@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26430.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Servers", "Servers", "{E2552411-D347-4907-9C50-2B7EDCB4B64A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Game Server", "Game Server", "{3D62116D-D193-4FB3-B99C-AA540E6E99D4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Game", "Servers\Game Server\Game\Game.csproj", "{DF693C06-200A-4903-B72F-AF600BB7D47A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Game.Common", "Servers\Game Server\Game.Common\Game.Common.csproj", "{1D6DE421-02F7-45A6-991A-6B4B142A0C7A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DF693C06-200A-4903-B72F-AF600BB7D47A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF693C06-200A-4903-B72F-AF600BB7D47A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF693C06-200A-4903-B72F-AF600BB7D47A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF693C06-200A-4903-B72F-AF600BB7D47A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1D6DE421-02F7-45A6-991A-6B4B142A0C7A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1D6DE421-02F7-45A6-991A-6B4B142A0C7A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1D6DE421-02F7-45A6-991A-6B4B142A0C7A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1D6DE421-02F7-45A6-991A-6B4B142A0C7A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{3D62116D-D193-4FB3-B99C-AA540E6E99D4} = {E2552411-D347-4907-9C50-2B7EDCB4B64A}
+		{DF693C06-200A-4903-B72F-AF600BB7D47A} = {3D62116D-D193-4FB3-B99C-AA540E6E99D4}
+		{1D6DE421-02F7-45A6-991A-6B4B142A0C7A} = {3D62116D-D193-4FB3-B99C-AA540E6E99D4}
+	EndGlobalSection
+EndGlobal
