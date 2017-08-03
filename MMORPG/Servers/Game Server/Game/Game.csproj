@@ -60,5 +60,14 @@
     <Compile Include="Application\PeerLogic\PeerLogic.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Game.Common\Game.Common.csproj">
+      <Project>{1D6DE421-02F7-45A6-991A-6B4B142A0C7A}</Project>
+      <Name>Game.Common</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="log4net.config" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
