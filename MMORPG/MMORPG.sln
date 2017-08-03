@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.14
+VisualStudioVersion = 15.0.26430.16
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Servers", "Servers", "{E2552411-D347-4907-9C50-2B7EDCB4B64A}"
 EndProject
@@ -10,6 +10,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Game", "Servers\Game Server\Game\Game.csproj", "{DF693C06-200A-4903-B72F-AF600BB7D47A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Game.Common", "Servers\Game Server\Game.Common\Game.Common.csproj", "{1D6DE421-02F7-45A6-991A-6B4B142A0C7A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{6BD1A4DA-D8A1-441D-AE30-7FFDAF884926}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

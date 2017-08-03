@@ -29,7 +29,7 @@ namespace Game.Application.PeerLogic
 
     internal abstract class ClientPeerLogicBase : ClientPeer
     {
-        private readonly Dictionary<byte, IOperation> operationsContainer = new Dictionary<byte, IOperation>();
+        private readonly Dictionary<byte, IOperationHandler> operationsContainer = new Dictionary<byte, IOperationHandler>();
 
         protected ClientPeerLogicBase(InitRequest initRequest) 
             : base(initRequest)
@@ -48,29 +48,20 @@ namespace Game.Application.PeerLogic
                 return;
             }
 
-            var requestParameters = operationRequest.Parameters;
-            var handlerParameters = operation.Handle(requestParameters); // await?
-
-            // TODO: Fix
-            /*if (handlerParameters == null)
+            var responseParameters = operation.Handle(operationRequest.Parameters); // await?
+            if (responseParameters == null)
             {
                 var operationResponse = new OperationResponse(operationCode);
                 SendOperationResponse(operationResponse, sendParameters);
             }
             else
             {
-                var parameters = ParametersSerializer.Serialize(ref handlerParameters);
-                var operationResponse = new OperationResponse(operationCode);
+                var operationResponse = new OperationResponse(operationCode, responseParameters);
                 SendOperationResponse(operationResponse, sendParameters);
             }
-
-            var operationResponse = response == null ? new OperationResponse(operationCode) 
-                : new OperationResponse(operationCode, response);*/
-
-            // SendOperationResponse(operationResponse, sendParameters);
         }
 
-        protected void SetOperationRequestHandler(GameOperations operationCode, IOperation operation)
+        protected void SetOperationRequestHandler(GameOperations operationCode, IOperationHandler operation)
         {
             operationsContainer.Add((byte)operationCode, operation);
         }
@@ -85,6 +76,9 @@ namespace Game.Application.PeerLogic
         protected abstract void OnPeerDisconnect(DisconnectReason reasonCode, string reasonDetail);
     }
 
+    /// <summary>
+    /// Every data (property) on parameters structure should use this attribute in order to be able to transfer this data over the network.
+    /// </summary>
     [AttributeUsage(AttributeTargets.Property, AllowMultiple = true)]
     public class ParameterAttribute : Attribute
     {
@@ -101,7 +95,7 @@ namespace Game.Application.PeerLogic
         /// </summary>
         /// <typeparam name="T">Should include the only Struct which inherits from IParameters interface.</typeparam>
         /// <param name="parameters">The parameters structure that we want to turn into Dictionary.</param>
-        public static Dictionary<byte, object> Serialize<T>(ref T parameters)
+        public static Dictionary<byte, object> Serialize<T>(T parameters)
             where T : struct, IParameters
         {
             var temp = new Dictionary<byte, object>();
@@ -150,25 +144,36 @@ namespace Game.Application.PeerLogic
         }
     }
 
+    /// <summary>
+    /// Every structure that handles request or response parameters should inherit from this interface.
+    /// </summary>
     public interface IParameters
     {
         // Left blank intentionally
     }
 
-    internal interface IOperation
+    /// <summary>
+    /// An interface which a handler class of an operation should implement.
+    /// </summary>
+    internal interface IOperationHandler
     {
-        IParameters Handle(Dictionary<byte, object> requestParameters);
+        /// <summary>
+        /// Handle() is getting a request parameters and giving a response parameters.
+        /// The following type is: (ResponseParameters : IParameters) Handle((RequestParameters : IParameters))
+        /// </summary>
+        /// <returns>It should return response parameters or null, which meaning that there are no parameters to send back.</returns>
+        Dictionary<byte, object> Handle(Dictionary<byte, object> parameters);
     }
 
-    internal class TestOperation : IOperation
+    internal class TestOperation : IOperationHandler
     {
-        public IParameters Handle(Dictionary<byte, object> requestParameters)
+        public Dictionary<byte, object> Handle(Dictionary<byte, object> parameters)
         {
-            var parameters = (TestRequestParameters)ParametersSerializer.Dserialize<TestRequestParameters>(requestParameters);
+            var requestParameters = (TestRequestParameters)ParametersSerializer.Dserialize<TestRequestParameters>(parameters);
 
-            Logger.Log.Debug("TestOperation->Handle() = " + parameters.MagicNumber);
+            Logger.Log.Debug("TestOperation->Handle() = " + requestParameters.MagicNumber);
 
-            return new TestResponseParameters { MagicNumber = 10 };
+            return ParametersSerializer.Serialize(new TestResponseParameters { MagicNumber = 10 });
         }
     }
 
