@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{DF693C06-200A-4903-B72F-AF600BB7D47A}</ProjectGuid>
+    <ProjectGuid>{81B0B76C-0581-477C-A512-A7EEEA7F2ABA}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Game</RootNamespace>
-    <AssemblyName>Game</AssemblyName>
+    <RootNamespace>Servers.Common</RootNamespace>
+    <AssemblyName>Servers.Common</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -30,49 +30,27 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ExitGames.Logging.Log4Net">
-      <HintPath>..\..\..\..\Photon Libraries\ExitGames.Logging.Log4Net.dll</HintPath>
-    </Reference>
-    <Reference Include="ExitGamesLibs">
-      <HintPath>..\..\..\..\Photon Libraries\ExitGamesLibs.dll</HintPath>
-    </Reference>
-    <Reference Include="log4net">
-      <HintPath>..\..\..\..\Photon Libraries\log4net.dll</HintPath>
-    </Reference>
     <Reference Include="Photon.SocketServer">
-      <HintPath>..\..\..\..\Photon Libraries\Photon.SocketServer.dll</HintPath>
+      <HintPath>..\..\Photon Libraries\Photon.SocketServer.dll</HintPath>
     </Reference>
     <Reference Include="PhotonHostRuntimeInterfaces">
-      <HintPath>..\..\..\..\Photon Libraries\PhotonHostRuntimeInterfaces.dll</HintPath>
+      <HintPath>..\..\Photon Libraries\PhotonHostRuntimeInterfaces.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Application\GameApplication.cs" />
-    <Compile Include="Application\Logger.cs" />
-    <Compile Include="Application\PeerLogic\ClientPeerLogic.cs" />
-    <Compile Include="Application\PeerLogic\Operations\TestOperation.cs" />
+    <Compile Include="ClientPeerLogicBase.cs" />
+    <Compile Include="EventSender.cs" />
+    <Compile Include="IOperation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Common.Communications\Common.Communications.csproj">
+    <ProjectReference Include="..\Common.Communications\Common.Communications.csproj">
       <Project>{B1B9750C-69F2-4A01-BA61-4F42268C17AF}</Project>
       <Name>Common.Communications</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\Servers.Common\Servers.Common.csproj">
-      <Project>{81B0B76C-0581-477C-A512-A7EEEA7F2ABA}</Project>
-      <Name>Servers.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Game.Common\Game.Common.csproj">
-      <Project>{1D6DE421-02F7-45A6-991A-6B4B142A0C7A}</Project>
-      <Name>Game.Common</Name>
-    </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <None Include="log4net.config" />
-  </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

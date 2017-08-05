@@ -1,6 +1,6 @@
 ﻿namespace Shared.Game.Common
 {
-    public enum GameOperations : byte
+    public enum GameEvents : byte
     {
         Test
     }
