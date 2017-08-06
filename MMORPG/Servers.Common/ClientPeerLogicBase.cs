@@ -8,11 +8,12 @@ namespace Shared.Servers.Common
     public abstract class ClientPeerLogicBase : ClientPeer
     {
         private readonly Dictionary<byte, IOperation> operationsContainer = new Dictionary<byte, IOperation>();
+        protected readonly EventSender EventSender;
 
         protected ClientPeerLogicBase(InitRequest initRequest)
             : base(initRequest)
         {
-            EventSender.EventAction = (eventCode, parameters, options) => SendEvent(new EventData(eventCode, parameters), options);
+            EventSender = new EventSender((eventCode, parameters, options) => SendEvent(new EventData(eventCode, parameters), options));
         }
 
         protected void SetOperationRequestHandler<T>(T operationCode, IOperation operation)

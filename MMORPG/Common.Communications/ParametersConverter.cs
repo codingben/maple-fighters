@@ -15,18 +15,18 @@ namespace Shared.Common.Communications
     /// <summary>
     /// A serializer of the Photon's dictionary parameters.
     /// </summary>
-    public static class ParametersSerializer
+    public static class ParametersConverter
     {
-        public static T DeserializeParameters<T>(this Dictionary<byte, object> parameters)
+        public static T ToParameters<T>(this Dictionary<byte, object> parameters)
             where T : struct, IParameters
         {
-            return (T)Convert.ChangeType(Dserialize<T>(parameters), typeof(T));
+            return (T)Convert.ChangeType(ConvertToParameters<T>(parameters), typeof(T));
         }
 
-        public static Dictionary<byte, object> SerializeParameters<T>(this T parameters)
+        public static Dictionary<byte, object> ToDictionary<T>(this T parameters)
             where T : struct, IParameters
         {
-            return Serialize(parameters);
+            return ConvertToDictionary(parameters);
         }
 
         /// <summary>
@@ -34,7 +34,7 @@ namespace Shared.Common.Communications
         /// </summary>
         /// <typeparam name="T">Should include the only Struct which inherits from IParameters interface.</typeparam>
         /// <param name="parameters">The parameters structure that we want to turn into Dictionary.</param>
-        private static Dictionary<byte, object> Serialize<T>(T parameters)
+        private static Dictionary<byte, object> ConvertToDictionary<T>(T parameters)
             where T : struct, IParameters
         {
             var temp = new Dictionary<byte, object>();
@@ -65,7 +65,7 @@ namespace Shared.Common.Communications
         /// </summary>
         /// <typeparam name="T">Should include the only Struct which inherits from IParameters interface.</typeparam>
         /// <param name="parameters">The parameters Dictionary that we want to turn into a structure.</param>
-        private static object Dserialize<T>(IReadOnlyDictionary<byte, object> parameters)
+        private static object ConvertToParameters<T>(IReadOnlyDictionary<byte, object> parameters)
             where T : struct, IParameters
         {
             object Object = new T();

@@ -18,7 +18,7 @@ namespace Game.Application.PeerLogic
 
         private void SetOperationsHandlers()
         {
-            SetOperationRequestHandler(GameOperations.Test, new TestOperation());
+            SetOperationRequestHandler(GameOperations.Test, new TestOperation(EventSender));
         }
 
         protected override void OnPeerDisconnect(DisconnectReason reasonCode, string reasonDetail)
