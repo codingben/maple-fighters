@@ -1,1 +1,4 @@
-sceneSetups: []
+sceneSetups:
+- path: Assets/MMORPG/Scenes/Levels/Game.unity
+  isLoaded: 1
+  isActive: 1
