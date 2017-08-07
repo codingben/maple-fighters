@@ -4,6 +4,7 @@ using ExitGames.Logging.Log4Net;
 using Game.Application.PeerLogic;
 using log4net.Config;
 using Photon.SocketServer;
+using ApplicationBase = PhotonServerImplementation.ApplicationBase;
 
 namespace Game.Application
 {
