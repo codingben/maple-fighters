@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{DF693C06-200A-4903-B72F-AF600BB7D47A}</ProjectGuid>
+    <ProjectGuid>{F82FBB67-7B1D-43B7-A415-3F407D40E5C7}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Game</RootNamespace>
-    <AssemblyName>Game</AssemblyName>
+    <RootNamespace>ServerApplication.Common</RootNamespace>
+    <AssemblyName>ServerApplication.Common</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -33,23 +33,23 @@
     <Reference Include="CommonCommunicationInterfaces, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\CommonCommunicationInterfaces.4.2.0\lib\net46\CommonCommunicationInterfaces.dll</HintPath>
     </Reference>
-    <Reference Include="CommunicationHelper, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\CommunicationHelper.3.2.3\lib\net46\CommunicationHelper.dll</HintPath>
-    </Reference>
     <Reference Include="Coroutines, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Coroutines.4.0.0\lib\net46\Coroutines.dll</HintPath>
     </Reference>
+    <Reference Include="log4net">
+      <HintPath>..\..\..\..\Photon Libraries\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="LogUtils, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Coroutines.4.0.0\lib\net46\LogUtils.dll</HintPath>
+    </Reference>
+    <Reference Include="Photon.SocketServer">
+      <HintPath>..\..\..\..\Photon Libraries\Photon.SocketServer.dll</HintPath>
     </Reference>
     <Reference Include="PhotonCommonImplementation, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\PhotonCommonImplementation.2.1.0\lib\net46\PhotonCommonImplementation.dll</HintPath>
     </Reference>
     <Reference Include="PhotonServerImplementation, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\PhotonServerImplementation.2.3.0\lib\net46\PhotonServerImplementation.dll</HintPath>
-    </Reference>
-    <Reference Include="ServerCommunicationHelper, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\ServerCommunicationHelper.1.9.4\lib\net46\ServerCommunicationHelper.dll</HintPath>
     </Reference>
     <Reference Include="ServerCommunicationInterfaces, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\ServerCommunicationInterfaces.1.9.0\lib\net46\ServerCommunicationInterfaces.dll</HintPath>
@@ -61,28 +61,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Application\GameApplication.cs" />
-    <Compile Include="Application\Peer Logic\ClientPeerLogic.cs" />
-    <Compile Include="Application\Peer Logic\Operations\TestOperation.cs" />
+    <Compile Include="Application Base\Application.cs" />
+    <Compile Include="Logger\Logger.cs" />
+    <Compile Include="Photon Starter\PhotonStarterBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="log4net.config" />
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\Shared\Client\Game.Common\Game.Common.csproj">
-      <Project>{AA536188-84FF-4286-A9E6-BAFBE1D8D37B}</Project>
-      <Name>Game.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\Shared\Communication\Communication.Common\Communication.Common.csproj">
-      <Project>{C078345D-CA52-4EA5-BF9B-13DEF0864556}</Project>
-      <Name>Communication.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\Shared\Servers\ServerApplication.Common\ServerApplication.Common.csproj">
-      <Project>{F82FBB67-7B1D-43B7-A415-3F407D40E5C7}</Project>
-      <Name>ServerApplication.Common</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

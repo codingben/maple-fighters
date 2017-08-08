@@ -1,39 +1,41 @@
 ﻿using System;
-using Photon.SocketServer;
-using PhotonHostRuntimeInterfaces;
-using PhotonServerImplementation;
 using ServerCommunicationHelper;
+using ServerCommunicationInterfaces;
 
-namespace Shared.Servers.Common
+namespace Shared.Communication.Common.Peer
 {
-    public abstract class ClientPeerLogicBase<TOperationCode, TEventCode> : PhotonClientPeer
+    public abstract class PeerLogicBase<TOperationCode, TEventCode> : ClientPeer<IClientPeer>
         where TOperationCode : IComparable, IFormattable, IConvertible
         where TEventCode : IComparable, IFormattable, IConvertible
     {
         protected IOperationRequestHandlerRegister<TOperationCode> OperationRequestHandlerRegister { get; private set; }
-        protected new IEventSender<TEventCode> EventSender { get; private set; }
+        protected IEventSender<TEventCode> EventSender { get; private set; }
 
         protected bool LogOperationRequests;
         protected bool LogOperationResponses;
         protected bool LogEvents;
 
-        protected ClientPeerLogicBase(InitRequest request) 
-            : base(request)
+        protected PeerLogicBase(IClientPeer peer) 
+            : base(peer)
         {
             InitializeCommunication();
         }
 
         private void InitializeCommunication()
         {
+            var operationRequestNotifier = Peer.OperationRequestNotifier;
+            var operationResponseSender = Peer.OperationResponseSender;
+            var eventSender = Peer.EventSender;
+
             OperationRequestHandlerRegister = new OperationRequestsHandler<TOperationCode>(
-                OperationRequestNotifier,
-                OperationResponseSender,
+                operationRequestNotifier,
+                operationResponseSender,
                 LogOperationRequests,
                 LogOperationResponses
             );
 
             EventSender = new EventSender<TEventCode>(
-                base.EventSender,
+                eventSender,
                 LogEvents
             );
         }
@@ -44,14 +46,5 @@ namespace Shared.Servers.Common
             LogOperationResponses = operationResponses;
             LogEvents = events;
         }
-
-        protected override void OnDisconnect(DisconnectReason reasonCode, string reasonDetail)
-        {
-            base.OnDisconnect(reasonCode, reasonDetail);
-
-            OnDisconnected(reasonCode, reasonDetail);
-        }
-
-        protected abstract void OnDisconnected(DisconnectReason reasonCode, string reasonDetail);
     }
 }

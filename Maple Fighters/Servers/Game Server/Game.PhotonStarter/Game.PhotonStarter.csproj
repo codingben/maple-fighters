@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{81B0B76C-0581-477C-A512-A7EEEA7F2ABA}</ProjectGuid>
+    <ProjectGuid>{BA247981-850D-416E-AE85-10BEC7349F21}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Servers.Common</RootNamespace>
-    <AssemblyName>Servers.Common</AssemblyName>
+    <RootNamespace>Game.PhotonStarter</RootNamespace>
+    <AssemblyName>Game.PhotonStarter</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -31,45 +31,45 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="CommonCommunicationInterfaces, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\CommonCommunicationInterfaces.4.2.0\lib\net46\CommonCommunicationInterfaces.dll</HintPath>
-    </Reference>
-    <Reference Include="CommunicationHelper, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\CommunicationHelper.3.2.3\lib\net46\CommunicationHelper.dll</HintPath>
+      <HintPath>..\..\..\packages\CommonCommunicationInterfaces.4.2.0\lib\net46\CommonCommunicationInterfaces.dll</HintPath>
     </Reference>
     <Reference Include="Coroutines, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Coroutines.4.0.0\lib\net46\Coroutines.dll</HintPath>
+      <HintPath>..\..\..\packages\Coroutines.4.0.0\lib\net46\Coroutines.dll</HintPath>
     </Reference>
     <Reference Include="LogUtils, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Coroutines.4.0.0\lib\net46\LogUtils.dll</HintPath>
+      <HintPath>..\..\..\packages\Coroutines.4.0.0\lib\net46\LogUtils.dll</HintPath>
     </Reference>
     <Reference Include="Photon.SocketServer">
-      <HintPath>..\..\Photon Libraries\Photon.SocketServer.dll</HintPath>
+      <HintPath>..\..\..\..\Photon Libraries\Photon.SocketServer.dll</HintPath>
     </Reference>
     <Reference Include="PhotonCommonImplementation, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\PhotonCommonImplementation.2.1.0\lib\net46\PhotonCommonImplementation.dll</HintPath>
-    </Reference>
-    <Reference Include="PhotonHostRuntimeInterfaces">
-      <HintPath>..\..\Photon Libraries\PhotonHostRuntimeInterfaces.dll</HintPath>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>..\..\..\packages\PhotonCommonImplementation.2.1.0\lib\net46\PhotonCommonImplementation.dll</HintPath>
     </Reference>
     <Reference Include="PhotonServerImplementation, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\PhotonServerImplementation.2.3.0\lib\net46\PhotonServerImplementation.dll</HintPath>
-    </Reference>
-    <Reference Include="ServerCommunicationHelper, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ServerCommunicationHelper.1.9.4\lib\net46\ServerCommunicationHelper.dll</HintPath>
+      <HintPath>..\..\..\packages\PhotonServerImplementation.2.3.0\lib\net46\PhotonServerImplementation.dll</HintPath>
     </Reference>
     <Reference Include="ServerCommunicationInterfaces, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ServerCommunicationInterfaces.1.9.0\lib\net46\ServerCommunicationInterfaces.dll</HintPath>
+      <HintPath>..\..\..\packages\ServerCommunicationInterfaces.1.9.0\lib\net46\ServerCommunicationInterfaces.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.ValueTuple, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.ValueTuple.4.3.1\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
+      <HintPath>..\..\..\packages\System.ValueTuple.4.3.1\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ClientPeerLogicBase.cs" />
+    <Compile Include="PhotonStarter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Shared\Servers\ServerApplication.Common\ServerApplication.Common.csproj">
+      <Project>{F82FBB67-7B1D-43B7-A415-3F407D40E5C7}</Project>
+      <Name>ServerApplication.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Game\Game.csproj">
+      <Project>{DF693C06-200A-4903-B72F-AF600BB7D47A}</Project>
+      <Name>Game</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
