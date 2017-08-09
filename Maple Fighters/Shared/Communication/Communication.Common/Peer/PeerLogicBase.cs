@@ -1,4 +1,6 @@
 ﻿using System;
+using CommonCommunicationInterfaces;
+using CommonTools.Log;
 using ServerCommunicationHelper;
 using ServerCommunicationInterfaces;
 
@@ -18,11 +20,16 @@ namespace Shared.Communication.Common.Peer
         protected PeerLogicBase(IClientPeer peer) 
             : base(peer)
         {
+            ActivateLogs(operationRequets: true, operationResponses: true, events: true);
             InitializeCommunication();
         }
 
         private void InitializeCommunication()
         {
+            LogUtils.Log($"InitializeCommunication() -> State: {Peer.NetworkTrafficState} Connected: {Peer.IsConnected}");
+
+            Peer.PeerDisconnectionNotifier.Disconnected += OnPeerDisconnected;
+
             var operationRequestNotifier = Peer.OperationRequestNotifier;
             var operationResponseSender = Peer.OperationResponseSender;
             var eventSender = Peer.EventSender;
@@ -38,6 +45,8 @@ namespace Shared.Communication.Common.Peer
                 eventSender,
                 LogEvents
             );
+
+            Initialize();
         }
 
         protected void ActivateLogs(bool operationRequets, bool operationResponses, bool events)
@@ -45,6 +54,20 @@ namespace Shared.Communication.Common.Peer
             LogOperationRequests = operationRequets;
             LogOperationResponses = operationResponses;
             LogEvents = events;
+        }
+
+        protected abstract void Initialize();
+
+        private void OnPeerDisconnected(DisconnectReason disconnectReason, string s)
+        {
+            Peer.PeerDisconnectionNotifier.Disconnected -= OnPeerDisconnected;
+
+            OperationRequestHandlerRegister?.Dispose();
+
+            var ip = Peer.ConnectionInformation.Ip;
+            var port = Peer.ConnectionInformation.Port;
+
+            LogUtils.Log($"A peer {ip}:{port} has been disconnected. Reason: {disconnectReason} - Details: {s}");
         }
     }
 }

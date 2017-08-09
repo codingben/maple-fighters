@@ -61,7 +61,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Peer\ClientPeerLogicBase.cs" />
+    <Compile Include="Peer\PeerLogicBase.cs" />
     <Compile Include="Peer\ClientPeer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

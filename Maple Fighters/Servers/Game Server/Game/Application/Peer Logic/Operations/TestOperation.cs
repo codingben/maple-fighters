@@ -1,4 +1,5 @@
 ﻿using CommonCommunicationInterfaces;
+using CommonTools.Log;
 using ServerCommunicationHelper;
 using ServerCommunicationInterfaces;
 using Shared.Game.Common;
@@ -12,11 +13,14 @@ namespace Game.Application.PeerLogic.Operations
         public TestOperation(IEventSender eventSender)
         {
             this.eventSender = eventSender;
+            LogUtils.Log($"TestOperation()");
         }
 
         public TestResponseParameters? Handle(MessageData<TestRequestParameters> messageData, ref MessageSendOptions sendOptions)
         {
-            eventSender.Send(new MessageData<TestParameters>((byte)GameEvents.Test, new TestParameters(10)), MessageSendOptions.DefaultReliable());
+            LogUtils.Log($"TestOperation::Handle() -> {messageData.Parameters.Number}");
+
+            // eventSender.Send(new MessageData<TestParameters>((byte)GameEvents.Test, new TestParameters(10)), MessageSendOptions.DefaultReliable());
 
             return new TestResponseParameters(10);
         }

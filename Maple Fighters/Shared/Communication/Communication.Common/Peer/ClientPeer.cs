@@ -15,7 +15,10 @@ namespace Shared.Communication.Common.Peer
 
         public void Dispose()
         {
-            Peer.Disconnect();
+            if (Peer.IsConnected)
+            {
+                Peer.Disconnect();
+            }
         }
     }
 }

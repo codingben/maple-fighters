@@ -5,21 +5,21 @@ namespace Shared.Game.Common
 {
     public struct TestParameters : IParameters
     {
-        private int number;
+        public int Number;
 
         public TestParameters(int number)
         {
-            this.number = number;
+            Number = number;
         }
 
         public void Serialize(BinaryWriter writer)
         {
-            writer.Write(number);
+            writer.Write(Number);
         }
 
         public void Deserialize(BinaryReader reader)
         {
-            number = reader.ReadInt32();
+            Number = reader.ReadInt32();
         }
     }
 }

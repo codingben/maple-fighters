@@ -27,6 +27,8 @@ namespace Game.Application
             {
                 peer.Dispose();
             }
+
+            peerLogics.Clear();
         }
     }
 }

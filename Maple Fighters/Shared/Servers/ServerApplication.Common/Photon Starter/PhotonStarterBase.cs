@@ -22,9 +22,10 @@ namespace ServerApplication.Common.PhotonStarter
 
             var clientPeer = new PhotonClientPeer(initRequest)
             {
-                NetworkTrafficState = NetworkTrafficState.Paused
+                NetworkTrafficState = NetworkTrafficState.Flowing
             };
 
+            // application.OnConnected(clientPeer);
             clientPeer.Fiber.Enqueue(() => application.OnConnected(clientPeer));
 
             return clientPeer;
