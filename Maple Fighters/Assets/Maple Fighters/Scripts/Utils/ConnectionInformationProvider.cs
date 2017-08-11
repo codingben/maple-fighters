@@ -8,7 +8,8 @@ namespace Scripts.Utils
     public class ConnectionInformation
     {
         [UsedImplicitly] public ServersType ServerType;
-        [UsedImplicitly] public PeerConnectionInformation ConnectionDetails;
+        [UsedImplicitly] public PeerConnectionInformation UdpConnectionDetails;
+        [UsedImplicitly] public PeerConnectionInformation TcpConnectionDetails;
         [UsedImplicitly] public PeerConnectionInformation WebConnectionDetails;
     }
 }

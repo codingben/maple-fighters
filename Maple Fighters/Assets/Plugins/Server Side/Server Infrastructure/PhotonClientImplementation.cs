@@ -94,7 +94,7 @@ namespace PhotonClientImplementation
         public event Action<StatusCode> StatusChanged;
         public event Action<DisconnectReason, string> Disconnected;
 
-        public PhotonPeer(PeerConnectionInformation serverConnectionInformation, ConnectionProtocol connectionProtocol, ICoroutinesExecuter coroutinesExecuter)
+        public PhotonPeer(PeerConnectionInformation serverConnectionInformation, ConnectionProtocol connectionProtocol, DebugLevel debugLevel, ICoroutinesExecuter coroutinesExecuter)
         {
             NetworkTrafficState = NetworkTrafficState.Flowing;
 
@@ -105,27 +105,41 @@ namespace PhotonClientImplementation
                 ChannelCount = 4
             };
 
-            if (connectionProtocol == ConnectionProtocol.WebSocket ||
-                connectionProtocol == ConnectionProtocol.WebSocketSecure)
+            #region WebSocket - Depercated
+            /*
+            // ExitGames.Client.Photon.SocketWebTcpThread ->
+            // To support WebGL export in Unity, we find and assign the SocketWebTcpThread or SocketWebTcpCoroutine class (if it's in the project).
+            Type websocketType = Type.GetType("ExitGames.Client.Photon.SocketWebTcpThread, Assembly-CSharp", false);
+            websocketType = websocketType ?? Type.GetType("ExitGames.Client.Photon.SocketWebTcpThread, Assembly-CSharp-firstpass", false);
+
+            // Change protocol during running a game on WebGL ->
+            #if UNITY_WEBGL
+            if (RawPeer.TransportProtocol != ConnectionProtocol.WebSocket && RawPeer.TransportProtocol != ConnectionProtocol.WebSocketSecure)
             {
-                // To support WebGL export in Unity, we find and assign the SocketWebTcpThread or SocketWebTcpCoroutine class (if it's in the project).
-                Type websocketType = Type.GetType("ExitGames.Client.Photon.SocketWebTcpThread, Assembly-CSharp", false);
-                websocketType = websocketType ?? Type.GetType("ExitGames.Client.Photon.SocketWebTcpThread, Assembly-CSharp-firstpass", false);
-                websocketType = websocketType ?? Type.GetType("ExitGames.Client.Photon.SocketWebTcpCoroutine, Assembly-CSharp", false);
-                websocketType = websocketType ?? Type.GetType("ExitGames.Client.Photon.SocketWebTcpCoroutine, Assembly-CSharp-firstpass", false);
-                /*var websocketType = Type.GetType("ExitGames.Client.Photon.SocketWebTcpCoroutine, Assembly-CSharp",
+                UnityEngine.Debug.Error("For UNITY_WEBGL, use protocol WebSocketSecure. Overriding currently set protcol " + RawPeer.TransportProtocol + ".");
+                RawPeer.TransportProtocol = ConnectionProtocol.WebSocket;
+            }
+            #endif
+            */
+            #endregion
+
+            if (RawPeer.TransportProtocol == ConnectionProtocol.WebSocket ||
+                RawPeer.TransportProtocol == ConnectionProtocol.WebSocketSecure)
+            {
+                var websocketType = Type.GetType("ExitGames.Client.Photon.SocketWebTcpCoroutine, Assembly-CSharp",
                     false);
                 websocketType = websocketType ??
                                 Type.GetType("ExitGames.Client.Photon.SocketWebTcpCoroutine, Assembly-CSharp-firstpass",
-                                    false);*/
+                                    false);
 
                 if (websocketType != null)
                 {
-                    RawPeer.SocketImplementation = websocketType;
+                    RawPeer.SocketImplementationConfig[ConnectionProtocol.WebSocket] = websocketType;
                 }
 
-                RawPeer.DebugOut = DebugLevel.INFO;
             }
+
+            RawPeer.DebugOut = debugLevel;
 
             this.coroutinesExecuter = coroutinesExecuter;
             coroutinesExecuter.StartCoroutine(UpdateEngine());

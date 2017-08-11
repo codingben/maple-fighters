@@ -485,9 +485,12 @@ MonoBehaviour:
     type: 2}
   connectionInformation:
     ServerType: 0
-    ConnectionDetails:
+    UdpConnectionDetails:
       Ip: 10.0.0.4
       Port: 5055
+    TcpConnectionDetails:
+      Ip: 10.0.0.4
+      Port: 4530
     WebConnectionDetails:
       Ip: ws://10.0.0.4
       Port: 9090

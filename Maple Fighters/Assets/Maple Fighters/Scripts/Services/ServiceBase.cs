@@ -27,7 +27,6 @@ namespace Scripts.Services
         private void Awake()
         {
             coroutinesExecuter = new ExternalCoroutinesExecuter();
-            //networkConfiguration = ScriptableObject.CreateInstance<NetworkConfiguration>();
 
             Initiate();
         }
@@ -63,14 +62,15 @@ namespace Scripts.Services
 
         private void InitializePhotonPeer()
         {
-            print(networkConfiguration.ConnectionProtocol);
-
             switch (networkConfiguration.ConnectionProtocol)
             {
                 case ConnectionProtocol.Udp:
+                    currentServerType = connectionInformation.ServerType;
+                    currentConnectionInformation = connectionInformation.UdpConnectionDetails;
+                    break;
                 case ConnectionProtocol.Tcp:
                     currentServerType = connectionInformation.ServerType;
-                    currentConnectionInformation = connectionInformation.ConnectionDetails;
+                    currentConnectionInformation = connectionInformation.TcpConnectionDetails;
                     break;
                 case ConnectionProtocol.WebSocket:
                 case ConnectionProtocol.WebSocketSecure:
@@ -85,7 +85,8 @@ namespace Scripts.Services
                 return;
             }
 
-            PhotonPeer = new PhotonPeer(currentConnectionInformation, networkConfiguration.ConnectionProtocol, coroutinesExecuter);
+            PhotonPeer = new PhotonPeer(currentConnectionInformation, networkConfiguration.ConnectionProtocol, networkConfiguration.DebugLevel, 
+                coroutinesExecuter);
         }
 
         protected void OnConnectionFailed()

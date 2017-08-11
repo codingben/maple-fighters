@@ -505,7 +505,7 @@ PlayerSettings:
   webGLUseWasm: 0
   webGLCompressionFormat: 1
   scriptingDefineSymbols:
-    1: 
+    1: WEBSOCKET
   platformArchitecture: {}
   scriptingBackend: {}
   incrementalIl2cppBuild: {}
