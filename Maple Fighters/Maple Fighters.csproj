@@ -77,22 +77,39 @@
     <Reference Include="Photon3Unity3D">
       <HintPath>Assets\Plugins\Photon\Photon3Unity3D.dll</HintPath>
     </Reference>
+    <Reference Include="websocket-sharp">
+      <HintPath>Assets\Plugins\Photon\PhotonWebSocket\WebSocket\websocket-sharp.dll</HintPath>
+    </Reference>
     <Reference Include="Game.Common">
       <HintPath>Assets\Plugins\Server Side\Game Common\Game.Common.dll</HintPath>
-    </Reference>
-    <Reference Include="PhotonCommonImplementation">
-      <HintPath>Assets\Plugins\Server Side\Server Infrastructure\PhotonCommonImplementation.dll</HintPath>
     </Reference>
     <Reference Include="CommonCommunicationInterfaces">
       <HintPath>Assets\Plugins\Server Side\Server Infrastructure\CommonCommunicationInterfaces.dll</HintPath>
     </Reference>
+    <Reference Include="Coroutines">
+      <HintPath>Assets\Plugins\Server Side\Server Infrastructure\Coroutines.dll</HintPath>
+    </Reference>
+    <Reference Include="PhotonCommonImplementation">
+      <HintPath>Assets\Plugins\Server Side\Server Infrastructure\PhotonCommonImplementation.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Maple Fighters\Scripts\GameConfiguration.cs" />
-    <Compile Include="Assets\Maple Fighters\Scripts\Photon\ServiceBase.cs" />
+    <ProjectReference Include="Maple Fighters.Plugins.csproj">
+      <Project>{9ACA0626-C706-9B60-66C6-38640F450C9D}</Project>
+      <Name>Maple Fighters.Plugins</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Assets\Maple Fighters\Scripts\NetworkConfiguration.cs" />
+    <Compile Include="Assets\Maple Fighters\Scripts\Services\GameService.cs" />
+    <Compile Include="Assets\Maple Fighters\Scripts\Services\IGameService.cs" />
+    <Compile Include="Assets\Maple Fighters\Scripts\Services\ServersType.cs" />
+    <Compile Include="Assets\Maple Fighters\Scripts\Services\ServiceBase.cs" />
+    <Compile Include="Assets\Maple Fighters\Scripts\Utils\ConnectionInformationProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Plugins\Photon\Photon3Unity3D.xml" />
+    <None Include="Assets\Plugins\Photon\PhotonWebSocket\Readme-Photon-WebSocket.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />
