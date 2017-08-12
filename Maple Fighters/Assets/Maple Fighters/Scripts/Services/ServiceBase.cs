@@ -32,13 +32,13 @@ namespace Scripts.Services
         protected IOperationRequestSender<TOperationCode> OperationRequestSender { get; private set; }
         protected IOperationResponseSubscriptionProvider SubscriptionProvider { get; private set; }
 
-        protected ICoroutinesExecuter CoroutinesExecuter;
+        protected ExternalCoroutinesExecuter CoroutinesExecuter;
 
         private void Awake()
         {
             LogUtils.Logger = new Logger();
 
-            CoroutinesExecuter = new CoroutinesExecuterWrapper();
+            CoroutinesExecuter = new ExternalCoroutinesExecuter().ExecuteExternally();
 
             networkConfiguration = Resources.Load<NetworkConfiguration>(NETWORK_CONFIGURATION_PATH);
 
@@ -65,6 +65,8 @@ namespace Scripts.Services
 
         public void Dispose()
         {
+            CoroutinesExecuter.RemoveFromExternalExecuter().Dispose();
+
             serverPeer?.Disconnect();
 
             SubscriptionProvider?.Dispose();

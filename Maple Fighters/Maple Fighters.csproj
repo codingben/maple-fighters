@@ -95,11 +95,11 @@
     <Reference Include="Coroutines">
       <HintPath>Assets\Plugins\Server Side\Server Infrastructure\Coroutines.dll</HintPath>
     </Reference>
-    <Reference Include="PhotonCommonImplementation">
-      <HintPath>Assets\Plugins\Server Side\Server Infrastructure\PhotonCommonImplementation.dll</HintPath>
-    </Reference>
     <Reference Include="LogUtils">
       <HintPath>Assets\Plugins\Server Side\Server Infrastructure\LogUtils.dll</HintPath>
+    </Reference>
+    <Reference Include="PhotonCommonImplementation">
+      <HintPath>Assets\Plugins\Server Side\Server Infrastructure\PhotonCommonImplementation.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -109,9 +109,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Maple Fighters\Scripts\Coroutines\CoroutinesExecuterWrapper.cs" />
     <Compile Include="Assets\Maple Fighters\Scripts\Coroutines\CoroutinesWrappersUpdater.cs" />
-    <Compile Include="Assets\Maple Fighters\Scripts\Coroutines\ICoroutinesExecuterWrapper.cs" />
     <Compile Include="Assets\Maple Fighters\Scripts\NetworkConfiguration.cs" />
     <Compile Include="Assets\Maple Fighters\Scripts\Services\EventInvoker.cs" />
     <Compile Include="Assets\Maple Fighters\Scripts\Services\GameService.cs" />
@@ -124,7 +122,6 @@
     <Compile Include="Assets\Maple Fighters\Scripts\Utils\ConnectionInformationProvider.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assets\Plugins\Photon\Photon3Unity3D.xml" />
     <None Include="Assets\Plugins\PhotonWebSocket\Readme-Photon-WebSocket.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

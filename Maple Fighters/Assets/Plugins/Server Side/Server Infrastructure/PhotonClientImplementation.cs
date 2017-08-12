@@ -30,35 +30,35 @@ namespace PhotonClientImplementation
                         switch (optionsBuffer.Dequeue())
                         {
                             case BufferOption.OperationResponse:
-                            {
-                                var tuple = operationResponsesBuffer.Dequeue();
-                                var operationResponded = OperationResponded;
-
-                                if (operationResponded != null)
                                 {
-                                    var messageResponseData = tuple.Item1;
-                                    var num = (int) tuple.Item2;
+                                    var tuple = operationResponsesBuffer.Dequeue();
+                                    var operationResponded = OperationResponded;
 
-                                    operationResponded(messageResponseData, (short) num);
+                                    if (operationResponded != null)
+                                    {
+                                        var messageResponseData = tuple.Item1;
+                                        var num = (int)tuple.Item2;
+
+                                        operationResponded(messageResponseData, (short)num);
+                                    }
+                                    break;
                                 }
-                                break;
-                            }
                             case BufferOption.Event:
-                            {
-                                var rawMessageData1 = eventsBuffer.Dequeue();
-                                var eventRecieved = EventRecieved;
-
-                                if (eventRecieved != null)
                                 {
-                                    var rawMessageData2 = rawMessageData1;
-                                    eventRecieved(rawMessageData2);
+                                    var rawMessageData1 = eventsBuffer.Dequeue();
+                                    var eventRecieved = EventRecieved;
+
+                                    if (eventRecieved != null)
+                                    {
+                                        var rawMessageData2 = rawMessageData1;
+                                        eventRecieved(rawMessageData2);
+                                    }
+                                    break;
                                 }
-                                break;
-                            }
                             default:
-                            {
-                                throw new ArgumentOutOfRangeException();
-                            }
+                                {
+                                    throw new ArgumentOutOfRangeException();
+                                }
                         }
                     }
 
@@ -94,50 +94,23 @@ namespace PhotonClientImplementation
 
         private NetworkTrafficState networkTrafficState;
 
-        public PhotonPeer(PeerConnectionInformation serverConnectionInformation, 
+        public PhotonPeer(PeerConnectionInformation serverConnectionInformation,
             ConnectionProtocol connectionProtocol, DebugLevel debugLevel, ICoroutinesExecuter coroutinesExecuter)
         {
             NetworkTrafficState = NetworkTrafficState.Flowing;
 
             this.serverConnectionInformation = serverConnectionInformation;
 
-            RawPeer = new ExitGames.Client.Photon.PhotonPeer(this, connectionProtocol)
-            {
-                ChannelCount = 4
-            };
+            RawPeer = new ExitGames.Client.Photon.PhotonPeer(this, connectionProtocol) { ChannelCount = 4 };
 
-            #region WebSocket - Depercated
-            /*
-            // ExitGames.Client.Photon.SocketWebTcpThread ->
-            // To support WebGL export in Unity, we find and assign the SocketWebTcpThread or SocketWebTcpCoroutine class (if it's in the project).
-            Type websocketType = Type.GetType("ExitGames.Client.Photon.SocketWebTcpThread, Assembly-CSharp", false);
-            websocketType = websocketType ?? Type.GetType("ExitGames.Client.Photon.SocketWebTcpThread, Assembly-CSharp-firstpass", false);
-
-            // Change protocol during running a game on WebGL ->
-            #if UNITY_WEBGL
-            if (RawPeer.TransportProtocol != ConnectionProtocol.WebSocket && RawPeer.TransportProtocol != ConnectionProtocol.WebSocketSecure)
+            #if UNITY_WEBGL || UNITY_XBOXONE || WEBSOCKET
+            if (connectionProtocol == ConnectionProtocol.WebSocket ||
+                connectionProtocol == ConnectionProtocol.WebSocketSecure)
             {
-                UnityEngine.Debug.Error("For UNITY_WEBGL, use protocol WebSocketSecure. Overriding currently set protcol " + RawPeer.TransportProtocol + ".");
-                RawPeer.TransportProtocol = ConnectionProtocol.WebSocket;
+                var websocketType = typeof(SocketWebTcpCoroutine);
+                RawPeer.SocketImplementationConfig[ConnectionProtocol.WebSocket] = websocketType;
             }
-            #endif
-            */
-            #endregion
-
-            if (RawPeer.TransportProtocol == ConnectionProtocol.WebSocket ||
-                RawPeer.TransportProtocol == ConnectionProtocol.WebSocketSecure)
-            {
-                var websocketType = Type.GetType("ExitGames.Client.Photon.SocketWebTcpCoroutine, Assembly-CSharp",
-                    false);
-                websocketType = websocketType ??
-                                Type.GetType("ExitGames.Client.Photon.SocketWebTcpCoroutine, Assembly-CSharp-firstpass",
-                                    false);
-
-                if (websocketType != null)
-                {
-                    RawPeer.SocketImplementationConfig[ConnectionProtocol.WebSocket] = websocketType;
-                }
-            }
+            #endif 
 
             RawPeer.DebugOut = debugLevel;
 
@@ -160,11 +133,13 @@ namespace PhotonClientImplementation
 
         private void Update()
         {
-            do {
+            do
+            {
                 // Left blank intentionally
             } while (RawPeer.DispatchIncomingCommands());
 
-            do {
+            do
+            {
                 // Left blank intentionally
             } while (RawPeer.SendOutgoingCommands());
         }
@@ -178,7 +153,7 @@ namespace PhotonClientImplementation
         {
             var serverAddress = $"{serverConnectionInformation.Ip}:{serverConnectionInformation.Port}";
 
-            Debug.Assert(RawPeer.Connect(serverAddress, "Empty"), 
+            Debug.Assert(RawPeer.Connect(serverAddress, "Empty"),
                 $"PhotonPeer::Connect() -> Could not begin connection with: {serverAddress}");
         }
 
@@ -201,25 +176,25 @@ namespace PhotonClientImplementation
             switch (level)
             {
                 case DebugLevel.ERROR:
-                {
-                    Debug.LogError($"PhotonPeer::DebugReturn() -> Debug Level: {level} Message: {message}");
-                    break;
-                }
+                    {
+                        Debug.LogError($"PhotonPeer::DebugReturn() -> Debug Level: {level} Message: {message}");
+                        break;
+                    }
                 case DebugLevel.WARNING:
-                {
-                    Debug.LogWarning($"PhotonPeer::DebugReturn() -> Debug Level: {level} Message: {message}");
-                    break;
-                }
+                    {
+                        Debug.LogWarning($"PhotonPeer::DebugReturn() -> Debug Level: {level} Message: {message}");
+                        break;
+                    }
                 case DebugLevel.INFO:
-                {
-                    Debug.Log($"PhotonPeer::DebugReturn() -> Debug Level: {level} Message: {message}");
-                    break;
-                }
+                    {
+                        Debug.Log($"PhotonPeer::DebugReturn() -> Debug Level: {level} Message: {message}");
+                        break;
+                    }
                 default:
-                {
-                    Debug.Log($"PhotonPeer::DebugReturn() -> Debug Level: {level} Message: {message}");
-                    break;
-                }
+                    {
+                        Debug.Log($"PhotonPeer::DebugReturn() -> Debug Level: {level} Message: {message}");
+                        break;
+                    }
             }
         }
 
@@ -255,22 +230,22 @@ namespace PhotonClientImplementation
             switch (statusCode)
             {
                 case StatusCode.Disconnect:
-                {
-                    // Left blank intentionally
-                    break;
-                }
+                    {
+                        // Left blank intentionally
+                        break;
+                    }
                 case StatusCode.TimeoutDisconnect:
-                {
-                    disconnectReason = 1;
-                    break;
-                }
+                    {
+                        disconnectReason = 1;
+                        break;
+                    }
                 case StatusCode.DisconnectByServer:
                 case StatusCode.DisconnectByServerUserLimit:
                 case StatusCode.DisconnectByServerLogic:
-                {
-                    disconnectReason = 4;
-                    break;
-                }
+                    {
+                        disconnectReason = 4;
+                        break;
+                    }
             }
 
             Disconnected?.Invoke((DisconnectReason)disconnectReason, statusCode.ToString());
@@ -297,7 +272,7 @@ namespace PhotonClientImplementation
             coroutinesExecuter.Dispose();
         }
 
-        public short Send<TParam>(MessageData<TParam> data, MessageSendOptions sendOptions) 
+        public short Send<TParam>(MessageData<TParam> data, MessageSendOptions sendOptions)
             where TParam : IParameters, new()
         {
             if (sendOptions.Flush)
@@ -345,20 +320,20 @@ namespace PhotonClientImplementation
             switch (peer.State)
             {
                 case PeerStateValue.Connected:
-                {
-                    onConnected?.Invoke();
-                    break;
-                }
+                    {
+                        onConnected?.Invoke();
+                        break;
+                    }
                 case PeerStateValue.Disconnected:
-                {
-                    onConnectionFailed?.Invoke();
-                    break;
-                }
+                    {
+                        onConnectionFailed?.Invoke();
+                        break;
+                    }
                 default:
-                {
-                    Debug.LogWarning($"PeerUtils::WaitForConnect() -> Unexpected state while waiting for connection: {peer.State}");
-                    break;
-                }
+                    {
+                        Debug.LogWarning($"PeerUtils::WaitForConnect() -> Unexpected state while waiting for connection: {peer.State}");
+                        break;
+                    }
             }
         }
     }

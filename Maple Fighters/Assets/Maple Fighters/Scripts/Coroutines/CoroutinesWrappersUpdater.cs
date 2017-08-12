@@ -5,25 +5,39 @@ using UnityEngine;
 
 namespace Scripts.Coroutines
 {
+    public static class ExtensionMethods
+    {
+        public static ExternalCoroutinesExecuter ExecuteExternally(this ExternalCoroutinesExecuter executer)
+        {
+            CoroutinesWrappersUpdater.GetInstance().AddCoroutineExecuter(executer);
+            return executer;
+        }
+
+        public static ExternalCoroutinesExecuter RemoveFromExternalExecuter(this ExternalCoroutinesExecuter executer)
+        {
+            CoroutinesWrappersUpdater.GetInstance().RemoveCoroutineExecuter(executer);
+            return executer;
+        }
+    }
+
     public sealed class CoroutinesWrappersUpdater : MonoBehaviour
     {
-        private readonly List<ICoroutinesExecuterWrapper> coroutinesWrappers = new List<ICoroutinesExecuterWrapper>();
+        private readonly List<ExternalCoroutinesExecuter> coroutinesWrappers = new List<ExternalCoroutinesExecuter>();
 
         private static CoroutinesWrappersUpdater _instance;
 
         public static CoroutinesWrappersUpdater GetInstance()
         {
-            Debug.Assert(_instance != null, "CoroutinesWrapperUpdater::Instance -> Could not find an instance of this class -> Creating a new one.");
             _instance = _instance ?? new GameObject(typeof(CoroutinesWrappersUpdater).ToString(), typeof(CoroutinesWrappersUpdater)).GetComponent<CoroutinesWrappersUpdater>();
             return _instance;
         }
 
-        public void AddCoroutineWrapper(CoroutinesExecuterWrapper coroutineWrapper)
+        public void AddCoroutineExecuter(ExternalCoroutinesExecuter coroutineWrapper)
         {
             coroutinesWrappers.Add(coroutineWrapper);
         }
 
-        public void RemoveCoroutineWrapper(CoroutinesExecuterWrapper coroutineWrapper)
+        public void RemoveCoroutineExecuter(ExternalCoroutinesExecuter coroutineWrapper)
         {
             coroutinesWrappers.Remove(coroutineWrapper);
         }
@@ -39,7 +53,7 @@ namespace Scripts.Coroutines
         {
             if (coroutinesWrappers.Count != 0)
             {
-                coroutinesWrappers.ForEach(x => x.UpdateCoroutines());
+                coroutinesWrappers.ForEach(x => x.Update());
             }
         }
 
