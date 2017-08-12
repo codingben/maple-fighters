@@ -481,9 +481,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff75cffb8d1744f5995d6c48178f2dee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  networkConfiguration: {fileID: 11400000, guid: 2f413dcf9d32917408f882f81283fc17,
-    type: 2}
-  connectionInformation:
+  connectionsInformation:
     ServerType: 0
     UdpConnectionDetails:
       Ip: 10.0.0.4

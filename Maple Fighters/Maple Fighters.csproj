@@ -12,12 +12,15 @@
     <ProjectTypeGuids>{E097FAD1-6243-4DAD-9C02-E9B9EFC3FFC1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
-    <TargetFrameworkProfile></TargetFrameworkProfile>
-    <CompilerResponseFile></CompilerResponseFile>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <CompilerResponseFile>
+    </CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows64:19</UnityBuildTarget>
     <UnityVersion>2017.1.0p2</UnityVersion>
-    <RootNamespace></RootNamespace>
+    <RootNamespace>
+    </RootNamespace>
     <LangVersion>6</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -77,11 +80,17 @@
     <Reference Include="Photon3Unity3D">
       <HintPath>Assets\Plugins\Photon\Photon3Unity3D.dll</HintPath>
     </Reference>
+    <Reference Include="websocket-sharp">
+      <HintPath>Assets\Plugins\PhotonWebSocket\WebSocket\websocket-sharp.dll</HintPath>
+    </Reference>
     <Reference Include="Game.Common">
       <HintPath>Assets\Plugins\Server Side\Game Common\Game.Common.dll</HintPath>
     </Reference>
     <Reference Include="CommonCommunicationInterfaces">
       <HintPath>Assets\Plugins\Server Side\Server Infrastructure\CommonCommunicationInterfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="CommunicationHelper">
+      <HintPath>Assets\Plugins\Server Side\Server Infrastructure\CommunicationHelper.dll</HintPath>
     </Reference>
     <Reference Include="Coroutines">
       <HintPath>Assets\Plugins\Server Side\Server Infrastructure\Coroutines.dll</HintPath>
@@ -89,8 +98,8 @@
     <Reference Include="PhotonCommonImplementation">
       <HintPath>Assets\Plugins\Server Side\Server Infrastructure\PhotonCommonImplementation.dll</HintPath>
     </Reference>
-    <Reference Include="websocket-sharp">
-      <HintPath>Assets\Plugins\PhotonWebSocket\WebSocket\websocket-sharp.dll</HintPath>
+    <Reference Include="LogUtils">
+      <HintPath>Assets\Plugins\Server Side\Server Infrastructure\LogUtils.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -100,11 +109,18 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Maple Fighters\Scripts\Coroutines\CoroutinesExecuterWrapper.cs" />
+    <Compile Include="Assets\Maple Fighters\Scripts\Coroutines\CoroutinesWrappersUpdater.cs" />
+    <Compile Include="Assets\Maple Fighters\Scripts\Coroutines\ICoroutinesExecuterWrapper.cs" />
     <Compile Include="Assets\Maple Fighters\Scripts\NetworkConfiguration.cs" />
+    <Compile Include="Assets\Maple Fighters\Scripts\Services\EventInvoker.cs" />
     <Compile Include="Assets\Maple Fighters\Scripts\Services\GameService.cs" />
+    <Compile Include="Assets\Maple Fighters\Scripts\Services\GameTimeProvider.cs" />
     <Compile Include="Assets\Maple Fighters\Scripts\Services\IGameService.cs" />
+    <Compile Include="Assets\Maple Fighters\Scripts\Services\Logger.cs" />
     <Compile Include="Assets\Maple Fighters\Scripts\Services\ServersType.cs" />
     <Compile Include="Assets\Maple Fighters\Scripts\Services\ServiceBase.cs" />
+    <Compile Include="Assets\Maple Fighters\Scripts\Services\UnityEvent.cs" />
     <Compile Include="Assets\Maple Fighters\Scripts\Utils\ConnectionInformationProvider.cs" />
   </ItemGroup>
   <ItemGroup>

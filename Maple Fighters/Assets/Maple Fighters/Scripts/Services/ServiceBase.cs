@@ -1,124 +1,145 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Threading.Tasks;
 using CommonCommunicationInterfaces;
 using CommonTools.Coroutines;
+using CommonTools.Log;
+using CommunicationHelper;
 using ExitGames.Client.Photon;
 using PhotonClientImplementation;
+using Scripts.Coroutines;
 using Scripts.ScriptableObjects;
 using Scripts.Utils;
 using UnityEngine;
-using PhotonPeer = PhotonClientImplementation.PhotonPeer;
 
 namespace Scripts.Services
 {
-    public abstract class ServiceBase : MonoBehaviour, ICoroutinesExecuter
+    public abstract class ServiceBase<TOperationCode, TEventCode> : MonoBehaviour, IDisposable
+        where TOperationCode : IComparable, IFormattable, IConvertible
+        where TEventCode : IComparable, IFormattable, IConvertible
     {
-        public int Count => coroutinesExecuter.Count;
+        private const string NETWORK_CONFIGURATION_PATH = "Configurations/Network Configuration";
 
-        private ExternalCoroutinesExecuter coroutinesExecuter;
-        [SerializeField] private NetworkConfiguration networkConfiguration;
+        [SerializeField] private ConnectionInformation connectionsInformation;
 
-        protected PhotonPeer PhotonPeer;
-
-        [SerializeField] private ConnectionInformation connectionInformation;
+        private NetworkConfiguration networkConfiguration;
 
         private ServersType currentServerType;
         private PeerConnectionInformation currentConnectionInformation;
 
+        private IServerPeer serverPeer;
+
+        protected IEventHandlerRegister<TEventCode> EventHandlerRegister { get; private set; }
+        protected IOperationRequestSender<TOperationCode> OperationRequestSender { get; private set; }
+        protected IOperationResponseSubscriptionProvider SubscriptionProvider { get; private set; }
+
+        protected ICoroutinesExecuter CoroutinesExecuter;
+
         private void Awake()
         {
-            coroutinesExecuter = new ExternalCoroutinesExecuter();
+            LogUtils.Logger = new Logger();
+
+            CoroutinesExecuter = new CoroutinesExecuterWrapper();
+
+            networkConfiguration = Resources.Load<NetworkConfiguration>(NETWORK_CONFIGURATION_PATH);
 
             Initiate();
         }
 
-        private void Update()
+        public async Task<IServerPeer> ConnectAsync(Yield yield, PeerConnectionInformation connectionInformation)
         {
-            coroutinesExecuter.Update();
+            var serverConnector = new PhotonServerConnector(() => CoroutinesExecuter);
+
+            serverPeer = await serverConnector.ConnectAsync(yield, connectionInformation,
+                new ConnectionDetails(networkConfiguration.ConnectionProtocol, networkConfiguration.DebugLevel));
+
+            if (serverPeer == null)
+            {
+                return null;
+            }
+
+            InitializePeerHandlers();
+            OnConnected();
+
+            return serverPeer;
         }
 
-        private void OnApplicationQuit()
+        public void Dispose()
         {
-            PhotonPeer?.Disconnect();
+            serverPeer?.Disconnect();
+
+            SubscriptionProvider?.Dispose();
+            EventHandlerRegister?.Dispose();
+        }
+
+        protected void Connect()
+        {
+            InitializePeer();
+
+            Debug.Log($"Connecting to a {currentServerType} server - " + $"{currentConnectionInformation.Ip}:{currentConnectionInformation.Port}");
+
+            CoroutinesExecuter.StartTask(y => ConnectAsync(y, currentConnectionInformation));
         }
 
         protected abstract void Initiate();
 
-        protected void Connect()
+        protected abstract void OnConnected();
+
+        protected abstract void OnDisconnected();
+
+        protected bool IsConnected()
         {
-            InitializePhotonPeer();
-
-            if (PhotonPeer == null)
-            {
-                return;
-            }
-
-            Debug.Log($"ServiceBase::Connect() -> Connecting to {currentServerType} - " +
-                      $"{currentConnectionInformation.Ip}:{currentConnectionInformation.Port}");
-
-            PhotonPeer.Connect();
-
-            coroutinesExecuter.StartCoroutine(PhotonPeer.WaitForConnect(OnConnected, OnConnectionFailed));
+            return serverPeer.IsConnected;
         }
 
-        private void InitializePhotonPeer()
+        private void OnDisconnected(DisconnectReason disconnectReason, string s)
+        {
+            Debug.Log("ServiceBase::OnDisconnected() -> The connection has been closed with " +
+                      $"{currentServerType} - {currentConnectionInformation.Ip}:{currentConnectionInformation.Port}. Reason: {disconnectReason}");
+
+            serverPeer.PeerDisconnectionNotifier.Disconnected -= OnDisconnected;
+
+            OnDisconnected();
+        }
+
+        private void InitializePeer()
         {
             switch (networkConfiguration.ConnectionProtocol)
             {
                 case ConnectionProtocol.Udp:
-                    currentServerType = connectionInformation.ServerType;
-                    currentConnectionInformation = connectionInformation.UdpConnectionDetails;
+                    currentServerType = connectionsInformation.ServerType;
+                    currentConnectionInformation = connectionsInformation.UdpConnectionDetails;
                     break;
                 case ConnectionProtocol.Tcp:
-                    currentServerType = connectionInformation.ServerType;
-                    currentConnectionInformation = connectionInformation.TcpConnectionDetails;
+                    currentServerType = connectionsInformation.ServerType;
+                    currentConnectionInformation = connectionsInformation.TcpConnectionDetails;
                     break;
                 case ConnectionProtocol.WebSocket:
                 case ConnectionProtocol.WebSocketSecure:
-                    currentServerType = connectionInformation.ServerType;
-                    currentConnectionInformation = connectionInformation.WebConnectionDetails;
+                    currentServerType = connectionsInformation.ServerType;
+                    currentConnectionInformation = connectionsInformation.WebConnectionDetails;
                     break;
             }
 
             if (networkConfiguration.ConnectionProtocol == ConnectionProtocol.WebSocketSecure)
             {
                 Debug.LogError($"Connection type {networkConfiguration} is not supported yet.");
-                return;
+                networkConfiguration.ConnectionProtocol = ConnectionProtocol.WebSocket;
             }
-
-            PhotonPeer = new PhotonPeer(currentConnectionInformation, networkConfiguration.ConnectionProtocol, networkConfiguration.DebugLevel, 
-                coroutinesExecuter);
         }
 
-        protected void OnConnectionFailed()
+        private void InitializePeerHandlers()
         {
-            Debug.LogWarning("ServiceBase::OnConnectionFailed() -> The connection was not established. Connection details: " +
-                             $"{currentServerType} - {currentConnectionInformation.Ip}:{currentConnectionInformation.Port}");
+            SubscriptionProvider = new OperationResponseSubscriptionProvider<TOperationCode>(serverPeer.OperationResponseNotifier,
+                (data, s) => Debug.LogError($"Sending an operaiton has been failed. Operation Code: {data.Code} - Server Type: {currentServerType}"));
+            EventHandlerRegister = new EventHandlerRegister<TEventCode>(serverPeer.EventNotifier);
+            OperationRequestSender = new OperationRequestSender<TOperationCode>(serverPeer.OperationRequestSender);
+
+            serverPeer.PeerDisconnectionNotifier.Disconnected += OnDisconnected;
         }
 
-        protected virtual void OnConnected()
+        private void OnApplicationQuit()
         {
-            Debug.Log("ServiceBase::OnConnected() -> The connection was established successfully. Connection details: " +
-                      $"{currentServerType} - {currentConnectionInformation.Ip}:{currentConnectionInformation.Port}");
-
-            PhotonPeer.Disconnected += OnDisconnected;
-        }
-
-        protected void OnDisconnected(DisconnectReason disconnectReason, string s)
-        {
-            Debug.Log("ServiceBase::OnDisconnected() -> The connection has been closed. Connection details: " +
-                      $"{currentServerType} - {currentConnectionInformation.Ip}:{currentConnectionInformation.Port}. Reason: {disconnectReason}");
-
-            PhotonPeer.Disconnected -= OnDisconnected;
-        }
-
-        public void Dispose()
-        {
-            PhotonPeer?.Disconnect();
-        }
-
-        public ICoroutine StartCoroutine(IEnumerator<IYieldInstruction> coroutineEnumerator)
-        {
-            return coroutinesExecuter.StartCoroutine(coroutineEnumerator);
+            Dispose();
         }
     }
 }

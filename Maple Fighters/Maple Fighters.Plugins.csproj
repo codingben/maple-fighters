@@ -77,11 +77,17 @@
     <Reference Include="Photon3Unity3D">
       <HintPath>Assets\Plugins\Photon\Photon3Unity3D.dll</HintPath>
     </Reference>
+    <Reference Include="websocket-sharp">
+      <HintPath>Assets\Plugins\PhotonWebSocket\WebSocket\websocket-sharp.dll</HintPath>
+    </Reference>
     <Reference Include="Game.Common">
       <HintPath>Assets\Plugins\Server Side\Game Common\Game.Common.dll</HintPath>
     </Reference>
     <Reference Include="CommonCommunicationInterfaces">
       <HintPath>Assets\Plugins\Server Side\Server Infrastructure\CommonCommunicationInterfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="CommunicationHelper">
+      <HintPath>Assets\Plugins\Server Side\Server Infrastructure\CommunicationHelper.dll</HintPath>
     </Reference>
     <Reference Include="Coroutines">
       <HintPath>Assets\Plugins\Server Side\Server Infrastructure\Coroutines.dll</HintPath>
@@ -89,8 +95,8 @@
     <Reference Include="PhotonCommonImplementation">
       <HintPath>Assets\Plugins\Server Side\Server Infrastructure\PhotonCommonImplementation.dll</HintPath>
     </Reference>
-    <Reference Include="websocket-sharp">
-      <HintPath>Assets\Plugins\PhotonWebSocket\WebSocket\websocket-sharp.dll</HintPath>
+    <Reference Include="LogUtils">
+      <HintPath>Assets\Plugins\Server Side\Server Infrastructure\LogUtils.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

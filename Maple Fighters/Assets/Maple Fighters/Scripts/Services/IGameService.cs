@@ -1,11 +1,12 @@
-﻿using Shared.Game.Common;
-using UnityEngine.Events;
+﻿using System.Threading.Tasks;
+using CommonTools.Coroutines;
+using Shared.Game.Common;
 
 namespace Scripts.Services
 {
     public interface IGameService
     {
-        void TestOperationRequest(TestRequestParameters parameters);
+        Task TestOperationRequestAsync(Yield yield, TestRequestParameters requestParameters);
 
         UnityEvent<TestParameters> TestEvent { get; }
     }
