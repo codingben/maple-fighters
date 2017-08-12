@@ -13,14 +13,13 @@ namespace Game.Application.PeerLogic.Operations
         public TestOperation(IEventSender eventSender)
         {
             this.eventSender = eventSender;
-            LogUtils.Log($"TestOperation()");
         }
 
         public TestResponseParameters? Handle(MessageData<TestRequestParameters> messageData, ref MessageSendOptions sendOptions)
         {
             LogUtils.Log($"TestOperation::Handle() -> {messageData.Parameters.Number}");
 
-            // eventSender.Send(new MessageData<TestParameters>((byte)GameEvents.Test, new TestParameters(10)), MessageSendOptions.DefaultReliable());
+            eventSender.Send(new MessageData<TestParameters>((byte)GameEvents.Test, new TestParameters(15)), MessageSendOptions.DefaultReliable());
 
             return new TestResponseParameters(10);
         }

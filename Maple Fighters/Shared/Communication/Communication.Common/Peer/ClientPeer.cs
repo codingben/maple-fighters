@@ -1,4 +1,5 @@
 ﻿using System;
+using CommonCommunicationInterfaces;
 using ServerCommunicationInterfaces;
 
 namespace Shared.Communication.Common.Peer
@@ -6,11 +7,14 @@ namespace Shared.Communication.Common.Peer
     public class ClientPeer<T> : IDisposable
         where T : IClientPeer
     {
-        protected T Peer { get; private set; }
+        public event Action Disconnected;
+
+        protected T Peer { get; }
 
         protected ClientPeer(T peer)
         {
             Peer = peer;
+            Peer.PeerDisconnectionNotifier.Disconnected += PeerDisconnectionNotifier;
         }
 
         public void Dispose()
@@ -19,6 +23,11 @@ namespace Shared.Communication.Common.Peer
             {
                 Peer.Disconnect();
             }
+        }
+
+        private void PeerDisconnectionNotifier(DisconnectReason disconnectReason, string s)
+        {
+            Disconnected?.Invoke();
         }
     }
 }

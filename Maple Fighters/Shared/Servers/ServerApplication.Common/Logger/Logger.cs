@@ -10,6 +10,12 @@ namespace ServerApplication.Common.Logger
         private readonly ILog logger;
         private readonly object locker = new object();
 
+        private static FileInfo GetConfigurationFile(string path)
+        {
+            var configurationFileInformation = new FileInfo(path);
+            return !configurationFileInformation.Exists ? null : configurationFileInformation;
+        }
+
         public Logger()
         {
             logger = LogManager.GetLogger(typeof(Logger));
@@ -24,12 +30,6 @@ namespace ServerApplication.Common.Logger
             }
 
             XmlConfigurator.ConfigureAndWatch(file);
-        }
-
-        private static FileInfo GetConfigurationFile(string path)
-        {
-            var configurationFileInformation = new FileInfo(path);
-            return !configurationFileInformation.Exists ? null : configurationFileInformation;
         }
 
         public void Log(string message, LogMessageType type = LogMessageType.Log, object context = null)

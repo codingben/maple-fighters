@@ -1,5 +1,4 @@
-﻿using CommonTools.Log;
-using Game.Application.PeerLogic.Operations;
+﻿using Game.Application.PeerLogic.Operations;
 using ServerCommunicationInterfaces;
 using Shared.Communication.Common.Peer;
 using Shared.Game.Common;
@@ -21,7 +20,6 @@ namespace Game.Application.PeerLogic
 
         private void SetOperationsHandlers()
         {
-            LogUtils.Log("SetOperationsHandlers()");
             OperationRequestHandlerRegister.SetHandler(GameOperations.Test, new TestOperation(EventSender));
         }
     }

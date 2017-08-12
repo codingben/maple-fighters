@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using CommonTools.Log;
+﻿using CommonTools.Log;
 using Game.Application.PeerLogic;
 using ServerCommunicationInterfaces;
 
@@ -7,8 +6,6 @@ namespace Game.Application
 {
     public class GameApplication : ServerApplication.Common.ApplicationBase.Application
     {
-        private readonly List<ClientPeerLogic> peerLogics = new List<ClientPeerLogic>();
-
         public override void Initialize()
         {
             LogUtils.Log("GameApplication::Initialize()");
@@ -16,19 +13,12 @@ namespace Game.Application
 
         public override void OnConnected(IClientPeer clientPeer)
         {
-            peerLogics.Add(new ClientPeerLogic(clientPeer));
+            CreateNewPeerLogic(new ClientPeerLogic(clientPeer));
         }
 
-        public override void Dispose()
+        protected override void Disposed()
         {
             LogUtils.Log("GameApplication::Dispose()");
-
-            foreach (var peer in peerLogics)
-            {
-                peer.Dispose();
-            }
-
-            peerLogics.Clear();
         }
     }
 }
