@@ -25,7 +25,6 @@ namespace ServerApplication.Common.PhotonStarter
                 NetworkTrafficState = NetworkTrafficState.Flowing
             };
 
-            // application.OnConnected(clientPeer);
             clientPeer.Fiber.Enqueue(() => application.OnConnected(clientPeer));
 
             return clientPeer;

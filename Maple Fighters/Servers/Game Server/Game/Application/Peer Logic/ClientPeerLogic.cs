@@ -10,11 +10,6 @@ namespace Game.Application.PeerLogic
         public ClientPeerLogic(IClientPeer peer) 
             : base(peer)
         {
-            // Left blank intentionally
-        }
-
-        protected override void Initialize()
-        {
             SetOperationsHandlers();
         }
 

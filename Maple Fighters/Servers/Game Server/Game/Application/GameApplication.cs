@@ -1,5 +1,4 @@
-﻿using CommonTools.Log;
-using Game.Application.PeerLogic;
+﻿using Game.Application.PeerLogic;
 using ServerCommunicationInterfaces;
 
 namespace Game.Application
@@ -8,17 +7,12 @@ namespace Game.Application
     {
         public override void Initialize()
         {
-            LogUtils.Log("GameApplication::Initialize()");
+            AddCommonComponents();
         }
 
         public override void OnConnected(IClientPeer clientPeer)
         {
-            CreateNewPeerLogic(new ClientPeerLogic(clientPeer));
-        }
-
-        protected override void Disposed()
-        {
-            LogUtils.Log("GameApplication::Dispose()");
+            AddPeerLogic(new ClientPeerLogic(clientPeer));
         }
     }
 }

@@ -7,13 +7,14 @@ namespace Shared.Communication.Common.Peer
     public class ClientPeer<T> : IDisposable
         where T : IClientPeer
     {
-        public event Action Disconnected;
+        public event Action<DisconnectReason, string> Disconnected;
 
-        protected T Peer { get; }
+        public T Peer { get; }
 
         protected ClientPeer(T peer)
         {
             Peer = peer;
+
             Peer.PeerDisconnectionNotifier.Disconnected += PeerDisconnectionNotifier;
         }
 
@@ -27,7 +28,7 @@ namespace Shared.Communication.Common.Peer
 
         private void PeerDisconnectionNotifier(DisconnectReason disconnectReason, string s)
         {
-            Disconnected?.Invoke();
+            Disconnected?.Invoke(disconnectReason, s);
         }
     }
 }
