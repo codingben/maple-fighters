@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using CommonCommunicationInterfaces;
-using CommonTools.Log;
-using ServerApplication.Common.ComponentModel;
+﻿using ServerApplication.Common.ComponentModel;
 using ServerApplication.Common.Components;
 using ServerCommunicationInterfaces;
 using Shared.Communication.Common.Peer;
@@ -13,39 +10,30 @@ namespace ServerApplication.Common.ApplicationBase
     /// </summary>
     public abstract class Application
     {
-        private readonly List<ClientPeer<IClientPeer>> peerLogics = new List<ClientPeer<IClientPeer>>();
-
         public abstract void OnConnected(IClientPeer clientPeer);
 
         public abstract void Initialize();
 
         public void Dispose()
         {
-            peerLogics.ForEach(x => x.Dispose());
-            peerLogics.Clear();
+            ServerComponents.Container.GetComponent(out PeerContainer peerContainer);
+            peerContainer.Dispose();
         }
 
         protected void AddCommonComponents()
         {
             ServerComponents.Container.AddComponent(new RandomNumberGenerator());
+            ServerComponents.Container.AddComponent(new IdGenerator());
+            ServerComponents.Container.AddComponent(new PeerContainer());
         }
 
-        protected void AddPeerLogic(ClientPeer<IClientPeer> peerLogic)
+        protected void WrapClientPeer(ClientPeer<IClientPeer> clientPeer)
         {
-            peerLogic.Disconnected += (reason, details) => RemovePeerLogic(peerLogic, reason, details);
+            ServerComponents.Container.GetComponent(out IdGenerator idGenerator);
+            ServerComponents.Container.GetComponent(out PeerContainer peerContainer);
 
-            peerLogics.Add(peerLogic);
-        }
-
-        private void RemovePeerLogic(ClientPeer<IClientPeer> peerLogic, DisconnectReason reason, string details)
-        {
-            var ip = peerLogic.Peer.ConnectionInformation.Ip;
-            var port = peerLogic.Peer.ConnectionInformation.Port;
-
-            LogUtils.Log(details == string.Empty ? $"A peer {ip}:{port} has been disconnected. Reason: {reason}"
-                : $"A peer {ip}:{port} has been disconnected. Reason: {reason} Details: {details}");
-
-            peerLogics.Remove(peerLogic);
+            var peerId = idGenerator.GenerateId();
+            peerContainer.AddPeerLogic(peerId, clientPeer);
         }
     }
 }

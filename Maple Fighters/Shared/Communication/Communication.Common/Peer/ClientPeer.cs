@@ -7,9 +7,9 @@ namespace Shared.Communication.Common.Peer
     public class ClientPeer<T> : IDisposable
         where T : IClientPeer
     {
-        public event Action<DisconnectReason, string> Disconnected;
-
         public T Peer { get; }
+
+        public event Action<DisconnectReason, string> Disconnected;
 
         protected ClientPeer(T peer)
         {

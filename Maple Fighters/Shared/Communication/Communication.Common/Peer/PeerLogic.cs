@@ -4,18 +4,18 @@ using ServerCommunicationInterfaces;
 
 namespace Shared.Communication.Common.Peer
 {
-    public abstract class PeerLogicBase<TOperationCode, TEventCode> : ClientPeer<IClientPeer>
+    public abstract class PeerLogic<TOperationCode, TEventCode> : ClientPeer<IClientPeer>
         where TOperationCode : IComparable, IFormattable, IConvertible
         where TEventCode : IComparable, IFormattable, IConvertible
     {
         protected IOperationRequestHandlerRegister<TOperationCode> OperationRequestHandlerRegister { get; private set; }
         protected IEventSender<TEventCode> EventSender { get; private set; }
 
-        protected bool LogOperationRequests;
-        protected bool LogOperationResponses;
-        protected bool LogEvents;
+        private bool logOperationRequests;
+        private bool logOperationResponses;
+        private bool logEvents;
 
-        protected PeerLogicBase(IClientPeer peer) 
+        protected PeerLogic(IClientPeer peer) 
             : base(peer)
         {
             ActivateLogs(operationRequets: true, operationResponses: true, events: true);
@@ -24,9 +24,9 @@ namespace Shared.Communication.Common.Peer
 
         protected void ActivateLogs(bool operationRequets, bool operationResponses, bool events)
         {
-            LogOperationRequests = operationRequets;
-            LogOperationResponses = operationResponses;
-            LogEvents = events;
+            logOperationRequests = operationRequets;
+            logOperationResponses = operationResponses;
+            logEvents = events;
         }
 
         private void InitializeCommunication()
@@ -38,13 +38,13 @@ namespace Shared.Communication.Common.Peer
             OperationRequestHandlerRegister = new OperationRequestsHandler<TOperationCode>(
                 operationRequestNotifier,
                 operationResponseSender,
-                LogOperationRequests,
-                LogOperationResponses
+                logOperationRequests,
+                logOperationResponses
             );
 
             EventSender = new EventSender<TEventCode>(
                 eventSender,
-                LogEvents
+                logEvents
             );
         }
     }

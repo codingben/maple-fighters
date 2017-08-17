@@ -62,6 +62,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Application Base\Application.cs" />
+    <Compile Include="Component Model\IComponentsContainer.cs" />
+    <Compile Include="Components\IdGenerator.cs" />
+    <Compile Include="Components\PeerContainer.cs" />
     <Compile Include="Components\RandomNumberGenerator.cs" />
     <Compile Include="Component Model\ComponentsContainer.cs" />
     <Compile Include="Component Model\IComponent.cs" />

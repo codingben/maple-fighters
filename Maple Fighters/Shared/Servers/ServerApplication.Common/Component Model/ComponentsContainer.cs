@@ -1,11 +1,11 @@
-﻿using System.Collections;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 namespace ServerApplication.Common.ComponentModel
 {
-    public class ComponentsContainer
+    public sealed class ComponentsContainer : IComponentsContainer
     {
-        private readonly ArrayList components = new ArrayList();
+        private readonly List<object> components = new List<object>();
 
         public void AddComponent<T>(T component) 
             where T : class, IComponent

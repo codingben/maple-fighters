@@ -64,6 +64,10 @@
     <Compile Include="Application\GameApplication.cs" />
     <Compile Include="Application\Peer Logic\ClientPeerLogic.cs" />
     <Compile Include="Application\Peer Logic\Operations\TestOperation.cs" />
+    <Compile Include="Entity\Entity.cs" />
+    <Compile Include="Entity\EntityContainer.cs" />
+    <Compile Include="Entity\EntityType.cs" />
+    <Compile Include="Entity\IEntity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -81,7 +85,7 @@
       <Name>Communication.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\Shared\Servers\ServerApplication.Common\ServerApplication.Common.csproj">
-      <Project>{F82FBB67-7B1D-43B7-A415-3F407D40E5C7}</Project>
+      <Project>{f82fbb67-7b1d-43b7-a415-3f407d40e5c7}</Project>
       <Name>ServerApplication.Common</Name>
     </ProjectReference>
   </ItemGroup>

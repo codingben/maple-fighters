@@ -1,18 +1,24 @@
 ﻿using Game.Application.PeerLogic;
+using Game.Entities;
+using ServerApplication.Common.ComponentModel;
 using ServerCommunicationInterfaces;
 
 namespace Game.Application
 {
-    public class GameApplication : ServerApplication.Common.ApplicationBase.Application
+    using Application = ServerApplication.Common.ApplicationBase.Application;
+
+    public class GameApplication : Application
     {
         public override void Initialize()
         {
             AddCommonComponents();
+
+            ServerComponents.Container.AddComponent(new EntityContainer());
         }
 
         public override void OnConnected(IClientPeer clientPeer)
         {
-            AddPeerLogic(new ClientPeerLogic(clientPeer));
+            WrapClientPeer(new ClientPeerLogic(clientPeer));
         }
     }
 }
