@@ -2,7 +2,7 @@
 using CommonCommunicationInterfaces;
 using ServerCommunicationInterfaces;
 
-namespace Shared.Communication.Common.Peer
+namespace Shared.ServerApplication.Common.Peer
 {
     public class ClientPeer<T> : IDisposable
         where T : IClientPeer

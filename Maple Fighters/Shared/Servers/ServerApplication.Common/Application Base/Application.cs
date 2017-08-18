@@ -1,7 +1,7 @@
 ﻿using ServerApplication.Common.ComponentModel;
 using ServerApplication.Common.Components;
 using ServerCommunicationInterfaces;
-using Shared.Communication.Common.Peer;
+using Shared.ServerApplication.Common.Peer;
 
 namespace ServerApplication.Common.ApplicationBase
 {
@@ -10,30 +10,28 @@ namespace ServerApplication.Common.ApplicationBase
     /// </summary>
     public abstract class Application
     {
+        private PeerContainer peerContainer;
+
         public abstract void OnConnected(IClientPeer clientPeer);
 
         public abstract void Initialize();
 
         public void Dispose()
         {
-            ServerComponents.Container.GetComponent(out PeerContainer peerContainer);
             peerContainer.Dispose();
         }
 
         protected void AddCommonComponents()
         {
+            peerContainer = ServerComponents.Container.AddComponent(new PeerContainer()) as PeerContainer;
+
             ServerComponents.Container.AddComponent(new RandomNumberGenerator());
             ServerComponents.Container.AddComponent(new IdGenerator());
-            ServerComponents.Container.AddComponent(new PeerContainer());
         }
 
-        protected void WrapClientPeer(ClientPeer<IClientPeer> clientPeer)
+        protected void WrapClientPeer(ClientPeer<IClientPeer> clientPeer, int peerId)
         {
-            ServerComponents.Container.GetComponent(out IdGenerator idGenerator);
-            ServerComponents.Container.GetComponent(out PeerContainer peerContainer);
-
-            var peerId = idGenerator.GenerateId();
-            peerContainer.AddPeerLogic(peerId, clientPeer);
+            peerContainer.AddPeerLogic(clientPeer, peerId);
         }
     }
 }

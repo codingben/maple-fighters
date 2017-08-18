@@ -49,7 +49,7 @@
       <HintPath>..\..\..\packages\PhotonServerImplementation.2.3.0\lib\net46\PhotonServerImplementation.dll</HintPath>
     </Reference>
     <Reference Include="ServerCommunicationHelper, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\ServerCommunicationHelper.1.9.4\lib\net46\ServerCommunicationHelper.dll</HintPath>
+      <HintPath>..\..\..\packages\ServerCommunicationHelper.2.0.1\lib\net46\ServerCommunicationHelper.dll</HintPath>
     </Reference>
     <Reference Include="ServerCommunicationInterfaces, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\ServerCommunicationInterfaces.1.9.0\lib\net46\ServerCommunicationInterfaces.dll</HintPath>
@@ -79,10 +79,6 @@
     <ProjectReference Include="..\..\..\Shared\Client\Game.Common\Game.Common.csproj">
       <Project>{AA536188-84FF-4286-A9E6-BAFBE1D8D37B}</Project>
       <Name>Game.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\Shared\Communication\Communication.Common\Communication.Common.csproj">
-      <Project>{C078345D-CA52-4EA5-BF9B-13DEF0864556}</Project>
-      <Name>Communication.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\Shared\Servers\ServerApplication.Common\ServerApplication.Common.csproj">
       <Project>{f82fbb67-7b1d-43b7-a415-3f407d40e5c7}</Project>

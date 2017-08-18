@@ -11,22 +11,20 @@ namespace Game.Application.PeerLogic.Operations
     internal class TestOperation : IOperationRequestHandler<TestRequestParameters, TestResponseParameters>
     {
         private readonly IEventSender eventSender;
+        private readonly RandomNumberGenerator randomNumberGenerator;
 
         public TestOperation(IEventSender eventSender)
         {
             this.eventSender = eventSender;
+
+            randomNumberGenerator = ServerComponents.Container.GetComponent<RandomNumberGenerator>().AssertNotNull() as RandomNumberGenerator;
         }
 
         public TestResponseParameters? Handle(MessageData<TestRequestParameters> messageData, ref MessageSendOptions sendOptions)
         {
-            ServerComponents.Container.GetComponent(out RandomNumberGenerator idGenerator);
+            var randomNumber = randomNumberGenerator.GenerateId();
 
-            if (idGenerator != null)
-            {
-                var randomNumber = idGenerator.GenerateId();
-
-                LogUtils.Log($"TestOperation::Handle() Random Number -> {randomNumber}");
-            }
+            LogUtils.Log($"TestOperation::Handle() Random Number -> {randomNumber}");
 
             eventSender.Send(new MessageData<TestParameters>((byte)GameEvents.Test, new TestParameters(15)), MessageSendOptions.DefaultReliable());
 

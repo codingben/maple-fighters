@@ -2,7 +2,7 @@
 using ServerCommunicationHelper;
 using ServerCommunicationInterfaces;
 
-namespace Shared.Communication.Common.Peer
+namespace Shared.ServerApplication.Common.Peer
 {
     public abstract class PeerLogic<TOperationCode, TEventCode> : ClientPeer<IClientPeer>
         where TOperationCode : IComparable, IFormattable, IConvertible

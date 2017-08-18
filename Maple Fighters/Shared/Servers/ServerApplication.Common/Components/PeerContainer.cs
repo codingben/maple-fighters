@@ -3,7 +3,7 @@ using CommonCommunicationInterfaces;
 using CommonTools.Log;
 using ServerApplication.Common.ComponentModel;
 using ServerCommunicationInterfaces;
-using Shared.Communication.Common.Peer;
+using Shared.ServerApplication.Common.Peer;
 
 namespace ServerApplication.Common.Components
 {
@@ -21,7 +21,7 @@ namespace ServerApplication.Common.Components
             peerLogics.Clear();
         }
 
-        public void AddPeerLogic(int peerId, ClientPeer<IClientPeer> peerLogic)
+        public void AddPeerLogic(ClientPeer<IClientPeer> peerLogic, int peerId)
         {
             peerLogic.Disconnected += (reason, details) => NotifyAndRemovePeerLogic(peerId, reason, details);
 

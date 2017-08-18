@@ -1,6 +1,8 @@
-﻿using Game.Application.PeerLogic;
+﻿using CommonTools.Log;
+using Game.Application.PeerLogic;
 using Game.Entities;
 using ServerApplication.Common.ComponentModel;
+using ServerApplication.Common.Components;
 using ServerCommunicationInterfaces;
 
 namespace Game.Application
@@ -18,7 +20,10 @@ namespace Game.Application
 
         public override void OnConnected(IClientPeer clientPeer)
         {
-            WrapClientPeer(new ClientPeerLogic(clientPeer));
+            var idGenerator = ServerComponents.Container.GetComponent<IdGenerator>().AssertNotNull() as IdGenerator;
+            var peerId = idGenerator.GenerateId();
+
+            WrapClientPeer(new ClientPeerLogic(clientPeer, peerId), peerId);
         }
     }
 }

@@ -7,22 +7,24 @@ namespace ServerApplication.Common.ComponentModel
     {
         private readonly List<object> components = new List<object>();
 
-        public void AddComponent<T>(T component) 
+        public object AddComponent<T>(T component) 
             where T : class, IComponent
         {
             components.Add(component);
+
+            return GetComponent<T>();
         }
 
-        public void RemoveComponent<T>(T component) 
+        public void RemoveComponent<T>() 
             where T : class, IComponent
         {
-            components.Remove(component);
+            components.Remove(typeof(T));
         }
 
-        public void GetComponent<T>(out T component)
+        public object GetComponent<T>()
             where T : class, IComponent
         {
-            component = components.OfType<T>().FirstOrDefault();
+            return components.OfType<T>().FirstOrDefault();
         }
     }
 }

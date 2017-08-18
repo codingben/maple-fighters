@@ -7,14 +7,12 @@ namespace Game.Entities
         public int Id { get; }
         public EntityType Type { get; }
 
-        public IComponentsContainer Components { get; }
+        public IComponentsContainer Components { get; } = new ComponentsContainer();
 
         public Entity(int id, EntityType type)
         {
             Id = id;
             Type = type;
-
-            Components = new ComponentsContainer();
         }
     }
 }

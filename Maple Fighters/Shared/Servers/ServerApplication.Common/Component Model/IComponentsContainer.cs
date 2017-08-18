@@ -2,13 +2,13 @@
 {
     public interface IComponentsContainer
     {
-        void AddComponent<T>(T component)
+        object AddComponent<T>(T component)
             where T : class, IComponent;
 
-        void RemoveComponent<T>(T component)
+        void RemoveComponent<T>()
             where T : class, IComponent;
 
-        void GetComponent<T>(out T component)
+        object GetComponent<T>()
             where T : class, IComponent;
     }
 }

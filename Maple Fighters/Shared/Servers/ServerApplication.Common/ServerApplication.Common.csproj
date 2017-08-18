@@ -33,6 +33,9 @@
     <Reference Include="CommonCommunicationInterfaces, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\CommonCommunicationInterfaces.4.3.0\lib\net46\CommonCommunicationInterfaces.dll</HintPath>
     </Reference>
+    <Reference Include="CommunicationHelper, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\CommunicationHelper.3.2.4\lib\net46\CommunicationHelper.dll</HintPath>
+    </Reference>
     <Reference Include="Coroutines, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Coroutines.4.1.0\lib\net46\Coroutines.dll</HintPath>
     </Reference>
@@ -50,6 +53,9 @@
     </Reference>
     <Reference Include="PhotonServerImplementation, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\PhotonServerImplementation.2.3.0\lib\net46\PhotonServerImplementation.dll</HintPath>
+    </Reference>
+    <Reference Include="ServerCommunicationHelper, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\ServerCommunicationHelper.2.0.1\lib\net46\ServerCommunicationHelper.dll</HintPath>
     </Reference>
     <Reference Include="ServerCommunicationInterfaces, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\ServerCommunicationInterfaces.1.9.0\lib\net46\ServerCommunicationInterfaces.dll</HintPath>
@@ -70,18 +76,14 @@
     <Compile Include="Component Model\IComponent.cs" />
     <Compile Include="Component Model\ServerComponents.cs" />
     <Compile Include="Logger\Logger.cs" />
+    <Compile Include="Peer\ClientPeer.cs" />
+    <Compile Include="Peer\PeerLogic.cs" />
     <Compile Include="Photon Starter\PhotonStarterBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\Communication\Communication.Common\Communication.Common.csproj">
-      <Project>{c078345d-ca52-4ea5-bf9b-13def0864556}</Project>
-      <Name>Communication.Common</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

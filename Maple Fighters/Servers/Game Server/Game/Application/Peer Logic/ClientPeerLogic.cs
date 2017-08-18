@@ -1,8 +1,9 @@
-﻿using Game.Application.PeerLogic.Operations;
+﻿using CommonTools.Log;
+using Game.Application.PeerLogic.Operations;
 using Game.Entities;
 using ServerApplication.Common.ComponentModel;
 using ServerCommunicationInterfaces;
-using Shared.Communication.Common.Peer;
+using Shared.ServerApplication.Common.Peer;
 using Shared.Game.Common;
 
 namespace Game.Application.PeerLogic
@@ -11,13 +12,17 @@ namespace Game.Application.PeerLogic
     {
         private IEntity entity;
 
-        public ClientPeerLogic(IClientPeer peer) 
+        public ClientPeerLogic(IClientPeer peer, int peerId)
             : base(peer)
         {
-            ServerComponents.Container.GetComponent(out EntityContainer entityContainer);
-            entity = entityContainer.CreateEntity(EntityType.Player);
-
+            CreateEntity(peerId);
             SetOperationsHandlers();
+        }
+
+        private void CreateEntity(int peerId)
+        {
+            var entityContainer = ServerComponents.Container.GetComponent<EntityContainer>().AssertNotNull() as EntityContainer;
+            entity = entityContainer.CreateEntity(peerId, EntityType.Player);
         }
 
         private void SetOperationsHandlers()
