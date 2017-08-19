@@ -22,7 +22,7 @@ namespace Game.Application.PeerLogic.Operations
 
         public TestResponseParameters? Handle(MessageData<TestRequestParameters> messageData, ref MessageSendOptions sendOptions)
         {
-            var randomNumber = randomNumberGenerator.GenerateId();
+            var randomNumber = randomNumberGenerator.GenerateRandomNumber();
 
             LogUtils.Log($"TestOperation::Handle() Random Number -> {randomNumber}");
 

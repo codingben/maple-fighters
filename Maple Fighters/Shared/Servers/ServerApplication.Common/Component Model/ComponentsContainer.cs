@@ -8,7 +8,7 @@ namespace ServerApplication.Common.ComponentModel
         private readonly List<object> components = new List<object>();
 
         public object AddComponent<T>(T component) 
-            where T : class, IComponent
+            where T : IComponent
         {
             components.Add(component);
 
@@ -16,13 +16,13 @@ namespace ServerApplication.Common.ComponentModel
         }
 
         public void RemoveComponent<T>() 
-            where T : class, IComponent
+            where T : IComponent
         {
             components.Remove(typeof(T));
         }
 
         public object GetComponent<T>()
-            where T : class, IComponent
+            where T : IComponent
         {
             return components.OfType<T>().FirstOrDefault();
         }

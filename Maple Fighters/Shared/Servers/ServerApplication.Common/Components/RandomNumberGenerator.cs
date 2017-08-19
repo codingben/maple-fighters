@@ -8,7 +8,7 @@ namespace ServerApplication.Common.Components
         private readonly Random random = new Random();
         private readonly object locker = new object();
 
-        public int GenerateId()
+        public int GenerateRandomNumber()
         {
             lock (locker)
             {
