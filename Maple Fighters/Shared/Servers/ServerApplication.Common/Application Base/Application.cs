@@ -29,9 +29,9 @@ namespace ServerApplication.Common.ApplicationBase
             ServerComponents.Container.AddComponent(new IdGenerator());
         }
 
-        protected void WrapClientPeer(ClientPeer<IClientPeer> clientPeer, int peerId)
+        protected void WrapClientPeer(ClientPeer<IClientPeer> clientPeer)
         {
-            peerContainer.AddPeerLogic(clientPeer, peerId);
+            peerContainer.AddPeerLogic(clientPeer);
         }
     }
 }

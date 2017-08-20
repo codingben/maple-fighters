@@ -1,4 +1,6 @@
-﻿using CommonTools.Log;
+﻿using CommonCommunicationInterfaces;
+using CommonTools.Log;
+using Game.Application.Components;
 using Game.Application.PeerLogic.Operations;
 using Game.Entities;
 using ServerApplication.Common.ComponentModel;
@@ -12,22 +14,45 @@ namespace Game.Application.PeerLogic
     {
         private IEntity entity;
 
-        public ClientPeerLogic(IClientPeer peer, int peerId)
-            : base(peer)
-        {
-            CreateEntity(peerId);
-            SetOperationsHandlers();
-        }
+        private readonly EntityIdToPeerIdConverter entityIdToPeerIdConverter;
 
-        private void CreateEntity(int peerId)
+        public ClientPeerLogic(IClientPeer peer, int peerId)
+            : base(peer, peerId)
         {
-            var entityContainer = ServerComponents.Container.GetComponent<EntityContainer>().AssertNotNull() as EntityContainer;
-            entity = entityContainer.CreateEntity(peerId, EntityType.Player);
+            SetOperationsHandlers();
+            CreateEntity();
+
+            entityIdToPeerIdConverter = ServerComponents.Container.GetComponent<EntityIdToPeerIdConverter>().AssertNotNull() as EntityIdToPeerIdConverter;
         }
 
         private void SetOperationsHandlers()
         {
             OperationRequestHandlerRegister.SetHandler(GameOperations.Test, new TestOperation(EventSender));
+        }
+
+        private void CreateEntity()
+        {
+            var entityContainer = ServerComponents.Container.GetComponent<EntityContainer>().AssertNotNull() as EntityContainer;
+            entity = entityContainer.CreateEntity(EntityType.Player);
+
+            AddPeerIdToEntityIdConverter(entity.Id);
+        }
+
+        private void AddPeerIdToEntityIdConverter(int entityId)
+        {
+            entityIdToPeerIdConverter.AddEntityIdToPeerId(entityId, PeerId);
+        }
+
+        private void RemovePeerIdFromEntityIdConverter(int entityId)
+        {
+            entityIdToPeerIdConverter.RemoveEntityIdToPeerId(entityId);
+        }
+
+        protected override void PeerDisconnectionNotifier(DisconnectReason disconnectReason, string s)
+        {
+            RemovePeerIdFromEntityIdConverter(entity.Id);
+
+            base.PeerDisconnectionNotifier(disconnectReason, s);
         }
     }
 }

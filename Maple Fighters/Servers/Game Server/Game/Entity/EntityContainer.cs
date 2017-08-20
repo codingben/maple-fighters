@@ -16,14 +16,6 @@ namespace Game.Entities
             idGenerator = ServerComponents.Container.GetComponent<IdGenerator>().AssertNotNull() as IdGenerator;
         }
 
-        public Entity CreateEntity(int peerId, EntityType type)
-        {
-            var entity = new Entity(peerId, type);
-            entities.Add(peerId, entity);
-
-            return entity;
-        }
-
         public Entity CreateEntity(EntityType type)
         {
             var entityId = idGenerator.GenerateId();
@@ -40,6 +32,18 @@ namespace Game.Entities
             LogUtils.Assert(value, $"Could not find an entity with id {entity}");
 
             return entity;
+        }
+
+        public Entity[] GetAllEntities()
+        {
+            var entitiesTemp = new Entity[entities.Count];
+
+            for (var i = 0; i < entities.Count; i++)
+            {
+                entitiesTemp[i] = entities[i];
+            }
+
+            return entitiesTemp;
         }
 
         public void Dispose()

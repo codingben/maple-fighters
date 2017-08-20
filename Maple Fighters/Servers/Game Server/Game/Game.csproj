@@ -61,14 +61,26 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Application\Components\EntityIdToPeerIdConverter.cs" />
     <Compile Include="Application\GameApplication.cs" />
     <Compile Include="Application\Peer Logic\ClientPeerLogic.cs" />
     <Compile Include="Application\Peer Logic\Operations\TestOperation.cs" />
+    <Compile Include="Entity\Components\ITransform.cs" />
+    <Compile Include="Entity\Components\Transform.cs" />
     <Compile Include="Entity\Entity.cs" />
     <Compile Include="Entity\EntityContainer.cs" />
     <Compile Include="Entity\EntityType.cs" />
     <Compile Include="Entity\IEntity.cs" />
+    <Compile Include="Interest Management\Boundaries.cs" />
+    <Compile Include="Interest Management\IInterestManagement.cs" />
+    <Compile Include="Interest Management\InterestManagement.cs" />
+    <Compile Include="Interest Management\IRegion.cs" />
+    <Compile Include="Interest Management\IScene.cs" />
+    <Compile Include="Interest Management\Region.cs" />
+    <Compile Include="Interest Management\Scene.cs" />
+    <Compile Include="Interest Management\SceneContainer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Systems\TransformSystem.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -76,6 +88,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Shared\Helper\MathematicsHelper\MathematicsHelper.csproj">
+      <Project>{A3BE3E13-D3A1-4800-B471-A39F5ED4B554}</Project>
+      <Name>MathematicsHelper</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\Shared\Client\Game.Common\Game.Common.csproj">
       <Project>{AA536188-84FF-4286-A9E6-BAFBE1D8D37B}</Project>
       <Name>Game.Common</Name>
@@ -85,5 +101,6 @@
       <Name>ServerApplication.Common</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

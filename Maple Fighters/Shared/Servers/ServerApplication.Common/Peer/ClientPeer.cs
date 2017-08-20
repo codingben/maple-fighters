@@ -8,12 +8,14 @@ namespace Shared.ServerApplication.Common.Peer
         where T : IClientPeer
     {
         public T Peer { get; }
+        public int PeerId { get; }
 
         public event Action<DisconnectReason, string> Disconnected;
 
-        protected ClientPeer(T peer)
+        protected ClientPeer(T peer, int peerId)
         {
             Peer = peer;
+            PeerId = peerId;
 
             Peer.PeerDisconnectionNotifier.Disconnected += PeerDisconnectionNotifier;
         }
@@ -26,7 +28,7 @@ namespace Shared.ServerApplication.Common.Peer
             }
         }
 
-        private void PeerDisconnectionNotifier(DisconnectReason disconnectReason, string s)
+        protected virtual void PeerDisconnectionNotifier(DisconnectReason disconnectReason, string s)
         {
             Disconnected?.Invoke(disconnectReason, s);
         }

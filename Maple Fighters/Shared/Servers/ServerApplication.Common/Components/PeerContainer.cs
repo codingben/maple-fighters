@@ -21,8 +21,10 @@ namespace ServerApplication.Common.Components
             peerLogics.Clear();
         }
 
-        public void AddPeerLogic(ClientPeer<IClientPeer> peerLogic, int peerId)
+        public void AddPeerLogic(ClientPeer<IClientPeer> peerLogic)
         {
+            var peerId = peerLogic.PeerId;
+
             peerLogic.Disconnected += (reason, details) => NotifyAndRemovePeerLogic(peerId, reason, details);
 
             peerLogics.Add(peerId, peerLogic);
@@ -39,6 +41,11 @@ namespace ServerApplication.Common.Components
                 : $"A peer {ip}:{port} has been disconnected. Reason: {reason} Details: {details}");
 
             peerLogics.Remove(peerId);
+        }
+
+        public int GetPeersCount()
+        {
+            return peerLogics.Count;
         }
     }
 }

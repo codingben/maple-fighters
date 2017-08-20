@@ -15,8 +15,8 @@ namespace Shared.ServerApplication.Common.Peer
         private bool logOperationResponses;
         private bool logEvents;
 
-        protected PeerLogic(IClientPeer peer) 
-            : base(peer)
+        protected PeerLogic(IClientPeer peer, int peerId) 
+            : base(peer, peerId)
         {
             ActivateLogs(operationRequets: true, operationResponses: true, events: true);
             InitializeCommunication();

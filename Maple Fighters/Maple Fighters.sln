@@ -21,6 +21,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Servers", "Servers", "{7F6D
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServerApplication.Common", "Shared\Servers\ServerApplication.Common\ServerApplication.Common.csproj", "{F82FBB67-7B1D-43B7-A415-3F407D40E5C7}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Helper", "Helper", "{15D448CF-A201-41D0-AE85-DF180ACD5818}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MathematicsHelper", "Shared\Helper\MathematicsHelper\MathematicsHelper.csproj", "{A3BE3E13-D3A1-4800-B471-A39F5ED4B554}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,6 +47,10 @@ Global
 		{F82FBB67-7B1D-43B7-A415-3F407D40E5C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F82FBB67-7B1D-43B7-A415-3F407D40E5C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F82FBB67-7B1D-43B7-A415-3F407D40E5C7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A3BE3E13-D3A1-4800-B471-A39F5ED4B554}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A3BE3E13-D3A1-4800-B471-A39F5ED4B554}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A3BE3E13-D3A1-4800-B471-A39F5ED4B554}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A3BE3E13-D3A1-4800-B471-A39F5ED4B554}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -55,5 +63,7 @@ Global
 		{46B2DB14-93E8-4C3F-8382-BEB6F9CC3CD7} = {6BD1A4DA-D8A1-441D-AE30-7FFDAF884926}
 		{7F6D9E5C-4E54-499D-8912-E613AC18CD4C} = {6BD1A4DA-D8A1-441D-AE30-7FFDAF884926}
 		{F82FBB67-7B1D-43B7-A415-3F407D40E5C7} = {7F6D9E5C-4E54-499D-8912-E613AC18CD4C}
+		{15D448CF-A201-41D0-AE85-DF180ACD5818} = {6BD1A4DA-D8A1-441D-AE30-7FFDAF884926}
+		{A3BE3E13-D3A1-4800-B471-A39F5ED4B554} = {15D448CF-A201-41D0-AE85-DF180ACD5818}
 	EndGlobalSection
 EndGlobal
