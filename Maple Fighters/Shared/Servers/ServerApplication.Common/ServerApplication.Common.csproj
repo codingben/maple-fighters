@@ -69,6 +69,8 @@
   <ItemGroup>
     <Compile Include="Application Base\Application.cs" />
     <Compile Include="Component Model\IComponentsContainer.cs" />
+    <Compile Include="Components\FiberCoroutinesExecuter.cs" />
+    <Compile Include="Components\CoroutinesExecuter.cs" />
     <Compile Include="Components\IdGenerator.cs" />
     <Compile Include="Components\PeerContainer.cs" />
     <Compile Include="Components\RandomNumberGenerator.cs" />
@@ -76,8 +78,10 @@
     <Compile Include="Component Model\IComponent.cs" />
     <Compile Include="Component Model\ServerComponents.cs" />
     <Compile Include="Logger\Logger.cs" />
-    <Compile Include="Peer\ClientPeer.cs" />
-    <Compile Include="Peer\PeerLogic.cs" />
+    <Compile Include="Peer\IClientPeerWrapper.cs" />
+    <Compile Include="Peer\ClientPeerWrapper.cs" />
+    <Compile Include="Peer\PeerLogicBase.cs" />
+    <Compile Include="Peer\PeerLogicEntity.cs" />
     <Compile Include="Photon Starter\PhotonStarterBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

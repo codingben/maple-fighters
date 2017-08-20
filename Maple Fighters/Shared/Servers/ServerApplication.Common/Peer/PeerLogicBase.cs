@@ -4,7 +4,7 @@ using ServerCommunicationInterfaces;
 
 namespace Shared.ServerApplication.Common.Peer
 {
-    public abstract class PeerLogic<TOperationCode, TEventCode> : ClientPeer<IClientPeer>
+    public abstract class PeerLogicBase<TOperationCode, TEventCode> : ClientPeerWrapper<IClientPeer>
         where TOperationCode : IComparable, IFormattable, IConvertible
         where TEventCode : IComparable, IFormattable, IConvertible
     {
@@ -15,7 +15,7 @@ namespace Shared.ServerApplication.Common.Peer
         private bool logOperationResponses;
         private bool logEvents;
 
-        protected PeerLogic(IClientPeer peer, int peerId) 
+        protected PeerLogicBase(IClientPeer peer, int peerId) 
             : base(peer, peerId)
         {
             ActivateLogs(operationRequets: true, operationResponses: true, events: true);

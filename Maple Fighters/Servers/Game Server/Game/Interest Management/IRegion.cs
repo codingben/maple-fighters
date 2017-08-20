@@ -6,11 +6,8 @@ namespace Game.InterestManagement
 {
     internal interface IRegion // (Scene -> IRegion -> ServerComponents)
     {
-        void SetPosition(Vector2 position);
-        void SetSize(Vector2 size);
-
-        Vector2 GetPosition();
-        Vector2 GetSize();
+        Vector2 Position { get; }
+        Vector2 Size { get; }
 
         void AddEntity(IEntity entity);
         void RemoveEntity(IEntity entity);
@@ -18,7 +15,7 @@ namespace Game.InterestManagement
         /*void AddSubscription(IEntity entity);
         void RemoveSubscription(IEntity entity);*/
 
-        List<IEntity> GetEntities();
+        List<IEntity> GetAllEntities();
         // List<IEntity> GetSubscribers();
     }
 }

@@ -1,44 +1,82 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using CommonTools.Coroutines;
+using CommonTools.Log;
 using Game.Entities;
+using Game.Systems;
 using MathematicsHelper;
+using ServerApplication.Common.ComponentModel;
+using ServerApplication.Common.Components.Coroutines;
 
 namespace Game.InterestManagement
 {
-    internal class Region : IRegion
+    internal class Region : IRegion, IDisposable
     {
-        public void SetPosition(Vector2 position)
+        public Vector2 Position { get; }
+        public Vector2 Size { get; }
+
+        private readonly Dictionary<int, IEntity> entities = new Dictionary<int, IEntity>();
+
+        private readonly TransformSystem transformSystem;
+        private readonly CoroutinesExecuter coroutinesExecuter;
+
+        public Region(Vector2 position, Vector2 size)
         {
-            throw new System.NotImplementedException();
+            Position = position;
+            Size = size;
+
+            transformSystem = ServerComponents.Container.GetComponent<TransformSystem>().AssertNotNull() as TransformSystem;
+
+            coroutinesExecuter = ServerComponents.Container.GetComponent<CoroutinesExecuter>().AssertNotNull() as CoroutinesExecuter;
+            coroutinesExecuter.StartCoroutine(UpdateRegion());
         }
 
-        public void SetSize(Vector2 size)
+        private IEnumerator<IYieldInstruction> UpdateRegion()
         {
-            throw new System.NotImplementedException();
-        }
+            while (true)
+            {
+                if (entities.Count == 0)
+                {
+                    yield return null;
+                }
 
-        public Vector2 GetPosition()
-        {
-            throw new System.NotImplementedException();
-        }
+                transformSystem.UpdatePosition(GetAllEntities());
 
-        public Vector2 GetSize()
-        {
-            throw new System.NotImplementedException();
+                yield return new WaitForSeconds(0.1f);
+            }
         }
 
         public void AddEntity(IEntity entity)
         {
-            throw new System.NotImplementedException();
+            if (entities.ContainsKey(entity.Id))
+            {
+                LogUtils.Log($"Region::AddEntity() -> An entity with a id #{entity.Id} already exists in a region.", LogMessageType.Warning);
+                return;
+            }
+
+            entities.Add(entity.Id, entity);
         }
 
         public void RemoveEntity(IEntity entity)
         {
-            throw new System.NotImplementedException();
+            if (!entities.ContainsKey(entity.Id))
+            {
+                LogUtils.Log($"Region::RemoveEntity() -> An entity with a id #{entity.Id} does not exists in a region.", LogMessageType.Warning);
+                return;
+            }
+
+            entities.Remove(entity.Id);
         }
 
-        public List<IEntity> GetEntities()
+        public List<IEntity> GetAllEntities()
         {
-            throw new System.NotImplementedException();
+            return entities.Select(entity => entity.Value).ToList();
+        }
+
+        public void Dispose()
+        {
+            coroutinesExecuter?.Dispose();
         }
     }
 }

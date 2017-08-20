@@ -4,6 +4,7 @@ using CommonTools.Log;
 using Photon.SocketServer;
 using PhotonServerImplementation;
 using ServerApplication.Common.ApplicationBase;
+using ServerCommunicationInterfaces;
 
 namespace ServerApplication.Common.PhotonStarter
 {
@@ -14,12 +15,10 @@ namespace ServerApplication.Common.PhotonStarter
 
         private T application;
 
-        protected abstract T CreateApplication();
+        protected abstract T CreateApplication(IFiberProvider fiberProvider);
 
         protected override PeerBase CreatePeer(InitRequest initRequest)
         {
-            LogUtils.Log($"A new peer has been created -> {initRequest.RemoteIP}:{initRequest.LocalPort}");
-
             var clientPeer = new PhotonClientPeer(initRequest)
             {
                 NetworkTrafficState = NetworkTrafficState.Flowing
@@ -34,8 +33,8 @@ namespace ServerApplication.Common.PhotonStarter
         {
             LogUtils.Logger = CreateLogger();
 
-            application = CreateApplication();
-            application?.Initialize();
+            application = CreateApplication(new PhotonFiberProvider());
+            application.Initialize();
         }
 
         protected override void TearDown()

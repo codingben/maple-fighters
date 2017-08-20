@@ -3,18 +3,14 @@ using ServerApplication.Common.ComponentModel;
 
 namespace Game.Entity.Components
 {
-    internal class Transform : IComponent, ITransform
+    internal class Transform : IComponent
     {
-        public Vector2 Position { get; private set; }
+        public Vector2 NewPosition { get; private set; }
+        public Vector2 LastPosition { get; set; }
 
         public void SetPosition(Vector2 position)
         {
-            Position = position;
-        }
-
-        public Vector2 GetPosition()
-        {
-            return Position;
+            NewPosition = position;
         }
 
         public void Dispose()

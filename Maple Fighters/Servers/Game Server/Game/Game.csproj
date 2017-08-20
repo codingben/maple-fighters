@@ -62,10 +62,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Application\Components\EntityIdToPeerIdConverter.cs" />
+    <Compile Include="Application\Components\EntityWrapper.cs" />
     <Compile Include="Application\GameApplication.cs" />
-    <Compile Include="Application\Peer Logic\ClientPeerLogic.cs" />
+    <Compile Include="Application\Peer Logic\PeerLogic.cs" />
     <Compile Include="Application\Peer Logic\Operations\TestOperation.cs" />
-    <Compile Include="Entity\Components\ITransform.cs" />
     <Compile Include="Entity\Components\Transform.cs" />
     <Compile Include="Entity\Entity.cs" />
     <Compile Include="Entity\EntityContainer.cs" />

@@ -1,9 +1,9 @@
 ﻿using CommonTools.Log;
 using Game.Application.Components;
-using Game.Application.PeerLogic;
 using Game.Entities;
 using Game.InterestManagement;
 using Game.Systems;
+using MathematicsHelper;
 using ServerApplication.Common.ComponentModel;
 using ServerApplication.Common.Components;
 using ServerCommunicationInterfaces;
@@ -14,11 +14,19 @@ namespace Game.Application
 
     public class GameApplication : Application
     {
+        public GameApplication(IFiberProvider fiberProvider) 
+            : base(fiberProvider)
+        {
+            // Left blank intentionally
+        }
+
         public override void Initialize()
         {
             AddCommonComponents();
             AddComponents();
             AddSystemsComponents();
+
+            SetupScenes();
         }
 
         public override void OnConnected(IClientPeer clientPeer)
@@ -26,7 +34,7 @@ namespace Game.Application
             var idGenerator = ServerComponents.Container.GetComponent<IdGenerator>().AssertNotNull() as IdGenerator;
             var peerId = idGenerator.GenerateId();
 
-            WrapClientPeer(new ClientPeerLogic(clientPeer, peerId));
+            WrapClientPeer(new PeerLogic.PeerLogic(clientPeer, peerId));
         }
 
         private void AddComponents()
@@ -40,5 +48,12 @@ namespace Game.Application
         {
             ServerComponents.Container.AddComponent(new TransformSystem());
         }
+
+        private void SetupScenes()
+        {
+            var sceneContainer = ServerComponents.Container.GetComponent<SceneContainer>().AssertNotNull() as SceneContainer;
+            sceneContainer.AddScene(new Boundaries(new Vector2(-10, 10), new Vector2(10, -10)), 2);
+        }
+
     }
 }

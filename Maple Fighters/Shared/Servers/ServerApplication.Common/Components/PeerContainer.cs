@@ -9,7 +9,7 @@ namespace ServerApplication.Common.Components
 {
     public class PeerContainer : IComponent
     {
-        private readonly Dictionary<int, ClientPeer<IClientPeer>> peerLogics = new Dictionary<int, ClientPeer<IClientPeer>>();
+        private readonly Dictionary<int, IClientPeerWrapper<IClientPeer>> peerLogics = new Dictionary<int, IClientPeerWrapper<IClientPeer>>();
 
         public void Dispose()
         {
@@ -21,13 +21,20 @@ namespace ServerApplication.Common.Components
             peerLogics.Clear();
         }
 
-        public void AddPeerLogic(ClientPeer<IClientPeer> peerLogic)
+        public void AddPeerLogic(IClientPeerWrapper<IClientPeer> peerLogic)
         {
             var peerId = peerLogic.PeerId;
 
-            peerLogic.Disconnected += (reason, details) => NotifyAndRemovePeerLogic(peerId, reason, details);
+            SubscribeToPeerDisconnectionNotifier(peerLogic, peerId);
 
             peerLogics.Add(peerId, peerLogic);
+
+            LogUtils.Log($"A new peer has been created -> {peerLogic.Peer.ConnectionInformation.Ip}:{peerLogic.Peer.ConnectionInformation.Port}");
+        }
+
+        private void SubscribeToPeerDisconnectionNotifier(IClientPeerWrapper<IClientPeer> peerLogic, int peerId)
+        {
+            peerLogic.Disconnected += (reason, details) => NotifyAndRemovePeerLogic(peerId, reason, details);
         }
 
         private void NotifyAndRemovePeerLogic(int peerId, DisconnectReason reason, string details)
