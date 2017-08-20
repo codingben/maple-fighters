@@ -88,17 +88,12 @@ namespace Scripts.Services
 
         protected abstract void OnDisconnected();
 
-        protected bool IsConnected()
-        {
-            return serverPeer.IsConnected;
-        }
-
         private void OnDisconnected(DisconnectReason disconnectReason, string s)
         {
-            Debug.Log("ServiceBase::OnDisconnected() -> The connection has been closed with " +
-                      $"{currentServerType} - {currentConnectionInformation.Ip}:{currentConnectionInformation.Port}. Reason: {disconnectReason}");
-
             serverPeer.PeerDisconnectionNotifier.Disconnected -= OnDisconnected;
+
+            Debug.Log("A connection has been closed with " +
+                      $"{currentServerType} - {currentConnectionInformation.Ip}:{currentConnectionInformation.Port}. Reason: {disconnectReason}");
 
             OnDisconnected();
         }
@@ -142,6 +137,11 @@ namespace Scripts.Services
         private void OnApplicationQuit()
         {
             Dispose();
+        }
+
+        protected bool IsConnected()
+        {
+            return serverPeer.IsConnected;
         }
     }
 }

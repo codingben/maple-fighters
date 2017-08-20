@@ -153,7 +153,7 @@ namespace PhotonClientImplementation
         {
             var serverAddress = $"{serverConnectionInformation.Ip}:{serverConnectionInformation.Port}";
 
-            Debug.Assert(RawPeer.Connect(serverAddress, "Empty"),
+            Debug.Assert(RawPeer.Connect(serverAddress, "Game"),
                 $"PhotonPeer::Connect() -> Could not begin connection with: {serverAddress}");
         }
 
@@ -169,6 +169,8 @@ namespace PhotonClientImplementation
 
             var photonPeer = this;
             coroutinesExecuter.WaitAndDo(photonPeer.WaitForDisconnect().StartCoroutine(coroutinesExecuter), Dispose);
+
+            Disconnected?.Invoke(DisconnectReason.ClientDisconnect, null);
         }
 
         public void DebugReturn(DebugLevel level, string message)
@@ -176,25 +178,25 @@ namespace PhotonClientImplementation
             switch (level)
             {
                 case DebugLevel.ERROR:
-                    {
-                        Debug.LogError($"PhotonPeer::DebugReturn() -> Debug Level: {level} Message: {message}");
-                        break;
-                    }
+                {
+                    Debug.LogError($"PhotonPeer::DebugReturn() -> Debug Level: {level} Message: {message}");
+                    break;
+                }
                 case DebugLevel.WARNING:
-                    {
-                        Debug.LogWarning($"PhotonPeer::DebugReturn() -> Debug Level: {level} Message: {message}");
-                        break;
-                    }
+                {
+                    Debug.LogWarning($"PhotonPeer::DebugReturn() -> Debug Level: {level} Message: {message}");
+                    break;
+                }
                 case DebugLevel.INFO:
-                    {
-                        Debug.Log($"PhotonPeer::DebugReturn() -> Debug Level: {level} Message: {message}");
-                        break;
-                    }
+                {
+                    Debug.Log($"PhotonPeer::DebugReturn() -> Debug Level: {level} Message: {message}");
+                    break;
+                }
                 default:
-                    {
-                        Debug.Log($"PhotonPeer::DebugReturn() -> Debug Level: {level} Message: {message}");
-                        break;
-                    }
+                {
+                    Debug.Log($"PhotonPeer::DebugReturn() -> Debug Level: {level} Message: {message}");
+                    break;
+                }
             }
         }
 
@@ -269,7 +271,7 @@ namespace PhotonClientImplementation
 
         public void Dispose()
         {
-            coroutinesExecuter.Dispose();
+            coroutinesExecuter?.Dispose();
         }
 
         public short Send<TParam>(MessageData<TParam> data, MessageSendOptions sendOptions)

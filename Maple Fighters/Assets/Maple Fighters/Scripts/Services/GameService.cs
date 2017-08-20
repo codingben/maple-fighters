@@ -24,6 +24,8 @@ namespace Scripts.Services
         protected override void OnConnected()
         {
             AddEventsHandlers();
+
+            CoroutinesExecuter.StartTask(y => TestOperationRequestAsync(y, new TestRequestParameters(5)));
         }
 
         protected override void OnDisconnected()
@@ -56,7 +58,7 @@ namespace Scripts.Services
             var requestId = OperationRequestSender.Send(GameOperations.Test, requestParameters, MessageSendOptions.DefaultReliable());
             var responseParameters = await SubscriptionProvider.ProvideSubscription<TestResponseParameters>(yield, requestId);
 
-            print(responseParameters.Number);
+            Debug.Log(responseParameters.Number);
         }
     }
 }
