@@ -2,7 +2,7 @@
 
 namespace ServerApplication.Common.Components
 {
-    public class IdGenerator : IComponent
+    public class IdGenerator : Component
     {
         private uint id = uint.MinValue;
         private readonly object locker = new object();
@@ -13,11 +13,6 @@ namespace ServerApplication.Common.Components
             {
                 return (int) checked(id++);
             }
-        }
-
-        public void Dispose()
-        {
-            // Left blank intentionally
         }
     }
 }

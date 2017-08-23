@@ -1,15 +1,16 @@
 ﻿using System.Collections.Generic;
 using CommonTools.Log;
+using MathematicsHelper;
 using ServerApplication.Common.ComponentModel;
 using ServerApplication.Common.Components;
 
 namespace Game.InterestManagement
 {
-    internal class SceneContainer : IComponent
+    internal class SceneContainer : Component
     {
         private readonly Dictionary<int, IScene> scenes = new Dictionary<int, IScene>();
 
-        public void AddScene(Boundaries boundaries, int regions)
+        public void AddScene(Boundaries boundaries, Vector2 regions)
         {
             var idGenerator = ServerComponents.Container.GetComponent<IdGenerator>().AssertNotNull() as IdGenerator;
             var sceneId = idGenerator.GenerateId();
@@ -27,11 +28,6 @@ namespace Game.InterestManagement
             LogUtils.Log($"SceneContainer::GetScene() - Could not found a scene id #{sceneId}", LogMessageType.Error);
 
             return null;
-        }
-
-        public void Dispose()
-        {
-            // Left blank intentionally
         }
     }
 }

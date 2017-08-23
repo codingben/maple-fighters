@@ -1,9 +1,11 @@
 ﻿using System;
 using CommonCommunicationInterfaces;
+using CommonTools.Log;
 using Game.Application.Components;
 using Game.Application.PeerLogic.Operations;
 using Game.Entities;
 using Game.Entity.Components;
+using Game.InterestManagement;
 using ServerCommunicationInterfaces;
 using Shared.ServerApplication.Common.Peer;
 using Shared.Game.Common;
@@ -17,19 +19,23 @@ namespace Game.Application.PeerLogic
         public PeerLogic(IClientPeer peer, int peerId)
             : base(peer, peerId)
         {
+            CreatePlayerEntity();
             SetOperationsHandlers();
-            CreateEntity();
         }
 
         private void SetOperationsHandlers()
         {
-            OperationRequestHandlerRegister.SetHandler(GameOperations.Test, new TestOperation(EventSender));
+            var transform = entityWrapper.Entity.Components.GetComponent<Transform>().AssertNotNull() as Transform;
+            OperationRequestHandlerRegister.SetHandler(GameOperations.UpdateEntityPosition, new UpdateEntityPositionOperation(transform));
         }
 
-        private void CreateEntity()
+        private void CreatePlayerEntity()
         {
             entityWrapper = new EntityWrapper(EntityType.Player, PeerId);
-            entityWrapper.Entity.Components.AddComponent(new Transform());
+
+            var entity = entityWrapper.Entity;
+            entity.Components.AddComponent(new Transform(entity));
+            entity.Components.AddComponent(new InterestArea(entity));
         }
 
         protected override void OnPeerDisconnected(DisconnectReason disconnectReason, string s)

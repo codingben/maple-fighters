@@ -2,10 +2,10 @@ using ServerApplication.Common.ComponentModel;
 
 namespace Game.Entities
 {
-    internal interface IEntity
+    public interface IEntity
     {
         int Id { get; }
-        int PresenceSceneId { get; }
+        int PresenceSceneId { get; } // TODO: Move to a entity component that will provide scene status (Has scene, scene id, etc..)
 
         EntityType Type { get; }
 

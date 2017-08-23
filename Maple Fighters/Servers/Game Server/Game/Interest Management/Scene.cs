@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using CommonTools.Log;
 using Game.Entities;
+using Game.Systems;
 using MathematicsHelper;
 
 namespace Game.InterestManagement
@@ -10,9 +11,13 @@ namespace Game.InterestManagement
         private readonly Boundaries boundaries;
         private readonly Dictionary<int, IEntity> entities = new Dictionary<int, IEntity>();
 
-        public Scene(Boundaries boundaries, int regions)
+        private readonly TransformSystem transformSystem;
+
+        public Scene(Boundaries boundaries, Vector2 regions)
         {
             this.boundaries = boundaries;
+
+            transformSystem = new TransformSystem();
         }
 
         public IRegion GetRegion(Vector2 position)
@@ -29,6 +34,8 @@ namespace Game.InterestManagement
             }
 
             entities.Add(entity.Id, entity);
+
+            transformSystem.AddEntity(entity);
         }
 
         public void RemoveEntity(IEntity entity)
@@ -40,6 +47,8 @@ namespace Game.InterestManagement
             }
 
             entities.Remove(entity.Id);
+
+            transformSystem.RemoveEntity(entity);
         }
 
         public IEntity GetEntity(int entityId)
@@ -56,12 +65,12 @@ namespace Game.InterestManagement
 
         public void AddEntitiesForEntity(IEntity entity, List<IEntity> entities)
         {
-            throw new System.NotImplementedException();
+            // Send an event for this entity which contains new entities.
         }
 
         public void RemoveEntitiesForEntity(IEntity entity, List<IEntity> entities)
         {
-            throw new System.NotImplementedException();
+            // Send an event for this entity which will remove these entities.
         }
     }
 }

@@ -4,7 +4,7 @@ using ServerApplication.Common.ComponentModel;
 
 namespace ServerApplication.Common.Components.Coroutines
 {
-    public class CoroutinesExecuter : IComponent, ICoroutinesExecuter
+    public class CoroutinesExecuter : Component, ICoroutinesExecuter
     {
         public int Count => executer.Count;
 
@@ -25,7 +25,7 @@ namespace ServerApplication.Common.Components.Coroutines
             executer.StopAllCoroutines();
         }
 
-        public void Dispose()
+        public new void Dispose()
         {
             executer?.Dispose();
         }

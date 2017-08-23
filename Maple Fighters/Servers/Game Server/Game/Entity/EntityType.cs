@@ -1,6 +1,6 @@
 ﻿namespace Game.Entities
 {
-    internal enum EntityType
+    public enum EntityType
     {
         Player
     }

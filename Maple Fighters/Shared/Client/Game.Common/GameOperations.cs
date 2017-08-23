@@ -2,6 +2,6 @@
 {
     public enum GameOperations : byte
     {
-        Test
+        UpdateEntityPosition
     }
 }

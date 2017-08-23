@@ -1,4 +1,5 @@
-﻿using ServerApplication.Common.ComponentModel;
+﻿using Game.InterestManagement;
+using ServerApplication.Common.ComponentModel;
 
 namespace Game.Entities
 {
@@ -10,6 +11,11 @@ namespace Game.Entities
         public EntityType Type { get; }
 
         public IComponentsContainer Components { get; } = new ComponentsContainer();
+
+        public IRegion GetRegion()
+        {
+            throw new System.NotImplementedException();
+        }
 
         public Entity(int id, EntityType type)
         {

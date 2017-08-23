@@ -2,7 +2,6 @@
 using Game.Application.Components;
 using Game.Entities;
 using Game.InterestManagement;
-using Game.Systems;
 using MathematicsHelper;
 using ServerApplication.Common.ComponentModel;
 using ServerApplication.Common.Components;
@@ -24,7 +23,6 @@ namespace Game.Application
         {
             AddCommonComponents();
             AddComponents();
-            AddSystemsComponents();
 
             SetupScenes();
         }
@@ -44,16 +42,10 @@ namespace Game.Application
             ServerComponents.Container.AddComponent(new SceneContainer());
         }
 
-        private void AddSystemsComponents()
-        {
-            ServerComponents.Container.AddComponent(new TransformSystem());
-        }
-
         private void SetupScenes()
         {
             var sceneContainer = ServerComponents.Container.GetComponent<SceneContainer>().AssertNotNull() as SceneContainer;
-            sceneContainer.AddScene(new Boundaries(new Vector2(-10, 10), new Vector2(10, -10)), 2);
+            sceneContainer?.AddScene(new Boundaries(new Vector2(-10, 10), new Vector2(10, -10)), new Vector2(5, 5));
         }
-
     }
 }

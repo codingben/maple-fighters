@@ -3,7 +3,7 @@ using ServerApplication.Common.ComponentModel;
 
 namespace ServerApplication.Common.Components
 {
-    public class RandomNumberGenerator : IComponent
+    public class RandomNumberGenerator : Component
     {
         private readonly Random random = new Random();
         private readonly object locker = new object();
@@ -14,11 +14,6 @@ namespace ServerApplication.Common.Components
             {
                 return random.Next(0, int.MaxValue);
             }
-        }
-
-        public void Dispose()
-        {
-            // Left blank intentionally
         }
     }
 }

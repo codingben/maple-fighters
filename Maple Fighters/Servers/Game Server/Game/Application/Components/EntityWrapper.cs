@@ -4,7 +4,7 @@ using ServerApplication.Common.ComponentModel;
 
 namespace Game.Application.Components
 {
-    internal class EntityWrapper : IComponent
+    internal class EntityWrapper : Component
     {
         public IEntity Entity { get; private set; }
 
@@ -18,7 +18,7 @@ namespace Game.Application.Components
             AddEntityToPeerIdConverter(peerId);
         }
 
-        public void Dispose()
+        public new void Dispose()
         {
             RemoveEntityIdFromConverter();
         }

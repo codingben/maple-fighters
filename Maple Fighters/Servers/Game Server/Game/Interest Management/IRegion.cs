@@ -4,7 +4,7 @@ using MathematicsHelper;
 
 namespace Game.InterestManagement
 {
-    internal interface IRegion // (Scene -> IRegion -> ServerComponents)
+    public interface IRegion // (Scene -> IRegion -> ServerComponents)
     {
         Vector2 Position { get; }
         Vector2 Size { get; }

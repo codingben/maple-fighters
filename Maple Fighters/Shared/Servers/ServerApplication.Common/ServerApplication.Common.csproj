@@ -68,6 +68,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Application Base\Application.cs" />
+    <Compile Include="Component Model\Component.cs" />
     <Compile Include="Component Model\IComponentsContainer.cs" />
     <Compile Include="Components\FiberCoroutinesExecuter.cs" />
     <Compile Include="Components\CoroutinesExecuter.cs" />

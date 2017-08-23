@@ -7,11 +7,11 @@ using Shared.ServerApplication.Common.Peer;
 
 namespace ServerApplication.Common.Components
 {
-    public class PeerContainer : IComponent
+    public class PeerContainer : Component
     {
         private readonly Dictionary<int, IClientPeerWrapper<IClientPeer>> peerLogics = new Dictionary<int, IClientPeerWrapper<IClientPeer>>();
 
-        public void Dispose()
+        public new void Dispose()
         {
             foreach (var peer in peerLogics)
             {
@@ -48,6 +48,11 @@ namespace ServerApplication.Common.Components
                 : $"A peer {ip}:{port} has been disconnected. Reason: {reason} Details: {details}");
 
             peerLogics.Remove(peerId);
+        }
+
+        public IClientPeerWrapper<IClientPeer> GetPeerWrapper(int peerId)
+        {
+            return peerLogics.TryGetValue(peerId, out var peerWrapper) ? peerWrapper : null;
         }
 
         public int GetPeersCount()

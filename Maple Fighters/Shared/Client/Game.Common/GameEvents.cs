@@ -2,6 +2,8 @@
 {
     public enum GameEvents : byte
     {
-        Test
+        EntityPositionChanged,
+        EntityAdded,
+        EntityRemoved
     }
 }

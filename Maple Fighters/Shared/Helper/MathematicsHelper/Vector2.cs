@@ -61,32 +61,6 @@ namespace MathematicsHelper
             }
         }
 
-        #region Deprecated
-        /*public static Vector2 Max(Vector2 value1, Vector2 value2)
-        {
-            return new Vector2(value1.X > value2.X ? value1.X : value2.X,
-                value1.Y > value2.Y ? value1.Y : value2.Y);
-        }
-
-        public static void Max(ref Vector2 value1, ref Vector2 value2, out Vector2 result)
-        {
-            result.X = value1.X > value2.X ? value1.X : value2.X;
-            result.Y = value1.Y > value2.Y ? value1.Y : value2.Y;
-        }
-
-        public static Vector2 Min(Vector2 value1, Vector2 value2)
-        {
-            return new Vector2(value1.X < value2.X ? value1.X : value2.X,
-                value1.Y < value2.Y ? value1.Y : value2.Y);
-        }
-
-        public static void Min(ref Vector2 value1, ref Vector2 value2, out Vector2 result)
-        {
-            result.X = value1.X < value2.X ? value1.X : value2.X;
-            result.Y = value1.Y < value2.Y ? value1.Y : value2.Y;
-        }*/
-        #endregion
-
         public static Vector2 operator -(Vector2 value)
         {
             value.X = -value.X;
@@ -154,4 +128,30 @@ namespace MathematicsHelper
             return value1;
         }
     }
+
+    #region Deprecated
+        /*public static Vector2 Max(Vector2 value1, Vector2 value2)
+        {
+            return new Vector2(value1.X > value2.X ? value1.X : value2.X,
+                value1.Y > value2.Y ? value1.Y : value2.Y);
+        }
+
+        public static void Max(ref Vector2 value1, ref Vector2 value2, out Vector2 result)
+        {
+            result.X = value1.X > value2.X ? value1.X : value2.X;
+            result.Y = value1.Y > value2.Y ? value1.Y : value2.Y;
+        }
+
+        public static Vector2 Min(Vector2 value1, Vector2 value2)
+        {
+            return new Vector2(value1.X < value2.X ? value1.X : value2.X,
+                value1.Y < value2.Y ? value1.Y : value2.Y);
+        }
+
+        public static void Min(ref Vector2 value1, ref Vector2 value2, out Vector2 result)
+        {
+            result.X = value1.X < value2.X ? value1.X : value2.X;
+            result.Y = value1.Y < value2.Y ? value1.Y : value2.Y;
+        }*/
+        #endregion
 }

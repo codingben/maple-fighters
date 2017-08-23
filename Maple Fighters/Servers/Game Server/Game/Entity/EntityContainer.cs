@@ -6,7 +6,7 @@ using ServerApplication.Common.Components;
 namespace Game.Entities
 {
     // TODO: Are this class and PeerContainer should using lockers?
-    internal class EntityContainer : IComponent
+    internal class EntityContainer : Component
     {
         private readonly Dictionary<int, Entity> entities = new Dictionary<int, Entity>();
         private readonly IdGenerator idGenerator;
@@ -44,11 +44,6 @@ namespace Game.Entities
             }
 
             return entitiesTemp;
-        }
-
-        public void Dispose()
-        {
-            // TODO: Implement
         }
     }
 }
