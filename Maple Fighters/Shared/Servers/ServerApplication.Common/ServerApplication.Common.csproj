@@ -37,13 +37,13 @@
       <HintPath>..\..\..\packages\CommunicationHelper.3.2.4\lib\net46\CommunicationHelper.dll</HintPath>
     </Reference>
     <Reference Include="Coroutines, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Coroutines.4.1.0\lib\net46\Coroutines.dll</HintPath>
+      <HintPath>..\..\..\packages\Coroutines.5.0.2\lib\net46\Coroutines.dll</HintPath>
     </Reference>
     <Reference Include="log4net">
       <HintPath>..\..\..\..\Photon Libraries\log4net.dll</HintPath>
     </Reference>
     <Reference Include="LogUtils, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Coroutines.4.1.0\lib\net46\LogUtils.dll</HintPath>
+      <HintPath>..\..\..\packages\Coroutines.5.0.2\lib\net46\LogUtils.dll</HintPath>
     </Reference>
     <Reference Include="Photon.SocketServer">
       <HintPath>..\..\..\..\Photon Libraries\Photon.SocketServer.dll</HintPath>
@@ -52,13 +52,13 @@
       <HintPath>..\..\..\packages\PhotonCommonImplementation.2.1.0\lib\net46\PhotonCommonImplementation.dll</HintPath>
     </Reference>
     <Reference Include="PhotonServerImplementation, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\PhotonServerImplementation.2.3.0\lib\net46\PhotonServerImplementation.dll</HintPath>
+      <HintPath>..\..\..\packages\PhotonServerImplementation.3.0.0\lib\net46\PhotonServerImplementation.dll</HintPath>
     </Reference>
     <Reference Include="ServerCommunicationHelper, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\ServerCommunicationHelper.2.0.1\lib\net46\ServerCommunicationHelper.dll</HintPath>
+      <HintPath>..\..\..\packages\ServerCommunicationHelper.2.1.0\lib\net46\ServerCommunicationHelper.dll</HintPath>
     </Reference>
     <Reference Include="ServerCommunicationInterfaces, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\ServerCommunicationInterfaces.1.9.0\lib\net46\ServerCommunicationInterfaces.dll</HintPath>
+      <HintPath>..\..\..\packages\ServerCommunicationInterfaces.2.0.0\lib\net46\ServerCommunicationInterfaces.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
