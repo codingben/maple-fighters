@@ -2,6 +2,7 @@
 using CommonTools.Log;
 using ServerApplication.Common.ComponentModel;
 using ServerApplication.Common.Components;
+using Shared.Game.Common;
 
 namespace Game.Entities
 {

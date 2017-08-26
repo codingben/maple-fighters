@@ -70,9 +70,7 @@
     <Compile Include="Entity\Components\Transform.cs" />
     <Compile Include="Entity\Entity.cs" />
     <Compile Include="Entity\EntityContainer.cs" />
-    <Compile Include="Entity\EntityType.cs" />
     <Compile Include="Entity\IEntity.cs" />
-    <Compile Include="Interest Management\Boundaries.cs" />
     <Compile Include="Interest Management\IInterestArea.cs" />
     <Compile Include="Interest Management\InterestArea.cs" />
     <Compile Include="Interest Management\IRegion.cs" />

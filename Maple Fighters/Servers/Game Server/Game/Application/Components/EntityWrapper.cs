@@ -1,6 +1,7 @@
 ﻿using CommonTools.Log;
 using Game.Entities;
 using ServerApplication.Common.ComponentModel;
+using Shared.Game.Common;
 
 namespace Game.Application.Components
 {

@@ -1,5 +1,6 @@
 ﻿using Game.InterestManagement;
 using ServerApplication.Common.ComponentModel;
+using Shared.Game.Common;
 
 namespace Game.Entities
 {

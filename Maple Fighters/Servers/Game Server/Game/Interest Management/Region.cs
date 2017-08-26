@@ -8,18 +8,16 @@ namespace Game.InterestManagement
 {
     internal class Region : IRegion
     {
-        public Vector2 Position { get; }
-        public Vector2 Size { get; }
+        public Rectangle Rectangle { get; }
 
         private readonly Dictionary<int, IEntity> entities = new Dictionary<int, IEntity>();
 
-        public Region(Vector2 position, Vector2 size)
+        public Region(Rectangle rectangle)
         {
-            Position = position;
-            Size = size;
+            Rectangle = rectangle;
         }
 
-        public void AddEntity(IEntity entity)
+        public void AddSubscription(IEntity entity)
         {
             if (entities.ContainsKey(entity.Id))
             {
@@ -30,7 +28,7 @@ namespace Game.InterestManagement
             entities.Add(entity.Id, entity);
         }
 
-        public void RemoveEntity(IEntity entity)
+        public void RemoveSubscription(IEntity entity)
         {
             if (!entities.ContainsKey(entity.Id))
             {
@@ -41,7 +39,7 @@ namespace Game.InterestManagement
             entities.Remove(entity.Id);
         }
 
-        public List<IEntity> GetAllEntities()
+        public List<IEntity> GetAllSubscribers()
         {
             return entities.Select(entity => entity.Value).ToList();
         }

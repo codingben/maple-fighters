@@ -42,8 +42,7 @@ namespace Game.Systems
 
         private void OnEntityAdded(IEntity entity)
         {
-            var transform = entity.Components.GetComponent<Transform>().AssertNotNull() as Transform;
-            if (transform == null)
+            if (!(entity.Components.GetComponent<Transform>().AssertNotNull() is Transform transform))
             {
                 return;
             }
@@ -99,7 +98,7 @@ namespace Game.Systems
         private void SendNewPosition(IEntity ignoredEntity, Vector2 newPosition)
         {
             var publisherRegion = ignoredEntity.Components.GetComponent<InterestArea>().AssertNotNull() as IInterestArea;
-            var entities = publisherRegion?.GetRegion().GetAllEntities().ToArray();
+            var entities = publisherRegion?.GetRegion().GetAllSubscribers().ToArray();
             var otherEntities = entities?.Except(new[] { ignoredEntity });
 
             foreach (var entity in otherEntities)
