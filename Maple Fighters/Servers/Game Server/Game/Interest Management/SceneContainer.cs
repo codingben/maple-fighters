@@ -10,12 +10,12 @@ namespace Game.InterestManagement
     {
         private readonly Dictionary<int, IScene> scenes = new Dictionary<int, IScene>();
 
-        public void AddScene(Rectangle boundaries, Vector2 regions)
+        public void AddScene(Vector2 sceneSize, Vector2 regionsSize)
         {
             var idGenerator = ServerComponents.Container.GetComponent<IdGenerator>().AssertNotNull() as IdGenerator;
             var sceneId = idGenerator.GenerateId();
 
-            scenes.Add(sceneId, new Scene(boundaries, regions, sceneId));
+            scenes.Add(sceneId, new Scene(sceneId, sceneSize, regionsSize));
         }
 
         public IScene GetScene(int sceneId)

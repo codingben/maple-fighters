@@ -45,7 +45,7 @@ namespace Game.Application
         private void SetupScenes()
         {
             var sceneContainer = ServerComponents.Container.GetComponent<SceneContainer>().AssertNotNull() as SceneContainer;
-            sceneContainer.AddScene(new Rectangle(Vector2.Zero, new Vector2(100, 100)), new Vector2(5, 5));
+            sceneContainer.AddScene(new Vector2(100, 100), new Vector2(5, 5));
         }
     }
 }

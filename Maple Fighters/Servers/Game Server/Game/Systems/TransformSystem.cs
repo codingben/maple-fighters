@@ -98,8 +98,8 @@ namespace Game.Systems
         private void SendNewPosition(IEntity ignoredEntity, Vector2 newPosition)
         {
             var publisherRegion = ignoredEntity.Components.GetComponent<InterestArea>().AssertNotNull() as IInterestArea;
-            var entities = publisherRegion?.GetRegion().GetAllSubscribers().ToArray();
-            var otherEntities = entities?.Except(new[] { ignoredEntity });
+            var entities = publisherRegion?.GetPublishers();
+            var otherEntities = entities?.ConvertRegionsFromMatrix().Except(new[] { ignoredEntity });
 
             foreach (var entity in otherEntities)
             {

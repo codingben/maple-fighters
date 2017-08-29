@@ -3,9 +3,9 @@ using CommonCommunicationInterfaces;
 using CommonTools.Log;
 using Game.Application.Components;
 using Game.Application.PeerLogic.Operations;
-using Game.Entities;
 using Game.Entity.Components;
 using Game.InterestManagement;
+using MathematicsHelper;
 using ServerCommunicationInterfaces;
 using Shared.ServerApplication.Common.Peer;
 using Shared.Game.Common;
@@ -35,7 +35,7 @@ namespace Game.Application.PeerLogic
 
             var entity = entityWrapper.Entity;
             entity.Components.AddComponent(new Transform(entity));
-            entity.Components.AddComponent(new InterestArea(entity));
+            entity.Components.AddComponent(new InterestArea(entity, new Vector2(10, 10)));
         }
 
         protected override void OnPeerDisconnected(DisconnectReason disconnectReason, string s)

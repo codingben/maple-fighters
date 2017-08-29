@@ -2,32 +2,24 @@
 
 namespace MathematicsHelper
 {
-    public struct Rectangle : IEquatable<Rectangle>
+    public struct Rectangle
     {
-        public readonly int X;
-        public readonly int Y;
-        public readonly int Width;
-        public readonly int Height;
+        public static readonly Rectangle EMPTY = new Rectangle();
 
-        public int Left => X;
-        public int Top => Y;
-        public int Right => X + Width;
-        public int Bottom => Y + Height;
+        public float X { get; private set; }
+        public float Y { get; private set; }
+
+        public float Width { get; }
+        public float Height { get; }
+
+        public float Left => X;
+        public float Top => Y;
+        public float Right => X + Width;
+        public float Bottom => Y + Height;
 
         public Vector2 Position => new Vector2(X, Y);
-        public Vector2 Size => new Vector2(Width, Height);
 
-        public static readonly Rectangle EMPTY = new Rectangle(Vector2.Zero, Vector2.Zero);
-
-        public Rectangle(Vector2 position, Vector2 size)
-        {
-            X = (int)position.X;
-            Y = (int)position.Y;
-            Width = (int)size.X;
-            Height = (int)size.Y;
-        }
-
-        public Rectangle(int x, int y, int width, int height)
+        public Rectangle(float x, float y, float width, float height)
         {
             X = x;
             Y = y;
@@ -35,63 +27,67 @@ namespace MathematicsHelper
             Height = height;
         }
 
-        public override string ToString() => $"X={X}, Y={Y}, Width={Width}, Height={Height}";
+        public Rectangle(Vector2 position, Vector2 size)
+        {
+            X = position.X;
+            Y = position.Y;
+            Width = size.X;
+            Height = size.Y;
+        }
+
+        public void SetPosition(Vector2 position)
+        {
+            X = position.X;
+            Y = position.Y;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (!(obj is Rectangle))
+            {
+                return false;
+            }
+
+            var rectangle = (Rectangle)obj;
+
+            return (rectangle.X == X) &&
+                   (rectangle.Y == Y) &&
+                   (rectangle.Width == Width) &&
+                   (rectangle.Height == Height);
+        }
 
         public override int GetHashCode()
         {
-            return unchecked((int)((uint)X ^
-                                   (((uint)Y << 13) | ((uint)Y >> 19)) ^
-                                   (((uint)Width << 26) | ((uint)Width >> 6)) ^
-                                   (((uint)Height << 7) | ((uint)Height >> 25))));
+            return (int)((uint)X ^
+                        (((uint)Y << 13) | ((uint)Y >> 19)) ^
+                            (((uint)Width << 26) | ((uint)Width >> 6)) ^
+                                (((uint)Height << 7) | ((uint)Height >> 25)));
         }
 
-        public override bool Equals(object obj) => obj is Rectangle && Equals((Rectangle)obj);
-
-        public bool Equals(Rectangle other)
+        public static Rectangle Intersect(Rectangle a, Rectangle b)
         {
-            return X == other.X &&
-                   Y == other.Y &&
-                   Width == other.Width &&
-                   Height == other.Height;
-        }
-        
-        public bool Contains(Vector2 position)
-        {
-            return position.X >= X &&
-                   position.X < Right &&
-                   position.Y >= Y &&
-                   position.Y < Bottom;
-        }
+            var x1 = Math.Max(a.X, b.X);
+            var x2 = Math.Min(a.X + a.Width, b.X + b.Width);
+            var y1 = Math.Max(a.Y, b.Y);
+            var y2 = Math.Min(a.Y + a.Height, b.Y + b.Height);
 
-        public bool Contains(Rectangle other)
-        {
-            return other.X >= X &&
-                   other.Right <= Right &&
-                   other.Y >= Y &&
-                   other.Bottom <= Bottom;
-        }
-
-        public Rectangle Intersect(Rectangle other)
-        {
-            var biggestX = Math.Max(X, other.X);
-            var smallestRight = Math.Min(Right, other.Right);
-            var biggestY = Math.Max(Y, other.Y);
-            var smallestBottom = Math.Min(Bottom, other.Bottom);
-
-            if (smallestRight >= biggestX && smallestBottom >= biggestY)
+            if (x2 >= x1
+                && y2 >= y1)
             {
-                return new Rectangle(biggestX, biggestY, smallestRight - biggestX, smallestBottom - biggestY);
-            }
 
+                return new Rectangle(x1, y1, x2 - x1, y2 - y1);
+            }
             return EMPTY;
         }
 
-        public bool IntersectsWith(Rectangle other)
+        public bool IntersectsWith(Rectangle rect)
         {
-            return other.X < Right &&
-                   X < other.Right &&
-                   other.Y < Bottom &&
-                   Y < other.Bottom;
+            return (rect.X < X + Width) &&
+                   (X < (rect.X + rect.Width)) &&
+                   (rect.Y < Y + Height) &&
+                   (Y < rect.Y + rect.Height);
         }
+
+        public override string ToString() => $"X={X} Y={Y} Width={Width} Height={Height}";
     }
 }

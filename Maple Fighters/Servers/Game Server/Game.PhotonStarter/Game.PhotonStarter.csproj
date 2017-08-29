@@ -34,10 +34,10 @@
       <HintPath>..\..\..\packages\CommonCommunicationInterfaces.4.3.0\lib\net46\CommonCommunicationInterfaces.dll</HintPath>
     </Reference>
     <Reference Include="Coroutines, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Coroutines.5.0.2\lib\net46\Coroutines.dll</HintPath>
+      <HintPath>..\..\..\packages\Coroutines.5.0.4\lib\net46\Coroutines.dll</HintPath>
     </Reference>
     <Reference Include="LogUtils, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Coroutines.5.0.2\lib\net46\LogUtils.dll</HintPath>
+      <HintPath>..\..\..\packages\Coroutines.5.0.4\lib\net46\LogUtils.dll</HintPath>
     </Reference>
     <Reference Include="Photon.SocketServer">
       <HintPath>..\..\..\..\Photon Libraries\Photon.SocketServer.dll</HintPath>

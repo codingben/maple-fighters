@@ -6,7 +6,7 @@ using Shared.Game.Common;
 
 namespace Game.Entities
 {
-    // TODO: Are this class and PeerContainer should using lockers?
+    // TODO: Are this class and PeerContainer should using lockers? Yes, if there is a using from different threads (fibers).
     internal class EntityContainer : Component
     {
         private readonly Dictionary<int, Entity> entities = new Dictionary<int, Entity>();

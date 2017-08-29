@@ -4,12 +4,14 @@ using MathematicsHelper;
 
 namespace Game.InterestManagement
 {
-    public interface IRegion // (Scene -> IRegion -> ServerComponents)
+    public interface IRegion
     {
         Rectangle Rectangle { get; }
 
         void AddSubscription(IEntity entity);
         void RemoveSubscription(IEntity entity);
+
+        bool HasSubscription(int entityId);
 
         List<IEntity> GetAllSubscribers();
     }

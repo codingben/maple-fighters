@@ -1,4 +1,5 @@
-﻿using Game.Entities;
+﻿using System;
+using Game.Entities;
 using MathematicsHelper;
 
 namespace Game.Entity.Components
@@ -7,6 +8,8 @@ namespace Game.Entity.Components
     {
         public Vector2 NewPosition { get; private set; }
         public Vector2 LastPosition { get; set; }
+
+        public event Action<Vector2> PositionChanged;
 
         public Transform(IEntity entity) 
             : base(entity)
@@ -17,6 +20,8 @@ namespace Game.Entity.Components
         public void SetPosition(Vector2 position)
         {
             NewPosition = position;
+
+            PositionChanged?.Invoke(position);
         }
     }
 }

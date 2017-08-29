@@ -39,10 +39,10 @@
       <HintPath>..\..\..\packages\CommunicationHelper.3.2.4\lib\net46\CommunicationHelper.dll</HintPath>
     </Reference>
     <Reference Include="Coroutines, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Coroutines.5.0.2\lib\net46\Coroutines.dll</HintPath>
+      <HintPath>..\..\..\packages\Coroutines.5.0.4\lib\net46\Coroutines.dll</HintPath>
     </Reference>
     <Reference Include="LogUtils, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Coroutines.5.0.2\lib\net46\LogUtils.dll</HintPath>
+      <HintPath>..\..\..\packages\Coroutines.5.0.4\lib\net46\LogUtils.dll</HintPath>
     </Reference>
     <Reference Include="PhotonCommonImplementation, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\PhotonCommonImplementation.2.1.0\lib\net46\PhotonCommonImplementation.dll</HintPath>
