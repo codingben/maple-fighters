@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using CommonCommunicationInterfaces;
 using CommonTools.Coroutines;
-using CommonTools.Log;
 using CommunicationHelper;
 using ExitGames.Client.Photon;
 using PhotonClientImplementation;
@@ -13,18 +12,12 @@ using UnityEngine;
 
 namespace Scripts.Services
 {
-    public abstract class ServiceBase<TOperationCode, TEventCode> : MonoBehaviour, IDisposable
+    public abstract class ServiceBase<TOperationCode, TEventCode> : IDisposable
         where TOperationCode : IComparable, IFormattable, IConvertible
         where TEventCode : IComparable, IFormattable, IConvertible
     {
-        private const string NETWORK_CONFIGURATION_PATH = "Configurations/Network Configuration";
-
-        [SerializeField] private ConnectionInformation connectionsInformation;
-
-        private NetworkConfiguration networkConfiguration;
-
-        private ServersType currentServerType;
-        private PeerConnectionInformation currentConnectionInformation;
+        private ServersType serverType;
+        private PeerConnectionInformation peerConnectionInformation;
 
         private IServerPeer serverPeer;
 
@@ -32,22 +25,19 @@ namespace Scripts.Services
         protected IOperationRequestSender<TOperationCode> OperationRequestSender { get; private set; }
         protected IOperationResponseSubscriptionProvider SubscriptionProvider { get; private set; }
 
-        protected ExternalCoroutinesExecuter CoroutinesExecuter;
+        protected readonly ExternalCoroutinesExecutor CoroutinesExecuter;
 
-        private void Awake()
+        protected ServiceBase()
         {
-            LogUtils.Logger = new Logger();
+            Debug.Log("ServiceBase");
 
-            CoroutinesExecuter = new ExternalCoroutinesExecuter().ExecuteExternally();
-
-            networkConfiguration = Resources.Load<NetworkConfiguration>(NETWORK_CONFIGURATION_PATH);
-
-            Initiate();
+            CoroutinesExecuter = new ExternalCoroutinesExecutor().ExecuteExternally();
         }
 
-        public async Task<IServerPeer> ConnectAsync(Yield yield, PeerConnectionInformation connectionInformation)
+        public async Task<IServerPeer> ConnectAsync(IYield yield, PeerConnectionInformation connectionInformation)
         {
             var serverConnector = new PhotonServerConnector(() => CoroutinesExecuter);
+            var networkConfiguration = NetworkConfiguration.GetInstance();
 
             serverPeer = await serverConnector.ConnectAsync(yield, connectionInformation,
                 new ConnectionDetails(networkConfiguration.ConnectionProtocol, networkConfiguration.DebugLevel));
@@ -73,16 +63,30 @@ namespace Scripts.Services
             EventHandlerRegister?.Dispose();
         }
 
-        protected void Connect()
+        protected void Connect(ConnectionInformation connectionInformation)
         {
-            InitializePeer();
+            var networkConfiguration = NetworkConfiguration.GetInstance();
 
-            Debug.Log($"Connecting to a {currentServerType} server - " + $"{currentConnectionInformation.Ip}:{currentConnectionInformation.Port}");
+            serverType = connectionInformation.ServerType;
 
-            CoroutinesExecuter.StartTask(y => ConnectAsync(y, currentConnectionInformation));
+            switch (networkConfiguration.ConnectionProtocol)
+            {
+                case ConnectionProtocol.Udp:
+                    peerConnectionInformation = connectionInformation.UdpConnectionDetails;
+                    break;
+                case ConnectionProtocol.Tcp:
+                    peerConnectionInformation = connectionInformation.TcpConnectionDetails;
+                    break;
+                case ConnectionProtocol.WebSocket:
+                case ConnectionProtocol.WebSocketSecure:
+                    peerConnectionInformation = connectionInformation.WebConnectionDetails;
+                    break;
+            }
+
+            Debug.Log($"Connecting to a {serverType} server - " + $"{peerConnectionInformation.Ip}:{peerConnectionInformation.Port}");
+
+            CoroutinesExecuter.StartTask(y => ConnectAsync(y, peerConnectionInformation));
         }
-
-        protected abstract void Initiate();
 
         protected abstract void OnConnected();
 
@@ -93,41 +97,15 @@ namespace Scripts.Services
             serverPeer.PeerDisconnectionNotifier.Disconnected -= OnDisconnected;
 
             Debug.Log("A connection has been closed with " +
-                      $"{currentServerType} - {currentConnectionInformation.Ip}:{currentConnectionInformation.Port}. Reason: {disconnectReason}");
+                      $"{serverType} - {peerConnectionInformation.Ip}:{peerConnectionInformation.Port}. Reason: {disconnectReason}");
 
             OnDisconnected();
-        }
-
-        private void InitializePeer()
-        {
-            switch (networkConfiguration.ConnectionProtocol)
-            {
-                case ConnectionProtocol.Udp:
-                    currentServerType = connectionsInformation.ServerType;
-                    currentConnectionInformation = connectionsInformation.UdpConnectionDetails;
-                    break;
-                case ConnectionProtocol.Tcp:
-                    currentServerType = connectionsInformation.ServerType;
-                    currentConnectionInformation = connectionsInformation.TcpConnectionDetails;
-                    break;
-                case ConnectionProtocol.WebSocket:
-                case ConnectionProtocol.WebSocketSecure:
-                    currentServerType = connectionsInformation.ServerType;
-                    currentConnectionInformation = connectionsInformation.WebConnectionDetails;
-                    break;
-            }
-
-            if (networkConfiguration.ConnectionProtocol == ConnectionProtocol.WebSocketSecure)
-            {
-                Debug.LogError($"Connection type {networkConfiguration} is not supported yet.");
-                networkConfiguration.ConnectionProtocol = ConnectionProtocol.WebSocket;
-            }
         }
 
         private void InitializePeerHandlers()
         {
             SubscriptionProvider = new OperationResponseSubscriptionProvider<TOperationCode>(serverPeer.OperationResponseNotifier,
-                (data, s) => Debug.LogError($"Sending an operaiton has been failed. Operation Code: {data.Code} - Server Type: {currentServerType}"));
+                (data, s) => Debug.LogError($"Sending an operaiton has been failed. Operation Code: {data.Code} - Server Type: {serverType}"));
             EventHandlerRegister = new EventHandlerRegister<TEventCode>(serverPeer.EventNotifier);
             OperationRequestSender = new OperationRequestSender<TOperationCode>(serverPeer.OperationRequestSender);
 

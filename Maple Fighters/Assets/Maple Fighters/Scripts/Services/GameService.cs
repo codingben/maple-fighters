@@ -1,31 +1,34 @@
-﻿using System.Threading.Tasks;
-using CommonCommunicationInterfaces;
-using CommonTools.Coroutines;
+﻿using CommonCommunicationInterfaces;
+using Scripts.ScriptableObjects;
 using Shared.Game.Common;
-using CommunicationHelper;
 using UnityEngine;
 
 namespace Scripts.Services
 {
     public sealed class GameService : ServiceBase<GameOperations, GameEvents>, IGameService
     {
-        public UnityEvent<TestParameters> TestEvent { get; }
+        public UnityEvent<EntityInitialInfomraitonEventParameters> EntitiyInitialInformation { get; }
+        public UnityEvent<EntityAddedEventParameters> EntityAdded { get; }
+        public UnityEvent<EntityRemovedEventParameters> EntityRemoved { get; }
+        public UnityEvent<EntityPositionChangedEventParameters> EntityPositionChanged { get; }
 
         public GameService()
         {
-            TestEvent = new UnityEvent<TestParameters>();
+            EntityAdded = new UnityEvent<EntityAddedEventParameters>();
+            EntityRemoved = new UnityEvent<EntityRemovedEventParameters>();
+            EntitiyInitialInformation = new UnityEvent<EntityInitialInfomraitonEventParameters>();
+            EntityPositionChanged = new UnityEvent<EntityPositionChangedEventParameters>();
         }
 
-        protected override void Initiate()
+        public void Connect()
         {
-            Connect();
+            var gameConnectionInformation = ServicesConfiguration.GetInstance().GameConnectionInformation;
+            Connect(gameConnectionInformation);
         }
 
         protected override void OnConnected()
         {
             AddEventsHandlers();
-
-            CoroutinesExecuter.StartTask(y => TestOperationRequestAsync(y, new TestRequestParameters(5)));
         }
 
         protected override void OnDisconnected()
@@ -35,19 +38,41 @@ namespace Scripts.Services
 
         private void AddEventsHandlers()
         {
-            EventHandlerRegister.SetHandler(GameEvents.Test, new EventInvoker<TestParameters>(unityEvent =>
+            EventHandlerRegister.SetHandler(GameEvents.EntityInitialInformation, new EventInvoker<EntityInitialInfomraitonEventParameters>(unityEvent =>
             {
-                TestEvent.Invoke(unityEvent.Parameters);
+                EntitiyInitialInformation.Invoke(unityEvent.Parameters);
+                return true;
+            }));
+
+            EventHandlerRegister.SetHandler(GameEvents.EntityAdded, new EventInvoker<EntityAddedEventParameters>(unityEvent =>
+            {
+                EntityAdded.Invoke(unityEvent.Parameters);
+                return true;
+            }));
+
+            EventHandlerRegister.SetHandler(GameEvents.EntityRemoved, new EventInvoker<EntityRemovedEventParameters>(unityEvent =>
+            {
+                EntityRemoved.Invoke(unityEvent.Parameters);
+                return true;
+            }));
+
+            EventHandlerRegister.SetHandler(GameEvents.EntityPositionChanged, new EventInvoker<EntityPositionChangedEventParameters>(unityEvent =>
+            {
+                EntityPositionChanged.Invoke(unityEvent.Parameters);
                 return true;
             }));
         }
 
         private void RemoveEventsHandlers()
         {
-            EventHandlerRegister.RemoveHandler(GameEvents.Test);
+            EventHandlerRegister.RemoveHandler(GameEvents.EntityInitialInformation);
+            EventHandlerRegister.RemoveHandler(GameEvents.EntityAdded);
+            EventHandlerRegister.RemoveHandler(GameEvents.EntityRemoved);
+            EventHandlerRegister.RemoveHandler(GameEvents.EntityPositionChanged);
         }
 
-        public async Task TestOperationRequestAsync(Yield yield, TestRequestParameters requestParameters)
+
+        public void UpdateEntityPosition(UpdateEntityPositionRequestParameters parameters)
         {
             if (!IsConnected())
             {
@@ -55,10 +80,9 @@ namespace Scripts.Services
                 return;
             }
 
-            var requestId = OperationRequestSender.Send(GameOperations.Test, requestParameters, MessageSendOptions.DefaultReliable());
-            var responseParameters = await SubscriptionProvider.ProvideSubscription<TestResponseParameters>(yield, requestId);
-
-            Debug.Log(responseParameters.Number);
+            OperationRequestSender.Send(GameOperations.UpdateEntityPosition, parameters, 
+                MessageSendOptions.DefaultUnreliable((byte)GameDataChannels.Position));
         }
+
     }
 }

@@ -12,12 +12,15 @@
     <ProjectTypeGuids>{E097FAD1-6243-4DAD-9C02-E9B9EFC3FFC1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
-    <TargetFrameworkProfile></TargetFrameworkProfile>
-    <CompilerResponseFile></CompilerResponseFile>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <CompilerResponseFile>
+    </CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>WebGL:20</UnityBuildTarget>
-    <UnityVersion>2017.1.0p2</UnityVersion>
-    <RootNamespace></RootNamespace>
+    <UnityVersion>2017.1.0p4</UnityVersion>
+    <RootNamespace>
+    </RootNamespace>
     <LangVersion>6</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -106,13 +109,31 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Maple Fighters\Scripts\Containers\GameContainers.cs" />
+    <Compile Include="Assets\Maple Fighters\Scripts\Containers\Entity\EntityContainer.cs" />
+    <Compile Include="Assets\Maple Fighters\Scripts\Containers\Entity\IEntityContainer.cs" />
+    <Compile Include="Assets\Maple Fighters\Scripts\Containers\IContainers.cs" />
+    <Compile Include="Assets\Maple Fighters\Scripts\Containers\IServiceContainer.cs" />
+    <Compile Include="Assets\Maple Fighters\Scripts\Containers\Service\ServiceContainer.cs" />
     <Compile Include="Assets\Maple Fighters\Scripts\Coroutines\CoroutinesWrappersUpdater.cs" />
+    <Compile Include="Assets\Maple Fighters\Scripts\Gameplay\Actors\EntityPositionController.cs" />
+    <Compile Include="Assets\Maple Fighters\Scripts\Gameplay\Actors\Entity\Entity.cs" />
+    <Compile Include="Assets\Maple Fighters\Scripts\Gameplay\Actors\Entity\IEntity.cs" />
+    <Compile Include="Assets\Maple Fighters\Scripts\Gameplay\Actors\IPositionSetter.cs" />
+    <Compile Include="Assets\Maple Fighters\Scripts\Gameplay\Actors\PlayerController.cs" />
+    <Compile Include="Assets\Maple Fighters\Scripts\Gameplay\Actors\PlayerInput.cs" />
+    <Compile Include="Assets\Maple Fighters\Scripts\Gameplay\Actors\PositionSender.cs" />
+    <Compile Include="Assets\Maple Fighters\Scripts\Gameplay\Actors\PositionSetter.cs" />
+    <Compile Include="Assets\Maple Fighters\Scripts\Gameplay\GameInitializer.cs" />
     <Compile Include="Assets\Maple Fighters\Scripts\NetworkConfiguration.cs" />
+    <Compile Include="Assets\Maple Fighters\Scripts\ScriptableObjectSingleton.cs" />
+    <Compile Include="Assets\Maple Fighters\Scripts\ServicesConfiguration.cs" />
     <Compile Include="Assets\Maple Fighters\Scripts\Services\EventInvoker.cs" />
     <Compile Include="Assets\Maple Fighters\Scripts\Services\GameService.cs" />
     <Compile Include="Assets\Maple Fighters\Scripts\Services\GameTimeProvider.cs" />
     <Compile Include="Assets\Maple Fighters\Scripts\Services\IGameService.cs" />
     <Compile Include="Assets\Maple Fighters\Scripts\Services\Logger.cs" />
+    <Compile Include="Assets\Maple Fighters\Scripts\Services\LoggerInitializer.cs" />
     <Compile Include="Assets\Maple Fighters\Scripts\Services\ServersType.cs" />
     <Compile Include="Assets\Maple Fighters\Scripts\Services\ServiceBase.cs" />
     <Compile Include="Assets\Maple Fighters\Scripts\Services\UnityEvent.cs" />

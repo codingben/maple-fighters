@@ -1,13 +1,18 @@
-﻿using System.Threading.Tasks;
-using CommonTools.Coroutines;
-using Shared.Game.Common;
+﻿using Shared.Game.Common;
 
 namespace Scripts.Services
 {
     public interface IGameService
     {
-        Task TestOperationRequestAsync(Yield yield, TestRequestParameters requestParameters);
+        void Connect();
 
-        UnityEvent<TestParameters> TestEvent { get; }
+        void UpdateEntityPosition(UpdateEntityPositionRequestParameters parameters);
+
+        UnityEvent<EntityInitialInfomraitonEventParameters> EntitiyInitialInformation { get; }
+
+        UnityEvent<EntityAddedEventParameters> EntityAdded { get; }
+        UnityEvent<EntityRemovedEventParameters> EntityRemoved { get; }
+
+        UnityEvent<EntityPositionChangedEventParameters> EntityPositionChanged { get; }
     }
 }

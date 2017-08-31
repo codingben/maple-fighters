@@ -425,7 +425,7 @@ namespace PhotonClientImplementation
             this.coroutinesExecuterProvider = coroutinesExecuterProvider;
         }
 
-        public async Task<IServerPeer> ConnectAsync(Yield yield, PeerConnectionInformation connectionInformation, ConnectionDetails connectionDetails)
+        public async Task<IServerPeer> ConnectAsync(IYield yield, PeerConnectionInformation connectionInformation, ConnectionDetails connectionDetails)
         {
             var coroutinesExecuter = coroutinesExecuterProvider.Invoke();
 
@@ -444,7 +444,7 @@ namespace PhotonClientImplementation
             return null;
         }
 
-        private async Task<StatusCode> WaitForStatusCodeChange(Yield yield, PhotonPeer photonPeer)
+        private async Task<StatusCode> WaitForStatusCodeChange(IYield yield, PhotonPeer photonPeer)
         {
             var statusChanged = false;
             var statusCode = StatusCode.Disconnect;

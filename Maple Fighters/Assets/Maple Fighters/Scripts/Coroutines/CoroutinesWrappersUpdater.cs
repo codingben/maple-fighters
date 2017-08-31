@@ -7,13 +7,13 @@ namespace Scripts.Coroutines
 {
     public static class ExtensionMethods
     {
-        public static ExternalCoroutinesExecuter ExecuteExternally(this ExternalCoroutinesExecuter executer)
+        public static ExternalCoroutinesExecutor ExecuteExternally(this ExternalCoroutinesExecutor executer)
         {
             CoroutinesWrappersUpdater.GetInstance().AddCoroutineExecuter(executer);
             return executer;
         }
 
-        public static ExternalCoroutinesExecuter RemoveFromExternalExecuter(this ExternalCoroutinesExecuter executer)
+        public static ExternalCoroutinesExecutor RemoveFromExternalExecuter(this ExternalCoroutinesExecutor executer)
         {
             CoroutinesWrappersUpdater.GetInstance().RemoveCoroutineExecuter(executer);
             return executer;
@@ -22,29 +22,29 @@ namespace Scripts.Coroutines
 
     public sealed class CoroutinesWrappersUpdater : MonoBehaviour
     {
-        private readonly List<ExternalCoroutinesExecuter> coroutinesWrappers = new List<ExternalCoroutinesExecuter>();
-
-        private static CoroutinesWrappersUpdater _instance;
+        private readonly List<ExternalCoroutinesExecutor> coroutinesWrappers = new List<ExternalCoroutinesExecutor>();
 
         public static CoroutinesWrappersUpdater GetInstance()
         {
-            _instance = _instance ?? new GameObject(typeof(CoroutinesWrappersUpdater).ToString(), typeof(CoroutinesWrappersUpdater)).GetComponent<CoroutinesWrappersUpdater>();
-            return _instance;
+            instance = instance ?? new GameObject(typeof(CoroutinesWrappersUpdater).ToString(), typeof(CoroutinesWrappersUpdater)).GetComponent<CoroutinesWrappersUpdater>();
+            return instance;
         }
 
-        public void AddCoroutineExecuter(ExternalCoroutinesExecuter coroutineWrapper)
+        private static CoroutinesWrappersUpdater instance;
+
+        public void AddCoroutineExecuter(ExternalCoroutinesExecutor coroutineWrapper)
         {
             coroutinesWrappers.Add(coroutineWrapper);
         }
 
-        public void RemoveCoroutineExecuter(ExternalCoroutinesExecuter coroutineWrapper)
+        public void RemoveCoroutineExecuter(ExternalCoroutinesExecutor coroutineWrapper)
         {
             coroutinesWrappers.Remove(coroutineWrapper);
         }
 
         private void Awake()
         {
-            _instance = this;
+            instance = this;
 
             TimeProviders.DefaultTimeProvider = new GameTimeProvider();
         }
@@ -59,7 +59,12 @@ namespace Scripts.Coroutines
 
         private void OnApplicationQuit()
         {
-            _instance = null;
+            if (coroutinesWrappers.Count != 0)
+            {
+                coroutinesWrappers.ForEach(x => x.StopAllCoroutines());
+            }
+
+            instance = null;
         }
     }
 }
