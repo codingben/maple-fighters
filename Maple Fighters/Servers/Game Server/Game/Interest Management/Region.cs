@@ -96,14 +96,13 @@ namespace Game.InterestManagement
                 return;
             }
 
-            var entitiesTemp = new Shared.Game.Common.Entity[entities.Length];
-            for (var i = 0; i < entitiesTemp.Length; i++)
+            var entitiesIdTemp = new int[entities.Length];
+            for (var i = 0; i < entitiesIdTemp.Length; i++)
             {
-                entitiesTemp[i].Id = entities[i].Id;
-                entitiesTemp[i].Type = entities[i].Type;
+                entitiesIdTemp[i] = entities[i].Id;
             }
 
-            peerWrappper.SendEvent((byte)GameEvents.EntityRemoved, new EntityRemovedEventParameters(entitiesTemp), MessageSendOptions.DefaultReliable());
+            peerWrappper.SendEvent((byte)GameEvents.EntityRemoved, new EntityRemovedEventParameters(entitiesIdTemp), MessageSendOptions.DefaultReliable());
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using System;
-using CommonTools.Coroutines;
 using ServerCommunicationInterfaces;
+using CommonTools.Coroutines;
 
 namespace ServerApplication.Common.Components.Coroutines
 {

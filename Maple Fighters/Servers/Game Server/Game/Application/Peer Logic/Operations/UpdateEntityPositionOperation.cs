@@ -20,7 +20,7 @@ namespace Game.Application.PeerLogic.Operations
             var newPosition = new Vector2(messageData.Parameters.X, messageData.Parameters.Y);
             entityTransform.SetPosition(newPosition);
 
-            return new EmptyParameters();
+            return null;
         }
     }
 }

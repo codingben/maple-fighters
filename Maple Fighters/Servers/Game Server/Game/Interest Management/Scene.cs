@@ -83,7 +83,7 @@ namespace Game.InterestManagement
                 return entity;
             }
 
-            LogUtils.Log($"Scene::GetEntity() - Could not found an entity id #{entityId}", LogMessageType.Error);
+            LogUtils.Log($"Scene::GetEntity() - Could not find an entity id #{entityId}", LogMessageType.Error);
 
             return null;
         }

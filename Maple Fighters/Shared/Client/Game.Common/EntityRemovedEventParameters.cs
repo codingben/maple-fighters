@@ -6,21 +6,21 @@ namespace Shared.Game.Common
 {
     public struct EntityRemovedEventParameters : IParameters
     {
-        public Entity[] Entity;
+        public int[] EntitiesId;
 
-        public EntityRemovedEventParameters(Entity[] entity)
+        public EntityRemovedEventParameters(int[] entity)
         {
-            Entity = entity;
+            EntitiesId = entity;
         }
 
         public void Serialize(BinaryWriter writer)
         {
-            writer.WriteArray(Entity);
+            writer.WriteInt32Array(EntitiesId);
         }
 
         public void Deserialize(BinaryReader reader)
         {
-            Entity = reader.ReadArray<Entity>();
+            EntitiesId = reader.ReadInt32Array();
         }
     }
 }

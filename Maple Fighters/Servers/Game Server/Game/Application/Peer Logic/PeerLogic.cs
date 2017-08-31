@@ -36,6 +36,9 @@ namespace Game.Application.PeerLogic
             var entity = entityWrapper.Entity;
             entity.Components.AddComponent(new Transform(entity));
             entity.Components.AddComponent(new InterestArea(entity, new Vector2(10, 10)));
+
+            var parameters = new EntityInitialInfomraitonEventParameters(new Shared.Game.Common.Entity(entity.Id, entity.Type));
+            SendEvent((byte)GameEvents.EntityInitialInformation, parameters, MessageSendOptions.DefaultReliable()); 
         }
 
         protected override void OnPeerDisconnected(DisconnectReason disconnectReason, string s)

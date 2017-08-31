@@ -53,6 +53,7 @@
   <ItemGroup>
     <Compile Include="Entity.cs" />
     <Compile Include="EntityAddedEventParameters.cs" />
+    <Compile Include="EntityInitialInfomraitonEventParameters.cs" />
     <Compile Include="EntityPositionChangedEventParameters.cs" />
     <Compile Include="EntityRemovedEventParameters.cs" />
     <Compile Include="EntityType.cs" />

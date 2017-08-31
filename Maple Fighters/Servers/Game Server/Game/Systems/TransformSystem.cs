@@ -112,11 +112,9 @@ namespace Game.Systems
                     continue;
                 }
 
-                peerWrappper.SendEvent(
-                    (byte)GameEvents.EntityPositionChanged, 
-                    new EntityPositionChangedEventParameters(ignoredEntity.Id, newPosition.X, newPosition.Y), 
-                    new MessageSendOptions(true, (byte)GameDataChannels.Position, false, false)
-                );
+                var parameters = new EntityPositionChangedEventParameters(ignoredEntity.Id, newPosition.X, newPosition.Y);
+                peerWrappper.SendEvent((byte)GameEvents.EntityPositionChanged, parameters, 
+                    MessageSendOptions.DefaultUnreliable((byte)GameDataChannels.Position));
             }
         }
     }

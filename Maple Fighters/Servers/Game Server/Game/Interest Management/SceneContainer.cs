@@ -25,7 +25,7 @@ namespace Game.InterestManagement
                 return scene;
             }
 
-            LogUtils.Log($"SceneContainer::GetScene() - Could not found a scene id #{sceneId}", LogMessageType.Error);
+            LogUtils.Log($"SceneContainer::GetScene() - Could not find a scene id #{sceneId}", LogMessageType.Error);
 
             return null;
         }

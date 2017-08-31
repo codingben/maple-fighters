@@ -8,6 +8,12 @@ namespace Shared.Game.Common
         public int Id;
         public EntityType Type;
 
+        public Entity(int id, EntityType type)
+        {
+            Id = id;
+            Type = type;
+        }
+
         public void Serialize(BinaryWriter writer)
         {
             writer.Write(Id);
