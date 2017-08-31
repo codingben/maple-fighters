@@ -36,6 +36,8 @@ namespace Game.Application.PeerLogic
             entityWrapper = new EntityWrapper(EntityType.Player, PeerId);
 
             var entity = entityWrapper.Entity;
+            entity.PresenceSceneId = 1;
+
             entity.Components.AddComponent(new Transform(entity));
             entity.Components.AddComponent(new InterestArea(entity, new Vector2(10, 10)));
         }
