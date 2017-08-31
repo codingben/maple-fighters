@@ -29,8 +29,6 @@ namespace Scripts.Services
 
         protected ServiceBase()
         {
-            Debug.Log("ServiceBase");
-
             CoroutinesExecuter = new ExternalCoroutinesExecutor().ExecuteExternally();
         }
 
@@ -119,7 +117,7 @@ namespace Scripts.Services
 
         protected bool IsConnected()
         {
-            return serverPeer.IsConnected;
+            return serverPeer != null && serverPeer.IsConnected;
         }
     }
 }

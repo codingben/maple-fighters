@@ -26,11 +26,11 @@ namespace Scripts.Coroutines
 
         public static CoroutinesWrappersUpdater GetInstance()
         {
-            instance = instance ?? new GameObject(typeof(CoroutinesWrappersUpdater).ToString(), typeof(CoroutinesWrappersUpdater)).GetComponent<CoroutinesWrappersUpdater>();
-            return instance;
+            _instance = _instance ?? new GameObject(typeof(CoroutinesWrappersUpdater).ToString(), typeof(CoroutinesWrappersUpdater)).GetComponent<CoroutinesWrappersUpdater>();
+            return _instance;
         }
 
-        private static CoroutinesWrappersUpdater instance;
+        private static CoroutinesWrappersUpdater _instance;
 
         public void AddCoroutineExecuter(ExternalCoroutinesExecutor coroutineWrapper)
         {
@@ -44,16 +44,22 @@ namespace Scripts.Coroutines
 
         private void Awake()
         {
-            instance = this;
+            _instance = this;
 
             TimeProviders.DefaultTimeProvider = new GameTimeProvider();
         }
 
         private void Update()
         {
-            if (coroutinesWrappers.Count != 0)
+            var temp = coroutinesWrappers.ToArray();
+            if (temp.Length == 0)
             {
-                coroutinesWrappers.ForEach(x => x.Update());
+                return;
+            }
+
+            foreach (var externalCoroutinesExecutor in temp)
+            {
+                externalCoroutinesExecutor.Update();
             }
         }
 
@@ -64,7 +70,7 @@ namespace Scripts.Coroutines
                 coroutinesWrappers.ForEach(x => x.StopAllCoroutines());
             }
 
-            instance = null;
+            _instance = null;
         }
     }
 }

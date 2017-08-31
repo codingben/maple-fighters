@@ -16,7 +16,6 @@ namespace Scripts.Gameplay.Actors
             entityContainer = GameContainers.EntityContainer;
 
             ServiceContainer.GameService.EntityPositionChanged.AddListener(EntityPositionChanged);
-
             ServiceContainer.GameService.Connect();
         }
 

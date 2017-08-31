@@ -4,6 +4,7 @@ using ExitGames.Client.Photon;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using CommonTools.Log;
 using PhotonCommonImplementation;
 using UnityEngine;
 
@@ -17,53 +18,31 @@ namespace PhotonClientImplementation
 
         public NetworkTrafficState NetworkTrafficState
         {
-            get
-            {
-                return networkTrafficState;
-            }
+            get { return networkTrafficState; }
             set
             {
                 if (networkTrafficState == NetworkTrafficState.Paused && value == NetworkTrafficState.Flowing)
                 {
                     while (optionsBuffer.Count > 0)
                     {
-                        switch (optionsBuffer.Dequeue())
+                        var op = optionsBuffer.Dequeue();
+                        switch (op)
                         {
                             case BufferOption.OperationResponse:
-                                {
-                                    var tuple = operationResponsesBuffer.Dequeue();
-                                    var operationResponded = OperationResponded;
-
-                                    if (operationResponded != null)
-                                    {
-                                        var messageResponseData = tuple.Item1;
-                                        var num = (int)tuple.Item2;
-
-                                        operationResponded(messageResponseData, (short)num);
-                                    }
-                                    break;
-                                }
+                                var opres = operationResponsesBuffer.Dequeue();
+                                OperationResponded?.Invoke(opres.Item1, opres.Item2);
+                                break;
                             case BufferOption.Event:
-                                {
-                                    var rawMessageData1 = eventsBuffer.Dequeue();
-                                    var eventRecieved = EventRecieved;
-
-                                    if (eventRecieved != null)
-                                    {
-                                        var rawMessageData2 = rawMessageData1;
-                                        eventRecieved(rawMessageData2);
-                                    }
-                                    break;
-                                }
+                                var ev = eventsBuffer.Dequeue();
+                                EventRecieved?.Invoke(ev);
+                                break;
                             default:
-                                {
-                                    throw new ArgumentOutOfRangeException();
-                                }
+                                throw new ArgumentOutOfRangeException();
                         }
                     }
 
-                    Debug.Assert(operationResponsesBuffer.Count == 0, "Buffer has more than what flushed");
-                    Debug.Assert(eventsBuffer.Count == 0, "Buffer has more than what flushed");
+                    LogUtils.Assert(operationResponsesBuffer.Count == 0, new TraceMessage("Buffer has more than what flushed"));
+                    LogUtils.Assert(eventsBuffer.Count == 0, new TraceMessage("Buffer has more than what flushed"));
                 }
 
                 networkTrafficState = value;
@@ -151,15 +130,17 @@ namespace PhotonClientImplementation
 
         public void Connect()
         {
-            var serverAddress = $"{serverConnectionInformation.Ip}:{serverConnectionInformation.Port}";
+            const string APPLICATION_NAME = "Empty";
 
-            Debug.Assert(RawPeer.Connect(serverAddress, "Game"),
-                $"PhotonPeer::Connect() -> Could not begin connection with: {serverAddress}");
+            var serverAddress = serverConnectionInformation.Ip + ":" + serverConnectionInformation.Port;
+            var isConnecting = RawPeer.Connect(serverAddress, APPLICATION_NAME);
+
+            LogUtils.Assert(isConnecting, new TraceMessage("Could not begin connection with: " + serverAddress + " <" + APPLICATION_NAME + ">"));
         }
 
         public void Disconnect()
         {
-            if (RawPeer.PeerState == PeerStateValue.Disconnected &&
+            if (RawPeer.PeerState == PeerStateValue.Disconnected ||
                 RawPeer.PeerState == PeerStateValue.Disconnecting)
             {
                 return;
@@ -179,22 +160,22 @@ namespace PhotonClientImplementation
             {
                 case DebugLevel.ERROR:
                 {
-                    Debug.LogError($"PhotonPeer::DebugReturn() -> Debug Level: {level} Message: {message}");
+                    LogUtils.Log(MessageBuilder.Trace($"Debug Level: {level} Message: {message}"), LogMessageType.Error);
                     break;
                 }
                 case DebugLevel.WARNING:
                 {
-                    Debug.LogWarning($"PhotonPeer::DebugReturn() -> Debug Level: {level} Message: {message}");
+                    LogUtils.Log(MessageBuilder.Trace($"Debug Level: {level} Message: {message}"), LogMessageType.Warning);
                     break;
                 }
                 case DebugLevel.INFO:
                 {
-                    Debug.Log($"PhotonPeer::DebugReturn() -> Debug Level: {level} Message: {message}");
+                    LogUtils.Log(MessageBuilder.Trace($"Debug Level: {level} Message: {message}"));
                     break;
                 }
                 default:
                 {
-                    Debug.Log($"PhotonPeer::DebugReturn() -> Debug Level: {level} Message: {message}");
+                    LogUtils.Log(MessageBuilder.Trace($"Debug Level: {level} Message: {message}"));
                     break;
                 }
             }
@@ -203,54 +184,39 @@ namespace PhotonClientImplementation
         public void OnOperationResponse(OperationResponse operationResponse)
         {
             var requestId = operationResponse.ExtractRequestId();
-            var parameter = operationResponse.Parameters[0] as byte[];
-
-            var messageResponseData = new RawMessageResponseData(operationResponse.OperationCode, parameter, operationResponse.ReturnCode);
+            var binaryParameters = operationResponse.Parameters[0] as byte[];
+            var messageData = new RawMessageResponseData(operationResponse.OperationCode, binaryParameters, operationResponse.ReturnCode);
 
             if (NetworkTrafficState == NetworkTrafficState.Paused)
             {
-                optionsBuffer.Enqueue(PhotonPeer.BufferOption.OperationResponse);
-                operationResponsesBuffer.Enqueue(new Tuple<RawMessageResponseData, short>(messageResponseData, requestId));
+                optionsBuffer.Enqueue(BufferOption.OperationResponse);
+                operationResponsesBuffer.Enqueue(new Tuple<RawMessageResponseData, short>(messageData, requestId));
+                return;
             }
-            else
-            {
-                var operationResponded = OperationResponded;
-                if (operationResponded == null)
-                {
-                    return;
-                }
 
-                var numberId = (int)requestId;
-                operationResponded(messageResponseData, (short)numberId);
-            }
+            OperationResponded?.Invoke(messageData, requestId);
         }
 
         public void OnStatusChanged(StatusCode statusCode)
         {
-            var disconnectReason = 0;
-
             switch (statusCode)
             {
                 case StatusCode.Disconnect:
-                    {
-                        // Left blank intentionally
-                        break;
-                    }
+                    Disconnected?.Invoke(DisconnectReason.ManagedDisconnect, "");
+                    Dispose();
+                    break;
                 case StatusCode.TimeoutDisconnect:
-                    {
-                        disconnectReason = 1;
-                        break;
-                    }
+                    Disconnected?.Invoke(DisconnectReason.TimeoutDisconnect, "");
+                    Dispose();
+                    break;
                 case StatusCode.DisconnectByServer:
                 case StatusCode.DisconnectByServerUserLimit:
                 case StatusCode.DisconnectByServerLogic:
-                    {
-                        disconnectReason = 4;
-                        break;
-                    }
+                    Disconnected?.Invoke(DisconnectReason.ServerDisconnect, statusCode.ToString());
+                    Dispose();
+                    break;
             }
 
-            Disconnected?.Invoke((DisconnectReason)disconnectReason, statusCode.ToString());
             StatusChanged?.Invoke(statusCode);
         }
 
@@ -279,16 +245,15 @@ namespace PhotonClientImplementation
         {
             if (sendOptions.Flush)
             {
-                Debug.Log("PhotonPeer::Send() -> SendOptions::Flush is not supported!");
+                LogUtils.Log(MessageBuilder.Trace("sendOptions::Flush is not supported!"), LogMessageType.Warning);
             }
 
-            requestId = (short)(requestId + 1);
+            var currentRequestId = requestId++;
+            var operationRequest = Utils.ToPhotonOperationRequest(data, currentRequestId);
 
-            Debug.Assert(RawPeer.OpCustom(
-                Utils.ToPhotonOperationRequest(data, requestId), sendOptions.Reliable, sendOptions.ChannelId, sendOptions.Encrypted),
-                "PhotonPeer::Send() -> Could not send operation request!");
-
-            return requestId;
+            var result = RawPeer.OpCustom(operationRequest, sendOptions.Reliable, sendOptions.ChannelId, sendOptions.Encrypted);
+            LogUtils.Assert(result, "Could not send operation request");
+            return currentRequestId;
         }
 
         private enum BufferOption
@@ -307,7 +272,7 @@ namespace PhotonClientImplementation
                 // Left blank intentionally
                 yield return null;
             }
-            while ((uint)peer.State > 0U);
+            while (peer.State != PeerStateValue.Disconnected);
         }
 
         public static IEnumerator<IYieldInstruction> WaitForConnect(this PhotonPeer peer, Action onConnected, Action onConnectionFailed)
@@ -333,7 +298,7 @@ namespace PhotonClientImplementation
                     }
                 default:
                     {
-                        Debug.LogWarning($"PeerUtils::WaitForConnect() -> Unexpected state while waiting for connection: {peer.State}");
+                        LogUtils.Break(MessageBuilder.Trace("Unexpected state while waiting for connection: " + peer.State));
                         break;
                     }
             }
@@ -440,7 +405,7 @@ namespace PhotonClientImplementation
                 return photonPeer;
             }
 
-            Debug.LogError($"Connecting to {connectionInformation.Ip}:{connectionInformation.Port} failed. StatusCode: {statusCode}");
+            LogUtils.Log($"Connecting to {connectionInformation.Ip}:{connectionInformation.Port} failed. StatusCode: {statusCode}", LogMessageType.Error);
             return null;
         }
 

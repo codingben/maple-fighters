@@ -14,11 +14,11 @@ MonoBehaviour:
   gameConnectionInformation:
     ServerType: 0
     UdpConnectionDetails:
-      Ip: 10.0.0.6
+      Ip: 127.0.0.1
       Port: 5055
     TcpConnectionDetails:
-      Ip: 10.0.0.6
+      Ip: 127.0.0.1
       Port: 4530
     WebConnectionDetails:
-      Ip: ws://10.0.0.6
+      Ip: ws://127.0.0.1
       Port: 9090

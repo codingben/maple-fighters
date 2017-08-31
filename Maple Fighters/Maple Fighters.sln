@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2017
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Maple Fighters.Plugins", "Maple Fighters.Plugins.csproj", "{9ACA0626-C706-9B60-66C6-38640F450C9D}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Maple Fighters", "Maple Fighters.csproj", "{974930B5-E7EF-3B71-A7D1-C9E87EB8CEE9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Maple Fighters.Plugins", "Maple Fighters.Plugins.csproj", "{9ACA0626-C706-9B60-66C6-38640F450C9D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Maple Fighters.Editor.Plugins", "Maple Fighters.Editor.Plugins.csproj", "{54544BF3-9A26-9A5F-3670-AE7B11529C71}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,14 +13,18 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{974930B5-E7EF-3B71-A7D1-C9E87EB8CEE9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{974930B5-E7EF-3B71-A7D1-C9E87EB8CEE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{974930B5-E7EF-3B71-A7D1-C9E87EB8CEE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{974930B5-E7EF-3B71-A7D1-C9E87EB8CEE9}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9ACA0626-C706-9B60-66C6-38640F450C9D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9ACA0626-C706-9B60-66C6-38640F450C9D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9ACA0626-C706-9B60-66C6-38640F450C9D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9ACA0626-C706-9B60-66C6-38640F450C9D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{974930B5-E7EF-3B71-A7D1-C9E87EB8CEE9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{974930B5-E7EF-3B71-A7D1-C9E87EB8CEE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{974930B5-E7EF-3B71-A7D1-C9E87EB8CEE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{974930B5-E7EF-3B71-A7D1-C9E87EB8CEE9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{54544BF3-9A26-9A5F-3670-AE7B11529C71}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{54544BF3-9A26-9A5F-3670-AE7B11529C71}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{54544BF3-9A26-9A5F-3670-AE7B11529C71}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{54544BF3-9A26-9A5F-3670-AE7B11529C71}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,7 +1,7 @@
 ﻿using CommonCommunicationInterfaces;
+using CommonTools.Log;
 using Scripts.ScriptableObjects;
 using Shared.Game.Common;
-using UnityEngine;
 
 namespace Scripts.Services
 {
@@ -29,6 +29,7 @@ namespace Scripts.Services
         protected override void OnConnected()
         {
             AddEventsHandlers();
+            EnterWorld();
         }
 
         protected override void OnDisconnected()
@@ -76,7 +77,7 @@ namespace Scripts.Services
         {
             if (!IsConnected())
             {
-                Debug.LogWarning("GameService::TestOperationRequestAsync() -> Peer is not connected to a server.");
+                LogUtils.Log(MessageBuilder.Trace("Peer is not connected to a server."));
                 return;
             }
 
@@ -84,5 +85,15 @@ namespace Scripts.Services
                 MessageSendOptions.DefaultUnreliable((byte)GameDataChannels.Position));
         }
 
+        public void EnterWorld()
+        {
+            if (!IsConnected())
+            {
+                LogUtils.Log(MessageBuilder.Trace("Peer is not connected to a server."));
+                return;
+            }
+
+            OperationRequestSender.Send(GameOperations.EnterWorld, new EmptyParameters(), MessageSendOptions.DefaultReliable());
+        }
     }
 }

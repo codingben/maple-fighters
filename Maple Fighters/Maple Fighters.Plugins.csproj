@@ -105,9 +105,16 @@
     <Compile Include="Assets\Plugins\PhotonWebSocket\SocketWebTcpThread.cs" />
     <Compile Include="Assets\Plugins\PhotonWebSocket\WebSocket\WebSocket.cs" />
     <Compile Include="Assets\Plugins\Server Side\Server Infrastructure\PhotonClientImplementation.cs" />
+    <Compile Include="Assets\Plugins\Unity-Logs-Viewer\Reporter\MultiKeyDictionary.cs" />
+    <Compile Include="Assets\Plugins\Unity-Logs-Viewer\Reporter\Reporter.cs" />
+    <Compile Include="Assets\Plugins\Unity-Logs-Viewer\Reporter\ReporterGUI.cs" />
+    <Compile Include="Assets\Plugins\Unity-Logs-Viewer\Reporter\ReporterMessageReceiver.cs" />
+    <Compile Include="Assets\Plugins\Unity-Logs-Viewer\Reporter\Test\Rotate.cs" />
+    <Compile Include="Assets\Plugins\Unity-Logs-Viewer\Reporter\Test\TestReporter.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Plugins\PhotonWebSocket\Readme-Photon-WebSocket.txt" />
+    <None Include="Assets\StreamingAssets\build_info.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />

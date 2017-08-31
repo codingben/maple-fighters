@@ -18,8 +18,6 @@ namespace Scripts.Containers.Entity
 
         public EntityContainer()
         {
-            Debug.Log("EntityContainer");
-
             ServiceContainer.GameService.EntitiyInitialInformation.AddListener(AddLocalEntity);
             ServiceContainer.GameService.EntityAdded.AddListener(AddEntity);
             ServiceContainer.GameService.EntityRemoved.AddListener(RemoveEntity);
