@@ -2,6 +2,7 @@
 {
     public enum GameOperations : byte
     {
+        EnterWorld,
         UpdateEntityPosition
     }
 }

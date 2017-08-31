@@ -27,6 +27,8 @@ namespace Game.Application.PeerLogic
         {
             var transform = entityWrapper.Entity.Components.GetComponent<Transform>().AssertNotNull() as Transform;
             OperationRequestHandlerRegister.SetHandler(GameOperations.UpdateEntityPosition, new UpdateEntityPositionOperation(transform));
+
+            OperationRequestHandlerRegister.SetHandler(GameOperations.EnterWorld, new EnterWorldOperation(PeerId, entityWrapper.Entity.Id));
         }
 
         private void CreatePlayerEntity()
@@ -36,9 +38,6 @@ namespace Game.Application.PeerLogic
             var entity = entityWrapper.Entity;
             entity.Components.AddComponent(new Transform(entity));
             entity.Components.AddComponent(new InterestArea(entity, new Vector2(10, 10)));
-
-            var parameters = new EntityInitialInfomraitonEventParameters(new Shared.Game.Common.Entity(entity.Id, entity.Type));
-            SendEvent((byte)GameEvents.EntityInitialInformation, parameters, MessageSendOptions.DefaultReliable()); 
         }
 
         protected override void OnPeerDisconnected(DisconnectReason disconnectReason, string s)
