@@ -5,7 +5,6 @@ using Game.Entities;
 using Game.Entity.Components;
 using MathematicsHelper;
 using ServerApplication.Common.ComponentModel;
-using ServerApplication.Common.Components.Coroutines;
 
 namespace Game.InterestManagement
 {
@@ -14,9 +13,13 @@ namespace Game.InterestManagement
         private Rectangle areaBoundaries;
         private IRegion[,] sceneRegions;
 
-        public InterestArea(IEntity entity, Vector2 areaSize) 
+        private readonly ICoroutinesExecuter coroutinesExecuter;
+
+        public InterestArea(IEntity entity, Vector2 areaSize, ICoroutinesExecuter coroutinesExecuter) 
             : base(entity)
         {
+            this.coroutinesExecuter = coroutinesExecuter;
+
             areaBoundaries = new Rectangle(Vector2.Zero, areaSize);
 
             var transform = OwnerEntity.Components.GetComponent<Transform>().AssertNotNull() as Transform;
@@ -36,7 +39,6 @@ namespace Game.InterestManagement
 
             sceneRegions = scene.GetAllRegions();
 
-            var coroutinesExecuter = ServerComponents.Container.GetComponent<CoroutinesExecuter>().AssertNotNull() as ICoroutinesExecuter;
             coroutinesExecuter.StartCoroutine(DetectOverlapsWithRegions());
         }
 

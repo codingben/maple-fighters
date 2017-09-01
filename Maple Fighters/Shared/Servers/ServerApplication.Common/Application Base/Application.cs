@@ -17,6 +17,7 @@ namespace ServerApplication.Common.ApplicationBase
         protected Application(IFiberProvider fiberProvider)
         {
             this.fiberProvider = fiberProvider;
+            this.fiberProvider.GetFiber().Start();
         }
 
         public abstract void OnConnected(IClientPeer clientPeer);

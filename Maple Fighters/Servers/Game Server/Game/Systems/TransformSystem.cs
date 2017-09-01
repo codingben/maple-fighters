@@ -21,7 +21,7 @@ namespace Game.Systems
         public readonly Action<IEntity> AddEntity;
         public readonly Action<IEntity> RemoveEntity;
 
-        private readonly ICoroutinesExecuter coroutinesExecuter;
+        private readonly CoroutinesExecuter coroutinesExecuter;
         private ICoroutine entitiesIteratorCoroutine;
 
         private readonly PeerContainer peerContainer;
@@ -31,7 +31,7 @@ namespace Game.Systems
 
         public TransformSystem()
         {
-            coroutinesExecuter = ServerComponents.Container.GetComponent<CoroutinesExecuter>() as ICoroutinesExecuter;
+            coroutinesExecuter = ServerComponents.Container.GetComponent<CoroutinesExecuter>().AssertNotNull() as CoroutinesExecuter;
 
             peerContainer = ServerComponents.Container.GetComponent<PeerContainer>().AssertNotNull() as PeerContainer;
             entityIdToPeerIdConverter = ServerComponents.Container.GetComponent<EntityIdToPeerIdConverter>().AssertNotNull() as EntityIdToPeerIdConverter;
@@ -42,7 +42,8 @@ namespace Game.Systems
 
         private void OnEntityAdded(IEntity entity)
         {
-            if (!(entity.Components.GetComponent<Transform>().AssertNotNull() is Transform transform))
+            var transform = (Transform)entity.Components.GetComponent<Transform>().AssertNotNull();
+            if (transform == null)
             {
                 return;
             }
@@ -63,6 +64,8 @@ namespace Game.Systems
         {
             if (entitiesTransforms.Count > 0)
             {
+                LogUtils.Log("CheckEntitiesIteration");
+
                 entitiesIteratorCoroutine = coroutinesExecuter.StartCoroutine(EntitiesIteration());
             }
             else
@@ -73,6 +76,8 @@ namespace Game.Systems
 
         private IEnumerator<IYieldInstruction> EntitiesIteration()
         {
+            LogUtils.Log("EntitiesIteration");
+
             while (true)
             {
                 PositionChangesNotifier();
@@ -82,6 +87,8 @@ namespace Game.Systems
 
         private void PositionChangesNotifier()
         {
+            LogUtils.Log("PositionChangesNotifier");
+
             foreach (var transform in entitiesTransforms.Values)
             {
                 if (Vector2.Distance(transform.NewPosition, transform.LastPosition) < 1)
@@ -97,13 +104,27 @@ namespace Game.Systems
 
         private void SendNewPosition(IEntity ignoredEntity, Vector2 newPosition)
         {
-            var publisherRegion = ignoredEntity.Components.GetComponent<InterestArea>().AssertNotNull() as IInterestArea;
-            var entities = publisherRegion?.GetPublishers();
-            var otherEntities = entities?.ConvertRegionsFromMatrix().Except(new[] { ignoredEntity });
+            var ignoredEntityInterestArea = ignoredEntity.Components.GetComponent<InterestArea>().AssertNotNull() as IInterestArea;
 
-            foreach (var entity in otherEntities)
+            var publisherRegions = ignoredEntityInterestArea?.GetPublishers();
+
+            var entities = new List<IEntity>();
+
+            foreach (var publisherRegion in publisherRegions)
+            {
+                entities.AddRange(publisherRegion.GetAllSubscribers().Where(subscriber => subscriber.Id != ignoredEntity.Id));
+            }
+
+            // var entities = publisherRegions?.ConvertRegionsFromMatrix().Except(new[] { ignoredEntity });
+
+            foreach (var entity in entities)
             {
                 var peerId = entityIdToPeerIdConverter.GetPeerId(entity.Id);
+                if (peerId == -1)
+                {
+                    LogUtils.Log(MessageBuilder.Trace($"Could not find a peer id of an entity #{entity.Id}"));
+                    continue;
+                }
 
                 var peerWrappper = peerContainer.GetPeerWrapper(peerId).AssertNotNull();
                 if (peerWrappper == null)
@@ -112,9 +133,10 @@ namespace Game.Systems
                     continue;
                 }
 
+                LogUtils.Log($"Entity Id: {ignoredEntity.Id} Changed Position to: {newPosition}");
+                // MessageSendOptions.DefaultUnreliable((byte)GameDataChannels.Position))
                 var parameters = new EntityPositionChangedEventParameters(ignoredEntity.Id, newPosition.X, newPosition.Y);
-                peerWrappper.SendEvent((byte)GameEvents.EntityPositionChanged, parameters, 
-                    MessageSendOptions.DefaultUnreliable((byte)GameDataChannels.Position));
+                peerWrappper.SendEvent((byte)GameEvents.EntityPositionChanged, parameters, MessageSendOptions.DefaultReliable());
             }
         }
     }

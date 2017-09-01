@@ -14,6 +14,8 @@ namespace Game.InterestManagement
 
         private readonly TransformSystem transformSystem;
 
+        private readonly object locker = new object();
+
         public Scene(int sceneId, Vector2 sceneSize, Vector2 regionsSize)
         {
             this.sceneId = sceneId;
@@ -48,44 +50,55 @@ namespace Game.InterestManagement
 
         public void AddEntity(IEntity entity)
         {
-            if (entities.ContainsKey(entity.Id))
+            lock (locker)
             {
-                LogUtils.Log($"Scene::AddEntity() -> An entity with a id #{entity.Id} already exists in a scene.", LogMessageType.Warning);
-                return;
+                if (entities.ContainsKey(entity.Id))
+                {
+                    LogUtils.Log($"Scene::AddEntity() -> An entity with a id #{entity.Id} already exists in a scene.",
+                        LogMessageType.Warning);
+                    return;
+                }
+
+                entity.PresenceSceneId = sceneId;
+
+                entities.Add(entity.Id, entity);
+
+                transformSystem.AddEntity(entity);
             }
-
-            entity.PresenceSceneId = sceneId;
-
-            entities.Add(entity.Id, entity);
-
-            transformSystem.AddEntity(entity);
         }
 
         public void RemoveEntity(IEntity entity)
         {
-            if (!entities.ContainsKey(entity.Id))
+            lock (locker)
             {
-                LogUtils.Log($"Scene::AddEntity() -> An entity with a id #{entity.Id} does not exists in a scene.", LogMessageType.Warning);
-                return;
+                if (!entities.ContainsKey(entity.Id))
+                {
+                    LogUtils.Log($"Scene::AddEntity() -> An entity with a id #{entity.Id} does not exists in a scene.",
+                        LogMessageType.Warning);
+                    return;
+                }
+
+                entity.PresenceSceneId = -1;
+
+                entities.Remove(entity.Id);
+
+                transformSystem.RemoveEntity(entity);
             }
-
-            entity.PresenceSceneId = -1;
-
-            entities.Remove(entity.Id);
-
-            transformSystem.RemoveEntity(entity);
         }
 
         public IEntity GetEntity(int entityId)
         {
-            if (entities.TryGetValue(entityId, out var entity))
+            lock (locker)
             {
-                return entity;
+                if (entities.TryGetValue(entityId, out var entity))
+                {
+                    return entity;
+                }
+
+                LogUtils.Log($"Scene::GetEntity() - Could not find an entity id #{entityId}", LogMessageType.Error);
+
+                return null;
             }
-
-            LogUtils.Log($"Scene::GetEntity() - Could not find an entity id #{entityId}", LogMessageType.Error);
-
-            return null;
         }
 
         public IRegion[,] GetAllRegions()

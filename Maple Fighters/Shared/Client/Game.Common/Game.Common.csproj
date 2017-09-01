@@ -51,6 +51,8 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EntitiesAddedEventParameters.cs" />
+    <Compile Include="EntitiesRemovedEventParameters.cs" />
     <Compile Include="Entity.cs" />
     <Compile Include="EntityAddedEventParameters.cs" />
     <Compile Include="EntityInitialInfomraitonEventParameters.cs" />

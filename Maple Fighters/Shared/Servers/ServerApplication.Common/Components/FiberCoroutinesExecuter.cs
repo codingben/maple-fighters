@@ -4,7 +4,7 @@ using CommonTools.Coroutines;
 
 namespace ServerApplication.Common.Components.Coroutines
 {
-    internal class FiberCoroutinesExecuter : ThreadSafeCoroutinesExecuterBase
+    public class FiberCoroutinesExecuter : ThreadSafeCoroutinesExecuterBase
     {
         private readonly IDisposable scheduler;
 

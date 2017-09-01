@@ -1,26 +1,25 @@
 ﻿using System.IO;
 using CommonCommunicationInterfaces;
-using CommunicationHelper;
 
 namespace Shared.Game.Common
 {
     public struct EntityRemovedEventParameters : IParameters
     {
-        public int[] EntitiesId;
+        public int EntityId;
 
-        public EntityRemovedEventParameters(int[] entity)
+        public EntityRemovedEventParameters(int entity)
         {
-            EntitiesId = entity;
+            EntityId = entity;
         }
 
         public void Serialize(BinaryWriter writer)
         {
-            writer.WriteInt32Array(EntitiesId);
+            writer.Write(EntityId);
         }
 
         public void Deserialize(BinaryReader reader)
         {
-            EntitiesId = reader.ReadInt32Array();
+            EntityId = reader.ReadInt32();
         }
     }
 }

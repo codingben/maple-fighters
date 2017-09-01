@@ -5,6 +5,8 @@
         EntityInitialInformation,
         EntityPositionChanged,
         EntityAdded,
-        EntityRemoved
+        EntityRemoved,
+        EntitiesAdded,
+        EntitiesRemoved
     }
 }
