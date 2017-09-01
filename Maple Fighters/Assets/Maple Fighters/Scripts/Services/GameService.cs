@@ -10,14 +10,18 @@ namespace Scripts.Services
         public UnityEvent<EntityInitialInfomraitonEventParameters> EntitiyInitialInformation { get; }
         public UnityEvent<EntityAddedEventParameters> EntityAdded { get; }
         public UnityEvent<EntityRemovedEventParameters> EntityRemoved { get; }
+        public UnityEvent<EntitiesAddedEventParameters> EntitiesAdded { get; }
+        public UnityEvent<EntitiesRemovedEventParameters> EntitiesRemoved { get; }
         public UnityEvent<EntityPositionChangedEventParameters> EntityPositionChanged { get; }
 
         public GameService()
         {
-            EntityAdded = new UnityEvent<EntityAddedEventParameters>();
-            EntityRemoved = new UnityEvent<EntityRemovedEventParameters>();
             EntitiyInitialInformation = new UnityEvent<EntityInitialInfomraitonEventParameters>();
             EntityPositionChanged = new UnityEvent<EntityPositionChangedEventParameters>();
+            EntityAdded = new UnityEvent<EntityAddedEventParameters>();
+            EntityRemoved = new UnityEvent<EntityRemovedEventParameters>();
+            EntitiesAdded = new UnityEvent<EntitiesAddedEventParameters>();
+            EntitiesRemoved = new UnityEvent<EntitiesRemovedEventParameters>();
         }
 
         public void Connect()
@@ -57,6 +61,18 @@ namespace Scripts.Services
                 return true;
             }));
 
+            EventHandlerRegister.SetHandler(GameEvents.EntitiesAdded, new EventInvoker<EntitiesAddedEventParameters>(unityEvent =>
+            {
+                EntitiesAdded.Invoke(unityEvent.Parameters);
+                return true;
+            }));
+
+            EventHandlerRegister.SetHandler(GameEvents.EntitiesRemoved, new EventInvoker<EntitiesRemovedEventParameters>(unityEvent =>
+            {
+                EntitiesRemoved.Invoke(unityEvent.Parameters);
+                return true;
+            }));
+
             EventHandlerRegister.SetHandler(GameEvents.EntityPositionChanged, new EventInvoker<EntityPositionChangedEventParameters>(unityEvent =>
             {
                 EntityPositionChanged.Invoke(unityEvent.Parameters);
@@ -71,7 +87,6 @@ namespace Scripts.Services
             EventHandlerRegister.RemoveHandler(GameEvents.EntityRemoved);
             EventHandlerRegister.RemoveHandler(GameEvents.EntityPositionChanged);
         }
-
 
         public void UpdateEntityPosition(UpdateEntityPositionRequestParameters parameters)
         {

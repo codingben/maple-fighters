@@ -22,11 +22,13 @@ namespace Scripts.Gameplay.Actors
         private void EntityPositionChanged(EntityPositionChangedEventParameters parameters)
         {
             var entity = entityContainer.GetRemoteEntity(parameters.EntityId);
-            if (entity != null)
+            if (entity == null)
             {
                 LogUtils.Log(MessageBuilder.Trace($"Could not find an entity id #{entity.Id}"));
                 return;
             }
+
+            LogUtils.Log(MessageBuilder.Trace($"Entity Id: {parameters.EntityId} New Position: {new Vector2(parameters.X, parameters.Y)}"));
 
             entity.GameObject.GetComponent<IPositionSetter>().Move(new Vector2(parameters.X, parameters.Y));
         }

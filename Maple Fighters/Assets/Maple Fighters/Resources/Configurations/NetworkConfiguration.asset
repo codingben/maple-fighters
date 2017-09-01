@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Name: NetworkConfiguration
   m_EditorClassIdentifier: 
   ConnectionProtocol: 0
-  DebugLevel: 5
+  DebugLevel: 0

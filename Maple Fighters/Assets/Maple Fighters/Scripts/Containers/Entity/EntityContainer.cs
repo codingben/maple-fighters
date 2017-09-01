@@ -21,11 +21,13 @@ namespace Scripts.Containers.Entity
             ServiceContainer.GameService.EntitiyInitialInformation.AddListener(AddLocalEntity);
             ServiceContainer.GameService.EntityAdded.AddListener(AddEntity);
             ServiceContainer.GameService.EntityRemoved.AddListener(RemoveEntity);
+            ServiceContainer.GameService.EntitiesAdded.AddListener(AddEntities);
+            ServiceContainer.GameService.EntitiesRemoved.AddListener(RemoveEntities);
         }
 
         private void AddLocalEntity(EntityInitialInfomraitonEventParameters parameters)
         {
-            Debug.Log("AddLocalEntity()");
+            LogUtils.Log(MessageBuilder.Trace($"Local Id: {parameters.Entity.Id}"));
 
             var entity = parameters.Entity;
 
@@ -52,6 +54,30 @@ namespace Scripts.Containers.Entity
 
         private void AddEntity(EntityAddedEventParameters parameters)
         {
+            var entityId = parameters.Entity.Id;
+            var entityType = parameters.Entity.Type;
+
+            if (entities.ContainsKey(entityId))
+            {
+                LogUtils.Log(MessageBuilder.Trace($"Entity with id #{entityId} already exists."), LogMessageType.Warning);
+                return;
+            }
+
+            var entityObjectName = entityType.ToString();
+
+            var entityObject = CreateEntity(entityObjectName);
+            if (entityObject == null)
+            {
+                LogUtils.Log(MessageBuilder.Trace($"Could not find an entity type - {entityObjectName}"), LogMessageType.Error);
+                return;
+            }
+
+            var gameObject = Object.Instantiate(entityObject) as GameObject;
+            entities.Add(entityId, gameObject.GetComponent<IEntity>());                
+        }
+
+        private void AddEntities(EntitiesAddedEventParameters parameters)
+        {
             foreach (var entity in parameters.Entity)
             {
                 if (entities.ContainsKey(entity.Id))
@@ -70,11 +96,26 @@ namespace Scripts.Containers.Entity
                 }
 
                 var gameObject = Object.Instantiate(entityObject) as GameObject;
-                entities.Add(entity.Id, gameObject.GetComponent<IEntity>());                
+                entities.Add(entity.Id, gameObject.GetComponent<IEntity>());
             }
         }
 
         private void RemoveEntity(EntityRemovedEventParameters parameters)
+        {
+            var entityId = parameters.EntityId;
+
+            if (!entities.ContainsKey(entityId))
+            {
+                LogUtils.Log(MessageBuilder.Trace($"Could not find an entity with id #{entityId}"), LogMessageType.Warning);
+                return;
+            }
+
+            Object.Destroy(entities[entityId].GameObject);
+
+            entities.Remove(entityId);
+        }
+
+        private void RemoveEntities(EntitiesRemovedEventParameters parameters)
         {
             foreach (var entityId in parameters.EntitiesId)
             {
@@ -83,6 +124,8 @@ namespace Scripts.Containers.Entity
                     LogUtils.Log(MessageBuilder.Trace($"Could not find an entity with id #{entityId}"), LogMessageType.Warning);
                     continue;
                 }
+
+                Object.Destroy(entities[entityId].GameObject);
 
                 entities.Remove(entityId);
             }
