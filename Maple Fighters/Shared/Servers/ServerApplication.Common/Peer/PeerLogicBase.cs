@@ -1,4 +1,5 @@
 ﻿using System;
+using CommonCommunicationInterfaces;
 using ServerCommunicationHelper;
 using ServerCommunicationInterfaces;
 
@@ -46,6 +47,12 @@ namespace Shared.ServerApplication.Common.Peer
                 eventSender,
                 logEvents
             );
+        }
+
+        public override void SendEvent<TParameters>(byte code, TParameters parameters, MessageSendOptions messageSendOptions)
+        {
+            var gameEvent = (TEventCode)Enum.ToObject(typeof(TEventCode), code);
+            EventSender.Send(gameEvent, parameters, messageSendOptions);
         }
     }
 }

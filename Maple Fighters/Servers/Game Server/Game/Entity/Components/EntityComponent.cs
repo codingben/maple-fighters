@@ -5,7 +5,7 @@ namespace Game.Entity.Components
 {
     public class EntityComponent : IComponent
     {
-        public readonly IEntity OwnerEntity;
+        protected IEntity OwnerEntity { get; }
 
         protected EntityComponent(IEntity entity)
         {

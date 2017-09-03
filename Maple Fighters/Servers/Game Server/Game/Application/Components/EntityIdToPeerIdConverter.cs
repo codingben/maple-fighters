@@ -13,6 +13,12 @@ namespace Game.Application.Components
         {
             lock (locker)
             {
+                if (entityIdToPeerIdContainer.ContainsKey(entityId))
+                {
+                    LogUtils.Log(MessageBuilder.Trace($"Could not add a new entity #{entityId} because it already exists."));
+                    return;
+                }
+
                 entityIdToPeerIdContainer.Add(entityId, peerId);
             }
         }
@@ -21,6 +27,12 @@ namespace Game.Application.Components
         {
             lock (locker)
             {
+                if (!entityIdToPeerIdContainer.ContainsKey(entityId))
+                {
+                    LogUtils.Log(MessageBuilder.Trace($"Could not remove an entity #{entityId} because it does not exist."));
+                    return;
+                }
+
                 entityIdToPeerIdContainer.Remove(entityId);
             }
         }

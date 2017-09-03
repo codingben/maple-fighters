@@ -13,7 +13,7 @@ namespace Game.Application.Components
 
         public EntityWrapper(EntityType type, int peerId)
         {
-            entityIdToPeerIdConverter = ServerComponents.Container.GetComponent<EntityIdToPeerIdConverter>().AssertNotNull() as EntityIdToPeerIdConverter;
+            entityIdToPeerIdConverter = ServerComponents.Container.GetComponent<EntityIdToPeerIdConverter>().AssertNotNull();
 
             CreateEntity(type);
             AddEntityToPeerIdConverter(peerId);
@@ -22,11 +22,13 @@ namespace Game.Application.Components
         public new void Dispose()
         {
             RemoveEntityIdFromConverter();
+
+            Entity.Components.RemoveAllComponents();
         }
 
         private void CreateEntity(EntityType type)
         {
-            var entityContainer = ServerComponents.Container.GetComponent<EntityContainer>().AssertNotNull() as EntityContainer;
+            var entityContainer = ServerComponents.Container.GetComponent<EntityContainer>().AssertNotNull();
             Entity = entityContainer.CreateEntity(type);
         }
 

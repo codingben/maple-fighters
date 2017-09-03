@@ -1,5 +1,6 @@
 ﻿using CommonTools.Log;
 using Game.Application.Components;
+using Game.Application.PeerLogic;
 using Game.Entities;
 using Game.InterestManagement;
 using MathematicsHelper;
@@ -19,20 +20,29 @@ namespace Game.Application
             // Left blank intentionally
         }
 
-        public override void Initialize()
+        public override void Startup()
         {
+            base.Startup();
+
             AddCommonComponents();
             AddComponents();
 
             SetupScenes();
         }
 
+        public override void Shutdown()
+        {
+            base.Shutdown();
+
+            ServerComponents.Container.RemoveAllComponents();
+        }
+
         public override void OnConnected(IClientPeer clientPeer)
         {
-            var idGenerator = ServerComponents.Container.GetComponent<IdGenerator>().AssertNotNull() as IdGenerator;
+            var idGenerator = ServerComponents.Container.GetComponent<IdGenerator>().AssertNotNull();
             var peerId = idGenerator.GenerateId();
 
-            WrapClientPeer(new PeerLogic.PeerLogic(clientPeer, peerId));
+            WrapClientPeer(new GamePeerLogic(clientPeer, peerId));
         }
 
         private void AddComponents()
@@ -44,7 +54,7 @@ namespace Game.Application
 
         private void SetupScenes()
         {
-            var sceneContainer = ServerComponents.Container.GetComponent<SceneContainer>().AssertNotNull() as SceneContainer;
+            var sceneContainer = ServerComponents.Container.GetComponent<SceneContainer>().AssertNotNull();
             sceneContainer.AddScene(1, new Vector2(20, 15), new Vector2(10, 5));
         }
     }

@@ -24,8 +24,8 @@ namespace Game.InterestManagement
         {
             Rectangle = rectangle;
 
-            peerContainer = ServerComponents.Container.GetComponent<PeerContainer>().AssertNotNull() as PeerContainer;
-            entityIdToPeerIdConverter = ServerComponents.Container.GetComponent<EntityIdToPeerIdConverter>().AssertNotNull() as EntityIdToPeerIdConverter;
+            peerContainer = ServerComponents.Container.GetComponent<PeerContainer>().AssertNotNull();
+            entityIdToPeerIdConverter = ServerComponents.Container.GetComponent<EntityIdToPeerIdConverter>().AssertNotNull();
         }
 
         public void AddSubscription(IEntity entity)

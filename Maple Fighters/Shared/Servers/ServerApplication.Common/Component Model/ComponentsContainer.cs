@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using CommonTools.Log;
 
 namespace ServerApplication.Common.ComponentModel
 {
@@ -7,7 +8,7 @@ namespace ServerApplication.Common.ComponentModel
     {
         private readonly List<object> components = new List<object>();
 
-        public object AddComponent<T>(T component) 
+        public T AddComponent<T>(T component)
             where T : IComponent
         {
             components.Add(component);
@@ -15,16 +16,37 @@ namespace ServerApplication.Common.ComponentModel
             return GetComponent<T>();
         }
 
-        public void RemoveComponent<T>() 
+        public void RemoveComponent<T>()
             where T : IComponent
         {
-            components.Remove(typeof(T));
+            var component = GetComponent<T>();
+            if (component == null)
+            {
+                LogUtils.Log(MessageBuilder.Trace($"Could not remove component {typeof(T).Name} - it does not exist."));
+                return;
+            }
+
+            var index = components.IndexOf(component);
+            if (index != -1)
+            {
+                components.RemoveAt(index);
+            }
         }
 
-        public object GetComponent<T>()
+        public T GetComponent<T>()
             where T : IComponent
         {
             return components.OfType<T>().FirstOrDefault();
+        }
+
+        public void RemoveAllComponents()
+        {
+            foreach (var component in components)
+            {
+                (component as IComponent).Dispose();
+
+                components.Remove(component);
+            }
         }
     }
 }

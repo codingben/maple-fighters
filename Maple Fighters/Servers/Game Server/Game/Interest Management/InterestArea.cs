@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-using CommonTools.Coroutines;
 using CommonTools.Log;
 using Game.Entities;
 using Game.Entity.Components;
@@ -13,16 +11,12 @@ namespace Game.InterestManagement
         private Rectangle areaBoundaries;
         private IRegion[,] sceneRegions;
 
-        private readonly ICoroutinesExecuter coroutinesExecuter;
-
-        public InterestArea(IEntity entity, Vector2 areaSize, ICoroutinesExecuter coroutinesExecuter) 
+        public InterestArea(IEntity entity, Vector2 areaSize) 
             : base(entity)
         {
-            this.coroutinesExecuter = coroutinesExecuter;
-
             areaBoundaries = new Rectangle(Vector2.Zero, areaSize);
 
-            var transform = OwnerEntity.Components.GetComponent<Transform>().AssertNotNull() as Transform;
+            var transform = OwnerEntity.Components.GetComponent<Transform>().AssertNotNull();
             transform.PositionChanged += SetPosition;
 
             SetSceneRegions();
@@ -30,7 +24,7 @@ namespace Game.InterestManagement
 
         private void SetSceneRegions()
         {
-            var sceneContainer = ServerComponents.Container.GetComponent<SceneContainer>().AssertNotNull() as SceneContainer;
+            var sceneContainer = ServerComponents.Container.GetComponent<SceneContainer>().AssertNotNull();
             var scene = sceneContainer.GetScene(OwnerEntity.PresenceSceneId).AssertNotNull();
             if (scene == null)
             {
@@ -38,13 +32,13 @@ namespace Game.InterestManagement
             }
 
             sceneRegions = scene.GetAllRegions();
-
-            coroutinesExecuter.StartCoroutine(DetectOverlapsWithRegions());
         }
 
         public void SetPosition(Vector2 position)
         {
             areaBoundaries.SetPosition(position);
+
+            DetectOverlapsWithRegions();
         }
 
         public IRegion[,] GetPublishers()
@@ -52,39 +46,26 @@ namespace Game.InterestManagement
             return sceneRegions;
         }
 
-        private IEnumerator<IYieldInstruction> DetectOverlapsWithRegions()
+        private void DetectOverlapsWithRegions()
         {
-            var lastPosition = Vector2.Zero;
-
-            while (true)
+            foreach (var region in sceneRegions)
             {
-                if (Vector2.Distance(areaBoundaries.Position, lastPosition) < 1)
+                if (!Rectangle.Intersect(region.Rectangle, areaBoundaries).Equals(Rectangle.EMPTY))
                 {
-                    yield return null;
-                }
-
-                foreach (var region in sceneRegions)
-                {
-                    if (!Rectangle.Intersect(region.Rectangle, areaBoundaries).Equals(Rectangle.EMPTY))
+                    if (region.HasSubscription(OwnerEntity.Id))
                     {
-                        if (region.HasSubscription(OwnerEntity.Id))
-                        {
-                            continue;
-                        }
-
-                        region.AddSubscription(OwnerEntity);
+                        continue;
                     }
-                    else
+
+                    region.AddSubscription(OwnerEntity);
+                }
+                else
+                {
+                    if (region.HasSubscription(OwnerEntity.Id))
                     {
-                        if (region.HasSubscription(OwnerEntity.Id))
-                        {
-                            region.RemoveSubscription(OwnerEntity);
-                        }
+                        region.RemoveSubscription(OwnerEntity);
                     }
                 }
-
-                lastPosition = areaBoundaries.Position;
-                yield return null;
             }
         }
     }

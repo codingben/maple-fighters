@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using CommonTools.Log;
 using Game.Entities;
-using Game.Systems;
 using MathematicsHelper;
 
 namespace Game.InterestManagement
@@ -12,8 +11,6 @@ namespace Game.InterestManagement
         private IRegion[,] regions;
         private readonly Dictionary<int, IEntity> entities = new Dictionary<int, IEntity>();
 
-        private readonly TransformSystem transformSystem;
-
         private readonly object locker = new object();
 
         public Scene(int sceneId, Vector2 sceneSize, Vector2 regionsSize)
@@ -21,8 +18,6 @@ namespace Game.InterestManagement
             this.sceneId = sceneId;
 
             CreateRegions(sceneSize, regionsSize);
-
-            transformSystem = new TransformSystem();
         }
 
         private void CreateRegions(Vector2 sceneSize, Vector2 regionsSize)
@@ -62,8 +57,6 @@ namespace Game.InterestManagement
                 entity.PresenceSceneId = sceneId;
 
                 entities.Add(entity.Id, entity);
-
-                transformSystem.AddEntity(entity);
             }
         }
 
@@ -81,8 +74,6 @@ namespace Game.InterestManagement
                 entity.PresenceSceneId = -1;
 
                 entities.Remove(entity.Id);
-
-                transformSystem.RemoveEntity(entity);
             }
         }
 

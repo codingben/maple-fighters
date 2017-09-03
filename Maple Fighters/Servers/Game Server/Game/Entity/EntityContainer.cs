@@ -17,7 +17,7 @@ namespace Game.Entities
 
         public EntityContainer()
         {
-            idGenerator = ServerComponents.Container.GetComponent<IdGenerator>().AssertNotNull() as IdGenerator;
+            idGenerator = ServerComponents.Container.GetComponent<IdGenerator>().AssertNotNull();
         }
 
         public Entity CreateEntity(EntityType type)

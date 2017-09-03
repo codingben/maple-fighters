@@ -9,7 +9,7 @@ using ServerCommunicationInterfaces;
 namespace ServerApplication.Common.PhotonStarter
 {
     public abstract class PhotonStarterBase<T> : PhotonServerImplementation.ApplicationBase
-        where T : Application
+        where T : IApplication
     {
         private const string LOGGER_PATH = "../log4net.config";
 
@@ -34,12 +34,12 @@ namespace ServerApplication.Common.PhotonStarter
             LogUtils.Logger = CreateLogger();
 
             application = CreateApplication(new PhotonFiberProvider());
-            application.Initialize();
+            application.Startup();
         }
 
         protected override void TearDown()
         {
-            application?.Dispose();
+            application.Shutdown();
         }
 
         private Logger.Logger CreateLogger()

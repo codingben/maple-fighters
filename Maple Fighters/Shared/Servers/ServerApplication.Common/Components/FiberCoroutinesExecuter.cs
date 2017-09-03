@@ -4,11 +4,11 @@ using CommonTools.Coroutines;
 
 namespace ServerApplication.Common.Components.Coroutines
 {
-    public class FiberCoroutinesExecuter : ThreadSafeCoroutinesExecuterBase
+    public class FiberCoroutinesExecutor : ThreadSafeCoroutinesExecutorBase
     {
         private readonly IDisposable scheduler;
 
-        public FiberCoroutinesExecuter(IScheduler fiber, int updateRateMs)
+        public FiberCoroutinesExecutor(IScheduler fiber, int updateRateMs)
         {
             scheduler = fiber.ScheduleOnInterval(Update, 0, updateRateMs);
         }
