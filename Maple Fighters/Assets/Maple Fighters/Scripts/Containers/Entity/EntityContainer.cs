@@ -46,7 +46,8 @@ namespace Scripts.Containers.Entity
                 return;
             }
 
-            var gameObject = Object.Instantiate(entityObject) as GameObject;
+            var position = new Vector3(parameters.X, parameters.Y);
+            var gameObject = Object.Instantiate(entityObject, position, Quaternion.identity) as GameObject;
             entities.Add(entity.Id, gameObject.GetComponent<IEntity>());
 
             localEntityId = entity.Id;

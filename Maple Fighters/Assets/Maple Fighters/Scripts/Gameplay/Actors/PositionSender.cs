@@ -18,7 +18,7 @@ namespace Scripts.Gameplay.Actors
 
         private void Update()
         {
-            if (Vector2.Distance(transform.position, lastPosition) < 1)
+            if (Vector2.Distance(transform.position, lastPosition) < 0.1f)
             {
                 return;
             }

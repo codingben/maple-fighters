@@ -11,5 +11,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 998f05c916543b443a6738cd6b74be2e, type: 3}
   m_Name: NetworkConfiguration
   m_EditorClassIdentifier: 
-  ConnectionProtocol: 0
-  DebugLevel: 0
+  ConnectionProtocol: 4
+  DebugLevel: 5
