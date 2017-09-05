@@ -1,9 +1,9 @@
 ﻿namespace ServerApplication.Common.ComponentModel
 {
-    public interface IComponentsContainer
+    public interface IContainer<in TComoponent>
+        where TComoponent : class, IComponent
     {
-        T AddComponent<T>(T component)
-            where T : IComponent;
+        void AddComponent(TComoponent component);
 
         void RemoveComponent<T>()
             where T : IComponent;

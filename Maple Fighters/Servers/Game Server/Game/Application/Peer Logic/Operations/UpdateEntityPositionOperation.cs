@@ -1,5 +1,5 @@
 ﻿using CommonCommunicationInterfaces;
-using Game.Entity.Components;
+using Game.InterestManagement;
 using MathematicsHelper;
 using ServerCommunicationHelper;
 using Shared.Game.Common;
@@ -19,7 +19,6 @@ namespace Game.Application.PeerLogic.Operations
         {
             var newPosition = new Vector2(messageData.Parameters.X, messageData.Parameters.Y);
             entityTransform.SetPosition(newPosition);
-
             return null;
         }
     }

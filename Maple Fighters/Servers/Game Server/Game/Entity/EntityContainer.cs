@@ -6,9 +6,9 @@ using Shared.Game.Common;
 
 namespace Game.Entities
 {
-    // TODO: Are this class and PeerContainer should using lockers? Yes, if there is a using from different threads (fibers).
+    /*// TODO: Are this class and PeerContainer should using lockers? Yes, if there is a using from different threads (fibers).
     // TODO: Entities may contain "EventSender" component instead of Entity Id -> Peer Id and then send a event from Peer Logic.
-    internal class EntityContainer : Component
+    internal class EntityContainer : CommonComponent
     {
         private readonly Dictionary<int, Entity> entities = new Dictionary<int, Entity>();
         private readonly IdGenerator idGenerator;
@@ -58,5 +58,5 @@ namespace Game.Entities
                 return entitiesTemp;
             }
         }
-    }
+    }*/
 }

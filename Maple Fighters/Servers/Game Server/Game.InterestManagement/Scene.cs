@@ -1,26 +1,17 @@
 ﻿using System.Collections.Generic;
 using CommonTools.Log;
-using Game.Entities;
 using MathematicsHelper;
 
 namespace Game.InterestManagement
 {
     internal class Scene : IScene
     {
-        private readonly int sceneId;
-        private IRegion[,] regions;
-        private readonly Dictionary<int, IEntity> entities = new Dictionary<int, IEntity>();
+        private readonly IRegion[,] regions;
+        private readonly Dictionary<int, IGameObject> gameObjects = new Dictionary<int, IGameObject>();
 
         private readonly object locker = new object();
 
-        public Scene(int sceneId, Vector2 sceneSize, Vector2 regionsSize)
-        {
-            this.sceneId = sceneId;
-
-            CreateRegions(sceneSize, regionsSize);
-        }
-
-        private void CreateRegions(Vector2 sceneSize, Vector2 regionsSize)
+        public Scene(Vector2 sceneSize, Vector2 regionsSize)
         {
             var regionsX = (int)(sceneSize.X / regionsSize.X);
             var regionsY = (int)(sceneSize.Y / regionsSize.Y);
@@ -43,51 +34,47 @@ namespace Game.InterestManagement
             }
         }
 
-        public void AddEntity(IEntity entity)
+        public IGameObject AddGameObject(IGameObject gameObject)
         {
             lock (locker)
             {
-                if (entities.ContainsKey(entity.Id))
+                if (gameObjects.ContainsKey(gameObject.Id))
                 {
-                    LogUtils.Log($"Scene::AddEntity() -> An entity with a id #{entity.Id} already exists in a scene.",
-                        LogMessageType.Warning);
-                    return;
+                    LogUtils.Log(MessageBuilder.Trace($"A game object with a id #{gameObject.Id} already exists in a scene."), LogMessageType.Warning);
+                    return null;
                 }
 
-                entity.PresenceSceneId = sceneId;
+                gameObject.Scene = this;
+                gameObjects.Add(gameObject.Id, gameObject);
 
-                entities.Add(entity.Id, entity);
+                return gameObject;
             }
         }
 
-        public void RemoveEntity(IEntity entity)
+        public void RemoveGameObject(IGameObject gameObject)
         {
             lock (locker)
             {
-                if (!entities.ContainsKey(entity.Id))
+                if (!gameObjects.ContainsKey(gameObject.Id))
                 {
-                    LogUtils.Log($"Scene::AddEntity() -> An entity with a id #{entity.Id} does not exists in a scene.",
-                        LogMessageType.Warning);
+                    LogUtils.Log(MessageBuilder.Trace($"A game object with a id #{gameObject.Id} does not exists in a scene."), LogMessageType.Warning);
                     return;
                 }
 
-                entity.PresenceSceneId = -1;
-
-                entities.Remove(entity.Id);
+                gameObjects.Remove(gameObject.Id);
             }
         }
 
-        public IEntity GetEntity(int entityId)
+        public IGameObject GetGameObject(int gameObjectId)
         {
             lock (locker)
             {
-                if (entities.TryGetValue(entityId, out var entity))
+                if (gameObjects.TryGetValue(gameObjectId, out var gameObject))
                 {
-                    return entity;
+                    return gameObject;
                 }
 
-                LogUtils.Log($"Scene::GetEntity() - Could not find an entity id #{entityId}", LogMessageType.Error);
-
+                LogUtils.Log(MessageBuilder.Trace($"Could not find a game object with id #{gameObjectId}"), LogMessageType.Error);
                 return null;
             }
         }

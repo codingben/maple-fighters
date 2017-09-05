@@ -5,7 +5,7 @@ using Shared.Game.Common;
 
 namespace Game.Application.Components
 {
-    internal class EntityWrapper : Component
+    /*internal class EntityWrapper : CommonComponent
     {
         public IEntity Entity { get; private set; }
 
@@ -41,5 +41,5 @@ namespace Game.Application.Components
         {
             entityIdToPeerIdConverter.RemoveEntityIdToPeerId(Entity.Id);
         }
-    }
+    }*/
 }

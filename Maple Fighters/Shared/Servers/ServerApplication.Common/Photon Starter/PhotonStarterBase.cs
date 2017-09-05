@@ -15,20 +15,6 @@ namespace ServerApplication.Common.PhotonStarter
 
         private T application;
 
-        protected abstract T CreateApplication(IFiberProvider fiberProvider);
-
-        protected override PeerBase CreatePeer(InitRequest initRequest)
-        {
-            var clientPeer = new PhotonClientPeer(initRequest)
-            {
-                NetworkTrafficState = NetworkTrafficState.Flowing
-            };
-
-            clientPeer.Fiber.Enqueue(() => application.OnConnected(clientPeer));
-
-            return clientPeer;
-        }
-
         protected override void Setup()
         {
             LogUtils.Logger = CreateLogger();
@@ -42,11 +28,27 @@ namespace ServerApplication.Common.PhotonStarter
             application.Shutdown();
         }
 
+        protected abstract T CreateApplication(IFiberProvider fiberProvider);
+
+        protected override PeerBase CreatePeer(InitRequest initRequest)
+        {
+            var clientPeer = new PhotonClientPeer(initRequest)
+            {
+                NetworkTrafficState = NetworkTrafficState.Paused
+            };
+
+            clientPeer.Fiber.Enqueue(() =>
+            {
+                application.OnConnected(clientPeer);
+                LogUtils.Log($"A new peer has been connected -> {clientPeer.ConnectionInformation.Ip}:{clientPeer.ConnectionInformation.Port}");
+            });
+            return clientPeer;
+        }
+
         private Logger.Logger CreateLogger()
         {
             var logger = new Logger.Logger();
             logger.Initialize(Path.Combine(BinaryPath, LOGGER_PATH));
-
             return logger;
         }
     }

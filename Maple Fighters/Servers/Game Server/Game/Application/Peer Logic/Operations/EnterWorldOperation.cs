@@ -1,38 +1,40 @@
-﻿using CommonCommunicationInterfaces;
+﻿using System;
+using CommonCommunicationInterfaces;
 using CommonTools.Log;
-using Game.Entity.Components;
+using Game.InterestManagement;
+using MathematicsHelper;
 using ServerApplication.Common.ComponentModel;
-using ServerApplication.Common.Components;
 using ServerCommunicationHelper;
 using Shared.Game.Common;
 
 namespace Game.Application.PeerLogic.Operations
 {
-    internal class EnterWorldOperation : IOperationRequestHandler<EmptyParameters, EmptyParameters>
+    internal class EnterWorldOperation : IOperationRequestHandler<EmptyParameters, EnterWorldOperationResponseParameters>
     {
-        private readonly int peerId;
-        private readonly int entityId;
-        private readonly Transform transform;
-        private readonly PeerContainer peerContainer;
+        private readonly Action<IGameObject> onAuthenticated;
 
-        public EnterWorldOperation(int peerId, int entityId, Transform transform)
+        public EnterWorldOperation(Action<IGameObject> onAuthenticated)
         {
-            this.peerId = peerId;
-            this.entityId = entityId;
-            this.transform = transform;
-
-            peerContainer = ServerComponents.Container.GetComponent<PeerContainer>().AssertNotNull();
+            this.onAuthenticated = onAuthenticated;
         }
 
-        public EmptyParameters? Handle(MessageData<EmptyParameters> messageData, ref MessageSendOptions sendOptions)
+        public EnterWorldOperationResponseParameters? Handle(MessageData<EmptyParameters> messageData, ref MessageSendOptions sendOptions)
         {
-            var entity = new Shared.Game.Common.Entity(entityId, EntityType.Player);
-            var parameters = new EntityInitialInfomraitonEventParameters(entity, transform.Position.X, transform.Position.Y);
+            var sceneId = 1;
+            var position = new Vector2(3.55f, 0.74f);
+            var interestArea = new Vector2(5, 2.5f);
+            var playerGameObject = CreatePlayerGameObject(sceneId, position, interestArea);
 
-            peerContainer.GetPeerWrapper(peerId)?.AssertNotNull().SendEvent(
-                (byte)GameEvents.EntityInitialInformation, parameters, MessageSendOptions.DefaultReliable());
+            onAuthenticated.Invoke(playerGameObject);
 
-            return null;
+            return new EnterWorldOperationResponseParameters();
+        }
+
+        private IGameObject CreatePlayerGameObject(int sceneId, Vector2 position, Vector2 interestArea)
+        {
+            var scene = ServerComponents.Container.GetComponent<SceneContainer>().AssertNotNull();
+            var playerObject = scene?.GetScene(sceneId)?.AddGameObject(new GameObject(position, interestArea));
+            return playerObject;
         }
     }
 }

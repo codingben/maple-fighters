@@ -1,10 +1,10 @@
 ﻿using System;
-using Game.Entities;
 using MathematicsHelper;
+using ServerApplication.Common.ComponentModel;
 
 namespace Game.Entity.Components
 {
-    internal class Transform : EntityComponent
+    /*public class Transform : Component
     {
         public Vector2 Position { get; private set; }
         // public Vector2 NewPosition { get; set; }
@@ -12,8 +12,7 @@ namespace Game.Entity.Components
 
         public event Action<Vector2> PositionChanged;
 
-        public Transform(IEntity entity, Vector2 startPosition) 
-            : base(entity)
+        public Transform(Vector2 startPosition) 
         {
             Position = startPosition;
         }
@@ -27,11 +26,11 @@ namespace Game.Entity.Components
             if (Vector2.Distance(NewPosition, LastPosition) < 0.1f)
             {
                 return;
-            }*/
+            }
 
             PositionChanged?.Invoke(position);
 
             // LastPosition = NewPosition;
         }
-    }
+    }*/
 }

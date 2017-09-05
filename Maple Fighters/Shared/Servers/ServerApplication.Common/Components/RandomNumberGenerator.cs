@@ -3,7 +3,7 @@ using ServerApplication.Common.ComponentModel;
 
 namespace ServerApplication.Common.Components
 {
-    public class RandomNumberGenerator : Component
+    public class RandomNumberGenerator : CommonComponent
     {
         private readonly Random random = new Random();
         private readonly object locker = new object();

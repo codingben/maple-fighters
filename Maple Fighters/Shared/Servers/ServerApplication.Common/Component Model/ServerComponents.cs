@@ -2,6 +2,6 @@
 {
     public static class ServerComponents
     {
-        public static IComponentsContainer Container { get; } = new ComponentsContainer();
+        public static Container<CommonComponent> Container { get; } = new Container<CommonComponent>();
     }
 }

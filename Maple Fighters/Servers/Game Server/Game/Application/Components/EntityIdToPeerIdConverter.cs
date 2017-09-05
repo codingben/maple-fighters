@@ -4,7 +4,7 @@ using ServerApplication.Common.ComponentModel;
 
 namespace Game.Application.Components
 {
-    internal class EntityIdToPeerIdConverter : Component
+    /*internal class EntityIdToPeerIdConverter : CommonComponent
     {
         private readonly Dictionary<int, int> entityIdToPeerIdContainer = new Dictionary<int, int>();
         private readonly object locker = new object();
@@ -51,5 +51,5 @@ namespace Game.Application.Components
                 return -1;
             }
         }
-    }
+    }*/
 }

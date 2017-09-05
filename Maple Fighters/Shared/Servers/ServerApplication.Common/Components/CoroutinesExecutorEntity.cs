@@ -4,13 +4,13 @@ using ServerApplication.Common.ComponentModel;
 
 namespace ServerApplication.Common.Components.Coroutines
 {
-    public class CoroutinesExecutor : CommonComponent, ICoroutinesExecutor
+    public class CoroutinesExecutorEntity : EntityComponent, ICoroutinesExecutor
     {
         public int Count => executer.Count;
 
         private readonly ICoroutinesExecutor executer;
 
-        public CoroutinesExecutor(ICoroutinesExecutor executer)
+        public CoroutinesExecutorEntity(ICoroutinesExecutor executer)
         {
             this.executer = executer;
         }

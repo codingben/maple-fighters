@@ -1,58 +1,46 @@
 ﻿using System;
 using CommonCommunicationInterfaces;
+using ServerApplication.Common.Components;
+using ServerApplication.Common.Components.Coroutines;
 using ServerCommunicationHelper;
 using ServerCommunicationInterfaces;
 
-namespace Shared.ServerApplication.Common.Peer
+namespace Shared.ServerApplication.Common.PeerLogic
 {
-    public abstract class PeerLogicBase<TOperationCode, TEventCode> : ClientPeerWrapper<IClientPeer>
+    public abstract class PeerLogicBase<TOperationCode, TEventCode> : IPeerLogicBase
         where TOperationCode : IComparable, IFormattable, IConvertible
         where TEventCode : IComparable, IFormattable, IConvertible
     {
+        public IEntity Entity { get; private set; }
+
+        protected IClientPeerWrapper<IClientPeer> PeerWrapper { get; private set; }
+
         protected IOperationRequestHandlerRegister<TOperationCode> OperationRequestHandlerRegister { get; private set; }
         protected IEventSender<TEventCode> EventSender { get; private set; }
 
-        private bool logOperationRequests;
-        private bool logOperationResponses;
-        private bool logEvents;
-
-        protected PeerLogicBase(IClientPeer peer, int peerId) 
-            : base(peer, peerId)
+        public virtual void Initialize(IClientPeerWrapper<IClientPeer> peer, int peerId)
         {
-            ActivateLogs(operationRequets: true, operationResponses: true, events: true);
-            InitializeCommunication();
+            PeerWrapper = peer;
+
+            OperationRequestHandlerRegister = new OperationRequestsHandler<TOperationCode>(PeerWrapper.Peer.OperationRequestNotifier, 
+                PeerWrapper.Peer.OperationResponseSender, true, true);
+            EventSender = new EventSender<TEventCode>(PeerWrapper.Peer.EventSender, true);
+
+            Entity = new EntityWrapper(peerId);
+
+            PeerWrapper.Peer.NetworkTrafficState = NetworkTrafficState.Flowing;
         }
 
-        protected void ActivateLogs(bool operationRequets, bool operationResponses, bool events)
+        public void Dispose()
         {
-            logOperationRequests = operationRequets;
-            logOperationResponses = operationResponses;
-            logEvents = events;
+            Entity?.Dispose();
+            OperationRequestHandlerRegister?.Dispose();
         }
 
-        private void InitializeCommunication()
+        protected void AddCommonComponents()
         {
-            var operationRequestNotifier = Peer.OperationRequestNotifier;
-            var operationResponseSender = Peer.OperationResponseSender;
-            var eventSender = Peer.EventSender;
-
-            OperationRequestHandlerRegister = new OperationRequestsHandler<TOperationCode>(
-                operationRequestNotifier,
-                operationResponseSender,
-                logOperationRequests,
-                logOperationResponses
-            );
-
-            EventSender = new EventSender<TEventCode>(
-                eventSender,
-                logEvents
-            );
-        }
-
-        public override void SendEvent<TParameters>(byte code, TParameters parameters, MessageSendOptions messageSendOptions)
-        {
-            var gameEvent = (TEventCode)Enum.ToObject(typeof(TEventCode), code);
-            EventSender.Send(gameEvent, parameters, messageSendOptions);
+            Entity.Components.AddComponent(new EventSender(EventSender));
+            Entity.Components.AddComponent(new CoroutinesExecutorEntity(new FiberCoroutinesExecutor(PeerWrapper.Peer.Fiber, 100)));
         }
     }
 }

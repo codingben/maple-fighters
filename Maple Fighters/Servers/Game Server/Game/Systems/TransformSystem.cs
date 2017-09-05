@@ -8,7 +8,6 @@ using CommonTools.Log;
 using Game.Application.Components;
 using Game.Entities;
 using Game.Entity.Components;
-using Game.InterestManagement;
 using MathematicsHelper;
 using ServerApplication.Common.ComponentModel;
 using ServerApplication.Common.Components;

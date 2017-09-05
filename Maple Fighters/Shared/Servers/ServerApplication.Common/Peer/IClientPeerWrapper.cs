@@ -2,17 +2,19 @@
 using CommonCommunicationInterfaces;
 using ServerCommunicationInterfaces;
 
-namespace Shared.ServerApplication.Common.Peer
+namespace Shared.ServerApplication.Common.PeerLogic
 {
     public interface IClientPeerWrapper<out T> : IDisposable
         where T : IClientPeer
     {
-        T Peer { get; }
         int PeerId { get; }
 
-        event Action<DisconnectReason, string> Disconnected;
+        T Peer { get; }
+        IPeerLogicBase PeerLogic { get; }
 
-        void SendEvent<TParameters>(byte code, TParameters parameters, MessageSendOptions messageSendOptions)
-            where TParameters : struct, IParameters;
+        void SetPeerLogic<TPeerLogic>(TPeerLogic peerLogic)
+            where TPeerLogic : IPeerLogicBase;
+
+        event Action<DisconnectReason, string> Disconnected;
     }
 }

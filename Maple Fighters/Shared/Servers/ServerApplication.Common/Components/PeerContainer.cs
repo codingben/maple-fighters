@@ -3,15 +3,23 @@ using CommonCommunicationInterfaces;
 using CommonTools.Log;
 using ServerApplication.Common.ComponentModel;
 using ServerCommunicationInterfaces;
-using Shared.ServerApplication.Common.Peer;
+using Shared.ServerApplication.Common.PeerLogic;
 
 namespace ServerApplication.Common.Components
 {
-    public class PeerContainer : Component
+    public class PeerContainer : CommonComponent
     {
         private readonly Dictionary<int, IClientPeerWrapper<IClientPeer>> peerLogics = new Dictionary<int, IClientPeerWrapper<IClientPeer>>();
+        private readonly object locker = new object();
 
-        public new void Dispose()
+        public void AddPeerLogic(IClientPeerWrapper<IClientPeer> peerLogic)
+        {
+            peerLogics.Add(peerLogic.PeerId, peerLogic);
+
+            peerLogic.Disconnected += (reason, details) => NotifyAndRemovePeerLogic(peerLogic, reason, details);
+        }
+
+        public void DisconnectAllPeers()
         {
             foreach (var peer in peerLogics)
             {
@@ -20,39 +28,24 @@ namespace ServerApplication.Common.Components
 
             peerLogics.Clear();
         }
-
-        public void AddPeerLogic(IClientPeerWrapper<IClientPeer> peerLogic)
+        
+        private void NotifyAndRemovePeerLogic(IClientPeerWrapper<IClientPeer> peerLogic, DisconnectReason reason, string details)
         {
-            var peerId = peerLogic.PeerId;
-
-            SubscribeToPeerDisconnectionNotifier(peerLogic, peerId);
-
-            peerLogics.Add(peerId, peerLogic);
-
-            LogUtils.Log($"A new peer has been created -> {peerLogic.Peer.ConnectionInformation.Ip}:{peerLogic.Peer.ConnectionInformation.Port}");
-        }
-
-        private void SubscribeToPeerDisconnectionNotifier(IClientPeerWrapper<IClientPeer> peerLogic, int peerId)
-        {
-            peerLogic.Disconnected += (reason, details) => NotifyAndRemovePeerLogic(peerId, reason, details);
-        }
-
-        private void NotifyAndRemovePeerLogic(int peerId, DisconnectReason reason, string details)
-        {
-            var peerLogic = peerLogics[peerId];
-
             var ip = peerLogic.Peer.ConnectionInformation.Ip;
             var port = peerLogic.Peer.ConnectionInformation.Port;
 
             LogUtils.Log(details == string.Empty ? $"A peer {ip}:{port} has been disconnected. Reason: {reason}"
                 : $"A peer {ip}:{port} has been disconnected. Reason: {reason} Details: {details}");
 
-            peerLogics.Remove(peerId);
+            peerLogics.Remove(peerLogic.PeerId);
         }
 
         public IClientPeerWrapper<IClientPeer> GetPeerWrapper(int peerId)
         {
-            return peerLogics.TryGetValue(peerId, out var peerWrapper) ? peerWrapper : null;
+            lock (locker)
+            {
+                return peerLogics.TryGetValue(peerId, out var peerWrapper) ? peerWrapper : null;
+            }
         }
 
         public int GetPeersCount()

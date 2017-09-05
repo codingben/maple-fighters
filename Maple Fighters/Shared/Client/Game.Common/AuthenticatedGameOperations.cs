@@ -1,8 +1,7 @@
 ﻿namespace Shared.Game.Common
 {
-    public enum GameOperations : byte
+    public enum AuthenticatedGameOperations : byte
     {
-        EnterWorld,
         UpdateEntityPosition
     }
 }

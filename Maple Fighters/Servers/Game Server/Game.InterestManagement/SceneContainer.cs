@@ -5,13 +5,13 @@ using ServerApplication.Common.ComponentModel;
 
 namespace Game.InterestManagement
 {
-    internal class SceneContainer : Component
+    public class SceneContainer : CommonComponent
     {
         private readonly Dictionary<int, IScene> scenes = new Dictionary<int, IScene>();
 
         public void AddScene(int sceneId, Vector2 sceneSize, Vector2 regionsSize)
         {
-            scenes.Add(sceneId, new Scene(sceneId, sceneSize, regionsSize));
+            scenes.Add(sceneId, new Scene(sceneSize, regionsSize));
         }
 
         public IScene GetScene(int sceneId)
@@ -21,8 +21,7 @@ namespace Game.InterestManagement
                 return scene;
             }
 
-            LogUtils.Log($"SceneContainer::GetScene() - Could not find a scene id #{sceneId}", LogMessageType.Error);
-
+            LogUtils.Log(MessageBuilder.Trace($"Could not find a scene with id #{sceneId}"), LogMessageType.Error);
             return null;
         }
     }

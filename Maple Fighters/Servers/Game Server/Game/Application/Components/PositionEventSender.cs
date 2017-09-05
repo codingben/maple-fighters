@@ -12,7 +12,7 @@ using Shared.Game.Common;
 
 namespace Game.Application.Components
 {
-    internal class PositionEventSender : EntityComponent
+    /*internal class PositionEventSender : EntityComponent
     {
         private readonly Transform transform;
 
@@ -59,8 +59,8 @@ namespace Game.Application.Components
 
         private IEnumerable<IEntity> GetEntitiesFromEntityRegions()
         {
-            var publisherRegions = (OwnerEntity.Components.GetComponent<InterestArea>().AssertNotNull() as IInterestArea)?.GetPublishers();
-            var entities = new List<IEntity>();
+            var publisherRegions = (OwnerEntity.Components.GetComponent<InterestArea>().AssertNotNull() as IInterestArea)?.GetPublishersExpectMyGameObject();
+            var entities = new List<IGameObject>();
 
             foreach (var publisherRegion in publisherRegions)
             {
@@ -69,5 +69,5 @@ namespace Game.Application.Components
 
             return entities.ToArray();
         }
-    }
+    }*/
 }

@@ -4,16 +4,20 @@ using CommonTools.Log;
 
 namespace ServerApplication.Common.ComponentModel
 {
-    public sealed class ComponentsContainer : IComponentsContainer
+    public sealed class Container<TComoponent> : IContainer<TComoponent> 
+        where TComoponent : class, IComponent
     {
-        private readonly List<object> components = new List<object>();
+        private readonly List<TComoponent> components = new List<TComoponent>();
 
-        public T AddComponent<T>(T component)
-            where T : IComponent
+        public void AddComponent(TComoponent component)
         {
-            components.Add(component);
+            if (components.Contains(component))
+            {
+                LogUtils.Log(MessageBuilder.Trace($"Comoponent type - {typeof(TComoponent).Name} already exists."));
+                return;
+            }
 
-            return GetComponent<T>();
+            components.Add(component);
         }
 
         public void RemoveComponent<T>()
@@ -26,7 +30,7 @@ namespace ServerApplication.Common.ComponentModel
                 return;
             }
 
-            var index = components.IndexOf(component);
+            var index = components.IndexOf(component as TComoponent);
             if (index != -1)
             {
                 components.RemoveAt(index);
@@ -43,7 +47,7 @@ namespace ServerApplication.Common.ComponentModel
         {
             foreach (var component in components)
             {
-                (component as IComponent).Dispose();
+                component.Dispose();
 
                 components.Remove(component);
             }

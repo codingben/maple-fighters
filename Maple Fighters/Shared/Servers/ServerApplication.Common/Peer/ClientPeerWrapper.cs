@@ -2,40 +2,60 @@
 using CommonCommunicationInterfaces;
 using ServerCommunicationInterfaces;
 
-namespace Shared.ServerApplication.Common.Peer
+namespace Shared.ServerApplication.Common.PeerLogic
 {
-    public abstract class ClientPeerWrapper<T> : IClientPeerWrapper<T>
-        where T : IClientPeer
+    public sealed class ClientPeerWrapper<T> : IClientPeerWrapper<T>
+        where T : class, IClientPeer
     {
-        public T Peer { get; }
         public int PeerId { get; }
+
+        public T Peer { get; }
+        public IPeerLogicBase PeerLogic { get; private set; }
 
         public event Action<DisconnectReason, string> Disconnected;
 
-        protected ClientPeerWrapper(T peer, int peerId)
+        public ClientPeerWrapper(T peer, int peerId)
         {
             Peer = peer;
             PeerId = peerId;
 
-            Peer.PeerDisconnectionNotifier.Disconnected += OnPeerDisconnected;
+            Peer.PeerDisconnectionNotifier.Disconnected += OnDisconnected;
         }
 
-        protected virtual void OnPeerDisconnected(DisconnectReason disconnectReason, string s)
+        public void SetPeerLogic<TPeerLogic>(TPeerLogic peerLogic)
+            where TPeerLogic : IPeerLogicBase
         {
-            Disconnected?.Invoke(disconnectReason, s);
+            Peer.Fiber.Enqueue(() =>
+            {
+                Peer.NetworkTrafficState = NetworkTrafficState.Paused;
+
+                PeerLogic?.Dispose();
+
+                PeerLogic = peerLogic;
+                PeerLogic.Initialize(this, PeerId);
+            });
         }
 
         public void Dispose()
         {
-            if (Peer.IsConnected)
+            Peer.Fiber.Enqueue(() =>
             {
-                Peer.Disconnect();
-            }
+                PeerLogic.Dispose();
 
-            Peer.PeerDisconnectionNotifier.Disconnected -= OnPeerDisconnected;
+                if (Peer.IsConnected)
+                {
+                    Peer.Disconnect();
+                }
+
+                Peer.PeerDisconnectionNotifier.Disconnected -= OnDisconnected;
+            });
         }
 
-        public abstract void SendEvent<TParameters>(byte code, TParameters parameters, MessageSendOptions messageSendOptions)
-            where TParameters : struct, IParameters;
+        private void OnDisconnected(DisconnectReason disconnectReason, string s)
+        {
+            Disconnected?.Invoke(disconnectReason, s);
+
+            Dispose();
+        }
     }
 }

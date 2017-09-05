@@ -2,7 +2,7 @@
 
 namespace ServerApplication.Common.Components
 {
-    public class IdGenerator : Component
+    public class IdGenerator : CommonComponent
     {
         private uint id = uint.MinValue;
         private readonly object locker = new object();

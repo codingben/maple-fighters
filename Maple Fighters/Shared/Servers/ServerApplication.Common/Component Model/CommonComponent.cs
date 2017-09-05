@@ -1,8 +1,13 @@
 ﻿namespace ServerApplication.Common.ComponentModel
 {
-    public class Component : IComponent
+    public class CommonComponent : IComponent
     {
         public void Dispose()
+        {
+            OnDestroy();
+        }
+
+        protected virtual void OnDestroy()
         {
             // Left blank intentionally
         }
