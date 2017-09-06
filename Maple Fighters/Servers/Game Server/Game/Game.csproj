@@ -95,7 +95,7 @@
       <Project>{f82fbb67-7b1d-43b7-a415-3f407d40e5c7}</Project>
       <Name>ServerApplication.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\InterestManagement\Game.InterestManagement.csproj">
+    <ProjectReference Include="..\Game.InterestManagement\Game.InterestManagement.csproj">
       <Project>{DB7043AD-92FD-428A-BB43-18ED8D25B41D}</Project>
       <Name>Game.InterestManagement</Name>
     </ProjectReference>
