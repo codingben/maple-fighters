@@ -26,8 +26,8 @@ namespace Game.InterestManagement
 
             gameObjects.Add(gameObject.Id, gameObject);
 
-            ShowGameObjectsForGameObject(gameObject);
-            // AddEntityForEntities(gameObject);
+            ShowGameObjectsForGameObject(gameObject); // Show all exists entities for a new game object.
+            ShowGameObjectForGameObjects(gameObject); // Show a new game object for all exists entities.
         }
 
         public void RemoveSubscription(IGameObject gameObject)
@@ -38,14 +38,14 @@ namespace Game.InterestManagement
                 return;
             }
 
-            gameObjects.Remove(gameObject.Id);
-
-            /*if (gameObjects.Count > 0)
+            if (gameObjects.Count > 0)
             {
-                RemoveEntitiesForEntity(gameObject, gameObjects.Values.ToArray());
+                HideGameObjectsForGameObject(gameObject.Id);
             }
 
-            RemoveEntityForEntities(gameObject.Id);*/
+            HideGameObjectForGameObjects(gameObject.Id);
+
+            gameObjects.Remove(gameObject.Id);
         }
 
         public bool HasSubscription(int gameObjectId)
@@ -60,80 +60,17 @@ namespace Game.InterestManagement
 
         private void ShowGameObjectsForGameObject(IGameObject gameObject)
         {
-            /*var peerId = entityIdToPeerIdConverter.GetPeerId(entity.Id);
-            if (peerId == -1)
-            {
-                LogUtils.Log(MessageBuilder.Trace($"Could not find a peer id via entity id #{entity.Id}"));
-                return;
-            }
-
-            var peerWrappper = peerContainer.GetPeerWrapper(peerId).AssertNotNull();
-            if (peerWrappper == null)
-            {
-                LogUtils.Log(MessageBuilder.Trace($"Could not find a peer wrapper of an entity id #{entity.Id}"));
-                return;
-            }
-
-            var temp = entities.ToList();
-            foreach (var entityTemp in temp)
-            {
-                if (entityTemp.Id != entity.Id)
-                {
-                    continue;
-                }
-
-                temp.Remove(entityTemp);
-                break;
-            }
-
-            var entitiesTemp = new Shared.Game.Common.Entity[temp.Count];
-            for (var i = 0; i < entitiesTemp.Length; i++)
-            {
-                entitiesTemp[i].Id = temp[i].Id;
-                entitiesTemp[i].Type = temp[i].Type;
-            }
-
-            peerWrappper.SendEvent((byte)GameEvents.EntitiesAdded, new EntitiesAddedEventParameters(entitiesTemp), MessageSendOptions.DefaultReliable());*/
+            var gameObjectsTemp = gameObjects.Values.Where(gameObjectValue => gameObjectValue.Id != gameObject.Id).ToList();
+            gameObject.Components.GetComponent<InterestArea>().AssertNotNull().GameObjectsAdded?.Invoke(gameObjectsTemp.ToArray()); 
         }
 
-        /*private void RemoveEntitiesForEntity(IGameObject entity, IEnumerable<IGameObject> entities)
+        private void HideGameObjectsForGameObject(int id)
         {
-            var peerId = entityIdToPeerIdConverter.GetPeerId(entity.Id);
-            if (peerId == -1)
-            {
-                LogUtils.Log(MessageBuilder.Trace($"Could not find a peer id via entity id #{entity.Id}"));
-                return;
-            }
+            var gameObjectsTemp = gameObjects.Keys.Where(gameObjectId => gameObjectId != id).ToList();
+            gameObjects[id].Components.GetComponent<InterestArea>().AssertNotNull().GameObjectsRemoved?.Invoke(gameObjectsTemp.ToArray());
+        }
 
-            var peerWrappper = peerContainer.GetPeerWrapper(peerId).AssertNotNull();
-            if (peerWrappper == null)
-            {
-                LogUtils.Log(MessageBuilder.Trace($"Could not find a peer wrapper of an entity id #{entity.Id}"));
-                return;
-            }
-
-            var temp = entities.ToList();
-            foreach (var entityTemp in temp)
-            {
-                if (entityTemp.Id != entity.Id)
-                {
-                    continue;
-                }
-
-                temp.Remove(entityTemp);
-                break;
-            }
-
-            var entitiesIdsTemp = new int[temp.Count];
-            for (var i = 0; i < entitiesIdsTemp.Length; i++)
-            {
-                entitiesIdsTemp[i] = temp[i].Id;
-            }
-
-            peerWrappper.SendEvent((byte)GameEvents.EntitiesRemoved, new EntitiesRemovedEventParameters(entitiesIdsTemp), MessageSendOptions.DefaultReliable());
-        }*/
-
-        /*private void AddEntityForEntities(IGameObject newGameObject)
+        private void ShowGameObjectForGameObjects(IGameObject newGameObject)
         {
             foreach (var gameObject in gameObjects)
             {
@@ -142,57 +79,21 @@ namespace Game.InterestManagement
                     continue;
                 }
 
-                var peerId = entityIdToPeerIdConverter.GetPeerId(entity.Key);
-                if (peerId == -1)
-                {
-                    LogUtils.Log(MessageBuilder.Trace($"Could not find a peer id via entity id #{entity.Key}"));
-                    continue;
-                }
-
-                var peerWrappper = peerContainer.GetPeerWrapper(peerId).AssertNotNull();
-                if (peerWrappper == null)
-                {
-                    LogUtils.Log(MessageBuilder.Trace($"Could not find a peer wrapper of an entity id #{entity.Key}"));
-                    continue;
-                }
-
-                var sharedEntity = new Shared.Game.Common.Entity
-                {
-                    Id = newEntity.Id,
-                    Type = newEntity.Type
-                };
-
-                var parameters = new EntityAddedEventParameters(sharedEntity);
-                peerWrappper.SendEvent((byte)GameEvents.EntityAdded, parameters, MessageSendOptions.DefaultReliable());
+                gameObject.Value.Components.GetComponent<InterestArea>().AssertNotNull().GameObjectAdded?.Invoke(newGameObject);
             }
-        }*/
+        }
 
-        /*private void RemoveEntityForEntities(int entityId)
+        private void HideGameObjectForGameObjects(int id)
         {
-            foreach (var entity in entities)
+            foreach (var gameObject in gameObjects)
             {
-                if (entity.Key == entityId)
+                if (gameObject.Key == id)
                 {
                     continue;
                 }
 
-                var peerId = entityIdToPeerIdConverter.GetPeerId(entity.Key);
-                if (peerId == -1)
-                {
-                    LogUtils.Log(MessageBuilder.Trace($"Could not find a peer id via entity id #{entity.Key}"));
-                    continue;
-                }
-
-                var peerWrappper = peerContainer.GetPeerWrapper(peerId).AssertNotNull();
-                if (peerWrappper == null)
-                {
-                    LogUtils.Log(MessageBuilder.Trace($"Could not find a peer wrapper of an entity id #{entity.Key}"));
-                    continue;
-                }
-
-                var parameters = new EntityRemovedEventParameters(entityId);
-                peerWrappper.SendEvent((byte)GameEvents.EntityRemoved, parameters, MessageSendOptions.DefaultReliable());
+                gameObject.Value.Components.GetComponent<InterestArea>().AssertNotNull().GameObjectRemoved?.Invoke(id);
             }
-        }*/
+        }
     }
 }

@@ -5,8 +5,8 @@ namespace Shared.ServerApplication.Common.PeerLogic
 {
     public interface IPeerLogicBase : IDisposable
     {
-        IEntity Entity { get; }
+        // IPeerEntity Entity { get; }
 
-        void Initialize(IClientPeerWrapper<IClientPeer> peer, int peerId);
+        void Initialize(IClientPeerWrapper<IClientPeer> peer);
     }
 }

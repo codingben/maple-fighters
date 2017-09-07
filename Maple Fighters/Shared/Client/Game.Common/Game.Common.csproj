@@ -33,10 +33,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="CommonCommunicationInterfaces, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\CommonCommunicationInterfaces.4.3.0\lib\net46\CommonCommunicationInterfaces.dll</HintPath>
+      <HintPath>..\..\..\packages\CommonCommunicationInterfaces.5.0.0\lib\net46\CommonCommunicationInterfaces.dll</HintPath>
     </Reference>
     <Reference Include="CommunicationHelper, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\CommunicationHelper.3.2.5\lib\net46\CommunicationHelper.dll</HintPath>
+      <HintPath>..\..\..\packages\CommunicationHelper.4.0.0\lib\net46\CommunicationHelper.dll</HintPath>
     </Reference>
     <Reference Include="Coroutines, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Coroutines.5.0.5\lib\net46\Coroutines.dll</HintPath>
@@ -57,12 +57,12 @@
     <Compile Include="EntitiesRemovedEventParameters.cs" />
     <Compile Include="Entity.cs" />
     <Compile Include="EntityAddedEventParameters.cs" />
-    <Compile Include="EntityInitialInfomraitonEventParameters.cs" />
     <Compile Include="EntityPositionChangedEventParameters.cs" />
     <Compile Include="EntityRemovedEventParameters.cs" />
     <Compile Include="EntityType.cs" />
     <Compile Include="GameDataChannels.cs" />
     <Compile Include="GameEvents.cs" />
+    <Compile Include="GameOperations.cs" />
     <Compile Include="UnauthenticatedGameOperations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UpdateEntityPositionRequestParameters.cs" />

@@ -1,5 +1,7 @@
 ﻿using CommonCommunicationInterfaces;
 using CommonTools.Log;
+using Game.Application.Components;
+using Game.Application.PeerLogic.Components;
 using Game.Application.PeerLogic.Operations;
 using Game.InterestManagement;
 using ServerCommunicationInterfaces;
@@ -8,7 +10,7 @@ using Shared.Game.Common;
 
 namespace Game.Application.PeerLogic
 {
-    internal class AuthenticatedGamePeerLogic : PeerLogicBase<AuthenticatedGameOperations, GameEvents>
+    internal class AuthenticatedGamePeerLogic : PeerLogicBase<GameOperations, GameEvents>
     {
         private readonly IGameObject playerGameObject;
 
@@ -17,28 +19,46 @@ namespace Game.Application.PeerLogic
             this.playerGameObject = playerGameObject;
         }
 
-        public override void Initialize(IClientPeerWrapper<IClientPeer> peer, int peerId)
+        public override void Initialize(IClientPeerWrapper<IClientPeer> peer)
         {
-            base.Initialize(peer, peerId);
+            base.Initialize(peer);
 
-            PeerWrapper.Disconnected += OnDisconnected;
+            SubscribeToDisconnectedEvent();
 
             AddCommonComponents();
+            AddComponents();
 
             AddHandlerForUpdateEntityPosition();
         }
 
+        private void AddComponents()
+        {
+            var interestArea = playerGameObject.Components.GetComponent<InterestArea>().AssertNotNull();
+            Entity.Components.AddComponent(new InterestAreaEventSender(interestArea));
+            Entity.Components.AddComponent(new PositionEventSender(playerGameObject));
+        }
+
         private void AddHandlerForUpdateEntityPosition()
         {
-            var transform = playerGameObject.Entity.GetComponent<Transform>().AssertNotNull();
-            OperationRequestHandlerRegister.SetHandler(AuthenticatedGameOperations.UpdateEntityPosition, new UpdateEntityPositionOperation(transform));
+            var transform = playerGameObject.Components.GetComponent<Transform>().AssertNotNull();
+            OperationRequestHandlerRegister.SetHandler(GameOperations.UpdateEntityPosition, new UpdateEntityPositionOperation(transform));
+        }
+
+        private void SubscribeToDisconnectedEvent()
+        {
+            PeerWrapper.Disconnected += OnDisconnected;
+        }
+
+        private void UnsubscribeFromDisconnectedEvent()
+        {
+            PeerWrapper.Disconnected -= OnDisconnected;
         }
 
         private void OnDisconnected(DisconnectReason disconnectReason, string s)
         {
             playerGameObject.Dispose();
 
-            PeerWrapper.Disconnected -= OnDisconnected;
+            UnsubscribeFromDisconnectedEvent();
         }
     }
 }

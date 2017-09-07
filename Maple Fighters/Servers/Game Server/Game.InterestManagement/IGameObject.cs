@@ -9,6 +9,6 @@ namespace Game.InterestManagement
 
         IScene Scene { get; set; }
 
-        IContainer<GameObjectComponent> Entity { get; }
+        IContainer Components { get; }
     }
 }

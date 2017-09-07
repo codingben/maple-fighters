@@ -1,12 +1,19 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using CommonTools.Log;
 using MathematicsHelper;
+using ServerApplication.Common.ComponentModel;
 
 namespace Game.InterestManagement
 {
-    public class InterestArea : GameObjectComponent, IInterestArea
+    public class InterestArea : Component<IGameObject>, IInterestArea
     {
+        public Action<IGameObject> GameObjectAdded;
+        public Action<int> GameObjectRemoved;
+        public Action<IGameObject[]> GameObjectsAdded;
+        public Action<int[]> GameObjectsRemoved;
+
         private Rectangle interestArea;
 
         public InterestArea(Vector2 areaSize)
@@ -30,13 +37,13 @@ namespace Game.InterestManagement
 
         private void SubscribeToPositionChangesNotifier()
         {
-            var transform = GameObject.Entity.GetComponent<Transform>()?.AssertNotNull();
+            var transform = Entity.Components.GetComponent<Transform>().AssertNotNull();
             transform.PositionChanged += SetPosition;
         }
 
         private void UnsubscribeFromPositionChangesNotifier()
         {
-            var transform = GameObject.Entity.GetComponent<Transform>().AssertNotNull();
+            var transform = Entity.Components.GetComponent<Transform>().AssertNotNull();
             transform.PositionChanged -= SetPosition;
         }
 
@@ -49,47 +56,46 @@ namespace Game.InterestManagement
 
         public IEnumerable<IRegion> GetPublishers()
         {
-            var regions = GameObject.Scene.GetAllRegions();
-            return regions.Cast<IRegion>().Where(region => region.HasSubscription(GameObject.Id)).ToArray();
+            var regions = Entity.Scene.GetAllRegions();
+            return regions.Cast<IRegion>().Where(region => region.HasSubscription(Entity.Id)).ToArray();
         }
 
         public IEnumerable<IRegion> GetPublishersExceptMyGameObject()
         {
-            var regions = GameObject.Scene.GetAllRegions();
-            var publishers = regions.Cast<IRegion>().Where(region => region.HasSubscription(GameObject.Id));
+            var regions = Entity.Scene.GetAllRegions();
+            var publishers = regions.Cast<IRegion>().Where(region => region.HasSubscription(Entity.Id));
 
             var publishersExceptMyGameObject = publishers as IRegion[] ?? publishers.ToArray();
             foreach (var publisher in publishersExceptMyGameObject)
             {
-                if (publisher.HasSubscription(GameObject.Id))
+                if (publisher.HasSubscription(Entity.Id))
                 {
-                    publisher.RemoveSubscription(GameObject);
+                    publisher.RemoveSubscription(Entity);
                 }
             }
-
             return publishersExceptMyGameObject;
         }
 
         private void DetectOverlapsWithRegions()
         {
-            var sceneRegions = GameObject.Scene.GetAllRegions();
+            var sceneRegions = Entity.Scene.GetAllRegions();
 
             foreach (var region in sceneRegions)
             {
                 if (!Rectangle.Intersect(region.Area, interestArea).Equals(Rectangle.EMPTY))
                 {
-                    if (region.HasSubscription(GameObject.Id))
+                    if (region.HasSubscription(Entity.Id))
                     {
                         continue;
                     }
 
-                    region.AddSubscription(GameObject);
+                    region.AddSubscription(Entity);
                 }
                 else
                 {
-                    if (region.HasSubscription(GameObject.Id))
+                    if (region.HasSubscription(Entity.Id))
                     {
-                        region.RemoveSubscription(GameObject);
+                        region.RemoveSubscription(Entity);
                     }
                 }
             }

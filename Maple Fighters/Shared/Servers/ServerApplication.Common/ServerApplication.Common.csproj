@@ -31,10 +31,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="CommonCommunicationInterfaces, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\CommonCommunicationInterfaces.4.3.0\lib\net46\CommonCommunicationInterfaces.dll</HintPath>
+      <HintPath>..\..\..\packages\CommonCommunicationInterfaces.5.0.0\lib\net46\CommonCommunicationInterfaces.dll</HintPath>
     </Reference>
     <Reference Include="CommunicationHelper, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\CommunicationHelper.3.2.5\lib\net46\CommunicationHelper.dll</HintPath>
+      <HintPath>..\..\..\packages\CommunicationHelper.4.0.0\lib\net46\CommunicationHelper.dll</HintPath>
     </Reference>
     <Reference Include="Coroutines, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Coroutines.5.0.5\lib\net46\Coroutines.dll</HintPath>
@@ -52,13 +52,13 @@
       <HintPath>..\..\..\packages\PhotonCommonImplementation.2.1.0\lib\net46\PhotonCommonImplementation.dll</HintPath>
     </Reference>
     <Reference Include="PhotonServerImplementation, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\PhotonServerImplementation.3.0.0\lib\net46\PhotonServerImplementation.dll</HintPath>
+      <HintPath>..\..\..\packages\PhotonServerImplementation.4.0.0\lib\net46\PhotonServerImplementation.dll</HintPath>
     </Reference>
     <Reference Include="ServerCommunicationHelper, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\ServerCommunicationHelper.2.1.1\lib\net46\ServerCommunicationHelper.dll</HintPath>
+      <HintPath>..\..\..\packages\ServerCommunicationHelper.3.1.0\lib\net46\ServerCommunicationHelper.dll</HintPath>
     </Reference>
     <Reference Include="ServerCommunicationInterfaces, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\ServerCommunicationInterfaces.2.0.0\lib\net46\ServerCommunicationInterfaces.dll</HintPath>
+      <HintPath>..\..\..\packages\ServerCommunicationInterfaces.3.0.0\lib\net46\ServerCommunicationInterfaces.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -73,7 +73,7 @@
     <Compile Include="Component Model\CommonComponent.cs" />
     <Compile Include="Component Model\IContainer.cs" />
     <Compile Include="Components\CoroutinesExecutorEntity.cs" />
-    <Compile Include="Components\EventSender.cs" />
+    <Compile Include="Components\EventSenderWrapper.cs" />
     <Compile Include="Components\FiberCoroutinesExecuter.cs" />
     <Compile Include="Components\CoroutinesExecuter.cs" />
     <Compile Include="Components\FiberProvider.cs" />
@@ -84,11 +84,11 @@
     <Compile Include="Component Model\IComponent.cs" />
     <Compile Include="Component Model\ServerComponents.cs" />
     <Compile Include="Logger\Logger.cs" />
-    <Compile Include="Component Model\EntityComponent.cs" />
+    <Compile Include="Component Model\Component.cs" />
     <Compile Include="Peer\EntityWrapper.cs" />
     <Compile Include="Peer\IClientPeerWrapper.cs" />
     <Compile Include="Peer\ClientPeerWrapper.cs" />
-    <Compile Include="Peer\IEntity.cs" />
+    <Compile Include="Peer\IPeerEntity.cs" />
     <Compile Include="Peer\IPeerLogicBase.cs" />
     <Compile Include="Peer\PeerLogicBase.cs" />
     <Compile Include="Photon Starter\PhotonStarterBase.cs" />

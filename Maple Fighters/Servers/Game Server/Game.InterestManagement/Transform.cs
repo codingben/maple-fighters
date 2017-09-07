@@ -1,9 +1,10 @@
 ﻿using System;
 using MathematicsHelper;
+using ServerApplication.Common.ComponentModel;
 
 namespace Game.InterestManagement
 {
-    public class Transform : GameObjectComponent
+    public class Transform : Component<IGameObject>
     {
         public Vector2 Position { get; private set; } = Vector2.Zero;
 

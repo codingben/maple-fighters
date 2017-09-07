@@ -3,10 +3,8 @@ using ServerApplication.Common.ComponentModel;
 
 namespace Shared.ServerApplication.Common.PeerLogic
 {
-    public interface IEntity : IDisposable
+    public interface IPeerEntity : IDisposable
     {
-        int Id { get; }
-
-        IContainer<EntityComponent> Components { get; }
+        IContainer Components { get; }
     }
 }

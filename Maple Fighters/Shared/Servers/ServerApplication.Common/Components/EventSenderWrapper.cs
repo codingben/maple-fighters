@@ -1,14 +1,15 @@
 ﻿using CommonCommunicationInterfaces;
 using ServerApplication.Common.ComponentModel;
 using ServerCommunicationInterfaces;
+using Shared.ServerApplication.Common.PeerLogic;
 
 namespace ServerApplication.Common.Components
 {
-    public class EventSender : EntityComponent
+    public class EventSenderWrapper : Component<IPeerEntity>
     {
         private readonly IEventSender eventSender;
 
-        public EventSender(IEventSender eventSender)
+        public EventSenderWrapper(IEventSender eventSender)
         {
             this.eventSender = eventSender;
         }

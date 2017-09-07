@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
 using CommonTools.Coroutines;
 using ServerApplication.Common.ComponentModel;
+using Shared.ServerApplication.Common.PeerLogic;
 
 namespace ServerApplication.Common.Components.Coroutines
 {
-    public class CoroutinesExecutorEntity : EntityComponent, ICoroutinesExecutor
+    public class CoroutinesExecutorEntity : Component<IPeerEntity>, ICoroutinesExecutor
     {
         public int Count => executer.Count;
 

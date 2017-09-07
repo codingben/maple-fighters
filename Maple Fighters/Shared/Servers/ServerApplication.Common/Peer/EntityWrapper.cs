@@ -2,39 +2,40 @@
 
 namespace Shared.ServerApplication.Common.PeerLogic
 {
-    public class EntityWrapper : IContainer<EntityComponent>, IEntity
+    public class EntityWrapper : IContainer<IPeerEntity>, IPeerEntity
     {
-        public int Id { get; }
+        IContainer IPeerEntity.Components { get; } = new Container<Component<IPeerEntity>>();
 
-        IContainer<EntityComponent> IEntity.Components { get; } = new Container<EntityComponent>();
-
-        public EntityWrapper(int id)
-        {
-            Id = id;
-        }
-
-        public void AddComponent(EntityComponent component)
+        public void AddComponent(Component<IPeerEntity> component)
         {
             component.Awake(this);
 
-            ((IEntity)this).Components.AddComponent(component);
+            ((IPeerEntity)this).Components.AddComponent(component);
+        }
+
+        public T AddComponent<T>(T component) 
+            where T : Component<IPeerEntity>, IComponent
+        {
+            component.Awake(this);
+            ((IPeerEntity)this).Components.AddComponent(component);
+            return component;
         }
 
         public void RemoveComponent<T>()
             where T : IComponent
         {
-            ((IEntity)this).Components.RemoveComponent<T>();
+            ((IPeerEntity)this).Components.RemoveComponent<T>();
         }
 
         public T GetComponent<T>()
             where T : IComponent
         {
-            return ((IEntity)this).Components.GetComponent<T>();
+            return ((IPeerEntity)this).Components.GetComponent<T>();
         }
 
         public void RemoveAllComponents()
         {
-            ((IEntity)this).Components.RemoveAllComponents();
+            ((IPeerEntity)this).Components.RemoveAllComponents();
         }
 
         public void Dispose()

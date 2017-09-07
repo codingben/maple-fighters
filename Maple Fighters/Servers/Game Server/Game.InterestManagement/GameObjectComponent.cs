@@ -2,9 +2,9 @@
 
 namespace Game.InterestManagement
 {
-    public class GameObjectComponent : CommonComponent
+    /*public class GameObjectComponent : CommonComponent
     {
-        protected IGameObject GameObject { get; set; }
+        protected IGameObject GameObject { get; private set; }
 
         public void Awake(IGameObject gameObject)
         {
@@ -17,5 +17,5 @@ namespace Game.InterestManagement
         {
             // Left blank intentionally
         }
-    }
+    }*/
 }

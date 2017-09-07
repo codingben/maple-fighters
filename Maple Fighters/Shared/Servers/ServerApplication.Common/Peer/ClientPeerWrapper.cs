@@ -32,7 +32,7 @@ namespace Shared.ServerApplication.Common.PeerLogic
                 PeerLogic?.Dispose();
 
                 PeerLogic = peerLogic;
-                PeerLogic.Initialize(this, PeerId);
+                PeerLogic.Initialize(this);
             });
         }
 

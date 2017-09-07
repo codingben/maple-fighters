@@ -7,18 +7,18 @@ using Shared.ServerApplication.Common.PeerLogic;
 
 namespace Game.Application.PeerLogic
 {
-    internal class UnauthenticatedGamePeerLogic : PeerLogicBase<UnauthenticatedGameOperations, EmptyEventCode>
+    internal class UnauthenticatedGamePeerLogic : PeerLogicBase<GameOperations, EmptyEventCode>
     {
-        public override void Initialize(IClientPeerWrapper<IClientPeer> peer, int peerId)
+        public override void Initialize(IClientPeerWrapper<IClientPeer> peer)
         {
-            base.Initialize(peer, peerId);
+            base.Initialize(peer);
 
             AddHandlerForEnterWorldOperation();
         }
 
         private void AddHandlerForEnterWorldOperation()
         {
-            OperationRequestHandlerRegister.SetHandler(UnauthenticatedGameOperations.EnterWorld, new EnterWorldOperation(OnAuthenticated));
+            OperationRequestHandlerRegister.SetHandler(GameOperations.EnterWorld, new EnterWorldOperation(OnAuthenticated));
         }
 
         private void OnAuthenticated(IGameObject gameObject)

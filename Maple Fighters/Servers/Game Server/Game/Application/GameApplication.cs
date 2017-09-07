@@ -19,6 +19,8 @@ namespace Game.Application
 
         public override void Startup()
         {
+            LogUtils.Log(MessageBuilder.Trace(string.Empty));
+
             base.Startup();
 
             AddCommonComponents();
@@ -29,6 +31,8 @@ namespace Game.Application
 
         public override void Shutdown()
         {
+            LogUtils.Log(MessageBuilder.Trace(string.Empty));
+
             base.Shutdown();
 
             ServerComponents.Container.RemoveAllComponents();
@@ -41,8 +45,6 @@ namespace Game.Application
 
         private void AddComponents()
         {
-            // ServerComponents.Container.AddComponent(new EntityContainer());
-            // ServerComponents.Container.AddComponent(new EntityIdToPeerIdConverter());
             ServerComponents.Container.AddComponent(new SceneContainer());
         }
 

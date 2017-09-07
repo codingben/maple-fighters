@@ -5,12 +5,12 @@ using ServerApplication.Common.Components;
 
 namespace Game.InterestManagement
 {
-    public class GameObject : IContainer<GameObjectComponent>, IGameObject
+    public class GameObject : IContainer<IGameObject>, IGameObject
     {
         public int Id { get; }
         public IScene Scene { get; set; }
 
-        IContainer<GameObjectComponent> IGameObject.Entity { get; } = new Container<GameObjectComponent>();
+        IContainer IGameObject.Components { get; } = new Container<Component<IGameObject>>();
 
         public GameObject(Vector2 position, Vector2 interestArea)
         {
@@ -21,28 +21,29 @@ namespace Game.InterestManagement
             AddComponent(new InterestArea(interestArea));
         }
 
-        public void AddComponent(GameObjectComponent component)
+        public T AddComponent<T>(T component)
+            where T : Component<IGameObject>, IComponent
         {
             component.Awake(this);
-
-            ((IGameObject)this).Entity.AddComponent(component);
+            ((IGameObject)this).Components.AddComponent(component);
+            return component;
         }
 
         public void RemoveComponent<T>() 
             where T : IComponent
         {
-            ((IGameObject)this).Entity.RemoveComponent<T>();
+            ((IGameObject)this).Components.RemoveComponent<T>();
         }
 
         public T GetComponent<T>() 
             where T : IComponent
         {
-            return ((IGameObject)this).Entity.GetComponent<T>();
+            return ((IGameObject)this).Components.GetComponent<T>();
         }
 
         public void RemoveAllComponents()
         {
-            ((IGameObject)this).Entity.RemoveAllComponents();
+            ((IGameObject)this).Components.RemoveAllComponents();
         }
 
         public void Dispose()
