@@ -62,7 +62,7 @@ namespace PhotonClientImplementation
         public event Action<RawMessageData> EventRecieved;
         public event Action<RawMessageResponseData, short> OperationResponded;
 
-        private readonly ICoroutinesExecuter coroutinesExecuter;
+        private readonly ICoroutinesExecutor coroutinesExecuter;
         private readonly PeerConnectionInformation serverConnectionInformation;
 
         private short requestId;
@@ -74,7 +74,7 @@ namespace PhotonClientImplementation
         private NetworkTrafficState networkTrafficState;
 
         public PhotonPeer(PeerConnectionInformation serverConnectionInformation,
-            ConnectionProtocol connectionProtocol, DebugLevel debugLevel, ICoroutinesExecuter coroutinesExecuter)
+            ConnectionProtocol connectionProtocol, DebugLevel debugLevel, ICoroutinesExecutor coroutinesExecuter)
         {
             NetworkTrafficState = NetworkTrafficState.Flowing;
 
@@ -241,7 +241,7 @@ namespace PhotonClientImplementation
         }
 
         public short Send<TParam>(MessageData<TParam> data, MessageSendOptions sendOptions)
-            where TParam : IParameters, new()
+            where TParam : struct, IParameters
         {
             if (sendOptions.Flush)
             {
@@ -307,7 +307,8 @@ namespace PhotonClientImplementation
 
     public static class Utils
     {
-        public static OperationRequest ToPhotonOperationRequest<TParam>(MessageData<TParam> request, short requestId) where TParam : IParameters, new()
+        public static OperationRequest ToPhotonOperationRequest<TParam>(MessageData<TParam> request, short requestId) 
+            where TParam : struct, IParameters
         {
             var photonParameters = PhotonCommonImplementation.Utils.ToPhotonParameters(request.Parameters);
             var operationRequest = new OperationRequest
@@ -383,9 +384,9 @@ namespace PhotonClientImplementation
 
     public class PhotonServerConnector
     {
-        private readonly Func<ICoroutinesExecuter> coroutinesExecuterProvider;
+        private readonly Func<ICoroutinesExecutor> coroutinesExecuterProvider;
 
-        public PhotonServerConnector(Func<ICoroutinesExecuter> coroutinesExecuterProvider)
+        public PhotonServerConnector(Func<ICoroutinesExecutor> coroutinesExecuterProvider)
         {
             this.coroutinesExecuterProvider = coroutinesExecuterProvider;
         }

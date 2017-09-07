@@ -1,5 +1,8 @@
-﻿using CommonCommunicationInterfaces;
+﻿using System.Threading.Tasks;
+using CommonCommunicationInterfaces;
+using CommonTools.Coroutines;
 using CommonTools.Log;
+using CommunicationHelper;
 using Scripts.ScriptableObjects;
 using Shared.Game.Common;
 
@@ -7,7 +10,7 @@ namespace Scripts.Services
 {
     public sealed class GameService : ServiceBase<GameOperations, GameEvents>, IGameService
     {
-        public UnityEvent<EntityInitialInfomraitonEventParameters> EntitiyInitialInformation { get; }
+        public UnityEvent<EnterWorldOperationResponseParameters> EntitiyInitialInformation { get; }
         public UnityEvent<EntityAddedEventParameters> EntityAdded { get; }
         public UnityEvent<EntityRemovedEventParameters> EntityRemoved { get; }
         public UnityEvent<EntitiesAddedEventParameters> EntitiesAdded { get; }
@@ -16,7 +19,7 @@ namespace Scripts.Services
 
         public GameService()
         {
-            EntitiyInitialInformation = new UnityEvent<EntityInitialInfomraitonEventParameters>();
+            EntitiyInitialInformation = new UnityEvent<EnterWorldOperationResponseParameters>();
             EntityPositionChanged = new UnityEvent<EntityPositionChangedEventParameters>();
             EntityAdded = new UnityEvent<EntityAddedEventParameters>();
             EntityRemoved = new UnityEvent<EntityRemovedEventParameters>();
@@ -33,7 +36,8 @@ namespace Scripts.Services
         protected override void OnConnected()
         {
             AddEventsHandlers();
-            EnterWorld();
+
+            CoroutinesExecuter.StartTask(EnterWorld);
         }
 
         protected override void OnDisconnected()
@@ -43,12 +47,6 @@ namespace Scripts.Services
 
         private void AddEventsHandlers()
         {
-            EventHandlerRegister.SetHandler(GameEvents.EntityInitialInformation, new EventInvoker<EntityInitialInfomraitonEventParameters>(unityEvent =>
-            {
-                EntitiyInitialInformation.Invoke(unityEvent.Parameters);
-                return true;
-            }));
-
             EventHandlerRegister.SetHandler(GameEvents.EntityAdded, new EventInvoker<EntityAddedEventParameters>(unityEvent =>
             {
                 EntityAdded.Invoke(unityEvent.Parameters);
@@ -100,15 +98,44 @@ namespace Scripts.Services
                 MessageSendOptions.DefaultUnreliable((byte)GameDataChannels.Position));
         }
 
-        public void EnterWorld()
+        public async Task EnterWorld(IYield yield)
         {
-            if (!IsConnected())
+            var requestId = OperationRequestSender.Send(GameOperations.EnterWorld, new EmptyParameters(), MessageSendOptions.DefaultReliable());
+            var response = await SubscriptionProvider.ProvideSubscription<EnterWorldOperationResponseParameters>(yield, requestId);
+
+            EntitiyInitialInformation.Invoke(response);
+        }
+    }
+
+    public static class ExtensionMethods
+    {
+        public static async Task<TParam> ProvideSubscription<TParam>(this IOperationResponseSubscriptionProvider subscriptionProvider, IYield yield, short requestId)
+            where TParam : struct, IParameters
+        {
+            var receiver = new SafeOperationResponseReceiver<TParam>(Configuration.OperationTimeout);
+            subscriptionProvider.ProvideSubscription(receiver, requestId);
+
+            await yield.Return(receiver);
+
+            if (receiver.HasException)
             {
-                LogUtils.Log(MessageBuilder.Trace("Peer is not connected to a server."));
-                return;
+                throw new OperationNotHandledException(receiver.ExceptionReturnCode);
             }
 
-            OperationRequestSender.Send(GameOperations.EnterWorld, new EmptyParameters(), MessageSendOptions.DefaultReliable());
+            return receiver.Value;
+        }
+
+        public static async Task ProvideSubscription(this IOperationResponseSubscriptionProvider subscriptionProvider, IYield yield, short requestId)
+        {
+            var receiver = new SafeOperationResponseReceiver<EmptyParameters>(Configuration.OperationTimeout);
+            subscriptionProvider.ProvideSubscription(receiver, requestId);
+
+            await yield.Return(receiver);
+
+            if (receiver.HasException)
+            {
+                throw new OperationNotHandledException(receiver.ExceptionReturnCode);
+            }
         }
     }
 }

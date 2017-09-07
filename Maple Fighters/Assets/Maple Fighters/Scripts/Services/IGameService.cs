@@ -8,7 +8,7 @@ namespace Scripts.Services
 
         void UpdateEntityPosition(UpdateEntityPositionRequestParameters parameters);
 
-        UnityEvent<EntityInitialInfomraitonEventParameters> EntitiyInitialInformation { get; }
+        UnityEvent<EnterWorldOperationResponseParameters> EntitiyInitialInformation { get; }
 
         UnityEvent<EntityAddedEventParameters> EntityAdded { get; }
         UnityEvent<EntityRemovedEventParameters> EntityRemoved { get; }

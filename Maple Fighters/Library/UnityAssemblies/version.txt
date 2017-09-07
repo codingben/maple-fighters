@@ -1,5 +1,5 @@
-2017.1.0p5:3.1.0.0
-WebGL
+2017.1.1f1:3.3.0.2
+StandaloneWindows64
 C:/Program Files/Unity/Editor/Data/Managed/UnityEditor.dll
 C:/Program Files/Unity/Editor/Data/Managed/UnityEngine.dll
 C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll
