@@ -9,10 +9,10 @@ namespace Game.InterestManagement
 {
     public class InterestArea : Component<IGameObject>, IInterestArea
     {
-        public Action<IGameObject> GameObjectAdded;
-        public Action<int> GameObjectRemoved;
-        public Action<IGameObject[]> GameObjectsAdded;
-        public Action<int[]> GameObjectsRemoved;
+        public Action<IGameObject> GameObjectAdded = delegate { };
+        public Action<int> GameObjectRemoved = delegate { };
+        public Action<IGameObject[]> GameObjectsAdded = delegate { };
+        public Action<int[]> GameObjectsRemoved = delegate { };
 
         private Rectangle interestArea;
 
@@ -37,13 +37,13 @@ namespace Game.InterestManagement
 
         private void SubscribeToPositionChangesNotifier()
         {
-            var transform = Entity.Components.GetComponent<Transform>().AssertNotNull();
+            var transform = Entity.Container.GetComponent<Transform>().AssertNotNull();
             transform.PositionChanged += SetPosition;
         }
 
         private void UnsubscribeFromPositionChangesNotifier()
         {
-            var transform = Entity.Components.GetComponent<Transform>().AssertNotNull();
+            var transform = Entity.Container.GetComponent<Transform>().AssertNotNull();
             transform.PositionChanged -= SetPosition;
         }
 

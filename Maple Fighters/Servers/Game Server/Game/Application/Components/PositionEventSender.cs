@@ -25,9 +25,9 @@ namespace Game.Application.Components
         {
             base.OnAwake();
 
-            eventSender = Entity.Components.GetComponent<EventSenderWrapper>().AssertNotNull();
+            eventSender = Entity.Container.GetComponent<EventSenderWrapper>().AssertNotNull();
 
-            var transform = playerGameObject.Components.GetComponent<Transform>().AssertNotNull();
+            var transform = playerGameObject.Container.GetComponent<Transform>().AssertNotNull();
             transform.PositionChanged += SendNewPosition;
         }
 
@@ -42,7 +42,7 @@ namespace Game.Application.Components
 
         private IEnumerable<IGameObject> GetEntitiesFromEntityRegions()
         {
-            var publisherRegions = (playerGameObject.Components.GetComponent<InterestArea>().AssertNotNull() as IInterestArea)?.GetPublishersExceptMyGameObject();
+            var publisherRegions = (playerGameObject.Container.GetComponent<InterestArea>().AssertNotNull() as IInterestArea)?.GetPublishersExceptMyGameObject();
             var gameObjects = new List<IGameObject>();
 
             if (publisherRegions == null)

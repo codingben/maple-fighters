@@ -1,10 +1,9 @@
-﻿using System;
-using ServerApplication.Common.ComponentModel;
+﻿using ServerApplication.Common.ComponentModel;
 
 namespace Shared.ServerApplication.Common.PeerLogic
 {
-    public interface IPeerEntity : IDisposable
+    public interface IPeerEntity : IEntity
     {
-        IContainer Components { get; }
+        IContainer<IPeerEntity> Container { get; }
     }
 }

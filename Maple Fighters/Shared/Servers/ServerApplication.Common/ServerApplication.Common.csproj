@@ -69,9 +69,11 @@
   <ItemGroup>
     <Compile Include="Application Base\Application.cs" />
     <Compile Include="Application Base\IApplication.cs" />
+    <Compile Include="Application Base\IServerEntity.cs" />
+    <Compile Include="Application Base\Server.cs" />
     <Compile Include="Application Base\TimeProvider.cs" />
-    <Compile Include="Component Model\CommonComponent.cs" />
     <Compile Include="Component Model\IContainer.cs" />
+    <Compile Include="Component Model\IEntity.cs" />
     <Compile Include="Components\CoroutinesExecutorEntity.cs" />
     <Compile Include="Components\EventSenderWrapper.cs" />
     <Compile Include="Components\FiberCoroutinesExecuter.cs" />
@@ -82,10 +84,10 @@
     <Compile Include="Components\RandomNumberGenerator.cs" />
     <Compile Include="Component Model\Container.cs" />
     <Compile Include="Component Model\IComponent.cs" />
-    <Compile Include="Component Model\ServerComponents.cs" />
+    <Compile Include="Component Model\ServerEntity.cs" />
     <Compile Include="Logger\Logger.cs" />
     <Compile Include="Component Model\Component.cs" />
-    <Compile Include="Peer\EntityWrapper.cs" />
+    <Compile Include="Peer\PeerEntity.cs" />
     <Compile Include="Peer\IClientPeerWrapper.cs" />
     <Compile Include="Peer\ClientPeerWrapper.cs" />
     <Compile Include="Peer\IPeerEntity.cs" />

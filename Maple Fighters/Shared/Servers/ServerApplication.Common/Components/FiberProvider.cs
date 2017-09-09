@@ -1,9 +1,10 @@
-﻿using ServerApplication.Common.ComponentModel;
+﻿using ServerApplication.Common.ApplicationBase;
+using ServerApplication.Common.ComponentModel;
 using ServerCommunicationInterfaces;
 
 namespace ServerApplication.Common.Components
 {
-    public class FiberProvider : CommonComponent
+    public class FiberProvider : Component<IServerEntity>
     {
         private readonly IFiberProvider fiberProvider;
 

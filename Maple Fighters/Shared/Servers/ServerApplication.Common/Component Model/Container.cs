@@ -4,65 +4,16 @@ using CommonTools.Log;
 
 namespace ServerApplication.Common.ComponentModel
 {
-    public sealed class Container<TComoponent> : IContainer
-        where TComoponent : class, IComponent
+    public sealed class Container<TOwner> : IContainer<TOwner>
+       where TOwner : IEntity
     {
-        private readonly List<TComoponent> components = new List<TComoponent>();
+        private readonly List<IComponent> components = new List<IComponent>();
+        private readonly TOwner owner;
 
-        public T AddComponent<T>(T component)
-            where T : class , IComponent
+        public Container(TOwner owner)
         {
-            if (GetComponent<T>() != null)
-            {
-                LogUtils.Log(MessageBuilder.Trace($"Comoponent {typeof(T).Name} already exists!"), LogMessageType.Error);
-                return null;
-            }
-
-            components.Add(component as TComoponent);
-            return component;
+            this.owner = owner;
         }
-
-        public void RemoveComponent<T>()
-            where T : IComponent
-        {
-            var component = GetComponent<T>();
-            if (component == null)
-            {
-                LogUtils.Log(MessageBuilder.Trace($"Could not remove component {typeof(T).Name} - It doesn't exist."), LogMessageType.Warning);
-                return;
-            }
-
-            var index = components.IndexOf(component as TComoponent);
-            if (index != -1)
-            {
-                components.RemoveAt(index);
-            }
-        }
-
-        public T GetComponent<T>()
-            where T : IComponent
-        {
-            return components.OfType<T>().FirstOrDefault();
-        }
-
-        public void RemoveAllComponents()
-        {
-            components.ForEach(component => component.Dispose());
-
-            var componentsListTemp = new List<TComoponent>();
-            componentsListTemp.AddRange(components);
-
-            foreach (var component in componentsListTemp)
-            {
-                components.Remove(component);
-            }
-        }
-    }
-
-    /*public sealed class Container<TComoponent, TOwner> : IContainer<TOwner>
-        where TComoponent : class, IComponent
-    {
-        private readonly List<TComoponent> components = new List<TComoponent>();
 
         public T AddComponent<T>(T component)
             where T : Component<TOwner>, IComponent
@@ -73,7 +24,8 @@ namespace ServerApplication.Common.ComponentModel
                 return null;
             }
 
-            components.Add(component as TComoponent);
+            component.Awake(owner);
+            components.Add(component);
             return component;
         }
 
@@ -87,7 +39,7 @@ namespace ServerApplication.Common.ComponentModel
                 return;
             }
 
-            var index = components.IndexOf(component as TComoponent);
+            var index = components.IndexOf(component);
             if (index != -1)
             {
                 components.RemoveAt(index);
@@ -104,7 +56,7 @@ namespace ServerApplication.Common.ComponentModel
         {
             components.ForEach(component => component.Dispose());
 
-            var componentsListTemp = new List<TComoponent>();
+            var componentsListTemp = new List<IComponent>();
             componentsListTemp.AddRange(components);
 
             foreach (var component in componentsListTemp)
@@ -112,5 +64,5 @@ namespace ServerApplication.Common.ComponentModel
                 components.Remove(component);
             }
         }
-    }*/
+    }
 }

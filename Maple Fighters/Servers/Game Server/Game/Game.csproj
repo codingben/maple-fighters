@@ -61,8 +61,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Application\Components\EntityIdToPeerIdConverter.cs" />
-    <Compile Include="Application\Components\EntityWrapper.cs" />
     <Compile Include="Application\Components\PositionEventSender.cs" />
     <Compile Include="Application\GameApplication.cs" />
     <Compile Include="Application\Peer Logic\Components\InterestAreaEventSender.cs" />
@@ -70,13 +68,7 @@
     <Compile Include="Application\Peer Logic\AuthenticatedGamePeerLogic.cs" />
     <Compile Include="Application\Peer Logic\Operations\UpdateEntityPositionOperation.cs" />
     <Compile Include="Application\Peer Logic\UnauthenticatedGamePeerLogic.cs" />
-    <Compile Include="Entity\Components\Transform.cs" />
-    <Compile Include="Entity\Entity.cs" />
-    <Compile Include="Entity\EntityContainer.cs" />
-    <Compile Include="Entity\IEntity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Systems\ExtensionMethods.cs" />
-    <Compile Include="Systems\TransformSystem.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

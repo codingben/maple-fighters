@@ -70,11 +70,5 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\Helper\MathematicsHelper\MathematicsHelper.csproj">
-      <Project>{A3BE3E13-D3A1-4800-B471-A39F5ED4B554}</Project>
-      <Name>MathematicsHelper</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

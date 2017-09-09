@@ -2,11 +2,11 @@
 {
     public enum GameEvents : byte
     {
-        EntityInitialInformation,
-        EntityPositionChanged,
+        Test,
         EntityAdded,
         EntityRemoved,
         EntitiesAdded,
-        EntitiesRemoved
+        EntitiesRemoved,
+        EntityPositionChanged
     }
 }

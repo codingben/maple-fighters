@@ -1,13 +1,14 @@
 ﻿using System.Collections.Generic;
 using CommonCommunicationInterfaces;
 using CommonTools.Log;
+using ServerApplication.Common.ApplicationBase;
 using ServerApplication.Common.ComponentModel;
 using ServerCommunicationInterfaces;
 using Shared.ServerApplication.Common.PeerLogic;
 
 namespace ServerApplication.Common.Components
 {
-    public class PeerContainer : CommonComponent
+    public class PeerContainer : Component<IServerEntity>
     {
         private readonly Dictionary<int, IClientPeerWrapper<IClientPeer>> peerLogics = new Dictionary<int, IClientPeerWrapper<IClientPeer>>();
         private readonly object locker = new object();

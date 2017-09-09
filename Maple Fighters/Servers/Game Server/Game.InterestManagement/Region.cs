@@ -26,8 +26,11 @@ namespace Game.InterestManagement
 
             gameObjects.Add(gameObject.Id, gameObject);
 
-            ShowGameObjectsForGameObject(gameObject); // Show all exists entities for a new game object.
-            ShowGameObjectForGameObjects(gameObject); // Show a new game object for all exists entities.
+            if (gameObjects.Count > 0)
+            {
+                ShowGameObjectsForGameObject(gameObject); // Show all exists entities for a new game object.
+                ShowGameObjectForGameObjects(gameObject); // Show a new game object for all exists entities.
+            }
         }
 
         public void RemoveSubscription(IGameObject gameObject)
@@ -41,9 +44,8 @@ namespace Game.InterestManagement
             if (gameObjects.Count > 0)
             {
                 HideGameObjectsForGameObject(gameObject.Id);
+                HideGameObjectForGameObjects(gameObject.Id);
             }
-
-            HideGameObjectForGameObjects(gameObject.Id);
 
             gameObjects.Remove(gameObject.Id);
         }
@@ -61,13 +63,17 @@ namespace Game.InterestManagement
         private void ShowGameObjectsForGameObject(IGameObject gameObject)
         {
             var gameObjectsTemp = gameObjects.Values.Where(gameObjectValue => gameObjectValue.Id != gameObject.Id).ToList();
-            gameObject.Components.GetComponent<InterestArea>().AssertNotNull().GameObjectsAdded?.Invoke(gameObjectsTemp.ToArray()); 
+            var interestArea = gameObject.Container.GetComponent<InterestArea>().AssertNotNull();
+
+            interestArea.GameObjectsAdded.AssertNotNull().Invoke(gameObjectsTemp.ToArray()); 
         }
 
-        private void HideGameObjectsForGameObject(int id)
+        private void HideGameObjectsForGameObject(int hideGameObjectId)
         {
-            var gameObjectsTemp = gameObjects.Keys.Where(gameObjectId => gameObjectId != id).ToList();
-            gameObjects[id].Components.GetComponent<InterestArea>().AssertNotNull().GameObjectsRemoved?.Invoke(gameObjectsTemp.ToArray());
+            var gameObjectsTemp = gameObjects.Keys.Where(gameObjectId => gameObjectId != hideGameObjectId).ToList();
+            var interestArea = gameObjects[hideGameObjectId].Container.GetComponent<InterestArea>().AssertNotNull();
+
+            interestArea.GameObjectsRemoved.AssertNotNull().Invoke(gameObjectsTemp.ToArray());
         }
 
         private void ShowGameObjectForGameObjects(IGameObject newGameObject)
@@ -79,20 +85,22 @@ namespace Game.InterestManagement
                     continue;
                 }
 
-                gameObject.Value.Components.GetComponent<InterestArea>().AssertNotNull().GameObjectAdded?.Invoke(newGameObject);
+                var interestArea = gameObject.Value.Container.GetComponent<InterestArea>().AssertNotNull();
+                interestArea.GameObjectAdded.AssertNotNull().Invoke(newGameObject);
             }
         }
 
-        private void HideGameObjectForGameObjects(int id)
+        private void HideGameObjectForGameObjects(int hideGameObjectId)
         {
             foreach (var gameObject in gameObjects)
             {
-                if (gameObject.Key == id)
+                if (gameObject.Key == hideGameObjectId)
                 {
                     continue;
                 }
 
-                gameObject.Value.Components.GetComponent<InterestArea>().AssertNotNull().GameObjectRemoved?.Invoke(id);
+                var interestArea = gameObject.Value.Container.GetComponent<InterestArea>().AssertNotNull();
+                interestArea.GameObjectRemoved.AssertNotNull().Invoke(hideGameObjectId);
             }
         }
     }

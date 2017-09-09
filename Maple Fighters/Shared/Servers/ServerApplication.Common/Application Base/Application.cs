@@ -1,6 +1,5 @@
 ﻿using CommonTools.Coroutines;
 using CommonTools.Log;
-using ServerApplication.Common.ComponentModel;
 using ServerApplication.Common.Components;
 using ServerApplication.Common.Components.Coroutines;
 using ServerCommunicationInterfaces;
@@ -14,7 +13,6 @@ namespace ServerApplication.Common.ApplicationBase
     public abstract class Application : IApplication
     {
         private PeerContainer peerContainer;
-
         private readonly IFiberProvider fiberProvider;
 
         protected Application(IFiberProvider fiberProvider)
@@ -26,12 +24,13 @@ namespace ServerApplication.Common.ApplicationBase
 
         public virtual void Startup()
         {
-            ServerComponents.Container.AddComponent(new PeerContainer());
-            peerContainer = ServerComponents.Container.GetComponent<PeerContainer>().AssertNotNull();
+            Server.Entity.Container.AddComponent(new PeerContainer());
+            peerContainer = Server.Entity.Container.GetComponent<PeerContainer>().AssertNotNull();
         }
 
         public virtual void Shutdown()
         {
+            Server.Entity.Dispose();
             peerContainer.DisconnectAllPeers();
         }
 
@@ -39,16 +38,15 @@ namespace ServerApplication.Common.ApplicationBase
         {
             TimeProviders.DefaultTimeProvider = new TimeProvider();
 
-            ServerComponents.Container.AddComponent(new RandomNumberGenerator());
-            ServerComponents.Container.AddComponent(new IdGenerator());
-            ServerComponents.Container.AddComponent(new FiberProvider(fiberProvider));
-            var fiber = ServerComponents.Container.GetComponent<FiberProvider>().AssertNotNull();
-            ServerComponents.Container.AddComponent(new CoroutinesExecutor(new FiberCoroutinesExecutor(fiber.GetFiberStarter(), 100)));
+            Server.Entity.Container.AddComponent(new RandomNumberGenerator());
+            Server.Entity.Container.AddComponent(new IdGenerator());
+            var fiber = Server.Entity.Container.AddComponent(new FiberProvider(fiberProvider)).AssertNotNull();
+            Server.Entity.Container.AddComponent(new CoroutinesExecutor(new FiberCoroutinesExecutor(fiber.GetFiberStarter(), 100)));
         }
 
         protected void WrapClientPeer(IClientPeer clientPeer, IPeerLogicBase peerLogic)
         {
-            var idGenerator = ServerComponents.Container.GetComponent<IdGenerator>().AssertNotNull();
+            var idGenerator = Server.Entity.Container.GetComponent<IdGenerator>().AssertNotNull();
             var peerId = idGenerator.GenerateId();
 
             var clientPeerWrapper = new ClientPeerWrapper<IClientPeer>(clientPeer, peerId);

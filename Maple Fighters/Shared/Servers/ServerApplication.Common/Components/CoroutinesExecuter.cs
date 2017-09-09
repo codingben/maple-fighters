@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
 using CommonTools.Coroutines;
+using ServerApplication.Common.ApplicationBase;
 using ServerApplication.Common.ComponentModel;
 
 namespace ServerApplication.Common.Components.Coroutines
 {
-    public class CoroutinesExecutor : CommonComponent, ICoroutinesExecutor
+    public class CoroutinesExecutor : Component<IServerEntity>, ICoroutinesExecutor
     {
         public int Count => executer.Count;
 

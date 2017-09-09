@@ -1,6 +1,6 @@
 ﻿namespace ServerApplication.Common.ComponentModel
 {
-    public class Component<TOwner> : CommonComponent
+    public class Component<TOwner> : IComponent
     {
         protected TOwner Entity { get; private set; }
 
@@ -11,7 +11,17 @@
             OnAwake();
         }
 
+        public void Dispose()
+        {
+            OnDestroy();
+        }
+
         protected virtual void OnAwake()
+        {
+            // Left blank intentionally
+        }
+
+        protected virtual void OnDestroy()
         {
             // Left blank intentionally
         }

@@ -3,7 +3,7 @@ using CommonCommunicationInterfaces;
 using CommonTools.Log;
 using Game.InterestManagement;
 using MathematicsHelper;
-using ServerApplication.Common.ComponentModel;
+using ServerApplication.Common.ApplicationBase;
 using ServerCommunicationHelper;
 using Shared.Game.Common;
 
@@ -27,13 +27,13 @@ namespace Game.Application.PeerLogic.Operations
 
             onAuthenticated.Invoke(playerGameObject);
 
-            var entityTemp = new Shared.Game.Common.Entity(playerGameObject.Id, EntityType.Player);
+            var entityTemp = new Entity(playerGameObject.Id, EntityType.Player);
             return new EnterWorldOperationResponseParameters(entityTemp, position.X, position.Y);
         }
 
         private IGameObject CreatePlayerGameObject(int sceneId, Vector2 position, Vector2 interestArea)
         {
-            var scene = ServerComponents.Container.GetComponent<SceneContainer>().AssertNotNull();
+            var scene = Server.Entity.Container.GetComponent<SceneContainer>().AssertNotNull();
             var playerObject = scene?.GetScene(sceneId)?.AddGameObject(new GameObject(position, interestArea));
             return playerObject;
         }

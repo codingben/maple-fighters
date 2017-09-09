@@ -1,14 +1,13 @@
-﻿using System;
-using ServerApplication.Common.ComponentModel;
+﻿using ServerApplication.Common.ComponentModel;
 
 namespace Game.InterestManagement
 {
-    public interface IGameObject : IDisposable
+    public interface IGameObject : IEntity
     {
         int Id { get; }
 
         IScene Scene { get; set; }
 
-        IContainer Components { get; }
+        IContainer<IGameObject> Container { get; }
     }
 }

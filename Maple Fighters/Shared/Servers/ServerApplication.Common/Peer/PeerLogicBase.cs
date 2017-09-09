@@ -1,5 +1,6 @@
 ﻿using System;
 using CommonCommunicationInterfaces;
+using CommonTools.Log;
 using ServerApplication.Common.Components;
 using ServerApplication.Common.Components.Coroutines;
 using ServerCommunicationHelper;
@@ -11,7 +12,7 @@ namespace Shared.ServerApplication.Common.PeerLogic
         where TOperationCode : IComparable, IFormattable, IConvertible
         where TEventCode : IComparable, IFormattable, IConvertible
     {
-        protected IPeerEntity Entity { get; } = new EntityWrapper();
+        protected IPeerEntity Entity { get; } = new PeerEntity();
         protected IClientPeerWrapper<IClientPeer> PeerWrapper { get; private set; }
         protected IOperationRequestHandlerRegister<TOperationCode> OperationRequestHandlerRegister { get; private set; }
         protected IEventSender<TEventCode> EventSender { get; private set; }
@@ -21,7 +22,7 @@ namespace Shared.ServerApplication.Common.PeerLogic
             PeerWrapper = peer;
 
             OperationRequestHandlerRegister = new OperationRequestsHandler<TOperationCode>(PeerWrapper.Peer.OperationRequestNotifier, 
-                PeerWrapper.Peer.OperationResponseSender, true, true);
+                PeerWrapper.Peer.OperationResponseSender, false, false);
             EventSender = new EventSender<TEventCode>(PeerWrapper.Peer.EventSender, true);
 
             PeerWrapper.Peer.NetworkTrafficState = NetworkTrafficState.Flowing;
@@ -35,8 +36,8 @@ namespace Shared.ServerApplication.Common.PeerLogic
 
         protected void AddCommonComponents()
         {
-            Entity.Components.AddComponent(new EventSenderWrapper(EventSender));
-            Entity.Components.AddComponent(new CoroutinesExecutorEntity(new FiberCoroutinesExecutor(PeerWrapper.Peer.Fiber, 100)));
+            Entity.Container.AddComponent(new EventSenderWrapper(EventSender.AssertNotNull()));
+            Entity.Container.AddComponent(new CoroutinesExecutorEntity(new FiberCoroutinesExecutor(PeerWrapper.Peer.Fiber, 100)));
         }
     }
 }

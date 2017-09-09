@@ -8,7 +8,7 @@ namespace Game.InterestManagement
     {
         public Vector2 Position { get; private set; } = Vector2.Zero;
 
-        public event Action<Vector2> PositionChanged;
+        public Action<Vector2> PositionChanged = delegate {  };
 
         public Transform()
         {

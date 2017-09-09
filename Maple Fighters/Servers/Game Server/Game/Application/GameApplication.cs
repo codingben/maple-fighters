@@ -2,7 +2,7 @@
 using Game.Application.PeerLogic;
 using Game.InterestManagement;
 using MathematicsHelper;
-using ServerApplication.Common.ComponentModel;
+using ServerApplication.Common.ApplicationBase;
 using ServerCommunicationInterfaces;
 
 namespace Game.Application
@@ -34,8 +34,6 @@ namespace Game.Application
             LogUtils.Log(MessageBuilder.Trace(string.Empty));
 
             base.Shutdown();
-
-            ServerComponents.Container.RemoveAllComponents();
         }
 
         public override void OnConnected(IClientPeer clientPeer)
@@ -45,12 +43,12 @@ namespace Game.Application
 
         private void AddComponents()
         {
-            ServerComponents.Container.AddComponent(new SceneContainer());
+            Server.Entity.Container.AddComponent(new SceneContainer());
         }
 
         private void CreateScenes()
         {
-            var sceneContainer = ServerComponents.Container.GetComponent<SceneContainer>().AssertNotNull();
+            var sceneContainer = Server.Entity.Container.GetComponent<SceneContainer>().AssertNotNull();
             sceneContainer.AddScene(1, new Vector2(20, 15), new Vector2(10, 5));
         }
     }

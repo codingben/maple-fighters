@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
 using CommonTools.Log;
 using MathematicsHelper;
+using ServerApplication.Common.ApplicationBase;
 using ServerApplication.Common.ComponentModel;
 
 namespace Game.InterestManagement
 {
-    public class SceneContainer : CommonComponent
+    public class SceneContainer : Component<IServerEntity>
     {
         private readonly Dictionary<int, IScene> scenes = new Dictionary<int, IScene>();
 

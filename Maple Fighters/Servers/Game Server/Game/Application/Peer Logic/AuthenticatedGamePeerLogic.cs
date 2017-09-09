@@ -33,14 +33,14 @@ namespace Game.Application.PeerLogic
 
         private void AddComponents()
         {
-            var interestArea = playerGameObject.Components.GetComponent<InterestArea>().AssertNotNull();
-            Entity.Components.AddComponent(new InterestAreaEventSender(interestArea));
-            Entity.Components.AddComponent(new PositionEventSender(playerGameObject));
+            var interestArea = playerGameObject.Container.GetComponent<InterestArea>().AssertNotNull();
+            Entity.Container.AddComponent(new InterestAreaEventSender(interestArea));
+            Entity.Container.AddComponent(new PositionEventSender(playerGameObject));
         }
 
         private void AddHandlerForUpdateEntityPosition()
         {
-            var transform = playerGameObject.Components.GetComponent<Transform>().AssertNotNull();
+            var transform = playerGameObject.Container.GetComponent<Transform>().AssertNotNull();
             OperationRequestHandlerRegister.SetHandler(GameOperations.UpdateEntityPosition, new UpdateEntityPositionOperation(transform));
         }
 
