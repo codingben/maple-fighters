@@ -4,6 +4,7 @@ using CommonCommunicationInterfaces;
 using CommonTools.Log;
 using Game.InterestManagement;
 using MathematicsHelper;
+using ServerApplication.Common.ApplicationBase;
 using ServerApplication.Common.ComponentModel;
 using ServerApplication.Common.Components;
 using Shared.Game.Common;
@@ -14,7 +15,7 @@ namespace Game.Application.Components
     internal class PositionEventSender : Component<IPeerEntity>
     {
         private readonly IGameObject playerGameObject;
-        private EventSenderWrapper eventSender;
+        private PeerContainer peerContainer;
 
         public PositionEventSender(IGameObject playerGameObject)
         {
@@ -25,7 +26,7 @@ namespace Game.Application.Components
         {
             base.OnAwake();
 
-            eventSender = Entity.Container.GetComponent<EventSenderWrapper>().AssertNotNull();
+            peerContainer = Server.Entity.Container.GetComponent<PeerContainer>().AssertNotNull();
 
             var transform = playerGameObject.Container.GetComponent<Transform>().AssertNotNull();
             transform.PositionChanged += SendNewPosition;
@@ -35,14 +36,32 @@ namespace Game.Application.Components
         {
             foreach (var otherEntity in GetEntitiesFromEntityRegions())
             {
-                var parameters = new EntityPositionChangedEventParameters(otherEntity.Id, newPosition.X, newPosition.Y);
+                LogUtils.Log(MessageBuilder.Trace($"Pre-sending an event to entity id #{otherEntity.Id}"));
+
+                if (playerGameObject.Id == otherEntity.Id)
+                {
+                    LogUtils.Log(MessageBuilder.Trace($"Cannot send a new position to an entity id #{otherEntity.Id}"));
+                    continue;
+                }
+
+                var peerWrapper = peerContainer.GetPeerWrapper(otherEntity.Id).AssertNotNull();
+
+                var eventSender = peerWrapper?.PeerLogic.Entity.Container.GetComponent<EventSenderWrapper>().AssertNotNull();
+                if (eventSender == null)
+                {
+                    continue;
+                }
+
+                LogUtils.Log(MessageBuilder.Trace($"Sending an event to entity id #{otherEntity.Id}"));
+
+                var parameters = new EntityPositionChangedEventParameters(playerGameObject.Id, newPosition.X, newPosition.Y);
                 eventSender.SendEvent((byte)GameEvents.EntityPositionChanged, parameters, MessageSendOptions.DefaultUnreliable((byte)GameDataChannels.Position));
             }
         }
 
         private IEnumerable<IGameObject> GetEntitiesFromEntityRegions()
         {
-            var publisherRegions = (playerGameObject.Container.GetComponent<InterestArea>().AssertNotNull() as IInterestArea)?.GetPublishersExceptMyGameObject();
+            var publisherRegions = (playerGameObject.Container.GetComponent<InterestArea>().AssertNotNull() as IInterestArea)?.GetPublishers();
             var gameObjects = new List<IGameObject>();
 
             if (publisherRegions == null)

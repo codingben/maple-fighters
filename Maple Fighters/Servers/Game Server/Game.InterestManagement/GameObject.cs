@@ -23,6 +23,16 @@ namespace Game.InterestManagement
             Container.AddComponent(new InterestArea(interestArea));
         }
 
+        public GameObject(int id, Vector2 position, Vector2 interestArea)
+        {
+            Id = id;
+
+            Container = new Container<IGameObject>(this);
+
+            Container.AddComponent(new Transform(position));
+            Container.AddComponent(new InterestArea(interestArea));
+        }
+
         public void Dispose()
         {
             Container.RemoveAllComponents();

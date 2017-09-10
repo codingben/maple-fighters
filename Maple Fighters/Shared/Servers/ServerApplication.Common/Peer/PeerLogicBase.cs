@@ -12,7 +12,8 @@ namespace Shared.ServerApplication.Common.PeerLogic
         where TOperationCode : IComparable, IFormattable, IConvertible
         where TEventCode : IComparable, IFormattable, IConvertible
     {
-        protected IPeerEntity Entity { get; } = new PeerEntity();
+        public IPeerEntity Entity { get; } = new PeerEntity();
+
         protected IClientPeerWrapper<IClientPeer> PeerWrapper { get; private set; }
         protected IOperationRequestHandlerRegister<TOperationCode> OperationRequestHandlerRegister { get; private set; }
         protected IEventSender<TEventCode> EventSender { get; private set; }
@@ -23,7 +24,7 @@ namespace Shared.ServerApplication.Common.PeerLogic
 
             OperationRequestHandlerRegister = new OperationRequestsHandler<TOperationCode>(PeerWrapper.Peer.OperationRequestNotifier, 
                 PeerWrapper.Peer.OperationResponseSender, false, false);
-            EventSender = new EventSender<TEventCode>(PeerWrapper.Peer.EventSender, true);
+            EventSender = new EventSender<TEventCode>(PeerWrapper.Peer.EventSender, false);
 
             PeerWrapper.Peer.NetworkTrafficState = NetworkTrafficState.Flowing;
         }

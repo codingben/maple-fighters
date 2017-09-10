@@ -2,11 +2,15 @@ using System.Collections.Generic;
 using System.Linq;
 using CommonTools.Log;
 using MathematicsHelper;
+using ServerApplication.Common.ApplicationBase;
+using ServerApplication.Common.Components;
 
 namespace Game.InterestManagement
 {
     internal class Region : IRegion
     {
+        private readonly int Id;
+
         public Rectangle Area { get; }
 
         private readonly Dictionary<int, IGameObject> gameObjects = new Dictionary<int, IGameObject>();
@@ -14,6 +18,8 @@ namespace Game.InterestManagement
         public Region(Rectangle rectangle)
         {
             Area = rectangle;
+
+            Id = Server.Entity.Container.GetComponent<IdGenerator>().GenerateId();
         }
 
         public void AddSubscription(IGameObject gameObject)
@@ -26,7 +32,9 @@ namespace Game.InterestManagement
 
             gameObjects.Add(gameObject.Id, gameObject);
 
-            if (gameObjects.Count > 0)
+            LogUtils.Log(MessageBuilder.Trace($"Region Id: {Id} Game Objects Length: {gameObjects.Count}"));
+
+            if (gameObjects.Count >= 2)
             {
                 ShowGameObjectsForGameObject(gameObject); // Show all exists entities for a new game object.
                 ShowGameObjectForGameObjects(gameObject); // Show a new game object for all exists entities.
@@ -41,13 +49,15 @@ namespace Game.InterestManagement
                 return;
             }
 
-            if (gameObjects.Count > 0)
+            if (gameObjects.Count >= 2)
             {
                 HideGameObjectsForGameObject(gameObject.Id);
                 HideGameObjectForGameObjects(gameObject.Id);
             }
 
             gameObjects.Remove(gameObject.Id);
+
+            LogUtils.Log(MessageBuilder.Trace($"Region Id: {Id} Game Objects Length: {gameObjects.Count}"));
         }
 
         public bool HasSubscription(int gameObjectId)
@@ -62,18 +72,18 @@ namespace Game.InterestManagement
 
         private void ShowGameObjectsForGameObject(IGameObject gameObject)
         {
-            var gameObjectsTemp = gameObjects.Values.Where(gameObjectValue => gameObjectValue.Id != gameObject.Id).ToList();
+            var gameObjectsTemp = gameObjects.Values.Where(gameObjectValue => gameObjectValue.Id != gameObject.Id).ToArray();
             var interestArea = gameObject.Container.GetComponent<InterestArea>().AssertNotNull();
 
-            interestArea.GameObjectsAdded.AssertNotNull().Invoke(gameObjectsTemp.ToArray()); 
+            interestArea.GameObjectsAdded.AssertNotNull().Invoke(gameObjectsTemp); 
         }
 
         private void HideGameObjectsForGameObject(int hideGameObjectId)
         {
-            var gameObjectsTemp = gameObjects.Keys.Where(gameObjectId => gameObjectId != hideGameObjectId).ToList();
+            var gameObjectsTemp = gameObjects.Keys.Where(gameObjectId => gameObjectId != hideGameObjectId).ToArray();
             var interestArea = gameObjects[hideGameObjectId].Container.GetComponent<InterestArea>().AssertNotNull();
 
-            interestArea.GameObjectsRemoved.AssertNotNull().Invoke(gameObjectsTemp.ToArray());
+            interestArea.GameObjectsRemoved.AssertNotNull().Invoke(gameObjectsTemp);
         }
 
         private void ShowGameObjectForGameObjects(IGameObject newGameObject)

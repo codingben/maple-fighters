@@ -10,7 +10,7 @@ namespace Shared.ServerApplication.Common.PeerLogic
         int PeerId { get; }
 
         T Peer { get; }
-        // IPeerLogicBase PeerLogic { get; }
+        IPeerLogicBase PeerLogic { get; }
 
         void SetPeerLogic<TPeerLogic>(TPeerLogic peerLogic)
             where TPeerLogic : IPeerLogicBase;
