@@ -47,7 +47,14 @@ namespace Scripts.Containers.Entity
             }
 
             var position = new Vector3(parameters.X, parameters.Y);
+            LogUtils.Log(MessageBuilder.Trace($"Entity Id: {entity.Id} Starting Position: {position}"));
             var gameObject = Object.Instantiate(entityObject, position, Quaternion.identity) as GameObject;
+            if (gameObject == null)
+            {
+                LogUtils.Log(MessageBuilder.Trace($"Could not instantiate an object {entityObjectName}"));
+                return;
+            }
+
             entities.Add(entity.Id, gameObject.GetComponent<IEntity>());
 
             localEntityId = entity.Id;
@@ -73,7 +80,15 @@ namespace Scripts.Containers.Entity
                 return;
             }
 
-            var gameObject = Object.Instantiate(entityObject) as GameObject;
+            var position = new Vector3(parameters.Entity.X, parameters.Entity.Y);
+            LogUtils.Log(MessageBuilder.Trace($"Entity Id: {entityId} Starting Position: {position}"));
+            var gameObject = Object.Instantiate(entityObject, position, Quaternion.identity) as GameObject;
+            if (gameObject == null)
+            {
+                LogUtils.Log(MessageBuilder.Trace($"Could not instantiate an object {entityObjectName}"));
+                return;
+            }
+
             entities.Add(entityId, gameObject.GetComponent<IEntity>());                
         }
 
@@ -96,7 +111,15 @@ namespace Scripts.Containers.Entity
                     continue;
                 }
 
-                var gameObject = Object.Instantiate(entityObject) as GameObject;
+                var position = new Vector3(entity.X, entity.Y);
+                LogUtils.Log(MessageBuilder.Trace($"Entity Id: {entity.Id} Starting Position: {position}"));
+                var gameObject = Object.Instantiate(entityObject, position, Quaternion.identity) as GameObject;
+                if (gameObject == null)
+                {
+                    LogUtils.Log(MessageBuilder.Trace($"Could not instantiate an object {entityObjectName}"));
+                    return;
+                }
+
                 entities.Add(entity.Id, gameObject.GetComponent<IEntity>());
             }
         }

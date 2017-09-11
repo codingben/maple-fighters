@@ -116,9 +116,6 @@
     <Reference Include="SyntaxTree.VisualStudio.Unity.Bridge">
       <HintPath>Library\UnityAssemblies\SyntaxTree.VisualStudio.Unity.Bridge.dll</HintPath>
     </Reference>
-    <Reference Include="ConsoleE">
-      <HintPath>Assets\Plugins\ConsoleE\Editor\ConsoleE.dll</HintPath>
-    </Reference>
     <Reference Include="Game.Common">
       <HintPath>Assets\Plugins\Game Common\Game.Common.dll</HintPath>
     </Reference>

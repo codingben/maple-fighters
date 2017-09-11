@@ -56,7 +56,10 @@ namespace Scripts.Gameplay.Actors
                 return;
             }
 
-            rigidbody.MovePosition(position);
+            if (position != Vector2.zero)
+            {
+                rigidbody.MovePosition(position);
+            }
         }
 
         private void FallingState()

@@ -76,14 +76,22 @@ namespace Scripts.Services
                 EntityPositionChanged.Invoke(unityEvent.Parameters);
                 return true;
             }));
+
+            EventHandlerRegister.SetHandler(GameEvents.Test, new EventInvoker<EmptyParameters>(unityEvent =>
+            {
+                LogUtils.Log("Test event");
+                return true;
+            }));
         }
 
         private void RemoveEventsHandlers()
         {
-            EventHandlerRegister.RemoveHandler(GameEvents.EntityInitialInformation);
             EventHandlerRegister.RemoveHandler(GameEvents.EntityAdded);
             EventHandlerRegister.RemoveHandler(GameEvents.EntityRemoved);
+            EventHandlerRegister.RemoveHandler(GameEvents.EntitiesAdded);
+            EventHandlerRegister.RemoveHandler(GameEvents.EntitiesRemoved);
             EventHandlerRegister.RemoveHandler(GameEvents.EntityPositionChanged);
+            EventHandlerRegister.RemoveHandler(GameEvents.Test);
         }
 
         public void UpdateEntityPosition(UpdateEntityPositionRequestParameters parameters)
@@ -94,8 +102,7 @@ namespace Scripts.Services
                 return;
             }
 
-            OperationRequestSender.Send(GameOperations.UpdateEntityPosition, parameters, 
-                MessageSendOptions.DefaultUnreliable((byte)GameDataChannels.Position));
+            OperationRequestSender.Send(GameOperations.UpdateEntityPosition, parameters, MessageSendOptions.DefaultUnreliable((byte)GameDataChannels.Position));
         }
 
         public async Task EnterWorld(IYield yield)
