@@ -23,13 +23,13 @@ namespace Game.Application.PeerLogic.Operations
         public EnterWorldOperationResponseParameters? Handle(MessageData<EmptyParameters> messageData, ref MessageSendOptions sendOptions)
         {
             var sceneId = 1;
-            var position = new Vector2(0, -6);
-            var interestArea = new Vector2(5, 2.5f);
+            var position = new Vector2(0, -6.0f);
+            var interestArea = new Vector2(10, 5);
             var playerGameObject = CreatePlayerGameObject(sceneId, position, interestArea);
 
             onAuthenticated.Invoke(playerGameObject);
 
-            var entityTemp = new Entity(playerGameObject.Id, EntityType.Player);
+            var entityTemp = new Entity(playerGameObject.Id, EntityType.Player, position.X, position.Y);
             return new EnterWorldOperationResponseParameters(entityTemp, position.X, position.Y);
         }
 

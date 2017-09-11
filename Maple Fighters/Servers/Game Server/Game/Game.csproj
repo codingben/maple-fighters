@@ -61,7 +61,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Application\Components\PositionEventSender.cs" />
+    <Compile Include="Application\Peer Logic\Components\PositionEventSender.cs" />
     <Compile Include="Application\GameApplication.cs" />
     <Compile Include="Application\Peer Logic\Components\InterestAreaEventSender.cs" />
     <Compile Include="Application\Peer Logic\Operations\EnterWorldOperation.cs" />
@@ -93,6 +93,8 @@
       <Name>Game.InterestManagement</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Application\Components\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

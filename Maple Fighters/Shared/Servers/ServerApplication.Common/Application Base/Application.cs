@@ -25,13 +25,19 @@ namespace ServerApplication.Common.ApplicationBase
         public virtual void Startup()
         {
             Server.Entity.Container.AddComponent(new PeerContainer());
+
             peerContainer = Server.Entity.Container.GetComponent<PeerContainer>().AssertNotNull();
+
+            LogUtils.Log("An application has started.");
         }
 
         public virtual void Shutdown()
         {
             Server.Entity.Dispose();
+
             peerContainer.DisconnectAllPeers();
+
+            LogUtils.Log("An application has been stopped.");
         }
 
         protected void AddCommonComponents()

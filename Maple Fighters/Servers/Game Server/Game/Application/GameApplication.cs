@@ -19,8 +19,6 @@ namespace Game.Application
 
         public override void Startup()
         {
-            LogUtils.Log(MessageBuilder.Trace(string.Empty));
-
             base.Startup();
 
             AddCommonComponents();
@@ -28,14 +26,7 @@ namespace Game.Application
 
             CreateScenes();
         }
-
-        public override void Shutdown()
-        {
-            LogUtils.Log(MessageBuilder.Trace(string.Empty));
-
-            base.Shutdown();
-        }
-
+        
         public override void OnConnected(IClientPeer clientPeer)
         {
             WrapClientPeer(clientPeer, new UnauthenticatedGamePeerLogic());

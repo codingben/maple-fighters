@@ -1,6 +1,5 @@
 ﻿using CommonCommunicationInterfaces;
 using CommonTools.Log;
-using Game.Application.Components;
 using Game.Application.PeerLogic.Components;
 using Game.Application.PeerLogic.Operations;
 using Game.InterestManagement;

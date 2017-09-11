@@ -10,7 +10,7 @@ using ServerApplication.Common.Components;
 using Shared.Game.Common;
 using Shared.ServerApplication.Common.PeerLogic;
 
-namespace Game.Application.Components
+namespace Game.Application.PeerLogic.Components
 {
     internal class PositionEventSender : Component<IPeerEntity>
     {
@@ -36,8 +36,6 @@ namespace Game.Application.Components
         {
             foreach (var otherEntity in GetEntitiesFromEntityRegions())
             {
-                LogUtils.Log(MessageBuilder.Trace($"Pre-sending an event to entity id #{otherEntity.Id}"));
-
                 if (playerGameObject.Id == otherEntity.Id)
                 {
                     LogUtils.Log(MessageBuilder.Trace($"Cannot send a new position to an entity id #{otherEntity.Id}"));
@@ -51,8 +49,6 @@ namespace Game.Application.Components
                 {
                     continue;
                 }
-
-                LogUtils.Log(MessageBuilder.Trace($"Sending an event to entity id #{otherEntity.Id}"));
 
                 var parameters = new EntityPositionChangedEventParameters(playerGameObject.Id, newPosition.X, newPosition.Y);
                 eventSender.SendEvent((byte)GameEvents.EntityPositionChanged, parameters, MessageSendOptions.DefaultUnreliable((byte)GameDataChannels.Position));
@@ -71,8 +67,7 @@ namespace Game.Application.Components
 
             foreach (var publisherRegion in publisherRegions)
             {
-                gameObjects.AddRange(publisherRegion.GetAllSubscribers()
-                    .Where(subscriber => subscriber.Id != playerGameObject.Id));
+                gameObjects.AddRange(publisherRegion.GetAllSubscribers().Where(subscriber => subscriber.Id != playerGameObject.Id));
             }
             return gameObjects.ToArray();
         }

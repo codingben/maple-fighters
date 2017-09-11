@@ -32,9 +32,8 @@ namespace Game.Application.PeerLogic.Components
 
         private void OnGameObjectAdded(IGameObject gameObject)
         {
-            LogUtils.Log(MessageBuilder.Trace($"GameObject Id: {gameObject.Id}"));
-
-            var entityTemp = new Entity(gameObject.Id, EntityType.Player);
+            var transform = gameObject.Container.GetComponent<Transform>().AssertNotNull();
+            var entityTemp = new Entity(gameObject.Id, EntityType.Player, transform.Position.X, transform.Position.Y);
             var parameters = new EntityAddedEventParameters(entityTemp);
 
             eventSender.SendEvent((byte)GameEvents.EntityAdded, parameters, MessageSendOptions.DefaultReliable());
@@ -42,21 +41,21 @@ namespace Game.Application.PeerLogic.Components
 
         private void OnGameObjectRemoved(int gameObjectId)
         {
-            LogUtils.Log(MessageBuilder.Trace($"GameObject Id: {gameObjectId}"));
-
             var parameters = new EntityRemovedEventParameters(gameObjectId);
             eventSender.SendEvent((byte)GameEvents.EntityRemoved, parameters, MessageSendOptions.DefaultReliable());
         }
 
         private void OnGameObjectsAdded(IGameObject[] gameObjects)
         {
-            LogUtils.Log(MessageBuilder.Trace($"GameObjects Length: {gameObjects.Length}"));
-
             var entitiesTemp = new Entity[gameObjects.Length];
             for (var i = 0; i < entitiesTemp.Length; i++)
             {
+                var transform = gameObjects[i].Container.GetComponent<Transform>().AssertNotNull();
+
                 entitiesTemp[i].Id = gameObjects[i].Id;
                 entitiesTemp[i].Type = EntityType.Player;
+                entitiesTemp[i].X = transform.Position.X;
+                entitiesTemp[i].Y = transform.Position.Y;
             }
 
             eventSender.SendEvent((byte)GameEvents.EntitiesAdded, new EntitiesAddedEventParameters(entitiesTemp), MessageSendOptions.DefaultReliable());
@@ -64,8 +63,6 @@ namespace Game.Application.PeerLogic.Components
 
         private void OnGameObjectsRemoved(int[] gameObjectsId)
         {
-            LogUtils.Log(MessageBuilder.Trace($"GameObjects Length: {gameObjectsId.Length}"));
-
             var entitiesIdsTemp = new int[gameObjectsId.Length];
             for (var i = 0; i < entitiesIdsTemp.Length; i++)
             {
