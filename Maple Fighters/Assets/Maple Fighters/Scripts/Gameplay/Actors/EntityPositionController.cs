@@ -23,8 +23,6 @@ namespace Scripts.Gameplay.Actors
             var entityId = parameters.EntityId;
             var entity = entityContainer.GetRemoteEntity(entityId);
 
-            // LogUtils.Log(MessageBuilder.Trace($"Entity Id: {entityId} New Position: {new Vector2(parameters.X, parameters.Y)}"));
-
             entity?.GameObject.GetComponent<IPositionSetter>().Move(new Vector2(parameters.X, parameters.Y));
         }
     }

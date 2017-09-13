@@ -47,7 +47,6 @@ namespace Scripts.Containers.Entity
             }
 
             var position = new Vector3(parameters.X, parameters.Y);
-            LogUtils.Log(MessageBuilder.Trace($"Entity Id: {entity.Id} Starting Position: {position}"));
             var gameObject = Object.Instantiate(entityObject, position, Quaternion.identity) as GameObject;
             if (gameObject == null)
             {
@@ -81,7 +80,6 @@ namespace Scripts.Containers.Entity
             }
 
             var position = new Vector3(parameters.Entity.X, parameters.Entity.Y);
-            LogUtils.Log(MessageBuilder.Trace($"Entity Id: {entityId} Starting Position: {position}"));
             var gameObject = Object.Instantiate(entityObject, position, Quaternion.identity) as GameObject;
             if (gameObject == null)
             {
@@ -112,7 +110,6 @@ namespace Scripts.Containers.Entity
                 }
 
                 var position = new Vector3(entity.X, entity.Y);
-                LogUtils.Log(MessageBuilder.Trace($"Entity Id: {entity.Id} Starting Position: {position}"));
                 var gameObject = Object.Instantiate(entityObject, position, Quaternion.identity) as GameObject;
                 if (gameObject == null)
                 {

@@ -1,5 +1,4 @@
-﻿using CommonTools.Log;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Scripts.Gameplay.Actors
 {

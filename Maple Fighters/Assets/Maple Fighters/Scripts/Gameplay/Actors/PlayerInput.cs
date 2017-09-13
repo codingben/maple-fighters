@@ -1,59 +1,46 @@
-﻿using System.Collections.Generic;
-using CommonTools.Coroutines;
-using CommonTools.Log;
-using Scripts.Coroutines;
+﻿using CommonTools.Log;
 using UnityEngine;
 
 namespace Scripts.Gameplay.Actors
 {
+    public enum Directions
+    {
+        None = 0,
+        Left = -1,
+        Right = 1
+    }
+
     public class PlayerInput : MonoBehaviour
     {
         [Header("Keyboard")]
-        [SerializeField] private KeyCode moveLeftKey;
-        [SerializeField] private KeyCode moveRightKey;
+        [SerializeField] private string axisName;
         [SerializeField] private KeyCode jumpKey;
 
-        private Vector2 moveDirection;
-
         private PlayerController playerController;
-        private ExternalCoroutinesExecutor coroutinesExecuter;
 
         private void Awake()
         {
             playerController = GetComponent<PlayerController>().AssertNotNull();
-            coroutinesExecuter = new ExternalCoroutinesExecutor().ExecuteExternally();
         }
 
-        private void Start() => coroutinesExecuter.StartCoroutine(PlayerInputListener());
-
-        private IEnumerator<IYieldInstruction> PlayerInputListener()
+        private void Update()
         {
-            while (true)
+            if (Input.GetKeyDown(jumpKey))
             {
-                moveDirection = GetDirectionByInput();
-
-                if (moveDirection != Vector2.zero)
-                {
-                    playerController?.Move(moveDirection);
-                }
-
-                yield return null;
+                playerController.Jump();
             }
+
+            playerController.Move(GetDirectionByInput());
         }
 
-        private Vector2 GetDirectionByInput()
+        private Directions GetDirectionByInput()
         {
-            if (Input.GetKey(moveLeftKey))
+            if (Input.GetAxisRaw(axisName) == 0)
             {
-                return Vector2.left;
+                return Directions.None;
             }
 
-            if (Input.GetKey(moveRightKey))
-            {
-                return Vector2.right;
-            }
-
-            return Vector2.zero;
+            return Input.GetAxisRaw(axisName) > 0 ? Directions.Right : Directions.Left;
         }
     }
 }

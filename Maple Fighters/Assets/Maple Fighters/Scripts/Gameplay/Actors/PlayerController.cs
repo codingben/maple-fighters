@@ -1,4 +1,5 @@
-﻿using CommonTools.Log;
+﻿using System.Linq;
+using CommonTools.Log;
 using UnityEngine;
 
 namespace Scripts.Gameplay.Actors
@@ -7,28 +8,40 @@ namespace Scripts.Gameplay.Actors
     {
         private enum PlayerState
         {
+            Idle,
             Moving,
             Falling
         }
 
-        [SerializeField] private float speed;
         [SerializeField] private PlayerState playerState = PlayerState.Falling;
 
-        private Vector2 position;
-        private new Rigidbody2D rigidbody;
+        [Header("Properties")]
+        [SerializeField] private float speed;
+        [SerializeField] private float jumpForce;
 
-        private LayerMask floorLayerMask;
+        [Header("Ground Detection")]
+        [SerializeField] private LayerMask floorLayerMask;
+        [SerializeField] private Transform[] floorDetectionPoints;
+
+        [Header("Debug")]
+        [SerializeField] private float direction;
+
+        private new Rigidbody2D rigidbody;
 
         private void Awake()
         {
             rigidbody = GetComponent<Rigidbody2D>().AssertNotNull();
-            floorLayerMask = LayerMask.GetMask("Floor");
         }
 
-        private void FixedUpdate()
+        private void Update()
         {
             switch (playerState)
             {
+                case PlayerState.Idle:
+                {
+                    IdleState();
+                    break;
+                }
                 case PlayerState.Moving:
                 {
                     MovingState();
@@ -42,10 +55,57 @@ namespace Scripts.Gameplay.Actors
             }
         }
 
-        public void Move(Vector2 direction)
+        private void FixedUpdate()
         {
-            var transformPosition = new Vector2(rigidbody.position.x, rigidbody.position.y);
-            position = transformPosition + direction * speed * Time.deltaTime;
+            rigidbody.velocity = new Vector2(direction * speed * Time.fixedDeltaTime, rigidbody.velocity.y);
+        }
+
+        public void Move(Directions directions)
+        {
+            if (!IsOnFloor())
+            {
+                return;
+            }
+
+            switch (directions)
+            {
+                case Directions.None:
+                {
+                    playerState = PlayerState.Idle;
+                    break;
+                }
+                case Directions.Left:
+                case Directions.Right:
+                {
+                    playerState = PlayerState.Moving;
+                    break;
+                }
+            }
+
+            direction = (int)directions * speed;
+        }
+
+        public void Jump()
+        {
+            if (playerState != PlayerState.Idle && playerState != PlayerState.Moving)
+            {
+                return;
+            }
+
+            var forceDirection = new Vector2(direction, 1);
+            rigidbody.AddForce(forceDirection * jumpForce, ForceMode2D.Impulse);
+
+            playerState = PlayerState.Falling;
+        }
+
+        private void IdleState()
+        {
+            if (!IsOnFloor())
+            {
+                playerState = PlayerState.Falling;
+            }
+
+            direction = 0;
         }
 
         private void MovingState()
@@ -53,12 +113,6 @@ namespace Scripts.Gameplay.Actors
             if (!IsOnFloor())
             {
                 playerState = PlayerState.Falling;
-                return;
-            }
-
-            if (position != Vector2.zero)
-            {
-                rigidbody.MovePosition(position);
             }
         }
 
@@ -66,10 +120,13 @@ namespace Scripts.Gameplay.Actors
         {
             if (IsOnFloor())
             {
-                playerState = PlayerState.Moving;
+                playerState = PlayerState.Idle;
             }
         }
 
-        private bool IsOnFloor() => Physics2D.Raycast(rigidbody.position, Vector2.down, 0.5f, floorLayerMask);
+        private bool IsOnFloor()
+        {
+            return floorDetectionPoints.Any(ground => Physics2D.OverlapPoint(ground.position, floorLayerMask));
+        }
     }
 }
