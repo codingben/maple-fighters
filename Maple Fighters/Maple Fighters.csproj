@@ -74,29 +74,29 @@
     <Reference Include="UnityEngine.HoloLens">
       <HintPath>Library\UnityAssemblies\UnityEngine.HoloLens.dll</HintPath>
     </Reference>
-    <Reference Include="Game.Common">
-      <HintPath>Assets\Plugins\Game Common\Game.Common.dll</HintPath>
-    </Reference>
     <Reference Include="Photon3Unity3D">
-      <HintPath>Assets\Plugins\Photon\Photon3Unity3D.dll</HintPath>
+      <HintPath>Assets\Plugins\Exit Games\Photon Server\Photon\Photon3Unity3D.dll</HintPath>
     </Reference>
     <Reference Include="websocket-sharp">
-      <HintPath>Assets\Plugins\PhotonWebSocket\WebSocket\websocket-sharp.dll</HintPath>
+      <HintPath>Assets\Plugins\Exit Games\Photon Server\PhotonWebSocket\WebSocket\websocket-sharp.dll</HintPath>
+    </Reference>
+    <Reference Include="Game.Common">
+      <HintPath>Assets\Plugins\Server Related\Commons\Game\Game.Common.dll</HintPath>
     </Reference>
     <Reference Include="CommonCommunicationInterfaces">
-      <HintPath>Assets\Plugins\Server Infrastructure\CommonCommunicationInterfaces.dll</HintPath>
+      <HintPath>Assets\Plugins\Server Related\Infrastructure\CommonCommunicationInterfaces.dll</HintPath>
     </Reference>
     <Reference Include="CommunicationHelper">
-      <HintPath>Assets\Plugins\Server Infrastructure\CommunicationHelper.dll</HintPath>
+      <HintPath>Assets\Plugins\Server Related\Infrastructure\CommunicationHelper.dll</HintPath>
     </Reference>
     <Reference Include="Coroutines">
-      <HintPath>Assets\Plugins\Server Infrastructure\Coroutines.dll</HintPath>
+      <HintPath>Assets\Plugins\Server Related\Infrastructure\Coroutines.dll</HintPath>
     </Reference>
     <Reference Include="LogUtils">
-      <HintPath>Assets\Plugins\Server Infrastructure\LogUtils.dll</HintPath>
+      <HintPath>Assets\Plugins\Server Related\Infrastructure\LogUtils.dll</HintPath>
     </Reference>
     <Reference Include="PhotonCommonImplementation">
-      <HintPath>Assets\Plugins\Server Infrastructure\PhotonCommonImplementation.dll</HintPath>
+      <HintPath>Assets\Plugins\Server Related\Infrastructure\PhotonCommonImplementation.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -106,6 +106,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Interest Management\Scripts\InterestArea.cs" />
+    <Compile Include="Assets\Interest Management\Scripts\Rectangle.cs" />
+    <Compile Include="Assets\Interest Management\Scripts\Region.cs" />
+    <Compile Include="Assets\Interest Management\Scripts\Scene.cs" />
     <Compile Include="Assets\Maple Fighters\Scripts\Containers\Entity\EntityContainer.cs" />
     <Compile Include="Assets\Maple Fighters\Scripts\Containers\Entity\IEntityContainer.cs" />
     <Compile Include="Assets\Maple Fighters\Scripts\Containers\GameContainers.cs" />
@@ -119,12 +123,17 @@
     <Compile Include="Assets\Maple Fighters\Scripts\Gameplay\Actors\IPositionSetter.cs" />
     <Compile Include="Assets\Maple Fighters\Scripts\Gameplay\Actors\PlayerController.cs" />
     <Compile Include="Assets\Maple Fighters\Scripts\Gameplay\Actors\PlayerInput.cs" />
+    <Compile Include="Assets\Maple Fighters\Scripts\Gameplay\Actors\PlayerStateSetter.cs" />
     <Compile Include="Assets\Maple Fighters\Scripts\Gameplay\Actors\PositionSender.cs" />
     <Compile Include="Assets\Maple Fighters\Scripts\Gameplay\Actors\PositionSetter.cs" />
+    <Compile Include="Assets\Maple Fighters\Scripts\Gameplay\Camera\CameraController.cs" />
+    <Compile Include="Assets\Maple Fighters\Scripts\Gameplay\Camera\CameraControllerProvider.cs" />
     <Compile Include="Assets\Maple Fighters\Scripts\Gameplay\GameInitializer.cs" />
     <Compile Include="Assets\Maple Fighters\Scripts\NetworkConfiguration.cs" />
     <Compile Include="Assets\Maple Fighters\Scripts\ScriptableObjectSingleton.cs" />
+    <Compile Include="Assets\Maple Fighters\Scripts\Services\Connector.cs" />
     <Compile Include="Assets\Maple Fighters\Scripts\Services\EventInvoker.cs" />
+    <Compile Include="Assets\Maple Fighters\Scripts\Services\ExtensionMethods.cs" />
     <Compile Include="Assets\Maple Fighters\Scripts\Services\GameService.cs" />
     <Compile Include="Assets\Maple Fighters\Scripts\Services\GameTimeProvider.cs" />
     <Compile Include="Assets\Maple Fighters\Scripts\Services\IGameService.cs" />
@@ -135,9 +144,13 @@
     <Compile Include="Assets\Maple Fighters\Scripts\Services\UnityEvent.cs" />
     <Compile Include="Assets\Maple Fighters\Scripts\ServicesConfiguration.cs" />
     <Compile Include="Assets\Maple Fighters\Scripts\Utils\ConnectionInformationProvider.cs" />
+    <Compile Include="Assets\Maple Fighters\Scripts\Utils\Shared\MonoBehaviourEntity.cs" />
+    <Compile Include="Assets\Maple Fighters\Scripts\Utils\Shared\PlayerStateNetworkAnimator.cs" />
+    <Compile Include="Assets\Maple Fighters\Scripts\World\ParallaxScrolling.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assets\Plugins\PhotonWebSocket\Readme-Photon-WebSocket.txt" />
+    <None Include="Assets\Maple Fighters\Sprites\NPCs\Blue Snail\data.xml" />
+    <None Include="Assets\Plugins\Exit Games\Photon Server\PhotonWebSocket\Readme-Photon-WebSocket.txt" />
     <None Include="Assets\StreamingAssets\build_info.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -1,15 +1,9 @@
 ﻿using CommonTools.Log;
+using Shared.Game.Common;
 using UnityEngine;
 
 namespace Scripts.Gameplay.Actors
 {
-    public enum Directions
-    {
-        None = 0,
-        Left = -1,
-        Right = 1
-    }
-
     public class PlayerInput : MonoBehaviour
     {
         [Header("Keyboard")]

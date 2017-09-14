@@ -5,7 +5,7 @@ namespace Scripts.Gameplay.Actors.Entity
 {
     public interface IEntity
     {
-        int Id { get;}
+        int Id { get; }
 
         EntityType Type { get; }
 

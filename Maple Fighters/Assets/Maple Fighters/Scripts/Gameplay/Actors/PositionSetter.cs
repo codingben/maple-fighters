@@ -1,18 +1,12 @@
-﻿using UnityEngine;
+﻿using Shared.Game.Common;
+using UnityEngine;
 
 namespace Scripts.Gameplay.Actors
 {
     public class PositionSetter : MonoBehaviour, IPositionSetter
     {
         private const float SPEED = 10;
-
-        // private new Rigidbody2D rigidbody;
         private Vector3 position = Vector3.zero;
-
-        private void Awake()
-        {
-            // rigidbody = GetComponent<Rigidbody2D>().AssertNotNull();
-        }
 
         private void Update()
         {
@@ -22,12 +16,32 @@ namespace Scripts.Gameplay.Actors
             }
         }
 
-        public void Move(Vector2 position)
+        public void SetPosition(Vector2 newPosition, Directions direction)
         {
-            /*var transformPosition = new Vector2(transform.position.x, transform.position.y);
-            Vector3 direction = (position - transformPosition).normalized;
-            rigidbody.MovePosition(transform.position + direction * SPEED * Time.deltaTime);*/
-            this.position = position;
+            position = newPosition;
+
+            FlipByDirection(direction);
+        }
+
+        private void FlipByDirection(Directions direction)
+        {
+            switch (direction)
+            {
+                case Directions.Left:
+                {
+                    transform.localScale = new Vector3(1, transform.localScale.y, transform.localScale.z);
+                    break;
+                }
+                case Directions.Right:
+                {
+                    transform.localScale = new Vector3(-1, transform.localScale.y, transform.localScale.z);
+                    break;
+                }
+                case Directions.None:
+                {
+                    break;
+                }
+            }
         }
     }
 }

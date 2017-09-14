@@ -1,5 +1,4 @@
 ﻿using Scripts.Containers.Service;
-using Scripts.Services;
 using Shared.Game.Common;
 using UnityEngine;
 
@@ -7,12 +6,10 @@ namespace Scripts.Gameplay.Actors
 {
     public class PositionSender : MonoBehaviour
     {
-        private IGameService gameService;
         private Vector2 lastPosition;
 
         private void Awake()
         {
-            gameService = ServiceContainer.GameService;
             lastPosition = transform.position;
         }
 
@@ -23,10 +20,30 @@ namespace Scripts.Gameplay.Actors
                 return;
             }
 
-            var parameters = new UpdateEntityPositionRequestParameters(transform.position.x, transform.position.y);
-            gameService.UpdateEntityPosition(parameters);
+            Directions direction;
+            GetDirection(out direction);
+
+            var parameters = new UpdateEntityPositionRequestParameters(transform.position.x, transform.position.y, direction);
+            ServiceContainer.GameService.UpdateEntityPosition(parameters);
 
             lastPosition = transform.position;
+        }
+
+        private void GetDirection(out Directions direction)
+        {
+            if (transform.localScale.x > 0)
+            {
+                direction = Directions.Left;
+                return;
+            }
+
+            if (transform.localScale.x < 0)
+            {
+                direction = Directions.Right;
+                return;
+            }
+
+            direction = Directions.None;
         }
     }
 }

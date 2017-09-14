@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/Maple Fighters/Scenes/Levels/Game.unity
+- path: Assets/Maple Fighters/Scenes/Levels/Game 1.unity
   isLoaded: 1
   isActive: 1

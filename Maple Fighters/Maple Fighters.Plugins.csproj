@@ -74,46 +74,47 @@
     <Reference Include="UnityEngine.HoloLens">
       <HintPath>Library\UnityAssemblies\UnityEngine.HoloLens.dll</HintPath>
     </Reference>
-    <Reference Include="Game.Common">
-      <HintPath>Assets\Plugins\Game Common\Game.Common.dll</HintPath>
-    </Reference>
     <Reference Include="Photon3Unity3D">
-      <HintPath>Assets\Plugins\Photon\Photon3Unity3D.dll</HintPath>
+      <HintPath>Assets\Plugins\Exit Games\Photon Server\Photon\Photon3Unity3D.dll</HintPath>
     </Reference>
     <Reference Include="websocket-sharp">
-      <HintPath>Assets\Plugins\PhotonWebSocket\WebSocket\websocket-sharp.dll</HintPath>
+      <HintPath>Assets\Plugins\Exit Games\Photon Server\PhotonWebSocket\WebSocket\websocket-sharp.dll</HintPath>
+    </Reference>
+    <Reference Include="Game.Common">
+      <HintPath>Assets\Plugins\Server Related\Commons\Game\Game.Common.dll</HintPath>
     </Reference>
     <Reference Include="CommonCommunicationInterfaces">
-      <HintPath>Assets\Plugins\Server Infrastructure\CommonCommunicationInterfaces.dll</HintPath>
+      <HintPath>Assets\Plugins\Server Related\Infrastructure\CommonCommunicationInterfaces.dll</HintPath>
     </Reference>
     <Reference Include="CommunicationHelper">
-      <HintPath>Assets\Plugins\Server Infrastructure\CommunicationHelper.dll</HintPath>
+      <HintPath>Assets\Plugins\Server Related\Infrastructure\CommunicationHelper.dll</HintPath>
     </Reference>
     <Reference Include="Coroutines">
-      <HintPath>Assets\Plugins\Server Infrastructure\Coroutines.dll</HintPath>
+      <HintPath>Assets\Plugins\Server Related\Infrastructure\Coroutines.dll</HintPath>
     </Reference>
     <Reference Include="LogUtils">
-      <HintPath>Assets\Plugins\Server Infrastructure\LogUtils.dll</HintPath>
+      <HintPath>Assets\Plugins\Server Related\Infrastructure\LogUtils.dll</HintPath>
     </Reference>
     <Reference Include="PhotonCommonImplementation">
-      <HintPath>Assets\Plugins\Server Infrastructure\PhotonCommonImplementation.dll</HintPath>
+      <HintPath>Assets\Plugins\Server Related\Infrastructure\PhotonCommonImplementation.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Plugins\PhotonWebSocket\PingHttp.cs" />
-    <Compile Include="Assets\Plugins\PhotonWebSocket\SocketWebTcpCoroutine.cs" />
-    <Compile Include="Assets\Plugins\PhotonWebSocket\SocketWebTcpThread.cs" />
-    <Compile Include="Assets\Plugins\PhotonWebSocket\WebSocket\WebSocket.cs" />
-    <Compile Include="Assets\Plugins\Server Infrastructure\PhotonClientImplementation.cs" />
-    <Compile Include="Assets\Plugins\Unity-Logs-Viewer\Reporter\MultiKeyDictionary.cs" />
-    <Compile Include="Assets\Plugins\Unity-Logs-Viewer\Reporter\Reporter.cs" />
-    <Compile Include="Assets\Plugins\Unity-Logs-Viewer\Reporter\ReporterGUI.cs" />
-    <Compile Include="Assets\Plugins\Unity-Logs-Viewer\Reporter\ReporterMessageReceiver.cs" />
-    <Compile Include="Assets\Plugins\Unity-Logs-Viewer\Reporter\Test\Rotate.cs" />
-    <Compile Include="Assets\Plugins\Unity-Logs-Viewer\Reporter\Test\TestReporter.cs" />
+    <Compile Include="Assets\Plugins\Exit Games\Photon Server\PhotonWebSocket\PingHttp.cs" />
+    <Compile Include="Assets\Plugins\Exit Games\Photon Server\PhotonWebSocket\SocketWebTcpCoroutine.cs" />
+    <Compile Include="Assets\Plugins\Exit Games\Photon Server\PhotonWebSocket\SocketWebTcpThread.cs" />
+    <Compile Include="Assets\Plugins\Exit Games\Photon Server\PhotonWebSocket\WebSocket\WebSocket.cs" />
+    <Compile Include="Assets\Plugins\Server Related\Infrastructure\PhotonClientImplementation.cs" />
+    <Compile Include="Assets\Plugins\Unity Logs Viewer\Reporter\MultiKeyDictionary.cs" />
+    <Compile Include="Assets\Plugins\Unity Logs Viewer\Reporter\Reporter.cs" />
+    <Compile Include="Assets\Plugins\Unity Logs Viewer\Reporter\ReporterGUI.cs" />
+    <Compile Include="Assets\Plugins\Unity Logs Viewer\Reporter\ReporterMessageReceiver.cs" />
+    <Compile Include="Assets\Plugins\Unity Logs Viewer\Reporter\Test\Rotate.cs" />
+    <Compile Include="Assets\Plugins\Unity Logs Viewer\Reporter\Test\TestReporter.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assets\Plugins\PhotonWebSocket\Readme-Photon-WebSocket.txt" />
+    <None Include="Assets\Maple Fighters\Sprites\NPCs\Blue Snail\data.xml" />
+    <None Include="Assets\Plugins\Exit Games\Photon Server\PhotonWebSocket\Readme-Photon-WebSocket.txt" />
     <None Include="Assets\StreamingAssets\build_info.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

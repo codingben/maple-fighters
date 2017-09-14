@@ -7,6 +7,7 @@ namespace Scripts.Services
         void Connect();
 
         void UpdateEntityPosition(UpdateEntityPositionRequestParameters parameters);
+        void UpdatePlayerState(UpdatePlayerStateRequestParameters parameters);
 
         UnityEvent<EnterWorldOperationResponseParameters> EntitiyInitialInformation { get; }
 
@@ -16,5 +17,7 @@ namespace Scripts.Services
         UnityEvent<EntitiesRemovedEventParameters> EntitiesRemoved { get; }
 
         UnityEvent<EntityPositionChangedEventParameters> EntityPositionChanged { get; }
+
+        UnityEvent<PlayerStateChangedEventParameters> PlayerStateChanged { get; }
     }
 }
