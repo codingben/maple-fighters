@@ -1,6 +1,9 @@
-﻿using CommonCommunicationInterfaces;
+﻿using System.Collections.Generic;
+using System.Linq;
+using CommonCommunicationInterfaces;
 using CommonTools.Log;
 using Game.InterestManagement;
+using ServerApplication.Common.ApplicationBase;
 using ServerApplication.Common.ComponentModel;
 using ServerApplication.Common.Components;
 using Shared.Game.Common;
@@ -8,20 +11,26 @@ using Shared.ServerApplication.Common.PeerLogic;
 
 namespace Game.Application.PeerLogic.Components
 {
-    public class InterestAreaEventSender : Component<IPeerEntity>
+    internal class InterestAreaManagement : Component<IPeerEntity>
     {
-        private EventSenderWrapper eventSender;
+        private readonly IGameObject gameObject;
         private readonly InterestArea interestArea;
 
-        public InterestAreaEventSender(InterestArea interestArea)
+        private PeerContainer peerContainer;
+        private EventSenderWrapper eventSender;
+
+        public InterestAreaManagement(IGameObject gameObject)
         {
-            this.interestArea = interestArea;
+            this.gameObject = gameObject;
+
+            interestArea = gameObject.AssertNotNull().Container.GetComponent<InterestArea>().AssertNotNull();
         }
 
         protected override void OnAwake()
         {
             base.OnAwake();
 
+            peerContainer = Server.Entity.Container.GetComponent<PeerContainer>().AssertNotNull();
             eventSender = Entity.Container.GetComponent<EventSenderWrapper>().AssertNotNull();
 
             interestArea.GameObjectAdded = OnGameObjectAdded;
@@ -70,6 +79,34 @@ namespace Game.Application.PeerLogic.Components
             }
 
             eventSender.SendEvent((byte)GameEvents.EntitiesRemoved, new EntitiesRemovedEventParameters(entitiesIdsTemp), MessageSendOptions.DefaultReliable());
+        }
+
+        public void SendEventOnlyForEntitiesInMyRegions<TParameters>(byte code, TParameters parameters, MessageSendOptions messageSendOptions)
+            where TParameters : struct, IParameters
+        {
+            foreach (var otherEntity in GetEntitiesFromEntityRegions())
+            {
+                var peerWrapper = peerContainer.GetPeerWrapper(otherEntity.Id).AssertNotNull();
+                var eventSender = peerWrapper?.PeerLogic.Entity.Container.GetComponent<EventSenderWrapper>().AssertNotNull();
+
+                eventSender?.SendEvent(code, parameters, messageSendOptions);
+            }
+        }
+
+        public IEnumerable<IGameObject> GetEntitiesFromEntityRegions()
+        {
+            var gameObjects = new List<IGameObject>();
+
+            if (interestArea == null)
+            {
+                return gameObjects.ToArray();
+            }
+
+            foreach (var publisherRegion in interestArea.GetPublishers())
+            {
+                gameObjects.AddRange(publisherRegion.GetAllSubscribers().Where(subscriber => subscriber.Id != gameObject.Id));
+            }
+            return gameObjects.ToArray();
         }
     }
 }

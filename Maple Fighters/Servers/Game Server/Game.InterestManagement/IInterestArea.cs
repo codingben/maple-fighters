@@ -5,6 +5,5 @@ namespace Game.InterestManagement
     public interface IInterestArea
     {
         IEnumerable<IRegion> GetPublishers();
-        IEnumerable<IRegion> GetPublishersExceptMyGameObject();
     }
 }

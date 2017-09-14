@@ -18,7 +18,7 @@ namespace Game.Application.PeerLogic
 
         private void AddHandlerForEnterWorldOperation()
         {
-            OperationRequestHandlerRegister.SetHandler(GameOperations.EnterWorld, new EnterWorldOperation(PeerWrapper.PeerId, OnAuthenticated));
+            OperationRequestHandlerRegister.SetHandler(GameOperations.EnterWorld, new EnterWorldOperationHandler(PeerWrapper.PeerId, OnAuthenticated));
         }
 
         private void OnAuthenticated(IGameObject gameObject)

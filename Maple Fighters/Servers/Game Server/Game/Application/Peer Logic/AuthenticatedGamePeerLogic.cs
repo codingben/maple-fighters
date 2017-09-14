@@ -11,11 +11,11 @@ namespace Game.Application.PeerLogic
 {
     internal class AuthenticatedGamePeerLogic : PeerLogicBase<GameOperations, GameEvents>
     {
-        private readonly IGameObject playerGameObject;
+        private readonly IGameObject gameObject;
 
-        public AuthenticatedGamePeerLogic(IGameObject playerGameObject)
+        public AuthenticatedGamePeerLogic(IGameObject gameObject)
         {
-            this.playerGameObject = playerGameObject;
+            this.gameObject = gameObject;
         }
 
         public override void Initialize(IClientPeerWrapper<IClientPeer> peer)
@@ -27,20 +27,26 @@ namespace Game.Application.PeerLogic
             AddCommonComponents();
             AddComponents();
 
-            AddHandlerForUpdateEntityPosition();
+            AddHandlerForUpdateEntityPositionOperation();
+            AddHandlerForUpdatePlayerStateOperation();
         }
 
         private void AddComponents()
         {
-            var interestArea = playerGameObject.Container.GetComponent<InterestArea>().AssertNotNull();
-            Entity.Container.AddComponent(new InterestAreaEventSender(interestArea));
-            Entity.Container.AddComponent(new PositionEventSender(playerGameObject));
+            Entity.Container.AddComponent(new InterestAreaManagement(gameObject));
+            Entity.Container.AddComponent(new PositionChangesListener(gameObject));
         }
 
-        private void AddHandlerForUpdateEntityPosition()
+        private void AddHandlerForUpdateEntityPositionOperation()
         {
-            var transform = playerGameObject.Container.GetComponent<Transform>().AssertNotNull();
-            OperationRequestHandlerRegister.SetHandler(GameOperations.UpdateEntityPosition, new UpdateEntityPositionOperation(transform));
+            var transform = gameObject.Container.GetComponent<Transform>().AssertNotNull();
+            OperationRequestHandlerRegister.SetHandler(GameOperations.PositionChanged, new UpdateEntityPositionOperationHandler(transform));
+        }
+
+        private void AddHandlerForUpdatePlayerStateOperation()
+        {
+            var interestAreaManagement = Entity.Container.GetComponent<InterestAreaManagement>().AssertNotNull();
+            OperationRequestHandlerRegister.SetHandler(GameOperations.PlayerStateChanged, new UpdatePlayerStateOperationHandler(gameObject.Id, interestAreaManagement));
         }
 
         private void SubscribeToDisconnectedEvent()
@@ -55,7 +61,7 @@ namespace Game.Application.PeerLogic
 
         private void OnDisconnected(DisconnectReason disconnectReason, string s)
         {
-            playerGameObject.Dispose();
+            gameObject.Dispose();
 
             UnsubscribeFromDisconnectedEvent();
         }

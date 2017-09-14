@@ -26,29 +26,55 @@ namespace Game.InterestManagement
 
             gameObjects.Add(gameObject.Id, gameObject);
 
-            // Show all exists entities for a new game object.
-            ShowGameObjectsForGameObject(gameObject);
+            if (gameObjects.Count > 1)
+            {
+                // Show all exists entities for a new game object.
+                ShowGameObjectsForGameObject(gameObject);
 
-            // Show a new game object for all exists entities.
-            ShowGameObjectForGameObjects(gameObject);
+                // Show a new game object for all exists entities.
+                ShowGameObjectForGameObjects(gameObject);
+            }
         }
 
-        public void RemoveSubscription(IGameObject gameObject)
+        public void RemoveSubscription(int gameObjectId)
         {
-            if (!gameObjects.ContainsKey(gameObject.Id))
+            if (!gameObjects.ContainsKey(gameObjectId))
             {
-                LogUtils.Log(MessageBuilder.Trace($"A game object with id #{gameObject.Id} does not exists in a region."), LogMessageType.Error);
+                LogUtils.Log(MessageBuilder.Trace($"A game object with id #{gameObjectId} does not exists in a region."), LogMessageType.Error);
                 return;
             }
 
-            // Hide game objects for the one that left this region.
-            HideGameObjectsForGameObject(gameObject.Id);
+            if (gameObjects.Count > 1)
+            {
+                // Hide game objects for the one that left this region.
+                HideGameObjectsForGameObject(gameObjectId);
+            }
 
             // Remove him from region's list.
-            gameObjects.Remove(gameObject.Id);
+            gameObjects.Remove(gameObjectId);
+
+            if (gameObjects.Count > 1)
+            {
+                // Hide the one who left from this region for other game objects.
+                HideGameObjectForGameObjects(gameObjectId);
+            }
+        }
+
+        public void RemoveSubscriptionForOtherOnly(int gameObjectId)
+        {
+            if (!gameObjects.ContainsKey(gameObjectId))
+            {
+                LogUtils.Log(MessageBuilder.Trace($"A game object with id #{gameObjectId} does not exists in a region."), LogMessageType.Error);
+                return;
+            }
+
+            LogUtils.Log(MessageBuilder.Trace($"Removing {gameObjectId}"));
+
+            // Remove him from region's list.
+            gameObjects.Remove(gameObjectId);
 
             // Hide the one who left from this region for other game objects.
-            HideGameObjectForGameObjects(gameObject.Id);
+            DestroyDisconnectedGameObject(gameObjectId);
         }
 
         public bool HasSubscription(int gameObjectId)
@@ -110,6 +136,18 @@ namespace Game.InterestManagement
             {
                 var interestArea = gameObject.Container.GetComponent<InterestArea>().AssertNotNull();
                 if (!interestArea.GetPublishers().Any(publisher => publisher.HasSubscription(hideGameObjectId)))
+                {
+                    interestArea.GameObjectRemoved.AssertNotNull().Invoke(hideGameObjectId);
+                }
+            }
+        }
+
+        private void DestroyDisconnectedGameObject(int hideGameObjectId)
+        {
+            foreach (var gameObject in gameObjects.Values)
+            {
+                var interestArea = gameObject.Container.GetComponent<InterestArea>().AssertNotNull();
+                if (interestArea.GetPublishers().Any(publisher => publisher.HasSubscription(hideGameObjectId)))
                 {
                     interestArea.GameObjectRemoved.AssertNotNull().Invoke(hideGameObjectId);
                 }

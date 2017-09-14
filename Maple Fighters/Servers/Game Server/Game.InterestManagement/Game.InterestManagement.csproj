@@ -60,6 +60,10 @@
     <Compile Include="Transform.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Shared\Client\Game.Common\Game.Common.csproj">
+      <Project>{AA536188-84FF-4286-A9E6-BAFBE1D8D37B}</Project>
+      <Name>Game.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\Shared\Helper\MathematicsHelper\MathematicsHelper.csproj">
       <Project>{a3be3e13-d3a1-4800-b471-a39f5ed4b554}</Project>
       <Name>MathematicsHelper</Name>

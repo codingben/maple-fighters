@@ -44,24 +44,30 @@ namespace Game.InterestManagement
                     return null;
                 }
 
-                gameObject.Scene = this;
                 gameObjects.Add(gameObject.Id, gameObject);
-
                 return gameObject;
             }
         }
 
-        public void RemoveGameObject(IGameObject gameObject)
+        public void RemoveGameObjectFromScene(int id)
         {
             lock (locker)
             {
-                if (!gameObjects.ContainsKey(gameObject.Id))
+                if (!gameObjects.ContainsKey(id))
                 {
-                    LogUtils.Log(MessageBuilder.Trace($"A game object with a id #{gameObject.Id} does not exists in a scene."), LogMessageType.Warning);
+                    LogUtils.Log(MessageBuilder.Trace($"A game object with a id #{id} does not exists in a scene."), LogMessageType.Warning);
                     return;
                 }
 
-                gameObjects.Remove(gameObject.Id);
+                gameObjects.Remove(id);
+
+                foreach (var region in regions)
+                {
+                    if (region.HasSubscription(id))
+                    {
+                        region.RemoveSubscriptionForOtherOnly(id);
+                    }
+                }
             }
         }
 

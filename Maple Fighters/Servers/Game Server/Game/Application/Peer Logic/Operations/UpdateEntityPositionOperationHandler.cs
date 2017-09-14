@@ -6,19 +6,21 @@ using Shared.Game.Common;
 
 namespace Game.Application.PeerLogic.Operations
 {
-    internal class UpdateEntityPositionOperation : IOperationRequestHandler<UpdateEntityPositionRequestParameters, EmptyParameters>
+    internal class UpdateEntityPositionOperationHandler : IOperationRequestHandler<UpdateEntityPositionRequestParameters, EmptyParameters>
     {
-        private readonly Transform entityTransform;
+        private readonly Transform transform;
 
-        public UpdateEntityPositionOperation(Transform entityTransform)
+        public UpdateEntityPositionOperationHandler(Transform transform)
         {
-            this.entityTransform = entityTransform;
+            this.transform = transform;
         }
 
         public EmptyParameters? Handle(MessageData<UpdateEntityPositionRequestParameters> messageData, ref MessageSendOptions sendOptions)
         {
             var newPosition = new Vector2(messageData.Parameters.X, messageData.Parameters.Y);
-            entityTransform.SetPosition(newPosition);
+            var direction = messageData.Parameters.Direction;
+
+            transform.SetPosition(newPosition, direction);
             return null;
         }
     }

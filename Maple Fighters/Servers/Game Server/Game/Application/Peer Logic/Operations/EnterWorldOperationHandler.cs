@@ -9,12 +9,12 @@ using Shared.Game.Common;
 
 namespace Game.Application.PeerLogic.Operations
 {
-    internal class EnterWorldOperation : IOperationRequestHandler<EmptyParameters, EnterWorldOperationResponseParameters>
+    internal class EnterWorldOperationHandler : IOperationRequestHandler<EmptyParameters, EnterWorldOperationResponseParameters>
     {
         private readonly int peerId;
         private readonly Action<IGameObject> onAuthenticated;
 
-        public EnterWorldOperation(int peerId, Action<IGameObject> onAuthenticated)
+        public EnterWorldOperationHandler(int peerId, Action<IGameObject> onAuthenticated)
         {
             this.peerId = peerId;
             this.onAuthenticated = onAuthenticated;
@@ -23,20 +23,20 @@ namespace Game.Application.PeerLogic.Operations
         public EnterWorldOperationResponseParameters? Handle(MessageData<EmptyParameters> messageData, ref MessageSendOptions sendOptions)
         {
             var sceneId = 1;
-            var position = new Vector2(0, -6.0f);
+            var position = new Vector2(18, -5.8f);
             var interestArea = new Vector2(10, 5);
-            var playerGameObject = CreatePlayerGameObject(sceneId, position, interestArea);
+            var gameObject = CreatePlayerGameObject(sceneId, position, interestArea);
 
-            onAuthenticated.Invoke(playerGameObject);
+            onAuthenticated.Invoke(gameObject);
 
-            var entityTemp = new Entity(playerGameObject.Id, EntityType.Player, position.X, position.Y);
+            var entityTemp = new Entity(gameObject.Id, EntityType.Player, position.X, position.Y);
             return new EnterWorldOperationResponseParameters(entityTemp, position.X, position.Y);
         }
 
         private IGameObject CreatePlayerGameObject(int sceneId, Vector2 position, Vector2 interestArea)
         {
             var scene = Server.Entity.Container.GetComponent<SceneContainer>().AssertNotNull();
-            var playerObject = scene?.GetScene(sceneId)?.AddGameObject(new GameObject(peerId, position, interestArea));
+            var playerObject = scene?.GetScene(sceneId)?.AddGameObject(new GameObject(sceneId, peerId, position, interestArea));
             return playerObject;
         }
     }

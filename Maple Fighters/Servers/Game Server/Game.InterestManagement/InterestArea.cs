@@ -9,22 +9,23 @@ namespace Game.InterestManagement
 {
     public class InterestArea : Component<IGameObject>, IInterestArea
     {
-        public Action<IGameObject> GameObjectAdded = delegate { };
-        public Action<int> GameObjectRemoved = delegate { };
-        public Action<IGameObject[]> GameObjectsAdded = delegate { };
-        public Action<int[]> GameObjectsRemoved = delegate { };
+        public Action<IGameObject> GameObjectAdded;
+        public Action<int> GameObjectRemoved;
+        public Action<IGameObject[]> GameObjectsAdded;
+        public Action<int[]> GameObjectsRemoved;
 
         private Rectangle interestArea;
 
-        public InterestArea(Vector2 areaSize)
+        public InterestArea(Vector2 position, Vector2 areaSize)
         {
-            interestArea = new Rectangle(Vector2.Zero, areaSize);
+            interestArea = new Rectangle(position, areaSize);
         }
 
         protected override void OnAwake()
         {
             base.OnAwake();
 
+            DetectOverlapsWithRegions();
             SubscribeToPositionChangesNotifier();
         }
 
@@ -60,22 +61,6 @@ namespace Game.InterestManagement
             return regions.Cast<IRegion>().Where(region => region.HasSubscription(Entity.Id)).ToArray();
         }
 
-        public IEnumerable<IRegion> GetPublishersExceptMyGameObject()
-        {
-            var regions = Entity.Scene.GetAllRegions();
-            var publishers = regions.Cast<IRegion>().Where(region => region.HasSubscription(Entity.Id));
-
-            var publishersExceptMyGameObject = publishers as IRegion[] ?? publishers.ToArray();
-            foreach (var publisher in publishersExceptMyGameObject)
-            {
-                if (publisher.HasSubscription(Entity.Id))
-                {
-                    publisher.RemoveSubscription(Entity);
-                }
-            }
-            return publishersExceptMyGameObject;
-        }
-
         private void DetectOverlapsWithRegions()
         {
             var sceneRegions = Entity.Scene.GetAllRegions();
@@ -95,7 +80,7 @@ namespace Game.InterestManagement
                 {
                     if (region.HasSubscription(Entity.Id))
                     {
-                        region.RemoveSubscription(Entity);
+                        region.RemoveSubscription(Entity.Id);
                     }
                 }
             }

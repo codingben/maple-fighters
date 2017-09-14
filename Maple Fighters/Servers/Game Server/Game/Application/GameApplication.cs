@@ -40,7 +40,7 @@ namespace Game.Application
         private void CreateScenes()
         {
             var sceneContainer = Server.Entity.Container.GetComponent<SceneContainer>().AssertNotNull();
-            sceneContainer.AddScene(1, new Vector2(20, 15), new Vector2(10, 5));
+            sceneContainer.AddScene(1, new Vector2(40, 10), new Vector2(10, 5));
         }
     }
 }

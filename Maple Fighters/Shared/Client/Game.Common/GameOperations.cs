@@ -3,6 +3,7 @@
     public enum GameOperations : byte
     {
         EnterWorld,
-        UpdateEntityPosition
+        PositionChanged,
+        PlayerStateChanged
     }
 }

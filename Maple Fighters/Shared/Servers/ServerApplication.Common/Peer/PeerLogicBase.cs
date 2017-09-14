@@ -29,7 +29,7 @@ namespace Shared.ServerApplication.Common.PeerLogic
             PeerWrapper.Peer.NetworkTrafficState = NetworkTrafficState.Flowing;
         }
 
-        public void Dispose()
+        public virtual void Dispose()
         {
             Entity?.Dispose();
             OperationRequestHandlerRegister?.Dispose();

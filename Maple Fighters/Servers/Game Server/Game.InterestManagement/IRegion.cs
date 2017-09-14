@@ -8,7 +8,8 @@ namespace Game.InterestManagement
         Rectangle Area { get; }
 
         void AddSubscription(IGameObject gameObject);
-        void RemoveSubscription(IGameObject gameObject);
+        void RemoveSubscription(int gameObjectId);
+        void RemoveSubscriptionForOtherOnly(int gameObjectId);
 
         bool HasSubscription(int gameObjectId);
 

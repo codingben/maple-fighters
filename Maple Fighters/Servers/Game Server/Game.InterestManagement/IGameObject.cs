@@ -6,7 +6,7 @@ namespace Game.InterestManagement
     {
         int Id { get; }
 
-        IScene Scene { get; set; }
+        IScene Scene { get; }
 
         IContainer<IGameObject> Container { get; }
     }
