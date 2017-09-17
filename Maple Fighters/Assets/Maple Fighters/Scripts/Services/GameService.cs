@@ -16,7 +16,7 @@ namespace Scripts.Services
         public UnityEvent<EntitiesRemovedEventParameters> EntitiesRemoved { get; } = new UnityEvent<EntitiesRemovedEventParameters>();
         public UnityEvent<EntityPositionChangedEventParameters> EntityPositionChanged { get; } = new UnityEvent<EntityPositionChangedEventParameters>();
         public UnityEvent<PlayerStateChangedEventParameters> PlayerStateChanged { get; } = new UnityEvent<PlayerStateChangedEventParameters>();
-
+        
         public void Connect()
         {
             var gameConnectionInformation = ServicesConfiguration.GetInstance().GameConnectionInformation;
@@ -27,7 +27,7 @@ namespace Scripts.Services
         {
             AddEventsHandlers();
 
-            CoroutinesExecuter.StartTask(EnterWorld);
+            CoroutinesExecutor.StartTask(EnterWorld);
         }
 
         protected override void OnDisconnected()
@@ -84,6 +84,20 @@ namespace Scripts.Services
             EventHandlerRegister.RemoveHandler(GameEvents.EntityStateChanged);
         }
 
+        public async Task EnterWorld(IYield yield)
+        {
+            if (!IsConnected())
+            {
+                LogUtils.Log(MessageBuilder.Trace("Peer is not connected to a server."));
+                return;
+            }
+
+            var requestId = OperationRequestSender.Send(GameOperations.EnterWorld, new EmptyParameters(), MessageSendOptions.DefaultReliable());
+            var response = await SubscriptionProvider.ProvideSubscription<EnterWorldOperationResponseParameters>(yield, requestId);
+
+            EntitiyInitialInformation.Invoke(response);
+        }
+
         public void UpdateEntityPosition(UpdateEntityPositionRequestParameters parameters)
         {
             if (!IsConnected())
@@ -106,7 +120,7 @@ namespace Scripts.Services
             OperationRequestSender.Send(GameOperations.PlayerStateChanged, parameters, MessageSendOptions.DefaultReliable());
         }
 
-        public async Task EnterWorld(IYield yield)
+        public async Task ChangeScene(IYield yield, ChangeSceneRequestParameters parameters)
         {
             if (!IsConnected())
             {
@@ -114,10 +128,8 @@ namespace Scripts.Services
                 return;
             }
 
-            var requestId = OperationRequestSender.Send(GameOperations.EnterWorld, new EmptyParameters(), MessageSendOptions.DefaultReliable());
-            var response = await SubscriptionProvider.ProvideSubscription<EnterWorldOperationResponseParameters>(yield, requestId);
-
-            EntitiyInitialInformation.Invoke(response);
+            var requestId = OperationRequestSender.Send(GameOperations.ChangeScene, parameters, MessageSendOptions.DefaultReliable());
+            await SubscriptionProvider.ProvideSubscription<EmptyParameters>(yield, requestId);
         }
     }
 }

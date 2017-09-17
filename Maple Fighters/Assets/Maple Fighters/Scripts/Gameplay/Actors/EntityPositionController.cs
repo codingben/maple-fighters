@@ -17,7 +17,11 @@ namespace Scripts.Gameplay.Actors
             var entityId = parameters.EntityId;
             var entity = GameContainers.EntityContainer.GetRemoteEntity(entityId);
 
-            entity?.GameObject.GetComponent<IPositionSetter>().SetPosition(new Vector2(parameters.X, parameters.Y), parameters.Direction);
+            if (entity != null && entity.GameObject != null)
+            {
+                entity.GameObject.GetComponent<IPositionSetter>()
+                    .SetPosition(new Vector2(parameters.X, parameters.Y), parameters.Direction);
+            }
         }
     }
 }

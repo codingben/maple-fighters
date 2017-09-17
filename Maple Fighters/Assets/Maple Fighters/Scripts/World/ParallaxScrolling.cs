@@ -11,6 +11,8 @@ namespace Scripts.World
         [Header("Boundaries")]
         [SerializeField] private float minX;
         [SerializeField] private float maxX;
+        [SerializeField] private float minY;
+        [SerializeField] private float maxY;
 
         private Transform target;
 
@@ -27,7 +29,8 @@ namespace Scripts.World
             }
 
             var x = Mathf.Clamp(target.position.x, minX, maxX);
-            var newPosition = new Vector3(x, transform.position.y, transform.position.z);
+            var y = Mathf.Clamp(target.position.x, minY, maxY);
+            var newPosition = new Vector3(x, y, transform.position.z);
 
             transform.position = Vector3.LerpUnclamped(transform.position, newPosition, moveSpeed * Time.deltaTime);
         }

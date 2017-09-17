@@ -12,12 +12,15 @@
     <ProjectTypeGuids>{E097FAD1-6243-4DAD-9C02-E9B9EFC3FFC1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
-    <TargetFrameworkProfile></TargetFrameworkProfile>
-    <CompilerResponseFile></CompilerResponseFile>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <CompilerResponseFile>
+    </CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows64:19</UnityBuildTarget>
     <UnityVersion>2017.1.1f1</UnityVersion>
-    <RootNamespace></RootNamespace>
+    <RootNamespace>
+    </RootNamespace>
     <LangVersion>6</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -143,10 +146,15 @@
     <Compile Include="Assets\Maple Fighters\Scripts\Services\ServiceBase.cs" />
     <Compile Include="Assets\Maple Fighters\Scripts\Services\UnityEvent.cs" />
     <Compile Include="Assets\Maple Fighters\Scripts\ServicesConfiguration.cs" />
+    <Compile Include="Assets\Maple Fighters\Scripts\UI\MonoSingleton.cs" />
+    <Compile Include="Assets\Maple Fighters\Scripts\UI\ScreenFade.cs" />
     <Compile Include="Assets\Maple Fighters\Scripts\Utils\ConnectionInformationProvider.cs" />
+    <Compile Include="Assets\Maple Fighters\Scripts\Utils\DontDestroyOnLoad.cs" />
     <Compile Include="Assets\Maple Fighters\Scripts\Utils\Shared\MonoBehaviourEntity.cs" />
     <Compile Include="Assets\Maple Fighters\Scripts\Utils\Shared\PlayerStateNetworkAnimator.cs" />
     <Compile Include="Assets\Maple Fighters\Scripts\World\ParallaxScrolling.cs" />
+    <Compile Include="Assets\Maple Fighters\Scripts\World\Portal.cs" />
+    <Compile Include="Assets\Maple Fighters\Scripts\World\PortalInteraction.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Maple Fighters\Sprites\NPCs\Blue Snail\data.xml" />

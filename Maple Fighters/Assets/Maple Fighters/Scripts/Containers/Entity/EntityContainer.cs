@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using CommonTools.Log;
 using Scripts.Containers.Service;
 using Scripts.Gameplay.Actors.Entity;
@@ -10,10 +11,10 @@ namespace Scripts.Containers.Entity
 {
     public class EntityContainer : IEntityContainer
     {
+        public event Action EntityAdded;
+
         private const string ENTITIES_FOLDER_PATH = "Actors/{0}";
-
         private readonly Dictionary<int, IEntity> entities = new Dictionary<int, IEntity>();
-
         private int localEntityId;
 
         public EntityContainer()
@@ -87,7 +88,7 @@ namespace Scripts.Containers.Entity
                 return;
             }
 
-            entities.Add(entityId, gameObject.GetComponent<IEntity>());                
+            entities.Add(entityId, gameObject.GetComponent<IEntity>());
         }
 
         private void AddEntities(EntitiesAddedEventParameters parameters)
@@ -119,6 +120,8 @@ namespace Scripts.Containers.Entity
 
                 entities.Add(entity.Id, gameObject.GetComponent<IEntity>());
             }
+
+            EntityAdded?.Invoke();
         }
 
         private void RemoveEntity(EntityRemovedEventParameters parameters)

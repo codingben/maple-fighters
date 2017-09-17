@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using CommonTools.Coroutines;
 using Scripts.Services;
+using Scripts.Utils;
 using UnityEngine;
 
 namespace Scripts.Coroutines
@@ -9,13 +10,13 @@ namespace Scripts.Coroutines
     {
         public static ExternalCoroutinesExecutor ExecuteExternally(this ExternalCoroutinesExecutor executer)
         {
-            CoroutinesWrappersUpdater.GetInstance().AddCoroutineExecuter(executer);
+            CoroutinesWrappersUpdater.GetInstance().AddCoroutineExecutor(executer);
             return executer;
         }
 
-        public static ExternalCoroutinesExecutor RemoveFromExternalExecuter(this ExternalCoroutinesExecutor executer)
+        public static ExternalCoroutinesExecutor RemoveFromExternalExecutor(this ExternalCoroutinesExecutor executer)
         {
-            CoroutinesWrappersUpdater.GetInstance().RemoveCoroutineExecuter(executer);
+            CoroutinesWrappersUpdater.GetInstance().RemoveCoroutineExecutor(executer);
             return executer;
         }
     }
@@ -26,18 +27,19 @@ namespace Scripts.Coroutines
 
         public static CoroutinesWrappersUpdater GetInstance()
         {
-            _instance = _instance ?? new GameObject(typeof(CoroutinesWrappersUpdater).ToString(), typeof(CoroutinesWrappersUpdater)).GetComponent<CoroutinesWrappersUpdater>();
+            _instance = _instance ?? new GameObject(typeof(CoroutinesWrappersUpdater).ToString(), typeof(CoroutinesWrappersUpdater), typeof(DontDestroyOnLoad))
+                .GetComponent<CoroutinesWrappersUpdater>();
             return _instance;
         }
 
         private static CoroutinesWrappersUpdater _instance;
 
-        public void AddCoroutineExecuter(ExternalCoroutinesExecutor coroutineWrapper)
+        public void AddCoroutineExecutor(ExternalCoroutinesExecutor coroutineWrapper)
         {
             coroutinesWrappers.Add(coroutineWrapper);
         }
 
-        public void RemoveCoroutineExecuter(ExternalCoroutinesExecutor coroutineWrapper)
+        public void RemoveCoroutineExecutor(ExternalCoroutinesExecutor coroutineWrapper)
         {
             coroutinesWrappers.Remove(coroutineWrapper);
         }
@@ -67,7 +69,7 @@ namespace Scripts.Coroutines
         {
             if (coroutinesWrappers.Count != 0)
             {
-                coroutinesWrappers.ForEach(x => x.StopAllCoroutines());
+                coroutinesWrappers.ForEach(x => x.Dispose());
             }
 
             _instance = null;

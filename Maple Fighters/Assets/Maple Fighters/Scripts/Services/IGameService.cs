@@ -1,4 +1,6 @@
-﻿using Shared.Game.Common;
+﻿using System.Threading.Tasks;
+using CommonTools.Coroutines;
+using Shared.Game.Common;
 
 namespace Scripts.Services
 {
@@ -8,6 +10,7 @@ namespace Scripts.Services
 
         void UpdateEntityPosition(UpdateEntityPositionRequestParameters parameters);
         void UpdatePlayerState(UpdatePlayerStateRequestParameters parameters);
+        Task ChangeScene(IYield yield, ChangeSceneRequestParameters parameters);
 
         UnityEvent<EnterWorldOperationResponseParameters> EntitiyInitialInformation { get; }
 

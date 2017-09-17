@@ -1,20 +1,20 @@
 ﻿using Scripts.Containers;
+using Scripts.Containers.Entity;
 using Scripts.Containers.Service;
+using Scripts.Services;
 using UnityEngine;
 
 namespace Scripts.Gameplay
 {
     public class GameInitializer : MonoBehaviour
     {
+        private IGameService gameService;
+        private IEntityContainer entityContainer;
+
         private void Awake()
         {
-            var gameService = ServiceContainer.GameService;
-            var entityContainer = GameContainers.EntityContainer;
-        }
-
-        private void Start()
-        {
-            // ServiceContainer.GameService.Connect();
+            gameService = ServiceContainer.GameService;
+            entityContainer = GameContainers.EntityContainer;
         }
     }
 }

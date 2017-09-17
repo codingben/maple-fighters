@@ -25,16 +25,16 @@ namespace Scripts.Services
         protected IOperationRequestSender<TOperationCode> OperationRequestSender { get; private set; }
         protected IOperationResponseSubscriptionProvider SubscriptionProvider { get; private set; }
 
-        protected readonly ExternalCoroutinesExecutor CoroutinesExecuter;
+        protected readonly ExternalCoroutinesExecutor CoroutinesExecutor;
 
         protected ServiceBase()
         {
-            CoroutinesExecuter = new ExternalCoroutinesExecutor().ExecuteExternally();
+            CoroutinesExecutor = new ExternalCoroutinesExecutor().ExecuteExternally();
         }
 
         public async Task<IServerPeer> ConnectAsync(IYield yield, PeerConnectionInformation connectionInformation)
         {
-            var serverConnector = new PhotonServerConnector(() => CoroutinesExecuter);
+            var serverConnector = new PhotonServerConnector(() => CoroutinesExecutor);
             var networkConfiguration = NetworkConfiguration.GetInstance();
 
             serverPeer = await serverConnector.ConnectAsync(yield, connectionInformation,
@@ -53,7 +53,7 @@ namespace Scripts.Services
 
         public void Dispose()
         {
-            CoroutinesExecuter.RemoveFromExternalExecuter().Dispose();
+            CoroutinesExecutor.RemoveFromExternalExecutor().Dispose();
 
             serverPeer?.Disconnect();
 
@@ -83,7 +83,7 @@ namespace Scripts.Services
 
             Debug.Log($"Connecting to a {serverType} server - " + $"{peerConnectionInformation.Ip}:{peerConnectionInformation.Port}");
 
-            CoroutinesExecuter.StartTask(y => ConnectAsync(y, peerConnectionInformation));
+            CoroutinesExecutor.StartTask(y => ConnectAsync(y, peerConnectionInformation));
         }
 
         protected abstract void OnConnected();

@@ -104,7 +104,11 @@
     <Compile Include="Assets\Plugins\Exit Games\Photon Server\PhotonWebSocket\SocketWebTcpCoroutine.cs" />
     <Compile Include="Assets\Plugins\Exit Games\Photon Server\PhotonWebSocket\SocketWebTcpThread.cs" />
     <Compile Include="Assets\Plugins\Exit Games\Photon Server\PhotonWebSocket\WebSocket\WebSocket.cs" />
-    <Compile Include="Assets\Plugins\Server Related\Infrastructure\PhotonClientImplementation.cs" />
+    <Compile Include="Assets\Plugins\Server Related\Infrastructure\PhotonClientImplementation\ConnectionDetails.cs" />
+    <Compile Include="Assets\Plugins\Server Related\Infrastructure\PhotonClientImplementation\PeerUtils.cs" />
+    <Compile Include="Assets\Plugins\Server Related\Infrastructure\PhotonClientImplementation\PhotonPeer.cs" />
+    <Compile Include="Assets\Plugins\Server Related\Infrastructure\PhotonClientImplementation\PhotonServerConnector.cs" />
+    <Compile Include="Assets\Plugins\Server Related\Infrastructure\PhotonClientImplementation\Utils.cs" />
     <Compile Include="Assets\Plugins\Unity Logs Viewer\Reporter\MultiKeyDictionary.cs" />
     <Compile Include="Assets\Plugins\Unity Logs Viewer\Reporter\Reporter.cs" />
     <Compile Include="Assets\Plugins\Unity Logs Viewer\Reporter\ReporterGUI.cs" />
