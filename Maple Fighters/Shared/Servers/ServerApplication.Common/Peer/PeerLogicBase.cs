@@ -1,5 +1,6 @@
 ﻿using System;
 using CommonCommunicationInterfaces;
+using CommonTools.Coroutines;
 using CommonTools.Log;
 using ServerApplication.Common.Components;
 using ServerApplication.Common.Components.Coroutines;
@@ -22,9 +23,14 @@ namespace Shared.ServerApplication.Common.PeerLogic
         {
             PeerWrapper = peer;
 
+            EventSender = new EventSender<TEventCode>(PeerWrapper.Peer.EventSender, true);
+
+            AddCommonComponents();
+
+            var coroutinesExecutor = Entity.Container.GetComponent<CoroutinesExecutorEntity>() as ICoroutinesExecutor;
+
             OperationRequestHandlerRegister = new OperationRequestsHandler<TOperationCode>(PeerWrapper.Peer.OperationRequestNotifier, 
-                PeerWrapper.Peer.OperationResponseSender, false, false);
-            EventSender = new EventSender<TEventCode>(PeerWrapper.Peer.EventSender, false);
+                PeerWrapper.Peer.OperationResponseSender, false, false, coroutinesExecutor);
 
             PeerWrapper.Peer.NetworkTrafficState = NetworkTrafficState.Flowing;
         }
@@ -35,7 +41,7 @@ namespace Shared.ServerApplication.Common.PeerLogic
             OperationRequestHandlerRegister?.Dispose();
         }
 
-        protected void AddCommonComponents()
+        private void AddCommonComponents()
         {
             Entity.Container.AddComponent(new EventSenderWrapper(EventSender.AssertNotNull()));
             Entity.Container.AddComponent(new CoroutinesExecutorEntity(new FiberCoroutinesExecutor(PeerWrapper.Peer.Fiber, 100)));

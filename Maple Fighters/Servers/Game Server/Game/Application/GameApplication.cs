@@ -4,6 +4,7 @@ using Game.InterestManagement;
 using MathematicsHelper;
 using ServerApplication.Common.ApplicationBase;
 using ServerCommunicationInterfaces;
+using Shared.Game.Common;
 
 namespace Game.Application
 {
@@ -40,7 +41,8 @@ namespace Game.Application
         private void CreateScenes()
         {
             var sceneContainer = Server.Entity.Container.GetComponent<SceneContainer>().AssertNotNull();
-            sceneContainer.AddScene(1, new Vector2(40, 10), new Vector2(10, 5));
+            sceneContainer.AddScene(Maps.Map_1, new Vector2(40, 10), new Vector2(10, 5));
+            sceneContainer.AddScene(Maps.Map_2, new Vector2(30, 30), new Vector2(15, 10));
         }
     }
 }

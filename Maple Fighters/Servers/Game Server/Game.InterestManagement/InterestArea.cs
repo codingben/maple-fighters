@@ -25,7 +25,6 @@ namespace Game.InterestManagement
         {
             base.OnAwake();
 
-            DetectOverlapsWithRegions();
             SubscribeToPositionChangesNotifier();
         }
 
@@ -52,7 +51,10 @@ namespace Game.InterestManagement
         {
             interestArea.SetPosition(position);
 
-            DetectOverlapsWithRegions();
+            if (Entity.Scene != null)
+            {
+                DetectOverlapsWithRegions();
+            }
         }
 
         public IEnumerable<IRegion> GetPublishers()

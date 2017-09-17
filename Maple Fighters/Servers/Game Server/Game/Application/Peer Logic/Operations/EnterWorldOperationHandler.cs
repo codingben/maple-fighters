@@ -22,10 +22,9 @@ namespace Game.Application.PeerLogic.Operations
 
         public EnterWorldOperationResponseParameters? Handle(MessageData<EmptyParameters> messageData, ref MessageSendOptions sendOptions)
         {
-            var sceneId = 1;
-            var position = new Vector2(18, -5.8f);
+            var position = new Vector2(18, -5.5f);
             var interestArea = new Vector2(10, 5);
-            var gameObject = CreatePlayerGameObject(sceneId, position, interestArea);
+            var gameObject = CreatePlayerGameObject(Maps.Map_1, position, interestArea);
 
             onAuthenticated.Invoke(gameObject);
 
@@ -33,10 +32,10 @@ namespace Game.Application.PeerLogic.Operations
             return new EnterWorldOperationResponseParameters(entityTemp, position.X, position.Y);
         }
 
-        private IGameObject CreatePlayerGameObject(int sceneId, Vector2 position, Vector2 interestArea)
+        private IGameObject CreatePlayerGameObject(Maps map, Vector2 position, Vector2 interestArea)
         {
             var scene = Server.Entity.Container.GetComponent<SceneContainer>().AssertNotNull();
-            var playerObject = scene?.GetScene(sceneId)?.AddGameObject(new GameObject(sceneId, peerId, position, interestArea));
+            var playerObject = scene?.GetScene(map)?.AssertNotNull().AddGameObject(new GameObject(map, peerId, position, interestArea));
             return playerObject;
         }
     }

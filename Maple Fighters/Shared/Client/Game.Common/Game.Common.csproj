@@ -52,6 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AuthenticatedGameOperations.cs" />
+    <Compile Include="ChangeSceneRequestParameters.cs" />
     <Compile Include="Directions.cs" />
     <Compile Include="EnterWorldOperationResponseParameters.cs" />
     <Compile Include="EntitiesAddedEventParameters.cs" />
@@ -64,6 +65,7 @@
     <Compile Include="GameDataChannels.cs" />
     <Compile Include="GameEvents.cs" />
     <Compile Include="GameOperations.cs" />
+    <Compile Include="Maps.cs" />
     <Compile Include="PlayerState.cs" />
     <Compile Include="PlayerStateChangedEventParameters.cs" />
     <Compile Include="UnauthenticatedGameOperations.cs" />

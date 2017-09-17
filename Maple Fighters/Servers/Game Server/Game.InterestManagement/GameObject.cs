@@ -3,6 +3,7 @@ using MathematicsHelper;
 using ServerApplication.Common.ApplicationBase;
 using ServerApplication.Common.ComponentModel;
 using ServerApplication.Common.Components;
+using Shared.Game.Common;
 
 namespace Game.InterestManagement
 {
@@ -14,12 +15,12 @@ namespace Game.InterestManagement
 
         private SceneContainer sceneContainer;
 
-        public GameObject(int sceneId, Vector2 position, Vector2 interestAreaSize)
+        public GameObject(Maps map, Vector2 position, Vector2 interestAreaSize)
         {
             var idGenerator = Server.Entity.Container.GetComponent<IdGenerator>().AssertNotNull();
             Id = idGenerator.GenerateId();
 
-            SetScene(sceneId);
+            Scene = GetScene(map);
 
             Container = new Container<IGameObject>(this);
 
@@ -27,11 +28,11 @@ namespace Game.InterestManagement
             Container.AddComponent(new InterestArea(position, interestAreaSize));
         }
 
-        public GameObject(int sceneId, int id, Vector2 position, Vector2 interestAreaSize)
+        public GameObject(Maps map, int id, Vector2 position, Vector2 interestAreaSize)
         {
             Id = id;
 
-            SetScene(sceneId);
+            Scene = GetScene(map);
 
             Container = new Container<IGameObject>(this);
 
@@ -39,19 +40,24 @@ namespace Game.InterestManagement
             Container.AddComponent(new InterestArea(position, interestAreaSize));
         }
 
-        public void SetScene(int sceneId)
+        public void ChangeScene(Maps map)
         {
-            Scene = GetScene(sceneId);
+            Scene.RemoveGameObjectFromScene(Id);
+
+            var scene = GetScene(map);
+            scene.AddGameObject(this);
+
+            Scene = scene;
         }
 
-        private IScene GetScene(int sceneId)
+        private IScene GetScene(Maps map)
         {
             if (sceneContainer == null)
             {
                 sceneContainer = Server.Entity.Container.GetComponent<SceneContainer>().AssertNotNull();
             }
 
-            var scene = sceneContainer.GetScene(sceneId).AssertNotNull();
+            var scene = sceneContainer.GetScene(map).AssertNotNull();
             return scene;
         }
 

@@ -6,6 +6,7 @@ using Game.InterestManagement;
 using ServerApplication.Common.ApplicationBase;
 using ServerApplication.Common.ComponentModel;
 using ServerApplication.Common.Components;
+using ServerCommunicationInterfaces;
 using Shared.Game.Common;
 using Shared.ServerApplication.Common.PeerLogic;
 
@@ -13,15 +14,17 @@ namespace Game.Application.PeerLogic.Components
 {
     internal class InterestAreaManagement : Component<IPeerEntity>
     {
+        private readonly IMinimalPeer peer;
         private readonly IGameObject gameObject;
         private readonly InterestArea interestArea;
 
         private PeerContainer peerContainer;
         private EventSenderWrapper eventSender;
 
-        public InterestAreaManagement(IGameObject gameObject)
+        public InterestAreaManagement(IGameObject gameObject, IMinimalPeer peer)
         {
             this.gameObject = gameObject;
+            this.peer = peer;
 
             interestArea = gameObject.AssertNotNull().Container.GetComponent<InterestArea>().AssertNotNull();
         }
@@ -41,6 +44,11 @@ namespace Game.Application.PeerLogic.Components
 
         private void OnGameObjectAdded(IGameObject gameObject)
         {
+            if (!peer.IsConnected)
+            {
+                return;
+            }
+
             var transform = gameObject.Container.GetComponent<Transform>().AssertNotNull();
             var entityTemp = new Entity(gameObject.Id, EntityType.Player, transform.Position.X, transform.Position.Y);
             var parameters = new EntityAddedEventParameters(entityTemp);
@@ -50,12 +58,22 @@ namespace Game.Application.PeerLogic.Components
 
         private void OnGameObjectRemoved(int gameObjectId)
         {
+            if (!peer.IsConnected)
+            {
+                return;
+            }
+
             var parameters = new EntityRemovedEventParameters(gameObjectId);
             eventSender.SendEvent((byte)GameEvents.EntityRemoved, parameters, MessageSendOptions.DefaultReliable());
         }
 
         private void OnGameObjectsAdded(IGameObject[] gameObjects)
         {
+            if (!peer.IsConnected)
+            {
+                return;
+            }
+
             var entitiesTemp = new Entity[gameObjects.Length];
             for (var i = 0; i < entitiesTemp.Length; i++)
             {
@@ -72,6 +90,11 @@ namespace Game.Application.PeerLogic.Components
 
         private void OnGameObjectsRemoved(int[] gameObjectsId)
         {
+            if (!peer.IsConnected)
+            {
+                return;
+            }
+
             var entitiesIdsTemp = new int[gameObjectsId.Length];
             for (var i = 0; i < entitiesIdsTemp.Length; i++)
             {
@@ -84,6 +107,11 @@ namespace Game.Application.PeerLogic.Components
         public void SendEventOnlyForEntitiesInMyRegions<TParameters>(byte code, TParameters parameters, MessageSendOptions messageSendOptions)
             where TParameters : struct, IParameters
         {
+            if (!peer.IsConnected)
+            {
+                return;
+            }
+
             foreach (var otherEntity in GetEntitiesFromEntityRegions())
             {
                 var peerWrapper = peerContainer.GetPeerWrapper(otherEntity.Id).AssertNotNull();

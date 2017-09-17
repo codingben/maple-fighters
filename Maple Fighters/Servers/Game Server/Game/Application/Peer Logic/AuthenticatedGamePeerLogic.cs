@@ -24,16 +24,16 @@ namespace Game.Application.PeerLogic
 
             SubscribeToDisconnectedEvent();
 
-            AddCommonComponents();
             AddComponents();
 
             AddHandlerForUpdateEntityPositionOperation();
             AddHandlerForUpdatePlayerStateOperation();
+            AddHandlerForChangeSceneOperation();
         }
 
         private void AddComponents()
         {
-            Entity.Container.AddComponent(new InterestAreaManagement(gameObject));
+            Entity.Container.AddComponent(new InterestAreaManagement(gameObject, PeerWrapper.Peer));
             Entity.Container.AddComponent(new PositionChangesListener(gameObject));
         }
 
@@ -47,6 +47,11 @@ namespace Game.Application.PeerLogic
         {
             var interestAreaManagement = Entity.Container.GetComponent<InterestAreaManagement>().AssertNotNull();
             OperationRequestHandlerRegister.SetHandler(GameOperations.PlayerStateChanged, new UpdatePlayerStateOperationHandler(gameObject.Id, interestAreaManagement));
+        }
+
+        private void AddHandlerForChangeSceneOperation()
+        {
+            OperationRequestHandlerRegister.SetHandler(GameOperations.ChangeScene, new ChangeSceneOperationHandler(gameObject));
         }
 
         private void SubscribeToDisconnectedEvent()

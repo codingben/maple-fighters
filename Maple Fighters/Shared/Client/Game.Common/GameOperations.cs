@@ -4,6 +4,7 @@
     {
         EnterWorld,
         PositionChanged,
-        PlayerStateChanged
+        PlayerStateChanged,
+        ChangeScene
     }
 }

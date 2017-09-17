@@ -26,14 +26,11 @@ namespace Game.InterestManagement
 
             gameObjects.Add(gameObject.Id, gameObject);
 
-            if (gameObjects.Count > 1)
-            {
-                // Show all exists entities for a new game object.
-                ShowGameObjectsForGameObject(gameObject);
+            // Show all exists entities for a new game object.
+            ShowGameObjectsForGameObject(gameObject);
 
-                // Show a new game object for all exists entities.
-                ShowGameObjectForGameObjects(gameObject);
-            }
+            // Show a new game object for all exists entities.
+            ShowGameObjectForGameObjects(gameObject);
         }
 
         public void RemoveSubscription(int gameObjectId)
@@ -44,20 +41,14 @@ namespace Game.InterestManagement
                 return;
             }
 
-            if (gameObjects.Count > 1)
-            {
-                // Hide game objects for the one that left this region.
-                HideGameObjectsForGameObject(gameObjectId);
-            }
+            // Hide game objects for the one that left this region.
+            HideGameObjectsForGameObject(gameObjectId);
 
             // Remove him from region's list.
             gameObjects.Remove(gameObjectId);
 
-            if (gameObjects.Count > 1)
-            {
-                // Hide the one who left from this region for other game objects.
-                HideGameObjectForGameObjects(gameObjectId);
-            }
+            // Hide the one who left from this region for other game objects.
+            HideGameObjectForGameObjects(gameObjectId);
         }
 
         public void RemoveSubscriptionForOtherOnly(int gameObjectId)
@@ -68,13 +59,13 @@ namespace Game.InterestManagement
                 return;
             }
 
-            LogUtils.Log(MessageBuilder.Trace($"Removing {gameObjectId}"));
+            HideGameObjectsForGameObjectOnly(gameObjectId);
 
             // Remove him from region's list.
             gameObjects.Remove(gameObjectId);
 
             // Hide the one who left from this region for other game objects.
-            DestroyDisconnectedGameObject(gameObjectId);
+            HideGameObjectForOtherOnly(gameObjectId);
         }
 
         public bool HasSubscription(int gameObjectId)
@@ -142,16 +133,26 @@ namespace Game.InterestManagement
             }
         }
 
-        private void DestroyDisconnectedGameObject(int hideGameObjectId)
+        private void HideGameObjectForOtherOnly(int hideGameObjectId)
         {
             foreach (var gameObject in gameObjects.Values)
             {
                 var interestArea = gameObject.Container.GetComponent<InterestArea>().AssertNotNull();
-                if (interestArea.GetPublishers().Any(publisher => publisher.HasSubscription(hideGameObjectId)))
-                {
-                    interestArea.GameObjectRemoved.AssertNotNull().Invoke(hideGameObjectId);
-                }
+                interestArea.GameObjectRemoved.AssertNotNull().Invoke(hideGameObjectId);
             }
+        }
+
+        private void HideGameObjectsForGameObjectOnly(int hideGameObjectId)
+        {
+            var gameObjectsTemp = gameObjects.Keys.Where(gameObjectId => gameObjectId != hideGameObjectId).ToArray();
+
+            if (gameObjects[hideGameObjectId]?.Container?.GetComponent<InterestArea>() == null)
+            {
+                return;
+            }
+
+            var interestArea = gameObjects[hideGameObjectId].Container.GetComponent<InterestArea>().AssertNotNull();
+            interestArea.GameObjectsRemoved.AssertNotNull().Invoke(gameObjectsTemp);
         }
     }
 }
