@@ -1,7 +1,6 @@
 ﻿using System.Threading.Tasks;
 using CommonCommunicationInterfaces;
 using CommonTools.Coroutines;
-using CommonTools.Log;
 using Scripts.ScriptableObjects;
 using Shared.Game.Common;
 
@@ -21,6 +20,11 @@ namespace Scripts.Services
         {
             var gameConnectionInformation = ServicesConfiguration.GetInstance().GameConnectionInformation;
             Connect(gameConnectionInformation);
+        }
+
+        public void Disconnect()
+        {
+            Dispose();
         }
 
         protected override void OnConnected()
@@ -88,7 +92,6 @@ namespace Scripts.Services
         {
             if (!IsConnected())
             {
-                LogUtils.Log(MessageBuilder.Trace("Peer is not connected to a server."));
                 return;
             }
 
@@ -102,7 +105,6 @@ namespace Scripts.Services
         {
             if (!IsConnected())
             {
-                LogUtils.Log(MessageBuilder.Trace("Peer is not connected to a server."));
                 return;
             }
 
@@ -113,7 +115,6 @@ namespace Scripts.Services
         {
             if (!IsConnected())
             {
-                LogUtils.Log(MessageBuilder.Trace("Peer is not connected to a server."));
                 return;
             }
 
@@ -124,7 +125,6 @@ namespace Scripts.Services
         {
             if (!IsConnected())
             {
-                LogUtils.Log(MessageBuilder.Trace("Peer is not connected to a server."));
                 return;
             }
 

@@ -21,13 +21,13 @@ namespace Scripts.Coroutines
         }
     }
 
-    public sealed class CoroutinesWrappersUpdater : MonoBehaviour
+    public sealed class CoroutinesWrappersUpdater : DontDestroyOnLoad<CoroutinesWrappersUpdater>
     {
         private readonly List<ExternalCoroutinesExecutor> coroutinesWrappers = new List<ExternalCoroutinesExecutor>();
 
         public static CoroutinesWrappersUpdater GetInstance()
         {
-            _instance = _instance ?? new GameObject(typeof(CoroutinesWrappersUpdater).ToString(), typeof(CoroutinesWrappersUpdater), typeof(DontDestroyOnLoad))
+            _instance = _instance ?? new GameObject(typeof(CoroutinesWrappersUpdater).ToString(), typeof(CoroutinesWrappersUpdater))
                 .GetComponent<CoroutinesWrappersUpdater>();
             return _instance;
         }
@@ -44,7 +44,7 @@ namespace Scripts.Coroutines
             coroutinesWrappers.Remove(coroutineWrapper);
         }
 
-        private void Awake()
+        private void Start()
         {
             _instance = this;
 

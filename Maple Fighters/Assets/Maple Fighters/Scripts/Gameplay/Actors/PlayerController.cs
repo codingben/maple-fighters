@@ -9,9 +9,11 @@ namespace Scripts.Gameplay.Actors
 {
     public class PlayerController : MonoBehaviour
     {
-        private PlayerState PlayerState
+        public bool DetectGround { get; set; } = true;
+
+        public PlayerState PlayerState
         {
-            set
+            private set
             {
                 playerState = value;
                 playerStateChanged?.Invoke(value);
@@ -21,6 +23,7 @@ namespace Scripts.Gameplay.Actors
                 return playerState;
             }
         }
+
         private Action<PlayerState> playerStateChanged;
 
         [SerializeField] private PlayerState playerState = PlayerState.Falling;
@@ -28,6 +31,14 @@ namespace Scripts.Gameplay.Actors
         [Header("General")]
         [SerializeField] private float speed;
         [SerializeField] private float jumpForce;
+
+        [Header("Rope Speed")]
+        [SerializeField] private float ropeUpSpeed;
+        [SerializeField] private float ropeDownSpeed;
+
+        [Header("Ladder Speed")]
+        [SerializeField] private float ladderUpSpeed;
+        [SerializeField] private float ladderDownSpeed;
 
         [Header("Ground Detection")]
         [SerializeField] private LayerMask floorLayerMask;
@@ -66,12 +77,25 @@ namespace Scripts.Gameplay.Actors
                     FallingState();
                     break;
                 }
+                case PlayerState.Rope:
+                case PlayerState.Ladder:
+                {
+                    FallingState();
+                    break;
+                }
             }
         }
 
         private void FixedUpdate()
         {
-            rigidbody.velocity = new Vector2(direction * speed * Time.fixedDeltaTime, rigidbody.velocity.y);
+            if (playerState == PlayerState.Rope || playerState == PlayerState.Ladder)
+            {
+                rigidbody.velocity = new Vector2(rigidbody.velocity.x, direction * speed * Time.fixedDeltaTime);
+            }
+            else
+            {
+                rigidbody.velocity = new Vector2(direction * speed * Time.fixedDeltaTime, rigidbody.velocity.y);
+            }
         }
 
         public void Move(Directions directions)
@@ -88,6 +112,48 @@ namespace Scripts.Gameplay.Actors
             FlipByDirection(directions);
         }
 
+        public void MoveOnRope(Directions directions)
+        {
+            var speedTemp = 0f;
+
+            switch (directions)
+            {
+                case Directions.Up:
+                {
+                    speedTemp = ropeUpSpeed;
+                    break;
+                }
+                case Directions.Down:
+                {
+                    speedTemp = ropeDownSpeed;
+                    break;
+                }
+            }
+
+            direction = GetDirecton(directions) * speedTemp;
+        }
+
+        public void MoveOnLadder(Directions directions)
+        {
+            var speedTemp = 0f;
+
+            switch (directions)
+            {
+                case Directions.Up:
+                {
+                    speedTemp = ladderUpSpeed;
+                    break;
+                }
+                case Directions.Down:
+                {
+                    speedTemp = ladderDownSpeed;
+                    break;
+                }
+            }
+
+            direction = GetDirecton(directions) * speedTemp;
+        }
+
         public void Jump()
         {
             if (PlayerState != PlayerState.Idle && PlayerState != PlayerState.Moving)
@@ -99,6 +165,14 @@ namespace Scripts.Gameplay.Actors
             rigidbody.AddForce(forceDirection * jumpForce, ForceMode2D.Impulse);
 
             PlayerState = PlayerState.Falling;
+        }
+
+        public void SetStateFromRopeOrLadderInteraction(PlayerState state)
+        {
+            playerState = state;
+            playerStateChanged?.Invoke(state);
+
+            rigidbody.velocity = new Vector2(0, rigidbody.velocity.y);
         }
 
         private void IdleState()
@@ -164,7 +238,7 @@ namespace Scripts.Gameplay.Actors
 
         private float GetDirecton(Directions direction)
         {
-            var dir = 0.0f;
+            var dir = 0f;
 
             switch (direction)
             {
@@ -173,11 +247,13 @@ namespace Scripts.Gameplay.Actors
                     dir = 0;
                     break;
                 }
+                case Directions.Down:
                 case Directions.Left:
                 {
                     dir = -1;
                     break;
                 }
+                case Directions.Up:
                 case Directions.Right:
                 {
                     dir = 1;
@@ -189,7 +265,7 @@ namespace Scripts.Gameplay.Actors
 
         private bool IsOnFloor()
         {
-            return floorDetectionPoints.Any(ground => Physics2D.OverlapPoint(ground.position, floorLayerMask));
+            return DetectGround && floorDetectionPoints.Any(ground => Physics2D.OverlapPoint(ground.position, floorLayerMask));
         }
     }
 }

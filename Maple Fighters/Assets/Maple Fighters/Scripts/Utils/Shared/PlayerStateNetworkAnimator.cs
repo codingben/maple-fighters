@@ -1,5 +1,4 @@
 ﻿using System;
-using CommonTools.Log;
 using Scripts.Containers;
 using Scripts.Containers.Service;
 using Scripts.Gameplay.Actors;
@@ -11,11 +10,13 @@ namespace Scripts.Utils.Shared
     [RequireComponent(typeof(Animator))]
     public class PlayerStateNetworkAnimator : MonoBehaviour
     {
-        [SerializeField] private bool IsLocal;
+        [SerializeField] private bool isLocal;
 
         [Header("Animator Parameters")]
         [SerializeField] private string walkName;
         [SerializeField] private string jumpName;
+        [SerializeField] private string ropeName;
+        [SerializeField] private string ladderName;
 
         private Animator animator;
         private PlayerState lastPlayerState = PlayerState.Idle;
@@ -27,11 +28,14 @@ namespace Scripts.Utils.Shared
 
         private void Start()
         {
-            if (IsLocal)
+            if (!isLocal)
             {
-                ServiceContainer.GameService.PlayerStateChanged.AddListener(OnPlayerStateEventReceived);
-                GameContainers.EntityContainer.EntityAdded += OnEntityAdded;
+                return;
             }
+
+            GameContainers.EntityContainer.EntityAdded += OnEntityAdded;
+             
+            ServiceContainer.GameService.PlayerStateChanged.AddListener(OnPlayerStateEventReceived);
         }
 
         /// <summary>
@@ -68,8 +72,6 @@ namespace Scripts.Utils.Shared
 
         public void OnPlayerStateReceived(PlayerState playerState)
         {
-            LogUtils.Log(MessageBuilder.Trace(playerState.ToString()));
-
             switch (playerState)
             {
                 case PlayerState.Idle:
@@ -87,6 +89,16 @@ namespace Scripts.Utils.Shared
                     FallingState();
                     break;
                 }
+                case PlayerState.Rope:
+                {
+                    RopeState();
+                    break;
+                }
+                case PlayerState.Ladder:
+                {
+                    LadderState();
+                    break;
+                }
                 default:
                 {
                     throw new ArgumentOutOfRangeException(nameof(playerState), playerState, null);
@@ -98,18 +110,40 @@ namespace Scripts.Utils.Shared
         {
             animator.SetBool(walkName, false);
             animator.SetBool(jumpName, false);
+            animator.SetBool(ropeName, false);
+            animator.SetBool(ladderName, false);
         }
 
         private void MovingState()
         {
             animator.SetBool(walkName, true);
             animator.SetBool(jumpName, false);
+            animator.SetBool(ropeName, false);
+            animator.SetBool(ladderName, false);
         }
 
         private void FallingState()
         {
             animator.SetBool(jumpName, true);
             animator.SetBool(walkName, false);
+            animator.SetBool(ropeName, false);
+            animator.SetBool(ladderName, false);
+        }
+
+        private void RopeState()
+        {
+            animator.SetBool(jumpName, false);
+            animator.SetBool(walkName, false);
+            animator.SetBool(ropeName, true);
+            animator.SetBool(ladderName, false);
+        }
+
+        private void LadderState()
+        {
+            animator.SetBool(jumpName, false);
+            animator.SetBool(walkName, false);
+            animator.SetBool(ropeName, false);
+            animator.SetBool(ladderName, true);
         }
     }
 }

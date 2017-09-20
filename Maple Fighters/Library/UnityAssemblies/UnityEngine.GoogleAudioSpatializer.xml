@@ -1,0 +1,399 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<doc>
+  <members>
+    <assembly>
+      <name>UnityEngine.GoogleAudioSpatializer</name>
+    </assembly>
+    <member name="T:UnityEngine.Experimental.Audio.Google.GvrAudioListenerExtensionMethods">
+      <summary>
+        <para>Extension methods for accessing the Google spatializer's properties on the AudioListener.</para>
+      </summary>
+    </member>
+    <member name="M:UnityEngine.Experimental.Audio.Google.GvrAudioListenerExtensionMethods.GetGlobalGainDb(UnityEngine.AudioListener)">
+      <summary>
+        <para>Get the global gain, in decibels, that will be applied to the Google spatializer renderer's mixed output.</para>
+      </summary>
+      <param name="listener">This is the AudioListener affected by these Google spatializer extension properties.</param>
+      <returns>
+        <para>Returns the global gain, in decibels.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.Experimental.Audio.Google.GvrAudioListenerExtensionMethods.GetOcclusionMask(UnityEngine.AudioListener)">
+      <summary>
+        <para>Get the global layer mask that will be used in the Google spatializer's occlusion detection.</para>
+      </summary>
+      <param name="listener">This is the AudioListener affected by these Google spatializer extension properties.</param>
+      <returns>
+        <para>Returns the global layer mask.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.Experimental.Audio.Google.GvrAudioListenerExtensionMethods.GetQuality(UnityEngine.AudioListener)">
+      <summary>
+        <para>Get the Google spatializer's rendering quality.</para>
+      </summary>
+      <param name="listener">This is the AudioListener affected by these Google spatializer extension properties.</param>
+      <returns>
+        <para>Returns the current quality setting.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.Experimental.Audio.Google.GvrAudioListenerExtensionMethods.SetGlobalGainDb(UnityEngine.AudioListener,System.Single)">
+      <summary>
+        <para>Set the global gain, in decibels, that will be applied to the Google spatializer renderer's mixed output.</para>
+      </summary>
+      <param name="listener">This is the AudioListener affected by these Google spatializer extension properties.</param>
+      <param name="globalGainDb">Global gain, in decibels.</param>
+    </member>
+    <member name="M:UnityEngine.Experimental.Audio.Google.GvrAudioListenerExtensionMethods.SetOcclusionMask(UnityEngine.AudioListener,UnityEngine.LayerMask)">
+      <summary>
+        <para>Set the global layer mask that will be used in the Google spatializer's occlusion detection.</para>
+      </summary>
+      <param name="listener">This is the AudioListener affected by these Google spatializer extension properties.</param>
+      <param name="occlusionMask">Occlusion layer mask.</param>
+    </member>
+    <member name="M:UnityEngine.Experimental.Audio.Google.GvrAudioListenerExtensionMethods.SetQuality(UnityEngine.AudioListener,UnityEngine.Experimental.Audio.Google.GvrAudioQuality)">
+      <summary>
+        <para>Set the Google spatializer's rendering quality.</para>
+      </summary>
+      <param name="listener">This is the AudioListener affected by these Google spatializer extension properties.</param>
+      <param name="quality">Rendering quality setting.</param>
+    </member>
+    <member name="T:UnityEngine.Experimental.Audio.Google.GvrAudioQuality">
+      <summary>
+        <para>Google spatializer rendering quality.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.Experimental.Audio.Google.GvrAudioQuality.High">
+      <summary>
+        <para>High-quality binaural rendering using third-order HRTF.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.Experimental.Audio.Google.GvrAudioQuality.Low">
+      <summary>
+        <para>Low-quality binaural rendering using first-order HRTF.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.Experimental.Audio.Google.GvrAudioQuality.Stereo">
+      <summary>
+        <para>Stereo-only rendering.</para>
+      </summary>
+    </member>
+    <member name="T:UnityEngine.Experimental.Audio.Google.GvrAudioRoom">
+      <summary>
+        <para>The Google spatializer's audio room component that simulates the environmental effects of a room.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Experimental.Audio.Google.GvrAudioRoom.backWall">
+      <summary>
+        <para>Room surface material of the GvrAudioRoom's back wall (negative z direction).</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Experimental.Audio.Google.GvrAudioRoom.ceiling">
+      <summary>
+        <para>Room surface material of the GvrAudioRoom's ceiling (positive y direction).</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Experimental.Audio.Google.GvrAudioRoom.floor">
+      <summary>
+        <para>Room surface material of the GvrAudioRoom's floor (negative y direction).</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Experimental.Audio.Google.GvrAudioRoom.frontWall">
+      <summary>
+        <para>Room surface material of the GvrAudioRoom's front wall (positive z direction).</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Experimental.Audio.Google.GvrAudioRoom.leftWall">
+      <summary>
+        <para>Room surface material of the GvrAudioRoom's left wall (negative x direction).</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Experimental.Audio.Google.GvrAudioRoom.reflectivity">
+      <summary>
+        <para>Reflectivity scalar for each surface in the GvrAudioRoom.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Experimental.Audio.Google.GvrAudioRoom.reverbBrightness">
+      <summary>
+        <para>GvrAudioRoom's reverb brightness modifier.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Experimental.Audio.Google.GvrAudioRoom.reverbGainDb">
+      <summary>
+        <para>GvrAudioRoom's reverb gain modifier, in decibels.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Experimental.Audio.Google.GvrAudioRoom.reverbTime">
+      <summary>
+        <para>GvrAudioRoom's reverb time modifier.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Experimental.Audio.Google.GvrAudioRoom.rightWall">
+      <summary>
+        <para>Room surface material of the GvrAudioRoom's right wall (positive x direction).</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Experimental.Audio.Google.GvrAudioRoom.size">
+      <summary>
+        <para>Size of GvrAudioRoom's room, normalized with respect to the scale of the game object.</para>
+      </summary>
+    </member>
+    <member name="M:UnityEngine.Experimental.Audio.Google.GvrAudioRoom.#ctor">
+      <summary>
+        <para>Constructor.</para>
+      </summary>
+    </member>
+    <member name="T:UnityEngine.Experimental.Audio.Google.GvrAudioRoom.SurfaceMaterial">
+      <summary>
+        <para>Material type that determines the acoustic properties of a GvrAudioRoom surface (walls, ceiling, and floor).</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.Experimental.Audio.Google.GvrAudioRoom.SurfaceMaterial.AcousticCeilingTiles">
+      <summary>
+        <para>Acoustic ceiling tiles.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.Experimental.Audio.Google.GvrAudioRoom.SurfaceMaterial.BrickBare">
+      <summary>
+        <para>Bare brick.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.Experimental.Audio.Google.GvrAudioRoom.SurfaceMaterial.BrickPainted">
+      <summary>
+        <para>Painted brick.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.Experimental.Audio.Google.GvrAudioRoom.SurfaceMaterial.ConcreteBlockCoarse">
+      <summary>
+        <para>Course concrete block.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.Experimental.Audio.Google.GvrAudioRoom.SurfaceMaterial.ConcreteBlockPainted">
+      <summary>
+        <para>Painted concrete block.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.Experimental.Audio.Google.GvrAudioRoom.SurfaceMaterial.CurtainHeavy">
+      <summary>
+        <para>Heavy curtain.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.Experimental.Audio.Google.GvrAudioRoom.SurfaceMaterial.FiberglassInsulation">
+      <summary>
+        <para>Fiberglass insulation.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.Experimental.Audio.Google.GvrAudioRoom.SurfaceMaterial.GlassThick">
+      <summary>
+        <para>Thick glass.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.Experimental.Audio.Google.GvrAudioRoom.SurfaceMaterial.GlassThin">
+      <summary>
+        <para>Thin glass.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.Experimental.Audio.Google.GvrAudioRoom.SurfaceMaterial.Grass">
+      <summary>
+        <para>Grass.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.Experimental.Audio.Google.GvrAudioRoom.SurfaceMaterial.LinoleumOnConcrete">
+      <summary>
+        <para>Linoleum on concrete.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.Experimental.Audio.Google.GvrAudioRoom.SurfaceMaterial.Marble">
+      <summary>
+        <para>Marble.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.Experimental.Audio.Google.GvrAudioRoom.SurfaceMaterial.Metal">
+      <summary>
+        <para>Galvanized sheet metal.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.Experimental.Audio.Google.GvrAudioRoom.SurfaceMaterial.ParquetOnConcrete">
+      <summary>
+        <para>Parquet on concrete.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.Experimental.Audio.Google.GvrAudioRoom.SurfaceMaterial.PlasterRough">
+      <summary>
+        <para>Rough plaster.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.Experimental.Audio.Google.GvrAudioRoom.SurfaceMaterial.PlasterSmooth">
+      <summary>
+        <para>Smooth plaster.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.Experimental.Audio.Google.GvrAudioRoom.SurfaceMaterial.PlywoodPanel">
+      <summary>
+        <para>Plywood panel.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.Experimental.Audio.Google.GvrAudioRoom.SurfaceMaterial.PolishedConcreteOrTile">
+      <summary>
+        <para>Polished concrete or tile.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.Experimental.Audio.Google.GvrAudioRoom.SurfaceMaterial.Sheetrock">
+      <summary>
+        <para>Sheetrock.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.Experimental.Audio.Google.GvrAudioRoom.SurfaceMaterial.Transparent">
+      <summary>
+        <para>Transparent.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.Experimental.Audio.Google.GvrAudioRoom.SurfaceMaterial.WaterOrIceSurface">
+      <summary>
+        <para>Water or ice.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.Experimental.Audio.Google.GvrAudioRoom.SurfaceMaterial.WoodCeiling">
+      <summary>
+        <para>Wood ceiling.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.Experimental.Audio.Google.GvrAudioRoom.SurfaceMaterial.WoodPanel">
+      <summary>
+        <para>Wood panel.</para>
+      </summary>
+    </member>
+    <member name="T:UnityEngine.Experimental.Audio.Google.GvrAudioSourceExtensionMethods">
+      <summary>
+        <para>Extension methods for accessing the Google spatializer's properties on the AudioSource.</para>
+      </summary>
+    </member>
+    <member name="M:UnityEngine.Experimental.Audio.Google.GvrAudioSourceExtensionMethods.GetBypassRoomEffects(UnityEngine.AudioSource)">
+      <summary>
+        <para>Get whether the Google spatializer's room effects are being bypassed.</para>
+      </summary>
+      <param name="source">This is the AudioSource affected by these Google spatializer extension properties.</param>
+      <returns>
+        <para>True if the room effects are bypassed; false otherwise.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.Experimental.Audio.Google.GvrAudioSourceExtensionMethods.GetDirectivityAlpha(UnityEngine.AudioSource)">
+      <summary>
+        <para>Get the Google spatializer's directivity pattern shaping factor.</para>
+      </summary>
+      <param name="source">This is the AudioSource affected by these Google spatializer extension properties.</param>
+      <returns>
+        <para>Directivity alpha.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.Experimental.Audio.Google.GvrAudioSourceExtensionMethods.GetDirectivitySharpness(UnityEngine.AudioSource)">
+      <summary>
+        <para>Get the Google spatializer's directivity pattern order.</para>
+      </summary>
+      <param name="source">This is the AudioSource affected by these Google spatializer extension properties.</param>
+      <returns>
+        <para>Directivity sharpness.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.Experimental.Audio.Google.GvrAudioSourceExtensionMethods.GetGainDb(UnityEngine.AudioSource)">
+      <summary>
+        <para>Get the Google spatializer's input gain, in decibels.</para>
+      </summary>
+      <param name="source">This is the AudioSource affected by these Google spatializer extension properties.</param>
+      <returns>
+        <para>Returns the input gain.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.Experimental.Audio.Google.GvrAudioSourceExtensionMethods.GetHrtfEnabled(UnityEngine.AudioSource)">
+      <summary>
+        <para>Get whether the Google spatializer's head-related transfer function is enabled.</para>
+      </summary>
+      <param name="source">This is the AudioSource affected by these Google spatializer extension properties.</param>
+      <returns>
+        <para>Returns true if the HRTF is enabled; false otherwise.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.Experimental.Audio.Google.GvrAudioSourceExtensionMethods.GetListenerDirectivityAlpha(UnityEngine.AudioSource)">
+      <summary>
+        <para>Get the listener directivity pattern shaping factor.</para>
+      </summary>
+      <param name="source">This is the AudioSource affected by these Google spatializer extension properties.</param>
+      <returns>
+        <para>Directivity alpha.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.Experimental.Audio.Google.GvrAudioSourceExtensionMethods.GetListenerDirectivitySharpness(UnityEngine.AudioSource)">
+      <summary>
+        <para>Get the listener directivity pattern order.</para>
+      </summary>
+      <param name="source">This is the AudioSource affected by these Google spatializer extension properties.</param>
+      <returns>
+        <para>Directivity sharpness.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.Experimental.Audio.Google.GvrAudioSourceExtensionMethods.GetOcclusionEnabled(UnityEngine.AudioSource)">
+      <summary>
+        <para>Get whether the Google spatializer's occlusion effect is enabled or not.</para>
+      </summary>
+      <param name="source">This is the AudioSource affected by these Google spatializer extension properties.</param>
+      <returns>
+        <para>Returns true if occlusion is enabled; false otherwise.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.Experimental.Audio.Google.GvrAudioSourceExtensionMethods.SetBypassRoomEffects(UnityEngine.AudioSource,System.Boolean)">
+      <summary>
+        <para>Set whether the Google spatializer's room effects should be bypassed or not.</para>
+      </summary>
+      <param name="bypassRoomEffects">True, if the room effects should be bypassed; false otherwise.</param>
+      <param name="source">This is the AudioSource affected by these Google spatializer extension properties.</param>
+    </member>
+    <member name="M:UnityEngine.Experimental.Audio.Google.GvrAudioSourceExtensionMethods.SetDirectivityAlpha(UnityEngine.AudioSource,System.Single)">
+      <summary>
+        <para>Set the Google spatializer's directivity pattern shaping factor.</para>
+      </summary>
+      <param name="source">This is the AudioSource affected by these Google spatializer extension properties.</param>
+      <param name="directivityAlpha">Directivity pattern shaping factor.</param>
+    </member>
+    <member name="M:UnityEngine.Experimental.Audio.Google.GvrAudioSourceExtensionMethods.SetDirectivitySharpness(UnityEngine.AudioSource,System.Single)">
+      <summary>
+        <para>Set the Google spatializer's directivity pattern order.</para>
+      </summary>
+      <param name="source">This is the AudioSource affected by these Google spatializer extension properties.</param>
+      <param name="directivitySharpness">Directivity pattern order.</param>
+    </member>
+    <member name="M:UnityEngine.Experimental.Audio.Google.GvrAudioSourceExtensionMethods.SetGainDb(UnityEngine.AudioSource,System.Single)">
+      <summary>
+        <para>Set the Google spatializer's input gain, in decibels.</para>
+      </summary>
+      <param name="source">This is the AudioSource affected by these Google spatializer extension properties.</param>
+      <param name="gainDb">Input gain, in decibels.</param>
+    </member>
+    <member name="M:UnityEngine.Experimental.Audio.Google.GvrAudioSourceExtensionMethods.SetHrtfEnabled(UnityEngine.AudioSource,System.Boolean)">
+      <summary>
+        <para>Set whether the Google spatializer's head-related transfer function is enabled.</para>
+      </summary>
+      <param name="source">This is the AudioSource affected by these Google spatializer extension properties.</param>
+      <param name="hrtfEnabled">HRTF setting.</param>
+    </member>
+    <member name="M:UnityEngine.Experimental.Audio.Google.GvrAudioSourceExtensionMethods.SetListenerDirectivityAlpha(UnityEngine.AudioSource,System.Single)">
+      <summary>
+        <para>Set the listener directivity pattern shaping factor.</para>
+      </summary>
+      <param name="source">This is the AudioSource affected by these Google spatializer extension properties.</param>
+      <param name="listenerDirectivityAlpha">Directivity pattern shaping factor.</param>
+    </member>
+    <member name="M:UnityEngine.Experimental.Audio.Google.GvrAudioSourceExtensionMethods.SetListenerDirectivitySharpness(UnityEngine.AudioSource,System.Single)">
+      <summary>
+        <para>Set the listener directivity pattern order.</para>
+      </summary>
+      <param name="source">This is the AudioSource affected by these Google spatializer extension properties.</param>
+      <param name="listenerDirectivitySharpness">Directivity pattern order.</param>
+    </member>
+    <member name="M:UnityEngine.Experimental.Audio.Google.GvrAudioSourceExtensionMethods.SetOcclusionEnabled(UnityEngine.AudioSource,System.Boolean)">
+      <summary>
+        <para>Set whether the Google spatializer's occlusion effect is enabled or not.</para>
+      </summary>
+      <param name="source">This is the AudioSource affected by these Google spatializer extension properties.</param>
+      <param name="occlusionEnabled">Occlusion setting.</param>
+    </member>
+  </members>
+</doc>

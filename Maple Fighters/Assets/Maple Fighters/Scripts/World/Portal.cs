@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using CommonTools.Coroutines;
+using CommonTools.Log;
 using Scripts.Containers.Service;
 using Scripts.Coroutines;
 using Scripts.UI;
@@ -39,6 +40,8 @@ namespace Scripts.World
             {
                 playerGameObject = gameObject;
             }
+
+            LogUtils.Log(MessageBuilder.Trace());
 
             ScreenFade.Instance.Fade(1, 10, Teleport);
         }

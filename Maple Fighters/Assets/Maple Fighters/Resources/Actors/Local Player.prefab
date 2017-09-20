@@ -75,11 +75,12 @@ GameObject:
   - component: {fileID: 114398886610002808}
   - component: {fileID: 114499038457775834}
   - component: {fileID: 114905826191853246}
-  - component: {fileID: 114205697257489694}
   - component: {fileID: 114027339336836850}
+  - component: {fileID: 114589106926560606}
+  - component: {fileID: 114768141776313052}
   m_Layer: 0
   m_Name: Local Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -91,7 +92,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1414019868076446}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.375, y: -0.83, z: 0}
+  m_LocalPosition: {x: -0.4, y: -0.95, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4299486902504466}
@@ -133,7 +134,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1118593818177338}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.015, y: -0.83, z: 0}
+  m_LocalPosition: {x: 0.01, y: -0.95, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4299486902504466}
@@ -212,17 +213,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e1b6467013f61f4997a0741aecbfa53, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114205697257489694
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1801284219781380}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e24151c09abc54147b89cfe9531efc86, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114398886610002808
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -245,6 +235,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ad1b18ffac05a9418c8e85a13d4eefb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114589106926560606
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1801284219781380}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc8769ed4d6ed2a488cffe64ba2b8a4b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  flyInteractionKey: 273
+  floorInteractionKey: 274
 --- !u!114 &114691071847861050
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -267,8 +270,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e10042f839f3a949aba2fcaab278a7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  axisName: Horizontal
   jumpKey: 32
+--- !u!114 &114768141776313052
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1801284219781380}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43708399847dd5947b577d43e6cbda0c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114841678516950934
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -283,6 +296,10 @@ MonoBehaviour:
   playerState: 0
   speed: 10
   jumpForce: 6
+  ropeUpSpeed: 5
+  ropeDownSpeed: 6
+  ladderUpSpeed: 5
+  ladderDownSpeed: 4
   floorLayerMask:
     serializedVersion: 2
     m_Bits: 256
@@ -313,9 +330,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40aefd32793e3004c82db6f0803c0256, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IsLocal: 1
+  isLocal: 1
   walkName: Walking
   jumpName: Jump
+  ropeName: Rope
+  ladderName: Ladder
 --- !u!212 &212822570213418954
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -325,6 +344,7 @@ SpriteRenderer:
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -340,6 +360,7 @@ SpriteRenderer:
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
   m_SelectedEditorRenderState: 0
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5

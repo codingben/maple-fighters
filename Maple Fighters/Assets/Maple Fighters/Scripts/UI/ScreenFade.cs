@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using CommonTools.Coroutines;
 using Scripts.Coroutines;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Scripts.UI
 {
@@ -11,12 +12,24 @@ namespace Scripts.UI
         private ExternalCoroutinesExecutor coroutinesExecutor;
         private ICoroutine fadeCoroutine;
 
-        private void Awake()
+        private void Start()
         {
             coroutinesExecutor = new ExternalCoroutinesExecutor().ExecuteExternally();
+
+            UnFade(1);
         }
 
-        private void Start()
+        private void OnEnable()
+        {
+            SceneManager.sceneLoaded += OnSceneLoaded;
+        }
+
+        private void OnDisable()
+        {
+            SceneManager.sceneLoaded -= OnSceneLoaded;
+        }
+
+        private void OnSceneLoaded(Scene scene, LoadSceneMode loadSceneMode)
         {
             UnFade(1);
         }
@@ -24,13 +37,13 @@ namespace Scripts.UI
         public void Fade(float time, float speed = 10, Action onFinished = null)
         {
             fadeCoroutine?.Dispose();
-            fadeCoroutine = coroutinesExecutor.StartCoroutine(FadeRoutine(time, speed, onFinished));
+            fadeCoroutine = coroutinesExecutor?.StartCoroutine(FadeRoutine(time, speed, onFinished));
         }
 
         public void UnFade(float time, float speed = 10, Action onFinished = null)
         {
             fadeCoroutine?.Dispose();
-            fadeCoroutine = coroutinesExecutor.StartCoroutine(UnFadeRoutine(time, speed, onFinished));
+            fadeCoroutine = coroutinesExecutor?.StartCoroutine(UnFadeRoutine(time, speed, onFinished));
         }
 
         private IEnumerator<IYieldInstruction> FadeRoutine(float time, float speed = 10, Action onFinished = null)

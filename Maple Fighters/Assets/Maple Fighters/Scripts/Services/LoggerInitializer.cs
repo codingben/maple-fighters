@@ -1,9 +1,9 @@
 ﻿using CommonTools.Log;
-using UnityEngine;
+using Scripts.Utils;
 
 namespace Scripts.Services
 {
-    public class LoggerInitializer : MonoBehaviour
+    public class LoggerInitializer : DontDestroyOnLoad<LoggerInitializer>
     {
         private void Awake()
         {

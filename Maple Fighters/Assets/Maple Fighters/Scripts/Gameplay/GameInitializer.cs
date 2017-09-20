@@ -2,19 +2,24 @@
 using Scripts.Containers.Entity;
 using Scripts.Containers.Service;
 using Scripts.Services;
-using UnityEngine;
+using Scripts.Utils;
 
 namespace Scripts.Gameplay
 {
-    public class GameInitializer : MonoBehaviour
+    public class GameInitializer : DontDestroyOnLoad<GameInitializer>
     {
         private IGameService gameService;
         private IEntityContainer entityContainer;
 
-        private void Awake()
+        private void Start()
         {
             gameService = ServiceContainer.GameService;
             entityContainer = GameContainers.EntityContainer;
+        }
+
+        private void OnApplicationQuit()
+        {
+            gameService.Disconnect();
         }
     }
 }

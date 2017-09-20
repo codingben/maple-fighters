@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Portal
+  - Rope
+  - Ladder
   layers:
   - Default
   - TransparentFX
@@ -15,7 +17,7 @@ TagManager:
   - 
   - 
   - Floor
-  - Portal
+  - 
   - 
   - 
   - 

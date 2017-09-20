@@ -7,6 +7,7 @@ namespace Scripts.Services
     public interface IGameService
     {
         void Connect();
+        void Disconnect();
 
         void UpdateEntityPosition(UpdateEntityPositionRequestParameters parameters);
         void UpdatePlayerState(UpdatePlayerStateRequestParameters parameters);

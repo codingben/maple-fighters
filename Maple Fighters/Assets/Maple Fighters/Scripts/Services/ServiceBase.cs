@@ -53,8 +53,6 @@ namespace Scripts.Services
 
         public void Dispose()
         {
-            CoroutinesExecutor.RemoveFromExternalExecutor().Dispose();
-
             serverPeer?.Disconnect();
 
             SubscriptionProvider?.Dispose();

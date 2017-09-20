@@ -2010,13 +2010,8 @@ public class Reporter : MonoBehaviour
 			url = System.IO.Path.Combine(streamingAssetsPath, prefFile);
 		}
 
-		if (Application.platform != RuntimePlatform.OSXWebPlayer && Application.platform != RuntimePlatform.WindowsWebPlayer)
-			if (!url.Contains("://"))
-				url = "file://" + url;
-
-
-		// float startTime = Time.realtimeSinceStartup;
-		WWW www = new WWW(url);
+        // float startTime = Time.realtimeSinceStartup;
+        WWW www = new WWW(url);
 		yield return www;
 
 		if (!string.IsNullOrEmpty(www.error)) {

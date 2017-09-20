@@ -162,9 +162,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40aefd32793e3004c82db6f0803c0256, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IsLocal: 0
+  isLocal: 0
   walkName: Walking
   jumpName: Jump
+  ropeName: Rope
+  ladderName: Ladder
 --- !u!212 &212817580663636986
 SpriteRenderer:
   m_ObjectHideFlags: 1
