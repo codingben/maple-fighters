@@ -4,6 +4,8 @@
     {
         Idle,
         Moving,
-        Falling
+        Falling,
+        Rope,
+        Ladder
     }
 }

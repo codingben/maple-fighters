@@ -28,8 +28,8 @@ namespace Game.Application.PeerLogic.Operations
 
             onAuthenticated.Invoke(gameObject);
 
-            var entityTemp = new Entity(gameObject.Id, EntityType.Player, position.X, position.Y);
-            return new EnterWorldOperationResponseParameters(entityTemp, position.X, position.Y);
+            var entity = new Entity(gameObject.Id, EntityType.Player, position.X, position.Y);
+            return new EnterWorldOperationResponseParameters(entity);
         }
 
         private IGameObject CreatePlayerGameObject(Maps map, Vector2 position, Vector2 interestArea)
