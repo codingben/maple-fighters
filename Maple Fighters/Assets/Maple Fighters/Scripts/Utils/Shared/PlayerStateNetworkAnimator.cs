@@ -49,7 +49,7 @@ namespace Scripts.Utils.Shared
 
         private void OnPlayerStateEventReceived(PlayerStateChangedEventParameters parameters)
         {
-            var entityId = parameters.EntityId;
+            var entityId = parameters.GameObjectId;
             var entity = GameContainers.EntityContainer.GetRemoteEntity(entityId);
 
             entity?.GameObject.GetComponent<PlayerStateSetter>().SetState(parameters.PlayerState);

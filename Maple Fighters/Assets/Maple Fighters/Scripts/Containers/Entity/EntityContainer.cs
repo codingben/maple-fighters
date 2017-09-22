@@ -5,6 +5,7 @@ using Scripts.Containers.Service;
 using Scripts.Gameplay.Actors.Entity;
 using Shared.Game.Common;
 using UnityEngine;
+using GameObject = UnityEngine.GameObject;
 using Object = UnityEngine.Object;
 
 namespace Scripts.Containers.Entity
@@ -28,9 +29,9 @@ namespace Scripts.Containers.Entity
 
         private void AddLocalEntity(EnterWorldOperationResponseParameters parameters)
         {
-            LogUtils.Log(MessageBuilder.Trace($"Local Id: {parameters.Entity.Id}"));
+            LogUtils.Log(MessageBuilder.Trace($"Local Id: {parameters.PlayerGameObject.Id}"));
 
-            var entity = parameters.Entity;
+            var entity = parameters.PlayerGameObject;
 
             if (entities.ContainsKey(entity.Id))
             {
@@ -38,16 +39,16 @@ namespace Scripts.Containers.Entity
                 return;
             }
 
-            var entityObjectName = entity.Type.ToString();
+            var entityObjectName = entity.Name;
 
-            var entityObject = CreateEntity($"Local {entityObjectName}");
+            var entityObject = CreateEntity(entityObjectName);
             if (entityObject == null)
             {
                 LogUtils.Log(MessageBuilder.Trace($"Could not find an entity type - {entityObjectName}"), LogMessageType.Error);
                 return;
             }
 
-            var position = new Vector3(parameters.X, parameters.Y);
+            var position = new Vector3(parameters.PlayerGameObject.X, parameters.PlayerGameObject.Y);
             var gameObject = Object.Instantiate(entityObject, position, Quaternion.identity) as GameObject;
             if (gameObject == null)
             {
@@ -60,10 +61,9 @@ namespace Scripts.Containers.Entity
             localEntityId = entity.Id;
         }
 
-        private void AddEntity(EntityAddedEventParameters parameters)
+        private void AddEntity(GameObjectAddedEventParameters parameters)
         {
-            var entityId = parameters.Entity.Id;
-            var entityType = parameters.Entity.Type;
+            var entityId = parameters.GameObject.Id;
 
             if (entities.ContainsKey(entityId))
             {
@@ -71,7 +71,7 @@ namespace Scripts.Containers.Entity
                 return;
             }
 
-            var entityObjectName = entityType.ToString();
+            var entityObjectName = parameters.GameObject.Name;
 
             var entityObject = CreateEntity(entityObjectName);
             if (entityObject == null)
@@ -80,7 +80,7 @@ namespace Scripts.Containers.Entity
                 return;
             }
 
-            var position = new Vector3(parameters.Entity.X, parameters.Entity.Y);
+            var position = new Vector3(parameters.GameObject.X, parameters.GameObject.Y);
             var gameObject = Object.Instantiate(entityObject, position, Quaternion.identity) as GameObject;
             if (gameObject == null)
             {
@@ -89,11 +89,13 @@ namespace Scripts.Containers.Entity
             }
 
             entities.Add(entityId, gameObject.GetComponent<IEntity>());
+
+            LogUtils.Log(MessageBuilder.Trace($"Added a new game object with id #{parameters.GameObject.Id}"));
         }
 
-        private void AddEntities(EntitiesAddedEventParameters parameters)
+        private void AddEntities(GameObjectsAddedEventParameters parameters)
         {
-            foreach (var entity in parameters.Entity)
+            foreach (var entity in parameters.GameObjects)
             {
                 if (entities.ContainsKey(entity.Id))
                 {
@@ -101,7 +103,7 @@ namespace Scripts.Containers.Entity
                     continue;
                 }
 
-                var entityObjectName = entity.Type.ToString();
+                var entityObjectName = entity.Name;
 
                 var entityObject = CreateEntity(entityObjectName);
                 if (entityObject == null)
@@ -119,14 +121,16 @@ namespace Scripts.Containers.Entity
                 }
 
                 entities.Add(entity.Id, gameObject.GetComponent<IEntity>());
+
+                LogUtils.Log(MessageBuilder.Trace($"Added a new game object with id #{entity.Id}"));
             }
 
             EntityAdded?.Invoke();
         }
 
-        private void RemoveEntity(EntityRemovedEventParameters parameters)
+        private void RemoveEntity(GameObjectRemovedEventParameters parameters)
         {
-            var entityId = parameters.EntityId;
+            var entityId = parameters.GameObjectId;
 
             if (!entities.ContainsKey(entityId))
             {
@@ -139,15 +143,17 @@ namespace Scripts.Containers.Entity
             entities.Remove(entityId);
         }
 
-        private void RemoveEntities(EntitiesRemovedEventParameters parameters)
+        private void RemoveEntities(GameObjectsRemovedEventParameters parameters)
         {
-            foreach (var entityId in parameters.EntitiesId)
+            foreach (var entityId in parameters.GameObjectsId)
             {
                 if (!entities.ContainsKey(entityId))
                 {
                     LogUtils.Log(MessageBuilder.Trace($"Could not find an entity with id #{entityId}"), LogMessageType.Warning);
                     continue;
                 }
+
+                LogUtils.Log(MessageBuilder.Trace($"Added a new game object with id #{entityId}"));
 
                 Object.Destroy(entities[entityId].GameObject);
 

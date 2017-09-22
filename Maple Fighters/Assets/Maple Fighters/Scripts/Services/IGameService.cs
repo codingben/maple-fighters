@@ -15,12 +15,12 @@ namespace Scripts.Services
 
         UnityEvent<EnterWorldOperationResponseParameters> EntitiyInitialInformation { get; }
 
-        UnityEvent<EntityAddedEventParameters> EntityAdded { get; }
-        UnityEvent<EntityRemovedEventParameters> EntityRemoved { get; }
-        UnityEvent<EntitiesAddedEventParameters> EntitiesAdded { get; }
-        UnityEvent<EntitiesRemovedEventParameters> EntitiesRemoved { get; }
+        UnityEvent<GameObjectAddedEventParameters> EntityAdded { get; }
+        UnityEvent<GameObjectRemovedEventParameters> EntityRemoved { get; }
+        UnityEvent<GameObjectsAddedEventParameters> EntitiesAdded { get; }
+        UnityEvent<GameObjectsRemovedEventParameters> EntitiesRemoved { get; }
 
-        UnityEvent<EntityPositionChangedEventParameters> EntityPositionChanged { get; }
+        UnityEvent<GameObjectPositionChangedEventParameters> EntityPositionChanged { get; }
 
         UnityEvent<PlayerStateChangedEventParameters> PlayerStateChanged { get; }
     }

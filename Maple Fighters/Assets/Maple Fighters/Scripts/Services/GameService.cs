@@ -9,11 +9,11 @@ namespace Scripts.Services
     public sealed class GameService : ServiceBase<GameOperations, GameEvents>, IGameService
     {
         public UnityEvent<EnterWorldOperationResponseParameters> EntitiyInitialInformation { get; } = new UnityEvent<EnterWorldOperationResponseParameters>();
-        public UnityEvent<EntityAddedEventParameters> EntityAdded { get; } = new UnityEvent<EntityAddedEventParameters>();
-        public UnityEvent<EntityRemovedEventParameters> EntityRemoved { get; } = new UnityEvent<EntityRemovedEventParameters>();
-        public UnityEvent<EntitiesAddedEventParameters> EntitiesAdded { get; } = new UnityEvent<EntitiesAddedEventParameters>();
-        public UnityEvent<EntitiesRemovedEventParameters> EntitiesRemoved { get; } = new UnityEvent<EntitiesRemovedEventParameters>();
-        public UnityEvent<EntityPositionChangedEventParameters> EntityPositionChanged { get; } = new UnityEvent<EntityPositionChangedEventParameters>();
+        public UnityEvent<GameObjectAddedEventParameters> EntityAdded { get; } = new UnityEvent<GameObjectAddedEventParameters>();
+        public UnityEvent<GameObjectRemovedEventParameters> EntityRemoved { get; } = new UnityEvent<GameObjectRemovedEventParameters>();
+        public UnityEvent<GameObjectsAddedEventParameters> EntitiesAdded { get; } = new UnityEvent<GameObjectsAddedEventParameters>();
+        public UnityEvent<GameObjectsRemovedEventParameters> EntitiesRemoved { get; } = new UnityEvent<GameObjectsRemovedEventParameters>();
+        public UnityEvent<GameObjectPositionChangedEventParameters> EntityPositionChanged { get; } = new UnityEvent<GameObjectPositionChangedEventParameters>();
         public UnityEvent<PlayerStateChangedEventParameters> PlayerStateChanged { get; } = new UnityEvent<PlayerStateChangedEventParameters>();
         
         public void Connect()
@@ -41,37 +41,37 @@ namespace Scripts.Services
 
         private void AddEventsHandlers()
         {
-            EventHandlerRegister.SetHandler(GameEvents.EntityAdded, new EventInvoker<EntityAddedEventParameters>(unityEvent =>
+            EventHandlerRegister.SetHandler(GameEvents.GameObjectAdded, new EventInvoker<GameObjectAddedEventParameters>(unityEvent =>
             {
                 EntityAdded?.Invoke(unityEvent.Parameters);
                 return true;
             }));
 
-            EventHandlerRegister.SetHandler(GameEvents.EntityRemoved, new EventInvoker<EntityRemovedEventParameters>(unityEvent =>
+            EventHandlerRegister.SetHandler(GameEvents.GameObjectRemoved, new EventInvoker<GameObjectRemovedEventParameters>(unityEvent =>
             {
                 EntityRemoved?.Invoke(unityEvent.Parameters);
                 return true;
             }));
 
-            EventHandlerRegister.SetHandler(GameEvents.EntitiesAdded, new EventInvoker<EntitiesAddedEventParameters>(unityEvent =>
+            EventHandlerRegister.SetHandler(GameEvents.GameObjectsAdded, new EventInvoker<GameObjectsAddedEventParameters>(unityEvent =>
             {
                 EntitiesAdded?.Invoke(unityEvent.Parameters);
                 return true;
             }));
 
-            EventHandlerRegister.SetHandler(GameEvents.EntitiesRemoved, new EventInvoker<EntitiesRemovedEventParameters>(unityEvent =>
+            EventHandlerRegister.SetHandler(GameEvents.GameObjectsRemoved, new EventInvoker<GameObjectsRemovedEventParameters>(unityEvent =>
             {
                 EntitiesRemoved?.Invoke(unityEvent.Parameters);
                 return true;
             }));
 
-            EventHandlerRegister.SetHandler(GameEvents.EntityPositionChanged, new EventInvoker<EntityPositionChangedEventParameters>(unityEvent =>
+            EventHandlerRegister.SetHandler(GameEvents.PositionChanged, new EventInvoker<GameObjectPositionChangedEventParameters>(unityEvent =>
             {
                 EntityPositionChanged?.Invoke(unityEvent.Parameters);
                 return true;
             }));
 
-            EventHandlerRegister.SetHandler(GameEvents.EntityStateChanged, new EventInvoker<PlayerStateChangedEventParameters>(unityEvent =>
+            EventHandlerRegister.SetHandler(GameEvents.PlayerStateChanged, new EventInvoker<PlayerStateChangedEventParameters>(unityEvent =>
             {
                 PlayerStateChanged?.Invoke(unityEvent.Parameters);
                 return true;
@@ -80,12 +80,12 @@ namespace Scripts.Services
 
         private void RemoveEventsHandlers()
         {
-            EventHandlerRegister.RemoveHandler(GameEvents.EntityAdded);
-            EventHandlerRegister.RemoveHandler(GameEvents.EntityRemoved);
-            EventHandlerRegister.RemoveHandler(GameEvents.EntitiesAdded);
-            EventHandlerRegister.RemoveHandler(GameEvents.EntitiesRemoved);
-            EventHandlerRegister.RemoveHandler(GameEvents.EntityPositionChanged);
-            EventHandlerRegister.RemoveHandler(GameEvents.EntityStateChanged);
+            EventHandlerRegister.RemoveHandler(GameEvents.GameObjectAdded);
+            EventHandlerRegister.RemoveHandler(GameEvents.GameObjectRemoved);
+            EventHandlerRegister.RemoveHandler(GameEvents.GameObjectsAdded);
+            EventHandlerRegister.RemoveHandler(GameEvents.GameObjectsRemoved);
+            EventHandlerRegister.RemoveHandler(GameEvents.PositionChanged);
+            EventHandlerRegister.RemoveHandler(GameEvents.PlayerStateChanged);
         }
 
         public async Task EnterWorld(IYield yield)

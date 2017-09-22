@@ -12,9 +12,9 @@ namespace Scripts.Gameplay.Actors
             ServiceContainer.GameService.EntityPositionChanged.AddListener(OnEntityPositionChanged);
         }
 
-        private void OnEntityPositionChanged(EntityPositionChangedEventParameters parameters)
+        private void OnEntityPositionChanged(GameObjectPositionChangedEventParameters parameters)
         {
-            var entityId = parameters.EntityId;
+            var entityId = parameters.GameObjectId;
             var entity = GameContainers.EntityContainer.GetRemoteEntity(entityId);
 
             if (entity != null && entity.GameObject != null)
