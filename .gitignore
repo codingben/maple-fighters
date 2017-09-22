@@ -1,16 +1,12 @@
 Maple Fighters/Temp/
-Maple Fighters/Library/il2cpp_cache/
-Maple Fighters/Library/ShaderCache/
-Maple Fighters/Library/webgl_cache/
-Maple Fighters/Library/metadata/
-Maple Fighters/Library/PlayerDataCache/
+Maple Fighters/Library/
 Maple Fighters/Assets/StreamingAssets/
-Maple Fighters/Library/il2cpp_cache 2017.1.0p5 (de463fc61bac)
-Maple Fighters/Library/expandedItems
-Maple Fighters/Library/assetDatabase3
-Maple Fighters/Library/LastBuild.buildreport
-Maple Fighters/Library/InspectorExpandedItems.asset
-Maple Fighters/Library/EditorUserBuildSettings.asset
-Maple Fighters/Library/AssetImportState
-Maple Fighters/Library/EditorInstance.json
 Maple Fighters/.vs/Maple Fighters/v15/sqlite3/storage.ide
+Maple Fighters/*.userprefs
+Maple Fighters/*.csproj
+Maple Fighters/*.pidb
+Maple Fighters/*.suo
+Maple Fighters/*.sln*
+Maple Fighters/*.user
+Maple Fighters/*.unityproj
+Maple Fighters/*.booproj
