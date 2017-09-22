@@ -26,6 +26,8 @@ namespace Game.InterestManagement
 
             gameObjects.Add(gameObject.Id, gameObject);
 
+            LogUtils.Log(MessageBuilder.Trace($"A new subscriber: {gameObject.Name}"));
+
             // Show all exists entities for a new game object.
             ShowGameObjectsForGameObject(gameObject);
 
@@ -81,15 +83,18 @@ namespace Game.InterestManagement
         private void ShowGameObjectsForGameObject(IGameObject gameObject)
         {
             var gameObjectsTemp = gameObjects.Values.Where(gameObjectValue => gameObjectValue.Id != gameObject.Id).ToArray();
-            var interestArea = gameObject.Container.GetComponent<InterestArea>().AssertNotNull();
-
-            interestArea.GameObjectsAdded.AssertNotNull().Invoke(gameObjectsTemp); 
+            var interestArea = gameObject.Container.GetComponent<InterestArea>();
+            interestArea?.GameObjectsAdded?.Invoke(gameObjectsTemp); 
         }
 
         private void HideGameObjectsForGameObject(int hideGameObjectId)
         {
             var gameObjectsTemp = gameObjects.Values.Where(gameObject => gameObject.Id != hideGameObjectId).ToArray();
-            var interestArea = gameObjects[hideGameObjectId].Container.GetComponent<InterestArea>().AssertNotNull();
+            var interestArea = gameObjects[hideGameObjectId].Container.GetComponent<InterestArea>();
+            if (interestArea == null)
+            {
+                return;
+            }
 
             var removeGameObjects = new List<int>();
 
@@ -103,7 +108,7 @@ namespace Game.InterestManagement
 
             if (removeGameObjects.Count > 0)
             {
-                interestArea.GameObjectsRemoved.AssertNotNull().Invoke(removeGameObjects.ToArray());
+                interestArea.GameObjectsRemoved?.Invoke(removeGameObjects.ToArray());
             }
         }
 
@@ -116,8 +121,8 @@ namespace Game.InterestManagement
                     continue;
                 }
 
-                var interestArea = gameObject.Value.Container.GetComponent<InterestArea>().AssertNotNull();
-                interestArea.GameObjectAdded.AssertNotNull().Invoke(newGameObject);
+                var interestArea = gameObject.Value.Container.GetComponent<InterestArea>();
+                interestArea?.GameObjectAdded?.Invoke(newGameObject);
             }
         }
 
@@ -125,10 +130,15 @@ namespace Game.InterestManagement
         {
             foreach (var gameObject in gameObjects.Values)
             {
-                var interestArea = gameObject.Container.GetComponent<InterestArea>().AssertNotNull();
+                var interestArea = gameObject.Container.GetComponent<InterestArea>();
+                if (interestArea == null)
+                {
+                    continue;
+                }
+
                 if (!interestArea.GetPublishers().Any(publisher => publisher.HasSubscription(hideGameObjectId)))
                 {
-                    interestArea.GameObjectRemoved.AssertNotNull().Invoke(hideGameObjectId);
+                    interestArea.GameObjectRemoved?.Invoke(hideGameObjectId);
                 }
             }
         }
@@ -137,8 +147,8 @@ namespace Game.InterestManagement
         {
             foreach (var gameObject in gameObjects.Values)
             {
-                var interestArea = gameObject.Container.GetComponent<InterestArea>().AssertNotNull();
-                interestArea.GameObjectRemoved.AssertNotNull().Invoke(hideGameObjectId);
+                var interestArea = gameObject.Container.GetComponent<InterestArea>();
+                interestArea?.GameObjectRemoved?.Invoke(hideGameObjectId);
             }
         }
 
@@ -151,8 +161,8 @@ namespace Game.InterestManagement
                 return;
             }
 
-            var interestArea = gameObjects[hideGameObjectId].Container.GetComponent<InterestArea>().AssertNotNull();
-            interestArea.GameObjectsRemoved.AssertNotNull().Invoke(gameObjectsTemp);
+            var interestArea = gameObjects[hideGameObjectId].Container.GetComponent<InterestArea>();
+            interestArea?.GameObjectsRemoved?.Invoke(gameObjectsTemp);
         }
     }
 }

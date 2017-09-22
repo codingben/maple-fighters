@@ -10,18 +10,14 @@ namespace Game.Application.PeerLogic.Components
 {
     internal class PositionChangesListener : Component<IPeerEntity>
     {
+        private GameObjectGetter gameObjectGetter;
         private InterestAreaManagement interestAreaManagement;
-        private readonly IGameObject gameObject;
-
-        public PositionChangesListener(IGameObject gameObject)
-        {
-            this.gameObject = gameObject;
-        }
 
         protected override void OnAwake()
         {
             base.OnAwake();
 
+            gameObjectGetter = Entity.Container.GetComponent<GameObjectGetter>().AssertNotNull();
             interestAreaManagement = Entity.Container.GetComponent<InterestAreaManagement>().AssertNotNull();
 
             SubscribeToPositionChangedEvent();
@@ -29,14 +25,16 @@ namespace Game.Application.PeerLogic.Components
 
         private void SubscribeToPositionChangedEvent()
         {
-            var transform = gameObject.Container.GetComponent<Transform>().AssertNotNull();
+            var transform = gameObjectGetter.GetGameObject().Container.GetComponent<Transform>().AssertNotNull();
             transform.PositionAndDirectionChanged += SendNewPosition;
         }
 
         public void SendNewPosition(Vector2 newPosition, Directions direction)
         {
-            var parameters = new EntityPositionChangedEventParameters(gameObject.Id, newPosition.X, newPosition.Y, direction);
-            interestAreaManagement?.SendEventOnlyForEntitiesInMyRegions((byte)GameEvents.EntityPositionChanged, parameters, MessageSendOptions.DefaultUnreliable((byte)GameDataChannels.Position));
+            var gameObjectId = gameObjectGetter.GetGameObject().Id;
+            var parameters = new GameObjectPositionChangedEventParameters(gameObjectId, newPosition.X, newPosition.Y, direction);
+            var messageSendOptions = MessageSendOptions.DefaultUnreliable((byte) GameDataChannels.Position);
+            interestAreaManagement.SendEventForGameObjectsInMyRegions((byte)GameEvents.PositionChanged, parameters, messageSendOptions);
         }
     }
 }

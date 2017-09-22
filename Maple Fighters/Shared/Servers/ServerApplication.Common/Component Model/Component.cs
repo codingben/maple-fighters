@@ -2,7 +2,7 @@
 {
     public class Component<TOwner> : IComponent
     {
-        protected TOwner Entity { get; private set; }
+        public TOwner Entity { get; private set; }
 
         public void Awake(TOwner entity)
         {

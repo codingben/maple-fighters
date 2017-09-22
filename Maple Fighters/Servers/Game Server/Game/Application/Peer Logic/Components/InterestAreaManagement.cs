@@ -6,7 +6,6 @@ using Game.InterestManagement;
 using ServerApplication.Common.ApplicationBase;
 using ServerApplication.Common.ComponentModel;
 using ServerApplication.Common.Components;
-using ServerCommunicationInterfaces;
 using Shared.Game.Common;
 using Shared.ServerApplication.Common.PeerLogic;
 
@@ -14,28 +13,27 @@ namespace Game.Application.PeerLogic.Components
 {
     internal class InterestAreaManagement : Component<IPeerEntity>
     {
-        private readonly IMinimalPeer peer;
-        private readonly IGameObject gameObject;
-        private readonly InterestArea interestArea;
-
         private PeerContainer peerContainer;
         private EventSenderWrapper eventSender;
-
-        public InterestAreaManagement(IGameObject gameObject, IMinimalPeer peer)
-        {
-            this.gameObject = gameObject;
-            this.peer = peer;
-
-            interestArea = gameObject.AssertNotNull().Container.GetComponent<InterestArea>().AssertNotNull();
-        }
+        private GameObjectGetter gameObjectGetter;
+        private MinimalPeerGetter minimalPeerGetter;
 
         protected override void OnAwake()
         {
             base.OnAwake();
 
             peerContainer = Server.Entity.Container.GetComponent<PeerContainer>().AssertNotNull();
-            eventSender = Entity.Container.GetComponent<EventSenderWrapper>().AssertNotNull();
 
+            eventSender = Entity.Container.GetComponent<EventSenderWrapper>().AssertNotNull();
+            gameObjectGetter = Entity.Container.GetComponent<GameObjectGetter>().AssertNotNull();
+            minimalPeerGetter = Entity.Container.GetComponent<MinimalPeerGetter>().AssertNotNull();
+
+            SubscribeToInterestAreaEvents();
+        }
+
+        private void SubscribeToInterestAreaEvents()
+        {
+            var interestArea = gameObjectGetter.GetGameObject().Container.GetComponent<InterestArea>().AssertNotNull();
             interestArea.GameObjectAdded = OnGameObjectAdded;
             interestArea.GameObjectRemoved = OnGameObjectRemoved;
             interestArea.GameObjectsAdded = OnGameObjectsAdded;
@@ -44,95 +42,108 @@ namespace Game.Application.PeerLogic.Components
 
         private void OnGameObjectAdded(IGameObject gameObject)
         {
-            if (!peer.IsConnected)
+            if (!minimalPeerGetter.GetPeer().IsConnected)
             {
                 return;
             }
 
             var transform = gameObject.Container.GetComponent<Transform>().AssertNotNull();
-            var entityTemp = new Entity(gameObject.Id, EntityType.Player, transform.Position.X, transform.Position.Y);
-            var parameters = new EntityAddedEventParameters(entityTemp);
+            var gameObjectTemp = new Shared.Game.Common.GameObject(gameObject.Id, gameObject.Name, transform.Position.X, transform.Position.Y);
 
-            eventSender.SendEvent((byte)GameEvents.EntityAdded, parameters, MessageSendOptions.DefaultReliable());
+            var parameters = new GameObjectAddedEventParameters(gameObjectTemp);
+            eventSender.SendEvent((byte)GameEvents.GameObjectAdded, parameters, MessageSendOptions.DefaultReliable());
         }
 
         private void OnGameObjectRemoved(int gameObjectId)
         {
-            if (!peer.IsConnected)
+            if (!minimalPeerGetter.GetPeer().IsConnected)
             {
                 return;
             }
 
-            var parameters = new EntityRemovedEventParameters(gameObjectId);
-            eventSender.SendEvent((byte)GameEvents.EntityRemoved, parameters, MessageSendOptions.DefaultReliable());
+            var parameters = new GameObjectRemovedEventParameters(gameObjectId);
+            eventSender.SendEvent((byte)GameEvents.GameObjectRemoved, parameters, MessageSendOptions.DefaultReliable());
         }
 
         private void OnGameObjectsAdded(IGameObject[] gameObjects)
         {
-            if (!peer.IsConnected)
+            if (!minimalPeerGetter.GetPeer().IsConnected)
             {
                 return;
             }
 
-            var entitiesTemp = new Entity[gameObjects.Length];
-            for (var i = 0; i < entitiesTemp.Length; i++)
+            var gameObjectsTemp = new Shared.Game.Common.GameObject[gameObjects.Length];
+            for (var i = 0; i < gameObjectsTemp.Length; i++)
             {
                 var transform = gameObjects[i].Container.GetComponent<Transform>().AssertNotNull();
 
-                entitiesTemp[i].Id = gameObjects[i].Id;
-                entitiesTemp[i].Type = EntityType.Player;
-                entitiesTemp[i].X = transform.Position.X;
-                entitiesTemp[i].Y = transform.Position.Y;
+                gameObjectsTemp[i].Id = gameObjects[i].Id;
+                gameObjectsTemp[i].Name = gameObjects[i].Name;
+                gameObjectsTemp[i].X = transform.Position.X;
+                gameObjectsTemp[i].Y = transform.Position.Y;
             }
 
-            eventSender.SendEvent((byte)GameEvents.EntitiesAdded, new EntitiesAddedEventParameters(entitiesTemp), MessageSendOptions.DefaultReliable());
+            eventSender.SendEvent((byte)GameEvents.GameObjectsAdded, new GameObjectsAddedEventParameters(gameObjectsTemp), MessageSendOptions.DefaultReliable());
         }
 
         private void OnGameObjectsRemoved(int[] gameObjectsId)
         {
-            if (!peer.IsConnected)
+            if (!minimalPeerGetter.GetPeer().IsConnected)
             {
                 return;
             }
 
-            var entitiesIdsTemp = new int[gameObjectsId.Length];
-            for (var i = 0; i < entitiesIdsTemp.Length; i++)
+            var gameObjectsIdTemp = new int[gameObjectsId.Length];
+            for (var i = 0; i < gameObjectsIdTemp.Length; i++)
             {
-                entitiesIdsTemp[i] = gameObjectsId[i];
+                gameObjectsIdTemp[i] = gameObjectsId[i];
             }
 
-            eventSender.SendEvent((byte)GameEvents.EntitiesRemoved, new EntitiesRemovedEventParameters(entitiesIdsTemp), MessageSendOptions.DefaultReliable());
+            eventSender.SendEvent((byte)GameEvents.GameObjectsRemoved, new GameObjectsRemovedEventParameters(gameObjectsIdTemp), MessageSendOptions.DefaultReliable());
         }
 
-        public void SendEventOnlyForEntitiesInMyRegions<TParameters>(byte code, TParameters parameters, MessageSendOptions messageSendOptions)
+        public void SendEventForGameObjectsInMyRegions<TParameters>(byte code, TParameters parameters, MessageSendOptions messageSendOptions)
             where TParameters : struct, IParameters
         {
-            if (!peer.IsConnected)
+            if (!minimalPeerGetter.GetPeer().IsConnected)
             {
                 return;
             }
 
-            foreach (var otherEntity in GetEntitiesFromEntityRegions())
+            foreach (var gameObject in GetGameObjectsFromEntityRegions())
             {
-                var peerWrapper = peerContainer.GetPeerWrapper(otherEntity.Id).AssertNotNull();
-                var eventSender = peerWrapper?.PeerLogic.Entity.Container.GetComponent<EventSenderWrapper>().AssertNotNull();
+                var peerId = gameObject.Container.GetComponent<PeerIdGetter>();
+                if (peerId == null)
+                {
+                    return;
+                }
 
-                eventSender?.SendEvent(code, parameters, messageSendOptions);
+                var peerWrapper = peerContainer.GetPeerWrapper(peerId.GetId());
+                if (peerWrapper == null)
+                {
+                    continue;
+                }
+
+                var eventSender = peerWrapper.PeerLogic.Entity.Container.GetComponent<EventSenderWrapper>().AssertNotNull();
+                eventSender.SendEvent(code, parameters, messageSendOptions);
             }
         }
 
-        public IEnumerable<IGameObject> GetEntitiesFromEntityRegions()
+        public IEnumerable<IGameObject> GetGameObjectsFromEntityRegions()
         {
             var gameObjects = new List<IGameObject>();
+
+            var gameObject = gameObjectGetter.GetGameObject();
+            var interestArea = gameObjectGetter.GetGameObject().Container.GetComponent<InterestArea>().AssertNotNull();
 
             if (interestArea == null)
             {
                 return gameObjects.ToArray();
             }
 
-            foreach (var publisherRegion in interestArea.GetPublishers())
+            foreach (var publisher in interestArea.GetPublishers())
             {
-                gameObjects.AddRange(publisherRegion.GetAllSubscribers().Where(subscriber => subscriber.Id != gameObject.Id));
+                gameObjects.AddRange(publisher.GetAllSubscribers().Where(subscriber => subscriber.Id != gameObject.Id));
             }
             return gameObjects.ToArray();
         }

@@ -13,7 +13,7 @@ namespace Shared.ServerApplication.Common.PeerLogic
         where TOperationCode : IComparable, IFormattable, IConvertible
         where TEventCode : IComparable, IFormattable, IConvertible
     {
-        public IPeerEntity Entity { get; } = new PeerEntity();
+        public IPeerEntity Entity { get; private set; }
 
         protected IClientPeerWrapper<IClientPeer> PeerWrapper { get; private set; }
         protected IOperationRequestHandlerRegister<TOperationCode> OperationRequestHandlerRegister { get; private set; }
@@ -23,6 +23,7 @@ namespace Shared.ServerApplication.Common.PeerLogic
         {
             PeerWrapper = peer;
 
+            Entity = new PeerEntity(PeerWrapper.PeerId);
             EventSender = new EventSender<TEventCode>(PeerWrapper.Peer.EventSender, true);
 
             AddCommonComponents();

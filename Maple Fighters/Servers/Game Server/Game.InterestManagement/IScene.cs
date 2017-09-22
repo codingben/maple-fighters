@@ -5,7 +5,7 @@
         IRegion[,] GetAllRegions();
 
         IGameObject AddGameObject(IGameObject gameObject);
-        void RemoveGameObjectFromScene(int id);
+        void RemoveGameObject(int id);
 
         IGameObject GetGameObject(int gameObjectId);
     }

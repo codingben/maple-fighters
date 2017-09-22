@@ -4,7 +4,7 @@ using MathematicsHelper;
 
 namespace Game.InterestManagement
 {
-    internal class Scene : IScene
+    public class Scene : IScene
     {
         private readonly IRegion[,] regions;
         private readonly Dictionary<int, IGameObject> gameObjects = new Dictionary<int, IGameObject>();
@@ -45,11 +45,14 @@ namespace Game.InterestManagement
                 }
 
                 gameObjects.Add(gameObject.Id, gameObject);
+
+                LogUtils.Log(MessageBuilder.Trace($"A new game object: {gameObject.Name}"));
+
                 return gameObject;
             }
         }
 
-        public void RemoveGameObjectFromScene(int id)
+        public void RemoveGameObject(int id)
         {
             lock (locker)
             {
@@ -59,6 +62,7 @@ namespace Game.InterestManagement
                     return;
                 }
 
+                gameObjects[id].RemoveScene();
                 gameObjects.Remove(id);
 
                 foreach (var region in regions)

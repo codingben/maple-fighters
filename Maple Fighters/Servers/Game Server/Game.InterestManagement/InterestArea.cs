@@ -7,7 +7,7 @@ using ServerApplication.Common.ComponentModel;
 
 namespace Game.InterestManagement
 {
-    public class InterestArea : Component<IGameObject>, IInterestArea
+    public class InterestArea : Component<IGameObject>
     {
         public Action<IGameObject> GameObjectAdded;
         public Action<int> GameObjectRemoved;
@@ -26,6 +26,8 @@ namespace Game.InterestManagement
             base.OnAwake();
 
             SubscribeToPositionChangesNotifier();
+
+            DetectOverlapsWithRegions();
         }
 
         protected override void OnDestroy()
@@ -65,10 +67,22 @@ namespace Game.InterestManagement
 
         private void DetectOverlapsWithRegions()
         {
+            if (Entity == null)
+            {
+                LogUtils.Log(MessageBuilder.Trace("Entity is null."));
+                return;
+            }
+
             var sceneRegions = Entity.Scene.GetAllRegions();
 
             foreach (var region in sceneRegions)
             {
+                if (region == null)
+                {
+                    LogUtils.Log(MessageBuilder.Trace("Region is null."));
+                    continue;
+                }
+
                 if (!Rectangle.Intersect(region.Area, interestArea).Equals(Rectangle.EMPTY))
                 {
                     if (region.HasSubscription(Entity.Id))

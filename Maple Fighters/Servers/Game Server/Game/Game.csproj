@@ -61,6 +61,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Application\Components\SceneContainer.cs" />
+    <Compile Include="Application\Peer Logic\Components\GameObjectGetter.cs" />
+    <Compile Include="Application\Peer Logic\Components\MinimalPeerGetter.cs" />
+    <Compile Include="Application\Peer Logic\Components\PeerIdGetter.cs" />
     <Compile Include="Application\Peer Logic\Components\PositionChangesListener.cs" />
     <Compile Include="Application\GameApplication.cs" />
     <Compile Include="Application\Peer Logic\Components\InterestAreaManagement.cs" />
@@ -95,8 +99,6 @@
       <Name>Game.InterestManagement</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Application\Components\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

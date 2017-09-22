@@ -3,24 +3,26 @@ using MathematicsHelper;
 using ServerApplication.Common.ApplicationBase;
 using ServerApplication.Common.ComponentModel;
 using ServerApplication.Common.Components;
-using Shared.Game.Common;
 
 namespace Game.InterestManagement
 {
     public class GameObject : IGameObject
     {
         public int Id { get; }
+        public string Name { get; }
+
         public IScene Scene { get; private set; }
+
         public IContainer<IGameObject> Container { get; }
 
-        private SceneContainer sceneContainer;
-
-        public GameObject(Maps map, Vector2 position, Vector2 interestAreaSize)
+        public GameObject(string name, IScene scene, Vector2 position, Vector2 interestAreaSize)
         {
+            Name = name;
+
             var idGenerator = Server.Entity.Container.GetComponent<IdGenerator>().AssertNotNull();
             Id = idGenerator.GenerateId();
 
-            Scene = GetScene(map);
+            Scene = scene;
 
             Container = new Container<IGameObject>(this);
 
@@ -28,43 +30,29 @@ namespace Game.InterestManagement
             Container.AddComponent(new InterestArea(position, interestAreaSize));
         }
 
-        public GameObject(Maps map, int id, Vector2 position, Vector2 interestAreaSize)
+        public void SetScene(IScene scene)
         {
-            Id = id;
+            RemoveFromScene();
 
-            Scene = GetScene(map);
-
-            Container = new Container<IGameObject>(this);
-
-            Container.AddComponent(new Transform(position));
-            Container.AddComponent(new InterestArea(position, interestAreaSize));
-        }
-
-        public void ChangeScene(Maps map)
-        {
-            Scene.RemoveGameObjectFromScene(Id);
-
-            var scene = GetScene(map);
             scene.AddGameObject(this);
-
             Scene = scene;
         }
 
-        private IScene GetScene(Maps map)
+        public void RemoveScene()
         {
-            if (sceneContainer == null)
-            {
-                sceneContainer = Server.Entity.Container.GetComponent<SceneContainer>().AssertNotNull();
-            }
+            Scene = null;
+        }
 
-            var scene = sceneContainer.GetScene(map).AssertNotNull();
-            return scene;
+        private void RemoveFromScene()
+        {
+            Scene.RemoveGameObject(Id);
+            Scene = null;
         }
 
         public void Dispose()
         {
             Container.RemoveAllComponents();
-            Scene.RemoveGameObjectFromScene(Id);
+            Scene.RemoveGameObject(Id);
         }
     }
 }

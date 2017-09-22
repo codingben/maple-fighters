@@ -1,6 +1,6 @@
 ﻿using CommonTools.Log;
+using Game.Application.Components;
 using Game.Application.PeerLogic;
-using Game.InterestManagement;
 using MathematicsHelper;
 using ServerApplication.Common.ApplicationBase;
 using ServerCommunicationInterfaces;
@@ -26,6 +26,8 @@ namespace Game.Application
             AddComponents();
 
             CreateScenes();
+
+            CreateGuardianNPC();
         }
         
         public override void OnConnected(IClientPeer clientPeer)
@@ -43,6 +45,15 @@ namespace Game.Application
             var sceneContainer = Server.Entity.Container.GetComponent<SceneContainer>().AssertNotNull();
             sceneContainer.AddScene(Maps.Map_1, new Vector2(40, 10), new Vector2(10, 5));
             sceneContainer.AddScene(Maps.Map_2, new Vector2(30, 30), new Vector2(15, 10));
+        }
+
+        private void CreateGuardianNPC()
+        {
+            var sceneContainer = Server.Entity.Container.GetComponent<SceneContainer>().AssertNotNull();
+            var scene = sceneContainer.GetScene(Maps.Map_1).AssertNotNull();
+
+            var gameObject = new InterestManagement.GameObject("Guardian", scene, new Vector2(-15, -5.95f), new Vector2(10, 5));
+            scene.AddGameObject(gameObject);
         }
     }
 }

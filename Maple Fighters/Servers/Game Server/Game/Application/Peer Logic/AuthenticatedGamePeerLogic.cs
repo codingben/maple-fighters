@@ -33,8 +33,10 @@ namespace Game.Application.PeerLogic
 
         private void AddComponents()
         {
-            Entity.Container.AddComponent(new InterestAreaManagement(gameObject, PeerWrapper.Peer));
-            Entity.Container.AddComponent(new PositionChangesListener(gameObject));
+            Entity.Container.AddComponent(new GameObjectGetter(gameObject));
+            Entity.Container.AddComponent(new MinimalPeerGetter(PeerWrapper.Peer));
+            Entity.Container.AddComponent(new InterestAreaManagement());
+            Entity.Container.AddComponent(new PositionChangesListener());
         }
 
         private void AddHandlerForUpdateEntityPositionOperation()
@@ -51,7 +53,8 @@ namespace Game.Application.PeerLogic
 
         private void AddHandlerForChangeSceneOperation()
         {
-            OperationRequestHandlerRegister.SetHandler(GameOperations.ChangeScene, new ChangeSceneOperationHandler(gameObject));
+            var gameObjectGetter = Entity.Container.GetComponent<GameObjectGetter>().AssertNotNull();
+            OperationRequestHandlerRegister.SetHandler(GameOperations.ChangeScene, new ChangeSceneOperationHandler(gameObjectGetter));
         }
 
         private void SubscribeToDisconnectedEvent()

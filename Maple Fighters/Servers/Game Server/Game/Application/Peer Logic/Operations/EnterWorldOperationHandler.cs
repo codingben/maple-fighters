@@ -1,6 +1,8 @@
 ﻿using System;
 using CommonCommunicationInterfaces;
 using CommonTools.Log;
+using Game.Application.Components;
+using Game.Application.PeerLogic.Components;
 using Game.InterestManagement;
 using MathematicsHelper;
 using ServerApplication.Common.ApplicationBase;
@@ -13,30 +15,32 @@ namespace Game.Application.PeerLogic.Operations
     {
         private readonly int peerId;
         private readonly Action<IGameObject> onAuthenticated;
+        private readonly SceneContainer sceneContainer;
 
         public EnterWorldOperationHandler(int peerId, Action<IGameObject> onAuthenticated)
         {
             this.peerId = peerId;
             this.onAuthenticated = onAuthenticated;
+
+            sceneContainer = Server.Entity.Container.GetComponent<SceneContainer>().AssertNotNull();
         }
 
         public EnterWorldOperationResponseParameters? Handle(MessageData<EmptyParameters> messageData, ref MessageSendOptions sendOptions)
         {
-            var position = new Vector2(18, -5.5f);
-            var interestArea = new Vector2(10, 5);
-            var gameObject = CreatePlayerGameObject(Maps.Map_1, position, interestArea);
+            var playerGameObject = CreatePlayerGameObject();
+            playerGameObject.Container.AddComponent(new PeerIdGetter(peerId));
 
-            onAuthenticated.Invoke(gameObject);
+            onAuthenticated.Invoke(playerGameObject);
 
-            var entity = new Entity(gameObject.Id, EntityType.Player, position.X, position.Y);
-            return new EnterWorldOperationResponseParameters(entity);
+            var transform = playerGameObject.Container.GetComponent<Transform>().AssertNotNull();
+            var gameObject = new Shared.Game.Common.GameObject(playerGameObject.Id, "Local Player", transform.Position.X, transform.Position.Y);
+            return new EnterWorldOperationResponseParameters(gameObject);
         }
 
-        private IGameObject CreatePlayerGameObject(Maps map, Vector2 position, Vector2 interestArea)
+        private IGameObject CreatePlayerGameObject()
         {
-            var scene = Server.Entity.Container.GetComponent<SceneContainer>().AssertNotNull();
-            var playerObject = scene?.GetScene(map)?.AssertNotNull().AddGameObject(new GameObject(map, peerId, position, interestArea));
-            return playerObject;
+            var scene = sceneContainer.GetScene(Maps.Map_1);
+            return scene.AddGameObject(new InterestManagement.GameObject("Player", scene, new Vector2(18, -5.5f), new Vector2(10, 5)));
         }
     }
 }

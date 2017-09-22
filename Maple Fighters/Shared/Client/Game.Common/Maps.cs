@@ -2,7 +2,7 @@
 {
     public enum Maps : byte
     {
-        Map_1,
-        Map_2
+        Map_1 = 0,
+        Map_2 = 1
     }
 }

@@ -49,13 +49,11 @@
     <Compile Include="ExtensionMethods.cs" />
     <Compile Include="GameObject.cs" />
     <Compile Include="IGameObject.cs" />
-    <Compile Include="IInterestArea.cs" />
     <Compile Include="InterestArea.cs" />
     <Compile Include="IRegion.cs" />
     <Compile Include="IScene.cs" />
     <Compile Include="Region.cs" />
     <Compile Include="Scene.cs" />
-    <Compile Include="SceneContainer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Transform.cs" />
   </ItemGroup>

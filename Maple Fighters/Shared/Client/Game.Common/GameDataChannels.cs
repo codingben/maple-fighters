@@ -3,6 +3,7 @@
     public enum GameDataChannels : byte
     {
         Default,
-        Position
+        Position,
+        Animations
     }
 }

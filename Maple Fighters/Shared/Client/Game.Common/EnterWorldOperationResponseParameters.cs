@@ -5,21 +5,21 @@ namespace Shared.Game.Common
 {
     public struct EnterWorldOperationResponseParameters : IParameters
     {
-        public Entity Entity;
+        public GameObject PlayerGameObject;
 
-        public EnterWorldOperationResponseParameters(Entity entity)
+        public EnterWorldOperationResponseParameters(GameObject playerGameObject)
         {
-            Entity = entity;
+            PlayerGameObject = playerGameObject;
         }
 
         public void Serialize(BinaryWriter writer)
         {
-            Entity.Serialize(writer);
+            PlayerGameObject.Serialize(writer);
         }
 
         public void Deserialize(BinaryReader reader)
         {
-            Entity.Deserialize(reader);
+            PlayerGameObject.Deserialize(reader);
         }
     }
 }

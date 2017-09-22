@@ -1,14 +1,17 @@
 ﻿using ServerApplication.Common.ComponentModel;
-using Shared.Game.Common;
 
 namespace Game.InterestManagement
 {
     public interface IGameObject : IEntity
     {
         int Id { get; }
+        string Name { get; }
+
         IScene Scene { get; }
+
         IContainer<IGameObject> Container { get; }
 
-        void ChangeScene(Maps map);
+        void SetScene(IScene scene);
+        void RemoveScene();
     }
 }
