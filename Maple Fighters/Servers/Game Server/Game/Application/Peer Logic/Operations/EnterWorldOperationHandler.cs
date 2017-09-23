@@ -39,7 +39,7 @@ namespace Game.Application.PeerLogic.Operations
 
         private IGameObject CreatePlayerGameObject()
         {
-            var scene = sceneContainer.GetScene(Maps.Map_1);
+            var scene = sceneContainer.GetGameSceneWrapper(Maps.Map_1).GetScene();
             return scene.AddGameObject(new InterestManagement.GameObject("Player", scene, new Vector2(18, -5.5f), new Vector2(10, 5)));
         }
     }

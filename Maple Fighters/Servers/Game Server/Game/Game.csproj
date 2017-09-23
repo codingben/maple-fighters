@@ -42,6 +42,18 @@
     <Reference Include="LogUtils, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Coroutines.5.0.5\lib\net46\LogUtils.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Dynamic, Version=1.1.2.22, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\DynamicLanguageRuntime.1.1.2\lib\Net45\Microsoft.Dynamic.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Scripting, Version=1.1.2.22, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\DynamicLanguageRuntime.1.1.2\lib\Net45\Microsoft.Scripting.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Scripting.AspNet, Version=1.1.1.21, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\DynamicLanguageRuntime.1.1.2\lib\Net45\Microsoft.Scripting.AspNet.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Scripting.Metadata, Version=1.1.2.22, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\DynamicLanguageRuntime.1.1.2\lib\Net45\Microsoft.Scripting.Metadata.dll</HintPath>
+    </Reference>
     <Reference Include="PhotonCommonImplementation, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\PhotonCommonImplementation.2.1.0\lib\net46\PhotonCommonImplementation.dll</HintPath>
     </Reference>
@@ -61,6 +73,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Application\Components\GameSceneWrapper.cs" />
     <Compile Include="Application\Components\SceneContainer.cs" />
     <Compile Include="Application\Peer Logic\Components\GameObjectGetter.cs" />
     <Compile Include="Application\Peer Logic\Components\MinimalPeerGetter.cs" />
@@ -89,6 +102,10 @@
     <ProjectReference Include="..\..\..\Shared\Client\Game.Common\Game.Common.csproj">
       <Project>{AA536188-84FF-4286-A9E6-BAFBE1D8D37B}</Project>
       <Name>Game.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Shared\Python\PythonScripting\PythonScripting.csproj">
+      <Project>{f74fa3b5-23f9-460d-b9bc-f6c0e98f7556}</Project>
+      <Name>PythonScripting</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\Shared\Servers\ServerApplication.Common\ServerApplication.Common.csproj">
       <Project>{f82fbb67-7b1d-43b7-a415-3f407d40e5c7}</Project>

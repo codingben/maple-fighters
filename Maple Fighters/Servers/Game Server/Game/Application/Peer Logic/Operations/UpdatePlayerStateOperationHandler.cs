@@ -20,7 +20,6 @@ namespace Game.Application.PeerLogic.Operations
         {
             var playerState = messageData.Parameters.PlayerState;
             var parameters = new PlayerStateChangedEventParameters(playerState, gameObjectId);
-
             interestAreaManagement.SendEventForGameObjectsInMyRegions((byte)GameEvents.PlayerStateChanged, parameters, MessageSendOptions.DefaultReliable());
             return null;
         }

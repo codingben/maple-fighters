@@ -23,10 +23,10 @@ namespace Game.Application.PeerLogic.Operations
         public EmptyParameters? Handle(MessageData<ChangeSceneRequestParameters> messageData, ref MessageSendOptions sendOptions)
         {
             var sceneId = messageData.Parameters.Map;
-            var scene = sceneContainer.GetScene(sceneId).AssertNotNull();
+            var scene = sceneContainer.GetGameSceneWrapper(sceneId).AssertNotNull();
 
             var gameObject = gameObjectGetter.GetGameObject();
-            gameObject.SetScene(scene);
+            gameObject.SetScene(scene.GetScene());
             return new EmptyParameters();
         }
     }

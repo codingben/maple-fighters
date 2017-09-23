@@ -11,25 +11,25 @@ namespace Game.InterestManagement
 
         private readonly object locker = new object();
 
-        public Scene(Vector2 sceneSize, Vector2 regionsSize)
+        public Scene(Vector2 sceneSize, Vector2 regionSize)
         {
-            var regionsX = (int)(sceneSize.X / regionsSize.X);
-            var regionsY = (int)(sceneSize.Y / regionsSize.Y);
+            var regionsX = (int)(sceneSize.X / regionSize.X);
+            var regionsY = (int)(sceneSize.Y / regionSize.Y);
 
             regions = new IRegion[regionsX, regionsY];
 
-            var x = -(sceneSize.X / 2) + regionsSize.X / 2;
-            var y = -(sceneSize.Y / 2) + regionsSize.Y / 2;
+            var x = -(sceneSize.X / 2) + regionSize.X / 2;
+            var y = -(sceneSize.Y / 2) + regionSize.Y / 2;
 
             for (var i = 0; i < regions.GetLength(0); i++)
             {
                 for (var j = 0; j < regions.GetLength(1); j++)
                 {
-                    var regionPositionX = x + (i * regionsSize.X);
-                    var regionPositionY = y + (j * regionsSize.Y);
+                    var regionPositionX = x + (i * regionSize.X);
+                    var regionPositionY = y + (j * regionSize.Y);
 
                     regions[i, j] = new Region(new Rectangle(new Vector2(regionPositionX, regionPositionY),
-                        new Vector2(regionsSize.X, regionsSize.Y)));
+                        new Vector2(regionSize.X, regionSize.Y)));
                 }
             }
         }

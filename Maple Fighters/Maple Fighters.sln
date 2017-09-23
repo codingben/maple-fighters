@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.16
+VisualStudioVersion = 15.0.26730.15
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Servers", "Servers", "{E2552411-D347-4907-9C50-2B7EDCB4B64A}"
 EndProject
@@ -26,6 +26,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MathematicsHelper", "Shared\Helper\MathematicsHelper\MathematicsHelper.csproj", "{A3BE3E13-D3A1-4800-B471-A39F5ED4B554}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Game.InterestManagement", "Servers\Game Server\Game.InterestManagement\Game.InterestManagement.csproj", "{DB7043AD-92FD-428A-BB43-18ED8D25B41D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Python", "Python", "{A6880D1E-AF42-4785-ACD7-2A97BBF4E83D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PythonScripting", "Shared\Python\PythonScripting\PythonScripting.csproj", "{F74FA3B5-23F9-460D-B9BC-F6C0E98F7556}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,6 +61,10 @@ Global
 		{DB7043AD-92FD-428A-BB43-18ED8D25B41D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DB7043AD-92FD-428A-BB43-18ED8D25B41D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DB7043AD-92FD-428A-BB43-18ED8D25B41D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F74FA3B5-23F9-460D-B9BC-F6C0E98F7556}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F74FA3B5-23F9-460D-B9BC-F6C0E98F7556}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F74FA3B5-23F9-460D-B9BC-F6C0E98F7556}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F74FA3B5-23F9-460D-B9BC-F6C0E98F7556}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -72,5 +80,10 @@ Global
 		{15D448CF-A201-41D0-AE85-DF180ACD5818} = {6BD1A4DA-D8A1-441D-AE30-7FFDAF884926}
 		{A3BE3E13-D3A1-4800-B471-A39F5ED4B554} = {15D448CF-A201-41D0-AE85-DF180ACD5818}
 		{DB7043AD-92FD-428A-BB43-18ED8D25B41D} = {3D62116D-D193-4FB3-B99C-AA540E6E99D4}
+		{A6880D1E-AF42-4785-ACD7-2A97BBF4E83D} = {6BD1A4DA-D8A1-441D-AE30-7FFDAF884926}
+		{F74FA3B5-23F9-460D-B9BC-F6C0E98F7556} = {A6880D1E-AF42-4785-ACD7-2A97BBF4E83D}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E4930A91-FA7B-48D4-9B95-E8E5F16ACE7C}
 	EndGlobalSection
 EndGlobal
