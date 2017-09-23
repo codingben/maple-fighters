@@ -3,6 +3,7 @@ using System.IO;
 using CommonTools.Log;
 using Game.InterestManagement;
 using MathematicsHelper;
+using Microsoft.Scripting.Hosting;
 using PythonScripting;
 using ServerApplication.Common.ApplicationBase;
 using ServerApplication.Common.ComponentModel;
@@ -13,7 +14,9 @@ namespace Game.Application.Components
     public class SceneContainer : Component<IServerEntity>
     {
         private readonly Dictionary<Maps, GameSceneWrapper> scenes = new Dictionary<Maps, GameSceneWrapper>();
+
         private PythonScriptEngine pythonScriptEngine;
+        private ScriptScope scriptScope;
 
         protected override void OnAwake()
         {
@@ -21,8 +24,8 @@ namespace Game.Application.Components
 
             pythonScriptEngine = Entity.Container.GetComponent<PythonScriptEngine>().AssertNotNull();
 
-            var scope = pythonScriptEngine.GetScriptEngine().CreateScope();
-            scope.SetVariable("sceneContainer", this);
+            scriptScope = pythonScriptEngine.GetScriptEngine().CreateScope();
+            scriptScope.SetVariable("sceneContainer", this);
 
             AddScenesViaPython();
         }
@@ -34,7 +37,7 @@ namespace Game.Application.Components
 
             foreach (var pythonScript in pythonScripts)
             {
-                pythonScriptEngine.GetScriptEngine().ExecuteFile(pythonScript);
+                pythonScriptEngine.GetScriptEngine().ExecuteFile(pythonScript, scriptScope);
             }
         }
 

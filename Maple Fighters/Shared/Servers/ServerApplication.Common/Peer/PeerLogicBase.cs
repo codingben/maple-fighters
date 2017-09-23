@@ -24,7 +24,7 @@ namespace Shared.ServerApplication.Common.PeerLogic
             PeerWrapper = peer;
 
             Entity = new PeerEntity(PeerWrapper.PeerId);
-            EventSender = new EventSender<TEventCode>(PeerWrapper.Peer.EventSender, true);
+            EventSender = new EventSender<TEventCode>(PeerWrapper.Peer.EventSender, false);
 
             AddCommonComponents();
 

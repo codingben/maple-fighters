@@ -1,5 +1,6 @@
 ﻿using System;
 using IronPython.Hosting;
+using MathematicsHelper;
 using Microsoft.Scripting.Hosting;
 using ServerApplication.Common.ApplicationBase;
 using ServerApplication.Common.ComponentModel;
@@ -17,6 +18,7 @@ namespace PythonScripting
             foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
             {
                 scriptEngine.Runtime.LoadAssembly(assembly);
+                scriptEngine.Runtime.LoadAssembly(typeof(Vector2).Assembly);
             }
         }
 
