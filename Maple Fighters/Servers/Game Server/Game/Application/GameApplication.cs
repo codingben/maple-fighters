@@ -6,9 +6,7 @@ using ServerCommunicationInterfaces;
 
 namespace Game.Application
 {
-    using Application = ServerApplication.Common.ApplicationBase.Application;
-
-    public class GameApplication : Application
+    public class GameApplication : ApplicationBase
     {
         public GameApplication(IFiberProvider fiberProvider) 
             : base(fiberProvider)

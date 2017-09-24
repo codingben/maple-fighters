@@ -10,12 +10,12 @@ namespace ServerApplication.Common.ApplicationBase
     /// <summary>
     /// A base class to startup a server application
     /// </summary>
-    public abstract class Application : IApplication
+    public abstract class ApplicationBase : IApplication
     {
         private PeerContainer peerContainer;
         private readonly IFiberProvider fiberProvider;
 
-        protected Application(IFiberProvider fiberProvider)
+        protected ApplicationBase(IFiberProvider fiberProvider)
         {
             this.fiberProvider = fiberProvider;
         }
@@ -28,7 +28,7 @@ namespace ServerApplication.Common.ApplicationBase
 
             peerContainer = Server.Entity.Container.GetComponent<PeerContainer>().AssertNotNull();
 
-            LogUtils.Log("An application has started.");
+            LogUtils.Log(MessageBuilder.Trace("An application has started."));
         }
 
         public virtual void Shutdown()
@@ -37,7 +37,7 @@ namespace ServerApplication.Common.ApplicationBase
 
             peerContainer.DisconnectAllPeers();
 
-            LogUtils.Log("An application has been stopped.");
+            LogUtils.Log(MessageBuilder.Trace("An application has been stopped."));
         }
 
         protected void AddCommonComponents()

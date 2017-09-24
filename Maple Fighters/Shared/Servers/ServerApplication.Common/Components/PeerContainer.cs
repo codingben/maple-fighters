@@ -49,6 +49,19 @@ namespace ServerApplication.Common.Components
             }
         }
 
+        public IClientPeerWrapper<IClientPeer>[] GetAllPeerWrappers()
+        {
+            lock (locker)
+            {
+                var peerWrappers = new List<IClientPeerWrapper<IClientPeer>>();
+                foreach (var peerWrapper in peerWrappers)
+                {
+                    peerWrappers.Add(peerWrapper);
+                }
+                return peerWrappers.ToArray();
+            }
+        }
+
         public int GetPeersCount()
         {
             return peerLogics.Count;
