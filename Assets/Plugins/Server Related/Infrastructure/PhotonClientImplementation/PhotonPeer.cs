@@ -26,15 +26,21 @@ namespace PhotonClientImplementation
                         switch (op)
                         {
                             case BufferOption.OperationResponse:
+                            {
                                 var opres = operationResponsesBuffer.Dequeue();
                                 OperationResponded?.Invoke(opres.Item1, opres.Item2);
                                 break;
+                            }
                             case BufferOption.Event:
+                            {
                                 var ev = eventsBuffer.Dequeue();
                                 EventRecieved?.Invoke(ev);
                                 break;
+                            }
                             default:
+                            {
                                 throw new ArgumentOutOfRangeException();
+                            }
                         }
                     }
 
@@ -45,7 +51,6 @@ namespace PhotonClientImplementation
                 networkTrafficState = value;
             }
         }
-
         public PeerStateValue State => RawPeer.PeerState;
 
         public IPeerDisconnectionNotifier PeerDisconnectionNotifier => this;

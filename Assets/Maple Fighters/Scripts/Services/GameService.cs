@@ -118,7 +118,7 @@ namespace Scripts.Services
                 return;
             }
 
-            OperationRequestSender.Send(GameOperations.PlayerStateChanged, parameters, MessageSendOptions.DefaultReliable());
+            OperationRequestSender.Send(GameOperations.PlayerStateChanged, parameters, MessageSendOptions.DefaultUnreliable((byte)GameDataChannels.Animations));
         }
 
         public async Task ChangeScene(IYield yield, ChangeSceneRequestParameters parameters)
