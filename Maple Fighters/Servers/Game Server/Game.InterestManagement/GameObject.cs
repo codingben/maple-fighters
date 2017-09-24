@@ -15,7 +15,7 @@ namespace Game.InterestManagement
 
         public IContainer<IGameObject> Container { get; }
 
-        public GameObject(string name, IScene scene, Vector2 position, Vector2 interestAreaSize)
+        public GameObject(string name, IScene scene, Vector2 position)
         {
             Name = name;
 
@@ -27,7 +27,6 @@ namespace Game.InterestManagement
             Container = new Container<IGameObject>(this);
 
             Container.AddComponent(new Transform(position));
-            Container.AddComponent(new InterestArea(position, interestAreaSize));
         }
 
         public void SetScene(IScene scene)

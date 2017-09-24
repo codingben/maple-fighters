@@ -6,6 +6,8 @@ namespace Game.InterestManagement
 {
     public class Scene : IScene
     {
+        public Vector2 RegionSize { get; }
+
         private readonly IRegion[,] regions;
         private readonly Dictionary<int, IGameObject> gameObjects = new Dictionary<int, IGameObject>();
 
@@ -32,6 +34,8 @@ namespace Game.InterestManagement
                         new Vector2(regionSize.X, regionSize.Y)));
                 }
             }
+
+            RegionSize = regionSize;
         }
 
         public IGameObject AddGameObject(IGameObject gameObject)

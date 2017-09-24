@@ -1,7 +1,11 @@
-﻿namespace Game.InterestManagement
+﻿using MathematicsHelper;
+
+namespace Game.InterestManagement
 {
     public interface IScene
     {
+        Vector2 RegionSize { get; }
+
         IRegion[,] GetAllRegions();
 
         IGameObject AddGameObject(IGameObject gameObject);

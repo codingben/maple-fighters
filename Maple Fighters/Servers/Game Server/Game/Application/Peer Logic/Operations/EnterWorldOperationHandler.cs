@@ -40,7 +40,10 @@ namespace Game.Application.PeerLogic.Operations
         private IGameObject CreatePlayerGameObject()
         {
             var scene = sceneContainer.GetGameSceneWrapper(Maps.Map_1).GetScene();
-            return scene.AddGameObject(new InterestManagement.GameObject("Player", scene, new Vector2(18, -5.5f), new Vector2(10, 5)));
+            var position = new Vector2(18, -5.5f);
+            var gameObject = scene.AddGameObject(new InterestManagement.GameObject("Player", scene, position));
+            gameObject.Container.AddComponent(new InterestArea(position, scene.RegionSize));
+            return gameObject;
         }
     }
 }

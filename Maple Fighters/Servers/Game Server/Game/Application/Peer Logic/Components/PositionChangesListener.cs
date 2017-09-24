@@ -33,7 +33,7 @@ namespace Game.Application.PeerLogic.Components
         {
             var gameObjectId = gameObjectGetter.GetGameObject().Id;
             var parameters = new GameObjectPositionChangedEventParameters(gameObjectId, newPosition.X, newPosition.Y, direction);
-            var messageSendOptions = MessageSendOptions.DefaultUnreliable((byte) GameDataChannels.Position);
+            var messageSendOptions = MessageSendOptions.DefaultUnreliable((byte)GameDataChannels.Position);
             interestAreaManagement.SendEventForGameObjectsInMyRegions((byte)GameEvents.PositionChanged, parameters, messageSendOptions);
         }
     }

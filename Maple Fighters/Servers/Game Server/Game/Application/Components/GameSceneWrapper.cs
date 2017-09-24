@@ -44,8 +44,11 @@ namespace Game.Application.Components
 
         public void AddGameObject(string name, Vector2 position, Vector2 interestAreaSize)
         {
-            var gameObject = new GameObject(name, scene, position, interestAreaSize);
+            var gameObject = new GameObject(name, scene, position);
             scene.AddGameObject(gameObject);
+
+            var interestArea = gameObject.Container.AddComponent(new InterestArea(position, interestAreaSize));
+            interestArea.DetectOverlapsWithRegionsAction.Invoke();
         }
 
         public IScene GetScene()

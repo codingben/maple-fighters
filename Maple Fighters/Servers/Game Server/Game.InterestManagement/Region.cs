@@ -9,30 +9,30 @@ namespace Game.InterestManagement
     {
         public Rectangle Area { get; }
 
-        private readonly Dictionary<int, IGameObject> gameObjects = new Dictionary<int, IGameObject>();
+        private readonly Dictionary<int, InterestArea> gameObjects = new Dictionary<int, InterestArea>();
 
         public Region(Rectangle rectangle)
         {
             Area = rectangle;
         }
 
-        public void AddSubscription(IGameObject gameObject)
+        public void AddSubscription(InterestArea interestArea)
         {
-            if (gameObjects.ContainsKey(gameObject.Id))
+            if (gameObjects.ContainsKey(interestArea.Entity.Id))
             {
-                LogUtils.Log(MessageBuilder.Trace($"A game object with id #{gameObject.Id} already exists in a region."), LogMessageType.Error);
+                LogUtils.Log(MessageBuilder.Trace($"A game object with id #{interestArea.Entity.Id} already exists in a region."), LogMessageType.Error);
                 return;
             }
 
-            gameObjects.Add(gameObject.Id, gameObject);
+            gameObjects.Add(interestArea.Entity.Id, interestArea);
 
-            LogUtils.Log(MessageBuilder.Trace($"A new subscriber: {gameObject.Name}"));
+            LogUtils.Log(MessageBuilder.Trace($"A new subscriber: {interestArea.Entity.Name}"));
 
             // Show all exists entities for a new game object.
-            ShowGameObjectsForGameObject(gameObject);
+            ShowGameObjectsForGameObject(interestArea);
 
             // Show a new game object for all exists entities.
-            ShowGameObjectForGameObjects(gameObject);
+            ShowGameObjectForGameObjects(interestArea);
         }
 
         public void RemoveSubscription(int gameObjectId)
@@ -75,34 +75,30 @@ namespace Game.InterestManagement
             return gameObjects.ContainsKey(gameObjectId);
         }
 
-        public IEnumerable<IGameObject> GetAllSubscribers()
+        public IEnumerable<InterestArea> GetAllSubscribers()
         {
             return gameObjects.Select(gameObject => gameObject.Value).ToList();
         }
 
-        private void ShowGameObjectsForGameObject(IGameObject gameObject)
+        private void ShowGameObjectsForGameObject(InterestArea gameObject)
         {
-            var gameObjectsTemp = gameObjects.Values.Where(gameObjectValue => gameObjectValue.Id != gameObject.Id).ToArray();
-            var interestArea = gameObject.Container.GetComponent<InterestArea>();
-            interestArea?.GameObjectsAdded?.Invoke(gameObjectsTemp); 
+            var gameObjectsTemp = gameObjects.Values.Where(gameObjectValue => gameObjectValue.Entity.Id != gameObject.Entity.Id).ToArray();
+            gameObject?.GameObjectsAdded?.Invoke(gameObjectsTemp); 
         }
 
         private void HideGameObjectsForGameObject(int hideGameObjectId)
         {
-            var gameObjectsTemp = gameObjects.Values.Where(gameObject => gameObject.Id != hideGameObjectId).ToArray();
-            var interestArea = gameObjects[hideGameObjectId].Container.GetComponent<InterestArea>();
-            if (interestArea == null)
-            {
-                return;
-            }
+            var gameObjectsTemp = gameObjects.Values.Where(gameObject => gameObject.Entity.Id != hideGameObjectId).ToArray();
+
+            var interestArea = gameObjects[hideGameObjectId];
 
             var removeGameObjects = new List<int>();
 
             foreach (var gameObject in gameObjectsTemp)
             {
-                if (interestArea.GetPublishers().Any(publisher => !publisher.HasSubscription(gameObject.Id)))
+                if (interestArea.GetPublishers().Any(publisher => !publisher.HasSubscription(gameObject.Entity.Id)))
                 {
-                    removeGameObjects.Add(gameObject.Id);
+                    removeGameObjects.Add(gameObject.Entity.Id);
                 }
             }
 
@@ -112,17 +108,16 @@ namespace Game.InterestManagement
             }
         }
 
-        private void ShowGameObjectForGameObjects(IGameObject newGameObject)
+        private void ShowGameObjectForGameObjects(InterestArea newGameObject)
         {
             foreach (var gameObject in gameObjects)
             {
-                if (gameObject.Value.Id == newGameObject.Id)
+                if (gameObject.Value.Entity.Id == newGameObject.Entity.Id)
                 {
                     continue;
                 }
 
-                var interestArea = gameObject.Value.Container.GetComponent<InterestArea>();
-                interestArea?.GameObjectAdded?.Invoke(newGameObject);
+                gameObject.Value.GameObjectAdded?.Invoke(newGameObject);
             }
         }
 
@@ -130,15 +125,9 @@ namespace Game.InterestManagement
         {
             foreach (var gameObject in gameObjects.Values)
             {
-                var interestArea = gameObject.Container.GetComponent<InterestArea>();
-                if (interestArea == null)
+                if (!gameObject.GetPublishers().Any(publisher => publisher.HasSubscription(hideGameObjectId)))
                 {
-                    continue;
-                }
-
-                if (!interestArea.GetPublishers().Any(publisher => publisher.HasSubscription(hideGameObjectId)))
-                {
-                    interestArea.GameObjectRemoved?.Invoke(hideGameObjectId);
+                    gameObject.GameObjectRemoved?.Invoke(hideGameObjectId);
                 }
             }
         }
@@ -147,8 +136,7 @@ namespace Game.InterestManagement
         {
             foreach (var gameObject in gameObjects.Values)
             {
-                var interestArea = gameObject.Container.GetComponent<InterestArea>();
-                interestArea?.GameObjectRemoved?.Invoke(hideGameObjectId);
+                gameObject.GameObjectRemoved?.Invoke(hideGameObjectId);
             }
         }
 
@@ -156,13 +144,12 @@ namespace Game.InterestManagement
         {
             var gameObjectsTemp = gameObjects.Keys.Where(gameObjectId => gameObjectId != hideGameObjectId).ToArray();
 
-            if (gameObjects[hideGameObjectId]?.Container?.GetComponent<InterestArea>() == null)
+            if (gameObjects[hideGameObjectId] == null)
             {
                 return;
             }
 
-            var interestArea = gameObjects[hideGameObjectId].Container.GetComponent<InterestArea>();
-            interestArea?.GameObjectsRemoved?.Invoke(gameObjectsTemp);
+            gameObjects[hideGameObjectId]?.GameObjectsRemoved?.Invoke(gameObjectsTemp);
         }
     }
 }

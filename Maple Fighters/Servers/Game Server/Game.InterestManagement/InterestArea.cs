@@ -9,16 +9,20 @@ namespace Game.InterestManagement
 {
     public class InterestArea : Component<IGameObject>
     {
-        public Action<IGameObject> GameObjectAdded;
+        public Action<InterestArea> GameObjectAdded;
         public Action<int> GameObjectRemoved;
-        public Action<IGameObject[]> GameObjectsAdded;
+        public Action<InterestArea[]> GameObjectsAdded;
         public Action<int[]> GameObjectsRemoved;
+
+        public readonly Action DetectOverlapsWithRegionsAction;
 
         private Rectangle interestArea;
 
         public InterestArea(Vector2 position, Vector2 areaSize)
         {
             interestArea = new Rectangle(position, areaSize);
+
+            DetectOverlapsWithRegionsAction = DetectOverlapsWithRegions;
         }
 
         protected override void OnAwake()
@@ -26,8 +30,6 @@ namespace Game.InterestManagement
             base.OnAwake();
 
             SubscribeToPositionChangesNotifier();
-
-            DetectOverlapsWithRegions();
         }
 
         protected override void OnDestroy()
@@ -90,7 +92,7 @@ namespace Game.InterestManagement
                         continue;
                     }
 
-                    region.AddSubscription(Entity);
+                    region.AddSubscription(this);
                 }
                 else
                 {
