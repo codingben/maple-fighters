@@ -1,6 +1,5 @@
 ﻿using Chat.Common;
 using CommonCommunicationInterfaces;
-using CommonTools.Log;
 using Scripts.ScriptableObjects;
 
 namespace Scripts.Services
@@ -23,8 +22,6 @@ namespace Scripts.Services
         protected override void OnConnected()
         {
             AddEventsHandlers();
-
-            SendChatMessage(new ChatMessageRequestParameters("Hello world!"));
         }
 
         protected override void OnDisconnected()
@@ -36,7 +33,6 @@ namespace Scripts.Services
         {
             EventHandlerRegister.SetHandler(ChatEvents.ChatMessage, new EventInvoker<ChatMessageEventParameters>(unityEvent =>
             {
-                LogUtils.Log($"Message: {unityEvent.Parameters.Message}");
                 ChatMessageReceived?.Invoke(unityEvent.Parameters);
                 return true;
             }));
