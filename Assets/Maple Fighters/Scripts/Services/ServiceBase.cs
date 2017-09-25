@@ -2,13 +2,13 @@
 using System.Threading.Tasks;
 using CommonCommunicationInterfaces;
 using CommonTools.Coroutines;
+using CommonTools.Log;
 using CommunicationHelper;
 using ExitGames.Client.Photon;
 using PhotonClientImplementation;
 using Scripts.Coroutines;
 using Scripts.ScriptableObjects;
 using Scripts.Utils;
-using UnityEngine;
 
 namespace Scripts.Services
 {
@@ -68,18 +68,24 @@ namespace Scripts.Services
             switch (networkConfiguration.ConnectionProtocol)
             {
                 case ConnectionProtocol.Udp:
+                {
                     peerConnectionInformation = connectionInformation.UdpConnectionDetails;
                     break;
+                }
                 case ConnectionProtocol.Tcp:
+                {
                     peerConnectionInformation = connectionInformation.TcpConnectionDetails;
                     break;
+                }
                 case ConnectionProtocol.WebSocket:
                 case ConnectionProtocol.WebSocketSecure:
+                {
                     peerConnectionInformation = connectionInformation.WebConnectionDetails;
                     break;
+                }
             }
 
-            Debug.Log($"Connecting to a {serverType} server - " + $"{peerConnectionInformation.Ip}:{peerConnectionInformation.Port}");
+            LogUtils.Log(MessageBuilder.Trace("Connecting to a {serverType} server - " + $"{peerConnectionInformation.Ip}:{peerConnectionInformation.Port}"));
 
             CoroutinesExecutor.StartTask(y => ConnectAsync(y, peerConnectionInformation));
         }
@@ -92,20 +98,27 @@ namespace Scripts.Services
         {
             serverPeer.PeerDisconnectionNotifier.Disconnected -= OnDisconnected;
 
-            Debug.Log("A connection has been closed with " +
-                      $"{serverType} - {peerConnectionInformation.Ip}:{peerConnectionInformation.Port}. Reason: {disconnectReason}");
+            LogUtils.Log(MessageBuilder.Trace("A connection has been closed with " +
+                                              $"{serverType} - {peerConnectionInformation.Ip}:{peerConnectionInformation.Port}. Reason: {disconnectReason}"));
 
             OnDisconnected();
         }
 
         private void InitializePeerHandlers()
         {
-            SubscriptionProvider = new OperationResponseSubscriptionProvider<TOperationCode>(serverPeer.OperationResponseNotifier,
-                (data, s) => Debug.LogError($"Sending an operaiton has been failed. Operation Code: {data.Code} - Server Type: {serverType}"));
-            EventHandlerRegister = new EventHandlerRegister<TEventCode>(serverPeer.EventNotifier);
-            OperationRequestSender = new OperationRequestSender<TOperationCode>(serverPeer.OperationRequestSender);
+            var networkConfiguration = NetworkConfiguration.GetInstance();
+
+            OperationRequestSender = new OperationRequestSender<TOperationCode>(serverPeer.OperationRequestSender, networkConfiguration.LogOperationsRequest);
+            SubscriptionProvider = new OperationResponseSubscriptionProvider<TOperationCode>(serverPeer.OperationResponseNotifier, OnOperationRequestFailed, 
+                networkConfiguration.LogOperationsResponse);
+            EventHandlerRegister = new EventHandlerRegister<TEventCode>(serverPeer.EventNotifier, networkConfiguration.LogEvents);
 
             serverPeer.PeerDisconnectionNotifier.Disconnected += OnDisconnected;
+        }
+
+        private void OnOperationRequestFailed(RawMessageResponseData data, short requestId)
+        {
+            LogUtils.Log(MessageBuilder.Trace($"Sending an operaiton has been failed. Operation Code: {data.Code} - Server Type: {serverType}"));
         }
 
         private void OnApplicationQuit()

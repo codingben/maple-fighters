@@ -17,6 +17,20 @@ namespace Scripts.Containers.Service
             }
         }
 
+        public static IChatService ChatService
+        {
+            get
+            {
+                if (_chatService == null)
+                {
+                    _chatService = new ChatService();
+                }
+
+                return _chatService;
+            }
+        }
+
+        private static IChatService _chatService;
         private static IGameService _gameService;
     }
 }

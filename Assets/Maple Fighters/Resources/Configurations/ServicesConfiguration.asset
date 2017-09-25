@@ -11,7 +11,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90d68ebd4e9571b44b4512010bb2a042, type: 3}
   m_Name: ServicesConfiguration
   m_EditorClassIdentifier: 
-  gameConnectionInformation:
+  connectionInformations:
+  - Name: Game
     ServerType: 0
     UdpConnectionDetails:
       Ip: 127.0.0.1
@@ -22,3 +23,14 @@ MonoBehaviour:
     WebConnectionDetails:
       Ip: ws://127.0.0.1
       Port: 9090
+  - Name: Chat
+    ServerType: 1
+    UdpConnectionDetails:
+      Ip: 127.0.0.1
+      Port: 5056
+    TcpConnectionDetails:
+      Ip: 127.0.0.1
+      Port: 4531
+    WebConnectionDetails:
+      Ip: ws://127.0.0.1
+      Port: 9091

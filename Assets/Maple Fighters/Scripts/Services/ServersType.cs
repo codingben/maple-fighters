@@ -2,6 +2,7 @@
 {
     public enum ServersType
     {
-        Game
+        Game,
+        Chat
     }
 }
