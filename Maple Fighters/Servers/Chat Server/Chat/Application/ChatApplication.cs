@@ -11,7 +11,14 @@ namespace Chat.Application
         {
             // Left blank intentionally
         }
-        
+
+        public override void Startup()
+        {
+            base.Startup();
+
+            AddCommonComponents();
+        }
+
         public override void OnConnected(IClientPeer clientPeer)
         {
             WrapClientPeer(clientPeer, new ChatPeerLogic());

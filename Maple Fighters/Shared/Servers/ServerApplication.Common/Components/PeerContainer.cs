@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using CommonCommunicationInterfaces;
 using CommonTools.Log;
 using ServerApplication.Common.ApplicationBase;
@@ -49,16 +50,11 @@ namespace ServerApplication.Common.Components
             }
         }
 
-        public IClientPeerWrapper<IClientPeer>[] GetAllPeerWrappers()
+        public IEnumerable<IClientPeerWrapper<IClientPeer>> GetAllPeerWrappers()
         {
             lock (locker)
             {
-                var peerWrappers = new List<IClientPeerWrapper<IClientPeer>>();
-                foreach (var peerWrapper in peerWrappers)
-                {
-                    peerWrappers.Add(peerWrapper);
-                }
-                return peerWrappers.ToArray();
+                return peerLogics.Values.ToArray();
             }
         }
 
