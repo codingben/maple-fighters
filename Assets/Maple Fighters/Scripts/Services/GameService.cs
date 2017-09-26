@@ -18,7 +18,7 @@ namespace Scripts.Services
         
         public void Connect()
         {
-            var gameConnectionInformation = ServicesConfiguration.GetInstance().GameConnectionInformation;
+            var gameConnectionInformation = ServicesConfiguration.GetInstance().GetConnectionInformation(ServersType.Game);
             Connect(gameConnectionInformation);
         }
 

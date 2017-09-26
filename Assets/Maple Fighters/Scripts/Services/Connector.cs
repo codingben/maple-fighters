@@ -1,5 +1,4 @@
-﻿using CommonTools.Log;
-using Scripts.Containers.Service;
+﻿using Scripts.Containers.Service;
 using Scripts.Utils;
 
 namespace Scripts.Services
@@ -8,8 +7,8 @@ namespace Scripts.Services
     {
         private void Start()
         {
-            LogUtils.Log(MessageBuilder.Trace());
             ServiceContainer.GameService.Connect();
+            ServiceContainer.ChatService.Connect();
         }
     }
 }

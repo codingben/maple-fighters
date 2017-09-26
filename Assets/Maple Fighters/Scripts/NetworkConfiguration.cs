@@ -8,5 +8,8 @@ namespace Scripts.ScriptableObjects
     {
         public ConnectionProtocol ConnectionProtocol = ConnectionProtocol.Udp;
         public DebugLevel DebugLevel = DebugLevel.OFF;
+        public bool LogOperationsRequest;
+        public bool LogOperationsResponse;
+        public bool LogEvents;
     }
 }

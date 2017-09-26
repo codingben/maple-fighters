@@ -5,5 +5,6 @@ namespace Scripts.Containers
     public interface IServiceContainer
     {
         IGameService GameService { get; }
+        IChatService ChatService { get; }
     }
 }
