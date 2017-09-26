@@ -4,13 +4,14 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{F82FBB67-7B1D-43B7-A415-3F407D40E5C7}</ProjectGuid>
+    <ProjectGuid>{0DEC7208-CD13-4900-95A3-5519727A3902}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ServerApplication.Common</RootNamespace>
-    <AssemblyName>ServerApplication.Common</AssemblyName>
+    <RootNamespace>Chat.PhotonStarter</RootNamespace>
+    <AssemblyName>Chat.PhotonStarter</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -33,14 +34,8 @@
     <Reference Include="CommonCommunicationInterfaces, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\CommonCommunicationInterfaces.5.0.0\lib\net46\CommonCommunicationInterfaces.dll</HintPath>
     </Reference>
-    <Reference Include="CommunicationHelper, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\CommunicationHelper.4.0.0\lib\net46\CommunicationHelper.dll</HintPath>
-    </Reference>
     <Reference Include="Coroutines, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Coroutines.5.0.5\lib\net46\Coroutines.dll</HintPath>
-    </Reference>
-    <Reference Include="log4net">
-      <HintPath>..\..\..\..\Photon Libraries\log4net.dll</HintPath>
     </Reference>
     <Reference Include="LogUtils, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Coroutines.5.0.5\lib\net46\LogUtils.dll</HintPath>
@@ -54,9 +49,6 @@
     <Reference Include="PhotonServerImplementation, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\PhotonServerImplementation.4.0.0\lib\net46\PhotonServerImplementation.dll</HintPath>
     </Reference>
-    <Reference Include="ServerCommunicationHelper, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\ServerCommunicationHelper.3.1.0\lib\net46\ServerCommunicationHelper.dll</HintPath>
-    </Reference>
     <Reference Include="ServerCommunicationInterfaces, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\ServerCommunicationInterfaces.3.0.0\lib\net46\ServerCommunicationInterfaces.dll</HintPath>
     </Reference>
@@ -67,37 +59,20 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Application Base\ApplicationBase.cs" />
-    <Compile Include="Application Base\IApplication.cs" />
-    <Compile Include="Application Base\IServerEntity.cs" />
-    <Compile Include="Application Base\Server.cs" />
-    <Compile Include="Application Base\TimeProvider.cs" />
-    <Compile Include="Component Model\IContainer.cs" />
-    <Compile Include="Component Model\IEntity.cs" />
-    <Compile Include="Components\CoroutinesExecutorEntity.cs" />
-    <Compile Include="Components\EventSenderWrapper.cs" />
-    <Compile Include="Components\FiberCoroutinesExecuter.cs" />
-    <Compile Include="Components\CoroutinesExecuter.cs" />
-    <Compile Include="Components\FiberProvider.cs" />
-    <Compile Include="Components\IdGenerator.cs" />
-    <Compile Include="Components\PeerContainer.cs" />
-    <Compile Include="Components\RandomNumberGenerator.cs" />
-    <Compile Include="Component Model\Container.cs" />
-    <Compile Include="Component Model\IComponent.cs" />
-    <Compile Include="Component Model\ServerEntity.cs" />
-    <Compile Include="Logger\Logger.cs" />
-    <Compile Include="Component Model\Component.cs" />
-    <Compile Include="Peer\PeerEntity.cs" />
-    <Compile Include="Peer\IClientPeerWrapper.cs" />
-    <Compile Include="Peer\ClientPeerWrapper.cs" />
-    <Compile Include="Peer\IPeerEntity.cs" />
-    <Compile Include="Peer\IPeerLogicBase.cs" />
-    <Compile Include="Peer\PeerLogicBase.cs" />
-    <Compile Include="Photon Starter\PhotonStarterBase.cs" />
+    <Compile Include="PhotonStarter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
+    <ProjectReference Include="..\..\..\Shared\Servers\ServerApplication.Common\ServerApplication.Common.csproj">
+      <Project>{F82FBB67-7B1D-43B7-A415-3F407D40E5C7}</Project>
+      <Name>ServerApplication.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Chat\Chat.csproj">
+      <Project>{4ea8869d-4447-448a-acf7-c46a4640324d}</Project>
+      <Name>Chat</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

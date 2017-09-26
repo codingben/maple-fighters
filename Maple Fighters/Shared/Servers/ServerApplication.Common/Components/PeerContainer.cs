@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using CommonCommunicationInterfaces;
 using CommonTools.Log;
 using ServerApplication.Common.ApplicationBase;
@@ -46,6 +47,14 @@ namespace ServerApplication.Common.Components
             lock (locker)
             {
                 return peerLogics.TryGetValue(peerId, out var peerWrapper) ? peerWrapper : null;
+            }
+        }
+
+        public IEnumerable<IClientPeerWrapper<IClientPeer>> GetAllPeerWrappers()
+        {
+            lock (locker)
+            {
+                return peerLogics.Values.ToArray();
             }
         }
 
