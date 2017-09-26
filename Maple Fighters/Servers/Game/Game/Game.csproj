@@ -99,7 +99,7 @@
       <Project>{A3BE3E13-D3A1-4800-B471-A39F5ED4B554}</Project>
       <Name>MathematicsHelper</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\Shared\Client\Game.Common\Game.Common.csproj">
+    <ProjectReference Include="..\Game.Common\Game.Common.csproj">
       <Project>{AA536188-84FF-4286-A9E6-BAFBE1D8D37B}</Project>
       <Name>Game.Common</Name>
     </ProjectReference>

@@ -5,15 +5,15 @@ VisualStudioVersion = 15.0.26730.15
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Servers", "Servers", "{E2552411-D347-4907-9C50-2B7EDCB4B64A}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Game Server", "Game Server", "{3D62116D-D193-4FB3-B99C-AA540E6E99D4}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Game", "Game", "{3D62116D-D193-4FB3-B99C-AA540E6E99D4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Game", "Servers\Game Server\Game\Game.csproj", "{DF693C06-200A-4903-B72F-AF600BB7D47A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Game", "Servers\Game\Game\Game.csproj", "{DF693C06-200A-4903-B72F-AF600BB7D47A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{6BD1A4DA-D8A1-441D-AE30-7FFDAF884926}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Game.PhotonStarter", "Servers\Game Server\Game.PhotonStarter\Game.PhotonStarter.csproj", "{BA247981-850D-416E-AE85-10BEC7349F21}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Game.PhotonStarter", "Servers\Game\Game.PhotonStarter\Game.PhotonStarter.csproj", "{BA247981-850D-416E-AE85-10BEC7349F21}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Game.Common", "Shared\Client\Game.Common\Game.Common.csproj", "{AA536188-84FF-4286-A9E6-BAFBE1D8D37B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Game.Common", "Servers\Game\Game.Common\Game.Common.csproj", "{AA536188-84FF-4286-A9E6-BAFBE1D8D37B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Client", "Client", "{46B2DB14-93E8-4C3F-8382-BEB6F9CC3CD7}"
 EndProject
@@ -25,19 +25,35 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Helper", "Helper", "{15D448
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MathematicsHelper", "Shared\Helper\MathematicsHelper\MathematicsHelper.csproj", "{A3BE3E13-D3A1-4800-B471-A39F5ED4B554}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Game.InterestManagement", "Servers\Game Server\Game.InterestManagement\Game.InterestManagement.csproj", "{DB7043AD-92FD-428A-BB43-18ED8D25B41D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Game.InterestManagement", "Servers\Game\Game.InterestManagement\Game.InterestManagement.csproj", "{DB7043AD-92FD-428A-BB43-18ED8D25B41D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Python", "Python", "{A6880D1E-AF42-4785-ACD7-2A97BBF4E83D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PythonScripting", "Shared\Python\PythonScripting\PythonScripting.csproj", "{F74FA3B5-23F9-460D-B9BC-F6C0E98F7556}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Chat Server", "Chat Server", "{E7B92426-12DC-48E6-A5EE-D697E7D37CB2}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Chat", "Chat", "{E7B92426-12DC-48E6-A5EE-D697E7D37CB2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chat", "Servers\Chat Server\Chat\Chat.csproj", "{4EA8869D-4447-448A-ACF7-C46A4640324D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chat", "Servers\Chat\Chat\Chat.csproj", "{4EA8869D-4447-448A-ACF7-C46A4640324D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chat.PhotonStarter", "Servers\Chat Server\Chat.PhotonStarter\Chat.PhotonStarter.csproj", "{0DEC7208-CD13-4900-95A3-5519727A3902}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chat.PhotonStarter", "Servers\Chat\Chat.PhotonStarter\Chat.PhotonStarter.csproj", "{0DEC7208-CD13-4900-95A3-5519727A3902}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chat.Common", "Servers\Chat Server\Chat.Common\Chat.Common\Chat.Common.csproj", "{900E3927-BEC2-4CAB-A5A2-E1480FAAC11A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chat.Common", "Servers\Chat\Chat.Common\Chat.Common\Chat.Common.csproj", "{900E3927-BEC2-4CAB-A5A2-E1480FAAC11A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Registration", "Registration", "{ECC73817-FE03-4C27-8609-5AD5A8D8CE63}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Registration", "Servers\Registration\Registration\Registration.csproj", "{5EA5F3C7-5040-4EE3-9B31-DE10977D553E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Registration.PhotonStarter", "Servers\Registration\Registration.PhotonStarter\Registration.PhotonStarter.csproj", "{A6A97506-4C26-4A57-95E6-B96936EEBD82}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Registration.Common", "Servers\Registration\Registration.Common\Registration.Common.csproj", "{50468D7F-3700-4C7C-805B-AB08CB5BA77A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Login", "Login", "{387A6691-0218-4C4C-83E8-E21E8CBDB460}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Login", "Servers\Login\Login\Login.csproj", "{857924CC-235A-40F4-AB42-739FD420D80B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Login.PhotonStarter", "Servers\Login\Login.PhotonStarter\Login.PhotonStarter.csproj", "{14B4F196-70A2-4D76-B065-557DDF298665}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Login.Common", "Servers\Login\Login.Common\Login.Common.csproj", "{828BFB93-CA48-4B37-89D3-FC907903035D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -85,6 +101,30 @@ Global
 		{900E3927-BEC2-4CAB-A5A2-E1480FAAC11A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{900E3927-BEC2-4CAB-A5A2-E1480FAAC11A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{900E3927-BEC2-4CAB-A5A2-E1480FAAC11A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5EA5F3C7-5040-4EE3-9B31-DE10977D553E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5EA5F3C7-5040-4EE3-9B31-DE10977D553E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5EA5F3C7-5040-4EE3-9B31-DE10977D553E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5EA5F3C7-5040-4EE3-9B31-DE10977D553E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A6A97506-4C26-4A57-95E6-B96936EEBD82}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A6A97506-4C26-4A57-95E6-B96936EEBD82}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A6A97506-4C26-4A57-95E6-B96936EEBD82}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A6A97506-4C26-4A57-95E6-B96936EEBD82}.Release|Any CPU.Build.0 = Release|Any CPU
+		{50468D7F-3700-4C7C-805B-AB08CB5BA77A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{50468D7F-3700-4C7C-805B-AB08CB5BA77A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{50468D7F-3700-4C7C-805B-AB08CB5BA77A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{50468D7F-3700-4C7C-805B-AB08CB5BA77A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{857924CC-235A-40F4-AB42-739FD420D80B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{857924CC-235A-40F4-AB42-739FD420D80B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{857924CC-235A-40F4-AB42-739FD420D80B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{857924CC-235A-40F4-AB42-739FD420D80B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{14B4F196-70A2-4D76-B065-557DDF298665}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{14B4F196-70A2-4D76-B065-557DDF298665}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{14B4F196-70A2-4D76-B065-557DDF298665}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{14B4F196-70A2-4D76-B065-557DDF298665}.Release|Any CPU.Build.0 = Release|Any CPU
+		{828BFB93-CA48-4B37-89D3-FC907903035D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{828BFB93-CA48-4B37-89D3-FC907903035D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{828BFB93-CA48-4B37-89D3-FC907903035D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{828BFB93-CA48-4B37-89D3-FC907903035D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -106,6 +146,14 @@ Global
 		{4EA8869D-4447-448A-ACF7-C46A4640324D} = {E7B92426-12DC-48E6-A5EE-D697E7D37CB2}
 		{0DEC7208-CD13-4900-95A3-5519727A3902} = {E7B92426-12DC-48E6-A5EE-D697E7D37CB2}
 		{900E3927-BEC2-4CAB-A5A2-E1480FAAC11A} = {46B2DB14-93E8-4C3F-8382-BEB6F9CC3CD7}
+		{ECC73817-FE03-4C27-8609-5AD5A8D8CE63} = {E2552411-D347-4907-9C50-2B7EDCB4B64A}
+		{5EA5F3C7-5040-4EE3-9B31-DE10977D553E} = {ECC73817-FE03-4C27-8609-5AD5A8D8CE63}
+		{A6A97506-4C26-4A57-95E6-B96936EEBD82} = {ECC73817-FE03-4C27-8609-5AD5A8D8CE63}
+		{50468D7F-3700-4C7C-805B-AB08CB5BA77A} = {46B2DB14-93E8-4C3F-8382-BEB6F9CC3CD7}
+		{387A6691-0218-4C4C-83E8-E21E8CBDB460} = {E2552411-D347-4907-9C50-2B7EDCB4B64A}
+		{857924CC-235A-40F4-AB42-739FD420D80B} = {387A6691-0218-4C4C-83E8-E21E8CBDB460}
+		{14B4F196-70A2-4D76-B065-557DDF298665} = {387A6691-0218-4C4C-83E8-E21E8CBDB460}
+		{828BFB93-CA48-4B37-89D3-FC907903035D} = {46B2DB14-93E8-4C3F-8382-BEB6F9CC3CD7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E4930A91-FA7B-48D4-9B95-E8E5F16ACE7C}
