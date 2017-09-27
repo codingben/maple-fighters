@@ -55,6 +55,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Login.PhotonStarter", "Serv
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Login.Common", "Servers\Login\Login.Common\Login.Common.csproj", "{828BFB93-CA48-4B37-89D3-FC907903035D}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Database", "Database", "{CAEC4E64-6E4B-40C3-9E6E-7077AEE6AF9E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Database.Common", "Shared\Database\Database.Common\Database.Common.csproj", "{46B701A0-8606-4EF1-B111-F001EE74F124}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -125,6 +129,10 @@ Global
 		{828BFB93-CA48-4B37-89D3-FC907903035D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{828BFB93-CA48-4B37-89D3-FC907903035D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{828BFB93-CA48-4B37-89D3-FC907903035D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{46B701A0-8606-4EF1-B111-F001EE74F124}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{46B701A0-8606-4EF1-B111-F001EE74F124}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{46B701A0-8606-4EF1-B111-F001EE74F124}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{46B701A0-8606-4EF1-B111-F001EE74F124}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -154,6 +162,8 @@ Global
 		{857924CC-235A-40F4-AB42-739FD420D80B} = {387A6691-0218-4C4C-83E8-E21E8CBDB460}
 		{14B4F196-70A2-4D76-B065-557DDF298665} = {387A6691-0218-4C4C-83E8-E21E8CBDB460}
 		{828BFB93-CA48-4B37-89D3-FC907903035D} = {46B2DB14-93E8-4C3F-8382-BEB6F9CC3CD7}
+		{CAEC4E64-6E4B-40C3-9E6E-7077AEE6AF9E} = {6BD1A4DA-D8A1-441D-AE30-7FFDAF884926}
+		{46B701A0-8606-4EF1-B111-F001EE74F124} = {CAEC4E64-6E4B-40C3-9E6E-7077AEE6AF9E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E4930A91-FA7B-48D4-9B95-E8E5F16ACE7C}

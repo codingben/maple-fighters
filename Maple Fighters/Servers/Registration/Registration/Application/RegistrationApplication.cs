@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Database.Common.Components;
+using Registration.Application.PeerLogic;
 using ServerApplication.Common.ApplicationBase;
 using ServerCommunicationInterfaces;
 
@@ -12,9 +13,16 @@ namespace Registration.Application
             // Left blank intentionally
         }
 
+        public override void Startup()
+        {
+            base.Startup();
+
+            Server.Entity.Container.AddComponent(new DatabaseConnectionProvider());
+        }
+
         public override void OnConnected(IClientPeer clientPeer)
         {
-            throw new NotImplementedException();
+            WrapClientPeer(clientPeer, new RegistrationPeerLogic());
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Database.Common.Components;
+using Login.Application.Components;
+using Login.Application.PeerLogic;
 using ServerApplication.Common.ApplicationBase;
 using ServerCommunicationInterfaces;
 
@@ -12,9 +14,18 @@ namespace Login.Application
             // Left blank intentionally
         }
 
+        public override void Startup()
+        {
+            base.Startup();
+
+            Server.Entity.Container.AddComponent(new DatabaseConnectionProvider());
+            Server.Entity.Container.AddComponent(new DatabaseUserVerifier());
+            Server.Entity.Container.AddComponent(new DatabaseUserPasswordVerifier());
+        }
+
         public override void OnConnected(IClientPeer clientPeer)
         {
-            throw new NotImplementedException();
+            WrapClientPeer(clientPeer, new LoginPeerLogic());
         }
     }
 }
