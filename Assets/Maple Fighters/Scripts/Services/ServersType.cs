@@ -3,6 +3,8 @@
     public enum ServersType
     {
         Game,
-        Chat
+        Chat,
+        Login,
+        Registration
     }
 }

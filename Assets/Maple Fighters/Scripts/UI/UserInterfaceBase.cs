@@ -18,12 +18,14 @@ namespace Scripts.UI
         {
             CanvasGroup.alpha = 1;
             CanvasGroup.blocksRaycasts = true;
+            CanvasGroup.interactable = true;
         }
 
         public virtual void Hide()
         {
             CanvasGroup.alpha = 0;
             CanvasGroup.blocksRaycasts = false;
+            CanvasGroup.interactable = false;
         }
     }
 }

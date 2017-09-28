@@ -23,7 +23,6 @@ namespace Scripts.World
         [SerializeField] private Vector3 newPosition;
 
         private Transform playerGameObject;
-
         private ExternalCoroutinesExecutor coroutinesExecutor;
 
         private void Awake()
@@ -41,14 +40,12 @@ namespace Scripts.World
                 playerGameObject = gameObject;
             }
 
-            LogUtils.Log(MessageBuilder.Trace());
-
-            ScreenFade.Instance.Fade(1, 10, Teleport);
+            UserInterfaceContainer.Instance.Get<ScreenFade>().AssertNotNull().Show(Teleport);
         }
 
         private void OnInteractionStopped()
         {
-            ScreenFade.Instance.UnFade(1);
+            UserInterfaceContainer.Instance.Get<ScreenFade>().AssertNotNull().Hide();
         }
 
         private void Teleport()

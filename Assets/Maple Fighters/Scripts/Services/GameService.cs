@@ -18,8 +18,8 @@ namespace Scripts.Services
         
         public void Connect()
         {
-            var gameConnectionInformation = ServicesConfiguration.GetInstance().GetConnectionInformation(ServersType.Game);
-            Connect(gameConnectionInformation);
+            var connectionInformation = ServicesConfiguration.GetInstance().GetConnectionInformation(ServersType.Game);
+            Connect(connectionInformation);
         }
 
         public void Disconnect()
@@ -96,9 +96,9 @@ namespace Scripts.Services
             }
 
             var requestId = OperationRequestSender.Send(GameOperations.EnterWorld, new EmptyParameters(), MessageSendOptions.DefaultReliable());
-            var response = await SubscriptionProvider.ProvideSubscription<EnterWorldOperationResponseParameters>(yield, requestId);
+            var responseParameters = await SubscriptionProvider.ProvideSubscription<EnterWorldOperationResponseParameters>(yield, requestId);
 
-            EntitiyInitialInformation.Invoke(response);
+            EntitiyInitialInformation.Invoke(responseParameters);
         }
 
         public void UpdateEntityPosition(UpdateEntityPositionRequestParameters parameters)

@@ -30,7 +30,35 @@ namespace Scripts.Containers.Service
             }
         }
 
+        public static ILoginService LoginService
+        {
+            get
+            {
+                if (_loginService == null)
+                {
+                    _loginService = new LoginService();
+                }
+
+                return _loginService;
+            }
+        }
+
+        public static IRegistrationService RegistrationService
+        {
+            get
+            {
+                if (_registrationService == null)
+                {
+                    _registrationService = new RegistrationService();
+                }
+
+                return _registrationService;
+            }
+        }
+
         private static IChatService _chatService;
         private static IGameService _gameService;
+        private static ILoginService _loginService;
+        private static IRegistrationService _registrationService;
     }
 }

@@ -10,8 +10,8 @@ namespace Scripts.Services
 
         public void Connect()
         {
-            var gameConnectionInformation = ServicesConfiguration.GetInstance().GetConnectionInformation(ServersType.Chat);
-            Connect(gameConnectionInformation);
+            var connectionInformation = ServicesConfiguration.GetInstance().GetConnectionInformation(ServersType.Chat);
+            Connect(connectionInformation);
         }
 
         public void Disconnect()

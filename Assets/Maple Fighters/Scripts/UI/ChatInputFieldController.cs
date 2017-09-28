@@ -24,13 +24,18 @@ namespace Scripts.UI
 
             inputField.gameObject.SetActive(!inputField.gameObject.activeSelf);
 
+            if (inputField.gameObject.activeSelf)
+            {
+                inputField.ActivateInputField();
+            }
+
             if (inputField.text.Length == 0)
             {
                 return;
             }
 
             SendMessage();
-            AddMessageToChatAndRestInputFieldText();
+            AddMessageToChatAndResetInputFieldText();
         }
 
         private void SendMessage()
@@ -40,7 +45,7 @@ namespace Scripts.UI
             ServiceContainer.ChatService.SendChatMessage(parameters);
         }
 
-        private void AddMessageToChatAndRestInputFieldText()
+        private void AddMessageToChatAndResetInputFieldText()
         {
             var message = $"Player: {inputField.text}";
             chatWindow.AddMessageToChatText.Invoke(message);

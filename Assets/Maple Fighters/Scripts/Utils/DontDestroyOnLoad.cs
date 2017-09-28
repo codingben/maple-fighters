@@ -5,11 +5,11 @@ namespace Scripts.Utils
     public class DontDestroyOnLoad<T> : MonoBehaviour
         where T : DontDestroyOnLoad<T>
     {
-        private static T _instance;
+        public static T Instance { get; private set; }
 
         private void Awake()
         {
-            if (_instance != null)
+            if (Instance != null)
             {
                 DestroyImmediate(gameObject);
                 return;
@@ -17,7 +17,7 @@ namespace Scripts.Utils
 
             DontDestroyOnLoad(gameObject);
 
-            _instance = this as T;
+            Instance = this as T;
         }
     }
 }
