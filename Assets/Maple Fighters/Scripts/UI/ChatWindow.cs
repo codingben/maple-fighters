@@ -1,8 +1,8 @@
 ﻿using System;
 using Chat.Common;
 using Scripts.Containers.Service;
+using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Scripts.UI
 {
@@ -10,7 +10,7 @@ namespace Scripts.UI
     {
         public Action<string> AddMessageToChatText;
 
-        [SerializeField] private Text chatText;
+        [SerializeField] private TextMeshProUGUI chatText;
 
         private void Awake()
         {

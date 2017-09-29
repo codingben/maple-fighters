@@ -1,13 +1,13 @@
 ﻿using Chat.Common;
 using Scripts.Containers.Service;
+using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Scripts.UI
 {
     public class ChatInputFieldController : MonoBehaviour
     {
-        [SerializeField] private InputField inputField;
+        [SerializeField] private TMP_InputField inputField;
         private ChatWindow chatWindow;
 
         private void Awake()
