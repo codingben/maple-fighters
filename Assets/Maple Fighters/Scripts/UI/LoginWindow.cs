@@ -1,4 +1,5 @@
 ﻿using CommonTools.Log;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,8 +10,8 @@ namespace Scripts.UI
         [Header("Configuration")]
         [SerializeField] private int passwordCharacters;
         [Header("Input Fields")]
-        [SerializeField] private InputField emailInputField;
-        [SerializeField] private InputField passwordInputField;
+        [SerializeField] private TMP_InputField emailInputField;
+        [SerializeField] private TMP_InputField passwordInputField;
         [Header("Buttons")]
         [SerializeField] private Button loginButton;
         [SerializeField] private Button registerButton;
