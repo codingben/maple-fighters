@@ -28,9 +28,21 @@ namespace Scripts.UI
 
         private void OnLoginButtonClicked()
         {
+            if (emailInputField.text == string.Empty)
+            {
+                ShowNotice("Email address can not be empty.");
+                return;
+            }
+
             if (!emailInputField.text.IsValidEmailAddress())
             {
                 ShowNotice("Email address is not valid.");
+                return;
+            }
+
+            if (passwordInputField.text == string.Empty)
+            {
+                ShowNotice("Password can not be empty.");
                 return;
             }
 

@@ -51,15 +51,15 @@ namespace Scripts.UI
                 return;
             }
 
-            if (passwordInputField.text == string.Empty || rePasswordInputField.text == string.Empty)
-            {
-                ShowNotice("Passwords can not be empty.");
-                return;
-            }
-
             if (!emailInputField.text.IsValidEmailAddress())
             {
                 ShowNotice("Email address is not valid.");
+                return;
+            }
+
+            if (passwordInputField.text == string.Empty || rePasswordInputField.text == string.Empty)
+            {
+                ShowNotice("Passwords can not be empty.");
                 return;
             }
 
@@ -69,10 +69,10 @@ namespace Scripts.UI
                 return;
             }
 
-            if (firstNameInputField.text.Length <= firstLastNameCharacters || 
-                lastNameInputField.text.Length <= firstLastNameCharacters)
+            if (firstNameInputField.text.Length < firstLastNameCharacters || 
+                lastNameInputField.text.Length < firstLastNameCharacters)
             {
-                ShowNotice("First or last name is short.");
+                ShowNotice("First or last name is too short.");
                 return;
             }
 

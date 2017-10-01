@@ -1,4 +1,5 @@
 ﻿using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,7 +12,7 @@ namespace Scripts.UI
         [Header("Buttons")]
         [SerializeField] private Button okButton;
         [Header("Texts")]
-        [SerializeField] private Text messageText;
+        [SerializeField] private TextMeshProUGUI messageText;
 
         public void Initialize(string message, Action okButtonClicked)
         {
