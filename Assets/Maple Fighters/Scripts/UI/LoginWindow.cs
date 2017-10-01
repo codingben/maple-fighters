@@ -1,4 +1,4 @@
-﻿using CommonTools.Log;
+﻿using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,6 +7,9 @@ namespace Scripts.UI
 {
     public class LoginWindow : UserInterfaceWindowFadeEffect
     {
+        public event Action<string, string> LoginButtonClicked;
+        public event Action RegisterButtonClicked;
+
         [Header("Configuration")]
         [SerializeField] private int passwordCharacters;
         [Header("Input Fields")]
@@ -16,12 +19,8 @@ namespace Scripts.UI
         [SerializeField] private Button loginButton;
         [SerializeField] private Button registerButton;
 
-        private RegisterWindow registerWindow;
-
         private void Start()
         {
-            UserInterfaceContainer.Instance.AddOnly(this);
-
             loginButton.onClick.AddListener(OnLoginButtonClicked);
             registerButton.onClick.AddListener(OnRegisterButtonClicked);
         }
@@ -52,7 +51,7 @@ namespace Scripts.UI
                 return;
             }
 
-            LogUtils.Log(MessageBuilder.Trace());
+            Login();
         }
 
         private void OnRegisterButtonClicked()
@@ -60,12 +59,15 @@ namespace Scripts.UI
             Hide();
             ResetInputFields();
 
-            if (registerWindow == null)
-            {
-                registerWindow = UserInterfaceContainer.Instance.Get<RegisterWindow>().AssertNotNull();
-            }
+            RegisterButtonClicked?.Invoke();
+        }
 
-            registerWindow.Show();
+        private void Login()
+        {
+            var email = emailInputField.text;
+            var password = passwordInputField.text;
+
+            LoginButtonClicked?.Invoke(email, password);
         }
 
         private void ResetInputFields()
