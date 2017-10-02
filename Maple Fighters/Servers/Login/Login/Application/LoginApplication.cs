@@ -18,6 +18,8 @@ namespace Login.Application
         {
             base.Startup();
 
+            AddCommonComponents();
+
             Server.Entity.Container.AddComponent(new DatabaseConnectionProvider());
             Server.Entity.Container.AddComponent(new DatabaseUserVerifier());
             Server.Entity.Container.AddComponent(new DatabaseUserPasswordVerifier());

@@ -8,6 +8,12 @@ namespace Login.Common
         public string Email;
         public string Password;
 
+        public LoginRequestParameters(string email, string password)
+        {
+            Email = email;
+            Password = password;
+        }
+
         public void Serialize(BinaryWriter writer)
         {
             writer.Write(Email);
