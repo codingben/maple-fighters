@@ -90,7 +90,7 @@ namespace Scripts.Services
 
         public async Task EnterWorld(IYield yield)
         {
-            if (!IsConnected())
+            if (!IsServerConnected())
             {
                 return;
             }
@@ -103,7 +103,7 @@ namespace Scripts.Services
 
         public void UpdateEntityPosition(UpdateEntityPositionRequestParameters parameters)
         {
-            if (!IsConnected())
+            if (!IsServerConnected())
             {
                 return;
             }
@@ -113,7 +113,7 @@ namespace Scripts.Services
 
         public void UpdatePlayerState(UpdatePlayerStateRequestParameters parameters)
         {
-            if (!IsConnected())
+            if (!IsServerConnected())
             {
                 return;
             }
@@ -123,7 +123,7 @@ namespace Scripts.Services
 
         public async Task ChangeScene(IYield yield, ChangeSceneRequestParameters parameters)
         {
-            if (!IsConnected())
+            if (!IsServerConnected())
             {
                 return;
             }

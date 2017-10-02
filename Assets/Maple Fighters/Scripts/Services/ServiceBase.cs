@@ -126,7 +126,7 @@ namespace Scripts.Services
             Dispose();
         }
 
-        protected bool IsConnected()
+        protected bool IsServerConnected()
         {
             return serverPeer != null && serverPeer.IsConnected;
         }

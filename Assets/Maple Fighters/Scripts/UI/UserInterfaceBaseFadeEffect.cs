@@ -10,6 +10,8 @@ namespace Scripts.UI
         [SerializeField] protected float showSpeed;
         [SerializeField] protected float hideSpeed;
 
+        protected bool isShowed;
+
         private Coroutine fadeCoroutine;
 
         public void Show(Action onFinished)
@@ -84,6 +86,8 @@ namespace Scripts.UI
 
         private void FadeFinished(Action onFinished = null)
         {
+            isShowed = true;
+
             CanvasGroup.alpha = 1;
             CanvasGroup.blocksRaycasts = true;
             CanvasGroup.interactable = true;
@@ -93,6 +97,8 @@ namespace Scripts.UI
 
         private void UnFadeFinished(Action onFinished = null)
         {
+            isShowed = false;
+
             CanvasGroup.alpha = 0;
             CanvasGroup.blocksRaycasts = false;
             CanvasGroup.interactable = false;

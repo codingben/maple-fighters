@@ -6,6 +6,8 @@ namespace Scripts.Services
 {
     public interface IRegistrationService
     {
+        bool IsConnected();
+
         void Connect();
         void Disconnect();
 

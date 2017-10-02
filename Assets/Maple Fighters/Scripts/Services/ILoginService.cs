@@ -6,6 +6,8 @@ namespace Scripts.Services
 {
     public interface ILoginService
     {
+        bool IsConnected();
+
         void Connect();
         void Disconnect();
 

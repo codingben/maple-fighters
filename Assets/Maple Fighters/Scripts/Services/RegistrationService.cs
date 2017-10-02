@@ -19,6 +19,11 @@ namespace Scripts.Services
             // Left blank intentionally
         }
 
+        public bool IsConnected()
+        {
+            return IsServerConnected();
+        }
+
         public void Connect()
         {
             var connectionInformation = ServicesConfiguration.GetInstance().GetConnectionInformation(ServersType.Registration);

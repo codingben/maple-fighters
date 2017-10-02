@@ -23,7 +23,14 @@ namespace Scripts.UI
 
         private void OnSceneLoaded(Scene scene, LoadSceneMode loadSceneMode)
         {
-            Show();
+            if (isShowed)
+            {
+                Hide();
+            }
+            else
+            {
+                Show();
+            }
         }
     }
 }

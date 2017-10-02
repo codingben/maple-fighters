@@ -45,7 +45,7 @@ namespace Scripts.Services
 
         public void SendChatMessage(ChatMessageRequestParameters parameters)
         {
-            if (!IsConnected())
+            if (!IsServerConnected())
             {
                 return;
             }

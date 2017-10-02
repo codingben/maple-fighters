@@ -7,7 +7,9 @@ namespace Scripts.UI
 {
     public class NoticeWindow : UserInterfaceBaseFadeEffect
     {
-        private Action okButtonClicked;
+        public TextMeshProUGUI Message => messageText;
+        public Button OkButton => okButton;
+        public Action OkButtonClicked;
 
         [Header("Buttons")]
         [SerializeField] private Button okButton;
@@ -17,8 +19,7 @@ namespace Scripts.UI
         public void Initialize(string message, Action okButtonClicked)
         {
             messageText.text = message;
-
-            this.okButtonClicked = okButtonClicked;
+            OkButtonClicked = okButtonClicked;
         }
 
         private void Start()
@@ -29,7 +30,9 @@ namespace Scripts.UI
         private void OnOkButtonClicked()
         {
             Hide();
-            okButtonClicked?.Invoke();
+
+            OkButtonClicked?.Invoke();
+
             UserInterfaceContainer.Instance.Remove(this);
         }
     }

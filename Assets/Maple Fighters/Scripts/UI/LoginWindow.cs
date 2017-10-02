@@ -9,6 +9,7 @@ namespace Scripts.UI
     {
         public event Action<string, string> LoginButtonClicked;
         public event Action RegisterButtonClicked;
+        public event Action<string> ShowNotice;
 
         [Header("Configuration")]
         [SerializeField] private int passwordCharacters;
@@ -29,25 +30,25 @@ namespace Scripts.UI
         {
             if (emailInputField.text == string.Empty)
             {
-                ShowNotice("Email address can not be empty.");
+                ShowNotice?.Invoke("Email address can not be empty.");
                 return;
             }
 
             if (!emailInputField.text.IsValidEmailAddress())
             {
-                ShowNotice("Email address is not valid.");
+                ShowNotice?.Invoke("Email address is not valid.");
                 return;
             }
 
             if (passwordInputField.text == string.Empty)
             {
-                ShowNotice("Password can not be empty.");
+                ShowNotice?.Invoke("Password can not be empty.");
                 return;
             }
 
             if (passwordInputField.text.Length <= passwordCharacters)
             {
-                ShowNotice("Password is not match.");
+                ShowNotice?.Invoke("Password is not match.");
                 return;
             }
 
@@ -74,15 +75,6 @@ namespace Scripts.UI
         {
             emailInputField.text = string.Empty;
             passwordInputField.text = string.Empty;
-        }
-
-        private void ShowNotice(string message)
-        {
-            Hide();
-
-            var noticeWindow = UserInterfaceContainer.Instance.Add<NoticeWindow>();
-            noticeWindow.Initialize(message, delegate { UserInterfaceContainer.Instance.Get<LoginWindow>().Show(); });
-            noticeWindow.Show();
         }
     }
 }
