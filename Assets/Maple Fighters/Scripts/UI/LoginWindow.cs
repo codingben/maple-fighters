@@ -28,27 +28,8 @@ namespace Scripts.UI
 
         private void OnLoginButtonClicked()
         {
-            if (emailInputField.text == string.Empty)
+            if (!AcceptInputFieldsContent())
             {
-                ShowNotice?.Invoke("Email address can not be empty.");
-                return;
-            }
-
-            if (!emailInputField.text.IsValidEmailAddress())
-            {
-                ShowNotice?.Invoke("Email address is not valid.");
-                return;
-            }
-
-            if (passwordInputField.text == string.Empty)
-            {
-                ShowNotice?.Invoke("Password can not be empty.");
-                return;
-            }
-
-            if (passwordInputField.text.Length <= passwordCharacters)
-            {
-                ShowNotice?.Invoke("Password is not match.");
                 return;
             }
 
@@ -75,6 +56,35 @@ namespace Scripts.UI
         {
             emailInputField.text = string.Empty;
             passwordInputField.text = string.Empty;
+        }
+
+        private bool AcceptInputFieldsContent()
+        {
+            if (emailInputField.text == string.Empty)
+            {
+                ShowNotice?.Invoke("Email address can not be empty.");
+                return false;
+            }
+
+            if (!emailInputField.text.IsValidEmailAddress())
+            {
+                ShowNotice?.Invoke("Email address is not valid.");
+                return false;
+            }
+
+            if (passwordInputField.text == string.Empty)
+            {
+                ShowNotice?.Invoke("Password can not be empty.");
+                return false;
+            }
+
+            if (passwordInputField.text.Length <= passwordCharacters)
+            {
+                ShowNotice?.Invoke("Password is not match.");
+                return false;
+            }
+
+            return true;
         }
     }
 }

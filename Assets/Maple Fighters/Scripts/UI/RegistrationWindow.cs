@@ -40,40 +40,8 @@ namespace Scripts.UI
 
         private void OnRegisterButtonClicked()
         {
-            if (emailInputField.text == string.Empty)
+            if (!AcceptInputFieldsContent())
             {
-                ShowNotice?.Invoke("Email address can not be empty.");
-                return;
-            }
-
-            if (!emailInputField.text.IsValidEmailAddress())
-            {
-                ShowNotice?.Invoke("Email address is not valid.");
-                return;
-            }
-
-            if (passwordInputField.text == string.Empty || rePasswordInputField.text == string.Empty)
-            {
-                ShowNotice?.Invoke("Passwords can not be empty.");
-                return;
-            }
-
-            if (passwordInputField.text.Length <= passwordCharacters)
-            {
-                ShowNotice?.Invoke("Please enter a longer password.");
-                return;
-            }
-
-            if (firstNameInputField.text.Length < firstLastNameCharacters || 
-                lastNameInputField.text.Length < firstLastNameCharacters)
-            {
-                ShowNotice?.Invoke("First or last name is too short.");
-                return;
-            }
-
-            if (passwordInputField.text != rePasswordInputField.text)
-            {
-                ShowNotice?.Invoke("Passwords are not match.");
                 return;
             }
 
@@ -97,6 +65,48 @@ namespace Scripts.UI
             rePasswordInputField.text = string.Empty;
             firstNameInputField.text = string.Empty;
             lastNameInputField.text = string.Empty;
+        }
+
+        private bool AcceptInputFieldsContent()
+        {
+            if (emailInputField.text == string.Empty)
+            {
+                ShowNotice?.Invoke("Email address can not be empty.");
+                return false;
+            }
+
+            if (!emailInputField.text.IsValidEmailAddress())
+            {
+                ShowNotice?.Invoke("Email address is not valid.");
+                return false;
+            }
+
+            if (passwordInputField.text == string.Empty || rePasswordInputField.text == string.Empty)
+            {
+                ShowNotice?.Invoke("Passwords can not be empty.");
+                return false;
+            }
+
+            if (passwordInputField.text.Length <= passwordCharacters)
+            {
+                ShowNotice?.Invoke("Please enter a longer password.");
+                return false;
+            }
+
+            if (firstNameInputField.text.Length < firstLastNameCharacters ||
+                lastNameInputField.text.Length < firstLastNameCharacters)
+            {
+                ShowNotice?.Invoke("First or last name is too short.");
+                return false;
+            }
+
+            if (passwordInputField.text != rePasswordInputField.text)
+            {
+                ShowNotice?.Invoke("Passwords are not match.");
+                return false;
+            }
+
+            return true;
         }
     }
 }

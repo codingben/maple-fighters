@@ -75,7 +75,7 @@ namespace Scripts.UI.Controllers
                 case RegisterStatus.Succeed:
                 {
                     noticeWindow.Message.text = "Registration is completed successfully.";
-                    noticeWindow.OkButtonClicked = delegate { loginWindow.Show(); };
+                    noticeWindow.OkButtonClicked = OnBackButtonClicked;
                     noticeWindow.OkButton.interactable = true;
                     break;
                 }

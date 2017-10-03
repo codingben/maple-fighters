@@ -10,6 +10,11 @@ namespace Scripts.UI
 
         private void Awake()
         {
+            OnAwake();
+        }
+
+        protected virtual void OnAwake()
+        {
             GameObject = gameObject;
             CanvasGroup = GetComponent<CanvasGroup>();
         }
