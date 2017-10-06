@@ -5,6 +5,7 @@ using CommonTools.Log;
 using Scripts.Containers.Service;
 using Scripts.Coroutines;
 using Scripts.UI;
+using Scripts.UI.Core;
 using Shared.Game.Common;
 using UnityEngine;
 using UnityEngine.SceneManagement;

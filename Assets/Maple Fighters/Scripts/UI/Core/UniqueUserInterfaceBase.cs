@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Scripts.UI
+namespace Scripts.UI.Core
 {
     public class UniqueUserInterfaceBase : MonoBehaviour, IUserInterface
     {

@@ -1,21 +1,24 @@
 ﻿using System;
-using CommonTools.Log;
+using Scripts.UI.Core;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Scripts.UI
+namespace Scripts.UI.Windows
 {
     public class CharactersSelectionWindow : UserInterfaceWindowFadeEffect
     {
-        public event Action Choosed;
+        public event Action CancelClicked;
+        public event Action ChoosedClicked;
         public event Action KnightSelected;
         public event Action ArrowSelected;
         public event Action WizardSelected;
         public event Action Deselected;
 
+        [SerializeField] private MouseDetectionBackground screenMouseDetection;
         [Header("Buttons")]
-        [SerializeField] private Button ChooseButton;
+        [SerializeField] private Button cancelButton;
+        [SerializeField] private Button chooseButton;
         [SerializeField] private Button knightButton;
         [SerializeField] private Button arrowButton;
         [SerializeField] private Button wizardButton;
@@ -30,7 +33,8 @@ namespace Scripts.UI
 
         private void Start()
         {
-            ChooseButton.onClick.AddListener(OnChooseClicked);
+            cancelButton.onClick.AddListener(OnCancelClicked);
+            chooseButton.onClick.AddListener(OnChooseClicked);
             knightButton.onClick.AddListener(OnKnightSelected);
             arrowButton.onClick.AddListener(OnArrowSelected);
             wizardButton.onClick.AddListener(OnWizardSelected);
@@ -38,23 +42,27 @@ namespace Scripts.UI
             SubscribeToMouseDetectionBackgroundEvent();
         }
 
+        private void OnDestroy()
+        {
+            cancelButton.onClick.RemoveListener(OnCancelClicked);
+            chooseButton.onClick.RemoveListener(OnChooseClicked);
+            knightButton.onClick.RemoveListener(OnKnightSelected);
+            arrowButton.onClick.RemoveListener(OnArrowSelected);
+            wizardButton.onClick.RemoveListener(OnWizardSelected);
+
+            UnsubscribeFromMouseDetectionBackgroundEvent();
+        }
+
         private void SubscribeToMouseDetectionBackgroundEvent()
         {
-            var screenMouseDetection = UserInterfaceContainer.Instance.Get<MouseDetectionBackground>().AssertNotNull();
             screenMouseDetection.MouseClicked += DeactiveAllSelectedClasses;
             screenMouseDetection.MouseClicked += OnDeselected;
         }
 
         private void UnsubscribeFromMouseDetectionBackgroundEvent()
         {
-            var screenMouseDetection = UserInterfaceContainer.Instance.Get<MouseDetectionBackground>().AssertNotNull();
             screenMouseDetection.MouseClicked -= DeactiveAllSelectedClasses;
             screenMouseDetection.MouseClicked -= OnDeselected;
-        }
-
-        private void OnDestroy()
-        {
-            UnsubscribeFromMouseDetectionBackgroundEvent();
         }
 
         private void OnKnightSelected()
@@ -63,6 +71,8 @@ namespace Scripts.UI
 
             knightSelectedImage.SetActive(true);
             knightName.fontStyle = FontStyles.Bold;
+
+            chooseButton.interactable = true;
 
             KnightSelected?.Invoke();
         }
@@ -74,6 +84,8 @@ namespace Scripts.UI
             arrowSelectedImage.SetActive(true);
             arrowName.fontStyle = FontStyles.Bold;
 
+            chooseButton.interactable = true;
+
             ArrowSelected?.Invoke();
         }
 
@@ -84,12 +96,25 @@ namespace Scripts.UI
             wizardSelectedImage.SetActive(true);
             wizardName.fontStyle = FontStyles.Bold;
 
+            chooseButton.interactable = true;
+
             WizardSelected?.Invoke();
+        }
+
+        private void OnCancelClicked()
+        {
+            Hide();
+
+            chooseButton.interactable = false;
+
+            DeactiveAllSelectedClasses();
+
+            CancelClicked?.Invoke();
         }
 
         private void OnChooseClicked()
         {
-            Choosed?.Invoke();
+            ChoosedClicked?.Invoke();
         }
 
         private void DeactiveAllSelectedClasses()
@@ -105,6 +130,8 @@ namespace Scripts.UI
 
         private void OnDeselected()
         {
+            chooseButton.interactable = false;
+
             Deselected?.Invoke();
         }
     }

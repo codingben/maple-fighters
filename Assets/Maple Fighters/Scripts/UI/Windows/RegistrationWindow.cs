@@ -1,9 +1,10 @@
 ﻿using System;
+using Scripts.UI.Core;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Scripts.UI
+namespace Scripts.UI.Windows
 {
     public class RegistrationWindow : UserInterfaceWindowFadeEffect
     {
@@ -28,6 +29,12 @@ namespace Scripts.UI
         {
             backButton.onClick.AddListener(OnBackButtonClicked);
             registerButton.onClick.AddListener(OnRegisterButtonClicked);
+        }
+
+        private void OnDestroy()
+        {
+            backButton.onClick.RemoveListener(OnBackButtonClicked);
+            registerButton.onClick.RemoveListener(OnRegisterButtonClicked);
         }
 
         private void OnBackButtonClicked()

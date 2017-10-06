@@ -1,4 +1,5 @@
-﻿using UnityEngine.SceneManagement;
+﻿using Scripts.UI.Core;
+using UnityEngine.SceneManagement;
 
 namespace Scripts.UI
 {

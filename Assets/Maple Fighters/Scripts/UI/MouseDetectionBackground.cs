@@ -1,4 +1,5 @@
 ﻿using System;
+using Scripts.UI.Core;
 using UnityEngine.EventSystems;
 
 namespace Scripts.UI
@@ -9,7 +10,10 @@ namespace Scripts.UI
 
         protected void Awake()
         {
-            UserInterfaceContainer.Instance.AddOnly(this);
+            if (UserInterfaceContainer.Instance.Get<MouseDetectionBackground>() == null)
+            {
+                UserInterfaceContainer.Instance.AddOnly(this);
+            }
         }
 
         public void OnPointerClick(PointerEventData eventData)

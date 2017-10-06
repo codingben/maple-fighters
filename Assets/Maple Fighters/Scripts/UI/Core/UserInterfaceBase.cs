@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Scripts.UI
+namespace Scripts.UI.Core
 {
     [RequireComponent(typeof(CanvasGroup))]
     public class UserInterfaceBase : MonoBehaviour, IUserInterface

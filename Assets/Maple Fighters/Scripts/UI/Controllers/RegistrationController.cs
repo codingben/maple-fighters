@@ -4,6 +4,8 @@ using CommonTools.Coroutines;
 using CommonTools.Log;
 using Registration.Common;
 using Scripts.Containers.Service;
+using Scripts.UI.Core;
+using Scripts.UI.Windows;
 using UnityEngine;
 
 namespace Scripts.UI.Controllers

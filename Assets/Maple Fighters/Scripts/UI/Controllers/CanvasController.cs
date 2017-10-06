@@ -1,4 +1,6 @@
-﻿namespace Scripts.UI
+﻿using Scripts.UI.Core;
+
+namespace Scripts.UI.Controllers
 {
     public class CanvasController : UserInterfaceBaseFadeEffect
     {

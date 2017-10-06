@@ -1,9 +1,10 @@
 ﻿using System;
+using Scripts.UI.Core;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Scripts.UI
+namespace Scripts.UI.Windows
 {
     public class NoticeWindow : UserInterfaceBaseFadeEffect
     {
@@ -25,6 +26,11 @@ namespace Scripts.UI
         private void Start()
         {
             okButton.onClick.AddListener(OnOkButtonClicked);
+        }
+
+        private void OnDestroy()
+        {
+            okButton.onClick.RemoveListener(OnOkButtonClicked);
         }
 
         private void OnOkButtonClicked()

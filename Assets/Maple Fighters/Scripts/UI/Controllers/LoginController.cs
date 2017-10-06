@@ -4,6 +4,8 @@ using CommonTools.Coroutines;
 using CommonTools.Log;
 using Login.Common;
 using Scripts.Containers.Service;
+using Scripts.UI.Core;
+using Scripts.UI.Windows;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -21,7 +23,9 @@ namespace Scripts.UI.Controllers
         private void Start()
         {
             coroutinesExecutor = new ExternalCoroutinesExecutor();
+
             loginWindow = UserInterfaceContainer.Instance.Add<LoginWindow>();
+            loginWindow.Show();
 
             SubscribeToLoginWindowEvents();
         }

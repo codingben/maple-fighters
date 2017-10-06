@@ -1,9 +1,10 @@
 ﻿using System;
+using Scripts.UI.Core;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Scripts.UI
+namespace Scripts.UI.Windows
 {
     public class LoginWindow : UserInterfaceWindowFadeEffect
     {
@@ -24,6 +25,12 @@ namespace Scripts.UI
         {
             loginButton.onClick.AddListener(OnLoginButtonClicked);
             registerButton.onClick.AddListener(OnRegisterButtonClicked);
+        }
+
+        private void OnDestroy()
+        {
+            loginButton.onClick.RemoveListener(OnLoginButtonClicked);
+            registerButton.onClick.RemoveListener(OnRegisterButtonClicked);
         }
 
         private void OnLoginButtonClicked()

@@ -1,9 +1,10 @@
 ﻿using System;
 using Chat.Common;
+using Scripts.UI.Core;
 using TMPro;
 using UnityEngine;
 
-namespace Scripts.UI
+namespace Scripts.UI.Windows
 {
     public class ChatWindow : UserInterfaceWindow
     {

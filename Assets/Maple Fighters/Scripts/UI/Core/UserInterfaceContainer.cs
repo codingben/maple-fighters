@@ -4,14 +4,22 @@ using System.Linq;
 using Scripts.Utils;
 using UnityEngine;
 
-namespace Scripts.UI
+namespace Scripts.UI.Core
 {
+    public enum ViewType
+    {
+        Background,
+        Foreground
+    }
+
     public class UserInterfaceContainer : DontDestroyOnLoad<UserInterfaceContainer>
     {
+        [Header("Views")]
+        [SerializeField] private Transform background;
+        [SerializeField] private Transform foreground;
+
         private const string UI_RESOURCES_PATH = "UI/{0}";
         private readonly List<IUserInterface> userInterfaces = new List<IUserInterface>();
-
-        [SerializeField] private Transform parent;
 
         public T AddOnly<T>(T type)
             where T : IUserInterface
@@ -26,7 +34,7 @@ namespace Scripts.UI
             return type;
         }
 
-        public T Add<T>()
+        public T Add<T>(ViewType viewType = ViewType.Foreground)
             where T : IUserInterface
         {
             var userInterfaceName = typeof(T).Name;
@@ -37,6 +45,7 @@ namespace Scripts.UI
                 throw new Exception($"Could not find an user interface with name {userInterfaceName}.");
             }
 
+            var parent = viewType == ViewType.Foreground ? foreground : background;
             var userInterface = Instantiate(userInterfaceObject, Vector3.zero, Quaternion.identity, parent)
                 .GetComponent<T>();
             userInterface.GameObject.transform.SetAsFirstSibling();
