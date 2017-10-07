@@ -9,10 +9,10 @@ namespace Scripts.UI
 {
     public class ClickableCharacter : UserInterfaceBaseFadeEffect, IPointerClickHandler
     {
-        public event Action<Character, int> CharacterClicked;
+        public event Action<Character?, int> CharacterClicked;
 
         private int index;
-        private Character character;
+        private Character? character;
 
         private Animator animator;
 
@@ -44,7 +44,7 @@ namespace Scripts.UI
             screenMouseDetection.MouseClicked -= PlayIdleAnimation;
         }
 
-        public void SetCharacter(int index, Character character)
+        public void SetCharacter(int index, Character? character)
         {
             this.index = index;
             this.character = character;

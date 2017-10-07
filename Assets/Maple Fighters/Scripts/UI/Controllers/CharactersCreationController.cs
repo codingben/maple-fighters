@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using CommonTools.Log;
 using Scripts.UI.Core;
 using Scripts.UI.Windows;
@@ -11,6 +10,7 @@ namespace Scripts.UI.Controllers
     public class CharactersCreationController : MonoBehaviour
     {
         private const string CHARACTERS_PATH = "Characters/{0}";
+        private const int MAXIMUM_CHARACTERS = 3;
 
         private Transform charactersParent;
         private CharacterSelectionOptionsWindow characterSelectionOptionsWindow;
@@ -21,15 +21,16 @@ namespace Scripts.UI.Controllers
 
             charactersParent = UserInterfaceContainer.Instance.Get<BackgroundCharactersParent>().AssertNotNull().GameObject.transform;
 
-            var characters = new [] { new Character(CharacterClasses.Arrow, "Stephen"), new Character(CharacterClasses.Knight, "Stephen"), new Character(CharacterClasses.Wizard, "Ronald") };
+            IList<Character?> characters = new [] { new Character(CharacterClasses.Arrow, "Stephen"), (Character?) null, new Character(CharacterClasses.Wizard, "Ronald") };
             OnReceivedCharacters(characters);
         }
 
-        private void OnReceivedCharacters(IList<Character> characters)
+        private void OnReceivedCharacters(IList<Character?> characters)
         {
-            if (characters.Count > 3)
+            if (characters.Count > MAXIMUM_CHARACTERS)
             {
-                throw new Exception("There can not be more than 3 characters.");
+                LogUtils.Log($"There can not be more than {MAXIMUM_CHARACTERS} characters.", LogMessageType.Error);
+                return;
             }
 
             for (var i = 0; i < characters.Count; i++)
@@ -39,7 +40,7 @@ namespace Scripts.UI.Controllers
             }
         }
 
-        private void CreateCharacter(Character character = null, int index = 0)
+        private void CreateCharacter(Character? character = null, int index = 0)
         {
             var characterName = character?.CharacterType.ToString() ?? $"Sample {index}";
             var characterType = Resources.Load<GameObject>(string.Format(CHARACTERS_PATH, characterName));
@@ -61,11 +62,11 @@ namespace Scripts.UI.Controllers
             var characterNameComponent = characterGameObject.transform.GetChild(0).GetComponent<TextMeshProUGUI>().AssertNotNull();
             if (characterNameComponent != null)
             {
-                characterNameComponent.text = character.Name;
+                characterNameComponent.text = character.Value.Name;
             }
         }
 
-        private void OnCharacterClicked(Character character, int index)
+        private void OnCharacterClicked(Character? character, int index)
         {
             RemoveCharacterSelectionOptionsWindowIfExists();
             ShowCharacterSelectionOptionsWindow(character, index);
@@ -79,7 +80,7 @@ namespace Scripts.UI.Controllers
             }
         }
 
-        private void ShowCharacterSelectionOptionsWindow(Character character, int index)
+        private void ShowCharacterSelectionOptionsWindow(Character? character, int index)
         {
             characterSelectionOptionsWindow = UserInterfaceContainer.Instance.Add<CharacterSelectionOptionsWindow>();
             characterSelectionOptionsWindow.StartButtonClicked += () => OnStartButtonClicked(index);
@@ -110,8 +111,8 @@ namespace Scripts.UI.Controllers
             // TODO: Implement
         }
     }
-
-    public class Character
+    
+    public struct Character
     {
         public readonly CharacterClasses CharacterType;
         public readonly string Name;
