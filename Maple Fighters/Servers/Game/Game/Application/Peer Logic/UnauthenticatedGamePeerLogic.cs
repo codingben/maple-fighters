@@ -1,6 +1,5 @@
 ﻿using CommunicationHelper;
 using Game.Application.PeerLogic.Operations;
-using Game.InterestManagement;
 using ServerCommunicationInterfaces;
 using Shared.Game.Common;
 using Shared.ServerApplication.Common.PeerLogic;
@@ -13,17 +12,17 @@ namespace Game.Application.PeerLogic
         {
             base.Initialize(peer);
 
-            AddHandlerForEnterWorldOperation();
+            AddHandlerForAuthenticationOperation();
         }
 
-        private void AddHandlerForEnterWorldOperation()
+        private void AddHandlerForAuthenticationOperation()
         {
-            OperationRequestHandlerRegister.SetHandler(GameOperations.EnterWorld, new EnterWorldOperationHandler(PeerWrapper.PeerId, OnAuthenticated));
+            OperationRequestHandlerRegister.SetHandler(GameOperations.Authenticate, new AuthenticationOperationHandler(OnAuthenticated));
         }
 
-        private void OnAuthenticated(IGameObject gameObject)
+        private void OnAuthenticated()
         {
-            PeerWrapper.SetPeerLogic(new AuthenticatedGamePeerLogic(gameObject));
+            PeerWrapper.SetPeerLogic(new AuthenticatedGamePeerLogic());
         }
     }
 }

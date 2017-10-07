@@ -11,7 +11,10 @@ namespace Database.Common.TablesDefinition
         [Alias("name")]
         public string Name { get; set; }
 
-        [Alias("class")]
-        public string Class { get; set; }
+        [Alias("character_type")]
+        public string CharacterType { get; set; }
+
+        [Alias("character_index")]
+        public int CharacterIndex { get; set; }
     }
 }

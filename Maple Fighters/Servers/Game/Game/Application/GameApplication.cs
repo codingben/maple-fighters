@@ -1,4 +1,5 @@
-﻿using Game.Application.Components;
+﻿using Database.Common.Components;
+using Game.Application.Components;
 using Game.Application.PeerLogic;
 using PythonScripting;
 using ServerApplication.Common.ApplicationBase;
@@ -31,6 +32,8 @@ namespace Game.Application
         {
             Server.Entity.Container.AddComponent(new PythonScriptEngine());
             Server.Entity.Container.AddComponent(new SceneContainer());
+            Server.Entity.Container.AddComponent(new PlayerGameObjectCreator());
+            Server.Entity.Container.AddComponent(new DatabaseConnectionProvider());
         }
     }
 }
