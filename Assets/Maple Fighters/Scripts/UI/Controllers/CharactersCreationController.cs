@@ -12,14 +12,16 @@ namespace Scripts.UI.Controllers
     {
         private const string CHARACTERS_PATH = "Characters/{0}";
 
-        [SerializeField] private Transform charactersParent;
+        private Transform charactersParent;
         private CharacterSelectionOptionsWindow characterSelectionOptionsWindow;
 
         private void Start()
         {
             // TODO: Subscribe to an event to get a data from the server.
 
-            var characters = new [] { new Character(CharacterClasses.Arrow, "Stephen"), null, new Character(CharacterClasses.Wizard, "Ronald") };
+            charactersParent = UserInterfaceContainer.Instance.Get<BackgroundCharactersParent>().AssertNotNull().GameObject.transform;
+
+            var characters = new [] { new Character(CharacterClasses.Arrow, "Stephen"), new Character(CharacterClasses.Knight, "Stephen"), new Character(CharacterClasses.Wizard, "Ronald") };
             OnReceivedCharacters(characters);
         }
 

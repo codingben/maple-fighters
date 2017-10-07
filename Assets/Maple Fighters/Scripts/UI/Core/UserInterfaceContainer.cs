@@ -12,13 +12,20 @@ namespace Scripts.UI.Core
         Foreground
     }
 
+    public enum Index
+    {
+        First,
+        Last
+    }
+
     public class UserInterfaceContainer : DontDestroyOnLoad<UserInterfaceContainer>
     {
+        private const string UI_RESOURCES_PATH = "UI/{0}";
+
         [Header("Views")]
         [SerializeField] private Transform background;
         [SerializeField] private Transform foreground;
 
-        private const string UI_RESOURCES_PATH = "UI/{0}";
         private readonly List<IUserInterface> userInterfaces = new List<IUserInterface>();
 
         public T AddOnly<T>(T type)
@@ -34,7 +41,7 @@ namespace Scripts.UI.Core
             return type;
         }
 
-        public T Add<T>(ViewType viewType = ViewType.Foreground)
+        public T Add<T>(ViewType viewType = ViewType.Foreground, Index index = Index.First)
             where T : IUserInterface
         {
             var userInterfaceName = typeof(T).Name;
@@ -48,7 +55,16 @@ namespace Scripts.UI.Core
             var parent = viewType == ViewType.Foreground ? foreground : background;
             var userInterface = Instantiate(userInterfaceObject, Vector3.zero, Quaternion.identity, parent)
                 .GetComponent<T>();
-            userInterface.GameObject.transform.SetAsFirstSibling();
+
+            if (index == Index.First)
+            {
+                userInterface.GameObject.transform.SetAsFirstSibling();
+            }
+            else
+            {
+                userInterface.GameObject.transform.SetAsLastSibling();
+            }
+
             userInterface.GameObject.GetComponent<RectTransform>().anchoredPosition = userInterfaceObject.transform.position;
 
             userInterfaces.Add(userInterface);

@@ -3,11 +3,10 @@ using Scripts.Utils;
 
 namespace Scripts.Services
 {
-    public class Connector : DontDestroyOnLoad<Connector>
+    public class ChatConnector : DontDestroyOnLoad<ChatConnector>
     {
         private void Start()
         {
-            ServiceContainer.GameService.Connect();
             ServiceContainer.ChatService.Connect();
         }
     }

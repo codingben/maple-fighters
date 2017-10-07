@@ -30,8 +30,6 @@ namespace Scripts.Services
         protected override void OnConnected()
         {
             AddEventsHandlers();
-
-            CoroutinesExecutor.StartTask(EnterWorld);
         }
 
         protected override void OnDisconnected()

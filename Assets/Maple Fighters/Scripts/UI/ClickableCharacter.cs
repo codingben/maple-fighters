@@ -1,6 +1,8 @@
 ﻿using System;
+using CommonTools.Log;
 using Scripts.UI.Controllers;
 using Scripts.UI.Core;
+using UnityEngine;
 using UnityEngine.EventSystems;
 
 namespace Scripts.UI
@@ -12,9 +14,34 @@ namespace Scripts.UI
         private int index;
         private Character character;
 
+        private Animator animator;
+
         private void Start()
         {
+            animator = GetComponent<Animator>();
+
             Show();
+
+            SubscribeToMouseDetectionBackgroundEvent();
+        }
+
+        private void OnDestroy()
+        {
+            CharacterClicked = null;
+
+            UnsubscribeFromMouseDetectionBackgroundEvent();
+        }
+
+        private void SubscribeToMouseDetectionBackgroundEvent()
+        {
+            var screenMouseDetection = UserInterfaceContainer.Instance.Get<MouseDetectionBackground>().AssertNotNull();
+            screenMouseDetection.MouseClicked += PlayIdleAnimation;
+        }
+
+        private void UnsubscribeFromMouseDetectionBackgroundEvent()
+        {
+            var screenMouseDetection = UserInterfaceContainer.Instance.Get<MouseDetectionBackground>().AssertNotNull();
+            screenMouseDetection.MouseClicked -= PlayIdleAnimation;
         }
 
         public void SetCharacter(int index, Character character)
@@ -25,12 +52,21 @@ namespace Scripts.UI
 
         public void OnPointerClick(PointerEventData eventData)
         {
+            PlayWalkAnimation();
+
             CharacterClicked?.Invoke(character, index);
         }
 
-        private void OnDestroy()
+        private void PlayIdleAnimation()
         {
-            CharacterClicked = null;
+            const string ANIMATION_NAME = "Walk";
+            animator.SetBool(ANIMATION_NAME, false);
+        }
+
+        private void PlayWalkAnimation()
+        {
+            const string ANIMATION_NAME = "Walk";
+            animator.SetBool(ANIMATION_NAME, true);
         }
     }
 }

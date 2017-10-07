@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/Maple Fighters/Scenes/Menu/Login.unity
     guid: 9df1aac550fe58b41a73c8be33536790
   - enabled: 1
+    path: Assets/Maple Fighters/Scenes/Menu/Game Initializer.unity
+    guid: ffedadea82dcf174a8268be270fb3a70
+  - enabled: 1
     path: Assets/Maple Fighters/Scenes/Levels/Game 1.unity
     guid: 650692c6966b4bc4890c1c9221c9c67f
   - enabled: 1

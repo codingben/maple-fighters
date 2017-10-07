@@ -4,14 +4,14 @@ namespace Scripts.UI.Core
 {
     public class UniqueUserInterfaceBase : MonoBehaviour, IUserInterface
     {
-        public GameObject GameObject { get; } = null;
+        public GameObject GameObject => gameObject;
 
-        public void Show()
+        public virtual void Show()
         {
             // Left blank intentionally
         }
 
-        public void Hide()
+        public virtual void Hide()
         {
             // Left blank intentionally
         }
