@@ -3,31 +3,31 @@ using CommonCommunicationInterfaces;
 
 namespace Shared.Game.Common
 {
-    public struct Character : IParameters
+    public struct CreateCharacterRequestParameters : IParameters
     {
-        public CharacterClasses CharacterType;
+        public CharacterClasses CharacterClass;
         public string Name;
         public CharacterIndex Index;
 
-        public Character(CharacterClasses characterType, string name, CharacterIndex characterIndex)
+        public CreateCharacterRequestParameters(CharacterClasses characterClass, string name, CharacterIndex characterIndex)
         {
-            CharacterType = characterType;
+            CharacterClass = characterClass;
             Name = name;
             Index = characterIndex;
         }
 
         public void Serialize(BinaryWriter writer)
         {
-            writer.Write((byte)CharacterType);
+            writer.Write((byte)CharacterClass);
             writer.Write(Name);
             writer.Write((byte)Index);
         }
 
         public void Deserialize(BinaryReader reader)
         {
-            CharacterType = (CharacterClasses)reader.ReadByte();
+            CharacterClass = (CharacterClasses)reader.ReadByte();
             Name = reader.ReadString();
-            Index = (CharacterIndex)reader.ReadByte();
+            Index = (CharacterIndex)reader.ReadInt32();
         }
     }
 }

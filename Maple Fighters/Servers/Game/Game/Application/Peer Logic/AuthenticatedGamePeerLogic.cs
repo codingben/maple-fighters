@@ -15,10 +15,12 @@ namespace Game.Application.PeerLogic
     internal class AuthenticatedGamePeerLogic : PeerLogicBase<GameOperations, GameEvents>
     {
         private readonly IGameObject gameObject;
+        private readonly int userId;
 
         public AuthenticatedGamePeerLogic()
         {
             gameObject = CreatePlayerGameObject();
+            userId = 1; // TODO: Remove
         }
 
         public override void Initialize(IClientPeerWrapper<IClientPeer> peer)
@@ -29,8 +31,11 @@ namespace Game.Application.PeerLogic
 
             AddComponents();
 
+            AddHandlerForFetchCharactersOperation();
             AddHandlerForEnterWorldOperation();
-            AddHandlerForUpdateEntityPositionOperation();
+            AddHandlerForCreateCharacterOperation();
+            AddHandlerForRemoveCharacterOperation();
+            AddHandlerForUpdatePositionOperation();
             AddHandlerForUpdatePlayerStateOperation();
             AddHandlerForChangeSceneOperation();
         }
@@ -51,15 +56,20 @@ namespace Game.Application.PeerLogic
             Entity.Container.AddComponent(new PositionChangesListener());
         }
 
-        private void AddHandlerForEnterWorldOperation()
+        private void AddHandlerForFetchCharactersOperation()
         {
-            OperationRequestHandlerRegister.SetHandler(GameOperations.EnterWorld, new EnterWorldOperationHandler(gameObject));
+            OperationRequestHandlerRegister.SetHandler(GameOperations.FetchCharacters, new FetchCharactersOperationHandler(userId));
         }
 
-        private void AddHandlerForUpdateEntityPositionOperation()
+        private void AddHandlerForEnterWorldOperation()
+        {
+            OperationRequestHandlerRegister.SetHandler(GameOperations.EnterWorld, new EnterWorldOperationHandler(gameObject, userId));
+        }
+
+        private void AddHandlerForUpdatePositionOperation()
         {
             var transform = gameObject.Container.GetComponent<Transform>().AssertNotNull();
-            OperationRequestHandlerRegister.SetHandler(GameOperations.PositionChanged, new UpdateEntityPositionOperationHandler(transform));
+            OperationRequestHandlerRegister.SetHandler(GameOperations.PositionChanged, new UpdatePositionOperationHandler(transform));
         }
 
         private void AddHandlerForUpdatePlayerStateOperation()
@@ -72,6 +82,16 @@ namespace Game.Application.PeerLogic
         {
             var gameObjectGetter = Entity.Container.GetComponent<GameObjectGetter>().AssertNotNull();
             OperationRequestHandlerRegister.SetHandler(GameOperations.ChangeScene, new ChangeSceneOperationHandler(gameObjectGetter));
+        }
+
+        private void AddHandlerForCreateCharacterOperation()
+        {
+            OperationRequestHandlerRegister.SetHandler(GameOperations.CreateCharacter, new CreateCharacterOperationHandler(userId));
+        }
+
+        private void AddHandlerForRemoveCharacterOperation()
+        {
+            OperationRequestHandlerRegister.SetHandler(GameOperations.RemoveCharacter, new RemoveCharacterOperationHandler(userId));
         }
 
         private void SubscribeToDisconnectedEvent()

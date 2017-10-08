@@ -7,7 +7,7 @@ using Shared.Game.Common;
 
 namespace Game.Application.Components
 {
-    internal class DatabaseCharacterCreator : Component<IServerEntity>
+    internal class DatabaseCharacterExistence : Component<IServerEntity>
     {
         private DatabaseConnectionProvider databaseConnectionProvider;
 
@@ -18,18 +18,12 @@ namespace Game.Application.Components
             databaseConnectionProvider = Entity.Container.GetComponent<DatabaseConnectionProvider>();
         }
 
-        public Character Create(int userId, string name, CharacterClasses characterClass, CharacterIndex characterIndex)
+        public bool Exists(int userId, CharacterIndex characterIndex)
         {
             using (var db = databaseConnectionProvider.GetDbConnection())
             {
-                var user = new CharactersTableDefinition
-                {
-                    UserId = userId,
-                    Name = name,
-                    CharacterType = characterClass.ToString()
-                };
-                db.Insert(user);
-                return new Character(characterClass, name, characterIndex);
+                var exists = db.Exists<CharactersTableDefinition>(new CharactersTableDefinition { UserId = userId, CharacterIndex = (int)characterIndex });
+                return exists;
             }
         }
     }

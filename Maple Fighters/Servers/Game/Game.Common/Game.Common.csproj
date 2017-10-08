@@ -51,13 +51,17 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AuthenticatedGameOperations.cs" />
     <Compile Include="ChangeSceneRequestParameters.cs" />
     <Compile Include="Character.cs" />
     <Compile Include="CharacterClasses.cs" />
+    <Compile Include="CharacterCreationStatus.cs" />
+    <Compile Include="CharacterIndex.cs" />
+    <Compile Include="CreateCharacterRequestParameters.cs" />
+    <Compile Include="CreateCharacterResponseParameters.cs" />
     <Compile Include="Directions.cs" />
-    <Compile Include="EnterWorldOperationResponseParameters.cs" />
+    <Compile Include="EnterWorldResponseParameters.cs" />
     <Compile Include="EnterWorldRequestParameters.cs" />
+    <Compile Include="FetchCharactersResponseParameters.cs" />
     <Compile Include="GameObjectsAddedEventParameters.cs" />
     <Compile Include="GameObjectsRemovedEventParameters.cs" />
     <Compile Include="GameObject.cs" />
@@ -70,9 +74,9 @@
     <Compile Include="Maps.cs" />
     <Compile Include="PlayerState.cs" />
     <Compile Include="PlayerStateChangedEventParameters.cs" />
-    <Compile Include="UnauthenticatedGameOperations.cs" />
+    <Compile Include="RemoveCharacterRequestParameters.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UpdateEntityPositionRequestParameters.cs" />
+    <Compile Include="UpdatePositionRequestParameters.cs" />
     <Compile Include="UpdatePlayerStateRequestParameters.cs" />
   </ItemGroup>
   <ItemGroup>

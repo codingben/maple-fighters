@@ -3,13 +3,13 @@ using CommonCommunicationInterfaces;
 
 namespace Shared.Game.Common
 {
-    public struct UpdateEntityPositionRequestParameters : IParameters
+    public struct UpdatePositionRequestParameters : IParameters
     {
         public float X;
         public float Y;
         public Directions Direction;
 
-        public UpdateEntityPositionRequestParameters(float x, float y, Directions direction)
+        public UpdatePositionRequestParameters(float x, float y, Directions direction)
         {
             X = x;
             Y = y;

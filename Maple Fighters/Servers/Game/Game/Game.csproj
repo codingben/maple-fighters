@@ -87,7 +87,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Application\Components\DatabaseCharacterCreator.cs" />
+    <Compile Include="Application\Components\DatabaseCharacterExistence.cs" />
+    <Compile Include="Application\Components\DatabaseCharacterNameVerifier.cs" />
     <Compile Include="Application\Components\DatabaseCharacterRemover.cs" />
+    <Compile Include="Application\Components\DatabaseCharactersGetter.cs" />
     <Compile Include="Application\Components\GameSceneWrapper.cs" />
     <Compile Include="Application\Components\PlayerGameObjectCreator.cs" />
     <Compile Include="Application\Components\SceneContainer.cs" />
@@ -99,9 +102,12 @@
     <Compile Include="Application\Peer Logic\Components\InterestAreaManagement.cs" />
     <Compile Include="Application\Peer Logic\Operations\AuthenticationOperationHandler.cs" />
     <Compile Include="Application\Peer Logic\Operations\ChangeSceneOperationHandler.cs" />
+    <Compile Include="Application\Peer Logic\Operations\CreateCharacterOperationHandler.cs" />
     <Compile Include="Application\Peer Logic\Operations\EnterWorldOperationHandler.cs" />
     <Compile Include="Application\Peer Logic\AuthenticatedGamePeerLogic.cs" />
-    <Compile Include="Application\Peer Logic\Operations\UpdateEntityPositionOperationHandler.cs" />
+    <Compile Include="Application\Peer Logic\Operations\FetchCharactersOperationHandler.cs" />
+    <Compile Include="Application\Peer Logic\Operations\RemoveCharacterOperationHandler.cs" />
+    <Compile Include="Application\Peer Logic\Operations\UpdatePositionOperationHandler.cs" />
     <Compile Include="Application\Peer Logic\Operations\UpdatePlayerStateOperationHandler.cs" />
     <Compile Include="Application\Peer Logic\UnauthenticatedGamePeerLogic.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

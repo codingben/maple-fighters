@@ -34,6 +34,11 @@ namespace Game.Application
             Server.Entity.Container.AddComponent(new SceneContainer());
             Server.Entity.Container.AddComponent(new PlayerGameObjectCreator());
             Server.Entity.Container.AddComponent(new DatabaseConnectionProvider());
+            Server.Entity.Container.AddComponent(new DatabaseCharacterCreator());
+            Server.Entity.Container.AddComponent(new DatabaseCharacterRemover());
+            Server.Entity.Container.AddComponent(new DatabaseCharacterNameVerifier());
+            Server.Entity.Container.AddComponent(new DatabaseCharactersGetter());
+            Server.Entity.Container.AddComponent(new DatabaseCharacterExistence());
         }
     }
 }

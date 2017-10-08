@@ -3,11 +3,10 @@ using Database.Common.TablesDefinition;
 using ServerApplication.Common.ApplicationBase;
 using ServerApplication.Common.ComponentModel;
 using ServiceStack.OrmLite;
-using Shared.Game.Common;
 
 namespace Game.Application.Components
 {
-    internal class DatabaseCharacterCreator : Component<IServerEntity>
+    internal class DatabaseCharacterNameVerifier : Component<IServerEntity>
     {
         private DatabaseConnectionProvider databaseConnectionProvider;
 
@@ -18,18 +17,12 @@ namespace Game.Application.Components
             databaseConnectionProvider = Entity.Container.GetComponent<DatabaseConnectionProvider>();
         }
 
-        public Character Create(int userId, string name, CharacterClasses characterClass, CharacterIndex characterIndex)
+        public bool Verify(string name)
         {
             using (var db = databaseConnectionProvider.GetDbConnection())
             {
-                var user = new CharactersTableDefinition
-                {
-                    UserId = userId,
-                    Name = name,
-                    CharacterType = characterClass.ToString()
-                };
-                db.Insert(user);
-                return new Character(characterClass, name, characterIndex);
+                var isVerified = db.Exists<CharactersTableDefinition>(new { Name = name });
+                return isVerified;
             }
         }
     }
