@@ -30,11 +30,11 @@ namespace Game.Application.PeerLogic.Operations
             var character = charactersGetter.GetCharacter(userId, characterIndex);
             if (character == null)
             {
-                return new EnterWorldResponseParameters();
+                return new EnterWorldResponseParameters(null, null, false);
             }
 
             var gameObject = GetGameObject();
-            return new EnterWorldResponseParameters(gameObject, character.Value);
+            return new EnterWorldResponseParameters(gameObject, character.Value, true);
         }
 
         private GameObject GetGameObject()

@@ -7,23 +7,35 @@ namespace Shared.Game.Common
     {
         public GameObject PlayerGameObject;
         public Character Character;
+        public bool HasCharacter;
 
-        public EnterWorldResponseParameters(GameObject playerGameObject, Character character)
+        public EnterWorldResponseParameters(GameObject? playerGameObject, Character? character, bool hasCharacter)
         {
-            PlayerGameObject = playerGameObject;
-            Character = character;
+            PlayerGameObject = playerGameObject.GetValueOrDefault();
+            Character = character.GetValueOrDefault();
+            HasCharacter = hasCharacter;
         }
 
         public void Serialize(BinaryWriter writer)
         {
-            PlayerGameObject.Serialize(writer);
-            Character.Serialize(writer);
+            writer.Write(HasCharacter);
+            
+            if (HasCharacter)
+            {
+                PlayerGameObject.Serialize(writer);
+                Character.Serialize(writer);
+            }
         }
 
         public void Deserialize(BinaryReader reader)
         {
-            PlayerGameObject.Deserialize(reader);
-            Character.Deserialize(reader);
+            HasCharacter = reader.ReadBoolean();
+
+            if (HasCharacter)
+            {
+                PlayerGameObject.Deserialize(reader);
+                Character.Deserialize(reader);
+            }
         }
     }
 }
