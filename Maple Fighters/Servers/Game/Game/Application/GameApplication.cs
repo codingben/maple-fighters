@@ -1,6 +1,6 @@
 ﻿using Database.Common.Components;
 using Game.Application.Components;
-using Game.Application.PeerLogic;
+using Game.Application.PeerLogics;
 using PythonScripting;
 using ServerApplication.Common.ApplicationBase;
 using ServerCommunicationInterfaces;
@@ -25,7 +25,7 @@ namespace Game.Application
         
         public override void OnConnected(IClientPeer clientPeer)
         {
-            WrapClientPeer(clientPeer, new UnauthenticatedGamePeerLogic());
+            WrapClientPeer(clientPeer, new UnauthenticatedPeerLogic());
         }
 
         private void AddComponents()

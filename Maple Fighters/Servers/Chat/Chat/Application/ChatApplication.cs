@@ -1,4 +1,4 @@
-﻿using Chat.Application.PeerLogic;
+﻿using Chat.Application.PeerLogics;
 using ServerApplication.Common.ApplicationBase;
 using ServerCommunicationInterfaces;
 
@@ -21,7 +21,7 @@ namespace Chat.Application
 
         public override void OnConnected(IClientPeer clientPeer)
         {
-            WrapClientPeer(clientPeer, new ChatPeerLogic());
+            WrapClientPeer(clientPeer, new AuthenticatedPeerLogic());
         }
     }
 }

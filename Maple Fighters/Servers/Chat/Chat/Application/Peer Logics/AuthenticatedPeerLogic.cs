@@ -5,9 +5,9 @@ using CommonTools.Log;
 using ServerCommunicationInterfaces;
 using Shared.ServerApplication.Common.PeerLogic;
 
-namespace Chat.Application.PeerLogic
+namespace Chat.Application.PeerLogics
 {
-    internal class ChatPeerLogic : PeerLogicBase<ChatOperations, ChatEvents>
+    internal class AuthenticatedPeerLogic : PeerLogicBase<ChatOperations, ChatEvents>
     {
         public override void Initialize(IClientPeerWrapper<IClientPeer> peer)
         {

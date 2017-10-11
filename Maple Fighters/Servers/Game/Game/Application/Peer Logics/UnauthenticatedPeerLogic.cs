@@ -4,9 +4,9 @@ using ServerCommunicationInterfaces;
 using Shared.Game.Common;
 using Shared.ServerApplication.Common.PeerLogic;
 
-namespace Game.Application.PeerLogic
+namespace Game.Application.PeerLogics
 {
-    internal class UnauthenticatedGamePeerLogic : PeerLogicBase<GameOperations, EmptyEventCode>
+    internal class UnauthenticatedPeerLogic : PeerLogicBase<GameOperations, EmptyEventCode>
     {
         public override void Initialize(IClientPeerWrapper<IClientPeer> peer)
         {
@@ -20,9 +20,9 @@ namespace Game.Application.PeerLogic
             OperationRequestHandlerRegister.SetHandler(GameOperations.Authenticate, new AuthenticationOperationHandler(OnAuthenticated));
         }
 
-        private void OnAuthenticated()
+        private void OnAuthenticated(int dbUserId)
         {
-            PeerWrapper.SetPeerLogic(new AuthenticatedGamePeerLogic());
+            PeerWrapper.SetPeerLogic(new CharactersSelectionPeerLogic(dbUserId));
         }
     }
 }
