@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using CommonCommunicationInterfaces;
 using CommonTools.Coroutines;
 using Scripts.ScriptableObjects;
@@ -8,12 +9,15 @@ namespace Scripts.Services
 {
     public sealed class GameService : ServiceBase<GameOperations, GameEvents>, IGameService
     {
-        public UnityEvent<EnterWorldOperationResponseParameters> EntitiyInitialInformation { get; } = new UnityEvent<EnterWorldOperationResponseParameters>();
+        public event Action Connected;
+        public event Action Authenticated;
+
+        public UnityEvent<EnterWorldResponseParameters> EntitiyInitialInformation { get; } = new UnityEvent<EnterWorldResponseParameters>();
         public UnityEvent<GameObjectAddedEventParameters> EntityAdded { get; } = new UnityEvent<GameObjectAddedEventParameters>();
         public UnityEvent<GameObjectRemovedEventParameters> EntityRemoved { get; } = new UnityEvent<GameObjectRemovedEventParameters>();
         public UnityEvent<GameObjectsAddedEventParameters> EntitiesAdded { get; } = new UnityEvent<GameObjectsAddedEventParameters>();
         public UnityEvent<GameObjectsRemovedEventParameters> EntitiesRemoved { get; } = new UnityEvent<GameObjectsRemovedEventParameters>();
-        public UnityEvent<GameObjectPositionChangedEventParameters> EntityPositionChanged { get; } = new UnityEvent<GameObjectPositionChangedEventParameters>();
+        public UnityEvent<GameObjectPositionChangedEventParameters> PositionChanged { get; } = new UnityEvent<GameObjectPositionChangedEventParameters>();
         public UnityEvent<PlayerStateChangedEventParameters> PlayerStateChanged { get; } = new UnityEvent<PlayerStateChangedEventParameters>();
         
         public void Connect()
@@ -30,6 +34,8 @@ namespace Scripts.Services
         protected override void OnConnected()
         {
             AddEventsHandlers();
+
+            Connected?.Invoke();
         }
 
         protected override void OnDisconnected()
@@ -65,7 +71,7 @@ namespace Scripts.Services
 
             EventHandlerRegister.SetHandler(GameEvents.PositionChanged, new EventInvoker<GameObjectPositionChangedEventParameters>(unityEvent =>
             {
-                EntityPositionChanged?.Invoke(unityEvent.Parameters);
+                PositionChanged?.Invoke(unityEvent.Parameters);
                 return true;
             }));
 
@@ -86,20 +92,75 @@ namespace Scripts.Services
             EventHandlerRegister.RemoveHandler(GameEvents.PlayerStateChanged);
         }
 
-        public async Task EnterWorld(IYield yield)
+        public async Task Authenticate(IYield yield)
         {
             if (!IsServerConnected())
             {
                 return;
             }
 
-            var requestId = OperationRequestSender.Send(GameOperations.EnterWorld, new EmptyParameters(), MessageSendOptions.DefaultReliable());
-            var responseParameters = await SubscriptionProvider.ProvideSubscription<EnterWorldOperationResponseParameters>(yield, requestId);
+            var requestId = OperationRequestSender.Send(GameOperations.Authenticate, new EmptyParameters(), MessageSendOptions.DefaultReliable());
+            await SubscriptionProvider.ProvideSubscription<EmptyParameters>(yield, requestId);
 
-            EntitiyInitialInformation.Invoke(responseParameters);
+            Authenticated?.Invoke();
         }
 
-        public void UpdateEntityPosition(UpdateEntityPositionRequestParameters parameters)
+        public async Task<EnterWorldStatus> EnterWorld(IYield yield, EnterWorldRequestParameters parameters)
+        {
+            if (!IsServerConnected())
+            {
+                return EnterWorldStatus.Denied;
+            }
+
+            var requestId = OperationRequestSender.Send(GameOperations.EnterWorld, parameters, MessageSendOptions.DefaultReliable());
+            var responseParameters = await SubscriptionProvider.ProvideSubscription<EnterWorldResponseParameters>(yield, requestId);
+
+            if (!responseParameters.HasCharacter)
+            {
+                return EnterWorldStatus.Denied;
+            }
+
+            EntitiyInitialInformation.Invoke(responseParameters);
+            return EnterWorldStatus.Access;
+        }
+
+        public async Task<FetchCharactersResponseParameters> FetchCharacters(IYield yield)
+        {
+            if (!IsServerConnected())
+            {
+                return new FetchCharactersResponseParameters(new Character[0]);
+            }
+
+            var requestId = OperationRequestSender.Send(GameOperations.FetchCharacters, new EmptyParameters(), MessageSendOptions.DefaultReliable());
+            var responseParameters = await SubscriptionProvider.ProvideSubscription<FetchCharactersResponseParameters>(yield, requestId);
+            return responseParameters;
+        }
+
+        public async Task<CreateCharacterResponseParameters> CreateCharacter(IYield yield, CreateCharacterRequestParameters parameters)
+        {
+            if (!IsServerConnected())
+            {
+                return new CreateCharacterResponseParameters(CharacterCreationStatus.Failed);
+            }
+
+            var requestId = OperationRequestSender.Send(GameOperations.CreateCharacter, parameters, MessageSendOptions.DefaultReliable());
+            var responseParameters = await SubscriptionProvider.ProvideSubscription<CreateCharacterResponseParameters>(yield, requestId);
+            return responseParameters;
+        }
+
+        public async Task<RemoveCharacterResponseParameters> RemoveCharacter(IYield yield, RemoveCharacterRequestParameters parameters)
+        {
+            if (!IsServerConnected())
+            {
+                return new RemoveCharacterResponseParameters(RemoveCharacterStatus.Failed);
+            }
+
+            var requestId = OperationRequestSender.Send(GameOperations.RemoveCharacter, parameters, MessageSendOptions.DefaultReliable());
+            var responseParameters = await SubscriptionProvider.ProvideSubscription<RemoveCharacterResponseParameters>(yield, requestId);
+            return responseParameters;
+        }
+
+        public void UpdatePosition(UpdatePositionRequestParameters parameters)
         {
             if (!IsServerConnected())
             {

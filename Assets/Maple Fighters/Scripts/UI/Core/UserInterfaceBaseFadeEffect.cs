@@ -71,6 +71,8 @@ namespace Scripts.UI.Core
 
         private IEnumerator UnFadeRoutine(float speed, Action onFinished = null)
         {
+            CanvasGroup.interactable = false;
+
             while (true)
             {
                 if (CanvasGroup.alpha <= 0)

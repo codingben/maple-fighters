@@ -10,17 +10,26 @@ namespace Scripts.UI.Windows
     {
         public TextMeshProUGUI Message => messageText;
         public Button OkButton => okButton;
-        public Action OkButtonClicked;
+        public Action OkButtonClickedAction;
 
+        [Header("Images")]
+        [SerializeField] private Image blackBackground;
         [Header("Buttons")]
         [SerializeField] private Button okButton;
         [Header("Texts")]
         [SerializeField] private TextMeshProUGUI messageText;
 
-        public void Initialize(string message, Action okButtonClicked)
+        public void Initialize(string message, Action okButtonClicked, bool background = false)
         {
             messageText.text = message;
-            OkButtonClicked = okButtonClicked;
+            OkButtonClickedAction = okButtonClicked;
+
+            blackBackground.gameObject.SetActive(background);
+        }
+
+        public override void Hide()
+        {
+            Hide(() => UserInterfaceContainer.Instance.Remove(this));
         }
 
         private void Start()
@@ -37,9 +46,7 @@ namespace Scripts.UI.Windows
         {
             Hide();
 
-            OkButtonClicked?.Invoke();
-
-            UserInterfaceContainer.Instance.Remove(this);
+            OkButtonClickedAction?.Invoke();
         }
     }
 }

@@ -35,6 +35,8 @@ namespace Scripts.UI.Windows
         {
             backButton.onClick.RemoveListener(OnBackButtonClicked);
             registerButton.onClick.RemoveListener(OnRegisterButtonClicked);
+
+            ShowNotice = null;
         }
 
         private void OnBackButtonClicked()
@@ -47,6 +49,8 @@ namespace Scripts.UI.Windows
 
         private void OnRegisterButtonClicked()
         {
+            Hide();
+
             if (!AcceptInputFieldsContent())
             {
                 return;

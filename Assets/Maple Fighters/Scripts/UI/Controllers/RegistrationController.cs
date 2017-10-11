@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using CommonTools.Coroutines;
 using CommonTools.Log;
 using Registration.Common;
@@ -15,11 +14,10 @@ namespace Scripts.UI.Controllers
         private RegistrationWindow registrationWindow;
         private LoginWindow loginWindow;
 
-        private ExternalCoroutinesExecutor coroutinesExecutor;
+        private readonly ExternalCoroutinesExecutor coroutinesExecutor = new ExternalCoroutinesExecutor();
 
         private void Start()
         {
-            coroutinesExecutor = new ExternalCoroutinesExecutor();
             registrationWindow = UserInterfaceContainer.Instance.Add<RegistrationWindow>();
 
             SubscribeToRegistrationWindowEvents();
@@ -43,21 +41,20 @@ namespace Scripts.UI.Controllers
         {
             registrationWindow.RegisterButtonClicked += OnRegisterButtonClicked;
             registrationWindow.BackButtonClicked += OnBackButtonClicked;
-            registrationWindow.ShowNotice += ShowNotice;
+            registrationWindow.ShowNotice += (message) => Utils.ShowNotice(message, () => registrationWindow.Show());
         }
 
         private void UnsubscribeFromRegistrationWindowEvents()
         {
             registrationWindow.RegisterButtonClicked -= OnRegisterButtonClicked;
             registrationWindow.BackButtonClicked -= OnBackButtonClicked;
-            registrationWindow.ShowNotice -= ShowNotice;
         }
 
         private void OnRegisterButtonClicked(string email, string password, string firstName, string lastName)
         {
             if (!ServiceContainer.RegistrationService.IsConnected())
             {
-                ShowNotice("Could not connect to a server.");
+                Utils.ShowNotice("Could not connect to a server.", () => registrationWindow.Show());
                 return;
             }
 
@@ -67,7 +64,7 @@ namespace Scripts.UI.Controllers
 
         private async Task Register(IYield yield, RegisterRequestParameters paramters)
         {
-            var noticeWindow = ShowCustomNotice("Registration is in a process, please wait.", delegate { registrationWindow.Show(); });
+            var noticeWindow = Utils.ShowNotice("Registration is in a process, please wait.", () => registrationWindow.Show());
             noticeWindow.OkButton.interactable = false;
 
             var responseParameters = await ServiceContainer.RegistrationService.Register(yield, paramters);
@@ -77,7 +74,7 @@ namespace Scripts.UI.Controllers
                 case RegisterStatus.Succeed:
                 {
                     noticeWindow.Message.text = "Registration is completed successfully.";
-                    noticeWindow.OkButtonClicked = OnBackButtonClicked;
+                    noticeWindow.OkButtonClickedAction = OnBackButtonClicked;
                     noticeWindow.OkButton.interactable = true;
                     break;
                 }
@@ -104,26 +101,6 @@ namespace Scripts.UI.Controllers
             }
 
             loginWindow.Show();
-        }
-
-        private void ShowNotice(string message)
-        {
-            registrationWindow.Hide();
-
-            var noticeWindow = UserInterfaceContainer.Instance.Add<NoticeWindow>();
-            noticeWindow.Initialize(message, delegate { registrationWindow.Show(); });
-            noticeWindow.Show();
-        }
-
-        private NoticeWindow ShowCustomNotice(string message, Action okButtonClicked)
-        {
-            registrationWindow.Hide();
-
-            var noticeWindow = UserInterfaceContainer.Instance.Add<NoticeWindow>();
-            noticeWindow.Initialize(message, okButtonClicked);
-            noticeWindow.Show();
-
-            return noticeWindow;
         }
     }
 }

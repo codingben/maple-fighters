@@ -8,12 +8,14 @@ namespace Scripts.UI.Windows
 {
     public class CharactersSelectionWindow : UserInterfaceWindowFadeEffect
     {
-        public event Action CancelClicked;
         public event Action ChoosedClicked;
+        public event Action CancelClicked;
         public event Action KnightSelected;
         public event Action ArrowSelected;
         public event Action WizardSelected;
         public event Action Deselected;
+
+        public Action DeactiveAll;
 
         [SerializeField] private MouseDetectionBackground screenMouseDetection;
         [Header("Buttons")]
@@ -33,6 +35,8 @@ namespace Scripts.UI.Windows
 
         private void Start()
         {
+            DeactiveAll = Deactive;
+
             cancelButton.onClick.AddListener(OnCancelClicked);
             chooseButton.onClick.AddListener(OnChooseClicked);
             knightButton.onClick.AddListener(OnKnightSelected);
@@ -114,6 +118,8 @@ namespace Scripts.UI.Windows
 
         private void OnChooseClicked()
         {
+            Hide();
+
             ChoosedClicked?.Invoke();
         }
 
@@ -126,6 +132,13 @@ namespace Scripts.UI.Windows
             knightSelectedImage.SetActive(false);
             arrowSelectedImage.SetActive(false);
             wizardSelectedImage.SetActive(false);
+        }
+
+        private void Deactive()
+        {
+            chooseButton.interactable = false;
+
+            DeactiveAllSelectedClasses();
         }
 
         private void OnDeselected()

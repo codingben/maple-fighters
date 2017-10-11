@@ -9,7 +9,7 @@ namespace Scripts.Gameplay.Actors
     {
         private void Start()
         {
-            ServiceContainer.GameService.EntityPositionChanged.AddListener(OnEntityPositionChanged);
+            ServiceContainer.GameService.PositionChanged.AddListener(OnEntityPositionChanged);
         }
 
         private void OnEntityPositionChanged(GameObjectPositionChangedEventParameters parameters)

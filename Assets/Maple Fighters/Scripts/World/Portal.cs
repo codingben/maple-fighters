@@ -24,12 +24,11 @@ namespace Scripts.World
         [SerializeField] private Vector3 newPosition;
 
         private Transform playerGameObject;
-        private ExternalCoroutinesExecutor coroutinesExecutor;
+
+        private readonly ExternalCoroutinesExecutor coroutinesExecutor = new ExternalCoroutinesExecutor().ExecuteExternally();
 
         private void Awake()
         {
-            coroutinesExecutor = new ExternalCoroutinesExecutor().ExecuteExternally();
-
             StartInteraction = OnInteractionStarted;
             StopInteraction = OnInteractionStopped;
         }

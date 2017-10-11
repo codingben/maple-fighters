@@ -22,9 +22,7 @@ namespace Scripts.UI.Windows
         private void Start()
         {
             confirmButton.onClick.AddListener(OnConfirmClicked);
-            confirmButton.onClick.AddListener(ResetNameInputField);
             backButton.onClick.AddListener(OnBackClicked);
-            backButton.onClick.AddListener(ResetNameInputField);
 
             nameInputField.onValueChanged.AddListener(IsEnoughCharactersForInteractableConfirmButton);
         }
@@ -32,9 +30,7 @@ namespace Scripts.UI.Windows
         private void OnDestroy()
         {
             confirmButton.onClick.RemoveListener(OnConfirmClicked);
-            confirmButton.onClick.RemoveListener(ResetNameInputField);
             backButton.onClick.RemoveListener(OnBackClicked);
-            backButton.onClick.RemoveListener(ResetNameInputField);
 
             nameInputField.onValueChanged.RemoveListener(IsEnoughCharactersForInteractableConfirmButton);
         }
@@ -46,12 +42,19 @@ namespace Scripts.UI.Windows
 
         private void OnConfirmClicked()
         {
+            Hide();
+
             var characterName = nameInputField.text;
             ConfirmClicked?.Invoke(characterName);
+
+            ResetNameInputField();
         }
 
         private void OnBackClicked()
         {
+            Hide();
+            ResetNameInputField();
+
             BackClicked?.Invoke();
         }
 

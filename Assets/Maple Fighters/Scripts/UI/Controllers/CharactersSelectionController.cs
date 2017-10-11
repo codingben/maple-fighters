@@ -1,25 +1,35 @@
-﻿using CommonTools.Log;
+﻿using System.Threading.Tasks;
+using CommonTools.Coroutines;
+using Scripts.Containers.Service;
 using Scripts.UI.Core;
 using Scripts.UI.Windows;
+using Shared.Game.Common;
 
 namespace Scripts.UI.Controllers
 {
-    public enum CharacterClasses
-    {
-        Knight,
-        Arrow,
-        Wizard
-    }
-
     public class CharactersSelectionController : MonoSingleton<CharactersSelectionController>
     {
+        private ClickableCharacter clickedCharacter;
+
         private CharactersSelectionWindow charactersSelectionWindow;
         private CharacterNameWindow characterNameWindow;
 
-        private CharacterClasses chosenCharacterClass;
+        private CreateCharacterRequestParameters characterRequestParameters;
 
-        public void ShowCharactersSelectionWindow()
+        private readonly ExternalCoroutinesExecutor coroutinesExecutor = new ExternalCoroutinesExecutor();
+
+        private void Update()
         {
+            coroutinesExecutor?.Update();
+        }
+
+        public void ShowCharactersSelectionWindow(ClickableCharacter clickableCharacter, int characterIndex)
+        {
+            clickedCharacter = clickableCharacter;
+            clickedCharacter.PlayWalkAnimationAction.Invoke();
+
+            characterRequestParameters.Index = (CharacterIndex)characterIndex;
+
             if (charactersSelectionWindow)
             {
                 charactersSelectionWindow.Show();
@@ -61,8 +71,8 @@ namespace Scripts.UI.Controllers
 
         private void SubscribeToCharactersSelectionWindowEvents()
         {
-            charactersSelectionWindow.CancelClicked += OnCancelClicked;
             charactersSelectionWindow.ChoosedClicked += OnChoosedClass;
+            charactersSelectionWindow.CancelClicked += OnCancelClicked;
             charactersSelectionWindow.KnightSelected += OnKnightSelected;
             charactersSelectionWindow.ArrowSelected += OnArrowSelected;
             charactersSelectionWindow.WizardSelected += OnWizardSelected;
@@ -71,8 +81,8 @@ namespace Scripts.UI.Controllers
 
         private void UnsubscribeFromCharactersSelectionWindowEvents()
         {
-            charactersSelectionWindow.CancelClicked -= OnCancelClicked;
             charactersSelectionWindow.ChoosedClicked -= OnChoosedClass;
+            charactersSelectionWindow.CancelClicked -= OnCancelClicked;
             charactersSelectionWindow.KnightSelected -= OnKnightSelected;
             charactersSelectionWindow.ArrowSelected -= OnArrowSelected;
             charactersSelectionWindow.WizardSelected -= OnWizardSelected;
@@ -93,47 +103,88 @@ namespace Scripts.UI.Controllers
 
         private void OnConfirmClicked(string characterName)
         {
-            // TODO: Implement
+            characterRequestParameters.Name = characterName;
 
-            LogUtils.Log(MessageBuilder.Trace(characterName));
+            coroutinesExecutor.StartTask(CreateCharacter);
+        }
+
+        private async Task CreateCharacter(IYield yield)
+        {
+            var noticeWindow = Utils.ShowNotice("Creating a new character... Please wait.", ShowCharacterNamwWindow, true);
+            noticeWindow.OkButton.interactable = false;
+
+            var responseParameters = await ServiceContainer.GameService.CreateCharacter(yield, characterRequestParameters);
+
+            switch (responseParameters.Status)
+            {
+                case CharacterCreationStatus.Succeed:
+                {
+                    CharactersController.Instance.RecreateCharacter(GetLastCreatedCharacter());
+
+                    noticeWindow.Message.text = "Character created successfully.";
+                    noticeWindow.OkButtonClickedAction = charactersSelectionWindow.DeactiveAll;
+                    noticeWindow.OkButton.interactable = true;
+                    break;
+                }
+                case CharacterCreationStatus.Failed:
+                {
+                    noticeWindow.Message.text = "Failed to create a new character, please try again.";
+                    noticeWindow.OkButton.interactable = true;
+                    break;
+                }
+                case CharacterCreationStatus.NameUsed:
+                {
+                    noticeWindow.Message.text = "The name is already in use, choose another name.";
+                    noticeWindow.OkButton.interactable = true;
+                    break;
+                }
+                default:
+                {
+                    noticeWindow.Message.text = "Something went wrong, please try again.";
+                    noticeWindow.OkButton.interactable = true;
+                    break;
+                }
+            }
         }
 
         private void OnBackClicked()
         {
-            characterNameWindow.Hide();
             charactersSelectionWindow.Show();
-        }
-
-        private void OnCancelClicked()
-        {
-            charactersSelectionWindow.Hide();
         }
 
         private void OnChoosedClass()
         {
-            charactersSelectionWindow.Hide();
-
             ShowCharacterNamwWindow();
+        }
+
+        private void OnCancelClicked()
+        {
+            clickedCharacter.PlayIdleAnimationAction.Invoke();
         }
 
         private void OnKnightSelected()
         {
-            chosenCharacterClass = CharacterClasses.Knight;
+            characterRequestParameters.CharacterClass = CharacterClasses.Knight;
         }
 
         private void OnArrowSelected()
         {
-            chosenCharacterClass = CharacterClasses.Arrow;
+            characterRequestParameters.CharacterClass = CharacterClasses.Arrow;
         }
 
         private void OnWizardSelected()
         {
-            chosenCharacterClass = CharacterClasses.Wizard;
+            characterRequestParameters.CharacterClass = CharacterClasses.Wizard;
         }
 
         private void OnDeselected()
         {
             // Left blank intentionally
+        }
+
+        private Character GetLastCreatedCharacter()
+        {
+            return new Character(characterRequestParameters.CharacterClass, characterRequestParameters.Name, characterRequestParameters.Index);
         }
     }
 }

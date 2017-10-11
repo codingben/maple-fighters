@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using CommonTools.Coroutines;
 using CommonTools.Log;
 using Login.Common;
@@ -18,12 +17,10 @@ namespace Scripts.UI.Controllers
         private RegistrationWindow registrationWindow;
         private LoginWindow loginWindow;
 
-        private ExternalCoroutinesExecutor coroutinesExecutor;
+        private readonly ExternalCoroutinesExecutor coroutinesExecutor = new ExternalCoroutinesExecutor();
 
         private void Start()
         {
-            coroutinesExecutor = new ExternalCoroutinesExecutor();
-
             loginWindow = UserInterfaceContainer.Instance.Add<LoginWindow>();
             loginWindow.Show();
 
@@ -48,21 +45,20 @@ namespace Scripts.UI.Controllers
         {
             loginWindow.LoginButtonClicked += OnLoginButtonClicked;
             loginWindow.RegisterButtonClicked += OnRegisterButtonClicked;
-            loginWindow.ShowNotice += ShowNotice;
+            loginWindow.ShowNotice += (message) => Utils.ShowNotice(message, () => loginWindow.Show());
         }
 
         private void UnsubscribeFromRegistrationWindowEvents()
         {
             loginWindow.LoginButtonClicked -= OnLoginButtonClicked;
             loginWindow.RegisterButtonClicked -= OnRegisterButtonClicked;
-            loginWindow.ShowNotice -= ShowNotice;
         }
 
         private void OnLoginButtonClicked(string email, string password)
         {
             if (!ServiceContainer.LoginService.IsConnected())
             {
-                ShowNotice("Could not connect to a server.");
+                Utils.ShowNotice("Could not connect to a server.", () => loginWindow.Show());
                 return;
             }
 
@@ -72,7 +68,7 @@ namespace Scripts.UI.Controllers
 
         private async Task Login(IYield yield, LoginRequestParameters parameters)
         {
-            var noticeWindow = ShowCustomNotice("Login is in a process, please wait.", delegate { loginWindow.Show(); });
+            var noticeWindow = Utils.ShowNotice("Login is in a process, please wait.", () => loginWindow.Show());
             noticeWindow.OkButton.interactable = false;
 
             var responseParameters = await ServiceContainer.LoginService.Login(yield, parameters);
@@ -81,7 +77,7 @@ namespace Scripts.UI.Controllers
             {
                 case LoginStatus.Succeed:
                 {
-                    noticeWindow.Message.text = "Login was successful. Loading the world...";
+                    noticeWindow.Message.text = "You have logged in successfully. Loading the world...";
                     LoginSucceed(noticeWindow);
                     break;
                 }
@@ -127,26 +123,6 @@ namespace Scripts.UI.Controllers
             }
 
             registrationWindow.Show();
-        }
-
-        private void ShowNotice(string message)
-        {
-            loginWindow.Hide();
-
-            var noticeWindow = UserInterfaceContainer.Instance.Add<NoticeWindow>();
-            noticeWindow.Initialize(message, delegate { loginWindow.Show(); });
-            noticeWindow.Show();
-        }
-
-        private NoticeWindow ShowCustomNotice(string message, Action okButtonClicked)
-        {
-            loginWindow.Hide();
-
-            var noticeWindow = UserInterfaceContainer.Instance.Add<NoticeWindow>();
-            noticeWindow.Initialize(message, okButtonClicked);
-            noticeWindow.Show();
-
-            return noticeWindow;
         }
     }
 }

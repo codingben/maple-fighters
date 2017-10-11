@@ -25,12 +25,7 @@ namespace Scripts.Services
         protected IOperationRequestSender<TOperationCode> OperationRequestSender { get; private set; }
         protected IOperationResponseSubscriptionProvider SubscriptionProvider { get; private set; }
 
-        protected readonly ExternalCoroutinesExecutor CoroutinesExecutor;
-
-        protected ServiceBase()
-        {
-            CoroutinesExecutor = new ExternalCoroutinesExecutor().ExecuteExternally();
-        }
+        protected readonly ExternalCoroutinesExecutor CoroutinesExecutor = new ExternalCoroutinesExecutor().ExecuteExternally();
 
         public async Task<IServerPeer> ConnectAsync(IYield yield, PeerConnectionInformation connectionInformation)
         {
@@ -85,7 +80,7 @@ namespace Scripts.Services
                 }
             }
 
-            LogUtils.Log(MessageBuilder.Trace("Connecting to a {serverType} server - " + $"{peerConnectionInformation.Ip}:{peerConnectionInformation.Port}"));
+            LogUtils.Log(MessageBuilder.Trace($"Connecting to a {serverType} server - " + $"{peerConnectionInformation.Ip}:{peerConnectionInformation.Port}"));
 
             CoroutinesExecutor.StartTask(y => ConnectAsync(y, peerConnectionInformation));
         }

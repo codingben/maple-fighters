@@ -31,10 +31,14 @@ namespace Scripts.UI.Windows
         {
             loginButton.onClick.RemoveListener(OnLoginButtonClicked);
             registerButton.onClick.RemoveListener(OnRegisterButtonClicked);
+
+            ShowNotice = null;
         }
 
         private void OnLoginButtonClicked()
         {
+            Hide();
+
             if (!AcceptInputFieldsContent())
             {
                 return;

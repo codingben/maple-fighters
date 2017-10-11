@@ -1,7 +1,7 @@
 ﻿using System;
 using CommonTools.Log;
-using Scripts.UI.Controllers;
 using Scripts.UI.Core;
+using Shared.Game.Common;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -9,7 +9,10 @@ namespace Scripts.UI
 {
     public class ClickableCharacter : UserInterfaceBaseFadeEffect, IPointerClickHandler
     {
-        public event Action<Character?, int> CharacterClicked;
+        public Action PlayIdleAnimationAction;
+        public Action PlayWalkAnimationAction;
+
+        public event Action<Character, int> CharacterClicked;
 
         private int index;
         private Character? character;
@@ -19,6 +22,9 @@ namespace Scripts.UI
         private void Start()
         {
             animator = GetComponent<Animator>();
+
+            PlayIdleAnimationAction = PlayIdleAnimation;
+            PlayWalkAnimationAction = PlayWalkAnimation;
 
             Show();
 
@@ -30,6 +36,11 @@ namespace Scripts.UI
             CharacterClicked = null;
 
             UnsubscribeFromMouseDetectionBackgroundEvent();
+        }
+
+        public override void Hide()
+        {
+            Hide(() => Destroy(gameObject));
         }
 
         private void SubscribeToMouseDetectionBackgroundEvent()
@@ -44,7 +55,7 @@ namespace Scripts.UI
             screenMouseDetection.MouseClicked -= PlayIdleAnimation;
         }
 
-        public void SetCharacter(int index, Character? character)
+        public void SetCharacter(int index, Character character)
         {
             this.index = index;
             this.character = character;
@@ -52,9 +63,14 @@ namespace Scripts.UI
 
         public void OnPointerClick(PointerEventData eventData)
         {
+            if (!CanvasGroup.interactable)
+            {
+                return;
+            }
+
             PlayWalkAnimation();
 
-            CharacterClicked?.Invoke(character, index);
+            CharacterClicked?.Invoke(character.GetValueOrDefault(), index);
         }
 
         private void PlayIdleAnimation()

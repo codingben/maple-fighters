@@ -27,7 +27,7 @@ namespace Scripts.Containers.Entity
             ServiceContainer.GameService.EntitiesRemoved.AddListener(RemoveEntities);
         }
 
-        private void AddLocalEntity(EnterWorldOperationResponseParameters parameters)
+        private void AddLocalEntity(EnterWorldResponseParameters parameters)
         {
             LogUtils.Log(MessageBuilder.Trace($"Local Id: {parameters.PlayerGameObject.Id}"));
 

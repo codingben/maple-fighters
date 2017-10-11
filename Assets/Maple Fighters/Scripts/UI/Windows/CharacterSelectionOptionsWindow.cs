@@ -11,6 +11,7 @@ namespace Scripts.UI.Windows
         public event Action StartButtonClicked;
         public event Action CreateCharacterButtonClicked;
         public event Action DeleteCharacterButtonClicked;
+        public event Action PlayCharacterIdleAnimation;
 
         public void StartButtonInteraction(bool interctable) => startButton.interactable = interctable;
         public void CreateCharacteButtonInteraction(bool interctable) => createCharacterButton.interactable = interctable;
@@ -20,12 +21,8 @@ namespace Scripts.UI.Windows
         [SerializeField] private Button createCharacterButton;
         [SerializeField] private Button deleteCharacterButton;
 
-        private Action removeMeAction;
-
         private void Start()
         {
-            removeMeAction = RemoveMe;
-
             startButton.onClick.AddListener(OnStartClicked);
             createCharacterButton.onClick.AddListener(OnCreateCharacterClicked);
             deleteCharacterButton.onClick.AddListener(OnDeleteCharacterClicked);
@@ -42,35 +39,51 @@ namespace Scripts.UI.Windows
             UnsubscribeFromMouseDetectionBackgroundEvent();
         }
 
+        public override void Hide()
+        {
+            Hide(() => UserInterfaceContainer.Instance.Remove(this));
+
+            PlayCharacterIdleAnimation?.Invoke();
+        }
+
         private void SubscribeToMouseDetectionBackgroundEvent()
         {
             var screenMouseDetection = UserInterfaceContainer.Instance.Get<MouseDetectionBackground>().AssertNotNull();
-            screenMouseDetection.MouseClicked += removeMeAction;
+            screenMouseDetection.MouseClicked += Hide;
+            screenMouseDetection.MouseClicked += ShowChooseFighterText;
         }
 
         private void UnsubscribeFromMouseDetectionBackgroundEvent()
         {
             var screenMouseDetection = UserInterfaceContainer.Instance.Get<MouseDetectionBackground>().AssertNotNull();
-            screenMouseDetection.MouseClicked -= removeMeAction;
+            screenMouseDetection.MouseClicked -= Hide;
+            screenMouseDetection.MouseClicked -= ShowChooseFighterText;
         }
 
-        private void RemoveMe()
+        private void ShowChooseFighterText()
         {
-            UserInterfaceContainer.Instance.Remove(this);
+            var chooseFighterText = UserInterfaceContainer.Instance.Get<ChooseFighterText>().AssertNotNull();
+            chooseFighterText.Show();
         }
 
         private void OnStartClicked()
         {
+            Hide();
+
             StartButtonClicked?.Invoke();
         }
 
         private void OnCreateCharacterClicked()
         {
+            Hide();
+
             CreateCharacterButtonClicked?.Invoke();
         }
 
         private void OnDeleteCharacterClicked()
         {
+            Hide();
+
             DeleteCharacterButtonClicked?.Invoke();
         }
     }

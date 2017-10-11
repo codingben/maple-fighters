@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Text.RegularExpressions;
+using Scripts.UI.Core;
+using Scripts.UI.Windows;
 
-namespace Scripts.UI.Core
+namespace Scripts.UI
 {
     public static class Utils
     {
@@ -17,6 +19,14 @@ namespace Scripts.UI.Core
             {
                 return false;
             }
+        }
+
+        public static NoticeWindow ShowNotice(string message, Action okButtonClicked, bool background = false)
+        {
+            var noticeWindow = UserInterfaceContainer.Instance.Add<NoticeWindow>();
+            noticeWindow.Initialize(message, okButtonClicked, background);
+            noticeWindow.Show();
+            return noticeWindow;
         }
     }
 }
