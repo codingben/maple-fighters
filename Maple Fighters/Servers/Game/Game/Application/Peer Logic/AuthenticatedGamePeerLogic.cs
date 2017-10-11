@@ -44,12 +44,13 @@ namespace Game.Application.PeerLogic
         {
             var playerGameObjectCreator = Server.Entity.Container.GetComponent<PlayerGameObjectCreator>().AssertNotNull();
             var playerGameObject = playerGameObjectCreator.Create(Maps.Map_1, new Vector2(10, -5.5f));
-            playerGameObject.Container.AddComponent(new PeerIdGetter(PeerWrapper.PeerId));
             return playerGameObject;
         }
 
         private void AddComponents()
         {
+            gameObject.Container.AddComponent(new PeerIdGetter(PeerWrapper.PeerId));
+
             Entity.Container.AddComponent(new GameObjectGetter(gameObject));
             Entity.Container.AddComponent(new MinimalPeerGetter(PeerWrapper.Peer));
             Entity.Container.AddComponent(new InterestAreaManagement());

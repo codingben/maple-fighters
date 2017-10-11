@@ -18,7 +18,7 @@ namespace Game.Application.Components
             databaseConnectionProvider = Entity.Container.GetComponent<DatabaseConnectionProvider>();
         }
 
-        public Character Create(int userId, string name, CharacterClasses characterClass, CharacterIndex characterIndex)
+        public void Create(int userId, string name, CharacterClasses characterClass, CharacterIndex characterIndex)
         {
             using (var db = databaseConnectionProvider.GetDbConnection())
             {
@@ -26,10 +26,10 @@ namespace Game.Application.Components
                 {
                     UserId = userId,
                     Name = name,
-                    CharacterType = characterClass.ToString()
+                    CharacterType = characterClass.ToString(),
+                    CharacterIndex = (int)characterIndex
                 };
                 db.Insert(user);
-                return new Character(characterClass, name, characterIndex);
             }
         }
     }

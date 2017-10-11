@@ -27,7 +27,7 @@ namespace Shared.Game.Common
         {
             CharacterClass = (CharacterClasses)reader.ReadByte();
             Name = reader.ReadString();
-            Index = (CharacterIndex)reader.ReadInt32();
+            Index = (CharacterIndex)reader.ReadByte();
         }
     }
 }

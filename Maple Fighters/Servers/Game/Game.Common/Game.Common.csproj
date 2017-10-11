@@ -76,6 +76,8 @@
     <Compile Include="PlayerStateChangedEventParameters.cs" />
     <Compile Include="RemoveCharacterRequestParameters.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RemoveCharacterResponseParameters.cs" />
+    <Compile Include="RemoveCharacterStatus.cs" />
     <Compile Include="UpdatePositionRequestParameters.cs" />
     <Compile Include="UpdatePlayerStateRequestParameters.cs" />
   </ItemGroup>

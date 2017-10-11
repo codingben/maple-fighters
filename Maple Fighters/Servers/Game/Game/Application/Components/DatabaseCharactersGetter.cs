@@ -19,21 +19,40 @@ namespace Game.Application.Components
         {
             base.OnAwake();
 
-            databaseConnectionProvider = Entity.Container.GetComponent<DatabaseConnectionProvider>();
+            databaseConnectionProvider = Entity.Container.GetComponent<DatabaseConnectionProvider>().AssertNotNull();
         }
 
-        public IEnumerable<Character?> GetCharacters(int userId)
+        public IEnumerable<Character> GetCharacters(int userId)
         {
             using (var db = databaseConnectionProvider.GetDbConnection())
             {
-                var query = db.From<CharactersTableDefinition>().Where(x => x.UserId == userId);
-                var results = db.Column<CharactersTableDefinition>(query);
+                // Should only be 3 characters.
+                var charactersFromDatabase = db.Select<CharactersTableDefinition>().Where(x => x.UserId == userId);
+                var charactersDatabase = charactersFromDatabase.Select(GetCharacter).ToList();
 
-                var characters = new List<Character?>(MAXIMUM_CHARACTERS);
-                characters.AddRange(results.Select(GetCharacter));
+                // If there is no characters, it means that there is an empty character. 
+                var length = MAXIMUM_CHARACTERS - charactersDatabase.Count;
+                for (var i = 0; i < length; i++)
+                {
+                    charactersDatabase.Add(new Character { HasCharacter = false, Index = CharacterIndex.Zero });
+                }
 
-                var orderedCharacters = characters.OrderBy(x => x != null ? x.Value.Index : 0).ToList();
-                return orderedCharacters;
+                // Make an order of characters which will be sent to a client.
+                var characters = new List<Character>(MAXIMUM_CHARACTERS)
+                {
+                    new Character { HasCharacter = false, Index = CharacterIndex.First },
+                    new Character { HasCharacter = false, Index = CharacterIndex.Second },
+                    new Character { HasCharacter = false, Index = CharacterIndex.Third }
+                };
+
+                foreach (var character in charactersDatabase)
+                {
+                    if (character.HasCharacter)
+                    {
+                        characters[(int)character.Index] = new Character(character.CharacterType, character.Name, character.Index);
+                    }
+                }
+                return characters;
             }
         }
 
@@ -46,7 +65,7 @@ namespace Game.Application.Components
             }
         }
 
-        private Character? GetCharacter(CharactersTableDefinition charactersTableDefinition)
+        private Character GetCharacter(CharactersTableDefinition charactersTableDefinition)
         {
             if (charactersTableDefinition.CharacterType == CharacterClasses.Arrow.ToString())
             {
@@ -64,7 +83,7 @@ namespace Game.Application.Components
             }
 
             LogUtils.Log(MessageBuilder.Trace($"Can not get character type of user id #{charactersTableDefinition.UserId}"));
-            return null;
+            return new Character { HasCharacter = false, Index = (CharacterIndex)charactersTableDefinition.CharacterIndex };
         }
     }
 }

@@ -7,7 +7,7 @@ using Shared.Game.Common;
 
 namespace Game.Application.PeerLogic.Operations
 {
-    internal class RemoveCharacterOperationHandler : IOperationRequestHandler<RemoveCharacterRequestParameters, EmptyParameters>
+    internal class RemoveCharacterOperationHandler : IOperationRequestHandler<RemoveCharacterRequestParameters, RemoveCharacterResponseParameters>
     {
         private readonly int userId;
         private readonly DatabaseCharacterRemover databaseCharacterRemover;
@@ -19,11 +19,11 @@ namespace Game.Application.PeerLogic.Operations
             databaseCharacterRemover = Server.Entity.Container.GetComponent<DatabaseCharacterRemover>().AssertNotNull();
         }
 
-        public EmptyParameters? Handle(MessageData<RemoveCharacterRequestParameters> messageData, ref MessageSendOptions sendOptions)
+        public RemoveCharacterResponseParameters? Handle(MessageData<RemoveCharacterRequestParameters> messageData, ref MessageSendOptions sendOptions)
         {
             var characterIndex = messageData.Parameters.CharacterIndex;
-            databaseCharacterRemover.Remove(userId, characterIndex);
-            return null;
+            var removed = !databaseCharacterRemover.Remove(userId, characterIndex);
+            return new RemoveCharacterResponseParameters(removed ? RemoveCharacterStatus.Succeed : RemoveCharacterStatus.Failed);
         }
     }
 }
