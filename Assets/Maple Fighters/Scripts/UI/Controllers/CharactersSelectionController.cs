@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 using CommonTools.Coroutines;
-using Scripts.Containers.Service;
+using Scripts.Containers;
 using Scripts.UI.Core;
 using Scripts.UI.Windows;
 using Shared.Game.Common;

@@ -1,6 +1,5 @@
 ﻿using System;
 using Scripts.Containers;
-using Scripts.Containers.Service;
 using Scripts.Gameplay.Actors;
 using Shared.Game.Common;
 using UnityEngine;
@@ -8,9 +7,9 @@ using UnityEngine;
 namespace Scripts.Utils.Shared
 {
     [RequireComponent(typeof(Animator))]
-    public class PlayerStateNetworkAnimator : MonoBehaviour
+    public class PlayerStateAnimatorNetwork : MonoBehaviour
     {
-        [SerializeField] private bool isLocal;
+        public bool IsLocal;
 
         [Header("Animator Parameters")]
         [SerializeField] private string walkName;
@@ -28,13 +27,12 @@ namespace Scripts.Utils.Shared
 
         private void Start()
         {
-            if (!isLocal)
+            if (!IsLocal)
             {
                 return;
             }
 
-            GameContainers.EntityContainer.EntityAdded += OnEntityAdded;
-             
+            GameContainers.GameObjectsContainer.GameObjectsAdded += OnEntityAdded;
             ServiceContainer.GameService.PlayerStateChanged.AddListener(OnPlayerStateEventReceived);
         }
 
@@ -49,10 +47,9 @@ namespace Scripts.Utils.Shared
 
         private void OnPlayerStateEventReceived(PlayerStateChangedEventParameters parameters)
         {
-            var entityId = parameters.GameObjectId;
-            var entity = GameContainers.EntityContainer.GetRemoteEntity(entityId);
-
-            entity?.GameObject.GetComponent<PlayerStateSetter>().SetState(parameters.PlayerState);
+            var gameObjectId = parameters.GameObjectId;
+            var gameObject = GameContainers.GameObjectsContainer.GetRemoteGameObject(gameObjectId);
+            gameObject?.GetComponent<PlayerStateSetter>().SetState(parameters.PlayerState);
         }
 
         public void OnPlayerStateChanged(PlayerState playerState)

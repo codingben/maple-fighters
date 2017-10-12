@@ -1,4 +1,4 @@
-﻿using Scripts.Containers.Service;
+﻿using Scripts.Containers;
 using Shared.Game.Common;
 using UnityEngine;
 

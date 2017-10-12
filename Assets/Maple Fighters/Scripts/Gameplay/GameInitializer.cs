@@ -1,5 +1,4 @@
 ﻿using Scripts.Containers;
-using Scripts.Containers.Service;
 using Scripts.Services;
 using Scripts.Utils;
 
@@ -15,7 +14,7 @@ namespace Scripts.Gameplay
             gameService = ServiceContainer.GameService;
             chatService = ServiceContainer.ChatService;
 
-            var entityContainer = GameContainers.EntityContainer;
+            var temp = GameContainers.GameObjectsContainer;
         }
 
         private void OnApplicationQuit()

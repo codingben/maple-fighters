@@ -1,5 +1,5 @@
 ﻿using Chat.Common;
-using Scripts.Containers.Service;
+using Scripts.Containers;
 using Scripts.UI.Core;
 using Scripts.UI.Windows;
 using UnityEngine;

@@ -1,6 +1,6 @@
 ﻿using Scripts.Services;
 
-namespace Scripts.Containers.Service
+namespace Scripts.Containers
 {
     public static class ServiceContainer
     {
@@ -12,7 +12,6 @@ namespace Scripts.Containers.Service
                 {
                     _gameService = new GameService();
                 }
-
                 return _gameService;
             }
         }
@@ -25,7 +24,6 @@ namespace Scripts.Containers.Service
                 {
                     _chatService = new ChatService();
                 }
-
                 return _chatService;
             }
         }
@@ -38,7 +36,6 @@ namespace Scripts.Containers.Service
                 {
                     _loginService = new LoginService();
                 }
-
                 return _loginService;
             }
         }
@@ -51,7 +48,6 @@ namespace Scripts.Containers.Service
                 {
                     _registrationService = new RegistrationService();
                 }
-
                 return _registrationService;
             }
         }

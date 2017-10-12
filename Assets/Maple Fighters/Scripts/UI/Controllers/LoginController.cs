@@ -2,7 +2,7 @@
 using CommonTools.Coroutines;
 using CommonTools.Log;
 using Login.Common;
-using Scripts.Containers.Service;
+using Scripts.Containers;
 using Scripts.UI.Core;
 using Scripts.UI.Windows;
 using UnityEngine;

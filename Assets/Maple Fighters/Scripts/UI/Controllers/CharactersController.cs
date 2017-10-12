@@ -3,7 +3,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using CommonTools.Coroutines;
 using CommonTools.Log;
-using Scripts.Containers.Service;
+using Scripts.Containers;
+using Scripts.Services;
 using Scripts.UI.Core;
 using Scripts.UI.Windows;
 using Shared.Game.Common;
@@ -155,7 +156,39 @@ namespace Scripts.UI.Controllers
 
         private void OnStartButtonClicked(int characterIndex)
         {
-            // TODO: Implement
+            var parameters = new EnterWorldRequestParameters(characterIndex);
+            coroutinesExecutor.StartTask((y) => EnterWorld(y, parameters));
+        }
+
+        private async Task EnterWorld(IYield yield, EnterWorldRequestParameters parameters)
+        {
+            var noticeWindow = Utils.ShowNotice("Entering to the world... Please wait.", null, true);
+            noticeWindow.OkButton.interactable = false;
+
+            var response = await ServiceContainer.GameService.EnterWorld(yield, parameters);
+
+            switch (response)
+            {
+                case EnterWorldStatus.Access:
+                {
+                    // TODO: Implement - Remove all GUI (Include choose fighters text, etc), Activate screen fade, load level, etc.. 
+                    // TODO: Seperate Game initializer.
+                    // TODO: Read only "Id" on network identity component.
+                    break;
+                }
+                case EnterWorldStatus.Denied:
+                {
+                    noticeWindow.Message.text = "Cannot enter to the world, please try again.";
+                    noticeWindow.OkButton.interactable = true;
+                    break;
+                }
+                default:
+                {
+                    noticeWindow.Message.text = "Something went wrong, please try again.";
+                    noticeWindow.OkButton.interactable = true;
+                    break;
+                }
+            }
         }
 
         private void OnCreateCharacterButtonClicked(ClickableCharacter clickableCharacter, int characterIndex)

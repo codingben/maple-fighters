@@ -1,22 +1,19 @@
-﻿using Scripts.Containers.Entity;
-
-namespace Scripts.Containers
+﻿namespace Scripts.Containers
 {
     public static class GameContainers
     {
-        public static IEntityContainer EntityContainer
+        public static IGameObjectsContainer GameObjectsContainer
         {
             get
             {
-                if (_entityContainer == null)
+                if (_gameObjectsContainer == null)
                 {
-                    _entityContainer = new EntityContainer();
+                    _gameObjectsContainer = new GameObjectsContainer();
                 }
-
-                return _entityContainer;
+                return _gameObjectsContainer;
             }
         }
 
-        private static IEntityContainer _entityContainer;
+        private static IGameObjectsContainer _gameObjectsContainer;
     }
 }
