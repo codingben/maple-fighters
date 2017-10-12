@@ -94,6 +94,7 @@
     <Compile Include="Application\Components\GameSceneWrapper.cs" />
     <Compile Include="Application\Components\PlayerGameObjectCreator.cs" />
     <Compile Include="Application\Components\SceneContainer.cs" />
+    <Compile Include="Application\Game Objects\Components\CharacterInformationProvider.cs" />
     <Compile Include="Application\Peer Logics\CharactersSelectionPeerLogic.cs" />
     <Compile Include="Application\Peer Logics\Components\GameObjectGetter.cs" />
     <Compile Include="Application\Peer Logics\Components\MinimalPeerGetter.cs" />

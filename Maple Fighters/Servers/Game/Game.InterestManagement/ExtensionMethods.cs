@@ -7,7 +7,7 @@ namespace Game.InterestManagement
     {
         public static IEnumerable<InterestArea> ConvertRegionsFromMatrix(this IRegion[,] regions)
         {
-            return regions.Cast<IRegion>().SelectMany(region => region.GetAllSubscribers()).ToList();
+            return regions.Cast<IRegion>().SelectMany(region => region.GetAllSubscribersArea()).ToList();
         }
     }
 }

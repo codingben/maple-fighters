@@ -9,10 +9,10 @@ namespace Game.InterestManagement
 {
     public class InterestArea : Component<IGameObject>
     {
-        public Action<InterestArea> GameObjectAdded;
-        public Action<int> GameObjectRemoved;
-        public Action<InterestArea[]> GameObjectsAdded;
-        public Action<int[]> GameObjectsRemoved;
+        public Action<InterestArea> SubscriberAdded;
+        public Action<int> SubscriberRemoved;
+        public Action<InterestArea[]> SubscribersAdded;
+        public Action<int[]> SubscribersRemoved;
 
         public readonly Action DetectOverlapsWithRegionsAction;
 
@@ -85,7 +85,7 @@ namespace Game.InterestManagement
                     continue;
                 }
 
-                if (!Rectangle.Intersect(region.Area, interestArea).Equals(Rectangle.EMPTY))
+                if (!Rectangle.Intersect(region.PublisherArea, interestArea).Equals(Rectangle.EMPTY))
                 {
                     if (region.HasSubscription(Entity.Id))
                     {

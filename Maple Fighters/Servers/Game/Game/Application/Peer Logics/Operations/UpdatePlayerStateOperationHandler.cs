@@ -21,7 +21,7 @@ namespace Game.Application.PeerLogic.Operations
             var playerState = messageData.Parameters.PlayerState;
             var parameters = new PlayerStateChangedEventParameters(playerState, gameObjectId);
             var messageSendOptions = MessageSendOptions.DefaultReliable((byte)GameDataChannels.Animations);
-            interestAreaManagement.SendEventForGameObjectsInMyRegions((byte)GameEvents.PlayerStateChanged, parameters, messageSendOptions);
+            interestAreaManagement.SendEventForSubscribers((byte)GameEvents.PlayerStateChanged, parameters, messageSendOptions);
             return null;
         }
     }

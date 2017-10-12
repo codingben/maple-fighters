@@ -5,14 +5,14 @@ namespace Game.InterestManagement
 {
     public interface IRegion
     {
-        Rectangle Area { get; }
+        Rectangle PublisherArea { get; }
 
-        void AddSubscription(InterestArea gameObject);
-        void RemoveSubscription(int gameObjectId);
-        void RemoveSubscriptionForOtherOnly(int gameObjectId);
+        void AddSubscription(InterestArea subscriberArea);
+        void RemoveSubscription(int subscriberId);
+        void RemoveSubscriptionForOtherOnly(int subscriberId);
 
-        bool HasSubscription(int gameObjectId);
+        bool HasSubscription(int subscriberId);
 
-        IEnumerable<InterestArea> GetAllSubscribers();
+        IEnumerable<InterestArea> GetAllSubscribersArea();
     }
 }

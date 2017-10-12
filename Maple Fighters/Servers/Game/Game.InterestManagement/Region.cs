@@ -7,149 +7,148 @@ namespace Game.InterestManagement
 {
     internal class Region : IRegion
     {
-        public Rectangle Area { get; }
+        public Rectangle PublisherArea { get; }
 
-        private readonly Dictionary<int, InterestArea> gameObjects = new Dictionary<int, InterestArea>();
+        private readonly Dictionary<int, InterestArea> subscribersAreas = new Dictionary<int, InterestArea>();
 
         public Region(Rectangle rectangle)
         {
-            Area = rectangle;
+            PublisherArea = rectangle;
         }
 
-        public void AddSubscription(InterestArea interestArea)
+        public void AddSubscription(InterestArea subscriberArea)
         {
-            if (gameObjects.ContainsKey(interestArea.Entity.Id))
+            if (subscribersAreas.ContainsKey(subscriberArea.Entity.Id))
             {
-                LogUtils.Log(MessageBuilder.Trace($"A game object with id #{interestArea.Entity.Id} already exists in a region."), LogMessageType.Error);
+                LogUtils.Log(MessageBuilder.Trace($"A game object with id #{subscriberArea.Entity.Id} already exists in a region."), LogMessageType.Error);
                 return;
             }
 
-            gameObjects.Add(interestArea.Entity.Id, interestArea);
+            subscribersAreas.Add(subscriberArea.Entity.Id, subscriberArea);
 
-            LogUtils.Log(MessageBuilder.Trace($"A new subscriber: {interestArea.Entity.Name}"));
+            LogUtils.Log(MessageBuilder.Trace($"A new subscriber: {subscriberArea.Entity.Name}"));
 
             // Show all exists entities for a new game object.
-            ShowGameObjectsForGameObject(interestArea);
+            AddSubscribersForSubscriber(subscriberArea);
 
             // Show a new game object for all exists entities.
-            ShowGameObjectForGameObjects(interestArea);
+            AddSubscriberForSubscribers(subscriberArea);
         }
 
-        public void RemoveSubscription(int gameObjectId)
+        public void RemoveSubscription(int subscriberId)
         {
-            if (!gameObjects.ContainsKey(gameObjectId))
+            if (!subscribersAreas.ContainsKey(subscriberId))
             {
-                LogUtils.Log(MessageBuilder.Trace($"A game object with id #{gameObjectId} does not exists in a region."), LogMessageType.Error);
+                LogUtils.Log(MessageBuilder.Trace($"A game object with id #{subscriberId} does not exists in a region."), LogMessageType.Error);
                 return;
             }
 
             // Hide game objects for the one that left this region.
-            HideGameObjectsForGameObject(gameObjectId);
+            RemoveSubscribersForSubscriber(subscriberId);
 
             // Remove him from region's list.
-            gameObjects.Remove(gameObjectId);
+            subscribersAreas.Remove(subscriberId);
 
             // Hide the one who left from this region for other game objects.
-            HideGameObjectForGameObjects(gameObjectId);
+            RemoveSubscriberForSubscribers(subscriberId);
         }
 
-        public void RemoveSubscriptionForOtherOnly(int gameObjectId)
+        public void RemoveSubscriptionForOtherOnly(int subscriberId)
         {
-            if (!gameObjects.ContainsKey(gameObjectId))
+            if (!subscribersAreas.ContainsKey(subscriberId))
             {
-                LogUtils.Log(MessageBuilder.Trace($"A game object with id #{gameObjectId} does not exists in a region."), LogMessageType.Error);
+                LogUtils.Log(MessageBuilder.Trace($"A game object with id #{subscriberId} does not exists in a region."), LogMessageType.Error);
                 return;
             }
 
-            HideGameObjectsForGameObjectOnly(gameObjectId);
+            RemoveSubscribersForSubscriberOnly(subscriberId);
 
             // Remove him from region's list.
-            gameObjects.Remove(gameObjectId);
+            subscribersAreas.Remove(subscriberId);
 
             // Hide the one who left from this region for other game objects.
-            HideGameObjectForOtherOnly(gameObjectId);
+            RemoveSubscriberForOtherOnly(subscriberId);
         }
 
-        public bool HasSubscription(int gameObjectId)
+        public bool HasSubscription(int subscriberId)
         {
-            return gameObjects.ContainsKey(gameObjectId);
+            return subscribersAreas.ContainsKey(subscriberId);
         }
 
-        public IEnumerable<InterestArea> GetAllSubscribers()
+        public IEnumerable<InterestArea> GetAllSubscribersArea()
         {
-            return gameObjects.Select(gameObject => gameObject.Value).ToList();
+            return subscribersAreas.Values;
         }
 
-        private void ShowGameObjectsForGameObject(InterestArea gameObject)
+        private void AddSubscribersForSubscriber(InterestArea subscriberArea)
         {
-            var gameObjectsTemp = gameObjects.Values.Where(gameObjectValue => gameObjectValue.Entity.Id != gameObject.Entity.Id).ToArray();
-            gameObject?.GameObjectsAdded?.Invoke(gameObjectsTemp); 
+            var subscribers = subscribersAreas.Values.Where(subscriber => subscriber.Entity.Id != subscriberArea.Entity.Id).ToArray();
+            subscriberArea?.SubscribersAdded?.Invoke(subscribers); 
         }
 
-        private void HideGameObjectsForGameObject(int hideGameObjectId)
+        private void RemoveSubscribersForSubscriber(int removeSubscriberId)
         {
-            var gameObjectsTemp = gameObjects.Values.Where(gameObject => gameObject.Entity.Id != hideGameObjectId).ToArray();
+            var subscribers = subscribersAreas.Values.Where(subscriber => subscriber.Entity.Id != removeSubscriberId).ToArray();
+            var interestArea = subscribersAreas[removeSubscriberId];
 
-            var interestArea = gameObjects[hideGameObjectId];
+            var subscribersForRemoveList = new List<int>();
 
-            var removeGameObjects = new List<int>();
-
-            foreach (var gameObject in gameObjectsTemp)
+            foreach (var subscriber in subscribers)
             {
-                if (interestArea.GetPublishers().Any(publisher => !publisher.HasSubscription(gameObject.Entity.Id)))
+                if (interestArea.GetPublishers().Any(publisher => !publisher.HasSubscription(subscriber.Entity.Id)))
                 {
-                    removeGameObjects.Add(gameObject.Entity.Id);
+                    subscribersForRemoveList.Add(subscriber.Entity.Id);
                 }
             }
 
-            if (removeGameObjects.Count > 0)
+            if (subscribersForRemoveList.Count > 0)
             {
-                interestArea.GameObjectsRemoved?.Invoke(removeGameObjects.ToArray());
+                interestArea.SubscribersRemoved?.Invoke(subscribersForRemoveList.ToArray());
             }
         }
 
-        private void ShowGameObjectForGameObjects(InterestArea newGameObject)
+        private void AddSubscriberForSubscribers(InterestArea subscriberArea)
         {
-            foreach (var gameObject in gameObjects)
+            foreach (var subscriber in subscribersAreas)
             {
-                if (gameObject.Value.Entity.Id == newGameObject.Entity.Id)
+                if (subscriber.Value.Entity.Id == subscriberArea.Entity.Id)
                 {
                     continue;
                 }
 
-                gameObject.Value.GameObjectAdded?.Invoke(newGameObject);
+                subscriber.Value.SubscriberAdded?.Invoke(subscriberArea);
             }
         }
 
-        private void HideGameObjectForGameObjects(int hideGameObjectId)
+        private void RemoveSubscriberForSubscribers(int removeSubscriberId)
         {
-            foreach (var gameObject in gameObjects.Values)
+            foreach (var subscriber in subscribersAreas.Values)
             {
-                if (!gameObject.GetPublishers().Any(publisher => publisher.HasSubscription(hideGameObjectId)))
+                if (!subscriber.GetPublishers().Any(publisher => publisher.HasSubscription(removeSubscriberId)))
                 {
-                    gameObject.GameObjectRemoved?.Invoke(hideGameObjectId);
+                    subscriber.SubscriberRemoved?.Invoke(removeSubscriberId);
                 }
             }
         }
 
-        private void HideGameObjectForOtherOnly(int hideGameObjectId)
+        private void RemoveSubscriberForOtherOnly(int removeSubscriberId)
         {
-            foreach (var gameObject in gameObjects.Values)
+            foreach (var subscriber in subscribersAreas.Values)
             {
-                gameObject.GameObjectRemoved?.Invoke(hideGameObjectId);
+                subscriber.SubscriberRemoved?.Invoke(removeSubscriberId);
             }
         }
 
-        private void HideGameObjectsForGameObjectOnly(int hideGameObjectId)
+        private void RemoveSubscribersForSubscriberOnly(int removeSubscriberId)
         {
-            var gameObjectsTemp = gameObjects.Keys.Where(gameObjectId => gameObjectId != hideGameObjectId).ToArray();
+            var subscribers = subscribersAreas.Keys.Where(subscriberId => subscriberId != removeSubscriberId).ToArray();
 
-            if (gameObjects[hideGameObjectId] == null)
+            if (subscribersAreas[removeSubscriberId] == null)
             {
                 return;
             }
 
-            gameObjects[hideGameObjectId]?.GameObjectsRemoved?.Invoke(gameObjectsTemp);
+            subscribersAreas[removeSubscriberId]?.SubscribersRemoved?.Invoke(subscribers);
         }
     }
 }

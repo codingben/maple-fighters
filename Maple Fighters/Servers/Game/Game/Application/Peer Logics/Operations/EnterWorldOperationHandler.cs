@@ -35,7 +35,7 @@ namespace Game.Application.PeerLogic.Operations
                 return new EnterWorldResponseParameters(null, null, false);
             }
 
-            var gameObject = CreatePlayerGameObject();
+            var gameObject = CreatePlayerGameObject(character.Value);
             var sharedGameObject = GetSharedGameObject(gameObject);
 
             onCharacterSelected.Invoke(gameObject);
@@ -45,14 +45,16 @@ namespace Game.Application.PeerLogic.Operations
 
         private GameObject GetSharedGameObject(IGameObject gameObject)
         {
+            const string GAME_OBJECT_NAME = "Local Player";
+
             var transform = gameObject.Container.GetComponent<Transform>().AssertNotNull();
-            return new GameObject(gameObject.Id, "Local Player", transform.Position.X, transform.Position.Y);
+            return new GameObject(gameObject.Id, GAME_OBJECT_NAME, transform.Position.X, transform.Position.Y);
         }
 
-        private IGameObject CreatePlayerGameObject()
+        private IGameObject CreatePlayerGameObject(Character character)
         {
             var playerGameObjectCreator = Server.Entity.Container.GetComponent<PlayerGameObjectCreator>().AssertNotNull();
-            var playerGameObject = playerGameObjectCreator.Create(Maps.Map_1, new Vector2(10, -5.5f));
+            var playerGameObject = playerGameObjectCreator.Create(character, Maps.Map_1, new Vector2(10, -5.5f));
             return playerGameObject;
         }
     }

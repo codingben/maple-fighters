@@ -7,6 +7,11 @@ namespace Shared.Game.Common
     {
         public int CharacterIndex;
 
+        public EnterWorldRequestParameters(int characterIndex)
+        {
+            CharacterIndex = characterIndex;
+        }
+
         public void Serialize(BinaryWriter writer)
         {
             writer.Write(CharacterIndex);
