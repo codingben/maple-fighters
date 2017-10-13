@@ -10,10 +10,10 @@ namespace Game.Application.PeerLogic.Operations
 {
     internal class ChangeSceneOperationHandler : IOperationRequestHandler<ChangeSceneRequestParameters, EmptyParameters>
     {
-        private readonly GameObjectGetter gameObjectGetter;
+        private readonly CharacterGameObjectGetter gameObjectGetter;
         private readonly SceneContainer sceneContainer;
 
-        public ChangeSceneOperationHandler(GameObjectGetter gameObjectGetter)
+        public ChangeSceneOperationHandler(CharacterGameObjectGetter gameObjectGetter)
         {
             this.gameObjectGetter = gameObjectGetter;
 

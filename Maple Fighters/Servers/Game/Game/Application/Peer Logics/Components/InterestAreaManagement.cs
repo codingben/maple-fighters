@@ -18,7 +18,7 @@ namespace Game.Application.PeerLogic.Components
         private PeerContainer peerContainer;
         private MinimalPeerGetter peerGetter;
         private EventSenderWrapper eventSender;
-        private GameObjectGetter gameObjectGetter;
+        private CharacterGameObjectGetter gameObjectGetter;
 
         protected override void OnAwake()
         {
@@ -27,7 +27,7 @@ namespace Game.Application.PeerLogic.Components
             peerContainer = Server.Entity.Container.GetComponent<PeerContainer>().AssertNotNull();
 
             eventSender = Entity.Container.GetComponent<EventSenderWrapper>().AssertNotNull();
-            gameObjectGetter = Entity.Container.GetComponent<GameObjectGetter>().AssertNotNull();
+            gameObjectGetter = Entity.Container.GetComponent<CharacterGameObjectGetter>().AssertNotNull();
             peerGetter = Entity.Container.GetComponent<MinimalPeerGetter>().AssertNotNull();
 
             SubscribeToInterestAreaEvents();

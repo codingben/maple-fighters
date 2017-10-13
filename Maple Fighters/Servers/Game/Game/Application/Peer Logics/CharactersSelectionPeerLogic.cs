@@ -1,6 +1,5 @@
 ﻿using CommunicationHelper;
 using Game.Application.PeerLogic.Operations;
-using Game.InterestManagement;
 using ServerCommunicationInterfaces;
 using Shared.Game.Common;
 using Shared.ServerApplication.Common.PeerLogic;
@@ -20,15 +19,15 @@ namespace Game.Application.PeerLogics
         {
             base.Initialize(peer);
 
-            AddHandlerForEnterWorldOperation();
+            AddHandlerValidateCharacterOperation();
             AddHandlerForFetchCharactersOperation();
             AddHandlerForCreateCharacterOperation();
             AddHandlerForRemoveCharacterOperation();
         }
 
-        private void AddHandlerForEnterWorldOperation()
+        private void AddHandlerValidateCharacterOperation()
         {
-            OperationRequestHandlerRegister.SetHandler(GameOperations.EnterWorld, new EnterWorldOperationHandler(dbUserId, OnCharacterSelected));
+            OperationRequestHandlerRegister.SetHandler(GameOperations.ValidateCharacter, new ValidateCharacterOperationHandler(dbUserId, OnCharacterSelected));
         }
 
         private void AddHandlerForFetchCharactersOperation()
@@ -46,9 +45,9 @@ namespace Game.Application.PeerLogics
             OperationRequestHandlerRegister.SetHandler(GameOperations.RemoveCharacter, new RemoveCharacterOperationHandler(dbUserId));
         }
 
-        private void OnCharacterSelected(IGameObject gameObject)
+        private void OnCharacterSelected(Character character)
         {
-            PeerWrapper.SetPeerLogic(new AuthenticatedPeerLogic(gameObject));
+            PeerWrapper.SetPeerLogic(new AuthenticatedPeerLogic(character));
         }
     }
 }

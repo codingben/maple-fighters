@@ -5,11 +5,11 @@ using Shared.ServerApplication.Common.PeerLogic;
 
 namespace Game.Application.PeerLogic.Components
 {
-    internal class GameObjectGetter : Component<IPeerEntity>
+    internal class CharacterGameObjectGetter : Component<IPeerEntity>
     {
         private readonly IGameObject gameObject;
 
-        public GameObjectGetter(IGameObject gameObject)
+        public CharacterGameObjectGetter(IGameObject gameObject)
         {
             this.gameObject = gameObject.AssertNotNull();
         }

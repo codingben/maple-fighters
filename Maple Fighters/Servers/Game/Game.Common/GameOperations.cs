@@ -8,6 +8,7 @@
         PositionChanged,
         PlayerStateChanged,
         ChangeScene,
+        ValidateCharacter,
         CreateCharacter,
         RemoveCharacter
     }

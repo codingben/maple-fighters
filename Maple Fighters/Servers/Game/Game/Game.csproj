@@ -92,11 +92,11 @@
     <Compile Include="Application\Components\DatabaseCharacterRemover.cs" />
     <Compile Include="Application\Components\DatabaseCharactersGetter.cs" />
     <Compile Include="Application\Components\GameSceneWrapper.cs" />
-    <Compile Include="Application\Components\PlayerGameObjectCreator.cs" />
+    <Compile Include="Application\Components\CharacterGameObjectCreator.cs" />
     <Compile Include="Application\Components\SceneContainer.cs" />
     <Compile Include="Application\Game Objects\Components\CharacterInformationProvider.cs" />
     <Compile Include="Application\Peer Logics\CharactersSelectionPeerLogic.cs" />
-    <Compile Include="Application\Peer Logics\Components\GameObjectGetter.cs" />
+    <Compile Include="Application\Peer Logics\Components\CharacterGameObjectGetter.cs" />
     <Compile Include="Application\Peer Logics\Components\MinimalPeerGetter.cs" />
     <Compile Include="Application\Peer Logics\Components\PeerIdGetter.cs" />
     <Compile Include="Application\Peer Logics\Components\PositionChangesListener.cs" />
@@ -106,6 +106,7 @@
     <Compile Include="Application\Peer Logics\Operations\ChangeSceneOperationHandler.cs" />
     <Compile Include="Application\Peer Logics\Operations\CreateCharacterOperationHandler.cs" />
     <Compile Include="Application\Peer Logics\Operations\EnterWorldOperationHandler.cs" />
+    <Compile Include="Application\Peer Logics\Operations\ValidateCharacterOperationHandler.cs" />
     <Compile Include="Application\Peer Logics\AuthenticatedPeerLogic.cs" />
     <Compile Include="Application\Peer Logics\Operations\FetchCharactersOperationHandler.cs" />
     <Compile Include="Application\Peer Logics\Operations\RemoveCharacterOperationHandler.cs" />

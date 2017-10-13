@@ -81,6 +81,8 @@
     <Compile Include="RemoveCharacterStatus.cs" />
     <Compile Include="UpdatePositionRequestParameters.cs" />
     <Compile Include="UpdatePlayerStateRequestParameters.cs" />
+    <Compile Include="ValidateCharacterResponseParameters.cs" />
+    <Compile Include="ValidateCharacterStatus.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

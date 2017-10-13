@@ -3,11 +3,11 @@ using CommonCommunicationInterfaces;
 
 namespace Shared.Game.Common
 {
-    public struct EnterWorldRequestParameters : IParameters
+    public struct ValidateCharacterRequestParameters : IParameters
     {
         public int CharacterIndex;
 
-        public EnterWorldRequestParameters(int characterIndex)
+        public ValidateCharacterRequestParameters(int characterIndex)
         {
             CharacterIndex = characterIndex;
         }
