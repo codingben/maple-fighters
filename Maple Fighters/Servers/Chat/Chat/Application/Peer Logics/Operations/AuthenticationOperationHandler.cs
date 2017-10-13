@@ -25,15 +25,14 @@ namespace Chat.Application.PeerLogic.Operations
         public EmptyParameters? Handle(MessageData<AuthenticateRequestParameters> messageData, ref MessageSendOptions sendOptions)
         {
             var accessToken = messageData.Parameters.AccessToken;
-
-            if (databaseAccessTokenExistence.Exists(accessToken))
+            if (!databaseAccessTokenExistence.Exists(accessToken))
             {
-                onAuthenticated.Invoke();
+                onUnauthenticated.Invoke();
                 return null;
             }
 
-            onUnauthenticated.Invoke();
-            return null;
+            onAuthenticated.Invoke();
+            return new EmptyParameters();
         }
     }
 }

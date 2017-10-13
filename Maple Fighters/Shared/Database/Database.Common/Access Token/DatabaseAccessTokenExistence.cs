@@ -22,7 +22,7 @@ namespace Database.Common.AccessToken
         {
             using (var db = databaseConnectionProvider.GetDbConnection())
             {
-                var exists = db.Exists<AccessTokensTableDefinition>(new AccessTokensTableDefinition { AccessToken = accessToken });
+                var exists = db.Exists<AccessTokensTableDefinition>(new { AccessToken = accessToken });
                 return exists;
             }
         }

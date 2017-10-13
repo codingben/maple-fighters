@@ -26,11 +26,12 @@ namespace Chat.Application
         {
             Server.Entity.Container.AddComponent(new DatabaseConnectionProvider());
             Server.Entity.Container.AddComponent(new DatabaseUserIdViaAccessTokenProvider());
+            Server.Entity.Container.AddComponent(new DatabaseAccessTokenExistence());
         }
 
         public override void OnConnected(IClientPeer clientPeer)
         {
-            WrapClientPeer(clientPeer, new AuthenticatedPeerLogic());
+            WrapClientPeer(clientPeer, new UnauthenticatedPeerLogic());
         }
     }
 }

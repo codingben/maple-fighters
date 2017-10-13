@@ -28,6 +28,7 @@ namespace Login.Application
             Server.Entity.Container.AddComponent(new DatabaseAccessTokenCreator());
             Server.Entity.Container.AddComponent(new DatabaseAccessTokenExistence());
             Server.Entity.Container.AddComponent(new DatabaseAccessTokenProvider());
+            Server.Entity.Container.AddComponent(new DatabaseAccessTokenExistenceViaUserId());
         }
 
         public override void OnConnected(IClientPeer clientPeer)
