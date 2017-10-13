@@ -59,11 +59,16 @@
     <Compile Include="Application\ChatApplication.cs" />
     <Compile Include="Application\Peer Logics\Components\ChatMessageEventSender.cs" />
     <Compile Include="Application\Peer Logics\AuthenticatedPeerLogic.cs" />
+    <Compile Include="Application\Peer Logics\Operations\AuthenticationOperationHandler.cs" />
     <Compile Include="Application\Peer Logics\Operations\ChatMessageOperationHandler.cs" />
     <Compile Include="Application\Peer Logics\UnauthenticatedPeerLogic.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Shared\Database\Database.Common\Database.Common.csproj">
+      <Project>{46B701A0-8606-4EF1-B111-F001EE74F124}</Project>
+      <Name>Database.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\Shared\Servers\ServerApplication.Common\ServerApplication.Common.csproj">
       <Project>{F82FBB67-7B1D-43B7-A415-3F407D40E5C7}</Project>
       <Name>ServerApplication.Common</Name>
@@ -74,6 +79,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

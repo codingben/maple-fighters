@@ -51,6 +51,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AuthenticateRequestParameters.cs" />
     <Compile Include="ChangeSceneRequestParameters.cs" />
     <Compile Include="Character.cs" />
     <Compile Include="CharacterClasses.cs" />

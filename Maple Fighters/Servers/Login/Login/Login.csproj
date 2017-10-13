@@ -69,6 +69,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Application\Components\DatabaseUserIdProvider.cs" />
     <Compile Include="Application\Components\DatabaseUserPasswordVerifier.cs" />
     <Compile Include="Application\Components\DatabaseUserVerifier.cs" />
     <Compile Include="Application\LoginApplication.cs" />

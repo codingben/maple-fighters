@@ -17,12 +17,17 @@ namespace Game.Application.PeerLogics
 
         private void AddHandlerForAuthenticationOperation()
         {
-            OperationRequestHandlerRegister.SetHandler(GameOperations.Authenticate, new AuthenticationOperationHandler(OnAuthenticated));
+            OperationRequestHandlerRegister.SetHandler(GameOperations.Authenticate, new AuthenticationOperationHandler(OnAuthenticated, OnUnauthenticated));
         }
 
         private void OnAuthenticated(int dbUserId)
         {
             PeerWrapper.SetPeerLogic(new CharactersSelectionPeerLogic(dbUserId));
+        }
+
+        private void OnUnauthenticated()
+        {
+            PeerWrapper.Peer.Disconnect();
         }
     }
 }

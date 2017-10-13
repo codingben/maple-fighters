@@ -1,4 +1,5 @@
-﻿using Database.Common.Components;
+﻿using CommonTools.Log;
+using Database.Common.Components;
 using Database.Common.TablesDefinition;
 using ServerApplication.Common.ApplicationBase;
 using ServerApplication.Common.ComponentModel;
@@ -14,7 +15,7 @@ namespace Game.Application.Components
         {
             base.OnAwake();
 
-            databaseConnectionProvider = Entity.Container.GetComponent<DatabaseConnectionProvider>();
+            databaseConnectionProvider = Entity.Container.GetComponent<DatabaseConnectionProvider>().AssertNotNull();
         }
 
         public bool Verify(string name)

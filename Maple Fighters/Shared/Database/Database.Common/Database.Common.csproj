@@ -31,6 +31,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Coroutines, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Coroutines.5.0.5\lib\net46\Coroutines.dll</HintPath>
+    </Reference>
+    <Reference Include="LogUtils, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Coroutines.5.0.5\lib\net46\LogUtils.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Extensions.Primitives, Version=1.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Microsoft.Extensions.Primitives.1.1.1\lib\netstandard1.0\Microsoft.Extensions.Primitives.dll</HintPath>
@@ -152,9 +158,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Access Token\DatabaseAccessTokenCreator.cs" />
+    <Compile Include="Access Token\DatabaseAccessTokenExistence.cs" />
+    <Compile Include="Access Token\DatabaseAccessTokenExistenceViaUserId.cs" />
+    <Compile Include="Access Token\DatabaseAccessTokenProvider.cs" />
+    <Compile Include="Access Token\DatabaseUserIdViaAccessTokenProvider.cs" />
     <Compile Include="Components\DatabaseConnectionProvider.cs" />
     <Compile Include="Configuration\DatabaseConnectionConfiguraiton.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tables Definition\AccessTokensTableDefinition.cs" />
     <Compile Include="Tables Definition\CharactersTableDefinition.cs" />
     <Compile Include="Tables Definition\UsersTableDefinition.cs" />
   </ItemGroup>
@@ -168,5 +180,6 @@
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

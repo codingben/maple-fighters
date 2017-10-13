@@ -1,4 +1,6 @@
 ﻿using CommonCommunicationInterfaces;
+using CommonTools.Log;
+using Database.Common.AccessToken;
 using Login.Application.Components;
 using Login.Common;
 using ServerApplication.Common.ApplicationBase;
@@ -10,11 +12,19 @@ namespace Login.Application.PeerLogic.Operations
     {
         private readonly DatabaseUserVerifier databaseUserVerifier;
         private readonly DatabaseUserPasswordVerifier databaseUserPasswordVerifier;
+        private readonly DatabaseUserIdProvider databaseUserIdProvider;
+        private readonly DatabaseAccessTokenCreator databaseAccessTokenCreator;
+        private readonly DatabaseAccessTokenExistenceViaUserId databaseAccessTokenExistenceViaUserId;
+        private readonly DatabaseAccessTokenProvider databaseAccessTokenProvider;
 
         public LoginOperationHandler()
         {
-            databaseUserVerifier = Server.Entity.Container.GetComponent<DatabaseUserVerifier>();
-            databaseUserPasswordVerifier = Server.Entity.Container.GetComponent<DatabaseUserPasswordVerifier>();
+            databaseUserVerifier = Server.Entity.Container.GetComponent<DatabaseUserVerifier>().AssertNotNull();
+            databaseUserPasswordVerifier = Server.Entity.Container.GetComponent<DatabaseUserPasswordVerifier>().AssertNotNull();
+            databaseUserIdProvider = Server.Entity.Container.GetComponent<DatabaseUserIdProvider>().AssertNotNull();
+            databaseAccessTokenCreator = Server.Entity.Container.GetComponent<DatabaseAccessTokenCreator>().AssertNotNull();
+            databaseAccessTokenExistenceViaUserId = Server.Entity.Container.GetComponent<DatabaseAccessTokenExistenceViaUserId>().AssertNotNull();
+            databaseAccessTokenProvider = Server.Entity.Container.GetComponent<DatabaseAccessTokenProvider>().AssertNotNull();
         }
 
         public LoginResponseParameters? Handle(MessageData<LoginRequestParameters> messageData, ref MessageSendOptions sendOptions)
@@ -31,7 +41,11 @@ namespace Login.Application.PeerLogic.Operations
                 return new LoginResponseParameters(LoginStatus.PasswordIncorrect);
             }
 
-            return new LoginResponseParameters(LoginStatus.Succeed);
+            var userId = databaseUserIdProvider.GetUserId(email);
+            var accessToken = databaseAccessTokenExistenceViaUserId.Exists(userId) 
+                ? databaseAccessTokenProvider.GetAccessToken(userId) : databaseAccessTokenCreator.Create(userId);
+
+            return new LoginResponseParameters(LoginStatus.Succeed, accessToken, true);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using CommonCommunicationInterfaces;
+using CommonTools.Log;
 using Registration.Application.Components;
 using Registration.Common;
 using ServerApplication.Common.ApplicationBase;
@@ -13,8 +14,8 @@ namespace Registration.Application.PeerLogic.Operations
 
         public RegisterOperationHandler()
         {
-            databaseUserCreator = Server.Entity.Container.GetComponent<DatabaseUserCreator>();
-            databaseUserEmailVerifier = Server.Entity.Container.GetComponent<DatabaseUserEmailVerifier>();
+            databaseUserCreator = Server.Entity.Container.GetComponent<DatabaseUserCreator>().AssertNotNull();
+            databaseUserEmailVerifier = Server.Entity.Container.GetComponent<DatabaseUserEmailVerifier>().AssertNotNull();
         }
 
         public RegisterResponseParameters? Handle(MessageData<RegisterRequestParameters> messageData, ref MessageSendOptions sendOptions)

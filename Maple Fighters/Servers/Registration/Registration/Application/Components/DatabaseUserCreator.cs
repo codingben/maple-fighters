@@ -1,4 +1,5 @@
-﻿using Database.Common.Components;
+﻿using CommonTools.Log;
+using Database.Common.Components;
 using Database.Common.TablesDefinition;
 using ServerApplication.Common.ApplicationBase;
 using ServerApplication.Common.ComponentModel;
@@ -14,7 +15,7 @@ namespace Registration.Application.Components
         {
             base.OnAwake();
 
-            databaseConnectionProvider = Entity.Container.GetComponent<DatabaseConnectionProvider>();
+            databaseConnectionProvider = Entity.Container.GetComponent<DatabaseConnectionProvider>().AssertNotNull();
         }
 
         public void Create(string email, string password, string firstName, string lastName)

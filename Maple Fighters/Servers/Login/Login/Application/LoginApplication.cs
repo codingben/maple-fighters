@@ -1,4 +1,5 @@
-﻿using Database.Common.Components;
+﻿using Database.Common.AccessToken;
+using Database.Common.Components;
 using Login.Application.Components;
 using Login.Application.PeerLogic;
 using ServerApplication.Common.ApplicationBase;
@@ -23,6 +24,10 @@ namespace Login.Application
             Server.Entity.Container.AddComponent(new DatabaseConnectionProvider());
             Server.Entity.Container.AddComponent(new DatabaseUserVerifier());
             Server.Entity.Container.AddComponent(new DatabaseUserPasswordVerifier());
+            Server.Entity.Container.AddComponent(new DatabaseUserIdProvider());
+            Server.Entity.Container.AddComponent(new DatabaseAccessTokenCreator());
+            Server.Entity.Container.AddComponent(new DatabaseAccessTokenExistence());
+            Server.Entity.Container.AddComponent(new DatabaseAccessTokenProvider());
         }
 
         public override void OnConnected(IClientPeer clientPeer)

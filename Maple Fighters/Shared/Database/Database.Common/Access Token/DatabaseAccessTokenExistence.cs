@@ -5,9 +5,9 @@ using ServerApplication.Common.ApplicationBase;
 using ServerApplication.Common.ComponentModel;
 using ServiceStack.OrmLite;
 
-namespace Login.Application.Components
+namespace Database.Common.AccessToken
 {
-    internal class DatabaseUserPasswordVerifier : Component<IServerEntity>
+    public class DatabaseAccessTokenExistence : Component<IServerEntity>
     {
         private DatabaseConnectionProvider databaseConnectionProvider;
 
@@ -18,13 +18,12 @@ namespace Login.Application.Components
             databaseConnectionProvider = Entity.Container.GetComponent<DatabaseConnectionProvider>().AssertNotNull();
         }
 
-        public bool Verify(string email, string password)
+        public bool Exists(string accessToken)
         {
             using (var db = databaseConnectionProvider.GetDbConnection())
             {
-                var user = db.Single<UsersTableDefinition>(x => x.Email == email);
-                var isVerified = user.Password == password;
-                return isVerified;
+                var exists = db.Exists<AccessTokensTableDefinition>(new AccessTokensTableDefinition { AccessToken = accessToken });
+                return exists;
             }
         }
     }

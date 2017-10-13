@@ -1,4 +1,5 @@
-﻿using Database.Common.Components;
+﻿using Database.Common.AccessToken;
+using Database.Common.Components;
 using Game.Application.Components;
 using Game.Application.PeerLogics;
 using PythonScripting;
@@ -39,6 +40,9 @@ namespace Game.Application
             Server.Entity.Container.AddComponent(new DatabaseCharacterNameVerifier());
             Server.Entity.Container.AddComponent(new DatabaseCharactersGetter());
             Server.Entity.Container.AddComponent(new DatabaseCharacterExistence());
+            Server.Entity.Container.AddComponent(new DatabaseAccessTokenExistence());
+            Server.Entity.Container.AddComponent(new DatabaseAccessTokenProvider());
+            Server.Entity.Container.AddComponent(new DatabaseUserIdViaAccessTokenProvider());
         }
     }
 }

@@ -7,7 +7,7 @@ using ServiceStack.OrmLite;
 
 namespace Login.Application.Components
 {
-    internal class DatabaseUserPasswordVerifier : Component<IServerEntity>
+    internal class DatabaseUserIdProvider : Component<IServerEntity>
     {
         private DatabaseConnectionProvider databaseConnectionProvider;
 
@@ -18,13 +18,12 @@ namespace Login.Application.Components
             databaseConnectionProvider = Entity.Container.GetComponent<DatabaseConnectionProvider>().AssertNotNull();
         }
 
-        public bool Verify(string email, string password)
+        public int GetUserId(string email)
         {
             using (var db = databaseConnectionProvider.GetDbConnection())
             {
                 var user = db.Single<UsersTableDefinition>(x => x.Email == email);
-                var isVerified = user.Password == password;
-                return isVerified;
+                return user.Id;
             }
         }
     }
