@@ -39,6 +39,10 @@ namespace Scripts.Services
         {
             var requestId = OperationRequestSender.Send(LoginOperations.Login, parameters, MessageSendOptions.DefaultReliable());
             var responseParameters = await SubscriptionProvider.ProvideSubscription<LoginResponseParameters>(yield, requestId);
+            if (responseParameters.HasAccessToken)
+            {
+                AccessTokenProvider.AccessToken = responseParameters.AccessToken;
+            }
             return new LoginResponseParameters(responseParameters.Status);
         }
     }

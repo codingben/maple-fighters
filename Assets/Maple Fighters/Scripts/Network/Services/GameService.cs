@@ -103,7 +103,8 @@ namespace Scripts.Services
                 return;
             }
 
-            var requestId = OperationRequestSender.Send(GameOperations.Authenticate, new EmptyParameters(), MessageSendOptions.DefaultReliable());
+            var parameters = new AuthenticateRequestParameters(AccessTokenProvider.AccessToken);
+            var requestId = OperationRequestSender.Send(GameOperations.Authenticate, parameters, MessageSendOptions.DefaultReliable());
             await SubscriptionProvider.ProvideSubscription<EmptyParameters>(yield, requestId);
 
             Authenticated?.Invoke();

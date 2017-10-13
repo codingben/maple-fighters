@@ -12,6 +12,11 @@ namespace Scripts.UI.Controllers
 
         private void Start()
         {
+            ServiceContainer.ChatService.Authenticated += OnAuthenticated;
+        }
+
+        private void OnAuthenticated()
+        {
             chatWindow = UserInterfaceContainer.Instance.Add<ChatWindow>();
             chatWindow.SendChatMessage += OnSendChatMessage;
 
@@ -20,6 +25,13 @@ namespace Scripts.UI.Controllers
 
         private void OnDestroy()
         {
+            ServiceContainer.ChatService.Authenticated -= OnAuthenticated;
+
+            if (chatWindow == null)
+            {
+                return;
+            }
+
             chatWindow.SendChatMessage -= OnSendChatMessage;
 
             ServiceContainer.ChatService.ChatMessageReceived.RemoveAllListeners();
