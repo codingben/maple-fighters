@@ -284,7 +284,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   newMap: 0
-  sceneIndex: 1
+  sceneIndex: 2
   newPosition: {x: 18, y: -5.5, z: 0}
 --- !u!1 &354198740
 GameObject:

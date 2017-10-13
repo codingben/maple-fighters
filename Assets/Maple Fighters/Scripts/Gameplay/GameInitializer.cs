@@ -13,8 +13,6 @@ namespace Scripts.Gameplay
         {
             gameService = ServiceContainer.GameService;
             chatService = ServiceContainer.ChatService;
-
-            var temp = GameContainers.GameObjectsContainer;
         }
 
         private void OnApplicationQuit()

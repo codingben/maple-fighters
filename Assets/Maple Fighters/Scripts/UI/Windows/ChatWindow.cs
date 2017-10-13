@@ -1,5 +1,8 @@
 ﻿using System;
 using Chat.Common;
+using CommonTools.Log;
+using Scripts.Containers;
+using Scripts.Gameplay.Actors;
 using Scripts.UI.Core;
 using TMPro;
 using UnityEngine;
@@ -13,6 +16,8 @@ namespace Scripts.UI.Windows
 
         [SerializeField] private TextMeshProUGUI chatText;
         [SerializeField] private TMP_InputField inputField;
+
+        private string characterName;
 
         private void Start()
         {
@@ -48,20 +53,19 @@ namespace Scripts.UI.Windows
             }
 
             SendMessage();
-            AddMessageToChatLocally();
-
             ResetInputField();
         }
 
         private void SendMessage()
         {
-            var message = $"Player: {inputField.text}";
-            SendChatMessage?.Invoke(message);
-        }
+            if (characterName == null)
+            {
+                characterName = GetCharacterName();
+            }
 
-        private void AddMessageToChatLocally()
-        {
-            var message = $"Player: {inputField.text}";
+            var message = $"{characterName}: {inputField.text}";
+            SendChatMessage?.Invoke(message);
+
             AddMessageToChat(message);
         }
 
@@ -79,6 +83,13 @@ namespace Scripts.UI.Windows
         {
             var message = parameters.Message;
             AddMessageToChat(message);
+        }
+
+        private string GetCharacterName()
+        {
+            var localGameObject = GameContainers.GameObjectsContainer.GetLocalGameObject().GetGameObject().AssertNotNull();
+            var characterInformation = localGameObject.GetComponent<CharacterInformationProvider>();
+            return characterInformation.GetCharacterName();
         }
     }
 }

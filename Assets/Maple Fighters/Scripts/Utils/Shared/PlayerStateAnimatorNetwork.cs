@@ -32,14 +32,14 @@ namespace Scripts.Utils.Shared
                 return;
             }
 
-            GameContainers.GameObjectsContainer.GameObjectsAdded += OnEntityAdded;
+            ServiceContainer.GameService.GameObjectsAdded.AddListener(OnGameObjectsAdded);
             ServiceContainer.GameService.PlayerStateChanged.AddListener(OnPlayerStateEventReceived);
         }
 
         /// <summary>
-        /// When a new entity added, so send him the last current state.
+        /// When a new game objects added, so send them the last current state.
         /// </summary>
-        private void OnEntityAdded()
+        private void OnGameObjectsAdded(GameObjectsAddedEventParameters arg)
         {
             var parameters = new UpdatePlayerStateRequestParameters(lastPlayerState);
             ServiceContainer.GameService.UpdatePlayerState(parameters);

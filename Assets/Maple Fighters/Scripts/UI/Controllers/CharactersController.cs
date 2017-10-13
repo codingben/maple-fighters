@@ -4,12 +4,12 @@ using System.Threading.Tasks;
 using CommonTools.Coroutines;
 using CommonTools.Log;
 using Scripts.Containers;
-using Scripts.Services;
 using Scripts.UI.Core;
 using Scripts.UI.Windows;
 using Shared.Game.Common;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using GameObject = UnityEngine.GameObject;
 
 namespace Scripts.UI.Controllers
@@ -19,10 +19,14 @@ namespace Scripts.UI.Controllers
         private const string CHARACTERS_PATH = "Characters/{0}";
         private const int MAXIMUM_CHARACTERS = 3;
 
+        [SerializeField] private int loadSceneIndex;
+
         private Transform charactersParent;
 
         private ChooseFighterText chooseFighterText;
         private CharacterSelectionOptionsWindow characterSelectionOptionsWindow;
+
+        private ClickableCharacter clickedCharacter;
 
         private readonly ClickableCharacter[] characters = { null, null, null };
         private readonly ExternalCoroutinesExecutor coroutinesExecutor = new ExternalCoroutinesExecutor();
@@ -32,6 +36,27 @@ namespace Scripts.UI.Controllers
             charactersParent = UserInterfaceContainer.Instance.Get<BackgroundCharactersParent>().AssertNotNull().GameObject.transform;
 
             ServiceContainer.GameService.Authenticated += () => coroutinesExecutor.StartTask(FetchCharactersTask);
+        }
+
+        private void OnDestroy()
+        {
+            RemoveCharacters();
+
+            if (chooseFighterText != null)
+            {
+                UserInterfaceContainer.Instance.Remove(chooseFighterText);
+            }
+        }
+
+        private void RemoveCharacters()
+        {
+            foreach (var clickableCharacter in characters)
+            {
+                if (clickableCharacter != null)
+                {
+                    Destroy(clickableCharacter.gameObject);
+                }
+            }
         }
 
         private void Update()
@@ -152,33 +177,35 @@ namespace Scripts.UI.Controllers
             characterSelectionOptionsWindow.CreateCharacteButtonInteraction(!character.HasCharacter);
             characterSelectionOptionsWindow.DeleteCharacterButtonInteraction(character.HasCharacter);
             characterSelectionOptionsWindow.Show();
+
+            clickedCharacter = clickableCharacter;
         }
 
         private void OnStartButtonClicked(int characterIndex)
         {
-            var parameters = new EnterWorldRequestParameters(characterIndex);
-            coroutinesExecutor.StartTask((y) => EnterWorld(y, parameters));
+            clickedCharacter.PlayWalkAnimationAction();
+
+            var parameters = new ValidateCharacterRequestParameters(characterIndex);
+            coroutinesExecutor.StartTask((y) => ValidateCharacter(y, parameters));
         }
 
-        private async Task EnterWorld(IYield yield, EnterWorldRequestParameters parameters)
+        private async Task ValidateCharacter(IYield yield, ValidateCharacterRequestParameters parameters)
         {
             var noticeWindow = Utils.ShowNotice("Entering to the world... Please wait.", null, true);
             noticeWindow.OkButton.interactable = false;
 
-            var response = await ServiceContainer.GameService.EnterWorld(yield, parameters);
+            var response = await ServiceContainer.GameService.ValidateCharacter(yield, parameters);
 
             switch (response)
             {
-                case EnterWorldStatus.Access:
+                case ValidateCharacterStatus.Ok:
                 {
-                    // TODO: Implement - Remove all GUI (Include choose fighters text, etc), Activate screen fade, load level, etc.. 
-                    // TODO: Seperate Game initializer.
-                    // TODO: Read only "Id" on network identity component.
+                    EnteredWorld(noticeWindow);
                     break;
                 }
-                case EnterWorldStatus.Denied:
+                case ValidateCharacterStatus.Wrong:
                 {
-                    noticeWindow.Message.text = "Cannot enter to the world, please try again.";
+                    noticeWindow.Message.text = "Cannot enter to the world with this character. Please try again.";
                     noticeWindow.OkButton.interactable = true;
                     break;
                 }
@@ -189,6 +216,26 @@ namespace Scripts.UI.Controllers
                     break;
                 }
             }
+
+            if (response != ValidateCharacterStatus.Ok)
+            {
+                clickedCharacter.PlayIdleAnimationAction();
+            }
+        }
+
+        private void EnteredWorld(NoticeWindow noticeWindow)
+        {
+            var screenFade = UserInterfaceContainer.Instance.Get<ScreenFade>().AssertNotNull();
+            screenFade.Show(() => OnEnteredWorld(noticeWindow));
+        }
+
+        private void OnEnteredWorld(NoticeWindow noticeWindow)
+        {
+            UserInterfaceContainer.Instance.Remove(noticeWindow);
+
+            SceneManager.LoadScene(loadSceneIndex, LoadSceneMode.Single);
+
+            ServiceContainer.GameService.EnterWorld();
         }
 
         private void OnCreateCharacterButtonClicked(ClickableCharacter clickableCharacter, int characterIndex)

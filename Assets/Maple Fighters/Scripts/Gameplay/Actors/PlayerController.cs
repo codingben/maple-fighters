@@ -24,6 +24,7 @@ namespace Scripts.Gameplay.Actors
         }
 
         public Action<PlayerState> PlayerStateChanged;
+        public event Action<Directions> ChangedDirection;
 
         [SerializeField] private PlayerState playerState = PlayerState.Falling;
 
@@ -229,6 +230,8 @@ namespace Scripts.Gameplay.Actors
                     break;
                 }
             }
+
+            ChangedDirection?.Invoke(direction);
         }
 
         private float GetDirecton(Directions direction)

@@ -1,6 +1,5 @@
-﻿using CommonTools.Log;
+﻿using Scripts.Gameplay.Camera;
 using Scripts.Utils.Shared;
-using TMPro;
 using UnityEngine;
 using CharacterInformation = Shared.Game.Common.CharacterInformation;
 
@@ -15,32 +14,81 @@ namespace Scripts.Gameplay.Actors
         [Header("Sprite")]
         [SerializeField] private int orderInLayer;
 
+        private GameObject character;
+
         public void Create(CharacterInformation characterInformation)
         {
-            var name = characterInformation.CharacterName;
-            var type = characterInformation.CharacterClass;
+            var characterName = characterInformation.CharacterName;
+            var characterClass = characterInformation.CharacterClass;
 
-            var gameObject = Resources.Load<GameObject>(string.Format(GAME_OBJECTS_PATH, type));
-            var character = Instantiate(gameObject, Vector3.zero, Quaternion.identity, transform);
-            character.transform.SetAsFirstSibling();
+            var gameObject = Resources.Load<GameObject>(string.Format(GAME_OBJECTS_PATH, characterClass));
+            var characterGameObject = Instantiate(gameObject, Vector3.zero, Quaternion.identity, transform);
+            characterGameObject.transform.localPosition = gameObject.transform.localPosition;
+            characterGameObject.transform.SetAsFirstSibling();
 
-            var characterNameComponent = gameObject.transform.GetChild(0).GetComponent<TextMeshPro>().AssertNotNull();
-            characterNameComponent.text = name;
+            character = characterGameObject;
 
+            InitializeCharacterName(characterName);
+            InitializeSpriteRenderer();
+            InitializePlayerStateAnimatorNetwork();
+            InitializePlayerController();
+            InitializeCharacterInformationProvider(characterInformation);
+
+            if (isLocal)
+            {
+                InitializeLocallyOnly();
+            }
+            else
+            {
+                InitializeRemoteOnly();
+            }
+        }
+
+        private void InitializeCharacterName(string characterName)
+        {
+            var characterNameComponent = character.GetComponent<CharacterName>();
+            characterNameComponent.SetName(characterName);
+            characterNameComponent.SetSortingOrder(orderInLayer);
+        }
+
+        private void InitializeSpriteRenderer()
+        {
             var spriteRenderer = character.GetComponent<SpriteRenderer>();
             spriteRenderer.sortingOrder = orderInLayer;
+        }
 
+        private void InitializePlayerStateAnimatorNetwork()
+        {
             var playerStateAnimatorNetwork = character.GetComponent<PlayerStateAnimatorNetwork>();
             playerStateAnimatorNetwork.IsLocal = isLocal;
+        }
 
+        private void InitializePlayerController()
+        {
+            var playerStateAnimatorNetwork = character.GetComponent<PlayerStateAnimatorNetwork>();
+            var characterName = character.GetComponent<CharacterName>();
             var playerController = GetComponent<PlayerController>();
             playerController.PlayerStateChanged = playerStateAnimatorNetwork.OnPlayerStateChanged;
+            playerController.ChangedDirection += characterName.OnChangedDirection;
+        }
 
-            if (!isLocal)
-            {
-                var playerStateSetter = gameObject.GetComponent<PlayerStateSetter>();
-                playerStateSetter.PlayerAnimator = playerStateAnimatorNetwork;
-            }
+        private void InitializeCharacterInformationProvider(CharacterInformation characterInformation)
+        {
+            var characterInformationProvider = GetComponent<CharacterInformationProvider>();
+            characterInformationProvider.SetCharacterInformation(characterInformation);
+        }
+
+        private void InitializeLocallyOnly()
+        {
+            var cameraControllerProvider = GetComponent<CameraControllerProvider>();
+            cameraControllerProvider.SetCameraTarget();
+        }
+
+        private void InitializeRemoteOnly()
+        {
+            var playerStateAnimatorNetwork = character.GetComponent<PlayerStateAnimatorNetwork>();
+            var playerStateSetter = character.GetComponent<PlayerStateSetter>();
+            playerStateSetter.PlayerAnimator = playerStateAnimatorNetwork;
         }
     }
 }

@@ -36,6 +36,8 @@ namespace Scripts.UI
 
             UserInterfaceContainer.Instance.Remove(backgroundImage);
             UserInterfaceContainer.Instance.Remove(backgroundCharactersParent);
+
+            Destroy(gameObject);
         }
 
         private bool IsSkippableScene(int index)

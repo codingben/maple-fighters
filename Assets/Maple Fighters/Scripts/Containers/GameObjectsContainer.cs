@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using CommonTools.Log;
 using Scripts.Gameplay;
 using Scripts.Gameplay.Actors;
@@ -12,36 +11,39 @@ namespace Scripts.Containers
 {
     public class GameObjectsContainer : IGameObjectsContainer
     {
-        public event Action GameObjectsAdded;
-
         private const string GAME_OBJECTS_FOLDER_PATH = "Game/{0}";
         private int localGameObjectId;
         private readonly Dictionary<int, IGameObject> gameObjects = new Dictionary<int, IGameObject>();
 
         public GameObjectsContainer()
         {
-            ServiceContainer.GameService.LocalGameObjectAdded.AddListener(OnLocalGameObjectAdded);
             ServiceContainer.GameService.GameObjectAdded.AddListener(OnGameObjectAdded);
             ServiceContainer.GameService.GameObjectRemoved.AddListener(OnGameObjectRemoved);
             ServiceContainer.GameService.GameObjectsAdded.AddListener(OnGameObjectsAdded);
             ServiceContainer.GameService.GameObjectsRemoved.AddListener(OnGameObjectsRemoved);
         }
 
-        private void OnLocalGameObjectAdded(EnterWorldResponseParameters parameters)
+        public void CreateLocalGameObject(Shared.Game.Common.GameObject characterGameObject, Character character)
         {
-            var gameObject = parameters.PlayerGameObject;
-            var character = new CharacterInformation(parameters.Character.Name, parameters.Character.CharacterType);
+            var obj = AddGameObject(characterGameObject);
+            if (obj == null)
+            {
+                return;
+            }
 
-            var obj = AddGameObject(gameObject);
-            obj.GetComponent<CharacterCreator>().Create(character);
+            obj.GetComponent<CharacterCreator>().Create(new CharacterInformation(character.Name, character.CharacterType));
 
-            localGameObjectId = gameObject.Id;
+            localGameObjectId = characterGameObject.Id;
         }
 
         private void OnGameObjectAdded(GameObjectAddedEventParameters parameters)
         {
             var gameObject = parameters.GameObject;
             var obj = AddGameObject(gameObject);
+            if (obj == null)
+            {
+                return;
+            }
 
             var character = parameters.CharacterInformation;
             if (character.HasValue)
@@ -62,14 +64,16 @@ namespace Scripts.Containers
             foreach (var gameObject in gameObjects)
             {
                 var obj = AddGameObject(gameObject);
+                if (obj == null)
+                {
+                    continue;
+                }
 
                 foreach (var characterInformation in parameters.CharacterInformations)
                 {
                     obj.GetComponent<CharacterCreator>().Create(characterInformation);
                 }
             }
-
-            GameObjectsAdded?.Invoke();
         }
 
         private void OnGameObjectsRemoved(GameObjectsRemovedEventParameters parameters)
@@ -89,13 +93,17 @@ namespace Scripts.Containers
                 return null;
             }
 
-            var obj = CreateGameObject(gameObject.Name, new Vector3(gameObject.X, gameObject.Y));
+            var position = new Vector3(gameObject.X, gameObject.Y);
+            var obj = CreateGameObject(gameObject.Name, position);
             if (obj == null)
             {
                 return null;
             }
 
-            gameObjects.Add(gameObject.Id, obj.GetComponent<IGameObject>());
+            var networkIdentity = obj.GetComponent<IGameObject>();
+            networkIdentity.Id = gameObject.Id;
+
+            gameObjects.Add(gameObject.Id, networkIdentity);
 
             LogUtils.Log(MessageBuilder.Trace($"Added a new game object with id #{gameObject.Id}"));
             return obj;

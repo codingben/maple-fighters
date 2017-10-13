@@ -25,10 +25,12 @@ namespace Scripts.World
 
         private Transform playerGameObject;
 
-        private readonly ExternalCoroutinesExecutor coroutinesExecutor = new ExternalCoroutinesExecutor().ExecuteExternally();
+        private readonly ExternalCoroutinesExecutor coroutinesExecutor = new ExternalCoroutinesExecutor();
 
         private void Awake()
         {
+            coroutinesExecutor.ExecuteExternally();
+
             StartInteraction = OnInteractionStarted;
             StopInteraction = OnInteractionStopped;
         }

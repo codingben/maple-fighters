@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using CommonCommunicationInterfaces;
 using CommonTools.Coroutines;
+using Scripts.Containers;
 using Scripts.ScriptableObjects;
 using Shared.Game.Common;
 
@@ -12,15 +13,15 @@ namespace Scripts.Services
         public event Action Connected;
         public event Action Authenticated;
 
-        public UnityEvent<EnterWorldResponseParameters> LocalGameObjectAdded { get; } = new UnityEvent<EnterWorldResponseParameters>();
-
         public UnityEvent<GameObjectAddedEventParameters> GameObjectAdded { get; } = new UnityEvent<GameObjectAddedEventParameters>();
         public UnityEvent<GameObjectRemovedEventParameters> GameObjectRemoved { get; } = new UnityEvent<GameObjectRemovedEventParameters>();
         public UnityEvent<GameObjectsAddedEventParameters> GameObjectsAdded { get; } = new UnityEvent<GameObjectsAddedEventParameters>();
         public UnityEvent<GameObjectsRemovedEventParameters> GameObjectsRemoved { get; } = new UnityEvent<GameObjectsRemovedEventParameters>();
         public UnityEvent<GameObjectPositionChangedEventParameters> PositionChanged { get; } = new UnityEvent<GameObjectPositionChangedEventParameters>();
         public UnityEvent<PlayerStateChangedEventParameters> PlayerStateChanged { get; } = new UnityEvent<PlayerStateChangedEventParameters>();
-        
+
+        private IGameObjectsContainer gameObjectsContainer;
+
         public void Connect()
         {
             var connectionInformation = ServicesConfiguration.GetInstance().GetConnectionInformation(ServersType.Game);
@@ -34,6 +35,8 @@ namespace Scripts.Services
 
         protected override void OnConnected()
         {
+            gameObjectsContainer = GameContainers.GameObjectsContainer;
+
             AddEventsHandlers();
 
             Connected?.Invoke();
@@ -106,23 +109,25 @@ namespace Scripts.Services
             Authenticated?.Invoke();
         }
 
-        public async Task<EnterWorldStatus> EnterWorld(IYield yield, EnterWorldRequestParameters parameters)
+        public void EnterWorld()
+        {
+            CoroutinesExecutor.StartTask(EnterWorld);
+        }
+
+        private async Task EnterWorld(IYield yield)
         {
             if (!IsServerConnected())
             {
-                return EnterWorldStatus.Denied;
+                return;
             }
 
-            var requestId = OperationRequestSender.Send(GameOperations.EnterWorld, parameters, MessageSendOptions.DefaultReliable());
+            var requestId = OperationRequestSender.Send(GameOperations.EnterWorld, new EmptyParameters(), MessageSendOptions.DefaultReliable());
             var responseParameters = await SubscriptionProvider.ProvideSubscription<EnterWorldResponseParameters>(yield, requestId);
 
-            if (!responseParameters.HasCharacter)
-            {
-                return EnterWorldStatus.Denied;
-            }
+            var characterGameObject = responseParameters.CharacterGameObject;
+            var character = responseParameters.Character;
 
-            LocalGameObjectAdded.Invoke(responseParameters);
-            return EnterWorldStatus.Access;
+            gameObjectsContainer.CreateLocalGameObject(characterGameObject, character);
         }
 
         public async Task<FetchCharactersResponseParameters> FetchCharacters(IYield yield)
@@ -135,6 +140,18 @@ namespace Scripts.Services
             var requestId = OperationRequestSender.Send(GameOperations.FetchCharacters, new EmptyParameters(), MessageSendOptions.DefaultReliable());
             var responseParameters = await SubscriptionProvider.ProvideSubscription<FetchCharactersResponseParameters>(yield, requestId);
             return responseParameters;
+        }
+
+        public async Task<ValidateCharacterStatus> ValidateCharacter(IYield yield, ValidateCharacterRequestParameters parameters)
+        {
+            if (!IsServerConnected())
+            {
+                return ValidateCharacterStatus.Wrong;
+            }
+
+            var requestId = OperationRequestSender.Send(GameOperations.ValidateCharacter, parameters, MessageSendOptions.DefaultReliable());
+            var responseParameters = await SubscriptionProvider.ProvideSubscription<ValidateCharacterResponseParameters>(yield, requestId);
+            return responseParameters.Status;
         }
 
         public async Task<CreateCharacterResponseParameters> CreateCharacter(IYield yield, CreateCharacterRequestParameters parameters)

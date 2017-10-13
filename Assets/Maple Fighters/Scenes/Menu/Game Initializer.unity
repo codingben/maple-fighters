@@ -318,7 +318,6 @@ GameObject:
   - component: {fileID: 1711322845}
   - component: {fileID: 1711322846}
   - component: {fileID: 1711322847}
-  - component: {fileID: 1711322848}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -350,6 +349,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb5974421c8008f4cbf2f4b5a1425b3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  loadSceneIndex: 2
 --- !u!114 &1711322847
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -361,18 +361,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0fdeb3699607c04ab890fe06e3f2864, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1711322848
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1711322844}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a7d8bb93a3e0b0f4fbfc016b0444c4bd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  skipBuildIndexes: 01000000
 --- !u!1001 &1782094179
 Prefab:
   m_ObjectHideFlags: 0
@@ -412,15 +400,57 @@ Prefab:
       propertyPath: m_RootOrder
       value: 4
       objectReference: {fileID: 0}
-    - target: {fileID: 1531253443867706, guid: e782ff1fd96938d47bbf22cfe7de0863, type: 2}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 224907980033704690, guid: e782ff1fd96938d47bbf22cfe7de0863,
+    - target: {fileID: 114140515158368162, guid: e782ff1fd96938d47bbf22cfe7de0863,
         type: 2}
-      propertyPath: m_RootOrder
-      value: 0
+      propertyPath: showSpeed
+      value: 0.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 114140515158368162, guid: e782ff1fd96938d47bbf22cfe7de0863,
+        type: 2}
+      propertyPath: hideSpeed
+      value: 0.75
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e782ff1fd96938d47bbf22cfe7de0863, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &1813788833
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1813788835}
+  - component: {fileID: 1813788834}
+  m_Layer: 0
+  m_Name: Background Controller
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1813788834
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1813788833}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7d8bb93a3e0b0f4fbfc016b0444c4bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skipBuildIndexes: 01000000
+--- !u!4 &1813788835
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1813788833}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

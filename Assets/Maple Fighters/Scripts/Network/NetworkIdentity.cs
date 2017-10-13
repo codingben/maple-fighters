@@ -1,10 +1,23 @@
-﻿using UnityEngine;
+﻿using Scripts.Editor;
+using UnityEngine;
 
 namespace Scripts.Gameplay
 {
     public class NetworkIdentity : MonoBehaviour, IGameObject
     {
-        public int Id { get; set; }
+        [ReadOnly, SerializeField] private int id;
+
+        public int Id
+        {
+            get
+            {
+                return id;
+            }
+            set
+            {
+                id = value;
+            }
+        }
 
         public GameObject GetGameObject()
         {

@@ -61,11 +61,13 @@ namespace Scripts.UI.Controllers
             if (charactersSelectionWindow != null)
             {
                 UnsubscribeFromCharactersSelectionWindowEvents();
+                UserInterfaceContainer.Instance.Remove(charactersSelectionWindow);
             }
 
             if (characterNameWindow != null)
             {
                 UnsubscribeFromCharacterNameWindow();
+                UserInterfaceContainer.Instance.Remove(characterNameWindow);
             }
         }
 

@@ -104,7 +104,7 @@ namespace Scripts.UI.Controllers
 
         private void LoginSucceed(NoticeWindow noticeWindow)
         {
-            var screenFade = UserInterfaceContainer.Instance.Get<ScreenFade>();
+            var screenFade = UserInterfaceContainer.Instance.Get<ScreenFade>().AssertNotNull();
             screenFade.Show(() => OnLoginSucceed(noticeWindow));
         }
 

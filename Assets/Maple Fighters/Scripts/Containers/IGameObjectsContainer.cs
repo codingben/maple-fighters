@@ -1,12 +1,12 @@
-﻿using System;
-using Scripts.Gameplay;
-using UnityEngine;
+﻿using Scripts.Gameplay;
+using Shared.Game.Common;
+using GameObject = UnityEngine.GameObject;
 
 namespace Scripts.Containers
 {
     public interface IGameObjectsContainer
     {
-        event Action GameObjectsAdded;
+        void CreateLocalGameObject(Shared.Game.Common.GameObject characterGameObject, Character character);
 
         IGameObject GetLocalGameObject();
 
