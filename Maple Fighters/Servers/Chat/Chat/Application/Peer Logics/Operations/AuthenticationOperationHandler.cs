@@ -8,7 +8,7 @@ using ServerCommunicationHelper;
 
 namespace Chat.Application.PeerLogic.Operations
 {
-    internal class AuthenticationOperationHandler : IOperationRequestHandler<AuthenticateRequestParameters, EmptyParameters>
+    internal class AuthenticationOperationHandler : IOperationRequestHandler<AuthenticateRequestParameters, AuthenticateResponseParameters>
     {
         private readonly Action onAuthenticated;
         private readonly Action onUnauthenticated;
@@ -22,17 +22,17 @@ namespace Chat.Application.PeerLogic.Operations
             databaseAccessTokenExistence = Server.Entity.Container.GetComponent<DatabaseAccessTokenExistence>().AssertNotNull();
         }
 
-        public EmptyParameters? Handle(MessageData<AuthenticateRequestParameters> messageData, ref MessageSendOptions sendOptions)
+        public AuthenticateResponseParameters? Handle(MessageData<AuthenticateRequestParameters> messageData, ref MessageSendOptions sendOptions)
         {
             var accessToken = messageData.Parameters.AccessToken;
             if (!databaseAccessTokenExistence.Exists(accessToken))
             {
                 onUnauthenticated.Invoke();
-                return null;
+                return new AuthenticateResponseParameters(AuthenticateStatus.Failed);
             }
 
             onAuthenticated.Invoke();
-            return new EmptyParameters();
+            return new AuthenticateResponseParameters(AuthenticateStatus.Succeed);
         }
     }
 }

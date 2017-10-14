@@ -27,7 +27,7 @@ namespace Chat.Application.PeerLogics
 
         private void OnUnauthenticated()
         {
-            PeerWrapper.Peer.Disconnect();
+            PeerWrapper.Peer.Fiber.Enqueue(PeerWrapper.Peer.Disconnect);
         }
     }
 }

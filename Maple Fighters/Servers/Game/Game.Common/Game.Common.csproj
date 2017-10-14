@@ -52,6 +52,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AuthenticateRequestParameters.cs" />
+    <Compile Include="AuthenticateResponseParameters.cs" />
+    <Compile Include="AuthenticationStatus.cs" />
     <Compile Include="ChangeSceneRequestParameters.cs" />
     <Compile Include="Character.cs" />
     <Compile Include="CharacterClasses.cs" />

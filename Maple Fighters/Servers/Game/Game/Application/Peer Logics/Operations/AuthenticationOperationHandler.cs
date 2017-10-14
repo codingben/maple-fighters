@@ -8,7 +8,7 @@ using Shared.Game.Common;
 
 namespace Game.Application.PeerLogic.Operations
 {
-    internal class AuthenticationOperationHandler : IOperationRequestHandler<AuthenticateRequestParameters, EmptyParameters>
+    internal class AuthenticationOperationHandler : IOperationRequestHandler<AuthenticateRequestParameters, AuthenticateResponseParameters>
     {
         private readonly Action<int> onAuthenticated;
         private readonly Action onUnauthenticated;
@@ -26,14 +26,14 @@ namespace Game.Application.PeerLogic.Operations
             databaseUserIdViaAccessTokenProvider = Server.Entity.Container.GetComponent<DatabaseUserIdViaAccessTokenProvider>().AssertNotNull();
         }
 
-        public EmptyParameters? Handle(MessageData<AuthenticateRequestParameters> messageData, ref MessageSendOptions sendOptions)
+        public AuthenticateResponseParameters? Handle(MessageData<AuthenticateRequestParameters> messageData, ref MessageSendOptions sendOptions)
         {
             var accessToken = messageData.Parameters.AccessToken;
 
             if (!databaseAccessTokenExistence.Exists(accessToken))
             {
                 onUnauthenticated.Invoke();
-                return null;
+                return new AuthenticateResponseParameters(AuthenticationStatus.Failed);
             }
 
             var userId = databaseUserIdViaAccessTokenProvider.GetUserId(accessToken);
@@ -41,11 +41,11 @@ namespace Game.Application.PeerLogic.Operations
             if (databaseAccessTokenProvider.GetAccessToken(userId) != accessToken)
             {
                 onUnauthenticated.Invoke();
-                return null;
+                return new AuthenticateResponseParameters(AuthenticationStatus.Failed);
             }
 
             onAuthenticated.Invoke(userId);
-            return new EmptyParameters();
+            return new AuthenticateResponseParameters(AuthenticationStatus.Succeed);
         }
     }
 }
