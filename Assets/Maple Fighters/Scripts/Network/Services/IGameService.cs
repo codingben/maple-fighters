@@ -8,9 +8,8 @@ namespace Scripts.Services
     public interface IGameService
     {
         event Action Connected;
-        event Action Authenticated;
 
-        void Connect();
+        Task<ConnectionStatus> Connect(IYield yield);
         void Disconnect();
 
         void EnterWorld();
@@ -18,7 +17,7 @@ namespace Scripts.Services
         void UpdatePosition(UpdatePositionRequestParameters parameters);
         void UpdatePlayerState(UpdatePlayerStateRequestParameters parameters);
 
-        Task Authenticate(IYield yield);
+        Task<AuthenticationStatus> Authenticate(IYield yield);
 
         Task<FetchCharactersResponseParameters> FetchCharacters(IYield yield);
         Task<ValidateCharacterStatus> ValidateCharacter(IYield yield, ValidateCharacterRequestParameters parameters);

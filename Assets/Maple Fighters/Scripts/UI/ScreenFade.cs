@@ -28,10 +28,6 @@ namespace Scripts.UI
             {
                 Hide();
             }
-            else
-            {
-                Show();
-            }
         }
     }
 }

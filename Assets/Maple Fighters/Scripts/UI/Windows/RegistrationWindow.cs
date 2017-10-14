@@ -8,6 +8,8 @@ namespace Scripts.UI.Windows
 {
     public class RegistrationWindow : UserInterfaceWindowFadeEffect
     {
+        public Action ResetInputFields;
+
         public event Action<string, string, string, string> RegisterButtonClicked;
         public event Action BackButtonClicked;
         public event Action<string> ShowNotice;
@@ -27,6 +29,8 @@ namespace Scripts.UI.Windows
 
         private void Start()
         {
+            ResetInputFields = OnResetInputFields;
+
             backButton.onClick.AddListener(OnBackButtonClicked);
             registerButton.onClick.AddListener(OnRegisterButtonClicked);
         }
@@ -42,7 +46,6 @@ namespace Scripts.UI.Windows
         private void OnBackButtonClicked()
         {
             Hide();
-            ResetInputFields();
 
             BackButtonClicked?.Invoke();
         }
@@ -69,7 +72,7 @@ namespace Scripts.UI.Windows
             RegisterButtonClicked?.Invoke(email, password, firstName, lastName);
         }
 
-        private void ResetInputFields()
+        private void OnResetInputFields()
         {
             emailInputField.text = string.Empty;
             passwordInputField.text = string.Empty;

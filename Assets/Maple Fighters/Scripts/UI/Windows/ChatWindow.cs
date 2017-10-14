@@ -11,21 +11,42 @@ namespace Scripts.UI.Windows
 {
     public class ChatWindow : UserInterfaceWindow
     {
-        public event Action<string> SendChatMessage;
+        public bool IsConnected { get; set; }
+
+        public Action<string, ChatMessageColor> ChatMessageNotifier;
         public Action<ChatMessageEventParameters> ChatMessageReceived;
+
+        public event Action<string> SendChatMessage;
 
         [SerializeField] private TextMeshProUGUI chatText;
         [SerializeField] private TMP_InputField inputField;
 
         private string characterName;
 
-        private void Start()
+        protected override void OnAwake()
         {
+            base.OnAwake();
+
+            ChatMessageNotifier = OnChatMessageNotifier;
             ChatMessageReceived = OnChatMessageReceived;
+        }
+
+        private void OnChatMessageNotifier(string message, ChatMessageColor color)
+        {
+            var chatMessageColor = color.ToString().ToLower();
+
+            chatText.text += chatText.text.Length > 0 
+                ? $"\n<color={chatMessageColor}>{message}</color>" 
+                : $"<color={chatMessageColor}>{message}</color>";
         }
 
         private void Update()
         {
+            if (!IsConnected)
+            {
+                return;
+            }
+
             ActivateOrDeactivateInputField();
             DetectTextChangesAndSendMessage();
         }

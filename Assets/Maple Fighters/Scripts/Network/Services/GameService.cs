@@ -11,7 +11,6 @@ namespace Scripts.Services
     public sealed class GameService : ServiceBase<GameOperations, GameEvents>, IGameService
     {
         public event Action Connected;
-        public event Action Authenticated;
 
         public UnityEvent<GameObjectAddedEventParameters> GameObjectAdded { get; } = new UnityEvent<GameObjectAddedEventParameters>();
         public UnityEvent<GameObjectRemovedEventParameters> GameObjectRemoved { get; } = new UnityEvent<GameObjectRemovedEventParameters>();
@@ -22,10 +21,11 @@ namespace Scripts.Services
 
         private IGameObjectsContainer gameObjectsContainer;
 
-        public void Connect()
+        public async Task<ConnectionStatus> Connect(IYield yield)
         {
             var connectionInformation = ServicesConfiguration.GetInstance().GetConnectionInformation(ServersType.Game);
-            Connect(connectionInformation);
+            var connectionStatus = await Connect(yield, connectionInformation);
+            return connectionStatus;
         }
 
         public void Disconnect()
@@ -96,18 +96,17 @@ namespace Scripts.Services
             EventHandlerRegister.RemoveHandler(GameEvents.PlayerStateChanged);
         }
 
-        public async Task Authenticate(IYield yield)
+        public async Task<AuthenticationStatus> Authenticate(IYield yield)
         {
             if (!IsServerConnected())
             {
-                return;
+                return AuthenticationStatus.Failed;
             }
 
             var parameters = new AuthenticateRequestParameters(AccessTokenProvider.AccessToken);
             var requestId = OperationRequestSender.Send(GameOperations.Authenticate, parameters, MessageSendOptions.DefaultReliable());
-            await SubscriptionProvider.ProvideSubscription<EmptyParameters>(yield, requestId);
-
-            Authenticated?.Invoke();
+            var responseParameters = await SubscriptionProvider.ProvideSubscription<AuthenticateResponseParameters>(yield, requestId);
+            return responseParameters.Status;
         }
 
         public void EnterWorld()

@@ -27,12 +27,11 @@ namespace PhotonClientImplementation
             var statusCode = await WaitForStatusCodeChange(yield, photonPeer);
             if (statusCode == StatusCode.Connect)
             {
-
                 Debug.Log($"A new server has been connected: {connectionInformation.Ip}:{connectionInformation.Port}");
                 return photonPeer;
             }
 
-            LogUtils.Log($"Connecting to {connectionInformation.Ip}:{connectionInformation.Port} failed. StatusCode: {statusCode}", LogMessageType.Error);
+            LogUtils.Log($"Connecting to {connectionInformation.Ip}:{connectionInformation.Port} failed. Status Code: {statusCode}");
             return null;
         }
 

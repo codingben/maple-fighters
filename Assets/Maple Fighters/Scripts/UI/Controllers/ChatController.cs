@@ -1,32 +1,34 @@
 ﻿using Chat.Common;
 using Scripts.Containers;
+using Scripts.Services;
 using Scripts.UI.Core;
 using Scripts.UI.Windows;
-using UnityEngine;
+using Scripts.Utils;
 
 namespace Scripts.UI.Controllers
 {
-    public class ChatController : MonoBehaviour
+    public class ChatController : DontDestroyOnLoad<ChatController>
     {
         private ChatWindow chatWindow;
 
         private void Start()
         {
-            ServiceContainer.ChatService.Authenticated += OnAuthenticated;
+            chatWindow = UserInterfaceContainer.Instance.Add<ChatWindow>();
+            chatWindow.IsConnected = false;
+
+            ChatConnector.Instance.Connect();
         }
 
-        private void OnAuthenticated()
+        public void OnAuthenticated()
         {
-            chatWindow = UserInterfaceContainer.Instance.Add<ChatWindow>();
             chatWindow.SendChatMessage += OnSendChatMessage;
+            chatWindow.IsConnected = true;
 
             ServiceContainer.ChatService.ChatMessageReceived.AddListener(p => chatWindow.ChatMessageReceived.Invoke(p));
         }
 
         private void OnDestroy()
         {
-            ServiceContainer.ChatService.Authenticated -= OnAuthenticated;
-
             if (chatWindow == null)
             {
                 return;

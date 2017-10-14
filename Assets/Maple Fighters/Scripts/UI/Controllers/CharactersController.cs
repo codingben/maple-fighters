@@ -33,9 +33,7 @@ namespace Scripts.UI.Controllers
 
         private void Start()
         {
-            charactersParent = UserInterfaceContainer.Instance.Get<BackgroundCharactersParent>().AssertNotNull().GameObject.transform;
-
-            ServiceContainer.GameService.Authenticated += () => coroutinesExecutor.StartTask(FetchCharactersTask);
+            coroutinesExecutor.StartTask(FetchCharactersTask);
         }
 
         private void OnDestroy()
@@ -66,11 +64,12 @@ namespace Scripts.UI.Controllers
 
         private async Task FetchCharactersTask(IYield yield)
         {
-            var parameters = await ServiceContainer.GameService.FetchCharacters(yield);
+            charactersParent = UserInterfaceContainer.Instance.Get<BackgroundCharactersParent>().AssertNotNull().GameObject.transform;
 
+            var parameters = await ServiceContainer.GameService.FetchCharacters(yield);
             if (parameters.Characters.Length == 0)
             {
-                Utils.ShowNotice("Could not connect to a server.", Application.Quit, true);
+                Utils.ShowNotice("Something went wrong, could not fetch characters.", Application.Quit, true);
                 return;
             }
 

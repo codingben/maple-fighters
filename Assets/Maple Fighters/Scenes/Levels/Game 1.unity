@@ -470,7 +470,7 @@ MonoBehaviour:
   moveSpeed: 5
   minX: -13.5
   maxX: 13.5
-  minY: -3.75
+  minY: -4.25
   maxY: -3.75
 --- !u!1 &698174972
 GameObject:

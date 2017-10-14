@@ -12,39 +12,25 @@ using Scripts.Utils;
 
 namespace Scripts.Services
 {
+    public enum ConnectionStatus
+    {
+        Succeed,
+        Failed
+    }
+
     public abstract class ServiceBase<TOperationCode, TEventCode> : IDisposable
         where TOperationCode : IComparable, IFormattable, IConvertible
         where TEventCode : IComparable, IFormattable, IConvertible
     {
+        private IServerPeer serverPeer;
         private ServersType serverType;
         private PeerConnectionInformation peerConnectionInformation;
-
-        private IServerPeer serverPeer;
 
         protected IEventHandlerRegister<TEventCode> EventHandlerRegister { get; private set; }
         protected IOperationRequestSender<TOperationCode> OperationRequestSender { get; private set; }
         protected IOperationResponseSubscriptionProvider SubscriptionProvider { get; private set; }
 
         protected readonly ExternalCoroutinesExecutor CoroutinesExecutor = new ExternalCoroutinesExecutor().ExecuteExternally();
-
-        public async Task<IServerPeer> ConnectAsync(IYield yield, PeerConnectionInformation connectionInformation)
-        {
-            var serverConnector = new PhotonServerConnector(() => CoroutinesExecutor);
-            var networkConfiguration = NetworkConfiguration.GetInstance();
-
-            serverPeer = await serverConnector.ConnectAsync(yield, connectionInformation,
-                new ConnectionDetails(networkConfiguration.ConnectionProtocol, networkConfiguration.DebugLevel));
-
-            if (serverPeer == null)
-            {
-                return null;
-            }
-
-            InitializePeerHandlers();
-            OnConnected();
-
-            return serverPeer;
-        }
 
         public void Dispose()
         {
@@ -54,35 +40,26 @@ namespace Scripts.Services
             EventHandlerRegister?.Dispose();
         }
 
-        protected void Connect(ConnectionInformation connectionInformation)
+        protected async Task<ConnectionStatus> Connect(IYield yield, ConnectionInformation connectionInformation)
         {
+            var peerConnectionInformation = GetPeerConnectionInformation(connectionInformation);
+
+            LogUtils.Log($"Connecting to a {serverType} server. IP: {peerConnectionInformation.Ip} Port: {peerConnectionInformation.Port}");
+
+            var serverConnector = new PhotonServerConnector(() => CoroutinesExecutor);
             var networkConfiguration = NetworkConfiguration.GetInstance();
 
-            serverType = connectionInformation.ServerType;
+            serverPeer = await serverConnector.ConnectAsync(yield, peerConnectionInformation,
+                new ConnectionDetails(networkConfiguration.ConnectionProtocol, networkConfiguration.DebugLevel));
 
-            switch (networkConfiguration.ConnectionProtocol)
+            if (serverPeer == null)
             {
-                case ConnectionProtocol.Udp:
-                {
-                    peerConnectionInformation = connectionInformation.UdpConnectionDetails;
-                    break;
-                }
-                case ConnectionProtocol.Tcp:
-                {
-                    peerConnectionInformation = connectionInformation.TcpConnectionDetails;
-                    break;
-                }
-                case ConnectionProtocol.WebSocket:
-                case ConnectionProtocol.WebSocketSecure:
-                {
-                    peerConnectionInformation = connectionInformation.WebConnectionDetails;
-                    break;
-                }
+                return ConnectionStatus.Failed;
             }
 
-            LogUtils.Log(MessageBuilder.Trace($"Connecting to a {serverType} server - " + $"{peerConnectionInformation.Ip}:{peerConnectionInformation.Port}"));
-
-            CoroutinesExecutor.StartTask(y => ConnectAsync(y, peerConnectionInformation));
+            InitializePeerHandlers();
+            OnConnected();
+            return ConnectionStatus.Succeed;
         }
 
         protected abstract void OnConnected();
@@ -93,8 +70,8 @@ namespace Scripts.Services
         {
             serverPeer.PeerDisconnectionNotifier.Disconnected -= OnDisconnected;
 
-            LogUtils.Log(MessageBuilder.Trace("A connection has been closed with " +
-                                              $"{serverType} - {peerConnectionInformation.Ip}:{peerConnectionInformation.Port}. Reason: {disconnectReason}"));
+            LogUtils.Log("A connection has been closed with " +
+                            $"{serverType} - {peerConnectionInformation.Ip}:{peerConnectionInformation.Port}. Reason: {disconnectReason}");
 
             OnDisconnected();
         }
@@ -124,6 +101,35 @@ namespace Scripts.Services
         protected bool IsServerConnected()
         {
             return serverPeer != null && serverPeer.IsConnected;
+        }
+
+        private PeerConnectionInformation GetPeerConnectionInformation(ConnectionInformation connectionInformation)
+        {
+            var networkConfiguration = NetworkConfiguration.GetInstance();
+
+            serverType = connectionInformation.ServerType;
+
+            switch (networkConfiguration.ConnectionProtocol)
+            {
+                case ConnectionProtocol.Udp:
+                {
+                    peerConnectionInformation = connectionInformation.UdpConnectionDetails;
+                    break;
+                }
+                case ConnectionProtocol.Tcp:
+                {
+                    peerConnectionInformation = connectionInformation.TcpConnectionDetails;
+                    break;
+                }
+                case ConnectionProtocol.WebSocket:
+                case ConnectionProtocol.WebSocketSecure:
+                {
+                    peerConnectionInformation = connectionInformation.WebConnectionDetails;
+                    break;
+                }
+            }
+
+            return new PeerConnectionInformation(peerConnectionInformation.Ip, peerConnectionInformation.Port);
         }
     }
 }

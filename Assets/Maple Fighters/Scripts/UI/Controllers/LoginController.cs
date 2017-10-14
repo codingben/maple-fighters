@@ -1,22 +1,27 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using CommonTools.Coroutines;
 using CommonTools.Log;
 using Login.Common;
 using Scripts.Containers;
+using Scripts.Services;
 using Scripts.UI.Core;
 using Scripts.UI.Windows;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using WaitForSeconds = CommonTools.Coroutines.WaitForSeconds;
 
 namespace Scripts.UI.Controllers
 {
     public class LoginController : MonoBehaviour
     {
+        private const int AUTO_TIME_FOR_DISCONNECT = 60;
+
         [SerializeField] private int loadSceneIndex;
 
         private RegistrationWindow registrationWindow;
         private LoginWindow loginWindow;
 
+        private ICoroutine disconnectAutomatically;
         private readonly ExternalCoroutinesExecutor coroutinesExecutor = new ExternalCoroutinesExecutor();
 
         private void Start()
@@ -56,29 +61,40 @@ namespace Scripts.UI.Controllers
 
         private void OnLoginButtonClicked(string email, string password)
         {
+            var parameters = new LoginRequestParameters(email, password);
+            coroutinesExecutor.StartTask((y) => Connect(y, parameters));
+        }
+
+        private async Task Connect(IYield yield, LoginRequestParameters parameters)
+        {
+            var noticeWindow = Utils.ShowNotice("Logging in... Please wait.", () => loginWindow.Show());
+            noticeWindow.OkButton.interactable = false;
+
             if (!ServiceContainer.LoginService.IsConnected())
             {
-                Utils.ShowNotice("Could not connect to a server.", () => loginWindow.Show());
-                return;
+                var connectionStatus = await ServiceContainer.LoginService.Connect(yield);
+                if (connectionStatus == ConnectionStatus.Failed)
+                {
+                    noticeWindow.Message.text = "Could not connect to a login server.";
+                    noticeWindow.OkButton.interactable = true;
+                    return;
+                }
             }
 
-            var parameters = new LoginRequestParameters(email, password);
             coroutinesExecutor.StartTask((y) => Login(y, parameters));
         }
 
         private async Task Login(IYield yield, LoginRequestParameters parameters)
         {
-            var noticeWindow = Utils.ShowNotice("Login is in a process, please wait.", () => loginWindow.Show());
-            noticeWindow.OkButton.interactable = false;
-
+            var noticeWindow = UserInterfaceContainer.Instance.Get<NoticeWindow>().AssertNotNull();
             var responseParameters = await ServiceContainer.LoginService.Login(yield, parameters);
 
             switch (responseParameters.Status)
             {
                 case LoginStatus.Succeed:
                 {
-                    noticeWindow.Message.text = "You have logged in successfully. Loading the world...";
-                    LoginSucceed(noticeWindow);
+                    noticeWindow.Message.text = "You have logged in successfully. Please wait.";
+                    LoginSucceed();
                     break;
                 }
                 case LoginStatus.UserNotExist:
@@ -100,19 +116,23 @@ namespace Scripts.UI.Controllers
                     break;
                 }
             }
+
+            if (responseParameters.Status != LoginStatus.Succeed)
+            {
+                if (disconnectAutomatically == null)
+                {
+                    disconnectAutomatically = coroutinesExecutor.StartCoroutine(DisconnectAutomatically());
+                }
+            }
+            else
+            {
+                Disconnect();
+            }
         }
 
-        private void LoginSucceed(NoticeWindow noticeWindow)
+        private void LoginSucceed()
         {
-            var screenFade = UserInterfaceContainer.Instance.Get<ScreenFade>().AssertNotNull();
-            screenFade.Show(() => OnLoginSucceed(noticeWindow));
-        }
-
-        private void OnLoginSucceed(NoticeWindow noticeWindow)
-        {
-            UserInterfaceContainer.Instance.Remove(noticeWindow);
-
-            SceneManager.LoadScene(loadSceneIndex, LoadSceneMode.Single);
+            GameConnector.Instance.Connect();
         }
 
         private void OnRegisterButtonClicked()
@@ -123,6 +143,32 @@ namespace Scripts.UI.Controllers
             }
 
             registrationWindow.Show();
+        }
+
+        private IEnumerator<IYieldInstruction> DisconnectAutomatically()
+        {
+            const int MINIMUM_TASKS = 1;
+
+            while (true)
+            {
+                yield return new WaitForSeconds(AUTO_TIME_FOR_DISCONNECT);
+
+                if (coroutinesExecutor.Count > MINIMUM_TASKS)
+                {
+                    continue;
+                }
+
+                Disconnect();
+                yield break;
+            }
+        }
+
+        private void Disconnect()
+        {
+            disconnectAutomatically?.Dispose();
+            disconnectAutomatically = null;
+
+            ServiceContainer.LoginService.Disconnect();
         }
     }
 }

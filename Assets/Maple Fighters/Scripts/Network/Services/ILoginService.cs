@@ -8,7 +8,7 @@ namespace Scripts.Services
     {
         bool IsConnected();
 
-        void Connect();
+        Task<ConnectionStatus> Connect(IYield yield);
         void Disconnect();
 
         Task<LoginResponseParameters> Login(IYield yield, LoginRequestParameters parameters);

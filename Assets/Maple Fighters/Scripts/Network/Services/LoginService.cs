@@ -24,10 +24,11 @@ namespace Scripts.Services
             return IsServerConnected();
         }
 
-        public void Connect()
+        public async Task<ConnectionStatus> Connect(IYield yield)
         {
             var connectionInformation = ServicesConfiguration.GetInstance().GetConnectionInformation(ServersType.Login);
-            Connect(connectionInformation);
+            var connectionStatus = await Connect(yield, connectionInformation);
+            return connectionStatus;
         }
 
         public void Disconnect()

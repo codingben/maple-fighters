@@ -259,6 +259,10 @@ Prefab:
       propertyPath: m_RootOrder
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 1531253443867706, guid: e782ff1fd96938d47bbf22cfe7de0863, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e782ff1fd96938d47bbf22cfe7de0863, type: 2}
   m_IsPrefabParent: 0
@@ -361,7 +365,7 @@ GameObject:
   - component: {fileID: 1602680588}
   - component: {fileID: 1602680589}
   m_Layer: 0
-  m_Name: Main (Login Initializer)
+  m_Name: Main (Game Connector)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -388,9 +392,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1602680587}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 892a80b1fa43e07479b2d26eef8ba219, type: 3}
+  m_Script: {fileID: 11500000, guid: 041a2b582a449b3458f02931e1040b68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  loadSceneIndex: 1
 --- !u!1 &1711322844
 GameObject:
   m_ObjectHideFlags: 0
