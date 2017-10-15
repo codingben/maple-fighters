@@ -1,10 +1,13 @@
-﻿using Shared.Game.Common;
+﻿using System;
+using Shared.Game.Common;
 using UnityEngine;
 
 namespace Scripts.Gameplay.Actors
 {
     public class PositionSetter : MonoBehaviour, IPositionSetter
     {
+        public event Action<Directions> DirectionChanged; 
+
         private const float SPEED = 10;
         private Vector3 position = Vector3.zero;
 
@@ -42,6 +45,8 @@ namespace Scripts.Gameplay.Actors
                     break;
                 }
             }
+
+            DirectionChanged?.Invoke(direction);
         }
     }
 }

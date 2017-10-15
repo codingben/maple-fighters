@@ -2,6 +2,7 @@
 using CommonTools.Log;
 using Scripts.Gameplay;
 using Scripts.Gameplay.Actors;
+using Scripts.Utils;
 using Shared.Game.Common;
 using UnityEngine;
 using GameObject = UnityEngine.GameObject;
@@ -9,22 +10,47 @@ using Object = UnityEngine.Object;
 
 namespace Scripts.Containers
 {
-    public class GameObjectsContainer : IGameObjectsContainer
+    public class GameObjectsContainer : DontDestroyOnLoad<GameObjectsContainer>
     {
         private const string GAME_OBJECTS_FOLDER_PATH = "Game/{0}";
         private int localGameObjectId;
         private readonly Dictionary<int, IGameObject> gameObjects = new Dictionary<int, IGameObject>();
 
-        public GameObjectsContainer()
+        private void Start()
         {
+            SubscribeToGameServiceEvents();
+
+            ServiceContainer.GameService.EnterWorld();
+        }
+
+        private void OnDestroy()
+        {
+            UnsubscribeFromGameServiceEvents();
+        }
+
+        private void SubscribeToGameServiceEvents()
+        {
+            ServiceContainer.GameService.LocalGameObjectAdded.AddListener(CreateLocalGameObject);
             ServiceContainer.GameService.GameObjectAdded.AddListener(OnGameObjectAdded);
             ServiceContainer.GameService.GameObjectRemoved.AddListener(OnGameObjectRemoved);
             ServiceContainer.GameService.GameObjectsAdded.AddListener(OnGameObjectsAdded);
             ServiceContainer.GameService.GameObjectsRemoved.AddListener(OnGameObjectsRemoved);
         }
 
-        public void CreateLocalGameObject(Shared.Game.Common.GameObject characterGameObject, Character character)
+        private void UnsubscribeFromGameServiceEvents()
         {
+            ServiceContainer.GameService.LocalGameObjectAdded.RemoveListener(CreateLocalGameObject);
+            ServiceContainer.GameService.GameObjectAdded.RemoveListener(OnGameObjectAdded);
+            ServiceContainer.GameService.GameObjectRemoved.RemoveListener(OnGameObjectRemoved);
+            ServiceContainer.GameService.GameObjectsAdded.RemoveListener(OnGameObjectsAdded);
+            ServiceContainer.GameService.GameObjectsRemoved.RemoveListener(OnGameObjectsRemoved);
+        }
+
+        private void CreateLocalGameObject(LocalGameObjectAddedEventParameters parameters)
+        {
+            var characterGameObject = parameters.CharacterGameObject;
+            var character = parameters.Character;
+
             LogUtils.Log(MessageBuilder.Trace($"Local Game Object Id: {characterGameObject.Id}"));
 
             var obj = AddGameObject(characterGameObject);
@@ -33,7 +59,7 @@ namespace Scripts.Containers
                 return;
             }
 
-            obj.GetComponent<CharacterCreator>().Create(new CharacterInformation(character.Name, character.CharacterType));
+            obj.GetComponent<CharacterCreator>().Create(new CharacterInformation(characterGameObject.Id, character.Name, character.CharacterType));
 
             localGameObjectId = characterGameObject.Id;
         }
@@ -47,10 +73,11 @@ namespace Scripts.Containers
                 return;
             }
 
-            var character = parameters.CharacterInformation;
-            if (character.HasValue)
+            var hasCharacter = parameters.HasCharacter;
+            if (hasCharacter)
             {
-                obj.GetComponent<CharacterCreator>().Create(character.Value);
+                var character = parameters.CharacterInformation;
+                obj.GetComponent<CharacterCreator>().Create(character);
             }
         }
 
@@ -60,21 +87,18 @@ namespace Scripts.Containers
             RemoveGameObject(id);
         }
 
-        private void OnGameObjectsAdded(GameObjectsAddedEventParameters parameters) // TODO: Bug spotted - characters information may be null or may not exists at all.
+        private void OnGameObjectsAdded(GameObjectsAddedEventParameters parameters)
         {
             var gameObjects = parameters.GameObjects;
             foreach (var gameObject in gameObjects)
             {
-                var obj = AddGameObject(gameObject);
-                if (obj == null)
-                {
-                    continue;
-                }
+                AddGameObject(gameObject);
+            }
 
-                foreach (var character in parameters.CharacterInformations)
-                {
-                    obj.GetComponent<CharacterCreator>().Create(character);
-                }
+            foreach (var character in parameters.CharacterInformations)
+            {
+                var gameObject = GetRemoteGameObject(character.GameObjectId);
+                gameObject?.GetGameObject().GetComponent<CharacterCreator>().Create(character);
             }
         }
 
@@ -104,8 +128,6 @@ namespace Scripts.Containers
 
             obj.name = gameObject.Name;
 
-            LogUtils.Log(MessageBuilder.Trace($"Created object: {obj.gameObject.name}"));
-
             var networkIdentity = obj.GetComponent<IGameObject>();
             networkIdentity.Id = gameObject.Id;
 
@@ -117,7 +139,7 @@ namespace Scripts.Containers
 
         private void RemoveGameObject(int id)
         {
-            var gameObject = GetRemoteGameObject(id);
+            var gameObject = GetRemoteGameObject(id)?.GetGameObject();
             if (gameObject == null)
             {
                 return;
@@ -154,12 +176,12 @@ namespace Scripts.Containers
             return null;
         }
 
-        public GameObject GetRemoteGameObject(int id)
+        public IGameObject GetRemoteGameObject(int id)
         {
             IGameObject gameObject;
             if (gameObjects.TryGetValue(id, out gameObject))
             {
-                return gameObject.GetGameObject();
+                return gameObject;
             }
 
             LogUtils.Log(MessageBuilder.Trace($"Could not find a game object with id #{id}"), LogMessageType.Warning);

@@ -231,10 +231,7 @@ namespace Scripts.UI.Controllers
         private void OnEnteredWorld(NoticeWindow noticeWindow)
         {
             UserInterfaceContainer.Instance.Remove(noticeWindow);
-
             SceneManager.LoadScene(loadSceneIndex, LoadSceneMode.Single);
-
-            ServiceContainer.GameService.EnterWorld();
         }
 
         private void OnCreateCharacterButtonClicked(ClickableCharacter clickableCharacter, int characterIndex)

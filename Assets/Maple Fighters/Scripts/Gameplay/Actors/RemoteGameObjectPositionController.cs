@@ -14,11 +14,8 @@ namespace Scripts.Gameplay.Actors
         private void OnPositionChanged(GameObjectPositionChangedEventParameters parameters)
         {
             var id = parameters.GameObjectId;
-            var gameObject = GameContainers.GameObjectsContainer.GetRemoteGameObject(id);
-            if (gameObject != null)
-            {
-                gameObject.GetComponent<IPositionSetter>().SetPosition(new Vector2(parameters.X, parameters.Y), parameters.Direction);
-            }
+            var gameObject = GameObjectsContainer.Instance.GetRemoteGameObject(id);
+            gameObject?.GetGameObject()?.GetComponent<IPositionSetter>().SetPosition(new Vector2(parameters.X, parameters.Y), parameters.Direction);
         }
     }
 }

@@ -48,8 +48,8 @@ namespace Scripts.Utils.Shared
         private void OnPlayerStateEventReceived(PlayerStateChangedEventParameters parameters)
         {
             var gameObjectId = parameters.GameObjectId;
-            var gameObject = GameContainers.GameObjectsContainer.GetRemoteGameObject(gameObjectId);
-            gameObject?.GetComponent<PlayerStateSetter>().SetState(parameters.PlayerState);
+            var gameObject = GameObjectsContainer.Instance.GetRemoteGameObject(gameObjectId);
+            gameObject?.GetGameObject()?.GetComponent<PlayerStateSetter>().SetState(parameters.PlayerState);
         }
 
         public void OnPlayerStateChanged(PlayerState playerState)

@@ -1,6 +1,6 @@
 ﻿namespace Scripts.Containers
 {
-    public static class GameContainers
+    /*public static class GameContainers
     {
         public static IGameObjectsContainer GameObjectsContainer
         {
@@ -15,5 +15,5 @@
         }
 
         private static IGameObjectsContainer _gameObjectsContainer;
-    }
+    }*/
 }

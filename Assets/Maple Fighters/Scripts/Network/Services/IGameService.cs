@@ -25,6 +25,7 @@ namespace Scripts.Services
         Task<RemoveCharacterResponseParameters> RemoveCharacter(IYield yield, RemoveCharacterRequestParameters parameters);
         Task ChangeScene(IYield yield, ChangeSceneRequestParameters parameters);
 
+        UnityEvent<LocalGameObjectAddedEventParameters> LocalGameObjectAdded { get; }
         UnityEvent<GameObjectAddedEventParameters> GameObjectAdded { get; }
         UnityEvent<GameObjectRemovedEventParameters> GameObjectRemoved { get; }
         UnityEvent<GameObjectsAddedEventParameters> GameObjectsAdded { get; }

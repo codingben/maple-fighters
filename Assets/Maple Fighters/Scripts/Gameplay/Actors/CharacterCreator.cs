@@ -84,17 +84,30 @@ namespace Scripts.Gameplay.Actors
             InitializePlayerStateAnimatorNetwork();
         }
 
+        private void SetCameraTarget()
+        {
+            var cameraControllerProvider = GetComponent<CameraControllerProvider>();
+            cameraControllerProvider.SetCameraTarget();
+        }
+
         private void InitializeRemoteOnly()
+        {
+            InitializePlayerStateSetter();
+            InitializeCharacterNameDirectionSetter();
+        }
+
+        private void InitializePlayerStateSetter()
         {
             var playerStateAnimatorNetwork = character.GetComponent<PlayerStateAnimatorNetwork>();
             var playerStateSetter = GetComponent<PlayerStateSetter>();
             playerStateSetter.PlayerAnimator = playerStateAnimatorNetwork;
         }
 
-        private void SetCameraTarget()
+        private void InitializeCharacterNameDirectionSetter()
         {
-            var cameraControllerProvider = GetComponent<CameraControllerProvider>();
-            cameraControllerProvider.SetCameraTarget();
+            var characterNameComponent = character.GetComponent<CharacterName>();
+            var positionSettter = GetComponent<PositionSetter>();
+            positionSettter.DirectionChanged += characterNameComponent.OnChangedDirection;
         }
     }
 }

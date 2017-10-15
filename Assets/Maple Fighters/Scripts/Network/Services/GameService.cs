@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using CommonCommunicationInterfaces;
 using CommonTools.Coroutines;
-using Scripts.Containers;
 using Scripts.ScriptableObjects;
 using Shared.Game.Common;
 
@@ -12,14 +11,13 @@ namespace Scripts.Services
     {
         public event Action Connected;
 
+        public UnityEvent<LocalGameObjectAddedEventParameters> LocalGameObjectAdded { get; } = new UnityEvent<LocalGameObjectAddedEventParameters>();
         public UnityEvent<GameObjectAddedEventParameters> GameObjectAdded { get; } = new UnityEvent<GameObjectAddedEventParameters>();
         public UnityEvent<GameObjectRemovedEventParameters> GameObjectRemoved { get; } = new UnityEvent<GameObjectRemovedEventParameters>();
         public UnityEvent<GameObjectsAddedEventParameters> GameObjectsAdded { get; } = new UnityEvent<GameObjectsAddedEventParameters>();
         public UnityEvent<GameObjectsRemovedEventParameters> GameObjectsRemoved { get; } = new UnityEvent<GameObjectsRemovedEventParameters>();
         public UnityEvent<GameObjectPositionChangedEventParameters> PositionChanged { get; } = new UnityEvent<GameObjectPositionChangedEventParameters>();
         public UnityEvent<PlayerStateChangedEventParameters> PlayerStateChanged { get; } = new UnityEvent<PlayerStateChangedEventParameters>();
-
-        private IGameObjectsContainer gameObjectsContainer;
 
         public async Task<ConnectionStatus> Connect(IYield yield)
         {
@@ -35,8 +33,6 @@ namespace Scripts.Services
 
         protected override void OnConnected()
         {
-            gameObjectsContainer = GameContainers.GameObjectsContainer;
-
             AddEventsHandlers();
 
             Connected?.Invoke();
@@ -49,6 +45,12 @@ namespace Scripts.Services
 
         private void AddEventsHandlers()
         {
+            EventHandlerRegister.SetHandler(GameEvents.LocalGameObjectAdded, new EventInvoker<LocalGameObjectAddedEventParameters>(unityEvent =>
+            {
+                LocalGameObjectAdded?.Invoke(unityEvent.Parameters);
+                return true;
+            }));
+
             EventHandlerRegister.SetHandler(GameEvents.GameObjectAdded, new EventInvoker<GameObjectAddedEventParameters>(unityEvent =>
             {
                 GameObjectAdded?.Invoke(unityEvent.Parameters);
@@ -88,6 +90,7 @@ namespace Scripts.Services
 
         private void RemoveEventsHandlers()
         {
+            EventHandlerRegister.RemoveHandler(GameEvents.LocalGameObjectAdded);
             EventHandlerRegister.RemoveHandler(GameEvents.GameObjectAdded);
             EventHandlerRegister.RemoveHandler(GameEvents.GameObjectRemoved);
             EventHandlerRegister.RemoveHandler(GameEvents.GameObjectsAdded);
@@ -111,23 +114,12 @@ namespace Scripts.Services
 
         public void EnterWorld()
         {
-            CoroutinesExecutor.StartTask(EnterWorld);
-        }
-
-        private async Task EnterWorld(IYield yield)
-        {
             if (!IsServerConnected())
             {
                 return;
             }
 
-            var requestId = OperationRequestSender.Send(GameOperations.EnterWorld, new EmptyParameters(), MessageSendOptions.DefaultReliable());
-            var responseParameters = await SubscriptionProvider.ProvideSubscription<EnterWorldResponseParameters>(yield, requestId);
-
-            var characterGameObject = responseParameters.CharacterGameObject;
-            var character = responseParameters.Character;
-
-            gameObjectsContainer.CreateLocalGameObject(characterGameObject, character);
+            OperationRequestSender.Send(GameOperations.EnterWorld, new EmptyParameters(), MessageSendOptions.DefaultReliable());
         }
 
         public async Task<FetchCharactersResponseParameters> FetchCharacters(IYield yield)
