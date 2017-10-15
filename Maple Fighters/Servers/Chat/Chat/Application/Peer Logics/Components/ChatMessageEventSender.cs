@@ -30,7 +30,7 @@ namespace Chat.Application.PeerLogic.Components
 
                 var eventSenderWrapper = peerWrapper.PeerLogic.Entity.Container.GetComponent<EventSenderWrapper>().AssertNotNull();
                 var parameters = new ChatMessageEventParameters(message);
-                eventSenderWrapper.SendEvent((byte)ChatEvents.ChatMessage, parameters, MessageSendOptions.DefaultReliable());
+                eventSenderWrapper.Send((byte)ChatEvents.ChatMessage, parameters, MessageSendOptions.DefaultReliable());
             }
         }
     }

@@ -1,34 +1,22 @@
-﻿using CommonCommunicationInterfaces;
-using CommonTools.Log;
-using Game.InterestManagement;
+﻿using System;
+using CommonCommunicationInterfaces;
 using ServerCommunicationHelper;
-using Shared.Game.Common;
-using GameObject = Shared.Game.Common.GameObject;
 
 namespace Game.Application.PeerLogic.Operations
 {
-    internal class EnterWorldOperationHandler : IOperationRequestHandler<EmptyParameters, EnterWorldResponseParameters>
+    internal class EnterWorldOperationHandler : IOperationRequestHandler<EmptyParameters, EmptyParameters>
     {
-        private readonly IGameObject characterGameObject;
-        private readonly Character character;
+        private readonly Action onEnterWorld;
 
-        public EnterWorldOperationHandler(IGameObject characterGameObject, Character character)
+        public EnterWorldOperationHandler(Action onEnterWorld)
         {
-            this.characterGameObject = characterGameObject;
-            this.character = character;
+            this.onEnterWorld = onEnterWorld;
         }
 
-        public EnterWorldResponseParameters? Handle(MessageData<EmptyParameters> messageData, ref MessageSendOptions sendOptions)
+        public EmptyParameters? Handle(MessageData<EmptyParameters> messageData, ref MessageSendOptions sendOptions)
         {
-            return new EnterWorldResponseParameters(GetSharedGameObject(characterGameObject), character);
-        }
-
-        private GameObject GetSharedGameObject(IGameObject gameObject)
-        {
-            const string GAME_OBJECT_NAME = "Local Player";
-
-            var transform = gameObject.Container.GetComponent<Transform>().AssertNotNull();
-            return new GameObject(gameObject.Id, GAME_OBJECT_NAME, transform.Position.X, transform.Position.Y);
+            onEnterWorld.Invoke();
+            return null;
         }
     }
 }

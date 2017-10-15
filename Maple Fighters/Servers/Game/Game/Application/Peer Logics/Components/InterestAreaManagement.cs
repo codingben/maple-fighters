@@ -53,8 +53,9 @@ namespace Game.Application.PeerLogic.Components
             var transform = subscriber.Entity.Container.GetComponent<Transform>().AssertNotNull();
             var gameObject = new GameObject(subscriber.Entity.Id, subscriber.Entity.Name, transform.Position.X, transform.Position.Y);
 
-            var parameters = new GameObjectAddedEventParameters(gameObject, GetCharacterInformation(subscriber.Entity));
-            eventSender.SendEvent((byte)GameEvents.GameObjectAdded, parameters, MessageSendOptions.DefaultReliable());
+            var characterInformation = GetCharacterInformation(subscriber.Entity);
+            var parameters = new GameObjectAddedEventParameters(gameObject, characterInformation.GetValueOrDefault(), characterInformation.HasValue);
+            eventSender.Send((byte)GameEvents.GameObjectAdded, parameters, MessageSendOptions.DefaultReliable());
         }
 
         private void OnSubscriberRemoved(int subscriberId)
@@ -65,7 +66,7 @@ namespace Game.Application.PeerLogic.Components
             }
 
             var parameters = new GameObjectRemovedEventParameters(subscriberId);
-            eventSender.SendEvent((byte)GameEvents.GameObjectRemoved, parameters, MessageSendOptions.DefaultReliable());
+            eventSender.Send((byte)GameEvents.GameObjectRemoved, parameters, MessageSendOptions.DefaultReliable());
         }
 
         private void OnSubscribersAdded(IReadOnlyList<InterestArea> subscribers)
@@ -86,8 +87,8 @@ namespace Game.Application.PeerLogic.Components
                 gameObjects[i].Y = transform.Position.Y;
             }
 
-            eventSender.SendEvent((byte)GameEvents.GameObjectsAdded, new GameObjectsAddedEventParameters(gameObjects, 
-                GetCharacterInformations(subscribers)), MessageSendOptions.DefaultReliable());
+            eventSender.Send((byte)GameEvents.GameObjectsAdded, new GameObjectsAddedEventParameters(gameObjects, GetCharacterInformations(subscribers)), 
+                MessageSendOptions.DefaultReliable());
         }
 
         private void OnSubscribersRemoved(IReadOnlyList<int> subscribersId)
@@ -103,7 +104,7 @@ namespace Game.Application.PeerLogic.Components
                 gameObjectsId[i] = subscribersId[i];
             }
 
-            eventSender.SendEvent((byte)GameEvents.GameObjectsRemoved, new GameObjectsRemovedEventParameters(gameObjectsId), 
+            eventSender.Send((byte)GameEvents.GameObjectsRemoved, new GameObjectsRemovedEventParameters(gameObjectsId), 
                 MessageSendOptions.DefaultReliable());
         }
 
@@ -130,7 +131,7 @@ namespace Game.Application.PeerLogic.Components
                 }
 
                 var eventSender = peerWrapper.PeerLogic.Entity.Container.GetComponent<EventSenderWrapper>().AssertNotNull();
-                eventSender.SendEvent(code, parameters, messageSendOptions);
+                eventSender.Send(code, parameters, messageSendOptions);
             }
         }
 
@@ -162,8 +163,8 @@ namespace Game.Application.PeerLogic.Components
             {
                 return null;
             }
-
-            return new CharacterInformation(characterInformationProvider.GetCharacterName(), characterInformationProvider.GetCharacterClass());
+            return new CharacterInformation(gameObject.Id, 
+                characterInformationProvider.GetCharacterName(), characterInformationProvider.GetCharacterClass());
         }
 
         private CharacterInformation[] GetCharacterInformations(IEnumerable<InterestArea> subscribers)
@@ -178,8 +179,8 @@ namespace Game.Application.PeerLogic.Components
                     continue;
                 }
 
-                characterInformations.Add(new CharacterInformation(characterInformationProvider.GetCharacterName(), 
-                    characterInformationProvider.GetCharacterClass()));
+                characterInformations.Add(new CharacterInformation(gameObject.Entity.Id,
+                    characterInformationProvider.GetCharacterName(), characterInformationProvider.GetCharacterClass()));
             }
             return characterInformations.ToArray();
         }

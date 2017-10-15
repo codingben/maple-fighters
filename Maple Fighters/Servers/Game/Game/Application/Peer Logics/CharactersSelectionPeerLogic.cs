@@ -1,4 +1,5 @@
-﻿using CommunicationHelper;
+﻿using CommonTools.Log;
+using CommunicationHelper;
 using Game.Application.PeerLogic.Operations;
 using ServerCommunicationInterfaces;
 using Shared.Game.Common;
@@ -9,6 +10,7 @@ namespace Game.Application.PeerLogics
     internal class CharactersSelectionPeerLogic : PeerLogicBase<GameOperations, EmptyEventCode>
     {
         private readonly int dbUserId;
+        private Character? choosedCharacter;
 
         public CharactersSelectionPeerLogic(int dbUserId)
         {
@@ -19,10 +21,16 @@ namespace Game.Application.PeerLogics
         {
             base.Initialize(peer);
 
+            AddHandlerForEnteredWorldOperation();
             AddHandlerValidateCharacterOperation();
             AddHandlerForFetchCharactersOperation();
             AddHandlerForCreateCharacterOperation();
             AddHandlerForRemoveCharacterOperation();
+        }
+
+        private void AddHandlerForEnteredWorldOperation()
+        {
+            OperationRequestHandlerRegister.SetHandler(GameOperations.EnterWorld, new EnterWorldOperationHandler(OnCharacterEnterWorld));
         }
 
         private void AddHandlerValidateCharacterOperation()
@@ -47,7 +55,28 @@ namespace Game.Application.PeerLogics
 
         private void OnCharacterSelected(Character character)
         {
-            PeerWrapper.SetPeerLogic(new AuthenticatedPeerLogic(character));
+            choosedCharacter = character;
+        }
+
+        private void OnCharacterEnterWorld()
+        {
+            if (!choosedCharacter.HasValue)
+            {
+                KickOutPeer();
+                return;
+            }
+
+            PeerWrapper.SetPeerLogic(new AuthenticatedPeerLogic(choosedCharacter.Value));
+        }
+
+        private void KickOutPeer()
+        {
+            var ip = PeerWrapper.Peer.ConnectionInformation.Ip;
+            var peerId = PeerWrapper.PeerId;
+
+            LogUtils.Log(MessageBuilder.Trace($"A peer {ip} with id #{peerId} does not have character but trying to enter with character."));
+
+            PeerWrapper.Peer.Disconnect();
         }
     }
 }

@@ -97,6 +97,7 @@
     <Compile Include="Application\Game Objects\Components\CharacterInformationProvider.cs" />
     <Compile Include="Application\Peer Logics\CharactersSelectionPeerLogic.cs" />
     <Compile Include="Application\Peer Logics\Components\CharacterGameObjectGetter.cs" />
+    <Compile Include="Application\Peer Logics\Components\LocalGameObjectFetcher.cs" />
     <Compile Include="Application\Peer Logics\Components\MinimalPeerGetter.cs" />
     <Compile Include="Application\Peer Logics\Components\PeerIdGetter.cs" />
     <Compile Include="Application\Peer Logics\Components\PositionChangesListener.cs" />

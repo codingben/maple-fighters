@@ -14,7 +14,7 @@ namespace ServerApplication.Common.Components
             this.eventSender = eventSender;
         }
 
-        public void SendEvent<TParameters>(byte code, TParameters parameters, MessageSendOptions messageSendOptions)
+        public void Send<TParameters>(byte code, TParameters parameters, MessageSendOptions messageSendOptions)
             where TParameters : struct, IParameters
         {
             eventSender.Send(new MessageData<TParameters>(code, parameters), messageSendOptions);

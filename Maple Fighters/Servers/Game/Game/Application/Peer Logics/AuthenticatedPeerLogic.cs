@@ -30,7 +30,6 @@ namespace Game.Application.PeerLogics
 
             AddComponents();
 
-            AddHandlerForEnterWorldOperation();
             AddHandlerForUpdatePositionOperation();
             AddHandlerForUpdatePlayerStateOperation();
             AddHandlerForChangeSceneOperation();
@@ -40,15 +39,11 @@ namespace Game.Application.PeerLogics
         {
             characterGameObject.Container.AddComponent(new PeerIdGetter(PeerWrapper.PeerId));
 
-            Entity.Container.AddComponent(new CharacterGameObjectGetter(characterGameObject));
+            Entity.Container.AddComponent(new CharacterGameObjectGetter(characterGameObject, character));
             Entity.Container.AddComponent(new MinimalPeerGetter(PeerWrapper.Peer));
             Entity.Container.AddComponent(new InterestAreaManagement());
             Entity.Container.AddComponent(new PositionChangesListener());
-        }
-
-        private void AddHandlerForEnterWorldOperation()
-        {
-            OperationRequestHandlerRegister.SetHandler(GameOperations.EnterWorld, new EnterWorldOperationHandler(characterGameObject, character));
+            Entity.Container.AddComponent(new LocalGameObjectFetcher());
         }
 
         private void AddHandlerForUpdatePositionOperation()

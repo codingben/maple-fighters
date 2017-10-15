@@ -2,6 +2,7 @@
 {
     public enum GameEvents : byte
     {
+        LocalGameObjectAdded,
         GameObjectAdded,
         GameObjectRemoved,
         GameObjectsAdded,

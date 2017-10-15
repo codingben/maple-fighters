@@ -24,9 +24,9 @@ namespace Game.InterestManagement
                 return;
             }
 
-            subscribersAreas.Add(subscriberArea.Entity.Id, subscriberArea);
+            LogUtils.Log(MessageBuilder.Trace($"Added subscription id #{subscriberArea.Entity.Id}"));
 
-            LogUtils.Log(MessageBuilder.Trace($"A new subscriber: {subscriberArea.Entity.Name}"));
+            subscribersAreas.Add(subscriberArea.Entity.Id, subscriberArea);
 
             // Show all exists entities for a new game object.
             AddSubscribersForSubscriber(subscriberArea);
@@ -42,6 +42,8 @@ namespace Game.InterestManagement
                 LogUtils.Log(MessageBuilder.Trace($"A game object with id #{subscriberId} does not exists in a region."), LogMessageType.Error);
                 return;
             }
+
+            LogUtils.Log(MessageBuilder.Trace($"Removed subscription id #{subscriberId}"));
 
             // Hide game objects for the one that left this region.
             RemoveSubscribersForSubscriber(subscriberId);
