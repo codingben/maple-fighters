@@ -25,6 +25,8 @@ namespace Scripts.Containers
 
         public void CreateLocalGameObject(Shared.Game.Common.GameObject characterGameObject, Character character)
         {
+            LogUtils.Log(MessageBuilder.Trace($"Local Game Object Id: {characterGameObject.Id}"));
+
             var obj = AddGameObject(characterGameObject);
             if (obj == null)
             {
@@ -58,7 +60,7 @@ namespace Scripts.Containers
             RemoveGameObject(id);
         }
 
-        private void OnGameObjectsAdded(GameObjectsAddedEventParameters parameters)
+        private void OnGameObjectsAdded(GameObjectsAddedEventParameters parameters) // TODO: Bug spotted - characters information may be null or may not exists at all.
         {
             var gameObjects = parameters.GameObjects;
             foreach (var gameObject in gameObjects)
@@ -69,9 +71,9 @@ namespace Scripts.Containers
                     continue;
                 }
 
-                foreach (var characterInformation in parameters.CharacterInformations)
+                foreach (var character in parameters.CharacterInformations)
                 {
-                    obj.GetComponent<CharacterCreator>().Create(characterInformation);
+                    obj.GetComponent<CharacterCreator>().Create(character);
                 }
             }
         }
@@ -99,6 +101,10 @@ namespace Scripts.Containers
             {
                 return null;
             }
+
+            obj.name = gameObject.Name;
+
+            LogUtils.Log(MessageBuilder.Trace($"Created object: {obj.gameObject.name}"));
 
             var networkIdentity = obj.GetComponent<IGameObject>();
             networkIdentity.Id = gameObject.Id;

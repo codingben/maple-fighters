@@ -30,8 +30,6 @@ namespace Scripts.Gameplay.Actors
 
             InitializeCharacterName(characterName);
             InitializeSpriteRenderer();
-            InitializePlayerStateAnimatorNetwork();
-            InitializePlayerController();
             InitializeCharacterInformationProvider(characterInformation);
 
             if (isLocal)
@@ -80,15 +78,23 @@ namespace Scripts.Gameplay.Actors
 
         private void InitializeLocallyOnly()
         {
-            var cameraControllerProvider = GetComponent<CameraControllerProvider>();
-            cameraControllerProvider.SetCameraTarget();
+            SetCameraTarget();
+
+            InitializePlayerController();
+            InitializePlayerStateAnimatorNetwork();
         }
 
         private void InitializeRemoteOnly()
         {
             var playerStateAnimatorNetwork = character.GetComponent<PlayerStateAnimatorNetwork>();
-            var playerStateSetter = character.GetComponent<PlayerStateSetter>();
+            var playerStateSetter = GetComponent<PlayerStateSetter>();
             playerStateSetter.PlayerAnimator = playerStateAnimatorNetwork;
+        }
+
+        private void SetCameraTarget()
+        {
+            var cameraControllerProvider = GetComponent<CameraControllerProvider>();
+            cameraControllerProvider.SetCameraTarget();
         }
     }
 }
