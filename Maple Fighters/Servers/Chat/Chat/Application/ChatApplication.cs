@@ -27,6 +27,7 @@ namespace Chat.Application
             Server.Entity.Container.AddComponent(new DatabaseConnectionProvider());
             Server.Entity.Container.AddComponent(new DatabaseUserIdViaAccessTokenProvider());
             Server.Entity.Container.AddComponent(new DatabaseAccessTokenExistence());
+            Server.Entity.Container.AddComponent(new LocalDatabaseAccessTokens());
         }
 
         public override void OnConnected(IClientPeer clientPeer)

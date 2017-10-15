@@ -43,6 +43,7 @@ namespace Game.Application
             Server.Entity.Container.AddComponent(new DatabaseAccessTokenExistence());
             Server.Entity.Container.AddComponent(new DatabaseAccessTokenProvider());
             Server.Entity.Container.AddComponent(new DatabaseUserIdViaAccessTokenProvider());
+            Server.Entity.Container.AddComponent(new LocalDatabaseAccessTokens());
         }
     }
 }

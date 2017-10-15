@@ -17,7 +17,7 @@ namespace Game.Application.Components
         {
             base.OnAwake();
 
-            sceneContainer = Server.Entity.Container.GetComponent<SceneContainer>().AssertNotNull();
+            sceneContainer = Entity.Container.GetComponent<SceneContainer>().AssertNotNull();
         }
 
         public IGameObject Create(Character character)

@@ -10,29 +10,38 @@ namespace Chat.Application.PeerLogic.Operations
 {
     internal class AuthenticationOperationHandler : IOperationRequestHandler<AuthenticateRequestParameters, AuthenticateResponseParameters>
     {
+        private readonly int peerId;
         private readonly Action onAuthenticated;
-        private readonly Action onUnauthenticated;
+        private readonly LocalDatabaseAccessTokens databaseAccessTokens;
         private readonly DatabaseAccessTokenExistence databaseAccessTokenExistence;
 
-        public AuthenticationOperationHandler(Action onAuthenticated, Action onUnauthenticated)
+        public AuthenticationOperationHandler(int peerId, Action onAuthenticated)
         {
+            this.peerId = peerId;
             this.onAuthenticated = onAuthenticated;
-            this.onUnauthenticated = onUnauthenticated;
 
+            databaseAccessTokens = Server.Entity.Container.GetComponent<LocalDatabaseAccessTokens>().AssertNotNull();
             databaseAccessTokenExistence = Server.Entity.Container.GetComponent<DatabaseAccessTokenExistence>().AssertNotNull();
         }
 
         public AuthenticateResponseParameters? Handle(MessageData<AuthenticateRequestParameters> messageData, ref MessageSendOptions sendOptions)
         {
             var accessToken = messageData.Parameters.AccessToken;
-            if (!databaseAccessTokenExistence.Exists(accessToken))
+
+            if (databaseAccessTokens.Exists(accessToken))
             {
-                onUnauthenticated.Invoke();
-                return new AuthenticateResponseParameters(AuthenticateStatus.Failed);
+                return new AuthenticateResponseParameters(AuthenticationStatus.Failed);
             }
 
+            if (!databaseAccessTokenExistence.Exists(accessToken))
+            {
+                return new AuthenticateResponseParameters(AuthenticationStatus.Failed);
+            }
+
+            databaseAccessTokens.Add(peerId, accessToken);
+
             onAuthenticated.Invoke();
-            return new AuthenticateResponseParameters(AuthenticateStatus.Succeed);
+            return new AuthenticateResponseParameters(AuthenticationStatus.Succeed);
         }
     }
 }

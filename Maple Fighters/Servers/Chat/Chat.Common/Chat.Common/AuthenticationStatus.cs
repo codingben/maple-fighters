@@ -1,6 +1,6 @@
 ﻿namespace Chat.Common
 {
-    public enum AuthenticateStatus : byte
+    public enum AuthenticationStatus : byte
     {
         Succeed,
         Failed

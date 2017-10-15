@@ -17,17 +17,13 @@ namespace Chat.Application.PeerLogics
 
         private void AddHandlerForAuthenticationOperation()
         {
-            OperationRequestHandlerRegister.SetHandler(ChatOperations.Authenticate, new AuthenticationOperationHandler(OnAuthenticated, OnUnauthenticated));
+            OperationRequestHandlerRegister.SetHandler(ChatOperations.Authenticate, 
+                new AuthenticationOperationHandler(PeerWrapper.PeerId, OnAuthenticated));
         }
 
         private void OnAuthenticated()
         {
             PeerWrapper.SetPeerLogic(new AuthenticatedPeerLogic());
-        }
-
-        private void OnUnauthenticated()
-        {
-            PeerWrapper.Peer.Fiber.Enqueue(PeerWrapper.Peer.Disconnect);
         }
     }
 }

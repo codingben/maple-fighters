@@ -5,9 +5,9 @@ namespace Chat.Common
 {
     public struct AuthenticateResponseParameters : IParameters
     {
-        public AuthenticateStatus Status;
+        public AuthenticationStatus Status;
 
-        public AuthenticateResponseParameters(AuthenticateStatus status)
+        public AuthenticateResponseParameters(AuthenticationStatus status)
         {
             Status = status;
         }
@@ -19,7 +19,7 @@ namespace Chat.Common
 
         public void Deserialize(BinaryReader reader)
         {
-            Status = (AuthenticateStatus)reader.ReadByte();
+            Status = (AuthenticationStatus)reader.ReadByte();
         }
     }
 }

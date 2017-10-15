@@ -18,7 +18,7 @@ namespace ServerApplication.Common.Components
         {
             peerLogics.Add(peerLogic.PeerId, peerLogic);
 
-            peerLogic.Disconnected += (reason, details) => NotifyAndRemovePeerLogic(peerLogic, reason, details);
+            peerLogic.Disconnected += (reason, details) => RemovePeerLogic(peerLogic, reason, details);
         }
 
         public void DisconnectAllPeers()
@@ -31,7 +31,7 @@ namespace ServerApplication.Common.Components
             peerLogics.Clear();
         }
         
-        private void NotifyAndRemovePeerLogic(IClientPeerWrapper<IClientPeer> peerLogic, DisconnectReason reason, string details)
+        private void RemovePeerLogic(IClientPeerWrapper<IClientPeer> peerLogic, DisconnectReason reason, string details)
         {
             var ip = peerLogic.Peer.ConnectionInformation.Ip;
             var port = peerLogic.Peer.ConnectionInformation.Port;

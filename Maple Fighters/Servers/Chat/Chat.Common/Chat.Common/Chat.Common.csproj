@@ -46,7 +46,7 @@
   <ItemGroup>
     <Compile Include="AuthenticateRequestParameters.cs" />
     <Compile Include="AuthenticateResponseParameters.cs" />
-    <Compile Include="AuthenticateStatus.cs" />
+    <Compile Include="AuthenticationStatus.cs" />
     <Compile Include="ChatEvents.cs" />
     <Compile Include="ChatMessageEventParameters.cs" />
     <Compile Include="ChatMessageRequestParameters.cs" />
