@@ -1,10 +1,8 @@
-﻿using Scripts.Containers.Entity;
-
-namespace Scripts.Containers
+﻿namespace Scripts.Containers
 {
     public interface IContainers
     {
-        IEntityContainer EntityContainer { get; }
+        IGameObjectsContainer GameObjectsContainer { get; }
         IServiceContainer ServiceContainer { get; }
     }
 }

@@ -34,3 +34,25 @@ MonoBehaviour:
     WebConnectionDetails:
       Ip: ws://127.0.0.1
       Port: 9091
+  - Name: Login
+    ServerType: 2
+    UdpConnectionDetails:
+      Ip: 127.0.0.1
+      Port: 5057
+    TcpConnectionDetails:
+      Ip: 127.0.0.1
+      Port: 4532
+    WebConnectionDetails:
+      Ip: ws://127.0.0.1
+      Port: 9092
+  - Name: Registration
+    ServerType: 3
+    UdpConnectionDetails:
+      Ip: 127.0.0.1
+      Port: 5058
+    TcpConnectionDetails:
+      Ip: 127.0.0.1
+      Port: 4533
+    WebConnectionDetails:
+      Ip: ws://127.0.0.1
+      Port: 9093

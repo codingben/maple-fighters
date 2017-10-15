@@ -6,9 +6,10 @@ namespace Scripts.Gameplay.Camera
 {
     public class CameraControllerProvider : MonoBehaviour
     {
-        private void Start()
+        public void SetCameraTarget()
         {
-            SetCameraTarget();
+            var cameraController = UnityEngine.Camera.main.GetComponent<CameraController>().AssertNotNull();
+            cameraController.Target = transform;
         }
 
         private void OnEnable()
@@ -24,12 +25,6 @@ namespace Scripts.Gameplay.Camera
         private void OnSceneLoaded(Scene scene, LoadSceneMode loadSceneMode)
         {
             SetCameraTarget();
-        }
-
-        private void SetCameraTarget()
-        {
-            var cameraController = UnityEngine.Camera.main.GetComponent<CameraController>().AssertNotNull();
-            cameraController.Target = transform;
         }
     }
 }

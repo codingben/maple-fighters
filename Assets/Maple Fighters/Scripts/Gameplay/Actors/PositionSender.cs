@@ -1,4 +1,4 @@
-﻿using Scripts.Containers.Service;
+﻿using Scripts.Containers;
 using Shared.Game.Common;
 using UnityEngine;
 
@@ -23,8 +23,8 @@ namespace Scripts.Gameplay.Actors
             Directions direction;
             GetDirection(out direction);
 
-            var parameters = new UpdateEntityPositionRequestParameters(transform.position.x, transform.position.y, direction);
-            ServiceContainer.GameService.UpdateEntityPosition(parameters);
+            var parameters = new UpdatePositionRequestParameters(transform.position.x, transform.position.y, direction);
+            ServiceContainer.GameService.UpdatePosition(parameters);
 
             lastPosition = transform.position;
         }

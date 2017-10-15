@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Linq;
-using CommonTools.Log;
-using Scripts.Utils.Shared;
 using Shared.Game.Common;
 using UnityEngine;
 
 namespace Scripts.Gameplay.Actors
 {
+    [RequireComponent(typeof(Rigidbody2D))]
     public class PlayerController : MonoBehaviour
     {
         public bool DetectGround { get; set; } = true;
@@ -16,7 +15,7 @@ namespace Scripts.Gameplay.Actors
             private set
             {
                 playerState = value;
-                playerStateChanged?.Invoke(value);
+                PlayerStateChanged?.Invoke(value);
             }
             get
             {
@@ -24,7 +23,8 @@ namespace Scripts.Gameplay.Actors
             }
         }
 
-        private Action<PlayerState> playerStateChanged;
+        public Action<PlayerState> PlayerStateChanged;
+        public event Action<Directions> ChangedDirection;
 
         [SerializeField] private PlayerState playerState = PlayerState.Falling;
 
@@ -47,15 +47,11 @@ namespace Scripts.Gameplay.Actors
         [Header("Debug")]
         [SerializeField] private float direction;
 
-        [Header("Other")]
-        [SerializeField] private PlayerStateNetworkAnimator playerAnimator;
-
         private new Rigidbody2D rigidbody;
 
         private void Awake()
         {
-            rigidbody = GetComponent<Rigidbody2D>().AssertNotNull();
-            playerStateChanged = playerAnimator.AssertNotNull().OnPlayerStateChanged;
+            rigidbody = GetComponent<Rigidbody2D>();
         }
 
         private void Update()
@@ -170,7 +166,7 @@ namespace Scripts.Gameplay.Actors
         public void SetStateFromRopeOrLadderInteraction(PlayerState state)
         {
             playerState = state;
-            playerStateChanged?.Invoke(state);
+            PlayerStateChanged?.Invoke(state);
 
             rigidbody.velocity = new Vector2(0, rigidbody.velocity.y);
         }
@@ -234,6 +230,8 @@ namespace Scripts.Gameplay.Actors
                     break;
                 }
             }
+
+            ChangedDirection?.Invoke(direction);
         }
 
         private float GetDirecton(Directions direction)

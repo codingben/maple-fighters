@@ -2,9 +2,10 @@
 using System.Threading.Tasks;
 using CommonTools.Coroutines;
 using CommonTools.Log;
-using Scripts.Containers.Service;
+using Scripts.Containers;
 using Scripts.Coroutines;
 using Scripts.UI;
+using Scripts.UI.Core;
 using Shared.Game.Common;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -24,11 +25,11 @@ namespace Scripts.World
 
         private Transform playerGameObject;
 
-        private ExternalCoroutinesExecutor coroutinesExecutor;
+        private readonly ExternalCoroutinesExecutor coroutinesExecutor = new ExternalCoroutinesExecutor();
 
         private void Awake()
         {
-            coroutinesExecutor = new ExternalCoroutinesExecutor().ExecuteExternally();
+            coroutinesExecutor.ExecuteExternally();
 
             StartInteraction = OnInteractionStarted;
             StopInteraction = OnInteractionStopped;
@@ -41,14 +42,12 @@ namespace Scripts.World
                 playerGameObject = gameObject;
             }
 
-            LogUtils.Log(MessageBuilder.Trace());
-
-            ScreenFade.Instance.Fade(1, 10, Teleport);
+            UserInterfaceContainer.Instance.Get<ScreenFade>().AssertNotNull().Show(Teleport);
         }
 
         private void OnInteractionStopped()
         {
-            ScreenFade.Instance.UnFade(1);
+            UserInterfaceContainer.Instance.Get<ScreenFade>().AssertNotNull().Hide();
         }
 
         private void Teleport()
