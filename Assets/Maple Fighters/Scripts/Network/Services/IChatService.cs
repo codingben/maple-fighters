@@ -4,12 +4,9 @@ using CommonTools.Coroutines;
 
 namespace Scripts.Services
 {
-    public interface IChatService
+    public interface IChatService : IServiceBase
     {
-        Task<ConnectionStatus> Connect(IYield yield);
-        void Disconnect();
-
-        Task<AuthenticateStatus> Authenticate(IYield yield);
+        Task<AuthenticationStatus> Authenticate(IYield yield);
 
         void SendChatMessage(ChatMessageRequestParameters parameters);
 

@@ -1,28 +1,22 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using CommonTools.Coroutines;
 using CommonTools.Log;
 using Login.Common;
 using Scripts.Containers;
+using Scripts.ScriptableObjects;
 using Scripts.Services;
 using Scripts.UI.Core;
 using Scripts.UI.Windows;
 using UnityEngine;
-using WaitForSeconds = CommonTools.Coroutines.WaitForSeconds;
 
 namespace Scripts.UI.Controllers
 {
-    public class LoginController : MonoBehaviour
+    public class LoginController : ServiceConnector<LoginController>
     {
-        private const int AUTO_TIME_FOR_DISCONNECT = 60;
-
         [SerializeField] private int loadSceneIndex;
 
         private RegistrationWindow registrationWindow;
         private LoginWindow loginWindow;
-
-        private ICoroutine disconnectAutomatically;
-        private readonly ExternalCoroutinesExecutor coroutinesExecutor = new ExternalCoroutinesExecutor();
 
         private void Start()
         {
@@ -32,14 +26,9 @@ namespace Scripts.UI.Controllers
             SubscribeToLoginWindowEvents();
         }
 
-        private void Update()
+        protected override void OnDestroyed()
         {
-            coroutinesExecutor?.Update();
-        }
-
-        private void OnDestroy()
-        {
-            coroutinesExecutor.Dispose();
+            base.OnDestroyed();
 
             UnsubscribeFromRegistrationWindowEvents();
 
@@ -62,7 +51,7 @@ namespace Scripts.UI.Controllers
         private void OnLoginButtonClicked(string email, string password)
         {
             var parameters = new LoginRequestParameters(email, password);
-            coroutinesExecutor.StartTask((y) => Connect(y, parameters));
+            CoroutinesExecutor.StartTask((y) => Connect(y, parameters));
         }
 
         private async Task Connect(IYield yield, LoginRequestParameters parameters)
@@ -70,9 +59,10 @@ namespace Scripts.UI.Controllers
             var noticeWindow = Utils.ShowNotice("Logging in... Please wait.", () => loginWindow.Show());
             noticeWindow.OkButton.interactable = false;
 
-            if (!ServiceContainer.LoginService.IsConnected())
+            if (!IsConnected())
             {
-                var connectionStatus = await ServiceContainer.LoginService.Connect(yield);
+                var connectionInformation = ServicesConfiguration.GetInstance().GetConnectionInformation(ServersType.Login);
+                var connectionStatus = await Connect(yield, ServiceContainer.LoginService, connectionInformation);
                 if (connectionStatus == ConnectionStatus.Failed)
                 {
                     noticeWindow.Message.text = "Could not connect to a login server.";
@@ -81,7 +71,7 @@ namespace Scripts.UI.Controllers
                 }
             }
 
-            coroutinesExecutor.StartTask((y) => Login(y, parameters));
+            CoroutinesExecutor.StartTask((y) => Login(y, parameters));
         }
 
         private async Task Login(IYield yield, LoginRequestParameters parameters)
@@ -119,10 +109,7 @@ namespace Scripts.UI.Controllers
 
             if (responseParameters.Status != LoginStatus.Succeed)
             {
-                if (disconnectAutomatically == null)
-                {
-                    disconnectAutomatically = coroutinesExecutor.StartCoroutine(DisconnectAutomatically());
-                }
+                DisconnectAutomatically();
             }
             else
             {
@@ -143,32 +130,6 @@ namespace Scripts.UI.Controllers
             }
 
             registrationWindow.Show();
-        }
-
-        private IEnumerator<IYieldInstruction> DisconnectAutomatically()
-        {
-            const int MINIMUM_TASKS = 1;
-
-            while (true)
-            {
-                yield return new WaitForSeconds(AUTO_TIME_FOR_DISCONNECT);
-
-                if (coroutinesExecutor.Count > MINIMUM_TASKS)
-                {
-                    continue;
-                }
-
-                Disconnect();
-                yield break;
-            }
-        }
-
-        private void Disconnect()
-        {
-            disconnectAutomatically?.Dispose();
-            disconnectAutomatically = null;
-
-            ServiceContainer.LoginService.Disconnect();
         }
     }
 }

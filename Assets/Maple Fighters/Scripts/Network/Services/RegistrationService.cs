@@ -3,7 +3,6 @@ using CommonCommunicationInterfaces;
 using CommonTools.Coroutines;
 using CommunicationHelper;
 using Registration.Common;
-using Scripts.ScriptableObjects;
 
 namespace Scripts.Services
 {
@@ -17,23 +16,6 @@ namespace Scripts.Services
         protected override void OnDisconnected()
         {
             // Left blank intentionally
-        }
-
-        public bool IsConnected()
-        {
-            return IsServerConnected();
-        }
-
-        public async Task<ConnectionStatus> Connect(IYield yield)
-        {
-            var connectionInformation = ServicesConfiguration.GetInstance().GetConnectionInformation(ServersType.Registration);
-            var connectionStatus = await Connect(yield, connectionInformation);
-            return connectionStatus;
-        }
-
-        public void Disconnect()
-        {
-            Dispose();
         }
 
         public async Task<RegisterResponseParameters> Register(IYield yield, RegisterRequestParameters parameters)

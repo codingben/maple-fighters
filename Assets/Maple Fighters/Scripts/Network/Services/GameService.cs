@@ -1,16 +1,12 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using CommonCommunicationInterfaces;
 using CommonTools.Coroutines;
-using Scripts.ScriptableObjects;
 using Shared.Game.Common;
 
 namespace Scripts.Services
 {
     public sealed class GameService : ServiceBase<GameOperations, GameEvents>, IGameService
     {
-        public event Action Connected;
-
         public UnityEvent<LocalGameObjectAddedEventParameters> LocalGameObjectAdded { get; } = new UnityEvent<LocalGameObjectAddedEventParameters>();
         public UnityEvent<GameObjectAddedEventParameters> GameObjectAdded { get; } = new UnityEvent<GameObjectAddedEventParameters>();
         public UnityEvent<GameObjectRemovedEventParameters> GameObjectRemoved { get; } = new UnityEvent<GameObjectRemovedEventParameters>();
@@ -19,23 +15,9 @@ namespace Scripts.Services
         public UnityEvent<GameObjectPositionChangedEventParameters> PositionChanged { get; } = new UnityEvent<GameObjectPositionChangedEventParameters>();
         public UnityEvent<PlayerStateChangedEventParameters> PlayerStateChanged { get; } = new UnityEvent<PlayerStateChangedEventParameters>();
 
-        public async Task<ConnectionStatus> Connect(IYield yield)
-        {
-            var connectionInformation = ServicesConfiguration.GetInstance().GetConnectionInformation(ServersType.Game);
-            var connectionStatus = await Connect(yield, connectionInformation);
-            return connectionStatus;
-        }
-
-        public void Disconnect()
-        {
-            Dispose();
-        }
-
         protected override void OnConnected()
         {
             AddEventsHandlers();
-
-            Connected?.Invoke();
         }
 
         protected override void OnDisconnected()
@@ -101,7 +83,7 @@ namespace Scripts.Services
 
         public async Task<AuthenticationStatus> Authenticate(IYield yield)
         {
-            if (!IsServerConnected())
+            if (!IsConnected())
             {
                 return AuthenticationStatus.Failed;
             }
@@ -114,7 +96,7 @@ namespace Scripts.Services
 
         public void EnterWorld()
         {
-            if (!IsServerConnected())
+            if (!IsConnected())
             {
                 return;
             }
@@ -124,7 +106,7 @@ namespace Scripts.Services
 
         public async Task<FetchCharactersResponseParameters> FetchCharacters(IYield yield)
         {
-            if (!IsServerConnected())
+            if (!IsConnected())
             {
                 return new FetchCharactersResponseParameters(new Character[0]);
             }
@@ -136,7 +118,7 @@ namespace Scripts.Services
 
         public async Task<ValidateCharacterStatus> ValidateCharacter(IYield yield, ValidateCharacterRequestParameters parameters)
         {
-            if (!IsServerConnected())
+            if (!IsConnected())
             {
                 return ValidateCharacterStatus.Wrong;
             }
@@ -148,7 +130,7 @@ namespace Scripts.Services
 
         public async Task<CreateCharacterResponseParameters> CreateCharacter(IYield yield, CreateCharacterRequestParameters parameters)
         {
-            if (!IsServerConnected())
+            if (!IsConnected())
             {
                 return new CreateCharacterResponseParameters(CharacterCreationStatus.Failed);
             }
@@ -160,7 +142,7 @@ namespace Scripts.Services
 
         public async Task<RemoveCharacterResponseParameters> RemoveCharacter(IYield yield, RemoveCharacterRequestParameters parameters)
         {
-            if (!IsServerConnected())
+            if (!IsConnected())
             {
                 return new RemoveCharacterResponseParameters(RemoveCharacterStatus.Failed);
             }
@@ -172,7 +154,7 @@ namespace Scripts.Services
 
         public void UpdatePosition(UpdatePositionRequestParameters parameters)
         {
-            if (!IsServerConnected())
+            if (!IsConnected())
             {
                 return;
             }
@@ -182,7 +164,7 @@ namespace Scripts.Services
 
         public void UpdatePlayerState(UpdatePlayerStateRequestParameters parameters)
         {
-            if (!IsServerConnected())
+            if (!IsConnected())
             {
                 return;
             }
@@ -192,7 +174,7 @@ namespace Scripts.Services
 
         public async Task ChangeScene(IYield yield, ChangeSceneRequestParameters parameters)
         {
-            if (!IsServerConnected())
+            if (!IsConnected())
             {
                 return;
             }

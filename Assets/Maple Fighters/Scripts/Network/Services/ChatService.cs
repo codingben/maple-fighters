@@ -2,25 +2,12 @@
 using Chat.Common;
 using CommonCommunicationInterfaces;
 using CommonTools.Coroutines;
-using Scripts.ScriptableObjects;
 
 namespace Scripts.Services
 {
     public sealed class ChatService : ServiceBase<ChatOperations, ChatEvents>, IChatService
     {
         public UnityEvent<ChatMessageEventParameters> ChatMessageReceived { get; } = new UnityEvent<ChatMessageEventParameters>();
-
-        public async Task<ConnectionStatus> Connect(IYield yield)
-        {
-            var connectionInformation = ServicesConfiguration.GetInstance().GetConnectionInformation(ServersType.Chat);
-            var connectionStatus = await Connect(yield, connectionInformation);
-            return connectionStatus;
-        }
-
-        public void Disconnect()
-        {
-            Dispose();
-        }
 
         protected override void OnConnected()
         {
@@ -46,11 +33,11 @@ namespace Scripts.Services
             EventHandlerRegister.RemoveHandler(ChatEvents.ChatMessage);
         }
 
-        public async Task<AuthenticateStatus> Authenticate(IYield yield)
+        public async Task<AuthenticationStatus> Authenticate(IYield yield)
         {
-            if (!IsServerConnected())
+            if (!IsConnected())
             {
-                return AuthenticateStatus.Failed;
+                return AuthenticationStatus.Failed;
             }
 
             var parameters = new AuthenticateRequestParameters(AccessTokenProvider.AccessToken);
@@ -61,7 +48,7 @@ namespace Scripts.Services
 
         public void SendChatMessage(ChatMessageRequestParameters parameters)
         {
-            if (!IsServerConnected())
+            if (!IsConnected())
             {
                 return;
             }

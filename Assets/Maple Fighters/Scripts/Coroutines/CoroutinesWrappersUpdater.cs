@@ -47,8 +47,6 @@ namespace Scripts.Coroutines
         private void Start()
         {
             _instance = this;
-
-            TimeProviders.DefaultTimeProvider = new GameTimeProvider();
         }
 
         private void Update()

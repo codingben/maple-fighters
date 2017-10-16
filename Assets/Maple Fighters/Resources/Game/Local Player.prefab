@@ -262,7 +262,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerState: 0
   speed: 10
-  jumpForce: 5
+  jumpForce: 6
   ropeUpSpeed: 8
   ropeDownSpeed: 10
   ladderUpSpeed: 6

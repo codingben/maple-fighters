@@ -1,26 +1,19 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using CommonTools.Coroutines;
 using CommonTools.Log;
 using Registration.Common;
 using Scripts.Containers;
+using Scripts.ScriptableObjects;
 using Scripts.Services;
 using Scripts.UI.Core;
 using Scripts.UI.Windows;
-using UnityEngine;
-using WaitForSeconds = CommonTools.Coroutines.WaitForSeconds;
 
 namespace Scripts.UI.Controllers
 {
-    public class RegistrationController : MonoBehaviour
+    public class RegistrationController : ServiceConnector<RegistrationController>
     {
-        private const int AUTO_TIME_FOR_DISCONNECT = 60;
-
         private RegistrationWindow registrationWindow;
         private LoginWindow loginWindow;
-
-        private ICoroutine disconnectAutomatically;
-        private readonly ExternalCoroutinesExecutor coroutinesExecutor = new ExternalCoroutinesExecutor();
 
         private void Start()
         {
@@ -29,14 +22,9 @@ namespace Scripts.UI.Controllers
             SubscribeToRegistrationWindowEvents();
         }
 
-        private void Update()
+        protected override void OnDestroyed()
         {
-            coroutinesExecutor?.Update();
-        }
-
-        private void OnDestroy()
-        {
-            coroutinesExecutor.Dispose();
+            base.OnDestroyed();
 
             UnsubscribeFromRegistrationWindowEvents();
 
@@ -59,7 +47,7 @@ namespace Scripts.UI.Controllers
         private void OnRegisterButtonClicked(string email, string password, string firstName, string lastName)
         {
             var parameters = new RegisterRequestParameters(email, password, firstName, lastName);
-            coroutinesExecutor.StartTask((y) => Connect(y, parameters));
+            CoroutinesExecutor.StartTask((y) => Connect(y, parameters));
         }
 
         private async Task Connect(IYield yield, RegisterRequestParameters parameters)
@@ -67,9 +55,10 @@ namespace Scripts.UI.Controllers
             var noticeWindow = Utils.ShowNotice("Registration is in a process.. Please wait.", () => registrationWindow.Show());
             noticeWindow.OkButton.interactable = false;
 
-            if (!ServiceContainer.RegistrationService.IsConnected())
+            if (!IsConnected())
             {
-                var connectionStatus = await ServiceContainer.RegistrationService.Connect(yield);
+                var connectionInformation = ServicesConfiguration.GetInstance().GetConnectionInformation(ServersType.Registration);
+                var connectionStatus = await Connect(yield, ServiceContainer.RegistrationService, connectionInformation);
                 if (connectionStatus == ConnectionStatus.Failed)
                 {
                     noticeWindow.Message.text = "Could not connect to a registration server.";
@@ -78,7 +67,7 @@ namespace Scripts.UI.Controllers
                 }
             }
 
-            coroutinesExecutor.StartTask((y) => Register(y, parameters));
+            CoroutinesExecutor.StartTask((y) => Register(y, parameters));
         }
 
         private async Task Register(IYield yield, RegisterRequestParameters paramters)
@@ -111,10 +100,7 @@ namespace Scripts.UI.Controllers
 
             if (responseParameters.Status != RegisterStatus.Succeed)
             {
-                if (disconnectAutomatically == null)
-                {
-                    disconnectAutomatically = coroutinesExecutor.StartCoroutine(DisconnectAutomatically());
-                }
+                DisconnectAutomatically();
             }
             else
             {
@@ -132,32 +118,6 @@ namespace Scripts.UI.Controllers
             }
 
             loginWindow.Show();
-        }
-
-        private IEnumerator<IYieldInstruction> DisconnectAutomatically()
-        {
-            const int MINIMUM_TASKS = 1;
-
-            while (true)
-            {
-                yield return new WaitForSeconds(AUTO_TIME_FOR_DISCONNECT);
-
-                if (coroutinesExecutor.Count > MINIMUM_TASKS)
-                {
-                    continue;
-                }
-
-                Disconnect();
-                yield break;
-            }
-        }
-
-        private void Disconnect()
-        {
-            disconnectAutomatically?.Dispose();
-            disconnectAutomatically = null;
-
-            ServiceContainer.RegistrationService.Disconnect();
         }
     }
 }

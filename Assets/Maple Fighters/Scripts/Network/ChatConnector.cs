@@ -3,6 +3,7 @@ using Chat.Common;
 using CommonTools.Coroutines;
 using CommonTools.Log;
 using Scripts.Containers;
+using Scripts.ScriptableObjects;
 using Scripts.UI;
 using Scripts.UI.Controllers;
 using Scripts.UI.Core;
@@ -10,18 +11,18 @@ using Scripts.UI.Windows;
 
 namespace Scripts.Services
 {
-    public class ChatConnector : MonoSingleton<ChatConnector>
+    public class ChatConnector : ServiceConnector<ChatConnector>
     {
-        private readonly ExternalCoroutinesExecutor coroutinesExecutor = new ExternalCoroutinesExecutor();
+        protected override void OnAwake()
+        {
+            base.OnAwake();
+
+            DontDestroyOnLoad();
+        }
 
         public void Connect()
         {
-            coroutinesExecutor.StartTask(Connect);
-        }
-
-        private void Update()
-        {
-            coroutinesExecutor?.Update();
+            CoroutinesExecutor.StartTask(Connect);
         }
 
         private async Task Connect(IYield yield)
@@ -29,14 +30,15 @@ namespace Scripts.Services
             var chatWindow = UserInterfaceContainer.Instance.Get<ChatWindow>().AssertNotNull();
             chatWindow.ChatMessageNotifier.Invoke("Connecting to a chat server...", ChatMessageColor.Green);
 
-            var connectionStatus = await ServiceContainer.ChatService.Connect(yield);
+            var connectionInformation = ServicesConfiguration.GetInstance().GetConnectionInformation(ServersType.Chat);
+            var connectionStatus = await Connect(yield, ServiceContainer.ChatService, connectionInformation);
             if (connectionStatus == ConnectionStatus.Failed)
             {
                 chatWindow.ChatMessageNotifier.Invoke("Could not connect to a chat server.", ChatMessageColor.Red);
                 return;
             }
 
-            coroutinesExecutor.StartTask(Authenticate);
+            CoroutinesExecutor.StartTask(Authenticate);
         }
 
         private async Task Authenticate(IYield yield)
@@ -44,8 +46,10 @@ namespace Scripts.Services
             var chatWindow = UserInterfaceContainer.Instance.Get<ChatWindow>().AssertNotNull();
 
             var authenticationStatus = await ServiceContainer.ChatService.Authenticate(yield);
-            if (authenticationStatus == AuthenticateStatus.Failed)
+            if (authenticationStatus == AuthenticationStatus.Failed)
             {
+                ServiceContainer.ChatService.Disconnect();
+
                 chatWindow.ChatMessageNotifier.Invoke("Authentication with chat server failed.", ChatMessageColor.Red);
                 return;
             }

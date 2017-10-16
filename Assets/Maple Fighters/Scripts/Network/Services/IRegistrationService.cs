@@ -4,13 +4,8 @@ using Registration.Common;
 
 namespace Scripts.Services
 {
-    public interface IRegistrationService
+    public interface IRegistrationService : IServiceBase
     {
-        bool IsConnected();
-
-        Task<ConnectionStatus> Connect(IYield yield);
-        void Disconnect();
-
         Task<RegisterResponseParameters> Register(IYield yield, RegisterRequestParameters parameters);
     }
 }

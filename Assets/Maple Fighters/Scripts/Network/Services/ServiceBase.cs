@@ -6,19 +6,12 @@ using CommonTools.Log;
 using CommunicationHelper;
 using ExitGames.Client.Photon;
 using PhotonClientImplementation;
-using Scripts.Coroutines;
 using Scripts.ScriptableObjects;
 using Scripts.Utils;
 
 namespace Scripts.Services
 {
-    public enum ConnectionStatus
-    {
-        Succeed,
-        Failed
-    }
-
-    public abstract class ServiceBase<TOperationCode, TEventCode> : IDisposable
+    public abstract class ServiceBase<TOperationCode, TEventCode> : IDisposable, IServiceBase
         where TOperationCode : IComparable, IFormattable, IConvertible
         where TEventCode : IComparable, IFormattable, IConvertible
     {
@@ -30,23 +23,13 @@ namespace Scripts.Services
         protected IOperationRequestSender<TOperationCode> OperationRequestSender { get; private set; }
         protected IOperationResponseSubscriptionProvider SubscriptionProvider { get; private set; }
 
-        protected readonly ExternalCoroutinesExecutor CoroutinesExecutor = new ExternalCoroutinesExecutor().ExecuteExternally();
-
-        public void Dispose()
-        {
-            serverPeer?.Disconnect();
-
-            SubscriptionProvider?.Dispose();
-            EventHandlerRegister?.Dispose();
-        }
-
-        protected async Task<ConnectionStatus> Connect(IYield yield, ConnectionInformation connectionInformation)
+        public async Task<ConnectionStatus> Connect(IYield yield, ICoroutinesExecutor coroutinesExecutor, ConnectionInformation connectionInformation)
         {
             var peerConnectionInformation = GetPeerConnectionInformation(connectionInformation);
 
             LogUtils.Log($"Connecting to a {serverType} server. IP: {peerConnectionInformation.Ip} Port: {peerConnectionInformation.Port}");
 
-            var serverConnector = new PhotonServerConnector(() => CoroutinesExecutor);
+            var serverConnector = new PhotonServerConnector(() => coroutinesExecutor);
             var networkConfiguration = NetworkConfiguration.GetInstance();
 
             serverPeer = await serverConnector.ConnectAsync(yield, peerConnectionInformation,
@@ -60,6 +43,29 @@ namespace Scripts.Services
             InitializePeerHandlers();
             OnConnected();
             return ConnectionStatus.Succeed;
+        }
+
+        public void Dispose()
+        {
+            if (!IsConnected() || serverPeer == null)
+            {
+                return;
+            }
+
+            serverPeer.Disconnect();
+
+            SubscriptionProvider.Dispose();
+            EventHandlerRegister.Dispose();
+        }
+
+        public void Disconnect()
+        {
+            Dispose();
+        }
+
+        public bool IsConnected()
+        {
+            return serverPeer != null && serverPeer.IsConnected;
         }
 
         protected abstract void OnConnected();
@@ -91,16 +97,6 @@ namespace Scripts.Services
         private void OnOperationRequestFailed(RawMessageResponseData data, short requestId)
         {
             LogUtils.Log(MessageBuilder.Trace($"Sending an operaiton has been failed. Operation Code: {data.Code} - Server Type: {serverType}"));
-        }
-
-        private void OnApplicationQuit()
-        {
-            Dispose();
-        }
-
-        protected bool IsServerConnected()
-        {
-            return serverPeer != null && serverPeer.IsConnected;
         }
 
         private PeerConnectionInformation GetPeerConnectionInformation(ConnectionInformation connectionInformation)

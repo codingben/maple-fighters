@@ -4,13 +4,8 @@ using Login.Common;
 
 namespace Scripts.Services
 {
-    public interface ILoginService
+    public interface ILoginService : IServiceBase
     {
-        bool IsConnected();
-
-        Task<ConnectionStatus> Connect(IYield yield);
-        void Disconnect();
-
         Task<LoginResponseParameters> Login(IYield yield, LoginRequestParameters parameters);
     }
 }

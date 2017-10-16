@@ -1,17 +1,11 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using CommonTools.Coroutines;
 using Shared.Game.Common;
 
 namespace Scripts.Services
 {
-    public interface IGameService
+    public interface IGameService : IServiceBase
     {
-        event Action Connected;
-
-        Task<ConnectionStatus> Connect(IYield yield);
-        void Disconnect();
-
         void EnterWorld();
 
         void UpdatePosition(UpdatePositionRequestParameters parameters);
