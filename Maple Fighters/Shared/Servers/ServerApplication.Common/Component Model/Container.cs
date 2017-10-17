@@ -52,7 +52,7 @@ namespace ServerApplication.Common.ComponentModel
             return components.OfType<T>().FirstOrDefault();
         }
 
-        public void RemoveAllComponents()
+        public void Dispose()
         {
             components.ForEach(component => component.Dispose());
 

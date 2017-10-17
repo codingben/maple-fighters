@@ -5,27 +5,27 @@ namespace Shared.Game.Common
 {
     public struct CharacterInformation : IParameters
     {
-        public int GameObjectId;
+        public int SceneObjectId;
         public string CharacterName;
         public CharacterClasses CharacterClass;
 
-        public CharacterInformation(int gameObjectId, string characterName, CharacterClasses characterClass)
+        public CharacterInformation(int sceneObjectId, string characterName, CharacterClasses characterClass)
         {
-            GameObjectId = gameObjectId;
+            SceneObjectId = sceneObjectId;
             CharacterName = characterName;
             CharacterClass = characterClass;
         }
 
         public void Serialize(BinaryWriter writer)
         {
-            writer.Write(GameObjectId);
+            writer.Write(SceneObjectId);
             writer.Write(CharacterName);
             writer.Write((byte)CharacterClass);
         }
 
         public void Deserialize(BinaryReader reader)
         {
-            GameObjectId = reader.ReadInt32();
+            SceneObjectId = reader.ReadInt32();
             CharacterName = reader.ReadString();
             CharacterClass = (CharacterClasses)reader.ReadByte();
         }

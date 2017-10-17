@@ -13,13 +13,13 @@ namespace Game.Application.PeerLogics
 {
     internal class AuthenticatedPeerLogic : PeerLogicBase<GameOperations, GameEvents>
     {
-        private readonly IGameObject characterGameObject;
+        private readonly ISceneObject characterSceneObject;
         private readonly Character character;
 
         public AuthenticatedPeerLogic(Character character)
         {
             this.character = character;
-            this.characterGameObject = CreateCharacterGameObject(character);
+            this.characterSceneObject = CreateCharacterSceneObject(character);
         }
 
         public override void Initialize(IClientPeerWrapper<IClientPeer> peer)
@@ -37,31 +37,31 @@ namespace Game.Application.PeerLogics
 
         private void AddComponents()
         {
-            characterGameObject.Container.AddComponent(new PeerIdGetter(PeerWrapper.PeerId));
+            characterSceneObject.Container.AddComponent(new PeerIdGetter(PeerWrapper.PeerId));
 
-            Entity.Container.AddComponent(new CharacterGameObjectGetter(characterGameObject, character));
+            Entity.Container.AddComponent(new CharacterSceneObjectGetter(characterSceneObject, character));
             Entity.Container.AddComponent(new MinimalPeerGetter(PeerWrapper.Peer));
             Entity.Container.AddComponent(new InterestAreaManagement());
             Entity.Container.AddComponent(new PositionChangesListener());
-            Entity.Container.AddComponent(new LocalGameObjectFetcher());
+            Entity.Container.AddComponent(new LocalCharacterSender());
         }
 
         private void AddHandlerForUpdatePositionOperation()
         {
-            var transform = characterGameObject.Container.GetComponent<Transform>().AssertNotNull();
+            var transform = characterSceneObject.Container.GetComponent<Transform>().AssertNotNull();
             OperationRequestHandlerRegister.SetHandler(GameOperations.PositionChanged, new UpdatePositionOperationHandler(transform));
         }
 
         private void AddHandlerForUpdatePlayerStateOperation()
         {
             var interestAreaManagement = Entity.Container.GetComponent<InterestAreaManagement>().AssertNotNull();
-            OperationRequestHandlerRegister.SetHandler(GameOperations.PlayerStateChanged, new UpdatePlayerStateOperationHandler(characterGameObject.Id, interestAreaManagement));
+            OperationRequestHandlerRegister.SetHandler(GameOperations.PlayerStateChanged, new UpdatePlayerStateOperationHandler(characterSceneObject.Id, interestAreaManagement));
         }
 
         private void AddHandlerForChangeSceneOperation()
         {
-            var gameObjectGetter = Entity.Container.GetComponent<CharacterGameObjectGetter>().AssertNotNull();
-            OperationRequestHandlerRegister.SetHandler(GameOperations.ChangeScene, new ChangeSceneOperationHandler(gameObjectGetter));
+            var sceneObjectGetter = Entity.Container.GetComponent<CharacterSceneObjectGetter>().AssertNotNull();
+            OperationRequestHandlerRegister.SetHandler(GameOperations.ChangeScene, new ChangeSceneOperationHandler(sceneObjectGetter));
         }
 
         private void SubscribeToDisconnectedEvent()
@@ -76,16 +76,16 @@ namespace Game.Application.PeerLogics
 
         private void OnDisconnected(DisconnectReason disconnectReason, string s)
         {
-            characterGameObject.Dispose();
+            characterSceneObject.Dispose();
 
             UnsubscribeFromDisconnectedEvent();
         }
 
-        private IGameObject CreateCharacterGameObject(Character character)
+        private ISceneObject CreateCharacterSceneObject(Character character)
         {
-            var characterGameObjectCreator = Server.Entity.Container.GetComponent<CharacterGameObjectCreator>().AssertNotNull();
-            var characterGameObject = characterGameObjectCreator.Create(character);
-            return characterGameObject;
+            var characterSceneObjectCreator = Server.Entity.Container.GetComponent<CharacterSceneObjectCreator>().AssertNotNull();
+            var characterSceneObject = characterSceneObjectCreator.Create(character);
+            return characterSceneObject;
         }
     }
 }

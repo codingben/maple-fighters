@@ -3,22 +3,22 @@ using CommonCommunicationInterfaces;
 
 namespace Shared.Game.Common
 {
-    public struct GameObjectAddedEventParameters : IParameters
+    public struct SceneObjectAddedEventParameters : IParameters
     {
-        public GameObject GameObject;
+        public SceneObject SceneObject;
         public CharacterInformation CharacterInformation;
         public bool HasCharacter;
 
-        public GameObjectAddedEventParameters(GameObject gameObject, CharacterInformation characterInformation, bool hasCharacter)
+        public SceneObjectAddedEventParameters(SceneObject sceneObject, CharacterInformation characterInformation, bool hasCharacter)
         {
-            GameObject = gameObject;
+            SceneObject = sceneObject;
             CharacterInformation = characterInformation;
             HasCharacter = hasCharacter;
         }
 
         public void Serialize(BinaryWriter writer)
         {
-            GameObject.Serialize(writer);
+            SceneObject.Serialize(writer);
 
             writer.Write(HasCharacter);
 
@@ -30,7 +30,7 @@ namespace Shared.Game.Common
 
         public void Deserialize(BinaryReader reader)
         {
-            GameObject.Deserialize(reader);
+            SceneObject.Deserialize(reader);
 
             HasCharacter = reader.ReadBoolean();
 

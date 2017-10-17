@@ -20,56 +20,48 @@ namespace Game.InterestManagement
         {
             if (subscribersAreas.ContainsKey(subscriberArea.Entity.Id))
             {
-                LogUtils.Log(MessageBuilder.Trace($"A game object with id #{subscriberArea.Entity.Id} already exists in a region."), LogMessageType.Error);
+                LogUtils.Log(MessageBuilder.Trace($"A scene object with id #{subscriberArea.Entity.Id} already exists in a region."), LogMessageType.Error);
                 return;
             }
 
-            LogUtils.Log(MessageBuilder.Trace($"Added subscription id #{subscriberArea.Entity.Id}"));
-
             subscribersAreas.Add(subscriberArea.Entity.Id, subscriberArea);
 
-            // Show all exists entities for a new game object.
             AddSubscribersForSubscriber(subscriberArea);
-
-            // Show a new game object for all exists entities.
             AddSubscriberForSubscribers(subscriberArea);
+
+            LogUtils.Log(MessageBuilder.Trace($"Added subscription id #{subscriberArea.Entity.Id}"));
         }
 
         public void RemoveSubscription(int subscriberId)
         {
             if (!subscribersAreas.ContainsKey(subscriberId))
             {
-                LogUtils.Log(MessageBuilder.Trace($"A game object with id #{subscriberId} does not exists in a region."), LogMessageType.Error);
+                LogUtils.Log(MessageBuilder.Trace($"A scene object with id #{subscriberId} does not exists in a region."), LogMessageType.Error);
                 return;
             }
 
-            LogUtils.Log(MessageBuilder.Trace($"Removed subscription id #{subscriberId}"));
-
-            // Hide game objects for the one that left this region.
             RemoveSubscribersForSubscriber(subscriberId);
 
-            // Remove him from region's list.
             subscribersAreas.Remove(subscriberId);
 
-            // Hide the one who left from this region for other game objects.
             RemoveSubscriberForSubscribers(subscriberId);
+
+            LogUtils.Log(MessageBuilder.Trace($"Removed subscription id #{subscriberId}"));
         }
 
-        public void RemoveSubscriptionForOtherOnly(int subscriberId)
+        public void RemoveSubscriptionForAllSubscribers(int subscriberId)
         {
             if (!subscribersAreas.ContainsKey(subscriberId))
             {
-                LogUtils.Log(MessageBuilder.Trace($"A game object with id #{subscriberId} does not exists in a region."), LogMessageType.Error);
+                LogUtils.Log(MessageBuilder.Trace($"A scene object with id #{subscriberId} does not exists in a region."), LogMessageType.Error);
                 return;
             }
 
-            RemoveSubscribersForSubscriberOnly(subscriberId);
+            RemoveAllSubscribersForSubscriber(subscriberId);
 
-            // Remove him from region's list.
             subscribersAreas.Remove(subscriberId);
 
-            // Hide the one who left from this region for other game objects.
-            RemoveSubscriberForOtherOnly(subscriberId);
+            RemoveSubscriberForAllSubscribers(subscriberId);
         }
 
         public bool HasSubscription(int subscriberId)
@@ -82,16 +74,24 @@ namespace Game.InterestManagement
             return subscribersAreas.Values;
         }
 
+        /// <summary>
+        /// Add all subscribers for a new subscriber.
+        /// </summary>
+        /// <param name="subscriberArea">A new subscriber</param>
         private void AddSubscribersForSubscriber(InterestArea subscriberArea)
         {
             var subscribers = subscribersAreas.Values.Where(subscriber => subscriber.Entity.Id != subscriberArea.Entity.Id).ToArray();
             subscriberArea?.SubscribersAdded?.Invoke(subscribers); 
         }
 
-        private void RemoveSubscribersForSubscriber(int removeSubscriberId)
+        /// <summary>
+        /// Remove subscribers for the subscriber that left this region.
+        /// </summary>
+        /// <param name="subscriberId">A removed subscriber id</param>
+        private void RemoveSubscribersForSubscriber(int subscriberId)
         {
-            var subscribers = subscribersAreas.Values.Where(subscriber => subscriber.Entity.Id != removeSubscriberId).ToArray();
-            var interestArea = subscribersAreas[removeSubscriberId];
+            var subscribers = subscribersAreas.Values.Where(subscriber => subscriber.Entity.Id != subscriberId).ToArray();
+            var interestArea = subscribersAreas[subscriberId];
 
             var subscribersForRemoveList = new List<int>();
 
@@ -109,6 +109,10 @@ namespace Game.InterestManagement
             }
         }
 
+        /// <summary>
+        /// Add a new subscriber for all other subscribers.
+        /// </summary>
+        /// <param name="subscriberArea">A new subscriber</param>
         private void AddSubscriberForSubscribers(InterestArea subscriberArea)
         {
             foreach (var subscriber in subscribersAreas)
@@ -122,35 +126,47 @@ namespace Game.InterestManagement
             }
         }
 
-        private void RemoveSubscriberForSubscribers(int removeSubscriberId)
+        /// <summary>
+        /// Remove the subscriber that left from this region for other subscribers.
+        /// </summary>
+        /// <param name="subscriberId">A removed subscriber id</param>
+        private void RemoveSubscriberForSubscribers(int subscriberId)
         {
             foreach (var subscriber in subscribersAreas.Values)
             {
-                if (!subscriber.GetPublishers().Any(publisher => publisher.HasSubscription(removeSubscriberId)))
+                if (!subscriber.GetPublishers().Any(publisher => publisher.HasSubscription(subscriberId)))
                 {
-                    subscriber.SubscriberRemoved?.Invoke(removeSubscriberId);
+                    subscriber.SubscriberRemoved?.Invoke(subscriberId);
                 }
             }
         }
 
-        private void RemoveSubscriberForOtherOnly(int removeSubscriberId)
+        /// <summary>
+        /// Remove the subscriber that left from this region for all subscribers.
+        /// </summary>
+        /// <param name="subscriberId">A removed subscriber id</param>
+        private void RemoveSubscriberForAllSubscribers(int subscriberId)
         {
             foreach (var subscriber in subscribersAreas.Values)
             {
-                subscriber.SubscriberRemoved?.Invoke(removeSubscriberId);
+                subscriber.SubscriberRemoved?.Invoke(subscriberId);
             }
         }
 
-        private void RemoveSubscribersForSubscriberOnly(int removeSubscriberId)
+        /// <summary>
+        /// Remove subscribers for the subscriber that left from this region.
+        /// </summary>
+        /// <param name="subscriberId">A removed subscriber id</param>
+        private void RemoveAllSubscribersForSubscriber(int subscriberId)
         {
-            var subscribers = subscribersAreas.Keys.Where(subscriberId => subscriberId != removeSubscriberId).ToArray();
+            var subscribers = subscribersAreas.Keys.Where(id => id != subscriberId).ToArray();
 
-            if (subscribersAreas[removeSubscriberId] == null)
+            if (subscribersAreas[subscriberId] == null)
             {
                 return;
             }
 
-            subscribersAreas[removeSubscriberId]?.SubscribersRemoved?.Invoke(subscribers);
+            subscribersAreas[subscriberId]?.SubscribersRemoved?.Invoke(subscribers);
         }
     }
 }

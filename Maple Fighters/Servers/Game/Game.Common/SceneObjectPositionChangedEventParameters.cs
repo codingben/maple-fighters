@@ -3,16 +3,16 @@ using CommonCommunicationInterfaces;
 
 namespace Shared.Game.Common
 {
-    public struct GameObjectPositionChangedEventParameters : IParameters
+    public struct SceneObjectPositionChangedEventParameters : IParameters
     {
-        public int GameObjectId;
+        public int SceneObjectId;
         public float X;
         public float Y;
         public Directions Direction;
 
-        public GameObjectPositionChangedEventParameters(int gameObjectId, float x, float y, Directions direction)
+        public SceneObjectPositionChangedEventParameters(int sceneObjectId, float x, float y, Directions direction)
         {
-            GameObjectId = gameObjectId;
+            SceneObjectId = sceneObjectId;
             X = x;
             Y = y;
             Direction = direction;
@@ -20,7 +20,7 @@ namespace Shared.Game.Common
 
         public void Serialize(BinaryWriter writer)
         {
-            writer.Write(GameObjectId);
+            writer.Write(SceneObjectId);
             writer.Write(X);
             writer.Write(Y);
             writer.Write((byte)Direction);
@@ -28,7 +28,7 @@ namespace Shared.Game.Common
 
         public void Deserialize(BinaryReader reader)
         {
-            GameObjectId = reader.ReadInt32();
+            SceneObjectId = reader.ReadInt32();
             X = reader.ReadSingle();
             Y = reader.ReadSingle();
             Direction = (Directions)reader.ReadByte();

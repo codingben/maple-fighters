@@ -39,8 +39,8 @@ namespace ServerApplication.Common.PhotonStarter
 
             clientPeer.Fiber.Enqueue(() =>
             {
-                application.OnConnected(clientPeer);
                 LogUtils.Log($"A new peer has been connected -> {clientPeer.ConnectionInformation.Ip}:{clientPeer.ConnectionInformation.Port}");
+                application.OnConnected(clientPeer);
             });
             return clientPeer;
         }

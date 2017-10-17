@@ -7,7 +7,7 @@ using ServerApplication.Common.ComponentModel;
 
 namespace Game.InterestManagement
 {
-    public class InterestArea : Component<IGameObject>
+    public class InterestArea : Component<ISceneObject>
     {
         public Action<InterestArea> SubscriberAdded;
         public Action<int> SubscriberRemoved;

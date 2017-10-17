@@ -15,7 +15,7 @@ namespace Shared.ServerApplication.Common.PeerLogic
 
         public void Dispose()
         {
-            Container.RemoveAllComponents();
+            Container.Dispose();
         }
     }
 }

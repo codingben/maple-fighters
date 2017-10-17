@@ -33,7 +33,7 @@ namespace Game.Application
         {
             Server.Entity.Container.AddComponent(new PythonScriptEngine());
             Server.Entity.Container.AddComponent(new SceneContainer());
-            Server.Entity.Container.AddComponent(new CharacterGameObjectCreator());
+            Server.Entity.Container.AddComponent(new CharacterSceneObjectCreator());
             Server.Entity.Container.AddComponent(new DatabaseConnectionProvider());
             Server.Entity.Container.AddComponent(new DatabaseCharacterCreator());
             Server.Entity.Container.AddComponent(new DatabaseCharacterRemover());

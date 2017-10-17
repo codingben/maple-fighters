@@ -3,26 +3,26 @@ using CommonCommunicationInterfaces;
 
 namespace Shared.Game.Common
 {
-    public struct LocalGameObjectAddedEventParameters : IParameters
+    public struct LocalSceneObjectAddedEventParameters : IParameters
     {
-        public GameObject CharacterGameObject;
+        public SceneObject CharacterSceneObject;
         public Character Character;
 
-        public LocalGameObjectAddedEventParameters(GameObject characterGameObject, Character character)
+        public LocalSceneObjectAddedEventParameters(SceneObject characterSceneObject, Character character)
         {
-            CharacterGameObject = characterGameObject;
+            CharacterSceneObject = characterSceneObject;
             Character = character;
         }
 
         public void Serialize(BinaryWriter writer)
         {
-            CharacterGameObject.Serialize(writer);
+            CharacterSceneObject.Serialize(writer);
             Character.Serialize(writer);
         }
 
         public void Deserialize(BinaryReader reader)
         {
-            CharacterGameObject.Deserialize(reader);
+            CharacterSceneObject.Deserialize(reader);
             Character.Deserialize(reader);
         }
     }

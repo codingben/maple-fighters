@@ -13,7 +13,7 @@ namespace ServerApplication.Common.ComponentModel
 
         public void Dispose()
         {
-            Container.RemoveAllComponents();
+            Container.Dispose();
         }
     }
 }

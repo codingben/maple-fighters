@@ -5,7 +5,7 @@ using Shared.Game.Common;
 
 namespace Game.InterestManagement
 {
-    public class Transform : Component<IGameObject>
+    public class Transform : Component<ISceneObject>
     {
         public Vector2 Position { get; private set; } = Vector2.Zero;
         private Vector2 lastPosition = Vector2.Zero;

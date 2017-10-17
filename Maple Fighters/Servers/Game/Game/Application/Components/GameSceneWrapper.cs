@@ -6,7 +6,7 @@ using Microsoft.Scripting.Hosting;
 using PythonScripting;
 using ServerApplication.Common.ApplicationBase;
 using Shared.Game.Common;
-using GameObject = Game.InterestManagement.GameObject;
+using SceneObject = Game.InterestManagement.SceneObject;
 
 namespace Game.Application.Components
 {
@@ -28,10 +28,10 @@ namespace Game.Application.Components
             scriptScope = pythonScriptEngine.GetScriptEngine().CreateScope();
             scriptScope.SetVariable("scene", this);
 
-            AddGameObjectsViaPython();
+            AddSceneObjectsViaPython();
         }
 
-        private void AddGameObjectsViaPython()
+        private void AddSceneObjectsViaPython()
         {
             var pythonScriptsPath = $"../Game/python/scenes/{map}";
             var pythonScripts = Directory.GetFiles(pythonScriptsPath, "*.py", SearchOption.AllDirectories);
@@ -42,12 +42,12 @@ namespace Game.Application.Components
             }
         }
 
-        public void AddGameObject(string name, Vector2 position, Vector2 interestAreaSize)
+        public void AddSceneObject(string name, Vector2 position, Vector2 interestAreaSize)
         {
-            var gameObject = new GameObject(name, scene, position);
-            scene.AddGameObject(gameObject);
+            var sceneObject = new SceneObject(name, position);
+            scene.AddSceneObject(sceneObject);
 
-            var interestArea = gameObject.Container.AddComponent(new InterestArea(position, interestAreaSize));
+            var interestArea = sceneObject.Container.AddComponent(new InterestArea(position, interestAreaSize));
             interestArea.DetectOverlapsWithRegionsAction.Invoke();
         }
 

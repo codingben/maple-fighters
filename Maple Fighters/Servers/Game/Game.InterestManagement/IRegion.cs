@@ -9,7 +9,7 @@ namespace Game.InterestManagement
 
         void AddSubscription(InterestArea subscriberArea);
         void RemoveSubscription(int subscriberId);
-        void RemoveSubscriptionForOtherOnly(int subscriberId);
+        void RemoveSubscriptionForAllSubscribers(int subscriberId);
 
         bool HasSubscription(int subscriberId);
 

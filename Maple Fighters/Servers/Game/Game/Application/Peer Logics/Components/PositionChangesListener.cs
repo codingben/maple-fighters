@@ -10,14 +10,14 @@ namespace Game.Application.PeerLogic.Components
 {
     internal class PositionChangesListener : Component<IPeerEntity>
     {
-        private CharacterGameObjectGetter gameObjectGetter;
+        private CharacterSceneObjectGetter sceneObjectGetter;
         private InterestAreaManagement interestAreaManagement;
 
         protected override void OnAwake()
         {
             base.OnAwake();
 
-            gameObjectGetter = Entity.Container.GetComponent<CharacterGameObjectGetter>().AssertNotNull();
+            sceneObjectGetter = Entity.Container.GetComponent<CharacterSceneObjectGetter>().AssertNotNull();
             interestAreaManagement = Entity.Container.GetComponent<InterestAreaManagement>().AssertNotNull();
 
             SubscribeToPositionChangedEvent();
@@ -25,14 +25,14 @@ namespace Game.Application.PeerLogic.Components
 
         private void SubscribeToPositionChangedEvent()
         {
-            var transform = gameObjectGetter.GetGameObject().Container.GetComponent<Transform>().AssertNotNull();
+            var transform = sceneObjectGetter.GetSceneObject().Container.GetComponent<Transform>().AssertNotNull();
             transform.PositionAndDirectionChanged += SendNewPosition;
         }
 
         public void SendNewPosition(Vector2 newPosition, Directions direction)
         {
-            var gameObjectId = gameObjectGetter.GetGameObject().Id;
-            var parameters = new GameObjectPositionChangedEventParameters(gameObjectId, newPosition.X, newPosition.Y, direction);
+            var sceneObjectId = sceneObjectGetter.GetSceneObject().Id;
+            var parameters = new SceneObjectPositionChangedEventParameters(sceneObjectId, newPosition.X, newPosition.Y, direction);
             var messageSendOptions = MessageSendOptions.DefaultUnreliable((byte)GameDataChannels.Position);
             interestAreaManagement.SendEventForSubscribers((byte)GameEvents.PositionChanged, parameters, messageSendOptions);
         }

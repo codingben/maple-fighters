@@ -39,14 +39,20 @@ namespace ServerApplication.Common.Logger
                 switch (type)
                 {
                     case LogMessageType.Log:
+                    {
                         logger.Info(message);
                         break;
+                    }
                     case LogMessageType.Warning:
+                    {
                         logger.Warn(message);
                         break;
+                    }
                     case LogMessageType.Error:
+                    {
                         logger.Error(message);
                         break;
+                    }
                 }
             }
         }

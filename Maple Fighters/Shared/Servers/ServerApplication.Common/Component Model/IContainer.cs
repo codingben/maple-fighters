@@ -1,6 +1,8 @@
-﻿namespace ServerApplication.Common.ComponentModel
+﻿using System;
+
+namespace ServerApplication.Common.ComponentModel
 {
-    public interface IContainer<TOwner>
+    public interface IContainer<TOwner> : IDisposable
         where TOwner : IEntity
     {
         T AddComponent<T>(T component)
@@ -11,7 +13,5 @@
 
         T GetComponent<T>()
             where T : IComponent;
-
-        void RemoveAllComponents();
     }
 }

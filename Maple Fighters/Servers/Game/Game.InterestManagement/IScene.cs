@@ -8,9 +8,9 @@ namespace Game.InterestManagement
 
         IRegion[,] GetAllRegions();
 
-        IGameObject AddGameObject(IGameObject gameObject);
-        void RemoveGameObject(int id);
+        ISceneObject AddSceneObject(ISceneObject sceneObject);
+        void RemoveSceneObject(int id);
 
-        IGameObject GetGameObject(int gameObjectId);
+        ISceneObject GetSceneObject(int sceneObjectId);
     }
 }

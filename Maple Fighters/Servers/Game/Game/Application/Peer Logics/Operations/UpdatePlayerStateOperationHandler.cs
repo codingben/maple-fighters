@@ -7,19 +7,19 @@ namespace Game.Application.PeerLogic.Operations
 {
     internal class UpdatePlayerStateOperationHandler : IOperationRequestHandler<UpdatePlayerStateRequestParameters, EmptyParameters>
     {
-        private readonly int gameObjectId;
+        private readonly int sceneObjectId;
         private readonly InterestAreaManagement interestAreaManagement;
         
-        public UpdatePlayerStateOperationHandler(int gameObjectId, InterestAreaManagement interestAreaManagement)
+        public UpdatePlayerStateOperationHandler(int sceneObjectId, InterestAreaManagement interestAreaManagement)
         {
-            this.gameObjectId = gameObjectId;
+            this.sceneObjectId = sceneObjectId;
             this.interestAreaManagement = interestAreaManagement;
         }
 
         public EmptyParameters? Handle(MessageData<UpdatePlayerStateRequestParameters> messageData, ref MessageSendOptions sendOptions)
         {
             var playerState = messageData.Parameters.PlayerState;
-            var parameters = new PlayerStateChangedEventParameters(playerState, gameObjectId);
+            var parameters = new PlayerStateChangedEventParameters(playerState, sceneObjectId);
             var messageSendOptions = MessageSendOptions.DefaultReliable((byte)GameDataChannels.Animations);
             interestAreaManagement.SendEventForSubscribers((byte)GameEvents.PlayerStateChanged, parameters, messageSendOptions);
             return null;

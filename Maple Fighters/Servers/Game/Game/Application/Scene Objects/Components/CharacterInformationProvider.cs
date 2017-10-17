@@ -2,9 +2,9 @@
 using ServerApplication.Common.ComponentModel;
 using Shared.Game.Common;
 
-namespace Game.Application.GameObjects.Components
+namespace Game.Application.SceneObjects.Components
 {
-    internal class CharacterInformationProvider : Component<IGameObject>
+    internal class CharacterInformationProvider : Component<ISceneObject>
     {
         private CharacterInformation characterInformation;
 

@@ -47,8 +47,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ExtensionMethods.cs" />
-    <Compile Include="GameObject.cs" />
-    <Compile Include="IGameObject.cs" />
+    <Compile Include="IPresenceSceneProvider.cs" />
+    <Compile Include="PresenceSceneProvider.cs" />
+    <Compile Include="SceneObject.cs" />
+    <Compile Include="ISceneObject.cs" />
     <Compile Include="InterestArea.cs" />
     <Compile Include="IRegion.cs" />
     <Compile Include="IScene.cs" />
