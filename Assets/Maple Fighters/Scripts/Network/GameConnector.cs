@@ -37,6 +37,7 @@ namespace Scripts.Services
             {
                 noticeWindow.Message.text = "Could not connect to a game server.";
                 noticeWindow.OkButton.interactable = true;
+                return;
             }
 
             CoroutinesExecutor.StartTask(Authenticate);
