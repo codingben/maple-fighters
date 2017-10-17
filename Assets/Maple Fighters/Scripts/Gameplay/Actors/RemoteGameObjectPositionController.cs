@@ -11,10 +11,10 @@ namespace Scripts.Gameplay.Actors
             ServiceContainer.GameService.PositionChanged.AddListener(OnPositionChanged);
         }
 
-        private void OnPositionChanged(GameObjectPositionChangedEventParameters parameters)
+        private void OnPositionChanged(SceneObjectPositionChangedEventParameters parameters)
         {
-            var id = parameters.GameObjectId;
-            var gameObject = GameObjectsContainer.Instance.GetRemoteGameObject(id);
+            var id = parameters.SceneObjectId;
+            var gameObject = SceneObjectsContainer.Instance.GetRemoteGameObject(id);
             gameObject?.GetGameObject()?.GetComponent<IPositionSetter>().SetPosition(new Vector2(parameters.X, parameters.Y), parameters.Direction);
         }
     }

@@ -32,14 +32,14 @@ namespace Scripts.Utils.Shared
                 return;
             }
 
-            ServiceContainer.GameService.GameObjectsAdded.AddListener(OnGameObjectsAdded);
+            ServiceContainer.GameService.SceneObjectsAdded.AddListener(OnGameObjectsAdded);
             ServiceContainer.GameService.PlayerStateChanged.AddListener(OnPlayerStateEventReceived);
         }
 
         /// <summary>
         /// When a new game objects added, so send them the last current state.
         /// </summary>
-        private void OnGameObjectsAdded(GameObjectsAddedEventParameters arg)
+        private void OnGameObjectsAdded(SceneObjectsAddedEventParameters arg)
         {
             var parameters = new UpdatePlayerStateRequestParameters(lastPlayerState);
             ServiceContainer.GameService.UpdatePlayerState(parameters);
@@ -47,8 +47,8 @@ namespace Scripts.Utils.Shared
 
         private void OnPlayerStateEventReceived(PlayerStateChangedEventParameters parameters)
         {
-            var gameObjectId = parameters.GameObjectId;
-            var gameObject = GameObjectsContainer.Instance.GetRemoteGameObject(gameObjectId);
+            var id = parameters.SceneObjectId;
+            var gameObject = SceneObjectsContainer.Instance.GetRemoteGameObject(id);
             gameObject?.GetGameObject()?.GetComponent<PlayerStateSetter>().SetState(parameters.PlayerState);
         }
 

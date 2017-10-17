@@ -1,18 +1,19 @@
 ﻿using System.Threading.Tasks;
 using CommonCommunicationInterfaces;
 using CommonTools.Coroutines;
+using CommonTools.Log;
 using Shared.Game.Common;
 
 namespace Scripts.Services
 {
     public sealed class GameService : ServiceBase<GameOperations, GameEvents>, IGameService
     {
-        public UnityEvent<LocalGameObjectAddedEventParameters> LocalGameObjectAdded { get; } = new UnityEvent<LocalGameObjectAddedEventParameters>();
-        public UnityEvent<GameObjectAddedEventParameters> GameObjectAdded { get; } = new UnityEvent<GameObjectAddedEventParameters>();
-        public UnityEvent<GameObjectRemovedEventParameters> GameObjectRemoved { get; } = new UnityEvent<GameObjectRemovedEventParameters>();
-        public UnityEvent<GameObjectsAddedEventParameters> GameObjectsAdded { get; } = new UnityEvent<GameObjectsAddedEventParameters>();
-        public UnityEvent<GameObjectsRemovedEventParameters> GameObjectsRemoved { get; } = new UnityEvent<GameObjectsRemovedEventParameters>();
-        public UnityEvent<GameObjectPositionChangedEventParameters> PositionChanged { get; } = new UnityEvent<GameObjectPositionChangedEventParameters>();
+        public UnityEvent<LocalSceneObjectAddedEventParameters> LocalSceneObjectAdded { get; } = new UnityEvent<LocalSceneObjectAddedEventParameters>();
+        public UnityEvent<SceneObjectAddedEventParameters> SceneObjectAdded { get; } = new UnityEvent<SceneObjectAddedEventParameters>();
+        public UnityEvent<SceneObjectRemovedEventParameters> SceneObjectRemoved { get; } = new UnityEvent<SceneObjectRemovedEventParameters>();
+        public UnityEvent<SceneObjectsAddedEventParameters> SceneObjectsAdded { get; } = new UnityEvent<SceneObjectsAddedEventParameters>();
+        public UnityEvent<SceneObjectsRemovedEventParameters> SceneObjectsRemoved { get; } = new UnityEvent<SceneObjectsRemovedEventParameters>();
+        public UnityEvent<SceneObjectPositionChangedEventParameters> PositionChanged { get; } = new UnityEvent<SceneObjectPositionChangedEventParameters>();
         public UnityEvent<PlayerStateChangedEventParameters> PlayerStateChanged { get; } = new UnityEvent<PlayerStateChangedEventParameters>();
 
         protected override void OnConnected()
@@ -27,37 +28,37 @@ namespace Scripts.Services
 
         private void AddEventsHandlers()
         {
-            EventHandlerRegister.SetHandler(GameEvents.LocalGameObjectAdded, new EventInvoker<LocalGameObjectAddedEventParameters>(unityEvent =>
+            EventHandlerRegister.SetHandler(GameEvents.LocalSceneObjectAdded, new EventInvoker<LocalSceneObjectAddedEventParameters>(unityEvent =>
             {
-                LocalGameObjectAdded?.Invoke(unityEvent.Parameters);
+                LocalSceneObjectAdded?.Invoke(unityEvent.Parameters);
                 return true;
             }));
 
-            EventHandlerRegister.SetHandler(GameEvents.GameObjectAdded, new EventInvoker<GameObjectAddedEventParameters>(unityEvent =>
+            EventHandlerRegister.SetHandler(GameEvents.SceneObjectAdded, new EventInvoker<SceneObjectAddedEventParameters>(unityEvent =>
             {
-                GameObjectAdded?.Invoke(unityEvent.Parameters);
+                SceneObjectAdded?.Invoke(unityEvent.Parameters);
                 return true;
             }));
 
-            EventHandlerRegister.SetHandler(GameEvents.GameObjectRemoved, new EventInvoker<GameObjectRemovedEventParameters>(unityEvent =>
+            EventHandlerRegister.SetHandler(GameEvents.SceneObjectRemoved, new EventInvoker<SceneObjectRemovedEventParameters>(unityEvent =>
             {
-                GameObjectRemoved?.Invoke(unityEvent.Parameters);
+                SceneObjectRemoved?.Invoke(unityEvent.Parameters);
                 return true;
             }));
 
-            EventHandlerRegister.SetHandler(GameEvents.GameObjectsAdded, new EventInvoker<GameObjectsAddedEventParameters>(unityEvent =>
+            EventHandlerRegister.SetHandler(GameEvents.SceneObjectsAdded, new EventInvoker<SceneObjectsAddedEventParameters>(unityEvent =>
             {
-                GameObjectsAdded?.Invoke(unityEvent.Parameters);
+                SceneObjectsAdded?.Invoke(unityEvent.Parameters);
                 return true;
             }));
 
-            EventHandlerRegister.SetHandler(GameEvents.GameObjectsRemoved, new EventInvoker<GameObjectsRemovedEventParameters>(unityEvent =>
+            EventHandlerRegister.SetHandler(GameEvents.SceneObjectsRemoved, new EventInvoker<SceneObjectsRemovedEventParameters>(unityEvent =>
             {
-                GameObjectsRemoved?.Invoke(unityEvent.Parameters);
+                SceneObjectsRemoved?.Invoke(unityEvent.Parameters);
                 return true;
             }));
 
-            EventHandlerRegister.SetHandler(GameEvents.PositionChanged, new EventInvoker<GameObjectPositionChangedEventParameters>(unityEvent =>
+            EventHandlerRegister.SetHandler(GameEvents.PositionChanged, new EventInvoker<SceneObjectPositionChangedEventParameters>(unityEvent =>
             {
                 PositionChanged?.Invoke(unityEvent.Parameters);
                 return true;
@@ -72,11 +73,11 @@ namespace Scripts.Services
 
         private void RemoveEventsHandlers()
         {
-            EventHandlerRegister.RemoveHandler(GameEvents.LocalGameObjectAdded);
-            EventHandlerRegister.RemoveHandler(GameEvents.GameObjectAdded);
-            EventHandlerRegister.RemoveHandler(GameEvents.GameObjectRemoved);
-            EventHandlerRegister.RemoveHandler(GameEvents.GameObjectsAdded);
-            EventHandlerRegister.RemoveHandler(GameEvents.GameObjectsRemoved);
+            EventHandlerRegister.RemoveHandler(GameEvents.LocalSceneObjectAdded);
+            EventHandlerRegister.RemoveHandler(GameEvents.SceneObjectAdded);
+            EventHandlerRegister.RemoveHandler(GameEvents.SceneObjectRemoved);
+            EventHandlerRegister.RemoveHandler(GameEvents.SceneObjectsAdded);
+            EventHandlerRegister.RemoveHandler(GameEvents.SceneObjectsRemoved);
             EventHandlerRegister.RemoveHandler(GameEvents.PositionChanged);
             EventHandlerRegister.RemoveHandler(GameEvents.PlayerStateChanged);
         }
