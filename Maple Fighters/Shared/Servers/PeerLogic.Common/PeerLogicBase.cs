@@ -4,6 +4,7 @@ using CommonTools.Log;
 using PeerLogic.Common.Components;
 using ServerCommunicationHelper;
 using ServerCommunicationInterfaces;
+using JsonConfig;
 
 namespace PeerLogic.Common
 {
@@ -22,14 +23,18 @@ namespace PeerLogic.Common
             PeerWrapper = peer;
 
             Entity = new PeerEntity(PeerWrapper.PeerId);
-            EventSender = new EventSender<TEventCode>(PeerWrapper.Peer.EventSender, false);
+
+            var logEvents = Config.Global.Logs.Events;
+            EventSender = new EventSender<TEventCode>(PeerWrapper.Peer.EventSender, logEvents);
 
             AddCommonComponents();
 
             var coroutinesExecutor = Entity.Container.GetComponent<ICoroutinesExecutor>().AssertNotNull();
 
+            var logOperationsRequest = Config.Global.Logs.OperationsRequest;
+            var logOperationsResponse = Config.Global.Logs.OperationsResponse;
             OperationRequestHandlerRegister = new OperationRequestsHandler<TOperationCode>(PeerWrapper.Peer.OperationRequestNotifier, 
-                PeerWrapper.Peer.OperationResponseSender, false, false, coroutinesExecutor);
+                PeerWrapper.Peer.OperationResponseSender, logOperationsRequest, logOperationsResponse, coroutinesExecutor);
 
             PeerWrapper.Peer.NetworkTrafficState = NetworkTrafficState.Flowing;
         }

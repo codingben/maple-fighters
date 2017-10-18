@@ -33,7 +33,7 @@ namespace Game.Application.Components
 
         private void AddSceneObjectsViaPython()
         {
-            var pythonScriptsPath = $"../Game/python/scenes/{map}";
+            var pythonScriptsPath = $"python/scenes/{map}";
             var pythonScripts = Directory.GetFiles(pythonScriptsPath, "*.py", SearchOption.AllDirectories);
 
             foreach (var pythonScript in pythonScripts)

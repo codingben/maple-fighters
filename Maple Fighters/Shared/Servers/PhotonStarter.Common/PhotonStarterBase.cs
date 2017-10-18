@@ -6,19 +6,19 @@ using PhotonServerImplementation;
 using ServerApplication.Common.ApplicationBase;
 using ServerCommunicationInterfaces;
 using PhotonStarter.Common.Utils;
+using JsonConfig;
 
 namespace PhotonStarter.Common
 {
     public abstract class PhotonStarterBase<T> : PhotonServerImplementation.ApplicationBase
         where T : IApplication
     {
-        private const string LOGGER_PATH = "../log4net.config";
-
         private T application;
 
         protected override void Setup()
         {
             LogUtils.Logger = CreateLogger();
+            Config.Global = CreateJsonConfiguration();
 
             application = CreateApplication(new PhotonFiberProvider());
             application.Startup();
@@ -46,10 +46,17 @@ namespace PhotonStarter.Common
             return clientPeer;
         }
 
+        private ConfigObject CreateJsonConfiguration()
+        {
+            var directoryInfo = new DirectoryInfo("configuration/json");
+            var configObject = Config.ApplyFromDirectoryInfo(directoryInfo);
+            return configObject;
+        }
+
         private Logger CreateLogger()
         {
             var logger = new Logger();
-            logger.Initialize(Path.Combine(BinaryPath, LOGGER_PATH));
+            logger.Initialize(Path.Combine(BinaryPath, "configuration/log4net.config"));
             return logger;
         }
     }

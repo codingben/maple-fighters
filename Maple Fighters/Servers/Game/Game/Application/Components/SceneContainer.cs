@@ -32,7 +32,7 @@ namespace Game.Application.Components
 
         private void AddScenesViaPython()
         {
-            const string PYTHON_SCRIPTS_PATH = "../Game/python/scenes";
+            const string PYTHON_SCRIPTS_PATH = "python/scenes";
             var pythonScripts = Directory.GetFiles(PYTHON_SCRIPTS_PATH, "*.py", SearchOption.TopDirectoryOnly);
 
             foreach (var pythonScript in pythonScripts)
