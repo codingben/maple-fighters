@@ -7,7 +7,7 @@ using ServiceStack.OrmLite;
 
 namespace Database.Common.Components
 {
-    public class DatabaseConnectionProvider : Component<IServerEntity>
+    public class DatabaseConnectionProvider : Component<IServerEntity>, IDatabaseConnectionProvider
     {
         private readonly OrmLiteConnectionFactory dbFactory;
 

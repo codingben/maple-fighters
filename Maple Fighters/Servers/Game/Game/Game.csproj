@@ -93,7 +93,19 @@
     <Compile Include="Application\Components\DatabaseCharactersGetter.cs" />
     <Compile Include="Application\Components\GameSceneWrapper.cs" />
     <Compile Include="Application\Components\CharacterSceneObjectCreator.cs" />
+    <Compile Include="Application\Components\ICharacterSceneObjectCreator.cs" />
+    <Compile Include="Application\Components\IDatabaseCharacterCreator.cs" />
+    <Compile Include="Application\Components\IDatabaseCharacterExistence.cs" />
+    <Compile Include="Application\Components\IDatabaseCharacterNameVerifier.cs" />
+    <Compile Include="Application\Components\IDatabaseCharacterRemover.cs" />
+    <Compile Include="Application\Components\IDatabaseCharactersGetter.cs" />
+    <Compile Include="Application\Components\IGameSceneWrapper.cs" />
+    <Compile Include="Application\Components\ISceneContainer.cs" />
     <Compile Include="Application\Components\SceneContainer.cs" />
+    <Compile Include="Application\Peer Logics\Components\ICharacterSceneObjectGetter.cs" />
+    <Compile Include="Application\Peer Logics\Components\IInterestAreaManagement.cs" />
+    <Compile Include="Application\Peer Logics\Components\IMinimalPeerGetter.cs" />
+    <Compile Include="Application\Peer Logics\Components\IPeerIdGetter.cs" />
     <Compile Include="Application\Scene Objects\Components\CharacterInformationProvider.cs" />
     <Compile Include="Application\Peer Logics\CharactersSelectionPeerLogic.cs" />
     <Compile Include="Application\Peer Logics\Components\CharacterSceneObjectGetter.cs" />
@@ -114,6 +126,7 @@
     <Compile Include="Application\Peer Logics\Operations\UpdatePositionOperationHandler.cs" />
     <Compile Include="Application\Peer Logics\Operations\UpdatePlayerStateOperationHandler.cs" />
     <Compile Include="Application\Peer Logics\UnauthenticatedPeerLogic.cs" />
+    <Compile Include="Application\Scene Objects\Components\ICharacterInformationProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -6,7 +6,7 @@ using Shared.Game.Common;
 
 namespace Game.Application.PeerLogic.Components
 {
-    internal class CharacterSceneObjectGetter : Component<IPeerEntity>
+    internal class CharacterSceneObjectGetter : Component<IPeerEntity>, ICharacterSceneObjectGetter
     {
         private readonly ISceneObject sceneObject;
         private readonly Character character;

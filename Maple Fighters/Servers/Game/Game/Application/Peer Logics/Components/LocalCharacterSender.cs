@@ -11,15 +11,15 @@ namespace Game.Application.PeerLogic.Components
 {
     internal class LocalCharacterSender : Component<IPeerEntity>
     {
-        private EventSenderWrapper eventSender;
-        private CharacterSceneObjectGetter sceneObjectGetter;
+        private IEventSenderWrapper eventSender;
+        private ICharacterSceneObjectGetter sceneObjectGetter;
 
         protected override void OnAwake()
         {
             base.OnAwake();
 
-            eventSender = Entity.Container.GetComponent<EventSenderWrapper>().AssertNotNull();
-            sceneObjectGetter = Entity.Container.GetComponent<CharacterSceneObjectGetter>().AssertNotNull();
+            eventSender = Entity.Container.GetComponent<IEventSenderWrapper>().AssertNotNull();
+            sceneObjectGetter = Entity.Container.GetComponent<ICharacterSceneObjectGetter>().AssertNotNull();
 
             SendLocalSceneObject();
         }
@@ -36,7 +36,7 @@ namespace Game.Application.PeerLogic.Components
         {
             const string SCENE_OBJECT_NAME = "Local Player";
 
-            var transform = sceneObject.Container.GetComponent<Transform>().AssertNotNull();
+            var transform = sceneObject.Container.GetComponent<ITransform>().AssertNotNull();
             return new SceneObject(sceneObject.Id, SCENE_OBJECT_NAME, transform.Position.X, transform.Position.Y);
         }
     }

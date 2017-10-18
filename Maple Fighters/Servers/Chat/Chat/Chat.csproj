@@ -59,6 +59,7 @@
     <Compile Include="Application\ChatApplication.cs" />
     <Compile Include="Application\Peer Logics\Components\ChatMessageEventSender.cs" />
     <Compile Include="Application\Peer Logics\AuthenticatedPeerLogic.cs" />
+    <Compile Include="Application\Peer Logics\Components\IChatMessageEventSender.cs" />
     <Compile Include="Application\Peer Logics\Operations\AuthenticationOperationHandler.cs" />
     <Compile Include="Application\Peer Logics\Operations\ChatMessageOperationHandler.cs" />
     <Compile Include="Application\Peer Logics\UnauthenticatedPeerLogic.cs" />

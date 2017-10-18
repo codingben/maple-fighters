@@ -7,22 +7,23 @@ using MathematicsHelper;
 
 namespace Game.InterestManagement
 {
-    public class InterestArea : Component<ISceneObject>
+    public class InterestArea : Component<ISceneObject>, IInterestArea
     {
-        public Action<InterestArea> SubscriberAdded;
-        public Action<int> SubscriberRemoved;
-        public Action<InterestArea[]> SubscribersAdded;
-        public Action<int[]> SubscribersRemoved;
+        public event Action<ISceneObject> SubscriberAdded;
+        public event Action<int> SubscriberRemoved;
+        public event Action<ISceneObject[]> SubscribersAdded;
+        public event Action<int[]> SubscribersRemoved;
 
-        public readonly Action DetectOverlapsWithRegionsAction;
+        public void InvokeSubscriberAdded(ISceneObject sceneObject) => SubscriberAdded?.Invoke(sceneObject);
+        public void InvokeSubscriberRemoved(int sceneObjectId) => SubscriberRemoved?.Invoke(sceneObjectId);
+        public void InvokeSubscribersAdded(ISceneObject[] sceneObjects) => SubscribersAdded?.Invoke(sceneObjects);
+        public void InvokeSubscribersRemoved(int[] sceneObjectIds) => SubscribersRemoved?.Invoke(sceneObjectIds);
 
         private Rectangle interestArea;
 
         public InterestArea(Vector2 position, Vector2 areaSize)
         {
             interestArea = new Rectangle(position, areaSize);
-
-            DetectOverlapsWithRegionsAction = DetectOverlapsWithRegions;
         }
 
         protected override void OnAwake()
@@ -36,19 +37,16 @@ namespace Game.InterestManagement
         {
             base.OnDestroy();
 
-            UnsubscribeFromPositionChangesNotifier();
+            SubscriberAdded = null;
+            SubscriberRemoved = null;
+            SubscribersAdded = null;
+            SubscribersRemoved = null;
         }
 
         private void SubscribeToPositionChangesNotifier()
         {
-            var transform = Entity.Container.GetComponent<Transform>().AssertNotNull();
+            var transform = Entity.Container.GetComponent<ITransform>().AssertNotNull();
             transform.PositionChanged += SetPosition;
-        }
-
-        private void UnsubscribeFromPositionChangesNotifier()
-        {
-            var transform = Entity.Container.GetComponent<Transform>().AssertNotNull();
-            transform.PositionChanged -= SetPosition;
         }
 
         private void SetPosition(Vector2 position)
@@ -67,7 +65,7 @@ namespace Game.InterestManagement
             return regions.Cast<IRegion>().Where(region => region.HasSubscription(Entity.Id)).ToArray();
         }
 
-        private void DetectOverlapsWithRegions()
+        public void DetectOverlapsWithRegions()
         {
             if (Entity == null)
             {
@@ -92,7 +90,7 @@ namespace Game.InterestManagement
                         continue;
                     }
 
-                    region.AddSubscription(this);
+                    region.AddSubscription(Entity);
                 }
                 else
                 {

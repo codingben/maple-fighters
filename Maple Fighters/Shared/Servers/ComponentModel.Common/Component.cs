@@ -1,6 +1,6 @@
 ﻿namespace ComponentModel.Common
 {
-    public class Component<TOwner> : IComponent
+    public class Component<TOwner>
     {
         public TOwner Entity { get; private set; }
 

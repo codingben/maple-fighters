@@ -10,17 +10,17 @@ namespace Game.Application.PeerLogic.Operations
     internal class CreateCharacterOperationHandler : IOperationRequestHandler<CreateCharacterRequestParameters, CreateCharacterResponseParameters>
     {
         private readonly int userId;
-        private readonly DatabaseCharacterCreator databaseCharacterCreator;
-        private readonly DatabaseCharacterExistence databaseCharacterExistence;
-        private readonly DatabaseCharacterNameVerifier databaseCharacterNameVerifier;
+        private readonly IDatabaseCharacterCreator databaseCharacterCreator;
+        private readonly IDatabaseCharacterExistence databaseCharacterExistence;
+        private readonly IDatabaseCharacterNameVerifier databaseCharacterNameVerifier;
 
         public CreateCharacterOperationHandler(int userId)
         {
             this.userId = userId;
 
-            databaseCharacterCreator = Server.Entity.Container.GetComponent<DatabaseCharacterCreator>().AssertNotNull();
-            databaseCharacterExistence = Server.Entity.Container.GetComponent<DatabaseCharacterExistence>().AssertNotNull();
-            databaseCharacterNameVerifier = Server.Entity.Container.GetComponent<DatabaseCharacterNameVerifier>().AssertNotNull();
+            databaseCharacterCreator = Server.Entity.Container.GetComponent<IDatabaseCharacterCreator>().AssertNotNull();
+            databaseCharacterExistence = Server.Entity.Container.GetComponent<IDatabaseCharacterExistence>().AssertNotNull();
+            databaseCharacterNameVerifier = Server.Entity.Container.GetComponent<IDatabaseCharacterNameVerifier>().AssertNotNull();
         }
 
         public CreateCharacterResponseParameters? Handle(MessageData<CreateCharacterRequestParameters> messageData, ref MessageSendOptions sendOptions)

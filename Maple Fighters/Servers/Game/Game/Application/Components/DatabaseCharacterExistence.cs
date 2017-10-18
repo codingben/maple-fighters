@@ -8,15 +8,15 @@ using Shared.Game.Common;
 
 namespace Game.Application.Components
 {
-    internal class DatabaseCharacterExistence : Component<IServerEntity>
+    internal class DatabaseCharacterExistence : Component<IServerEntity>, IDatabaseCharacterExistence
     {
-        private DatabaseConnectionProvider databaseConnectionProvider;
+        private IDatabaseConnectionProvider databaseConnectionProvider;
 
         protected override void OnAwake()
         {
             base.OnAwake();
 
-            databaseConnectionProvider = Entity.Container.GetComponent<DatabaseConnectionProvider>().AssertNotNull();
+            databaseConnectionProvider = Entity.Container.GetComponent<IDatabaseConnectionProvider>().AssertNotNull();
         }
 
         public bool Exists(int userId, CharacterIndex characterIndex)

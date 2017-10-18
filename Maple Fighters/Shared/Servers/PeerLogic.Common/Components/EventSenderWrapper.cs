@@ -4,7 +4,7 @@ using ServerCommunicationInterfaces;
 
 namespace PeerLogic.Common.Components
 {
-    public class EventSenderWrapper : Component<IPeerEntity>
+    public class EventSenderWrapper : Component<IPeerEntity>, IEventSenderWrapper
     {
         private readonly IEventSender eventSender;
 

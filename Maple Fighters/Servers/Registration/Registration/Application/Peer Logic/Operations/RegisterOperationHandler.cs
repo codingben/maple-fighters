@@ -9,13 +9,13 @@ namespace Registration.Application.PeerLogic.Operations
 {
     internal class RegisterOperationHandler : IOperationRequestHandler<RegisterRequestParameters, RegisterResponseParameters>
     {
-        private readonly DatabaseUserCreator databaseUserCreator;
-        private readonly DatabaseUserEmailVerifier databaseUserEmailVerifier;
+        private readonly IDatabaseUserCreator databaseUserCreator;
+        private readonly IDatabaseUserEmailVerifier databaseUserEmailVerifier;
 
         public RegisterOperationHandler()
         {
-            databaseUserCreator = Server.Entity.Container.GetComponent<DatabaseUserCreator>().AssertNotNull();
-            databaseUserEmailVerifier = Server.Entity.Container.GetComponent<DatabaseUserEmailVerifier>().AssertNotNull();
+            databaseUserCreator = Server.Entity.Container.GetComponent<IDatabaseUserCreator>().AssertNotNull();
+            databaseUserEmailVerifier = Server.Entity.Container.GetComponent<IDatabaseUserEmailVerifier>().AssertNotNull();
         }
 
         public RegisterResponseParameters? Handle(MessageData<RegisterRequestParameters> messageData, ref MessageSendOptions sendOptions)

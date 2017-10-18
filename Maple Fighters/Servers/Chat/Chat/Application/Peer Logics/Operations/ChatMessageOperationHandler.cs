@@ -7,9 +7,9 @@ namespace Chat.Application.PeerLogic.Operations
 {
     internal class ChatMessageOperationHandler : IOperationRequestHandler<ChatMessageRequestParameters, EmptyParameters>
     {
-        private readonly ChatMessageEventSender eventSenderWrapper;
+        private readonly IChatMessageEventSender eventSenderWrapper;
 
-        public ChatMessageOperationHandler(ChatMessageEventSender eventSenderWrapper)
+        public ChatMessageOperationHandler(IChatMessageEventSender eventSenderWrapper)
         {
             this.eventSenderWrapper = eventSenderWrapper;
         }

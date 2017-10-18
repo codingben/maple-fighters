@@ -5,9 +5,9 @@ namespace Game.InterestManagement
 {
     public static class ExtensionMethods
     {
-        public static IEnumerable<InterestArea> ConvertRegionsFromMatrix(this IRegion[,] regions)
+        public static IEnumerable<ISceneObject> GetSubscribersFromAllPublishers(this IRegion[,] regions)
         {
-            return regions.Cast<IRegion>().SelectMany(region => region.GetAllSubscribersArea()).ToList();
+            return regions.Cast<IRegion>().SelectMany(region => region.GetAllSubscribers()).ToList();
         }
     }
 }

@@ -12,14 +12,14 @@ namespace Game.Application.PeerLogic.Operations
     {
         private readonly int userId;
         private readonly Action<Character> onCharacterSelected;
-        private readonly DatabaseCharactersGetter charactersGetter;
+        private readonly IDatabaseCharactersGetter charactersGetter;
 
         public ValidateCharacterOperationHandler(int userId, Action<Character> onCharacterSelected)
         {
             this.userId = userId;
             this.onCharacterSelected = onCharacterSelected;
 
-            charactersGetter = Server.Entity.Container.GetComponent<DatabaseCharactersGetter>().AssertNotNull();
+            charactersGetter = Server.Entity.Container.GetComponent<IDatabaseCharactersGetter>().AssertNotNull();
         }
 
         public ValidateCharacterResponseParameters? Handle(MessageData<ValidateCharacterRequestParameters> messageData, ref MessageSendOptions sendOptions)

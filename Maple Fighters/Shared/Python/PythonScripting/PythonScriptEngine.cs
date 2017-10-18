@@ -7,7 +7,7 @@ using ServerApplication.Common.ApplicationBase;
 
 namespace PythonScripting
 {
-    public class PythonScriptEngine : Component<IServerEntity>
+    public class PythonScriptEngine : Component<IServerEntity> , IPythonScriptEngine
     {
         private readonly ScriptEngine scriptEngine;
 

@@ -3,7 +3,7 @@ using ServerApplication.Common.ApplicationBase;
 
 namespace ServerApplication.Common.Components
 {
-    public class IdGenerator : Component<IServerEntity>
+    public class IdGenerator : Component<IServerEntity>, IIdGenerator
     {
         private uint id = uint.MinValue;
         private readonly object locker = new object();

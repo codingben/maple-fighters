@@ -47,7 +47,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ExtensionMethods.cs" />
+    <Compile Include="IInterestArea.cs" />
     <Compile Include="IPresenceSceneProvider.cs" />
+    <Compile Include="ITransform.cs" />
     <Compile Include="PresenceSceneProvider.cs" />
     <Compile Include="SceneObject.cs" />
     <Compile Include="ISceneObject.cs" />

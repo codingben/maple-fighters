@@ -9,7 +9,7 @@ using ServerCommunicationInterfaces;
 
 namespace ServerApplication.Common.Components
 {
-    public class PeerContainer : Component<IServerEntity>
+    public class PeerContainer : Component<IServerEntity>, IPeerContainer
     {
         private readonly Dictionary<int, IClientPeerWrapper<IClientPeer>> peerLogics = new Dictionary<int, IClientPeerWrapper<IClientPeer>>();
         private readonly object locker = new object();

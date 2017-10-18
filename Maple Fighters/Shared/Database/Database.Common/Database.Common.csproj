@@ -169,8 +169,15 @@
     <Compile Include="Access Token\DatabaseAccessTokenExistenceViaUserId.cs" />
     <Compile Include="Access Token\DatabaseAccessTokenProvider.cs" />
     <Compile Include="Access Token\DatabaseUserIdViaAccessTokenProvider.cs" />
+    <Compile Include="Access Token\IDatabaseAccessTokenCreator.cs" />
+    <Compile Include="Access Token\IDatabaseAccessTokenExistence.cs" />
+    <Compile Include="Access Token\IDatabaseAccessTokenExistenceViaUserId.cs" />
+    <Compile Include="Access Token\IDatabaseAccessTokenProvider.cs" />
+    <Compile Include="Access Token\IDatabaseUserIdViaAccessTokenProvider.cs" />
+    <Compile Include="Access Token\ILocalDatabaseAccessTokens.cs" />
     <Compile Include="Access Token\LocalDatabaseAccessTokens.cs" />
     <Compile Include="Components\DatabaseConnectionProvider.cs" />
+    <Compile Include="Components\IDatabaseConnectionProvider.cs" />
     <Compile Include="Configuration\DatabaseConnectionConfiguraiton.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tables Definition\AccessTokensTableDefinition.cs" />

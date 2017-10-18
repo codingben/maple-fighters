@@ -7,15 +7,15 @@ using ServiceStack.OrmLite;
 
 namespace Login.Application.Components
 {
-    internal class DatabaseUserPasswordVerifier : Component<IServerEntity>
+    internal class DatabaseUserPasswordVerifier : Component<IServerEntity>, IDatabaseUserPasswordVerifier
     {
-        private DatabaseConnectionProvider databaseConnectionProvider;
+        private IDatabaseConnectionProvider databaseConnectionProvider;
 
         protected override void OnAwake()
         {
             base.OnAwake();
 
-            databaseConnectionProvider = Entity.Container.GetComponent<DatabaseConnectionProvider>().AssertNotNull();
+            databaseConnectionProvider = Entity.Container.GetComponent<IDatabaseConnectionProvider>().AssertNotNull();
         }
 
         public bool Verify(string email, string password)

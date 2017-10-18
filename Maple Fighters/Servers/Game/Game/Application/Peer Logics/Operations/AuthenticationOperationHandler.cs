@@ -12,20 +12,20 @@ namespace Game.Application.PeerLogic.Operations
     {
         private readonly int peerId;
         private readonly Action<int> onAuthenticated;
-        private readonly LocalDatabaseAccessTokens databaseAccessTokens;
-        private readonly DatabaseAccessTokenExistence databaseAccessTokenExistence;
-        private readonly DatabaseAccessTokenProvider databaseAccessTokenProvider;
-        private readonly DatabaseUserIdViaAccessTokenProvider databaseUserIdViaAccessTokenProvider;
+        private readonly ILocalDatabaseAccessTokens databaseAccessTokens;
+        private readonly IDatabaseAccessTokenExistence databaseAccessTokenExistence;
+        private readonly IDatabaseAccessTokenProvider databaseAccessTokenProvider;
+        private readonly IDatabaseUserIdViaAccessTokenProvider databaseUserIdViaAccessTokenProvider;
 
         public AuthenticationOperationHandler(int peerId, Action<int> onAuthenticated)
         {
             this.peerId = peerId;
             this.onAuthenticated = onAuthenticated;
 
-            databaseAccessTokens = Server.Entity.Container.GetComponent<LocalDatabaseAccessTokens>().AssertNotNull();
-            databaseAccessTokenExistence = Server.Entity.Container.GetComponent<DatabaseAccessTokenExistence>().AssertNotNull();
-            databaseAccessTokenProvider = Server.Entity.Container.GetComponent<DatabaseAccessTokenProvider>().AssertNotNull();
-            databaseUserIdViaAccessTokenProvider = Server.Entity.Container.GetComponent<DatabaseUserIdViaAccessTokenProvider>().AssertNotNull();
+            databaseAccessTokens = Server.Entity.Container.GetComponent<ILocalDatabaseAccessTokens>().AssertNotNull();
+            databaseAccessTokenExistence = Server.Entity.Container.GetComponent<IDatabaseAccessTokenExistence>().AssertNotNull();
+            databaseAccessTokenProvider = Server.Entity.Container.GetComponent<IDatabaseAccessTokenProvider>().AssertNotNull();
+            databaseUserIdViaAccessTokenProvider = Server.Entity.Container.GetComponent<IDatabaseUserIdViaAccessTokenProvider>().AssertNotNull();
         }
 
         public AuthenticateResponseParameters? Handle(MessageData<AuthenticateRequestParameters> messageData, ref MessageSendOptions sendOptions)

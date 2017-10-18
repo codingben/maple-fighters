@@ -10,13 +10,13 @@ namespace Game.Application.PeerLogic.Operations
     internal class RemoveCharacterOperationHandler : IOperationRequestHandler<RemoveCharacterRequestParameters, RemoveCharacterResponseParameters>
     {
         private readonly int userId;
-        private readonly DatabaseCharacterRemover databaseCharacterRemover;
+        private readonly IDatabaseCharacterRemover databaseCharacterRemover;
 
         public RemoveCharacterOperationHandler(int userId)
         {
             this.userId = userId;
 
-            databaseCharacterRemover = Server.Entity.Container.GetComponent<DatabaseCharacterRemover>().AssertNotNull();
+            databaseCharacterRemover = Server.Entity.Container.GetComponent<IDatabaseCharacterRemover>().AssertNotNull();
         }
 
         public RemoveCharacterResponseParameters? Handle(MessageData<RemoveCharacterRequestParameters> messageData, ref MessageSendOptions sendOptions)

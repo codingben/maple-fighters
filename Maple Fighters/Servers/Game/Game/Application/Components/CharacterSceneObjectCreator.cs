@@ -9,16 +9,16 @@ using SceneObject = Game.InterestManagement.SceneObject;
 
 namespace Game.Application.Components
 {
-    internal class CharacterSceneObjectCreator : Component<IServerEntity>
+    internal class CharacterSceneObjectCreator : Component<IServerEntity>, ICharacterSceneObjectCreator
     {
         private const string SCENE_OBJECT_NAME = "Player";
-        private SceneContainer sceneContainer;
+        private ISceneContainer sceneContainer;
 
         protected override void OnAwake()
         {
             base.OnAwake();
 
-            sceneContainer = Entity.Container.GetComponent<SceneContainer>().AssertNotNull();
+            sceneContainer = Entity.Container.GetComponent<ISceneContainer>().AssertNotNull();
         }
 
         public ISceneObject Create(Character character)
@@ -26,7 +26,7 @@ namespace Game.Application.Components
             const Maps MAP = Maps.Map_1;
             var position = new Vector2(18, -6);
 
-            var scene = sceneContainer.GetGameSceneWrapper(MAP).GetScene().AssertNotNull();
+            var scene = sceneContainer.GetSceneWrapper(MAP).GetScene().AssertNotNull();
             var sceneObject = scene.AddSceneObject(new SceneObject(SCENE_OBJECT_NAME, position)).AssertNotNull();
             sceneObject.Container.AddComponent(new InterestArea(position, scene.RegionSize));
             sceneObject.Container.AddComponent(new CharacterInformationProvider(character));

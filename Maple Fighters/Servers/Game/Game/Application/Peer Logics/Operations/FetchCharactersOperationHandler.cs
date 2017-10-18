@@ -11,13 +11,13 @@ namespace Game.Application.PeerLogic.Operations
     internal class FetchCharactersOperationHandler : IOperationRequestHandler<EmptyParameters, FetchCharactersResponseParameters>
     {
         private readonly int userId;
-        private readonly DatabaseCharactersGetter databaseCharactersGetter;
+        private readonly IDatabaseCharactersGetter databaseCharactersGetter;
 
         public FetchCharactersOperationHandler(int userId)
         {
             this.userId = userId;
 
-            databaseCharactersGetter = Server.Entity.Container.GetComponent<DatabaseCharactersGetter>().AssertNotNull();
+            databaseCharactersGetter = Server.Entity.Container.GetComponent<IDatabaseCharactersGetter>().AssertNotNull();
         }
 
         public FetchCharactersResponseParameters? Handle(MessageData<EmptyParameters> messageData, ref MessageSendOptions sendOptions)

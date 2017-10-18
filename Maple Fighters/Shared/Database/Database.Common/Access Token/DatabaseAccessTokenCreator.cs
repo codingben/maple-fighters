@@ -8,15 +8,15 @@ using ServiceStack.OrmLite;
 
 namespace Database.Common.AccessToken
 {
-    public class DatabaseAccessTokenCreator : Component<IServerEntity>
+    public class DatabaseAccessTokenCreator : Component<IServerEntity>, IDatabaseAccessTokenCreator
     {
-        private DatabaseConnectionProvider databaseConnectionProvider;
+        private IDatabaseConnectionProvider databaseConnectionProvider;
 
         protected override void OnAwake()
         {
             base.OnAwake();
 
-            databaseConnectionProvider = Entity.Container.GetComponent<DatabaseConnectionProvider>().AssertNotNull();
+            databaseConnectionProvider = Entity.Container.GetComponent<IDatabaseConnectionProvider>().AssertNotNull();
         }
 
         public string Create(int userId)
@@ -34,6 +34,6 @@ namespace Database.Common.AccessToken
             }
         }
 
-        public static string GenerateAccessToken => Guid.NewGuid().ToString("N");
+        private static string GenerateAccessToken => Guid.NewGuid().ToString("N");
     }
 }

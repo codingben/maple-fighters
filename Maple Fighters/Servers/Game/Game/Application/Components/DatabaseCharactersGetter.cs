@@ -10,16 +10,16 @@ using Shared.Game.Common;
 
 namespace Game.Application.Components
 {
-    internal class DatabaseCharactersGetter : Component<IServerEntity>
+    internal class DatabaseCharactersGetter : Component<IServerEntity>, IDatabaseCharactersGetter
     {
         private const int MAXIMUM_CHARACTERS = 3;
-        private DatabaseConnectionProvider databaseConnectionProvider;
+        private IDatabaseConnectionProvider databaseConnectionProvider;
 
         protected override void OnAwake()
         {
             base.OnAwake();
 
-            databaseConnectionProvider = Entity.Container.GetComponent<DatabaseConnectionProvider>().AssertNotNull();
+            databaseConnectionProvider = Entity.Container.GetComponent<IDatabaseConnectionProvider>().AssertNotNull();
         }
 
         public IEnumerable<Character> GetCharacters(int userId)

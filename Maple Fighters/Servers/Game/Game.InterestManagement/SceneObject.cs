@@ -18,7 +18,7 @@ namespace Game.InterestManagement
         {
             Name = name;
 
-            var idGenerator = Server.Entity.Container.GetComponent<IdGenerator>().AssertNotNull();
+            var idGenerator = Server.Entity.Container.GetComponent<IIdGenerator>().AssertNotNull();
             Id = idGenerator.GenerateId();
 
             Container = new Container<ISceneObject>(this);

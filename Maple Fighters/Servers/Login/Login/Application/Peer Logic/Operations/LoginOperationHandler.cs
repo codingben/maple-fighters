@@ -10,21 +10,21 @@ namespace Login.Application.PeerLogic.Operations
 {
     internal class LoginOperationHandler : IOperationRequestHandler<LoginRequestParameters, LoginResponseParameters>
     {
-        private readonly DatabaseUserVerifier databaseUserVerifier;
-        private readonly DatabaseUserPasswordVerifier databaseUserPasswordVerifier;
-        private readonly DatabaseUserIdProvider databaseUserIdProvider;
-        private readonly DatabaseAccessTokenCreator databaseAccessTokenCreator;
-        private readonly DatabaseAccessTokenExistenceViaUserId databaseAccessTokenExistenceViaUserId;
-        private readonly DatabaseAccessTokenProvider databaseAccessTokenProvider;
+        private readonly IDatabaseUserVerifier databaseUserVerifier;
+        private readonly IDatabaseUserPasswordVerifier databaseUserPasswordVerifier;
+        private readonly IDatabaseUserIdProvider databaseUserIdProvider;
+        private readonly IDatabaseAccessTokenCreator databaseAccessTokenCreator;
+        private readonly IDatabaseAccessTokenExistenceViaUserId databaseAccessTokenExistenceViaUserId;
+        private readonly IDatabaseAccessTokenProvider databaseAccessTokenProvider;
 
         public LoginOperationHandler()
         {
-            databaseUserVerifier = Server.Entity.Container.GetComponent<DatabaseUserVerifier>().AssertNotNull();
-            databaseUserPasswordVerifier = Server.Entity.Container.GetComponent<DatabaseUserPasswordVerifier>().AssertNotNull();
-            databaseUserIdProvider = Server.Entity.Container.GetComponent<DatabaseUserIdProvider>().AssertNotNull();
-            databaseAccessTokenCreator = Server.Entity.Container.GetComponent<DatabaseAccessTokenCreator>().AssertNotNull();
-            databaseAccessTokenExistenceViaUserId = Server.Entity.Container.GetComponent<DatabaseAccessTokenExistenceViaUserId>().AssertNotNull();
-            databaseAccessTokenProvider = Server.Entity.Container.GetComponent<DatabaseAccessTokenProvider>().AssertNotNull();
+            databaseUserVerifier = Server.Entity.Container.GetComponent<IDatabaseUserVerifier>().AssertNotNull();
+            databaseUserPasswordVerifier = Server.Entity.Container.GetComponent<IDatabaseUserPasswordVerifier>().AssertNotNull();
+            databaseUserIdProvider = Server.Entity.Container.GetComponent<IDatabaseUserIdProvider>().AssertNotNull();
+            databaseAccessTokenCreator = Server.Entity.Container.GetComponent<IDatabaseAccessTokenCreator>().AssertNotNull();
+            databaseAccessTokenExistenceViaUserId = Server.Entity.Container.GetComponent<IDatabaseAccessTokenExistenceViaUserId>().AssertNotNull();
+            databaseAccessTokenProvider = Server.Entity.Container.GetComponent<IDatabaseAccessTokenProvider>().AssertNotNull();
         }
 
         public LoginResponseParameters? Handle(MessageData<LoginRequestParameters> messageData, ref MessageSendOptions sendOptions)

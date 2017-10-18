@@ -7,15 +7,15 @@ using ServiceStack.OrmLite;
 
 namespace Registration.Application.Components
 {
-    internal class DatabaseUserCreator : Component<IServerEntity>
+    internal class DatabaseUserCreator : Component<IServerEntity>, IDatabaseUserCreator
     {
-        private DatabaseConnectionProvider databaseConnectionProvider;
+        private IDatabaseConnectionProvider databaseConnectionProvider;
 
         protected override void OnAwake()
         {
             base.OnAwake();
 
-            databaseConnectionProvider = Entity.Container.GetComponent<DatabaseConnectionProvider>().AssertNotNull();
+            databaseConnectionProvider = Entity.Container.GetComponent<IDatabaseConnectionProvider>().AssertNotNull();
         }
 
         public void Create(string email, string password, string firstName, string lastName)

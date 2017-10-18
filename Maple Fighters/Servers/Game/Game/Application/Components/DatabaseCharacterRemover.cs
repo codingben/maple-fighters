@@ -7,15 +7,15 @@ using ServiceStack.OrmLite;
 
 namespace Game.Application.Components
 {
-    internal class DatabaseCharacterRemover : Component<IServerEntity>
+    internal class DatabaseCharacterRemover : Component<IServerEntity>, IDatabaseCharacterRemover
     {
-        private DatabaseConnectionProvider databaseConnectionProvider;
+        private IDatabaseConnectionProvider databaseConnectionProvider;
 
         protected override void OnAwake()
         {
             base.OnAwake();
 
-            databaseConnectionProvider = Entity.Container.GetComponent<DatabaseConnectionProvider>().AssertNotNull();
+            databaseConnectionProvider = Entity.Container.GetComponent<IDatabaseConnectionProvider>().AssertNotNull();
         }
 
         public bool Remove(int userId, int characterIndex)

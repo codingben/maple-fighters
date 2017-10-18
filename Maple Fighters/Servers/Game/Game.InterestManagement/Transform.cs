@@ -5,13 +5,13 @@ using Shared.Game.Common;
 
 namespace Game.InterestManagement
 {
-    public class Transform : Component<ISceneObject>
+    public class Transform : Component<ISceneObject>, ITransform
     {
         public Vector2 Position { get; private set; } = Vector2.Zero;
         private Vector2 lastPosition = Vector2.Zero;
 
-        public Action<Vector2> PositionChanged;
-        public Action<Vector2, Directions> PositionAndDirectionChanged;
+        public event Action<Vector2> PositionChanged;
+        public event Action<Vector2, Directions> PositionAndDirectionChanged;
 
         public Transform()
         {
@@ -22,6 +22,14 @@ namespace Game.InterestManagement
         {
             Position = startPosition;
             lastPosition = startPosition;
+        }
+
+        protected override void OnDestroy()
+        {
+            base.OnDestroy();
+
+            PositionChanged = null;
+            PositionAndDirectionChanged = null;
         }
 
         public void SetPosition(Vector2 position)

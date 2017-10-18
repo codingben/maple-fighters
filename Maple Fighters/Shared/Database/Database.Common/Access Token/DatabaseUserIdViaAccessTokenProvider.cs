@@ -7,15 +7,15 @@ using ServiceStack.OrmLite;
 
 namespace Database.Common.AccessToken
 {
-    public class DatabaseUserIdViaAccessTokenProvider : Component<IServerEntity>
+    public class DatabaseUserIdViaAccessTokenProvider : Component<IServerEntity>, IDatabaseUserIdViaAccessTokenProvider
     {
-        private DatabaseConnectionProvider databaseConnectionProvider;
+        private IDatabaseConnectionProvider databaseConnectionProvider;
 
         protected override void OnAwake()
         {
             base.OnAwake();
 
-            databaseConnectionProvider = Entity.Container.GetComponent<DatabaseConnectionProvider>().AssertNotNull();
+            databaseConnectionProvider = Entity.Container.GetComponent<IDatabaseConnectionProvider>().AssertNotNull();
         }
 
         public int GetUserId(string accessToken)

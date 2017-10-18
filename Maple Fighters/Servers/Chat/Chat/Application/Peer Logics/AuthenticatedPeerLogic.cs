@@ -20,7 +20,7 @@ namespace Chat.Application.PeerLogics
 
         private void AddHandlerForChatMessageOperation()
         {
-            var eventSenderWrapper = Entity.Container.GetComponent<ChatMessageEventSender>().AssertNotNull();
+            var eventSenderWrapper = Entity.Container.GetComponent<IChatMessageEventSender>().AssertNotNull();
             OperationRequestHandlerRegister.SetHandler(ChatOperations.ChatMessage, new ChatMessageOperationHandler(eventSenderWrapper));
         }
     }

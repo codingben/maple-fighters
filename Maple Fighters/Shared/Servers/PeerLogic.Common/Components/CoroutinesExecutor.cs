@@ -8,9 +8,9 @@ namespace PeerLogic.Common.Components
     {
         public int Count => executer.Count;
 
-        private readonly ICoroutinesExecutor executer;
+        private readonly CommonTools.Coroutines.ICoroutinesExecutor executer;
 
-        public CoroutinesExecutor(ICoroutinesExecutor executer)
+        public CoroutinesExecutor(CommonTools.Coroutines.ICoroutinesExecutor executer)
         {
             this.executer = executer;
         }

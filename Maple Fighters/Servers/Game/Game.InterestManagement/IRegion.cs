@@ -7,12 +7,12 @@ namespace Game.InterestManagement
     {
         Rectangle PublisherArea { get; }
 
-        void AddSubscription(InterestArea subscriberArea);
-        void RemoveSubscription(int subscriberId);
-        void RemoveSubscriptionForAllSubscribers(int subscriberId);
+        void AddSubscription(ISceneObject sceneObject);
+        void RemoveSubscription(int sceneObjectId);
+        void RemoveSubscriptionForAllSubscribers(int sceneObjectId);
 
-        bool HasSubscription(int subscriberId);
+        bool HasSubscription(int sceneObjectId);
 
-        IEnumerable<InterestArea> GetAllSubscribersArea();
+        IEnumerable<ISceneObject> GetAllSubscribers();
     }
 }

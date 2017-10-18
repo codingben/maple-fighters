@@ -10,20 +10,20 @@ namespace Game.Application.PeerLogic.Operations
 {
     internal class ChangeSceneOperationHandler : IOperationRequestHandler<ChangeSceneRequestParameters, EmptyParameters>
     {
-        private readonly CharacterSceneObjectGetter sceneObjectGetter;
-        private readonly SceneContainer sceneContainer;
+        private readonly ICharacterSceneObjectGetter sceneObjectGetter;
+        private readonly ISceneContainer sceneContainer;
 
-        public ChangeSceneOperationHandler(CharacterSceneObjectGetter sceneObjectGetter)
+        public ChangeSceneOperationHandler(ICharacterSceneObjectGetter sceneObjectGetter)
         {
             this.sceneObjectGetter = sceneObjectGetter;
 
-            sceneContainer = Server.Entity.Container.GetComponent<SceneContainer>().AssertNotNull();
+            sceneContainer = Server.Entity.Container.GetComponent<ISceneContainer>().AssertNotNull();
         }
 
         public EmptyParameters? Handle(MessageData<ChangeSceneRequestParameters> messageData, ref MessageSendOptions sendOptions)
         {
             var sceneId = messageData.Parameters.Map;
-            var scene = sceneContainer.GetGameSceneWrapper(sceneId).AssertNotNull();
+            var scene = sceneContainer.GetSceneWrapper(sceneId).AssertNotNull();
 
             var sceneObject = sceneObjectGetter.GetSceneObject();
             sceneObject.Scene.RemoveSceneObject(sceneObject.Id);

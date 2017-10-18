@@ -7,15 +7,15 @@ using ServiceStack.OrmLite;
 
 namespace Login.Application.Components
 {
-    internal class DatabaseUserIdProvider : Component<IServerEntity>
+    internal class DatabaseUserIdProvider : Component<IServerEntity>, IDatabaseUserIdProvider
     {
-        private DatabaseConnectionProvider databaseConnectionProvider;
+        private IDatabaseConnectionProvider databaseConnectionProvider;
 
         protected override void OnAwake()
         {
             base.OnAwake();
 
-            databaseConnectionProvider = Entity.Container.GetComponent<DatabaseConnectionProvider>().AssertNotNull();
+            databaseConnectionProvider = Entity.Container.GetComponent<IDatabaseConnectionProvider>().AssertNotNull();
         }
 
         public int GetUserId(string email)

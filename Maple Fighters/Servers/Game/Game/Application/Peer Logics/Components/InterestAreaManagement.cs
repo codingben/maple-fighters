@@ -14,48 +14,48 @@ using SceneObject = Shared.Game.Common.SceneObject;
 
 namespace Game.Application.PeerLogic.Components
 {
-    internal class InterestAreaManagement : Component<IPeerEntity>
+    internal class InterestAreaManagement : Component<IPeerEntity>, IInterestAreaManagement
     {
-        private PeerContainer peerContainer;
-        private MinimalPeerGetter peerGetter;
-        private EventSenderWrapper eventSender;
-        private CharacterSceneObjectGetter sceneObjectGetter;
+        private IPeerContainer peerContainer;
+        private IMinimalPeerGetter peerGetter;
+        private IEventSenderWrapper eventSender;
+        private ICharacterSceneObjectGetter sceneObjectGetter;
 
         protected override void OnAwake()
         {
             base.OnAwake();
 
-            peerContainer = Server.Entity.Container.GetComponent<PeerContainer>().AssertNotNull();
+            peerContainer = Server.Entity.Container.GetComponent<IPeerContainer>().AssertNotNull();
 
-            eventSender = Entity.Container.GetComponent<EventSenderWrapper>().AssertNotNull();
-            sceneObjectGetter = Entity.Container.GetComponent<CharacterSceneObjectGetter>().AssertNotNull();
-            peerGetter = Entity.Container.GetComponent<MinimalPeerGetter>().AssertNotNull();
+            eventSender = Entity.Container.GetComponent<IEventSenderWrapper>().AssertNotNull();
+            sceneObjectGetter = Entity.Container.GetComponent<ICharacterSceneObjectGetter>().AssertNotNull();
+            peerGetter = Entity.Container.GetComponent<IMinimalPeerGetter>().AssertNotNull();
 
             SubscribeToInterestAreaEvents();
         }
 
         private void SubscribeToInterestAreaEvents()
         {
-            var interestArea = sceneObjectGetter.GetSceneObject().Container.GetComponent<InterestArea>().AssertNotNull();
-            interestArea.SubscriberAdded = OnSubscriberAdded;
-            interestArea.SubscriberRemoved = OnSubscriberRemoved;
-            interestArea.SubscribersAdded = OnSubscribersAdded;
-            interestArea.SubscribersRemoved = OnSubscribersRemoved;
-            interestArea.DetectOverlapsWithRegionsAction.Invoke();
+            var interestArea = sceneObjectGetter.GetSceneObject().Container.GetComponent<IInterestArea>().AssertNotNull();
+            interestArea.SubscriberAdded += OnSubscriberAdded;
+            interestArea.SubscriberRemoved += OnSubscriberRemoved;
+            interestArea.SubscribersAdded += OnSubscribersAdded;
+            interestArea.SubscribersRemoved += OnSubscribersRemoved;
+            interestArea.DetectOverlapsWithRegions();
         }
 
-        private void OnSubscriberAdded(InterestArea subscriber)
+        private void OnSubscriberAdded(ISceneObject sceneObject)
         {
             if (!peerGetter.GetPeer().IsConnected)
             {
                 return;
             }
 
-            var transform = subscriber.Entity.Container.GetComponent<Transform>().AssertNotNull();
-            var sceneObject = new SceneObject(subscriber.Entity.Id, subscriber.Entity.Name, transform.Position.X, transform.Position.Y);
+            var transform = sceneObject.Container.GetComponent<ITransform>().AssertNotNull();
+            var sharedSceneObject = new SceneObject(sceneObject.Id, sceneObject.Name, transform.Position.X, transform.Position.Y);
 
-            var characterInformation = GetCharacterInformation(subscriber.Entity);
-            var parameters = new SceneObjectAddedEventParameters(sceneObject, characterInformation.GetValueOrDefault(), characterInformation.HasValue);
+            var characterInformation = GetCharacterInformation(sceneObject);
+            var parameters = new SceneObjectAddedEventParameters(sharedSceneObject, characterInformation.GetValueOrDefault(), characterInformation.HasValue);
             eventSender.Send((byte)GameEvents.SceneObjectAdded, parameters, MessageSendOptions.DefaultReliable());
         }
 
@@ -70,39 +70,35 @@ namespace Game.Application.PeerLogic.Components
             eventSender.Send((byte)GameEvents.SceneObjectRemoved, parameters, MessageSendOptions.DefaultReliable());
         }
 
-        private void OnSubscribersAdded(IReadOnlyList<InterestArea> subscribers)
+        private void OnSubscribersAdded(IReadOnlyList<ISceneObject> sceneObjects)
         {
             if (!peerGetter.GetPeer().IsConnected)
             {
                 return;
             }
 
-            var sceneObjects = new SceneObject[subscribers.Count];
-            for (var i = 0; i < sceneObjects.Length; i++)
+            var sharedSceneObjects = new SceneObject[sceneObjects.Count];
+            for (var i = 0; i < sceneObjects.Count; i++)
             {
-                var transform = subscribers[i].Entity.Container.GetComponent<Transform>().AssertNotNull();
+                sharedSceneObjects[i].Id = sceneObjects[i].Id;
+                sharedSceneObjects[i].Name = sceneObjects[i].Name;
 
-                sceneObjects[i].Id = subscribers[i].Entity.Id;
-                sceneObjects[i].Name = subscribers[i].Entity.Name;
-                sceneObjects[i].X = transform.Position.X;
-                sceneObjects[i].Y = transform.Position.Y;
+                var transform = sceneObjects[i].Container.GetComponent<ITransform>().AssertNotNull();
+
+                sharedSceneObjects[i].X = transform.Position.X;
+                sharedSceneObjects[i].Y = transform.Position.Y;
             }
 
-            eventSender.Send((byte)GameEvents.SceneObjectsAdded, new SceneObjectsAddedEventParameters(sceneObjects, GetCharacterInformations(subscribers)), 
+            eventSender.Send((byte)GameEvents.SceneObjectsAdded, 
+                new SceneObjectsAddedEventParameters(sharedSceneObjects, GetCharacterInformations(sceneObjects)), 
                 MessageSendOptions.DefaultReliable());
         }
 
-        private void OnSubscribersRemoved(IReadOnlyList<int> subscribersId)
+        private void OnSubscribersRemoved(int[] sceneObjectsId)
         {
             if (!peerGetter.GetPeer().IsConnected)
             {
                 return;
-            }
-
-            var sceneObjectsId = new int[subscribersId.Count];
-            for (var i = 0; i < sceneObjectsId.Length; i++)
-            {
-                sceneObjectsId[i] = subscribersId[i];
             }
 
             eventSender.Send((byte)GameEvents.SceneObjectsRemoved, new SceneObjectsRemovedEventParameters(sceneObjectsId), 
@@ -119,7 +115,7 @@ namespace Game.Application.PeerLogic.Components
 
             foreach (var subscriber in GetSubscribersFromPublishers)
             {
-                var peerId = subscriber.Entity.Container.GetComponent<PeerIdGetter>();
+                var peerId = subscriber.Container.GetComponent<IPeerIdGetter>();
                 if (peerId == null)
                 {
                     continue;
@@ -131,19 +127,19 @@ namespace Game.Application.PeerLogic.Components
                     continue;
                 }
 
-                var eventSender = peerWrapper.PeerLogic.Entity.Container.GetComponent<EventSenderWrapper>().AssertNotNull();
+                var eventSender = peerWrapper.PeerLogic.Entity.Container.GetComponent<IEventSenderWrapper>().AssertNotNull();
                 eventSender.Send(code, parameters, messageSendOptions);
             }
         }
 
-        private IEnumerable<InterestArea> GetSubscribersFromPublishers
+        private IEnumerable<ISceneObject> GetSubscribersFromPublishers
         {
             get
             {
-                var subscribers = new List<InterestArea>();
+                var subscribers = new List<ISceneObject>();
                 var sceneObject = sceneObjectGetter.GetSceneObject();
 
-                var interestArea = sceneObject.Container.GetComponent<InterestArea>().AssertNotNull();
+                var interestArea = sceneObject.Container.GetComponent<IInterestArea>().AssertNotNull();
                 if (interestArea == null)
                 {
                     return subscribers.ToArray();
@@ -151,7 +147,7 @@ namespace Game.Application.PeerLogic.Components
 
                 foreach (var publisher in interestArea.GetPublishers())
                 {
-                    subscribers.AddRange(publisher.GetAllSubscribersArea().Where(subscriber => subscriber.Entity.Id != sceneObject.Id));
+                    subscribers.AddRange(publisher.GetAllSubscribers().Where(subscriber => subscriber.Id != sceneObject.Id));
                 }
                 return subscribers.ToArray();
             }
@@ -159,29 +155,27 @@ namespace Game.Application.PeerLogic.Components
 
         private CharacterInformation? GetCharacterInformation(ISceneObject sceneObject)
         {
-            var characterInformationProvider = sceneObject.Container.GetComponent<CharacterInformationProvider>();
+            var characterInformationProvider = sceneObject.Container.GetComponent<ICharacterInformationProvider>();
             if (characterInformationProvider == null)
             {
                 return null;
             }
-            return new CharacterInformation(sceneObject.Id, 
-                characterInformationProvider.GetCharacterName(), characterInformationProvider.GetCharacterClass());
+            return new CharacterInformation(sceneObject.Id, characterInformationProvider.GetCharacterName(), characterInformationProvider.GetCharacterClass());
         }
 
-        private CharacterInformation[] GetCharacterInformations(IEnumerable<InterestArea> subscribers)
+        private CharacterInformation[] GetCharacterInformations(IEnumerable<ISceneObject> sceneObjects)
         {
             var characterInformations = new List<CharacterInformation>();
 
-            foreach (var sceneObject in subscribers)
+            foreach (var sceneObject in sceneObjects)
             {
-                var characterInformationProvider = sceneObject.Entity.Container.GetComponent<CharacterInformationProvider>();
+                var characterInformationProvider = sceneObject.Container.GetComponent<ICharacterInformationProvider>();
                 if (characterInformationProvider == null)
                 {
                     continue;
                 }
 
-                characterInformations.Add(new CharacterInformation(sceneObject.Entity.Id,
-                    characterInformationProvider.GetCharacterName(), characterInformationProvider.GetCharacterClass()));
+                characterInformations.Add(new CharacterInformation(sceneObject.Id, characterInformationProvider.GetCharacterName(), characterInformationProvider.GetCharacterClass()));
             }
             return characterInformations.ToArray();
         }

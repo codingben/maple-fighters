@@ -9,15 +9,15 @@ using ServerApplication.Common.Components;
 
 namespace Chat.Application.PeerLogic.Components
 {
-    internal class ChatMessageEventSender : Component<IPeerEntity>
+    internal class ChatMessageEventSender : Component<IPeerEntity>, IChatMessageEventSender
     {
-        private PeerContainer peerContainer;
+        private IPeerContainer peerContainer;
 
         protected override void OnAwake()
         {
             base.OnAwake();
 
-            peerContainer = Server.Entity.Container.GetComponent<PeerContainer>().AssertNotNull();
+            peerContainer = Server.Entity.Container.GetComponent<IPeerContainer>().AssertNotNull();
         }
 
         public void SendChatMessage(string message)
@@ -29,7 +29,7 @@ namespace Chat.Application.PeerLogic.Components
                     continue;
                 }
 
-                var eventSenderWrapper = peerWrapper.PeerLogic.Entity.Container.GetComponent<EventSenderWrapper>().AssertNotNull();
+                var eventSenderWrapper = peerWrapper.PeerLogic.Entity.Container.GetComponent<IEventSenderWrapper>().AssertNotNull();
                 var parameters = new ChatMessageEventParameters(message);
                 eventSenderWrapper.Send((byte)ChatEvents.ChatMessage, parameters, MessageSendOptions.DefaultReliable());
             }

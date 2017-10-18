@@ -10,12 +10,12 @@ using SceneObject = Game.InterestManagement.SceneObject;
 
 namespace Game.Application.Components
 {
-    public class GameSceneWrapper
+    public class GameSceneWrapper : IGameSceneWrapper
     {
         private readonly Maps map;
         private readonly IScene scene;
 
-        private readonly PythonScriptEngine pythonScriptEngine;
+        private readonly IPythonScriptEngine pythonScriptEngine;
         private readonly ScriptScope scriptScope;
 
         public GameSceneWrapper(Maps map, IScene scene)
@@ -23,7 +23,7 @@ namespace Game.Application.Components
             this.map = map;
             this.scene = scene;
 
-            pythonScriptEngine = Server.Entity.Container.GetComponent<PythonScriptEngine>().AssertNotNull();
+            pythonScriptEngine = Server.Entity.Container.GetComponent<IPythonScriptEngine>().AssertNotNull();
 
             scriptScope = pythonScriptEngine.GetScriptEngine().CreateScope();
             scriptScope.SetVariable("scene", this);
@@ -48,7 +48,7 @@ namespace Game.Application.Components
             scene.AddSceneObject(sceneObject);
 
             var interestArea = sceneObject.Container.AddComponent(new InterestArea(position, interestAreaSize));
-            interestArea.DetectOverlapsWithRegionsAction.Invoke();
+            interestArea.DetectOverlapsWithRegions();
         }
 
         public IScene GetScene()

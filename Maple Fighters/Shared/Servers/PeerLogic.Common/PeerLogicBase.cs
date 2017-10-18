@@ -1,6 +1,5 @@
 ﻿using System;
 using CommonCommunicationInterfaces;
-using CommonTools.Coroutines;
 using CommonTools.Log;
 using PeerLogic.Common.Components;
 using ServerCommunicationHelper;
@@ -27,7 +26,7 @@ namespace PeerLogic.Common
 
             AddCommonComponents();
 
-            var coroutinesExecutor = Entity.Container.GetComponent<CoroutinesExecutor>() as ICoroutinesExecutor;
+            var coroutinesExecutor = Entity.Container.GetComponent<ICoroutinesExecutor>().AssertNotNull();
 
             OperationRequestHandlerRegister = new OperationRequestsHandler<TOperationCode>(PeerWrapper.Peer.OperationRequestNotifier, 
                 PeerWrapper.Peer.OperationResponseSender, false, false, coroutinesExecutor);

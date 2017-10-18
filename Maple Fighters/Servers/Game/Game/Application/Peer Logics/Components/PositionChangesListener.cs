@@ -10,22 +10,22 @@ namespace Game.Application.PeerLogic.Components
 {
     internal class PositionChangesListener : Component<IPeerEntity>
     {
-        private CharacterSceneObjectGetter sceneObjectGetter;
-        private InterestAreaManagement interestAreaManagement;
+        private ICharacterSceneObjectGetter sceneObjectGetter;
+        private IInterestAreaManagement interestAreaManagement;
 
         protected override void OnAwake()
         {
             base.OnAwake();
 
-            sceneObjectGetter = Entity.Container.GetComponent<CharacterSceneObjectGetter>().AssertNotNull();
-            interestAreaManagement = Entity.Container.GetComponent<InterestAreaManagement>().AssertNotNull();
+            sceneObjectGetter = Entity.Container.GetComponent<ICharacterSceneObjectGetter>().AssertNotNull();
+            interestAreaManagement = Entity.Container.GetComponent<IInterestAreaManagement>().AssertNotNull();
 
             SubscribeToPositionChangedEvent();
         }
 
         private void SubscribeToPositionChangedEvent()
         {
-            var transform = sceneObjectGetter.GetSceneObject().Container.GetComponent<Transform>().AssertNotNull();
+            var transform = sceneObjectGetter.GetSceneObject().Container.GetComponent<ITransform>().AssertNotNull();
             transform.PositionAndDirectionChanged += SendNewPosition;
         }
 

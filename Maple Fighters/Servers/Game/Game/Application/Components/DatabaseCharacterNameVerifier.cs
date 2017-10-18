@@ -7,15 +7,15 @@ using ServiceStack.OrmLite;
 
 namespace Game.Application.Components
 {
-    internal class DatabaseCharacterNameVerifier : Component<IServerEntity>
+    internal class DatabaseCharacterNameVerifier : Component<IServerEntity>, IDatabaseCharacterNameVerifier
     {
-        private DatabaseConnectionProvider databaseConnectionProvider;
+        private IDatabaseConnectionProvider databaseConnectionProvider;
 
         protected override void OnAwake()
         {
             base.OnAwake();
 
-            databaseConnectionProvider = Entity.Container.GetComponent<DatabaseConnectionProvider>().AssertNotNull();
+            databaseConnectionProvider = Entity.Container.GetComponent<IDatabaseConnectionProvider>().AssertNotNull();
         }
 
         public bool Verify(string name)

@@ -6,12 +6,12 @@ namespace ComponentModel.Common
         where TOwner : IEntity
     {
         T AddComponent<T>(T component)
-            where T : Component<TOwner>, IComponent;
+            where T : Component<TOwner>;
 
         void RemoveComponent<T>()
-            where T : IComponent;
+            where T : Component<TOwner>;
 
         T GetComponent<T>()
-            where T : IComponent;
+            where T : IExposableComponent;
     }
 }

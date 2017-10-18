@@ -7,15 +7,15 @@ using ServiceStack.OrmLite;
 
 namespace Login.Application.Components
 {
-    internal class DatabaseUserVerifier : Component<IServerEntity>
+    internal class DatabaseUserVerifier : Component<IServerEntity>, IDatabaseUserVerifier
     {
-        private DatabaseConnectionProvider databaseConnectionProvider;
+        private IDatabaseConnectionProvider databaseConnectionProvider;
 
         protected override void OnAwake()
         {
             base.OnAwake();
 
-            databaseConnectionProvider = Entity.Container.GetComponent<DatabaseConnectionProvider>().AssertNotNull();
+            databaseConnectionProvider = Entity.Container.GetComponent<IDatabaseConnectionProvider>().AssertNotNull();
         }
 
         public bool IsExists(string email)

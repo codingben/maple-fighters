@@ -11,18 +11,18 @@ using Shared.Game.Common;
 
 namespace Game.Application.Components
 {
-    public class SceneContainer : Component<IServerEntity>
+    public class SceneContainer : Component<IServerEntity>, ISceneContainer
     {
-        private readonly Dictionary<Maps, GameSceneWrapper> scenes = new Dictionary<Maps, GameSceneWrapper>();
+        private readonly Dictionary<Maps, IGameSceneWrapper> scenes = new Dictionary<Maps, IGameSceneWrapper>();
 
-        private PythonScriptEngine pythonScriptEngine;
+        private IPythonScriptEngine pythonScriptEngine;
         private ScriptScope scriptScope;
 
         protected override void OnAwake()
         {
             base.OnAwake();
 
-            pythonScriptEngine = Entity.Container.GetComponent<PythonScriptEngine>().AssertNotNull();
+            pythonScriptEngine = Entity.Container.GetComponent<IPythonScriptEngine>().AssertNotNull();
 
             scriptScope = pythonScriptEngine.GetScriptEngine().CreateScope();
             scriptScope.SetVariable("sceneContainer", this);
@@ -46,7 +46,7 @@ namespace Game.Application.Components
             scenes.Add((Maps)map, new GameSceneWrapper((Maps)map, new Scene(sceneSize, regionSize)));
         }
 
-        public GameSceneWrapper GetGameSceneWrapper(Maps map)
+        public IGameSceneWrapper GetSceneWrapper(Maps map)
         {
             if (scenes.TryGetValue(map, out var scene))
             {

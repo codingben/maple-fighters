@@ -12,16 +12,16 @@ namespace Chat.Application.PeerLogic.Operations
     {
         private readonly int peerId;
         private readonly Action onAuthenticated;
-        private readonly LocalDatabaseAccessTokens databaseAccessTokens;
-        private readonly DatabaseAccessTokenExistence databaseAccessTokenExistence;
+        private readonly ILocalDatabaseAccessTokens databaseAccessTokens;
+        private readonly IDatabaseAccessTokenExistence databaseAccessTokenExistence;
 
         public AuthenticationOperationHandler(int peerId, Action onAuthenticated)
         {
             this.peerId = peerId;
             this.onAuthenticated = onAuthenticated;
 
-            databaseAccessTokens = Server.Entity.Container.GetComponent<LocalDatabaseAccessTokens>().AssertNotNull();
-            databaseAccessTokenExistence = Server.Entity.Container.GetComponent<DatabaseAccessTokenExistence>().AssertNotNull();
+            databaseAccessTokens = Server.Entity.Container.GetComponent<ILocalDatabaseAccessTokens>().AssertNotNull();
+            databaseAccessTokenExistence = Server.Entity.Container.GetComponent<IDatabaseAccessTokenExistence>().AssertNotNull();
         }
 
         public AuthenticateResponseParameters? Handle(MessageData<AuthenticateRequestParameters> messageData, ref MessageSendOptions sendOptions)

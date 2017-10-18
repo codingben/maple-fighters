@@ -8,15 +8,15 @@ using Shared.Game.Common;
 
 namespace Game.Application.Components
 {
-    internal class DatabaseCharacterCreator : Component<IServerEntity>
+    internal class DatabaseCharacterCreator : Component<IServerEntity>, IDatabaseCharacterCreator
     {
-        private DatabaseConnectionProvider databaseConnectionProvider;
+        private IDatabaseConnectionProvider databaseConnectionProvider;
 
         protected override void OnAwake()
         {
             base.OnAwake();
 
-            databaseConnectionProvider = Entity.Container.GetComponent<DatabaseConnectionProvider>().AssertNotNull();
+            databaseConnectionProvider = Entity.Container.GetComponent<IDatabaseConnectionProvider>().AssertNotNull();
         }
 
         public void Create(int userId, string name, CharacterClasses characterClass, CharacterIndex characterIndex)

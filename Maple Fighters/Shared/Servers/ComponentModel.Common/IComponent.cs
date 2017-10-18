@@ -2,7 +2,7 @@
 
 namespace ComponentModel.Common
 {
-    public interface IComponent : IDisposable
+    public interface IExposableComponent : IDisposable
     {
         // Left blank intentionally
     }

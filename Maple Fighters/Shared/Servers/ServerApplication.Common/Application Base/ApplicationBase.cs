@@ -24,9 +24,7 @@ namespace ServerApplication.Common.ApplicationBase
 
         public virtual void Startup()
         {
-            Server.Entity.Container.AddComponent(new PeerContainer());
-
-            peerContainer = Server.Entity.Container.GetComponent<PeerContainer>().AssertNotNull();
+            peerContainer = Server.Entity.Container.AddComponent(new PeerContainer());
 
             LogUtils.Log(MessageBuilder.Trace("An application has started."));
         }
@@ -52,7 +50,7 @@ namespace ServerApplication.Common.ApplicationBase
 
         protected void WrapClientPeer(IClientPeer clientPeer, IPeerLogicBase peerLogic)
         {
-            var idGenerator = Server.Entity.Container.GetComponent<IdGenerator>().AssertNotNull();
+            var idGenerator = Server.Entity.Container.GetComponent<IIdGenerator>().AssertNotNull();
             var peerId = idGenerator.GenerateId();
 
             var clientPeerWrapper = new ClientPeerWrapper<IClientPeer>(clientPeer, peerId);

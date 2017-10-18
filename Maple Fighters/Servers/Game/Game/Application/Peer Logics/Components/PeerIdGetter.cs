@@ -3,7 +3,7 @@ using Game.InterestManagement;
 
 namespace Game.Application.PeerLogic.Components
 {
-    internal class PeerIdGetter : Component<ISceneObject>
+    internal class PeerIdGetter : Component<ISceneObject>, IPeerIdGetter
     {
         private readonly int id;
 

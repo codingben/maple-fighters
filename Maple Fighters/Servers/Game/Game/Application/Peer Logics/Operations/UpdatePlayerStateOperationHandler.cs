@@ -8,9 +8,9 @@ namespace Game.Application.PeerLogic.Operations
     internal class UpdatePlayerStateOperationHandler : IOperationRequestHandler<UpdatePlayerStateRequestParameters, EmptyParameters>
     {
         private readonly int sceneObjectId;
-        private readonly InterestAreaManagement interestAreaManagement;
+        private readonly IInterestAreaManagement interestAreaManagement;
         
-        public UpdatePlayerStateOperationHandler(int sceneObjectId, InterestAreaManagement interestAreaManagement)
+        public UpdatePlayerStateOperationHandler(int sceneObjectId, IInterestAreaManagement interestAreaManagement)
         {
             this.sceneObjectId = sceneObjectId;
             this.interestAreaManagement = interestAreaManagement;

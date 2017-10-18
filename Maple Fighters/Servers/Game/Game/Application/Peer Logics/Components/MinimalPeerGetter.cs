@@ -5,7 +5,7 @@ using ServerCommunicationInterfaces;
 
 namespace Game.Application.PeerLogic.Components
 {
-    internal class MinimalPeerGetter : Component<IPeerEntity>
+    internal class MinimalPeerGetter : Component<IPeerEntity>, IMinimalPeerGetter
     {
         private readonly IMinimalPeer peer;
 

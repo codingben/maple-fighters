@@ -8,9 +8,9 @@ namespace Game.Application.PeerLogic.Operations
 {
     internal class UpdatePositionOperationHandler : IOperationRequestHandler<UpdatePositionRequestParameters, EmptyParameters>
     {
-        private readonly Transform transform;
+        private readonly ITransform transform;
 
-        public UpdatePositionOperationHandler(Transform transform)
+        public UpdatePositionOperationHandler(ITransform transform)
         {
             this.transform = transform;
         }

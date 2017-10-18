@@ -77,6 +77,8 @@
     <Compile Include="Components\FiberCoroutinesExecuter.cs" />
     <Compile Include="Components\FiberProvider.cs" />
     <Compile Include="Components\IdGenerator.cs" />
+    <Compile Include="Components\IIdGenerator.cs" />
+    <Compile Include="Components\IPeerContainer.cs" />
     <Compile Include="Components\PeerContainer.cs" />
     <Compile Include="Components\RandomNumberGenerator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

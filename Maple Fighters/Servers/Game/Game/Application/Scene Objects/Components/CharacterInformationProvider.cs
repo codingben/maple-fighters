@@ -4,7 +4,7 @@ using Shared.Game.Common;
 
 namespace Game.Application.SceneObjects.Components
 {
-    internal class CharacterInformationProvider : Component<ISceneObject>
+    internal class CharacterInformationProvider : Component<ISceneObject>, ICharacterInformationProvider
     {
         private CharacterInformation characterInformation;
 
