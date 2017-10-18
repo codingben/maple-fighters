@@ -1,5 +1,5 @@
 ﻿using Chat.Application;
-using ServerApplication.Common.PhotonStarter;
+using PhotonStarter.Common;
 using ServerCommunicationInterfaces;
 
 namespace Chat.PhotonStarter

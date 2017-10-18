@@ -1,7 +1,7 @@
 ﻿using CommonTools.Log;
+using ComponentModel.Common;
 using MathematicsHelper;
 using ServerApplication.Common.ApplicationBase;
-using ServerApplication.Common.ComponentModel;
 using ServerApplication.Common.Components;
 
 namespace Game.InterestManagement

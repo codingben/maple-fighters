@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using CommonTools.Coroutines;
+using ComponentModel.Common;
 using ServerApplication.Common.ApplicationBase;
-using ServerApplication.Common.ComponentModel;
 
 namespace ServerApplication.Common.Components.Coroutines
 {

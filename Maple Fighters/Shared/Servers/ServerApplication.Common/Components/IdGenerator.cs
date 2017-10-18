@@ -1,5 +1,5 @@
-﻿using ServerApplication.Common.ApplicationBase;
-using ServerApplication.Common.ComponentModel;
+﻿using ComponentModel.Common;
+using ServerApplication.Common.ApplicationBase;
 
 namespace ServerApplication.Common.Components
 {

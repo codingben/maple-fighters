@@ -1,7 +1,7 @@
 ﻿using System;
 using ServerCommunicationInterfaces;
 
-namespace Shared.ServerApplication.Common.PeerLogic
+namespace PeerLogic.Common
 {
     public interface IPeerLogicBase : IDisposable
     {

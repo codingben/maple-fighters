@@ -1,8 +1,8 @@
 ﻿using CommunicationHelper;
+using PeerLogic.Common;
 using Registration.Application.PeerLogic.Operations;
 using Registration.Common;
 using ServerCommunicationInterfaces;
-using Shared.ServerApplication.Common.PeerLogic;
 
 namespace Registration.Application.PeerLogic
 {

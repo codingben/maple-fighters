@@ -1,10 +1,11 @@
 ﻿using Chat.Common;
 using CommonCommunicationInterfaces;
 using CommonTools.Log;
+using ComponentModel.Common;
+using PeerLogic.Common;
+using PeerLogic.Common.Components;
 using ServerApplication.Common.ApplicationBase;
-using ServerApplication.Common.ComponentModel;
 using ServerApplication.Common.Components;
-using Shared.ServerApplication.Common.PeerLogic;
 
 namespace Chat.Application.PeerLogic.Components
 {

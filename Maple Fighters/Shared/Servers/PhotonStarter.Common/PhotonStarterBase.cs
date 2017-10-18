@@ -5,8 +5,9 @@ using Photon.SocketServer;
 using PhotonServerImplementation;
 using ServerApplication.Common.ApplicationBase;
 using ServerCommunicationInterfaces;
+using PhotonStarter.Common.Utils;
 
-namespace ServerApplication.Common.PhotonStarter
+namespace PhotonStarter.Common
 {
     public abstract class PhotonStarterBase<T> : PhotonServerImplementation.ApplicationBase
         where T : IApplication
@@ -45,9 +46,9 @@ namespace ServerApplication.Common.PhotonStarter
             return clientPeer;
         }
 
-        private Logger.Logger CreateLogger()
+        private Logger CreateLogger()
         {
-            var logger = new Logger.Logger();
+            var logger = new Logger();
             logger.Initialize(Path.Combine(BinaryPath, LOGGER_PATH));
             return logger;
         }

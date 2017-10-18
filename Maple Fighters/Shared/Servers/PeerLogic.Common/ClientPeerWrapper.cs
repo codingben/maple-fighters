@@ -2,7 +2,7 @@
 using CommonCommunicationInterfaces;
 using ServerCommunicationInterfaces;
 
-namespace Shared.ServerApplication.Common.PeerLogic
+namespace PeerLogic.Common
 {
     public sealed class ClientPeerWrapper<T> : IClientPeerWrapper<T>
         where T : class, IClientPeer

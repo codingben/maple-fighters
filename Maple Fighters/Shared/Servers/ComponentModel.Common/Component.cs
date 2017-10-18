@@ -1,4 +1,4 @@
-﻿namespace ServerApplication.Common.ComponentModel
+﻿namespace ComponentModel.Common
 {
     public class Component<TOwner> : IComponent
     {

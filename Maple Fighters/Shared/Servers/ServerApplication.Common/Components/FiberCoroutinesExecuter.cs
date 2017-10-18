@@ -2,7 +2,7 @@
 using ServerCommunicationInterfaces;
 using CommonTools.Coroutines;
 
-namespace ServerApplication.Common.Components.Coroutines
+namespace ServerApplication.Common.Components
 {
     public class FiberCoroutinesExecutor : ThreadSafeCoroutinesExecutorBase
     {

@@ -1,9 +1,9 @@
 ﻿using CommonTools.Log;
 using CommunicationHelper;
 using Game.Application.PeerLogic.Operations;
+using PeerLogic.Common;
 using ServerCommunicationInterfaces;
 using Shared.Game.Common;
-using Shared.ServerApplication.Common.PeerLogic;
 
 namespace Game.Application.PeerLogics
 {

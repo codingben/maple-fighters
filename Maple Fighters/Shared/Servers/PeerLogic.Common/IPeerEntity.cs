@@ -1,6 +1,6 @@
-﻿using ServerApplication.Common.ComponentModel;
+﻿using ComponentModel.Common;
 
-namespace Shared.ServerApplication.Common.PeerLogic
+namespace PeerLogic.Common
 {
     public interface IPeerEntity : IEntity
     {

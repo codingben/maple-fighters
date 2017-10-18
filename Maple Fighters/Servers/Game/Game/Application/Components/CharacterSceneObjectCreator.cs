@@ -1,9 +1,9 @@
 ﻿using CommonTools.Log;
+using ComponentModel.Common;
 using Game.Application.SceneObjects.Components;
 using Game.InterestManagement;
 using MathematicsHelper;
 using ServerApplication.Common.ApplicationBase;
-using ServerApplication.Common.ComponentModel;
 using Shared.Game.Common;
 using SceneObject = Game.InterestManagement.SceneObject;
 

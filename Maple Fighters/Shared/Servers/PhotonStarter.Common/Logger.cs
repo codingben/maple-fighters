@@ -3,7 +3,7 @@ using CommonTools.Log;
 using log4net;
 using log4net.Config;
 
-namespace ServerApplication.Common.Logger
+namespace PhotonStarter.Common.Utils
 {
     public class Logger : ILogger
     {

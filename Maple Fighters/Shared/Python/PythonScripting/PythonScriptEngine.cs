@@ -1,9 +1,9 @@
 ﻿using System;
+using ComponentModel.Common;
 using IronPython.Hosting;
 using MathematicsHelper;
 using Microsoft.Scripting.Hosting;
 using ServerApplication.Common.ApplicationBase;
-using ServerApplication.Common.ComponentModel;
 
 namespace PythonScripting
 {

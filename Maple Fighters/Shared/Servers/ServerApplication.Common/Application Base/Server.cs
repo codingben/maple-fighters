@@ -1,6 +1,4 @@
-﻿using ServerApplication.Common.ComponentModel;
-
-namespace ServerApplication.Common.ApplicationBase
+﻿namespace ServerApplication.Common.ApplicationBase
 {
     public static class Server
     {

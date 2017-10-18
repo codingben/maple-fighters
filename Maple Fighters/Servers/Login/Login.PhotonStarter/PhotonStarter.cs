@@ -1,5 +1,5 @@
 ﻿using Login.Application;
-using ServerApplication.Common.PhotonStarter;
+using PhotonStarter.Common;
 using ServerCommunicationInterfaces;
 
 namespace Login.PhotonStarter

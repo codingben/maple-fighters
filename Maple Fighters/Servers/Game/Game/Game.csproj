@@ -130,6 +130,14 @@
       <Project>{A3BE3E13-D3A1-4800-B471-A39F5ED4B554}</Project>
       <Name>MathematicsHelper</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\Shared\Servers\ComponentModel.Common\ComponentModel.Common.csproj">
+      <Project>{00565794-9958-47D9-9E8E-6D7193D67B9D}</Project>
+      <Name>ComponentModel.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Shared\Servers\PeerLogic.Common\PeerLogic.Common.csproj">
+      <Project>{F90F12D2-58E0-4718-A205-EBFD28C81742}</Project>
+      <Name>PeerLogic.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Game.Common\Game.Common.csproj">
       <Project>{AA536188-84FF-4286-A9E6-BAFBE1D8D37B}</Project>
       <Name>Game.Common</Name>

@@ -2,10 +2,10 @@
 using System.Linq;
 using CommonCommunicationInterfaces;
 using CommonTools.Log;
+using ComponentModel.Common;
+using PeerLogic.Common;
 using ServerApplication.Common.ApplicationBase;
-using ServerApplication.Common.ComponentModel;
 using ServerCommunicationInterfaces;
-using Shared.ServerApplication.Common.PeerLogic;
 
 namespace ServerApplication.Common.Components
 {

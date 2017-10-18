@@ -1,4 +1,4 @@
-﻿using ServerApplication.Common.ComponentModel;
+﻿using ComponentModel.Common;
 
 namespace ServerApplication.Common.ApplicationBase
 {

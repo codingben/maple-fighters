@@ -1,10 +1,10 @@
 ﻿using CommonCommunicationInterfaces;
 using CommonTools.Log;
+using ComponentModel.Common;
 using Game.InterestManagement;
-using ServerApplication.Common.ComponentModel;
-using ServerApplication.Common.Components;
+using PeerLogic.Common;
+using PeerLogic.Common.Components;
 using Shared.Game.Common;
-using Shared.ServerApplication.Common.PeerLogic;
 using SceneObject = Shared.Game.Common.SceneObject;
 
 namespace Game.Application.PeerLogic.Components

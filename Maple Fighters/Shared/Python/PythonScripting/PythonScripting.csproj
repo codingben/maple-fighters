@@ -70,6 +70,10 @@
       <Project>{A3BE3E13-D3A1-4800-B471-A39F5ED4B554}</Project>
       <Name>MathematicsHelper</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Servers\ComponentModel.Common\ComponentModel.Common.csproj">
+      <Project>{00565794-9958-47D9-9E8E-6D7193D67B9D}</Project>
+      <Name>ComponentModel.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Servers\ServerApplication.Common\ServerApplication.Common.csproj">
       <Project>{F82FBB67-7B1D-43B7-A415-3F407D40E5C7}</Project>
       <Name>ServerApplication.Common</Name>

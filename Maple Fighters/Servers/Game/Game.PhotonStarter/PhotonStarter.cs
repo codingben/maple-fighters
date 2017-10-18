@@ -1,5 +1,5 @@
 ﻿using Game.Application;
-using ServerApplication.Common.PhotonStarter;
+using PhotonStarter.Common;
 using ServerCommunicationInterfaces;
 
 namespace Game.PhotonStarter

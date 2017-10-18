@@ -1,5 +1,5 @@
-﻿using Registration.Application;
-using ServerApplication.Common.PhotonStarter;
+﻿using PhotonStarter.Common;
+using Registration.Application;
 using ServerCommunicationInterfaces;
 
 namespace Registration.PhotonStarter

@@ -1,6 +1,6 @@
 ﻿using System;
+using ComponentModel.Common;
 using MathematicsHelper;
-using ServerApplication.Common.ComponentModel;
 using Shared.Game.Common;
 
 namespace Game.InterestManagement

@@ -1,8 +1,8 @@
 ﻿using Chat.Application.PeerLogic.Operations;
 using Chat.Common;
 using CommunicationHelper;
+using PeerLogic.Common;
 using ServerCommunicationInterfaces;
-using Shared.ServerApplication.Common.PeerLogic;
 
 namespace Chat.Application.PeerLogics
 {

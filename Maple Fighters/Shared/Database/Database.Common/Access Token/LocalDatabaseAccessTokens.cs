@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using CommonTools.Log;
+using ComponentModel.Common;
 using ServerApplication.Common.ApplicationBase;
-using ServerApplication.Common.ComponentModel;
 using ServerApplication.Common.Components;
 
 namespace Database.Common.AccessToken

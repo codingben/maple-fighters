@@ -1,8 +1,8 @@
 ﻿using CommonTools.Log;
+using ComponentModel.Common;
 using Game.InterestManagement;
-using ServerApplication.Common.ComponentModel;
+using PeerLogic.Common;
 using Shared.Game.Common;
-using Shared.ServerApplication.Common.PeerLogic;
 
 namespace Game.Application.PeerLogic.Components
 {

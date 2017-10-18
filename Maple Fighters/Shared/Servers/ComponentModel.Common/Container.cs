@@ -2,7 +2,7 @@
 using System.Linq;
 using CommonTools.Log;
 
-namespace ServerApplication.Common.ComponentModel
+namespace ComponentModel.Common
 {
     public sealed class Container<TOwner> : IContainer<TOwner>
        where TOwner : IEntity
@@ -20,7 +20,8 @@ namespace ServerApplication.Common.ComponentModel
         {
             if (GetComponent<T>() != null)
             {
-                LogUtils.Log(MessageBuilder.Trace($"Comoponent {typeof(T).Name} already exists!"), LogMessageType.Error);
+                var componentName = typeof(T).Name;
+                LogUtils.Log(MessageBuilder.Trace($"Comoponent {componentName} already exists!"), LogMessageType.Error);
                 return null;
             }
 
@@ -35,7 +36,8 @@ namespace ServerApplication.Common.ComponentModel
             var component = GetComponent<T>();
             if (component == null)
             {
-                LogUtils.Log(MessageBuilder.Trace($"Could not remove component {typeof(T).Name} - It doesn't exist."), LogMessageType.Warning);
+                var componentName = typeof(T).Name;
+                LogUtils.Log(MessageBuilder.Trace($"Could not remove component {componentName} - It doesn't exist."), LogMessageType.Warning);
                 return;
             }
 

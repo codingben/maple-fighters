@@ -1,6 +1,6 @@
-﻿using ServerApplication.Common.ApplicationBase;
+﻿using ComponentModel.Common;
 
-namespace ServerApplication.Common.ComponentModel
+namespace ServerApplication.Common.ApplicationBase
 {
     public class ServerEntity : IServerEntity
     {

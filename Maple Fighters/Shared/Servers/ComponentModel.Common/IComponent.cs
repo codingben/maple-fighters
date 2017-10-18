@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ServerApplication.Common.ComponentModel
+namespace ComponentModel.Common
 {
     public interface IComponent : IDisposable
     {

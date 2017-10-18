@@ -1,5 +1,5 @@
-﻿using Game.InterestManagement;
-using ServerApplication.Common.ComponentModel;
+﻿using ComponentModel.Common;
+using Game.InterestManagement;
 
 namespace Game.Application.PeerLogic.Components
 {

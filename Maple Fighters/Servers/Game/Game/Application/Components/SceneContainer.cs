@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using CommonTools.Log;
+using ComponentModel.Common;
 using Game.InterestManagement;
 using MathematicsHelper;
 using Microsoft.Scripting.Hosting;
 using PythonScripting;
 using ServerApplication.Common.ApplicationBase;
-using ServerApplication.Common.ComponentModel;
 using Shared.Game.Common;
 
 namespace Game.Application.Components

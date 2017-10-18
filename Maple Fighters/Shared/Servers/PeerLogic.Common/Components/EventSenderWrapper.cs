@@ -1,9 +1,8 @@
 ﻿using CommonCommunicationInterfaces;
-using ServerApplication.Common.ComponentModel;
+using ComponentModel.Common;
 using ServerCommunicationInterfaces;
-using Shared.ServerApplication.Common.PeerLogic;
 
-namespace ServerApplication.Common.Components
+namespace PeerLogic.Common.Components
 {
     public class EventSenderWrapper : Component<IPeerEntity>
     {

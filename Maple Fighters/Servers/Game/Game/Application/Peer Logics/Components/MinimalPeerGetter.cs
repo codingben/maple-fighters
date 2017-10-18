@@ -1,7 +1,7 @@
 ﻿using CommonTools.Log;
-using ServerApplication.Common.ComponentModel;
+using ComponentModel.Common;
+using PeerLogic.Common;
 using ServerCommunicationInterfaces;
-using Shared.ServerApplication.Common.PeerLogic;
 
 namespace Game.Application.PeerLogic.Components
 {

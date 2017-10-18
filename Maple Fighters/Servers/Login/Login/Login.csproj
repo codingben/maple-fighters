@@ -82,6 +82,14 @@
       <Project>{46B701A0-8606-4EF1-B111-F001EE74F124}</Project>
       <Name>Database.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\Shared\Servers\ComponentModel.Common\ComponentModel.Common.csproj">
+      <Project>{00565794-9958-47D9-9E8E-6D7193D67B9D}</Project>
+      <Name>ComponentModel.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Shared\Servers\PeerLogic.Common\PeerLogic.Common.csproj">
+      <Project>{F90F12D2-58E0-4718-A205-EBFD28C81742}</Project>
+      <Name>PeerLogic.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\Shared\Servers\ServerApplication.Common\ServerApplication.Common.csproj">
       <Project>{F82FBB67-7B1D-43B7-A415-3F407D40E5C7}</Project>
       <Name>ServerApplication.Common</Name>

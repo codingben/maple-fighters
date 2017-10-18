@@ -2,12 +2,11 @@
 using CommonCommunicationInterfaces;
 using CommonTools.Coroutines;
 using CommonTools.Log;
-using ServerApplication.Common.Components;
-using ServerApplication.Common.Components.Coroutines;
+using PeerLogic.Common.Components;
 using ServerCommunicationHelper;
 using ServerCommunicationInterfaces;
 
-namespace Shared.ServerApplication.Common.PeerLogic
+namespace PeerLogic.Common
 {
     public abstract class PeerLogicBase<TOperationCode, TEventCode> : IPeerLogicBase
         where TOperationCode : IComparable, IFormattable, IConvertible
@@ -28,7 +27,7 @@ namespace Shared.ServerApplication.Common.PeerLogic
 
             AddCommonComponents();
 
-            var coroutinesExecutor = Entity.Container.GetComponent<CoroutinesExecutorEntity>() as ICoroutinesExecutor;
+            var coroutinesExecutor = Entity.Container.GetComponent<CoroutinesExecutor>() as ICoroutinesExecutor;
 
             OperationRequestHandlerRegister = new OperationRequestsHandler<TOperationCode>(PeerWrapper.Peer.OperationRequestNotifier, 
                 PeerWrapper.Peer.OperationResponseSender, false, false, coroutinesExecutor);
@@ -45,7 +44,7 @@ namespace Shared.ServerApplication.Common.PeerLogic
         private void AddCommonComponents()
         {
             Entity.Container.AddComponent(new EventSenderWrapper(EventSender.AssertNotNull()));
-            Entity.Container.AddComponent(new CoroutinesExecutorEntity(new FiberCoroutinesExecutor(PeerWrapper.Peer.Fiber, 100)));
+            Entity.Container.AddComponent(new CoroutinesExecutor(new FiberCoroutinesExecutor(PeerWrapper.Peer.Fiber, 100)));
         }
     }
 }

@@ -2,8 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using CommonTools.Log;
+using ComponentModel.Common;
 using MathematicsHelper;
-using ServerApplication.Common.ComponentModel;
 
 namespace Game.InterestManagement
 {

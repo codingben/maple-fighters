@@ -4,9 +4,9 @@ using Game.Application.Components;
 using Game.Application.PeerLogic.Components;
 using Game.Application.PeerLogic.Operations;
 using Game.InterestManagement;
+using PeerLogic.Common;
 using ServerApplication.Common.ApplicationBase;
 using ServerCommunicationInterfaces;
-using Shared.ServerApplication.Common.PeerLogic;
 using Shared.Game.Common;
 
 namespace Game.Application.PeerLogics

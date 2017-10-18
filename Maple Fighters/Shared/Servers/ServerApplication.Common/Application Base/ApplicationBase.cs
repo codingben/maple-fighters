@@ -1,14 +1,14 @@
 ﻿using CommonTools.Coroutines;
 using CommonTools.Log;
+using PeerLogic.Common;
 using ServerApplication.Common.Components;
 using ServerApplication.Common.Components.Coroutines;
 using ServerCommunicationInterfaces;
-using Shared.ServerApplication.Common.PeerLogic;
 
 namespace ServerApplication.Common.ApplicationBase
 {
     /// <summary>
-    /// A base class to startup a server application
+    /// A base class to startup a server application.
     /// </summary>
     public abstract class ApplicationBase : IApplication
     {

@@ -2,7 +2,7 @@
 using CommonCommunicationInterfaces;
 using ServerCommunicationInterfaces;
 
-namespace Shared.ServerApplication.Common.PeerLogic
+namespace PeerLogic.Common
 {
     public interface IClientPeerWrapper<out T> : IDisposable
         where T : IClientPeer

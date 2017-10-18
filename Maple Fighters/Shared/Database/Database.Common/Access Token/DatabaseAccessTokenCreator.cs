@@ -1,9 +1,9 @@
 ﻿using System;
 using CommonTools.Log;
+using ComponentModel.Common;
 using Database.Common.Components;
 using Database.Common.TablesDefinition;
 using ServerApplication.Common.ApplicationBase;
-using ServerApplication.Common.ComponentModel;
 using ServiceStack.OrmLite;
 
 namespace Database.Common.AccessToken

@@ -60,6 +60,10 @@
     <Compile Include="Transform.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Shared\Servers\ComponentModel.Common\ComponentModel.Common.csproj">
+      <Project>{00565794-9958-47D9-9E8E-6D7193D67B9D}</Project>
+      <Name>ComponentModel.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Game.Common\Game.Common.csproj">
       <Project>{AA536188-84FF-4286-A9E6-BAFBE1D8D37B}</Project>
       <Name>Game.Common</Name>
