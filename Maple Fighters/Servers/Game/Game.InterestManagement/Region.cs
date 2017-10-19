@@ -92,12 +92,11 @@ namespace Game.InterestManagement
         private void RemoveSubscribersForSubscriber(int sceneObjectId)
         {
             var subscribers = sceneObjects.Values.Where(subscriber => subscriber.Id != sceneObjectId).ToArray();
-
+            var subscriberArea = sceneObjects[sceneObjectId].Container.GetComponent<IInterestArea>().AssertNotNull();
             var subscribersForRemoveList = new List<int>();
 
             foreach (var subscriber in subscribers)
             {
-                var subscriberArea = subscriber.Container.GetComponent<IInterestArea>().AssertNotNull();
                 if (subscriberArea.GetPublishers().Any(publisher => !publisher.HasSubscription(subscriber.Id)))
                 {
                     subscribersForRemoveList.Add(subscriber.Id);
@@ -106,7 +105,6 @@ namespace Game.InterestManagement
 
             if (subscribersForRemoveList.Count <= 0) return;
             {
-                var subscriberArea = sceneObjects[sceneObjectId].Container.GetComponent<IInterestArea>().AssertNotNull();
                 subscriberArea.InvokeSubscribersRemoved(subscribersForRemoveList.ToArray());
             }
         }

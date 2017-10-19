@@ -24,15 +24,15 @@ namespace PeerLogic.Common
 
             Entity = new PeerEntity(PeerWrapper.PeerId);
 
-            var logEvents = Config.Global.Logs.Events;
+            var logEvents = Config.Global.Log.Events;
             EventSender = new EventSender<TEventCode>(PeerWrapper.Peer.EventSender, logEvents);
 
             AddCommonComponents();
 
             var coroutinesExecutor = Entity.Container.GetComponent<ICoroutinesExecutor>().AssertNotNull();
 
-            var logOperationsRequest = Config.Global.Logs.OperationsRequest;
-            var logOperationsResponse = Config.Global.Logs.OperationsResponse;
+            var logOperationsRequest = Config.Global.Log.OperationsRequest;
+            var logOperationsResponse = Config.Global.Log.OperationsResponse;
             OperationRequestHandlerRegister = new OperationRequestsHandler<TOperationCode>(PeerWrapper.Peer.OperationRequestNotifier, 
                 PeerWrapper.Peer.OperationResponseSender, logOperationsRequest, logOperationsResponse, coroutinesExecutor);
 

@@ -56,7 +56,7 @@ namespace PhotonStarter.Common
         private Logger CreateLogger()
         {
             var logger = new Logger();
-            logger.Initialize(Path.Combine(BinaryPath, "configuration/log4net.config"));
+            logger.Initialize(Path.Combine(BinaryPath, "../configuration/log4net.config"));
             return logger;
         }
     }

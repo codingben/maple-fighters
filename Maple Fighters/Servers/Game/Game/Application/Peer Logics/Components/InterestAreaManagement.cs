@@ -89,9 +89,8 @@ namespace Game.Application.PeerLogic.Components
                 sharedSceneObjects[i].Y = transform.Position.Y;
             }
 
-            eventSender.Send((byte)GameEvents.SceneObjectsAdded, 
-                new SceneObjectsAddedEventParameters(sharedSceneObjects, GetCharacterInformations(sceneObjects)), 
-                MessageSendOptions.DefaultReliable());
+            var parameters = new SceneObjectsAddedEventParameters(sharedSceneObjects, GetCharacterInformations(sceneObjects));
+            eventSender.Send((byte)GameEvents.SceneObjectsAdded, parameters, MessageSendOptions.DefaultReliable());
         }
 
         private void OnSubscribersRemoved(int[] sceneObjectsId)
@@ -101,8 +100,8 @@ namespace Game.Application.PeerLogic.Components
                 return;
             }
 
-            eventSender.Send((byte)GameEvents.SceneObjectsRemoved, new SceneObjectsRemovedEventParameters(sceneObjectsId), 
-                MessageSendOptions.DefaultReliable());
+            var parameters = new SceneObjectsRemovedEventParameters(sceneObjectsId);
+            eventSender.Send((byte)GameEvents.SceneObjectsRemoved, parameters, MessageSendOptions.DefaultReliable());
         }
 
         public void SendEventForSubscribers<TParameters>(byte code, TParameters parameters, MessageSendOptions messageSendOptions)
