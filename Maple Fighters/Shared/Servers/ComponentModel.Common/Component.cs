@@ -1,8 +1,10 @@
-﻿namespace ComponentModel.Common
+﻿using System;
+
+namespace ComponentModel.Common
 {
-    public class Component<TOwner>
+    public class Component<TOwner> : IDisposable
     {
-        public TOwner Entity { get; private set; }
+        protected TOwner Entity { get; private set; }
 
         public void Awake(TOwner entity)
         {
