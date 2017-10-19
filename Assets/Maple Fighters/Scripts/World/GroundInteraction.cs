@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using UnityEngine;
 
+#pragma warning disable 0109
+
 namespace Scripts.World
 {
     public class GroundInteraction : MonoBehaviour

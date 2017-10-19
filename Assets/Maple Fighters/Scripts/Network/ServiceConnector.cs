@@ -52,7 +52,7 @@ namespace Scripts.Services
                 return;
             }
 
-            DontDestroyOnLoad(gameObject);
+            gameObject.DontDestroyOnLoad();
 
             Instance = this as T;
         }

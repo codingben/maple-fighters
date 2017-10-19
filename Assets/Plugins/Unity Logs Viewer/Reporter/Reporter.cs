@@ -19,6 +19,7 @@ using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 #endif
 
+#pragma warning disable 0649
 
 [System.Serializable]
 public class Images
@@ -346,9 +347,10 @@ public class Reporter : MonoBehaviour
 #endif
 			created = true;
 			//addSample();
+
+		    SceneManager.sceneLoaded += LevelLoaded;
 		}
 		else {
-			Debug.LogWarning("tow manager is exists delete the second");
 			DestroyImmediate(gameObject, true);
 			return;
 		}
@@ -1955,7 +1957,7 @@ public class Reporter : MonoBehaviour
 	}
 
 	//new scene is loaded
-	void OnLevelWasLoaded()
+	void LevelLoaded(Scene arg0, LoadSceneMode loadSceneMode)
 	{
 		if (clearOnNewSceneLoaded)
 			clear();

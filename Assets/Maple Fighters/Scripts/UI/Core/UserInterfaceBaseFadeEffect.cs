@@ -56,6 +56,9 @@ namespace Scripts.UI.Core
 
         private IEnumerator FadeRoutine(float speed, Action onFinished = null)
         {
+            CanvasGroup.interactable = true;
+            CanvasGroup.blocksRaycasts = true;
+
             while (true)
             {
                 if (CanvasGroup.alpha >= 1)
@@ -72,6 +75,7 @@ namespace Scripts.UI.Core
         private IEnumerator UnFadeRoutine(float speed, Action onFinished = null)
         {
             CanvasGroup.interactable = false;
+            CanvasGroup.blocksRaycasts = false;
 
             while (true)
             {

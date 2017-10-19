@@ -2,6 +2,8 @@
 using Shared.Game.Common;
 using UnityEngine;
 
+#pragma warning disable 0109
+
 namespace Scripts.World
 {
     [RequireComponent(typeof(PlayerController))]

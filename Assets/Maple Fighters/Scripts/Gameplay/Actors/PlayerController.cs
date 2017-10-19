@@ -3,6 +3,8 @@ using System.Linq;
 using Shared.Game.Common;
 using UnityEngine;
 
+#pragma warning disable 0109
+
 namespace Scripts.Gameplay.Actors
 {
     [RequireComponent(typeof(Rigidbody2D))]

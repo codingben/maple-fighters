@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using CommonCommunicationInterfaces;
 using CommonTools.Coroutines;
-using CommonTools.Log;
+using Scripts.Utils;
 using Shared.Game.Common;
 
 namespace Scripts.Services
@@ -24,6 +24,8 @@ namespace Scripts.Services
         protected override void OnDisconnected()
         {
             RemoveEventsHandlers();
+
+            SavedObjects.DestroyAll();
         }
 
         private void AddEventsHandlers()
