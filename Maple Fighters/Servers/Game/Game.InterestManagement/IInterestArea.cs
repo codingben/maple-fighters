@@ -18,6 +18,6 @@ namespace Game.InterestManagement
 
         void DetectOverlapsWithRegions();
 
-        IEnumerable<IRegion> GetPublishers();
+        IEnumerable<IRegion> GetSubscribedPublishers();
     }
 }

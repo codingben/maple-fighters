@@ -5,7 +5,7 @@ namespace Game.Application.Components
 {
     public interface IGameSceneWrapper
     {
-        void AddSceneObject(string name, Vector2 position, Vector2 interestAreaSize);
+        void AddSceneObject(string name, Vector2 position);
 
         IScene GetScene();
     }

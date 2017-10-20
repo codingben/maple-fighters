@@ -144,7 +144,7 @@ namespace Game.Application.PeerLogic.Components
                     return subscribers.ToArray();
                 }
 
-                foreach (var publisher in interestArea.GetPublishers())
+                foreach (var publisher in interestArea.GetSubscribedPublishers())
                 {
                     subscribers.AddRange(publisher.GetAllSubscribers().Where(subscriber => subscriber.Id != sceneObject.Id));
                 }

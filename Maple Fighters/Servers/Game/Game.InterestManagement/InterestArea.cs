@@ -14,10 +14,73 @@ namespace Game.InterestManagement
         public event Action<ISceneObject[]> SubscribersAdded;
         public event Action<int[]> SubscribersRemoved;
 
-        public void InvokeSubscriberAdded(ISceneObject sceneObject) => SubscriberAdded?.Invoke(sceneObject);
-        public void InvokeSubscriberRemoved(int sceneObjectId) => SubscriberRemoved?.Invoke(sceneObjectId);
-        public void InvokeSubscribersAdded(ISceneObject[] sceneObjects) => SubscribersAdded?.Invoke(sceneObjects);
-        public void InvokeSubscribersRemoved(int[] sceneObjectIds) => SubscribersRemoved?.Invoke(sceneObjectIds);
+        public void InvokeSubscriberAdded(ISceneObject sceneObject)
+        {
+            if (interestedSceneObjects.ContainsKey(sceneObject.Id))
+            {
+                return;
+            }
+
+            interestedSceneObjects.Add(sceneObject.Id, sceneObject);
+
+            SubscriberAdded?.Invoke(sceneObject);
+        }
+
+        public void InvokeSubscriberRemoved(int sceneObjectId)
+        {
+            if (!interestedSceneObjects.ContainsKey(sceneObjectId))
+            {
+                return;
+            }
+
+            interestedSceneObjects.Remove(sceneObjectId);
+
+            SubscriberRemoved?.Invoke(sceneObjectId);
+        }
+
+        public void InvokeSubscribersAdded(ISceneObject[] sceneObjects)
+        {
+            var subscribersAdded = new List<ISceneObject>();
+
+            foreach (var sceneObject in sceneObjects)
+            {
+                if (interestedSceneObjects.ContainsKey(sceneObject.Id))
+                {
+                    continue;
+                }
+
+                subscribersAdded.Add(sceneObject);
+                interestedSceneObjects.Add(sceneObject.Id, sceneObject);
+            }
+
+            if (subscribersAdded.Count == 0) return;
+            {
+                SubscribersAdded?.Invoke(sceneObjects);
+            }
+        }
+
+        public void InvokeSubscribersRemoved(int[] sceneObjectIds)
+        {
+            var subscribersRemoved = new List<int>();
+
+            foreach (var id in sceneObjectIds)
+            {
+                if (!interestedSceneObjects.ContainsKey(id))
+                {
+                    continue;
+                }
+
+                subscribersRemoved.Add(id);
+                interestedSceneObjects.Remove(id);
+            }
+
+            if (subscribersRemoved.Count == 0) return;
+            {
+                SubscribersRemoved?.Invoke(sceneObjectIds);
+            }
+        }
+
+        private readonly Dictionary<int, ISceneObject> interestedSceneObjects = new Dictionary<int, ISceneObject>();
 
         private Rectangle interestArea;
 
@@ -41,6 +104,8 @@ namespace Game.InterestManagement
             SubscriberRemoved = null;
             SubscribersAdded = null;
             SubscribersRemoved = null;
+
+            interestedSceneObjects.Clear();
         }
 
         private void SubscribeToPositionChangesNotifier()
@@ -59,7 +124,7 @@ namespace Game.InterestManagement
             }
         }
 
-        public IEnumerable<IRegion> GetPublishers()
+        public IEnumerable<IRegion> GetSubscribedPublishers()
         {
             var regions = Entity.Scene.GetAllRegions();
             return regions.Cast<IRegion>().Where(region => region.HasSubscription(Entity.Id)).ToArray();

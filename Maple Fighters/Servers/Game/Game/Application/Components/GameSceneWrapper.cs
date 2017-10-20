@@ -42,12 +42,12 @@ namespace Game.Application.Components
             }
         }
 
-        public void AddSceneObject(string name, Vector2 position, Vector2 interestAreaSize)
+        public void AddSceneObject(string name, Vector2 position)
         {
             var sceneObject = new SceneObject(name, position);
             scene.AddSceneObject(sceneObject);
 
-            var interestArea = sceneObject.Container.AddComponent(new InterestArea(position, interestAreaSize));
+            var interestArea = sceneObject.Container.AddComponent(new InterestArea(position, scene.RegionSize));
             interestArea.DetectOverlapsWithRegions();
         }
 
