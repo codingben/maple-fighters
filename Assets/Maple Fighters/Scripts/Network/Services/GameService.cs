@@ -16,6 +16,8 @@ namespace Scripts.Services
         public UnityEvent<SceneObjectPositionChangedEventParameters> PositionChanged { get; } = new UnityEvent<SceneObjectPositionChangedEventParameters>();
         public UnityEvent<PlayerStateChangedEventParameters> PlayerStateChanged { get; } = new UnityEvent<PlayerStateChangedEventParameters>();
 
+        private AuthenticationStatus authenticationStatus;
+
         protected override void OnConnected()
         {
             AddEventsHandlers();
@@ -25,7 +27,10 @@ namespace Scripts.Services
         {
             RemoveEventsHandlers();
 
-            SavedObjects.DestroyAll();
+            if (authenticationStatus == AuthenticationStatus.Succeed)
+            {
+                SavedObjects.DestroyAll();
+            }
         }
 
         private void AddEventsHandlers()
@@ -94,6 +99,7 @@ namespace Scripts.Services
             var parameters = new AuthenticateRequestParameters(AccessTokenProvider.AccessToken);
             var requestId = OperationRequestSender.Send(GameOperations.Authenticate, parameters, MessageSendOptions.DefaultReliable());
             var responseParameters = await SubscriptionProvider.ProvideSubscription<AuthenticateResponseParameters>(yield, requestId);
+            authenticationStatus = responseParameters.Status;
             return responseParameters.Status;
         }
 

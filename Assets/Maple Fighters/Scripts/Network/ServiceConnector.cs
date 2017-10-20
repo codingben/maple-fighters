@@ -84,7 +84,7 @@ namespace Scripts.Services
             disconnectAutomatically?.Dispose();
             disconnectAutomatically = null;
 
-            serviceBase?.Disconnect();
+            serviceBase?.Dispose();
         }
 
         private void OnApplicationQuit()

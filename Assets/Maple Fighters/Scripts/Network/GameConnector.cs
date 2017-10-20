@@ -50,7 +50,7 @@ namespace Scripts.Services
             var authenticationStatus = await ServiceContainer.GameService.Authenticate(yield);
             if (authenticationStatus == AuthenticationStatus.Failed)
             {
-                ServiceContainer.GameService.Disconnect();
+                ServiceContainer.GameService.Dispose();
 
                 noticeWindow.Message.text = "Authentication with game server failed.";
                 noticeWindow.OkButton.interactable = true;

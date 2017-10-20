@@ -48,7 +48,7 @@ namespace Scripts.Services
             var authenticationStatus = await ServiceContainer.ChatService.Authenticate(yield);
             if (authenticationStatus == AuthenticationStatus.Failed)
             {
-                ServiceContainer.ChatService.Disconnect();
+                ServiceContainer.ChatService.Dispose();
 
                 chatWindow.ChatMessageNotifier.Invoke("Authentication with chat server failed.", ChatMessageColor.Red);
                 return;

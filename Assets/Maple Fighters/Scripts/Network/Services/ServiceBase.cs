@@ -11,7 +11,7 @@ using Scripts.Utils;
 
 namespace Scripts.Services
 {
-    public abstract class ServiceBase<TOperationCode, TEventCode> : IDisposable, IServiceBase
+    public abstract class ServiceBase<TOperationCode, TEventCode> : IServiceBase
         where TOperationCode : IComparable, IFormattable, IConvertible
         where TEventCode : IComparable, IFormattable, IConvertible
     {
@@ -56,11 +56,6 @@ namespace Scripts.Services
 
             SubscriptionProvider.Dispose();
             EventHandlerRegister.Dispose();
-        }
-
-        public void Disconnect()
-        {
-            Dispose();
         }
 
         public bool IsConnected()

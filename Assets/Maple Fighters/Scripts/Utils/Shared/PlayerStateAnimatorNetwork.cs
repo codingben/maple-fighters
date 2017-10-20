@@ -32,8 +32,29 @@ namespace Scripts.Utils.Shared
                 return;
             }
 
+            SubscribeToGameServiceEvents();
+        }
+
+        private void OnDestroy()
+        {
+            if (!IsLocal)
+            {
+                return;
+            }
+
+            UnsubscribeFromGameServiceEvents();
+        }
+
+        private void SubscribeToGameServiceEvents()
+        {
             ServiceContainer.GameService.SceneObjectsAdded.AddListener(OnGameObjectsAdded);
             ServiceContainer.GameService.PlayerStateChanged.AddListener(OnPlayerStateEventReceived);
+        }
+
+        private void UnsubscribeFromGameServiceEvents()
+        {
+            ServiceContainer.GameService.SceneObjectsAdded.RemoveListener(OnGameObjectsAdded);
+            ServiceContainer.GameService.PlayerStateChanged.RemoveListener(OnPlayerStateEventReceived);
         }
 
         /// <summary>
