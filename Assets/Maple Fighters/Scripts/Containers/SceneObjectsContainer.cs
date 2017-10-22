@@ -1,10 +1,13 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using CommonTools.Coroutines;
 using CommonTools.Log;
 using Scripts.Gameplay;
 using Scripts.Gameplay.Actors;
 using Scripts.Utils;
 using Shared.Game.Common;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Scripts.Containers
 {
@@ -13,21 +16,41 @@ namespace Scripts.Containers
         private readonly Dictionary<int, ISceneObject> sceneObjects = new Dictionary<int, ISceneObject>();
         private int localSceneObjectId;
 
+        private readonly ExternalCoroutinesExecutor coroutinesExecutor = new ExternalCoroutinesExecutor();
+
+        protected override void OnAwake()
+        {
+            base.OnAwake();
+
+            SceneManager.sceneLoaded += OnSceneLoaded;
+        }
+
         private void Start()
         {
             SubscribeToGameServiceEvents();
+        }
 
-            ServiceContainer.GameService.EnterWorld();
+        private void Update()
+        {
+            coroutinesExecutor.Update();
+        }
+
+        private void OnSceneLoaded(Scene scene, LoadSceneMode sceneMode)
+        {
+            coroutinesExecutor.StartTask(CreateLocalGameObject);
         }
 
         private void OnDestroy()
         {
+            coroutinesExecutor.Dispose();
+
+            SceneManager.sceneLoaded -= OnSceneLoaded;
+
             UnsubscribeFromGameServiceEvents();
         }
 
         private void SubscribeToGameServiceEvents()
         {
-            ServiceContainer.GameService.LocalSceneObjectAdded.AddListener(CreateLocalGameObject);
             ServiceContainer.GameService.SceneObjectAdded.AddListener(OnGameObjectAdded);
             ServiceContainer.GameService.SceneObjectRemoved.AddListener(OnGameObjectRemoved);
             ServiceContainer.GameService.SceneObjectsAdded.AddListener(OnGameObjectsAdded);
@@ -36,15 +59,16 @@ namespace Scripts.Containers
 
         private void UnsubscribeFromGameServiceEvents()
         {
-            ServiceContainer.GameService.LocalSceneObjectAdded.RemoveListener(CreateLocalGameObject);
             ServiceContainer.GameService.SceneObjectAdded.RemoveListener(OnGameObjectAdded);
             ServiceContainer.GameService.SceneObjectRemoved.RemoveListener(OnGameObjectRemoved);
             ServiceContainer.GameService.SceneObjectsAdded.RemoveListener(OnGameObjectsAdded);
             ServiceContainer.GameService.SceneObjectsRemoved.RemoveListener(OnGameObjectsRemoved);
         }
 
-        private void CreateLocalGameObject(LocalSceneObjectAddedEventParameters parameters)
+        private async Task CreateLocalGameObject(IYield yield)
         {
+            var parameters = await ServiceContainer.GameService.EnterWorld(yield);
+
             var characterGameObject = parameters.CharacterSceneObject;
             var character = parameters.Character;
 

@@ -42,6 +42,7 @@ GameObject:
   - component: {fileID: 95120891288372150}
   - component: {fileID: 114552846580037476}
   - component: {fileID: 114479215125207072}
+  - component: {fileID: 114671294607958812}
   m_Layer: 0
   m_Name: Arrow
   m_TagString: Untagged
@@ -122,6 +123,19 @@ MonoBehaviour:
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 0.5, y: -0.5}
   m_UseGraphicAlpha: 1
+--- !u!114 &114671294607958812
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1672393161269726}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65ff503a0f1de0c449eb569eacc70fe4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  showSpeed: 10
+  hideSpeed: 10
 --- !u!114 &114990334225663680
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -188,7 +202,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: ff7f482061b725842998f3d0d5df3771, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

@@ -11,25 +11,19 @@ namespace Scripts.World
         private void OnTriggerEnter2D(Collider2D collider)
         {
             var portalGameObject = collider.transform;
-
-            if (!collider.transform.CompareTag(PORTAL_TAG))
+            if (portalGameObject.CompareTag(PORTAL_TAG))
             {
-                return;
+                portalGameObject.GetComponent<PortalController>().StartInteraction();
             }
-
-            portalGameObject.GetComponent<Portal>().StartInteraction?.Invoke(gameObject.transform);
         }
 
         private void OnTriggerExit2D(Collider2D collider)
         {
             var portalGameObject = collider.transform;
-
-            if (!collider.transform.CompareTag(PORTAL_TAG))
+            if (portalGameObject.CompareTag(PORTAL_TAG))
             {
-                return;
+                portalGameObject.GetComponent<PortalController>().StopInteraction();
             }
-
-            portalGameObject.GetComponent<Portal>().StopInteraction?.Invoke();
         }
     }
 }

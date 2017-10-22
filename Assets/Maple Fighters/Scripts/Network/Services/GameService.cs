@@ -8,7 +8,6 @@ namespace Scripts.Services
 {
     public sealed class GameService : ServiceBase<GameOperations, GameEvents>, IGameService
     {
-        public UnityEvent<LocalSceneObjectAddedEventParameters> LocalSceneObjectAdded { get; } = new UnityEvent<LocalSceneObjectAddedEventParameters>();
         public UnityEvent<SceneObjectAddedEventParameters> SceneObjectAdded { get; } = new UnityEvent<SceneObjectAddedEventParameters>();
         public UnityEvent<SceneObjectRemovedEventParameters> SceneObjectRemoved { get; } = new UnityEvent<SceneObjectRemovedEventParameters>();
         public UnityEvent<SceneObjectsAddedEventParameters> SceneObjectsAdded { get; } = new UnityEvent<SceneObjectsAddedEventParameters>();
@@ -35,12 +34,6 @@ namespace Scripts.Services
 
         private void AddEventsHandlers()
         {
-            EventHandlerRegister.SetHandler(GameEvents.LocalSceneObjectAdded, new EventInvoker<LocalSceneObjectAddedEventParameters>(unityEvent =>
-            {
-                LocalSceneObjectAdded?.Invoke(unityEvent.Parameters);
-                return true;
-            }));
-
             EventHandlerRegister.SetHandler(GameEvents.SceneObjectAdded, new EventInvoker<SceneObjectAddedEventParameters>(unityEvent =>
             {
                 SceneObjectAdded?.Invoke(unityEvent.Parameters);
@@ -80,7 +73,6 @@ namespace Scripts.Services
 
         private void RemoveEventsHandlers()
         {
-            EventHandlerRegister.RemoveHandler(GameEvents.LocalSceneObjectAdded);
             EventHandlerRegister.RemoveHandler(GameEvents.SceneObjectAdded);
             EventHandlerRegister.RemoveHandler(GameEvents.SceneObjectRemoved);
             EventHandlerRegister.RemoveHandler(GameEvents.SceneObjectsAdded);
@@ -103,14 +95,16 @@ namespace Scripts.Services
             return responseParameters.Status;
         }
 
-        public void EnterWorld()
+        public async Task<EnterWorldResponseParameters> EnterWorld(IYield yield)
         {
             if (!IsConnected())
             {
-                return;
+                return new EnterWorldResponseParameters();
             }
 
-            OperationRequestSender.Send(GameOperations.EnterWorld, new EmptyParameters(), MessageSendOptions.DefaultReliable());
+            var requestId = OperationRequestSender.Send(GameOperations.EnterWorld, new EmptyParameters(), MessageSendOptions.DefaultReliable());
+            var responseParameters = await SubscriptionProvider.ProvideSubscription<EnterWorldResponseParameters>(yield, requestId);
+            return responseParameters;
         }
 
         public async Task<FetchCharactersResponseParameters> FetchCharacters(IYield yield)
@@ -181,15 +175,16 @@ namespace Scripts.Services
             OperationRequestSender.Send(GameOperations.PlayerStateChanged, parameters, MessageSendOptions.DefaultUnreliable((byte)GameDataChannels.Animations));
         }
 
-        public async Task ChangeScene(IYield yield, ChangeSceneRequestParameters parameters)
+        public async Task<ChangeSceneResponseParameters> ChangeScene(IYield yield, ChangeSceneRequestParameters parameters)
         {
             if (!IsConnected())
             {
-                return;
+                return new ChangeSceneResponseParameters(0);
             }
 
             var requestId = OperationRequestSender.Send(GameOperations.ChangeScene, parameters, MessageSendOptions.DefaultReliable());
-            await SubscriptionProvider.ProvideSubscription<EmptyParameters>(yield, requestId);
+            var responseParameters = await SubscriptionProvider.ProvideSubscription<ChangeSceneResponseParameters>(yield, requestId);
+            return responseParameters;
         }
     }
 }

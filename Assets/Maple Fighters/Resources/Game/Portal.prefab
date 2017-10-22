@@ -20,9 +20,11 @@ GameObject:
   m_Component:
   - component: {fileID: 4438300318642170}
   - component: {fileID: 61433287547904096}
-  m_Layer: 9
+  - component: {fileID: 114633205479044062}
+  - component: {fileID: 114698297195872212}
+  m_Layer: 0
   m_Name: Portal
-  m_TagString: Untagged
+  m_TagString: Portal
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -37,7 +39,8 @@ GameObject:
   - component: {fileID: 4836771901875952}
   - component: {fileID: 212908975280307160}
   - component: {fileID: 95367525517447752}
-  m_Layer: 9
+  - component: {fileID: 114968752706650406}
+  m_Layer: 0
   m_Name: Portal Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -113,6 +116,42 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114633205479044062
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1335518769023786}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed66d6b0c6100b742897ba2510e288ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: 0
+--- !u!114 &114698297195872212
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1335518769023786}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ed69dcf68f07264ca339c151e8df6de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114968752706650406
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1336006894701676}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65ff503a0f1de0c449eb569eacc70fe4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  showSpeed: 10
+  hideSpeed: 10
 --- !u!212 &212908975280307160
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -146,7 +185,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 734a6b2466aea0442b4339e434544fc6, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

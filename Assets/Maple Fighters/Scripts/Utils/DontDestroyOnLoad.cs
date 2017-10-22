@@ -18,6 +18,13 @@ namespace Scripts.Utils
             gameObject.DontDestroyOnLoad();
 
             Instance = this as T;
+
+            OnAwake();
+        }
+
+        protected virtual void OnAwake()
+        {
+            // Left blank intentionally
         }
     }
 }
