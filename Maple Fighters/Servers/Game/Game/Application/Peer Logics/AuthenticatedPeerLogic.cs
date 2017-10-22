@@ -30,6 +30,7 @@ namespace Game.Application.PeerLogics
 
             AddComponents();
 
+            AddHandlerForEnterWorldOperation();
             AddHandlerForUpdatePositionOperation();
             AddHandlerForUpdatePlayerStateOperation();
             AddHandlerForChangeSceneOperation();
@@ -39,11 +40,16 @@ namespace Game.Application.PeerLogics
         {
             characterSceneObject.Container.AddComponent(new PeerIdGetter(PeerWrapper.PeerId));
 
-            Entity.Container.AddComponent(new CharacterSceneObjectGetter(characterSceneObject, character));
+            Entity.Container.AddComponent(new CharacterGetter(characterSceneObject, character));
             Entity.Container.AddComponent(new MinimalPeerGetter(PeerWrapper.Peer));
             Entity.Container.AddComponent(new InterestAreaManagement());
             Entity.Container.AddComponent(new PositionChangesListener());
-            Entity.Container.AddComponent(new LocalCharacterSender());
+        }
+
+        private void AddHandlerForEnterWorldOperation()
+        {
+            var characterGetter = Entity.Container.GetComponent<ICharacterGetter>().AssertNotNull();
+            OperationRequestHandlerRegister.SetHandler(GameOperations.EnterWorld, new EnterWorldOperationHandler(characterGetter));
         }
 
         private void AddHandlerForUpdatePositionOperation()
@@ -61,8 +67,8 @@ namespace Game.Application.PeerLogics
 
         private void AddHandlerForChangeSceneOperation()
         {
-            var sceneObjectGetter = Entity.Container.GetComponent<ICharacterSceneObjectGetter>().AssertNotNull();
-            OperationRequestHandlerRegister.SetHandler(GameOperations.ChangeScene, new ChangeSceneOperationHandler(sceneObjectGetter));
+            var characterGetter = Entity.Container.GetComponent<ICharacterGetter>().AssertNotNull();
+            OperationRequestHandlerRegister.SetHandler(GameOperations.ChangeScene, new ChangeSceneOperationHandler(characterGetter));
         }
 
         private void SubscribeToDisconnectedEvent()

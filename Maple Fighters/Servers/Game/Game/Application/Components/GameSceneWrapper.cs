@@ -1,12 +1,10 @@
 ﻿using System.IO;
 using CommonTools.Log;
 using Game.InterestManagement;
-using MathematicsHelper;
 using Microsoft.Scripting.Hosting;
 using PythonScripting;
 using ServerApplication.Common.ApplicationBase;
 using Shared.Game.Common;
-using SceneObject = Game.InterestManagement.SceneObject;
 
 namespace Game.Application.Components
 {
@@ -42,12 +40,12 @@ namespace Game.Application.Components
             }
         }
 
-        public void AddSceneObject(string name, Vector2 position)
+        public void AddSceneObject(ISceneObject sceneObject)
         {
-            var sceneObject = new SceneObject(name, position);
-            scene.AddSceneObject(sceneObject);
+            var newSceneObject = scene.AddSceneObject(sceneObject);
 
-            var interestArea = sceneObject.Container.AddComponent(new InterestArea(position, scene.RegionSize));
+            var transform = newSceneObject.Container.GetComponent<ITransform>().AssertNotNull();
+            var interestArea = newSceneObject.Container.AddComponent(new InterestArea(transform.Position, scene.RegionSize));
             interestArea.DetectOverlapsWithRegions();
         }
 

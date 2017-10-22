@@ -4,7 +4,7 @@ using Shared.Game.Common;
 
 namespace Game.Application.PeerLogic.Components
 {
-    internal interface ICharacterSceneObjectGetter : IExposableComponent
+    internal interface ICharacterGetter : IExposableComponent
     {
         ISceneObject GetSceneObject();
         Character GetCharacter();

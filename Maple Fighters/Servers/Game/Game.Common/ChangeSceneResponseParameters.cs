@@ -3,23 +3,23 @@ using CommonCommunicationInterfaces;
 
 namespace Shared.Game.Common
 {
-    public struct ChangeSceneRequestParameters : IParameters
+    public struct ChangeSceneResponseParameters : IParameters
     {
-        public int PortalId;
+        public int SceneId;
 
-        public ChangeSceneRequestParameters(int portalId)
+        public ChangeSceneResponseParameters(int sceneId)
         {
-            PortalId = portalId;
+            SceneId = sceneId;
         }
 
         public void Serialize(BinaryWriter writer)
         {
-            writer.Write(PortalId);
+            writer.Write(SceneId);
         }
 
         public void Deserialize(BinaryReader reader)
         {
-            PortalId = reader.ReadInt32();
+            SceneId = reader.ReadInt32();
         }
     }
 }

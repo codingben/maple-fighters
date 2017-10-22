@@ -19,7 +19,7 @@ namespace Game.Application.PeerLogic.Components
         private IPeerContainer peerContainer;
         private IMinimalPeerGetter peerGetter;
         private IEventSenderWrapper eventSender;
-        private ICharacterSceneObjectGetter sceneObjectGetter;
+        private ICharacterGetter sceneObjectGetter;
 
         protected override void OnAwake()
         {
@@ -28,7 +28,7 @@ namespace Game.Application.PeerLogic.Components
             peerContainer = Server.Entity.Container.GetComponent<IPeerContainer>().AssertNotNull();
 
             eventSender = Entity.Container.GetComponent<IEventSenderWrapper>().AssertNotNull();
-            sceneObjectGetter = Entity.Container.GetComponent<ICharacterSceneObjectGetter>().AssertNotNull();
+            sceneObjectGetter = Entity.Container.GetComponent<ICharacterGetter>().AssertNotNull();
             peerGetter = Entity.Container.GetComponent<IMinimalPeerGetter>().AssertNotNull();
 
             SubscribeToInterestAreaEvents();

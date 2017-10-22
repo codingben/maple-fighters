@@ -162,7 +162,7 @@ namespace Game.InterestManagement
         /// <param name="sceneObjectId">A removed subscriber id</param>
         private void RemoveAllSubscribersForSubscriber(int sceneObjectId)
         {
-            var subscribers = sceneObjects.Keys.Where(id => id != sceneObjectId).ToArray();
+            var subscribers = sceneObjects.Keys.ToArray();
 
             if (sceneObjects[sceneObjectId] == null) return;
             {

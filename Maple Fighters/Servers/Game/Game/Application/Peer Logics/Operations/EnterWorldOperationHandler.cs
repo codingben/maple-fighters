@@ -1,22 +1,35 @@
-﻿using System;
-using CommonCommunicationInterfaces;
+﻿using CommonCommunicationInterfaces;
+using CommonTools.Log;
+using Game.Application.PeerLogic.Components;
+using Game.InterestManagement;
 using ServerCommunicationHelper;
+using Shared.Game.Common;
+using SceneObject = Shared.Game.Common.SceneObject;
 
 namespace Game.Application.PeerLogic.Operations
 {
-    internal class EnterWorldOperationHandler : IOperationRequestHandler<EmptyParameters, EmptyParameters>
+    internal class EnterWorldOperationHandler : IOperationRequestHandler<EmptyParameters, EnterWorldResponseParameters>
     {
-        private readonly Action onEnterWorld;
+        private readonly ICharacterGetter sceneObjectGetter;
 
-        public EnterWorldOperationHandler(Action onEnterWorld)
+        public EnterWorldOperationHandler(ICharacterGetter sceneObjectGetter)
         {
-            this.onEnterWorld = onEnterWorld;
+            this.sceneObjectGetter = sceneObjectGetter;
         }
 
-        public EmptyParameters? Handle(MessageData<EmptyParameters> messageData, ref MessageSendOptions sendOptions)
+        public EnterWorldResponseParameters? Handle(MessageData<EmptyParameters> messageData, ref MessageSendOptions sendOptions)
         {
-            onEnterWorld.Invoke();
-            return null;
+            var characterSceneObject = sceneObjectGetter.GetSceneObject();
+            var character = sceneObjectGetter.GetCharacter();
+            return new EnterWorldResponseParameters(GetSharedSceneObject(characterSceneObject), character);
+        }
+
+        private SceneObject GetSharedSceneObject(ISceneObject sceneObject)
+        {
+            const string SCENE_OBJECT_NAME = "Local Player";
+
+            var transform = sceneObject.Container.GetComponent<ITransform>().AssertNotNull();
+            return new SceneObject(sceneObject.Id, SCENE_OBJECT_NAME, transform.Position.X, transform.Position.Y);
         }
     }
 }

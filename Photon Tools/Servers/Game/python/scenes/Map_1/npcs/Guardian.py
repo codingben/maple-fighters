@@ -1,6 +1,9 @@
 from MathematicsHelper import *
+from Game.InterestManagement import *
 
 name = "Guardian"
 position = Vector2(-15, -5.95)
 
-scene.AddSceneObject(name, position)
+guardian = SceneObject(name, position)
+
+scene.AddSceneObject(guardian)

@@ -102,14 +102,13 @@
     <Compile Include="Application\Components\IGameSceneWrapper.cs" />
     <Compile Include="Application\Components\ISceneContainer.cs" />
     <Compile Include="Application\Components\SceneContainer.cs" />
-    <Compile Include="Application\Peer Logics\Components\ICharacterSceneObjectGetter.cs" />
+    <Compile Include="Application\Peer Logics\Components\ICharacterGetter.cs" />
     <Compile Include="Application\Peer Logics\Components\IInterestAreaManagement.cs" />
     <Compile Include="Application\Peer Logics\Components\IMinimalPeerGetter.cs" />
     <Compile Include="Application\Peer Logics\Components\IPeerIdGetter.cs" />
     <Compile Include="Application\Scene Objects\Components\CharacterInformationProvider.cs" />
     <Compile Include="Application\Peer Logics\CharactersSelectionPeerLogic.cs" />
-    <Compile Include="Application\Peer Logics\Components\CharacterSceneObjectGetter.cs" />
-    <Compile Include="Application\Peer Logics\Components\LocalCharacterSender.cs" />
+    <Compile Include="Application\Peer Logics\Components\CharacterGetter.cs" />
     <Compile Include="Application\Peer Logics\Components\MinimalPeerGetter.cs" />
     <Compile Include="Application\Peer Logics\Components\PeerIdGetter.cs" />
     <Compile Include="Application\Peer Logics\Components\PositionChangesListener.cs" />
@@ -127,6 +126,9 @@
     <Compile Include="Application\Peer Logics\Operations\UpdatePlayerStateOperationHandler.cs" />
     <Compile Include="Application\Peer Logics\UnauthenticatedPeerLogic.cs" />
     <Compile Include="Application\Scene Objects\Components\ICharacterInformationProvider.cs" />
+    <Compile Include="Application\Scene Objects\Portal\IPortalInfoProvider.cs" />
+    <Compile Include="Application\Scene Objects\Portal\Portal.cs" />
+    <Compile Include="Application\Scene Objects\Portal\PortalInfoProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

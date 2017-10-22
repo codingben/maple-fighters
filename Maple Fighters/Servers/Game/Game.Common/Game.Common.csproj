@@ -55,6 +55,7 @@
     <Compile Include="AuthenticateResponseParameters.cs" />
     <Compile Include="AuthenticationStatus.cs" />
     <Compile Include="ChangeSceneRequestParameters.cs" />
+    <Compile Include="ChangeSceneResponseParameters.cs" />
     <Compile Include="Character.cs" />
     <Compile Include="CharacterClasses.cs" />
     <Compile Include="CharacterCreationStatus.cs" />
@@ -74,7 +75,7 @@
     <Compile Include="GameDataChannels.cs" />
     <Compile Include="GameEvents.cs" />
     <Compile Include="GameOperations.cs" />
-    <Compile Include="LocalSceneObjectAddedEventParameters.cs" />
+    <Compile Include="EnterWorldResponseParameters.cs" />
     <Compile Include="Maps.cs" />
     <Compile Include="PlayerState.cs" />
     <Compile Include="PlayerStateChangedEventParameters.cs" />

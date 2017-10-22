@@ -2,35 +2,47 @@
 using CommonTools.Log;
 using Game.Application.Components;
 using Game.Application.PeerLogic.Components;
+using Game.Application.SceneObjects;
+using Game.InterestManagement;
 using ServerApplication.Common.ApplicationBase;
 using ServerCommunicationHelper;
 using Shared.Game.Common;
 
 namespace Game.Application.PeerLogic.Operations
 {
-    internal class ChangeSceneOperationHandler : IOperationRequestHandler<ChangeSceneRequestParameters, EmptyParameters>
+    internal class ChangeSceneOperationHandler : IOperationRequestHandler<ChangeSceneRequestParameters, ChangeSceneResponseParameters>
     {
-        private readonly ICharacterSceneObjectGetter sceneObjectGetter;
+        private readonly ICharacterGetter character;
         private readonly ISceneContainer sceneContainer;
 
-        public ChangeSceneOperationHandler(ICharacterSceneObjectGetter sceneObjectGetter)
+        public ChangeSceneOperationHandler(ICharacterGetter character)
         {
-            this.sceneObjectGetter = sceneObjectGetter;
+            this.character = character;
 
             sceneContainer = Server.Entity.Container.GetComponent<ISceneContainer>().AssertNotNull();
         }
 
-        public EmptyParameters? Handle(MessageData<ChangeSceneRequestParameters> messageData, ref MessageSendOptions sendOptions)
+        public ChangeSceneResponseParameters? Handle(MessageData<ChangeSceneRequestParameters> messageData, ref MessageSendOptions sendOptions)
         {
-            var sceneId = messageData.Parameters.Map;
-            var scene = sceneContainer.GetSceneWrapper(sceneId).AssertNotNull();
+            var characterSceneObject = character.GetSceneObject();
 
-            var sceneObject = sceneObjectGetter.GetSceneObject();
-            sceneObject.Scene.RemoveSceneObject(sceneObject.Id);
+            // Getting portal info.
+            var portalSceneObjectId = messageData.Parameters.PortalId;
+            var portalSceneObject = characterSceneObject.Scene.GetSceneObject(portalSceneObjectId).AssertNotNull();
+            var portalInfoProvider = portalSceneObject.Container.GetComponent<IPortalInfoProvider>().AssertNotNull();
 
-            scene.GetScene().AddSceneObject(sceneObject);
+            // Removing a character from his old scene.
+            characterSceneObject.Scene.RemoveSceneObject(characterSceneObject.Id);
 
-            return new EmptyParameters();
+            // Adding a character to the destination scene.
+            var destinationScene = sceneContainer.GetSceneWrapper(portalInfoProvider.Map).AssertNotNull();
+            destinationScene.GetScene().AddSceneObject(characterSceneObject);
+
+            // Setting the character's position in the destination scene.
+            var transform = characterSceneObject.Container.GetComponent<ITransform>().AssertNotNull();
+            transform.SetPosition(portalInfoProvider.PlayerPosition);
+
+            return new ChangeSceneResponseParameters((int)portalInfoProvider.Map);
         }
     }
 }

@@ -27,6 +27,7 @@ namespace Game.InterestManagement
 
         public void Dispose()
         {
+            Scene?.RemoveSceneObject(Id);
             Container?.Dispose();
         }
     }

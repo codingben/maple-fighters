@@ -10,14 +10,14 @@ namespace Game.Application.PeerLogic.Components
 {
     internal class PositionChangesListener : Component<IPeerEntity>
     {
-        private ICharacterSceneObjectGetter sceneObjectGetter;
+        private ICharacterGetter sceneObjectGetter;
         private IInterestAreaManagement interestAreaManagement;
 
         protected override void OnAwake()
         {
             base.OnAwake();
 
-            sceneObjectGetter = Entity.Container.GetComponent<ICharacterSceneObjectGetter>().AssertNotNull();
+            sceneObjectGetter = Entity.Container.GetComponent<ICharacterGetter>().AssertNotNull();
             interestAreaManagement = Entity.Container.GetComponent<IInterestAreaManagement>().AssertNotNull();
 
             SubscribeToPositionChangedEvent();

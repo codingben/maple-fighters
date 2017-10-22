@@ -6,12 +6,12 @@ using Shared.Game.Common;
 
 namespace Game.Application.PeerLogic.Components
 {
-    internal class CharacterSceneObjectGetter : Component<IPeerEntity>, ICharacterSceneObjectGetter
+    internal class CharacterGetter : Component<IPeerEntity>, ICharacterGetter
     {
         private readonly ISceneObject sceneObject;
         private readonly Character character;
 
-        public CharacterSceneObjectGetter(ISceneObject sceneObject, Character character)
+        public CharacterGetter(ISceneObject sceneObject, Character character)
         {
             this.sceneObject = sceneObject.AssertNotNull();
             this.character = character;

@@ -21,16 +21,10 @@ namespace Game.Application.PeerLogics
         {
             base.Initialize(peer);
 
-            AddHandlerForEnteredWorldOperation();
             AddHandlerValidateCharacterOperation();
             AddHandlerForFetchCharactersOperation();
             AddHandlerForCreateCharacterOperation();
             AddHandlerForRemoveCharacterOperation();
-        }
-
-        private void AddHandlerForEnteredWorldOperation()
-        {
-            OperationRequestHandlerRegister.SetHandler(GameOperations.EnterWorld, new EnterWorldOperationHandler(OnCharacterEnterWorld));
         }
 
         private void AddHandlerValidateCharacterOperation()
@@ -56,11 +50,8 @@ namespace Game.Application.PeerLogics
         private void OnCharacterSelected(Character character)
         {
             choosedCharacter = character;
-        }
 
-        private void OnCharacterEnterWorld()
-        {
-            if (!choosedCharacter.HasValue)
+            if (choosedCharacter == null)
             {
                 KickOutPeer();
                 return;
