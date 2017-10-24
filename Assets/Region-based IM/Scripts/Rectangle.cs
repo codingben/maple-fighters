@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace InterestManagement
+namespace InterestManagement.Scripts
 {
     public struct Rectangle
     {

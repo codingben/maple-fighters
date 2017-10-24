@@ -23,6 +23,16 @@ namespace Scripts.Services
         protected IOperationRequestSender<TOperationCode> OperationRequestSender { get; private set; }
         protected IOperationResponseSubscriptionProvider SubscriptionProvider { get; private set; }
 
+        NetworkTrafficState? IServiceBase.NetworkTrafficState() => serverPeer?.NetworkTrafficState;
+
+        public void SetNetworkTrafficState(NetworkTrafficState state)
+        {
+            if (IsConnected())
+            {
+                serverPeer.NetworkTrafficState = state;
+            }
+        }
+
         public async Task<ConnectionStatus> Connect(IYield yield, ICoroutinesExecutor coroutinesExecutor, ConnectionInformation connectionInformation)
         {
             var peerConnectionInformation = GetPeerConnectionInformation(connectionInformation);

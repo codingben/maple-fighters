@@ -72,7 +72,8 @@ namespace Scripts.Containers
             var characterGameObject = parameters.CharacterSceneObject;
             var character = parameters.Character;
 
-            LogUtils.Log(MessageBuilder.Trace($"Local scene object Id: {characterGameObject.Id}"));
+            var position = new Vector2(parameters.CharacterSceneObject.X, parameters.CharacterSceneObject.Y);
+            LogUtils.Log(MessageBuilder.Trace($"Local scene object Id: {characterGameObject.Id} Position: {position}"));
 
             var obj = AddGameObject(characterGameObject);
             if (obj == null)
