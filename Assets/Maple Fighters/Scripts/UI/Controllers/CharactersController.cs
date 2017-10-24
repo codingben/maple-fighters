@@ -33,7 +33,7 @@ namespace Scripts.UI.Controllers
 
         private void Start()
         {
-            coroutinesExecutor.StartTask(FetchCharactersTask);
+            coroutinesExecutor.StartTask(FetchCharacters);
         }
 
         private void OnDestroy()
@@ -59,10 +59,10 @@ namespace Scripts.UI.Controllers
 
         private void Update()
         {
-            coroutinesExecutor?.Update();
+            coroutinesExecutor.Update();
         }
 
-        private async Task FetchCharactersTask(IYield yield)
+        private async Task FetchCharacters(IYield yield)
         {
             charactersParent = UserInterfaceContainer.Instance.Get<BackgroundCharactersParent>().AssertNotNull().GameObject.transform;
 
@@ -173,11 +173,12 @@ namespace Scripts.UI.Controllers
             characterSelectionOptionsWindow.DeleteCharacterButtonClicked += () => OnDeleteCharacterButtonClicked(index);
             characterSelectionOptionsWindow.PlayCharacterIdleAnimation += clickableCharacter.PlayIdleAnimationAction;
             characterSelectionOptionsWindow.StartButtonInteraction(character.HasCharacter);
-            characterSelectionOptionsWindow.CreateCharacteButtonInteraction(!character.HasCharacter);
+            characterSelectionOptionsWindow.CreateCharacterButtonInteraction(!character.HasCharacter);
             characterSelectionOptionsWindow.DeleteCharacterButtonInteraction(character.HasCharacter);
             characterSelectionOptionsWindow.Show();
 
             clickedCharacter = clickableCharacter;
+            clickedCharacter.PlayWalkAnimationAction();
         }
 
         private void OnStartButtonClicked(int characterIndex)

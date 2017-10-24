@@ -14,7 +14,7 @@ namespace Scripts.UI.Windows
         public event Action PlayCharacterIdleAnimation;
 
         public void StartButtonInteraction(bool interctable) => startButton.interactable = interctable;
-        public void CreateCharacteButtonInteraction(bool interctable) => createCharacterButton.interactable = interctable;
+        public void CreateCharacterButtonInteraction(bool interctable) => createCharacterButton.interactable = interctable;
         public void DeleteCharacterButtonInteraction(bool interctable) => deleteCharacterButton.interactable = interctable;
 
         [SerializeField] private Button startButton;

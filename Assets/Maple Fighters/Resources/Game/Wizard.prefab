@@ -23,7 +23,6 @@ GameObject:
   - component: {fileID: 95990871939859340}
   - component: {fileID: 114226178903887958}
   - component: {fileID: 114056583436086012}
-  - component: {fileID: 114034895202054118}
   m_Layer: 0
   m_Name: Wizard
   m_TagString: Untagged
@@ -81,19 +80,6 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &114034895202054118
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1210278977448276}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 65ff503a0f1de0c449eb569eacc70fe4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  showSpeed: 10
-  hideSpeed: 10
 --- !u!114 &114056583436086012
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -202,7 +188,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: c323b4b94758aed43a479d677d44b59b, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

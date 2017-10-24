@@ -20,7 +20,7 @@ namespace Scripts.UI.Controllers
 
         private void Update()
         {
-            coroutinesExecutor?.Update();
+            coroutinesExecutor.Update();
         }
 
         public void ShowCharactersSelectionWindow(ClickableCharacter clickableCharacter, int characterIndex)

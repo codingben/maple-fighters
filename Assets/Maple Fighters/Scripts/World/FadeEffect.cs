@@ -5,6 +5,14 @@ namespace Scripts.World
 {
     public class FadeEffect : MonoBehaviour
     {
+        protected enum FadeState
+        {
+            Fade,
+            UnFade
+        }
+
+        [Header("Fade Settings")]
+        [SerializeField] protected FadeState startingState;
         [Header("Fade Speed")]
         [SerializeField] protected float showSpeed;
         [SerializeField] protected float hideSpeed;
@@ -19,7 +27,19 @@ namespace Scripts.World
 
         private void Start()
         {
-            Fade();
+            switch (startingState)
+            {
+                case FadeState.Fade:
+                {
+                    Fade();
+                    break;
+                }
+                case FadeState.UnFade:
+                {
+                    UnFade();
+                    break;
+                }
+            }
         }
 
         private void Fade()
@@ -32,7 +52,7 @@ namespace Scripts.World
             fadeCoroutine = StartCoroutine(FadeRoutine(showSpeed));
         }
 
-        private void UnFade() // TODO: Implement
+        private void UnFade()
         {
             if (fadeCoroutine != null)
             {
@@ -44,7 +64,7 @@ namespace Scripts.World
 
         private IEnumerator FadeRoutine(float speed)
         {
-            var color = new Color(0, 0, 0, 1);
+            var color = new Color(0, 0, 0, 0.25f);
 
             while (true)
             {
