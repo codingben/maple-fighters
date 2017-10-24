@@ -124,6 +124,12 @@ namespace Game.InterestManagement
             }
         }
 
+        public void SetSize()
+        {
+            var size = Entity.Scene.RegionSize;
+            interestArea.SetSize(size);
+        }
+
         public IEnumerable<IRegion> GetSubscribedPublishers()
         {
             var regions = Entity.Scene.GetAllRegions();

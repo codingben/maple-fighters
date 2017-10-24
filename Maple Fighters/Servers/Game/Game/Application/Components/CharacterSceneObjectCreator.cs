@@ -24,7 +24,7 @@ namespace Game.Application.Components
         public ISceneObject Create(Character character)
         {
             const Maps MAP = Maps.Map_1;
-            var position = new Vector2(18, -6);
+            var position = new Vector2(18, -1.75f);
 
             var scene = sceneContainer.GetSceneWrapper(MAP).GetScene().AssertNotNull();
             var sceneObject = scene.AddSceneObject(new SceneObject(SCENE_OBJECT_NAME, position)).AssertNotNull();

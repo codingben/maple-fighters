@@ -7,6 +7,7 @@ namespace Game.InterestManagement
 {
     public interface ITransform : IExposableComponent
     {
+        Vector2 InitialPosition { get; set; }
         Vector2 Position { get; }
 
         event Action<Vector2> PositionChanged;

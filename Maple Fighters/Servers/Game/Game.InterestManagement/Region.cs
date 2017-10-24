@@ -40,10 +40,11 @@ namespace Game.InterestManagement
                 return;
             }
 
-            RemoveSubscribersForSubscriber(sceneObjectId);
+            var sceneObject = sceneObjects[sceneObjectId];
 
             sceneObjects.Remove(sceneObjectId);
 
+            RemoveSubscribersForSubscriber(sceneObject);
             RemoveSubscriberForSubscribers(sceneObjectId);
 
             LogUtils.Log(MessageBuilder.Trace($"Removed subscription id #{sceneObjectId}"));
@@ -80,7 +81,7 @@ namespace Game.InterestManagement
         /// <param name="sceneObject">A new subscriber</param>
         private void AddSubscribersForSubscriber(ISceneObject sceneObject)
         {
-            var subscribers = sceneObjects.Values.Where(subscriber => subscriber.Id != sceneObject.Id).ToArray();
+            var subscribers = GetAllSubscribers().Where(subscriber => subscriber.Id != sceneObject.Id).ToArray();
             if (subscribers.Length <= 0) return;
             {
                 var subscriberArea = sceneObject.Container.GetComponent<IInterestArea>().AssertNotNull();
@@ -91,23 +92,36 @@ namespace Game.InterestManagement
         /// <summary>
         /// Remove subscribers for the subscriber that left this region.
         /// </summary>
-        /// <param name="sceneObjectId">A removed subscriber id</param>
-        private void RemoveSubscribersForSubscriber(int sceneObjectId)
+        /// <param name="sceneObject">A removed subscriber</param>
+        private void RemoveSubscribersForSubscriber(ISceneObject sceneObject)
         {
-            var subscribers = sceneObjects.Values.Where(subscriber => subscriber.Id != sceneObjectId).ToArray();
-            var subscriberArea = sceneObjects[sceneObjectId].Container.GetComponent<IInterestArea>().AssertNotNull();
             var subscribersForRemoveList = new List<int>();
 
-            foreach (var subscriber in subscribers)
+            foreach (var subscriber in GetAllSubscribers())
             {
-                if (subscriberArea.GetSubscribedPublishers().Any(publisher => !publisher.HasSubscription(subscriber.Id)))
+                var subscriberArea = subscriber.Container.GetComponent<IInterestArea>().AssertNotNull();
+                var subscribedPublishers = subscriberArea.GetSubscribedPublishers().ToArray();
+
+                foreach (var publisher in subscribedPublishers)
                 {
-                    subscribersForRemoveList.Add(subscriber.Id);
+                    if (!publisher.HasSubscription(sceneObject.Id))
+                    {
+                        subscribersForRemoveList.Add(subscriber.Id);
+                    }
+                }
+
+                foreach (var publisher in subscribedPublishers)
+                {
+                    if (publisher.HasSubscription(sceneObject.Id))
+                    {
+                        subscribersForRemoveList.Remove(subscriber.Id);
+                    }
                 }
             }
 
             if (subscribersForRemoveList.Count <= 0) return;
             {
+                var subscriberArea = sceneObject.Container.GetComponent<IInterestArea>().AssertNotNull();
                 subscriberArea.InvokeSubscribersRemoved(subscribersForRemoveList.ToArray());
             }
         }
@@ -118,7 +132,7 @@ namespace Game.InterestManagement
         /// <param name="sceneObject">A new subscriber</param>
         private void AddSubscriberForSubscribers(ISceneObject sceneObject)
         {
-            var subscribers = sceneObjects.Values.Where(subscriber => subscriber.Id != sceneObject.Id).ToArray();
+            var subscribers = GetAllSubscribers().Where(subscriber => subscriber.Id != sceneObject.Id).ToArray();
 
             foreach (var subscriber in subscribers)
             {
@@ -133,7 +147,7 @@ namespace Game.InterestManagement
         /// <param name="sceneObjectId">A removed subscriber id</param>
         private void RemoveSubscriberForSubscribers(int sceneObjectId)
         {
-            foreach (var subscriber in sceneObjects.Values)
+            foreach (var subscriber in GetAllSubscribers())
             {
                 var subscriberArea = subscriber.Container.GetComponent<IInterestArea>().AssertNotNull();
                 if (!subscriberArea.GetSubscribedPublishers().Any(publisher => publisher.HasSubscription(sceneObjectId)))
@@ -149,7 +163,7 @@ namespace Game.InterestManagement
         /// <param name="sceneObjectId">A removed subscriber id</param>
         private void RemoveSubscriberForAllSubscribers(int sceneObjectId)
         {
-            foreach (var subscriber in sceneObjects.Values)
+            foreach (var subscriber in GetAllSubscribers())
             {
                 var subscriberArea = subscriber.Container.GetComponent<IInterestArea>().AssertNotNull();
                 subscriberArea.InvokeSubscriberRemoved(sceneObjectId);

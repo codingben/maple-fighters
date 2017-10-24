@@ -16,6 +16,7 @@ namespace Game.InterestManagement
         void InvokeSubscribersAdded(ISceneObject[] sceneObjects);
         void InvokeSubscribersRemoved(int[] sceneObjectIds);
 
+        void SetSize();
         void DetectOverlapsWithRegions();
 
         IEnumerable<IRegion> GetSubscribedPublishers();

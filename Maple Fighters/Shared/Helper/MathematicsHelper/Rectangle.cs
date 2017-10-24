@@ -9,8 +9,8 @@ namespace MathematicsHelper
         public float X { get; private set; }
         public float Y { get; private set; }
 
-        public float Width { get; }
-        public float Height { get; }
+        public float Width { get; private set; }
+        public float Height { get; private set; }
 
         public float Left => X;
         public float Top => Y;
@@ -39,6 +39,12 @@ namespace MathematicsHelper
         {
             X = position.X;
             Y = position.Y;
+        }
+
+        public void SetSize(Vector2 size)
+        {
+            Width = size.X;
+            Height = size.Y;
         }
 
         public override bool Equals(object obj)

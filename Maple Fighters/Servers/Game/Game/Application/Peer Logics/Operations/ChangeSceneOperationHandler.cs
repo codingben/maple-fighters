@@ -18,7 +18,6 @@ namespace Game.Application.PeerLogic.Operations
         public ChangeSceneOperationHandler(ICharacterGetter character)
         {
             this.character = character;
-
             sceneContainer = Server.Entity.Container.GetComponent<ISceneContainer>().AssertNotNull();
         }
 
@@ -34,13 +33,17 @@ namespace Game.Application.PeerLogic.Operations
             // Removing a character from his old scene.
             characterSceneObject.Scene.RemoveSceneObject(characterSceneObject.Id);
 
+            // Setting the character's position in the destination scene.
+            var transform = characterSceneObject.Container.GetComponent<ITransform>().AssertNotNull();
+            transform.InitialPosition = portalInfoProvider.PlayerPosition;
+
             // Adding a character to the destination scene.
             var destinationScene = sceneContainer.GetSceneWrapper(portalInfoProvider.Map).AssertNotNull();
             destinationScene.GetScene().AddSceneObject(characterSceneObject);
 
-            // Setting the character's position in the destination scene.
-            var transform = characterSceneObject.Container.GetComponent<ITransform>().AssertNotNull();
-            transform.SetPosition(portalInfoProvider.PlayerPosition);
+            // Setting the character's interest area in the destination scene.
+            var interestArea = characterSceneObject.Container.GetComponent<IInterestArea>().AssertNotNull();
+            interestArea.SetSize();
 
             return new ChangeSceneResponseParameters((int)portalInfoProvider.Map);
         }

@@ -7,7 +7,9 @@ namespace Game.InterestManagement
 {
     public class Transform : Component<ISceneObject>, ITransform
     {
+        public Vector2 InitialPosition { get; set; }
         public Vector2 Position { get; private set; } = Vector2.Zero;
+
         private Vector2 lastPosition = Vector2.Zero;
 
         public event Action<Vector2> PositionChanged;
@@ -20,6 +22,7 @@ namespace Game.InterestManagement
 
         public Transform(Vector2 startPosition)
         {
+            InitialPosition = startPosition;
             Position = startPosition;
             lastPosition = startPosition;
         }
