@@ -2,6 +2,7 @@
 using System.Linq;
 using CommonTools.Log;
 using MathematicsHelper;
+using Config = JsonConfig.Config;
 
 namespace Game.InterestManagement
 {
@@ -29,7 +30,10 @@ namespace Game.InterestManagement
             AddSubscribersForSubscriber(sceneObject);
             AddSubscriberForSubscribers(sceneObject);
 
-            LogUtils.Log(MessageBuilder.Trace($"Added subscription id #{sceneObject.Id}"));
+            if (Config.Global.Log.InterestManagement)
+            {
+                LogUtils.Log(MessageBuilder.Trace($"Added subscription id #{sceneObject.Id}"));
+            }
         }
 
         public void RemoveSubscription(int sceneObjectId)
@@ -47,7 +51,10 @@ namespace Game.InterestManagement
             RemoveSubscribersForSubscriber(sceneObject);
             RemoveSubscriberForSubscribers(sceneObjectId);
 
-            LogUtils.Log(MessageBuilder.Trace($"Removed subscription id #{sceneObjectId}"));
+            if (Config.Global.Log.InterestManagement)
+            {
+                LogUtils.Log(MessageBuilder.Trace($"Removed subscription id #{sceneObjectId}"));
+            }
         }
 
         public void RemoveSubscriptionForAllSubscribers(int sceneObject)

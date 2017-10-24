@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using CommonTools.Log;
 using MathematicsHelper;
+using Config = JsonConfig.Config;
 
 namespace Game.InterestManagement
 {
@@ -50,7 +51,10 @@ namespace Game.InterestManagement
                 sceneObject.Scene = this;
                 sceneObjects.Add(sceneObject.Id, sceneObject);
 
-                LogUtils.Log(MessageBuilder.Trace($"A new scene object: {sceneObject.Name}"));
+                if (Config.Global.Log.InterestManagement)
+                {
+                    LogUtils.Log(MessageBuilder.Trace($"A new scene object: {sceneObject.Name}"));
+                }
                 return sceneObject;
             }
         }
@@ -65,7 +69,10 @@ namespace Game.InterestManagement
                     return;
                 }
 
-                LogUtils.Log(MessageBuilder.Trace($"Removed scene object: {sceneObjects[id].Name}"));
+                if (Config.Global.Log.InterestManagement)
+                {
+                    LogUtils.Log(MessageBuilder.Trace($"Removed scene object: {sceneObjects[id].Name}"));
+                }
 
                 sceneObjects[id].Scene = null;
                 sceneObjects.Remove(id);
