@@ -10,6 +10,8 @@ namespace Scripts.Services
     {
         Task<ConnectionStatus> Connect(IYield yield, ICoroutinesExecutor coroutinesExecutor, ConnectionInformation connectionInformation);
 
+        void SetNetworkTrafficState(NetworkTrafficState state);
+
         NetworkTrafficState? NetworkTrafficState();
         bool IsConnected();
     }

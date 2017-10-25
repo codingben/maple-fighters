@@ -67,7 +67,7 @@ namespace Scripts.Containers
 
         private async Task CreateLocalGameObject(IYield yield)
         {
-            var parameters = await ServiceContainer.GameService.EnterWorld(yield);
+            var parameters = await ServiceContainer.GameService.EnterScene(yield);
 
             var characterGameObject = parameters.CharacterSceneObject;
             var character = parameters.Character;

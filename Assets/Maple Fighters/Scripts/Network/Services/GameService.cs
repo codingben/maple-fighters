@@ -95,15 +95,15 @@ namespace Scripts.Services
             return responseParameters.Status;
         }
 
-        public async Task<EnterWorldResponseParameters> EnterWorld(IYield yield)
+        public async Task<EnterSceneResponseParameters> EnterScene(IYield yield)
         {
             if (!IsConnected())
             {
-                return new EnterWorldResponseParameters();
+                return new EnterSceneResponseParameters();
             }
 
-            var requestId = OperationRequestSender.Send(GameOperations.EnterWorld, new EmptyParameters(), MessageSendOptions.DefaultReliable());
-            var responseParameters = await SubscriptionProvider.ProvideSubscription<EnterWorldResponseParameters>(yield, requestId);
+            var enteredSceneRequestId = OperationRequestSender.Send(GameOperations.EnterScene, new EmptyParameters(), MessageSendOptions.DefaultReliable());
+            var responseParameters = await SubscriptionProvider.ProvideSubscription<EnterSceneResponseParameters>(yield, enteredSceneRequestId);
             return responseParameters;
         }
 

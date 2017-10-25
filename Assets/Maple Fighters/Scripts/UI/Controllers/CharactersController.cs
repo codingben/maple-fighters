@@ -6,10 +6,10 @@ using CommonTools.Log;
 using Scripts.Containers;
 using Scripts.UI.Core;
 using Scripts.UI.Windows;
+using Scripts.World;
 using Shared.Game.Common;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using GameObject = UnityEngine.GameObject;
 
 namespace Scripts.UI.Controllers
@@ -18,8 +18,6 @@ namespace Scripts.UI.Controllers
     {
         private const string CHARACTERS_PATH = "Characters/{0}";
         private const int MAXIMUM_CHARACTERS = 3;
-
-        [SerializeField] private int loadSceneIndex;
 
         private Transform charactersParent;
 
@@ -232,7 +230,7 @@ namespace Scripts.UI.Controllers
         private void OnEnteredWorld(NoticeWindow noticeWindow)
         {
             UserInterfaceContainer.Instance.Remove(noticeWindow);
-            SceneManager.LoadScene(loadSceneIndex, LoadSceneMode.Single);
+            GameScenesController.Instance.LoadScene(Maps.Map_1);
         }
 
         private void OnCreateCharacterButtonClicked(ClickableCharacter clickableCharacter, int characterIndex)

@@ -1,0 +1,29 @@
+﻿using CommonCommunicationInterfaces;
+using Scripts.Containers;
+using Scripts.Utils;
+using Shared.Game.Common;
+using UnityEngine.SceneManagement;
+
+namespace Scripts.World
+{
+    public class GameScenesController : DontDestroyOnLoad<GameScenesController>
+    {
+        protected override void OnAwake()
+        {
+            base.OnAwake();
+
+            SceneManager.sceneLoaded += OnSceneLoaded;
+        }
+
+        private void OnSceneLoaded(Scene scene, LoadSceneMode loadSceneMode)
+        {
+            ServiceContainer.GameService.SetNetworkTrafficState(NetworkTrafficState.Flowing);
+        }
+
+        public void LoadScene(Maps map)
+        {
+            ServiceContainer.GameService.SetNetworkTrafficState(NetworkTrafficState.Paused);
+            SceneManager.LoadScene((int)map, LoadSceneMode.Single);
+        }
+    }
+}

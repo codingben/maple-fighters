@@ -6,12 +6,12 @@ namespace Scripts.Services
 {
     public interface IGameService : IServiceBase
     {
-        Task<EnterWorldResponseParameters> EnterWorld(IYield yield);
+        Task<AuthenticationStatus> Authenticate(IYield yield);
+
+        Task<EnterSceneResponseParameters> EnterScene(IYield yield);
 
         void UpdatePosition(UpdatePositionRequestParameters parameters);
         void UpdatePlayerState(UpdatePlayerStateRequestParameters parameters);
-
-        Task<AuthenticationStatus> Authenticate(IYield yield);
 
         Task<FetchCharactersResponseParameters> FetchCharacters(IYield yield);
         Task<ValidateCharacterStatus> ValidateCharacter(IYield yield, ValidateCharacterRequestParameters parameters);

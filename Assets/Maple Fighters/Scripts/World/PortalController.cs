@@ -8,7 +8,6 @@ using Scripts.UI;
 using Scripts.UI.Core;
 using Shared.Game.Common;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace Scripts.World
 {
@@ -35,18 +34,21 @@ namespace Scripts.World
 
         public void StopInteraction()
         {
-            if (!isTeleporting)
+            if (isTeleporting)
             {
                 return;
             }
 
             var screenFade = UserInterfaceContainer.Instance.Get<ScreenFade>().AssertNotNull();
             screenFade?.Hide();
+
+            coroutinesExecutor.Dispose();
         }
 
         private void Teleport()
         {
             isTeleporting = true;
+
             coroutinesExecutor.StartTask(ChangeScene);
         }
 
@@ -57,14 +59,14 @@ namespace Scripts.World
             var parameters = new ChangeSceneRequestParameters(portalId);
             var responseParameters = await ServiceContainer.GameService.ChangeScene(yield, parameters);
 
-            var sceneIndex = responseParameters.SceneId;
-            if (sceneIndex == 0)
+            var map = responseParameters.Map;
+            if (map == 0)
             {
                 LogUtils.Log(MessageBuilder.Trace("You can not teleport to scene index 0."));
                 return;
             }
 
-            SceneManager.LoadScene(sceneIndex, LoadSceneMode.Single);
+            GameScenesController.Instance.LoadScene(map);
         }
     }
 }
