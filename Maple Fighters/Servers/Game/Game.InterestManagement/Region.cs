@@ -27,13 +27,13 @@ namespace Game.InterestManagement
 
             sceneObjects.Add(sceneObject.Id, sceneObject);
 
-            AddSubscribersForSubscriber(sceneObject);
-            AddSubscriberForSubscribers(sceneObject);
-
             if (Config.Global.Log.InterestManagement)
             {
                 LogUtils.Log(MessageBuilder.Trace($"Added subscription id #{sceneObject.Id}"));
             }
+
+            AddSubscribersForSubscriber(sceneObject);
+            AddSubscriberForSubscribers(sceneObject);
         }
 
         public void RemoveSubscription(int sceneObjectId)
@@ -48,13 +48,13 @@ namespace Game.InterestManagement
 
             sceneObjects.Remove(sceneObjectId);
 
-            RemoveSubscribersForSubscriber(sceneObject);
-            RemoveSubscriberForSubscribers(sceneObjectId);
-
             if (Config.Global.Log.InterestManagement)
             {
                 LogUtils.Log(MessageBuilder.Trace($"Removed subscription id #{sceneObjectId}"));
             }
+
+            RemoveSubscribersForSubscriber(sceneObject);
+            RemoveSubscriberForSubscribers(sceneObjectId);
         }
 
         public void RemoveSubscriptionForAllSubscribers(int sceneObject)

@@ -45,7 +45,7 @@ namespace Game.Application.PeerLogic.Operations
             var interestArea = characterSceneObject.Container.GetComponent<IInterestArea>().AssertNotNull();
             interestArea.SetSize();
 
-            return new ChangeSceneResponseParameters((int)portalInfoProvider.Map);
+            return new ChangeSceneResponseParameters(portalInfoProvider.Map);
         }
     }
 }

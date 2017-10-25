@@ -41,7 +41,6 @@ namespace Game.Application.PeerLogic.Components
             interestArea.SubscriberRemoved += OnSubscriberRemoved;
             interestArea.SubscribersAdded += OnSubscribersAdded;
             interestArea.SubscribersRemoved += OnSubscribersRemoved;
-            interestArea.DetectOverlapsWithRegions();
         }
 
         private void OnSubscriberAdded(ISceneObject sceneObject)

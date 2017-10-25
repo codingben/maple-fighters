@@ -23,7 +23,7 @@ namespace Game.Application.PeerLogics
 
         private void OnAuthenticated(int dbUserId)
         {
-            PeerWrapper.SetPeerLogic(new CharactersSelectionPeerLogic(dbUserId));
+            PeerWrapper.SetPeerLogic(new CharacterSelectionPeerLogic(dbUserId));
         }
     }
 }

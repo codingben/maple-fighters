@@ -8,20 +8,24 @@ using SceneObject = Shared.Game.Common.SceneObject;
 
 namespace Game.Application.PeerLogic.Operations
 {
-    internal class EnterWorldOperationHandler : IOperationRequestHandler<EmptyParameters, EnterWorldResponseParameters>
+    internal class EnterSceneOperationHandler : IOperationRequestHandler<EmptyParameters, EnterSceneResponseParameters>
     {
         private readonly ICharacterGetter sceneObjectGetter;
 
-        public EnterWorldOperationHandler(ICharacterGetter sceneObjectGetter)
+        public EnterSceneOperationHandler(ICharacterGetter sceneObjectGetter)
         {
             this.sceneObjectGetter = sceneObjectGetter;
         }
 
-        public EnterWorldResponseParameters? Handle(MessageData<EmptyParameters> messageData, ref MessageSendOptions sendOptions)
+        public EnterSceneResponseParameters? Handle(MessageData<EmptyParameters> messageData, ref MessageSendOptions sendOptions)
         {
             var characterSceneObject = sceneObjectGetter.GetSceneObject();
             var character = sceneObjectGetter.GetCharacter();
-            return new EnterWorldResponseParameters(GetSharedSceneObject(characterSceneObject), character);
+
+            var interestArea = characterSceneObject.Container.GetComponent<IInterestArea>().AssertNotNull();
+            interestArea.DetectOverlapsWithRegions();
+
+            return new EnterSceneResponseParameters(GetSharedSceneObject(characterSceneObject), character);
         }
 
         private SceneObject GetSharedSceneObject(ISceneObject sceneObject)

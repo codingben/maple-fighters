@@ -5,21 +5,21 @@ namespace Shared.Game.Common
 {
     public struct ChangeSceneResponseParameters : IParameters
     {
-        public int SceneId;
+        public Maps Map;
 
-        public ChangeSceneResponseParameters(int sceneId)
+        public ChangeSceneResponseParameters(Maps map)
         {
-            SceneId = sceneId;
+            Map = map;
         }
 
         public void Serialize(BinaryWriter writer)
         {
-            writer.Write(SceneId);
+            writer.Write((byte)Map);
         }
 
         public void Deserialize(BinaryReader reader)
         {
-            SceneId = reader.ReadInt32();
+            Map = (Maps)reader.ReadByte();
         }
     }
 }

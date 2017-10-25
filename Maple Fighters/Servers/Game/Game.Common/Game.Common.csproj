@@ -75,7 +75,7 @@
     <Compile Include="GameDataChannels.cs" />
     <Compile Include="GameEvents.cs" />
     <Compile Include="GameOperations.cs" />
-    <Compile Include="EnterWorldResponseParameters.cs" />
+    <Compile Include="EnterSceneResponseParameters.cs" />
     <Compile Include="Maps.cs" />
     <Compile Include="PlayerState.cs" />
     <Compile Include="PlayerStateChangedEventParameters.cs" />

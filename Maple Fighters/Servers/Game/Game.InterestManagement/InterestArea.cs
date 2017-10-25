@@ -80,9 +80,8 @@ namespace Game.InterestManagement
             }
         }
 
-        private readonly Dictionary<int, ISceneObject> interestedSceneObjects = new Dictionary<int, ISceneObject>();
-
         private Rectangle interestArea;
+        private readonly Dictionary<int, ISceneObject> interestedSceneObjects = new Dictionary<int, ISceneObject>();
 
         public InterestArea(Vector2 position, Vector2 areaSize)
         {

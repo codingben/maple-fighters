@@ -7,12 +7,12 @@ using Shared.Game.Common;
 
 namespace Game.Application.PeerLogics
 {
-    internal class CharactersSelectionPeerLogic : PeerLogicBase<GameOperations, EmptyEventCode>
+    internal class CharacterSelectionPeerLogic : PeerLogicBase<GameOperations, EmptyEventCode>
     {
         private readonly int dbUserId;
         private Character? choosedCharacter;
 
-        public CharactersSelectionPeerLogic(int dbUserId)
+        public CharacterSelectionPeerLogic(int dbUserId)
         {
             this.dbUserId = dbUserId;
         }
@@ -57,7 +57,7 @@ namespace Game.Application.PeerLogics
                 return;
             }
 
-            PeerWrapper.SetPeerLogic(new AuthenticatedPeerLogic(choosedCharacter.Value));
+            PeerWrapper.SetPeerLogic(new GameScenePeerLogic(choosedCharacter.Value));
         }
 
         private void KickOutPeer()

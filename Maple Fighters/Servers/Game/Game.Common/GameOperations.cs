@@ -3,11 +3,11 @@
     public enum GameOperations : byte
     {
         Authenticate,
-        FetchCharacters,
-        EnterWorld,
+        EnterScene,
+        ChangeScene,
         PositionChanged,
         PlayerStateChanged,
-        ChangeScene,
+        FetchCharacters,
         ValidateCharacter,
         CreateCharacter,
         RemoveCharacter

@@ -3,12 +3,12 @@ using CommonCommunicationInterfaces;
 
 namespace Shared.Game.Common
 {
-    public struct EnterWorldResponseParameters : IParameters
+    public struct EnterSceneResponseParameters : IParameters
     {
         public SceneObject CharacterSceneObject;
         public Character Character;
 
-        public EnterWorldResponseParameters(SceneObject characterSceneObject, Character character)
+        public EnterSceneResponseParameters(SceneObject characterSceneObject, Character character)
         {
             CharacterSceneObject = characterSceneObject;
             Character = character;

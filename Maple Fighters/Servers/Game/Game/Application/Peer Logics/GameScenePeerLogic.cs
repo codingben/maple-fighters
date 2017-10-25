@@ -11,15 +11,16 @@ using Shared.Game.Common;
 
 namespace Game.Application.PeerLogics
 {
-    internal class AuthenticatedPeerLogic : PeerLogicBase<GameOperations, GameEvents>
+    internal class GameScenePeerLogic : PeerLogicBase<GameOperations, GameEvents>
     {
         private readonly ISceneObject characterSceneObject;
         private readonly Character character;
 
-        public AuthenticatedPeerLogic(Character character)
+        public GameScenePeerLogic(Character character)
         {
             this.character = character;
-            this.characterSceneObject = CreateCharacterSceneObject(character);
+
+            characterSceneObject = CreateCharacterSceneObject(character);
         }
 
         public override void Initialize(IClientPeerWrapper<IClientPeer> peer)
@@ -30,7 +31,7 @@ namespace Game.Application.PeerLogics
 
             AddComponents();
 
-            AddHandlerForEnterWorldOperation();
+            AddHandlerForEnterSceneOperation();
             AddHandlerForUpdatePositionOperation();
             AddHandlerForUpdatePlayerStateOperation();
             AddHandlerForChangeSceneOperation();
@@ -46,10 +47,10 @@ namespace Game.Application.PeerLogics
             Entity.Container.AddComponent(new PositionChangesListener());
         }
 
-        private void AddHandlerForEnterWorldOperation()
+        private void AddHandlerForEnterSceneOperation()
         {
             var characterGetter = Entity.Container.GetComponent<ICharacterGetter>().AssertNotNull();
-            OperationRequestHandlerRegister.SetHandler(GameOperations.EnterWorld, new EnterWorldOperationHandler(characterGetter));
+            OperationRequestHandlerRegister.SetHandler(GameOperations.EnterScene, new EnterSceneOperationHandler(characterGetter));
         }
 
         private void AddHandlerForUpdatePositionOperation()

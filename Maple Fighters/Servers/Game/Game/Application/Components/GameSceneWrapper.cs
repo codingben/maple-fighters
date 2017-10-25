@@ -12,7 +12,6 @@ namespace Game.Application.Components
     {
         private readonly Maps map;
         private readonly IScene scene;
-
         private readonly IPythonScriptEngine pythonScriptEngine;
         private readonly ScriptScope scriptScope;
 
