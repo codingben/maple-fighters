@@ -33,3 +33,5 @@ sysinfo.txt
 # Builds
 *.apk
 *.unitypackage
+Assets/Plugins/Map Editor
+Assets/Plugins/Map Editor.meta
