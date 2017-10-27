@@ -9,6 +9,8 @@ namespace PythonScripting
 {
     public class PythonScriptEngine : Component<IServerEntity>, IPythonScriptEngine
     {
+        private const string ENVIRONMENT_PYTHON_LIB_NAME = "IRON_PYTHON_LIB_DIR";
+
         private readonly ScriptEngine scriptEngine;
 
         public PythonScriptEngine()
@@ -21,6 +23,13 @@ namespace PythonScripting
             }
 
             scriptEngine.Runtime.LoadAssembly(typeof(SceneObject).Assembly);
+            scriptEngine.Runtime.LoadAssembly(typeof(IronPython.Modules.ArrayModule).Assembly);
+
+            var ironPythonLibPath = Environment.GetEnvironmentVariable(ENVIRONMENT_PYTHON_LIB_NAME, EnvironmentVariableTarget.Machine);
+            var paths = scriptEngine.GetSearchPaths();
+            paths.Add(ironPythonLibPath);
+
+            scriptEngine.SetSearchPaths(paths);
         }
 
         public ScriptEngine GetScriptEngine()
