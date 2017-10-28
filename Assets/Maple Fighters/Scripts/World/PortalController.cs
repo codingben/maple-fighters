@@ -55,7 +55,6 @@ namespace Scripts.World
         private async Task ChangeScene(IYield yield)
         {
             var portalId = GetComponent<NetworkIdentity>().Id;
-
             var parameters = new ChangeSceneRequestParameters(portalId);
             var responseParameters = await ServiceContainer.GameService.ChangeScene(yield, parameters);
 

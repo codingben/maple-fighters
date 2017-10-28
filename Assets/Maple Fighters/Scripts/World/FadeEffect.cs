@@ -12,10 +12,13 @@ namespace Scripts.World
         }
 
         [Header("Fade Settings")]
-        [SerializeField] protected FadeState startingState;
+        [SerializeField] private FadeState startingState;
         [Header("Fade Speed")]
-        [SerializeField] protected float showSpeed;
-        [SerializeField] protected float hideSpeed;
+        [SerializeField] private float showSpeed;
+        [SerializeField] private float hideSpeed;
+        [Header("Fade Color")]
+        [SerializeField] private Color fadeColor;
+        [SerializeField] private Color unFadeColor;
 
         private Coroutine fadeCoroutine;
         private SpriteRenderer spriteRenderer;
@@ -44,6 +47,8 @@ namespace Scripts.World
 
         private void Fade()
         {
+            spriteRenderer.color = unFadeColor;
+
             if (fadeCoroutine != null)
             {
                 StopCoroutine(fadeCoroutine);
@@ -54,6 +59,8 @@ namespace Scripts.World
 
         private void UnFade()
         {
+            spriteRenderer.color = fadeColor;
+
             if (fadeCoroutine != null)
             {
                 StopCoroutine(fadeCoroutine);

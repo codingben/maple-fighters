@@ -153,6 +153,8 @@ MonoBehaviour:
   startingState: 0
   showSpeed: 1
   hideSpeed: 1
+  fadeColor: {r: 1, g: 1, b: 1, a: 1}
+  unFadeColor: {r: 1, g: 1, b: 1, a: 0}
 --- !u!212 &212908975280307160
 SpriteRenderer:
   m_ObjectHideFlags: 1
