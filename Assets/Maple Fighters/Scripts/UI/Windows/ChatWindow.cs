@@ -3,6 +3,7 @@ using Chat.Common;
 using CommonTools.Log;
 using Scripts.Containers;
 using Scripts.Gameplay.Actors;
+using Scripts.UI.Controllers;
 using Scripts.UI.Core;
 using TMPro;
 using UnityEngine;
@@ -60,10 +61,14 @@ namespace Scripts.UI.Windows
 
             inputField.gameObject.SetActive(!inputField.gameObject.activeSelf);
 
-            if (inputField.gameObject.activeSelf)
+            if (!inputField.gameObject.activeSelf)
             {
-                inputField.ActivateInputField();
+                FocusController.Instance.Focusable = Focusable.Game;
+                return;
             }
+
+            inputField.ActivateInputField();
+            FocusController.Instance.Focusable = Focusable.Chat;
         }
 
         private void DetectTextChangesAndSendMessage()

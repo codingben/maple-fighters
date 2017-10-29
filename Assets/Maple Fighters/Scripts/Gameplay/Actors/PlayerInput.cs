@@ -1,4 +1,5 @@
-﻿using Shared.Game.Common;
+﻿using Scripts.UI.Controllers;
+using Shared.Game.Common;
 using UnityEngine;
 
 namespace Scripts.Gameplay.Actors
@@ -18,6 +19,11 @@ namespace Scripts.Gameplay.Actors
 
         private void Update()
         {
+            if (FocusController.Instance.Focusable != Focusable.Game)
+            {
+                return;
+            }
+
             switch (playerController.PlayerState)
             {
                 case PlayerState.Idle:
