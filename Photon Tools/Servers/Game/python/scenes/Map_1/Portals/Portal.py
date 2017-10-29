@@ -15,9 +15,8 @@ x = data["Position"]["x"]
 y = data["Position"]["y"]
 
 position = Vector2(x, y)
-playerPosition = Vector2(-12.8, -12.8)
 map = 3
 
-portalSceneObject = Portal(position, playerPosition, map)
+portalSceneObject = Portal(position, map)
 
 scene.AddSceneObject(portalSceneObject)
