@@ -15,6 +15,10 @@ namespace Scripts.Gameplay.Camera
         [SerializeField] private float minY;
         [SerializeField] private float maxY;
 
+        [Header("Only For Minimap Camera")]
+        [SerializeField] private float playerX;
+        [SerializeField] private float playerY;
+
         private void LateUpdate()
         {
             if (Target == null)
@@ -30,8 +34,7 @@ namespace Scripts.Gameplay.Camera
             var x = Mathf.Clamp(Target.position.x, minX, maxX);
             var y = Mathf.Clamp(Target.position.y, minY, maxY);
 
-            var newPosition = new Vector3(x, y, transform.position.z);
-
+            var newPosition = new Vector3(playerX + x, playerY + y, transform.position.z);
             transform.position = Vector3.Lerp(transform.position, newPosition, moveSpeed * Time.deltaTime);
         }
     }

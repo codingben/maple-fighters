@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 95880835775799512}
   - component: {fileID: 114044474024115752}
   - component: {fileID: 114854680575105592}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Knight
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -6,10 +6,18 @@ namespace Scripts.Gameplay.Camera
 {
     public class CameraControllerProvider : MonoBehaviour
     {
-        public void SetCameraTarget()
+        private const string MINI_CAMERA_TAG = "Mini Camera";
+
+        public void SetCamerasTarget()
         {
             var cameraController = UnityEngine.Camera.main.GetComponent<CameraController>().AssertNotNull();
             cameraController.Target = transform;
+
+            var miniCameraController = GameObject.FindGameObjectWithTag(MINI_CAMERA_TAG)?.GetComponent<CameraController>();
+            if (miniCameraController != null)
+            {
+                miniCameraController.Target = transform;
+            }
         }
 
         private void OnEnable()
@@ -24,7 +32,7 @@ namespace Scripts.Gameplay.Camera
 
         private void OnSceneLoaded(Scene scene, LoadSceneMode loadSceneMode)
         {
-            SetCameraTarget();
+            SetCamerasTarget();
         }
     }
 }

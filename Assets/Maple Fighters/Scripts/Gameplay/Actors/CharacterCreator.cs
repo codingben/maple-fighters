@@ -78,16 +78,16 @@ namespace Scripts.Gameplay.Actors
 
         private void InitializeLocallyOnly()
         {
-            SetCameraTarget();
+            SetCamerasTarget();
 
             InitializePlayerController();
             InitializePlayerStateAnimatorNetwork();
         }
 
-        private void SetCameraTarget()
+        private void SetCamerasTarget()
         {
             var cameraControllerProvider = GetComponent<CameraControllerProvider>();
-            cameraControllerProvider.SetCameraTarget();
+            cameraControllerProvider.SetCamerasTarget();
         }
 
         private void InitializeRemoteOnly()
