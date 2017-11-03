@@ -6,7 +6,7 @@ namespace Scripts.Gameplay.Camera
 {
     public class CameraControllerProvider : MonoBehaviour
     {
-        private const string MINI_CAMERA_TAG = "Mini Camera";
+        private const string MINI_CAMERA_TAG = "Minimap Camera";
 
         public void SetCamerasTarget()
         {

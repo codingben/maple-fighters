@@ -2,17 +2,19 @@
 
 namespace Scripts.Gameplay.Camera
 {
+    using Camera = UnityEngine.Camera;
+
     [ExecuteInEditMode]
     public class CameraScreenResolution : MonoBehaviour
     {
         [SerializeField] private int targetWidth;
         [SerializeField] private float pixelsToUnits;
 
-        private new UnityEngine.Camera camera;
+        private new Camera camera;
 
         private void Awake()
         {
-            camera = GetComponent<UnityEngine.Camera>();
+            camera = GetComponent<Camera>();
         }
 
         private void Update()

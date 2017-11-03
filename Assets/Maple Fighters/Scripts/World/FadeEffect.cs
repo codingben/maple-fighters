@@ -75,7 +75,7 @@ namespace Scripts.World
 
             while (true)
             {
-                if (spriteRenderer.color.a >= 1)
+                if (spriteRenderer.color.a >= fadeColor.a)
                 {
                     yield break;
                 }

@@ -7,7 +7,7 @@ TagManager:
   - Portal
   - Rope
   - Ladder
-  - Mini Camera
+  - Minimap Camera
   layers:
   - Default
   - TransparentFX
@@ -20,9 +20,9 @@ TagManager:
   - Floor
   - Minimap
   - Minimap Camera
-  - 
-  - 
-  - 
+  - Player
+  - NPC
+  - Portal
   - 
   - 
   - 
