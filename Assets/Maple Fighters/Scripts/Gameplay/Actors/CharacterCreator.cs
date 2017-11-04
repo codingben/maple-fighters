@@ -8,6 +8,7 @@ namespace Scripts.Gameplay.Actors
     public class CharacterCreator : MonoBehaviour
     {
         private const string GAME_OBJECTS_PATH = "Game/{0}";
+        private const int CHARACTER_INDEX = 0;
 
         [Header("Network")]
         [SerializeField] private bool isLocal;
@@ -15,6 +16,7 @@ namespace Scripts.Gameplay.Actors
         [SerializeField] private int orderInLayer;
 
         private GameObject character;
+        private GameObject characterController;
 
         public void Create(CharacterInformation characterInformation)
         {
@@ -26,7 +28,8 @@ namespace Scripts.Gameplay.Actors
             characterGameObject.transform.localPosition = gameObject.transform.localPosition;
             characterGameObject.transform.SetAsFirstSibling();
 
-            character = characterGameObject;
+            character = characterGameObject.transform.GetChild(CHARACTER_INDEX).gameObject;
+            characterController = characterGameObject;
 
             InitializeCharacterName(characterName);
             InitializeSpriteRenderer();
@@ -57,17 +60,18 @@ namespace Scripts.Gameplay.Actors
 
         private void InitializePlayerStateAnimatorNetwork()
         {
-            var playerStateAnimatorNetwork = character.GetComponent<PlayerStateAnimatorNetwork>();
+            var playerStateAnimatorNetwork = character.GetComponent<PlayerStateAnimator>();
             playerStateAnimatorNetwork.IsLocal = isLocal;
         }
 
         private void InitializePlayerController()
         {
-            var playerStateAnimatorNetwork = character.GetComponent<PlayerStateAnimatorNetwork>();
+            var playerStateAnimatorNetwork = character.GetComponent<PlayerStateAnimator>();
             var characterName = character.GetComponent<CharacterName>();
-            var playerController = GetComponent<PlayerController>();
-            playerController.PlayerStateChanged = playerStateAnimatorNetwork.OnPlayerStateChanged;
+
+            var playerController = characterController.GetComponent<PlayerController>();
             playerController.ChangedDirection += characterName.OnChangedDirection;
+            playerController.PlayerStateChanged = playerStateAnimatorNetwork.OnPlayerStateChanged;
         }
 
         private void InitializeCharacterInformationProvider(CharacterInformation characterInformation)
@@ -79,6 +83,7 @@ namespace Scripts.Gameplay.Actors
         private void InitializeLocallyOnly()
         {
             SetCamerasTarget();
+            SetCharacterToPositionSender();
 
             InitializePlayerController();
             InitializePlayerStateAnimatorNetwork();
@@ -86,19 +91,42 @@ namespace Scripts.Gameplay.Actors
 
         private void SetCamerasTarget()
         {
-            var cameraControllerProvider = GetComponent<CameraControllerProvider>();
+            var cameraControllerProvider = characterController.GetComponent<CameraControllerProvider>();
             cameraControllerProvider.SetCamerasTarget();
         }
 
         private void InitializeRemoteOnly()
         {
+            DisableCollision();
+            RemoveAllCharacterControllerComponents();
+
             InitializePlayerStateSetter();
             InitializeCharacterNameDirectionSetter();
         }
 
+        private void DisableCollision()
+        {
+            characterController.GetComponent<Collider2D>().isTrigger = true;
+        }
+
+        private void SetCharacterToPositionSender()
+        {
+            var positionSender = GetComponent<PositionSender>();
+            positionSender.SetPlayerController(characterController.transform);
+        }
+
+        private void RemoveAllCharacterControllerComponents()
+        {
+            var components = characterController.GetComponents<MonoBehaviour>();
+            foreach (var component in components)
+            {
+                Destroy(component);
+            }
+        }
+
         private void InitializePlayerStateSetter()
         {
-            var playerStateAnimatorNetwork = character.GetComponent<PlayerStateAnimatorNetwork>();
+            var playerStateAnimatorNetwork = character.GetComponent<PlayerStateAnimator>();
             var playerStateSetter = GetComponent<PlayerStateSetter>();
             playerStateSetter.PlayerAnimator = playerStateAnimatorNetwork;
         }

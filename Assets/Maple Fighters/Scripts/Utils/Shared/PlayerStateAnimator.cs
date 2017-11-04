@@ -7,7 +7,7 @@ using UnityEngine;
 namespace Scripts.Utils.Shared
 {
     [RequireComponent(typeof(Animator))]
-    public class PlayerStateAnimatorNetwork : MonoBehaviour
+    public class PlayerStateAnimator : MonoBehaviour
     {
         public bool IsLocal;
 

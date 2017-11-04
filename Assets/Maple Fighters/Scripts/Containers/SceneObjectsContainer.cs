@@ -22,12 +22,12 @@ namespace Scripts.Containers
         {
             base.OnAwake();
 
-            SceneManager.sceneLoaded += OnSceneLoaded;
+            coroutinesExecutor.StartTask(CreateLocalGameObject);
         }
 
         private void Start()
         {
-            SubscribeToGameServiceEvents();
+            SubscribeToEvents();
         }
 
         private void Update()
@@ -37,6 +37,8 @@ namespace Scripts.Containers
 
         private void OnSceneLoaded(Scene scene, LoadSceneMode sceneMode)
         {
+            sceneObjects.Remove(localSceneObjectId);
+
             coroutinesExecutor.StartTask(CreateLocalGameObject);
         }
 
@@ -44,21 +46,23 @@ namespace Scripts.Containers
         {
             coroutinesExecutor.Dispose();
 
-            SceneManager.sceneLoaded -= OnSceneLoaded;
-
-            UnsubscribeFromGameServiceEvents();
+            UnsubscribeFromEvents();
         }
 
-        private void SubscribeToGameServiceEvents()
+        private void SubscribeToEvents()
         {
+            SceneManager.sceneLoaded += OnSceneLoaded;
+
             ServiceContainer.GameService.SceneObjectAdded.AddListener(OnGameObjectAdded);
             ServiceContainer.GameService.SceneObjectRemoved.AddListener(OnGameObjectRemoved);
             ServiceContainer.GameService.SceneObjectsAdded.AddListener(OnGameObjectsAdded);
             ServiceContainer.GameService.SceneObjectsRemoved.AddListener(OnGameObjectsRemoved);
         }
 
-        private void UnsubscribeFromGameServiceEvents()
+        private void UnsubscribeFromEvents()
         {
+            SceneManager.sceneLoaded -= OnSceneLoaded;
+
             ServiceContainer.GameService.SceneObjectAdded.RemoveListener(OnGameObjectAdded);
             ServiceContainer.GameService.SceneObjectRemoved.RemoveListener(OnGameObjectRemoved);
             ServiceContainer.GameService.SceneObjectsAdded.RemoveListener(OnGameObjectsAdded);
@@ -112,16 +116,29 @@ namespace Scripts.Containers
         private void OnGameObjectsAdded(SceneObjectsAddedEventParameters parameters)
         {
             var gameObjects = parameters.SceneObjects;
+            var ignoreCharacterCreation = new Dictionary<int, bool>();
+
             foreach (var gameObject in gameObjects)
             {
-                AddGameObject(gameObject);
+                var isExists = AddGameObject(gameObject);
+                if (isExists == null)
+                {
+                    ignoreCharacterCreation.Add(gameObject.Id, false);
+                }
             }
 
             foreach (var character in parameters.CharacterInformations)
             {
+                if (ignoreCharacterCreation.ContainsKey(character.SceneObjectId))
+                {
+                    continue;
+                }
+
                 var gameObject = GetRemoteGameObject(character.SceneObjectId);
                 gameObject?.GetGameObject().GetComponent<CharacterCreator>().Create(character);
             }
+
+            ignoreCharacterCreation.Clear();
         }
 
         private void OnGameObjectsRemoved(SceneObjectsRemovedEventParameters parameters)

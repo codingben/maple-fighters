@@ -3,7 +3,6 @@ using UnityEngine;
 
 namespace Scripts.World
 {
-    [RequireComponent(typeof(PlayerController))]
     public class PortalInteraction : MonoBehaviour
     {
         private const string PORTAL_TAG = "Portal";

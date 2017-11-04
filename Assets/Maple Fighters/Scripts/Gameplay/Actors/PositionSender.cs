@@ -7,10 +7,16 @@ namespace Scripts.Gameplay.Actors
     public class PositionSender : MonoBehaviour
     {
         private Vector2 lastPosition;
+        private Transform character;
 
         private void Awake()
         {
             lastPosition = transform.position;
+        }
+
+        public void SetPlayerController(Transform characterController)
+        {
+            character = characterController;
         }
 
         private void Update()
@@ -31,13 +37,13 @@ namespace Scripts.Gameplay.Actors
 
         private void GetDirection(out Directions direction)
         {
-            if (transform.localScale.x > 0)
+            if (character?.localScale.x > 0)
             {
                 direction = Directions.Left;
                 return;
             }
 
-            if (transform.localScale.x < 0)
+            if (character?.localScale.x < 0)
             {
                 direction = Directions.Right;
                 return;

@@ -6,7 +6,7 @@ namespace Scripts.Gameplay.Actors
 {
     public class PlayerStateSetter : MonoBehaviour
     {
-        [HideInInspector] public PlayerStateAnimatorNetwork PlayerAnimator;
+        [HideInInspector] public PlayerStateAnimator PlayerAnimator;
 
         public void SetState(PlayerState playerState)
         {

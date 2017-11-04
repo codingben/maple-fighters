@@ -14,6 +14,7 @@ namespace Scripts.World
 
         private bool isInInteraction;
         private new Collider2D collider;
+        private RopeOrLadderInteraction playerInteraction;
 
         private void Awake()
         {
@@ -27,7 +28,7 @@ namespace Scripts.World
                 return;
             }
 
-            if (Input.GetKeyDown(groundInteraction))
+            if (Input.GetKeyDown(groundInteraction) && playerInteraction != null && !playerInteraction.IsInInteraction)
             {
                 DoInteraction();
             }
@@ -48,7 +49,18 @@ namespace Scripts.World
                 return;
             }
 
+            playerInteraction = collision.gameObject.GetComponentInChildren<RopeOrLadderInteraction>();
             isInInteraction = true;
+        }
+
+        private void OnCollisionExit2D(Collision2D collision)
+        {
+            if (!collision.gameObject.CompareTag(PLAYER_TAG))
+            {
+                return;
+            }
+
+            isInInteraction = false;
         }
 
         private IEnumerator EnableGround()

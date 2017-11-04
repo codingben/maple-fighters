@@ -4,6 +4,8 @@ namespace Scripts.Gameplay.Camera
 {
     using Camera = UnityEngine.Camera;
 
+    #pragma warning disable 0109
+
     [ExecuteInEditMode]
     public class CameraScreenResolution : MonoBehaviour
     {

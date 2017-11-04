@@ -7,7 +7,6 @@ using UnityEngine;
 
 namespace Scripts.Gameplay.Actors
 {
-    [RequireComponent(typeof(Rigidbody2D))]
     public class PlayerController : MonoBehaviour
     {
         public bool DetectGround { get; set; } = true;
@@ -53,7 +52,7 @@ namespace Scripts.Gameplay.Actors
 
         private void Awake()
         {
-            rigidbody = GetComponent<Rigidbody2D>();
+            rigidbody = GetComponent<Collider2D>().attachedRigidbody;
         }
 
         private void Update()

@@ -1,15 +1,47 @@
 ﻿using System;
+using Scripts.Containers;
 using Shared.Game.Common;
 using UnityEngine;
 
 namespace Scripts.Gameplay.Actors
 {
-    public class PositionSetter : MonoBehaviour, IPositionSetter
+    [RequireComponent(typeof(NetworkIdentity))]
+    public class PositionSetter : MonoBehaviour
     {
         public event Action<Directions> DirectionChanged; 
 
         private const float SPEED = 10;
         private Vector3 position = Vector3.zero;
+
+        private NetworkIdentity networkIdentity;
+
+        private void Awake()
+        {
+            networkIdentity = GetComponent<NetworkIdentity>();
+        }
+
+        private void Start()
+        {
+            ServiceContainer.GameService.PositionChanged.AddListener(OnPositionChanged);
+        }
+
+        private void OnDestroy()
+        {
+            ServiceContainer.GameService.PositionChanged.RemoveListener(OnPositionChanged);
+        }
+
+        private void OnPositionChanged(SceneObjectPositionChangedEventParameters parameters)
+        {
+            var id = parameters.SceneObjectId;
+            if (networkIdentity.Id != id)
+            {
+                return;
+            }
+
+            var position = new Vector2(parameters.X, parameters.Y);
+            var direction = parameters.Direction;
+            SetPosition(position, direction);
+        }
 
         private void Update()
         {
@@ -19,7 +51,7 @@ namespace Scripts.Gameplay.Actors
             }
         }
 
-        public void SetPosition(Vector2 newPosition, Directions direction)
+        private void SetPosition(Vector2 newPosition, Directions direction)
         {
             position = newPosition;
 

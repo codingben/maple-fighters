@@ -1,9 +1,10 @@
-﻿using System;
+﻿using System.Collections;
 using CommonTools.Log;
 using Scripts.UI.Core;
 using Scripts.UI.Windows;
 using Scripts.Utils;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
 namespace Scripts.UI.Controllers
@@ -84,6 +85,14 @@ namespace Scripts.UI.Controllers
 
             curMarkLayer = selection;
             minimapCamera.cullingMask = markSelections[selection].MarkLayerMask;
+
+            StartCoroutine(SetSelectedGameObjectToNull());
+        }
+
+        private IEnumerator SetSelectedGameObjectToNull()
+        {
+            yield return new WaitForEndOfFrame();
+            EventSystem.current.SetSelectedGameObject(null);
         }
     }
 }

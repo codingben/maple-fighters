@@ -4,7 +4,6 @@ using UnityEngine;
 
 namespace Scripts.Gameplay.Actors
 {
-    [RequireComponent(typeof(PlayerController))]
     public class PlayerInput : MonoBehaviour
     {
         [Header("Keyboard")]
