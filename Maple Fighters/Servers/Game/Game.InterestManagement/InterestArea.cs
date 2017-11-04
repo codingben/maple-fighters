@@ -55,7 +55,7 @@ namespace Game.InterestManagement
 
             if (subscribersAdded.Count == 0) return;
             {
-                SubscribersAdded?.Invoke(sceneObjects);
+                SubscribersAdded?.Invoke(subscribersAdded.ToArray());
             }
         }
 
@@ -76,7 +76,7 @@ namespace Game.InterestManagement
 
             if (subscribersRemoved.Count == 0) return;
             {
-                SubscribersRemoved?.Invoke(sceneObjectIds);
+                SubscribersRemoved?.Invoke(subscribersRemoved.ToArray());
             }
         }
 
