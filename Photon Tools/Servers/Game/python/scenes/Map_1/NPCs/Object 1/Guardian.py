@@ -15,7 +15,9 @@ name = data["Name"]
 x = data["Position"]["x"]
 y = data["Position"]["y"]
 
+direction = data["Direction"]
+
 position = Vector2(x, y)
-guardian = SceneObject(name, position)
+guardian = SceneObject(name, position, direction)
 
 scene.AddSceneObject(guardian)

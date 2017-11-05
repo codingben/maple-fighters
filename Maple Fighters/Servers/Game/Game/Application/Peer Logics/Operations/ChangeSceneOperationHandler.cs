@@ -14,14 +14,14 @@ namespace Game.Application.PeerLogic.Operations
     {
         private readonly ICharacterGetter character;
         private readonly ISceneContainer sceneContainer;
-        private readonly ICharacterSpawnPositionProvider characterSpawnPositionProvider;
+        private readonly ICharacterSpawnPositionDetailsProvider characterSpawnPositionProvider;
 
         public ChangeSceneOperationHandler(ICharacterGetter character)
         {
             this.character = character;
 
             sceneContainer = Server.Entity.Container.GetComponent<ISceneContainer>().AssertNotNull();
-            characterSpawnPositionProvider = Server.Entity.Container.GetComponent<ICharacterSpawnPositionProvider>().AssertNotNull();
+            characterSpawnPositionProvider = Server.Entity.Container.GetComponent<ICharacterSpawnPositionDetailsProvider>().AssertNotNull();
         }
 
         public ChangeSceneResponseParameters? Handle(MessageData<ChangeSceneRequestParameters> messageData, ref MessageSendOptions sendOptions)
@@ -37,9 +37,10 @@ namespace Game.Application.PeerLogic.Operations
             characterSceneObject.Scene.RemoveSceneObject(characterSceneObject.Id);
 
             // Setting the character's position in the destination scene.
-            var newPlayerPosition = characterSpawnPositionProvider.GetPosition(portalInfoProvider.Map);
+            var newPlayerPosition = characterSpawnPositionProvider.GetSpawnPositionDetails(portalInfoProvider.Map);
             var transform = characterSceneObject.Container.GetComponent<ITransform>().AssertNotNull();
-            transform.InitialPosition = newPlayerPosition;
+            transform.InitialPosition = newPlayerPosition.Position;
+            transform.Direction = newPlayerPosition.Direction;
 
             // Adding a character to the destination scene.
             var destinationScene = sceneContainer.GetSceneWrapper(portalInfoProvider.Map).AssertNotNull();

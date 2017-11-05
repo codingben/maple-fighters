@@ -14,4 +14,6 @@ y = data["Position"]["y"]
 
 position = Vector2(x, y)
 
-scene.AddCharacterSpawnPosition(position)
+direction = data["Direction"]
+
+scene.AddCharacterSpawnPosition(position, direction)

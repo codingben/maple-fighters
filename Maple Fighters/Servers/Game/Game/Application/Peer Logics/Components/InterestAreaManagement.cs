@@ -51,7 +51,7 @@ namespace Game.Application.PeerLogic.Components
             }
 
             var transform = sceneObject.Container.GetComponent<ITransform>().AssertNotNull();
-            var sharedSceneObject = new SceneObject(sceneObject.Id, sceneObject.Name, transform.Position.X, transform.Position.Y);
+            var sharedSceneObject = new SceneObject(sceneObject.Id, sceneObject.Name, transform.Position.X, transform.Position.Y, transform.Direction);
 
             var characterInformation = GetCharacterInformation(sceneObject);
             var parameters = new SceneObjectAddedEventParameters(sharedSceneObject, characterInformation.GetValueOrDefault(), characterInformation.HasValue);
@@ -86,6 +86,7 @@ namespace Game.Application.PeerLogic.Components
 
                 sharedSceneObjects[i].X = transform.Position.X;
                 sharedSceneObjects[i].Y = transform.Position.Y;
+                sharedSceneObjects[i].Direction = transform.Direction;
             }
 
             var parameters = new SceneObjectsAddedEventParameters(sharedSceneObjects, GetCharacterInformations(sceneObjects));

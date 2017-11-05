@@ -10,6 +10,8 @@ namespace Game.InterestManagement
         Vector2 InitialPosition { get; set; }
         Vector2 Position { get; }
 
+        Directions Direction { get; set; }
+
         event Action<Vector2> PositionChanged;
         event Action<Vector2, Directions> PositionAndDirectionChanged;
 
