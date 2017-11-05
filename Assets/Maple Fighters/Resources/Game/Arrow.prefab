@@ -271,12 +271,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerState: 0
-  speed: 10
-  jumpForce: 6
+  speed: 12
+  jumpForce: 6.25
   ropeUpSpeed: 8
   ropeDownSpeed: 10
-  ladderUpSpeed: 6
-  ladderDownSpeed: 8
+  ladderUpSpeed: 8
+  ladderDownSpeed: 6
   floorLayerMask:
     serializedVersion: 2
     m_Bits: 256

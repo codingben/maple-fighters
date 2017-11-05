@@ -73,27 +73,28 @@ namespace Scripts.Containers
         {
             var parameters = await ServiceContainer.GameService.EnterScene(yield);
 
-            var characterGameObject = parameters.CharacterSceneObject;
+            var characterSceneObject = parameters.CharacterSceneObject;
             var character = parameters.Character;
 
             var position = new Vector2(parameters.CharacterSceneObject.X, parameters.CharacterSceneObject.Y);
-            LogUtils.Log(MessageBuilder.Trace($"Local scene object Id: {characterGameObject.Id} Position: {position}"));
+            LogUtils.Log(MessageBuilder.Trace($"Local scene object Id: {characterSceneObject.Id} Position: {position}"));
 
-            var obj = AddGameObject(characterGameObject);
+            var obj = AddGameObject(characterSceneObject);
             if (obj == null)
             {
                 return;
             }
 
-            obj.GetComponent<CharacterCreator>().Create(new CharacterInformation(characterGameObject.Id, character.Name, character.CharacterType));
+            var characterInformation = new CharacterInformation(characterSceneObject.Id, character.Name, character.CharacterType);
+            obj.GetComponent<CharacterCreator>().Create(characterInformation, characterSceneObject.Direction);
 
-            localSceneObjectId = characterGameObject.Id;
+            localSceneObjectId = characterSceneObject.Id;
         }
 
         private void OnGameObjectAdded(SceneObjectAddedEventParameters parameters)
         {
-            var gameObject = parameters.SceneObject;
-            var obj = AddGameObject(gameObject);
+            var sceneObject = parameters.SceneObject;
+            var obj = AddGameObject(sceneObject);
             if (obj == null)
             {
                 return;
@@ -103,7 +104,7 @@ namespace Scripts.Containers
             if (hasCharacter)
             {
                 var character = parameters.CharacterInformation;
-                obj.GetComponent<CharacterCreator>().Create(character);
+                obj.GetComponent<CharacterCreator>().Create(character, sceneObject.Direction);
             }
         }
 
@@ -115,30 +116,31 @@ namespace Scripts.Containers
 
         private void OnGameObjectsAdded(SceneObjectsAddedEventParameters parameters)
         {
-            var gameObjects = parameters.SceneObjects;
-            var ignoreCharacterCreation = new Dictionary<int, bool>();
+            var sceneObjects = parameters.SceneObjects;
+            var charactersToCreateForSceneObjects = new Dictionary<int, SceneObject>();
 
-            foreach (var gameObject in gameObjects)
+            foreach (var sceneObject in sceneObjects)
             {
-                var isExists = AddGameObject(gameObject);
-                if (isExists == null)
+                var isExists = AddGameObject(sceneObject);
+                if (isExists != null)
                 {
-                    ignoreCharacterCreation.Add(gameObject.Id, false);
+                    charactersToCreateForSceneObjects.Add(sceneObject.Id, sceneObject);
                 }
             }
 
             foreach (var character in parameters.CharacterInformations)
             {
-                if (ignoreCharacterCreation.ContainsKey(character.SceneObjectId))
+                if (!charactersToCreateForSceneObjects.ContainsKey(character.SceneObjectId))
                 {
                     continue;
                 }
 
-                var gameObject = GetRemoteGameObject(character.SceneObjectId);
-                gameObject?.GetGameObject().GetComponent<CharacterCreator>().Create(character);
+                var sceneObject = GetRemoteGameObject(character.SceneObjectId);
+                var direction = charactersToCreateForSceneObjects[character.SceneObjectId].Direction;
+                sceneObject?.GetGameObject().GetComponent<CharacterCreator>().Create(character, direction);
             }
 
-            ignoreCharacterCreation.Clear();
+            charactersToCreateForSceneObjects.Clear();
         }
 
         private void OnGameObjectsRemoved(SceneObjectsRemovedEventParameters parameters)
@@ -150,43 +152,43 @@ namespace Scripts.Containers
             }
         }
 
-        private GameObject AddGameObject(SceneObject gameObject)
+        private GameObject AddGameObject(SceneObject sceneObject)
         {
-            if (sceneObjects.ContainsKey(gameObject.Id))
+            if (sceneObjects.ContainsKey(sceneObject.Id))
             {
-                LogUtils.Log(MessageBuilder.Trace($"Scene object with id #{gameObject.Id} already exists."), LogMessageType.Warning);
+                LogUtils.Log(MessageBuilder.Trace($"Scene object with id #{sceneObject.Id} already exists."), LogMessageType.Warning);
                 return null;
             }
 
-            var position = new Vector3(gameObject.X, gameObject.Y);
-            var obj = CreateGameObject(gameObject.Name, position);
+            var position = new Vector3(sceneObject.X, sceneObject.Y);
+            var obj = CreateGameObject(sceneObject.Name, position);
             if (obj == null)
             {
                 return null;
             }
 
-            obj.name = gameObject.Name;
+            obj.name = sceneObject.Name;
 
             var networkIdentity = obj.GetComponent<ISceneObject>();
-            networkIdentity.Id = gameObject.Id;
+            networkIdentity.Id = sceneObject.Id;
 
-            sceneObjects.Add(gameObject.Id, networkIdentity);
+            sceneObjects.Add(sceneObject.Id, networkIdentity);
 
-            LogUtils.Log(MessageBuilder.Trace($"Added a new scene object with id #{gameObject.Id}"));
+            LogUtils.Log(MessageBuilder.Trace($"Added a new scene object with id #{sceneObject.Id}"));
             return obj;
         }
 
         private void RemoveGameObject(int id)
         {
-            var gameObject = GetRemoteGameObject(id)?.GetGameObject();
-            if (gameObject == null)
+            var sceneObject = GetRemoteGameObject(id)?.GetGameObject();
+            if (sceneObject == null)
             {
                 return;
             }
 
             sceneObjects.Remove(id);
 
-            Destroy(gameObject);
+            Destroy(sceneObject);
 
             LogUtils.Log(MessageBuilder.Trace($"Removed a scene object with id #{id}"));
         }
@@ -198,7 +200,14 @@ namespace Scripts.Containers
             var obj = Resources.Load(string.Format(SCENE_OBJECTS_FOLDER_PATH, name)).AssertNotNull();
             if (obj != null)
             {
-                return Instantiate(obj, position, Quaternion.identity) as GameObject;
+                var sceneObject = Instantiate(obj, position, Quaternion.identity) as GameObject;
+                if (sceneObject != null)
+                {
+                    return sceneObject;
+                }
+
+                LogUtils.Log(MessageBuilder.Trace($"Could not create a scene object with name {name}"), LogMessageType.Error);
+                return null;
             }
 
             LogUtils.Log(MessageBuilder.Trace($"Could not find a scene object with name {name}"), LogMessageType.Error);

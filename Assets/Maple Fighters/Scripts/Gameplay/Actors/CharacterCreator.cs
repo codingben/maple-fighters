@@ -1,5 +1,6 @@
 ﻿using Scripts.Gameplay.Camera;
 using Scripts.Utils.Shared;
+using Shared.Game.Common;
 using UnityEngine;
 using CharacterInformation = Shared.Game.Common.CharacterInformation;
 
@@ -18,7 +19,7 @@ namespace Scripts.Gameplay.Actors
         private GameObject character;
         private GameObject characterController;
 
-        public void Create(CharacterInformation characterInformation)
+        public void Create(CharacterInformation characterInformation, Directions direction)
         {
             var characterName = characterInformation.CharacterName;
             var characterClass = characterInformation.CharacterClass;
@@ -30,6 +31,8 @@ namespace Scripts.Gameplay.Actors
 
             character = characterGameObject.transform.GetChild(CHARACTER_INDEX).gameObject;
             characterController = characterGameObject;
+
+            SetDirection(characterController.transform, direction);
 
             InitializeCharacterName(characterName);
             InitializeSpriteRenderer();
@@ -136,6 +139,23 @@ namespace Scripts.Gameplay.Actors
             var characterNameComponent = character.GetComponent<CharacterName>();
             var positionSettter = GetComponent<PositionSetter>();
             positionSettter.DirectionChanged += characterNameComponent.OnChangedDirection;
+        }
+
+        private void SetDirection(Transform transform, Directions direction)
+        {
+            switch (direction)
+            {
+                case Directions.Left:
+                {
+                    transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
+                    break;
+                }
+                case Directions.Right:
+                {
+                    transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y, transform.localScale.z);
+                    break;
+                }
+            }
         }
     }
 }

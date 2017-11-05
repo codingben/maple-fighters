@@ -9,9 +9,16 @@ namespace Scripts.Gameplay.Actors
         private Vector2 lastPosition;
         private Transform character;
 
+        private UpdatePositionRequestParameters parameters;
+
         private void Awake()
         {
             lastPosition = transform.position;
+
+            Directions direction;
+            GetDirection(out direction);
+
+            parameters = new UpdatePositionRequestParameters(transform.position.x, transform.position.y, direction);
         }
 
         public void SetPlayerController(Transform characterController)
@@ -29,7 +36,10 @@ namespace Scripts.Gameplay.Actors
             Directions direction;
             GetDirection(out direction);
 
-            var parameters = new UpdatePositionRequestParameters(transform.position.x, transform.position.y, direction);
+            parameters.X = transform.position.x;
+            parameters.Y = transform.position.y;
+            parameters.Direction = direction;
+
             ServiceContainer.GameService.UpdatePosition(parameters);
 
             lastPosition = transform.position;
