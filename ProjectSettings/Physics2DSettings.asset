@@ -18,18 +18,17 @@ Physics2DSettings:
   m_TimeToSleep: 0.5
   m_LinearSleepTolerance: 0.01
   m_AngularSleepTolerance: 2
-  m_DefaultContactOffset: 0.01
+  m_DefaultContactOffset: 0.0001
   m_AutoSimulation: 1
   m_QueriesHitTriggers: 1
   m_QueriesStartInColliders: 1
   m_ChangeStopsCallbacks: 0
   m_CallbacksOnDisable: 1
-  m_AutoSyncTransforms: 1
-  m_AlwaysShowColliders: 0
+  m_AlwaysShowColliders: 1
   m_ShowColliderSleep: 1
-  m_ShowColliderContacts: 0
-  m_ShowColliderAABB: 0
-  m_ContactArrowScale: 0.2
+  m_ShowColliderContacts: 1
+  m_ShowColliderAABB: 1
+  m_ContactArrowScale: 0.25
   m_ColliderAwakeColor: {r: 0.5686275, g: 0.95686275, b: 0.54509807, a: 0.7529412}
   m_ColliderAsleepColor: {r: 0.5686275, g: 0.95686275, b: 0.54509807, a: 0.36078432}
   m_ColliderContactColor: {r: 1, g: 0, b: 1, a: 0.6862745}

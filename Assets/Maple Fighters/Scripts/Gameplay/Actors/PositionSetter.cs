@@ -1,4 +1,5 @@
 ﻿using System;
+using CommonTools.Log;
 using Scripts.Containers;
 using Shared.Game.Common;
 using UnityEngine;
@@ -10,7 +11,7 @@ namespace Scripts.Gameplay.Actors
     {
         public event Action<Directions> DirectionChanged; 
 
-        private const float SPEED = 10;
+        private const float SPEED = 15;
         private Vector3 position = Vector3.zero;
 
         private NetworkIdentity networkIdentity;
@@ -60,20 +61,18 @@ namespace Scripts.Gameplay.Actors
 
         private void FlipByDirection(Directions direction)
         {
+            const float SCALE = 1;
+
             switch (direction)
             {
                 case Directions.Left:
                 {
-                    transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
+                    transform.localScale = new Vector3(SCALE, transform.localScale.y, transform.localScale.z);
                     break;
                 }
                 case Directions.Right:
                 {
-                    transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y, transform.localScale.z);
-                    break;
-                }
-                case Directions.None:
-                {
+                    transform.localScale = new Vector3(-SCALE, transform.localScale.y, transform.localScale.z);
                     break;
                 }
             }

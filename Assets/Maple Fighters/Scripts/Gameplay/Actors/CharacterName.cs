@@ -10,16 +10,18 @@ namespace Scripts.Gameplay.Actors
 
         public void OnChangedDirection(Directions directions)
         {
+            const float SCALE = 0.01f;
+
             switch (directions)
             {
                 case Directions.Left:
                 {
-                    nameText.transform.localScale = new Vector3(0.01f, 0.01f, 1);
+                    nameText.transform.localScale = new Vector3(SCALE, SCALE, nameText.transform.localScale.z);
                     break;
                 }
                 case Directions.Right:
                 {
-                    nameText.transform.localScale = new Vector3(-0.01f, 0.01f, 1);
+                    nameText.transform.localScale = new Vector3(-SCALE, SCALE, nameText.transform.localScale.z);
                     break;
                 }
             }

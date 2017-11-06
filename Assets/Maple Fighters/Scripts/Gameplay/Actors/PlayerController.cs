@@ -218,16 +218,18 @@ namespace Scripts.Gameplay.Actors
 
         private void FlipByDirection(Directions direction)
         {
+            const float SCALE = 1;
+
             switch (direction)
             {
                 case Directions.Left:
                 {
-                    transform.localScale = new Vector3(1, transform.localScale.y, transform.localScale.z);
+                    transform.localScale = new Vector3(SCALE, transform.localScale.y, transform.localScale.z);
                     break;
                 }
                 case Directions.Right:
                 {
-                    transform.localScale = new Vector3(-1, transform.localScale.y, transform.localScale.z);
+                    transform.localScale = new Vector3(-SCALE, transform.localScale.y, transform.localScale.z);
                     break;
                 }
             }

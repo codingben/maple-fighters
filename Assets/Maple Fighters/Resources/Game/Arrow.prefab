@@ -140,7 +140,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1131376555792642}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.01, y: -0.95, z: 0}
+  m_LocalPosition: {x: -0.015, y: -0.95, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4992641578627268}
@@ -181,7 +181,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1536779701889080}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.4, y: -0.95, z: 0}
+  m_LocalPosition: {x: -0.35, y: -0.95, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4992641578627268}
@@ -229,7 +229,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.185, y: -0.2}
+  m_Offset: {x: -0.18314777, y: -0.23241377}
   m_SpriteTilingProperty:
     border: {x: 0.049999997, y: 0.049999997, z: 0.049999997, w: 0.049999997}
     pivot: {x: 0.5, y: 0.5}
@@ -240,7 +240,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.4, y: 1.15}
+  m_Size: {x: 0.37406895, y: 1.0851724}
   m_EdgeRadius: 0
 --- !u!95 &95919946666178214
 Animator:
@@ -271,12 +271,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerState: 0
-  speed: 12
-  jumpForce: 6.25
+  speed: 10.5
+  jumpForce: 5
   ropeUpSpeed: 8
   ropeDownSpeed: 10
-  ladderUpSpeed: 8
-  ladderDownSpeed: 6
+  ladderUpSpeed: 7
+  ladderDownSpeed: 8
   floorLayerMask:
     serializedVersion: 2
     m_Bits: 256

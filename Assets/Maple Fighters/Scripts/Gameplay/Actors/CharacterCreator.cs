@@ -1,4 +1,6 @@
-﻿using Scripts.Gameplay.Camera;
+﻿using System.Runtime.InteropServices;
+using CommonTools.Log;
+using Scripts.Gameplay.Camera;
 using Scripts.Utils.Shared;
 using Shared.Game.Common;
 using UnityEngine;
@@ -18,6 +20,7 @@ namespace Scripts.Gameplay.Actors
 
         private GameObject character;
         private GameObject characterController;
+        private Directions orientation;
 
         public void Create(CharacterInformation characterInformation, Directions direction)
         {
@@ -31,8 +34,7 @@ namespace Scripts.Gameplay.Actors
 
             character = characterGameObject.transform.GetChild(CHARACTER_INDEX).gameObject;
             characterController = characterGameObject;
-
-            SetDirection(characterController.transform, direction);
+            orientation = direction;
 
             InitializeCharacterName(characterName);
             InitializeSpriteRenderer();
@@ -87,6 +89,7 @@ namespace Scripts.Gameplay.Actors
         {
             SetCamerasTarget();
             SetCharacterToPositionSender();
+            SetDirectionOnCreation();
 
             InitializePlayerController();
             InitializePlayerStateAnimatorNetwork();
@@ -141,21 +144,33 @@ namespace Scripts.Gameplay.Actors
             positionSettter.DirectionChanged += characterNameComponent.OnChangedDirection;
         }
 
-        private void SetDirection(Transform transform, Directions direction)
+        private void SetCharacterNameDirection()
         {
-            switch (direction)
+            var characterNameComponent = character.GetComponent<CharacterName>();
+            characterNameComponent.OnChangedDirection(orientation);
+        }
+
+        private void SetDirectionOnCreation()
+        {
+            const float SCALE = 1;
+
+            var transform = characterController.transform;
+
+            switch (orientation)
             {
                 case Directions.Left:
                 {
-                    transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
+                    transform.localScale = new Vector3(SCALE, transform.localScale.y, transform.localScale.z);
                     break;
                 }
                 case Directions.Right:
                 {
-                    transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y, transform.localScale.z);
+                    transform.localScale = new Vector3(-SCALE, transform.localScale.y, transform.localScale.z);
                     break;
                 }
             }
+
+            SetCharacterNameDirection();
         }
     }
 }
