@@ -9,6 +9,7 @@ namespace Game.InterestManagement
     {
         public Vector2 InitialPosition { get; set; }
         public Vector2 Position { get; private set; } = Vector2.Zero;
+        public Directions Direction { get; set; }
 
         private Vector2 lastPosition = Vector2.Zero;
 
@@ -20,9 +21,10 @@ namespace Game.InterestManagement
             // Left blank intentionally
         }
 
-        public Transform(Vector2 startPosition)
+        public Transform(Vector2 startPosition, Directions direction)
         {
             InitialPosition = startPosition;
+            Direction = direction;
             Position = startPosition;
             lastPosition = startPosition;
         }

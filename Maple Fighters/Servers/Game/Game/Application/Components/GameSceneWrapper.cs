@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using CommonTools.Log;
 using Game.InterestManagement;
+using MathematicsHelper;
 using Microsoft.Scripting.Hosting;
 using PythonScripting;
 using ServerApplication.Common.ApplicationBase;
@@ -14,6 +15,7 @@ namespace Game.Application.Components
         private readonly IScene scene;
         private readonly IPythonScriptEngine pythonScriptEngine;
         private readonly ScriptScope scriptScope;
+        private readonly ICharacterSpawnPositionDetailsProvider characterSpawnPositionProvider;
 
         public GameSceneWrapper(Maps map, IScene scene)
         {
@@ -21,6 +23,7 @@ namespace Game.Application.Components
             this.scene = scene;
 
             pythonScriptEngine = Server.Entity.Container.GetComponent<IPythonScriptEngine>().AssertNotNull();
+            characterSpawnPositionProvider = Server.Entity.Container.GetComponent<ICharacterSpawnPositionDetailsProvider>().AssertNotNull();
 
             scriptScope = pythonScriptEngine.GetScriptEngine().CreateScope();
             scriptScope.SetVariable("scene", this);
@@ -48,9 +51,9 @@ namespace Game.Application.Components
             interestArea.DetectOverlapsWithRegions();
         }
 
-        public IScene GetScene()
-        {
-            return scene;
-        }
+        public void AddCharacterSpawnPosition(Vector2 position, float direction) 
+            => characterSpawnPositionProvider.AddSpawnPositionDetails(map, new SpawnPositionDetails(position, direction.ToDirections()));
+
+        public IScene GetScene() => scene;
     }
 }

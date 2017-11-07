@@ -6,11 +6,12 @@ namespace Game.Application.SceneObjects
     public class Portal : SceneObject
     {
         private const string SCENE_OBJECT_NAME = "Portal";
+        private const int DIRECTION_LEFT = 1;
 
-        public Portal(Vector2 position, Vector2 playerPosition, int map) 
-            : base(SCENE_OBJECT_NAME, position)
+        public Portal(Vector2 position, int map) 
+            : base(SCENE_OBJECT_NAME, position, DIRECTION_LEFT)
         {
-            Container.AddComponent(new PortalInfoProvider(playerPosition, map));
+            Container.AddComponent(new PortalInfoProvider(map));
         }
     }
 }

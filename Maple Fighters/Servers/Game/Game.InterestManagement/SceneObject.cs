@@ -3,6 +3,7 @@ using ComponentModel.Common;
 using MathematicsHelper;
 using ServerApplication.Common.ApplicationBase;
 using ServerApplication.Common.Components;
+using Shared.Game.Common;
 
 namespace Game.InterestManagement
 {
@@ -14,7 +15,7 @@ namespace Game.InterestManagement
         public IContainer<ISceneObject> Container { get; }
         public IScene Scene { get; set; }
 
-        public SceneObject(string name, Vector2 position)
+        public SceneObject(string name, Vector2 position, float direction)
         {
             Name = name;
 
@@ -22,7 +23,7 @@ namespace Game.InterestManagement
             Id = idGenerator.GenerateId();
 
             Container = new Container<ISceneObject>(this);
-            Container.AddComponent(new Transform(position));
+            Container.AddComponent(new Transform(position, direction.ToDirections()));
         }
 
         public void Dispose()

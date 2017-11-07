@@ -63,6 +63,7 @@
     <Compile Include="CharacterInformation.cs" />
     <Compile Include="CreateCharacterRequestParameters.cs" />
     <Compile Include="CreateCharacterResponseParameters.cs" />
+    <Compile Include="DirectionsUtils.cs" />
     <Compile Include="Directions.cs" />
     <Compile Include="ValidateCharacterRequestParameters.cs" />
     <Compile Include="FetchCharactersResponseParameters.cs" />

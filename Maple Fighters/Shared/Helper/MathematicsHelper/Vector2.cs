@@ -33,6 +33,11 @@ namespace MathematicsHelper
             result = (float)Math.Sqrt((v1 * v1) + (v2 * v2));
         }
 
+        public override string ToString()
+        {
+            return $"X: {X} Y: {Y}";
+        }
+
         public override bool Equals(object obj)
         {
             if (obj is Vector2)
