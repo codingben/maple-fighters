@@ -8,7 +8,7 @@ namespace Scripts.Gameplay.Actors
     {
         [SerializeField] private Text nameText;
 
-        public void OnChangedDirection(Directions directions)
+        public void OnDirectionChanged(Directions directions)
         {
             const float SCALE = 0.01f;
 

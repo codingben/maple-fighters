@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using Scripts.World;
 using Shared.Game.Common;
 using UnityEngine;
 
@@ -9,7 +10,7 @@ namespace Scripts.Gameplay.Actors
 {
     public class PlayerController : MonoBehaviour
     {
-        public bool DetectGround { get; set; } = true;
+        public bool IsOnGround { get; } = true;
 
         public PlayerState PlayerState
         {
@@ -24,8 +25,8 @@ namespace Scripts.Gameplay.Actors
             }
         }
 
-        public Action<PlayerState> PlayerStateChanged;
-        public event Action<Directions> ChangedDirection;
+        public event Action<Directions> DirectionChanged;
+        public event Action<PlayerState> PlayerStateChanged;
 
         [SerializeField] private PlayerState playerState = PlayerState.Falling;
 
@@ -49,10 +50,12 @@ namespace Scripts.Gameplay.Actors
         [SerializeField] private float direction;
 
         private new Rigidbody2D rigidbody;
+        private RopeOrLadderInteraction ropeOrLadderInteraction;
 
         private void Awake()
         {
             rigidbody = GetComponent<Collider2D>().attachedRigidbody;
+            ropeOrLadderInteraction = GetComponent<RopeOrLadderInteraction>();
         }
 
         private void Update()
@@ -89,7 +92,7 @@ namespace Scripts.Gameplay.Actors
             {
                 rigidbody.velocity = new Vector2(rigidbody.velocity.x, direction * speed * Time.fixedDeltaTime);
             }
-            else
+            else if(playerState != PlayerState.Falling)
             {
                 rigidbody.velocity = new Vector2(direction * speed * Time.fixedDeltaTime, rigidbody.velocity.y);
             }
@@ -164,12 +167,25 @@ namespace Scripts.Gameplay.Actors
             PlayerState = PlayerState.Falling;
         }
 
+        public void JumpFromRopeOrLadder(Directions directions)
+        {
+            if (directions != Directions.None)
+            {
+                direction = GetDirecton(directions);
+
+                var forceDirection = new Vector2(direction, 1);
+                rigidbody.AddForce(forceDirection * (jumpForce / 2), ForceMode2D.Impulse);
+
+                FlipByDirection(directions);
+            }
+
+            SetStateFromRopeOrLadderInteraction(PlayerState.Falling);
+        }
+
         public void SetStateFromRopeOrLadderInteraction(PlayerState state)
         {
             playerState = state;
             PlayerStateChanged?.Invoke(state);
-
-            rigidbody.velocity = new Vector2(0, rigidbody.velocity.y);
         }
 
         private void IdleState()
@@ -234,7 +250,7 @@ namespace Scripts.Gameplay.Actors
                 }
             }
 
-            ChangedDirection?.Invoke(direction);
+            DirectionChanged?.Invoke(direction);
         }
 
         private float GetDirecton(Directions direction)
@@ -266,7 +282,12 @@ namespace Scripts.Gameplay.Actors
 
         private bool IsOnFloor()
         {
-            return DetectGround && floorDetectionPoints.Any(ground => Physics2D.OverlapPoint(ground.position, floorLayerMask));
+            if (ropeOrLadderInteraction.IsInInteraction)
+            {
+                return false;
+            }
+
+            return IsOnGround && floorDetectionPoints.Any(ground => Physics2D.OverlapPoint(ground.position, floorLayerMask));
         }
     }
 }

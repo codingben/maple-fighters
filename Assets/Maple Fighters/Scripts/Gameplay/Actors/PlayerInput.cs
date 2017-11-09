@@ -43,7 +43,7 @@ namespace Scripts.Gameplay.Actors
 
         private void GetInputOrdinary()
         {
-            if (Input.GetKeyDown(jumpKey))
+            if (Input.GetKeyDown(jumpKey) && playerController.PlayerState != PlayerState.Falling)
             {
                 playerController.Jump();
             }
@@ -56,7 +56,7 @@ namespace Scripts.Gameplay.Actors
         {
             if (Input.GetKeyDown(jumpKey))
             {
-                playerController.SetStateFromRopeOrLadderInteraction(PlayerState.Falling);
+                playerController.JumpFromRopeOrLadder(GetHorizontalDirection());
             }
 
             var direction = GetVerticalDirection();

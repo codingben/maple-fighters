@@ -1,6 +1,4 @@
-﻿using System.Runtime.InteropServices;
-using CommonTools.Log;
-using Scripts.Gameplay.Camera;
+﻿using Scripts.Gameplay.Camera;
 using Scripts.Utils.Shared;
 using Shared.Game.Common;
 using UnityEngine;
@@ -75,8 +73,8 @@ namespace Scripts.Gameplay.Actors
             var characterName = character.GetComponent<CharacterName>();
 
             var playerController = characterController.GetComponent<PlayerController>();
-            playerController.ChangedDirection += characterName.OnChangedDirection;
-            playerController.PlayerStateChanged = playerStateAnimatorNetwork.OnPlayerStateChanged;
+            playerController.DirectionChanged += characterName.OnDirectionChanged;
+            playerController.PlayerStateChanged += playerStateAnimatorNetwork.OnPlayerStateChanged;
         }
 
         private void InitializeCharacterInformationProvider(CharacterInformation characterInformation)
@@ -141,13 +139,13 @@ namespace Scripts.Gameplay.Actors
         {
             var characterNameComponent = character.GetComponent<CharacterName>();
             var positionSettter = GetComponent<PositionSetter>();
-            positionSettter.DirectionChanged += characterNameComponent.OnChangedDirection;
+            positionSettter.DirectionChanged += characterNameComponent.OnDirectionChanged;
         }
 
         private void SetCharacterNameDirection()
         {
             var characterNameComponent = character.GetComponent<CharacterName>();
-            characterNameComponent.OnChangedDirection(orientation);
+            characterNameComponent.OnDirectionChanged(orientation);
         }
 
         private void SetDirectionOnCreation()

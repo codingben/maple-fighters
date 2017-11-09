@@ -28,10 +28,16 @@ namespace Scripts.World
                 return;
             }
 
-            if (Input.GetKeyDown(groundInteraction) && playerInteraction != null && !playerInteraction.IsInInteraction)
+            if (Input.GetKeyDown(groundInteraction) 
+                && IsNotInInteractionWithRopeOrLadder())
             {
                 DoInteraction();
             }
+        }
+
+        private bool IsNotInInteractionWithRopeOrLadder()
+        {
+            return playerInteraction != null && !playerInteraction.CanInteract && !playerInteraction.IsInInteraction;
         }
 
         private void DoInteraction()

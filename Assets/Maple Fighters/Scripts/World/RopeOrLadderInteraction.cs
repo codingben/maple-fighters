@@ -8,7 +8,8 @@ namespace Scripts.World
 {
     public class RopeOrLadderInteraction : MonoBehaviour
     {
-        public bool IsInInteraction { get; private set; }
+        public bool CanInteract { get; set; }
+        public bool IsInInteraction { get; set; }
 
         private enum Interaction
         {
@@ -24,13 +25,11 @@ namespace Scripts.World
         [SerializeField] private KeyCode floorInteractionKey = KeyCode.DownArrow;
 
         private Vector3 center;
-
         private new Collider2D collider;
         private Collider2D ignoredCollider;
+        private Interaction interactionType;
 
         private PlayerController playerController;
-
-        private Interaction interactionType;
 
         private void Awake()
         {
@@ -40,7 +39,7 @@ namespace Scripts.World
 
         private void Update()
         {
-            if (IsInInteraction)
+            if (CanInteract)
             {
                 IsInInteractionState();
             }
@@ -48,31 +47,16 @@ namespace Scripts.World
 
         private void IsInInteractionState()
         {
-            if (IsInInteraction
-                && Input.GetKeyDown(floorInteractionKey)
+            if (Input.GetKeyDown(floorInteractionKey)
                 && playerController.PlayerState == PlayerState.Idle)
             {
                 KeyDownPressed();
             }
 
-            if (IsInInteraction
-                && Input.GetKeyDown(flyInteractionKey)
+            if (Input.GetKeyDown(flyInteractionKey)
                 && playerController.PlayerState == PlayerState.Falling)
             {
                 KeyUpPressed();
-            }
-
-            if (ignoredCollider != null)
-            {
-                if (!Physics2D.GetIgnoreCollision(ignoredCollider, collider))
-                {
-                    return;
-                }
-
-                if (playerController.PlayerState == PlayerState.Idle)
-                {
-                    IgnoreCollision(false);
-                }
             }
         }
 
@@ -83,12 +67,14 @@ namespace Scripts.World
 
         private void KeyDownPressed()
         {
-            DisableGroundInteraction();
             StartedInteractionWithRopeOrLadder();
+            DisableGroundInteraction();
         }
 
         private void StartedInteractionWithRopeOrLadder()
         {
+            IsInInteraction = true;
+
             SetPlayerStateToCurrentInteraction();
             SetPositionToRopeCenter();
         }
@@ -112,12 +98,16 @@ namespace Scripts.World
 
         private void SetPositionToRopeCenter()
         {
+            collider.attachedRigidbody.velocity = new Vector2(0, collider.attachedRigidbody.velocity.y);
             transform.parent.position = new Vector3(center.x, transform.parent.position.y);
         }
 
         private void IgnoreCollision(bool ignore)
         {
-            Physics2D.IgnoreCollision(collider, ignoredCollider, ignore);
+            if (IsInInteraction)
+            {
+                Physics2D.IgnoreCollision(collider, ignoredCollider, ignore);
+            }
         }
 
         private void OnTriggerEnter2D(Collider2D collider)
@@ -141,45 +131,38 @@ namespace Scripts.World
 
         private void OnCollisionEnter2D(Collision2D collision)
         {
-            if (!IsInInteraction)
-            {
-                return;
-            }
-
             ignoredCollider = collision.gameObject.GetComponent<Collider2D>();
-            IgnoreCollision(true);
 
-            EnableGroundDetection();
+            DisableGroundInteraction();
         }
 
         private void EnableInteraction(Interaction type)
         {
-            IsInInteraction = true;
+            CanInteract = true;
             interactionType = type;
         }
 
         private void DisableInteraction()
         {
+            if (IsInInteraction)
+            {
+                playerController.SetStateFromRopeOrLadderInteraction(PlayerState.Idle);
+            }
+
+            EnableGroundInteraction();
+
+            CanInteract = false;
             IsInInteraction = false;
-
-            playerController.SetStateFromRopeOrLadderInteraction(PlayerState.Idle);
-
-            EnableGroundDetection();
         }
 
-        private void EnableGroundDetection()
+        private void EnableGroundInteraction()
         {
-            if (!playerController.DetectGround)
-            {
-                playerController.DetectGround = true;
-            }
+            IgnoreCollision(false);
         }
 
         private void DisableGroundInteraction()
         {
             IgnoreCollision(true);
-
-            playerController.DetectGround = false;
         }
     }
 }
