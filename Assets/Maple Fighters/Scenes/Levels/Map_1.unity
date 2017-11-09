@@ -353,6 +353,7 @@ GameObject:
   - component: {fileID: 581949300}
   - component: {fileID: 581949304}
   - component: {fileID: 581949305}
+  - component: {fileID: 581949306}
   m_Layer: 0
   m_Name: Camera
   m_TagString: MainCamera
@@ -423,10 +424,10 @@ Camera:
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
   m_TargetEye: 3
-  m_HDR: 1
-  m_AllowMSAA: 1
+  m_HDR: 0
+  m_AllowMSAA: 0
   m_ForceIntoRT: 0
-  m_OcclusionCulling: 1
+  m_OcclusionCulling: 0
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
   m_StereoMirrorMode: 0
@@ -461,6 +462,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetWidth: 1920
   pixelsToUnits: 135
+--- !u!114 &581949306
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 581949298}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff26db721962cdf4a8edcdfa9a767d2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  profile: {fileID: 11400000, guid: abff30c8e7f1f044983dcb75cda6deec, type: 2}
 --- !u!1 &698174972
 GameObject:
   m_ObjectHideFlags: 0
