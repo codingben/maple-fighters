@@ -1,82 +1,90 @@
-﻿using Box2DX.Collision;
+﻿using System;
+using Box2DX.Collision;
 using Box2DX.Common;
 using Box2DX.Dynamics;
-using OpenTK;
 using Physics.Box2D.PhysicsSimulation;
 
 namespace Physics.Box2D.Test
 {
     internal class Program
     {
+        private static World _world;
+
         private static void Main()
         {
+            var physicsDrawer = new DrawPhysics();
+            physicsDrawer.AppendFlags(DebugDraw.DrawFlags.Aabb);
+            physicsDrawer.AppendFlags(DebugDraw.DrawFlags.Shape);
+
+            _world = CreateWorld();
+            _world.SetDebugDraw(physicsDrawer);
+
+            AddBox(new Vec2(0.0f, 10.0f), new Vec2(5.0f, 5.0f));
+            AddBox(new Vec2(0.0f, 20.0f), new Vec2(5.0f, 5.0f));
+            var box = AddBox(new Vec2(2.5f, 25.0f), new Vec2(5.0f, 5.0f));
+            box.SetLinearVelocity(new Vec2(5, 0));
+            box.SetAngularVelocity(5);
+            AddBox(new Vec2(-2.5f, 25.0f), new Vec2(5.0f, 5.0f));
+            AddStaticBox(new Vec2(0.0f, -10.0f), new Vec2(50.0f, 10.0f));
+
+            const string WINDOW_TITLE = "Physics Simulation";
             const int SCREEN_WIDTH = 1024;
             const int SCREEN_HEIGHT = 768;
 
-            var game = new PhysicsSimulationWindow(SCREEN_WIDTH, SCREEN_HEIGHT)
+            var game = new PhysicsSimulationWindow(WINDOW_TITLE, SCREEN_WIDTH, SCREEN_HEIGHT)
             {
-                VSync = VSyncMode.On,
-                World = CreateWorld()
+                World = _world
             };
+            game.Disposed += OnDisposed;
             game.Run(60.0);
+        }
+
+        private static void OnDisposed(object sender, EventArgs eventArgs)
+        {
+            _world?.Dispose();
+        }
+
+        private static Body AddBox(Vec2 position, Vec2 size)
+        {
+            var bodyDef = new BodyDef();
+            bodyDef.Position.Set(position.X, position.Y);
+
+            var boxDef = new PolygonDef();
+            boxDef.SetAsBox(size.X, size.Y);
+            boxDef.Density = 1.0f;
+            boxDef.Friction = 0.3f;
+            boxDef.Restitution = 0.2f;
+
+            var body = _world.CreateBody(bodyDef);
+            body.CreateShape(boxDef);
+            body.SetMassFromShapes();
+            return body;
+        }
+
+        private static void AddStaticBox(Vec2 position, Vec2 size)
+        {
+            var bodyDef = new BodyDef();
+            bodyDef.Position.Set(position.X, position.Y);
+
+            var boxDef = new PolygonDef();
+            boxDef.SetAsBox(size.X, size.Y);
+            boxDef.Density = 0.0f;
+
+            var body = _world.CreateBody(bodyDef);
+            body.CreateShape(boxDef);
+            body.SetMassFromShapes();
         }
 
         private static World CreateWorld()
         {
-            // Define the size of the world. Simulation will still work
-            // if bodies reach the end of the world, but it will be slower.
             var worldAABB = new AABB();
-            worldAABB.LowerBound.Set(-100.0f);
-            worldAABB.UpperBound.Set(100.0f);
+            worldAABB.LowerBound.Set(-100.0f, -100.0f);
+            worldAABB.UpperBound.Set(100.0f, 100.0f);
 
-            // Define the gravity vector.
-            var gravity = new Vec2(0.0f, -10.0f);
-
-            // Do we want to let bodies sleep?
             const bool DO_SLEEP = true;
 
-            // Construct a world object, which will hold and simulate the rigid bodies.
+            var gravity = new Vec2(0.0f, -9.8f);
             var world = new World(worldAABB, gravity, DO_SLEEP);
-            world.SetDebugDraw(new DrawPhysics());
-
-            // Define the ground body.
-            var groundBodyDef = new BodyDef();
-            groundBodyDef.Position.Set(0.0f, -10.0f);
-
-            // Call the body factory which  creates the ground box shape.
-            // The body is also added to the world.
-            var groundBody = world.CreateBody(groundBodyDef);
-
-            // Define the ground box shape.
-            var groundShapeDef = new PolygonDef();
-
-            // The extents are the half-widths of the box.
-            groundShapeDef.SetAsBox(50.0f, 10.0f);
-
-            // Add the ground shape to the ground body.
-            groundBody.CreateFixture(groundShapeDef);
-
-            // Define the dynamic body. We set its position and call the body factory.
-            var bodyDef = new BodyDef();
-            bodyDef.Position.Set(0.0f, 4.0f);
-            var body = world.CreateBody(bodyDef);
-
-            // Define another box shape for our dynamic body.
-            var shapeDef = new PolygonDef();
-            shapeDef.SetAsBox(1.0f, 1.0f);
-
-            // Set the box density to be non-zero, so it will be dynamic.
-            shapeDef.Density = 1.0f;
-
-            // Override the default friction.
-            shapeDef.Friction = 0.3f;
-
-            // Add the shape to the body.
-            body.CreateFixture(shapeDef);
-
-            // Now tell the dynamic body to compute it's mass properties base
-            // on its shape.
-            body.SetMassFromShapes();
             return world;
         }
     }

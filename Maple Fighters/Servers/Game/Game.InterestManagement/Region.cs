@@ -6,7 +6,7 @@ using Config = JsonConfig.Config;
 
 namespace Game.InterestManagement
 {
-    internal class Region : IRegion
+    internal sealed class Region : IRegion
     {
         public Rectangle PublisherArea { get; }
 

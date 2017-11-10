@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using Box2DX.Dynamics;
@@ -13,7 +12,8 @@ namespace Physics.Box2D.PhysicsSimulation
     {
         public World World { get; set; }
 
-        private const string WINDOW_TITLE = "Physics Simulation";
+        private readonly string windowTitle;
+
         private const float MOUSE_ZOON_SPEED = 0.001f;
         private const float MOUSE_WHEEL_SENSITIVITY = 0.1f;
 
@@ -22,9 +22,10 @@ namespace Physics.Box2D.PhysicsSimulation
 
         private readonly CameraView cameraView;
 
-        public PhysicsSimulationWindow(int width, int height)
-            : base(width, height, GraphicsMode.Default, WINDOW_TITLE, GameWindowFlags.FixedWindow)
+        public PhysicsSimulationWindow(string title, int width, int height)
+            : base(width, height, GraphicsMode.Default, title, GameWindowFlags.FixedWindow)
         {
+            windowTitle = title;
             cameraView = new CameraView(Vector2.Zero, MOUSE_ZOON_SPEED);
 
             SubscribeToInputEvents();
@@ -148,8 +149,9 @@ namespace Physics.Box2D.PhysicsSimulation
 
             if (Keyboard.GetState().IsKeyDown(Key.Minus))
             {
-                if (Math.Abs(moveSpeedViaKeyboard) < 0)
+                if (Math.Abs(moveSpeedViaKeyboard) <= 1)
                 {
+                    moveSpeedViaKeyboard = 1;
                     return;
                 }
 
@@ -161,7 +163,7 @@ namespace Physics.Box2D.PhysicsSimulation
         {
             base.OnUpdateFrame(e);
 
-            Title = $"{WINDOW_TITLE} - FPS: {RenderFrequency:0.0} - Move Speed: {moveSpeedViaKeyboard}";
+            Title = $"{windowTitle} - FPS: {RenderFrequency:0.0} - Move Speed: {moveSpeedViaKeyboard}";
 
             MoveCameraViewViaKeyboard();
             MoveCameraViewViaMouse();
@@ -183,17 +185,13 @@ namespace Physics.Box2D.PhysicsSimulation
 
             SwapBuffers();
         }
-
-        protected override void OnClosing(CancelEventArgs e)
-        {
-            base.OnClosing(e);
-
-            World?.Dispose();
-        }
-
+        
         protected override void OnClosed(EventArgs e)
         {
             base.OnClosed(e);
+
+            World?.SetDebugDraw(null);
+            World = null;
 
             UnsubscribeFromInputEvents();
         }

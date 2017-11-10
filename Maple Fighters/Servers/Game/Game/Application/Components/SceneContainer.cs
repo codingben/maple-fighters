@@ -2,9 +2,9 @@
 using System.IO;
 using CommonTools.Log;
 using ComponentModel.Common;
-using Game.InterestManagement;
 using MathematicsHelper;
 using Microsoft.Scripting.Hosting;
+using Physics.Box2D;
 using PythonScripting;
 using ServerApplication.Common.ApplicationBase;
 using Shared.Game.Common;
@@ -30,6 +30,21 @@ namespace Game.Application.Components
             AddScenesViaPython();
         }
 
+        protected override void OnDestroy()
+        {
+            base.OnDestroy();
+
+            var scenesTemp = new List<IGameSceneWrapper>();
+            scenesTemp.AddRange(scenes.Values);
+
+            scenes.Clear();
+
+            foreach (var gameSceneWrapper in scenesTemp)
+            {
+                gameSceneWrapper.Dispose();
+            }
+        }
+
         private void AddScenesViaPython()
         {
             const string PYTHON_SCRIPTS_PATH = "python/scenes";
@@ -43,7 +58,18 @@ namespace Game.Application.Components
 
         public void AddScene(byte map, Vector2 sceneSize, Vector2 regionSize)
         {
-            scenes.Add((Maps)map, new GameSceneWrapper((Maps)map, new Scene(sceneSize, regionSize)));
+            scenes.Add((Maps) map, new GameSceneWrapper((Maps) map, sceneSize, regionSize));
+        }
+
+        public void AddPhysics(byte map, Vector2 lowerBound, Vector2 upperBound, Vector2 gravity, bool doSleep, bool drawPhysics)
+        {
+            var gameScene = GetSceneWrapper((Maps)map);
+            gameScene.Container.AddComponent(new PhysicsWorldCreator(lowerBound, upperBound, gravity, doSleep));
+
+            if (drawPhysics)
+            {
+                gameScene.Container.AddComponent(new PhysicsSimulationCreator(((Maps)map).ToString()));
+            }
         }
 
         public IGameSceneWrapper GetSceneWrapper(Maps map)

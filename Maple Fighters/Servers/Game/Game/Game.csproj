@@ -173,6 +173,10 @@
       <Project>{DB7043AD-92FD-428A-BB43-18ED8D25B41D}</Project>
       <Name>Game.InterestManagement</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Physics\Box2D\Physics.Box2D.csproj">
+      <Project>{2E057EC4-7919-4326-AB31-3116A259BA49}</Project>
+      <Name>Physics.Box2D</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -20,4 +20,4 @@ direction = data["Direction"]
 position = Vector2(x, y)
 guardian = SceneObject(name, position, direction)
 
-scene.AddSceneObject(guardian)
+scene.CreateSceneObject(guardian)

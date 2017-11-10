@@ -9,12 +9,6 @@ namespace Physics.Box2D.PhysicsSimulation
 {
     public class DrawPhysics : DebugDraw
     {
-        public DrawPhysics()
-        {
-            AppendFlags(DrawFlags.Aabb);
-            AppendFlags(DrawFlags.Shape);
-        }
-
         public override void DrawPolygon(Vec2[] vertices, int vertexCount, Color color)
         {
             GL.Color4(color.R, color.G, color.B, 0.5f);

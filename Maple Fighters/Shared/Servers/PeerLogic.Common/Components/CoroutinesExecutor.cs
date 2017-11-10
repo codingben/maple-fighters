@@ -6,28 +6,30 @@ namespace PeerLogic.Common.Components
 {
     public class CoroutinesExecutor : Component<IPeerEntity>, ICoroutinesExecutor
     {
-        public int Count => executer.Count;
+        public int Count => executor.Count;
 
-        private readonly CommonTools.Coroutines.ICoroutinesExecutor executer;
+        private readonly CommonTools.Coroutines.ICoroutinesExecutor executor;
 
-        public CoroutinesExecutor(CommonTools.Coroutines.ICoroutinesExecutor executer)
+        public CoroutinesExecutor(CommonTools.Coroutines.ICoroutinesExecutor executor)
         {
-            this.executer = executer;
+            this.executor = executor;
         }
 
         public ICoroutine StartCoroutine(IEnumerator<IYieldInstruction> coroutineEnumerator)
         {
-            return executer.StartCoroutine(coroutineEnumerator);
+            return executor.StartCoroutine(coroutineEnumerator);
         }
 
         public void StopAllCoroutines()
         {
-            executer.StopAllCoroutines();
+            executor.StopAllCoroutines();
         }
 
-        public new void Dispose()
+        protected override void OnDestroy()
         {
-            executer?.Dispose();
+            base.OnDestroy();
+
+            executor?.Dispose();
         }
     }
 }

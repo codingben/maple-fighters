@@ -7,28 +7,30 @@ namespace ServerApplication.Common.Components.Coroutines
 {
     public class CoroutinesExecutor : Component<IServerEntity>, ICoroutinesExecutor
     {
-        public int Count => executer.Count;
+        public int Count => executor.Count;
 
-        private readonly ICoroutinesExecutor executer;
+        private readonly ICoroutinesExecutor executor;
 
-        public CoroutinesExecutor(ICoroutinesExecutor executer)
+        public CoroutinesExecutor(ICoroutinesExecutor executor)
         {
-            this.executer = executer;
+            this.executor = executor;
         }
 
         public ICoroutine StartCoroutine(IEnumerator<IYieldInstruction> coroutineEnumerator)
         {
-            return executer.StartCoroutine(coroutineEnumerator);
+            return executor.StartCoroutine(coroutineEnumerator);
         }
 
         public void StopAllCoroutines()
         {
-            executer.StopAllCoroutines();
+            executor.StopAllCoroutines();
         }
 
-        public new void Dispose()
+        protected override void OnDestroy()
         {
-            executer?.Dispose();
+            base.OnDestroy();
+
+            executor?.Dispose();
         }
     }
 }

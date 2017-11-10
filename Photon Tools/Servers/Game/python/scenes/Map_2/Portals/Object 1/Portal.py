@@ -19,4 +19,4 @@ map = 2
 
 portalSceneObject = Portal(position, map)
 
-scene.AddSceneObject(portalSceneObject)
+scene.CreateSceneObject(portalSceneObject)

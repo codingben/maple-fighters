@@ -31,8 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Box2DX">
-      <HintPath>..\..\..\..\..\Photon Libraries\Box2DX.dll</HintPath>
+    <Reference Include="Box2DX, Version=2.0.1.29654, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\Libraries\Box2DX.dll</HintPath>
     </Reference>
     <Reference Include="OpenTK">
       <HintPath>..\..\..\..\packages\OpenTK.2.0.0\lib\net20\OpenTK.dll</HintPath>
@@ -40,16 +41,11 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CameraView.cs" />
     <Compile Include="DrawPhysics.cs" />
-    <Compile Include="PhysicsSimulationGame.cs" />
+    <Compile Include="PhysicsSimulationWindow.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
