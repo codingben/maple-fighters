@@ -54,10 +54,11 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IPhysicsWorldCreator.cs" />
+    <Compile Include="IPhysicsWorldProvider.cs" />
     <Compile Include="PhysicsWorldCreator.cs" />
     <Compile Include="PhysicsSimulationCreator.cs" />
     <Compile Include="PhysicsUtils.cs" />
+    <Compile Include="PhysicsWorldProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

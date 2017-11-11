@@ -3,7 +3,7 @@ using ComponentModel.Common;
 
 namespace Physics.Box2D
 {
-    public interface IPhysicsWorldCreator : IExposableComponent
+    public interface IPhysicsWorldProvider : IExposableComponent
     {
         World GetWorld();
     }

@@ -30,6 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Box2DX">
+      <HintPath>..\..\..\..\Libraries\Box2DX.dll</HintPath>
+    </Reference>
     <Reference Include="CommonCommunicationInterfaces, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\CommonCommunicationInterfaces.5.0.0\lib\net46\CommonCommunicationInterfaces.dll</HintPath>
     </Reference>
@@ -110,6 +113,7 @@
     <Compile Include="Application\Peer Logics\Components\IInterestAreaManagement.cs" />
     <Compile Include="Application\Peer Logics\Components\IMinimalPeerGetter.cs" />
     <Compile Include="Application\Peer Logics\Components\IPeerIdGetter.cs" />
+    <Compile Include="Application\Scene Objects\Components\CharacterBody.cs" />
     <Compile Include="Application\Scene Objects\Components\CharacterInformationProvider.cs" />
     <Compile Include="Application\Peer Logics\CharacterSelectionPeerLogic.cs" />
     <Compile Include="Application\Peer Logics\Components\CharacterGetter.cs" />

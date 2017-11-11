@@ -2,6 +2,8 @@
 using ComponentModel.Common;
 using Game.Application.SceneObjects.Components;
 using Game.InterestManagement;
+using MathematicsHelper;
+using Physics.Box2D;
 using ServerApplication.Common.ApplicationBase;
 using Shared.Game.Common;
 using SceneObject = Game.InterestManagement.SceneObject;
@@ -27,12 +29,17 @@ namespace Game.Application.Components
         {
             const Maps MAP = Maps.Map_1;
 
-            var scene = sceneContainer.GetSceneWrapper(MAP).GetScene().AssertNotNull();
+            var scene = sceneContainer.GetSceneWrapper(MAP).AssertNotNull();
             var spawnPositionDetails = characterSpawnPositionProvider.GetSpawnPositionDetails(MAP);
 
-            var sceneObject = scene.AddSceneObject(new SceneObject(SCENE_OBJECT_NAME, spawnPositionDetails.Position, spawnPositionDetails.Direction.FromDirections())).AssertNotNull();
-            sceneObject.Container.AddComponent(new InterestArea(spawnPositionDetails.Position, scene.RegionSize));
+            var sceneObject = scene.GetScene().AddSceneObject(new SceneObject(SCENE_OBJECT_NAME, spawnPositionDetails.Position, spawnPositionDetails.Direction.FromDirections()))
+                .AssertNotNull();
+            sceneObject.Container.AddComponent(new InterestArea(spawnPositionDetails.Position, scene.GetScene().RegionSize));
             sceneObject.Container.AddComponent(new CharacterInformationProvider(character));
+
+            var world = scene.Container.GetComponent<IPhysicsWorldProvider>().AssertNotNull().GetWorld();
+            var characterBody = world.CreateCharacter(spawnPositionDetails.Position, new Vector2(0.3624894f, 1.070811f)); // TODO: Make a configurable size
+            sceneObject.Container.AddComponent(new CharacterBody(characterBody, world));
             return sceneObject;
         }
     }

@@ -30,8 +30,8 @@ namespace Physics.Box2D
         {
             base.OnAwake();
 
-            var physicsCreator = Entity.Container.GetComponent<IPhysicsWorldCreator>().AssertNotNull();
-            world = physicsCreator.GetWorld();
+            var physicsWorld = Entity.Container.GetComponent<IPhysicsWorldProvider>().AssertNotNull();
+            world = physicsWorld.GetWorld();
             world.SetDebugDraw(drawPhysics);
 
             var fiber = Server.Entity.Container.GetComponent<IFiberStarter>().AssertNotNull();
@@ -44,7 +44,7 @@ namespace Physics.Box2D
 
                 physicsSimulationWindow = new PhysicsSimulationWindow(windowTitle, SCREEN_WIDTH, SCREEN_HEIGHT)
                 {
-                    World = physicsCreator.GetWorld()
+                    World = world
                 };
                 physicsSimulationWindow.Run(60.0);
             });
