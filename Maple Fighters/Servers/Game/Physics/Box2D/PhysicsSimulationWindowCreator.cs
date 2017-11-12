@@ -9,7 +9,7 @@ using ServerCommunicationInterfaces;
 
 namespace Physics.Box2D
 {
-    public class PhysicsSimulationCreator : Component<ISceneEntity>
+    public class PhysicsSimulationWindowCreator : Component<ISceneEntity>
     {
         private readonly string windowTitle;
         private readonly DrawPhysics drawPhysics;
@@ -17,7 +17,7 @@ namespace Physics.Box2D
         private World world;
         private PhysicsSimulationWindow physicsSimulationWindow;
 
-        public PhysicsSimulationCreator(string title)
+        public PhysicsSimulationWindowCreator(string title)
         {
             windowTitle = title;
 

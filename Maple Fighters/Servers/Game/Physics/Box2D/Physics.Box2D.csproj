@@ -54,9 +54,11 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ContactFilterModified.cs" />
     <Compile Include="IPhysicsWorldProvider.cs" />
+    <Compile Include="LayerMask.cs" />
     <Compile Include="PhysicsWorldCreator.cs" />
-    <Compile Include="PhysicsSimulationCreator.cs" />
+    <Compile Include="PhysicsSimulationWindowCreator.cs" />
     <Compile Include="PhysicsUtils.cs" />
     <Compile Include="PhysicsWorldProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

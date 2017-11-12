@@ -97,8 +97,8 @@
     <Compile Include="Application\Components\DatabaseCharacterRemover.cs" />
     <Compile Include="Application\Components\DatabaseCharactersGetter.cs" />
     <Compile Include="Application\Components\GameSceneWrapper.cs" />
-    <Compile Include="Application\Components\CharacterSceneObjectCreator.cs" />
-    <Compile Include="Application\Components\ICharacterSceneObjectCreator.cs" />
+    <Compile Include="Application\Components\CharacterCreator.cs" />
+    <Compile Include="Application\Components\ICharacterCreator.cs" />
     <Compile Include="Application\Components\ICharacterSpawnPositionDetailsProvider.cs" />
     <Compile Include="Application\Components\IDatabaseCharacterCreator.cs" />
     <Compile Include="Application\Components\IDatabaseCharacterExistence.cs" />

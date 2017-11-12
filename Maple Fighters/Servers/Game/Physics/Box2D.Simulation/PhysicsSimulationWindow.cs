@@ -12,77 +12,18 @@ namespace Physics.Box2D.PhysicsSimulation
     {
         public World World { get; set; }
 
+        private const float CAMERA_MOVEMENT_SPEED = 0.01f;
+        private const float MOVE_SPEED_VIA_KEYBOARD_MINIMUM_VALUE = 1;
+
+        private float moveSpeedViaKeyboard = 1;
+
         private readonly string windowTitle;
-
-        private const float MOUSE_ZOON_SPEED = 0.001f;
-        private const float MOUSE_WHEEL_SENSITIVITY = 0.1f;
-
-        private bool canMoveCameraView;
-        private float moveSpeedViaKeyboard = 10;
-
-        private readonly CameraView cameraView;
+        private readonly CameraView cameraView = new CameraView();
 
         public PhysicsSimulationWindow(string title, int width, int height)
             : base(width, height, GraphicsMode.Default, title, GameWindowFlags.FixedWindow)
         {
             windowTitle = title;
-            cameraView = new CameraView(Vector2.Zero, MOUSE_ZOON_SPEED);
-
-            SubscribeToInputEvents();
-        }
-
-        private void SubscribeToInputEvents()
-        {
-            MouseWheel += OnMouseWheelToZoom;
-            MouseDown += OnLeftMouseDown;
-            KeyDown += OnEscapeKeyDown;
-        }
-
-        private void UnsubscribeFromInputEvents()
-        {
-            MouseWheel -= OnMouseWheelToZoom;
-            MouseDown -= OnLeftMouseDown;
-            KeyDown -= OnEscapeKeyDown;
-        }
-
-        private void OnMouseWheelToZoom(object sender, MouseWheelEventArgs mouseWheelEventArgs)
-        {
-            var value = (float)mouseWheelEventArgs.Value / 1000;
-            if (value < MOUSE_ZOON_SPEED)
-            {
-                value = MOUSE_ZOON_SPEED;
-            }
-
-            cameraView.Zoom = value;
-        }
-
-        private void OnLeftMouseDown(object sender, MouseButtonEventArgs mouseButtonEventArgs)
-        {
-            if (mouseButtonEventArgs.Button != MouseButton.Left)
-            {
-                return;
-            }
-
-            canMoveCameraView = !canMoveCameraView;
-
-            if (canMoveCameraView)
-            {
-                CursorVisible = false;
-            }
-        }
-
-        private void OnEscapeKeyDown(object sender, KeyboardKeyEventArgs keyboardKeyEventArgs)
-        {
-            if (keyboardKeyEventArgs.Key != Key.Escape)
-            {
-                return;
-            }
-
-            if (canMoveCameraView)
-            {
-                CursorVisible = true;
-                canMoveCameraView = false;
-            }
         }
 
         private void SimulateWorld()
@@ -101,18 +42,18 @@ namespace Physics.Box2D.PhysicsSimulation
 
         private void MoveCameraViewViaMouse()
         {
-            if (!canMoveCameraView)
+            if (!IsMouseKeyDown() || !Focused)
             {
                 return;
             }
 
-            var position = new Vector2(OpenTK.Input.Mouse.GetState().X * MOUSE_WHEEL_SENSITIVITY, -OpenTK.Input.Mouse.GetState().Y * MOUSE_WHEEL_SENSITIVITY);
-            cameraView.Position = position;
+            var direction = GetMousePosition() - cameraView.Position;
+            cameraView.Position += direction * CAMERA_MOVEMENT_SPEED;
         }
 
         private void MoveCameraViewViaKeyboard()
         {
-            if (canMoveCameraView)
+            if (!Focused || IsMouseKeyDown())
             {
                 return;
             }
@@ -138,24 +79,42 @@ namespace Physics.Box2D.PhysicsSimulation
             }
         }
 
+        protected override void OnMouseWheel(MouseWheelEventArgs e)
+        {
+            base.OnMouseWheel(e);
+
+            var value = (float)e.Value / 1000;
+            if (value < CameraView.MINIMUM_CAMERA_ZOON_VALUE)
+            {
+                value = CameraView.MINIMUM_CAMERA_ZOON_VALUE;
+            }
+
+            cameraView.Zoom = value;
+        }
+
         protected override void OnKeyDown(KeyboardKeyEventArgs e)
         {
             base.OnKeyDown(e);
 
-            if (Keyboard.GetState().IsKeyDown(Key.Plus))
+            if (e.Key == Key.KeypadPlus)
             {
-                moveSpeedViaKeyboard += 1;
+                moveSpeedViaKeyboard += MOVE_SPEED_VIA_KEYBOARD_MINIMUM_VALUE;
             }
 
-            if (Keyboard.GetState().IsKeyDown(Key.Minus))
+            if (e.Key == Key.KeypadMinus)
             {
-                if (Math.Abs(moveSpeedViaKeyboard) <= 1)
+                if (Math.Abs(moveSpeedViaKeyboard) <= MOVE_SPEED_VIA_KEYBOARD_MINIMUM_VALUE)
                 {
-                    moveSpeedViaKeyboard = 1;
+                    moveSpeedViaKeyboard = MOVE_SPEED_VIA_KEYBOARD_MINIMUM_VALUE;
                     return;
                 }
 
-                moveSpeedViaKeyboard -= 1;
+                moveSpeedViaKeyboard -= MOVE_SPEED_VIA_KEYBOARD_MINIMUM_VALUE;
+            }
+
+            if (e.Key == Key.Enter)
+            {
+                cameraView.Reset();
             }
         }
 
@@ -163,10 +122,10 @@ namespace Physics.Box2D.PhysicsSimulation
         {
             base.OnUpdateFrame(e);
 
-            Title = $"{windowTitle} - FPS: {RenderFrequency:0.0} - Move Speed: {moveSpeedViaKeyboard}";
+            Title = $"{windowTitle} - FPS: {RenderFrequency:0.0} - Move Speed Via Keyboard: {moveSpeedViaKeyboard}";
 
-            MoveCameraViewViaKeyboard();
             MoveCameraViewViaMouse();
+            MoveCameraViewViaKeyboard();
         }
 
         protected override void OnRenderFrame(FrameEventArgs e)
@@ -192,8 +151,17 @@ namespace Physics.Box2D.PhysicsSimulation
 
             World?.SetDebugDraw(null);
             World = null;
+        }
 
-            UnsubscribeFromInputEvents();
+        private bool IsMouseKeyDown()
+        {
+            const MouseButton CAMERA_MOVEMENT_MOUSE_KEY = MouseButton.Left;
+            return OpenTK.Input.Mouse.GetState().IsButtonDown(CAMERA_MOVEMENT_MOUSE_KEY);
+        }
+
+        private Vector2 GetMousePosition()
+        {
+            return new Vector2(OpenTK.Input.Mouse.GetState().X, -OpenTK.Input.Mouse.GetState().Y);
         }
     }
 }

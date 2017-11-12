@@ -65,10 +65,11 @@ namespace Game.Application.Components
         {
             var gameScene = GetSceneWrapper((Maps)map);
             gameScene.Container.AddComponent(new PhysicsWorldCreator(lowerBound, upperBound, gravity, doSleep));
+            gameScene.AddScenePhysicsData();
 
             if (drawPhysics)
             {
-                gameScene.Container.AddComponent(new PhysicsSimulationCreator(((Maps)map).ToString()));
+                gameScene.Container.AddComponent(new PhysicsSimulationWindowCreator(((Maps)map).ToString()));
             }
         }
 

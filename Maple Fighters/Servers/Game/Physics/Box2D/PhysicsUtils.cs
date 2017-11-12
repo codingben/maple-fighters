@@ -15,13 +15,17 @@ namespace Physics.Box2D
             var boxDef = new PolygonDef();
             boxDef.SetAsBox(size.X, size.Y);
             boxDef.Density = 0.0f;
+            boxDef.Filter = new FilterData
+            {
+                GroupIndex = (short)LayerMask.Ground
+            };
 
             var body = world.CreateBody(bodyDef);
             body.CreateShape(boxDef);
             body.SetMassFromShapes();
         }
 
-        public static Body CreateCharacter(this World world, Vector2 position, Vector2 size)
+        public static Body CreateCharacter(this World world, Vector2 position, Vector2 size, LayerMask layerMask)
         {
             var bodyDef = new BodyDef();
             bodyDef.Position.Set(position.X, position.Y);
@@ -31,11 +35,35 @@ namespace Physics.Box2D
             boxDef.SetAsBox(size.X, size.Y);
             boxDef.Density = 1.0f;
             boxDef.Friction = 0.3f;
+            boxDef.Filter = new FilterData
+            {
+                GroupIndex = (short)layerMask
+            };
 
             var body = world.CreateBody(bodyDef);
             body.CreateShape(boxDef);
             body.SetMassFromShapes();
             return body;
+        }
+
+        public static void MoveBody(this Body body, Vector2 position, float speed)
+        {
+            const float PHYSICS_SIMULATION_FPS = 60.0f; // TODO: Get this data from another source
+
+            var direction = position - body.GetPosition().ToVector2();
+            var distanceToTravel = direction.FromVector2().Normalize();
+
+            var distancePerTimestep = speed / PHYSICS_SIMULATION_FPS;
+            if (distancePerTimestep > distanceToTravel)
+            {
+                speed *= (distanceToTravel / distancePerTimestep);
+            }
+
+            var desiredVelocity = speed * direction;
+            var changeInVelocity = desiredVelocity - body.GetLinearVelocity().ToVector2();
+
+            var force = body.GetMass() * PHYSICS_SIMULATION_FPS * changeInVelocity;
+            body.ApplyForce(force.FromVector2(), body.GetWorldCenter());
         }
 
         public static Vector2 ToVector2(this Vec2 vec2)

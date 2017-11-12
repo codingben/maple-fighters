@@ -18,7 +18,7 @@ namespace Physics.Box2D
                 UpperBound = upperBound.FromVector2()
             };
             world = new World(worldAabb, gravity.FromVector2(), doSleep);
-            world.CreateGround(new Vector2(0.0f, -2.85f), new Vector2(20.30312f, 0.25f)); // Map_1 // TODO: Get this data from another source
+            world.SetContactFilter(new ContactFilterModified());
         }
 
         protected override void OnAwake()

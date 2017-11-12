@@ -3,6 +3,7 @@ using CommonTools.Log;
 using Game.Application.Components;
 using Game.Application.PeerLogic.Components;
 using Game.Application.SceneObjects;
+using Game.Application.SceneObjects.Components;
 using Game.InterestManagement;
 using ServerApplication.Common.ApplicationBase;
 using ServerCommunicationHelper;
@@ -15,6 +16,7 @@ namespace Game.Application.PeerLogic.Operations
         private readonly ICharacterGetter character;
         private readonly ISceneContainer sceneContainer;
         private readonly ICharacterSpawnPositionDetailsProvider characterSpawnPositionProvider;
+        private readonly ICharacterCreator characterCreator;
 
         public ChangeSceneOperationHandler(ICharacterGetter character)
         {
@@ -22,6 +24,7 @@ namespace Game.Application.PeerLogic.Operations
 
             sceneContainer = Server.Entity.Container.GetComponent<ISceneContainer>().AssertNotNull();
             characterSpawnPositionProvider = Server.Entity.Container.GetComponent<ICharacterSpawnPositionDetailsProvider>().AssertNotNull();
+            characterCreator = Server.Entity.Container.GetComponent<ICharacterCreator>().AssertNotNull();
         }
 
         public ChangeSceneResponseParameters? Handle(MessageData<ChangeSceneRequestParameters> messageData, ref MessageSendOptions sendOptions)
@@ -49,6 +52,12 @@ namespace Game.Application.PeerLogic.Operations
             // Setting the character's interest area in the destination scene.
             var interestArea = characterSceneObject.Container.GetComponent<IInterestArea>().AssertNotNull();
             interestArea.SetSize();
+
+            // Removing a body from old physics world.
+            characterSceneObject.Container.RemoveComponent<CharacterBody>();
+
+            // Creating a new body in the new physics world.
+            characterCreator.CreateCharacterBody(destinationScene, characterSceneObject);
 
             return new ChangeSceneResponseParameters(portalInfoProvider.Map);
         }

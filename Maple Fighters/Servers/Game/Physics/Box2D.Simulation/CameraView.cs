@@ -5,14 +5,10 @@ namespace Physics.Box2D.PhysicsSimulation
 {
     public class CameraView
     {
-        public Vector2 Position;
-        public float Zoom;
+        public const float MINIMUM_CAMERA_ZOON_VALUE = 0.001f;
 
-        public CameraView(Vector2 position, float zoom)
-        {
-            Position = position;
-            Zoom = zoom;
-        }
+        public Vector2 Position = Vector2.Zero;
+        public float Zoom = MINIMUM_CAMERA_ZOON_VALUE;
 
         public void Update()
         {
@@ -23,6 +19,12 @@ namespace Physics.Box2D.PhysicsSimulation
             transform = Matrix4.Mult(transform, Matrix4.CreateScale(Zoom, Zoom, 1.0f));
 
             GL.MultMatrix(ref transform);
+        }
+
+        public void Reset()
+        {
+            Position = Vector2.Zero;
+            Zoom = MINIMUM_CAMERA_ZOON_VALUE;
         }
     }
 }

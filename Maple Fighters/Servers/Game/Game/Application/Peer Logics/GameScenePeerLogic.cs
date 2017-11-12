@@ -91,7 +91,7 @@ namespace Game.Application.PeerLogics
 
         private ISceneObject CreateCharacterSceneObject(Character character)
         {
-            var characterSceneObjectCreator = Server.Entity.Container.GetComponent<ICharacterSceneObjectCreator>().AssertNotNull();
+            var characterSceneObjectCreator = Server.Entity.Container.GetComponent<ICharacterCreator>().AssertNotNull();
             var characterSceneObject = characterSceneObjectCreator.Create(character);
             return characterSceneObject;
         }
