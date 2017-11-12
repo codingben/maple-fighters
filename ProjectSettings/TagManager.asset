@@ -8,6 +8,7 @@ TagManager:
   - Rope
   - Ladder
   - Minimap Camera
+  - Ground
   layers:
   - Default
   - TransparentFX
