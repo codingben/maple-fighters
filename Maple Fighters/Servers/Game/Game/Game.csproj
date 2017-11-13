@@ -133,6 +133,7 @@
     <Compile Include="Application\Peer Logics\Operations\UpdatePositionOperationHandler.cs" />
     <Compile Include="Application\Peer Logics\Operations\UpdatePlayerStateOperationHandler.cs" />
     <Compile Include="Application\Peer Logics\UnauthenticatedPeerLogic.cs" />
+    <Compile Include="Application\Scene Objects\Components\ICharacterBody.cs" />
     <Compile Include="Application\Scene Objects\Components\ICharacterInformationProvider.cs" />
     <Compile Include="Application\Scene Objects\Portal\IPortalInfoProvider.cs" />
     <Compile Include="Application\Scene Objects\Portal\Portal.cs" />

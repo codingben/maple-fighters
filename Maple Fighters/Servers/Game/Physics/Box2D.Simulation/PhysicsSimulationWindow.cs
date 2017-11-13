@@ -155,7 +155,7 @@ namespace Physics.Box2D.PhysicsSimulation
 
         private bool IsMouseKeyDown()
         {
-            const MouseButton CAMERA_MOVEMENT_MOUSE_KEY = MouseButton.Left;
+            const MouseButton CAMERA_MOVEMENT_MOUSE_KEY = MouseButton.Right;
             return OpenTK.Input.Mouse.GetState().IsButtonDown(CAMERA_MOVEMENT_MOUSE_KEY);
         }
 

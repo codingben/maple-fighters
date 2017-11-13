@@ -1,14 +1,18 @@
-﻿using Box2DX.Dynamics;
+﻿using Box2DX.Collision;
+using Box2DX.Dynamics;
 using CommonTools.Log;
 using ComponentModel.Common;
 using Game.InterestManagement;
 using MathematicsHelper;
 using Physics.Box2D;
+using Shared.Game.Common;
 
 namespace Game.Application.SceneObjects.Components
 {
-    internal class CharacterBody : Component<ISceneObject>
+    internal class CharacterBody : Component<ISceneObject>, ICharacterBody
     {
+        public PlayerState PlayerState { get; set; }
+
         private readonly Body body;
         private readonly World world;
 
@@ -43,8 +47,33 @@ namespace Game.Application.SceneObjects.Components
 
         private void OnPositionChanged(Vector2 position)
         {
-            const float SPEED = 10.5f; // TODO: Get this data from another source
-            body.MoveBody(position, SPEED);
+            switch (PlayerState)
+            {
+                case PlayerState.Idle:
+                case PlayerState.Moving:
+                case PlayerState.Falling:
+                {
+                    if (body.GetMass() == 0)
+                    {
+                        body.SetMassFromShapes();
+                    }
+
+                    const float SPEED = 10.5f; // TODO: Get this data from another source
+                    body.MoveBody(position, SPEED);
+                    break;
+                }
+                case PlayerState.Rope:
+                case PlayerState.Ladder:
+                {
+                    if (body.GetMass() > 0)
+                    {
+                        body.SetMass(new MassData());
+                    }
+
+                    body.SetXForm(position.FromVector2(), body.GetAngle());
+                    break;
+                }
+            }
         }
     }
 }

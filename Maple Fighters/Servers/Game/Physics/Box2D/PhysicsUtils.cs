@@ -34,7 +34,7 @@ namespace Physics.Box2D
             var boxDef = new PolygonDef();
             boxDef.SetAsBox(size.X, size.Y);
             boxDef.Density = 1.0f;
-            boxDef.Friction = 0.3f;
+            boxDef.Friction = 4.0f;
             boxDef.Filter = new FilterData
             {
                 GroupIndex = (short)layerMask
@@ -49,9 +49,15 @@ namespace Physics.Box2D
         public static void MoveBody(this Body body, Vector2 position, float speed)
         {
             const float PHYSICS_SIMULATION_FPS = 60.0f; // TODO: Get this data from another source
+            const float TELEPORT_DISTANCE = 1;
 
             var direction = position - body.GetPosition().ToVector2();
             var distanceToTravel = direction.FromVector2().Normalize();
+            if (distanceToTravel > TELEPORT_DISTANCE)
+            {
+                body.SetXForm(position.FromVector2(), body.GetAngle());
+                return;
+            }
 
             var distancePerTimestep = speed / PHYSICS_SIMULATION_FPS;
             if (distancePerTimestep > distanceToTravel)
