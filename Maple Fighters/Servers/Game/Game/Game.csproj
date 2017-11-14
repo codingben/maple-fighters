@@ -136,6 +136,7 @@
     <Compile Include="Application\Scene Objects\Components\ICharacterBody.cs" />
     <Compile Include="Application\Scene Objects\Components\ICharacterInformationProvider.cs" />
     <Compile Include="Application\Scene Objects\Portal\IPortalInfoProvider.cs" />
+    <Compile Include="Application\Scene Objects\Portal\Mob.cs" />
     <Compile Include="Application\Scene Objects\Portal\Portal.cs" />
     <Compile Include="Application\Scene Objects\Portal\PortalInfoProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

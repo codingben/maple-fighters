@@ -42,7 +42,7 @@ namespace Game.Application.Components
 
         public void CreateCharacterBody(IGameSceneWrapper sceneWrapper, ISceneObject sceneObject)
         {
-            var world = sceneWrapper.Container.GetComponent<IPhysicsWorldProvider>().AssertNotNull().GetWorld();
+            var world = sceneWrapper.GetScene().Container.GetComponent<IPhysicsWorldProvider>().AssertNotNull().GetWorld();
             var spawnPosition = sceneObject.Container.GetComponent<ITransform>().InitialPosition;
             var characterBody = world.CreateCharacter(spawnPosition, new Vector2(0.3624894f, 1.070811f), LayerMask.Player); // TODO: Make a configurable size
             sceneObject.Container.AddComponent(new CharacterBody(characterBody, world));

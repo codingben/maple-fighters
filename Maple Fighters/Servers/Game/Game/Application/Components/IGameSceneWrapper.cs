@@ -2,10 +2,8 @@
 
 namespace Game.Application.Components
 {
-    public interface IGameSceneWrapper : ISceneEntity
+    public interface IGameSceneWrapper
     {
         IScene GetScene();
-
-        void AddScenePhysicsData();
     }
 }

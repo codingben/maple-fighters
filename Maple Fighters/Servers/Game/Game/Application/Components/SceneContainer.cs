@@ -41,7 +41,7 @@ namespace Game.Application.Components
 
             foreach (var gameSceneWrapper in scenesTemp)
             {
-                gameSceneWrapper.Dispose();
+                gameSceneWrapper.GetScene().Dispose();
             }
         }
 
@@ -64,12 +64,11 @@ namespace Game.Application.Components
         public void AddPhysics(byte map, Vector2 lowerBound, Vector2 upperBound, Vector2 gravity, bool doSleep, bool drawPhysics)
         {
             var gameScene = GetSceneWrapper((Maps)map);
-            gameScene.Container.AddComponent(new PhysicsWorldCreator(lowerBound, upperBound, gravity, doSleep));
-            gameScene.AddScenePhysicsData();
+            gameScene.GetScene().Container.AddComponent(new PhysicsWorldCreator((Maps)map, new PhysicsWorldInfo(lowerBound, upperBound, gravity, doSleep)));
 
             if (drawPhysics)
             {
-                gameScene.Container.AddComponent(new PhysicsSimulationWindowCreator(((Maps)map).ToString()));
+                gameScene.GetScene().Container.AddComponent(new PhysicsSimulationWindowCreator(((Maps)map).ToString()));
             }
         }
 

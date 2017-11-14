@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using CommonTools.Log;
+using ComponentModel.Common;
 using MathematicsHelper;
 using Config = JsonConfig.Config;
 
@@ -7,6 +8,7 @@ namespace Game.InterestManagement
 {
     public class Scene : IScene
     {
+        public IContainer<ISceneEntity> Container { get; }
         public Vector2 RegionSize { get; }
 
         private readonly IRegion[,] regions;
@@ -14,6 +16,8 @@ namespace Game.InterestManagement
 
         protected Scene(Vector2 sceneSize, Vector2 regionSize)
         {
+            Container = new Container<ISceneEntity>(this);
+
             var regionsX = (int)(sceneSize.X / regionSize.X);
             var regionsY = (int)(sceneSize.Y / regionSize.Y);
 
@@ -79,7 +83,7 @@ namespace Game.InterestManagement
             }
         }
 
-        protected void ClearScene()
+        public void Dispose()
         {
             var scenesObjectsTemp = new List<ISceneObject>();
             scenesObjectsTemp.AddRange(sceneObjects.Values);
@@ -90,6 +94,8 @@ namespace Game.InterestManagement
             {
                 sceneObject.Dispose();
             }
+
+            Container?.Dispose();
         }
 
         public ISceneObject GetSceneObject(int id)
