@@ -51,23 +51,25 @@ namespace Game.Application.SceneObjects.Components
             {
                 case PlayerState.Idle:
                 case PlayerState.Moving:
-                case PlayerState.Falling:
                 {
                     if (body.GetMass() == 0)
                     {
                         body.SetMassFromShapes();
+                        return;
                     }
 
                     const float SPEED = 10.5f; // TODO: Get this data from another source
                     body.MoveBody(position, SPEED);
                     break;
                 }
+                case PlayerState.Falling:
                 case PlayerState.Rope:
                 case PlayerState.Ladder:
                 {
                     if (body.GetMass() > 0)
                     {
                         body.SetMass(new MassData());
+                        return;
                     }
 
                     body.SetXForm(position.FromVector2(), body.GetAngle());
