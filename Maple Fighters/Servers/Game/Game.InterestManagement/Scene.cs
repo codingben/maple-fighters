@@ -12,9 +12,7 @@ namespace Game.InterestManagement
         private readonly IRegion[,] regions;
         private readonly Dictionary<int, ISceneObject> sceneObjects = new Dictionary<int, ISceneObject>();
 
-        private readonly object locker = new object();
-
-        public Scene(Vector2 sceneSize, Vector2 regionSize)
+        protected Scene(Vector2 sceneSize, Vector2 regionSize)
         {
             var regionsX = (int)(sceneSize.X / regionSize.X);
             var regionsY = (int)(sceneSize.Y / regionSize.Y);
@@ -40,49 +38,38 @@ namespace Game.InterestManagement
 
         public ISceneObject AddSceneObject(ISceneObject sceneObject)
         {
-            lock (locker)
+            if (sceneObjects.ContainsKey(sceneObject.Id))
             {
-                if (sceneObjects.ContainsKey(sceneObject.Id))
-                {
-                    LogUtils.Log(MessageBuilder.Trace($"A scene object with a id #{sceneObject.Id} already exists in a scene."), LogMessageType.Warning);
-                    return null;
-                }
-
-                sceneObject.Scene = this;
-                sceneObjects.Add(sceneObject.Id, sceneObject);
-
-                if (Config.Global.Log.InterestManagement)
-                {
-                    LogUtils.Log(MessageBuilder.Trace($"A new scene object: {sceneObject.Name}"));
-                }
-                return sceneObject;
+                LogUtils.Log(MessageBuilder.Trace($"A scene object with a id #{sceneObject.Id} already exists in a scene."), LogMessageType.Warning);
+                return null;
             }
+
+            sceneObject.Scene = this;
+            sceneObjects.Add(sceneObject.Id, sceneObject);
+
+            if (Config.Global.Log.InterestManagement)
+            {
+                LogUtils.Log(MessageBuilder.Trace($"A new scene object: {sceneObject.Name}"));
+            }
+            return sceneObject;
         }
 
         public void RemoveSceneObject(int id)
         {
-            lock (locker)
+            if (!sceneObjects.ContainsKey(id))
             {
-                if (!sceneObjects.ContainsKey(id))
-                {
-                    LogUtils.Log(MessageBuilder.Trace($"A scene object with a id #{id} does not exists in a scene."), LogMessageType.Warning);
-                    return;
-                }
-
-                if (Config.Global.Log.InterestManagement)
-                {
-                    LogUtils.Log(MessageBuilder.Trace($"Removed scene object: {sceneObjects[id].Name}"));
-                }
-
-                sceneObjects[id].Scene = null;
-                sceneObjects.Remove(id);
-
-                RemoveSubscriptionFromPublishers(id);
+                LogUtils.Log(MessageBuilder.Trace($"A scene object with a id #{id} does not exists in a scene."), LogMessageType.Warning);
+                return;
             }
-        }
 
-        private void RemoveSubscriptionFromPublishers(int id)
-        {
+            if (Config.Global.Log.InterestManagement)
+            {
+                LogUtils.Log(MessageBuilder.Trace($"Removed scene object: {sceneObjects[id].Name}"));
+            }
+
+            sceneObjects[id].Scene = null;
+            sceneObjects.Remove(id);
+
             foreach (var region in regions)
             {
                 if (region.HasSubscription(id))
@@ -92,18 +79,28 @@ namespace Game.InterestManagement
             }
         }
 
+        protected void ClearScene()
+        {
+            var scenesObjectsTemp = new List<ISceneObject>();
+            scenesObjectsTemp.AddRange(sceneObjects.Values);
+
+            sceneObjects.Clear();
+
+            foreach (var sceneObject in scenesObjectsTemp)
+            {
+                sceneObject.Dispose();
+            }
+        }
+
         public ISceneObject GetSceneObject(int id)
         {
-            lock (locker)
+            if (sceneObjects.TryGetValue(id, out var sceneObject))
             {
-                if (sceneObjects.TryGetValue(id, out var sceneObject))
-                {
-                    return sceneObject;
-                }
-
-                LogUtils.Log(MessageBuilder.Trace($"Could not find a scene object with id #{id}"), LogMessageType.Error);
-                return null;
+                return sceneObject;
             }
+
+            LogUtils.Log(MessageBuilder.Trace($"Could not find a scene object with id #{id}"), LogMessageType.Error);
+            return null;
         }
 
         public IRegion[,] GetAllRegions()

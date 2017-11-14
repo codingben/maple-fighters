@@ -55,6 +55,7 @@
   <ItemGroup>
     <Compile Include="ExtensionMethods.cs" />
     <Compile Include="IInterestArea.cs" />
+    <Compile Include="ISceneEntity.cs" />
     <Compile Include="ITransform.cs" />
     <Compile Include="SceneObject.cs" />
     <Compile Include="ISceneObject.cs" />

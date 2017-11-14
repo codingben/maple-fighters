@@ -30,6 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Box2DX">
+      <HintPath>..\..\..\..\Libraries\Box2DX.dll</HintPath>
+    </Reference>
     <Reference Include="CommonCommunicationInterfaces, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\CommonCommunicationInterfaces.5.0.0\lib\net46\CommonCommunicationInterfaces.dll</HintPath>
     </Reference>
@@ -94,8 +97,8 @@
     <Compile Include="Application\Components\DatabaseCharacterRemover.cs" />
     <Compile Include="Application\Components\DatabaseCharactersGetter.cs" />
     <Compile Include="Application\Components\GameSceneWrapper.cs" />
-    <Compile Include="Application\Components\CharacterSceneObjectCreator.cs" />
-    <Compile Include="Application\Components\ICharacterSceneObjectCreator.cs" />
+    <Compile Include="Application\Components\CharacterCreator.cs" />
+    <Compile Include="Application\Components\ICharacterCreator.cs" />
     <Compile Include="Application\Components\ICharacterSpawnPositionDetailsProvider.cs" />
     <Compile Include="Application\Components\IDatabaseCharacterCreator.cs" />
     <Compile Include="Application\Components\IDatabaseCharacterExistence.cs" />
@@ -110,6 +113,7 @@
     <Compile Include="Application\Peer Logics\Components\IInterestAreaManagement.cs" />
     <Compile Include="Application\Peer Logics\Components\IMinimalPeerGetter.cs" />
     <Compile Include="Application\Peer Logics\Components\IPeerIdGetter.cs" />
+    <Compile Include="Application\Scene Objects\Components\CharacterBody.cs" />
     <Compile Include="Application\Scene Objects\Components\CharacterInformationProvider.cs" />
     <Compile Include="Application\Peer Logics\CharacterSelectionPeerLogic.cs" />
     <Compile Include="Application\Peer Logics\Components\CharacterGetter.cs" />
@@ -129,6 +133,7 @@
     <Compile Include="Application\Peer Logics\Operations\UpdatePositionOperationHandler.cs" />
     <Compile Include="Application\Peer Logics\Operations\UpdatePlayerStateOperationHandler.cs" />
     <Compile Include="Application\Peer Logics\UnauthenticatedPeerLogic.cs" />
+    <Compile Include="Application\Scene Objects\Components\ICharacterBody.cs" />
     <Compile Include="Application\Scene Objects\Components\ICharacterInformationProvider.cs" />
     <Compile Include="Application\Scene Objects\Portal\IPortalInfoProvider.cs" />
     <Compile Include="Application\Scene Objects\Portal\Portal.cs" />
@@ -172,6 +177,10 @@
     <ProjectReference Include="..\Game.InterestManagement\Game.InterestManagement.csproj">
       <Project>{DB7043AD-92FD-428A-BB43-18ED8D25B41D}</Project>
       <Name>Game.InterestManagement</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Physics\Box2D\Physics.Box2D.csproj">
+      <Project>{2E057EC4-7919-4326-AB31-3116A259BA49}</Project>
+      <Name>Physics.Box2D</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

@@ -4,7 +4,7 @@ using ServerCommunicationInterfaces;
 
 namespace ServerApplication.Common.Components
 {
-    public class FiberProvider : Component<IServerEntity>
+    public class FiberProvider : Component<IServerEntity>, IFiberStarter
     {
         private readonly IFiberProvider fiberProvider;
 
