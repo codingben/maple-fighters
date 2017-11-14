@@ -58,7 +58,10 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CollisionInfo.cs" />
     <Compile Include="ContactFilterModified.cs" />
+    <Compile Include="ContactListenerModified.cs" />
+    <Compile Include="IPhysicsCollision.cs" />
     <Compile Include="IPhysicsWorldProvider.cs" />
     <Compile Include="LayerMask.cs" />
     <Compile Include="PhysicsWorldCreator.cs" />

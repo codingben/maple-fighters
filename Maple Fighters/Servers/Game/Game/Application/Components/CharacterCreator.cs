@@ -46,6 +46,7 @@ namespace Game.Application.Components
             var spawnPosition = sceneObject.Container.GetComponent<ITransform>().InitialPosition;
             var characterBody = world.CreateCharacter(spawnPosition, new Vector2(0.3624894f, 1.070811f), LayerMask.Player); // TODO: Make a configurable size
             sceneObject.Container.AddComponent(new CharacterBody(characterBody, world));
+            characterBody.SetUserData(sceneObject);
         }
     }
 }

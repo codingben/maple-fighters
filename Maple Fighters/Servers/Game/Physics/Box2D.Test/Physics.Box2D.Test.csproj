@@ -57,6 +57,10 @@
       <Project>{A80A032C-8FDC-45F5-B039-BAFA6097F58A}</Project>
       <Name>Physics.Box2D.Simulation</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Box2D\Physics.Box2D.csproj">
+      <Project>{2E057EC4-7919-4326-AB31-3116A259BA49}</Project>
+      <Name>Physics.Box2D</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

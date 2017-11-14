@@ -25,23 +25,24 @@ namespace Physics.Box2D
             body.SetMassFromShapes();
         }
 
-        public static Body CreateCharacter(this World world, Vector2 position, Vector2 size, LayerMask layerMask)
+        public static Body CreateCharacter(this World world, Vector2 position, Vector2 size, LayerMask layerMask, object userData = null)
         {
-            var bodyDef = new BodyDef();
-            bodyDef.Position.Set(position.X, position.Y);
-            bodyDef.FixedRotation = true;
+            var bodyDefinition = new BodyDef();
+            bodyDefinition.Position.Set(position.X, position.Y);
+            bodyDefinition.FixedRotation = true;
 
-            var boxDef = new PolygonDef();
-            boxDef.SetAsBox(size.X, size.Y);
-            boxDef.Density = 1.0f;
-            boxDef.Friction = 4.0f;
-            boxDef.Filter = new FilterData
+            var polygonDefinition = new PolygonDef();
+            polygonDefinition.SetAsBox(size.X, size.Y);
+            polygonDefinition.Density = 1.0f;
+            polygonDefinition.Friction = 4.0f;
+            polygonDefinition.Filter = new FilterData
             {
                 GroupIndex = (short)layerMask
             };
+            polygonDefinition.UserData = userData;
 
-            var body = world.CreateBody(bodyDef);
-            body.CreateShape(boxDef);
+            var body = world.CreateBody(bodyDefinition);
+            body.CreateShape(polygonDefinition);
             body.SetMassFromShapes();
             return body;
         }

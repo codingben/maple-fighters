@@ -15,7 +15,9 @@ namespace Game.Application.SceneObjects
         {
             var physicsWorldProvider = Scene.Container.GetComponent<IPhysicsWorldProvider>().AssertNotNull();
             var world = physicsWorldProvider.GetWorld();
-            world.CreateCharacter(position, size, LayerMask.Mobs);
+            var physicsCollisionProvider = Container.AddComponent(new PhysicsCollisionNotifier());
+            var body = world.CreateCharacter(position, size, LayerMask.Mob, physicsCollisionProvider);
+            body.SetUserData(this);
         }
     }
 }

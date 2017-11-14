@@ -24,6 +24,7 @@ namespace Physics.Box2D
             };
             world = new World(worldAabb, worldInfo.Gravity.FromVector2(), worldInfo.DoSleep);
             world.SetContactFilter(new ContactFilterModified());
+            world.SetContactListener(new ContactListenerModified());
 
             CreateScenePhysicsData(map);
         }
