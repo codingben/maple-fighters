@@ -1,9 +1,8 @@
 ﻿using CommonTools.Log;
 using ComponentModel.Common;
-using PeerLogic.Common;
 using ServerCommunicationInterfaces;
 
-namespace Game.Application.PeerLogic.Components
+namespace PeerLogic.Common.Components
 {
     internal class MinimalPeerGetter : Component<IPeerEntity>, IMinimalPeerGetter
     {

@@ -49,6 +49,8 @@ namespace Game.InterestManagement
             }
 
             sceneObject.Scene = this;
+            sceneObject.OnAwake();
+
             sceneObjects.Add(sceneObject.Id, sceneObject);
 
             if (Config.Global.Log.InterestManagement)

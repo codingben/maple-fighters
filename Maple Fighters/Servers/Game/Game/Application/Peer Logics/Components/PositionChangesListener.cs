@@ -1,6 +1,7 @@
 ﻿using CommonCommunicationInterfaces;
 using CommonTools.Log;
 using ComponentModel.Common;
+using Game.Application.SceneObjects.Components;
 using Game.InterestManagement;
 using MathematicsHelper;
 using PeerLogic.Common;
@@ -11,30 +12,25 @@ namespace Game.Application.PeerLogic.Components
     internal class PositionChangesListener : Component<IPeerEntity>
     {
         private ICharacterGetter sceneObjectGetter;
-        private IInterestAreaManagement interestAreaManagement;
+        private IInterestAreaNotifier interestAreaNotifier;
 
         protected override void OnAwake()
         {
             base.OnAwake();
 
             sceneObjectGetter = Entity.Container.GetComponent<ICharacterGetter>().AssertNotNull();
-            interestAreaManagement = Entity.Container.GetComponent<IInterestAreaManagement>().AssertNotNull();
+            interestAreaNotifier = sceneObjectGetter.GetSceneObject().Container.GetComponent<IInterestAreaNotifier>().AssertNotNull();
 
-            SubscribeToPositionChangedEvent();
-        }
-
-        private void SubscribeToPositionChangedEvent()
-        {
             var transform = sceneObjectGetter.GetSceneObject().Container.GetComponent<ITransform>().AssertNotNull();
-            transform.PositionAndDirectionChanged += SendNewPosition;
+            transform.PositionDirectionChanged += SendPosition;
         }
 
-        public void SendNewPosition(Vector2 newPosition, Directions direction)
+        private void SendPosition(Vector2 newPosition, Directions direction)
         {
             var sceneObjectId = sceneObjectGetter.GetSceneObject().Id;
             var parameters = new SceneObjectPositionChangedEventParameters(sceneObjectId, newPosition.X, newPosition.Y, direction);
             var messageSendOptions = MessageSendOptions.DefaultUnreliable((byte)GameDataChannels.Position);
-            interestAreaManagement.SendEventForSubscribers((byte)GameEvents.PositionChanged, parameters, messageSendOptions);
+            interestAreaNotifier.NotifySubscribers((byte)GameEvents.PositionChanged, parameters, messageSendOptions);
         }
     }
 }

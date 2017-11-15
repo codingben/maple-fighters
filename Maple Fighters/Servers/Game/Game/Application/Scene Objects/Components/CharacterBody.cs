@@ -11,7 +11,7 @@ namespace Game.Application.SceneObjects.Components
 {
     internal class CharacterBody : Component<ISceneObject>, ICharacterBody
     {
-        public PlayerState PlayerState { get; set; }
+        public PlayerState PlayerState { private get; set; }
 
         private readonly Body body;
         private readonly World world;

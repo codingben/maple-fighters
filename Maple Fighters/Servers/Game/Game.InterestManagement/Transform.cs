@@ -14,7 +14,7 @@ namespace Game.InterestManagement
         private Vector2 lastPosition = Vector2.Zero;
 
         public event Action<Vector2> PositionChanged;
-        public event Action<Vector2, Directions> PositionAndDirectionChanged;
+        public event Action<Vector2, Directions> PositionDirectionChanged;
 
         public Transform()
         {
@@ -34,7 +34,7 @@ namespace Game.InterestManagement
             base.OnDestroy();
 
             PositionChanged = null;
-            PositionAndDirectionChanged = null;
+            PositionDirectionChanged = null;
         }
 
         public void SetPosition(Vector2 position)
@@ -61,7 +61,7 @@ namespace Game.InterestManagement
             }
 
             PositionChanged?.Invoke(position);
-            PositionAndDirectionChanged?.Invoke(position, direction);
+            PositionDirectionChanged?.Invoke(position, direction);
 
             lastPosition = position;
         }

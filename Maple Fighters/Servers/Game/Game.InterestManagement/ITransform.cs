@@ -13,7 +13,7 @@ namespace Game.InterestManagement
         Directions Direction { get; set; }
 
         event Action<Vector2> PositionChanged;
-        event Action<Vector2, Directions> PositionAndDirectionChanged;
+        event Action<Vector2, Directions> PositionDirectionChanged;
 
         void SetPosition(Vector2 position);
         void SetPosition(Vector2 position, Directions direction);

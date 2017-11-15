@@ -69,6 +69,8 @@
     <Compile Include="Components\FiberCoroutinesExecuter.cs" />
     <Compile Include="Components\ICoroutinesExecutor.cs" />
     <Compile Include="Components\IEventSenderWrapper.cs" />
+    <Compile Include="Components\IMinimalPeerGetter.cs" />
+    <Compile Include="Components\MinimalPeerGetter.cs" />
     <Compile Include="IClientPeerWrapper.cs" />
     <Compile Include="IPeerEntity.cs" />
     <Compile Include="IPeerLogicBase.cs" />

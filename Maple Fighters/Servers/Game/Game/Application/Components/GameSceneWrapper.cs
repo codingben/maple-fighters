@@ -1,13 +1,10 @@
-﻿using System.Globalization;
-using System.IO;
+﻿using System.IO;
 using CommonTools.Log;
 using Game.InterestManagement;
 using MathematicsHelper;
 using Microsoft.Scripting.Hosting;
-using Physics.Box2D;
 using PythonScripting;
 using ServerApplication.Common.ApplicationBase;
-using ServiceStack;
 using Shared.Game.Common;
 
 namespace Game.Application.Components
@@ -29,11 +26,9 @@ namespace Game.Application.Components
 
             scriptScope = pythonScriptEngine.GetScriptEngine().CreateScope();
             scriptScope.SetVariable("scene", this);
-
-            AddSceneObjectsViaPython();
         }
 
-        private void AddSceneObjectsViaPython()
+        public void AddSceneObjectsViaPython()
         {
             var pythonScriptsPath = $"python/scenes/{map}";
             var pythonScripts = Directory.GetFiles(pythonScriptsPath, "*.py", SearchOption.AllDirectories);

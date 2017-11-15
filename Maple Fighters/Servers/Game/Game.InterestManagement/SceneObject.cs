@@ -26,9 +26,21 @@ namespace Game.InterestManagement
             Container.AddComponent(new Transform(position, direction.ToDirections()));
         }
 
+        public virtual void OnAwake()
+        {
+            // Left blank intentionally
+        }
+
+        protected virtual void OnDestroy()
+        {
+            // Left blank intentionally
+        }
+
         public void Dispose()
         {
             Container?.Dispose();
+
+            OnDestroy();
         }
     }
 }

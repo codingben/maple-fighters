@@ -47,6 +47,7 @@ namespace PeerLogic.Common
 
         private void AddCommonComponents()
         {
+            Entity.Container.AddComponent(new MinimalPeerGetter(PeerWrapper.Peer));
             Entity.Container.AddComponent(new EventSenderWrapper(EventSender.AssertNotNull()));
             Entity.Container.AddComponent(new CoroutinesExecutor(new FiberCoroutinesExecutor(PeerWrapper.Peer.Fiber, 100)));
         }

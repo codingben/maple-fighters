@@ -12,7 +12,7 @@ namespace Physics.Box2D.PhysicsSimulation
     {
         public World World { get; set; }
 
-        private const float CAMERA_MOVEMENT_SPEED = 0.01f;
+        private const float CAMERA_MOVEMENT_SPEED = 0.001f;
         private const float MOVE_SPEED_VIA_KEYBOARD_MINIMUM_VALUE = 1;
 
         private float moveSpeedViaKeyboard = 1;

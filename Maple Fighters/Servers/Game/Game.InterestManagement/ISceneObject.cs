@@ -9,5 +9,7 @@ namespace Game.InterestManagement
 
         IContainer<ISceneObject> Container { get; }
         IScene Scene { get; set; }
+
+        void OnAwake();
     }
 }

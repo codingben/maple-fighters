@@ -45,7 +45,8 @@ namespace ServerApplication.Common.ApplicationBase
             Server.Entity.Container.AddComponent(new RandomNumberGenerator());
             Server.Entity.Container.AddComponent(new IdGenerator());
             var fiber = Server.Entity.Container.AddComponent(new FiberProvider(fiberProvider)).AssertNotNull();
-            Server.Entity.Container.AddComponent(new CoroutinesExecutor(new FiberCoroutinesExecutor(fiber.GetFiberStarter(), 100)));
+            // NOTE: Changed to 50 from 100 because it isn't updating physics correctly. It does lags between move points.
+            Server.Entity.Container.AddComponent(new CoroutinesExecutor(new FiberCoroutinesExecutor(fiber.GetFiberStarter(), 50)));
         }
 
         protected void WrapClientPeer(IClientPeer clientPeer, IPeerLogicBase peerLogic)

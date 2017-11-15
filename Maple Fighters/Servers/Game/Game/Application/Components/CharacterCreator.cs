@@ -34,6 +34,7 @@ namespace Game.Application.Components
             var sceneObject = scene.GetScene().AddSceneObject(
                 new SceneObject(SCENE_OBJECT_NAME, spawnPositionDetails.Position, spawnPositionDetails.Direction.FromDirections())).AssertNotNull();
             sceneObject.Container.AddComponent(new InterestArea(spawnPositionDetails.Position, scene.GetScene().RegionSize));
+            sceneObject.Container.AddComponent(new InterestAreaNotifier());
             sceneObject.Container.AddComponent(new CharacterInformationProvider(character));
 
             CreateCharacterBody(scene, sceneObject);
@@ -43,7 +44,7 @@ namespace Game.Application.Components
         public void CreateCharacterBody(IGameSceneWrapper sceneWrapper, ISceneObject sceneObject)
         {
             var world = sceneWrapper.GetScene().Container.GetComponent<IPhysicsWorldProvider>().AssertNotNull().GetWorld();
-            var spawnPosition = sceneObject.Container.GetComponent<ITransform>().InitialPosition;
+            var spawnPosition = sceneObject.Container.GetComponent<ITransform>().AssertNotNull().InitialPosition;
             var characterBody = world.CreateCharacter(spawnPosition, new Vector2(0.3624894f, 1.070811f), LayerMask.Player); // TODO: Make a configurable size
             sceneObject.Container.AddComponent(new CharacterBody(characterBody, world));
             characterBody.SetUserData(sceneObject);
