@@ -841,6 +841,8 @@ MonoBehaviour:
       m_Image: {fileID: 0}
     - m_Text: NPCs
       m_Image: {fileID: 0}
+    - m_Text: Mobs
+      m_Image: {fileID: 0}
     - m_Text: Portals
       m_Image: {fileID: 0}
   m_OnValueChanged:

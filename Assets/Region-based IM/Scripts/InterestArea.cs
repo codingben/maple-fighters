@@ -154,7 +154,7 @@ namespace InterestManagement.Scripts
 
             if (subscribersAdded.Count == 0) return;
             {
-                SubscribersAdded?.Invoke(sceneObjects);
+                SubscribersAdded?.Invoke(subscribersAdded.ToArray());
             }
         }
 
@@ -175,7 +175,7 @@ namespace InterestManagement.Scripts
 
             if (subscribersRemoved.Count == 0) return;
             {
-                SubscribersRemoved?.Invoke(sceneObjectIds);
+                SubscribersRemoved?.Invoke(subscribersRemoved.ToArray());
             }
         }
     }

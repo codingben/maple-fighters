@@ -47,9 +47,10 @@ namespace InterestManagement.Scripts
 
             var sceneObject = sceneObjects[sceneObjectId];
 
+            RemoveSubscribersForSubscriber(sceneObject);
+
             sceneObjects.Remove(sceneObjectId);
 
-            RemoveSubscribersForSubscriber(sceneObject);
             RemoveSubscriberForSubscribers(sceneObjectId);
 
             LogUtils.Log(MessageBuilder.Trace($"Removed subscription id #{sceneObjectId} from Region id #{Id}"), LogMessageType.Warning);

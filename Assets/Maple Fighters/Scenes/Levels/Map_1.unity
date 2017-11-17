@@ -892,6 +892,10 @@ MonoBehaviour:
     MarkLayerMask:
       serializedVersion: 2
       m_Bits: 5632
+  - Name: Mobs
+    MarkLayerMask:
+      serializedVersion: 2
+      m_Bits: 17920
   - Name: Portals
     MarkLayerMask:
       serializedVersion: 2
