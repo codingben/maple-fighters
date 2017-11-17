@@ -27,25 +27,36 @@ namespace Physics.Box2D
             body.SetMassFromShapes();
         }
 
-        public static Body CreateCharacter(this World world, Vector2 position, Vector2 size, LayerMask layerMask, object userData = null)
+        public static BodyDefinitionWrapper CreateBodyDefinitionWrapper(PolygonDef fixture, Vector2 position, object userData = null)
+        {
+            var bodyDefinition = new BodyDef();
+            bodyDefinition.Position.Set(position.X, position.Y);
+            bodyDefinition.FixedRotation = true;
+
+            var bodyDefinitionWrapper = new BodyDefinitionWrapper(bodyDefinition, fixture, userData);
+            return bodyDefinitionWrapper;
+        }
+
+        public static PolygonDef CreateFixtureDefinition(Vector2 size, LayerMask layerMask, object userData = null)
+        {
+            var polygonDefinition = new PolygonDef();
+            polygonDefinition.SetAsBox(size.X, size.Y);
+            polygonDefinition.Density = 1.0f;
+            polygonDefinition.Friction = 4.0f;
+            polygonDefinition.Filter = new FilterData
+            {
+                GroupIndex = (short) layerMask
+            };
+            polygonDefinition.UserData = userData;
+            return polygonDefinition;
+        }
+
+        public static Body CreateCharacter(this World world, BodyDefinitionWrapper bodyDefinition, PolygonDef polygonDefinition)
         {
             lock (locker)
             {
-                var bodyDefinition = new BodyDef();
-                bodyDefinition.Position.Set(position.X, position.Y);
-                bodyDefinition.FixedRotation = true;
-
-                var polygonDefinition = new PolygonDef();
-                polygonDefinition.SetAsBox(size.X, size.Y);
-                polygonDefinition.Density = 1.0f;
-                polygonDefinition.Friction = 4.0f;
-                polygonDefinition.Filter = new FilterData
-                {
-                    GroupIndex = (short) layerMask
-                };
-                polygonDefinition.UserData = userData;
-
-                var body = world.CreateBody(bodyDefinition);
+                var body = world.CreateBody(bodyDefinition.BodyDef);
+                body.SetUserData(bodyDefinition.UserData);
                 body.CreateShape(polygonDefinition);
                 body.SetMassFromShapes();
                 return body;

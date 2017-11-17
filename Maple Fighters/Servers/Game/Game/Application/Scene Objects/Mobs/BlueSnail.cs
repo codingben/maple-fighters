@@ -1,11 +1,10 @@
 ﻿using System.Collections.Generic;
+using CommonCommunicationInterfaces;
 using CommonTools.Coroutines;
 using CommonTools.Log;
 using Game.InterestManagement;
 using MathematicsHelper;
 using Physics.Box2D;
-using ServerApplication.Common.ApplicationBase;
-using ServerApplication.Common.Components.Coroutines;
 using Shared.Game.Common;
 using Math = System.Math;
 
@@ -13,48 +12,69 @@ namespace Game.Application.SceneObjects
 {
     public class BlueSnail : Mob
     {
-        private const string MOB_NAME = "BlueSnail";
-        private ICoroutinesExecuter coroutinesExecutor;
+        private readonly Vector2 bodySize;
+        private readonly float moveSpeed;
+        private readonly float moveDistance;
 
-        public BlueSnail(Vector2 position, Vector2 size, float direction) 
-            : base(MOB_NAME, position, size, direction)
+        public BlueSnail(Vector2 position, Vector2 bodySize, float moveSpeed, float moveDistance) 
+            : base("BlueSnail", position)
         {
-            // TODO: Further implementation needed (Track a player, etc)
+            this.bodySize = bodySize;
+            this.moveSpeed = moveSpeed;
+            this.moveDistance = moveDistance;
         }
 
         public override void OnAwake()
         {
             base.OnAwake();
 
-            CreateCharacter();
+            var physicsCollisionProvider = Container.AddComponent(new PhysicsCollisionNotifier());
+            var fixtureDefinition = PhysicsUtils.CreateFixtureDefinition(bodySize, LayerMask.Mob, physicsCollisionProvider);
+
+            var transform = Container.GetComponent<ITransform>().AssertNotNull();
+            var bodyDefinitionWrapper = PhysicsUtils.CreateBodyDefinitionWrapper(fixtureDefinition, transform.InitialPosition, this);
+
+            var entityManager = Scene.Container.GetComponent<IEntityManager>().AssertNotNull();
+            entityManager.AddBody(new BodyInfo(Id, bodyDefinitionWrapper));
 
             var physicsCollisionNotifier = Container.GetComponent<IPhysicsCollisionNotifier>().AssertNotNull();
             physicsCollisionNotifier.CollisionEnter += OnCollisionEnter;
 
-            coroutinesExecutor = Server.Entity.Container.GetComponent<ICoroutinesExecuter>().AssertNotNull();
-            coroutinesExecutor.StartCoroutine(MoveMob());
+            var executor = Scene.Container.GetComponent<ISceneOrderExecutor>().AssertNotNull();
+            executor.GetPreUpdateExecutor().StartCoroutine(MoveMob());
         }
 
         private IEnumerator<IYieldInstruction> MoveMob()
         {
             yield return new WaitForSeconds(5);
 
+            var entityManager = Scene.Container.GetComponent<IEntityManager>().AssertNotNull();
+            var body = entityManager.GetBody(Id).AssertNotNull();
+
             var transform = Container.GetComponent<ITransform>().AssertNotNull();
-            var position = Body.GetPosition().ToVector2();
+            var position = body.GetPosition().ToVector2();
             var direction = 0.1f;
 
             while (true)
             {
                 position += new Vector2(direction, 0);
 
-                if(Math.Abs(position.X) > 3.5f)
+                if(Math.Abs(position.X) > moveDistance)
                 {
                     direction *= -1;
                 }
 
+                body.MoveBody(position, moveSpeed, false);
                 transform.SetPosition(position, direction > 0 ? Directions.Right : Directions.Left);
                 yield return null;
             }
+        }
+
+        private void OnPositionChanged(Vector2 position, Directions direction)
+        {
+            var parameters = new SceneObjectPositionChangedEventParameters(Id, position.X, position.Y, direction);
+            var messageSendOptions = MessageSendOptions.DefaultUnreliable((byte)GameDataChannels.Position);
+            InterestAreaNotifier.NotifySubscribers((byte)GameEvents.PositionChanged, parameters, messageSendOptions);
         }
 
         private void OnCollisionEnter(CollisionInfo collisionInfo)

@@ -36,7 +36,7 @@ namespace Physics.Box2D.Test
                 World = _world
             };
             game.Disposed += OnDisposed;
-            game.Run(60.0);
+            game.Run(60.0, 60.0);
         }
 
         private static void OnDisposed(object sender, EventArgs eventArgs)

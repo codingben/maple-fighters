@@ -1,7 +1,9 @@
-﻿using System.Globalization;
+﻿using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using Box2DX.Collision;
 using Box2DX.Dynamics;
+using CommonTools.Coroutines;
 using CommonTools.Log;
 using ComponentModel.Common;
 using Game.InterestManagement;
@@ -11,12 +13,15 @@ using Shared.Game.Common;
 
 namespace Physics.Box2D
 {
-    public class PhysicsWorldCreator : Component<ISceneEntity>
+    public class PhysicsWorldSimulation : Component<ISceneEntity>, IPhysicsWorldSimulation
     {
+        private readonly bool drawPhysics;
         private readonly World world;
 
-        public PhysicsWorldCreator(Maps map, PhysicsWorldInfo worldInfo)
+        public PhysicsWorldSimulation(Maps map, PhysicsWorldInfo worldInfo, bool debugPhysics)
         {
+            drawPhysics = debugPhysics;
+
             var worldAabb = new AABB
             {
                 LowerBound = worldInfo.LowerBound.FromVector2(),
@@ -33,7 +38,39 @@ namespace Physics.Box2D
         {
             base.OnAwake();
 
+            if (!drawPhysics)
+            {
+                StartSimulateWorldContinuously();
+            }
+
             Entity.Container.AddComponent(new PhysicsWorldProvider(world));
+        }
+
+        public void StartSimulateWorldContinuously()
+        {
+            if (drawPhysics)
+            {
+                var executor = Entity.Container.GetComponent<ISceneOrderExecutor>().AssertNotNull();
+                executor.GetUpdateExecutor().StartCoroutine(SimulateWorld());
+            }
+        }
+
+        private IEnumerator<IYieldInstruction> SimulateWorld()
+        {
+            while (true)
+            {
+                // Prepare for simulation. Typically we use a time step of 1/60 of a
+                // second (60Hz) and 10 iterations. This provides a high quality simulation
+                // in most game scenarios.
+                const float TIME_STEP = 1.0f / 60.0f;
+                const int VELOCITY_ITERATIONS = 8;
+                const int POSITION_ITERATIONS = 3;
+
+                // Instruct the world to perform a single step of simulation. It is
+                // generally best to keep the time step and iterations fixed.
+                world.Step(TIME_STEP, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
+                yield return null;
+            }
         }
 
         protected override void OnDestroy()
