@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Box2DX.Dynamics;
 using CommonCommunicationInterfaces;
 using CommonTools.Coroutines;
 using CommonTools.Log;
@@ -15,6 +16,9 @@ namespace Game.Application.SceneObjects
         private readonly Vector2 bodySize;
         private readonly float moveSpeed;
         private readonly float moveDistance;
+        private Body body;
+
+        private ITransform transform;
 
         public BlueSnail(Vector2 position, Vector2 bodySize, float moveSpeed, float moveDistance) 
             : base("BlueSnail", position)
@@ -31,7 +35,9 @@ namespace Game.Application.SceneObjects
             var physicsCollisionProvider = Container.AddComponent(new PhysicsCollisionNotifier());
             var fixtureDefinition = PhysicsUtils.CreateFixtureDefinition(bodySize, LayerMask.Mob, physicsCollisionProvider);
 
-            var transform = Container.GetComponent<ITransform>().AssertNotNull();
+            transform = Container.GetComponent<ITransform>().AssertNotNull();
+            transform.PositionDirectionChanged += OnPositionChanged;
+
             var bodyDefinitionWrapper = PhysicsUtils.CreateBodyDefinitionWrapper(fixtureDefinition, transform.InitialPosition, this);
 
             var entityManager = Scene.Container.GetComponent<IEntityManager>().AssertNotNull();
@@ -46,14 +52,13 @@ namespace Game.Application.SceneObjects
 
         private IEnumerator<IYieldInstruction> MoveMob()
         {
-            yield return new WaitForSeconds(5);
+            yield return new WaitForSeconds(1);
 
             var entityManager = Scene.Container.GetComponent<IEntityManager>().AssertNotNull();
-            var body = entityManager.GetBody(Id).AssertNotNull();
+            body = entityManager.GetBody(Id).AssertNotNull();
 
-            var transform = Container.GetComponent<ITransform>().AssertNotNull();
             var position = body.GetPosition().ToVector2();
-            var direction = 0.1f;
+            var direction = 0.01f;
 
             while (true)
             {
@@ -64,7 +69,6 @@ namespace Game.Application.SceneObjects
                     direction *= -1;
                 }
 
-                body.MoveBody(position, moveSpeed, false);
                 transform.SetPosition(position, direction > 0 ? Directions.Right : Directions.Left);
                 yield return null;
             }
@@ -72,9 +76,13 @@ namespace Game.Application.SceneObjects
 
         private void OnPositionChanged(Vector2 position, Directions direction)
         {
-            var parameters = new SceneObjectPositionChangedEventParameters(Id, position.X, position.Y, direction);
-            var messageSendOptions = MessageSendOptions.DefaultUnreliable((byte)GameDataChannels.Position);
-            InterestAreaNotifier.NotifySubscribers((byte)GameEvents.PositionChanged, parameters, messageSendOptions);
+            body.MoveBody(position, moveSpeed, false);
+
+            InterestAreaNotifier.NotifySubscribers(
+                (byte)GameEvents.PositionChanged,
+                new SceneObjectPositionChangedEventParameters(Id, position.X, position.Y, direction), 
+                MessageSendOptions.DefaultUnreliable((byte)GameDataChannels.Position)
+            );
         }
 
         private void OnCollisionEnter(CollisionInfo collisionInfo)

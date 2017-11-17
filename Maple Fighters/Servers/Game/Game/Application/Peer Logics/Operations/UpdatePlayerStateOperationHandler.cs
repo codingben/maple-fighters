@@ -26,7 +26,7 @@ namespace Game.Application.PeerLogic.Operations
         {
             var playerState = messageData.Parameters.PlayerState;
 
-            var characterBody = sceneObject.Container.GetComponent<ICharacterBody>().AssertNotNull();
+            var characterBody = sceneObject.Container.GetComponent<ICharacterBody>();
             if (characterBody != null)
             {
                 characterBody.PlayerState = playerState;

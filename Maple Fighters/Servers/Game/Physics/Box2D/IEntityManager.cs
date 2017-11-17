@@ -6,7 +6,7 @@ namespace Physics.Box2D
     public interface IEntityManager : IExposableComponent
     {
         void AddBody(BodyInfo bodyInfo);
-        void RemoveBody(int id);
+        void RemoveBody(Body body, int id);
 
         Body GetBody(int id);
     }

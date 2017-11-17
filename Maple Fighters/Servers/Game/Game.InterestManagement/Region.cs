@@ -44,7 +44,7 @@ namespace Game.InterestManagement
                 return;
             }
 
-            var sceneObject = sceneObjects[sceneObjectId];
+            RemoveSubscribersForSubscriber(sceneObjects[sceneObjectId]);
 
             sceneObjects.Remove(sceneObjectId);
 
@@ -53,7 +53,6 @@ namespace Game.InterestManagement
                 LogUtils.Log(MessageBuilder.Trace($"Removed subscription id #{sceneObjectId}"));
             }
 
-            RemoveSubscribersForSubscriber(sceneObject);
             RemoveSubscriberForSubscribers(sceneObjectId);
         }
 
@@ -106,8 +105,13 @@ namespace Game.InterestManagement
 
             foreach (var subscriber in GetAllSubscribers())
             {
-                var subscriberArea = subscriber.Container.GetComponent<IInterestArea>().AssertNotNull();
-                var subscribedPublishers = subscriberArea.GetSubscribedPublishers().ToArray();
+                var subscriberArea = subscriber.Container.GetComponent<IInterestArea>();
+                var subscribedPublishers = subscriberArea?.GetSubscribedPublishers().ToArray();
+
+                if (subscribedPublishers == null)
+                {
+                    continue;
+                }
 
                 foreach (var publisher in subscribedPublishers)
                 {

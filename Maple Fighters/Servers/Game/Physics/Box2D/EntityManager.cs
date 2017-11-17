@@ -31,21 +31,38 @@ namespace Physics.Box2D
         {
             while (true)
             {
-                foreach (var addBody in addBodies)
+                if (removeBodies.Count > 0)
                 {
-                    var body = world.CreateCharacter(addBody.Body, addBody.Body.FixtureDefinition);
-                    bodies.Add(addBody.Id, body);
+                    RemoveBodies();
                 }
 
-                foreach (var removeBody in removeBodies)
+                if (addBodies.Count > 0)
                 {
-                    world.DestroyBody(removeBody);
+                    AddBodies();
                 }
-
-                addBodies.Clear();
-                removeBodies.Clear();
                 yield return null;
             }
+        }
+
+        private void AddBodies()
+        {
+            foreach (var addBody in addBodies)
+            {
+                var body = world.CreateCharacter(addBody.Body, addBody.Body.FixtureDefinition);
+                bodies.Add(addBody.Id, body);
+            }
+
+            addBodies.Clear();
+        }
+
+        private void RemoveBodies()
+        {
+            foreach (var removeBody in removeBodies)
+            {
+                world.DestroyBody(removeBody);
+            }
+
+            removeBodies.Clear();
         }
 
         public void AddBody(BodyInfo bodyInfo)
@@ -53,14 +70,8 @@ namespace Physics.Box2D
             addBodies.Add(bodyInfo);
         }
 
-        public void RemoveBody(int id)
+        public void RemoveBody(Body body, int id)
         {
-            var body = GetBody(id);
-            if (body == null)
-            {
-                return;
-            }
-
             bodies.Remove(id);
             removeBodies.Add(body);
         }

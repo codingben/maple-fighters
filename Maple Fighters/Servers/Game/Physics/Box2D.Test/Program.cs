@@ -28,8 +28,8 @@ namespace Physics.Box2D.Test
             AddStaticBox(new Vec2(0.0f, -10.0f), new Vec2(50.0f, 10.0f));
 
             const string WINDOW_TITLE = "Physics Simulation";
-            const int SCREEN_WIDTH = 1024;
-            const int SCREEN_HEIGHT = 768;
+            const int SCREEN_WIDTH = 800;
+            const int SCREEN_HEIGHT = 600;
 
             var game = new PhysicsSimulationWindow(WINDOW_TITLE, SCREEN_WIDTH, SCREEN_HEIGHT)
             {

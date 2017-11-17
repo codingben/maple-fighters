@@ -40,7 +40,8 @@ namespace Physics.Box2D
 
             if (!drawPhysics)
             {
-                StartSimulateWorldContinuously();
+                var executor = Entity.Container.GetComponent<ISceneOrderExecutor>().AssertNotNull();
+                executor.GetUpdateExecutor().StartCoroutine(SimulateWorld());
             }
 
             Entity.Container.AddComponent(new PhysicsWorldProvider(world));

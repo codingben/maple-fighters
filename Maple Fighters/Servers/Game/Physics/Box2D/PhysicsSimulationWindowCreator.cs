@@ -40,8 +40,8 @@ namespace Physics.Box2D
 
             fiberExecutor.Enqueue(() => 
             {
-                const int SCREEN_WIDTH = 1024;
-                const int SCREEN_HEIGHT = 768;
+                const int SCREEN_WIDTH = 800;
+                const int SCREEN_HEIGHT = 600;
 
                 physicsSimulationWindow = new PhysicsSimulationWindow(windowTitle, SCREEN_WIDTH, SCREEN_HEIGHT)
                 {
@@ -54,10 +54,8 @@ namespace Physics.Box2D
 
         private void OnPhysicsSimulationWindowClosed(object sender, EventArgs eventArgs)
         {
-            // TODO: Make sure that this method won't be called after server shutdown
-
-            var physicsWorldSimulation = Entity.Container.GetComponent<IPhysicsWorldSimulation>().AssertNotNull();
-            physicsWorldSimulation.StartSimulateWorldContinuously();
+            var physicsWorldSimulation = Entity?.Container?.GetComponent<IPhysicsWorldSimulation>();
+            physicsWorldSimulation?.StartSimulateWorldContinuously();
         }
 
         protected override void OnDestroy()

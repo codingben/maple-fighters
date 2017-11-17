@@ -13,8 +13,8 @@ namespace Game.InterestManagement
 
         void InvokeSubscriberAdded(ISceneObject sceneObject);
         void InvokeSubscriberRemoved(int sceneObjectId);
-        void InvokeSubscribersAdded(ISceneObject[] sceneObjects);
-        void InvokeSubscribersRemoved(int[] sceneObjectIds);
+        void InvokeSubscribersAdded(IEnumerable<ISceneObject> sceneObjects);
+        void InvokeSubscribersRemoved(IEnumerable<int> sceneObjectIds);
 
         void SetSize();
         void DetectOverlapsWithRegions();
