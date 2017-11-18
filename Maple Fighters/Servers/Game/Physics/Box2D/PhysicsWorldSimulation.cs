@@ -13,15 +13,12 @@ using Shared.Game.Common;
 
 namespace Physics.Box2D
 {
-    public class PhysicsWorldSimulation : Component<ISceneEntity>, IPhysicsWorldSimulation
+    public class PhysicsWorldSimulation : Component<ISceneEntity>
     {
-        private readonly bool drawPhysics;
         private readonly World world;
 
-        public PhysicsWorldSimulation(Maps map, PhysicsWorldInfo worldInfo, bool debugPhysics)
+        public PhysicsWorldSimulation(Maps map, PhysicsWorldInfo worldInfo)
         {
-            drawPhysics = debugPhysics;
-
             var worldAabb = new AABB
             {
                 LowerBound = worldInfo.LowerBound.FromVector2(),
@@ -38,22 +35,10 @@ namespace Physics.Box2D
         {
             base.OnAwake();
 
-            if (!drawPhysics)
-            {
-                var executor = Entity.Container.GetComponent<ISceneOrderExecutor>().AssertNotNull();
-                executor.GetUpdateExecutor().StartCoroutine(SimulateWorld());
-            }
+            var executor = Entity.Container.GetComponent<ISceneOrderExecutor>().AssertNotNull();
+            executor.GetUpdateExecutor().StartCoroutine(SimulateWorld());
 
             Entity.Container.AddComponent(new PhysicsWorldProvider(world));
-        }
-
-        public void StartSimulateWorldContinuously()
-        {
-            if (drawPhysics)
-            {
-                var executor = Entity.Container.GetComponent<ISceneOrderExecutor>().AssertNotNull();
-                executor.GetUpdateExecutor().StartCoroutine(SimulateWorld());
-            }
         }
 
         private IEnumerator<IYieldInstruction> SimulateWorld()

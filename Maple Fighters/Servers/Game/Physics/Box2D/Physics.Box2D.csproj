@@ -67,7 +67,6 @@
     <Compile Include="IEntityManager.cs" />
     <Compile Include="IPhysicsCollision.cs" />
     <Compile Include="IPhysicsWorldProvider.cs" />
-    <Compile Include="IPhysicsWorldSimulation.cs" />
     <Compile Include="ISceneOrderExecutor.cs" />
     <Compile Include="LayerMask.cs" />
     <Compile Include="PhysicsWorldSimulation.cs" />

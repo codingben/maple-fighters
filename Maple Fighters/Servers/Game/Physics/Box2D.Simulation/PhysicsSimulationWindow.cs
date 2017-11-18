@@ -26,20 +26,6 @@ namespace Physics.Box2D.PhysicsSimulation
             windowTitle = title;
         }
 
-        private void SimulateWorld()
-        {
-            // Prepare for simulation. Typically we use a time step of 1/60 of a
-            // second (60Hz) and 10 iterations. This provides a high quality simulation
-            // in most game scenarios.
-            const float TIME_STEP = 1.0f / 60.0f;
-            const int VELOCITY_ITERATIONS = 8;
-            const int POSITION_ITERATIONS = 3;
-
-            // Instruct the world to perform a single step of simulation. It is
-            // generally best to keep the time step and iterations fixed.
-            World.Step(TIME_STEP, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
-        }
-
         private void MoveCameraViewViaMouse()
         {
             if (!IsMouseKeyDown() || !Focused)
@@ -137,10 +123,7 @@ namespace Physics.Box2D.PhysicsSimulation
 
             cameraView.Update();
 
-            if (World != null)
-            {
-                SimulateWorld();
-            }
+            World?.DrawDebugData();
 
             SwapBuffers();
         }

@@ -160,7 +160,12 @@ namespace Game.InterestManagement
         {
             foreach (var subscriber in GetAllSubscribers())
             {
-                var subscriberArea = subscriber.Container.GetComponent<IInterestArea>().AssertNotNull();
+                var subscriberArea = subscriber.Container.GetComponent<IInterestArea>();
+                if (subscriberArea == null)
+                {
+                    continue;
+                }
+
                 if (!subscriberArea.GetSubscribedPublishers().Any(publisher => publisher.HasSubscription(sceneObjectId)))
                 {
                     subscriberArea.InvokeSubscriberRemoved(sceneObjectId);

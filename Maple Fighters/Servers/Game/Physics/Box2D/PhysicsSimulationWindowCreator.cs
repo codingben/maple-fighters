@@ -1,5 +1,4 @@
-﻿using System;
-using Box2DX.Dynamics;
+﻿using Box2DX.Dynamics;
 using CommonTools.Log;
 using ComponentModel.Common;
 using Game.InterestManagement;
@@ -47,15 +46,8 @@ namespace Physics.Box2D
                 {
                     World = world
                 };
-                physicsSimulationWindow.Closed += OnPhysicsSimulationWindowClosed;
                 physicsSimulationWindow.Run(60.0, 60.0);
             });
-        }
-
-        private void OnPhysicsSimulationWindowClosed(object sender, EventArgs eventArgs)
-        {
-            var physicsWorldSimulation = Entity?.Container?.GetComponent<IPhysicsWorldSimulation>();
-            physicsWorldSimulation?.StartSimulateWorldContinuously();
         }
 
         protected override void OnDestroy()

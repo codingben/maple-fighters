@@ -9,7 +9,7 @@ lowerBound = Vector2(-100, -100)
 upperBound = Vector2(100, 100)
 gravity = Vector2(0, -9.8)
 doSleep = True
-drawPhysics = False
+drawPhysics = True
 
 physicsWorldInfo = PhysicsWorldInfo(lowerBound, upperBound, gravity, doSleep)
 
