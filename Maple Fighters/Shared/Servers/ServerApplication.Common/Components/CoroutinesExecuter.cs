@@ -5,6 +5,7 @@ using ServerApplication.Common.ApplicationBase;
 
 namespace ServerApplication.Common.Components.Coroutines
 {
+    // TODO: Update to Proutines
     public interface ICoroutinesExecuter : ICoroutinesExecutor, IExposableComponent
     {
         // Left blank intentionally

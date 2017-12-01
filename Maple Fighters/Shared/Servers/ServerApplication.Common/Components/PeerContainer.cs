@@ -16,9 +16,8 @@ namespace ServerApplication.Common.Components
 
         public void AddPeerLogic(IClientPeerWrapper<IClientPeer> peerLogic)
         {
-            peerLogics.Add(peerLogic.PeerId, peerLogic);
-
             peerLogic.Disconnected += (reason, details) => RemovePeerLogic(peerLogic, reason, details);
+            peerLogics.Add(peerLogic.PeerId, peerLogic);
         }
 
         public void DisconnectAllPeers()
