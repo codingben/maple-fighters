@@ -70,7 +70,7 @@ namespace Scripts.Utils.Shared
         {
             var id = parameters.SceneObjectId;
             var gameObject = SceneObjectsContainer.Instance.GetRemoteGameObject(id);
-            gameObject?.GetGameObject()?.GetComponent<PlayerStateSetter>().SetState(parameters.PlayerState);
+            gameObject?.GetGameObject()?.GetComponent<PlayerStateSetter>()?.SetState(parameters.PlayerState);
         }
 
         public void OnPlayerStateChanged(PlayerState playerState)
