@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Box2DX.Dynamics;
 using CommonCommunicationInterfaces;
 using CommonTools.Coroutines;
 using CommonTools.Log;
@@ -13,17 +12,12 @@ namespace Game.Application.SceneObjects
 {
     public class BlueSnail : Mob
     {
-        private readonly Vector2 bodySize;
         private readonly float moveSpeed;
         private readonly float moveDistance;
-        private Body body;
-
-        private ITransform transform;
 
         public BlueSnail(Vector2 position, Vector2 bodySize, float moveSpeed, float moveDistance) 
-            : base("BlueSnail", position)
+            : base("BlueSnail", position, bodySize)
         {
-            this.bodySize = bodySize;
             this.moveSpeed = moveSpeed;
             this.moveDistance = moveDistance;
         }
@@ -32,18 +26,9 @@ namespace Game.Application.SceneObjects
         {
             base.OnAwake();
 
-            var physicsCollisionProvider = Container.AddComponent(new PhysicsCollisionNotifier());
-            var fixtureDefinition = PhysicsUtils.CreateFixtureDefinition(bodySize, LayerMask.Mob, physicsCollisionProvider);
+            CreateBody();
 
-            transform = Container.GetComponent<ITransform>().AssertNotNull();
-            transform.PositionDirectionChanged += OnPositionChanged;
-
-            var bodyDefinitionWrapper = PhysicsUtils.CreateBodyDefinitionWrapper(fixtureDefinition, transform.InitialPosition, this);
-
-            var entityManager = Scene.Container.GetComponent<IEntityManager>().AssertNotNull();
-            entityManager.AddBody(new BodyInfo(Id, bodyDefinitionWrapper));
-
-            var physicsCollisionNotifier = Container.GetComponent<IPhysicsCollisionNotifier>().AssertNotNull();
+            var physicsCollisionNotifier = Container.GetComponent<IPhysicsCollisionNotifier>();
             physicsCollisionNotifier.CollisionEnter += OnCollisionEnter;
 
             var executor = Scene.Container.GetComponent<ISceneOrderExecutor>().AssertNotNull();
@@ -52,12 +37,12 @@ namespace Game.Application.SceneObjects
 
         private IEnumerator<IYieldInstruction> MoveMob()
         {
+            var transform = Container.GetComponent<ITransform>().AssertNotNull();
+            transform.PositionDirectionChanged += OnPositionChanged;
+
             yield return new WaitForSeconds(1);
 
-            var entityManager = Scene.Container.GetComponent<IEntityManager>().AssertNotNull();
-            body = entityManager.GetBody(Id).AssertNotNull();
-
-            var position = body.GetPosition().ToVector2();
+            var position = GetBody().GetPosition().ToVector2();
             var direction = 0.01f;
 
             while (true)
@@ -66,6 +51,7 @@ namespace Game.Application.SceneObjects
 
                 if(Math.Abs(position.X) > moveDistance)
                 {
+                    yield return new WaitForSeconds(0.1f);
                     direction *= -1;
                 }
 
@@ -76,7 +62,7 @@ namespace Game.Application.SceneObjects
 
         private void OnPositionChanged(Vector2 position, Directions direction)
         {
-            body.MoveBody(position, moveSpeed, false);
+            GetBody().MoveBody(position, moveSpeed, false);
 
             InterestAreaNotifier.NotifySubscribers(
                 (byte)GameEvents.PositionChanged,

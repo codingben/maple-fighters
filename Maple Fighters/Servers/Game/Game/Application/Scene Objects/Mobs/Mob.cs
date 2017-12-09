@@ -1,5 +1,8 @@
-﻿using Game.Application.SceneObjects.Components;
+﻿using Box2DX.Dynamics;
+using CommonTools.Log;
+using Game.Application.SceneObjects.Components;
 using MathematicsHelper;
+using Physics.Box2D;
 using SceneObject = Game.InterestManagement.SceneObject;
 
 namespace Game.Application.SceneObjects
@@ -11,10 +14,35 @@ namespace Game.Application.SceneObjects
     {
         protected readonly IInterestAreaNotifier InterestAreaNotifier;
 
-        protected Mob(string name, Vector2 position) 
+        private Body body;
+        private readonly BodyDefinitionWrapper bodyDefinitionWrapper;
+
+        protected Mob(string name, Vector2 position, Vector2 bodySize) 
             : base(name, position, 1)
         {
             InterestAreaNotifier = Container.AddComponent(new InterestAreaNotifier());
+
+            var physicsCollisionNotifier = Container.AddComponent(new PhysicsCollisionNotifier());
+            var fixtureDefinition = PhysicsUtils.CreateFixtureDefinition(bodySize, LayerMask.Mob, physicsCollisionNotifier);
+            bodyDefinitionWrapper = PhysicsUtils.CreateBodyDefinitionWrapper(fixtureDefinition, position, this);
+        }
+
+        protected void CreateBody()
+        {
+            var entityManager = Scene.Container.GetComponent<IEntityManager>().AssertNotNull();
+            entityManager.AddBody(new BodyInfo(Id, bodyDefinitionWrapper));
+        }
+
+        protected Body GetBody()
+        {
+            if (body != null)
+            {
+                return body;
+            }
+
+            var entityManager = Scene.Container.GetComponent<IEntityManager>().AssertNotNull();
+            body = entityManager.GetBody(Id).AssertNotNull();
+            return body;
         }
     }
 }
