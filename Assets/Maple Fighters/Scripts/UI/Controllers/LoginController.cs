@@ -50,7 +50,7 @@ namespace Scripts.UI.Controllers
 
         private void OnLoginButtonClicked(string email, string password)
         {
-            var parameters = new LoginRequestParameters(email, password);
+            var parameters = new LoginRequestParameters(email, password.CreateSha512());
             CoroutinesExecutor.StartTask((y) => Connect(y, parameters));
         }
 

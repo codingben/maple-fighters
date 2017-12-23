@@ -21,7 +21,7 @@ namespace Scripts.Gameplay
 
         public GameObject GetGameObject()
         {
-            return gameObject;
+            return Equals(gameObject, null) ? null : gameObject;
         }
     }
 }
