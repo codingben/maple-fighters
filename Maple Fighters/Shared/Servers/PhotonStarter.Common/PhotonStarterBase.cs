@@ -1,5 +1,4 @@
 ﻿using System.IO;
-using CommonCommunicationInterfaces;
 using CommonTools.Log;
 using Photon.SocketServer;
 using PhotonServerImplementation;
@@ -11,7 +10,7 @@ using JsonConfig;
 namespace PhotonStarter.Common
 {
     public abstract class PhotonStarterBase<T> : PhotonServerImplementation.ApplicationBase
-        where T : IApplication
+        where T : IApplicationBase
     {
         private T application;
 
@@ -33,16 +32,8 @@ namespace PhotonStarter.Common
 
         protected override PeerBase CreatePeer(InitRequest initRequest)
         {
-            var clientPeer = new PhotonClientPeer(initRequest)
-            {
-                NetworkTrafficState = NetworkTrafficState.Paused
-            };
-
-            clientPeer.Fiber.Enqueue(() =>
-            {
-                LogUtils.Log($"A new peer has been connected -> {clientPeer.ConnectionInformation.Ip}:{clientPeer.ConnectionInformation.Port}");
-                application.OnConnected(clientPeer);
-            });
+            var clientPeer = new PhotonClientPeer(initRequest);
+            clientPeer.Fiber.Enqueue(() => application.OnConnected(clientPeer));
             return clientPeer;
         }
 
@@ -55,9 +46,8 @@ namespace PhotonStarter.Common
 
         private Logger CreateLogger()
         {
-            var logger = new Logger();
-            logger.Initialize(Path.Combine(BinaryPath, "../configuration/log4net.config"));
-            return logger;
+            var path = Path.Combine(BinaryPath, "../configuration/log4net.config");
+            return new Logger(path);
         }
     }
 }

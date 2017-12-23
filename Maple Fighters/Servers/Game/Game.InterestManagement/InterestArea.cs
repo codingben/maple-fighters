@@ -38,7 +38,7 @@ namespace Game.InterestManagement
             SubscriberRemoved?.Invoke(sceneObjectId);
         }
 
-        public void InvokeSubscribersAdded(ISceneObject[] sceneObjects)
+        public void InvokeSubscribersAdded(IEnumerable<ISceneObject> sceneObjects)
         {
             var subscribersAdded = new List<ISceneObject>();
 
@@ -59,7 +59,7 @@ namespace Game.InterestManagement
             }
         }
 
-        public void InvokeSubscribersRemoved(int[] sceneObjectIds)
+        public void InvokeSubscribersRemoved(IEnumerable<int> sceneObjectIds)
         {
             var subscribersRemoved = new List<int>();
 

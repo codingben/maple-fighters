@@ -22,17 +22,19 @@ namespace Chat.Application
             AddComponents();
         }
 
+        public override void OnConnected(IClientPeer clientPeer)
+        {
+            base.OnConnected(clientPeer);
+
+            WrapClientPeer(clientPeer, new UnauthenticatedPeerLogic());
+        }
+
         private void AddComponents()
         {
             Server.Entity.Container.AddComponent(new DatabaseConnectionProvider());
             Server.Entity.Container.AddComponent(new DatabaseUserIdViaAccessTokenProvider());
             Server.Entity.Container.AddComponent(new DatabaseAccessTokenExistence());
             Server.Entity.Container.AddComponent(new LocalDatabaseAccessTokens());
-        }
-
-        public override void OnConnected(IClientPeer clientPeer)
-        {
-            WrapClientPeer(clientPeer, new UnauthenticatedPeerLogic());
         }
     }
 }

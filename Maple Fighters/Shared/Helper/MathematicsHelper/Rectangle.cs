@@ -94,6 +94,6 @@ namespace MathematicsHelper
                    (Y < rect.Y + rect.Height);
         }
 
-        public override string ToString() => $"X={X} Y={Y} Width={Width} Height={Height}";
+        public override string ToString() => $"X: {X} Y: {Y} Width: {Width} Height: {Height}";
     }
 }

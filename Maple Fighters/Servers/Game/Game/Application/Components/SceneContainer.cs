@@ -41,7 +41,7 @@ namespace Game.Application.Components
 
             foreach (var gameSceneWrapper in scenesTemp)
             {
-                gameSceneWrapper.Dispose();
+                gameSceneWrapper.GetScene().Dispose();
             }
         }
 
@@ -56,20 +56,19 @@ namespace Game.Application.Components
             }
         }
 
-        public void AddScene(byte map, Vector2 sceneSize, Vector2 regionSize)
+        public void AddScene(byte map, Vector2 sceneSize, Vector2 regionSize, PhysicsWorldInfo physicsWorldInfo, bool drawPhysics)
         {
-            scenes.Add((Maps) map, new GameSceneWrapper((Maps) map, sceneSize, regionSize));
-        }
+            var gameSceneWrapper = new GameSceneWrapper((Maps) map, sceneSize, regionSize);
+            scenes.Add((Maps) map, gameSceneWrapper);
 
-        public void AddPhysics(byte map, Vector2 lowerBound, Vector2 upperBound, Vector2 gravity, bool doSleep, bool drawPhysics)
-        {
-            var gameScene = GetSceneWrapper((Maps)map);
-            gameScene.Container.AddComponent(new PhysicsWorldCreator(lowerBound, upperBound, gravity, doSleep));
-            gameScene.AddScenePhysicsData();
+            gameSceneWrapper.GetScene().Container.AddComponent(new SceneOrderExecutor());
+            gameSceneWrapper.GetScene().Container.AddComponent(new PhysicsWorldSimulation((Maps)map, physicsWorldInfo));
+            gameSceneWrapper.GetScene().Container.AddComponent(new EntityManager());
+            gameSceneWrapper.AddSceneObjectsViaPython();
 
             if (drawPhysics)
             {
-                gameScene.Container.AddComponent(new PhysicsSimulationWindowCreator(((Maps)map).ToString()));
+                gameSceneWrapper.GetScene().Container.AddComponent(new PhysicsSimulationWindowCreator(((Maps)map).ToString()));
             }
         }
 

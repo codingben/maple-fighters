@@ -36,6 +36,9 @@ namespace Game.Application.PeerLogic.Operations
             var portalSceneObject = characterSceneObject.Scene.GetSceneObject(portalSceneObjectId).AssertNotNull();
             var portalInfoProvider = portalSceneObject.Container.GetComponent<IPortalInfoProvider>().AssertNotNull();
 
+            // Removing a body from old physics world.
+            characterSceneObject.Container.RemoveComponent<CharacterBody>();
+
             // Removing a character from his old scene.
             characterSceneObject.Scene.RemoveSceneObject(characterSceneObject.Id);
 
@@ -53,11 +56,11 @@ namespace Game.Application.PeerLogic.Operations
             var interestArea = characterSceneObject.Container.GetComponent<IInterestArea>().AssertNotNull();
             interestArea.SetSize();
 
-            // Removing a body from old physics world.
-            characterSceneObject.Container.RemoveComponent<CharacterBody>();
-
             // Creating a new body in the new physics world.
             characterCreator.CreateCharacterBody(destinationScene, characterSceneObject);
+
+            // Adding a new body to the new physics world.
+            characterSceneObject.Container.AddComponent(new CharacterBody());
 
             return new ChangeSceneResponseParameters(portalInfoProvider.Map);
         }

@@ -4,6 +4,6 @@
     {
         Ground,
         Player,
-        Mobs
+        Mob
     }
 }

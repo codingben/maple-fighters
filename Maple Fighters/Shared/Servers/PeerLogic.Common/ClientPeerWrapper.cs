@@ -33,6 +33,8 @@ namespace PeerLogic.Common
 
                 PeerLogic = peerLogic;
                 PeerLogic.Initialize(this);
+
+                Peer.NetworkTrafficState = NetworkTrafficState.Flowing;
             });
         }
 

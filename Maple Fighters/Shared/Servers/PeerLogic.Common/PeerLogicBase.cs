@@ -1,5 +1,4 @@
 ﻿using System;
-using CommonCommunicationInterfaces;
 using CommonTools.Log;
 using PeerLogic.Common.Components;
 using ServerCommunicationHelper;
@@ -35,8 +34,6 @@ namespace PeerLogic.Common
             var logOperationsResponse = Config.Global.Log.OperationsResponse;
             OperationRequestHandlerRegister = new OperationRequestsHandler<TOperationCode>(PeerWrapper.Peer.OperationRequestNotifier, 
                 PeerWrapper.Peer.OperationResponseSender, logOperationsRequest, logOperationsResponse, coroutinesExecutor);
-
-            PeerWrapper.Peer.NetworkTrafficState = NetworkTrafficState.Flowing;
         }
 
         public virtual void Dispose()
@@ -47,6 +44,7 @@ namespace PeerLogic.Common
 
         private void AddCommonComponents()
         {
+            Entity.Container.AddComponent(new MinimalPeerGetter(PeerWrapper.Peer));
             Entity.Container.AddComponent(new EventSenderWrapper(EventSender.AssertNotNull()));
             Entity.Container.AddComponent(new CoroutinesExecutor(new FiberCoroutinesExecutor(PeerWrapper.Peer.Fiber, 100)));
         }

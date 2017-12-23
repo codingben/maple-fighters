@@ -10,9 +10,9 @@ namespace ServerApplication.Common.ApplicationBase
     /// <summary>
     /// A base class to startup a server application.
     /// </summary>
-    public abstract class ApplicationBase : IApplication
+    public class ApplicationBase : IApplicationBase
     {
-        private PeerContainer peerContainer;
+        private IPeerContainer peerContainer;
         private readonly IFiberProvider fiberProvider;
 
         protected ApplicationBase(IFiberProvider fiberProvider)
@@ -20,7 +20,10 @@ namespace ServerApplication.Common.ApplicationBase
             this.fiberProvider = fiberProvider;
         }
 
-        public abstract void OnConnected(IClientPeer clientPeer);
+        public virtual void OnConnected(IClientPeer clientPeer)
+        {
+            LogUtils.Log($"A new peer has been connected -> {clientPeer.ConnectionInformation.Ip}:{clientPeer.ConnectionInformation.Port}");
+        }
 
         public virtual void Startup()
         {

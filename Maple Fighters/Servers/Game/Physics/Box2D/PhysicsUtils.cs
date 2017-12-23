@@ -7,6 +7,8 @@ namespace Physics.Box2D
 {
     public static class PhysicsUtils
     {
+        private static readonly object locker = new object();
+
         public static void CreateGround(this World world, Vector2 position, Vector2 size)
         {
             var bodyDef = new BodyDef();
@@ -25,51 +27,69 @@ namespace Physics.Box2D
             body.SetMassFromShapes();
         }
 
-        public static Body CreateCharacter(this World world, Vector2 position, Vector2 size, LayerMask layerMask)
+        public static BodyDefinitionWrapper CreateBodyDefinitionWrapper(PolygonDef fixture, Vector2 position, object userData = null)
         {
-            var bodyDef = new BodyDef();
-            bodyDef.Position.Set(position.X, position.Y);
-            bodyDef.FixedRotation = true;
+            var bodyDefinition = new BodyDef();
+            bodyDefinition.Position.Set(position.X, position.Y);
+            bodyDefinition.FixedRotation = true;
 
-            var boxDef = new PolygonDef();
-            boxDef.SetAsBox(size.X, size.Y);
-            boxDef.Density = 1.0f;
-            boxDef.Friction = 4.0f;
-            boxDef.Filter = new FilterData
-            {
-                GroupIndex = (short)layerMask
-            };
-
-            var body = world.CreateBody(bodyDef);
-            body.CreateShape(boxDef);
-            body.SetMassFromShapes();
-            return body;
+            var bodyDefinitionWrapper = new BodyDefinitionWrapper(bodyDefinition, fixture, userData);
+            return bodyDefinitionWrapper;
         }
 
-        public static void MoveBody(this Body body, Vector2 position, float speed)
+        public static PolygonDef CreateFixtureDefinition(Vector2 size, LayerMask layerMask, object userData = null)
         {
-            const float PHYSICS_SIMULATION_FPS = 60.0f; // TODO: Get this data from another source
-            const float TELEPORT_DISTANCE = 1;
-
-            var direction = position - body.GetPosition().ToVector2();
-            var distanceToTravel = direction.FromVector2().Normalize();
-            if (distanceToTravel > TELEPORT_DISTANCE)
+            var polygonDefinition = new PolygonDef();
+            polygonDefinition.SetAsBox(size.X, size.Y);
+            polygonDefinition.Density = 1.0f;
+            polygonDefinition.Friction = 4.0f;
+            polygonDefinition.Filter = new FilterData
             {
-                body.SetXForm(position.FromVector2(), body.GetAngle());
-                return;
-            }
+                GroupIndex = (short) layerMask
+            };
+            polygonDefinition.UserData = userData;
+            return polygonDefinition;
+        }
 
-            var distancePerTimestep = speed / PHYSICS_SIMULATION_FPS;
-            if (distancePerTimestep > distanceToTravel)
+        public static Body CreateCharacter(this World world, BodyDefinitionWrapper bodyDefinition, PolygonDef polygonDefinition)
+        {
+            lock (locker)
             {
-                speed *= (distanceToTravel / distancePerTimestep);
+                var body = world.CreateBody(bodyDefinition.BodyDef);
+                body.SetUserData(bodyDefinition.UserData);
+                body.CreateShape(polygonDefinition);
+                body.SetMassFromShapes();
+                return body;
             }
+        }
 
-            var desiredVelocity = speed * direction;
-            var changeInVelocity = desiredVelocity - body.GetLinearVelocity().ToVector2();
+        public static void MoveBody(this Body body, Vector2 position, float speed, bool teleport = true)
+        {
+            lock (locker)
+            {
+                const float PHYSICS_SIMULATION_FPS = 60.0f; // TODO: Get this data from another source
+                const float TELEPORT_DISTANCE = 1;
 
-            var force = body.GetMass() * PHYSICS_SIMULATION_FPS * changeInVelocity;
-            body.ApplyForce(force.FromVector2(), body.GetWorldCenter());
+                var direction = position - body.GetPosition().ToVector2();
+                var distanceToTravel = direction.FromVector2().Normalize();
+                if (teleport && (distanceToTravel > TELEPORT_DISTANCE))
+                {
+                    body.SetXForm(position.FromVector2(), body.GetAngle());
+                    return;
+                }
+
+                var distancePerTimestep = speed / PHYSICS_SIMULATION_FPS;
+                if (distancePerTimestep > distanceToTravel)
+                {
+                    speed *= (distanceToTravel / distancePerTimestep);
+                }
+
+                var desiredVelocity = speed * direction;
+                var changeInVelocity = desiredVelocity - body.GetLinearVelocity().ToVector2();
+
+                var force = body.GetMass() * PHYSICS_SIMULATION_FPS * changeInVelocity;
+                body.ApplyForce(force.FromVector2(), body.GetWorldCenter());
+            }
         }
 
         public static Vector2 ToVector2(this Vec2 vec2)

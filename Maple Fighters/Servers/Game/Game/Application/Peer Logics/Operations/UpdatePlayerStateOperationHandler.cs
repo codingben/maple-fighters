@@ -11,22 +11,22 @@ namespace Game.Application.PeerLogic.Operations
     internal class UpdatePlayerStateOperationHandler : IOperationRequestHandler<UpdatePlayerStateRequestParameters, EmptyParameters>
     {
         private readonly int sceneObjectId;
-        private readonly IInterestAreaManagement interestAreaManagement;
         private readonly ISceneObject sceneObject;
+        private readonly IInterestAreaNotifier interestAreaNotifier;
         
-        public UpdatePlayerStateOperationHandler(int sceneObjectId, IInterestAreaManagement interestAreaManagement, ICharacterGetter characterGetter)
+        public UpdatePlayerStateOperationHandler(int sceneObjectId, ICharacterGetter characterGetter)
         {
             this.sceneObjectId = sceneObjectId;
-            this.interestAreaManagement = interestAreaManagement;
 
             sceneObject = characterGetter.GetSceneObject();
+            interestAreaNotifier = sceneObject.Container.GetComponent<IInterestAreaNotifier>().AssertNotNull();
         }
 
         public EmptyParameters? Handle(MessageData<UpdatePlayerStateRequestParameters> messageData, ref MessageSendOptions sendOptions)
         {
             var playerState = messageData.Parameters.PlayerState;
 
-            var characterBody = sceneObject.Container.GetComponent<ICharacterBody>().AssertNotNull();
+            var characterBody = sceneObject.Container.GetComponent<ICharacterBody>();
             if (characterBody != null)
             {
                 characterBody.PlayerState = playerState;
@@ -34,7 +34,7 @@ namespace Game.Application.PeerLogic.Operations
 
             var parameters = new PlayerStateChangedEventParameters(playerState, sceneObjectId);
             var messageSendOptions = MessageSendOptions.DefaultReliable((byte)GameDataChannels.Animations);
-            interestAreaManagement.SendEventForSubscribers((byte)GameEvents.PlayerStateChanged, parameters, messageSendOptions);
+            interestAreaNotifier.NotifySubscribers((byte)GameEvents.PlayerStateChanged, parameters, messageSendOptions);
             return null;
         }
     }

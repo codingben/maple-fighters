@@ -24,7 +24,6 @@ namespace Physics.Box2D.PhysicsSimulation
         public void Reset()
         {
             Position = Vector2.Zero;
-            Zoom = MINIMUM_CAMERA_ZOON_VALUE;
         }
     }
 }

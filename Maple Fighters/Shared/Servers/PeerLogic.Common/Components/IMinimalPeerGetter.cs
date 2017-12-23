@@ -1,9 +1,9 @@
 ﻿using ComponentModel.Common;
 using ServerCommunicationInterfaces;
 
-namespace Game.Application.PeerLogic.Components
+namespace PeerLogic.Common.Components
 {
-    internal interface IMinimalPeerGetter : IExposableComponent
+    public interface IMinimalPeerGetter : IExposableComponent
     {
         IMinimalPeer GetPeer();
     }

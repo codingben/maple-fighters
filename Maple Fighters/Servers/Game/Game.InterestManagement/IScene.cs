@@ -2,7 +2,7 @@
 
 namespace Game.InterestManagement
 {
-    public interface IScene
+    public interface IScene : ISceneEntity
     {
         Vector2 RegionSize { get; }
 

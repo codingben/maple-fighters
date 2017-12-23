@@ -26,6 +26,8 @@ namespace Game.Application
         
         public override void OnConnected(IClientPeer clientPeer)
         {
+            base.OnConnected(clientPeer);
+
             WrapClientPeer(clientPeer, new UnauthenticatedPeerLogic());
         }
 

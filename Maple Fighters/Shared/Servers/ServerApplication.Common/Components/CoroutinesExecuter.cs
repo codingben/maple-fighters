@@ -5,7 +5,13 @@ using ServerApplication.Common.ApplicationBase;
 
 namespace ServerApplication.Common.Components.Coroutines
 {
-    public class CoroutinesExecutor : Component<IServerEntity>, ICoroutinesExecutor
+    // TODO: Update to Proutines
+    public interface ICoroutinesExecuter : ICoroutinesExecutor, IExposableComponent
+    {
+        // Left blank intentionally
+    }
+
+    public class CoroutinesExecutor : Component<IServerEntity>, ICoroutinesExecuter
     {
         public int Count => executor.Count;
 

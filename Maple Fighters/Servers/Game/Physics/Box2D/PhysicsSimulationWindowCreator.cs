@@ -39,14 +39,14 @@ namespace Physics.Box2D
 
             fiberExecutor.Enqueue(() => 
             {
-                const int SCREEN_WIDTH = 1024;
-                const int SCREEN_HEIGHT = 768;
+                const int SCREEN_WIDTH = 800;
+                const int SCREEN_HEIGHT = 600;
 
                 physicsSimulationWindow = new PhysicsSimulationWindow(windowTitle, SCREEN_WIDTH, SCREEN_HEIGHT)
                 {
                     World = world
                 };
-                physicsSimulationWindow.Run(60.0);
+                physicsSimulationWindow.Run(60.0, 60.0);
             });
         }
 

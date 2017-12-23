@@ -10,19 +10,10 @@ namespace PhotonStarter.Common.Utils
         private readonly ILog logger;
         private readonly object locker = new object();
 
-        private static FileInfo GetConfigurationFile(string path)
-        {
-            var configurationFileInformation = new FileInfo(path);
-            return !configurationFileInformation.Exists ? null : configurationFileInformation;
-        }
-
-        public Logger()
+        public Logger(string path)
         {
             logger = LogManager.GetLogger(typeof(Logger));
-        }
 
-        public void Initialize(string path)
-        {
             var file = GetConfigurationFile(path);
             if (file == null)
             {
@@ -60,6 +51,12 @@ namespace PhotonStarter.Common.Utils
         public void Break()
         {
             // left blank intentionally
+        }
+
+        private static FileInfo GetConfigurationFile(string path)
+        {
+            var configurationFileInformation = new FileInfo(path);
+            return !configurationFileInformation.Exists ? null : configurationFileInformation;
         }
     }
 }

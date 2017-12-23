@@ -2,7 +2,9 @@
 using ComponentModel.Common;
 using Game.InterestManagement;
 using IronPython.Hosting;
+using MathematicsHelper;
 using Microsoft.Scripting.Hosting;
+using Physics.Box2D;
 using ServerApplication.Common.ApplicationBase;
 
 namespace PythonScripting
@@ -22,7 +24,9 @@ namespace PythonScripting
                 scriptEngine.Runtime.LoadAssembly(assembly);
             }
 
+            scriptEngine.Runtime.LoadAssembly(typeof(Vector2).Assembly);
             scriptEngine.Runtime.LoadAssembly(typeof(SceneObject).Assembly);
+            scriptEngine.Runtime.LoadAssembly(typeof(PhysicsWorldInfo).Assembly);
             scriptEngine.Runtime.LoadAssembly(typeof(IronPython.Modules.ArrayModule).Assembly);
 
             var ironPythonLibPath = Environment.GetEnvironmentVariable(ENVIRONMENT_PYTHON_LIB_NAME, EnvironmentVariableTarget.Machine);

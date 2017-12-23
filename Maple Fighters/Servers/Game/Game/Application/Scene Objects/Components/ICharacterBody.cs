@@ -5,6 +5,6 @@ namespace Game.Application.SceneObjects.Components
 {
     internal interface ICharacterBody : IExposableComponent
     {
-        PlayerState PlayerState { get; set; }
+        PlayerState PlayerState { set; }
     }
 }

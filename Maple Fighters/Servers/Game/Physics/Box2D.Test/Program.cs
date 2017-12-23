@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using Box2DX.Collision;
 using Box2DX.Common;
 using Box2DX.Dynamics;
@@ -27,16 +28,43 @@ namespace Physics.Box2D.Test
             AddBox(new Vec2(-2.5f, 25.0f), new Vec2(5.0f, 5.0f));
             AddStaticBox(new Vec2(0.0f, -10.0f), new Vec2(50.0f, 10.0f));
 
-            const string WINDOW_TITLE = "Physics Simulation";
-            const int SCREEN_WIDTH = 1024;
-            const int SCREEN_HEIGHT = 768;
-
-            var game = new PhysicsSimulationWindow(WINDOW_TITLE, SCREEN_WIDTH, SCREEN_HEIGHT)
+            var openTkWindow = new ThreadStart(() => 
             {
-                World = _world
-            };
-            game.Disposed += OnDisposed;
-            game.Run(60.0);
+                const string WINDOW_TITLE = "Physics Simulation";
+                const int SCREEN_WIDTH = 800;
+                const int SCREEN_HEIGHT = 600;
+
+                var game = new PhysicsSimulationWindow(WINDOW_TITLE, SCREEN_WIDTH, SCREEN_HEIGHT)
+                {
+                    World = _world
+                };
+                game.Disposed += OnDisposed;
+                game.Load += OnGameLoad;
+                game.Run(60.0, 60.0);
+            });
+            var openTkThread = new Thread(openTkWindow);
+            openTkThread.Start();
+        }
+
+        private static void OnGameLoad(object sender, EventArgs eventArgs)
+        {
+            var ts = new ThreadStart(() => {
+                for (int i = 0; i < 1000000; i++)
+                {
+                    // Prepare for simulation. Typically we use a time step of 1/60 of a
+                    // second (60Hz) and 10 iterations. This provides a high quality simulation
+                    // in most game scenarios.
+                    const float TIME_STEP = 1.0f / 60.0f;
+                    const int VELOCITY_ITERATIONS = 8;
+                    const int POSITION_ITERATIONS = 3;
+
+                    // Instruct the world to perform a single step of simulation. It is
+                    // generally best to keep the time step and iterations fixed.
+                    _world.Step(TIME_STEP, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
+                }
+            });
+            var backgroundThread = new Thread(ts);
+            backgroundThread.Start();
         }
 
         private static void OnDisposed(object sender, EventArgs eventArgs)
