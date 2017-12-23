@@ -46,7 +46,7 @@ namespace Scripts.UI.Controllers
 
         private void OnRegisterButtonClicked(string email, string password, string firstName, string lastName)
         {
-            var parameters = new RegisterRequestParameters(email, password, firstName, lastName);
+            var parameters = new RegisterRequestParameters(email, password.CreateSha512(), firstName, lastName);
             CoroutinesExecutor.StartTask((y) => Connect(y, parameters));
         }
 
