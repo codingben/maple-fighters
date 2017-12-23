@@ -1,5 +1,4 @@
 ﻿using System.IO;
-using CommonCommunicationInterfaces;
 using CommonTools.Log;
 using Photon.SocketServer;
 using PhotonServerImplementation;
@@ -33,11 +32,7 @@ namespace PhotonStarter.Common
 
         protected override PeerBase CreatePeer(InitRequest initRequest)
         {
-            var clientPeer = new PhotonClientPeer(initRequest)
-            {
-                NetworkTrafficState = NetworkTrafficState.Paused
-            };
-
+            var clientPeer = new PhotonClientPeer(initRequest);
             clientPeer.Fiber.Enqueue(() =>
             {
                 LogUtils.Log($"A new peer has been connected -> {clientPeer.ConnectionInformation.Ip}:{clientPeer.ConnectionInformation.Port}");

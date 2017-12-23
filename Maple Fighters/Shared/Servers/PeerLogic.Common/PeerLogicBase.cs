@@ -35,8 +35,6 @@ namespace PeerLogic.Common
             var logOperationsResponse = Config.Global.Log.OperationsResponse;
             OperationRequestHandlerRegister = new OperationRequestsHandler<TOperationCode>(PeerWrapper.Peer.OperationRequestNotifier, 
                 PeerWrapper.Peer.OperationResponseSender, logOperationsRequest, logOperationsResponse, coroutinesExecutor);
-
-            PeerWrapper.Peer.NetworkTrafficState = NetworkTrafficState.Flowing;
         }
 
         public virtual void Dispose()
