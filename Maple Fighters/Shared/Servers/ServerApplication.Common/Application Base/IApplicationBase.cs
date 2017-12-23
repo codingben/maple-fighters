@@ -2,7 +2,7 @@
 
 namespace ServerApplication.Common.ApplicationBase
 {
-    public interface IApplication
+    public interface IApplicationBase
     {
         void Startup();
         void Shutdown();

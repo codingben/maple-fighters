@@ -65,7 +65,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Application Base\ApplicationBase.cs" />
-    <Compile Include="Application Base\IApplication.cs" />
+    <Compile Include="Application Base\IApplicationBase.cs" />
     <Compile Include="Application Base\IServerEntity.cs" />
     <Compile Include="Application Base\Server.cs" />
     <Compile Include="Application Base\ServerEntity.cs" />

@@ -1,5 +1,4 @@
 ﻿using System;
-using CommonCommunicationInterfaces;
 using CommonTools.Log;
 using PeerLogic.Common.Components;
 using ServerCommunicationHelper;
