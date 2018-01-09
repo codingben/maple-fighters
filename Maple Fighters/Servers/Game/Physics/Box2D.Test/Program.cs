@@ -38,18 +38,19 @@ namespace Physics.Box2D.Test
                 {
                     World = _world
                 };
+                game.Load += OnGameLoaded;
                 game.Disposed += OnDisposed;
-                game.Load += OnGameLoad;
                 game.Run(60.0, 60.0);
             });
             var openTkThread = new Thread(openTkWindow);
             openTkThread.Start();
         }
 
-        private static void OnGameLoad(object sender, EventArgs eventArgs)
+        private static void OnGameLoaded(object sender, EventArgs eventArgs)
         {
-            var ts = new ThreadStart(() => {
-                for (int i = 0; i < 1000000; i++)
+            var ts = new ThreadStart(() => 
+            {
+                for (;;)
                 {
                     // Prepare for simulation. Typically we use a time step of 1/60 of a
                     // second (60Hz) and 10 iterations. This provides a high quality simulation
@@ -61,6 +62,8 @@ namespace Physics.Box2D.Test
                     // Instruct the world to perform a single step of simulation. It is
                     // generally best to keep the time step and iterations fixed.
                     _world.Step(TIME_STEP, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
+
+                    Thread.Sleep(10);
                 }
             });
             var backgroundThread = new Thread(ts);

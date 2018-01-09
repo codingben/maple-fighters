@@ -46,7 +46,7 @@ namespace Physics.Box2D
                 {
                     World = world
                 };
-                physicsSimulationWindow.Run(60.0, 60.0);
+                physicsSimulationWindow.Run(30.0, 30.0);
             });
         }
 

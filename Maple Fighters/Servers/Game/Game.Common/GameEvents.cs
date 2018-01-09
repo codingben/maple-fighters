@@ -7,6 +7,7 @@
         SceneObjectsAdded,
         SceneObjectsRemoved,
         PositionChanged,
-        PlayerStateChanged
+        PlayerStateChanged,
+        PlayerAttacked
     }
 }

@@ -65,6 +65,7 @@
     <Compile Include="CreateCharacterResponseParameters.cs" />
     <Compile Include="DirectionsUtils.cs" />
     <Compile Include="Directions.cs" />
+    <Compile Include="PlayerAttackedEventParameters.cs" />
     <Compile Include="ValidateCharacterRequestParameters.cs" />
     <Compile Include="FetchCharactersResponseParameters.cs" />
     <Compile Include="SceneObjectsAddedEventParameters.cs" />
@@ -91,6 +92,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Shared\Helper\MathematicsHelper\MathematicsHelper.csproj">
+      <Project>{A3BE3E13-D3A1-4800-B471-A39F5ED4B554}</Project>
+      <Name>MathematicsHelper</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

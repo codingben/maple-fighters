@@ -64,11 +64,8 @@ namespace Game.Application.SceneObjects
         {
             GetBody().MoveBody(position, moveSpeed, false);
 
-            InterestAreaNotifier.NotifySubscribers(
-                (byte)GameEvents.PositionChanged,
-                new SceneObjectPositionChangedEventParameters(Id, position.X, position.Y, direction), 
-                MessageSendOptions.DefaultUnreliable((byte)GameDataChannels.Position)
-            );
+            var parameters = new SceneObjectPositionChangedEventParameters(Id, position.X, position.Y, direction);
+            InterestAreaNotifier.NotifySubscribers((byte)GameEvents.PositionChanged, parameters, MessageSendOptions.DefaultUnreliable((byte)GameDataChannels.Position));
         }
 
         private void OnCollisionEnter(CollisionInfo collisionInfo)
@@ -81,10 +78,15 @@ namespace Game.Application.SceneObjects
 
             LogUtils.Log(MessageBuilder.Trace($"Hitting a player with id: {hittedSceneObject.Id}"));
 
-            // TODO: NOTE: It may be called twice since two colliders will do an interaction.
-
             // TODO: Implement - Send to the player new properites which will include his HP.
-            // TODO: Implement - Send impulse to the player's body from to his direction. 
+
+            AttackPlayer(hittedSceneObject, collisionInfo);
+        }
+
+        private void AttackPlayer(ISceneObject sceneObject, CollisionInfo collisionInfo)
+        {
+            var parameters = new PlayerAttackedEventParameters(collisionInfo.Position.X, collisionInfo.Position.Y);
+            InterestAreaNotifier.NotifySubscriberOnly(sceneObject, (byte)GameEvents.PlayerAttacked, parameters, MessageSendOptions.DefaultUnreliable());
         }
     }
 }

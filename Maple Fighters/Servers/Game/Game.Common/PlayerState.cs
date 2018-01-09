@@ -6,6 +6,7 @@
         Moving,
         Falling,
         Rope,
-        Ladder
+        Ladder,
+        Attacked
     }
 }
