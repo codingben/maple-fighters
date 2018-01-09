@@ -56,24 +56,24 @@ namespace Game.InterestManagement
             RemoveSubscriberForSubscribers(sceneObjectId);
         }
 
-        public void RemoveSubscriptionForAllSubscribers(int sceneObject)
+        public void RemoveSubscriptionForAllSubscribers(int sceneObjectId)
         {
-            if (!sceneObjects.ContainsKey(sceneObject))
+            if (!sceneObjects.ContainsKey(sceneObjectId))
             {
-                LogUtils.Log(MessageBuilder.Trace($"A scene object with id #{sceneObject} does not exists in a region."), LogMessageType.Error);
+                LogUtils.Log(MessageBuilder.Trace($"A scene object with id #{sceneObjectId} does not exists in a region."), LogMessageType.Error);
                 return;
             }
 
-            RemoveAllSubscribersForSubscriber(sceneObject);
+            RemoveAllSubscribersForSubscriber(sceneObjectId);
 
-            sceneObjects.Remove(sceneObject);
+            sceneObjects.Remove(sceneObjectId);
 
-            RemoveSubscriberForAllSubscribers(sceneObject);
+            RemoveSubscriberForAllSubscribers(sceneObjectId);
         }
 
-        public bool HasSubscription(int sceneObject)
+        public bool HasSubscription(int sceneObjectId)
         {
-            return sceneObjects.ContainsKey(sceneObject);
+            return sceneObjects.ContainsKey(sceneObjectId);
         }
 
         public IEnumerable<ISceneObject> GetAllSubscribers()

@@ -41,6 +41,8 @@ namespace Game.InterestManagement
             Container?.Dispose();
 
             OnDestroy();
+
+            Scene?.RemoveSceneObject(Id);
         }
     }
 }

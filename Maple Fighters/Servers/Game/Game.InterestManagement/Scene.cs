@@ -70,7 +70,9 @@ namespace Game.InterestManagement
 
             if (Config.Global.Log.InterestManagement)
             {
-                LogUtils.Log(MessageBuilder.Trace($"Removed scene object: {sceneObjects[id].Name}"));
+                var name = sceneObjects[id].Name;
+                var sceneObjectId = sceneObjects[id].Id;
+                LogUtils.Log(MessageBuilder.Trace($"Removed scene object: {name} Id: {sceneObjectId}"));
             }
 
             sceneObjects[id].Scene = null;
