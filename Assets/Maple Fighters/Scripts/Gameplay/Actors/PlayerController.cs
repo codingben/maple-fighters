@@ -10,14 +10,13 @@ namespace Scripts.Gameplay.Actors
 {
     public class PlayerController : MonoBehaviour
     {
-        public bool IsOnGround { get; } = true;
-
         public PlayerState PlayerState
         {
-            private set
+            set
             {
                 playerState = value;
-                PlayerStateChanged?.Invoke(value);
+
+                PlayerStateChanged?.Invoke(value != PlayerState.Attacked ? value : PlayerState.Falling);
             }
             get
             {
@@ -83,6 +82,14 @@ namespace Scripts.Gameplay.Actors
                     FallingState();
                     break;
                 }
+                case PlayerState.Attacked:
+                {
+                    if (!IsOnFloor())
+                    {
+                        playerState = PlayerState.Falling;
+                    }
+                    break;
+                }
             }
         }
 
@@ -92,7 +99,7 @@ namespace Scripts.Gameplay.Actors
             {
                 rigidbody.velocity = new Vector2(rigidbody.velocity.x, direction * speed * Time.fixedDeltaTime);
             }
-            else if(playerState != PlayerState.Falling)
+            else if(playerState != PlayerState.Falling && playerState != PlayerState.Attacked)
             {
                 rigidbody.velocity = new Vector2(direction * speed * Time.fixedDeltaTime, rigidbody.velocity.y);
             }
@@ -232,6 +239,12 @@ namespace Scripts.Gameplay.Actors
             }
         }
 
+        public void ResetMovement()
+        {
+            direction = 0;
+            rigidbody.velocity = Vector2.zero;
+        }
+
         private void FlipByDirection(Directions direction)
         {
             const float SCALE = 1;
@@ -287,7 +300,7 @@ namespace Scripts.Gameplay.Actors
                 return false;
             }
 
-            return IsOnGround && floorDetectionPoints.Any(ground => Physics2D.OverlapPoint(ground.position, floorLayerMask));
+            return floorDetectionPoints.Any(ground => Physics2D.OverlapPoint(ground.position, floorLayerMask));
         }
     }
 }

@@ -26,5 +26,6 @@ namespace Scripts.Services
 
         UnityEvent<SceneObjectPositionChangedEventParameters> PositionChanged { get; }
         UnityEvent<PlayerStateChangedEventParameters> PlayerStateChanged { get; }
+        UnityEvent<PlayerAttackedEventParameters> PlayerAttacked { get; }
     }
 }

@@ -13,9 +13,8 @@ namespace Scripts.Containers
 {
     public class SceneObjectsContainer : DontDestroyOnLoad<SceneObjectsContainer>
     {
-        private readonly Dictionary<int, ISceneObject> sceneObjects = new Dictionary<int, ISceneObject>();
         private int localSceneObjectId;
-
+        private readonly Dictionary<int, ISceneObject> sceneObjects = new Dictionary<int, ISceneObject>();
         private readonly ExternalCoroutinesExecutor coroutinesExecutor = new ExternalCoroutinesExecutor();
 
         protected override void OnAwake()

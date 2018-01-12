@@ -29,7 +29,10 @@ namespace Scripts.Gameplay.Actors
                 case PlayerState.Moving:
                 case PlayerState.Falling:
                 {
-                    GetInputOrdinary();
+                    if (playerController.PlayerState != PlayerState.Attacked)
+                    {
+                        GetInputOrdinary();
+                    }
                     break;
                 }
                 case PlayerState.Rope:
@@ -66,7 +69,7 @@ namespace Scripts.Gameplay.Actors
                 case PlayerState.Rope:
                 {
                     playerController.MoveOnRope(direction);
-                        break;
+                    break;
                 }
                 case PlayerState.Ladder:
                 {

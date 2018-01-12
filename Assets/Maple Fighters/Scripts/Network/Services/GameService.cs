@@ -14,6 +14,7 @@ namespace Scripts.Services
         public UnityEvent<SceneObjectsRemovedEventParameters> SceneObjectsRemoved { get; } = new UnityEvent<SceneObjectsRemovedEventParameters>();
         public UnityEvent<SceneObjectPositionChangedEventParameters> PositionChanged { get; } = new UnityEvent<SceneObjectPositionChangedEventParameters>();
         public UnityEvent<PlayerStateChangedEventParameters> PlayerStateChanged { get; } = new UnityEvent<PlayerStateChangedEventParameters>();
+        public UnityEvent<PlayerAttackedEventParameters> PlayerAttacked { get; } = new UnityEvent<PlayerAttackedEventParameters>();
 
         private AuthenticationStatus authenticationStatus;
 
@@ -67,6 +68,12 @@ namespace Scripts.Services
             EventHandlerRegister.SetHandler(GameEvents.PlayerStateChanged, new EventInvoker<PlayerStateChangedEventParameters>(unityEvent =>
             {
                 PlayerStateChanged?.Invoke(unityEvent.Parameters);
+                return true;
+            }));
+
+            EventHandlerRegister.SetHandler(GameEvents.PlayerAttacked, new EventInvoker<PlayerAttackedEventParameters>(unityEvent =>
+            {
+                PlayerAttacked?.Invoke(unityEvent.Parameters);
                 return true;
             }));
         }
