@@ -21,10 +21,11 @@ namespace Game.Application.SceneObjects
             : base(name, position, 1)
         {
             InterestAreaNotifier = Container.AddComponent(new InterestAreaNotifier());
-
             var physicsCollisionNotifier = Container.AddComponent(new PhysicsCollisionNotifier());
+
             var fixtureDefinition = PhysicsUtils.CreateFixtureDefinition(bodySize, LayerMask.Mob, physicsCollisionNotifier);
             bodyDefinitionWrapper = PhysicsUtils.CreateBodyDefinitionWrapper(fixtureDefinition, position, this);
+            bodyDefinitionWrapper.BodyDef.AllowSleep = false;
         }
 
         protected void CreateBody()

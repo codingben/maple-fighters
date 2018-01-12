@@ -49,10 +49,12 @@ namespace Game.Application.SceneObjects
                 return;
             }
 
-            if (hittedSceneObjects.ContainsKey(hittedSceneObject.Id))
+            if (!hittedSceneObjects.ContainsKey(hittedSceneObject.Id))
             {
-                hittedSceneObjects.Remove(hittedSceneObject.Id);
+                return;
             }
+
+            hittedSceneObjects.Remove(hittedSceneObject.Id);
 
             CollisionExit?.Invoke(collisionInfo);
         }

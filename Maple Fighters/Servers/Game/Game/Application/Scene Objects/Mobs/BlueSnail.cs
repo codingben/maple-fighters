@@ -12,14 +12,15 @@ namespace Game.Application.SceneObjects
 {
     public class BlueSnail : Mob
     {
-        private readonly float moveSpeed;
-        private readonly float moveDistance;
+        private readonly float speed; // TODO: Implement
+        private readonly float distance;
+        private bool isAttacking;
 
-        public BlueSnail(Vector2 position, Vector2 bodySize, float moveSpeed, float moveDistance) 
+        public BlueSnail(Vector2 position, Vector2 bodySize, float speed, float distance) 
             : base("BlueSnail", position, bodySize)
         {
-            this.moveSpeed = moveSpeed;
-            this.moveDistance = moveDistance;
+            this.speed = speed;
+            this.distance = distance;
         }
 
         public override void OnAwake()
@@ -28,8 +29,11 @@ namespace Game.Application.SceneObjects
 
             CreateBody();
 
-            var physicsCollisionNotifier = Container.GetComponent<IPhysicsCollisionNotifier>();
+            var physicsCollisionNotifier = Container.GetComponent<IPhysicsCollisionNotifier>().AssertNotNull();
             physicsCollisionNotifier.CollisionEnter += OnCollisionEnter;
+
+            var transform = Container.GetComponent<ITransform>().AssertNotNull();
+            transform.PositionDirectionChanged += OnPositionChanged;
 
             var executor = Scene.Container.GetComponent<ISceneOrderExecutor>().AssertNotNull();
             executor.GetPreUpdateExecutor().StartCoroutine(MoveMob());
@@ -37,32 +41,40 @@ namespace Game.Application.SceneObjects
 
         private IEnumerator<IYieldInstruction> MoveMob()
         {
+            yield return new WaitForSeconds(0.1f);
+
             var transform = Container.GetComponent<ITransform>().AssertNotNull();
-            transform.PositionDirectionChanged += OnPositionChanged;
-
-            yield return new WaitForSeconds(1);
-
             var position = GetBody().GetPosition().ToVector2();
             var direction = 0.01f;
 
             while (true)
             {
-                position += new Vector2(direction, 0);
-
-                if(Math.Abs(position.X) > moveDistance)
+                while (!isAttacking)
                 {
-                    yield return new WaitForSeconds(0.1f);
-                    direction *= -1;
-                }
+                    position += new Vector2(direction, 0);
 
-                transform.SetPosition(position, direction > 0 ? Directions.Right : Directions.Left);
-                yield return null;
+                    if (Math.Abs(position.X) > distance)
+                    {
+                        yield return new WaitForSeconds(0.1f);
+                        direction *= -1;
+                    }
+
+                    transform.SetPosition(position, direction > 0 ? Directions.Right : Directions.Left);
+                    yield return null;
+                }
+                yield return new WaitForSeconds(1);
+                isAttacking = false;
             }
         }
 
         private void OnPositionChanged(Vector2 position, Directions direction)
         {
-            GetBody().MoveBody(position, moveSpeed, false);
+            /* 
+             * NOTE: Deprecated MoveBody() due to forces and velocity issues between two fixtures.
+               -> GetBody().MoveBody(position, moveSpeed, true); 
+            */
+
+            GetBody().SetXForm(position.FromVector2(), GetBody().GetAngle());
 
             var parameters = new SceneObjectPositionChangedEventParameters(Id, position.X, position.Y, direction);
             InterestAreaNotifier.NotifySubscribers((byte)GameEvents.PositionChanged, parameters, MessageSendOptions.DefaultUnreliable((byte)GameDataChannels.Position));
@@ -76,15 +88,18 @@ namespace Game.Application.SceneObjects
                 return;
             }
 
-            LogUtils.Log(MessageBuilder.Trace($"Hitting a player with id: {hittedSceneObject.Id}"));
-
             // TODO: Implement - Send to the player new properites which will include his HP.
 
-            AttackPlayer(hittedSceneObject, collisionInfo);
+            if (!isAttacking)
+            {
+                AttackPlayer(hittedSceneObject, collisionInfo);
+            }
         }
 
         private void AttackPlayer(ISceneObject sceneObject, CollisionInfo collisionInfo)
         {
+            isAttacking = true;
+
             var parameters = new PlayerAttackedEventParameters(collisionInfo.Position.X, collisionInfo.Position.Y);
             InterestAreaNotifier.NotifySubscriberOnly(sceneObject, (byte)GameEvents.PlayerAttacked, parameters, MessageSendOptions.DefaultUnreliable());
         }

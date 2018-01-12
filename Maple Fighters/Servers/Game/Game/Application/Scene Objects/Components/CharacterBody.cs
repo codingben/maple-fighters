@@ -74,8 +74,13 @@ namespace Game.Application.SceneObjects.Components
                         return;
                     }
 
-                    const float SPEED = 10.5f; // TODO: Get this data from another source
-                    body.MoveBody(transform.Position, SPEED);
+                    /* 
+                     * NOTE: Deprecated MoveBody() due to forces and velocity issues between two fixtures.
+                       -> const float SPEED = 10.5f; // TODO: Get this data from another source
+                       -> body.MoveBody(transform.Position, SPEED);
+                    */
+
+                    body.SetXForm(transform.Position.FromVector2(), body.GetAngle());
                     break;
                 }
                 case PlayerState.Falling:
