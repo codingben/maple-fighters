@@ -44,8 +44,7 @@ namespace Game.InterestManagement
                 return;
             }
 
-            RemoveSubscribersForSubscriber(sceneObjects[sceneObjectId]);
-
+            var sceneObject = sceneObjects[sceneObjectId];
             sceneObjects.Remove(sceneObjectId);
 
             if (Config.Global.Log.InterestManagement)
@@ -53,6 +52,7 @@ namespace Game.InterestManagement
                 LogUtils.Log(MessageBuilder.Trace($"Removed subscription id #{sceneObjectId}"));
             }
 
+            RemoveSubscribersForSubscriber(sceneObject);
             RemoveSubscriberForSubscribers(sceneObjectId);
         }
 
@@ -60,7 +60,6 @@ namespace Game.InterestManagement
         {
             if (!sceneObjects.ContainsKey(sceneObjectId))
             {
-                LogUtils.Log(MessageBuilder.Trace($"A scene object with id #{sceneObjectId} does not exists in a region."), LogMessageType.Error);
                 return;
             }
 
@@ -90,8 +89,7 @@ namespace Game.InterestManagement
             var subscribers = GetAllSubscribers().Where(subscriber => subscriber.Id != sceneObject.Id).ToArray();
             if (subscribers.Length <= 0) return;
             {
-                var subscriberArea = sceneObject.Container.GetComponent<IInterestArea>();
-                subscriberArea?.InvokeSubscribersAdded(subscribers);
+                GetSubscriberArea(sceneObject)?.InvokeSubscribersAdded(subscribers);
             }
         }
 
@@ -105,35 +103,22 @@ namespace Game.InterestManagement
 
             foreach (var subscriber in GetAllSubscribers())
             {
-                var subscriberArea = subscriber.Container.GetComponent<IInterestArea>();
-
-                var subscribedPublishers = subscriberArea?.GetSubscribedPublishers().ToArray();
-                if (subscribedPublishers == null)
+                var hasSubscription = GetSubscribedPublishers(subscriber)?.Any(x => x.HasSubscription(sceneObject.Id));
+                if (hasSubscription != null && !hasSubscription.Value)
                 {
-                    continue;
-                }
-
-                foreach (var publisher in subscribedPublishers)
-                {
-                    if (!publisher.HasSubscription(sceneObject.Id))
-                    {
-                        subscribersForRemoveList.Add(subscriber.Id);
-                    }
-                }
-
-                foreach (var publisher in subscribedPublishers)
-                {
-                    if (publisher.HasSubscription(sceneObject.Id))
-                    {
-                        subscribersForRemoveList.Remove(subscriber.Id);
-                    }
+                    subscribersForRemoveList.Add(subscriber.Id);
                 }
             }
 
             if (subscribersForRemoveList.Count <= 0) return;
             {
-                var subscriberArea = sceneObject.Container.GetComponent<IInterestArea>();
-                subscriberArea?.InvokeSubscribersRemoved(subscribersForRemoveList.ToArray());
+                GetSubscriberArea(sceneObject)?.InvokeSubscribersRemoved(subscribersForRemoveList.ToArray());
+            }
+
+            IEnumerable<IRegion> GetSubscribedPublishers(ISceneObject subscriber)
+            {
+                var subscribedPublishers = GetSubscriberArea(subscriber)?.GetSubscribedPublishers().ToArray();
+                return subscribedPublishers;
             }
         }
 
@@ -144,11 +129,9 @@ namespace Game.InterestManagement
         private void AddSubscriberForSubscribers(ISceneObject sceneObject)
         {
             var subscribers = GetAllSubscribers().Where(subscriber => subscriber.Id != sceneObject.Id).ToArray();
-
             foreach (var subscriber in subscribers)
             {
-                var subscriberArea = subscriber.Container.GetComponent<IInterestArea>();
-                subscriberArea?.InvokeSubscriberAdded(sceneObject);
+                GetSubscriberArea(subscriber)?.InvokeSubscriberAdded(sceneObject);
             }
         }
 
@@ -160,15 +143,10 @@ namespace Game.InterestManagement
         {
             foreach (var subscriber in GetAllSubscribers())
             {
-                var subscriberArea = subscriber.Container.GetComponent<IInterestArea>();
-                if (subscriberArea == null)
+                var hasSubscription = GetSubscriberArea(subscriber)?.GetSubscribedPublishers().Any(publisher => publisher.HasSubscription(sceneObjectId));
+                if (hasSubscription != null && !hasSubscription.Value)
                 {
-                    continue;
-                }
-
-                if (!subscriberArea.GetSubscribedPublishers().Any(publisher => publisher.HasSubscription(sceneObjectId)))
-                {
-                    subscriberArea.InvokeSubscriberRemoved(sceneObjectId);
+                    GetSubscriberArea(subscriber)?.InvokeSubscriberRemoved(sceneObjectId);
                 }
             }
         }
@@ -181,8 +159,7 @@ namespace Game.InterestManagement
         {
             foreach (var subscriber in GetAllSubscribers())
             {
-                var subscriberArea = subscriber.Container.GetComponent<IInterestArea>();
-                subscriberArea?.InvokeSubscriberRemoved(sceneObjectId);
+                GetSubscriberArea(subscriber)?.InvokeSubscriberRemoved(sceneObjectId);
             }
         }
 
@@ -192,13 +169,17 @@ namespace Game.InterestManagement
         /// <param name="sceneObjectId">A removed subscriber id</param>
         private void RemoveAllSubscribersForSubscriber(int sceneObjectId)
         {
-            var subscribers = sceneObjects.Keys.ToArray();
-
-            if (sceneObjects[sceneObjectId] == null) return;
+            var subscriber = sceneObjects[sceneObjectId];
+            if (subscriber == null) return;
             {
-                var subscriberArea = sceneObjects[sceneObjectId].Container.GetComponent<IInterestArea>();
-                subscriberArea?.InvokeSubscribersRemoved(subscribers);
+                var subscribers = sceneObjects.Keys.ToArray();
+                GetSubscriberArea(subscriber)?.InvokeSubscribersRemoved(subscribers);
             }
+        }
+
+        private IInterestArea GetSubscriberArea(ISceneObject sceneObject)
+        {
+            return sceneObject.Container.GetComponent<IInterestArea>(); // TODO: Check if is not null
         }
     }
 }

@@ -45,7 +45,8 @@ namespace Game.Application.Components
         public void CreateCharacterBody(IGameSceneWrapper sceneWrapper, ISceneObject sceneObject)
         {
             var spawnPosition = sceneObject.Container.GetComponent<ITransform>().AssertNotNull();
-            var bodyFixtureDefinition = PhysicsUtils.CreateFixtureDefinition(new Vector2(0.3624894f, 0.9f), LayerMask.Player);
+            var bodySize = new Vector2(0.3624894f, 0.825f); // TODO: Do not hard code it
+            var bodyFixtureDefinition = PhysicsUtils.CreateFixtureDefinition(bodySize, LayerMask.Player);
             var bodyDefinition = PhysicsUtils.CreateBodyDefinitionWrapper(bodyFixtureDefinition, spawnPosition.InitialPosition, sceneObject);
             bodyDefinition.BodyDef.AllowSleep = false;
 
