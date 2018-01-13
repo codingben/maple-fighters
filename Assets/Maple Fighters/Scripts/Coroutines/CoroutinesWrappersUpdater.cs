@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using CommonTools.Coroutines;
-using Scripts.Services;
+using CommonTools.Log;
 using Scripts.Utils;
 using UnityEngine;
 
@@ -63,7 +63,17 @@ namespace Scripts.Coroutines
             }
         }
 
+        private void OnDestroy()
+        {
+            Dispose();
+        }
+
         private void OnApplicationQuit()
+        {
+            Dispose();
+        }
+
+        private void Dispose()
         {
             if (coroutinesWrappers.Count != 0)
             {

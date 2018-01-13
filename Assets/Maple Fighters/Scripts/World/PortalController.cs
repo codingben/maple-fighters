@@ -13,8 +13,8 @@ namespace Scripts.World
 {
     public class PortalController : MonoBehaviour
     {
-        private readonly ExternalCoroutinesExecutor coroutinesExecutor = new ExternalCoroutinesExecutor();
         private bool isTeleporting;
+        private readonly ExternalCoroutinesExecutor coroutinesExecutor = new ExternalCoroutinesExecutor();
 
         private void Awake()
         {
@@ -57,7 +57,6 @@ namespace Scripts.World
             var portalId = GetComponent<NetworkIdentity>().Id;
             var parameters = new ChangeSceneRequestParameters(portalId);
             var responseParameters = await ServiceContainer.GameService.ChangeScene(yield, parameters);
-
             var map = responseParameters.Map;
             if (map == 0)
             {
