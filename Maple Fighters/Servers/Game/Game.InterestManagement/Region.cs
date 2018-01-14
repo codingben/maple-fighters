@@ -60,6 +60,7 @@ namespace Game.InterestManagement
         {
             if (!sceneObjects.ContainsKey(sceneObjectId))
             {
+                LogUtils.Log(MessageBuilder.Trace($"A scene object with id #{sceneObjectId} does not exists in a region."), LogMessageType.Error);
                 return;
             }
 

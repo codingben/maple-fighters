@@ -12,8 +12,10 @@ namespace Game.Application.SceneObjects
 {
     public class BlueSnail : Mob
     {
+        private const float MOVE_DIRECTION = 0.01f;
         private readonly float speed; // TODO: Implement
         private readonly float distance;
+        private float direction;
         private bool isAttacking;
 
         public BlueSnail(Vector2 position, Vector2 bodySize, float speed, float distance) 
@@ -45,7 +47,8 @@ namespace Game.Application.SceneObjects
 
             var transform = Container.GetComponent<ITransform>().AssertNotNull();
             var position = GetBody().GetPosition().ToVector2();
-            var direction = 0.01f;
+
+            direction = MOVE_DIRECTION;
 
             while (true)
             {
@@ -62,7 +65,7 @@ namespace Game.Application.SceneObjects
                     transform.SetPosition(position, direction > 0 ? Directions.Right : Directions.Left);
                     yield return null;
                 }
-                yield return new WaitForSeconds(1);
+                yield return new WaitForSeconds(0.5f);
                 isAttacking = false;
             }
         }
@@ -99,6 +102,10 @@ namespace Game.Application.SceneObjects
         private void AttackPlayer(ISceneObject sceneObject, CollisionInfo collisionInfo)
         {
             isAttacking = true;
+
+            var transform = sceneObject.Container.GetComponent<ITransform>().AssertNotNull();
+            var orientation = (transform.Position - collisionInfo.Position).Normalize().X;
+            direction = orientation < 0 ? -MOVE_DIRECTION : MOVE_DIRECTION;
 
             var parameters = new PlayerAttackedEventParameters(collisionInfo.Position.X, collisionInfo.Position.Y);
             InterestAreaNotifier.NotifySubscriberOnly(sceneObject, (byte)GameEvents.PlayerAttacked, parameters, MessageSendOptions.DefaultUnreliable());

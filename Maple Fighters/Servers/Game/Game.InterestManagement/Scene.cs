@@ -55,7 +55,7 @@ namespace Game.InterestManagement
 
             if (Config.Global.Log.InterestManagement)
             {
-                LogUtils.Log(MessageBuilder.Trace($"A new scene object: {sceneObject.Name}"));
+                LogUtils.Log(MessageBuilder.Trace($"A new scene object: {sceneObject.Name} Id: {sceneObject.Id}"));
             }
             return sceneObject;
         }
@@ -78,6 +78,7 @@ namespace Game.InterestManagement
             sceneObjects[id].Scene = null;
             sceneObjects.Remove(id);
 
+            // Remove a scene objct for all other scene objects in his region.
             foreach (var region in regions)
             {
                 if (region.HasSubscription(id))
@@ -92,12 +93,12 @@ namespace Game.InterestManagement
             var scenesObjectsTemp = new List<ISceneObject>();
             scenesObjectsTemp.AddRange(sceneObjects.Values);
 
-            sceneObjects.Clear();
-
             foreach (var sceneObject in scenesObjectsTemp)
             {
                 sceneObject.Dispose();
             }
+
+            sceneObjects.Clear();
 
             Container?.Dispose();
         }

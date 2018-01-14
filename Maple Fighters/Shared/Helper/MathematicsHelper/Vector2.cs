@@ -21,6 +21,14 @@ namespace MathematicsHelper
             Y = y;
         }
 
+        public Vector2 Normalize()
+        {
+            var val = 1.0f / (float)Math.Sqrt((X * X) + (Y * Y));
+            X *= val;
+            Y *= val;
+            return new Vector2(X, Y);
+        }
+
         public static float Distance(Vector2 value1, Vector2 value2)
         {
             float v1 = value1.X - value2.X, v2 = value1.Y - value2.Y;
