@@ -13,9 +13,15 @@ namespace Chat.Application.PeerLogics
         {
             base.Initialize(peer);
 
-            Entity.Container.AddComponent(new ChatMessageEventSender());
+            AddCommonComponents();
+            AddComponents();
 
             AddHandlerForChatMessageOperation();
+        }
+
+        private void AddComponents()
+        {
+            Entity.Container.AddComponent(new ChatMessageEventSender());
         }
 
         private void AddHandlerForChatMessageOperation()

@@ -11,34 +11,57 @@ namespace ServerApplication.Common.Components
 {
     public class PeerContainer : Component<IServerEntity>, IPeerContainer
     {
-        private readonly Dictionary<int, IClientPeerWrapper<IClientPeer>> peerLogics = new Dictionary<int, IClientPeerWrapper<IClientPeer>>();
         private readonly object locker = new object();
+        private readonly Dictionary<int, IClientPeerWrapper<IClientPeer>> peerLogics = new Dictionary<int, IClientPeerWrapper<IClientPeer>>();
 
         public void AddPeerLogic(IClientPeerWrapper<IClientPeer> peerLogic)
         {
-            peerLogic.Disconnected += (reason, details) => RemovePeerLogic(peerLogic, reason, details);
-            peerLogics.Add(peerLogic.PeerId, peerLogic);
-        }
-
-        public void DisconnectAllPeers()
-        {
-            foreach (var peer in peerLogics)
+            lock (locker)
             {
-                peer.Value.Dispose();
-            }
+                if (peerLogics.ContainsKey(peerLogic.PeerId))
+                {
+                    LogUtils.Log(MessageBuilder.Trace($"A peer id {peerLogic.PeerId} has been already registered."));
+                    return;
+                }
 
-            peerLogics.Clear();
+                peerLogic.Peer.PeerDisconnectionNotifier.Disconnected += (reason, details) => RemovePeerLogic(peerLogic, reason, details);
+                peerLogics.Add(peerLogic.PeerId, peerLogic);
+            }
         }
-        
+
         private void RemovePeerLogic(IClientPeerWrapper<IClientPeer> peerLogic, DisconnectReason reason, string details)
         {
-            var ip = peerLogic.Peer.ConnectionInformation.Ip;
-            var port = peerLogic.Peer.ConnectionInformation.Port;
+            lock (locker)
+            {
+                var ip = peerLogic.Peer.ConnectionInformation.Ip;
+                var port = peerLogic.Peer.ConnectionInformation.Port;
 
-            LogUtils.Log(details == string.Empty ? $"A peer {ip}:{port} has been disconnected. Reason: {reason}"
-                : $"A peer {ip}:{port} has been disconnected. Reason: {reason} Details: {details}");
+                LogUtils.Log(details == string.Empty
+                    ? $"A peer {ip}:{port} has been disconnected. Reason: {reason}"
+                    : $"A peer {ip}:{port} has been disconnected. Reason: {reason} Details: {details}");
 
-            peerLogics.Remove(peerLogic.PeerId);
+                peerLogics.Remove(peerLogic.PeerId);
+            }
+        }
+
+        protected override void OnDestroy()
+        {
+            base.OnDestroy();
+
+            DisconnectAllPeers();
+        }
+
+        private void DisconnectAllPeers()
+        {
+            lock (locker)
+            {
+                foreach (var peer in peerLogics)
+                {
+                    peer.Value.Peer.Disconnect();
+                }
+
+                peerLogics.Clear();
+            }
         }
 
         public IClientPeerWrapper<IClientPeer> GetPeerWrapper(int peerId)
@@ -59,7 +82,10 @@ namespace ServerApplication.Common.Components
 
         public int GetPeersCount()
         {
-            return peerLogics.Count;
+            lock (locker)
+            {
+                return peerLogics.Count;
+            }
         }
     }
 }

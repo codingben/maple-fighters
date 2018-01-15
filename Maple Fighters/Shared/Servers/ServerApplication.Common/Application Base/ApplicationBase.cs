@@ -36,8 +36,6 @@ namespace ServerApplication.Common.ApplicationBase
         {
             Server.Entity.Dispose();
 
-            peerContainer.DisconnectAllPeers();
-
             LogUtils.Log(MessageBuilder.Trace("An application has been stopped."));
         }
 

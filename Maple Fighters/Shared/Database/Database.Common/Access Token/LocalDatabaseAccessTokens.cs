@@ -33,8 +33,13 @@ namespace Database.Common.AccessToken
 
                 accessTokens.Add(peerId, accessToken);
 
-                peerContainer.GetPeerWrapper(peerId).Disconnected += (reason, s) => Remove(peerId);
+                SubscribeToPeerDisconnectionNotifier(peerId);
             }
+        }
+
+        private void SubscribeToPeerDisconnectionNotifier(int peerId)
+        {
+            peerContainer.GetPeerWrapper(peerId).Peer.PeerDisconnectionNotifier.Disconnected += (reason, s) => Remove(peerId);
         }
 
         private void Remove(int peerId)

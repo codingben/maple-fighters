@@ -1,5 +1,4 @@
-﻿using CommonCommunicationInterfaces;
-using CommonTools.Log;
+﻿using CommonTools.Log;
 using Game.Application.Components;
 using Game.Application.PeerLogic.Components;
 using Game.Application.PeerLogic.Operations;
@@ -13,8 +12,8 @@ namespace Game.Application.PeerLogics
 {
     internal class GameScenePeerLogic : PeerLogicBase<GameOperations, GameEvents>
     {
-        private readonly ISceneObject characterSceneObject;
         private readonly Character character;
+        private readonly ISceneObject characterSceneObject;
 
         public GameScenePeerLogic(Character character)
         {
@@ -27,8 +26,7 @@ namespace Game.Application.PeerLogics
         {
             base.Initialize(peer);
 
-            SubscribeToDisconnectedEvent();
-
+            AddCommonComponents();
             AddComponents();
 
             AddHandlerForEnterSceneOperation();
@@ -71,21 +69,11 @@ namespace Game.Application.PeerLogics
             OperationRequestHandlerRegister.SetHandler(GameOperations.ChangeScene, new ChangeSceneOperationHandler(characterGetter));
         }
 
-        private void SubscribeToDisconnectedEvent()
+        public override void Dispose()
         {
-            PeerWrapper.Disconnected += OnDisconnected;
-        }
+            base.Dispose();
 
-        private void UnsubscribeFromDisconnectedEvent()
-        {
-            PeerWrapper.Disconnected -= OnDisconnected;
-        }
-
-        private void OnDisconnected(DisconnectReason disconnectReason, string s)
-        {
             characterSceneObject.Dispose();
-
-            UnsubscribeFromDisconnectedEvent();
         }
 
         private ISceneObject CreateCharacterSceneObject(Character character)

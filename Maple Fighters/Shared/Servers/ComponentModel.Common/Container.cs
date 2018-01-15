@@ -7,8 +7,8 @@ namespace ComponentModel.Common
     public sealed class Container<TOwner> : IContainer<TOwner>
         where TOwner : IEntity
     {
-        private readonly List<Component<TOwner>> components = new List<Component<TOwner>>();
         private readonly TOwner owner;
+        private readonly List<Component<TOwner>> components = new List<Component<TOwner>>();
 
         public Container(TOwner owner)
         {
@@ -18,7 +18,8 @@ namespace ComponentModel.Common
         public T AddComponent<T>(T component)
             where T : Component<TOwner>
         {
-            if (components.OfType<T>().FirstOrDefault() != null)
+            var isExists = components.OfType<T>().FirstOrDefault();
+            if (isExists != null)
             {
                 var componentName = typeof(T).Name;
                 LogUtils.Log(MessageBuilder.Trace($"Component {componentName} already exists!"));
@@ -55,7 +56,8 @@ namespace ComponentModel.Common
         {
             if (typeof(T).IsInterface)
             {
-                return components.OfType<T>().FirstOrDefault();
+                var component = components.OfType<T>().FirstOrDefault();
+                return component;
             }
 
             var componentName = typeof(T).Name;

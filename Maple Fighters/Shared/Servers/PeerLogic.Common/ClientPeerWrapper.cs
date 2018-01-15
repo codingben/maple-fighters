@@ -1,5 +1,4 @@
-﻿using System;
-using CommonCommunicationInterfaces;
+﻿using CommonCommunicationInterfaces;
 using ServerCommunicationInterfaces;
 
 namespace PeerLogic.Common
@@ -8,18 +7,25 @@ namespace PeerLogic.Common
         where T : class, IClientPeer
     {
         public int PeerId { get; }
-
         public T Peer { get; }
         public IPeerLogicBase PeerLogic { get; private set; }
-
-        public event Action<DisconnectReason, string> Disconnected;
 
         public ClientPeerWrapper(T peer, int peerId)
         {
             Peer = peer;
             PeerId = peerId;
 
+            SubscribeToPeerDisconnectionNotifier();
+        }
+
+        private void SubscribeToPeerDisconnectionNotifier()
+        {
             Peer.PeerDisconnectionNotifier.Disconnected += OnDisconnected;
+        }
+
+        private void UnsubscribeFromPeerDisconnectionNotifier()
+        {
+            Peer.PeerDisconnectionNotifier.Disconnected -= OnDisconnected;
         }
 
         public void SetPeerLogic<TPeerLogic>(TPeerLogic peerLogic)
@@ -30,7 +36,6 @@ namespace PeerLogic.Common
                 Peer.NetworkTrafficState = NetworkTrafficState.Paused;
 
                 PeerLogic?.Dispose();
-
                 PeerLogic = peerLogic;
                 PeerLogic.Initialize(this);
 
@@ -38,26 +43,18 @@ namespace PeerLogic.Common
             });
         }
 
-        public void Dispose()
+        private void Dispose()
         {
             Peer.Fiber.Enqueue(() =>
             {
-                PeerLogic.Dispose();
-
-                if (Peer.IsConnected)
-                {
-                    Peer.Disconnect();
-                }
-
-                Peer.PeerDisconnectionNotifier.Disconnected -= OnDisconnected;
+                PeerLogic?.Dispose();
             });
         }
 
         private void OnDisconnected(DisconnectReason disconnectReason, string s)
         {
-            Disconnected?.Invoke(disconnectReason, s);
-
             Dispose();
+            UnsubscribeFromPeerDisconnectionNotifier();
         }
     }
 }
