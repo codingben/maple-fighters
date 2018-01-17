@@ -1,12 +1,11 @@
 ﻿using System.Collections.Generic;
 using CommonTools.Log;
 using ComponentModel.Common;
-using ServerApplication.Common.ApplicationBase;
 using Shared.Game.Common;
 
 namespace Game.Application.Components
 {
-    internal class CharacterSpawnPositionDetailsProvider : Component<IServerEntity>, ICharacterSpawnPositionDetailsProvider
+    internal class CharacterSpawnPositionDetailsProvider : Component, ICharacterSpawnPositionDetailsProvider
     {
         private readonly Dictionary<Maps, SpawnPositionDetails> spawnPositionsDetails = new Dictionary<Maps, SpawnPositionDetails>();
 

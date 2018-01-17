@@ -22,25 +22,26 @@ namespace Game.Application.PeerLogic.Operations
         {
             this.character = character;
 
-            sceneContainer = Server.Entity.Container.GetComponent<ISceneContainer>().AssertNotNull();
-            characterSpawnPositionProvider = Server.Entity.Container.GetComponent<ICharacterSpawnPositionDetailsProvider>().AssertNotNull();
-            characterCreator = Server.Entity.Container.GetComponent<ICharacterCreator>().AssertNotNull();
+            sceneContainer = Server.Entity.GetComponent<ISceneContainer>().AssertNotNull();
+            characterSpawnPositionProvider = Server.Entity.GetComponent<ICharacterSpawnPositionDetailsProvider>().AssertNotNull();
+            characterCreator = Server.Entity.GetComponent<ICharacterCreator>().AssertNotNull();
         }
 
         public ChangeSceneResponseParameters? Handle(MessageData<ChangeSceneRequestParameters> messageData, ref MessageSendOptions sendOptions)
         {
             var characterSceneObject = character.GetSceneObject();
+            var presenceScene = characterSceneObject.Container.GetComponent<IPresenceScene>().AssertNotNull();
 
             // Getting portal info.
             var portalSceneObjectId = messageData.Parameters.PortalId;
-            var portalSceneObject = characterSceneObject.Scene.GetSceneObject(portalSceneObjectId).AssertNotNull();
+            var portalSceneObject = presenceScene.Scene.GetSceneObject(portalSceneObjectId).AssertNotNull();
             var portalInfoProvider = portalSceneObject.Container.GetComponent<IPortalInfoProvider>().AssertNotNull();
 
             // Removing a body from old physics world.
             characterSceneObject.Container.RemoveComponent<CharacterBody>();
 
             // Removing a character from his old scene.
-            characterSceneObject.Scene.RemoveSceneObject(characterSceneObject.Id);
+            presenceScene.Scene.RemoveSceneObject(characterSceneObject.Id);
 
             // Setting the character's position in the destination scene.
             var newPlayerPosition = characterSpawnPositionProvider.GetSpawnPositionDetails(portalInfoProvider.Map);

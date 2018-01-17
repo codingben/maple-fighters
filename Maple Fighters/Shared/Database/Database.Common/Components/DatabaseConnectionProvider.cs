@@ -2,12 +2,11 @@
 using System.Data.Common;
 using ComponentModel.Common;
 using Database.Common.Configuration;
-using ServerApplication.Common.ApplicationBase;
 using ServiceStack.OrmLite;
 
 namespace Database.Common.Components
 {
-    public class DatabaseConnectionProvider : Component<IServerEntity>, IDatabaseConnectionProvider
+    public class DatabaseConnectionProvider : Component, IDatabaseConnectionProvider
     {
         private readonly OrmLiteConnectionFactory dbFactory;
 

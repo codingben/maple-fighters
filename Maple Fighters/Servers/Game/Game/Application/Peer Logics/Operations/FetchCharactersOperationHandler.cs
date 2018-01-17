@@ -17,7 +17,7 @@ namespace Game.Application.PeerLogic.Operations
         {
             this.userId = userId;
 
-            databaseCharactersGetter = Server.Entity.Container.GetComponent<IDatabaseCharactersGetter>().AssertNotNull();
+            databaseCharactersGetter = Server.Entity.GetComponent<IDatabaseCharactersGetter>().AssertNotNull();
         }
 
         public FetchCharactersResponseParameters? Handle(MessageData<EmptyParameters> messageData, ref MessageSendOptions sendOptions)

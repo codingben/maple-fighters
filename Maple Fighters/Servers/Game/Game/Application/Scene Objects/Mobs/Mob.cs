@@ -1,6 +1,7 @@
 ﻿using Box2DX.Dynamics;
 using CommonTools.Log;
 using Game.Application.SceneObjects.Components;
+using Game.InterestManagement;
 using MathematicsHelper;
 using Physics.Box2D;
 using SceneObject = Game.InterestManagement.SceneObject;
@@ -30,7 +31,8 @@ namespace Game.Application.SceneObjects
 
         protected void CreateBody()
         {
-            var entityManager = Scene.Container.GetComponent<IEntityManager>().AssertNotNull();
+            var presenceScene = Container.GetComponent<IPresenceScene>().AssertNotNull();
+            var entityManager = presenceScene.Scene.Entity.GetComponent<IEntityManager>().AssertNotNull();
             entityManager.AddBody(new BodyInfo(Id, bodyDefinitionWrapper));
         }
 
@@ -41,7 +43,8 @@ namespace Game.Application.SceneObjects
                 return body;
             }
 
-            var entityManager = Scene.Container.GetComponent<IEntityManager>().AssertNotNull();
+            var presenceScene = Container.GetComponent<IPresenceScene>().AssertNotNull();
+            var entityManager = presenceScene.Scene.Entity.GetComponent<IEntityManager>().AssertNotNull();
             body = entityManager.GetBody(Id).AssertNotNull();
             return body;
         }

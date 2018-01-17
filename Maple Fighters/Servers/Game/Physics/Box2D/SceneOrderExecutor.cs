@@ -1,14 +1,13 @@
 ﻿using CommonTools.Coroutines;
 using CommonTools.Log;
 using ComponentModel.Common;
-using Game.InterestManagement;
 using ServerApplication.Common.ApplicationBase;
 using ServerApplication.Common.Components;
 using ServerCommunicationInterfaces;
 
 namespace Physics.Box2D
 {
-    public class SceneOrderExecutor : Component<ISceneEntity>, ISceneOrderExecutor
+    public class SceneOrderExecutor : Component, ISceneOrderExecutor
     {
         private readonly ExternalCoroutinesExecutor preUpdate = new ExternalCoroutinesExecutor();
         private readonly ExternalCoroutinesExecutor update = new ExternalCoroutinesExecutor();
@@ -18,7 +17,7 @@ namespace Physics.Box2D
         {
             base.OnAwake();
 
-            var fiber = Server.Entity.Container.GetComponent<IFiberStarter>().AssertNotNull();
+            var fiber = Server.Entity.GetComponent<IFiberStarter>().AssertNotNull();
             IScheduler fiberExecutor = fiber.GetFiberStarter();
             fiberExecutor.ScheduleOnInterval(Update, 0, 10);
         }

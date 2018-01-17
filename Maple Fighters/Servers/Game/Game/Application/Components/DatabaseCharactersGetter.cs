@@ -4,13 +4,12 @@ using CommonTools.Log;
 using ComponentModel.Common;
 using Database.Common.Components;
 using Database.Common.TablesDefinition;
-using ServerApplication.Common.ApplicationBase;
 using ServiceStack.OrmLite;
 using Shared.Game.Common;
 
 namespace Game.Application.Components
 {
-    internal class DatabaseCharactersGetter : Component<IServerEntity>, IDatabaseCharactersGetter
+    internal class DatabaseCharactersGetter : Component, IDatabaseCharactersGetter
     {
         private const int MAXIMUM_CHARACTERS = 3;
         private IDatabaseConnectionProvider databaseConnectionProvider;
@@ -19,7 +18,7 @@ namespace Game.Application.Components
         {
             base.OnAwake();
 
-            databaseConnectionProvider = Entity.Container.GetComponent<IDatabaseConnectionProvider>().AssertNotNull();
+            databaseConnectionProvider = Entity.GetComponent<IDatabaseConnectionProvider>().AssertNotNull();
         }
 
         public IEnumerable<Character> GetCharacters(int userId)

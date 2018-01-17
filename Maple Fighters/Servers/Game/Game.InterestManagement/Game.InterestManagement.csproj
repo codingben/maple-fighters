@@ -55,8 +55,9 @@
   <ItemGroup>
     <Compile Include="ExtensionMethods.cs" />
     <Compile Include="IInterestArea.cs" />
-    <Compile Include="ISceneEntity.cs" />
+    <Compile Include="IPresenceScene.cs" />
     <Compile Include="ITransform.cs" />
+    <Compile Include="PresenceScene.cs" />
     <Compile Include="SceneObject.cs" />
     <Compile Include="ISceneObject.cs" />
     <Compile Include="InterestArea.cs" />
@@ -72,10 +73,6 @@
       <Project>{00565794-9958-47D9-9E8E-6D7193D67B9D}</Project>
       <Name>ComponentModel.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Game.Common\Game.Common.csproj">
-      <Project>{AA536188-84FF-4286-A9E6-BAFBE1D8D37B}</Project>
-      <Name>Game.Common</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\Shared\Helper\MathematicsHelper\MathematicsHelper.csproj">
       <Project>{a3be3e13-d3a1-4800-b471-a39f5ed4b554}</Project>
       <Name>MathematicsHelper</Name>
@@ -83,6 +80,10 @@
     <ProjectReference Include="..\..\..\Shared\Servers\ServerApplication.Common\ServerApplication.Common.csproj">
       <Project>{f82fbb67-7b1d-43b7-a415-3f407d40e5c7}</Project>
       <Name>ServerApplication.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Game.Common\Game.Common.csproj">
+      <Project>{AA536188-84FF-4286-A9E6-BAFBE1D8D37B}</Project>
+      <Name>Game.Common</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

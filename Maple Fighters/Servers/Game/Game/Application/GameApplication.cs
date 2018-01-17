@@ -33,20 +33,20 @@ namespace Game.Application
 
         private void AddComponents()
         {
-            Server.Entity.Container.AddComponent(new PythonScriptEngine());
-            Server.Entity.Container.AddComponent(new CharacterSpawnPositionDetailsProvider());
-            Server.Entity.Container.AddComponent(new SceneContainer());
-            Server.Entity.Container.AddComponent(new CharacterCreator());
-            Server.Entity.Container.AddComponent(new DatabaseConnectionProvider());
-            Server.Entity.Container.AddComponent(new DatabaseCharacterCreator());
-            Server.Entity.Container.AddComponent(new DatabaseCharacterRemover());
-            Server.Entity.Container.AddComponent(new DatabaseCharacterNameVerifier());
-            Server.Entity.Container.AddComponent(new DatabaseCharactersGetter());
-            Server.Entity.Container.AddComponent(new DatabaseCharacterExistence());
-            Server.Entity.Container.AddComponent(new DatabaseAccessTokenExistence());
-            Server.Entity.Container.AddComponent(new DatabaseAccessTokenProvider());
-            Server.Entity.Container.AddComponent(new DatabaseUserIdViaAccessTokenProvider());
-            Server.Entity.Container.AddComponent(new LocalDatabaseAccessTokens());
+            Server.Entity.AddComponent(new PythonScriptEngine());
+            Server.Entity.AddComponent(new CharacterSpawnPositionDetailsProvider());
+            Server.Entity.AddComponent(new SceneContainer());
+            Server.Entity.AddComponent(new CharacterCreator());
+            Server.Entity.AddComponent(new DatabaseConnectionProvider());
+            Server.Entity.AddComponent(new DatabaseCharacterCreator());
+            Server.Entity.AddComponent(new DatabaseCharacterRemover());
+            Server.Entity.AddComponent(new DatabaseCharacterNameVerifier());
+            Server.Entity.AddComponent(new DatabaseCharactersGetter());
+            Server.Entity.AddComponent(new DatabaseCharacterExistence());
+            Server.Entity.AddComponent(new DatabaseAccessTokenExistence());
+            Server.Entity.AddComponent(new DatabaseAccessTokenProvider());
+            Server.Entity.AddComponent(new DatabaseUserIdViaAccessTokenProvider());
+            Server.Entity.AddComponent(new LocalDatabaseAccessTokens());
         }
     }
 }

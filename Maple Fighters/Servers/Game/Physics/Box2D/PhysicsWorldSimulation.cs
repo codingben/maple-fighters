@@ -6,14 +6,13 @@ using Box2DX.Dynamics;
 using CommonTools.Coroutines;
 using CommonTools.Log;
 using ComponentModel.Common;
-using Game.InterestManagement;
 using MathematicsHelper;
 using ServiceStack;
 using Shared.Game.Common;
 
 namespace Physics.Box2D
 {
-    public class PhysicsWorldSimulation : Component<ISceneEntity>
+    public class PhysicsWorldSimulation : Component
     {
         private readonly World world;
 
@@ -36,10 +35,10 @@ namespace Physics.Box2D
         {
             base.OnAwake();
 
-            var executor = Entity.Container.GetComponent<ISceneOrderExecutor>().AssertNotNull();
+            var executor = Entity.GetComponent<ISceneOrderExecutor>().AssertNotNull();
             executor.GetUpdateExecutor().StartCoroutine(SimulateWorld());
 
-            Entity.Container.AddComponent(new PhysicsWorldProvider(world));
+            Entity.AddComponent(new PhysicsWorldProvider(world));
         }
 
         private IEnumerator<IYieldInstruction> SimulateWorld()

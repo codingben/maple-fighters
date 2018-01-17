@@ -4,14 +4,13 @@ using CommonTools.Log;
 using ComponentModel.Common;
 using Game.Application.SceneObjects.Components;
 using Game.InterestManagement;
-using PeerLogic.Common;
 using PeerLogic.Common.Components;
 using Shared.Game.Common;
 using SceneObject = Shared.Game.Common.SceneObject;
 
 namespace Game.Application.PeerLogic.Components
 {
-    internal class InterestAreaManagement : Component<IPeerEntity>
+    internal class InterestAreaManagement : Component
     {
         private IEventSenderWrapper eventSender;
         private ICharacterGetter sceneObjectGetter;
@@ -20,8 +19,8 @@ namespace Game.Application.PeerLogic.Components
         {
             base.OnAwake();
 
-            eventSender = Entity.Container.GetComponent<IEventSenderWrapper>().AssertNotNull();
-            sceneObjectGetter = Entity.Container.GetComponent<ICharacterGetter>().AssertNotNull();
+            eventSender = Entity.GetComponent<IEventSenderWrapper>().AssertNotNull();
+            sceneObjectGetter = Entity.GetComponent<ICharacterGetter>().AssertNotNull();
 
             var interestArea = sceneObjectGetter.GetSceneObject().Container.GetComponent<IInterestArea>().AssertNotNull();
             interestArea.SubscriberAdded += OnSubscriberAdded;

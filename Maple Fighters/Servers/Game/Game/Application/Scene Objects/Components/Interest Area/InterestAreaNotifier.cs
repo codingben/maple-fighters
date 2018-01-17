@@ -19,7 +19,7 @@ namespace Game.Application.SceneObjects.Components
         {
             base.OnAwake();
 
-            peerContainer = Server.Entity.Container.GetComponent<IPeerContainer>().AssertNotNull();
+            peerContainer = Server.Entity.GetComponent<IPeerContainer>().AssertNotNull();
         }
 
         public void NotifySubscribers<TParameters>(byte code, TParameters parameters, MessageSendOptions messageSendOptions)
@@ -44,7 +44,7 @@ namespace Game.Application.SceneObjects.Components
                     continue;
                 }
 
-                var eventSender = peerWrapper.PeerLogic.Entity.Container.GetComponent<IEventSenderWrapper>().AssertNotNull();
+                var eventSender = peerWrapper.PeerLogic.Entity.GetComponent<IEventSenderWrapper>().AssertNotNull();
                 eventSender.Send(code, parameters, messageSendOptions);
             }
         }
@@ -66,7 +66,7 @@ namespace Game.Application.SceneObjects.Components
 
             if (peerWrapper.Peer.IsConnected)
             {
-                var eventSender = peerWrapper.PeerLogic.Entity.Container.GetComponent<IEventSenderWrapper>().AssertNotNull();
+                var eventSender = peerWrapper.PeerLogic.Entity.GetComponent<IEventSenderWrapper>().AssertNotNull();
                 eventSender.Send(code, parameters, messageSendOptions);
             }
         }

@@ -6,12 +6,11 @@ using MathematicsHelper;
 using Microsoft.Scripting.Hosting;
 using Physics.Box2D;
 using PythonScripting;
-using ServerApplication.Common.ApplicationBase;
 using Shared.Game.Common;
 
 namespace Game.Application.Components
 {
-    public class SceneContainer : Component<IServerEntity>, ISceneContainer
+    public class SceneContainer : Component, ISceneContainer
     {
         private readonly Dictionary<Maps, IGameSceneWrapper> scenes = new Dictionary<Maps, IGameSceneWrapper>();
 
@@ -22,7 +21,7 @@ namespace Game.Application.Components
         {
             base.OnAwake();
 
-            pythonScriptEngine = Entity.Container.GetComponent<IPythonScriptEngine>().AssertNotNull();
+            pythonScriptEngine = Entity.GetComponent<IPythonScriptEngine>().AssertNotNull();
 
             scriptScope = pythonScriptEngine.GetScriptEngine().CreateScope();
             scriptScope.SetVariable("sceneContainer", this);
@@ -61,14 +60,14 @@ namespace Game.Application.Components
             var gameSceneWrapper = new GameSceneWrapper((Maps) map, sceneSize, regionSize);
             scenes.Add((Maps) map, gameSceneWrapper);
 
-            gameSceneWrapper.GetScene().Container.AddComponent(new SceneOrderExecutor());
-            gameSceneWrapper.GetScene().Container.AddComponent(new PhysicsWorldSimulation((Maps)map, physicsWorldInfo));
-            gameSceneWrapper.GetScene().Container.AddComponent(new EntityManager());
+            gameSceneWrapper.GetScene().Entity.AddComponent(new SceneOrderExecutor());
+            gameSceneWrapper.GetScene().Entity.AddComponent(new PhysicsWorldSimulation((Maps)map, physicsWorldInfo));
+            gameSceneWrapper.GetScene().Entity.AddComponent(new EntityManager());
             gameSceneWrapper.AddSceneObjectsViaPython();
 
             if (drawPhysics)
             {
-                gameSceneWrapper.GetScene().Container.AddComponent(new PhysicsSimulationWindowCreator(((Maps)map).ToString()));
+                gameSceneWrapper.GetScene().Entity.AddComponent(new PhysicsSimulationWindowCreator(((Maps)map).ToString()));
             }
         }
 

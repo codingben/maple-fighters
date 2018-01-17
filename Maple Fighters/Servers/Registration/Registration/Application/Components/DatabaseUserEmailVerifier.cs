@@ -2,12 +2,11 @@
 using ComponentModel.Common;
 using Database.Common.Components;
 using Database.Common.TablesDefinition;
-using ServerApplication.Common.ApplicationBase;
 using ServiceStack.OrmLite;
 
 namespace Registration.Application.Components
 {
-    internal class DatabaseUserEmailVerifier : Component<IServerEntity>, IDatabaseUserEmailVerifier
+    internal class DatabaseUserEmailVerifier : Component, IDatabaseUserEmailVerifier
     {
         private IDatabaseConnectionProvider databaseConnectionProvider;
 
@@ -15,7 +14,7 @@ namespace Registration.Application.Components
         {
             base.OnAwake();
 
-            databaseConnectionProvider = Entity.Container.GetComponent<IDatabaseConnectionProvider>().AssertNotNull();
+            databaseConnectionProvider = Entity.GetComponent<IDatabaseConnectionProvider>().AssertNotNull();
         }
 
         public bool Verify(string email)

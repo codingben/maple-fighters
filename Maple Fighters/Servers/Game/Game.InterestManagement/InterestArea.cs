@@ -81,6 +81,7 @@ namespace Game.InterestManagement
         }
 
         private Rectangle interestArea;
+        private IPresenceScene presenceScene;
         private readonly Dictionary<int, ISceneObject> interestedSceneObjects = new Dictionary<int, ISceneObject>();
 
         public InterestArea(Vector2 position, Vector2 areaSize)
@@ -92,7 +93,10 @@ namespace Game.InterestManagement
         {
             base.OnAwake();
 
-            SubscribeToPositionChangesNotifier();
+            presenceScene = Entity.Container.GetComponent<IPresenceScene>().AssertNotNull();
+
+            var transform = Entity.Container.GetComponent<ITransform>().AssertNotNull();
+            transform.PositionChangedOnly += SetPosition;
         }
 
         protected override void OnDestroy()
@@ -107,17 +111,11 @@ namespace Game.InterestManagement
             interestedSceneObjects.Clear();
         }
 
-        private void SubscribeToPositionChangesNotifier()
-        {
-            var transform = Entity.Container.GetComponent<ITransform>().AssertNotNull();
-            transform.PositionChanged += SetPosition;
-        }
-
         private void SetPosition(Vector2 position)
         {
             interestArea.SetPosition(position);
 
-            if (Entity.Scene != null)
+            if (presenceScene.Scene != null)
             {
                 DetectOverlapsWithRegions();
             }
@@ -125,13 +123,13 @@ namespace Game.InterestManagement
 
         public void SetSize()
         {
-            var size = Entity.Scene.RegionSize;
+            var size = presenceScene.Scene.RegionSize;
             interestArea.SetSize(size);
         }
 
         public IEnumerable<IRegion> GetSubscribedPublishers()
         {
-            var regions = Entity.Scene.GetAllRegions();
+            var regions = presenceScene.Scene.GetAllRegions();
             return regions.Cast<IRegion>().Where(region => region.HasSubscription(Entity.Id)).ToArray();
         }
 
@@ -143,7 +141,7 @@ namespace Game.InterestManagement
                 return;
             }
 
-            var sceneRegions = Entity.Scene.GetAllRegions();
+            var sceneRegions = presenceScene.Scene.GetAllRegions();
 
             foreach (var region in sceneRegions)
             {

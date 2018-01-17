@@ -4,12 +4,11 @@ using CommonCommunicationInterfaces;
 using CommonTools.Log;
 using ComponentModel.Common;
 using PeerLogic.Common;
-using ServerApplication.Common.ApplicationBase;
 using ServerCommunicationInterfaces;
 
 namespace ServerApplication.Common.Components
 {
-    public class PeerContainer : Component<IServerEntity>, IPeerContainer
+    public class PeerContainer : Component, IPeerContainer
     {
         private readonly object locker = new object();
         private readonly Dictionary<int, IClientPeerWrapper<IClientPeer>> peerLogics = new Dictionary<int, IClientPeerWrapper<IClientPeer>>();

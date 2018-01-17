@@ -16,7 +16,7 @@ namespace Game.Application.PeerLogic.Operations
         {
             this.userId = userId;
 
-            databaseCharacterRemover = Server.Entity.Container.GetComponent<IDatabaseCharacterRemover>().AssertNotNull();
+            databaseCharacterRemover = Server.Entity.GetComponent<IDatabaseCharacterRemover>().AssertNotNull();
         }
 
         public RemoveCharacterResponseParameters? Handle(MessageData<RemoveCharacterRequestParameters> messageData, ref MessageSendOptions sendOptions)

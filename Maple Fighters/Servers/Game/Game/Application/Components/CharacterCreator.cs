@@ -10,7 +10,7 @@ using SceneObject = Game.InterestManagement.SceneObject;
 
 namespace Game.Application.Components
 {
-    internal class CharacterCreator : Component<IServerEntity>, ICharacterCreator
+    internal class CharacterCreator : Component, ICharacterCreator
     {
         private const string SCENE_OBJECT_NAME = "Player";
 
@@ -21,8 +21,8 @@ namespace Game.Application.Components
         {
             base.OnAwake();
 
-            sceneContainer = Entity.Container.GetComponent<ISceneContainer>().AssertNotNull();
-            characterSpawnPositionProvider = Server.Entity.Container.GetComponent<ICharacterSpawnPositionDetailsProvider>().AssertNotNull();
+            sceneContainer = Entity.GetComponent<ISceneContainer>().AssertNotNull();
+            characterSpawnPositionProvider = Server.Entity.GetComponent<ICharacterSpawnPositionDetailsProvider>().AssertNotNull();
         }
 
         public ISceneObject Create(Character character)
@@ -50,7 +50,7 @@ namespace Game.Application.Components
             var bodyDefinition = PhysicsUtils.CreateBodyDefinitionWrapper(bodyFixtureDefinition, spawnPosition.InitialPosition, sceneObject);
             bodyDefinition.BodyDef.AllowSleep = false;
 
-            var entityManager = sceneWrapper.GetScene().Container.GetComponent<IEntityManager>().AssertNotNull();
+            var entityManager = sceneWrapper.GetScene().Entity.GetComponent<IEntityManager>().AssertNotNull();
             entityManager.AddBody(new BodyInfo(sceneObject.Id, bodyDefinition));
         }
     }

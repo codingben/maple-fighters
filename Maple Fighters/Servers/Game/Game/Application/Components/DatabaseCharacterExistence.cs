@@ -2,13 +2,12 @@
 using ComponentModel.Common;
 using Database.Common.Components;
 using Database.Common.TablesDefinition;
-using ServerApplication.Common.ApplicationBase;
 using ServiceStack.OrmLite;
 using Shared.Game.Common;
 
 namespace Game.Application.Components
 {
-    internal class DatabaseCharacterExistence : Component<IServerEntity>, IDatabaseCharacterExistence
+    internal class DatabaseCharacterExistence : Component, IDatabaseCharacterExistence
     {
         private IDatabaseConnectionProvider databaseConnectionProvider;
 
@@ -16,7 +15,7 @@ namespace Game.Application.Components
         {
             base.OnAwake();
 
-            databaseConnectionProvider = Entity.Container.GetComponent<IDatabaseConnectionProvider>().AssertNotNull();
+            databaseConnectionProvider = Entity.GetComponent<IDatabaseConnectionProvider>().AssertNotNull();
         }
 
         public bool Exists(int userId, CharacterIndex characterIndex)

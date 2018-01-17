@@ -1,7 +1,9 @@
-﻿namespace ServerApplication.Common.ApplicationBase
+﻿using ComponentModel.Common;
+
+namespace ServerApplication.Common.ApplicationBase
 {
     public static class Server
     {
-        public static IServerEntity Entity { get; } = new ServerEntity();
+        public static readonly IContainer Entity = new Container();
     }
 }

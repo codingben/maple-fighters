@@ -1,7 +1,6 @@
 ﻿using Box2DX.Dynamics;
 using CommonTools.Log;
 using ComponentModel.Common;
-using Game.InterestManagement;
 using Physics.Box2D.PhysicsSimulation;
 using ServerApplication.Common.ApplicationBase;
 using ServerApplication.Common.Components;
@@ -9,7 +8,7 @@ using ServerCommunicationInterfaces;
 
 namespace Physics.Box2D
 {
-    public class PhysicsSimulationWindowCreator : Component<ISceneEntity>
+    public class PhysicsSimulationWindowCreator : Component
     {
         private readonly string windowTitle;
         private readonly DrawPhysics drawPhysics;
@@ -30,11 +29,16 @@ namespace Physics.Box2D
         {
             base.OnAwake();
 
-            var physicsWorld = Entity.Container.GetComponent<IPhysicsWorldProvider>().AssertNotNull();
+            var physicsWorld = Entity.GetComponent<IPhysicsWorldProvider>().AssertNotNull();
             world = physicsWorld.GetWorld();
             world.SetDebugDraw(drawPhysics);
 
-            var fiber = Server.Entity.Container.GetComponent<IFiberStarter>().AssertNotNull();
+            RunPhysicsSimulationWindow();
+        }
+
+        private void RunPhysicsSimulationWindow()
+        {
+            var fiber = Server.Entity.GetComponent<IFiberStarter>().AssertNotNull();
             IExecutionContext fiberExecutor = fiber.GetFiberStarter();
 
             fiberExecutor.Enqueue(() => 

@@ -3,11 +3,10 @@ using Box2DX.Dynamics;
 using CommonTools.Coroutines;
 using CommonTools.Log;
 using ComponentModel.Common;
-using Game.InterestManagement;
 
 namespace Physics.Box2D
 {
-    public class EntityManager : Component<ISceneEntity>, IEntityManager
+    public class EntityManager : Component, IEntityManager
     {
         private World world;
 
@@ -20,10 +19,10 @@ namespace Physics.Box2D
         {
             base.OnAwake();
 
-            var physicsWorldProvider = Entity.Container.GetComponent<IPhysicsWorldProvider>().AssertNotNull();
+            var physicsWorldProvider = Entity.GetComponent<IPhysicsWorldProvider>().AssertNotNull();
             world = physicsWorldProvider.GetWorld();
 
-            var executor = Entity.Container.GetComponent<ISceneOrderExecutor>().AssertNotNull();
+            var executor = Entity.GetComponent<ISceneOrderExecutor>().AssertNotNull();
             executor.GetPostUpdateExecutor().StartCoroutine(Update());
         }
 
@@ -78,13 +77,7 @@ namespace Physics.Box2D
 
         public Body GetBody(int id)
         {
-            if (bodies.TryGetValue(id, out var body))
-            {
-                return body;
-            }
-
-            LogUtils.Log(MessageBuilder.Trace($"Could not find body id #{id}"));
-            return null;
+            return bodies.TryGetValue(id, out var body) ? body : null;
         }
     }
 }

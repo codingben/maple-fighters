@@ -5,7 +5,7 @@ using ServerCommunicationInterfaces;
 
 namespace PeerLogic.Common.Components
 {
-    public class EventSenderWrapper : Component<IPeerEntity>, IEventSenderWrapper
+    public class EventSenderWrapper : Component, IEventSenderWrapper
     {
         private readonly IEventSender eventSender;
         private IMinimalPeerGetter peerGetter;
@@ -19,7 +19,7 @@ namespace PeerLogic.Common.Components
         {
             base.OnAwake();
 
-            peerGetter = Entity.Container.GetComponent<IMinimalPeerGetter>().AssertNotNull();
+            peerGetter = Entity.GetComponent<IMinimalPeerGetter>().AssertNotNull();
         }
 
         public void Send<TParameters>(byte code, TParameters parameters, MessageSendOptions messageSendOptions)

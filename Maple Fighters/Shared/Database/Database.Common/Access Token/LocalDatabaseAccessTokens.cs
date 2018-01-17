@@ -2,12 +2,11 @@
 using System.Linq;
 using CommonTools.Log;
 using ComponentModel.Common;
-using ServerApplication.Common.ApplicationBase;
 using ServerApplication.Common.Components;
 
 namespace Database.Common.AccessToken
 {
-    public class LocalDatabaseAccessTokens : Component<IServerEntity>, ILocalDatabaseAccessTokens
+    public class LocalDatabaseAccessTokens : Component, ILocalDatabaseAccessTokens
     {
         private readonly Dictionary<int, string> accessTokens = new Dictionary<int, string>();
         private readonly object locker = new object();
@@ -18,7 +17,7 @@ namespace Database.Common.AccessToken
         {
             base.OnAwake();
 
-            peerContainer = Entity.Container.GetComponent<IPeerContainer>().AssertNotNull();
+            peerContainer = Entity.GetComponent<IPeerContainer>().AssertNotNull();
         }
 
         public void Add(int peerId, string accessToken)

@@ -1,5 +1,6 @@
 ﻿using System;
 using CommonTools.Log;
+using ComponentModel.Common;
 using PeerLogic.Common.Components;
 using ServerCommunicationHelper;
 using ServerCommunicationInterfaces;
@@ -11,7 +12,7 @@ namespace PeerLogic.Common
         where TOperationCode : IComparable, IFormattable, IConvertible
         where TEventCode : IComparable, IFormattable, IConvertible
     {
-        public IPeerEntity Entity { get; private set; }
+        public IContainer Entity { get; } = new Container();
 
         protected IClientPeerWrapper<IClientPeer> PeerWrapper { get; private set; }
         protected IOperationRequestHandlerRegister<TOperationCode> OperationRequestHandlerRegister { get; private set; }
@@ -20,7 +21,6 @@ namespace PeerLogic.Common
         public virtual void Initialize(IClientPeerWrapper<IClientPeer> peer)
         {
             PeerWrapper = peer;
-            Entity = new PeerEntity(PeerWrapper.PeerId);
 
             AddEventsSenderHandler();
             AddOperationRequestsHandler();
@@ -44,7 +44,7 @@ namespace PeerLogic.Common
             var logOperationsResponse = Config.Global.Log.OperationsResponse;
 
             // Necessary for async operation handlers.
-            var coroutinesExecutor = Entity.Container.AddComponent(new CoroutinesExecutor(new FiberCoroutinesExecutor(PeerWrapper.Peer.Fiber, 100)));
+            var coroutinesExecutor = Entity.AddComponent(new CoroutinesExecutor(new FiberCoroutinesExecutor(PeerWrapper.Peer.Fiber, 100)));
 
             OperationRequestHandlerRegister = new OperationRequestsHandler<TOperationCode>(PeerWrapper.Peer.OperationRequestNotifier,
                 PeerWrapper.Peer.OperationResponseSender, logOperationsRequest, logOperationsResponse, coroutinesExecutor);
@@ -52,8 +52,8 @@ namespace PeerLogic.Common
 
         protected void AddCommonComponents()
         {
-            Entity.Container.AddComponent(new MinimalPeerGetter(PeerWrapper.Peer));
-            Entity.Container.AddComponent(new EventSenderWrapper(EventSender.AssertNotNull()));
+            Entity.AddComponent(new MinimalPeerGetter(PeerWrapper.PeerId, PeerWrapper.Peer));
+            Entity.AddComponent(new EventSenderWrapper(EventSender.AssertNotNull()));
         }
     }
 }

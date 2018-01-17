@@ -22,10 +22,10 @@ namespace Game.Application.PeerLogic.Operations
             this.peerId = peerId;
             this.onAuthenticated = onAuthenticated;
 
-            databaseAccessTokens = Server.Entity.Container.GetComponent<ILocalDatabaseAccessTokens>().AssertNotNull();
-            databaseAccessTokenExistence = Server.Entity.Container.GetComponent<IDatabaseAccessTokenExistence>().AssertNotNull();
-            databaseAccessTokenProvider = Server.Entity.Container.GetComponent<IDatabaseAccessTokenProvider>().AssertNotNull();
-            databaseUserIdViaAccessTokenProvider = Server.Entity.Container.GetComponent<IDatabaseUserIdViaAccessTokenProvider>().AssertNotNull();
+            databaseAccessTokens = Server.Entity.GetComponent<ILocalDatabaseAccessTokens>().AssertNotNull();
+            databaseAccessTokenExistence = Server.Entity.GetComponent<IDatabaseAccessTokenExistence>().AssertNotNull();
+            databaseAccessTokenProvider = Server.Entity.GetComponent<IDatabaseAccessTokenProvider>().AssertNotNull();
+            databaseUserIdViaAccessTokenProvider = Server.Entity.GetComponent<IDatabaseUserIdViaAccessTokenProvider>().AssertNotNull();
         }
 
         public AuthenticateResponseParameters? Handle(MessageData<AuthenticateRequestParameters> messageData, ref MessageSendOptions sendOptions)

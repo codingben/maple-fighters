@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using CommonTools.Coroutines;
 using ComponentModel.Common;
-using ServerApplication.Common.ApplicationBase;
 
 namespace ServerApplication.Common.Components.Coroutines
 {
@@ -11,7 +10,7 @@ namespace ServerApplication.Common.Components.Coroutines
         // Left blank intentionally
     }
 
-    public class CoroutinesExecutor : Component<IServerEntity>, ICoroutinesExecuter
+    public class CoroutinesExecutor : Component, ICoroutinesExecuter
     {
         public int Count => executor.Count;
 

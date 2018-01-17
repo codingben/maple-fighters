@@ -21,8 +21,8 @@ namespace Game.Application.Components
         {
             this.map = map;
 
-            pythonScriptEngine = Server.Entity.Container.GetComponent<IPythonScriptEngine>().AssertNotNull();
-            characterSpawnPositionProvider = Server.Entity.Container.GetComponent<ICharacterSpawnPositionDetailsProvider>().AssertNotNull();
+            pythonScriptEngine = Server.Entity.GetComponent<IPythonScriptEngine>().AssertNotNull();
+            characterSpawnPositionProvider = Server.Entity.GetComponent<ICharacterSpawnPositionDetailsProvider>().AssertNotNull();
 
             scriptScope = pythonScriptEngine.GetScriptEngine().CreateScope();
             scriptScope.SetVariable("scene", this);

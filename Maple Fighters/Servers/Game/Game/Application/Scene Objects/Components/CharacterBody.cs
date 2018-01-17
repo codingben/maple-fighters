@@ -15,10 +15,11 @@ namespace Game.Application.SceneObjects.Components
     {
         public PlayerState PlayerState { private get; set; }
 
-        private ITransform transform;
         private Body body;
-
         private Vector2 lastPosition;
+
+        private IScene scene;
+        private ITransform transform;
 
         protected override void OnAwake()
         {
@@ -26,21 +27,24 @@ namespace Game.Application.SceneObjects.Components
 
             transform = Entity.Container.GetComponent<ITransform>().AssertNotNull();
 
-            var executor = Entity.Scene.Container.GetComponent<ISceneOrderExecutor>().AssertNotNull();
+            var presenceScene = Entity.Container.GetComponent<IPresenceScene>().AssertNotNull();
+            scene = presenceScene.Scene;
+
+            var executor = scene.Entity.GetComponent<ISceneOrderExecutor>().AssertNotNull();
             executor.GetPreUpdateExecutor().StartCoroutine(UpdatePosition());
         }
 
         protected override void OnDestroy()
         {
             base.OnDestroy();
-            
-            var entityManager = Entity?.Scene?.Container?.GetComponent<IEntityManager>();
+
+            var entityManager = scene?.Entity?.GetComponent<IEntityManager>().AssertNotNull();
             entityManager?.RemoveBody(body, Entity.Id);
         }
 
         private IEnumerator<IYieldInstruction> UpdatePosition()
         {
-            var entityManager = Entity.Scene.Container.GetComponent<IEntityManager>().AssertNotNull();
+            var entityManager = scene.Entity.GetComponent<IEntityManager>().AssertNotNull();
 
             while (true)
             {
@@ -71,16 +75,17 @@ namespace Game.Application.SceneObjects.Components
                     if (body.GetMass() == 0)
                     {
                         body.SetMassFromShapes();
-                        return;
                     }
+                    else
+                    {
+                        /* 
+                         * NOTE: Deprecated MoveBody() due to forces and velocity issues between two fixtures.
+                           -> const float SPEED = 10.5f; // TODO: Get this data from another source
+                           -> body.MoveBody(transform.Position, SPEED);
+                        */
 
-                    /* 
-                     * NOTE: Deprecated MoveBody() due to forces and velocity issues between two fixtures.
-                       -> const float SPEED = 10.5f; // TODO: Get this data from another source
-                       -> body.MoveBody(transform.Position, SPEED);
-                    */
-
-                    body.SetXForm(transform.Position.FromVector2(), body.GetAngle());
+                        body.SetXForm(transform.Position.FromVector2(), body.GetAngle());
+                    }
                     break;
                 }
                 case PlayerState.Falling:
@@ -90,10 +95,11 @@ namespace Game.Application.SceneObjects.Components
                     if (body.GetMass() > 0)
                     {
                         body.SetMass(new MassData());
-                        return;
                     }
-
-                    body.SetXForm(transform.Position.FromVector2(), body.GetAngle());
+                    else
+                    {
+                        body.SetXForm(transform.Position.FromVector2(), body.GetAngle());
+                    }
                     break;
                 }
             }

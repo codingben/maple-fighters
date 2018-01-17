@@ -8,7 +8,7 @@ namespace Game.InterestManagement
 {
     public class Scene : IScene
     {
-        public IContainer<ISceneEntity> Container { get; }
+        public IContainer Entity { get; } = new Container();
         public Vector2 RegionSize { get; }
 
         private readonly IRegion[,] regions;
@@ -16,8 +16,6 @@ namespace Game.InterestManagement
 
         protected Scene(Vector2 sceneSize, Vector2 regionSize)
         {
-            Container = new Container<ISceneEntity>(this);
-
             var regionsX = (int)(sceneSize.X / regionSize.X);
             var regionsY = (int)(sceneSize.Y / regionSize.Y);
 
@@ -48,9 +46,10 @@ namespace Game.InterestManagement
                 return null;
             }
 
-            sceneObject.Scene = this;
-            sceneObject.OnAwake();
+            var presenceScene = sceneObject.Container.GetComponent<IPresenceScene>().AssertNotNull();
+            presenceScene.Scene = this;
 
+            sceneObject.OnAwake();
             sceneObjects.Add(sceneObject.Id, sceneObject);
 
             if (Config.Global.Log.InterestManagement)
@@ -68,16 +67,29 @@ namespace Game.InterestManagement
                 return;
             }
 
+            var sceneObject = sceneObjects[id];
+            sceneObject.OnDestroy();
+
+            var presenceScene = sceneObject.Container?.GetComponent<IPresenceScene>()?.AssertNotNull();
+            if (presenceScene != null)
+            {
+                presenceScene.Scene = null;
+            }
+
+            sceneObjects.Remove(id);
+
             if (Config.Global.Log.InterestManagement)
             {
-                var name = sceneObjects[id].Name;
-                var sceneObjectId = sceneObjects[id].Id;
+                var name = sceneObject.Name;
+                var sceneObjectId = sceneObject.Id;
                 LogUtils.Log(MessageBuilder.Trace($"Removed scene object: {name} Id: {sceneObjectId}"));
             }
 
-            sceneObjects[id].Scene = null;
-            sceneObjects.Remove(id);
+            RemoveSceneObjectFromRegions(id);
+        }
 
+        private void RemoveSceneObjectFromRegions(int id)
+        {
             // Remove a scene objct for all other scene objects in his region.
             foreach (var region in regions)
             {
@@ -100,7 +112,7 @@ namespace Game.InterestManagement
 
             sceneObjects.Clear();
 
-            Container?.Dispose();
+            Entity?.Dispose();
         }
 
         public ISceneObject GetSceneObject(int id)

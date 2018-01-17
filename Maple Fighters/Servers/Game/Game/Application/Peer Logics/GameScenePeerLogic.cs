@@ -39,14 +39,14 @@ namespace Game.Application.PeerLogics
         {
             characterSceneObject.Container.AddComponent(new PeerIdGetter(PeerWrapper.PeerId));
 
-            Entity.Container.AddComponent(new CharacterGetter(characterSceneObject, character));
-            Entity.Container.AddComponent(new InterestAreaManagement());
-            Entity.Container.AddComponent(new PositionChangesListener());
+            Entity.AddComponent(new CharacterGetter(characterSceneObject, character));
+            Entity.AddComponent(new InterestAreaManagement());
+            Entity.AddComponent(new PositionChangesListener());
         }
 
         private void AddHandlerForEnterSceneOperation()
         {
-            var characterGetter = Entity.Container.GetComponent<ICharacterGetter>().AssertNotNull();
+            var characterGetter = Entity.GetComponent<ICharacterGetter>().AssertNotNull();
             OperationRequestHandlerRegister.SetHandler(GameOperations.EnterScene, new EnterSceneOperationHandler(characterGetter));
         }
 
@@ -58,14 +58,14 @@ namespace Game.Application.PeerLogics
 
         private void AddHandlerForUpdatePlayerStateOperation()
         {
-            var characterGetter = Entity.Container.GetComponent<ICharacterGetter>().AssertNotNull();
+            var characterGetter = Entity.GetComponent<ICharacterGetter>().AssertNotNull();
             OperationRequestHandlerRegister.SetHandler(GameOperations.PlayerStateChanged, 
                 new UpdatePlayerStateOperationHandler(characterSceneObject.Id, characterGetter));
         }
 
         private void AddHandlerForChangeSceneOperation()
         {
-            var characterGetter = Entity.Container.GetComponent<ICharacterGetter>().AssertNotNull();
+            var characterGetter = Entity.GetComponent<ICharacterGetter>().AssertNotNull();
             OperationRequestHandlerRegister.SetHandler(GameOperations.ChangeScene, new ChangeSceneOperationHandler(characterGetter));
         }
 
@@ -78,7 +78,7 @@ namespace Game.Application.PeerLogics
 
         private ISceneObject CreateCharacterSceneObject(Character character)
         {
-            var characterSceneObjectCreator = Server.Entity.Container.GetComponent<ICharacterCreator>().AssertNotNull();
+            var characterSceneObjectCreator = Server.Entity.GetComponent<ICharacterCreator>().AssertNotNull();
             var characterSceneObject = characterSceneObjectCreator.Create(character);
             return characterSceneObject;
         }

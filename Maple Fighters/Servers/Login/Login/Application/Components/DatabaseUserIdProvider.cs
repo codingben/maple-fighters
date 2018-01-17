@@ -2,12 +2,11 @@
 using ComponentModel.Common;
 using Database.Common.Components;
 using Database.Common.TablesDefinition;
-using ServerApplication.Common.ApplicationBase;
 using ServiceStack.OrmLite;
 
 namespace Login.Application.Components
 {
-    internal class DatabaseUserIdProvider : Component<IServerEntity>, IDatabaseUserIdProvider
+    internal class DatabaseUserIdProvider : Component, IDatabaseUserIdProvider
     {
         private IDatabaseConnectionProvider databaseConnectionProvider;
 
@@ -15,7 +14,7 @@ namespace Login.Application.Components
         {
             base.OnAwake();
 
-            databaseConnectionProvider = Entity.Container.GetComponent<IDatabaseConnectionProvider>().AssertNotNull();
+            databaseConnectionProvider = Entity.GetComponent<IDatabaseConnectionProvider>().AssertNotNull();
         }
 
         public int GetUserId(string email)

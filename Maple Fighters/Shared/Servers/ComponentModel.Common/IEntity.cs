@@ -1,8 +1,6 @@
-﻿using System;
-
-namespace ComponentModel.Common
+﻿namespace ComponentModel.Common
 {
-    public interface IEntity : IDisposable
+    public interface IEntity
     {
         // Left blank intentionally
     }

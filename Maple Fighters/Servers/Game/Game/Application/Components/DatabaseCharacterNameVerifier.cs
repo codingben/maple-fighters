@@ -2,12 +2,11 @@
 using ComponentModel.Common;
 using Database.Common.Components;
 using Database.Common.TablesDefinition;
-using ServerApplication.Common.ApplicationBase;
 using ServiceStack.OrmLite;
 
 namespace Game.Application.Components
 {
-    internal class DatabaseCharacterNameVerifier : Component<IServerEntity>, IDatabaseCharacterNameVerifier
+    internal class DatabaseCharacterNameVerifier : Component, IDatabaseCharacterNameVerifier
     {
         private IDatabaseConnectionProvider databaseConnectionProvider;
 
@@ -15,7 +14,7 @@ namespace Game.Application.Components
         {
             base.OnAwake();
 
-            databaseConnectionProvider = Entity.Container.GetComponent<IDatabaseConnectionProvider>().AssertNotNull();
+            databaseConnectionProvider = Entity.GetComponent<IDatabaseConnectionProvider>().AssertNotNull();
         }
 
         public bool Verify(string name)

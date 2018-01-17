@@ -2,12 +2,11 @@
 using ComponentModel.Common;
 using Database.Common.Components;
 using Database.Common.TablesDefinition;
-using ServerApplication.Common.ApplicationBase;
 using ServiceStack.OrmLite;
 
 namespace Database.Common.AccessToken
 {
-    public class DatabaseUserIdViaAccessTokenProvider : Component<IServerEntity>, IDatabaseUserIdViaAccessTokenProvider
+    public class DatabaseUserIdViaAccessTokenProvider : Component, IDatabaseUserIdViaAccessTokenProvider
     {
         private IDatabaseConnectionProvider databaseConnectionProvider;
 
@@ -15,7 +14,7 @@ namespace Database.Common.AccessToken
         {
             base.OnAwake();
 
-            databaseConnectionProvider = Entity.Container.GetComponent<IDatabaseConnectionProvider>().AssertNotNull();
+            databaseConnectionProvider = Entity.GetComponent<IDatabaseConnectionProvider>().AssertNotNull();
         }
 
         public int GetUserId(string accessToken)

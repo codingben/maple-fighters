@@ -1,10 +1,9 @@
 ﻿using Box2DX.Dynamics;
 using ComponentModel.Common;
-using Game.InterestManagement;
 
 namespace Physics.Box2D
 {
-    public class PhysicsWorldProvider : Component<ISceneEntity>, IPhysicsWorldProvider
+    public class PhysicsWorldProvider : Component, IPhysicsWorldProvider
     {
         private readonly World world;
 

@@ -35,9 +35,10 @@ namespace Game.Application.SceneObjects
             physicsCollisionNotifier.CollisionEnter += OnCollisionEnter;
 
             var transform = Container.GetComponent<ITransform>().AssertNotNull();
-            transform.PositionDirectionChanged += OnPositionChanged;
+            transform.PositionChanged += OnPositionChanged;
 
-            var executor = Scene.Container.GetComponent<ISceneOrderExecutor>().AssertNotNull();
+            var presenceScene = Container.GetComponent<IPresenceScene>().AssertNotNull();
+            var executor = presenceScene.Scene.Entity.GetComponent<ISceneOrderExecutor>().AssertNotNull();
             executor.GetPreUpdateExecutor().StartCoroutine(MoveMob());
         }
 

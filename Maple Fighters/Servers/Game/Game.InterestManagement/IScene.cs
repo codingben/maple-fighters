@@ -1,11 +1,14 @@
-﻿using MathematicsHelper;
+﻿using System;
+using ComponentModel.Common;
+using MathematicsHelper;
 
 namespace Game.InterestManagement
 {
-    public interface IScene : ISceneEntity
+    public interface IScene : IEntity, IDisposable
     {
-        Vector2 RegionSize { get; }
+        IContainer Entity { get; }
 
+        Vector2 RegionSize { get; }
         IRegion[,] GetAllRegions();
 
         ISceneObject AddSceneObject(ISceneObject sceneObject);

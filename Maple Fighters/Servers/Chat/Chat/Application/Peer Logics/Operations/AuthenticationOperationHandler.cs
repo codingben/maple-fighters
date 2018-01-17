@@ -20,8 +20,8 @@ namespace Chat.Application.PeerLogic.Operations
             this.peerId = peerId;
             this.onAuthenticated = onAuthenticated;
 
-            databaseAccessTokens = Server.Entity.Container.GetComponent<ILocalDatabaseAccessTokens>().AssertNotNull();
-            databaseAccessTokenExistence = Server.Entity.Container.GetComponent<IDatabaseAccessTokenExistence>().AssertNotNull();
+            databaseAccessTokens = Server.Entity.GetComponent<ILocalDatabaseAccessTokens>().AssertNotNull();
+            databaseAccessTokenExistence = Server.Entity.GetComponent<IDatabaseAccessTokenExistence>().AssertNotNull();
         }
 
         public AuthenticateResponseParameters? Handle(MessageData<AuthenticateRequestParameters> messageData, ref MessageSendOptions sendOptions)

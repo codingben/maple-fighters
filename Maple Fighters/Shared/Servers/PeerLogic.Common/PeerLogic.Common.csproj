@@ -72,9 +72,7 @@
     <Compile Include="Components\IMinimalPeerGetter.cs" />
     <Compile Include="Components\MinimalPeerGetter.cs" />
     <Compile Include="IClientPeerWrapper.cs" />
-    <Compile Include="IPeerEntity.cs" />
     <Compile Include="IPeerLogicBase.cs" />
-    <Compile Include="PeerEntity.cs" />
     <Compile Include="PeerLogicBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

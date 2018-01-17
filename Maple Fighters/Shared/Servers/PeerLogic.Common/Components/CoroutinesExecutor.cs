@@ -4,7 +4,7 @@ using ComponentModel.Common;
 
 namespace PeerLogic.Common.Components
 {
-    public class CoroutinesExecutor : Component<IPeerEntity>, ICoroutinesExecutor
+    public class CoroutinesExecutor : Component, ICoroutinesExecutor
     {
         public int Count => executor.Count;
 

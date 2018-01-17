@@ -1,10 +1,9 @@
 ﻿using System;
 using ComponentModel.Common;
-using ServerApplication.Common.ApplicationBase;
 
 namespace ServerApplication.Common.Components
 {
-    public class RandomNumberGenerator : Component<IServerEntity>, IRandomNumberGenerator
+    public class RandomNumberGenerator : Component, IRandomNumberGenerator
     {
         private readonly Random random = new Random();
         private readonly object locker = new object();

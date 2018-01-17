@@ -5,14 +5,12 @@ using IronPython.Hosting;
 using MathematicsHelper;
 using Microsoft.Scripting.Hosting;
 using Physics.Box2D;
-using ServerApplication.Common.ApplicationBase;
 
 namespace PythonScripting
 {
-    public class PythonScriptEngine : Component<IServerEntity>, IPythonScriptEngine
+    public class PythonScriptEngine : Component, IPythonScriptEngine
     {
         private const string ENVIRONMENT_PYTHON_LIB_NAME = "IRON_PYTHON_LIB_DIR";
-
         private readonly ScriptEngine scriptEngine;
 
         public PythonScriptEngine()
