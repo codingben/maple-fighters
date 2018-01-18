@@ -9,18 +9,20 @@ namespace Game.Application.PeerLogic.Operations
     internal class UpdatePositionOperationHandler : IOperationRequestHandler<UpdatePositionRequestParameters, EmptyParameters>
     {
         private readonly ITransform transform;
+        private readonly IOrientationProvider orientationProvider;
 
-        public UpdatePositionOperationHandler(ITransform transform)
+        public UpdatePositionOperationHandler(ITransform transform, IOrientationProvider orientationProvider)
         {
             this.transform = transform;
+            this.orientationProvider = orientationProvider;
         }
 
         public EmptyParameters? Handle(MessageData<UpdatePositionRequestParameters> messageData, ref MessageSendOptions sendOptions)
         {
-            var newPosition = new Vector2(messageData.Parameters.X, messageData.Parameters.Y);
-            var direction = messageData.Parameters.Direction;
+            orientationProvider.Direction = (Direction)messageData.Parameters.Direction.FromDirections();
 
-            transform.SetPosition(newPosition, direction);
+            var newPosition = new Vector2(messageData.Parameters.X, messageData.Parameters.Y);
+            transform.SetPosition(newPosition);
             return null;
         }
     }

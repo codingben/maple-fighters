@@ -33,7 +33,8 @@ namespace Game.Application
 
         private void AddComponents()
         {
-            Server.Entity.AddComponent(new PythonScriptEngine());
+            RunPythonScriptEngine();
+
             Server.Entity.AddComponent(new CharacterSpawnPositionDetailsProvider());
             Server.Entity.AddComponent(new SceneContainer());
             Server.Entity.AddComponent(new CharacterCreator());
@@ -47,6 +48,14 @@ namespace Game.Application
             Server.Entity.AddComponent(new DatabaseAccessTokenProvider());
             Server.Entity.AddComponent(new DatabaseUserIdViaAccessTokenProvider());
             Server.Entity.AddComponent(new LocalDatabaseAccessTokens());
+        }
+
+        private void RunPythonScriptEngine()
+        {
+            var pythonScriptEngine = Server.Entity.AddComponent(new PythonScriptEngine());
+            pythonScriptEngine.GetScriptEngine().Runtime.LoadAssembly(typeof(MathematicsHelper.Vector2).Assembly);
+            pythonScriptEngine.GetScriptEngine().Runtime.LoadAssembly(typeof(InterestManagement.SceneObject).Assembly);
+            pythonScriptEngine.GetScriptEngine().Runtime.LoadAssembly(typeof(Physics.Box2D.PhysicsWorldInfo).Assembly);
         }
     }
 }

@@ -27,8 +27,8 @@ namespace Game.Application.SceneObjects.Components
 
             transform = Entity.Container.GetComponent<ITransform>().AssertNotNull();
 
-            var presenceScene = Entity.Container.GetComponent<IPresenceScene>().AssertNotNull();
-            scene = presenceScene.Scene;
+            var presenceSceneProvider = Entity.Container.GetComponent<IPresenceSceneProvider>().AssertNotNull();
+            scene = presenceSceneProvider.Scene;
 
             var executor = scene.Entity.GetComponent<ISceneOrderExecutor>().AssertNotNull();
             executor.GetPreUpdateExecutor().StartCoroutine(UpdatePosition());

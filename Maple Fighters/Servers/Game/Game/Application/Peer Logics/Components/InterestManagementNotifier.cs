@@ -10,7 +10,7 @@ using SceneObject = Shared.Game.Common.SceneObject;
 
 namespace Game.Application.PeerLogic.Components
 {
-    internal class InterestAreaManagement : Component
+    internal class InterestManagementNotifier : Component
     {
         private IEventSenderWrapper eventSender;
         private ICharacterGetter sceneObjectGetter;
@@ -32,7 +32,10 @@ namespace Game.Application.PeerLogic.Components
         private void OnSubscriberAdded(ISceneObject sceneObject)
         {
             var transform = sceneObject.Container.GetComponent<ITransform>().AssertNotNull();
-            var sharedSceneObject = new SceneObject(sceneObject.Id, sceneObject.Name, transform.Position.X, transform.Position.Y, transform.Direction);
+            var orientationProvider = sceneObject.Container.GetComponent<IOrientationProvider>().AssertNotNull();
+
+            var direction = orientationProvider.Direction.GetDirectionsFromDirection();
+            var sharedSceneObject = new SceneObject(sceneObject.Id, sceneObject.Name, transform.Position.X, transform.Position.Y, direction);
 
             var characterInformation = GetCharacterInformation(sceneObject);
             var parameters = new SceneObjectAddedEventParameters(sharedSceneObject, characterInformation.GetValueOrDefault(), characterInformation.HasValue);
@@ -54,10 +57,11 @@ namespace Game.Application.PeerLogic.Components
                 sharedSceneObjects[i].Name = sceneObjects[i].Name;
 
                 var transform = sceneObjects[i].Container.GetComponent<ITransform>().AssertNotNull();
+                var orientationProvider = sceneObjects[i].Container.GetComponent<IOrientationProvider>().AssertNotNull();
 
                 sharedSceneObjects[i].X = transform.Position.X;
                 sharedSceneObjects[i].Y = transform.Position.Y;
-                sharedSceneObjects[i].Direction = transform.Direction;
+                sharedSceneObjects[i].Direction = orientationProvider.Direction.GetDirectionsFromDirection();
             }
 
             var parameters = new SceneObjectsAddedEventParameters(sharedSceneObjects, GetCharacterInformations(sceneObjects));

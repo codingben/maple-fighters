@@ -55,19 +55,20 @@ namespace Game.Application.Components
             }
         }
 
-        public void AddScene(byte map, Vector2 sceneSize, Vector2 regionSize, PhysicsWorldInfo physicsWorldInfo, bool drawPhysics)
+        public void AddScene(Maps map, Vector2 sceneSize, Vector2 regionSize, PhysicsWorldInfo physicsWorldInfo, bool drawPhysics)
         {
-            var gameSceneWrapper = new GameSceneWrapper((Maps) map, sceneSize, regionSize);
-            scenes.Add((Maps) map, gameSceneWrapper);
+            var gameSceneWrapper = new GameSceneWrapper(map, sceneSize, regionSize);
+            scenes.Add(map, gameSceneWrapper);
 
             gameSceneWrapper.GetScene().Entity.AddComponent(new SceneOrderExecutor());
-            gameSceneWrapper.GetScene().Entity.AddComponent(new PhysicsWorldSimulation((Maps)map, physicsWorldInfo));
+            gameSceneWrapper.GetScene().Entity.AddComponent(new PhysicsWorldSimulationCreator(physicsWorldInfo));
+            gameSceneWrapper.GetScene().Entity.AddComponent(new PhysicsWorldMapCreator(map));
             gameSceneWrapper.GetScene().Entity.AddComponent(new EntityManager());
             gameSceneWrapper.AddSceneObjectsViaPython();
 
             if (drawPhysics)
             {
-                gameSceneWrapper.GetScene().Entity.AddComponent(new PhysicsSimulationWindowCreator(((Maps)map).ToString()));
+                gameSceneWrapper.GetScene().Entity.AddComponent(new PhysicsSimulationWindowCreator(map.ToString()));
             }
         }
 

@@ -1,4 +1,5 @@
 from MathematicsHelper import *
+from Shared.Game.Common import Directions
 
 import os
 import json
@@ -16,4 +17,7 @@ position = Vector2(x, y)
 
 direction = data["Direction"]
 
-scene.AddCharacterSpawnPosition(position, direction)
+if direction > 0:
+	scene.AddCharacterSpawnPosition(position, Directions.Left)
+else:
+	scene.AddCharacterSpawnPosition(position, Directions.Right)

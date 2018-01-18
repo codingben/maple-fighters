@@ -1,10 +1,7 @@
 ﻿using System;
 using ComponentModel.Common;
-using Game.InterestManagement;
 using IronPython.Hosting;
-using MathematicsHelper;
 using Microsoft.Scripting.Hosting;
-using Physics.Box2D;
 
 namespace PythonScripting
 {
@@ -16,16 +13,12 @@ namespace PythonScripting
         public PythonScriptEngine()
         {
             scriptEngine = Python.CreateEngine();
+            scriptEngine.Runtime.LoadAssembly(typeof(IronPython.Modules.ArrayModule).Assembly);
 
             foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
             {
                 scriptEngine.Runtime.LoadAssembly(assembly);
             }
-
-            scriptEngine.Runtime.LoadAssembly(typeof(Vector2).Assembly);
-            scriptEngine.Runtime.LoadAssembly(typeof(SceneObject).Assembly);
-            scriptEngine.Runtime.LoadAssembly(typeof(PhysicsWorldInfo).Assembly);
-            scriptEngine.Runtime.LoadAssembly(typeof(IronPython.Modules.ArrayModule).Assembly);
 
             var ironPythonLibPath = Environment.GetEnvironmentVariable(ENVIRONMENT_PYTHON_LIB_NAME, EnvironmentVariableTarget.Machine);
             var paths = scriptEngine.GetSearchPaths();

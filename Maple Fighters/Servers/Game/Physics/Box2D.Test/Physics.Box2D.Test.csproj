@@ -53,17 +53,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\Shared\Helper\MathematicsHelper\MathematicsHelper.csproj">
-      <Project>{A3BE3E13-D3A1-4800-B471-A39F5ED4B554}</Project>
-      <Name>MathematicsHelper</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Box2D.Simulation\Physics.Box2D.Simulation.csproj">
       <Project>{A80A032C-8FDC-45F5-B039-BAFA6097F58A}</Project>
       <Name>Physics.Box2D.Simulation</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Box2D\Physics.Box2D.csproj">
-      <Project>{2E057EC4-7919-4326-AB31-3116A259BA49}</Project>
-      <Name>Physics.Box2D</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

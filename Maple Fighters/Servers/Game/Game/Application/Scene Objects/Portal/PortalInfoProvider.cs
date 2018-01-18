@@ -8,9 +8,9 @@ namespace Game.Application.SceneObjects
     {
         public Maps Map { get; }
 
-        public PortalInfoProvider(int map)
+        public PortalInfoProvider(Maps map)
         {
-            Map = (Maps)map;
+            Map = map;
         }
     }
 }

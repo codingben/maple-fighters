@@ -2,7 +2,7 @@
 
 namespace Game.InterestManagement
 {
-    public interface IPresenceScene : IExposableComponent
+    public interface IPresenceSceneProvider : IExposableComponent
     {
         IScene Scene { get; set; }
     }

@@ -81,7 +81,7 @@ namespace Game.InterestManagement
         }
 
         private Rectangle interestArea;
-        private IPresenceScene presenceScene;
+        private IPresenceSceneProvider presenceSceneProvider;
         private readonly Dictionary<int, ISceneObject> interestedSceneObjects = new Dictionary<int, ISceneObject>();
 
         public InterestArea(Vector2 position, Vector2 areaSize)
@@ -93,10 +93,10 @@ namespace Game.InterestManagement
         {
             base.OnAwake();
 
-            presenceScene = Entity.Container.GetComponent<IPresenceScene>().AssertNotNull();
+            presenceSceneProvider = Entity.Container.GetComponent<IPresenceSceneProvider>().AssertNotNull();
 
             var transform = Entity.Container.GetComponent<ITransform>().AssertNotNull();
-            transform.PositionChangedOnly += SetPosition;
+            transform.PositionChanged += SetPosition;
         }
 
         protected override void OnDestroy()
@@ -115,7 +115,7 @@ namespace Game.InterestManagement
         {
             interestArea.SetPosition(position);
 
-            if (presenceScene.Scene != null)
+            if (presenceSceneProvider.Scene != null)
             {
                 DetectOverlapsWithRegions();
             }
@@ -123,13 +123,13 @@ namespace Game.InterestManagement
 
         public void SetSize()
         {
-            var size = presenceScene.Scene.RegionSize;
+            var size = presenceSceneProvider.Scene.RegionSize;
             interestArea.SetSize(size);
         }
 
         public IEnumerable<IRegion> GetSubscribedPublishers()
         {
-            var regions = presenceScene.Scene.GetAllRegions();
+            var regions = presenceSceneProvider.Scene.GetAllRegions();
             return regions.Cast<IRegion>().Where(region => region.HasSubscription(Entity.Id)).ToArray();
         }
 
@@ -141,8 +141,7 @@ namespace Game.InterestManagement
                 return;
             }
 
-            var sceneRegions = presenceScene.Scene.GetAllRegions();
-
+            var sceneRegions = presenceSceneProvider.Scene.GetAllRegions();
             foreach (var region in sceneRegions)
             {
                 if (region == null)

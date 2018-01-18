@@ -12,21 +12,26 @@ namespace Game.Application.PeerLogic.Components
     {
         private ICharacterGetter sceneObjectGetter;
         private IInterestAreaNotifier interestAreaNotifier;
+        private IOrientationProvider orientationProvider;
 
         protected override void OnAwake()
         {
             base.OnAwake();
 
             sceneObjectGetter = Entity.GetComponent<ICharacterGetter>().AssertNotNull();
+
             interestAreaNotifier = sceneObjectGetter.GetSceneObject().Container.GetComponent<IInterestAreaNotifier>().AssertNotNull();
+            orientationProvider = sceneObjectGetter.GetSceneObject().Container.GetComponent<IOrientationProvider>().AssertNotNull();
 
             var transform = sceneObjectGetter.GetSceneObject().Container.GetComponent<ITransform>().AssertNotNull();
             transform.PositionChanged += UpdatePositionForAll;
         }
 
-        private void UpdatePositionForAll(Vector2 newPosition, Directions direction)
+        private void UpdatePositionForAll(Vector2 newPosition)
         {
             var sceneObjectId = sceneObjectGetter.GetSceneObject().Id;
+            var direction = orientationProvider.Direction.GetDirectionsFromDirection();
+
             var parameters = new SceneObjectPositionChangedEventParameters(sceneObjectId, newPosition.X, newPosition.Y, direction);
             var messageSendOptions = MessageSendOptions.DefaultUnreliable((byte)GameDataChannels.Position);
             interestAreaNotifier.NotifySubscribers((byte)GameEvents.PositionChanged, parameters, messageSendOptions);

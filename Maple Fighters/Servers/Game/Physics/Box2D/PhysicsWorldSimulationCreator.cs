@@ -1,22 +1,17 @@
 ﻿using System.Collections.Generic;
-using System.Globalization;
-using System.IO;
 using Box2DX.Collision;
 using Box2DX.Dynamics;
 using CommonTools.Coroutines;
 using CommonTools.Log;
 using ComponentModel.Common;
-using MathematicsHelper;
-using ServiceStack;
-using Shared.Game.Common;
 
 namespace Physics.Box2D
 {
-    public class PhysicsWorldSimulation : Component
+    public class PhysicsWorldSimulationCreator : Component
     {
         private readonly World world;
 
-        public PhysicsWorldSimulation(Maps map, PhysicsWorldInfo worldInfo)
+        public PhysicsWorldSimulationCreator(PhysicsWorldInfo worldInfo)
         {
             var worldAabb = new AABB
             {
@@ -27,8 +22,6 @@ namespace Physics.Box2D
             world.SetContactFilter(new ContactFilterModified());
             world.SetContactListener(new ContactListenerModified());
             world.SetContinuousPhysics(false);
-
-            CreateScenePhysicsData(map);
         }
 
         protected override void OnAwake()
@@ -64,31 +57,6 @@ namespace Physics.Box2D
             base.OnDestroy();
 
             world.Dispose();
-        }
-
-        private void CreateScenePhysicsData(Maps map)
-        {
-            var path = $"python/scenes/{map}/ScenePhysicsData.json";
-            if (!File.Exists(path))
-            {
-                LogUtils.Log($"Could not find ScenePhysicsData json file for {map}.");
-                return;
-            }
-
-            var json = File.ReadAllText(path);
-            var scenePhysicsData = DynamicJson.Deserialize(json);
-
-            foreach (var groundCollider in scenePhysicsData.GroundColliders)
-            {
-                world.CreateGround(
-                    new Vector2(
-                        float.Parse(groundCollider.Position.X, CultureInfo.InvariantCulture.NumberFormat),
-                        float.Parse(groundCollider.Position.Y, CultureInfo.InvariantCulture.NumberFormat)),
-                    new Vector2(
-                        float.Parse(groundCollider.Extents.X, CultureInfo.InvariantCulture.NumberFormat),
-                        float.Parse(groundCollider.Extents.Y, CultureInfo.InvariantCulture.NumberFormat))
-                );
-            }
         }
     }
 }

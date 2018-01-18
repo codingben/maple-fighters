@@ -2,14 +2,14 @@
 {
     public static class DirectionsUtils
     {
-        public static Directions ToDirections(this float direction)
+        public static Directions ToDirections(this sbyte direction)
         {
             return direction > 0 ? Directions.Left : Directions.Right;
         }
 
-        public static float FromDirections(this Directions directions)
+        public static byte FromDirections(this Directions directions)
         {
-            return directions == Directions.Left ? 1 : -1;
+            return (byte)(directions == Directions.Left ? 1 : -1);
         }
     }
 }

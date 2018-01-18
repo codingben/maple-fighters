@@ -1,20 +1,14 @@
 ﻿using System;
 using ComponentModel.Common;
 using MathematicsHelper;
-using Shared.Game.Common;
 
 namespace Game.InterestManagement
 {
     public interface ITransform : IExposableComponent
     {
-        Vector2 InitialPosition { get; set; }
-        Vector2 Position { get; }
+        Vector2 Position { get; set; }
+        event Action<Vector2> PositionChanged;
 
-        Directions Direction { get; set; }
-
-        event Action<Vector2, Directions> PositionChanged;
-        event Action<Vector2> PositionChangedOnly;
-
-        void SetPosition(Vector2 position, Directions direction);
+        void SetPosition(Vector2 position);
     }
 }

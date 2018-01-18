@@ -30,24 +30,23 @@ namespace Game.Application.PeerLogic.Operations
         public ChangeSceneResponseParameters? Handle(MessageData<ChangeSceneRequestParameters> messageData, ref MessageSendOptions sendOptions)
         {
             var characterSceneObject = character.GetSceneObject();
-            var presenceScene = characterSceneObject.Container.GetComponent<IPresenceScene>().AssertNotNull();
+            var presenceSceneProvider = characterSceneObject.Container.GetComponent<IPresenceSceneProvider>().AssertNotNull();
 
             // Getting portal info.
             var portalSceneObjectId = messageData.Parameters.PortalId;
-            var portalSceneObject = presenceScene.Scene.GetSceneObject(portalSceneObjectId).AssertNotNull();
+            var portalSceneObject = presenceSceneProvider.Scene.GetSceneObject(portalSceneObjectId).AssertNotNull();
             var portalInfoProvider = portalSceneObject.Container.GetComponent<IPortalInfoProvider>().AssertNotNull();
 
             // Removing a body from old physics world.
             characterSceneObject.Container.RemoveComponent<CharacterBody>();
 
             // Removing a character from his old scene.
-            presenceScene.Scene.RemoveSceneObject(characterSceneObject.Id);
+            presenceSceneProvider.Scene.RemoveSceneObject(characterSceneObject.Id);
 
             // Setting the character's position in the destination scene.
             var newPlayerPosition = characterSpawnPositionProvider.GetSpawnPositionDetails(portalInfoProvider.Map);
             var transform = characterSceneObject.Container.GetComponent<ITransform>().AssertNotNull();
-            transform.InitialPosition = newPlayerPosition.Position;
-            transform.Direction = newPlayerPosition.Direction;
+            transform.Position = newPlayerPosition.Position;
 
             // Adding a character to the destination scene.
             var destinationScene = sceneContainer.GetSceneWrapper(portalInfoProvider.Map).AssertNotNull();
@@ -62,7 +61,6 @@ namespace Game.Application.PeerLogic.Operations
 
             // Adding a new body to the new physics world.
             characterSceneObject.Container.AddComponent(new CharacterBody());
-
             return new ChangeSceneResponseParameters(portalInfoProvider.Map);
         }
     }

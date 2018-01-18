@@ -2,11 +2,11 @@
 
 namespace Game.InterestManagement
 {
-    public class PresenceScene : Component<ISceneObject>, IPresenceScene
+    public class PresenceSceneProvider : Component<ISceneObject>, IPresenceSceneProvider
     {
         public IScene Scene { get; set; }
 
-        public PresenceScene(IScene scene = null)
+        public PresenceSceneProvider(IScene scene = null)
         {
             Scene = scene;
         }

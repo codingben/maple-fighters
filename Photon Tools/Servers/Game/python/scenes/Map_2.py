@@ -1,7 +1,7 @@
 from MathematicsHelper import *
 from Physics.Box2D import PhysicsWorldInfo
+from Shared.Game.Common import Maps
 
-sceneId = 3
 sceneSize = Vector2(30, 30)
 regionSize = Vector2(10, 5)
 
@@ -13,4 +13,4 @@ drawPhysics = False
 
 physicsWorldInfo = PhysicsWorldInfo(lowerBound, upperBound, gravity, doSleep)
 
-sceneContainer.AddScene(sceneId, sceneSize, regionSize, physicsWorldInfo, drawPhysics)
+sceneContainer.AddScene(Maps.Map_2, sceneSize, regionSize, physicsWorldInfo, drawPhysics)

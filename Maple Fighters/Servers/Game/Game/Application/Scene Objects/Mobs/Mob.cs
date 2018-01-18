@@ -19,7 +19,7 @@ namespace Game.Application.SceneObjects
         private readonly BodyDefinitionWrapper bodyDefinitionWrapper;
 
         protected Mob(string name, Vector2 position, Vector2 bodySize) 
-            : base(name, position, 1)
+            : base(name, position, Direction.Left)
         {
             InterestAreaNotifier = Container.AddComponent(new InterestAreaNotifier());
             var physicsCollisionNotifier = Container.AddComponent(new PhysicsCollisionNotifier());
@@ -31,8 +31,8 @@ namespace Game.Application.SceneObjects
 
         protected void CreateBody()
         {
-            var presenceScene = Container.GetComponent<IPresenceScene>().AssertNotNull();
-            var entityManager = presenceScene.Scene.Entity.GetComponent<IEntityManager>().AssertNotNull();
+            var presenceSceneProvider = Container.GetComponent<IPresenceSceneProvider>().AssertNotNull();
+            var entityManager = presenceSceneProvider.Scene.Entity.GetComponent<IEntityManager>().AssertNotNull();
             entityManager.AddBody(new BodyInfo(Id, bodyDefinitionWrapper));
         }
 
@@ -43,8 +43,8 @@ namespace Game.Application.SceneObjects
                 return body;
             }
 
-            var presenceScene = Container.GetComponent<IPresenceScene>().AssertNotNull();
-            var entityManager = presenceScene.Scene.Entity.GetComponent<IEntityManager>().AssertNotNull();
+            var presenceSceneProvider = Container.GetComponent<IPresenceSceneProvider>().AssertNotNull();
+            var entityManager = presenceSceneProvider.Scene.Entity.GetComponent<IEntityManager>().AssertNotNull();
             body = entityManager.GetBody(Id).AssertNotNull();
             return body;
         }

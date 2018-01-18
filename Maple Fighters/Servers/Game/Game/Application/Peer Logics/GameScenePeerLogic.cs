@@ -40,7 +40,7 @@ namespace Game.Application.PeerLogics
             characterSceneObject.Container.AddComponent(new PeerIdGetter(PeerWrapper.PeerId));
 
             Entity.AddComponent(new CharacterGetter(characterSceneObject, character));
-            Entity.AddComponent(new InterestAreaManagement());
+            Entity.AddComponent(new InterestManagementNotifier());
             Entity.AddComponent(new PositionChangesListener());
         }
 
@@ -53,14 +53,14 @@ namespace Game.Application.PeerLogics
         private void AddHandlerForUpdatePositionOperation()
         {
             var transform = characterSceneObject.Container.GetComponent<ITransform>().AssertNotNull();
-            OperationRequestHandlerRegister.SetHandler(GameOperations.PositionChanged, new UpdatePositionOperationHandler(transform));
+            var orientationProvider = characterSceneObject.Container.GetComponent<IOrientationProvider>().AssertNotNull();
+            OperationRequestHandlerRegister.SetHandler(GameOperations.PositionChanged, new UpdatePositionOperationHandler(transform, orientationProvider));
         }
 
         private void AddHandlerForUpdatePlayerStateOperation()
         {
             var characterGetter = Entity.GetComponent<ICharacterGetter>().AssertNotNull();
-            OperationRequestHandlerRegister.SetHandler(GameOperations.PlayerStateChanged, 
-                new UpdatePlayerStateOperationHandler(characterSceneObject.Id, characterGetter));
+            OperationRequestHandlerRegister.SetHandler(GameOperations.PlayerStateChanged, new UpdatePlayerStateOperationHandler(characterSceneObject.Id, characterGetter));
         }
 
         private void AddHandlerForChangeSceneOperation()

@@ -46,8 +46,8 @@ namespace Game.InterestManagement
                 return null;
             }
 
-            var presenceScene = sceneObject.Container.GetComponent<IPresenceScene>().AssertNotNull();
-            presenceScene.Scene = this;
+            var presenceSceneProvider = sceneObject.Container.GetComponent<IPresenceSceneProvider>().AssertNotNull();
+            presenceSceneProvider.Scene = this;
 
             sceneObject.OnAwake();
             sceneObjects.Add(sceneObject.Id, sceneObject);
@@ -70,10 +70,10 @@ namespace Game.InterestManagement
             var sceneObject = sceneObjects[id];
             sceneObject.OnDestroy();
 
-            var presenceScene = sceneObject.Container?.GetComponent<IPresenceScene>()?.AssertNotNull();
-            if (presenceScene != null)
+            var presenceSceneProvider = sceneObject.Container?.GetComponent<IPresenceSceneProvider>()?.AssertNotNull();
+            if (presenceSceneProvider != null)
             {
-                presenceScene.Scene = null;
+                presenceSceneProvider.Scene = null;
             }
 
             sceneObjects.Remove(id);

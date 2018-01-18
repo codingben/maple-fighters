@@ -31,8 +31,8 @@ namespace Game.Application.Components
 
             var scene = sceneContainer.GetSceneWrapper(MAP).AssertNotNull();
             var spawnPositionDetails = characterSpawnPositionProvider.GetSpawnPositionDetails(MAP);
-            var sceneObject = scene.GetScene().AddSceneObject(
-                new SceneObject(SCENE_OBJECT_NAME, spawnPositionDetails.Position, spawnPositionDetails.Direction.FromDirections())).AssertNotNull();
+            var sceneObject = scene.GetScene().AddSceneObject(new SceneObject(SCENE_OBJECT_NAME, spawnPositionDetails.Position,
+                    (Direction)spawnPositionDetails.Direction.FromDirections()));
             sceneObject.Container.AddComponent(new InterestArea(spawnPositionDetails.Position, scene.GetScene().RegionSize));
             sceneObject.Container.AddComponent(new InterestAreaNotifier());
             sceneObject.Container.AddComponent(new CharacterInformationProvider(character));
@@ -47,7 +47,7 @@ namespace Game.Application.Components
             var spawnPosition = sceneObject.Container.GetComponent<ITransform>().AssertNotNull();
             var bodySize = new Vector2(0.3624894f, 0.825f); // TODO: Do not hard code it
             var bodyFixtureDefinition = PhysicsUtils.CreateFixtureDefinition(bodySize, LayerMask.Player);
-            var bodyDefinition = PhysicsUtils.CreateBodyDefinitionWrapper(bodyFixtureDefinition, spawnPosition.InitialPosition, sceneObject);
+            var bodyDefinition = PhysicsUtils.CreateBodyDefinitionWrapper(bodyFixtureDefinition, spawnPosition.Position, sceneObject);
             bodyDefinition.BodyDef.AllowSleep = false;
 
             var entityManager = sceneWrapper.GetScene().Entity.GetComponent<IEntityManager>().AssertNotNull();

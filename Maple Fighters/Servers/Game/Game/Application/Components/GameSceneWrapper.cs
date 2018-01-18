@@ -47,8 +47,8 @@ namespace Game.Application.Components
             interestArea.DetectOverlapsWithRegions();
         }
 
-        public void AddCharacterSpawnPosition(Vector2 position, float direction) 
-            => characterSpawnPositionProvider.AddSpawnPositionDetails(map, new SpawnPositionDetails(position, direction.ToDirections()));
+        public void AddCharacterSpawnPosition(Vector2 position, Directions direction) =>
+            characterSpawnPositionProvider.AddSpawnPositionDetails(map, new SpawnPositionDetails(position, direction));
 
         public IScene GetScene() => this;
     }

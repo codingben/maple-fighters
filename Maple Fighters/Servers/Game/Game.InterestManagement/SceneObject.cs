@@ -3,7 +3,6 @@ using ComponentModel.Common;
 using MathematicsHelper;
 using ServerApplication.Common.ApplicationBase;
 using ServerApplication.Common.Components;
-using Shared.Game.Common;
 
 namespace Game.InterestManagement
 {
@@ -14,7 +13,7 @@ namespace Game.InterestManagement
 
         public IContainer<ISceneObject> Container { get; }
 
-        public SceneObject(string name, Vector2 position, float direction)
+        public SceneObject(string name, Vector2 position, Direction direction)
         {
             Name = name;
 
@@ -22,8 +21,9 @@ namespace Game.InterestManagement
             Id = idGenerator.GenerateId();
 
             Container = new Container<ISceneObject>(this);
-            Container.AddComponent(new Transform(position, direction.ToDirections()));
-            Container.AddComponent(new PresenceScene());
+            Container.AddComponent(new Transform(position));
+            Container.AddComponent(new OrientationProvider(direction));
+            Container.AddComponent(new PresenceSceneProvider());
         }
 
         public virtual void OnAwake()
@@ -38,8 +38,8 @@ namespace Game.InterestManagement
 
         public void Dispose()
         {
-            var presenceScene = Container.GetComponent<IPresenceScene>().AssertNotNull();
-            presenceScene.Scene?.RemoveSceneObject(Id);
+            var presenceSceneProvider = Container.GetComponent<IPresenceSceneProvider>().AssertNotNull();
+            presenceSceneProvider.Scene?.RemoveSceneObject(Id);
 
             Container?.Dispose();
         }

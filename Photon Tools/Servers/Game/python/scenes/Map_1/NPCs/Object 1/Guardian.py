@@ -11,13 +11,15 @@ with open(jsonPath) as data_file:
     data = json.load(data_file)
 
 name = data["Name"]
-
 x = data["Position"]["x"]
 y = data["Position"]["y"]
-
 direction = data["Direction"]
 
 position = Vector2(x, y)
-guardian = SceneObject(name, position, direction)
 
-scene.CreateSceneObject(guardian)
+if direction > 0:
+	guardian = SceneObject(name, position, Direction.Left)
+	scene.CreateSceneObject(guardian)
+else:
+	guardian = SceneObject(name, position, Direction.Right)
+	scene.CreateSceneObject(guardian)

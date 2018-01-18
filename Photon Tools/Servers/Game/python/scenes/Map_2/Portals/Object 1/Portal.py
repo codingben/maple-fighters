@@ -1,6 +1,7 @@
 from MathematicsHelper import *
 from Game.InterestManagement import *
 from Game.Application.SceneObjects import *
+from Shared.Game.Common import Maps
 
 import os
 import json
@@ -15,8 +16,8 @@ x = data["Position"]["x"]
 y = data["Position"]["y"]
 
 position = Vector2(x, y)
-map = 2
+destinationMap = Maps.Map_1
 
-portalSceneObject = Portal(position, map)
+portalSceneObject = Portal(position, destinationMap)
 
 scene.CreateSceneObject(portalSceneObject)

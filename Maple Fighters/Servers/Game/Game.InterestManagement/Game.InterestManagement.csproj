@@ -53,11 +53,14 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Direction.cs" />
     <Compile Include="ExtensionMethods.cs" />
     <Compile Include="IInterestArea.cs" />
-    <Compile Include="IPresenceScene.cs" />
+    <Compile Include="IOrientationProvider.cs" />
+    <Compile Include="IPresenceSceneProvider.cs" />
     <Compile Include="ITransform.cs" />
-    <Compile Include="PresenceScene.cs" />
+    <Compile Include="OrientationProvider.cs" />
+    <Compile Include="PresenceSceneProvider.cs" />
     <Compile Include="SceneObject.cs" />
     <Compile Include="ISceneObject.cs" />
     <Compile Include="InterestArea.cs" />
@@ -80,10 +83,6 @@
     <ProjectReference Include="..\..\..\Shared\Servers\ServerApplication.Common\ServerApplication.Common.csproj">
       <Project>{f82fbb67-7b1d-43b7-a415-3f407d40e5c7}</Project>
       <Name>ServerApplication.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Game.Common\Game.Common.csproj">
-      <Project>{AA536188-84FF-4286-A9E6-BAFBE1D8D37B}</Project>
-      <Name>Game.Common</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
