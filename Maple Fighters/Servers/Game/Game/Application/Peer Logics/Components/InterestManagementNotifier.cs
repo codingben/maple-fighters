@@ -2,7 +2,6 @@
 using CommonCommunicationInterfaces;
 using CommonTools.Log;
 using ComponentModel.Common;
-using Game.Application.SceneObjects.Components;
 using Game.InterestManagement;
 using PeerLogic.Common.Components;
 using Shared.Game.Common;
@@ -13,15 +12,14 @@ namespace Game.Application.PeerLogic.Components
     internal class InterestManagementNotifier : Component
     {
         private IEventSenderWrapper eventSender;
-        private ICharacterGetter sceneObjectGetter;
 
         protected override void OnAwake()
         {
             base.OnAwake();
 
             eventSender = Entity.GetComponent<IEventSenderWrapper>().AssertNotNull();
-            sceneObjectGetter = Entity.GetComponent<ICharacterGetter>().AssertNotNull();
 
+            var sceneObjectGetter = Entity.GetComponent<ISceneObjectGetter>().AssertNotNull();
             var interestArea = sceneObjectGetter.GetSceneObject().Container.GetComponent<IInterestArea>().AssertNotNull();
             interestArea.SubscriberAdded += OnSubscriberAdded;
             interestArea.SubscriberRemoved += OnSubscriberRemoved;
@@ -37,8 +35,7 @@ namespace Game.Application.PeerLogic.Components
             var direction = orientationProvider.Direction.GetDirectionsFromDirection();
             var sharedSceneObject = new SceneObject(sceneObject.Id, sceneObject.Name, transform.Position.X, transform.Position.Y, direction);
 
-            var characterInformation = GetCharacterInformation(sceneObject);
-            var parameters = new SceneObjectAddedEventParameters(sharedSceneObject, characterInformation.GetValueOrDefault(), characterInformation.HasValue);
+            var parameters = new SceneObjectAddedEventParameters(sharedSceneObject);
             eventSender.Send((byte)GameEvents.SceneObjectAdded, parameters, MessageSendOptions.DefaultReliable());
         }
 
@@ -64,7 +61,7 @@ namespace Game.Application.PeerLogic.Components
                 sharedSceneObjects[i].Direction = orientationProvider.Direction.GetDirectionsFromDirection();
             }
 
-            var parameters = new SceneObjectsAddedEventParameters(sharedSceneObjects, GetCharacterInformations(sceneObjects));
+            var parameters = new SceneObjectsAddedEventParameters(sharedSceneObjects);
             eventSender.Send((byte)GameEvents.SceneObjectsAdded, parameters, MessageSendOptions.DefaultReliable());
         }
 
@@ -72,33 +69,6 @@ namespace Game.Application.PeerLogic.Components
         {
             var parameters = new SceneObjectsRemovedEventParameters(sceneObjectsId);
             eventSender.Send((byte)GameEvents.SceneObjectsRemoved, parameters, MessageSendOptions.DefaultReliable());
-        }
-
-        private CharacterInformation? GetCharacterInformation(ISceneObject sceneObject)
-        {
-            var characterInformationProvider = sceneObject.Container.GetComponent<ICharacterInformationProvider>();
-            if (characterInformationProvider == null)
-            {
-                return null;
-            }
-            return new CharacterInformation(sceneObject.Id, characterInformationProvider.GetCharacterName(), characterInformationProvider.GetCharacterClass());
-        }
-
-        private CharacterInformation[] GetCharacterInformations(IEnumerable<ISceneObject> sceneObjects)
-        {
-            var characterInformations = new List<CharacterInformation>();
-
-            foreach (var sceneObject in sceneObjects)
-            {
-                var characterInformationProvider = sceneObject.Container.GetComponent<ICharacterInformationProvider>();
-                if (characterInformationProvider == null)
-                {
-                    continue;
-                }
-
-                characterInformations.Add(new CharacterInformation(sceneObject.Id, characterInformationProvider.GetCharacterName(), characterInformationProvider.GetCharacterClass()));
-            }
-            return characterInformations.ToArray();
         }
     }
 }

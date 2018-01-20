@@ -10,7 +10,7 @@ namespace Game.Application.PeerLogic.Components
 {
     internal class PositionChangesListener : Component
     {
-        private ICharacterGetter sceneObjectGetter;
+        private ISceneObjectGetter sceneObjectGetter;
         private IInterestAreaNotifier interestAreaNotifier;
         private IOrientationProvider orientationProvider;
 
@@ -18,7 +18,7 @@ namespace Game.Application.PeerLogic.Components
         {
             base.OnAwake();
 
-            sceneObjectGetter = Entity.GetComponent<ICharacterGetter>().AssertNotNull();
+            sceneObjectGetter = Entity.GetComponent<ISceneObjectGetter>().AssertNotNull();
 
             interestAreaNotifier = sceneObjectGetter.GetSceneObject().Container.GetComponent<IInterestAreaNotifier>().AssertNotNull();
             orientationProvider = sceneObjectGetter.GetSceneObject().Container.GetComponent<IOrientationProvider>().AssertNotNull();

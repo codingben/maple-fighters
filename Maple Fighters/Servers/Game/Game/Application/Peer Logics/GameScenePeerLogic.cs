@@ -13,13 +13,13 @@ namespace Game.Application.PeerLogics
     internal class GameScenePeerLogic : PeerLogicBase<GameOperations, GameEvents>
     {
         private readonly Character character;
-        private readonly ISceneObject characterSceneObject;
+        private readonly ISceneObject sceneObject;
 
         public GameScenePeerLogic(Character character)
         {
             this.character = character;
 
-            characterSceneObject = CreateCharacterSceneObject(character);
+            sceneObject = CreateSceneObject(character);
         }
 
         public override void Initialize(IClientPeerWrapper<IClientPeer> peer)
@@ -37,46 +37,45 @@ namespace Game.Application.PeerLogics
 
         private void AddComponents()
         {
-            characterSceneObject.Container.AddComponent(new PeerIdGetter(PeerWrapper.PeerId));
+            sceneObject.Container.AddComponent(new PeerIdGetter(PeerWrapper.PeerId));
 
-            Entity.AddComponent(new CharacterGetter(characterSceneObject, character));
+            Entity.AddComponent(new SceneObjectGetter(sceneObject));
+            Entity.AddComponent(new CharacterGetter(character));
             Entity.AddComponent(new InterestManagementNotifier());
+            Entity.AddComponent(new CharactersSender());
             Entity.AddComponent(new PositionChangesListener());
         }
 
         private void AddHandlerForEnterSceneOperation()
         {
-            var characterGetter = Entity.GetComponent<ICharacterGetter>().AssertNotNull();
-            OperationRequestHandlerRegister.SetHandler(GameOperations.EnterScene, new EnterSceneOperationHandler(characterGetter));
+            OperationRequestHandlerRegister.SetHandler(GameOperations.EnterScene, new EnterSceneOperationHandler(sceneObject, character));
         }
 
         private void AddHandlerForUpdatePositionOperation()
         {
-            var transform = characterSceneObject.Container.GetComponent<ITransform>().AssertNotNull();
-            var orientationProvider = characterSceneObject.Container.GetComponent<IOrientationProvider>().AssertNotNull();
+            var transform = sceneObject.Container.GetComponent<ITransform>().AssertNotNull();
+            var orientationProvider = sceneObject.Container.GetComponent<IOrientationProvider>().AssertNotNull();
             OperationRequestHandlerRegister.SetHandler(GameOperations.PositionChanged, new UpdatePositionOperationHandler(transform, orientationProvider));
         }
 
         private void AddHandlerForUpdatePlayerStateOperation()
         {
-            var characterGetter = Entity.GetComponent<ICharacterGetter>().AssertNotNull();
-            OperationRequestHandlerRegister.SetHandler(GameOperations.PlayerStateChanged, new UpdatePlayerStateOperationHandler(characterSceneObject.Id, characterGetter));
+            OperationRequestHandlerRegister.SetHandler(GameOperations.PlayerStateChanged, new UpdatePlayerStateOperationHandler(sceneObject));
         }
 
         private void AddHandlerForChangeSceneOperation()
         {
-            var characterGetter = Entity.GetComponent<ICharacterGetter>().AssertNotNull();
-            OperationRequestHandlerRegister.SetHandler(GameOperations.ChangeScene, new ChangeSceneOperationHandler(characterGetter));
+            OperationRequestHandlerRegister.SetHandler(GameOperations.ChangeScene, new ChangeSceneOperationHandler(sceneObject));
         }
 
         public override void Dispose()
         {
             base.Dispose();
 
-            characterSceneObject.Dispose();
+            sceneObject.Dispose();
         }
 
-        private ISceneObject CreateCharacterSceneObject(Character character)
+        private ISceneObject CreateSceneObject(Character character)
         {
             var characterSceneObjectCreator = Server.Entity.GetComponent<ICharacterCreator>().AssertNotNull();
             var characterSceneObject = characterSceneObjectCreator.Create(character);

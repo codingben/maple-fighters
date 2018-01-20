@@ -5,24 +5,24 @@ namespace Shared.Game.Common
 {
     public struct EnterSceneResponseParameters : IParameters
     {
-        public SceneObject CharacterSceneObject;
+        public SceneObject SceneObject;
         public Character Character;
 
-        public EnterSceneResponseParameters(SceneObject characterSceneObject, Character character)
+        public EnterSceneResponseParameters(SceneObject sceneObject, Character character)
         {
-            CharacterSceneObject = characterSceneObject;
+            SceneObject = sceneObject;
             Character = character;
         }
 
         public void Serialize(BinaryWriter writer)
         {
-            CharacterSceneObject.Serialize(writer);
+            SceneObject.Serialize(writer);
             Character.Serialize(writer);
         }
 
         public void Deserialize(BinaryReader reader)
         {
-            CharacterSceneObject.Deserialize(reader);
+            SceneObject.Deserialize(reader);
             Character.Deserialize(reader);
         }
     }

@@ -57,10 +57,12 @@
     <Compile Include="ChangeSceneRequestParameters.cs" />
     <Compile Include="ChangeSceneResponseParameters.cs" />
     <Compile Include="Character.cs" />
+    <Compile Include="CharacterAddedEventParameters.cs" />
     <Compile Include="CharacterClasses.cs" />
     <Compile Include="CharacterCreationStatus.cs" />
     <Compile Include="CharacterIndex.cs" />
     <Compile Include="CharacterInformation.cs" />
+    <Compile Include="CharactersAddedEventParameters.cs" />
     <Compile Include="CreateCharacterRequestParameters.cs" />
     <Compile Include="CreateCharacterResponseParameters.cs" />
     <Compile Include="DirectionsUtils.cs" />

@@ -110,8 +110,11 @@
     <Compile Include="Application\Components\PhysicsWorldMapCreator.cs" />
     <Compile Include="Application\Components\SceneContainer.cs" />
     <Compile Include="Application\Components\SpawnPositionDetails.cs" />
+    <Compile Include="Application\Peer Logics\Components\CharactersSender.cs" />
     <Compile Include="Application\Peer Logics\Components\ICharacterGetter.cs" />
     <Compile Include="Application\Peer Logics\Components\IPeerIdGetter.cs" />
+    <Compile Include="Application\Peer Logics\Components\ISceneObjectGetter.cs" />
+    <Compile Include="Application\Peer Logics\Components\SceneObjectGetter.cs" />
     <Compile Include="Application\Peer Logics\Components\Utils.cs" />
     <Compile Include="Application\Scene Objects\Components\CharacterBody.cs" />
     <Compile Include="Application\Scene Objects\Components\CharacterInformationProvider.cs" />

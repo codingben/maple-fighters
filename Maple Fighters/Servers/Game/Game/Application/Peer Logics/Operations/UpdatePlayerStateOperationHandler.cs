@@ -1,6 +1,5 @@
 ﻿using CommonCommunicationInterfaces;
 using CommonTools.Log;
-using Game.Application.PeerLogic.Components;
 using Game.Application.SceneObjects.Components;
 using Game.InterestManagement;
 using ServerCommunicationHelper;
@@ -10,15 +9,13 @@ namespace Game.Application.PeerLogic.Operations
 {
     internal class UpdatePlayerStateOperationHandler : IOperationRequestHandler<UpdatePlayerStateRequestParameters, EmptyParameters>
     {
-        private readonly int sceneObjectId;
         private readonly ISceneObject sceneObject;
         private readonly IInterestAreaNotifier interestAreaNotifier;
         
-        public UpdatePlayerStateOperationHandler(int sceneObjectId, ICharacterGetter characterGetter)
+        public UpdatePlayerStateOperationHandler(ISceneObject sceneObject)
         {
-            this.sceneObjectId = sceneObjectId;
+            this.sceneObject = sceneObject;
 
-            sceneObject = characterGetter.GetSceneObject();
             interestAreaNotifier = sceneObject.Container.GetComponent<IInterestAreaNotifier>().AssertNotNull();
         }
 
@@ -32,7 +29,7 @@ namespace Game.Application.PeerLogic.Operations
                 characterBody.PlayerState = playerState;
             }
 
-            var parameters = new PlayerStateChangedEventParameters(playerState, sceneObjectId);
+            var parameters = new PlayerStateChangedEventParameters(playerState, sceneObject.Id);
             var messageSendOptions = MessageSendOptions.DefaultReliable((byte)GameDataChannels.Animations);
             interestAreaNotifier.NotifySubscribers((byte)GameEvents.PlayerStateChanged, parameters, messageSendOptions);
             return null;

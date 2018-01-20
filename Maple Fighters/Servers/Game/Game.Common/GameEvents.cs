@@ -6,6 +6,8 @@
         SceneObjectRemoved,
         SceneObjectsAdded,
         SceneObjectsRemoved,
+        CharacterAdded,
+        CharactersAdded,
         PositionChanged,
         PlayerStateChanged,
         PlayerAttacked
