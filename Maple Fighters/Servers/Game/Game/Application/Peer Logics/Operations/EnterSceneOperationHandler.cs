@@ -33,7 +33,8 @@ namespace Game.Application.PeerLogic.Operations
             const string SCENE_OBJECT_NAME = "Local Player";
 
             var transform = sceneObject.Container.GetComponent<ITransform>().AssertNotNull();
-            return new SceneObject(sceneObject.Id, SCENE_OBJECT_NAME, transform.Position.X, transform.Position.Y, Directions.Right);
+            var orientationProvider = sceneObject.Container.GetComponent<IOrientationProvider>().AssertNotNull();
+            return new SceneObject(sceneObject.Id, SCENE_OBJECT_NAME, transform.Position.X, transform.Position.Y, orientationProvider.Direction.GetDirectionsFromDirection());
         }
     }
 }

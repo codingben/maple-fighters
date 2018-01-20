@@ -44,9 +44,11 @@ namespace Game.Application.PeerLogic.Operations
             presenceSceneProvider.Scene.RemoveSceneObject(characterSceneObject.Id);
 
             // Setting the character's position in the destination scene.
-            var newPlayerPosition = characterSpawnPositionProvider.GetSpawnPositionDetails(portalInfoProvider.Map);
+            var spawnPositionDetails = characterSpawnPositionProvider.GetSpawnPositionDetails(portalInfoProvider.Map);
             var transform = characterSceneObject.Container.GetComponent<ITransform>().AssertNotNull();
-            transform.Position = newPlayerPosition.Position;
+            transform.Position = spawnPositionDetails.Position;
+            var orientationProvider = characterSceneObject.Container.GetComponent<IOrientationProvider>().AssertNotNull();
+            orientationProvider.Direction = (Direction)spawnPositionDetails.Direction.FromDirections();
 
             // Adding a character to the destination scene.
             var destinationScene = sceneContainer.GetSceneWrapper(portalInfoProvider.Map).AssertNotNull();
