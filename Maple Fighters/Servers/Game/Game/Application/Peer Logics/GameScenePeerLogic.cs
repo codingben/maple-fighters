@@ -12,7 +12,7 @@ namespace Game.Application.PeerLogics
 {
     internal class GameScenePeerLogic : PeerLogicBase<GameOperations, GameEvents>
     {
-        private readonly Character character;
+        private readonly Character character; // TODO: Maybe we have to use a CharacterInformation instead of this one? (And throw it from Shared Game.Common)
         private readonly ISceneObject sceneObject;
 
         public GameScenePeerLogic(Character character)
@@ -40,7 +40,7 @@ namespace Game.Application.PeerLogics
             sceneObject.Container.AddComponent(new PeerIdGetter(PeerWrapper.PeerId));
 
             Entity.AddComponent(new SceneObjectGetter(sceneObject));
-            Entity.AddComponent(new CharacterGetter(character));
+            Entity.AddComponent(new CharacterGetter(character)); // TODO: There is no usage of this component
             Entity.AddComponent(new InterestManagementNotifier());
             Entity.AddComponent(new CharactersSender());
             Entity.AddComponent(new PositionChangesListener());

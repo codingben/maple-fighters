@@ -52,7 +52,9 @@ namespace Game.Application.PeerLogic.Components
                 return null;
             }
 
-            return new CharacterInformation(sceneObject.Id, characterInformationProvider.GetCharacterName(), characterInformationProvider.GetCharacterClass());
+            var orientationProvider = sceneObject.Container.GetComponent<IOrientationProvider>().AssertNotNull();
+            return new CharacterInformation(sceneObject.Id, characterInformationProvider.GetCharacterName(), characterInformationProvider.GetCharacterClass(),
+                orientationProvider.Direction.GetDirectionsFromDirection());
         }
 
         private IEnumerable<CharacterInformation> GetCharactersInformation(IEnumerable<ISceneObject> sceneObjects)
@@ -67,7 +69,9 @@ namespace Game.Application.PeerLogic.Components
                     continue;
                 }
 
-                charactersInformation.Add(new CharacterInformation(sceneObject.Id, characterInformationProvider.GetCharacterName(), characterInformationProvider.GetCharacterClass()));
+                var orientationProvider = sceneObject.Container.GetComponent<IOrientationProvider>().AssertNotNull();
+                charactersInformation.Add(new CharacterInformation(sceneObject.Id, characterInformationProvider.GetCharacterName(), characterInformationProvider.GetCharacterClass(),
+                    orientationProvider.Direction.GetDirectionsFromDirection()));
             }
 
             return charactersInformation.ToArray();

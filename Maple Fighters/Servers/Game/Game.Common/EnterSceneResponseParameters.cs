@@ -6,9 +6,9 @@ namespace Shared.Game.Common
     public struct EnterSceneResponseParameters : IParameters
     {
         public SceneObject SceneObject;
-        public Character Character;
+        public CharacterInformation Character;
 
-        public EnterSceneResponseParameters(SceneObject sceneObject, Character character)
+        public EnterSceneResponseParameters(SceneObject sceneObject, CharacterInformation character)
         {
             SceneObject = sceneObject;
             Character = character;

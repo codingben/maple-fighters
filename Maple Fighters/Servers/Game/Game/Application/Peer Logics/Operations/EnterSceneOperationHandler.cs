@@ -23,16 +23,21 @@ namespace Game.Application.PeerLogic.Operations
         {
             var interestArea = sceneObject.Container.GetComponent<IInterestArea>().AssertNotNull();
             interestArea.DetectOverlapsWithRegions();
-            return new EnterSceneResponseParameters(GetSharedSceneObject(sceneObject), character);
+            return new EnterSceneResponseParameters(GetSharedSceneObject(), GetSharedCharacterInformation());
         }
 
-        private SceneObject GetSharedSceneObject(ISceneObject sceneObject)
+        private SceneObject GetSharedSceneObject()
         {
             const string SCENE_OBJECT_NAME = "Local Player";
 
             var transform = sceneObject.Container.GetComponent<ITransform>().AssertNotNull();
+            return new SceneObject(sceneObject.Id, SCENE_OBJECT_NAME, transform.Position.X, transform.Position.Y);
+        }
+
+        private CharacterInformation GetSharedCharacterInformation()
+        {
             var orientationProvider = sceneObject.Container.GetComponent<IOrientationProvider>().AssertNotNull();
-            return new SceneObject(sceneObject.Id, SCENE_OBJECT_NAME, transform.Position.X, transform.Position.Y, orientationProvider.Direction.GetDirectionsFromDirection());
+            return new CharacterInformation(sceneObject.Id, character.Name, character.CharacterType, orientationProvider.Direction.GetDirectionsFromDirection());
         }
     }
 }
