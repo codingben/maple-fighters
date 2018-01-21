@@ -12,14 +12,9 @@ namespace Scripts.Gameplay.Actors
             this.characterInformation = characterInformation;
         }
 
-        public string GetCharacterName()
+        public CharacterInformation GetCharacterInfo()
         {
-            return characterInformation.CharacterName;
-        }
-
-        public CharacterClasses GetCharacterClasses()
-        {
-            return characterInformation.CharacterClass;
+            return characterInformation;
         }
     }
 }

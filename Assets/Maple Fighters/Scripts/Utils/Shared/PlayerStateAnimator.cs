@@ -69,7 +69,7 @@ namespace Scripts.Utils.Shared
         private void OnPlayerStateEventReceived(PlayerStateChangedEventParameters parameters)
         {
             var id = parameters.SceneObjectId;
-            var sceneObject = SceneObjectsContainer.Instance.GetRemoteGameObject(id);
+            var sceneObject = SceneObjectsContainer.Instance.GetRemoteSceneObject(id);
             if (sceneObject == null)
             {
                 return;

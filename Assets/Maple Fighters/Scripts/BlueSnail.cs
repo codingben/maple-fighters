@@ -18,7 +18,7 @@ namespace Assets.Scripts
 
         private IEnumerator HitPlayer(Vector3 contactPoint)
         {
-            var player = SceneObjectsContainer.Instance.GetLocalGameObject().GetGameObject();
+            var player = SceneObjectsContainer.Instance.GetLocalSceneObject().GetGameObject();
             var playerController = player?.transform.GetChild(0).GetComponent<PlayerController>();
             if (playerController == null)
             {

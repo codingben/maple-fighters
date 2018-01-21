@@ -19,6 +19,8 @@ namespace Scripts.Services
         Task<RemoveCharacterResponseParameters> RemoveCharacter(IYield yield, RemoveCharacterRequestParameters parameters);
         Task<ChangeSceneResponseParameters> ChangeScene(IYield yield, ChangeSceneRequestParameters parameters);
 
+        UnityEvent<EnterSceneResponseParameters> EnteredScene { get; }
+
         UnityEvent<SceneObjectAddedEventParameters> SceneObjectAdded { get; }
         UnityEvent<SceneObjectRemovedEventParameters> SceneObjectRemoved { get; }
         UnityEvent<SceneObjectsAddedEventParameters> SceneObjectsAdded { get; }
@@ -27,5 +29,8 @@ namespace Scripts.Services
         UnityEvent<SceneObjectPositionChangedEventParameters> PositionChanged { get; }
         UnityEvent<PlayerStateChangedEventParameters> PlayerStateChanged { get; }
         UnityEvent<PlayerAttackedEventParameters> PlayerAttacked { get; }
+
+        UnityEvent<CharacterAddedEventParameters> CharacterAdded { get; }
+        UnityEvent<CharactersAddedEventParameters> CharactersAdded { get; }
     }
 }

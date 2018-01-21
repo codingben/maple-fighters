@@ -8,6 +8,7 @@ namespace Scripts.Services
 {
     public sealed class GameService : ServiceBase<GameOperations, GameEvents>, IGameService
     {
+        public UnityEvent<EnterSceneResponseParameters> EnteredScene { get; } = new UnityEvent<EnterSceneResponseParameters>();
         public UnityEvent<SceneObjectAddedEventParameters> SceneObjectAdded { get; } = new UnityEvent<SceneObjectAddedEventParameters>();
         public UnityEvent<SceneObjectRemovedEventParameters> SceneObjectRemoved { get; } = new UnityEvent<SceneObjectRemovedEventParameters>();
         public UnityEvent<SceneObjectsAddedEventParameters> SceneObjectsAdded { get; } = new UnityEvent<SceneObjectsAddedEventParameters>();
@@ -15,6 +16,8 @@ namespace Scripts.Services
         public UnityEvent<SceneObjectPositionChangedEventParameters> PositionChanged { get; } = new UnityEvent<SceneObjectPositionChangedEventParameters>();
         public UnityEvent<PlayerStateChangedEventParameters> PlayerStateChanged { get; } = new UnityEvent<PlayerStateChangedEventParameters>();
         public UnityEvent<PlayerAttackedEventParameters> PlayerAttacked { get; } = new UnityEvent<PlayerAttackedEventParameters>();
+        public UnityEvent<CharacterAddedEventParameters> CharacterAdded { get; } = new UnityEvent<CharacterAddedEventParameters>();
+        public UnityEvent<CharactersAddedEventParameters> CharactersAdded { get; } = new UnityEvent<CharactersAddedEventParameters>();
 
         private AuthenticationStatus authenticationStatus;
 
@@ -76,6 +79,18 @@ namespace Scripts.Services
                 PlayerAttacked?.Invoke(unityEvent.Parameters);
                 return true;
             }));
+
+            EventHandlerRegister.SetHandler(GameEvents.CharacterAdded, new EventInvoker<CharacterAddedEventParameters>(unityEvent =>
+            {
+                CharacterAdded?.Invoke(unityEvent.Parameters);
+                return true;
+            }));
+
+            EventHandlerRegister.SetHandler(GameEvents.CharactersAdded, new EventInvoker<CharactersAddedEventParameters>(unityEvent =>
+            {
+                CharactersAdded?.Invoke(unityEvent.Parameters);
+                return true;
+            }));
         }
 
         private void RemoveEventsHandlers()
@@ -86,6 +101,8 @@ namespace Scripts.Services
             EventHandlerRegister.RemoveHandler(GameEvents.SceneObjectsRemoved);
             EventHandlerRegister.RemoveHandler(GameEvents.PositionChanged);
             EventHandlerRegister.RemoveHandler(GameEvents.PlayerStateChanged);
+            EventHandlerRegister.RemoveHandler(GameEvents.CharacterAdded);
+            EventHandlerRegister.RemoveHandler(GameEvents.CharactersAdded);
         }
 
         public async Task<AuthenticationStatus> Authenticate(IYield yield)
