@@ -16,7 +16,6 @@ namespace Scripts.Gameplay.Actors
             SetDirectionOnCreation();
 
             InitializePlayerController();
-            InitializePlayerStateAnimatorNetwork();
         }
 
         private void InitializeCharacterName(string characterName)
@@ -75,18 +74,12 @@ namespace Scripts.Gameplay.Actors
 
         private void InitializePlayerController()
         {
-            var playerStateAnimatorNetwork = characterSprite.GetComponent<PlayerStateAnimator>();
+            var playerStateAnimatorNetwork = characterSprite.AddComponent<PlayerStateAnimator>();
             var characterName = characterSprite.GetComponent<CharacterName>();
 
             var playerController = character.GetComponent<PlayerController>();
             playerController.DirectionChanged += characterName.OnDirectionChanged;
             playerController.PlayerStateChanged += playerStateAnimatorNetwork.OnPlayerStateChanged;
-        }
-
-        private void InitializePlayerStateAnimatorNetwork()
-        {
-            var playerStateAnimatorNetwork = characterSprite.GetComponent<PlayerStateAnimator>();
-            playerStateAnimatorNetwork.IsLocal = true;
         }
     }
 }

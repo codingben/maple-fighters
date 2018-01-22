@@ -1,5 +1,4 @@
-﻿using Scripts.Utils.Shared;
-using Shared.Game.Common;
+﻿using Shared.Game.Common;
 using UnityEngine;
 
 namespace Scripts.Gameplay.Actors
@@ -52,9 +51,8 @@ namespace Scripts.Gameplay.Actors
 
         private void InitializePlayerStateSetter()
         {
-            var playerStateAnimatorNetwork = characterSprite.GetComponent<PlayerStateAnimator>();
             var playerStateSetter = GetComponent<PlayerStateSetter>();
-            playerStateSetter.PlayerAnimator = playerStateAnimatorNetwork;
+            playerStateSetter.Animator = characterSprite.GetComponent<Animator>();
         }
 
         private void InitializeCharacterNameDirectionSetter()

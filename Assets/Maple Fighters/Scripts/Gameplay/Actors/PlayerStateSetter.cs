@@ -6,11 +6,11 @@ namespace Scripts.Gameplay.Actors
 {
     public class PlayerStateSetter : MonoBehaviour
     {
-        [HideInInspector] public PlayerStateAnimator PlayerAnimator;
+        public Animator Animator { private get; set; }
 
         public void SetState(PlayerState playerState)
         {
-            PlayerAnimator?.OnPlayerStateReceived(playerState);
+            Animator.SetState(playerState);
         }
     }
 }
