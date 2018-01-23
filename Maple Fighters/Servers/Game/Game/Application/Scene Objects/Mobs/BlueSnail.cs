@@ -25,6 +25,8 @@ namespace Game.Application.SceneObjects
         private ITransform transform;
         private IOrientationProvider orientationProvider;
 
+        private Vector2 lastPosition;
+
         public BlueSnail(Vector2 position, Vector2 bodySize, float speed, float distance) 
             : base("BlueSnail", position, bodySize)
         {
@@ -89,11 +91,18 @@ namespace Game.Application.SceneObjects
 
             GetBody().SetXForm(position.FromVector2(), GetBody().GetAngle());
 
+            if (Vector2.Distance(position, lastPosition) < 0.1f)
+            {
+                return;
+            }
+
             var direction = orientationProvider.Direction.GetDirectionsFromDirection();
 
             var parameters = new SceneObjectPositionChangedEventParameters(Id, position.X, position.Y, direction);
             var sendOptions = MessageSendOptions.DefaultUnreliable((byte) GameDataChannels.Position);
             InterestAreaNotifier.NotifySubscribers((byte)GameEvents.PositionChanged, parameters, sendOptions);
+
+            lastPosition = position;
         }
 
         private void OnCollisionEnter(CollisionInfo collisionInfo)

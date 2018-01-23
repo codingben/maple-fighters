@@ -9,37 +9,29 @@ namespace Physics.Box2D.Test
 {
     internal class Program
     {
-        private static World _world;
+        private static World world;
 
         private static void Main()
         {
-            var physicsDrawer = new DrawPhysics();
-            physicsDrawer.AppendFlags(DebugDraw.DrawFlags.Aabb);
-            physicsDrawer.AppendFlags(DebugDraw.DrawFlags.Shape);
-
-            _world = CreateWorld();
-            _world.SetDebugDraw(physicsDrawer);
-
-            AddBox(new Vec2(0.0f, 10.0f), new Vec2(5.0f, 5.0f));
-            AddBox(new Vec2(0.0f, 20.0f), new Vec2(5.0f, 5.0f));
-            var box = AddBox(new Vec2(2.5f, 25.0f), new Vec2(5.0f, 5.0f));
-            box.SetLinearVelocity(new Vec2(5, 0));
-            box.SetAngularVelocity(5);
-            AddBox(new Vec2(-2.5f, 25.0f), new Vec2(5.0f, 5.0f));
-            AddStaticBox(new Vec2(0.0f, -10.0f), new Vec2(50.0f, 10.0f));
-
             var openTkWindow = new ThreadStart(() => 
             {
                 const string WINDOW_TITLE = "Physics Simulation";
                 const int SCREEN_WIDTH = 800;
                 const int SCREEN_HEIGHT = 600;
 
-                var game = new PhysicsSimulationWindow(WINDOW_TITLE, SCREEN_WIDTH, SCREEN_HEIGHT)
-                {
-                    World = _world
-                };
+                var game = new PhysicsSimulationWindow(WINDOW_TITLE, SCREEN_WIDTH, SCREEN_HEIGHT);
                 game.Load += OnGameLoaded;
                 game.Disposed += OnDisposed;
+
+                var physicsDrawer = new DrawPhysics(game);
+                physicsDrawer.AppendFlags(DebugDraw.DrawFlags.Aabb);
+                physicsDrawer.AppendFlags(DebugDraw.DrawFlags.Shape);
+
+                world = CreateWorld();
+                world.SetDebugDraw(physicsDrawer);
+
+                CreateBodies();
+
                 game.Run(60.0, 60.0);
             });
             var openTkThread = new Thread(openTkWindow);
@@ -61,7 +53,7 @@ namespace Physics.Box2D.Test
 
                     // Instruct the world to perform a single step of simulation. It is
                     // generally best to keep the time step and iterations fixed.
-                    _world.Step(TIME_STEP, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
+                    world.Step(TIME_STEP, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
 
                     Thread.Sleep(10);
                 }
@@ -72,7 +64,18 @@ namespace Physics.Box2D.Test
 
         private static void OnDisposed(object sender, EventArgs eventArgs)
         {
-            _world?.Dispose();
+            world?.Dispose();
+        }
+
+        private static void CreateBodies()
+        {
+            AddBox(new Vec2(0.0f, 10.0f), new Vec2(5.0f, 5.0f));
+            AddBox(new Vec2(0.0f, 20.0f), new Vec2(5.0f, 5.0f));
+            var box = AddBox(new Vec2(2.5f, 25.0f), new Vec2(5.0f, 5.0f));
+            box.SetLinearVelocity(new Vec2(5, 0));
+            box.SetAngularVelocity(5);
+            AddBox(new Vec2(-2.5f, 25.0f), new Vec2(5.0f, 5.0f));
+            AddStaticBox(new Vec2(0.0f, -10.0f), new Vec2(50.0f, 10.0f));
         }
 
         private static Body AddBox(Vec2 position, Vec2 size)
@@ -86,7 +89,7 @@ namespace Physics.Box2D.Test
             boxDef.Friction = 0.3f;
             boxDef.Restitution = 0.2f;
 
-            var body = _world.CreateBody(bodyDef);
+            var body = world.CreateBody(bodyDef);
             body.CreateShape(boxDef);
             body.SetMassFromShapes();
             return body;
@@ -101,7 +104,7 @@ namespace Physics.Box2D.Test
             boxDef.SetAsBox(size.X, size.Y);
             boxDef.Density = 0.0f;
 
-            var body = _world.CreateBody(bodyDef);
+            var body = world.CreateBody(bodyDef);
             body.CreateShape(boxDef);
             body.SetMassFromShapes();
         }

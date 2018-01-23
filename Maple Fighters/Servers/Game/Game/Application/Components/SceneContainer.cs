@@ -61,10 +61,10 @@ namespace Game.Application.Components
             scenes.Add(map, gameSceneWrapper);
 
             gameSceneWrapper.GetScene().Entity.AddComponent(new SceneOrderExecutor());
-            gameSceneWrapper.GetScene().Entity.AddComponent(new PhysicsWorldSimulationCreator(physicsWorldInfo));
-            gameSceneWrapper.GetScene().Entity.AddComponent(new PhysicsWorldMapCreator(map));
+            gameSceneWrapper.GetScene().Entity.AddComponent(new PhysicsSimulationCreator(physicsWorldInfo));
+            gameSceneWrapper.GetScene().Entity.AddComponent(new PhysicsMapCreator(map));
             gameSceneWrapper.GetScene().Entity.AddComponent(new EntityManager());
-            gameSceneWrapper.AddSceneObjectsViaPython();
+            gameSceneWrapper.CreateSceneObjectsViaPython();
 
             if (drawPhysics)
             {

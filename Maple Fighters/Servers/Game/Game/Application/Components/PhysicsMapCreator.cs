@@ -9,11 +9,11 @@ using Shared.Game.Common;
 
 namespace Game.Application.Components
 {
-    internal class PhysicsWorldMapCreator : Component
+    internal class PhysicsMapCreator : Component
     {
         private readonly Maps map;
 
-        public PhysicsWorldMapCreator(Maps map)
+        public PhysicsMapCreator(Maps map)
         {
             this.map = map;
         }

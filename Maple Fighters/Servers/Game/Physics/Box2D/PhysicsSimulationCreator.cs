@@ -7,11 +7,11 @@ using ComponentModel.Common;
 
 namespace Physics.Box2D
 {
-    public class PhysicsWorldSimulationCreator : Component
+    public class PhysicsSimulationCreator : Component
     {
         private readonly World world;
 
-        public PhysicsWorldSimulationCreator(PhysicsWorldInfo worldInfo)
+        public PhysicsSimulationCreator(PhysicsWorldInfo worldInfo)
         {
             var worldAabb = new AABB
             {

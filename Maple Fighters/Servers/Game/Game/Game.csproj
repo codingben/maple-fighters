@@ -30,8 +30,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Box2DX">
-      <HintPath>..\..\..\..\Libraries\Box2DX.dll</HintPath>
+    <Reference Include="Box2DX, Version=2.0.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Box2DX.2.0.2.0\lib\net40\Box2DX.dll</HintPath>
     </Reference>
     <Reference Include="CommonCommunicationInterfaces, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\CommonCommunicationInterfaces.5.0.0\lib\net46\CommonCommunicationInterfaces.dll</HintPath>
@@ -107,7 +107,7 @@
     <Compile Include="Application\Components\IDatabaseCharactersGetter.cs" />
     <Compile Include="Application\Components\IGameSceneWrapper.cs" />
     <Compile Include="Application\Components\ISceneContainer.cs" />
-    <Compile Include="Application\Components\PhysicsWorldMapCreator.cs" />
+    <Compile Include="Application\Components\PhysicsMapCreator.cs" />
     <Compile Include="Application\Components\SceneContainer.cs" />
     <Compile Include="Application\Components\SpawnPositionDetails.cs" />
     <Compile Include="Application\Peer Logics\Components\CharactersSender.cs" />

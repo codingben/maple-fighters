@@ -31,9 +31,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Box2DX, Version=2.0.1.29654, Culture=neutral, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\Libraries\Box2DX.dll</HintPath>
+    <Reference Include="Box2DX, Version=2.0.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\packages\Box2DX.2.0.2.0\lib\net40\Box2DX.dll</HintPath>
     </Reference>
     <Reference Include="CommonCommunicationInterfaces, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\packages\CommonCommunicationInterfaces.5.0.0\lib\net46\CommonCommunicationInterfaces.dll</HintPath>
@@ -65,7 +64,7 @@
     <Compile Include="IPhysicsWorldProvider.cs" />
     <Compile Include="ISceneOrderExecutor.cs" />
     <Compile Include="LayerMask.cs" />
-    <Compile Include="PhysicsWorldSimulationCreator.cs" />
+    <Compile Include="PhysicsSimulationCreator.cs" />
     <Compile Include="PhysicsSimulationWindowCreator.cs" />
     <Compile Include="PhysicsUtils.cs" />
     <Compile Include="PhysicsWorldInfo.cs" />

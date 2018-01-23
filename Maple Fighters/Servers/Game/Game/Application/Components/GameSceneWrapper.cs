@@ -28,7 +28,7 @@ namespace Game.Application.Components
             scriptScope.SetVariable("scene", this);
         }
 
-        public void AddSceneObjectsViaPython()
+        public void CreateSceneObjectsViaPython()
         {
             var pythonScriptsPath = $"python/scenes/{map}";
             var pythonScripts = Directory.GetFiles(pythonScriptsPath, "*.py", SearchOption.AllDirectories);

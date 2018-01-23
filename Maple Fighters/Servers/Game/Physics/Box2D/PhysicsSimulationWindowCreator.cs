@@ -1,65 +1,71 @@
-﻿using Box2DX.Dynamics;
+﻿using System;
+using System.Threading;
+using Box2DX.Dynamics;
 using CommonTools.Log;
 using ComponentModel.Common;
 using Physics.Box2D.PhysicsSimulation;
-using ServerApplication.Common.ApplicationBase;
-using ServerApplication.Common.Components;
-using ServerCommunicationInterfaces;
 
 namespace Physics.Box2D
 {
     public class PhysicsSimulationWindowCreator : Component
     {
-        private readonly string windowTitle;
-        private readonly DrawPhysics drawPhysics;
+        private readonly string title;
 
         private World world;
+        private DrawPhysics drawPhysics;
         private PhysicsSimulationWindow physicsSimulationWindow;
 
         public PhysicsSimulationWindowCreator(string title)
         {
-            windowTitle = title;
-
-            drawPhysics = new DrawPhysics();
-            drawPhysics.AppendFlags(DebugDraw.DrawFlags.Aabb);
-            drawPhysics.AppendFlags(DebugDraw.DrawFlags.Shape);
+            this.title = title;
         }
 
         protected override void OnAwake()
         {
             base.OnAwake();
 
-            var physicsWorld = Entity.GetComponent<IPhysicsWorldProvider>().AssertNotNull();
-            world = physicsWorld.GetWorld();
-            world.SetDebugDraw(drawPhysics);
-
             RunPhysicsSimulationWindow();
         }
 
         private void RunPhysicsSimulationWindow()
         {
-            var fiber = Server.Entity.GetComponent<IFiberStarter>().AssertNotNull();
-            IExecutionContext fiberExecutor = fiber.GetFiberStarter();
-
-            fiberExecutor.Enqueue(() => 
+            var openTkWindow = new ThreadStart(() =>
             {
                 const int SCREEN_WIDTH = 800;
                 const int SCREEN_HEIGHT = 600;
 
-                physicsSimulationWindow = new PhysicsSimulationWindow(windowTitle, SCREEN_WIDTH, SCREEN_HEIGHT)
-                {
-                    World = world
-                };
-                physicsSimulationWindow.Run(30.0, 30.0);
+                physicsSimulationWindow = new PhysicsSimulationWindow(title, SCREEN_WIDTH, SCREEN_HEIGHT);
+                physicsSimulationWindow.Closed += OnPhysicsSimulationWindowClosed;
+
+                drawPhysics = new DrawPhysics(physicsSimulationWindow);
+                drawPhysics.AppendFlags(DebugDraw.DrawFlags.Aabb);
+                drawPhysics.AppendFlags(DebugDraw.DrawFlags.Shape);
+
+                var physicsWorld = Entity.GetComponent<IPhysicsWorldProvider>().AssertNotNull();
+                world = physicsWorld.GetWorld();
+                world.SetDebugDraw(drawPhysics);
+
+                const float UPDATES_PER_SECOND = 30.0f;
+                const float FRAMES_PER_SECOND = 30.0f;
+
+                physicsSimulationWindow.Run(UPDATES_PER_SECOND, FRAMES_PER_SECOND);
             });
+            var openTkThread = new Thread(openTkWindow);
+            openTkThread.Start();
+        }
+
+        private void OnPhysicsSimulationWindowClosed(object sender, EventArgs eventArgs)
+        {
+            world.SetDebugDraw(null);
         }
 
         protected override void OnDestroy()
         {
             base.OnDestroy();
 
-            physicsSimulationWindow.World?.SetDebugDraw(null);
-            physicsSimulationWindow.World = null; // A render frame may be called which will cause an error. This makes sure that it won't happen.
+            world.SetDebugDraw(null);
+            world = null; // A render frame may be called which will cause an error. This makes sure that it won't happen.
+
             physicsSimulationWindow.Close();
         }
     }
