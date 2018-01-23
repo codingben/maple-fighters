@@ -1,5 +1,4 @@
-﻿using CommonTools.Log;
-using Scripts.Containers;
+﻿using Scripts.Containers;
 using Scripts.Gameplay.Actors;
 using Shared.Game.Common;
 using UnityEngine;
@@ -19,8 +18,6 @@ namespace Scripts.Utils.Shared
 
         private void Start()
         {
-            LogUtils.Log(MessageBuilder.Trace());
-
             ServiceContainer.GameService.SceneObjectsAdded.AddListener((x) => 
             {
                 // When a new game objects added, so send them the last current state.
