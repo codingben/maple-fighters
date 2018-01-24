@@ -45,10 +45,7 @@ namespace Physics.Box2D
                 world = physicsWorld.GetWorld();
                 world.SetDebugDraw(drawPhysics);
 
-                const float UPDATES_PER_SECOND = 30.0f;
-                const float FRAMES_PER_SECOND = 30.0f;
-
-                physicsSimulationWindow.Run(UPDATES_PER_SECOND, FRAMES_PER_SECOND);
+                physicsSimulationWindow.Run(PhysicsSimulationWindow.UPDATES_PER_SECOND, PhysicsSimulationWindow.FRAMES_PER_SECOND);
             });
             var openTkThread = new Thread(openTkWindow);
             openTkThread.Start();

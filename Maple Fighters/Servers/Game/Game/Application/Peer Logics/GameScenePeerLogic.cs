@@ -12,10 +12,10 @@ namespace Game.Application.PeerLogics
 {
     internal class GameScenePeerLogic : PeerLogicBase<GameOperations, GameEvents>
     {
-        private readonly Character character; // TODO: Maybe we have to use a CharacterInformation instead of this one? (And throw it from Shared Game.Common)
+        private readonly CharacterFromDatabase character;
         private readonly ISceneObject sceneObject;
 
-        public GameScenePeerLogic(Character character)
+        public GameScenePeerLogic(CharacterFromDatabase character)
         {
             this.character = character;
 
@@ -40,7 +40,6 @@ namespace Game.Application.PeerLogics
             sceneObject.Container.AddComponent(new PeerIdGetter(PeerWrapper.PeerId));
 
             Entity.AddComponent(new SceneObjectGetter(sceneObject));
-            Entity.AddComponent(new CharacterGetter(character)); // TODO: There is no usage of this component
             Entity.AddComponent(new InterestManagementNotifier());
             Entity.AddComponent(new CharactersSender());
             Entity.AddComponent(new PositionChangesListener());
@@ -54,8 +53,7 @@ namespace Game.Application.PeerLogics
         private void AddHandlerForUpdatePositionOperation()
         {
             var transform = sceneObject.Container.GetComponent<ITransform>().AssertNotNull();
-            var orientationProvider = sceneObject.Container.GetComponent<IOrientationProvider>().AssertNotNull();
-            OperationRequestHandlerRegister.SetHandler(GameOperations.PositionChanged, new UpdatePositionOperationHandler(transform, orientationProvider));
+            OperationRequestHandlerRegister.SetHandler(GameOperations.PositionChanged, new UpdatePositionOperationHandler(transform));
         }
 
         private void AddHandlerForUpdatePlayerStateOperation()
@@ -75,7 +73,7 @@ namespace Game.Application.PeerLogics
             sceneObject.Dispose();
         }
 
-        private ISceneObject CreateSceneObject(Character character)
+        private ISceneObject CreateSceneObject(CharacterFromDatabase character)
         {
             var characterSceneObjectCreator = Server.Entity.GetComponent<ICharacterCreator>().AssertNotNull();
             var characterSceneObject = characterSceneObjectCreator.Create(character);

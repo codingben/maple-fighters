@@ -8,7 +8,7 @@ namespace Game.Application.SceneObjects
     public class Portal : SceneObject
     {
         public Portal(Vector2 position, Maps destinationMap) 
-            : base("Portal", position, Direction.Left)
+            : base("Portal", new TransformDetails(position, Vector2.Zero, Direction.Left))
         {
             Container.AddComponent(new PortalInfoProvider(destinationMap));
         }

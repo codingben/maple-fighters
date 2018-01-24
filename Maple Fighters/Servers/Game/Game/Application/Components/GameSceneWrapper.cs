@@ -14,7 +14,7 @@ namespace Game.Application.Components
         private readonly Maps map;
         private readonly ScriptScope scriptScope;
         private readonly IPythonScriptEngine pythonScriptEngine;
-        private readonly ICharacterSpawnPositionDetailsProvider characterSpawnPositionProvider;
+        private readonly ICharacterSpawnDetailsProvider characterSpawnDetailsProvider;
 
         public GameSceneWrapper(Maps map, Vector2 sceneSize, Vector2 regionSize)
             : base(sceneSize, regionSize)
@@ -22,7 +22,7 @@ namespace Game.Application.Components
             this.map = map;
 
             pythonScriptEngine = Server.Entity.GetComponent<IPythonScriptEngine>().AssertNotNull();
-            characterSpawnPositionProvider = Server.Entity.GetComponent<ICharacterSpawnPositionDetailsProvider>().AssertNotNull();
+            characterSpawnDetailsProvider = Server.Entity.GetComponent<ICharacterSpawnDetailsProvider>().AssertNotNull();
 
             scriptScope = pythonScriptEngine.GetScriptEngine().CreateScope();
             scriptScope.SetVariable("scene", this);
@@ -47,8 +47,7 @@ namespace Game.Application.Components
             interestArea.DetectOverlapsWithRegions();
         }
 
-        public void AddCharacterSpawnPosition(Vector2 position, Directions direction) =>
-            characterSpawnPositionProvider.AddSpawnPositionDetails(map, new SpawnPositionDetails(position, direction));
+        public void AddCharacterSpawnDetails(TransformDetails transformDetails) => characterSpawnDetailsProvider.AddCharacterSpawnDetails(map, transformDetails);
 
         public IScene GetScene() => this;
     }

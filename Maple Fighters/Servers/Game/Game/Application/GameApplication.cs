@@ -35,7 +35,7 @@ namespace Game.Application
         {
             RunPythonScriptEngine();
 
-            Server.Entity.AddComponent(new CharacterSpawnPositionDetailsProvider());
+            Server.Entity.AddComponent(new CharacterSpawnDetailsProvider());
             Server.Entity.AddComponent(new SceneContainer());
             Server.Entity.AddComponent(new CharacterCreator());
             Server.Entity.AddComponent(new DatabaseConnectionProvider());

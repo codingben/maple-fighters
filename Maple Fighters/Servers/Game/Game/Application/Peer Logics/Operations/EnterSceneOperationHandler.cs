@@ -11,9 +11,9 @@ namespace Game.Application.PeerLogic.Operations
     internal class EnterSceneOperationHandler : IOperationRequestHandler<EmptyParameters, EnterSceneResponseParameters>
     {
         private readonly ISceneObject sceneObject;
-        private readonly Character character;
+        private readonly CharacterFromDatabase character;
 
-        public EnterSceneOperationHandler(ISceneObject sceneObject, Character character)
+        public EnterSceneOperationHandler(ISceneObject sceneObject, CharacterFromDatabase character)
         {
             this.sceneObject = sceneObject;
             this.character = character;
@@ -23,10 +23,10 @@ namespace Game.Application.PeerLogic.Operations
         {
             var interestArea = sceneObject.Container.GetComponent<IInterestArea>().AssertNotNull();
             interestArea.DetectOverlapsWithRegions();
-            return new EnterSceneResponseParameters(GetSharedSceneObject(), GetSharedCharacterInformation());
+            return new EnterSceneResponseParameters(GetSceneObjectShared(), GetCharacterSpawnDetailsShared());
         }
 
-        private SceneObject GetSharedSceneObject()
+        private SceneObject GetSceneObjectShared()
         {
             const string SCENE_OBJECT_NAME = "Local Player";
 
@@ -34,10 +34,10 @@ namespace Game.Application.PeerLogic.Operations
             return new SceneObject(sceneObject.Id, SCENE_OBJECT_NAME, transform.Position.X, transform.Position.Y);
         }
 
-        private CharacterInformation GetSharedCharacterInformation()
+        private CharacterSpawnDetails GetCharacterSpawnDetailsShared()
         {
-            var orientationProvider = sceneObject.Container.GetComponent<IOrientationProvider>().AssertNotNull();
-            return new CharacterInformation(sceneObject.Id, character.Name, character.CharacterType, orientationProvider.Direction.GetDirectionsFromDirection());
+            var transform = sceneObject.Container.GetComponent<ITransform>().AssertNotNull();
+            return new CharacterSpawnDetails(sceneObject.Id, character, transform.Direction.GetDirectionsFromDirection());
         }
     }
 }

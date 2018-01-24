@@ -3,35 +3,33 @@ using CommonCommunicationInterfaces;
 
 namespace Shared.Game.Common
 {
-    public struct CharacterInformation : IParameters
+    public struct CharacterSpawnDetails : IParameters
     {
         public int SceneObjectId;
-        public string CharacterName;
-        public CharacterClasses CharacterClass;
+        public CharacterFromDatabase Character;
         public Directions Direction;
 
-        public CharacterInformation(int sceneObjectId, string characterName, CharacterClasses characterClass, Directions direction)
+        public CharacterSpawnDetails(int sceneObjectId, CharacterFromDatabase character, Directions direction)
         {
             SceneObjectId = sceneObjectId;
-            CharacterName = characterName;
-            CharacterClass = characterClass;
+            Character = character;
             Direction = direction;
         }
 
         public void Serialize(BinaryWriter writer)
         {
             writer.Write(SceneObjectId);
-            writer.Write(CharacterName);
-            writer.Write((byte)CharacterClass);
             writer.Write((byte)Direction);
+
+            Character.Serialize(writer);
         }
 
         public void Deserialize(BinaryReader reader)
         {
             SceneObjectId = reader.ReadInt32();
-            CharacterName = reader.ReadString();
-            CharacterClass = (CharacterClasses)reader.ReadByte();
             Direction = (Directions)reader.ReadByte();
+
+            Character.Deserialize(reader);
         }
     }
 }

@@ -180,7 +180,7 @@ namespace Game.InterestManagement
 
         private IInterestArea GetSubscriberArea(ISceneObject sceneObject)
         {
-            return sceneObject.Container.GetComponent<IInterestArea>(); // TODO: Check if is not null
+            return sceneObject.Container.GetComponent<IInterestArea>();
         }
     }
 }

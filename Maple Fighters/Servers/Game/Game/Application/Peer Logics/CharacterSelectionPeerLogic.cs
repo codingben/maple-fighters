@@ -10,7 +10,7 @@ namespace Game.Application.PeerLogics
     internal class CharacterSelectionPeerLogic : PeerLogicBase<GameOperations, EmptyEventCode>
     {
         private readonly int dbUserId;
-        private Character? choosedCharacter;
+        private CharacterFromDatabase? choosedCharacter;
 
         public CharacterSelectionPeerLogic(int dbUserId)
         {
@@ -47,7 +47,7 @@ namespace Game.Application.PeerLogics
             OperationRequestHandlerRegister.SetHandler(GameOperations.RemoveCharacter, new RemoveCharacterOperationHandler(dbUserId));
         }
 
-        private void OnCharacterSelected(Character character)
+        private void OnCharacterSelected(CharacterFromDatabase character)
         {
             choosedCharacter = character;
 

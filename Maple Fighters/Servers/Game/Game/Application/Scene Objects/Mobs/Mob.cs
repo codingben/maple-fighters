@@ -18,13 +18,13 @@ namespace Game.Application.SceneObjects
         private Body body;
         private readonly BodyDefinitionWrapper bodyDefinitionWrapper;
 
-        protected Mob(string name, Vector2 position, Vector2 bodySize) 
-            : base(name, position, Direction.Left)
+        protected Mob(string name, Vector2 position, Vector2 size) 
+            : base(name, new TransformDetails(position, size, Direction.Left))
         {
             InterestAreaNotifier = Container.AddComponent(new InterestAreaNotifier());
             var physicsCollisionNotifier = Container.AddComponent(new PhysicsCollisionNotifier());
 
-            var fixtureDefinition = PhysicsUtils.CreateFixtureDefinition(bodySize, LayerMask.Mob, physicsCollisionNotifier);
+            var fixtureDefinition = PhysicsUtils.CreateFixtureDefinition(size, LayerMask.Mob, physicsCollisionNotifier);
             bodyDefinitionWrapper = PhysicsUtils.CreateBodyDefinitionWrapper(fixtureDefinition, position, this);
             bodyDefinitionWrapper.BodyDef.AllowSleep = false;
         }

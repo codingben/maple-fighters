@@ -1,10 +1,10 @@
 ﻿using ComponentModel.Common;
 using Shared.Game.Common;
 
-namespace Game.Application.PeerLogic.Components
+namespace Game.Application.SceneObjects.Components
 {
     internal interface ICharacterGetter : IExposableComponent
     {
-        Character GetCharacter();
+        CharacterFromDatabase GetCharacter();
     }
 }

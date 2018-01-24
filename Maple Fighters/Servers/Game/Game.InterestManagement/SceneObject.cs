@@ -1,6 +1,5 @@
 ﻿using CommonTools.Log;
 using ComponentModel.Common;
-using MathematicsHelper;
 using ServerApplication.Common.ApplicationBase;
 using ServerApplication.Common.Components;
 
@@ -13,7 +12,7 @@ namespace Game.InterestManagement
 
         public IContainer<ISceneObject> Container { get; }
 
-        public SceneObject(string name, Vector2 position, Direction direction)
+        public SceneObject(string name, TransformDetails transformDetails)
         {
             Name = name;
 
@@ -21,8 +20,7 @@ namespace Game.InterestManagement
             Id = idGenerator.GenerateId();
 
             Container = new Container<ISceneObject>(this);
-            Container.AddComponent(new Transform(position));
-            Container.AddComponent(new OrientationProvider(direction));
+            Container.AddComponent(new Transform(transformDetails.Position, transformDetails.Size, transformDetails.Direction));
             Container.AddComponent(new PresenceSceneProvider());
         }
 

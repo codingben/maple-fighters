@@ -49,16 +49,10 @@ namespace Game.Application.SceneObjects.Components
             }
         }
 
-        public void NotifySubscriberOnly<TParameters>(ISceneObject subscriber, byte code, TParameters parameters, MessageSendOptions messageSendOptions)
+        public void NotifySubscriberOnly<TParameters>(int subscriberId, byte code, TParameters parameters, MessageSendOptions messageSendOptions)
             where TParameters : struct, IParameters
         {
-            var peerId = subscriber.Container.GetComponent<IPeerIdGetter>();
-            if (peerId == null)
-            {
-                return;
-            }
-
-            var peerWrapper = peerContainer.GetPeerWrapper(peerId.GetId());
+            var peerWrapper = peerContainer.GetPeerWrapper(subscriberId);
             if (peerWrapper == null)
             {
                 return;

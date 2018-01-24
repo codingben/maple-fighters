@@ -1,6 +1,5 @@
 ﻿using CommonCommunicationInterfaces;
 using ComponentModel.Common;
-using Game.InterestManagement;
 
 namespace Game.Application.SceneObjects.Components
 {
@@ -9,7 +8,7 @@ namespace Game.Application.SceneObjects.Components
         void NotifySubscribers<TParameters>(byte code, TParameters parameters, MessageSendOptions messageSendOptions)
             where TParameters : struct, IParameters;
 
-        void NotifySubscriberOnly<TParameters>(ISceneObject subscriber, byte code, TParameters parameters, MessageSendOptions messageSendOptions)
+        void NotifySubscriberOnly<TParameters>(int subscriberId, byte code, TParameters parameters, MessageSendOptions messageSendOptions)
             where TParameters : struct, IParameters;
     }
 }

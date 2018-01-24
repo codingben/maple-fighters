@@ -5,21 +5,21 @@ namespace Shared.Game.Common
 {
     public struct CharacterAddedEventParameters : IParameters
     {
-        public CharacterInformation CharacterInformation;
+        public CharacterSpawnDetails CharacterSpawnDetails;
 
-        public CharacterAddedEventParameters(CharacterInformation characterInformation)
+        public CharacterAddedEventParameters(CharacterSpawnDetails characterSpawnDetails)
         {
-            CharacterInformation = characterInformation;
+            CharacterSpawnDetails = characterSpawnDetails;
         }
 
         public void Serialize(BinaryWriter writer)
         {
-            CharacterInformation.Serialize(writer);
+            CharacterSpawnDetails.Serialize(writer);
         }
 
         public void Deserialize(BinaryReader reader)
         {
-            CharacterInformation.Deserialize(reader);
+            CharacterSpawnDetails.Deserialize(reader);
         }
     }
 }

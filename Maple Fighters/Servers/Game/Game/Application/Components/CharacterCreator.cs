@@ -2,7 +2,6 @@
 using ComponentModel.Common;
 using Game.Application.SceneObjects.Components;
 using Game.InterestManagement;
-using MathematicsHelper;
 using Physics.Box2D;
 using ServerApplication.Common.ApplicationBase;
 using Shared.Game.Common;
@@ -15,27 +14,26 @@ namespace Game.Application.Components
         private const string SCENE_OBJECT_NAME = "Player";
 
         private ISceneContainer sceneContainer;
-        private ICharacterSpawnPositionDetailsProvider characterSpawnPositionProvider;
+        private ICharacterSpawnDetailsProvider characterSpawnDetailsProvider;
 
         protected override void OnAwake()
         {
             base.OnAwake();
 
             sceneContainer = Entity.GetComponent<ISceneContainer>().AssertNotNull();
-            characterSpawnPositionProvider = Server.Entity.GetComponent<ICharacterSpawnPositionDetailsProvider>().AssertNotNull();
+            characterSpawnDetailsProvider = Server.Entity.GetComponent<ICharacterSpawnDetailsProvider>().AssertNotNull();
         }
 
-        public ISceneObject Create(Character character)
+        public ISceneObject Create(CharacterFromDatabase character)
         {
             const Maps MAP = Maps.Map_1;
 
             var scene = sceneContainer.GetSceneWrapper(MAP).AssertNotNull();
-            var spawnPositionDetails = characterSpawnPositionProvider.GetSpawnPositionDetails(MAP);
-            var sceneObject = scene.GetScene().AddSceneObject(new SceneObject(SCENE_OBJECT_NAME, spawnPositionDetails.Position,
-                    (Direction)spawnPositionDetails.Direction.FromDirections()));
-            sceneObject.Container.AddComponent(new InterestArea(spawnPositionDetails.Position, scene.GetScene().RegionSize));
+            var spawnDetails = characterSpawnDetailsProvider.GetCharacterSpawnDetails(MAP);
+            var sceneObject = scene.GetScene().AddSceneObject(new SceneObject(SCENE_OBJECT_NAME, spawnDetails));
+            sceneObject.Container.AddComponent(new InterestArea(spawnDetails.Position, scene.GetScene().RegionSize));
             sceneObject.Container.AddComponent(new InterestAreaNotifier());
-            sceneObject.Container.AddComponent(new CharacterInformationProvider(character));
+            sceneObject.Container.AddComponent(new CharacterGetter(character));
             sceneObject.Container.AddComponent(new CharacterBody());
 
             CreateCharacterBody(scene, sceneObject);
@@ -44,10 +42,10 @@ namespace Game.Application.Components
 
         public void CreateCharacterBody(IGameSceneWrapper sceneWrapper, ISceneObject sceneObject)
         {
-            var spawnPosition = sceneObject.Container.GetComponent<ITransform>().AssertNotNull();
-            var bodySize = new Vector2(0.3624894f, 0.825f); // TODO: Do not hard code it
-            var bodyFixtureDefinition = PhysicsUtils.CreateFixtureDefinition(bodySize, LayerMask.Player);
-            var bodyDefinition = PhysicsUtils.CreateBodyDefinitionWrapper(bodyFixtureDefinition, spawnPosition.Position, sceneObject);
+            var spawnDetails = sceneObject.Container.GetComponent<ITransform>().AssertNotNull();
+
+            var bodyFixtureDefinition = PhysicsUtils.CreateFixtureDefinition(spawnDetails.Size, LayerMask.Player);
+            var bodyDefinition = PhysicsUtils.CreateBodyDefinitionWrapper(bodyFixtureDefinition, spawnDetails.Position, sceneObject);
             bodyDefinition.BodyDef.AllowSleep = false;
 
             var entityManager = sceneWrapper.GetScene().Entity.GetComponent<IEntityManager>().AssertNotNull();

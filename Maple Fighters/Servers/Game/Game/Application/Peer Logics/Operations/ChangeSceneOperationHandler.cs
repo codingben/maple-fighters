@@ -14,7 +14,7 @@ namespace Game.Application.PeerLogic.Operations
     {
         private readonly ISceneObject sceneObject;
         private readonly ISceneContainer sceneContainer;
-        private readonly ICharacterSpawnPositionDetailsProvider characterSpawnPositionProvider;
+        private readonly ICharacterSpawnDetailsProvider CharacterSpawnDetailsProvider;
         private readonly ICharacterCreator characterCreator;
 
         public ChangeSceneOperationHandler(ISceneObject sceneObject)
@@ -22,7 +22,7 @@ namespace Game.Application.PeerLogic.Operations
             this.sceneObject = sceneObject;
 
             sceneContainer = Server.Entity.GetComponent<ISceneContainer>().AssertNotNull();
-            characterSpawnPositionProvider = Server.Entity.GetComponent<ICharacterSpawnPositionDetailsProvider>().AssertNotNull();
+            CharacterSpawnDetailsProvider = Server.Entity.GetComponent<ICharacterSpawnDetailsProvider>().AssertNotNull();
             characterCreator = Server.Entity.GetComponent<ICharacterCreator>().AssertNotNull();
         }
 
@@ -43,11 +43,10 @@ namespace Game.Application.PeerLogic.Operations
             presenceSceneProvider.Scene.RemoveSceneObject(sceneObject.Id);
 
             // Setting the character's position in the destination scene.
-            var spawnPositionDetails = characterSpawnPositionProvider.GetSpawnPositionDetails(portalInfoProvider.Map);
+            var spawnPositionDetails = CharacterSpawnDetailsProvider.GetCharacterSpawnDetails(portalInfoProvider.Map);
             var transform = sceneObject.Container.GetComponent<ITransform>().AssertNotNull();
             transform.Position = spawnPositionDetails.Position;
-            var orientationProvider = sceneObject.Container.GetComponent<IOrientationProvider>().AssertNotNull();
-            orientationProvider.Direction = (Direction)spawnPositionDetails.Direction.FromDirections();
+            transform.Direction = spawnPositionDetails.Direction;
 
             // Adding a character to the destination scene.
             var destinationScene = sceneContainer.GetSceneWrapper(portalInfoProvider.Map).AssertNotNull();

@@ -12,6 +12,9 @@ namespace Physics.Box2D.PhysicsSimulation
 {
     public class PhysicsSimulationWindow : GameWindow, IPhysicsSimulationWindow
     {
+        public const float UPDATES_PER_SECOND = 30.0f;
+        public const float FRAMES_PER_SECOND = 30.0f;
+
         private const float CAMERA_MOVEMENT_SPEED = 0.001f;
         private const float MOVE_SPEED_VIA_KEYBOARD_MINIMUM_VALUE = 1;
 

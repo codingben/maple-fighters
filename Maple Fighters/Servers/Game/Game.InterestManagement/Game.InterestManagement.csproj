@@ -56,10 +56,8 @@
     <Compile Include="Direction.cs" />
     <Compile Include="ExtensionMethods.cs" />
     <Compile Include="IInterestArea.cs" />
-    <Compile Include="IOrientationProvider.cs" />
     <Compile Include="IPresenceSceneProvider.cs" />
     <Compile Include="ITransform.cs" />
-    <Compile Include="OrientationProvider.cs" />
     <Compile Include="PresenceSceneProvider.cs" />
     <Compile Include="SceneObject.cs" />
     <Compile Include="ISceneObject.cs" />
@@ -70,6 +68,7 @@
     <Compile Include="Scene.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Transform.cs" />
+    <Compile Include="TransformDetails.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Shared\Servers\ComponentModel.Common\ComponentModel.Common.csproj">

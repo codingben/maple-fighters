@@ -16,19 +16,17 @@ namespace Game.Application.SceneObjects
         private const float MOVE_DIRECTION = 0.01f;
         private const float SLEEP_TIME_AFTER_ATTACK = 0.5f;
 
-        private readonly float speed; // TODO: Implement
+        private readonly float speed;
         private readonly float distance;
 
         private float direction;
         private bool isAttacking;
 
         private ITransform transform;
-        private IOrientationProvider orientationProvider;
-
         private Vector2 lastPosition;
 
-        public BlueSnail(Vector2 position, Vector2 bodySize, float speed, float distance) 
-            : base("BlueSnail", position, bodySize)
+        public BlueSnail(Vector2 position, Vector2 size, float speed, float distance) 
+            : base("BlueSnail", position, size)
         {
             this.speed = speed;
             this.distance = distance;
@@ -40,7 +38,6 @@ namespace Game.Application.SceneObjects
 
             CreateBody();
 
-            orientationProvider = Container.GetComponent<IOrientationProvider>().AssertNotNull();
             transform = Container.GetComponent<ITransform>().AssertNotNull();
             transform.PositionChanged += OnPositionChanged;
 
@@ -63,7 +60,7 @@ namespace Game.Application.SceneObjects
             {
                 while (!isAttacking)
                 {
-                    position += new Vector2(direction, 0);
+                    position += new Vector2(direction, 0) * speed;
 
                     if (Math.Abs(position.X) > distance)
                     {
@@ -71,7 +68,7 @@ namespace Game.Application.SceneObjects
                         direction *= -1;
                     }
 
-                    orientationProvider.Direction = direction < 0 ? Direction.Left : Direction.Right;
+                    transform.Direction = direction < 0 ? Direction.Left : Direction.Right;
                     transform.SetPosition(position);
                     yield return null;
                 }
@@ -96,7 +93,7 @@ namespace Game.Application.SceneObjects
                 return;
             }
 
-            var direction = orientationProvider.Direction.GetDirectionsFromDirection();
+            var direction = transform.Direction.GetDirectionsFromDirection();
 
             var parameters = new SceneObjectPositionChangedEventParameters(Id, position.X, position.Y, direction);
             var sendOptions = MessageSendOptions.DefaultUnreliable((byte) GameDataChannels.Position);
@@ -113,8 +110,6 @@ namespace Game.Application.SceneObjects
                 return;
             }
 
-            // TODO: Implement - Send to the player new properites which will include his HP.
-
             if (!isAttacking)
             {
                 AttackPlayer(hittedSceneObject, collisionInfo);
@@ -130,7 +125,7 @@ namespace Game.Application.SceneObjects
             direction = orientation.X < 0 ? -MOVE_DIRECTION : MOVE_DIRECTION;
 
             var parameters = new PlayerAttackedEventParameters(collisionInfo.Position.X, collisionInfo.Position.Y);
-            InterestAreaNotifier.NotifySubscriberOnly(sceneObject, (byte)GameEvents.PlayerAttacked, parameters, MessageSendOptions.DefaultUnreliable());
+            InterestAreaNotifier.NotifySubscriberOnly(sceneObject.Id, (byte)GameEvents.PlayerAttacked, parameters, MessageSendOptions.DefaultUnreliable());
         }
     }
 }

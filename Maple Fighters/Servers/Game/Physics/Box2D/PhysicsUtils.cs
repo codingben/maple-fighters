@@ -2,6 +2,7 @@
 using Box2DX.Common;
 using Box2DX.Dynamics;
 using MathematicsHelper;
+using Physics.Box2D.PhysicsSimulation;
 
 namespace Physics.Box2D
 {
@@ -67,7 +68,6 @@ namespace Physics.Box2D
         {
             lock (locker)
             {
-                const float PHYSICS_SIMULATION_FPS = 60.0f; // TODO: Get this data from another source
                 const float TELEPORT_DISTANCE = 1;
 
                 var direction = position - body.GetPosition().ToVector2();
@@ -78,7 +78,7 @@ namespace Physics.Box2D
                     return;
                 }
 
-                var distancePerTimestep = speed / PHYSICS_SIMULATION_FPS;
+                var distancePerTimestep = speed / PhysicsSimulationWindow.FRAMES_PER_SECOND;
                 if (distancePerTimestep > distanceToTravel)
                 {
                     speed *= (distanceToTravel / distancePerTimestep);
@@ -87,7 +87,7 @@ namespace Physics.Box2D
                 var desiredVelocity = speed * direction;
                 var changeInVelocity = desiredVelocity - body.GetLinearVelocity().ToVector2();
 
-                var force = body.GetMass() * PHYSICS_SIMULATION_FPS * changeInVelocity;
+                var force = body.GetMass() * PhysicsSimulationWindow.FRAMES_PER_SECOND * changeInVelocity;
                 body.ApplyForce(force.FromVector2(), body.GetWorldCenter());
             }
         }

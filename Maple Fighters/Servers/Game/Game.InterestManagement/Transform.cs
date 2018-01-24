@@ -6,7 +6,10 @@ namespace Game.InterestManagement
 {
     public class Transform : Component<ISceneObject>, ITransform
     {
-        public Vector2 Position { get; set; } = Vector2.Zero;
+        public Vector2 Position { get; set; }
+        public Vector2 Size { get; }
+        public Direction Direction { get; set; }
+
         public event Action<Vector2> PositionChanged;
 
         public Transform()
@@ -14,9 +17,11 @@ namespace Game.InterestManagement
             // Left blank intentionally
         }
 
-        public Transform(Vector2 position)
+        public Transform(Vector2 position, Vector2 size, Direction direction)
         {
             Position = position;
+            Size = size;
+            Direction = direction;
         }
 
         protected override void OnDestroy()
@@ -29,6 +34,7 @@ namespace Game.InterestManagement
         public void SetPosition(Vector2 position)
         {
             Position = position;
+
             PositionChanged?.Invoke(position);
         }
     }

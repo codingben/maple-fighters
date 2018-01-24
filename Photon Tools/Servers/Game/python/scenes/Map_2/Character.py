@@ -1,5 +1,5 @@
 from MathematicsHelper import *
-from Shared.Game.Common import Directions
+from Game.InterestManagement import *
 
 import os
 import json
@@ -12,12 +12,14 @@ with open(jsonPath) as data_file:
 
 x = data["Position"]["x"]
 y = data["Position"]["y"]
-
-position = Vector2(x, y)
-
 direction = data["Direction"]
 
+position = Vector2(x, y)
+size = Vector2(0.3625, 0.825)
+
 if direction > 0:
-	scene.AddCharacterSpawnPosition(position, Directions.Left)
+	transformDetails = TransformDetails(position, size, Direction.Left)
+	scene.AddCharacterSpawnDetails(transformDetails)
 else:
-	scene.AddCharacterSpawnPosition(position, Directions.Right)
+	transformDetails = TransformDetails(position, size, Direction.Right)
+	scene.AddCharacterSpawnDetails(transformDetails)

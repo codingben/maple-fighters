@@ -1,5 +1,6 @@
 from MathematicsHelper import *
 from Game.InterestManagement import *
+from Game.Application.SceneObjects import *
 
 import os
 import json
@@ -18,8 +19,8 @@ direction = data["Direction"]
 position = Vector2(x, y)
 
 if direction > 0:
-	guardian = SceneObject(name, position, Direction.Left)
+	guardian = Guardian(name, position, Direction.Left)
 	scene.CreateSceneObject(guardian)
 else:
-	guardian = SceneObject(name, position, Direction.Right)
+	guardian = Guardian(name, position, Direction.Right)
 	scene.CreateSceneObject(guardian)

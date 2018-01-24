@@ -3,17 +3,17 @@ using CommonCommunicationInterfaces;
 
 namespace Shared.Game.Common
 {
-    public struct Character : IParameters
+    public struct CharacterFromDatabase : IParameters
     {
-        public CharacterClasses CharacterType;
         public string Name;
         public CharacterIndex Index;
+        public CharacterClasses CharacterType;
         public bool HasCharacter;
 
-        public Character(CharacterClasses characterType, string name, CharacterIndex characterIndex)
+        public CharacterFromDatabase(string name, CharacterClasses characterType, CharacterIndex characterIndex)
         {
-            CharacterType = characterType;
             Name = name;
+            CharacterType = characterType;
             Index = characterIndex;
             HasCharacter = true;
         }
@@ -25,8 +25,8 @@ namespace Shared.Game.Common
 
             if (HasCharacter)
             {
-                writer.Write((byte)CharacterType);
                 writer.Write(Name);
+                writer.Write((byte)CharacterType);
             }
         }
 
@@ -37,8 +37,8 @@ namespace Shared.Game.Common
 
             if (HasCharacter)
             {
-                CharacterType = (CharacterClasses)reader.ReadByte();
                 Name = reader.ReadString();
+                CharacterType = (CharacterClasses)reader.ReadByte();
             }
         }
     }
