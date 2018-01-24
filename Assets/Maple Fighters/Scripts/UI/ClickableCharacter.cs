@@ -12,10 +12,10 @@ namespace Scripts.UI
         public Action PlayIdleAnimationAction;
         public Action PlayWalkAnimationAction;
 
-        public event Action<Character, int> CharacterClicked;
+        public event Action<CharacterFromDatabase, int> CharacterClicked;
 
         private int index;
-        private Character? character;
+        private CharacterFromDatabase? character;
 
         private Animator animator;
 
@@ -55,7 +55,7 @@ namespace Scripts.UI
             screenMouseDetection.MouseClicked -= PlayIdleAnimation;
         }
 
-        public void SetCharacter(int index, Character character)
+        public void SetCharacter(int index, CharacterFromDatabase character)
         {
             this.index = index;
             this.character = character;

@@ -7,9 +7,9 @@ namespace Scripts.Gameplay.Actors
 {
     public class CharacterCreatorLocally : CharacterCreatorBase
     {
-        public override void Create(CharacterInformation characterInformation)
+        public override void Create(CharacterSpawnDetails characterSpawnDetails)
         {
-            base.Create(characterInformation);
+            base.Create(characterSpawnDetails);
 
             SetCamerasTarget();
             SetCharacterToPositionSender();

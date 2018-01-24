@@ -115,7 +115,8 @@ namespace Scripts.UI.Windows
         {
             var localGameObject = SceneObjectsContainer.Instance.GetLocalSceneObject().GetGameObject().AssertNotNull();
             var characterInformation = localGameObject.GetComponent<CharacterInformationProvider>();
-            return characterInformation.GetCharacterInfo().CharacterName;
+            var name = characterInformation.GetCharacterInfo().Name;
+            return name;
         }
     }
 }

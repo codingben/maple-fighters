@@ -1,6 +1,5 @@
 ﻿using Shared.Game.Common;
 using UnityEngine;
-using CharacterInformation = Shared.Game.Common.CharacterInformation;
 
 namespace Scripts.Gameplay.Actors
 {
@@ -14,15 +13,15 @@ namespace Scripts.Gameplay.Actors
 
         protected Directions direction { get; private set; }
 
-        public virtual void Create(CharacterInformation characterInformation)
+        public virtual void Create(CharacterSpawnDetails characterSpawnDetails)
         {
             const string GAME_OBJECTS_PATH = "Game/{0}";
             const int CHARACTER_INDEX = 0;
 
-            direction = characterInformation.Direction;
+            direction = characterSpawnDetails.Direction;
 
-            var characterName = characterInformation.CharacterName;
-            var characterClass = characterInformation.CharacterClass;
+            var characterName = characterSpawnDetails.Character.Name;
+            var characterClass = characterSpawnDetails.Character.CharacterType;
 
             var gameObject = Resources.Load<GameObject>(string.Format(GAME_OBJECTS_PATH, characterClass));
             character = Instantiate(gameObject, Vector3.zero, Quaternion.identity, transform);
@@ -33,7 +32,7 @@ namespace Scripts.Gameplay.Actors
 
             InitializeCharacterName(characterName);
             InitializeSpriteRenderer();
-            InitializeCharacterInformationProvider(characterInformation);
+            InitializeCharacterInformationProvider(characterSpawnDetails.Character);
         }
 
         private void InitializeCharacterName(string characterName)
@@ -49,7 +48,7 @@ namespace Scripts.Gameplay.Actors
             spriteRenderer.sortingOrder = OrderInLayer;
         }
 
-        private void InitializeCharacterInformationProvider(CharacterInformation characterInformation)
+        private void InitializeCharacterInformationProvider(CharacterFromDatabase characterInformation)
         {
             var characterInformationProvider = GetComponent<CharacterInformationProvider>();
             characterInformationProvider.SetCharacterInformation(characterInformation);

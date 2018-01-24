@@ -59,27 +59,27 @@ namespace Scripts.Gameplay.Actors
             CreateLocalCharacter(parameters.Character);
         }
 
-        private void CreateLocalCharacter(CharacterInformation characterInformation)
+        private void CreateLocalCharacter(CharacterSpawnDetails characterSpawnDetails)
         {
-            var sceneObject = SceneObjectsContainer.Instance.GetRemoteSceneObject(characterInformation.SceneObjectId);
+            var sceneObject = SceneObjectsContainer.Instance.GetRemoteSceneObject(characterSpawnDetails.SceneObjectId);
             var characterInformationProvider = sceneObject.GetGameObject().GetComponent<CharacterInformationProvider>();
-            characterInformationProvider.SetCharacterInformation(characterInformation);
+            characterInformationProvider.SetCharacterInformation(characterSpawnDetails.Character);
 
-            sceneObject.GetGameObject().GetComponent<ICharacterCreator>().Create(characterInformation);
+            sceneObject.GetGameObject().GetComponent<ICharacterCreator>().Create(characterSpawnDetails);
         }
 
         private void OnCharacterAdded(CharacterAddedEventParameters parameters)
         {
-            var id = parameters.CharacterInformation.SceneObjectId;
+            var id = parameters.CharacterSpawnDetails.SceneObjectId;
             var sceneObject = SceneObjectsContainer.Instance.GetRemoteSceneObject(id);
 
-            var character = parameters.CharacterInformation;
+            var character = parameters.CharacterSpawnDetails;
             sceneObject.GetGameObject().GetComponent<ICharacterCreator>().Create(character);
         }
 
         private void OnCharactersAdded(CharactersAddedEventParameters parameters)
         {
-            foreach (var characterInformation in parameters.CharactersInformation)
+            foreach (var characterInformation in parameters.CharactersSpawnDetails)
             {
                 var id = characterInformation.SceneObjectId;
                 var sceneObject = SceneObjectsContainer.Instance.GetRemoteSceneObject(id);
