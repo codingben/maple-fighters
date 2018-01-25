@@ -8,7 +8,7 @@ namespace Game.Application.SceneObjects.Components
         void NotifySubscribers<TParameters>(byte code, TParameters parameters, MessageSendOptions messageSendOptions)
             where TParameters : struct, IParameters;
 
-        void NotifySubscriberOnly<TParameters>(int subscriberId, byte code, TParameters parameters, MessageSendOptions messageSendOptions)
+        void NotifySubscriberOnly<TParameters>(int peerId, byte code, TParameters parameters, MessageSendOptions messageSendOptions)
             where TParameters : struct, IParameters;
     }
 }

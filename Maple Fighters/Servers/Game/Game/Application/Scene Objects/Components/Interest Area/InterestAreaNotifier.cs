@@ -49,20 +49,17 @@ namespace Game.Application.SceneObjects.Components
             }
         }
 
-        public void NotifySubscriberOnly<TParameters>(int subscriberId, byte code, TParameters parameters, MessageSendOptions messageSendOptions)
+        public void NotifySubscriberOnly<TParameters>(int peerId, byte code, TParameters parameters, MessageSendOptions messageSendOptions)
             where TParameters : struct, IParameters
         {
-            var peerWrapper = peerContainer.GetPeerWrapper(subscriberId);
-            if (peerWrapper == null)
+            var peerWrapper = peerContainer.GetPeerWrapper(peerId);
+            if (peerWrapper == null || !peerWrapper.Peer.IsConnected)
             {
                 return;
             }
 
-            if (peerWrapper.Peer.IsConnected)
-            {
-                var eventSender = peerWrapper.PeerLogic.Entity.GetComponent<IEventSenderWrapper>().AssertNotNull();
-                eventSender.Send(code, parameters, messageSendOptions);
-            }
+            var eventSender = peerWrapper.PeerLogic.Entity.GetComponent<IEventSenderWrapper>().AssertNotNull();
+            eventSender.Send(code, parameters, messageSendOptions);
         }
 
         private IEnumerable<ISceneObject> GetSubscribersFromPublishers

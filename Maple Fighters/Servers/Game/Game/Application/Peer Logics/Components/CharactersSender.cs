@@ -37,8 +37,8 @@ namespace Game.Application.PeerLogic.Components
 
         private void OnCharactersAdded(ISceneObject[] characters)
         {
-            var characterSpawnDetails = GetCharactersSpawnDetails(characters).ToArray();
-            if (characterSpawnDetails.Any())
+            var characterSpawnDetails = GetCharactersSpawnDetails(characters)?.ToArray();
+            if (characterSpawnDetails != null && characterSpawnDetails.Any())
             {
                 eventSender.Send((byte)GameEvents.CharactersAdded, new CharactersAddedEventParameters(characterSpawnDetails), MessageSendOptions.DefaultReliable());
             }

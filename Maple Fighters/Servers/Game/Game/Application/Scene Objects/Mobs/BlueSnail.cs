@@ -110,22 +110,24 @@ namespace Game.Application.SceneObjects
                 return;
             }
 
-            if (!isAttacking)
+            var peerIdGetter = hittedSceneObject.Container.GetComponent<IPeerIdGetter>();
+            if (peerIdGetter != null && !isAttacking)
             {
-                AttackPlayer(hittedSceneObject, collisionInfo);
+                AttackPlayer(peerIdGetter.GetId(), hittedSceneObject, collisionInfo);
             }
         }
 
-        private void AttackPlayer(ISceneObject sceneObject, CollisionInfo collisionInfo)
+        private void AttackPlayer(int peerId, ISceneObject sceneObject, CollisionInfo collisionInfo)
         {
             isAttacking = true;
 
             var transform = sceneObject.Container.GetComponent<ITransform>().AssertNotNull();
             var orientation = (transform.Position - collisionInfo.Position).Normalize();
+
             direction = orientation.X < 0 ? -MOVE_DIRECTION : MOVE_DIRECTION;
 
             var parameters = new PlayerAttackedEventParameters(collisionInfo.Position.X, collisionInfo.Position.Y);
-            InterestAreaNotifier.NotifySubscriberOnly(sceneObject.Id, (byte)GameEvents.PlayerAttacked, parameters, MessageSendOptions.DefaultUnreliable());
+            InterestAreaNotifier.NotifySubscriberOnly(peerId, (byte)GameEvents.PlayerAttacked, parameters, MessageSendOptions.DefaultUnreliable());
         }
     }
 }
