@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using CommonCommunicationInterfaces;
 using CommonTools.Coroutines;
+using CommonTools.Log;
 using Scripts.Utils;
 using Shared.Game.Common;
 
@@ -101,6 +102,7 @@ namespace Scripts.Services
             EventHandlerRegister.RemoveHandler(GameEvents.SceneObjectsRemoved);
             EventHandlerRegister.RemoveHandler(GameEvents.PositionChanged);
             EventHandlerRegister.RemoveHandler(GameEvents.PlayerStateChanged);
+            EventHandlerRegister.RemoveHandler(GameEvents.PlayerAttacked);
             EventHandlerRegister.RemoveHandler(GameEvents.CharacterAdded);
             EventHandlerRegister.RemoveHandler(GameEvents.CharactersAdded);
         }
