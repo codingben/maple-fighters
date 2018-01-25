@@ -1,8 +1,6 @@
-﻿using System;
-
-namespace ComponentModel.Common
+﻿namespace ComponentModel.Common
 {
-    public class Component : IDisposable
+    public class Component : IComponent
     {
         protected IContainer Entity { get; private set; }
 
@@ -29,7 +27,7 @@ namespace ComponentModel.Common
         }
     }
 
-    public class Component<TOwner> : IDisposable
+    public class Component<TOwner> : IComponent<TOwner>
         where TOwner : IEntity
     {
         protected TOwner Entity { get; private set; }

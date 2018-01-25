@@ -5,23 +5,23 @@ namespace ComponentModel.Common
     public interface IContainer : IDisposable
     {
         T AddComponent<T>(T component)
-            where T : Component;
+            where T : IComponent;
 
         void RemoveComponent<T>()
-            where T : Component;
+            where T : IComponent;
 
         T GetComponent<T>()
             where T : IExposableComponent;
     }
 
-    public interface IContainer<TOwner> : IDisposable
+    public interface IContainer<out TOwner> : IDisposable
         where TOwner : IEntity
     {
         T AddComponent<T>(T component)
-            where T : Component<TOwner>;
+            where T : IComponent<TOwner>;
 
         void RemoveComponent<T>()
-            where T : Component<TOwner>;
+            where T : IComponent<TOwner>;
 
         T GetComponent<T>()
             where T : IExposableComponent;

@@ -7,7 +7,7 @@ namespace ComponentModel.Common
     public sealed class Container : IContainer
     {
         private readonly IContainer owner;
-        private readonly List<Component> components = new List<Component>();
+        private readonly List<IComponent> components = new List<IComponent>();
 
         public Container()
         {
@@ -15,14 +15,14 @@ namespace ComponentModel.Common
         }
 
         public T AddComponent<T>(T component)
-            where T : Component
+            where T : IComponent
         {
             var isExists = components.OfType<T>().FirstOrDefault();
             if (isExists != null)
             {
                 var componentName = typeof(T).Name;
                 LogUtils.Log(MessageBuilder.Trace($"Component {componentName} already exists!"));
-                return null;
+                return default(T);
             }
 
             component.Awake(owner);
@@ -31,7 +31,7 @@ namespace ComponentModel.Common
         }
 
         public void RemoveComponent<T>()
-            where T : Component
+            where T : IComponent
         {
             var component = components.OfType<T>().FirstOrDefault();
             if (component == null)
@@ -66,7 +66,7 @@ namespace ComponentModel.Common
 
         public void Dispose()
         {
-            var componentsListTemp = new List<Component>();
+            var componentsListTemp = new List<IComponent>();
             componentsListTemp.AddRange(components);
 
             foreach (var component in componentsListTemp)
@@ -83,7 +83,7 @@ namespace ComponentModel.Common
         where TOwner : IEntity
     {
         private readonly TOwner owner;
-        private readonly List<Component<TOwner>> components = new List<Component<TOwner>>();
+        private readonly List<IComponent<TOwner>> components = new List<IComponent<TOwner>>();
 
         public Container(TOwner owner)
         {
@@ -91,14 +91,14 @@ namespace ComponentModel.Common
         }
 
         public T AddComponent<T>(T component)
-            where T : Component<TOwner>
+            where T : IComponent<TOwner>
         {
             var isExists = components.OfType<T>().FirstOrDefault();
             if (isExists != null)
             {
                 var componentName = typeof(T).Name;
                 LogUtils.Log(MessageBuilder.Trace($"Component {componentName} already exists!"));
-                return null;
+                return default(T);
             }
 
             component.Awake(owner);
@@ -107,7 +107,7 @@ namespace ComponentModel.Common
         }
 
         public void RemoveComponent<T>()
-            where T : Component<TOwner>
+            where T : IComponent<TOwner>
         {
             var component = components.OfType<T>().FirstOrDefault();
             if (component == null)
@@ -142,7 +142,7 @@ namespace ComponentModel.Common
 
         public void Dispose()
         {
-            var componentsListTemp = new List<Component<TOwner>>();
+            var componentsListTemp = new List<IComponent<TOwner>>();
             componentsListTemp.AddRange(components);
 
             foreach (var component in componentsListTemp)
