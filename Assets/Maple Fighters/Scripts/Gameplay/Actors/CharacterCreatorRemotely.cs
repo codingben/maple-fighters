@@ -5,7 +5,7 @@ namespace Scripts.Gameplay.Actors
 {
     public class CharacterCreatorRemotely : CharacterCreatorBase
     {
-        public override void Create(CharacterSpawnDetails characterSpawnDetails)
+        public override void Create(CharacterSpawnDetailsParameters characterSpawnDetails)
         {
             base.Create(characterSpawnDetails);
 
@@ -32,10 +32,10 @@ namespace Scripts.Gameplay.Actors
             spriteRenderer.sortingOrder = OrderInLayer;
         }
 
-        private void InitializeCharacterInformationProvider(CharacterFromDatabase characterInformation)
+        private void InitializeCharacterInformationProvider(CharacterFromDatabaseParameters character)
         {
             var characterInformationProvider = GetComponent<CharacterInformationProvider>();
-            characterInformationProvider.SetCharacterInformation(characterInformation);
+            characterInformationProvider.SetCharacterInformation(character);
         }
 
         private void DisableCollision()

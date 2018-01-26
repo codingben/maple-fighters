@@ -137,7 +137,7 @@ namespace Scripts.Services
         {
             if (!IsConnected())
             {
-                return new FetchCharactersResponseParameters(new CharacterFromDatabase[0]);
+                return new FetchCharactersResponseParameters(new CharacterFromDatabaseParameters[0]);
             }
 
             var requestId = OperationRequestSender.Send(GameOperations.FetchCharacters, new EmptyParameters(), MessageSendOptions.DefaultReliable());

@@ -4,6 +4,6 @@ namespace Scripts.Gameplay.Actors
 {
     public interface ICharacterCreator
     {
-        void Create(CharacterSpawnDetails characterSpawnDetails);
+        void Create(CharacterSpawnDetailsParameters characterSpawnDetails);
     }
 }

@@ -13,7 +13,7 @@ namespace Scripts.Gameplay.Actors
 
         protected Directions direction { get; private set; }
 
-        public virtual void Create(CharacterSpawnDetails characterSpawnDetails)
+        public virtual void Create(CharacterSpawnDetailsParameters characterSpawnDetails)
         {
             const string GAME_OBJECTS_PATH = "Game/{0}";
             const int CHARACTER_INDEX = 0;
@@ -48,10 +48,10 @@ namespace Scripts.Gameplay.Actors
             spriteRenderer.sortingOrder = OrderInLayer;
         }
 
-        private void InitializeCharacterInformationProvider(CharacterFromDatabase characterInformation)
+        private void InitializeCharacterInformationProvider(CharacterFromDatabaseParameters character)
         {
             var characterInformationProvider = GetComponent<CharacterInformationProvider>();
-            characterInformationProvider.SetCharacterInformation(characterInformation);
+            characterInformationProvider.SetCharacterInformation(character);
         }
     }
 }

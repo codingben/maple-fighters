@@ -105,7 +105,7 @@ namespace Scripts.Containers
             }
         }
 
-        private void AddSceneObject(SceneObject sceneObject)
+        private void AddSceneObject(SceneObjectParameters sceneObject)
         {
             if (sceneObjects.ContainsKey(sceneObject.Id))
             {

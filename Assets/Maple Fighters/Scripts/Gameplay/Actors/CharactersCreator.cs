@@ -59,7 +59,7 @@ namespace Scripts.Gameplay.Actors
             CreateLocalCharacter(parameters.Character);
         }
 
-        private void CreateLocalCharacter(CharacterSpawnDetails characterSpawnDetails)
+        private void CreateLocalCharacter(CharacterSpawnDetailsParameters characterSpawnDetails)
         {
             var sceneObject = SceneObjectsContainer.Instance.GetRemoteSceneObject(characterSpawnDetails.SceneObjectId);
             var characterInformationProvider = sceneObject.GetGameObject().GetComponent<CharacterInformationProvider>();

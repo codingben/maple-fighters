@@ -5,14 +5,14 @@ namespace Scripts.Gameplay.Actors
 {
     public class CharacterInformationProvider : MonoBehaviour
     {
-        private CharacterFromDatabase character;
+        private CharacterFromDatabaseParameters character;
 
-        public void SetCharacterInformation(CharacterFromDatabase character)
+        public void SetCharacterInformation(CharacterFromDatabaseParameters character)
         {
             this.character = character;
         }
 
-        public CharacterFromDatabase GetCharacterInfo()
+        public CharacterFromDatabaseParameters GetCharacterInfo()
         {
             return character;
         }

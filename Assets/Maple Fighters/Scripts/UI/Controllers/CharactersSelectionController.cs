@@ -184,9 +184,9 @@ namespace Scripts.UI.Controllers
             // Left blank intentionally
         }
 
-        private CharacterFromDatabase GetLastCreatedCharacter()
+        private CharacterFromDatabaseParameters GetLastCreatedCharacter()
         {
-            return new CharacterFromDatabase(characterRequestParameters.Name, characterRequestParameters.CharacterClass, characterRequestParameters.Index);
+            return new CharacterFromDatabaseParameters(characterRequestParameters.Name, characterRequestParameters.CharacterClass, characterRequestParameters.Index);
         }
     }
 }

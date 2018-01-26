@@ -71,13 +71,13 @@ namespace Scripts.UI.Controllers
                 return;
             }
 
-            var characters = new List<CharacterFromDatabase>(MAXIMUM_CHARACTERS);
+            var characters = new List<CharacterFromDatabaseParameters>(MAXIMUM_CHARACTERS);
             characters.AddRange(parameters.Characters.ToList());
 
             OnReceivedCharacters(characters);
         }
 
-        private void OnReceivedCharacters(IReadOnlyCollection<CharacterFromDatabase> characters)
+        private void OnReceivedCharacters(IReadOnlyCollection<CharacterFromDatabaseParameters> characters)
         {
             if (characters.Count > MAXIMUM_CHARACTERS)
             {
@@ -99,7 +99,7 @@ namespace Scripts.UI.Controllers
             }
         }
 
-        private void CreateCharacter(CharacterFromDatabase character)
+        private void CreateCharacter(CharacterFromDatabaseParameters character)
         {
             var index = (int)character.Index;
             var characterName = character.HasCharacter ? $"{character.CharacterType} {index}" : $"Sample {index}";
@@ -129,7 +129,7 @@ namespace Scripts.UI.Controllers
             }
         }
 
-        public void RecreateCharacter(CharacterFromDatabase character)
+        public void RecreateCharacter(CharacterFromDatabaseParameters character)
         {
             var index = (int)character.Index;
             characters[index].Hide();
@@ -137,7 +137,7 @@ namespace Scripts.UI.Controllers
             CreateCharacter(character);
         }
 
-        private void OnCharacterClicked(ClickableCharacter clickableCharacter, CharacterFromDatabase character, int index)
+        private void OnCharacterClicked(ClickableCharacter clickableCharacter, CharacterFromDatabaseParameters character, int index)
         {
             HideChooseFighterText();
             RemoveCharacterSelectionOptionsWindowIfExists();
@@ -163,7 +163,7 @@ namespace Scripts.UI.Controllers
             }
         }
 
-        private void ShowCharacterSelectionOptionsWindow(ClickableCharacter clickableCharacter, CharacterFromDatabase character, int index)
+        private void ShowCharacterSelectionOptionsWindow(ClickableCharacter clickableCharacter, CharacterFromDatabaseParameters character, int index)
         {
             characterSelectionOptionsWindow = UserInterfaceContainer.Instance.Add<CharacterSelectionOptionsWindow>();
             characterSelectionOptionsWindow.StartButtonClicked += () => OnStartButtonClicked(index);
@@ -255,7 +255,7 @@ namespace Scripts.UI.Controllers
             {
                 case RemoveCharacterStatus.Succeed:
                 {
-                    RecreateCharacter(new CharacterFromDatabase
+                    RecreateCharacter(new CharacterFromDatabaseParameters
                     {
                         HasCharacter = false,
                         Index = (CharacterIndex)parameters.CharacterIndex

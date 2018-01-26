@@ -7,7 +7,7 @@ namespace Scripts.Gameplay.Actors
 {
     public class CharacterCreatorLocally : CharacterCreatorBase
     {
-        public override void Create(CharacterSpawnDetails characterSpawnDetails)
+        public override void Create(CharacterSpawnDetailsParameters characterSpawnDetails)
         {
             base.Create(characterSpawnDetails);
 
