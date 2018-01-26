@@ -34,14 +34,14 @@ namespace PeerLogic.Common
 
         private void AddEventsSenderHandler()
         {
-            var logEvents = Config.Global.Log.Events;
+            var logEvents = (bool)Config.Global.Log.Events;
             EventSender = new EventSender<TEventCode>(PeerWrapper.Peer.EventSender, logEvents);
         }
 
         private void AddOperationRequestsHandler()
         {
-            var logOperationsRequest = Config.Global.Log.OperationsRequest;
-            var logOperationsResponse = Config.Global.Log.OperationsResponse;
+            var logOperationsRequest = (bool)Config.Global.Log.OperationsRequest;
+            var logOperationsResponse = (bool)Config.Global.Log.OperationsResponse;
 
             // Necessary for async operation handlers.
             var coroutinesExecutor = Entity.AddComponent(new CoroutinesExecutor(new FiberCoroutinesExecutor(PeerWrapper.Peer.Fiber, 100)));

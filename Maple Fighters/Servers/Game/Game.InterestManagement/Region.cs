@@ -27,7 +27,8 @@ namespace Game.InterestManagement
 
             sceneObjects.Add(sceneObject.Id, sceneObject);
 
-            if (Config.Global.Log.InterestManagement)
+            var debug = (bool)Config.Global.Log.InterestManagement;
+            if (debug)
             {
                 LogUtils.Log(MessageBuilder.Trace($"Added subscription id #{sceneObject.Id}"));
             }
@@ -47,7 +48,8 @@ namespace Game.InterestManagement
             var sceneObject = sceneObjects[sceneObjectId];
             sceneObjects.Remove(sceneObjectId);
 
-            if (Config.Global.Log.InterestManagement)
+            var debug = (bool)Config.Global.Log.InterestManagement;
+            if (debug)
             {
                 LogUtils.Log(MessageBuilder.Trace($"Removed subscription id #{sceneObjectId}"));
             }

@@ -73,6 +73,7 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configuration.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="PhotonStarterBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

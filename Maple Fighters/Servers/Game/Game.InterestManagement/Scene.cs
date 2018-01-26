@@ -52,7 +52,8 @@ namespace Game.InterestManagement
             sceneObject.OnAwake();
             sceneObjects.Add(sceneObject.Id, sceneObject);
 
-            if (Config.Global.Log.InterestManagement)
+            var debug = (bool)Config.Global.Log.InterestManagement;
+            if (debug)
             {
                 LogUtils.Log(MessageBuilder.Trace($"A new scene object: {sceneObject.Name} Id: {sceneObject.Id}"));
             }
@@ -78,7 +79,8 @@ namespace Game.InterestManagement
 
             sceneObjects.Remove(id);
 
-            if (Config.Global.Log.InterestManagement)
+            var debug = (bool)Config.Global.Log.InterestManagement;
+            if (debug)
             {
                 var name = sceneObject.Name;
                 var sceneObjectId = sceneObject.Id;

@@ -37,17 +37,15 @@ namespace PhotonStarter.Common
             return clientPeer;
         }
 
-        private ConfigObject CreateJsonConfiguration()
-        {
-            var directoryInfo = new DirectoryInfo("configuration/json");
-            var configObject = Config.ApplyFromDirectoryInfo(directoryInfo);
-            return configObject;
-        }
-
         private Logger CreateLogger()
         {
-            var path = Path.Combine(BinaryPath, "../configuration/log4net.config");
-            return new Logger(path);
+            var path = Path.Combine(BinaryPath, $"../{Configuration.LOG4NET_PATH}");
+            return File.Exists(path) ? new Logger(path) : null;
+        }
+
+        private ConfigObject CreateJsonConfiguration()
+        {
+            return Directory.Exists(Configuration.JSON_PATH) ? Config.ApplyFromDirectoryInfo(new DirectoryInfo(Configuration.JSON_PATH)) : null;
         }
     }
 }

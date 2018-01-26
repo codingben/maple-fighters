@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using CommonTools.Log;
 using Game.InterestManagement;
+using JsonConfig;
 using MathematicsHelper;
 using Microsoft.Scripting.Hosting;
 using PythonScripting;
@@ -30,7 +31,8 @@ namespace Game.Application.Components
 
         public void CreateSceneObjectsViaPython()
         {
-            var pythonScriptsPath = $"python/scenes/{map}";
+            var pythonScenesPath = (string)Config.Global.Python.Scenes;
+            var pythonScriptsPath = $"{pythonScenesPath}/{map}";
             var pythonScripts = Directory.GetFiles(pythonScriptsPath, "*.py", SearchOption.AllDirectories);
 
             foreach (var pythonScript in pythonScripts)

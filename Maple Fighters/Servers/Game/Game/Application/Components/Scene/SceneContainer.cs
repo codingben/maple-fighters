@@ -3,6 +3,7 @@ using System.IO;
 using System.Threading;
 using CommonTools.Log;
 using ComponentModel.Common;
+using JsonConfig;
 using MathematicsHelper;
 using Microsoft.Scripting.Hosting;
 using Physics.Box2D;
@@ -48,10 +49,10 @@ namespace Game.Application.Components
 
         private void AddScenesViaPython()
         {
-            const string PYTHON_SCRIPTS_PATH = "python/scenes";
-            var pythonScripts = Directory.GetFiles(PYTHON_SCRIPTS_PATH, "*.py", SearchOption.TopDirectoryOnly);
+            var pythonScenesPath = (string)Config.Global.Python.Scenes;
+            var pythonScenesScripts = Directory.GetFiles(pythonScenesPath, "*.py", SearchOption.TopDirectoryOnly);
 
-            foreach (var pythonScript in pythonScripts)
+            foreach (var pythonScript in pythonScenesScripts)
             {
                 pythonScriptEngine.GetScriptEngine().ExecuteFile(pythonScript, scriptScope);
             }
