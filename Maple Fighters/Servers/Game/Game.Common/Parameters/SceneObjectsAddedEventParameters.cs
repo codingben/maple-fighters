@@ -6,9 +6,9 @@ namespace Shared.Game.Common
 {
     public struct SceneObjectsAddedEventParameters : IParameters
     {
-        public SceneObject[] SceneObjects;
+        public SceneObjectParameters[] SceneObjects;
 
-        public SceneObjectsAddedEventParameters(SceneObject[] sceneObjects)
+        public SceneObjectsAddedEventParameters(SceneObjectParameters[] sceneObjects)
         {
             SceneObjects = sceneObjects;
         }
@@ -20,7 +20,7 @@ namespace Shared.Game.Common
 
         public void Deserialize(BinaryReader reader)
         {
-            SceneObjects = reader.ReadArray<SceneObject>();
+            SceneObjects = reader.ReadArray<SceneObjectParameters>();
         }
     }
 }

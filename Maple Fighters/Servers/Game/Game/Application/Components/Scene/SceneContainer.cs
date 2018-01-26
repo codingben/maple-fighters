@@ -1,10 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using System.Threading;
 using CommonTools.Log;
 using ComponentModel.Common;
 using MathematicsHelper;
 using Microsoft.Scripting.Hosting;
 using Physics.Box2D;
+using Physics.Box2D.PhysicsSimulation;
 using PythonScripting;
 using Shared.Game.Common;
 
@@ -60,16 +62,30 @@ namespace Game.Application.Components
             var gameSceneWrapper = new GameSceneWrapper(map, sceneSize, regionSize);
             scenes.Add(map, gameSceneWrapper);
 
-            gameSceneWrapper.GetScene().Entity.AddComponent(new SceneOrderExecutor());
-            gameSceneWrapper.GetScene().Entity.AddComponent(new PhysicsSimulationCreator(physicsWorldInfo));
-            gameSceneWrapper.GetScene().Entity.AddComponent(new PhysicsMapCreator(map));
-            gameSceneWrapper.GetScene().Entity.AddComponent(new EntityManager());
+            var scene = gameSceneWrapper.GetScene();
+            scene.Entity.AddComponent(new SceneOrderExecutor());
+            scene.Entity.AddComponent(new PhysicsSimulationExecutor(physicsWorldInfo));
+            scene.Entity.AddComponent(new PhysicsMapCreator(map));
+            scene.Entity.AddComponent(new EntityManager());
+
             gameSceneWrapper.CreateSceneObjectsViaPython();
 
             if (drawPhysics)
             {
-                gameSceneWrapper.GetScene().Entity.AddComponent(new PhysicsSimulationWindowCreator(map.ToString()));
+                RunScenePhysicsSimulationWindow(scene.Entity, map.ToString(), 800, 600);
             }
+        }
+
+        private void RunScenePhysicsSimulationWindow(IContainer sceneContainer, string title, int width, int height)
+        {
+            var windowCreator = new ThreadStart(() =>
+            {
+                var physicsSimulationWindow = sceneContainer.AddComponent(new PhysicsSimulationWindow(title, width, height));
+                physicsSimulationWindow.Run(PhysicsUtils.UPDATES_PER_SECOND, PhysicsUtils.FRAMES_PER_SECOND);
+            });
+
+            var windowThread = new Thread(windowCreator);
+            windowThread.Start();
         }
 
         public IGameSceneWrapper GetSceneWrapper(Maps map)

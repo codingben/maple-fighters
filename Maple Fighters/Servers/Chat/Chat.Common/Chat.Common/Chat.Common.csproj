@@ -44,13 +44,13 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AuthenticateRequestParameters.cs" />
-    <Compile Include="AuthenticateResponseParameters.cs" />
-    <Compile Include="AuthenticationStatus.cs" />
-    <Compile Include="ChatEvents.cs" />
-    <Compile Include="ChatMessageEventParameters.cs" />
-    <Compile Include="ChatMessageRequestParameters.cs" />
-    <Compile Include="ChatOperations.cs" />
+    <Compile Include="Parameters\AuthenticateRequestParameters.cs" />
+    <Compile Include="Parameters\AuthenticateResponseParameters.cs" />
+    <Compile Include="Enums\AuthenticationStatus.cs" />
+    <Compile Include="Enums\ChatEvents.cs" />
+    <Compile Include="Parameters\ChatMessageEventParameters.cs" />
+    <Compile Include="Parameters\ChatMessageRequestParameters.cs" />
+    <Compile Include="Enums\ChatOperations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

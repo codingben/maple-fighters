@@ -30,13 +30,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CommonCommunicationInterfaces, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\CommonCommunicationInterfaces.5.0.0\lib\net46\CommonCommunicationInterfaces.dll</HintPath>
-    </Reference>
-    <Reference Include="Coroutines, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Coroutines.5.0.5\lib\net46\Coroutines.dll</HintPath>
-    </Reference>
-    <Reference Include="JsonConfig, Version=1.0.5359.16918, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="JsonConfig">
       <HintPath>..\..\..\packages\JsonConfig.1.0.0\lib\JsonConfig.dll</HintPath>
     </Reference>
     <Reference Include="JsonFx, Version=2.0.1209.2802, Culture=neutral, PublicKeyToken=315052dd637f8a52, processorArchitecture=MSIL">
@@ -46,9 +40,6 @@
       <HintPath>..\..\..\packages\Coroutines.5.0.5\lib\net46\LogUtils.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="ServerCommunicationInterfaces, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\ServerCommunicationInterfaces.3.0.0\lib\net46\ServerCommunicationInterfaces.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
   </ItemGroup>
@@ -78,10 +69,6 @@
     <ProjectReference Include="..\..\..\Shared\Helper\MathematicsHelper\MathematicsHelper.csproj">
       <Project>{a3be3e13-d3a1-4800-b471-a39f5ed4b554}</Project>
       <Name>MathematicsHelper</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\Shared\Servers\ServerApplication.Common\ServerApplication.Common.csproj">
-      <Project>{f82fbb67-7b1d-43b7-a415-3f407d40e5c7}</Project>
-      <Name>ServerApplication.Common</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

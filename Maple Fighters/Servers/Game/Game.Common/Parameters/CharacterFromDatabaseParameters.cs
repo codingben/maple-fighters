@@ -3,14 +3,14 @@ using CommonCommunicationInterfaces;
 
 namespace Shared.Game.Common
 {
-    public struct CharacterFromDatabase : IParameters
+    public struct CharacterFromDatabaseParameters : IParameters
     {
         public string Name;
         public CharacterIndex Index;
         public CharacterClasses CharacterType;
         public bool HasCharacter;
 
-        public CharacterFromDatabase(string name, CharacterClasses characterType, CharacterIndex characterIndex)
+        public CharacterFromDatabaseParameters(string name, CharacterClasses characterType, CharacterIndex characterIndex)
         {
             Name = name;
             CharacterType = characterType;

@@ -3,14 +3,14 @@ using CommonCommunicationInterfaces;
 
 namespace Shared.Game.Common
 {
-    public struct SceneObject : IParameters
+    public struct SceneObjectParameters : IParameters
     {
         public int Id;
         public string Name;
         public float X;
         public float Y;
 
-        public SceneObject(int id, string name, float x, float y)
+        public SceneObjectParameters(int id, string name, float x, float y)
         {
             Id = id;
             Name = name;

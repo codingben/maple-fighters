@@ -5,9 +5,9 @@ namespace Shared.Game.Common
 {
     public struct CharacterAddedEventParameters : IParameters
     {
-        public CharacterSpawnDetails CharacterSpawnDetails;
+        public CharacterSpawnDetailsParameters CharacterSpawnDetails;
 
-        public CharacterAddedEventParameters(CharacterSpawnDetails characterSpawnDetails)
+        public CharacterAddedEventParameters(CharacterSpawnDetailsParameters characterSpawnDetails)
         {
             CharacterSpawnDetails = characterSpawnDetails;
         }

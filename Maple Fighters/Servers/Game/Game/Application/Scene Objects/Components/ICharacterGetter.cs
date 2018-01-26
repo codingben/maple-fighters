@@ -5,6 +5,6 @@ namespace Game.Application.SceneObjects.Components
 {
     internal interface ICharacterGetter : IExposableComponent
     {
-        CharacterFromDatabase GetCharacter();
+        CharacterFromDatabaseParameters GetCharacter();
     }
 }

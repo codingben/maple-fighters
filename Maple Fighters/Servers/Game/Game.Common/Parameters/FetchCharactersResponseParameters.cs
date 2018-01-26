@@ -6,9 +6,9 @@ namespace Shared.Game.Common
 {
     public struct FetchCharactersResponseParameters : IParameters
     {
-        public CharacterFromDatabase[] Characters;
+        public CharacterFromDatabaseParameters[] Characters;
 
-        public FetchCharactersResponseParameters(CharacterFromDatabase[] characters)
+        public FetchCharactersResponseParameters(CharacterFromDatabaseParameters[] characters)
         {
             Characters = characters;
         }
@@ -20,7 +20,7 @@ namespace Shared.Game.Common
 
         public void Deserialize(BinaryReader reader)
         {
-            Characters = reader.ReadArray<CharacterFromDatabase>();
+            Characters = reader.ReadArray<CharacterFromDatabaseParameters>();
         }
     }
 }

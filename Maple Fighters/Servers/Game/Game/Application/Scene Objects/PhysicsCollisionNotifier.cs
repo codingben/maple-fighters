@@ -7,7 +7,7 @@ using Physics.Box2D;
 
 namespace Game.Application.SceneObjects
 {
-    public class PhysicsCollisionNotifier : Component<ISceneObject>, IPhysicsCollisionNotifier, IPhysicsCollision
+    public class PhysicsCollisionNotifier : Component<ISceneObject>, IPhysicsCollisionNotifier, IPhysicsCollisionCallback
     {
         public event Action<CollisionInfo> CollisionEnter; 
         public event Action<CollisionInfo> CollisionExit;

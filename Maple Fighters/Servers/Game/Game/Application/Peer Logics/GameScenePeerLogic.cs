@@ -12,10 +12,10 @@ namespace Game.Application.PeerLogics
 {
     internal class GameScenePeerLogic : PeerLogicBase<GameOperations, GameEvents>
     {
-        private readonly CharacterFromDatabase character;
+        private readonly CharacterFromDatabaseParameters character;
         private readonly ISceneObject sceneObject;
 
-        public GameScenePeerLogic(CharacterFromDatabase character)
+        public GameScenePeerLogic(CharacterFromDatabaseParameters character)
         {
             this.character = character;
 
@@ -73,7 +73,7 @@ namespace Game.Application.PeerLogics
             sceneObject.Dispose();
         }
 
-        private ISceneObject CreateSceneObject(CharacterFromDatabase character)
+        private ISceneObject CreateSceneObject(CharacterFromDatabaseParameters character)
         {
             var characterSceneObjectCreator = Server.Entity.GetComponent<ICharacterCreator>().AssertNotNull();
             var characterSceneObject = characterSceneObjectCreator.Create(character);

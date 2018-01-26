@@ -3,13 +3,13 @@ using CommonCommunicationInterfaces;
 
 namespace Shared.Game.Common
 {
-    public struct CharacterSpawnDetails : IParameters
+    public struct CharacterSpawnDetailsParameters : IParameters
     {
         public int SceneObjectId;
-        public CharacterFromDatabase Character;
+        public CharacterFromDatabaseParameters Character;
         public Directions Direction;
 
-        public CharacterSpawnDetails(int sceneObjectId, CharacterFromDatabase character, Directions direction)
+        public CharacterSpawnDetailsParameters(int sceneObjectId, CharacterFromDatabaseParameters character, Directions direction)
         {
             SceneObjectId = sceneObjectId;
             Character = character;

@@ -44,7 +44,7 @@ namespace Game.Application.PeerLogic.Components
             }
         }
 
-        private CharacterSpawnDetails? GetCharacterSpawnDetails(ISceneObject sceneObject)
+        private CharacterSpawnDetailsParameters? GetCharacterSpawnDetails(ISceneObject sceneObject)
         {
             // It may be null because not every object on a scene is a character.
             var characterGetter = sceneObject.Container.GetComponent<ICharacterGetter>();
@@ -54,12 +54,12 @@ namespace Game.Application.PeerLogic.Components
             }
 
             var transform = sceneObject.Container.GetComponent<ITransform>().AssertNotNull();
-            return new CharacterSpawnDetails(sceneObject.Id, characterGetter.GetCharacter(), transform.Direction.GetDirectionsFromDirection());
+            return new CharacterSpawnDetailsParameters(sceneObject.Id, characterGetter.GetCharacter(), transform.Direction.GetDirectionsFromDirection());
         }
 
-        private IEnumerable<CharacterSpawnDetails> GetCharactersSpawnDetails(IEnumerable<ISceneObject> sceneObjects)
+        private IEnumerable<CharacterSpawnDetailsParameters> GetCharactersSpawnDetails(IEnumerable<ISceneObject> sceneObjects)
         {
-            var charactersSpawnDetails = new List<CharacterSpawnDetails>();
+            var charactersSpawnDetails = new List<CharacterSpawnDetailsParameters>();
 
             foreach (var sceneObject in sceneObjects)
             {
@@ -71,7 +71,7 @@ namespace Game.Application.PeerLogic.Components
                 }
 
                 var transform = sceneObject.Container.GetComponent<ITransform>().AssertNotNull();
-                charactersSpawnDetails.Add(new CharacterSpawnDetails(sceneObject.Id, characterGetter.GetCharacter(), transform.Direction.GetDirectionsFromDirection()));
+                charactersSpawnDetails.Add(new CharacterSpawnDetailsParameters(sceneObject.Id, characterGetter.GetCharacter(), transform.Direction.GetDirectionsFromDirection()));
             }
 
             return charactersSpawnDetails.ToArray();

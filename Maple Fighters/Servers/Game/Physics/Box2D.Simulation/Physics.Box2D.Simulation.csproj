@@ -34,6 +34,12 @@
     <Reference Include="Box2DX, Version=2.0.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\packages\Box2DX.2.0.2.0\lib\net40\Box2DX.dll</HintPath>
     </Reference>
+    <Reference Include="Coroutines, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\packages\Coroutines.5.0.5\lib\net46\Coroutines.dll</HintPath>
+    </Reference>
+    <Reference Include="LogUtils, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\packages\Coroutines.5.0.5\lib\net46\LogUtils.dll</HintPath>
+    </Reference>
     <Reference Include="OpenTK">
       <HintPath>..\..\..\..\packages\OpenTK.2.0.0\lib\net20\OpenTK.dll</HintPath>
     </Reference>
@@ -42,15 +48,25 @@
     <Reference Include="System.Drawing" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CameraView.cs" />
-    <Compile Include="DrawPhysics.cs" />
-    <Compile Include="IPhysicsSimulationWindow.cs" />
-    <Compile Include="PhysicsSimulationWindow.cs" />
+    <Compile Include="Window\CameraView.cs" />
+    <Compile Include="Window\DrawPhysics.cs" />
+    <Compile Include="Window\IPhysicsSimulationWindow.cs" />
+    <Compile Include="Window\PhysicsSimulationWindow.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="OpenTK.dll.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\Shared\Servers\ComponentModel.Common\ComponentModel.Common.csproj">
+      <Project>{00565794-9958-47d9-9e8e-6d7193d67b9d}</Project>
+      <Name>ComponentModel.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Box2D\Physics.Box2D.csproj">
+      <Project>{2E057EC4-7919-4326-AB31-3116A259BA49}</Project>
+      <Name>Physics.Box2D</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

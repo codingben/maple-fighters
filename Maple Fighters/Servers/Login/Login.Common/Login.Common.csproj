@@ -44,10 +44,10 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="LoginOperations.cs" />
-    <Compile Include="LoginRequestParameters.cs" />
-    <Compile Include="LoginResponseParameters.cs" />
-    <Compile Include="LoginStatus.cs" />
+    <Compile Include="Enums\LoginOperations.cs" />
+    <Compile Include="Parameters\LoginRequestParameters.cs" />
+    <Compile Include="Parameters\LoginResponseParameters.cs" />
+    <Compile Include="Enums\LoginStatus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

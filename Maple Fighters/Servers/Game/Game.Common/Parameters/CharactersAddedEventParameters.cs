@@ -6,9 +6,9 @@ namespace Shared.Game.Common
 {
     public struct CharactersAddedEventParameters : IParameters
     {
-        public CharacterSpawnDetails[] CharactersSpawnDetails;
+        public CharacterSpawnDetailsParameters[] CharactersSpawnDetails;
 
-        public CharactersAddedEventParameters(CharacterSpawnDetails[] charactersSpawnDetails)
+        public CharactersAddedEventParameters(CharacterSpawnDetailsParameters[] charactersSpawnDetails)
         {
             CharactersSpawnDetails = charactersSpawnDetails;
         }
@@ -20,7 +20,7 @@ namespace Shared.Game.Common
 
         public void Deserialize(BinaryReader reader)
         {
-            CharactersSpawnDetails = reader.ReadArray<CharacterSpawnDetails>();
+            CharactersSpawnDetails = reader.ReadArray<CharacterSpawnDetailsParameters>();
         }
     }
 }

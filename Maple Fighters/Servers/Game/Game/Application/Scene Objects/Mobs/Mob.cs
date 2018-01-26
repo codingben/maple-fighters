@@ -4,6 +4,7 @@ using Game.Application.SceneObjects.Components;
 using Game.InterestManagement;
 using MathematicsHelper;
 using Physics.Box2D;
+using ServerApplication.Common.Components;
 using SceneObject = Game.InterestManagement.SceneObject;
 
 namespace Game.Application.SceneObjects
@@ -19,14 +20,14 @@ namespace Game.Application.SceneObjects
         private readonly BodyDefinitionWrapper bodyDefinitionWrapper;
 
         protected Mob(string name, Vector2 position, Vector2 size) 
-            : base(name, new TransformDetails(position, size, Direction.Left))
+            : base(IdGenerator.GetId(), name, new TransformDetails(position, size, Direction.Left))
         {
             InterestAreaNotifier = Container.AddComponent(new InterestAreaNotifier());
             var physicsCollisionNotifier = Container.AddComponent(new PhysicsCollisionNotifier());
 
             var fixtureDefinition = PhysicsUtils.CreateFixtureDefinition(size, LayerMask.Mob, physicsCollisionNotifier);
             bodyDefinitionWrapper = PhysicsUtils.CreateBodyDefinitionWrapper(fixtureDefinition, position, this);
-            bodyDefinitionWrapper.BodyDef.AllowSleep = false;
+            bodyDefinitionWrapper.BodyDefiniton.AllowSleep = false;
         }
 
         protected void CreateBody()

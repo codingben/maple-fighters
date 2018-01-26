@@ -5,13 +5,13 @@ namespace Physics.Box2D
 {
     public struct BodyDefinitionWrapper
     {
-        public readonly BodyDef BodyDef;
+        public readonly BodyDef BodyDefiniton;
         public readonly PolygonDef FixtureDefinition;
         public readonly object UserData;
 
-        public BodyDefinitionWrapper(BodyDef bodyDef, PolygonDef fixtureDefinition, object userData)
+        public BodyDefinitionWrapper(BodyDef bodyDefinition, PolygonDef fixtureDefinition, object userData)
         {
-            BodyDef = bodyDef;
+            BodyDefiniton = bodyDefinition;
             FixtureDefinition = fixtureDefinition;
             UserData = userData;
         }

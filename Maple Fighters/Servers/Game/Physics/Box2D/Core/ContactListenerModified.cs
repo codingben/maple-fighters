@@ -14,8 +14,8 @@ namespace Physics.Box2D
                 return;
             }
 
-            var userData1 = point.Shape1.UserData as IPhysicsCollision;
-            var userData2 = point.Shape2.UserData as IPhysicsCollision;
+            var userData1 = point.Shape1.UserData as IPhysicsCollisionCallback;
+            var userData2 = point.Shape2.UserData as IPhysicsCollisionCallback;
 
             userData1?.OnCollisionEnter(new CollisionInfo(point.Shape2.GetBody(), point.Position.ToVector2(), point.Velocity.ToVector2(), point.Normal.ToVector2()));
             userData2?.OnCollisionEnter(new CollisionInfo(point.Shape1.GetBody(), point.Position.ToVector2(), point.Velocity.ToVector2(), point.Normal.ToVector2()));
@@ -30,8 +30,8 @@ namespace Physics.Box2D
                 return;
             }
 
-            var userData1 = point.Shape1.UserData as IPhysicsCollision;
-            var userData2 = point.Shape2.UserData as IPhysicsCollision;
+            var userData1 = point.Shape1.UserData as IPhysicsCollisionCallback;
+            var userData2 = point.Shape2.UserData as IPhysicsCollisionCallback;
 
             userData1?.OnCollisionExit(new CollisionInfo(point.Shape2.GetBody(), point.Position.ToVector2(), point.Velocity.ToVector2(), point.Normal.ToVector2()));
             userData2?.OnCollisionExit(new CollisionInfo(point.Shape1.GetBody(), point.Position.ToVector2(), point.Velocity.ToVector2(), point.Normal.ToVector2()));

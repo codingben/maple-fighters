@@ -1,4 +1,6 @@
-﻿using ComponentModel.Common;
+﻿using CommonTools.Log;
+using ComponentModel.Common;
+using ServerApplication.Common.ApplicationBase;
 
 namespace ServerApplication.Common.Components
 {
@@ -13,6 +15,13 @@ namespace ServerApplication.Common.Components
             {
                 return (int) checked(id++);
             }
+        }
+
+        public static int GetId()
+        {
+            var idGenerator = Server.Entity.GetComponent<IIdGenerator>().AssertNotNull();
+            var id = idGenerator.GenerateId();
+            return id;
         }
     }
 }

@@ -1,7 +1,5 @@
 ﻿using CommonTools.Log;
 using ComponentModel.Common;
-using ServerApplication.Common.ApplicationBase;
-using ServerApplication.Common.Components;
 
 namespace Game.InterestManagement
 {
@@ -12,12 +10,10 @@ namespace Game.InterestManagement
 
         public IContainer<ISceneObject> Container { get; }
 
-        public SceneObject(string name, TransformDetails transformDetails)
+        public SceneObject(int id, string name, TransformDetails transformDetails)
         {
+            Id = id;
             Name = name;
-
-            var idGenerator = Server.Entity.GetComponent<IIdGenerator>().AssertNotNull();
-            Id = idGenerator.GenerateId();
 
             Container = new Container<ISceneObject>(this);
             Container.AddComponent(new Transform(transformDetails.Position, transformDetails.Size, transformDetails.Direction));

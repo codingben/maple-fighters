@@ -6,7 +6,7 @@ namespace Game.Application.Components
 {
     internal interface ICharacterCreator : IExposableComponent
     {
-        ISceneObject Create(CharacterFromDatabase character);
+        ISceneObject Create(CharacterFromDatabaseParameters character);
 
         void CreateCharacterBody(IGameSceneWrapper sceneWrapper, ISceneObject sceneObject);
     }

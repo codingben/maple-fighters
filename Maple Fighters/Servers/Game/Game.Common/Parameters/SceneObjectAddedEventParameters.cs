@@ -5,9 +5,9 @@ namespace Shared.Game.Common
 {
     public struct SceneObjectAddedEventParameters : IParameters
     {
-        public SceneObject SceneObject;
+        public SceneObjectParameters SceneObject;
 
-        public SceneObjectAddedEventParameters(SceneObject sceneObject)
+        public SceneObjectAddedEventParameters(SceneObjectParameters sceneObject)
         {
             SceneObject = sceneObject;
         }

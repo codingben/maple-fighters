@@ -5,10 +5,10 @@ namespace Shared.Game.Common
 {
     public struct EnterSceneResponseParameters : IParameters
     {
-        public SceneObject SceneObject;
-        public CharacterSpawnDetails Character;
+        public SceneObjectParameters SceneObject;
+        public CharacterSpawnDetailsParameters Character;
 
-        public EnterSceneResponseParameters(SceneObject sceneObject, CharacterSpawnDetails character)
+        public EnterSceneResponseParameters(SceneObjectParameters sceneObject, CharacterSpawnDetailsParameters character)
         {
             SceneObject = sceneObject;
             Character = character;

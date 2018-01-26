@@ -2,12 +2,14 @@
 using Box2DX.Common;
 using Box2DX.Dynamics;
 using MathematicsHelper;
-using Physics.Box2D.PhysicsSimulation;
 
 namespace Physics.Box2D
 {
     public static class PhysicsUtils
     {
+        public const float UPDATES_PER_SECOND = 30.0f;
+        public const float FRAMES_PER_SECOND = 30.0f;
+
         private static readonly object locker = new object();
 
         public static void CreateGround(this World world, Vector2 position, Vector2 size)
@@ -56,7 +58,7 @@ namespace Physics.Box2D
         {
             lock (locker)
             {
-                var body = world.CreateBody(bodyDefinition.BodyDef);
+                var body = world.CreateBody(bodyDefinition.BodyDefiniton);
                 body.SetUserData(bodyDefinition.UserData);
                 body.CreateShape(polygonDefinition);
                 body.SetMassFromShapes();
@@ -78,7 +80,7 @@ namespace Physics.Box2D
                     return;
                 }
 
-                var distancePerTimestep = speed / PhysicsSimulationWindow.FRAMES_PER_SECOND;
+                var distancePerTimestep = speed / FRAMES_PER_SECOND;
                 if (distancePerTimestep > distanceToTravel)
                 {
                     speed *= (distanceToTravel / distancePerTimestep);
@@ -87,7 +89,7 @@ namespace Physics.Box2D
                 var desiredVelocity = speed * direction;
                 var changeInVelocity = desiredVelocity - body.GetLinearVelocity().ToVector2();
 
-                var force = body.GetMass() * PhysicsSimulationWindow.FRAMES_PER_SECOND * changeInVelocity;
+                var force = body.GetMass() * FRAMES_PER_SECOND * changeInVelocity;
                 body.ApplyForce(force.FromVector2(), body.GetWorldCenter());
             }
         }

@@ -47,7 +47,7 @@ namespace Physics.Box2D
         {
             foreach (var addBody in addBodies)
             {
-                var body = world.CreateCharacter(addBody.Body, addBody.Body.FixtureDefinition);
+                var body = world.CreateCharacter(addBody.BodyDefinition, addBody.BodyDefinition.FixtureDefinition);
                 bodies.Add(addBody.Id, body);
             }
 

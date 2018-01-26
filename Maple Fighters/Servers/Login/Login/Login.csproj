@@ -69,12 +69,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Application\Components\DatabaseUserIdProvider.cs" />
-    <Compile Include="Application\Components\DatabaseUserPasswordVerifier.cs" />
-    <Compile Include="Application\Components\DatabaseUserVerifier.cs" />
-    <Compile Include="Application\Components\IDatabaseUserIdProvider.cs" />
-    <Compile Include="Application\Components\IDatabaseUserPasswordVerifier.cs" />
-    <Compile Include="Application\Components\IDatabaseUserVerifier.cs" />
+    <Compile Include="Application\Components\Database\DatabaseUserIdProvider.cs" />
+    <Compile Include="Application\Components\Database\DatabaseUserPasswordVerifier.cs" />
+    <Compile Include="Application\Components\Database\DatabaseUserVerifier.cs" />
+    <Compile Include="Application\Components\Database\IDatabaseUserIdProvider.cs" />
+    <Compile Include="Application\Components\Database\IDatabaseUserPasswordVerifier.cs" />
+    <Compile Include="Application\Components\Database\IDatabaseUserVerifier.cs" />
     <Compile Include="Application\LoginApplication.cs" />
     <Compile Include="Application\Peer Logic\LoginPeerLogic.cs" />
     <Compile Include="Application\Peer Logic\Operations\LoginOperationHandler.cs" />

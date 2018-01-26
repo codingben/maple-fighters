@@ -4,6 +4,7 @@ using Game.Application.SceneObjects.Components;
 using Game.InterestManagement;
 using Physics.Box2D;
 using ServerApplication.Common.ApplicationBase;
+using ServerApplication.Common.Components;
 using Shared.Game.Common;
 using SceneObject = Game.InterestManagement.SceneObject;
 
@@ -24,13 +25,14 @@ namespace Game.Application.Components
             characterSpawnDetailsProvider = Server.Entity.GetComponent<ICharacterSpawnDetailsProvider>().AssertNotNull();
         }
 
-        public ISceneObject Create(CharacterFromDatabase character)
+        public ISceneObject Create(CharacterFromDatabaseParameters character)
         {
             const Maps MAP = Maps.Map_1;
 
             var scene = sceneContainer.GetSceneWrapper(MAP).AssertNotNull();
             var spawnDetails = characterSpawnDetailsProvider.GetCharacterSpawnDetails(MAP);
-            var sceneObject = scene.GetScene().AddSceneObject(new SceneObject(SCENE_OBJECT_NAME, spawnDetails));
+
+            var sceneObject = scene.GetScene().AddSceneObject(new SceneObject(IdGenerator.GetId(), SCENE_OBJECT_NAME, spawnDetails));
             sceneObject.Container.AddComponent(new InterestArea(spawnDetails.Position, scene.GetScene().RegionSize));
             sceneObject.Container.AddComponent(new InterestAreaNotifier());
             sceneObject.Container.AddComponent(new CharacterGetter(character));
@@ -46,7 +48,7 @@ namespace Game.Application.Components
 
             var bodyFixtureDefinition = PhysicsUtils.CreateFixtureDefinition(spawnDetails.Size, LayerMask.Player);
             var bodyDefinition = PhysicsUtils.CreateBodyDefinitionWrapper(bodyFixtureDefinition, spawnDetails.Position, sceneObject);
-            bodyDefinition.BodyDef.AllowSleep = false;
+            bodyDefinition.BodyDefiniton.AllowSleep = false;
 
             var entityManager = sceneWrapper.GetScene().Entity.GetComponent<IEntityManager>().AssertNotNull();
             entityManager.AddBody(new BodyInfo(sceneObject.Id, bodyDefinition));

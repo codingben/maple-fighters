@@ -21,7 +21,7 @@ namespace Game.Application.Components
             databaseConnectionProvider = Entity.GetComponent<IDatabaseConnectionProvider>().AssertNotNull();
         }
 
-        public IEnumerable<CharacterFromDatabase> GetCharacters(int userId)
+        public IEnumerable<CharacterFromDatabaseParameters> GetCharacters(int userId)
         {
             using (var db = databaseConnectionProvider.GetDbConnection())
             {
@@ -33,29 +33,29 @@ namespace Game.Application.Components
                 var length = MAXIMUM_CHARACTERS - charactersDatabase.Count;
                 for (var i = 0; i < length; i++)
                 {
-                    charactersDatabase.Add(new CharacterFromDatabase { HasCharacter = false, Index = CharacterIndex.Zero });
+                    charactersDatabase.Add(new CharacterFromDatabaseParameters { HasCharacter = false, Index = CharacterIndex.Zero });
                 }
 
                 // Make an order of characters which will be sent to a client.
-                var characters = new List<CharacterFromDatabase>(MAXIMUM_CHARACTERS)
+                var characters = new List<CharacterFromDatabaseParameters>(MAXIMUM_CHARACTERS)
                 {
-                    new CharacterFromDatabase { HasCharacter = false, Index = CharacterIndex.First },
-                    new CharacterFromDatabase { HasCharacter = false, Index = CharacterIndex.Second },
-                    new CharacterFromDatabase { HasCharacter = false, Index = CharacterIndex.Third }
+                    new CharacterFromDatabaseParameters { HasCharacter = false, Index = CharacterIndex.First },
+                    new CharacterFromDatabaseParameters { HasCharacter = false, Index = CharacterIndex.Second },
+                    new CharacterFromDatabaseParameters { HasCharacter = false, Index = CharacterIndex.Third }
                 };
 
                 foreach (var character in charactersDatabase)
                 {
                     if (character.HasCharacter)
                     {
-                        characters[(int)character.Index] = new CharacterFromDatabase(character.Name, character.CharacterType, character.Index);
+                        characters[(int)character.Index] = new CharacterFromDatabaseParameters(character.Name, character.CharacterType, character.Index);
                     }
                 }
                 return characters;
             }
         }
 
-        public CharacterFromDatabase? GetCharacter(int userId, int characterIndex)
+        public CharacterFromDatabaseParameters? GetCharacter(int userId, int characterIndex)
         {
             using (var db = databaseConnectionProvider.GetDbConnection())
             {
@@ -64,25 +64,25 @@ namespace Game.Application.Components
             }
         }
 
-        private CharacterFromDatabase GetCharacter(CharactersTableDefinition charactersTableDefinition)
+        private CharacterFromDatabaseParameters GetCharacter(CharactersTableDefinition charactersTableDefinition)
         {
             if (charactersTableDefinition.CharacterType == CharacterClasses.Arrow.ToString())
             {
-                return new CharacterFromDatabase(charactersTableDefinition.Name, CharacterClasses.Arrow, (CharacterIndex)charactersTableDefinition.CharacterIndex);
+                return new CharacterFromDatabaseParameters(charactersTableDefinition.Name, CharacterClasses.Arrow, (CharacterIndex)charactersTableDefinition.CharacterIndex);
             }
 
             if (charactersTableDefinition.CharacterType == CharacterClasses.Knight.ToString())
             {
-                return new CharacterFromDatabase(charactersTableDefinition.Name, CharacterClasses.Knight, (CharacterIndex)charactersTableDefinition.CharacterIndex);
+                return new CharacterFromDatabaseParameters(charactersTableDefinition.Name, CharacterClasses.Knight, (CharacterIndex)charactersTableDefinition.CharacterIndex);
             }
 
             if (charactersTableDefinition.CharacterType == CharacterClasses.Wizard.ToString())
             {
-                return new CharacterFromDatabase(charactersTableDefinition.Name, CharacterClasses.Wizard, (CharacterIndex)charactersTableDefinition.CharacterIndex);
+                return new CharacterFromDatabaseParameters(charactersTableDefinition.Name, CharacterClasses.Wizard, (CharacterIndex)charactersTableDefinition.CharacterIndex);
             }
 
             LogUtils.Log(MessageBuilder.Trace($"Can not get character type of user id #{charactersTableDefinition.UserId}"));
-            return new CharacterFromDatabase { HasCharacter = false, Index = (CharacterIndex)charactersTableDefinition.CharacterIndex };
+            return new CharacterFromDatabaseParameters { HasCharacter = false, Index = (CharacterIndex)charactersTableDefinition.CharacterIndex };
         }
     }
 }

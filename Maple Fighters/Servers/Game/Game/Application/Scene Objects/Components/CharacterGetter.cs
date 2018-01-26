@@ -6,14 +6,14 @@ namespace Game.Application.SceneObjects.Components
 {
     internal class CharacterGetter : Component<ISceneObject>, ICharacterGetter
     {
-        private readonly CharacterFromDatabase character;
+        private readonly CharacterFromDatabaseParameters character;
 
-        public CharacterGetter(CharacterFromDatabase character)
+        public CharacterGetter(CharacterFromDatabaseParameters character)
         {
             this.character = character;
         }
 
-        public CharacterFromDatabase GetCharacter()
+        public CharacterFromDatabaseParameters GetCharacter()
         {
             return character;
         }

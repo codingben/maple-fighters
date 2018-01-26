@@ -5,7 +5,6 @@ using ComponentModel.Common;
 using Game.InterestManagement;
 using PeerLogic.Common.Components;
 using Shared.Game.Common;
-using SceneObject = Shared.Game.Common.SceneObject;
 
 namespace Game.Application.PeerLogic.Components
 {
@@ -30,7 +29,7 @@ namespace Game.Application.PeerLogic.Components
         private void OnSubscriberAdded(ISceneObject sceneObject)
         {
             var transform = sceneObject.Container.GetComponent<ITransform>().AssertNotNull();
-            var sharedSceneObject = new SceneObject(sceneObject.Id, sceneObject.Name, transform.Position.X, transform.Position.Y);
+            var sharedSceneObject = new SceneObjectParameters(sceneObject.Id, sceneObject.Name, transform.Position.X, transform.Position.Y);
 
             var parameters = new SceneObjectAddedEventParameters(sharedSceneObject);
             eventSender.Send((byte)GameEvents.SceneObjectAdded, parameters, MessageSendOptions.DefaultReliable());
@@ -44,7 +43,7 @@ namespace Game.Application.PeerLogic.Components
 
         private void OnSubscribersAdded(IReadOnlyList<ISceneObject> sceneObjects)
         {
-            var sharedSceneObjects = new SceneObject[sceneObjects.Count];
+            var sharedSceneObjects = new SceneObjectParameters[sceneObjects.Count];
             for (var i = 0; i < sceneObjects.Count; i++)
             {
                 sharedSceneObjects[i].Id = sceneObjects[i].Id;

@@ -6,7 +6,7 @@ namespace Game.Application.Components
 {
     internal interface IDatabaseCharactersGetter : IExposableComponent
     {
-        IEnumerable<CharacterFromDatabase> GetCharacters(int userId);
-        CharacterFromDatabase? GetCharacter(int userId, int characterIndex);
+        IEnumerable<CharacterFromDatabaseParameters> GetCharacters(int userId);
+        CharacterFromDatabaseParameters? GetCharacter(int userId, int characterIndex);
     }
 }

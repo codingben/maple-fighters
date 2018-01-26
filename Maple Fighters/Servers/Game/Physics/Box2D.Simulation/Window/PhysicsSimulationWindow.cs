@@ -1,20 +1,21 @@
 ﻿using System;
 using System.Collections.Concurrent;
+using System.ComponentModel;
 using Box2DX.Common;
 using Box2DX.Dynamics;
+using CommonTools.Log;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Graphics;
 using OpenTK.Input;
+using IComponent = ComponentModel.Common.IComponent;
+using IContainer = ComponentModel.Common.IContainer;
 using Math = System.Math;
 
 namespace Physics.Box2D.PhysicsSimulation
 {
-    public class PhysicsSimulationWindow : GameWindow, IPhysicsSimulationWindow
+    public class PhysicsSimulationWindow : GameWindow, IComponent, IPhysicsSimulationWindow
     {
-        public const float UPDATES_PER_SECOND = 30.0f;
-        public const float FRAMES_PER_SECOND = 30.0f;
-
         private const float CAMERA_MOVEMENT_SPEED = 0.001f;
         private const float MOVE_SPEED_VIA_KEYBOARD_MINIMUM_VALUE = 1;
 
@@ -23,12 +24,26 @@ namespace Physics.Box2D.PhysicsSimulation
         private readonly string windowTitle;
         private readonly CameraView cameraView = new CameraView();
 
+        private Action removeDebugDrawer;
         private readonly ConcurrentQueue<Action> drawActions = new ConcurrentQueue<Action>();
 
         public PhysicsSimulationWindow(string title, int width, int height)
             : base(width, height, GraphicsMode.Default, title, GameWindowFlags.FixedWindow)
         {
             windowTitle = title;
+        }
+
+        public void Awake(IContainer entity)
+        {
+            var drawPhysics = new DrawPhysics(this);
+            drawPhysics.AppendFlags(DebugDraw.DrawFlags.Aabb);
+            drawPhysics.AppendFlags(DebugDraw.DrawFlags.Shape);
+
+            var physicsWorld = entity.GetComponent<IPhysicsWorldProvider>().AssertNotNull();
+            var world = physicsWorld.GetWorld();
+            world.SetDebugDraw(drawPhysics);
+
+            removeDebugDrawer = () => world?.SetDebugDraw(null);
         }
 
         private void MoveCameraViewViaMouse()
@@ -134,6 +149,13 @@ namespace Physics.Box2D.PhysicsSimulation
             }
 
             SwapBuffers();
+        }
+
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            base.OnClosing(e);
+
+            removeDebugDrawer?.Invoke();
         }
 
         private bool IsMouseKeyDown()

@@ -7,11 +7,11 @@ using ComponentModel.Common;
 
 namespace Physics.Box2D
 {
-    public class PhysicsSimulationCreator : Component
+    public class PhysicsSimulationExecutor : Component
     {
         private readonly World world;
 
-        public PhysicsSimulationCreator(PhysicsWorldInfo worldInfo)
+        public PhysicsSimulationExecutor(PhysicsWorldInfo worldInfo)
         {
             var worldAabb = new AABB
             {
@@ -56,6 +56,7 @@ namespace Physics.Box2D
         {
             base.OnDestroy();
 
+            world.SetDebugDraw(null);
             world.Dispose();
         }
     }

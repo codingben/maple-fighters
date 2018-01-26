@@ -11,10 +11,10 @@ namespace Game.Application.PeerLogic.Operations
     internal class ValidateCharacterOperationHandler : IOperationRequestHandler<ValidateCharacterRequestParameters, ValidateCharacterResponseParameters>
     {
         private readonly int userId;
-        private readonly Action<CharacterFromDatabase> onCharacterSelected;
+        private readonly Action<CharacterFromDatabaseParameters> onCharacterSelected;
         private readonly IDatabaseCharactersGetter charactersGetter;
 
-        public ValidateCharacterOperationHandler(int userId, Action<CharacterFromDatabase> onCharacterSelected)
+        public ValidateCharacterOperationHandler(int userId, Action<CharacterFromDatabaseParameters> onCharacterSelected)
         {
             this.userId = userId;
             this.onCharacterSelected = onCharacterSelected;

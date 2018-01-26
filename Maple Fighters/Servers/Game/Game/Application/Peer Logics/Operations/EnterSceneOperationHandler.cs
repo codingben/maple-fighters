@@ -4,16 +4,15 @@ using Game.Application.PeerLogic.Components;
 using Game.InterestManagement;
 using ServerCommunicationHelper;
 using Shared.Game.Common;
-using SceneObject = Shared.Game.Common.SceneObject;
 
 namespace Game.Application.PeerLogic.Operations
 {
     internal class EnterSceneOperationHandler : IOperationRequestHandler<EmptyParameters, EnterSceneResponseParameters>
     {
         private readonly ISceneObject sceneObject;
-        private readonly CharacterFromDatabase character;
+        private readonly CharacterFromDatabaseParameters character;
 
-        public EnterSceneOperationHandler(ISceneObject sceneObject, CharacterFromDatabase character)
+        public EnterSceneOperationHandler(ISceneObject sceneObject, CharacterFromDatabaseParameters character)
         {
             this.sceneObject = sceneObject;
             this.character = character;
@@ -26,18 +25,18 @@ namespace Game.Application.PeerLogic.Operations
             return new EnterSceneResponseParameters(GetSceneObjectShared(), GetCharacterSpawnDetailsShared());
         }
 
-        private SceneObject GetSceneObjectShared()
+        private SceneObjectParameters GetSceneObjectShared()
         {
             const string SCENE_OBJECT_NAME = "Local Player";
 
             var transform = sceneObject.Container.GetComponent<ITransform>().AssertNotNull();
-            return new SceneObject(sceneObject.Id, SCENE_OBJECT_NAME, transform.Position.X, transform.Position.Y);
+            return new SceneObjectParameters(sceneObject.Id, SCENE_OBJECT_NAME, transform.Position.X, transform.Position.Y);
         }
 
-        private CharacterSpawnDetails GetCharacterSpawnDetailsShared()
+        private CharacterSpawnDetailsParameters GetCharacterSpawnDetailsShared()
         {
             var transform = sceneObject.Container.GetComponent<ITransform>().AssertNotNull();
-            return new CharacterSpawnDetails(sceneObject.Id, character, transform.Direction.GetDirectionsFromDirection());
+            return new CharacterSpawnDetailsParameters(sceneObject.Id, character, transform.Direction.GetDirectionsFromDirection());
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Game.InterestManagement;
 using MathematicsHelper;
+using ServerApplication.Common.Components;
 using Shared.Game.Common;
 using SceneObject = Game.InterestManagement.SceneObject;
 
@@ -8,7 +9,7 @@ namespace Game.Application.SceneObjects
     public class Portal : SceneObject
     {
         public Portal(Vector2 position, Maps destinationMap) 
-            : base("Portal", new TransformDetails(position, Vector2.Zero, Direction.Left))
+            : base(IdGenerator.GetId(), "Portal", new TransformDetails(position, Vector2.Zero, Direction.Left))
         {
             Container.AddComponent(new PortalInfoProvider(destinationMap));
         }

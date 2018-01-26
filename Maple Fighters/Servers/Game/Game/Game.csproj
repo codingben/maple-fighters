@@ -58,6 +58,9 @@
     <Reference Include="Microsoft.Scripting.Metadata, Version=1.1.2.22, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\DynamicLanguageRuntime.1.1.2\lib\Net45\Microsoft.Scripting.Metadata.dll</HintPath>
     </Reference>
+    <Reference Include="OpenTK, Version=2.0.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\OpenTK.2.0.0\lib\net20\OpenTK.dll</HintPath>
+    </Reference>
     <Reference Include="PhotonCommonImplementation, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\PhotonCommonImplementation.2.1.0\lib\net46\PhotonCommonImplementation.dll</HintPath>
     </Reference>
@@ -90,25 +93,25 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Application\Components\CharacterSpawnDetailsProvider.cs" />
-    <Compile Include="Application\Components\DatabaseCharacterCreator.cs" />
-    <Compile Include="Application\Components\DatabaseCharacterExistence.cs" />
-    <Compile Include="Application\Components\DatabaseCharacterNameVerifier.cs" />
-    <Compile Include="Application\Components\DatabaseCharacterRemover.cs" />
-    <Compile Include="Application\Components\DatabaseCharactersGetter.cs" />
-    <Compile Include="Application\Components\GameSceneWrapper.cs" />
-    <Compile Include="Application\Components\CharacterCreator.cs" />
-    <Compile Include="Application\Components\ICharacterCreator.cs" />
-    <Compile Include="Application\Components\ICharacterSpawnDetailsProvider.cs" />
-    <Compile Include="Application\Components\IDatabaseCharacterCreator.cs" />
-    <Compile Include="Application\Components\IDatabaseCharacterExistence.cs" />
-    <Compile Include="Application\Components\IDatabaseCharacterNameVerifier.cs" />
-    <Compile Include="Application\Components\IDatabaseCharacterRemover.cs" />
-    <Compile Include="Application\Components\IDatabaseCharactersGetter.cs" />
-    <Compile Include="Application\Components\IGameSceneWrapper.cs" />
-    <Compile Include="Application\Components\ISceneContainer.cs" />
-    <Compile Include="Application\Components\PhysicsMapCreator.cs" />
-    <Compile Include="Application\Components\SceneContainer.cs" />
+    <Compile Include="Application\Components\Characters\CharacterSpawnDetailsProvider.cs" />
+    <Compile Include="Application\Components\Characters\Database\DatabaseCharacterCreator.cs" />
+    <Compile Include="Application\Components\Characters\Database\DatabaseCharacterExistence.cs" />
+    <Compile Include="Application\Components\Characters\Database\DatabaseCharacterNameVerifier.cs" />
+    <Compile Include="Application\Components\Characters\Database\DatabaseCharacterRemover.cs" />
+    <Compile Include="Application\Components\Characters\Database\DatabaseCharactersGetter.cs" />
+    <Compile Include="Application\Components\Scene\GameSceneWrapper.cs" />
+    <Compile Include="Application\Components\Characters\CharacterCreator.cs" />
+    <Compile Include="Application\Components\Characters\ICharacterCreator.cs" />
+    <Compile Include="Application\Components\Characters\ICharacterSpawnDetailsProvider.cs" />
+    <Compile Include="Application\Components\Characters\Database\IDatabaseCharacterCreator.cs" />
+    <Compile Include="Application\Components\Characters\Database\IDatabaseCharacterExistence.cs" />
+    <Compile Include="Application\Components\Characters\Database\IDatabaseCharacterNameVerifier.cs" />
+    <Compile Include="Application\Components\Characters\Database\IDatabaseCharacterRemover.cs" />
+    <Compile Include="Application\Components\Characters\Database\IDatabaseCharactersGetter.cs" />
+    <Compile Include="Application\Components\Scene\IGameSceneWrapper.cs" />
+    <Compile Include="Application\Components\Scene\ISceneContainer.cs" />
+    <Compile Include="Application\Components\Scene\Map\PhysicsMapCreator.cs" />
+    <Compile Include="Application\Components\Scene\SceneContainer.cs" />
     <Compile Include="Application\Peer Logics\Components\CharactersSender.cs" />
     <Compile Include="Application\Peer Logics\Components\IPeerIdGetter.cs" />
     <Compile Include="Application\Peer Logics\Components\ISceneObjectGetter.cs" />
@@ -149,6 +152,7 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="log4net.config" />
+    <None Include="OpenTK.dll.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -183,6 +187,10 @@
     <ProjectReference Include="..\Game.InterestManagement\Game.InterestManagement.csproj">
       <Project>{DB7043AD-92FD-428A-BB43-18ED8D25B41D}</Project>
       <Name>Game.InterestManagement</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Physics\Box2D.Simulation\Physics.Box2D.Simulation.csproj">
+      <Project>{A80A032C-8FDC-45F5-B039-BAFA6097F58A}</Project>
+      <Name>Physics.Box2D.Simulation</Name>
     </ProjectReference>
     <ProjectReference Include="..\Physics\Box2D\Physics.Box2D.csproj">
       <Project>{2E057EC4-7919-4326-AB31-3116A259BA49}</Project>
