@@ -79,11 +79,11 @@ namespace Scripts.Gameplay.Actors
 
         private void OnCharactersAdded(CharactersAddedEventParameters parameters)
         {
-            foreach (var characterInformation in parameters.CharactersSpawnDetails)
+            foreach (var characterSpawnDetails in parameters.CharactersSpawnDetails)
             {
-                var id = characterInformation.SceneObjectId;
+                var id = characterSpawnDetails.SceneObjectId;
                 var sceneObject = SceneObjectsContainer.Instance.GetRemoteSceneObject(id);
-                sceneObject.GetGameObject().GetComponent<ICharacterCreator>().Create(characterInformation);
+                sceneObject.GetGameObject().GetComponent<ICharacterCreator>().Create(characterSpawnDetails);
             }
         }
     }

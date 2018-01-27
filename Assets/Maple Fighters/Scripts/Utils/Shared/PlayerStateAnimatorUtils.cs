@@ -13,10 +13,10 @@ namespace Scripts.Utils.Shared
             const string ROPE_NAME = "Rope";
             const string LADDER_NAME = "Ladder";
 
-            animator.SetBool(WALK_NAME, state == PlayerState.Moving);
-            animator.SetBool(JUMP_NAME, state == PlayerState.Falling);
-            animator.SetBool(ROPE_NAME, state == PlayerState.Rope);
-            animator.SetBool(LADDER_NAME, state == PlayerState.Ladder);
+            animator?.SetBool(WALK_NAME, state == PlayerState.Moving);
+            animator?.SetBool(JUMP_NAME, state == PlayerState.Falling);
+            animator?.SetBool(ROPE_NAME, state == PlayerState.Rope);
+            animator?.SetBool(LADDER_NAME, state == PlayerState.Ladder);
         }
     }
 }
