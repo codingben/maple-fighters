@@ -2,6 +2,7 @@
 using System.IO;
 using CommonTools.Log;
 using ComponentModel.Common;
+using JsonConfig;
 using MathematicsHelper;
 using Physics.Box2D;
 using ServiceStack;
@@ -11,6 +12,7 @@ namespace Game.Application.Components
 {
     internal class PhysicsMapCreator : Component
     {
+        private const string DATA_FILE_NAME = "ScenePhysicsData.json";
         private readonly Maps map;
 
         public PhysicsMapCreator(Maps map)
@@ -29,7 +31,8 @@ namespace Game.Application.Components
         {
             var physicsWorldProvider = Entity.GetComponent<IPhysicsWorldProvider>().AssertNotNull();
 
-            var path = $"python/scenes/{map}/ScenePhysicsData.json";
+            var pythonScenesPath = (string)Config.Global.Python.Scenes;
+            var path = $"{pythonScenesPath}/{map}/{DATA_FILE_NAME}";
             if (!File.Exists(path))
             {
                 LogUtils.Log($"Could not find ScenePhysicsData json file for {map}.");

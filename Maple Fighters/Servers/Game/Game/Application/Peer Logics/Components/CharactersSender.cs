@@ -67,7 +67,7 @@ namespace Game.Application.PeerLogic.Components
                 var characterGetter = sceneObject.Container.GetComponent<ICharacterGetter>();
                 if (characterGetter == null)
                 {
-                    return null;
+                    continue;
                 }
 
                 var transform = sceneObject.Container.GetComponent<ITransform>().AssertNotNull();
