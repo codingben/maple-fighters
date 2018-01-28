@@ -46,6 +46,28 @@ namespace Game.Application.PeerLogic.Components
 
         private CharacterSpawnDetailsParameters? GetCharacterSpawnDetails(ISceneObject sceneObject)
         {
+            var parameters = CreateCharacterSpawnDetails(sceneObject);
+            return parameters;
+        }
+
+        private IEnumerable<CharacterSpawnDetailsParameters> GetCharactersSpawnDetails(IEnumerable<ISceneObject> sceneObjects)
+        {
+            var charactersSpawnDetails = new List<CharacterSpawnDetailsParameters>();
+
+            foreach (var sceneObject in sceneObjects)
+            {
+                var parameters = CreateCharacterSpawnDetails(sceneObject);
+                if (parameters.HasValue)
+                {
+                    charactersSpawnDetails.Add(parameters.Value);
+                }
+            }
+
+            return charactersSpawnDetails.ToArray();
+        }
+
+        private CharacterSpawnDetailsParameters? CreateCharacterSpawnDetails(ISceneObject sceneObject)
+        {
             // It may be null because not every object on a scene is a character.
             var characterGetter = sceneObject.Container.GetComponent<ICharacterGetter>();
             if (characterGetter == null)
@@ -55,26 +77,6 @@ namespace Game.Application.PeerLogic.Components
 
             var transform = sceneObject.Container.GetComponent<ITransform>().AssertNotNull();
             return new CharacterSpawnDetailsParameters(sceneObject.Id, characterGetter.GetCharacter(), transform.Direction.GetDirectionsFromDirection());
-        }
-
-        private IEnumerable<CharacterSpawnDetailsParameters> GetCharactersSpawnDetails(IEnumerable<ISceneObject> sceneObjects)
-        {
-            var charactersSpawnDetails = new List<CharacterSpawnDetailsParameters>();
-
-            foreach (var sceneObject in sceneObjects)
-            {
-                // It may be null because not every object on a scene is a character.
-                var characterGetter = sceneObject.Container.GetComponent<ICharacterGetter>();
-                if (characterGetter == null)
-                {
-                    continue;
-                }
-
-                var transform = sceneObject.Container.GetComponent<ITransform>().AssertNotNull();
-                charactersSpawnDetails.Add(new CharacterSpawnDetailsParameters(sceneObject.Id, characterGetter.GetCharacter(), transform.Direction.GetDirectionsFromDirection()));
-            }
-
-            return charactersSpawnDetails.ToArray();
         }
     }
 }
