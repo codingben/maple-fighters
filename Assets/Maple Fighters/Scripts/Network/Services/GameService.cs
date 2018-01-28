@@ -121,11 +121,11 @@ namespace Scripts.Services
             return responseParameters.Status;
         }
 
-        public async Task<EnterSceneResponseParameters> EnterScene(IYield yield)
+        public async Task<EnterSceneResponseParameters?> EnterScene(IYield yield)
         {
             if (!IsConnected())
             {
-                return new EnterSceneResponseParameters();
+                return null;
             }
 
             var enteredSceneRequestId = OperationRequestSender.Send(GameOperations.EnterScene, new EmptyParameters(), MessageSendOptions.DefaultReliable());

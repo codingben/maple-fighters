@@ -1,34 +1,20 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using CommonTools.Coroutines;
-using CommonTools.Log;
 using Scripts.Utils;
-using UnityEngine;
 using WaitForSeconds = CommonTools.Coroutines.WaitForSeconds;
 
 namespace Scripts.Services
 {
-    public class ServiceConnector<T> : MonoBehaviour
+    public class ServiceConnector<T> : DontDestroyOnLoad<T>
         where T : ServiceConnector<T>
     {
-        public static T Instance { get; private set; }
-
         private const int AUTO_TIME_FOR_DISCONNECT = 60;
 
         private IServiceBase serviceBase;
         private ICoroutine disconnectAutomatically;
 
         protected readonly ExternalCoroutinesExecutor CoroutinesExecutor = new ExternalCoroutinesExecutor();
-
-        private void Awake()
-        {
-            OnAwake();
-        }
-
-        protected virtual void OnAwake()
-        {
-            // Left blank intentionally
-        }
 
         private void Update()
         {
@@ -43,19 +29,6 @@ namespace Scripts.Services
         protected virtual void OnDestroyed()
         {
             CoroutinesExecutor.Dispose();
-        }
-
-        protected void DontDestroyOnLoad()
-        {
-            if (Instance != null)
-            {
-                DestroyImmediate(gameObject);
-                return;
-            }
-
-            gameObject.DontDestroyOnLoad();
-
-            Instance = this as T;
         }
 
         protected async Task<ConnectionStatus> Connect(IYield yield, IServiceBase serviceBase, ConnectionInformation connectionInformation)

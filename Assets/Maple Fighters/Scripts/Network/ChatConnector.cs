@@ -13,13 +13,6 @@ namespace Scripts.Services
 {
     public class ChatConnector : ServiceConnector<ChatConnector>
     {
-        protected override void OnAwake()
-        {
-            base.OnAwake();
-
-            DontDestroyOnLoad();
-        }
-
         public void Connect()
         {
             CoroutinesExecutor.StartTask(Connect);

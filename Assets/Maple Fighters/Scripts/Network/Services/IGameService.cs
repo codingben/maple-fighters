@@ -8,7 +8,7 @@ namespace Scripts.Services
     {
         Task<AuthenticationStatus> Authenticate(IYield yield);
 
-        Task<EnterSceneResponseParameters> EnterScene(IYield yield);
+        Task<EnterSceneResponseParameters?> EnterScene(IYield yield);
 
         void UpdatePosition(UpdatePositionRequestParameters parameters);
         void UpdatePlayerState(UpdatePlayerStateRequestParameters parameters);

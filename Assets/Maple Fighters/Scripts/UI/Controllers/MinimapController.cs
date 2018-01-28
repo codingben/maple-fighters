@@ -36,13 +36,11 @@ namespace Scripts.UI.Controllers
 
         private void OnSceneLoaded(Scene scene, LoadSceneMode loadSceneMode)
         {
-            if (minimapCamera != null)
+            if (minimapCamera == null)
             {
-                return;
+                minimapCamera = GameObject.FindGameObjectWithTag(MINI_CAMERA_TAG).GetComponent<Camera>();
+                minimapCamera.cullingMask = markSelections[curMarkLayer].MarkLayerMask;
             }
-
-            minimapCamera = GameObject.FindGameObjectWithTag(MINI_CAMERA_TAG).GetComponent<Camera>();
-            minimapCamera.cullingMask = markSelections[curMarkLayer].MarkLayerMask;
         }
 
         private void SubscribeToEvents()

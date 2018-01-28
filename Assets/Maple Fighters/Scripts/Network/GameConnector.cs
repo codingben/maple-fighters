@@ -15,13 +15,6 @@ namespace Scripts.Services
     {
         [SerializeField] private int loadSceneIndex;
 
-        protected override void OnAwake()
-        {
-            base.OnAwake();
-
-            DontDestroyOnLoad();
-        }
-
         public void Connect()
         {
             CoroutinesExecutor.StartTask(Connect);

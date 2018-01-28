@@ -15,8 +15,7 @@ namespace Scripts.Gameplay.Actors
             set
             {
                 playerState = value;
-
-                PlayerStateChanged?.Invoke(value != PlayerState.Attacked ? value : PlayerState.Falling);
+                PlayerStateChanged?.Invoke(playerState != PlayerState.Attacked ? playerState : PlayerState.Falling);
             }
             get
             {

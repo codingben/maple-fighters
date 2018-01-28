@@ -16,7 +16,6 @@ namespace Scripts.Gameplay.Actors
             InitializeSpriteRenderer();
             InitializeCharacterNameDirectionSetter();
             InitializeCharacterName(characterSpawnDetails.Character.Name);
-            InitializeCharacterInformationProvider(characterSpawnDetails.Character);
         }
 
         private void InitializeCharacterName(string characterName)
@@ -30,12 +29,6 @@ namespace Scripts.Gameplay.Actors
         {
             var spriteRenderer = characterSprite.GetComponent<SpriteRenderer>();
             spriteRenderer.sortingOrder = OrderInLayer;
-        }
-
-        private void InitializeCharacterInformationProvider(CharacterFromDatabaseParameters character)
-        {
-            var characterInformationProvider = GetComponent<CharacterInformationProvider>();
-            characterInformationProvider.SetCharacterInformation(character);
         }
 
         private void DisableCollision()

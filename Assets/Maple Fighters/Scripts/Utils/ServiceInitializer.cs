@@ -6,19 +6,12 @@ namespace Scripts.Services
 {
     public class ServiceInitializer : DontDestroyOnLoad<ServiceInitializer>
     {
-        private static bool initialized;
-
-        private void Awake() // It may be called a couple times
+        protected override void OnAwake()
         {
-            if (initialized)
-            {
-                return;
-            }
+            base.OnAwake();
 
             LogUtils.Logger = new Logger();
             TimeProviders.DefaultTimeProvider = new GameTimeProvider();
-
-            initialized = true;
         }
     }
 }
