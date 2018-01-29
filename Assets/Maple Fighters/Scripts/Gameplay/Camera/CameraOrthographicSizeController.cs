@@ -1,28 +1,32 @@
 ﻿using UnityEngine;
+using Cinemachine;
 
 namespace Scripts.Gameplay.Camera
 {
-    using Camera = UnityEngine.Camera;
-
     #pragma warning disable 0109
 
     [ExecuteInEditMode]
-    public class CameraScreenResolution : MonoBehaviour
+    public class CameraOrthographicSizeController : MonoBehaviour
     {
         [SerializeField] private int targetWidth;
         [SerializeField] private float pixelsToUnits;
 
-        private new Camera camera;
+        private new CinemachineVirtualCamera camera;
 
         private void Awake()
         {
-            camera = GetComponent<Camera>();
+            camera = GetComponent<CinemachineVirtualCamera>();
         }
 
         private void Update()
         {
+            if (camera == null)
+            {
+                camera = GetComponent<CinemachineVirtualCamera>();
+            }
+
             var height = Mathf.RoundToInt(targetWidth / (float) Screen.width * Screen.height);
-            camera.orthographicSize = height / pixelsToUnits / 2;
+            camera.m_Lens.OrthographicSize = height / pixelsToUnits / 2;
         }
     }
 }

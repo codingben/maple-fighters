@@ -1,5 +1,4 @@
-﻿using Scripts.Gameplay.Camera;
-using Scripts.Utils.Shared;
+﻿using Scripts.Utils.Shared;
 using Shared.Game.Common;
 using UnityEngine;
 
@@ -11,7 +10,6 @@ namespace Scripts.Gameplay.Actors
         {
             base.Create(characterSpawnDetails);
 
-            SetCamerasTarget();
             SetCharacterToPositionSender();
             SetDirectionOnCreation();
 
@@ -29,12 +27,6 @@ namespace Scripts.Gameplay.Actors
         {
             var spriteRenderer = characterSprite.GetComponent<SpriteRenderer>();
             spriteRenderer.sortingOrder = OrderInLayer;
-        }
-
-        private void SetCamerasTarget()
-        {
-            var cameraControllerProvider = character.GetComponent<CameraControllerProvider>();
-            cameraControllerProvider.SetCamerasTarget();
         }
 
         private void SetCharacterToPositionSender()
