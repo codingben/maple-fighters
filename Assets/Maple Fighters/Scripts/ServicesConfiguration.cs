@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Scripts.ScriptableObjects
 {
-    [CreateAssetMenu(fileName = "ServicesConfiguration", menuName = "Maple Fighters/Scriptable Objects/ServicesConfiguration", order = 2)]
+    [CreateAssetMenu(fileName = "ServicesConfiguration", menuName = "Scriptable Objects/ServicesConfiguration", order = 1)]
     public class ServicesConfiguration : ScriptableObjectSingleton<ServicesConfiguration>
     {
         public ConnectionInformation GetConnectionInformation(ServersType type) 

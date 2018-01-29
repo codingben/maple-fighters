@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Scripts.ScriptableObjects
 {
-    [CreateAssetMenu(fileName = "NetworkConfiguration", menuName = "Maple Fighters/Scriptable Objects/NetworkConfiguration", order = 1)]
+    [CreateAssetMenu(fileName = "NetworkConfiguration", menuName = "Scriptable Objects/NetworkConfiguration", order = 0)]
     public class NetworkConfiguration : ScriptableObjectSingleton<NetworkConfiguration>
     {
         public ConnectionProtocol ConnectionProtocol = ConnectionProtocol.Udp;

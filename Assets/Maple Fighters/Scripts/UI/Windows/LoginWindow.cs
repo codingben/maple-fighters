@@ -8,6 +8,22 @@ namespace Scripts.UI.Windows
 {
     public class LoginWindow : UserInterfaceWindowFadeEffect
     {
+        public string Email
+        {
+            set
+            {
+                emailInputField.text = value;
+            }
+        }
+
+        public string Password
+        {
+            set
+            {
+                passwordInputField.text = value;
+            }
+        }
+
         public event Action<string, string> LoginButtonClicked;
         public event Action RegisterButtonClicked;
         public event Action<string> ShowNotice;
@@ -39,12 +55,10 @@ namespace Scripts.UI.Windows
         {
             Hide();
 
-            if (!AcceptInputFieldsContent())
+            if (AcceptInputFieldsContent())
             {
-                return;
+                Login();
             }
-
-            Login();
         }
 
         private void OnRegisterButtonClicked()
