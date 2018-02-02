@@ -68,13 +68,13 @@ namespace ComponentModel.Common
         {
             var componentsListTemp = new List<IComponent>();
             componentsListTemp.AddRange(components);
+            componentsListTemp.ForEach(component => component.Dispose());
 
             foreach (var component in componentsListTemp)
             {
                 components.Remove(component);
             }
 
-            componentsListTemp.ForEach(component => component.Dispose());
             componentsListTemp.Clear();
         }
     }
@@ -144,13 +144,13 @@ namespace ComponentModel.Common
         {
             var componentsListTemp = new List<IComponent<TOwner>>();
             componentsListTemp.AddRange(components);
+            componentsListTemp.ForEach(component => component.Dispose());
 
             foreach (var component in componentsListTemp)
             {
                 components.Remove(component);
             }
 
-            componentsListTemp.ForEach(component => component.Dispose());
             componentsListTemp.Clear();
         }
     }
