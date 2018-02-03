@@ -5,7 +5,7 @@ using ComponentModel.Common;
 
 namespace PhotonControl
 {
-    internal class ServersContainer : Component, IServersContainer
+    internal class ServersContainer : Component<IPhotonControl>, IServersContainer
     {
         private readonly Dictionary<string, ServerDetails> servers = new Dictionary<string, ServerDetails>();
         private IServersMenu serversMenu;
@@ -14,14 +14,14 @@ namespace PhotonControl
         {
             base.OnAwake();
 
-            serversMenu = Entity.AddComponent(new ServersMenu());
+            serversMenu = Entity.Components.AddComponent(new ServersMenu());
         }
 
         public void AddServer(string serverName)
         {
             if (servers.ContainsKey(serverName))
             {
-                LogUtils.Log($@"{serverName} server already exists in a servers list.");
+                LogUtils.Log(MessageBuilder.Trace($@"{serverName} server already exists in a servers list."));
                 return;
             }
 
@@ -36,7 +36,7 @@ namespace PhotonControl
         {
             if (!servers.ContainsKey(serverName))
             {
-                LogUtils.Log($@"{serverName} server does not exist in a servers list.");
+                LogUtils.Log(MessageBuilder.Trace($@"{serverName} server does not exist in a servers list."));
                 return;
             }
 
@@ -56,7 +56,7 @@ namespace PhotonControl
                 return serverDetails;
             }
 
-            LogUtils.Log($@"{serverName} server does not exist in a servers list.");
+            LogUtils.Log(MessageBuilder.Trace($@"{serverName} server does not exist in a servers list."));
             return null;
         }
 

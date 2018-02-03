@@ -4,24 +4,22 @@ using ComponentModel.Common;
 
 namespace PhotonControl
 {
-    internal class ServersMenu : Component, IServersMenu
+    internal class ServersMenu : Component<IPhotonControl>, IServersMenu
     {
-        private IPhotonControl photonControl;
         private IServersController serversController;
 
         protected override void OnAwake()
         {
             base.OnAwake();
 
-            photonControl = Entity.GetComponent<IPhotonControl>().AssertNotNull();
-            serversController = Entity.GetComponent<IServersController>().AssertNotNull("Servers controller is null");
+            serversController = Entity.Components.GetComponent<IServersController>().AssertNotNull();
         }
 
         public ToolStripMenuItem AddServerItemToServersMenu(string serverName)
         {
             if (string.IsNullOrEmpty(serverName) || string.IsNullOrWhiteSpace(serverName))
             {
-                LogUtils.Log(@"The server name incorrect. Please check it.");
+                LogUtils.Log(MessageBuilder.Trace(@"The server name incorrect. Please check it."));
                 return null;
             }
 
@@ -30,7 +28,7 @@ namespace PhotonControl
                 Name = serverName
             };
 
-            photonControl.ServersMenu.DropDownItems.Add(serverItem);
+            Entity.ServersMenu.DropDownItems.Add(serverItem);
 
             AddCommandsItemsToServerMenu();
             return serverItem;
@@ -50,11 +48,11 @@ namespace PhotonControl
         {
             if (string.IsNullOrEmpty(serverName) || string.IsNullOrWhiteSpace(serverName))
             {
-                LogUtils.Log(@"The server name incorrect. Please check it.");
+                LogUtils.Log(MessageBuilder.Trace(@"The server name incorrect. Please check it."));
                 return;
             }
 
-            photonControl.ServersMenu.DropDownItems.RemoveByKey(serverName);
+            Entity.ServersMenu.DropDownItems.RemoveByKey(serverName);
         }
     }
 }

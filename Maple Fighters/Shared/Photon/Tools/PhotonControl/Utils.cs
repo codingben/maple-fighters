@@ -27,7 +27,7 @@ namespace PhotonControl
             }
             catch (Exception exception)
             {
-                LogUtils.Log(exception.Message);
+                LogUtils.Log(MessageBuilder.Trace(exception.Message));
                 return false;
             }
 

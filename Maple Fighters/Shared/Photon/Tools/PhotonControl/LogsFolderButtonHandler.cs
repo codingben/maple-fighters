@@ -1,10 +1,9 @@
 ﻿using System.Windows.Forms;
-using CommonTools.Log;
 using ComponentModel.Common;
 
 namespace PhotonControl
 {
-    internal class LogsFolderButtonHandler : Component
+    internal class LogsFolderButtonHandler : Component<IPhotonControl>
     {
         private const string PHOTON_SERVER_LOG_FOLDER = @"{0}\log";
 
@@ -12,16 +11,14 @@ namespace PhotonControl
         {
             base.OnAwake();
 
-            var photonControl = Entity.GetComponent<IPhotonControl>().AssertNotNull();
-            photonControl.LogsFolderButtonClicked += OnLogsFolderButtonClicked;
+            Entity.LogsFolderButtonClicked += OnLogsFolderButtonClicked;
         }
 
         protected override void OnDestroy()
         {
             base.OnDestroy();
 
-            var photonControl = Entity.GetComponent<IPhotonControl>().AssertNotNull();
-            photonControl.LogsFolderButtonClicked -= OnLogsFolderButtonClicked;
+            Entity.LogsFolderButtonClicked -= OnLogsFolderButtonClicked;
         }
 
         private void OnLogsFolderButtonClicked()

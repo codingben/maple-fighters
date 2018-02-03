@@ -1,26 +1,22 @@
 ﻿using System.Windows.Forms;
-using CommonTools.Log;
 using ComponentModel.Common;
 
 namespace PhotonControl
 {
-    internal class ExitButtonHandler : Component
+    internal class ExitButtonHandler : Component<IPhotonControl>
     {
-        private IPhotonControl photonControl;
-
         protected override void OnAwake()
         {
             base.OnAwake();
 
-            photonControl = Entity.GetComponent<IPhotonControl>().AssertNotNull();
-            photonControl.ExitButtonClicked += OnExitButtonClicked;
+            Entity.ExitButtonClicked += OnExitButtonClicked;
         }
 
         protected override void OnDestroy()
         {
             base.OnDestroy();
 
-            photonControl.ExitButtonClicked -= OnExitButtonClicked;
+            Entity.ExitButtonClicked -= OnExitButtonClicked;
         }
 
         private void OnExitButtonClicked()
@@ -36,7 +32,7 @@ namespace PhotonControl
             else
             {
                 var message = "Could not stop servers.";
-                photonControl.NotifyIcon.ShowBalloonTip(1000, null, message, ToolTipIcon.Warning);
+                Entity.NotifyIcon.ShowBalloonTip(1000, null, message, ToolTipIcon.Warning);
             }
         }
     }

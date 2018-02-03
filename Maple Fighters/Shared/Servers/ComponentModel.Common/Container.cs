@@ -101,8 +101,8 @@ namespace ComponentModel.Common
                 return default(T);
             }
 
-            component.Awake(owner);
             components.Add(component);
+            component.Awake(owner);
             return component;
         }
 

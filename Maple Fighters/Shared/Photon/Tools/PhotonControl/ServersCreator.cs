@@ -6,12 +6,11 @@ using ComponentModel.Common;
 
 namespace PhotonControl
 {
-    internal class ServersCreator : Component
+    internal class ServersCreator : Component<IPhotonControl>
     {
         private const string PHOTON_SERVER_CONFIGURATION_FILE = @"{0}\PhotonServer.config";
         private const int MINIMUM_SERVERS_TO_ADD_START_OR_STOP_SERVERS_BUTTONS = 2;
 
-        private IPhotonControl photonControl;
         private IServersContainer serversContainer;
         private IServersController serversController;
 
@@ -19,9 +18,8 @@ namespace PhotonControl
         {
             base.OnAwake();
 
-            photonControl = Entity.GetComponent<IPhotonControl>().AssertNotNull();
-            serversContainer = Entity.GetComponent<IServersContainer>().AssertNotNull();
-            serversController = Entity.GetComponent<IServersController>().AssertNotNull();
+            serversContainer = Entity.Components.GetComponent<IServersContainer>().AssertNotNull();
+            serversController = Entity.Components.GetComponent<IServersController>().AssertNotNull();
 
             LoadServerNamesFromPhotonConfiguration();
         }
@@ -43,23 +41,25 @@ namespace PhotonControl
                 }
                 else
                 {
-                    LogUtils.Log(@"Could not find server names.");
+                    LogUtils.Log(MessageBuilder.Trace(@"Could not find server names."));
                 }
             }
             catch (Exception exception)
             {
-                LogUtils.Log(exception.Message);
+                LogUtils.Log(MessageBuilder.Trace(exception.Message));
             }
             finally
             {
                 var serversCount = serversContainer.GetNumberOfServers();
                 if (serversCount == 0)
                 {
+                    const int FIRST_INDEX = 0;
+
                     var info = new ToolStripMenuItem("No servers.");
-                    photonControl.ServersMenu.DropDownItems.Insert(0, info);
+                    Entity.ServersMenu.DropDownItems.Insert(FIRST_INDEX, info);
 
                     var message = "No servers were found.";
-                    photonControl.NotifyIcon.ShowBalloonTip(100, null, message, ToolTipIcon.Warning);
+                    Entity.NotifyIcon.ShowBalloonTip(100, null, message, ToolTipIcon.Info);
                 }
                 else
                 {
@@ -69,21 +69,53 @@ namespace PhotonControl
                     }
 
                     var message = $"{serversCount} servers were found.";
-                    photonControl.NotifyIcon.ShowBalloonTip(100, null, message, ToolTipIcon.Warning);
+                    Entity.NotifyIcon.ShowBalloonTip(100, null, message, ToolTipIcon.Info);
                 }
+
+                ChangeNotifyIconInfo();
             }
 
             void AddStartAndStopServersButtons()
             {
-                var startServers = new ToolStripMenuItem("Start Servers");
+                const string START_BUTTON_NAME = "Start Servers";
+                const string STOP_BUTTON_NAME = "Stop Servers";
+
+                var startServers = new ToolStripMenuItem(START_BUTTON_NAME);
                 startServers.Click += (o, args) => serversController.StartAllServers();
 
-                var stopServers = new ToolStripMenuItem("Stop Servers");
+                var stopServers = new ToolStripMenuItem(STOP_BUTTON_NAME);
                 stopServers.Click += (o, args) => serversController.StopAllServers();
 
-                photonControl.ServersMenu.DropDownItems.Insert(0, startServers);
-                photonControl.ServersMenu.DropDownItems.Insert(1, stopServers);
-                photonControl.ServersMenu.DropDownItems.Insert(2, new ToolStripSeparator());
+                const int FIRST_INDEX = 0;
+                const int SECOND_INDEX = 1;
+                const int THIRD_INDEX = 2;
+
+                Entity.ServersMenu.DropDownItems.Insert(FIRST_INDEX, startServers);
+                Entity.ServersMenu.DropDownItems.Insert(SECOND_INDEX, stopServers);
+                Entity.ServersMenu.DropDownItems.Insert(THIRD_INDEX, new ToolStripSeparator());
+            }
+        }
+
+        private void ChangeNotifyIconInfo()
+        {
+            var count = serversContainer.GetNumberOfServers();
+            switch (count)
+            {
+                case 0:
+                {
+                    Entity.NotifyIcon.Text = @"There are no servers available.";
+                    break;
+                }
+                case 1:
+                {
+                    Entity.NotifyIcon.Text = @"There is 1 server available.";
+                    break;
+                }
+                default:
+                {
+                    Entity.NotifyIcon.Text = $@"There are {count} servers available.";
+                    break;
+                }
             }
         }
     }

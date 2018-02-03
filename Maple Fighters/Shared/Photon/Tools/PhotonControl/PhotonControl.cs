@@ -5,12 +5,14 @@ using ComponentModel.Common;
 
 namespace PhotonControl
 {
-    internal partial class PhotonControl : Form, IComponent, IPhotonControl
+    internal partial class PhotonControl : Form, IPhotonControl
     {
         private const string TITLE = "Photon Control";
 
-        public ToolStripMenuItem ServersMenu { get; private set; }
-        public NotifyIcon NotifyIcon { get; private set; }
+        public IContainer<IPhotonControl> Components { get; }
+
+        public ToolStripMenuItem ServersMenu { get; }
+        public NotifyIcon NotifyIcon { get; }
 
         public event Action LogsFolderButtonClicked;
         public event Action ExitButtonClicked;
@@ -18,42 +20,66 @@ namespace PhotonControl
         public PhotonControl()
         {
             InitializeComponent();
-        }
 
-        public void Awake(IContainer entity)
-        {
-            // Left blank intentionally
-        }
-
-        private void Form_Load(object sender, EventArgs e)
-        {
-            ServersMenu = serversStripMenuItem;
+            ServersMenu = serversMenuItem;
 
             NotifyIcon = notifyIcon;
-            NotifyIcon.ContextMenuStrip = contextMenuStrip;
+            NotifyIcon.Icon = Properties.Resources.CircleIcon;
+            NotifyIcon.ContextMenuStrip = menuStrip;
+            NotifyIcon.Visible = true;
 
+            Components = new Container<IPhotonControl>(this);
+            Components.AddComponent(new ServersController());
+            Components.AddComponent(new ServersCreator());
+            Components.AddComponent(new ExitButtonHandler());
+            Components.AddComponent(new LogsFolderButtonHandler());
+
+            SubscribeToProcessExitEvent();
+        }
+
+        private void SubscribeToProcessExitEvent()
+        {
+            AppDomain.CurrentDomain.ProcessExit += OnProcessExit;
+        }
+
+        private void UnsubscribeFromProcessExitEvent()
+        {
+            AppDomain.CurrentDomain.ProcessExit -= OnProcessExit;
+        }
+
+        private void OnFormLoad(object sender, EventArgs e)
+        {
             Hide();
             CreateMenuTitle();
         }
 
-        private void CreateMenuTitle()
-        {
-            var ContextMenuStrip = new ContextMenuStrip();
-            var title = ContextMenuStrip.Items.Add(TITLE);
-            title.BackColor = Color.Black;
-            title.ForeColor = Color.White;
-
-            contextMenuStrip.Items.Insert(0, title);
-        }
-
-        private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
+        private void OnExitButtonClicked(object sender, EventArgs e)
         {
             ExitButtonClicked?.Invoke();
         }
 
-        private void logsToolStripMenuItem_Click(object sender, EventArgs e)
+        private void OnLogsButtonClicked(object sender, EventArgs e)
         {
             LogsFolderButtonClicked?.Invoke();
+        }
+
+        private void OnProcessExit(object sender, EventArgs e)
+        {
+            Components.Dispose();
+
+            UnsubscribeFromProcessExitEvent();
+        }
+
+        private void CreateMenuTitle()
+        {
+            var contextMenuStrip = new ContextMenuStrip();
+            var title = contextMenuStrip.Items.Add(TITLE);
+            title.BackColor = Color.Black;
+            title.ForeColor = Color.White;
+            title.Image = NotifyIcon.Icon.ToBitmap();
+
+            const int FIRST_INDEX = 0;
+            menuStrip.Items.Insert(FIRST_INDEX, title);
         }
     }
 } 

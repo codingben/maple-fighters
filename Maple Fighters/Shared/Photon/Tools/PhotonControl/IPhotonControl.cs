@@ -4,8 +4,10 @@ using ComponentModel.Common;
 
 namespace PhotonControl
 {
-    internal interface IPhotonControl : IExposableComponent
+    internal interface IPhotonControl : IEntity, IDisposable
     {
+        IContainer<IPhotonControl> Components { get; }
+
         ToolStripMenuItem ServersMenu { get; }
         NotifyIcon NotifyIcon { get; }
 

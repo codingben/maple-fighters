@@ -30,86 +30,94 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PhotonControl));
-            this.contextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.serversStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.serversMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripSeparator();
             this.logsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.testToolStripMenuItem = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
-            this.contextMenuStrip.SuspendLayout();
+            this.menuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
-            // contextMenuStrip
+            // menuStrip
             // 
-            this.contextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.serversStripMenuItem,
+            this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.serversMenuItem,
             this.exitToolStripMenuItem,
             this.logsToolStripMenuItem,
             this.testToolStripMenuItem,
             this.exitToolStripMenuItem1});
-            this.contextMenuStrip.Name = "contextMenuStrip1";
-            resources.ApplyResources(this.contextMenuStrip, "contextMenuStrip");
+            this.menuStrip.Name = "contextMenuStrip1";
+            this.menuStrip.Size = new System.Drawing.Size(136, 82);
             // 
-            // serversStripMenuItem
+            // serversMenuItem
             // 
-            this.serversStripMenuItem.Name = "serversStripMenuItem";
-            resources.ApplyResources(this.serversStripMenuItem, "serversStripMenuItem");
+            this.serversMenuItem.Name = "serversMenuItem";
+            this.serversMenuItem.Size = new System.Drawing.Size(135, 22);
+            this.serversMenuItem.Text = "Servers";
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            resources.ApplyResources(this.exitToolStripMenuItem, "exitToolStripMenuItem");
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(132, 6);
             // 
             // logsToolStripMenuItem
             // 
             this.logsToolStripMenuItem.Name = "logsToolStripMenuItem";
-            resources.ApplyResources(this.logsToolStripMenuItem, "logsToolStripMenuItem");
-            this.logsToolStripMenuItem.Click += new System.EventHandler(this.logsToolStripMenuItem_Click);
+            this.logsToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
+            this.logsToolStripMenuItem.Text = "Logs Folder";
+            this.logsToolStripMenuItem.Click += new System.EventHandler(this.OnLogsButtonClicked);
             // 
             // testToolStripMenuItem
             // 
             this.testToolStripMenuItem.Name = "testToolStripMenuItem";
-            resources.ApplyResources(this.testToolStripMenuItem, "testToolStripMenuItem");
+            this.testToolStripMenuItem.Size = new System.Drawing.Size(132, 6);
             // 
             // exitToolStripMenuItem1
             // 
             this.exitToolStripMenuItem1.Name = "exitToolStripMenuItem1";
-            resources.ApplyResources(this.exitToolStripMenuItem1, "exitToolStripMenuItem1");
-            this.exitToolStripMenuItem1.Click += new System.EventHandler(this.ExitToolStripMenuItem_Click);
+            this.exitToolStripMenuItem1.Size = new System.Drawing.Size(135, 22);
+            this.exitToolStripMenuItem1.Text = "Exit";
+            this.exitToolStripMenuItem1.Click += new System.EventHandler(this.OnExitButtonClicked);
             // 
             // optionsToolStripMenuItem
             // 
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
-            resources.ApplyResources(this.optionsToolStripMenuItem, "optionsToolStripMenuItem");
+            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.optionsToolStripMenuItem.Text = "Options";
             // 
             // notifyIcon
             // 
-            resources.ApplyResources(this.notifyIcon, "notifyIcon");
+            this.notifyIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon.Icon")));
             // 
             // PhotonControl
             // 
-            resources.ApplyResources(this, "$this");
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(284, 261);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "PhotonControl";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "Photon Control";
             this.WindowState = System.Windows.Forms.FormWindowState.Minimized;
-            this.Load += new System.EventHandler(this.Form_Load);
-            this.contextMenuStrip.ResumeLayout(false);
+            this.Load += new System.EventHandler(this.OnFormLoad);
+            this.menuStrip.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.ContextMenuStrip contextMenuStrip;
+        private System.Windows.Forms.ContextMenuStrip menuStrip;
         private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator exitToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem logsToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator testToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem1;
         private System.Windows.Forms.NotifyIcon notifyIcon;
-        private System.Windows.Forms.ToolStripMenuItem serversStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem serversMenuItem;
     }
 }
 

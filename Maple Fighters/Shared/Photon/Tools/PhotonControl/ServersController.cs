@@ -6,19 +6,17 @@ using ComponentModel.Common;
 
 namespace PhotonControl
 {
-    internal class ServersController : Component, IServersController
+    internal class ServersController : Component<IPhotonControl>, IServersController
     {
         private const string PHOTON_SERVER_EXECUTABLE = @"{0}\PhotonSocketServer.exe";
 
-        private IPhotonControl photonControl;
         private IServersContainer serversContainer;
 
         protected override void OnAwake()
         {
             base.OnAwake();
 
-            photonControl = Entity.GetComponent<IPhotonControl>().AssertNotNull();
-            serversContainer = Entity.AddComponent(new ServersContainer());
+            serversContainer = Entity.Components.AddComponent(new ServersContainer());
         }
 
         public void StartServer(string serverName, bool notify = true)
@@ -38,7 +36,7 @@ namespace PhotonControl
             if (notify)
             {
                 var message = isRunning ? $"{serverName} server started." : $"{serverName} server is not started.";
-                photonControl.NotifyIcon.ShowBalloonTip(100, $"{DateTime.Now:HH:mm:ss tt}", message, ToolTipIcon.Info);
+                Entity.NotifyIcon.ShowBalloonTip(100, $"{DateTime.Now:HH:mm:ss tt}", message, ToolTipIcon.Info);
             }
         }
 
@@ -59,7 +57,7 @@ namespace PhotonControl
             if (notify)
             {
                 var message = isStopped ? $"{serverName} server stopped." : $"{serverName} server is not stopped.";
-                photonControl.NotifyIcon.ShowBalloonTip(100, $"{DateTime.Now:HH:mm:ss tt}", message, ToolTipIcon.Info);
+                Entity.NotifyIcon.ShowBalloonTip(100, $"{DateTime.Now:HH:mm:ss tt}", message, ToolTipIcon.Info);
             }
         }
 
@@ -83,7 +81,7 @@ namespace PhotonControl
             }
 
             var message = $"{count} servers were started.";
-            photonControl.NotifyIcon.ShowBalloonTip(100, $"{DateTime.Now:HH:mm:ss tt}", message, ToolTipIcon.Info);
+            Entity.NotifyIcon.ShowBalloonTip(100, $"{DateTime.Now:HH:mm:ss tt}", message, ToolTipIcon.Info);
         }
 
         public void StopAllServers()
@@ -106,7 +104,7 @@ namespace PhotonControl
             }
 
             var message = $"{count} servers were stopped.";
-            photonControl.NotifyIcon.ShowBalloonTip(100, $"{DateTime.Now:HH:mm:ss tt}", message, ToolTipIcon.Info);
+            Entity.NotifyIcon.ShowBalloonTip(100, $"{DateTime.Now:HH:mm:ss tt}", message, ToolTipIcon.Info);
         }
 
         private void UpdateStateOfServerItemButtons(string serverName, bool isRunning)
