@@ -17,8 +17,8 @@ namespace Chat.Application.PeerLogic.Components
         {
             base.OnAwake();
 
-            peerContainer = Server.Entity.GetComponent<IPeerContainer>().AssertNotNull();
-            peerGetter = Entity.GetComponent<IMinimalPeerGetter>().AssertNotNull();
+            peerContainer = Server.Components.GetComponent<IPeerContainer>().AssertNotNull();
+            peerGetter = Components.GetComponent<IMinimalPeerGetter>().AssertNotNull();
         }
 
         public void SendChatMessage(string message)
@@ -30,7 +30,7 @@ namespace Chat.Application.PeerLogic.Components
                     continue;
                 }
 
-                var eventSenderWrapper = peerWrapper.PeerLogic.Entity.GetComponent<IEventSenderWrapper>().AssertNotNull();
+                var eventSenderWrapper = peerWrapper.PeerLogic.Components.GetComponent<IEventSenderWrapper>().AssertNotNull();
                 var parameters = new ChatMessageEventParameters(message);
                 eventSenderWrapper.Send((byte)ChatEvents.ChatMessage, parameters, MessageSendOptions.DefaultReliable());
             }

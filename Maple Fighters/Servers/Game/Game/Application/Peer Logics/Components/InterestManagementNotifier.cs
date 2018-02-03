@@ -16,10 +16,10 @@ namespace Game.Application.PeerLogic.Components
         {
             base.OnAwake();
 
-            eventSender = Entity.GetComponent<IEventSenderWrapper>().AssertNotNull();
+            eventSender = Components.GetComponent<IEventSenderWrapper>().AssertNotNull();
 
-            var sceneObjectGetter = Entity.GetComponent<ISceneObjectGetter>().AssertNotNull();
-            var interestArea = sceneObjectGetter.GetSceneObject().Container.GetComponent<IInterestArea>().AssertNotNull();
+            var sceneObjectGetter = Components.GetComponent<ISceneObjectGetter>().AssertNotNull();
+            var interestArea = sceneObjectGetter.GetSceneObject().Components.GetComponent<IInterestArea>().AssertNotNull();
             interestArea.SubscriberAdded += OnSubscriberAdded;
             interestArea.SubscriberRemoved += OnSubscriberRemoved;
             interestArea.SubscribersAdded += OnSubscribersAdded;
@@ -28,7 +28,7 @@ namespace Game.Application.PeerLogic.Components
 
         private void OnSubscriberAdded(ISceneObject sceneObject)
         {
-            var transform = sceneObject.Container.GetComponent<ITransform>().AssertNotNull();
+            var transform = sceneObject.Components.GetComponent<ITransform>().AssertNotNull();
             var sharedSceneObject = new SceneObjectParameters(sceneObject.Id, sceneObject.Name, transform.Position.X, transform.Position.Y);
 
             var parameters = new SceneObjectAddedEventParameters(sharedSceneObject);
@@ -49,7 +49,7 @@ namespace Game.Application.PeerLogic.Components
                 sharedSceneObjects[i].Id = sceneObjects[i].Id;
                 sharedSceneObjects[i].Name = sceneObjects[i].Name;
 
-                var transform = sceneObjects[i].Container.GetComponent<ITransform>().AssertNotNull();
+                var transform = sceneObjects[i].Components.GetComponent<ITransform>().AssertNotNull();
                 sharedSceneObjects[i].X = transform.Position.X;
                 sharedSceneObjects[i].Y = transform.Position.Y;
             }

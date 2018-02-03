@@ -19,7 +19,7 @@ namespace Game.Application.SceneObjects.Components
         {
             base.OnAwake();
 
-            peerContainer = Server.Entity.GetComponent<IPeerContainer>().AssertNotNull();
+            peerContainer = Server.Components.GetComponent<IPeerContainer>().AssertNotNull();
         }
 
         public void NotifySubscribers<TParameters>(byte code, TParameters parameters, MessageSendOptions messageSendOptions)
@@ -27,7 +27,7 @@ namespace Game.Application.SceneObjects.Components
         {
             foreach (var subscriber in GetSubscribersFromPublishers)
             {
-                var peerId = subscriber.Container.GetComponent<IPeerIdGetter>();
+                var peerId = subscriber.Components.GetComponent<IPeerIdGetter>();
                 if (peerId == null)
                 {
                     continue;
@@ -44,7 +44,7 @@ namespace Game.Application.SceneObjects.Components
                     continue;
                 }
 
-                var eventSender = peerWrapper.PeerLogic.Entity.GetComponent<IEventSenderWrapper>().AssertNotNull();
+                var eventSender = peerWrapper.PeerLogic.Components.GetComponent<IEventSenderWrapper>().AssertNotNull();
                 eventSender.Send(code, parameters, messageSendOptions);
             }
         }
@@ -58,7 +58,7 @@ namespace Game.Application.SceneObjects.Components
                 return;
             }
 
-            var eventSender = peerWrapper.PeerLogic.Entity.GetComponent<IEventSenderWrapper>().AssertNotNull();
+            var eventSender = peerWrapper.PeerLogic.Components.GetComponent<IEventSenderWrapper>().AssertNotNull();
             eventSender.Send(code, parameters, messageSendOptions);
         }
 
@@ -68,7 +68,7 @@ namespace Game.Application.SceneObjects.Components
             {
                 var subscribers = new List<ISceneObject>();
 
-                var interestArea = Entity.Container.GetComponent<IInterestArea>().AssertNotNull();
+                var interestArea = Entity.Components.GetComponent<IInterestArea>().AssertNotNull();
                 if (interestArea == null)
                 {
                     return subscribers.ToArray();

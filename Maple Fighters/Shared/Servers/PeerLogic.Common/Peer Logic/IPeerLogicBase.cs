@@ -6,7 +6,7 @@ namespace PeerLogic.Common
 {
     public interface IPeerLogicBase : IDisposable
     {
-        IContainer Entity { get; }
+        IContainer Components { get; }
 
         void Initialize(IClientPeerWrapper<IClientPeer> peer);
     }

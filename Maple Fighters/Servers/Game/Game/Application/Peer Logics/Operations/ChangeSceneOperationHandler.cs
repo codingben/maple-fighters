@@ -21,30 +21,30 @@ namespace Game.Application.PeerLogic.Operations
         {
             this.sceneObject = sceneObject;
 
-            sceneContainer = Server.Entity.GetComponent<ISceneContainer>().AssertNotNull();
-            CharacterSpawnDetailsProvider = Server.Entity.GetComponent<ICharacterSpawnDetailsProvider>().AssertNotNull();
-            characterCreator = Server.Entity.GetComponent<ICharacterCreator>().AssertNotNull();
+            sceneContainer = Server.Components.GetComponent<ISceneContainer>().AssertNotNull();
+            CharacterSpawnDetailsProvider = Server.Components.GetComponent<ICharacterSpawnDetailsProvider>().AssertNotNull();
+            characterCreator = Server.Components.GetComponent<ICharacterCreator>().AssertNotNull();
         }
 
         public ChangeSceneResponseParameters? Handle(MessageData<ChangeSceneRequestParameters> messageData, ref MessageSendOptions sendOptions)
         {
             // Getting a current scene before the teleportation.
-            var presenceSceneProvider = sceneObject.Container.GetComponent<IPresenceSceneProvider>().AssertNotNull();
+            var presenceSceneProvider = sceneObject.Components.GetComponent<IPresenceSceneProvider>().AssertNotNull();
 
             // Getting portal info.
             var portalSceneObjectId = messageData.Parameters.PortalId;
             var portalSceneObject = presenceSceneProvider.Scene.GetSceneObject(portalSceneObjectId).AssertNotNull();
-            var portalInfoProvider = portalSceneObject.Container.GetComponent<IPortalInfoProvider>().AssertNotNull();
+            var portalInfoProvider = portalSceneObject.Components.GetComponent<IPortalInfoProvider>().AssertNotNull();
 
             // Removing a body from old physics world.
-            sceneObject.Container.RemoveComponent<CharacterBody>();
+            sceneObject.Components.RemoveComponent<CharacterBody>();
 
             // Removing a character from his old scene.
             presenceSceneProvider.Scene.RemoveSceneObject(sceneObject.Id);
 
             // Setting the character's position in the destination scene.
             var spawnPositionDetails = CharacterSpawnDetailsProvider.GetCharacterSpawnDetails(portalInfoProvider.Map);
-            var transform = sceneObject.Container.GetComponent<ITransform>().AssertNotNull();
+            var transform = sceneObject.Components.GetComponent<ITransform>().AssertNotNull();
             transform.Position = spawnPositionDetails.Position;
             transform.Direction = spawnPositionDetails.Direction;
 
@@ -53,14 +53,14 @@ namespace Game.Application.PeerLogic.Operations
             destinationScene.GetScene().AddSceneObject(sceneObject);
 
             // Setting the character's interest area in the destination scene.
-            var interestArea = sceneObject.Container.GetComponent<IInterestArea>().AssertNotNull();
+            var interestArea = sceneObject.Components.GetComponent<IInterestArea>().AssertNotNull();
             interestArea.SetSize();
 
             // Creating a new body in the new physics world.
             characterCreator.CreateCharacterBody(destinationScene, sceneObject);
 
             // Adding a new body to the new physics world.
-            sceneObject.Container.AddComponent(new CharacterBody());
+            sceneObject.Components.AddComponent(new CharacterBody());
             return new ChangeSceneResponseParameters(portalInfoProvider.Map);
         }
     }

@@ -19,7 +19,7 @@ namespace PeerLogic.Common.Components
         {
             base.OnAwake();
 
-            peerGetter = Entity.GetComponent<IMinimalPeerGetter>().AssertNotNull();
+            peerGetter = Components.GetComponent<IMinimalPeerGetter>().AssertNotNull();
         }
 
         public void Send<TParameters>(byte code, TParameters parameters, MessageSendOptions messageSendOptions)

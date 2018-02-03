@@ -6,7 +6,7 @@ namespace Game.InterestManagement
 {
     public interface IScene : IEntity, IDisposable
     {
-        IContainer Entity { get; }
+        IContainer Components { get; }
 
         Vector2 RegionSize { get; }
         IRegion[,] GetAllRegions();

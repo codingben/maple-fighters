@@ -21,12 +21,12 @@ namespace Chat.Application.PeerLogics
 
         private void AddComponents()
         {
-            Entity.AddComponent(new ChatMessageEventSender());
+            Components.AddComponent(new ChatMessageEventSender());
         }
 
         private void AddHandlerForChatMessageOperation()
         {
-            var eventSenderWrapper = Entity.GetComponent<IChatMessageEventSender>().AssertNotNull();
+            var eventSenderWrapper = Components.GetComponent<IChatMessageEventSender>().AssertNotNull();
             OperationRequestHandlerRegister.SetHandler(ChatOperations.ChatMessage, new ChatMessageOperationHandler(eventSenderWrapper));
         }
     }

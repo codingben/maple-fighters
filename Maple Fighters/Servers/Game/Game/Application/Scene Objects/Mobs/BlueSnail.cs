@@ -38,14 +38,14 @@ namespace Game.Application.SceneObjects
 
             CreateBody();
 
-            transform = Container.GetComponent<ITransform>().AssertNotNull();
+            transform = Components.GetComponent<ITransform>().AssertNotNull();
             transform.PositionChanged += OnPositionChanged;
 
-            var physicsCollisionNotifier = Container.GetComponent<IPhysicsCollisionNotifier>().AssertNotNull();
+            var physicsCollisionNotifier = Components.GetComponent<IPhysicsCollisionNotifier>().AssertNotNull();
             physicsCollisionNotifier.CollisionEnter += OnCollisionEnter;
 
-            var presenceSceneProvider = Container.GetComponent<IPresenceSceneProvider>().AssertNotNull();
-            var executor = presenceSceneProvider.Scene.Entity.GetComponent<ISceneOrderExecutor>().AssertNotNull();
+            var presenceSceneProvider = Components.GetComponent<IPresenceSceneProvider>().AssertNotNull();
+            var executor = presenceSceneProvider.Scene.Components.GetComponent<ISceneOrderExecutor>().AssertNotNull();
             executor.GetPreUpdateExecutor().StartCoroutine(MoveMob());
         }
 
@@ -110,7 +110,7 @@ namespace Game.Application.SceneObjects
                 return;
             }
 
-            var peerIdGetter = hittedSceneObject.Container.GetComponent<IPeerIdGetter>();
+            var peerIdGetter = hittedSceneObject.Components.GetComponent<IPeerIdGetter>();
             if (peerIdGetter != null && !isAttacking)
             {
                 AttackPlayer(peerIdGetter.GetId(), hittedSceneObject, collisionInfo);
@@ -121,7 +121,7 @@ namespace Game.Application.SceneObjects
         {
             isAttacking = true;
 
-            var transform = sceneObject.Container.GetComponent<ITransform>().AssertNotNull();
+            var transform = sceneObject.Components.GetComponent<ITransform>().AssertNotNull();
             var orientation = (transform.Position - collisionInfo.Position).Normalize();
 
             direction = orientation.X < 0 ? -MOVE_DIRECTION : MOVE_DIRECTION;

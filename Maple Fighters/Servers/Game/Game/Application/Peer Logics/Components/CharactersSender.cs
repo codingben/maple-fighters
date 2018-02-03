@@ -18,10 +18,10 @@ namespace Game.Application.PeerLogic.Components
         {
             base.OnAwake();
 
-            eventSender = Entity.GetComponent<IEventSenderWrapper>().AssertNotNull();
+            eventSender = Components.GetComponent<IEventSenderWrapper>().AssertNotNull();
 
-            var sceneObjectGetter = Entity.GetComponent<ISceneObjectGetter>().AssertNotNull();
-            var interestArea = sceneObjectGetter.GetSceneObject().Container.GetComponent<IInterestArea>().AssertNotNull();
+            var sceneObjectGetter = Components.GetComponent<ISceneObjectGetter>().AssertNotNull();
+            var interestArea = sceneObjectGetter.GetSceneObject().Components.GetComponent<IInterestArea>().AssertNotNull();
             interestArea.SubscriberAdded += OnCharacterAdded;
             interestArea.SubscribersAdded += OnCharactersAdded;
         }
@@ -69,13 +69,13 @@ namespace Game.Application.PeerLogic.Components
         private CharacterSpawnDetailsParameters? CreateCharacterSpawnDetails(ISceneObject sceneObject)
         {
             // It may be null because not every object on a scene is a character.
-            var characterGetter = sceneObject.Container.GetComponent<ICharacterGetter>();
+            var characterGetter = sceneObject.Components.GetComponent<ICharacterGetter>();
             if (characterGetter == null)
             {
                 return null;
             }
 
-            var transform = sceneObject.Container.GetComponent<ITransform>().AssertNotNull();
+            var transform = sceneObject.Components.GetComponent<ITransform>().AssertNotNull();
             return new CharacterSpawnDetailsParameters(sceneObject.Id, characterGetter.GetCharacter(), transform.Direction.GetDirectionsFromDirection());
         }
     }

@@ -11,7 +11,7 @@ namespace Game.Application.SceneObjects
         public Portal(Vector2 position, Maps destinationMap) 
             : base(IdGenerator.GetId(), "Portal", new TransformDetails(position, Vector2.Zero, Direction.Left))
         {
-            Container.AddComponent(new PortalInfoProvider(destinationMap));
+            Components.AddComponent(new PortalInfoProvider(destinationMap));
         }
     }
 }

@@ -93,9 +93,9 @@ namespace Game.InterestManagement
         {
             base.OnAwake();
 
-            presenceSceneProvider = Entity.Container.GetComponent<IPresenceSceneProvider>().AssertNotNull();
+            presenceSceneProvider = Entity.Components.GetComponent<IPresenceSceneProvider>().AssertNotNull();
 
-            var transform = Entity.Container.GetComponent<ITransform>().AssertNotNull();
+            var transform = Entity.Components.GetComponent<ITransform>().AssertNotNull();
             transform.PositionChanged += SetPosition;
         }
 

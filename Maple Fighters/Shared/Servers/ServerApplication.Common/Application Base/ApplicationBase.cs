@@ -27,14 +27,14 @@ namespace ServerApplication.Common.ApplicationBase
 
         public virtual void Startup()
         {
-            peerContainer = Server.Entity.AddComponent(new PeerContainer());
+            peerContainer = Server.Components.AddComponent(new PeerContainer());
 
             LogUtils.Log(MessageBuilder.Trace("An application has started."));
         }
 
         public virtual void Shutdown()
         {
-            Server.Entity.Dispose();
+            Server.Components.Dispose();
 
             LogUtils.Log(MessageBuilder.Trace("An application has been stopped."));
         }
@@ -43,15 +43,15 @@ namespace ServerApplication.Common.ApplicationBase
         {
             TimeProviders.DefaultTimeProvider = new TimeProvider();
 
-            Server.Entity.AddComponent(new RandomNumberGenerator());
-            Server.Entity.AddComponent(new IdGenerator());
-            var fiber = Server.Entity.AddComponent(new FiberProvider(fiberProvider)).AssertNotNull();
-            Server.Entity.AddComponent(new CoroutinesExecutor(new FiberCoroutinesExecutor(fiber.GetFiberStarter(), 100)));
+            Server.Components.AddComponent(new RandomNumberGenerator());
+            Server.Components.AddComponent(new IdGenerator());
+            var fiber = Server.Components.AddComponent(new FiberProvider(fiberProvider)).AssertNotNull();
+            Server.Components.AddComponent(new CoroutinesExecutor(new FiberCoroutinesExecutor(fiber.GetFiberStarter(), 100)));
         }
 
         protected void WrapClientPeer(IClientPeer clientPeer, IPeerLogicBase peerLogic)
         {
-            var idGenerator = Server.Entity.GetComponent<IIdGenerator>().AssertNotNull();
+            var idGenerator = Server.Components.GetComponent<IIdGenerator>().AssertNotNull();
             var peerId = idGenerator.GenerateId();
 
             var clientPeerWrapper = new ClientPeerWrapper<IClientPeer>(clientPeer, peerId);

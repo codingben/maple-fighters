@@ -14,7 +14,7 @@ namespace Registration.Application.Components
         {
             base.OnAwake();
 
-            databaseConnectionProvider = Entity.GetComponent<IDatabaseConnectionProvider>().AssertNotNull();
+            databaseConnectionProvider = Components.GetComponent<IDatabaseConnectionProvider>().AssertNotNull();
         }
 
         public void Create(string email, string password, string firstName, string lastName)

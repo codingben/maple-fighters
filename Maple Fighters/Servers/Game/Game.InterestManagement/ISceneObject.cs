@@ -8,7 +8,7 @@ namespace Game.InterestManagement
         int Id { get; }
         string Name { get; }
 
-        IContainer<ISceneObject> Container { get; }
+        IContainer<ISceneObject> Components { get; }
 
         void OnAwake();
         void OnDestroy();

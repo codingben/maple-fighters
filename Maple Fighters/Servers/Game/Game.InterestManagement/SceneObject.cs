@@ -8,16 +8,16 @@ namespace Game.InterestManagement
         public int Id { get; }
         public string Name { get; }
 
-        public IContainer<ISceneObject> Container { get; }
+        public IContainer<ISceneObject> Components { get; }
 
         public SceneObject(int id, string name, TransformDetails transformDetails)
         {
             Id = id;
             Name = name;
 
-            Container = new Container<ISceneObject>(this);
-            Container.AddComponent(new Transform(transformDetails.Position, transformDetails.Size, transformDetails.Direction));
-            Container.AddComponent(new PresenceSceneProvider());
+            Components = new Container<ISceneObject>(this);
+            Components.AddComponent(new Transform(transformDetails.Position, transformDetails.Size, transformDetails.Direction));
+            Components.AddComponent(new PresenceSceneProvider());
         }
 
         public virtual void OnAwake()
@@ -32,10 +32,10 @@ namespace Game.InterestManagement
 
         public void Dispose()
         {
-            var presenceSceneProvider = Container.GetComponent<IPresenceSceneProvider>().AssertNotNull();
+            var presenceSceneProvider = Components.GetComponent<IPresenceSceneProvider>().AssertNotNull();
             presenceSceneProvider.Scene?.RemoveSceneObject(Id);
 
-            Container?.Dispose();
+            Components?.Dispose();
         }
     }
 }

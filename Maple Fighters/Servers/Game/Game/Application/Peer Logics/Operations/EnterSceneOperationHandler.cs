@@ -20,7 +20,7 @@ namespace Game.Application.PeerLogic.Operations
 
         public EnterSceneResponseParameters? Handle(MessageData<EmptyParameters> messageData, ref MessageSendOptions sendOptions)
         {
-            var interestArea = sceneObject.Container.GetComponent<IInterestArea>().AssertNotNull();
+            var interestArea = sceneObject.Components.GetComponent<IInterestArea>().AssertNotNull();
             interestArea.DetectOverlapsWithRegions();
             return new EnterSceneResponseParameters(GetSceneObjectShared(), GetCharacterSpawnDetailsShared());
         }
@@ -29,13 +29,13 @@ namespace Game.Application.PeerLogic.Operations
         {
             const string SCENE_OBJECT_NAME = "Local Player";
 
-            var transform = sceneObject.Container.GetComponent<ITransform>().AssertNotNull();
+            var transform = sceneObject.Components.GetComponent<ITransform>().AssertNotNull();
             return new SceneObjectParameters(sceneObject.Id, SCENE_OBJECT_NAME, transform.Position.X, transform.Position.Y);
         }
 
         private CharacterSpawnDetailsParameters GetCharacterSpawnDetailsShared()
         {
-            var transform = sceneObject.Container.GetComponent<ITransform>().AssertNotNull();
+            var transform = sceneObject.Components.GetComponent<ITransform>().AssertNotNull();
             return new CharacterSpawnDetailsParameters(sceneObject.Id, character, transform.Direction.GetDirectionsFromDirection());
         }
     }

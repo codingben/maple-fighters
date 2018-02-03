@@ -18,9 +18,9 @@ namespace Game.Application.PeerLogic.Operations
         {
             this.userId = userId;
 
-            databaseCharacterCreator = Server.Entity.GetComponent<IDatabaseCharacterCreator>().AssertNotNull();
-            databaseCharacterExistence = Server.Entity.GetComponent<IDatabaseCharacterExistence>().AssertNotNull();
-            databaseCharacterNameVerifier = Server.Entity.GetComponent<IDatabaseCharacterNameVerifier>().AssertNotNull();
+            databaseCharacterCreator = Server.Components.GetComponent<IDatabaseCharacterCreator>().AssertNotNull();
+            databaseCharacterExistence = Server.Components.GetComponent<IDatabaseCharacterExistence>().AssertNotNull();
+            databaseCharacterNameVerifier = Server.Components.GetComponent<IDatabaseCharacterNameVerifier>().AssertNotNull();
         }
 
         public CreateCharacterResponseParameters? Handle(MessageData<CreateCharacterRequestParameters> messageData, ref MessageSendOptions sendOptions)

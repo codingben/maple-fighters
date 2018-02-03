@@ -19,12 +19,12 @@ namespace Login.Application.PeerLogic.Operations
 
         public LoginOperationHandler()
         {
-            databaseUserVerifier = Server.Entity.GetComponent<IDatabaseUserVerifier>().AssertNotNull();
-            databaseUserPasswordVerifier = Server.Entity.GetComponent<IDatabaseUserPasswordVerifier>().AssertNotNull();
-            databaseUserIdProvider = Server.Entity.GetComponent<IDatabaseUserIdProvider>().AssertNotNull();
-            databaseAccessTokenCreator = Server.Entity.GetComponent<IDatabaseAccessTokenCreator>().AssertNotNull();
-            databaseAccessTokenExistenceViaUserId = Server.Entity.GetComponent<IDatabaseAccessTokenExistenceViaUserId>().AssertNotNull();
-            databaseAccessTokenProvider = Server.Entity.GetComponent<IDatabaseAccessTokenProvider>().AssertNotNull();
+            databaseUserVerifier = Server.Components.GetComponent<IDatabaseUserVerifier>().AssertNotNull();
+            databaseUserPasswordVerifier = Server.Components.GetComponent<IDatabaseUserPasswordVerifier>().AssertNotNull();
+            databaseUserIdProvider = Server.Components.GetComponent<IDatabaseUserIdProvider>().AssertNotNull();
+            databaseAccessTokenCreator = Server.Components.GetComponent<IDatabaseAccessTokenCreator>().AssertNotNull();
+            databaseAccessTokenExistenceViaUserId = Server.Components.GetComponent<IDatabaseAccessTokenExistenceViaUserId>().AssertNotNull();
+            databaseAccessTokenProvider = Server.Components.GetComponent<IDatabaseAccessTokenProvider>().AssertNotNull();
         }
 
         public LoginResponseParameters? Handle(MessageData<LoginRequestParameters> messageData, ref MessageSendOptions sendOptions)

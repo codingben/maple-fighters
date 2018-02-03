@@ -22,8 +22,8 @@ namespace Game.Application.Components
         {
             this.map = map;
 
-            pythonScriptEngine = Server.Entity.GetComponent<IPythonScriptEngine>().AssertNotNull();
-            characterSpawnDetailsProvider = Server.Entity.GetComponent<ICharacterSpawnDetailsProvider>().AssertNotNull();
+            pythonScriptEngine = Server.Components.GetComponent<IPythonScriptEngine>().AssertNotNull();
+            characterSpawnDetailsProvider = Server.Components.GetComponent<ICharacterSpawnDetailsProvider>().AssertNotNull();
 
             scriptScope = pythonScriptEngine.GetScriptEngine().CreateScope();
             scriptScope.SetVariable("scene", this);
@@ -43,9 +43,9 @@ namespace Game.Application.Components
 
         public void CreateSceneObject(ISceneObject sceneObject)
         {
-            var newSceneObject = AddSceneObject(sceneObject);
-            var transform = newSceneObject.Container.GetComponent<ITransform>().AssertNotNull();
-            var interestArea = newSceneObject.Container.AddComponent(new InterestArea(transform.Position, RegionSize));
+            var createdSceneObject = AddSceneObject(sceneObject);
+            var transform = createdSceneObject.Components.GetComponent<ITransform>().AssertNotNull();
+            var interestArea = createdSceneObject.Components.AddComponent(new InterestArea(transform.Position, RegionSize));
             interestArea.DetectOverlapsWithRegions();
         }
 

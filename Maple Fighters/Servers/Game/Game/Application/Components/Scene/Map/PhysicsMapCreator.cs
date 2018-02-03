@@ -29,7 +29,7 @@ namespace Game.Application.Components
 
         private void CreateScenePhysics(Maps map)
         {
-            var physicsWorldProvider = Entity.GetComponent<IPhysicsWorldProvider>().AssertNotNull();
+            var physicsWorldProvider = Components.GetComponent<IPhysicsWorldProvider>().AssertNotNull();
 
             var pythonScenesPath = (string)Config.Global.Python.Scenes;
             var path = $"{pythonScenesPath}/{map}/{DATA_FILE_NAME}";

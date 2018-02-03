@@ -14,7 +14,7 @@ namespace Login.Application.Components
         {
             base.OnAwake();
 
-            databaseConnectionProvider = Entity.GetComponent<IDatabaseConnectionProvider>().AssertNotNull();
+            databaseConnectionProvider = Components.GetComponent<IDatabaseConnectionProvider>().AssertNotNull();
         }
 
         public int GetUserId(string email)

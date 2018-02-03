@@ -14,8 +14,8 @@ namespace Registration.Application.PeerLogic.Operations
 
         public RegisterOperationHandler()
         {
-            databaseUserCreator = Server.Entity.GetComponent<IDatabaseUserCreator>().AssertNotNull();
-            databaseUserEmailVerifier = Server.Entity.GetComponent<IDatabaseUserEmailVerifier>().AssertNotNull();
+            databaseUserCreator = Server.Components.GetComponent<IDatabaseUserCreator>().AssertNotNull();
+            databaseUserEmailVerifier = Server.Components.GetComponent<IDatabaseUserEmailVerifier>().AssertNotNull();
         }
 
         public RegisterResponseParameters? Handle(MessageData<RegisterRequestParameters> messageData, ref MessageSendOptions sendOptions)

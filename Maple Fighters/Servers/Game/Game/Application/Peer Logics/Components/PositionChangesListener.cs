@@ -18,10 +18,10 @@ namespace Game.Application.PeerLogic.Components
         {
             base.OnAwake();
 
-            sceneObjectGetter = Entity.GetComponent<ISceneObjectGetter>().AssertNotNull();
+            sceneObjectGetter = Components.GetComponent<ISceneObjectGetter>().AssertNotNull();
 
-            interestAreaNotifier = sceneObjectGetter.GetSceneObject().Container.GetComponent<IInterestAreaNotifier>().AssertNotNull();
-            transform = sceneObjectGetter.GetSceneObject().Container.GetComponent<ITransform>().AssertNotNull();
+            interestAreaNotifier = sceneObjectGetter.GetSceneObject().Components.GetComponent<IInterestAreaNotifier>().AssertNotNull();
+            transform = sceneObjectGetter.GetSceneObject().Components.GetComponent<ITransform>().AssertNotNull();
             transform.PositionChanged += UpdatePositionForAll;
         }
 

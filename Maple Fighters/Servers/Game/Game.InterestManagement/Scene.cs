@@ -8,7 +8,7 @@ namespace Game.InterestManagement
 {
     public class Scene : IScene
     {
-        public IContainer Entity { get; } = new Container();
+        public IContainer Components { get; } = new Container();
         public Vector2 RegionSize { get; }
 
         private readonly IRegion[,] regions;
@@ -46,7 +46,7 @@ namespace Game.InterestManagement
                 return null;
             }
 
-            var presenceSceneProvider = sceneObject.Container.GetComponent<IPresenceSceneProvider>().AssertNotNull();
+            var presenceSceneProvider = sceneObject.Components.GetComponent<IPresenceSceneProvider>().AssertNotNull();
             presenceSceneProvider.Scene = this;
 
             sceneObject.OnAwake();
@@ -71,7 +71,7 @@ namespace Game.InterestManagement
             var sceneObject = sceneObjects[id];
             sceneObject.OnDestroy();
 
-            var presenceSceneProvider = sceneObject.Container?.GetComponent<IPresenceSceneProvider>()?.AssertNotNull();
+            var presenceSceneProvider = sceneObject.Components?.GetComponent<IPresenceSceneProvider>()?.AssertNotNull();
             if (presenceSceneProvider != null)
             {
                 presenceSceneProvider.Scene = null;
@@ -114,7 +114,7 @@ namespace Game.InterestManagement
 
             sceneObjects.Clear();
 
-            Entity?.Dispose();
+            Components?.Dispose();
         }
 
         public ISceneObject GetSceneObject(int id)

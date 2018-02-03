@@ -17,7 +17,7 @@ namespace Database.Common.AccessToken
         {
             base.OnAwake();
 
-            peerContainer = Entity.GetComponent<IPeerContainer>().AssertNotNull();
+            peerContainer = Components.GetComponent<IPeerContainer>().AssertNotNull();
         }
 
         public void Add(int peerId, string accessToken)

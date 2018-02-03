@@ -25,12 +25,12 @@ namespace Game.Application.SceneObjects.Components
         {
             base.OnAwake();
 
-            transform = Entity.Container.GetComponent<ITransform>().AssertNotNull();
+            transform = Entity.Components.GetComponent<ITransform>().AssertNotNull();
 
-            var presenceSceneProvider = Entity.Container.GetComponent<IPresenceSceneProvider>().AssertNotNull();
+            var presenceSceneProvider = Entity.Components.GetComponent<IPresenceSceneProvider>().AssertNotNull();
             scene = presenceSceneProvider.Scene;
 
-            var executor = scene.Entity.GetComponent<ISceneOrderExecutor>().AssertNotNull();
+            var executor = scene.Components.GetComponent<ISceneOrderExecutor>().AssertNotNull();
             executor.GetPreUpdateExecutor().StartCoroutine(UpdatePosition());
         }
 
@@ -38,13 +38,13 @@ namespace Game.Application.SceneObjects.Components
         {
             base.OnDestroy();
 
-            var entityManager = scene?.Entity?.GetComponent<IEntityManager>().AssertNotNull();
+            var entityManager = scene?.Components.GetComponent<IEntityManager>().AssertNotNull();
             entityManager?.RemoveBody(body, Entity.Id);
         }
 
         private IEnumerator<IYieldInstruction> UpdatePosition()
         {
-            var entityManager = scene.Entity.GetComponent<IEntityManager>().AssertNotNull();
+            var entityManager = scene.Components.GetComponent<IEntityManager>().AssertNotNull();
 
             while (true)
             {

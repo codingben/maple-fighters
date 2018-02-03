@@ -33,13 +33,13 @@ namespace Physics.Box2D.PhysicsSimulation
             windowTitle = title;
         }
 
-        public void Awake(IContainer entity)
+        public void Awake(IContainer components)
         {
             var drawPhysics = new DrawPhysics(this);
             drawPhysics.AppendFlags(DebugDraw.DrawFlags.Aabb);
             drawPhysics.AppendFlags(DebugDraw.DrawFlags.Shape);
 
-            var physicsWorld = entity.GetComponent<IPhysicsWorldProvider>().AssertNotNull();
+            var physicsWorld = components.GetComponent<IPhysicsWorldProvider>().AssertNotNull();
             var world = physicsWorld.GetWorld();
             world.SetDebugDraw(drawPhysics);
 

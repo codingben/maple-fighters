@@ -24,7 +24,7 @@ namespace Game.Application.Components
         {
             base.OnAwake();
 
-            pythonScriptEngine = Entity.GetComponent<IPythonScriptEngine>().AssertNotNull();
+            pythonScriptEngine = Components.GetComponent<IPythonScriptEngine>().AssertNotNull();
 
             scriptScope = pythonScriptEngine.GetScriptEngine().CreateScope();
             scriptScope.SetVariable("sceneContainer", this);
@@ -64,16 +64,16 @@ namespace Game.Application.Components
             scenes.Add(map, gameSceneWrapper);
 
             var scene = gameSceneWrapper.GetScene();
-            scene.Entity.AddComponent(new SceneOrderExecutor());
-            scene.Entity.AddComponent(new PhysicsSimulationExecutor(physicsWorldInfo));
-            scene.Entity.AddComponent(new PhysicsMapCreator(map));
-            scene.Entity.AddComponent(new EntityManager());
+            scene.Components.AddComponent(new SceneOrderExecutor());
+            scene.Components.AddComponent(new PhysicsSimulationExecutor(physicsWorldInfo));
+            scene.Components.AddComponent(new PhysicsMapCreator(map));
+            scene.Components.AddComponent(new EntityManager());
 
             gameSceneWrapper.CreateSceneObjectsViaPython();
 
             if (drawPhysics)
             {
-                RunScenePhysicsSimulationWindow(scene.Entity, map.ToString(), 800, 600);
+                RunScenePhysicsSimulationWindow(scene.Components, map.ToString(), 800, 600);
             }
         }
 

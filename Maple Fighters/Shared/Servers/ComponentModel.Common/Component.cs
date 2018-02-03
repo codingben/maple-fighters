@@ -2,11 +2,11 @@
 {
     public class Component : IComponent
     {
-        protected IContainer Entity { get; private set; }
+        protected IContainer Components { get; private set; }
 
-        public void Awake(IContainer entity)
+        public void Awake(IContainer components)
         {
-            Entity = entity;
+            Components = components;
 
             OnAwake();
         }

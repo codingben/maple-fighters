@@ -12,7 +12,7 @@ namespace PeerLogic.Common
         where TOperationCode : IComparable, IFormattable, IConvertible
         where TEventCode : IComparable, IFormattable, IConvertible
     {
-        public IContainer Entity { get; } = new Container();
+        public IContainer Components { get; } = new Container();
 
         protected IClientPeerWrapper<IClientPeer> PeerWrapper { get; private set; }
         protected IOperationRequestHandlerRegister<TOperationCode> OperationRequestHandlerRegister { get; private set; }
@@ -28,7 +28,7 @@ namespace PeerLogic.Common
 
         public virtual void Dispose()
         {
-            Entity?.Dispose();
+            Components?.Dispose();
             OperationRequestHandlerRegister?.Dispose();
         }
 
@@ -44,7 +44,7 @@ namespace PeerLogic.Common
             var logOperationsResponse = (bool)Config.Global.Log.OperationsResponse;
 
             // Necessary for async operation handlers.
-            var coroutinesExecutor = Entity.AddComponent(new CoroutinesExecutor(new FiberCoroutinesExecutor(PeerWrapper.Peer.Fiber, 100)));
+            var coroutinesExecutor = Components.AddComponent(new CoroutinesExecutor(new FiberCoroutinesExecutor(PeerWrapper.Peer.Fiber, 100)));
 
             OperationRequestHandlerRegister = new OperationRequestsHandler<TOperationCode>(PeerWrapper.Peer.OperationRequestNotifier,
                 PeerWrapper.Peer.OperationResponseSender, logOperationsRequest, logOperationsResponse, coroutinesExecutor);
@@ -52,8 +52,8 @@ namespace PeerLogic.Common
 
         protected void AddCommonComponents()
         {
-            Entity.AddComponent(new MinimalPeerGetter(PeerWrapper.PeerId, PeerWrapper.Peer));
-            Entity.AddComponent(new EventSenderWrapper(EventSender.AssertNotNull()));
+            Components.AddComponent(new MinimalPeerGetter(PeerWrapper.PeerId, PeerWrapper.Peer));
+            Components.AddComponent(new EventSenderWrapper(EventSender.AssertNotNull()));
         }
     }
 }

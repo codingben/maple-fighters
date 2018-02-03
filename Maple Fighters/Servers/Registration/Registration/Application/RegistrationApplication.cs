@@ -20,9 +20,9 @@ namespace Registration.Application
 
             AddCommonComponents();
 
-            Server.Entity.AddComponent(new DatabaseConnectionProvider());
-            Server.Entity.AddComponent(new DatabaseUserCreator());
-            Server.Entity.AddComponent(new DatabaseUserEmailVerifier());
+            Server.Components.AddComponent(new DatabaseConnectionProvider());
+            Server.Components.AddComponent(new DatabaseUserCreator());
+            Server.Components.AddComponent(new DatabaseUserEmailVerifier());
         }
 
         public override void OnConnected(IClientPeer clientPeer)

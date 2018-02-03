@@ -16,14 +16,14 @@ namespace Game.Application.PeerLogic.Operations
         {
             this.sceneObject = sceneObject;
 
-            interestAreaNotifier = sceneObject.Container.GetComponent<IInterestAreaNotifier>().AssertNotNull();
+            interestAreaNotifier = sceneObject.Components.GetComponent<IInterestAreaNotifier>().AssertNotNull();
         }
 
         public EmptyParameters? Handle(MessageData<UpdatePlayerStateRequestParameters> messageData, ref MessageSendOptions sendOptions)
         {
             var playerState = messageData.Parameters.PlayerState;
 
-            var characterBody = sceneObject.Container.GetComponent<ICharacterBody>();
+            var characterBody = sceneObject.Components.GetComponent<ICharacterBody>();
             if (characterBody != null)
             {
                 characterBody.PlayerState = playerState;

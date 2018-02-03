@@ -37,12 +37,12 @@ namespace Game.Application.PeerLogics
 
         private void AddComponents()
         {
-            sceneObject.Container.AddComponent(new PeerIdGetter(PeerWrapper.PeerId));
+            sceneObject.Components.AddComponent(new PeerIdGetter(PeerWrapper.PeerId));
 
-            Entity.AddComponent(new SceneObjectGetter(sceneObject));
-            Entity.AddComponent(new InterestManagementNotifier());
-            Entity.AddComponent(new CharactersSender());
-            Entity.AddComponent(new PositionChangesListener());
+            Components.AddComponent(new SceneObjectGetter(sceneObject));
+            Components.AddComponent(new InterestManagementNotifier());
+            Components.AddComponent(new CharactersSender());
+            Components.AddComponent(new PositionChangesListener());
         }
 
         private void AddHandlerForEnterSceneOperation()
@@ -52,7 +52,7 @@ namespace Game.Application.PeerLogics
 
         private void AddHandlerForUpdatePositionOperation()
         {
-            var transform = sceneObject.Container.GetComponent<ITransform>().AssertNotNull();
+            var transform = sceneObject.Components.GetComponent<ITransform>().AssertNotNull();
             OperationRequestHandlerRegister.SetHandler(GameOperations.PositionChanged, new UpdatePositionOperationHandler(transform));
         }
 
@@ -75,7 +75,7 @@ namespace Game.Application.PeerLogics
 
         private ISceneObject CreateSceneObject(CharacterFromDatabaseParameters character)
         {
-            var characterSceneObjectCreator = Server.Entity.GetComponent<ICharacterCreator>().AssertNotNull();
+            var characterSceneObjectCreator = Server.Components.GetComponent<ICharacterCreator>().AssertNotNull();
             var characterSceneObject = characterSceneObjectCreator.Create(character);
             return characterSceneObject;
         }

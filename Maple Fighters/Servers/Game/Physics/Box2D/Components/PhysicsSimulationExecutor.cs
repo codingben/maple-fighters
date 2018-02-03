@@ -28,10 +28,10 @@ namespace Physics.Box2D
         {
             base.OnAwake();
 
-            var executor = Entity.GetComponent<ISceneOrderExecutor>().AssertNotNull();
+            var executor = Components.GetComponent<ISceneOrderExecutor>().AssertNotNull();
             executor.GetUpdateExecutor().StartCoroutine(SimulateWorld());
 
-            Entity.AddComponent(new PhysicsWorldProvider(world));
+            Components.AddComponent(new PhysicsWorldProvider(world));
         }
 
         private IEnumerator<IYieldInstruction> SimulateWorld()

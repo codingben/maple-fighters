@@ -22,8 +22,8 @@ namespace Game.Application.SceneObjects
         protected Mob(string name, Vector2 position, Vector2 size) 
             : base(IdGenerator.GetId(), name, new TransformDetails(position, size, Direction.Left))
         {
-            InterestAreaNotifier = Container.AddComponent(new InterestAreaNotifier());
-            var physicsCollisionNotifier = Container.AddComponent(new PhysicsCollisionNotifier());
+            InterestAreaNotifier = Components.AddComponent(new InterestAreaNotifier());
+            var physicsCollisionNotifier = Components.AddComponent(new PhysicsCollisionNotifier());
 
             var fixtureDefinition = PhysicsUtils.CreateFixtureDefinition(size, LayerMask.Mob, physicsCollisionNotifier);
             bodyDefinitionWrapper = PhysicsUtils.CreateBodyDefinitionWrapper(fixtureDefinition, position, this);
@@ -32,8 +32,8 @@ namespace Game.Application.SceneObjects
 
         protected void CreateBody()
         {
-            var presenceSceneProvider = Container.GetComponent<IPresenceSceneProvider>().AssertNotNull();
-            var entityManager = presenceSceneProvider.Scene.Entity.GetComponent<IEntityManager>().AssertNotNull();
+            var presenceSceneProvider = Components.GetComponent<IPresenceSceneProvider>().AssertNotNull();
+            var entityManager = presenceSceneProvider.Scene.Components.GetComponent<IEntityManager>().AssertNotNull();
             entityManager.AddBody(new BodyInfo(Id, bodyDefinitionWrapper));
         }
 
@@ -44,8 +44,8 @@ namespace Game.Application.SceneObjects
                 return body;
             }
 
-            var presenceSceneProvider = Container.GetComponent<IPresenceSceneProvider>().AssertNotNull();
-            var entityManager = presenceSceneProvider.Scene.Entity.GetComponent<IEntityManager>().AssertNotNull();
+            var presenceSceneProvider = Components.GetComponent<IPresenceSceneProvider>().AssertNotNull();
+            var entityManager = presenceSceneProvider.Scene.Components.GetComponent<IEntityManager>().AssertNotNull();
             body = entityManager.GetBody(Id).AssertNotNull();
             return body;
         }

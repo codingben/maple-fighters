@@ -19,10 +19,10 @@ namespace Physics.Box2D
         {
             base.OnAwake();
 
-            var physicsWorldProvider = Entity.GetComponent<IPhysicsWorldProvider>().AssertNotNull();
+            var physicsWorldProvider = Components.GetComponent<IPhysicsWorldProvider>().AssertNotNull();
             world = physicsWorldProvider.GetWorld();
 
-            var executor = Entity.GetComponent<ISceneOrderExecutor>().AssertNotNull();
+            var executor = Components.GetComponent<ISceneOrderExecutor>().AssertNotNull();
             executor.GetPostUpdateExecutor().StartCoroutine(Update());
         }
 

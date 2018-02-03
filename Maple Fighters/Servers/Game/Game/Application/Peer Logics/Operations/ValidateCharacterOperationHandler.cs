@@ -19,7 +19,7 @@ namespace Game.Application.PeerLogic.Operations
             this.userId = userId;
             this.onCharacterSelected = onCharacterSelected;
 
-            charactersGetter = Server.Entity.GetComponent<IDatabaseCharactersGetter>().AssertNotNull();
+            charactersGetter = Server.Components.GetComponent<IDatabaseCharactersGetter>().AssertNotNull();
         }
 
         public ValidateCharacterResponseParameters? Handle(MessageData<ValidateCharacterRequestParameters> messageData, ref MessageSendOptions sendOptions)

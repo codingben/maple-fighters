@@ -31,10 +31,10 @@ namespace Chat.Application
 
         private void AddComponents()
         {
-            Server.Entity.AddComponent(new DatabaseConnectionProvider());
-            Server.Entity.AddComponent(new DatabaseUserIdViaAccessTokenProvider());
-            Server.Entity.AddComponent(new DatabaseAccessTokenExistence());
-            Server.Entity.AddComponent(new LocalDatabaseAccessTokens());
+            Server.Components.AddComponent(new DatabaseConnectionProvider());
+            Server.Components.AddComponent(new DatabaseUserIdViaAccessTokenProvider());
+            Server.Components.AddComponent(new DatabaseAccessTokenExistence());
+            Server.Components.AddComponent(new LocalDatabaseAccessTokens());
         }
     }
 }

@@ -4,7 +4,7 @@ namespace ComponentModel.Common
 {
     public interface IComponent : IDisposable
     {
-        void Awake(IContainer entity);
+        void Awake(IContainer components);
     }
 
     public interface IComponent<in TOwner> : IDisposable

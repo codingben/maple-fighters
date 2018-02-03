@@ -21,14 +21,14 @@ namespace Login.Application
 
             AddCommonComponents();
 
-            Server.Entity.AddComponent(new DatabaseConnectionProvider());
-            Server.Entity.AddComponent(new DatabaseUserVerifier());
-            Server.Entity.AddComponent(new DatabaseUserPasswordVerifier());
-            Server.Entity.AddComponent(new DatabaseUserIdProvider());
-            Server.Entity.AddComponent(new DatabaseAccessTokenCreator());
-            Server.Entity.AddComponent(new DatabaseAccessTokenExistence());
-            Server.Entity.AddComponent(new DatabaseAccessTokenProvider());
-            Server.Entity.AddComponent(new DatabaseAccessTokenExistenceViaUserId());
+            Server.Components.AddComponent(new DatabaseConnectionProvider());
+            Server.Components.AddComponent(new DatabaseUserVerifier());
+            Server.Components.AddComponent(new DatabaseUserPasswordVerifier());
+            Server.Components.AddComponent(new DatabaseUserIdProvider());
+            Server.Components.AddComponent(new DatabaseAccessTokenCreator());
+            Server.Components.AddComponent(new DatabaseAccessTokenExistence());
+            Server.Components.AddComponent(new DatabaseAccessTokenProvider());
+            Server.Components.AddComponent(new DatabaseAccessTokenExistenceViaUserId());
         }
 
         public override void OnConnected(IClientPeer clientPeer)

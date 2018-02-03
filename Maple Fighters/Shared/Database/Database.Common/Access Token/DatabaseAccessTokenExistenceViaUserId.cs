@@ -14,7 +14,7 @@ namespace Database.Common.AccessToken
         {
             base.OnAwake();
 
-            databaseConnectionProvider = Entity.GetComponent<IDatabaseConnectionProvider>().AssertNotNull();
+            databaseConnectionProvider = Components.GetComponent<IDatabaseConnectionProvider>().AssertNotNull();
         }
 
         public bool Exists(int userId)

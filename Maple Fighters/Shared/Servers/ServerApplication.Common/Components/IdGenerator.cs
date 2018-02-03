@@ -19,7 +19,7 @@ namespace ServerApplication.Common.Components
 
         public static int GetId()
         {
-            var idGenerator = Server.Entity.GetComponent<IIdGenerator>().AssertNotNull();
+            var idGenerator = Server.Components.GetComponent<IIdGenerator>().AssertNotNull();
             var id = idGenerator.GenerateId();
             return id;
         }

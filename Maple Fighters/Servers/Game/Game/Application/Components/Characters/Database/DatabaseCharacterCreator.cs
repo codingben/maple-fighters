@@ -15,7 +15,7 @@ namespace Game.Application.Components
         {
             base.OnAwake();
 
-            databaseConnectionProvider = Entity.GetComponent<IDatabaseConnectionProvider>().AssertNotNull();
+            databaseConnectionProvider = Components.GetComponent<IDatabaseConnectionProvider>().AssertNotNull();
         }
 
         public void Create(int userId, string name, CharacterClasses characterClass, CharacterIndex characterIndex)
