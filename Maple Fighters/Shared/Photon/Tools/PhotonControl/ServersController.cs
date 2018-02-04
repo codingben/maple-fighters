@@ -80,7 +80,27 @@ namespace PhotonControl
                 Thread.Sleep(1000);
             }
 
-            var message = $"{count} servers were started.";
+            string message;
+
+            switch (count)
+            {
+                case 0:
+                {
+                    message = "All servers are already running.";
+                    break;
+                }
+                case 1:
+                {
+                    message = "1 server was started.";
+                    break;
+                }
+                default:
+                {
+                    message = $"{count} servers were started.";
+                    break;
+                }
+            }
+
             Entity.NotifyIcon.ShowBalloonTip(100, $"{DateTime.Now:HH:mm:ss tt}", message, ToolTipIcon.Info);
         }
 
@@ -103,7 +123,27 @@ namespace PhotonControl
                 Thread.Sleep(1000);
             }
 
-            var message = $"{count} servers were stopped.";
+            string message;
+
+            switch (count)
+            {
+                case 0:
+                {
+                    message = "All servers are already stopped.";
+                    break;
+                }
+                case 1:
+                {
+                    message = "1 server was stopped.";
+                    break;
+                }
+                default:
+                {
+                    message = $"{count} servers were stopped.";
+                    break;
+                }
+            }
+
             Entity.NotifyIcon.ShowBalloonTip(100, $"{DateTime.Now:HH:mm:ss tt}", message, ToolTipIcon.Info);
         }
 

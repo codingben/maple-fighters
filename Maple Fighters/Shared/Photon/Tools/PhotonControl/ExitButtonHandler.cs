@@ -31,8 +31,7 @@ namespace PhotonControl
             }
             else
             {
-                var message = "Could not stop servers.";
-                Entity.NotifyIcon.ShowBalloonTip(1000, null, message, ToolTipIcon.Warning);
+                Entity.NotifyIcon.ShowBalloonTip(timeout: 1000, tipTitle: null, tipText: "Could not stop servers.", tipIcon: ToolTipIcon.Warning);
             }
         }
     }

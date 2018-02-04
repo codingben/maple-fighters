@@ -58,8 +58,7 @@ namespace PhotonControl
                     var info = new ToolStripMenuItem("No servers.");
                     Entity.ServersMenu.DropDownItems.Insert(FIRST_INDEX, info);
 
-                    var message = "No servers were found.";
-                    Entity.NotifyIcon.ShowBalloonTip(100, null, message, ToolTipIcon.Info);
+                    Entity.NotifyIcon.ShowBalloonTip(timeout: 1000, tipTitle: null, tipText: "No servers were found.", tipIcon: ToolTipIcon.Warning);
                 }
                 else
                 {
