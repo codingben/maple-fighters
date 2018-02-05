@@ -26,7 +26,6 @@ namespace Assets.Scripts
                 yield break;
             }
 
-            playerController.ResetMovement();
             playerController.PlayerState = PlayerState.Attacked;
 
             yield return new WaitForSeconds(0.1f);

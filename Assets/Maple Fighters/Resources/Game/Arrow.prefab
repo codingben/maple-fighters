@@ -121,8 +121,6 @@ GameObject:
   - component: {fileID: 4856581149847252}
   - component: {fileID: 61650476304595740}
   - component: {fileID: 114172141378278460}
-  - component: {fileID: 114205409494266672}
-  - component: {fileID: 114189607324497488}
   - component: {fileID: 114474275508558034}
   m_Layer: 0
   m_Name: Arrow
@@ -268,45 +266,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f55e8dbc344215e4083aa07d226c5ae7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerState: 0
-  speed: 10.5
-  jumpForce: 5
-  ropeUpSpeed: 8
-  ropeDownSpeed: 10
-  ladderUpSpeed: 7
-  ladderDownSpeed: 8
-  floorLayerMask:
+  playerState: 2
+  groundLayerMask:
     serializedVersion: 2
     m_Bits: 256
-  floorDetectionPoints:
+  groundDetectionPoints:
   - {fileID: 4215050340145326}
   - {fileID: 4847279644205866}
-  direction: 0
---- !u!114 &114189607324497488
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1672393161269726}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bc8769ed4d6ed2a488cffe64ba2b8a4b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  flyInteractionKey: 273
-  floorInteractionKey: 274
---- !u!114 &114205409494266672
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1672393161269726}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8e10042f839f3a949aba2fcaab278a7c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  jumpKey: 32
 --- !u!114 &114257676697761238
 MonoBehaviour:
   m_ObjectHideFlags: 1

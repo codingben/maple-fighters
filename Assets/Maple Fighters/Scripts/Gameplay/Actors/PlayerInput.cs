@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Scripts.Gameplay.Actors
 {
-    public class PlayerInput : MonoBehaviour
+    /*public class PlayerInput : MonoBehaviour
     {
         [Header("Keyboard")]
         [SerializeField] private KeyCode jumpKey;
@@ -102,5 +102,5 @@ namespace Scripts.Gameplay.Actors
 
             return Input.GetAxisRaw(AXIS_NAME) > 0 ? Directions.Up : Directions.Down;
         }
-    }
+    }*/
 }

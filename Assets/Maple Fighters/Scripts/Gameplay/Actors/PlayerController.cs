@@ -8,7 +8,78 @@ using UnityEngine;
 
 namespace Scripts.Gameplay.Actors
 {
-    public class PlayerController : MonoBehaviour
+    public class PlayerController : StateBehaviors, IPlayerController
+    {
+        public event Action<PlayerState> PlayerStateChanged;
+        public event Action<Directions> DirectionChanged;
+
+        public Rigidbody2D Rigidbody
+        {
+            get;
+            private set;
+        }
+
+        public PlayerState PlayerState
+        {
+            set
+            {
+                playerState = value;
+
+                if (playerState != lastPlayerState)
+                {
+                    GetStateBehaviour(lastPlayerState)?.OnStateExit();
+                    GetStateBehaviour(playerState)?.OnStateEnter(this);
+                }
+
+                lastPlayerState = playerState;
+
+                PlayerStateChanged?.Invoke(playerState != PlayerState.Attacked ? playerState : PlayerState.Falling);
+            }
+            get
+            {
+                return playerState;
+            }
+        }
+
+        [Header("State")]
+        [SerializeField] private PlayerState playerState = PlayerState.Falling;
+        private PlayerState lastPlayerState;
+
+        [Header("Ground Detection")]
+        [SerializeField] private LayerMask groundLayerMask;
+        [SerializeField] private Transform[] groundDetectionPoints;
+
+        private void Awake()
+        {
+            Rigidbody = GetComponent<Collider2D>().attachedRigidbody;
+
+            CreatePlayerStates();
+        }
+
+        private void Start()
+        {
+            lastPlayerState = playerState;
+
+            GetStateBehaviour(playerState)?.OnStateEnter(this);
+        }
+
+        private void Update()
+        {
+            GetStateBehaviour(playerState)?.OnStateUpdate();
+        }
+
+        private void FixedUpdate()
+        {
+            GetStateBehaviour(playerState)?.OnStateFixedUpdate();
+        }
+
+        public bool IsOnGround()
+        {
+            return groundDetectionPoints.Any(ground => Physics2D.OverlapPoint(ground.position, groundLayerMask));
+        }
+    }
+
+    /*public class PlayerController : MonoBehaviour
     {
         public PlayerState PlayerState
         {
@@ -301,5 +372,5 @@ namespace Scripts.Gameplay.Actors
 
             return floorDetectionPoints.Any(ground => Physics2D.OverlapPoint(ground.position, floorLayerMask));
         }
-    }
+    }*/
 }

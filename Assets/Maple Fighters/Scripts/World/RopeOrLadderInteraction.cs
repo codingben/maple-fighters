@@ -85,12 +85,12 @@ namespace Scripts.World
             {
                 case Interaction.Rope:
                 {
-                    playerController.SetStateFromRopeOrLadderInteraction(PlayerState.Rope);
+                    // playerController.SetStateFromRopeOrLadderInteraction(PlayerState.Rope); // TODO: Fix
                     break;
                 }
                 case Interaction.Ladder:
                 {
-                    playerController.SetStateFromRopeOrLadderInteraction(PlayerState.Ladder);
+                    // playerController.SetStateFromRopeOrLadderInteraction(PlayerState.Ladder); // TODO: Fix
                     break;
                 }
             }
@@ -146,7 +146,7 @@ namespace Scripts.World
         {
             if (IsInInteraction)
             {
-                playerController.SetStateFromRopeOrLadderInteraction(PlayerState.Idle);
+                // playerController.SetStateFromRopeOrLadderInteraction(PlayerState.Idle); // TODO: Fix
             }
 
             EnableGroundInteraction();
