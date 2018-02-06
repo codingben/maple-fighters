@@ -21,6 +21,7 @@ namespace Scripts.Gameplay.Actors
         {
             yield return new PlayerStateDetails(PlayerState.Idle, new PlayerIdleState());
             yield return new PlayerStateDetails(PlayerState.Moving, new PlayerMovingState());
+            yield return new PlayerStateDetails(PlayerState.Jumping, new PlayerJumpingState());
             yield return new PlayerStateDetails(PlayerState.Falling, new PlayerFallingState());
             yield return new PlayerStateDetails(PlayerState.Attacked, new PlayerAttackedState());
 

@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Scripts.World
 {
-    public class RopeOrLadderInteraction : MonoBehaviour
+    public class ClimbingInteraction : MonoBehaviour
     {
         public bool CanInteract { get; set; }
         public bool IsInInteraction { get; set; }
@@ -29,7 +29,7 @@ namespace Scripts.World
         private Collider2D ignoredCollider;
         private Interaction interactionType;
 
-        private PlayerController playerController;
+        private IPlayerController playerController;
 
         private void Awake()
         {
@@ -54,7 +54,7 @@ namespace Scripts.World
             }
 
             if (Input.GetKeyDown(flyInteractionKey)
-                && playerController.PlayerState == PlayerState.Falling)
+                && playerController.PlayerState == PlayerState.Jumping || playerController.PlayerState == PlayerState.Falling)
             {
                 KeyUpPressed();
             }
@@ -74,26 +74,9 @@ namespace Scripts.World
         private void StartedInteractionWithRopeOrLadder()
         {
             IsInInteraction = true;
+            playerController.PlayerState = interactionType == Interaction.Rope ? PlayerState.Rope : PlayerState.Ladder;
 
-            SetPlayerStateToCurrentInteraction();
             SetPositionToRopeCenter();
-        }
-
-        private void SetPlayerStateToCurrentInteraction()
-        {
-            switch (interactionType)
-            {
-                case Interaction.Rope:
-                {
-                    // playerController.SetStateFromRopeOrLadderInteraction(PlayerState.Rope); // TODO: Fix
-                    break;
-                }
-                case Interaction.Ladder:
-                {
-                    // playerController.SetStateFromRopeOrLadderInteraction(PlayerState.Ladder); // TODO: Fix
-                    break;
-                }
-            }
         }
 
         private void SetPositionToRopeCenter()
@@ -146,7 +129,7 @@ namespace Scripts.World
         {
             if (IsInInteraction)
             {
-                // playerController.SetStateFromRopeOrLadderInteraction(PlayerState.Idle); // TODO: Fix
+                playerController.PlayerState = PlayerState.Idle;
             }
 
             EnableGroundInteraction();

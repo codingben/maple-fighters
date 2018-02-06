@@ -69,6 +69,7 @@ GameObject:
   - component: {fileID: 4110249083257066}
   - component: {fileID: 61380068822998250}
   - component: {fileID: 114375439334909214}
+  - component: {fileID: 114270778823549198}
   - component: {fileID: 114769968751128320}
   m_Layer: 0
   m_Name: Wizard
@@ -268,6 +269,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveTime: 0.5
   moveSpeed: 5
+--- !u!114 &114270778823549198
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1210278977448276}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc8769ed4d6ed2a488cffe64ba2b8a4b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  flyInteractionKey: 273
+  floorInteractionKey: 274
 --- !u!114 &114273776630086968
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -307,7 +321,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f55e8dbc344215e4083aa07d226c5ae7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerState: 2
+  playerState: 3
   groundLayerMask:
     serializedVersion: 2
     m_Bits: 256

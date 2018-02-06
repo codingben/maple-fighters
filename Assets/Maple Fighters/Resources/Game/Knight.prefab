@@ -121,6 +121,7 @@ GameObject:
   - component: {fileID: 4596613497347352}
   - component: {fileID: 61530421461806864}
   - component: {fileID: 114185573003487554}
+  - component: {fileID: 114105165116930444}
   - component: {fileID: 114664649952649960}
   m_Layer: 0
   m_Name: Knight
@@ -255,6 +256,19 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114105165116930444
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1795698667356696}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc8769ed4d6ed2a488cffe64ba2b8a4b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  flyInteractionKey: 273
+  floorInteractionKey: 274
 --- !u!114 &114153617165047760
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -312,7 +326,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f55e8dbc344215e4083aa07d226c5ae7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerState: 2
+  playerState: 3
   groundLayerMask:
     serializedVersion: 2
     m_Bits: 256

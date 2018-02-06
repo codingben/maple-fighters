@@ -6,7 +6,8 @@ namespace Scripts.Gameplay.Actors
     public interface IPlayerController
     {
         Rigidbody2D Rigidbody { get; }
-        PlayerState PlayerState { get; set; }
+        Directions Direction { set; }
+        PlayerState PlayerState { set; get; }
 
         bool IsOnGround();
     }
