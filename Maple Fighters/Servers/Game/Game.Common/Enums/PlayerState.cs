@@ -4,6 +4,7 @@
     {
         Idle,
         Moving,
+        Jumping,
         Falling,
         Rope,
         Ladder,
