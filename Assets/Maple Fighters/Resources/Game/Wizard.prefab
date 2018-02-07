@@ -69,8 +69,7 @@ GameObject:
   - component: {fileID: 4110249083257066}
   - component: {fileID: 61380068822998250}
   - component: {fileID: 114375439334909214}
-  - component: {fileID: 114679582319811106}
-  - component: {fileID: 114691567616186860}
+  - component: {fileID: 114270778823549198}
   - component: {fileID: 114769968751128320}
   m_Layer: 0
   m_Name: Wizard
@@ -270,6 +269,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveTime: 0.5
   moveSpeed: 5
+--- !u!114 &114270778823549198
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1210278977448276}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc8769ed4d6ed2a488cffe64ba2b8a4b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  flyInteractionKey: 273
+  floorInteractionKey: 274
 --- !u!114 &114273776630086968
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -309,20 +321,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f55e8dbc344215e4083aa07d226c5ae7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerState: 0
-  speed: 10.5
-  jumpForce: 5
-  ropeUpSpeed: 8
-  ropeDownSpeed: 10
-  ladderUpSpeed: 7
-  ladderDownSpeed: 8
-  floorLayerMask:
+  playerState: 3
+  config:
+    Speed: 2.5
+    JumpForce: 5
+    ClimbingSpeed: 1.5
+    JumpKey: 32
+  groundLayerMask:
     serializedVersion: 2
     m_Bits: 256
-  floorDetectionPoints:
+  groundDetectionPoints:
   - {fileID: 4555121251783216}
   - {fileID: 4712476046923548}
-  direction: 0
 --- !u!114 &114405248585824388
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -337,31 +347,6 @@ MonoBehaviour:
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 0.5, y: -0.5}
   m_UseGraphicAlpha: 1
---- !u!114 &114679582319811106
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1210278977448276}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8e10042f839f3a949aba2fcaab278a7c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  jumpKey: 32
---- !u!114 &114691567616186860
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1210278977448276}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bc8769ed4d6ed2a488cffe64ba2b8a4b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  flyInteractionKey: 273
-  floorInteractionKey: 274
 --- !u!114 &114769968751128320
 MonoBehaviour:
   m_ObjectHideFlags: 1
