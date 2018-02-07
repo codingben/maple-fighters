@@ -24,7 +24,7 @@ namespace Scripts.Gameplay.Actors
                 return;
             }
 
-            if (Input.GetKeyDown(PlayerJumpingState.JUMP_KEY))
+            if (Input.GetKeyDown(playerController.Config.JumpKey))
             {
                 playerController.PlayerState = PlayerState.Jumping;
                 return;
@@ -43,10 +43,8 @@ namespace Scripts.Gameplay.Actors
 
         public void OnStateFixedUpdate()
         {
-            const float SPEED = 2.5f;
-
             var rigidbody = playerController.Rigidbody;
-            rigidbody.velocity = new Vector2(direction * SPEED, rigidbody.velocity.y);
+            rigidbody.velocity = new Vector2(direction * playerController.Config.Speed, rigidbody.velocity.y);
         }
 
         public void OnStateExit()

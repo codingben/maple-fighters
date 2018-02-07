@@ -281,6 +281,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerState: 3
+  config:
+    Speed: 2.5
+    JumpForce: 5
+    ClimbingSpeed: 1.5
+    JumpKey: 32
   groundLayerMask:
     serializedVersion: 2
     m_Bits: 256

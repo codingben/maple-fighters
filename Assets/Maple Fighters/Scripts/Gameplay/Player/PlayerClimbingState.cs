@@ -18,7 +18,7 @@ namespace Scripts.Gameplay.Actors
 
         public void OnStateUpdate()
         {
-            if (Input.GetKeyDown(PlayerJumpingState.JUMP_KEY))
+            if (Input.GetKeyDown(playerController.Config.JumpKey))
             {
                 Jump();
                 return;
@@ -30,10 +30,8 @@ namespace Scripts.Gameplay.Actors
 
         public void OnStateFixedUpdate()
         {
-            const float SPEED = 1.5f;
-
             var rigidbody = playerController.Rigidbody;
-            rigidbody.velocity = new Vector2(rigidbody.velocity.x, direction * SPEED);
+            rigidbody.velocity = new Vector2(rigidbody.velocity.x, direction * playerController.Config.ClimbingSpeed);
         }
 
         public void OnStateExit()
@@ -46,9 +44,10 @@ namespace Scripts.Gameplay.Actors
             var horizontal = Input.GetAxisRaw("Horizontal");
             if (Mathf.Abs(horizontal) > 0)
             {
+                playerController.Direction = horizontal < 0 ? Directions.Left : Directions.Right;
+
                 var forceDirection = new Vector2(horizontal, 1);
-                playerController.Rigidbody.AddForce(forceDirection * (PlayerJumpingState.JUMP_FORCE / 2), ForceMode2D.Impulse);
-                playerController.Direction = direction < 0 ? Directions.Left : Directions.Right;
+                playerController.Rigidbody.AddForce(forceDirection * (playerController.Config.JumpForce / 2), ForceMode2D.Impulse);
             }
 
             playerController.PlayerState = PlayerState.Falling;

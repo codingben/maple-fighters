@@ -5,9 +5,6 @@ namespace Scripts.Gameplay.Actors
 {
     public class PlayerJumpingState : IPlayerStateBehaviour
     {
-        public const KeyCode JUMP_KEY = KeyCode.Space;
-        public const float JUMP_FORCE = 5;
-
         private IPlayerController playerController;
         private bool isJumping;
 
@@ -27,7 +24,7 @@ namespace Scripts.Gameplay.Actors
             }
 
             var forceDirection = new Vector2(direction, 1);
-            playerController.Rigidbody.AddForce(forceDirection * JUMP_FORCE, ForceMode2D.Impulse);
+            playerController.Rigidbody.AddForce(forceDirection * playerController.Config.JumpForce, ForceMode2D.Impulse);
         }
 
         public void OnStateUpdate()

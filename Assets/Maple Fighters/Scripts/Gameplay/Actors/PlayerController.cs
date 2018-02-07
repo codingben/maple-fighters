@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using Scripts.Editor;
 using Scripts.World;
 using Shared.Game.Common;
 using UnityEngine;
@@ -8,10 +9,23 @@ using UnityEngine;
 
 namespace Scripts.Gameplay.Actors
 {
+    [Serializable]
+    public class PlayerControllerConfig
+    {
+        public float Speed;
+        public float JumpForce;
+        public float ClimbingSpeed;
+
+        [Header("Keyboard")]
+        public KeyCode JumpKey = KeyCode.Space;
+    }
+
     public class PlayerController : StateBehaviors, IPlayerController
     {
         public event Action<PlayerState> PlayerStateChanged;
         public event Action<Directions> DirectionChanged;
+
+        public PlayerControllerConfig Config => config;
 
         public Rigidbody2D Rigidbody
         {
@@ -55,10 +69,13 @@ namespace Scripts.Gameplay.Actors
         }
 
         [Header("State")]
-        [SerializeField] private PlayerState playerState = PlayerState.Falling;
+        [ReadOnly, SerializeField] private PlayerState playerState = PlayerState.Falling;
         private PlayerState lastPlayerState;
 
-        [Header("Ground Detection")]
+        [Header("Properties")]
+        [SerializeField] private PlayerControllerConfig config;
+
+        [Header("Ground")]
         [SerializeField] private LayerMask groundLayerMask;
         [SerializeField] private Transform[] groundDetectionPoints;
 

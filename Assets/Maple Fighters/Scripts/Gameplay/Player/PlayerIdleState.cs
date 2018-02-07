@@ -23,7 +23,7 @@ namespace Scripts.Gameplay.Actors
                 return;
             }
 
-            if (Input.GetKeyDown(PlayerJumpingState.JUMP_KEY))
+            if (Input.GetKeyDown(playerController.Config.JumpKey))
             {
                 playerController.PlayerState = PlayerState.Jumping;
                 return;

@@ -5,9 +5,11 @@ namespace Scripts.Gameplay.Actors
 {
     public interface IPlayerController
     {
+        PlayerControllerConfig Config { get; }
+
         Rigidbody2D Rigidbody { get; }
-        Directions Direction { set; }
         PlayerState PlayerState { set; get; }
+        Directions Direction { set; }
 
         bool IsOnGround();
     }

@@ -54,7 +54,7 @@ namespace Scripts.World
             }
 
             if (Input.GetKeyDown(flyInteractionKey)
-                && playerController.PlayerState == PlayerState.Jumping || playerController.PlayerState == PlayerState.Falling)
+                && (playerController.PlayerState == PlayerState.Jumping || playerController.PlayerState == PlayerState.Falling))
             {
                 KeyUpPressed();
             }
