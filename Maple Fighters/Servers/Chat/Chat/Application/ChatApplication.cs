@@ -8,8 +8,8 @@ namespace Chat.Application
 {
     public class ChatApplication : ApplicationBase
     {
-        public ChatApplication(IFiberProvider fiberProvider) 
-            : base(fiberProvider)
+        public ChatApplication(IFiberProvider fiberProvider, IServerConnector serverConnector) 
+            : base(fiberProvider, serverConnector)
         {
             // Left blank intentionally
         }

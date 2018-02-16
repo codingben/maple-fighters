@@ -8,8 +8,8 @@ namespace Registration.Application
 {
     public class RegistrationApplication : ApplicationBase
     {
-        public RegistrationApplication(IFiberProvider fiberProvider) 
-            : base(fiberProvider)
+        public RegistrationApplication(IFiberProvider fiberProvider, IServerConnector serverConnector)
+            : base(fiberProvider, serverConnector)
         {
             // Left blank intentionally
         }

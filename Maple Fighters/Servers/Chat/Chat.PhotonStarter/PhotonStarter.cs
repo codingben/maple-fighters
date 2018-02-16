@@ -6,9 +6,9 @@ namespace Chat.PhotonStarter
 {
     public class PhotonStarter : PhotonStarterBase<ChatApplication>
     {
-        protected override ChatApplication CreateApplication(IFiberProvider fiberProvider)
+        protected override ChatApplication CreateApplication(IFiberProvider fiberProvider, IServerConnector serverConnector)
         {
-            return new ChatApplication(fiberProvider);
+            return new ChatApplication(fiberProvider, serverConnector);
         }
     }
 }

@@ -12,12 +12,15 @@ namespace ServerApplication.Common.ApplicationBase
     /// </summary>
     public class ApplicationBase : IApplicationBase
     {
-        private IPeerContainer peerContainer;
         private readonly IFiberProvider fiberProvider;
+        private readonly IServerConnector serverConnector;
 
-        protected ApplicationBase(IFiberProvider fiberProvider)
+        private IPeerContainer peerContainer;
+
+        protected ApplicationBase(IFiberProvider fiberProvider, IServerConnector serverConnector)
         {
             this.fiberProvider = fiberProvider;
+            this.serverConnector = serverConnector;
         }
 
         public virtual void OnConnected(IClientPeer clientPeer)
@@ -47,6 +50,7 @@ namespace ServerApplication.Common.ApplicationBase
             Server.Components.AddComponent(new IdGenerator());
             var fiber = Server.Components.AddComponent(new FiberProvider(fiberProvider)).AssertNotNull();
             Server.Components.AddComponent(new CoroutinesExecutor(new FiberCoroutinesExecutor(fiber.GetFiberStarter(), 100)));
+            Server.Components.AddComponent(new ServerConnectorProvider(serverConnector));
         }
 
         protected void WrapClientPeer(IClientPeer clientPeer, IPeerLogicBase peerLogic)

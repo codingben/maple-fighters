@@ -39,9 +39,16 @@
     <Reference Include="Coroutines, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Coroutines.5.0.5\lib\net46\Coroutines.dll</HintPath>
     </Reference>
+    <Reference Include="JsonConfig, Version=1.0.5359.16918, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\JsonConfig.1.0.0\lib\JsonConfig.dll</HintPath>
+    </Reference>
+    <Reference Include="JsonFx, Version=2.0.1209.2802, Culture=neutral, PublicKeyToken=315052dd637f8a52, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\JsonFx.2.0.1209.2802\lib\net40\JsonFx.dll</HintPath>
+    </Reference>
     <Reference Include="LogUtils, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Coroutines.5.0.5\lib\net46\LogUtils.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="PhotonCommonImplementation, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\PhotonCommonImplementation.2.1.0\lib\net46\PhotonCommonImplementation.dll</HintPath>
     </Reference>
@@ -72,9 +79,14 @@
     <Compile Include="Components\IFiberStarter.cs" />
     <Compile Include="Components\IIdGenerator.cs" />
     <Compile Include="Components\IPeerContainer.cs" />
+    <Compile Include="Components\S2S\EventHandler.cs" />
+    <Compile Include="Components\S2S\IServerConnectorProvider.cs" />
     <Compile Include="Components\IRandomNumberGenerator.cs" />
     <Compile Include="Components\PeerContainer.cs" />
+    <Compile Include="Components\S2S\IServiceBase.cs" />
+    <Compile Include="Components\S2S\ServerConnectorProvider.cs" />
     <Compile Include="Components\RandomNumberGenerator.cs" />
+    <Compile Include="Components\S2S\ServiceBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

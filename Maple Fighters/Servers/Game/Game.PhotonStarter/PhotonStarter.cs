@@ -6,9 +6,9 @@ namespace Game.PhotonStarter
 {
     public class PhotonStarter : PhotonStarterBase<GameApplication>
     {
-        protected override GameApplication CreateApplication(IFiberProvider fiberProvider)
+        protected override GameApplication CreateApplication(IFiberProvider fiberProvider, IServerConnector serverConnector)
         {
-            return new GameApplication(fiberProvider);
+            return new GameApplication(fiberProvider, serverConnector);
         }
     }
 }

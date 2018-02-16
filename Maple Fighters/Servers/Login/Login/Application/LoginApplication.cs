@@ -9,8 +9,8 @@ namespace Login.Application
 {
     public class LoginApplication : ApplicationBase
     {
-        public LoginApplication(IFiberProvider fiberProvider) 
-            : base(fiberProvider)
+        public LoginApplication(IFiberProvider fiberProvider, IServerConnector serverConnector)
+            : base(fiberProvider, serverConnector)
         {
             // Left blank intentionally
         }

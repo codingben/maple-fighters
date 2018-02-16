@@ -10,8 +10,8 @@ namespace Game.Application
 {
     public class GameApplication : ApplicationBase
     {
-        public GameApplication(IFiberProvider fiberProvider) 
-            : base(fiberProvider)
+        public GameApplication(IFiberProvider fiberProvider, IServerConnector serverConnector)
+            : base(fiberProvider, serverConnector)
         {
             // Left blank intentionally
         }
