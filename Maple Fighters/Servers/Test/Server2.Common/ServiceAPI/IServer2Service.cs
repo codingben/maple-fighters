@@ -6,8 +6,6 @@ namespace Server2.Common
 {
     public interface IServer2Service : IServiceBase
     {
-        event Action<EmptyParameters> TestEvent;
-
-        void TestOperation();
+        event Action<EmptyParameters> TestAction;
     }
 }

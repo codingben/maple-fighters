@@ -13,14 +13,13 @@ namespace Server2
             base.Initialize(peer);
 
             AddCommonComponents();
-
             AddHandlerForTestOperation();
         }
 
         private void AddHandlerForTestOperation()
         {
             var eventSender = Components.GetComponent<IEventSenderWrapper>().AssertNotNull();
-            OperationRequestHandlerRegister.SetHandler(ServerOperations.Server1Operation, new TestOperationHandler(eventSender));
+            OperationRequestHandlerRegister.SetHandler(ServerOperations.Server1Operation, new Server1OperationHandler(eventSender));
         }
     }
 }

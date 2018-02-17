@@ -1,20 +1,20 @@
 ﻿using System;
 using CommonCommunicationInterfaces;
+using CommonTools.Log;
+using JsonConfig;
 using ServerApplication.Common.Components;
 
 namespace Server2.Common
 {
     public class Server2Service : ServiceBase<ServerOperations, ServerEvents>, IServer2Service
     {
-        public event Action<EmptyParameters> TestEvent;
+        public event Action<EmptyParameters> TestAction;
 
         protected override void OnConnected()
         {
             base.OnConnected();
 
-            SetEventHandler(ServerEvents.Server1Event, TestEvent);
-
-            TestOperation();
+            SetEventHandler(ServerEvents.Server1Event, TestAction);
         }
 
         protected override void OnDisconnected(DisconnectReason disconnectReason, string s)
@@ -24,17 +24,13 @@ namespace Server2.Common
             RemoveEventHandler(ServerEvents.Server1Event);
         }
 
-        public void TestOperation()
+        protected override PeerConnectionInformation GetPeerConnectionInformation()
         {
-            SendOperation(ServerOperations.Server1Operation, new EmptyParameters());
-        }
+            LogUtils.Assert(Config.Global.Server2, MessageBuilder.Trace("Could not find an connection info for the Server2 server."));
 
-        public override PeerConnectionInformation GetPeerConnectionInformation()
-        {
-            // TODO: Load from an configuration IP and port
-            const string IP = "127.0.0.1";
-            const int PORT = 4535;
-            return new PeerConnectionInformation(IP, PORT);
+            var ip = (string)Config.Global.Server2.IP;
+            var port = (int)Config.Global.Server2.Port;
+            return new PeerConnectionInformation(ip, port);
         }
     }
 }

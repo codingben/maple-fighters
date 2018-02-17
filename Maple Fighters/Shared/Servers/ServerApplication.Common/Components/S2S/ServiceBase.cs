@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using CommonCommunicationInterfaces;
 using CommonTools.Coroutines;
@@ -16,24 +17,54 @@ namespace ServerApplication.Common.Components
         where TEventCode : IComparable, IFormattable, IConvertible
     {
         private IOutboundServerPeer outboundServerPeer;
-        private IOperationRequestSender<TOperationCode> OperationRequestSender { get; set; }
-        private IEventHandlerRegister<TEventCode> EventHandlerRegister { get; set; }
-        private IOperationResponseSubscriptionProvider SubscriptionProvider { get; set; }
+        private IOperationRequestSender<TOperationCode> operationRequestSender;
+        private IEventHandlerRegister<TEventCode> eventHandlerRegister;
+        private IOperationResponseSubscriptionProvider subscriptionProvider;
+
+        private bool disposed;
 
         protected override void OnAwake()
         {
             base.OnAwake();
 
+            StartConnectContinuously();
+        }
+
+        private void StartConnectContinuously()
+        {
             var coroutinesExecutor = Components.GetComponent<ICoroutinesExecuter>().AssertNotNull();
-            coroutinesExecutor.StartTask(Connect);
+            coroutinesExecutor.StartCoroutine(ConnectContinuously());
+        }
+
+        private IEnumerator<IYieldInstruction> ConnectContinuously()
+        {
+            const int WAIT_TIME = 30;
+
+            outboundServerPeer = null;
+
+            while (true)
+            {
+                if (IsConnected())
+                {
+                    yield break;
+                }
+
+                var coroutinesExecutor = Components.GetComponent<ICoroutinesExecuter>().AssertNotNull();
+                coroutinesExecutor.StartTask(Connect);
+                yield return new WaitForSeconds(WAIT_TIME);
+            }
         }
 
         private async Task Connect(IYield yield)
         {
+            var peerConnectionInformation = GetPeerConnectionInformation();
+
             try
             {
+                LogUtils.Log($"An attempt to connect to a server - {peerConnectionInformation.Ip}:{peerConnectionInformation.Port}");
+
                 var serverConnector = Components.GetComponent<IServerConnectorProvider>().AssertNotNull();
-                outboundServerPeer = await serverConnector.GetServerConnector().Connect(yield, GetPeerConnectionInformation());
+                outboundServerPeer = await serverConnector.GetServerConnector().Connect(yield, peerConnectionInformation);
             }
             catch (CouldNotConnectToPeerException exception)
             {
@@ -41,10 +72,12 @@ namespace ServerApplication.Common.Components
                 {
                     LogUtils.Log(MessageBuilder.Trace(exception.Message));
                 }
+
+                LogUtils.Log($"Could not connect to a server - {peerConnectionInformation.Ip}:{peerConnectionInformation.Port}");
             }
             finally
             {
-                if (outboundServerPeer != null)
+                if (IsConnected())
                 {
                     OnConnected();
                 }
@@ -55,32 +88,47 @@ namespace ServerApplication.Common.Components
         {
             base.OnDestroy();
 
-            outboundServerPeer?.Disconnect();
+            disposed = true;
 
-            SubscriptionProvider?.Dispose();
-            EventHandlerRegister?.Dispose();
+            if (IsConnected())
+            {
+                outboundServerPeer.Disconnect();
+                outboundServerPeer = null;
+            }
+
+            subscriptionProvider?.Dispose();
+            eventHandlerRegister?.Dispose();
         }
 
         protected virtual void OnConnected()
         {
-            InitializePeerHandlers();
             SubscribeToDisconnectionNotifier();
+            InitializePeerHandlers();
 
-            var ip = GetPeerConnectionInformation().Ip;
-            var port = GetPeerConnectionInformation().Port;
-            LogUtils.Log(MessageBuilder.Trace($"A connection with {ip}:{port} has been established successfully."));
+            var peerConnectionInformation = GetPeerConnectionInformation();
+            LogUtils.Log($"A connection with {peerConnectionInformation.Ip}:{peerConnectionInformation.Port} has been established successfully.");
+
+            outboundServerPeer.NetworkTrafficState = NetworkTrafficState.Flowing;
         }
 
         protected virtual void OnDisconnected(DisconnectReason disconnectReason, string s)
         {
             UnsubscribeFromDisconnectionNotifier();
+
+            var peerConnectionInformation = GetPeerConnectionInformation();
+            LogUtils.Log($"Disconnected from a server - {peerConnectionInformation.Ip}:{peerConnectionInformation.Port}");
+
+            if (!disposed)
+            {
+                StartConnectContinuously();
+            }
         }
 
         private void OnOperationRequestFailed(RawMessageResponseData data, short requestId)
         {
-            var ip = GetPeerConnectionInformation().Ip;
-            var port = GetPeerConnectionInformation().Port;
-            LogUtils.Log(MessageBuilder.Trace($"Sending an operaiton has been failed. Operation Code: {data.Code} Server Details: {ip}:{port}"));
+            var peerConnectionInformation = GetPeerConnectionInformation();
+            LogUtils.Log($"Sending an operaiton has been failed. Operation Code: {data.Code} Server Details: " +
+                         $"{peerConnectionInformation.Ip}:{peerConnectionInformation.Port}");
         }
 
         private void InitializePeerHandlers()
@@ -89,9 +137,9 @@ namespace ServerApplication.Common.Components
             var logOperationsResponse = (bool)Config.Global.Log.OperationsResponse;
             var logEvents = (bool)Config.Global.Log.Events;
 
-            OperationRequestSender = new OperationRequestSender<TOperationCode>(outboundServerPeer.OperationRequestSender, logOperationsRequest);
-            SubscriptionProvider = new OperationResponseSubscriptionProvider<TOperationCode>(outboundServerPeer.OperationResponseNotifier, OnOperationRequestFailed, logOperationsResponse);
-            EventHandlerRegister = new EventHandlerRegister<TEventCode>(outboundServerPeer.EventNotifier, logEvents);
+            operationRequestSender = new OperationRequestSender<TOperationCode>(outboundServerPeer.OperationRequestSender, logOperationsRequest);
+            subscriptionProvider = new OperationResponseSubscriptionProvider<TOperationCode>(outboundServerPeer.OperationResponseNotifier, OnOperationRequestFailed, logOperationsResponse);
+            eventHandlerRegister = new EventHandlerRegister<TEventCode>(outboundServerPeer.EventNotifier, logEvents);
         }
 
         private void SubscribeToDisconnectionNotifier()
@@ -107,28 +155,45 @@ namespace ServerApplication.Common.Components
             }
         }
 
-        protected void SendOperation<TParams>(TOperationCode operationCode, TParams parameters)
+        public void SendOperation<TParams>(byte operationCode, TParams parameters)
             where TParams : struct, IParameters
         {
             if (!IsConnected())
             {
-                LogUtils.Log(MessageBuilder.Trace($"Could not send {operationCode} operation because no connection to a server."));
+                LogUtils.Log($"Could not send {operationCode} operation because no connection to a server.");
                 return;
             }
 
-            OperationRequestSender.Send(operationCode, parameters, MessageSendOptions.DefaultReliable());
+            var code = (TOperationCode)Enum.ToObject(typeof(TOperationCode), operationCode);
+            operationRequestSender.Send(code, parameters, MessageSendOptions.DefaultReliable());
+        }
+
+        public async Task<TResponseParams> SendYieldOperation<TRequestParams, TResponseParams>(IYield yield, byte operationCode, TRequestParams parameters)
+            where TRequestParams : struct, IParameters
+            where TResponseParams : struct, IParameters
+        {
+            if (!IsConnected())
+            {
+                LogUtils.Log($"Could not send {operationCode} operation because no connection to a server.");
+                return default(TResponseParams);
+            }
+
+            var code = (TOperationCode)Enum.ToObject(typeof(TOperationCode), operationCode);
+            var requestId = operationRequestSender.Send(code, parameters, MessageSendOptions.DefaultReliable());
+            var responseParameters = await subscriptionProvider.ProvideSubscription<TResponseParams>(yield, requestId);
+            return responseParameters;
         }
 
         protected void SetEventHandler<TParams>(TEventCode eventCode, Action<TParams> action)
             where TParams : struct, IParameters
         {
             var eventHandler = new EventHandler<TParams>((x) => action?.Invoke(x.Parameters));
-            EventHandlerRegister.SetHandler(eventCode, eventHandler);
+            eventHandlerRegister.SetHandler(eventCode, eventHandler);
         }
 
         protected void RemoveEventHandler(TEventCode eventCode)
         {
-            EventHandlerRegister.RemoveHandler(eventCode);
+            eventHandlerRegister.RemoveHandler(eventCode);
         }
 
         public bool IsConnected()
@@ -136,6 +201,6 @@ namespace ServerApplication.Common.Components
             return outboundServerPeer != null && outboundServerPeer.IsConnected;
         }
 
-        public abstract PeerConnectionInformation GetPeerConnectionInformation();
+        protected abstract PeerConnectionInformation GetPeerConnectionInformation();
     }
 }
