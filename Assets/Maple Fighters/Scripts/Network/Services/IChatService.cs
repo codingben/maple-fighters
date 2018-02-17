@@ -8,8 +8,6 @@ namespace Scripts.Services
     {
         Task<AuthenticationStatus> Authenticate(IYield yield);
 
-        void SendChatMessage(ChatMessageRequestParameters parameters);
-
         UnityEvent<ChatMessageEventParameters> ChatMessageReceived { get; }
     }
 }

@@ -32,7 +32,7 @@ namespace Scripts.Gameplay.Actors
         private void SetCharacterToPositionSender()
         {
             var positionSender = GetComponent<PositionSender>();
-            positionSender.SetPlayerController(character.transform);
+            positionSender.Character = character.transform;
         }
 
         private void SetDirectionOnCreation()

@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using CommonCommunicationInterfaces;
 using CommonTools.Coroutines;
-using CommonTools.Log;
+using CommunicationHelper;
 using Scripts.Utils;
 using Shared.Game.Common;
 
@@ -20,11 +20,11 @@ namespace Scripts.Services
         public UnityEvent<CharacterAddedEventParameters> CharacterAdded { get; } = new UnityEvent<CharacterAddedEventParameters>();
         public UnityEvent<CharactersAddedEventParameters> CharactersAdded { get; } = new UnityEvent<CharactersAddedEventParameters>();
 
-        private AuthenticationStatus authenticationStatus;
+        private AuthenticationStatus authenticationStatus = AuthenticationStatus.Failed;
 
         protected override void OnConnected()
         {
-            AddEventsHandlers();
+            SetEventsHandlers();
         }
 
         protected override void OnDisconnected()
@@ -37,74 +37,30 @@ namespace Scripts.Services
             }
         }
 
-        private void AddEventsHandlers()
+        private void SetEventsHandlers()
         {
-            EventHandlerRegister.SetHandler(GameEvents.SceneObjectAdded, new EventInvoker<SceneObjectAddedEventParameters>(unityEvent =>
-            {
-                SceneObjectAdded?.Invoke(unityEvent.Parameters);
-                return true;
-            }));
-
-            EventHandlerRegister.SetHandler(GameEvents.SceneObjectRemoved, new EventInvoker<SceneObjectRemovedEventParameters>(unityEvent =>
-            {
-                SceneObjectRemoved?.Invoke(unityEvent.Parameters);
-                return true;
-            }));
-
-            EventHandlerRegister.SetHandler(GameEvents.SceneObjectsAdded, new EventInvoker<SceneObjectsAddedEventParameters>(unityEvent =>
-            {
-                SceneObjectsAdded?.Invoke(unityEvent.Parameters);
-                return true;
-            }));
-
-            EventHandlerRegister.SetHandler(GameEvents.SceneObjectsRemoved, new EventInvoker<SceneObjectsRemovedEventParameters>(unityEvent =>
-            {
-                SceneObjectsRemoved?.Invoke(unityEvent.Parameters);
-                return true;
-            }));
-
-            EventHandlerRegister.SetHandler(GameEvents.PositionChanged, new EventInvoker<SceneObjectPositionChangedEventParameters>(unityEvent =>
-            {
-                PositionChanged?.Invoke(unityEvent.Parameters);
-                return true;
-            }));
-
-            EventHandlerRegister.SetHandler(GameEvents.PlayerStateChanged, new EventInvoker<PlayerStateChangedEventParameters>(unityEvent =>
-            {
-                PlayerStateChanged?.Invoke(unityEvent.Parameters);
-                return true;
-            }));
-
-            EventHandlerRegister.SetHandler(GameEvents.PlayerAttacked, new EventInvoker<PlayerAttackedEventParameters>(unityEvent =>
-            {
-                PlayerAttacked?.Invoke(unityEvent.Parameters);
-                return true;
-            }));
-
-            EventHandlerRegister.SetHandler(GameEvents.CharacterAdded, new EventInvoker<CharacterAddedEventParameters>(unityEvent =>
-            {
-                CharacterAdded?.Invoke(unityEvent.Parameters);
-                return true;
-            }));
-
-            EventHandlerRegister.SetHandler(GameEvents.CharactersAdded, new EventInvoker<CharactersAddedEventParameters>(unityEvent =>
-            {
-                CharactersAdded?.Invoke(unityEvent.Parameters);
-                return true;
-            }));
+            SetEventHandler(GameEvents.SceneObjectAdded, SceneObjectAdded);
+            SetEventHandler(GameEvents.SceneObjectRemoved, SceneObjectRemoved);
+            SetEventHandler(GameEvents.SceneObjectsAdded, SceneObjectsAdded);
+            SetEventHandler(GameEvents.SceneObjectsRemoved, SceneObjectsRemoved);
+            SetEventHandler(GameEvents.PositionChanged, PositionChanged);
+            SetEventHandler(GameEvents.PlayerStateChanged, PlayerStateChanged);
+            SetEventHandler(GameEvents.PlayerAttacked, PlayerAttacked);
+            SetEventHandler(GameEvents.CharacterAdded, CharacterAdded);
+            SetEventHandler(GameEvents.CharactersAdded, CharactersAdded);
         }
 
         private void RemoveEventsHandlers()
         {
-            EventHandlerRegister.RemoveHandler(GameEvents.SceneObjectAdded);
-            EventHandlerRegister.RemoveHandler(GameEvents.SceneObjectRemoved);
-            EventHandlerRegister.RemoveHandler(GameEvents.SceneObjectsAdded);
-            EventHandlerRegister.RemoveHandler(GameEvents.SceneObjectsRemoved);
-            EventHandlerRegister.RemoveHandler(GameEvents.PositionChanged);
-            EventHandlerRegister.RemoveHandler(GameEvents.PlayerStateChanged);
-            EventHandlerRegister.RemoveHandler(GameEvents.PlayerAttacked);
-            EventHandlerRegister.RemoveHandler(GameEvents.CharacterAdded);
-            EventHandlerRegister.RemoveHandler(GameEvents.CharactersAdded);
+            RemoveEventHandler(GameEvents.SceneObjectAdded);
+            RemoveEventHandler(GameEvents.SceneObjectRemoved);
+            RemoveEventHandler(GameEvents.SceneObjectsAdded);
+            RemoveEventHandler(GameEvents.SceneObjectsRemoved);
+            RemoveEventHandler(GameEvents.PositionChanged);
+            RemoveEventHandler(GameEvents.PlayerStateChanged);
+            RemoveEventHandler(GameEvents.PlayerAttacked);
+            RemoveEventHandler(GameEvents.CharacterAdded);
+            RemoveEventHandler(GameEvents.CharactersAdded);
         }
 
         public async Task<AuthenticationStatus> Authenticate(IYield yield)
@@ -179,26 +135,6 @@ namespace Scripts.Services
             var requestId = OperationRequestSender.Send(GameOperations.RemoveCharacter, parameters, MessageSendOptions.DefaultReliable());
             var responseParameters = await SubscriptionProvider.ProvideSubscription<RemoveCharacterResponseParameters>(yield, requestId);
             return responseParameters;
-        }
-
-        public void UpdatePosition(UpdatePositionRequestParameters parameters)
-        {
-            if (!IsConnected())
-            {
-                return;
-            }
-
-            OperationRequestSender.Send(GameOperations.PositionChanged, parameters, MessageSendOptions.DefaultUnreliable((byte)GameDataChannels.Position));
-        }
-
-        public void UpdatePlayerState(UpdatePlayerStateRequestParameters parameters)
-        {
-            if (!IsConnected())
-            {
-                return;
-            }
-
-            OperationRequestSender.Send(GameOperations.PlayerStateChanged, parameters, MessageSendOptions.DefaultUnreliable((byte)GameDataChannels.Animations));
         }
 
         public async Task<ChangeSceneResponseParameters> ChangeScene(IYield yield, ChangeSceneRequestParameters parameters)

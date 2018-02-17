@@ -1,4 +1,5 @@
 ﻿using Chat.Common;
+using CommonCommunicationInterfaces;
 using Scripts.Containers;
 using Scripts.Services;
 using Scripts.UI.Core;
@@ -37,14 +38,13 @@ namespace Scripts.UI.Controllers
             chatWindow.SendChatMessage -= OnSendChatMessage;
 
             ServiceContainer.ChatService.ChatMessageReceived.RemoveAllListeners();
-
             UserInterfaceContainer.Instance.Remove(chatWindow);
         }
 
         private void OnSendChatMessage(string message)
         {
             var parameters = new ChatMessageRequestParameters(message);
-            ServiceContainer.ChatService.SendChatMessage(parameters);
+            ServiceContainer.ChatService.SendOperation((byte)ChatOperations.ChatMessage, parameters, MessageSendOptions.DefaultReliable());
         }
     }
 }

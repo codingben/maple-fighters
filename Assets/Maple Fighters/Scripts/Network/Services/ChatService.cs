@@ -2,6 +2,7 @@
 using Chat.Common;
 using CommonCommunicationInterfaces;
 using CommonTools.Coroutines;
+using CommunicationHelper;
 
 namespace Scripts.Services
 {
@@ -11,26 +12,12 @@ namespace Scripts.Services
 
         protected override void OnConnected()
         {
-            AddEventsHandlers();
+            SetEventHandler(ChatEvents.ChatMessage, ChatMessageReceived);
         }
 
         protected override void OnDisconnected()
         {
-            RemoveEventsHandlers();
-        }
-
-        private void AddEventsHandlers()
-        {
-            EventHandlerRegister.SetHandler(ChatEvents.ChatMessage, new EventInvoker<ChatMessageEventParameters>(unityEvent =>
-            {
-                ChatMessageReceived?.Invoke(unityEvent.Parameters);
-                return true;
-            }));
-        }
-
-        private void RemoveEventsHandlers()
-        {
-            EventHandlerRegister.RemoveHandler(ChatEvents.ChatMessage);
+            RemoveEventHandler(ChatEvents.ChatMessage);
         }
 
         public async Task<AuthenticationStatus> Authenticate(IYield yield)
@@ -44,16 +31,6 @@ namespace Scripts.Services
             var requestId = OperationRequestSender.Send(ChatOperations.Authenticate, parameters, MessageSendOptions.DefaultReliable());
             var authenticationStatus = await SubscriptionProvider.ProvideSubscription<AuthenticateResponseParameters>(yield, requestId);
             return authenticationStatus.Status;
-        }
-
-        public void SendChatMessage(ChatMessageRequestParameters parameters)
-        {
-            if (!IsConnected())
-            {
-                return;
-            }
-
-            OperationRequestSender.Send(ChatOperations.ChatMessage, parameters, MessageSendOptions.DefaultReliable());
         }
     }
 }

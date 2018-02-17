@@ -1,13 +1,10 @@
-﻿using System;
-
-namespace Scripts.Services
+﻿namespace Scripts.Services
 {
     public class UnityEvent<T> : UnityEngine.Events.UnityEvent<T>
     {
-        // Left blank intentionally
         internal void AddListener()
         {
-            throw new NotImplementedException();
+            // Left blank intentionally
         }
     }
 }

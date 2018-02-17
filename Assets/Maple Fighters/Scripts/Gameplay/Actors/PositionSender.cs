@@ -1,4 +1,5 @@
-﻿using Scripts.Containers;
+﻿using CommonCommunicationInterfaces;
+using Scripts.Containers;
 using Shared.Game.Common;
 using UnityEngine;
 
@@ -6,9 +7,9 @@ namespace Scripts.Gameplay.Actors
 {
     public class PositionSender : MonoBehaviour
     {
-        private Vector2 lastPosition;
-        private Transform character;
+        public Transform Character { get; set; }
 
+        private Vector2 lastPosition;
         private UpdatePositionRequestParameters parameters;
 
         private void Awake()
@@ -21,11 +22,6 @@ namespace Scripts.Gameplay.Actors
             parameters = new UpdatePositionRequestParameters(transform.position.x, transform.position.y, direction);
         }
 
-        public void SetPlayerController(Transform characterController)
-        {
-            character = characterController;
-        }
-
         private void Update()
         {
             if (Vector2.Distance(transform.position, lastPosition) < 0.1f)
@@ -33,27 +29,37 @@ namespace Scripts.Gameplay.Actors
                 return;
             }
 
+            ChangeParameters();
+            SendPositionChangedOperation();
+
+            lastPosition = transform.position;
+        }
+
+        private void ChangeParameters()
+        {
             Directions direction;
             GetDirection(out direction);
 
             parameters.X = transform.position.x;
             parameters.Y = transform.position.y;
             parameters.Direction = direction;
+        }
 
-            ServiceContainer.GameService.UpdatePosition(parameters);
-
-            lastPosition = transform.position;
+        private void SendPositionChangedOperation()
+        {
+            var messageSendOptions = MessageSendOptions.DefaultUnreliable((byte) GameDataChannels.Position);
+            ServiceContainer.GameService.SendOperation((byte)GameOperations.PositionChanged, parameters, messageSendOptions);
         }
 
         private void GetDirection(out Directions direction)
         {
-            if (character?.localScale.x > 0)
+            if (Character?.localScale.x > 0)
             {
                 direction = Directions.Left;
                 return;
             }
 
-            if (character?.localScale.x < 0)
+            if (Character?.localScale.x < 0)
             {
                 direction = Directions.Right;
                 return;

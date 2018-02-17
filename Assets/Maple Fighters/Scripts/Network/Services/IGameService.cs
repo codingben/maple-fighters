@@ -10,9 +10,6 @@ namespace Scripts.Services
 
         Task<EnterSceneResponseParameters?> EnterScene(IYield yield);
 
-        void UpdatePosition(UpdatePositionRequestParameters parameters);
-        void UpdatePlayerState(UpdatePlayerStateRequestParameters parameters);
-
         Task<FetchCharactersResponseParameters> FetchCharacters(IYield yield);
         Task<ValidateCharacterStatus> ValidateCharacter(IYield yield, ValidateCharacterRequestParameters parameters);
         Task<CreateCharacterResponseParameters> CreateCharacter(IYield yield, CreateCharacterRequestParameters parameters);

@@ -19,7 +19,7 @@ namespace Scripts.Services
         private ServersType serverType;
         private PeerConnectionInformation peerConnectionInformation;
 
-        protected IEventHandlerRegister<TEventCode> EventHandlerRegister { get; private set; }
+        private IEventHandlerRegister<TEventCode> EventHandlerRegister { get; set; }
         protected IOperationRequestSender<TOperationCode> OperationRequestSender { get; private set; }
         protected IOperationResponseSubscriptionProvider SubscriptionProvider { get; private set; }
 
@@ -51,6 +51,7 @@ namespace Scripts.Services
             }
 
             InitializePeerHandlers();
+            SubscribeToDisconnectionNotifier();
             OnConnected();
             return ConnectionStatus.Succeed;
         }
@@ -79,7 +80,7 @@ namespace Scripts.Services
 
         private void OnDisconnected(DisconnectReason disconnectReason, string s)
         {
-            serverPeer.PeerDisconnectionNotifier.Disconnected -= OnDisconnected;
+            UnsubscribeFromDisconnectionNotifier();
 
             LogUtils.Log("A connection has been closed with " +
                             $"{serverType} - {peerConnectionInformation.Ip}:{peerConnectionInformation.Port}. Reason: {disconnectReason}");
@@ -90,18 +91,66 @@ namespace Scripts.Services
         private void InitializePeerHandlers()
         {
             var networkConfiguration = NetworkConfiguration.GetInstance();
-
             OperationRequestSender = new OperationRequestSender<TOperationCode>(serverPeer.OperationRequestSender, networkConfiguration.LogOperationsRequest);
             SubscriptionProvider = new OperationResponseSubscriptionProvider<TOperationCode>(serverPeer.OperationResponseNotifier, OnOperationRequestFailed, 
                 networkConfiguration.LogOperationsResponse);
             EventHandlerRegister = new EventHandlerRegister<TEventCode>(serverPeer.EventNotifier, networkConfiguration.LogEvents);
+        }
 
-            serverPeer.PeerDisconnectionNotifier.Disconnected += OnDisconnected;
+        public void SendOperation<TParams>(byte operationCode, TParams parameters, MessageSendOptions messageSendOptions)
+            where TParams : struct, IParameters
+        {
+            if (!IsConnected())
+            {
+                LogUtils.Log(MessageBuilder.Trace($"Could not send {operationCode} operation because no connection to a server."));
+                return;
+            }
+
+            var code = (TOperationCode)Enum.ToObject(typeof(TOperationCode), operationCode);
+            OperationRequestSender.Send(code, parameters, messageSendOptions);
+        }
+
+        public async Task<TResponseParams> SendYieldOperation<TRequestParams, TResponseParams>(IYield yield, byte operationCode, TRequestParams parameters, MessageSendOptions messageSendOptions)
+            where TRequestParams : struct, IParameters
+            where TResponseParams : struct, IParameters
+        {
+            if (!IsConnected())
+            {
+                LogUtils.Log(MessageBuilder.Trace($"Could not send {operationCode} operation because no connection to a server."));
+                return default(TResponseParams);
+            }
+
+            var code = (TOperationCode)Enum.ToObject(typeof(TOperationCode), operationCode);
+            var requestId = OperationRequestSender.Send(code, parameters, messageSendOptions);
+            var responseParameters = await SubscriptionProvider.ProvideSubscription<TResponseParams>(yield, requestId);
+            return responseParameters;
+        }
+
+        protected void SetEventHandler<TParams>(TEventCode eventCode, UnityEvent<TParams> action)
+            where TParams : struct, IParameters
+        {
+            var eventHandler = new EventHandler<TParams>((x) => action?.Invoke(x.Parameters));
+            EventHandlerRegister.SetHandler(eventCode, eventHandler);
+        }
+
+        protected void RemoveEventHandler(TEventCode eventCode)
+        {
+            EventHandlerRegister.RemoveHandler(eventCode);
         }
 
         private void OnOperationRequestFailed(RawMessageResponseData data, short requestId)
         {
             LogUtils.Log(MessageBuilder.Trace($"Sending an operaiton has been failed. Operation Code: {data.Code} - Server Type: {serverType}"));
+        }
+
+        private void SubscribeToDisconnectionNotifier()
+        {
+            serverPeer.PeerDisconnectionNotifier.Disconnected += OnDisconnected;
+        }
+
+        private void UnsubscribeFromDisconnectionNotifier()
+        {
+            serverPeer.PeerDisconnectionNotifier.Disconnected -= OnDisconnected;
         }
 
         private PeerConnectionInformation GetPeerConnectionInformation(ConnectionInformation connectionInformation)
