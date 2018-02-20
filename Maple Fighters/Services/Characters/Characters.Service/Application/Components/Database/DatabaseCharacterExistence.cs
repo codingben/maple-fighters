@@ -5,9 +5,9 @@ using Database.Common.TablesDefinition;
 using ServiceStack.OrmLite;
 using Shared.Game.Common;
 
-namespace Game.Application.Components
+namespace CharactersService.Application.Components
 {
-    internal class DatabaseCharacterCreator : Component, IDatabaseCharacterCreator
+    internal class DatabaseCharacterExistence : Component, IDatabaseCharacterExistence
     {
         private IDatabaseConnectionProvider databaseConnectionProvider;
 
@@ -18,18 +18,12 @@ namespace Game.Application.Components
             databaseConnectionProvider = Components.GetComponent<IDatabaseConnectionProvider>().AssertNotNull();
         }
 
-        public void Create(int userId, string name, CharacterClasses characterClass, CharacterIndex characterIndex)
+        public bool Exists(int userId, CharacterIndex characterIndex)
         {
             using (var db = databaseConnectionProvider.GetDbConnection())
             {
-                var user = new CharactersTableDefinition
-                {
-                    UserId = userId,
-                    Name = name,
-                    CharacterType = characterClass.ToString(),
-                    CharacterIndex = (int)characterIndex
-                };
-                db.Insert(user);
+                var exists = db.Exists<CharactersTableDefinition>(new CharactersTableDefinition { UserId = userId, CharacterIndex = (int)characterIndex });
+                return exists;
             }
         }
     }

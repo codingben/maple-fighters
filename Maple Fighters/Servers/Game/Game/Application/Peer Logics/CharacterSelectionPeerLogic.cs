@@ -10,7 +10,6 @@ namespace Game.Application.PeerLogics
     internal class CharacterSelectionPeerLogic : PeerLogicBase<GameOperations, EmptyEventCode>
     {
         private readonly int dbUserId;
-        private CharacterFromDatabaseParameters? choosedCharacter;
 
         public CharacterSelectionPeerLogic(int dbUserId)
         {
@@ -21,43 +20,23 @@ namespace Game.Application.PeerLogics
         {
             base.Initialize(peer);
 
-            AddHandlerValidateCharacterOperation();
-            AddHandlerForFetchCharactersOperation();
-            AddHandlerForCreateCharacterOperation();
-            AddHandlerForRemoveCharacterOperation();
+            AddHandlerToValidateCharacterOperation();
         }
 
-        private void AddHandlerValidateCharacterOperation()
+        private void AddHandlerToValidateCharacterOperation()
         {
-            OperationRequestHandlerRegister.SetHandler(GameOperations.ValidateCharacter, new ValidateCharacterOperationHandler(dbUserId, OnCharacterSelected));
+            OperationRequestHandlerRegister.SetAsyncHandler(GameOperations.ValidateCharacter, new ValidateCharacterOperationHandler(dbUserId, OnCharacterSelected));
         }
 
-        private void AddHandlerForFetchCharactersOperation()
+        private void OnCharacterSelected(CharacterFromDatabaseParameters? character)
         {
-            OperationRequestHandlerRegister.SetHandler(GameOperations.FetchCharacters, new FetchCharactersOperationHandler(dbUserId));
-        }
-
-        private void AddHandlerForCreateCharacterOperation()
-        {
-            OperationRequestHandlerRegister.SetHandler(GameOperations.CreateCharacter, new CreateCharacterOperationHandler(dbUserId));
-        }
-
-        private void AddHandlerForRemoveCharacterOperation()
-        {
-            OperationRequestHandlerRegister.SetHandler(GameOperations.RemoveCharacter, new RemoveCharacterOperationHandler(dbUserId));
-        }
-
-        private void OnCharacterSelected(CharacterFromDatabaseParameters character)
-        {
-            choosedCharacter = character;
-
-            if (choosedCharacter == null)
+            if (!character.HasValue)
             {
                 KickOutPeer();
                 return;
             }
 
-            PeerWrapper.SetPeerLogic(new GameScenePeerLogic(choosedCharacter.Value));
+            PeerWrapper.SetPeerLogic(new GameScenePeerLogic(character.Value));
         }
 
         private void KickOutPeer()

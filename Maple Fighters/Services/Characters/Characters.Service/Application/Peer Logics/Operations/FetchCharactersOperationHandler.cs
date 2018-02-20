@@ -1,12 +1,12 @@
 ﻿using System.Linq;
+using CharactersService.Application.Components;
 using CommonCommunicationInterfaces;
 using CommonTools.Log;
-using Game.Application.Components;
 using ServerApplication.Common.ApplicationBase;
 using ServerCommunicationHelper;
 using Shared.Game.Common;
 
-namespace Game.Application.PeerLogic.Operations
+namespace CharactersService.Application.PeerLogics.Operations
 {
     internal class FetchCharactersOperationHandler : IOperationRequestHandler<EmptyParameters, FetchCharactersResponseParameters>
     {

@@ -4,7 +4,7 @@ using Database.Common.Components;
 using Database.Common.TablesDefinition;
 using ServiceStack.OrmLite;
 
-namespace Game.Application.Components
+namespace CharactersService.Application.Components
 {
     internal class DatabaseCharacterNameVerifier : Component, IDatabaseCharacterNameVerifier
     {

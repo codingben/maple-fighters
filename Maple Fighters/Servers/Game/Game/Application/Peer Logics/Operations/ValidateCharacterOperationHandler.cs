@@ -1,39 +1,43 @@
 ﻿using System;
+using System.Threading.Tasks;
+using Characters.Common;
 using CommonCommunicationInterfaces;
+using CommonTools.Coroutines;
 using CommonTools.Log;
-using Game.Application.Components;
 using ServerApplication.Common.ApplicationBase;
 using ServerCommunicationHelper;
 using Shared.Game.Common;
 
 namespace Game.Application.PeerLogic.Operations
 {
-    internal class ValidateCharacterOperationHandler : IOperationRequestHandler<ValidateCharacterRequestParameters, ValidateCharacterResponseParameters>
+    internal class ValidateCharacterOperationHandler : IAsyncOperationRequestHandler<ValidateCharacterRequestParameters, ValidateCharacterResponseParameters>
     {
         private readonly int userId;
-        private readonly Action<CharacterFromDatabaseParameters> onCharacterSelected;
-        private readonly IDatabaseCharactersGetter charactersGetter;
+        private readonly Action<CharacterFromDatabaseParameters?> onCharacterSelected;
+        private readonly ICharactersServiceAPI charactersServiceApi;
 
-        public ValidateCharacterOperationHandler(int userId, Action<CharacterFromDatabaseParameters> onCharacterSelected)
+        public ValidateCharacterOperationHandler(int userId, Action<CharacterFromDatabaseParameters?> onCharacterSelected)
         {
             this.userId = userId;
             this.onCharacterSelected = onCharacterSelected;
 
-            charactersGetter = Server.Components.GetComponent<IDatabaseCharactersGetter>().AssertNotNull();
+            charactersServiceApi = Server.Components.GetComponent<ICharactersServiceAPI>().AssertNotNull();
         }
 
-        public ValidateCharacterResponseParameters? Handle(MessageData<ValidateCharacterRequestParameters> messageData, ref MessageSendOptions sendOptions)
+        public Task<ValidateCharacterResponseParameters?> Handle(IYield yield, MessageData<ValidateCharacterRequestParameters> messageData, ref MessageSendOptions sendOptions)
         {
             var characterIndex = messageData.Parameters.CharacterIndex;
+            var parameters = new FetchCharacterRequestParameters(userId, characterIndex);
+            return GetCharacter(yield, parameters);
+        }
 
-            var character = charactersGetter.GetCharacter(userId, characterIndex);
-            if (character == null)
-            {
-                return new ValidateCharacterResponseParameters(ValidateCharacterStatus.Wrong);
-            }
+        public async Task<ValidateCharacterResponseParameters?> GetCharacter(IYield yield, FetchCharacterRequestParameters parameters)
+        {
+            var character = await charactersServiceApi.SendYieldOperation<FetchCharacterRequestParameters, FetchCharacterResponseParameters>
+                (yield, (byte)CharactersServiceOperations.FetchCharacter, parameters);
 
-            onCharacterSelected.Invoke(character.Value);
-            return new ValidateCharacterResponseParameters(ValidateCharacterStatus.Ok);
+            onCharacterSelected.Invoke(character.Character);
+            return new ValidateCharacterResponseParameters(character.Character.HasValue ? ValidateCharacterStatus.Ok : ValidateCharacterStatus.Wrong);
         }
     }
 }

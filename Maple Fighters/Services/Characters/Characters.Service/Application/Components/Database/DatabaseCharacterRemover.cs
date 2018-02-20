@@ -4,7 +4,7 @@ using Database.Common.Components;
 using Database.Common.TablesDefinition;
 using ServiceStack.OrmLite;
 
-namespace Game.Application.Components
+namespace CharactersService.Application.Components
 {
     internal class DatabaseCharacterRemover : Component, IDatabaseCharacterRemover
     {
@@ -19,6 +19,8 @@ namespace Game.Application.Components
 
         public bool Remove(int userId, int characterIndex)
         {
+            // TODO: SRP
+
             using (var db = databaseConnectionProvider.GetDbConnection())
             {
                 db.Delete<CharactersTableDefinition>(c => c.UserId == userId && c.CharacterIndex == characterIndex);

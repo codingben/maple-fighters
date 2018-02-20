@@ -1,4 +1,5 @@
-﻿using Database.Common.AccessToken;
+﻿using Characters.Common;
+using Database.Common.AccessToken;
 using Database.Common.Components;
 using Game.Application.Components;
 using Game.Application.PeerLogics;
@@ -22,6 +23,7 @@ namespace Game.Application
 
             AddCommonComponents();
             AddComponents();
+            AddServiceComponens();
         }
         
         public override void OnConnected(IClientPeer clientPeer)
@@ -39,15 +41,15 @@ namespace Game.Application
             Server.Components.AddComponent(new SceneContainer());
             Server.Components.AddComponent(new CharacterCreator());
             Server.Components.AddComponent(new DatabaseConnectionProvider());
-            Server.Components.AddComponent(new DatabaseCharacterCreator());
-            Server.Components.AddComponent(new DatabaseCharacterRemover());
-            Server.Components.AddComponent(new DatabaseCharacterNameVerifier());
-            Server.Components.AddComponent(new DatabaseCharactersGetter());
-            Server.Components.AddComponent(new DatabaseCharacterExistence());
             Server.Components.AddComponent(new DatabaseAccessTokenExistence());
             Server.Components.AddComponent(new DatabaseAccessTokenProvider());
             Server.Components.AddComponent(new DatabaseUserIdViaAccessTokenProvider());
             Server.Components.AddComponent(new LocalDatabaseAccessTokens());
+        }
+
+        private void AddServiceComponens()
+        {
+            Server.Components.AddComponent(new CharactersService());
         }
 
         private void RunPythonScriptEngine()

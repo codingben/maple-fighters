@@ -7,7 +7,7 @@ using Database.Common.TablesDefinition;
 using ServiceStack.OrmLite;
 using Shared.Game.Common;
 
-namespace Game.Application.Components
+namespace CharactersService.Application.Components
 {
     internal class DatabaseCharactersGetter : Component, IDatabaseCharactersGetter
     {
@@ -27,7 +27,7 @@ namespace Game.Application.Components
             {
                 // Should only be 3 characters.
                 var charactersFromDatabase = db.Select<CharactersTableDefinition>().Where(x => x.UserId == userId);
-                var charactersDatabase = charactersFromDatabase.Select(GetCharacter).ToList();
+                var charactersDatabase = charactersFromDatabase.Select(GetCharacterParameters).ToList();
 
                 // If there is no characters, it means that there is an empty character. 
                 var length = MAXIMUM_CHARACTERS - charactersDatabase.Count;
@@ -59,12 +59,13 @@ namespace Game.Application.Components
         {
             using (var db = databaseConnectionProvider.GetDbConnection())
             {
-                var characterTable = db.Single<CharactersTableDefinition>(x => x.UserId == userId && x.CharacterIndex == characterIndex);
-                return GetCharacter(characterTable);
+                var charactersTable = db.Single<CharactersTableDefinition>(x => x.UserId == userId && x.CharacterIndex == characterIndex);
+                var character = GetCharacterParameters(charactersTable);
+                return character;
             }
         }
 
-        private CharacterFromDatabaseParameters GetCharacter(CharactersTableDefinition charactersTableDefinition)
+        private CharacterFromDatabaseParameters GetCharacterParameters(CharactersTableDefinition charactersTableDefinition)
         {
             if (charactersTableDefinition.CharacterType == CharacterClasses.Arrow.ToString())
             {

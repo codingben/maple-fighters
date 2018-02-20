@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{6D45E0D3-9B4C-40F8-9EBB-CB5A800C212C}</ProjectGuid>
+    <ProjectGuid>{BEB77F9A-714D-46FE-ABFC-01D0C894EEF9}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Server2</RootNamespace>
-    <AssemblyName>Server2</AssemblyName>
+    <RootNamespace>Characters.PhotonStarter</RootNamespace>
+    <AssemblyName>Characters.PhotonStarter</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -34,24 +34,20 @@
     <Reference Include="CommonCommunicationInterfaces, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\CommonCommunicationInterfaces.5.0.0\lib\net46\CommonCommunicationInterfaces.dll</HintPath>
     </Reference>
-    <Reference Include="CommunicationHelper, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\CommunicationHelper.4.0.0\lib\net46\CommunicationHelper.dll</HintPath>
-    </Reference>
     <Reference Include="Coroutines, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Coroutines.5.0.5\lib\net46\Coroutines.dll</HintPath>
-    </Reference>
-    <Reference Include="JsonConfig, Version=1.0.5359.16918, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\JsonConfig.1.0.0\lib\JsonConfig.dll</HintPath>
-    </Reference>
-    <Reference Include="JsonFx, Version=2.0.1209.2802, Culture=neutral, PublicKeyToken=315052dd637f8a52, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\JsonFx.2.0.1209.2802\lib\net40\JsonFx.dll</HintPath>
     </Reference>
     <Reference Include="LogUtils, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Coroutines.5.0.5\lib\net46\LogUtils.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="ServerCommunicationHelper, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\ServerCommunicationHelper.3.1.0\lib\net46\ServerCommunicationHelper.dll</HintPath>
+    <Reference Include="Photon.SocketServer">
+      <HintPath>..\..\..\..\Photon Libraries\Photon.SocketServer.dll</HintPath>
+    </Reference>
+    <Reference Include="PhotonCommonImplementation, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\PhotonCommonImplementation.2.1.0\lib\net46\PhotonCommonImplementation.dll</HintPath>
+    </Reference>
+    <Reference Include="PhotonServerImplementation, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\PhotonServerImplementation.4.0.0\lib\net46\PhotonServerImplementation.dll</HintPath>
     </Reference>
     <Reference Include="ServerCommunicationInterfaces, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\ServerCommunicationInterfaces.3.0.0\lib\net46\ServerCommunicationInterfaces.dll</HintPath>
@@ -59,35 +55,25 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.ValueTuple, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\System.ValueTuple.4.4.0\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
+      <HintPath>..\..\..\packages\System.ValueTuple.4.4.0\lib\net461\System.ValueTuple.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Application\Peer Logics\ClientPeerLogic.cs" />
-    <Compile Include="Application\Server2Application.cs" />
+    <Compile Include="PhotonStarter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Application\Peer Logics\ServerPeerLogic.cs" />
-    <Compile Include="Application\Peer Logics\Operations\Server1OperationHandler.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Shared\Servers\ComponentModel.Common\ComponentModel.Common.csproj">
-      <Project>{00565794-9958-47D9-9E8E-6D7193D67B9D}</Project>
-      <Name>ComponentModel.Common</Name>
+    <ProjectReference Include="..\..\..\Shared\Servers\PhotonStarter.Common\PhotonStarter.Common.csproj">
+      <Project>{9CF08CBC-8EAE-4159-8620-1383D562B6CA}</Project>
+      <Name>PhotonStarter.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\Shared\Servers\PeerLogic.Common\PeerLogic.Common.csproj">
-      <Project>{F90F12D2-58E0-4718-A205-EBFD28C81742}</Project>
-      <Name>PeerLogic.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\Shared\Servers\ServerApplication.Common\ServerApplication.Common.csproj">
-      <Project>{F82FBB67-7B1D-43B7-A415-3F407D40E5C7}</Project>
-      <Name>ServerApplication.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Server2.Common\Server2.Common.csproj">
-      <Project>{DDEDD983-2CFF-4D9E-999C-EB97140AFD0B}</Project>
-      <Name>Server2.Common</Name>
+    <ProjectReference Include="..\Characters.Service\Characters.Service.csproj">
+      <Project>{40F51EE4-D13D-4EAD-BF38-53A4361136D9}</Project>
+      <Name>Characters.Service</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

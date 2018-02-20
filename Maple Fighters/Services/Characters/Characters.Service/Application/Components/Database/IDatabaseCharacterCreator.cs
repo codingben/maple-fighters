@@ -1,7 +1,7 @@
 ﻿using ComponentModel.Common;
 using Shared.Game.Common;
 
-namespace Game.Application.Components
+namespace CharactersService.Application.Components
 {
     internal interface IDatabaseCharacterCreator : IExposableComponent
     {
