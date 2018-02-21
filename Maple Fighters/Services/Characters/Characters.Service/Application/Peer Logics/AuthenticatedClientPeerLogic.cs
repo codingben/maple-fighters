@@ -1,4 +1,4 @@
-﻿using Characters.Common;
+﻿using Characters.Client.Common;
 using CharactersService.Application.PeerLogics.Operations;
 using CommunicationHelper;
 using PeerLogic.Common;
@@ -6,7 +6,7 @@ using ServerCommunicationInterfaces;
 
 namespace Characters.Service.Application.PeerLogics
 {
-    internal class AuthenticatedClientPeerLogic : PeerLogicBase<CharactersServiceOperations, EmptyEventCode>
+    internal class AuthenticatedClientPeerLogic : PeerLogicBase<ClientOperations, EmptyEventCode>
     {
         private readonly int dbUserId;
 
@@ -21,22 +21,22 @@ namespace Characters.Service.Application.PeerLogics
 
             AddHandlerForCreateCharacterOperation();
             AddHandlerForRemoveCharacterOperation();
-            AddHandlerForFetchCharactersOperation();
+            AddHandlerForGetCharactersOperation();
         }
 
         private void AddHandlerForCreateCharacterOperation()
         {
-            OperationRequestHandlerRegister.SetHandler(CharactersServiceOperations.CreateCharacter, new CreateCharacterOperationHandler(dbUserId));
+            OperationRequestHandlerRegister.SetHandler(ClientOperations.CreateCharacter, new CreateCharacterOperationHandler(dbUserId));
         }
 
         private void AddHandlerForRemoveCharacterOperation()
         {
-            OperationRequestHandlerRegister.SetHandler(CharactersServiceOperations.RemoveCharacter, new RemoveCharacterOperationHandler(dbUserId));
+            OperationRequestHandlerRegister.SetHandler(ClientOperations.RemoveCharacter, new RemoveCharacterOperationHandler(dbUserId));
         }
 
-        private void AddHandlerForFetchCharactersOperation()
+        private void AddHandlerForGetCharactersOperation()
         {
-            OperationRequestHandlerRegister.SetHandler(CharactersServiceOperations.FetchCharacters, new FetchCharactersOperationHandler(dbUserId));
+            OperationRequestHandlerRegister.SetHandler(ClientOperations.GetCharacters, new GetCharactersOperationHandler(dbUserId));
         }
     }
 }

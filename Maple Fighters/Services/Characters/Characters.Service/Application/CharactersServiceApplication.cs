@@ -9,6 +9,8 @@ using ServerCommunicationInterfaces;
 
 namespace Characters.Service.Application
 {
+    using Server = ServerApplication.Common.ApplicationBase.Server;
+
     public class CharactersServiceApplication : ApplicationBase
     {
         public CharactersServiceApplication(IFiberProvider fiberProvider, IServerConnector serverConnector) 

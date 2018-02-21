@@ -1,6 +1,6 @@
-﻿using ComponentModel.Common;
+﻿using Characters.Client.Common;
+using ComponentModel.Common;
 using Game.InterestManagement;
-using Shared.Game.Common;
 
 namespace Game.Application.SceneObjects.Components
 {

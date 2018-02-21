@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Characters.Common;
+using Characters.Client.Common;
+using Characters.Server.Common;
 using CommonCommunicationInterfaces;
 using CommonTools.Coroutines;
 using CommonTools.Log;
@@ -27,14 +28,14 @@ namespace Game.Application.PeerLogic.Operations
         public Task<ValidateCharacterResponseParameters?> Handle(IYield yield, MessageData<ValidateCharacterRequestParameters> messageData, ref MessageSendOptions sendOptions)
         {
             var characterIndex = messageData.Parameters.CharacterIndex;
-            var parameters = new FetchCharacterRequestParameters(userId, characterIndex);
+            var parameters = new GetCharacterRequestParameters(userId, characterIndex);
             return GetCharacter(yield, parameters);
         }
 
-        public async Task<ValidateCharacterResponseParameters?> GetCharacter(IYield yield, FetchCharacterRequestParameters parameters)
+        public async Task<ValidateCharacterResponseParameters?> GetCharacter(IYield yield, GetCharacterRequestParameters parameters)
         {
-            var character = await charactersServiceApi.SendYieldOperation<FetchCharacterRequestParameters, FetchCharacterResponseParameters>
-                (yield, (byte)CharactersServiceOperations.FetchCharacter, parameters);
+            var character = await charactersServiceApi.SendYieldOperation<GetCharacterRequestParameters, GetCharacterResponseParameters>
+                (yield, (byte)ServerOperations.GetCharacter, parameters);
 
             onCharacterSelected.Invoke(character.Character);
             return new ValidateCharacterResponseParameters(character.Character.HasValue ? ValidateCharacterStatus.Ok : ValidateCharacterStatus.Wrong);

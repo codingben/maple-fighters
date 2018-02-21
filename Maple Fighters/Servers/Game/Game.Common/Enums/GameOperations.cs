@@ -7,9 +7,6 @@
         ChangeScene,
         PositionChanged,
         PlayerStateChanged,
-        FetchCharacters,
         ValidateCharacter,
-        CreateCharacter,
-        RemoveCharacter
     }
 }

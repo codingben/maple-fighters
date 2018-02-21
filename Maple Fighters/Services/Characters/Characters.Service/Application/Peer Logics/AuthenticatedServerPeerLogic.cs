@@ -1,4 +1,4 @@
-﻿using Characters.Common;
+﻿using Characters.Server.Common;
 using CharactersService.Application.PeerLogics.Operations;
 using CommunicationHelper;
 using PeerLogic.Common;
@@ -6,18 +6,18 @@ using ServerCommunicationInterfaces;
 
 namespace Characters.Service.Application.PeerLogics
 {
-    internal class AuthenticatedServerPeerLogic : PeerLogicBase<CharactersServiceOperations, EmptyEventCode>
+    internal class AuthenticatedServerPeerLogic : PeerLogicBase<ServerOperations, EmptyEventCode>
     {
         public override void Initialize(IClientPeerWrapper<IClientPeer> peer)
         {
             base.Initialize(peer);
 
-            AddHandlerForFetchCharacterOperation();
+            AddHandlerForGetCharacterOperation();
         }
 
-        private void AddHandlerForFetchCharacterOperation()
+        private void AddHandlerForGetCharacterOperation()
         {
-            OperationRequestHandlerRegister.SetHandler(CharactersServiceOperations.FetchCharacter, new FetchCharacterOperationHandler());
+            OperationRequestHandlerRegister.SetHandler(ServerOperations.GetCharacter, new GetCharacterOperationHandler());
         }
     }
 }

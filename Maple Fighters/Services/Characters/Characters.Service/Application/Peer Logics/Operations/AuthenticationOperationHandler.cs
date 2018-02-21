@@ -1,10 +1,10 @@
 ﻿using System;
+using Characters.Client.Common;
 using CommonCommunicationInterfaces;
 using CommonTools.Log;
 using Database.Common.AccessToken;
 using ServerApplication.Common.ApplicationBase;
 using ServerCommunicationHelper;
-using Shared.Game.Common;
 
 namespace CharactersService.Application.PeerLogics.Operations
 {

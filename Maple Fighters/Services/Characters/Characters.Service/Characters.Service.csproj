@@ -76,31 +76,30 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Application\CharactersServiceApplication.cs" />
-    <Compile Include="Application\Components\Database\DatabaseCharacterCreator.cs" />
-    <Compile Include="Application\Components\Database\DatabaseCharacterExistence.cs" />
-    <Compile Include="Application\Components\Database\DatabaseCharacterNameVerifier.cs" />
-    <Compile Include="Application\Components\Database\DatabaseCharacterRemover.cs" />
-    <Compile Include="Application\Components\Database\DatabaseCharactersGetter.cs" />
-    <Compile Include="Application\Components\Database\IDatabaseCharacterCreator.cs" />
-    <Compile Include="Application\Components\Database\IDatabaseCharacterExistence.cs" />
-    <Compile Include="Application\Components\Database\IDatabaseCharacterNameVerifier.cs" />
-    <Compile Include="Application\Components\Database\IDatabaseCharacterRemover.cs" />
-    <Compile Include="Application\Components\Database\IDatabaseCharactersGetter.cs" />
+    <Compile Include="Application\Components\DatabaseCharacterCreator.cs" />
+    <Compile Include="Application\Components\DatabaseCharacterExistence.cs" />
+    <Compile Include="Application\Components\DatabaseCharacterGetter.cs" />
+    <Compile Include="Application\Components\DatabaseCharacterNameVerifier.cs" />
+    <Compile Include="Application\Components\DatabaseCharacterRemover.cs" />
+    <Compile Include="Application\Components\DatabaseCharactersGetter.cs" />
+    <Compile Include="Application\Components\IDatabaseCharacterCreator.cs" />
+    <Compile Include="Application\Components\IDatabaseCharacterExistence.cs" />
+    <Compile Include="Application\Components\IDatabaseCharacterGetter.cs" />
+    <Compile Include="Application\Components\IDatabaseCharacterNameVerifier.cs" />
+    <Compile Include="Application\Components\IDatabaseCharacterRemover.cs" />
+    <Compile Include="Application\Components\IDatabaseCharactersGetter.cs" />
+    <Compile Include="Application\Components\Utils.cs" />
     <Compile Include="Application\Peer Logics\AuthenticatedClientPeerLogic.cs" />
     <Compile Include="Application\Peer Logics\AuthenticatedServerPeerLogic.cs" />
     <Compile Include="Application\Peer Logics\Operations\AuthenticationOperationHandler.cs" />
     <Compile Include="Application\Peer Logics\Operations\CreateCharacterOperationHandler.cs" />
-    <Compile Include="Application\Peer Logics\Operations\FetchCharacterOperationHandler.cs" />
-    <Compile Include="Application\Peer Logics\Operations\FetchCharactersOperationHandler.cs" />
+    <Compile Include="Application\Peer Logics\Operations\GetCharacterOperationHandler.cs" />
+    <Compile Include="Application\Peer Logics\Operations\GetCharactersOperationHandler.cs" />
     <Compile Include="Application\Peer Logics\Operations\RemoveCharacterOperationHandler.cs" />
     <Compile Include="Application\Peer Logics\UnauthenticatedClientPeerLogic.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Servers\Game\Game.Common\Game.Common.csproj">
-      <Project>{AA536188-84FF-4286-A9E6-BAFBE1D8D37B}</Project>
-      <Name>Game.Common</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\Shared\Database\Database.Common\Database.Common.csproj">
       <Project>{46B701A0-8606-4EF1-B111-F001EE74F124}</Project>
       <Name>Database.Common</Name>
@@ -117,15 +116,18 @@
       <Project>{F82FBB67-7B1D-43B7-A415-3F407D40E5C7}</Project>
       <Name>ServerApplication.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Characters.Common\Characters.Common.csproj">
+    <ProjectReference Include="..\Characters.Client.Common\Characters.Client.Common\Characters.Client.Common.csproj">
+      <Project>{2EB94BA4-299A-47D9-93D0-E86D06463A18}</Project>
+      <Name>Characters.Client.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Characters.Server.Common\Characters.Server.Common.csproj">
       <Project>{42BB62DA-299C-4EC1-B83C-894E5D75E505}</Project>
-      <Name>Characters.Common</Name>
+      <Name>Characters.Server.Common</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,9 +1,9 @@
-﻿using CharactersService.Application.Components;
+﻿using Characters.Client.Common;
+using CharactersService.Application.Components;
 using CommonCommunicationInterfaces;
 using CommonTools.Log;
 using ServerApplication.Common.ApplicationBase;
 using ServerCommunicationHelper;
-using Shared.Game.Common;
 
 namespace CharactersService.Application.PeerLogics.Operations
 {

@@ -64,8 +64,12 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Shared\Servers\PhotonStarter.Common\PhotonStarter.Common.csproj">
-      <Project>{9CF08CBC-8EAE-4159-8620-1383D562B6CA}</Project>
+      <Project>{9cf08cbc-8eae-4159-8620-1383d562b6ca}</Project>
       <Name>PhotonStarter.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Shared\Servers\ServerApplication.Common\ServerApplication.Common.csproj">
+      <Project>{F82FBB67-7B1D-43B7-A415-3F407D40E5C7}</Project>
+      <Name>ServerApplication.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\Characters.Service\Characters.Service.csproj">
       <Project>{40F51EE4-D13D-4EAD-BF38-53A4361136D9}</Project>

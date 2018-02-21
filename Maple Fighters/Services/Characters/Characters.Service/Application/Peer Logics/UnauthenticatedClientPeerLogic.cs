@@ -1,4 +1,4 @@
-﻿using Characters.Common;
+﻿using Characters.Client.Common;
 using CharactersService.Application.PeerLogics.Operations;
 using CommunicationHelper;
 using PeerLogic.Common;
@@ -6,7 +6,7 @@ using ServerCommunicationInterfaces;
 
 namespace Characters.Service.Application.PeerLogics
 {
-    internal class UnauthenticatedClientPeerLogic : PeerLogicBase<CharactersServiceOperations, EmptyEventCode>
+    internal class UnauthenticatedClientPeerLogic : PeerLogicBase<ClientOperations, EmptyEventCode>
     {
         public override void Initialize(IClientPeerWrapper<IClientPeer> peer)
         {
@@ -17,7 +17,7 @@ namespace Characters.Service.Application.PeerLogics
 
         private void AddHandlerForAuthenticationOperation()
         {
-            OperationRequestHandlerRegister.SetHandler(CharactersServiceOperations.Authenticate,
+            OperationRequestHandlerRegister.SetHandler(ClientOperations.Authenticate,
                 new AuthenticationOperationHandler(PeerWrapper.PeerId, OnAuthenticated));
         }
 

@@ -1,4 +1,4 @@
-﻿using Characters.Common;
+﻿using Characters.Server.Common;
 using Database.Common.AccessToken;
 using Database.Common.Components;
 using Game.Application.Components;

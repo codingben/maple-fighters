@@ -1,4 +1,5 @@
-﻿using CommonTools.Log;
+﻿using Characters.Client.Common;
+using CommonTools.Log;
 using ComponentModel.Common;
 using Game.Application.SceneObjects.Components;
 using Game.InterestManagement;

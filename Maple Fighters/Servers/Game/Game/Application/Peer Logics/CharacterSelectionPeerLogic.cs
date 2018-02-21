@@ -1,4 +1,5 @@
-﻿using CommonTools.Log;
+﻿using Characters.Client.Common;
+using CommonTools.Log;
 using CommunicationHelper;
 using Game.Application.PeerLogic.Operations;
 using PeerLogic.Common;

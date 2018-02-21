@@ -56,20 +56,13 @@
     <Compile Include="Enums\AuthenticationStatus.cs" />
     <Compile Include="Parameters\ChangeSceneRequestParameters.cs" />
     <Compile Include="Parameters\ChangeSceneResponseParameters.cs" />
-    <Compile Include="Parameters\CharacterFromDatabaseParameters.cs" />
     <Compile Include="Parameters\CharacterAddedEventParameters.cs" />
-    <Compile Include="Enums\CharacterClasses.cs" />
-    <Compile Include="Enums\CharacterCreationStatus.cs" />
-    <Compile Include="Enums\CharacterIndex.cs" />
     <Compile Include="Parameters\CharacterSpawnDetailsParameters.cs" />
     <Compile Include="Parameters\CharactersAddedEventParameters.cs" />
-    <Compile Include="Parameters\CreateCharacterRequestParameters.cs" />
-    <Compile Include="Parameters\CreateCharacterResponseParameters.cs" />
     <Compile Include="Enums\DirectionsUtils.cs" />
     <Compile Include="Enums\Directions.cs" />
     <Compile Include="Parameters\PlayerAttackedEventParameters.cs" />
     <Compile Include="Parameters\ValidateCharacterRequestParameters.cs" />
-    <Compile Include="Parameters\FetchCharactersResponseParameters.cs" />
     <Compile Include="Parameters\SceneObjectsAddedEventParameters.cs" />
     <Compile Include="Parameters\SceneObjectsRemovedEventParameters.cs" />
     <Compile Include="Parameters\SceneObjectParameters.cs" />
@@ -83,10 +76,7 @@
     <Compile Include="Enums\Maps.cs" />
     <Compile Include="Enums\PlayerState.cs" />
     <Compile Include="Parameters\PlayerStateChangedEventParameters.cs" />
-    <Compile Include="Parameters\RemoveCharacterRequestParameters.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Parameters\RemoveCharacterResponseParameters.cs" />
-    <Compile Include="Enums\RemoveCharacterStatus.cs" />
     <Compile Include="Parameters\UpdatePositionRequestParameters.cs" />
     <Compile Include="Parameters\UpdatePlayerStateRequestParameters.cs" />
     <Compile Include="Parameters\ValidateCharacterResponseParameters.cs" />
@@ -94,6 +84,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Services\Characters\Characters.Client.Common\Characters.Client.Common\Characters.Client.Common.csproj">
+      <Project>{2EB94BA4-299A-47D9-93D0-E86D06463A18}</Project>
+      <Name>Characters.Client.Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

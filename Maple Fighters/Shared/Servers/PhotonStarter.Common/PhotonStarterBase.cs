@@ -11,7 +11,7 @@ using PhotonServerImplementation.Server;
 namespace PhotonStarter.Common
 {
     public abstract class PhotonStarterBase<T> : PhotonServerImplementation.ApplicationBase
-        where T : IApplicationBase
+        where T : class, IApplicationBase
     {
         private T application;
 
