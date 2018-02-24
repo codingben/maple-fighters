@@ -10,11 +10,11 @@ namespace Game.Application.PeerLogics
 {
     internal class CharacterSelectionPeerLogic : PeerLogicBase<GameOperations, EmptyEventCode>
     {
-        private readonly int dbUserId;
+        private readonly int userId;
 
-        public CharacterSelectionPeerLogic(int dbUserId)
+        public CharacterSelectionPeerLogic(int userId)
         {
-            this.dbUserId = dbUserId;
+            this.userId = userId;
         }
 
         public override void Initialize(IClientPeerWrapper<IClientPeer> peer)
@@ -26,28 +26,24 @@ namespace Game.Application.PeerLogics
 
         private void AddHandlerToValidateCharacterOperation()
         {
-            OperationRequestHandlerRegister.SetAsyncHandler(GameOperations.ValidateCharacter, new ValidateCharacterOperationHandler(dbUserId, OnCharacterSelected));
+            OperationRequestHandlerRegister.SetAsyncHandler(GameOperations.ValidateCharacter, new CharacterValidationOperationHandler(userId, OnCharacterSelected));
         }
 
         private void OnCharacterSelected(CharacterFromDatabaseParameters? character)
         {
-            if (!character.HasValue)
+            if (character.HasValue)
             {
-                KickOutPeer();
-                return;
+                PeerWrapper.SetPeerLogic(new GameScenePeerLogic(character.Value));
             }
+            else
+            {
+                var ip = PeerWrapper.Peer.ConnectionInformation.Ip;
+                var peerId = PeerWrapper.PeerId;
 
-            PeerWrapper.SetPeerLogic(new GameScenePeerLogic(character.Value));
-        }
+                LogUtils.Log(MessageBuilder.Trace($"A peer {ip} with id #{peerId} does not have character but trying to enter with character."));
 
-        private void KickOutPeer()
-        {
-            var ip = PeerWrapper.Peer.ConnectionInformation.Ip;
-            var peerId = PeerWrapper.PeerId;
-
-            LogUtils.Log(MessageBuilder.Trace($"A peer {ip} with id #{peerId} does not have character but trying to enter with character."));
-
-            PeerWrapper.Peer.Disconnect();
+                PeerWrapper.Peer.Disconnect();
+            }
         }
     }
 }

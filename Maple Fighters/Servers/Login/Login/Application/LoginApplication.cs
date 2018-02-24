@@ -1,4 +1,4 @@
-﻿using Database.Common.AccessToken;
+﻿using Authorization.Server.Common;
 using Database.Common.Components;
 using Login.Application.Components;
 using Login.Application.PeerLogic;
@@ -20,15 +20,7 @@ namespace Login.Application
             base.Startup();
 
             AddCommonComponents();
-
-            Server.Components.AddComponent(new DatabaseConnectionProvider());
-            Server.Components.AddComponent(new DatabaseUserVerifier());
-            Server.Components.AddComponent(new DatabaseUserPasswordVerifier());
-            Server.Components.AddComponent(new DatabaseUserIdProvider());
-            Server.Components.AddComponent(new DatabaseAccessTokenCreator());
-            Server.Components.AddComponent(new DatabaseAccessTokenExistence());
-            Server.Components.AddComponent(new DatabaseAccessTokenProvider());
-            Server.Components.AddComponent(new DatabaseAccessTokenExistenceViaUserId());
+            AddComponents();
         }
 
         public override void OnConnected(IClientPeer clientPeer)
@@ -36,6 +28,15 @@ namespace Login.Application
             base.OnConnected(clientPeer);
 
             WrapClientPeer(clientPeer, new LoginPeerLogic());
+        }
+
+        private void AddComponents()
+        {
+            Server.Components.AddComponent(new DatabaseConnectionProvider());
+            Server.Components.AddComponent(new DatabaseUserVerifier());
+            Server.Components.AddComponent(new DatabaseUserPasswordVerifier());
+            Server.Components.AddComponent(new DatabaseUserIdProvider());
+            Server.Components.AddComponent(new AuthorizationService());
         }
     }
 }

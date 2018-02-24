@@ -1,6 +1,5 @@
-﻿using Chat.Application.PeerLogics;
-using Database.Common.AccessToken;
-using Database.Common.Components;
+﻿using Authorization.Server.Common;
+using Chat.Application.PeerLogics;
 using ServerApplication.Common.ApplicationBase;
 using ServerCommunicationInterfaces;
 
@@ -26,15 +25,12 @@ namespace Chat.Application
         {
             base.OnConnected(clientPeer);
 
-            WrapClientPeer(clientPeer, new UnauthenticatedPeerLogic());
+            WrapClientPeer(clientPeer, new UnauthorizedClientPeerLogic());
         }
 
         private void AddComponents()
         {
-            Server.Components.AddComponent(new DatabaseConnectionProvider());
-            Server.Components.AddComponent(new DatabaseUserIdViaAccessTokenProvider());
-            Server.Components.AddComponent(new DatabaseAccessTokenExistence());
-            Server.Components.AddComponent(new LocalDatabaseAccessTokens());
+            Server.Components.AddComponent(new AuthorizationService());
         }
     }
 }

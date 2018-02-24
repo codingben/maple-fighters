@@ -40,16 +40,9 @@
     <Reference Include="Coroutines, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Coroutines.5.0.5\lib\net46\Coroutines.dll</HintPath>
     </Reference>
-    <Reference Include="JsonConfig, Version=1.0.5359.16918, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\JsonConfig.1.0.0\lib\JsonConfig.dll</HintPath>
-    </Reference>
-    <Reference Include="JsonFx, Version=2.0.1209.2802, Culture=neutral, PublicKeyToken=315052dd637f8a52, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\JsonFx.2.0.1209.2802\lib\net40\JsonFx.dll</HintPath>
-    </Reference>
     <Reference Include="LogUtils, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Coroutines.5.0.5\lib\net46\LogUtils.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.CSharp" />
     <Reference Include="ServerCommunicationHelper, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\ServerCommunicationHelper.3.1.0\lib\net46\ServerCommunicationHelper.dll</HintPath>
     </Reference>
@@ -89,14 +82,13 @@
     <Compile Include="Application\Components\IDatabaseCharacterRemover.cs" />
     <Compile Include="Application\Components\IDatabaseCharactersGetter.cs" />
     <Compile Include="Application\Components\Utils.cs" />
-    <Compile Include="Application\Peer Logics\AuthenticatedClientPeerLogic.cs" />
-    <Compile Include="Application\Peer Logics\AuthenticatedServerPeerLogic.cs" />
-    <Compile Include="Application\Peer Logics\Operations\AuthenticationOperationHandler.cs" />
+    <Compile Include="Application\Peer Logics\AuthorizedClientPeerLogic.cs" />
+    <Compile Include="Application\Peer Logics\InboundServerPeerLogic.cs" />
     <Compile Include="Application\Peer Logics\Operations\CreateCharacterOperationHandler.cs" />
     <Compile Include="Application\Peer Logics\Operations\GetCharacterOperationHandler.cs" />
     <Compile Include="Application\Peer Logics\Operations\GetCharactersOperationHandler.cs" />
     <Compile Include="Application\Peer Logics\Operations\RemoveCharacterOperationHandler.cs" />
-    <Compile Include="Application\Peer Logics\UnauthenticatedClientPeerLogic.cs" />
+    <Compile Include="Application\Peer Logics\UnauthorizedClientPeerLogic.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -115,6 +107,10 @@
     <ProjectReference Include="..\..\..\Shared\Servers\ServerApplication.Common\ServerApplication.Common.csproj">
       <Project>{F82FBB67-7B1D-43B7-A415-3F407D40E5C7}</Project>
       <Name>ServerApplication.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Authorization\Authorization.Server.Common\Authorization.Server.Common.csproj">
+      <Project>{174c1938-ca68-4549-97de-3470afacb7c7}</Project>
+      <Name>Authorization.Server.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\Characters.Client.Common\Characters.Client.Common\Characters.Client.Common.csproj">
       <Project>{2EB94BA4-299A-47D9-93D0-E86D06463A18}</Project>

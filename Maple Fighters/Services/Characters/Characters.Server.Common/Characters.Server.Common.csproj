@@ -54,11 +54,11 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CharactersService.cs" />
+    <Compile Include="API\CharactersService.cs" />
     <Compile Include="Enums\ServerOperations.cs" />
     <Compile Include="Parameters\GetCharacterRequestParameters.cs" />
     <Compile Include="Parameters\GetCharacterResponseParameters.cs" />
-    <Compile Include="ICharactersServiceAPI.cs" />
+    <Compile Include="API\ICharactersServiceAPI.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

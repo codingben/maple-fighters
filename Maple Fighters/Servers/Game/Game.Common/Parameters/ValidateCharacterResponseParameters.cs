@@ -5,9 +5,9 @@ namespace Shared.Game.Common
 {
     public struct ValidateCharacterResponseParameters : IParameters
     {
-        public ValidateCharacterStatus Status;
+        public CharacterValidationStatus Status;
 
-        public ValidateCharacterResponseParameters(ValidateCharacterStatus status)
+        public ValidateCharacterResponseParameters(CharacterValidationStatus status)
         {
             Status = status;
         }
@@ -19,7 +19,7 @@ namespace Shared.Game.Common
 
         public void Deserialize(BinaryReader reader)
         {
-            Status = (ValidateCharacterStatus)reader.ReadByte();
+            Status = (CharacterValidationStatus)reader.ReadByte();
         }
     }
 }

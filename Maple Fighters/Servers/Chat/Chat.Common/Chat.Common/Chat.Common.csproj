@@ -44,9 +44,6 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Parameters\AuthenticateRequestParameters.cs" />
-    <Compile Include="Parameters\AuthenticateResponseParameters.cs" />
-    <Compile Include="Enums\AuthenticationStatus.cs" />
     <Compile Include="Enums\ChatEvents.cs" />
     <Compile Include="Parameters\ChatMessageEventParameters.cs" />
     <Compile Include="Parameters\ChatMessageRequestParameters.cs" />

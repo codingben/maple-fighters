@@ -2,7 +2,7 @@
 {
     public enum ClientOperations : byte
     {
-        Authenticate,
+        Authorize,
         CreateCharacter,
         RemoveCharacter,
         GetCharacters

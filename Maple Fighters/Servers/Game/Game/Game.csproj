@@ -115,14 +115,13 @@
     <Compile Include="Application\Peer Logics\Components\PositionChangesListener.cs" />
     <Compile Include="Application\GameApplication.cs" />
     <Compile Include="Application\Peer Logics\Components\InterestManagementNotifier.cs" />
-    <Compile Include="Application\Peer Logics\Operations\AuthenticationOperationHandler.cs" />
     <Compile Include="Application\Peer Logics\Operations\ChangeSceneOperationHandler.cs" />
     <Compile Include="Application\Peer Logics\Operations\EnterSceneOperationHandler.cs" />
-    <Compile Include="Application\Peer Logics\Operations\ValidateCharacterOperationHandler.cs" />
+    <Compile Include="Application\Peer Logics\Operations\CharacterValidationOperationHandler.cs" />
     <Compile Include="Application\Peer Logics\GameScenePeerLogic.cs" />
     <Compile Include="Application\Peer Logics\Operations\UpdatePositionOperationHandler.cs" />
     <Compile Include="Application\Peer Logics\Operations\UpdatePlayerStateOperationHandler.cs" />
-    <Compile Include="Application\Peer Logics\UnauthenticatedPeerLogic.cs" />
+    <Compile Include="Application\Peer Logics\UnauthorizedClientPeerLogic.cs" />
     <Compile Include="Application\Scene Objects\Components\CharacterGetter.cs" />
     <Compile Include="Application\Scene Objects\Components\ICharacterBody.cs" />
     <Compile Include="Application\Scene Objects\Components\ICharacterGetter.cs" />
@@ -145,6 +144,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Services\Authorization\Authorization.Server.Common\Authorization.Server.Common.csproj">
+      <Project>{174C1938-CA68-4549-97DE-3470AFACB7C7}</Project>
+      <Name>Authorization.Server.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\Services\Characters\Characters.Client.Common\Characters.Client.Common\Characters.Client.Common.csproj">
       <Project>{2EB94BA4-299A-47D9-93D0-E86D06463A18}</Project>
       <Name>Characters.Client.Common</Name>
@@ -152,10 +155,6 @@
     <ProjectReference Include="..\..\..\Services\Characters\Characters.Server.Common\Characters.Server.Common.csproj">
       <Project>{42bb62da-299c-4ec1-b83c-894e5d75e505}</Project>
       <Name>Characters.Server.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\Shared\Database\Database.Common\Database.Common.csproj">
-      <Project>{46B701A0-8606-4EF1-B111-F001EE74F124}</Project>
-      <Name>Database.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\Shared\Helper\MathematicsHelper\MathematicsHelper.csproj">
       <Project>{A3BE3E13-D3A1-4800-B471-A39F5ED4B554}</Project>

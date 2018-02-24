@@ -51,9 +51,6 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Parameters\AuthenticateRequestParameters.cs" />
-    <Compile Include="Parameters\AuthenticateResponseParameters.cs" />
-    <Compile Include="Enums\AuthenticationStatus.cs" />
     <Compile Include="Parameters\ChangeSceneRequestParameters.cs" />
     <Compile Include="Parameters\ChangeSceneResponseParameters.cs" />
     <Compile Include="Parameters\CharacterAddedEventParameters.cs" />
@@ -80,7 +77,7 @@
     <Compile Include="Parameters\UpdatePositionRequestParameters.cs" />
     <Compile Include="Parameters\UpdatePlayerStateRequestParameters.cs" />
     <Compile Include="Parameters\ValidateCharacterResponseParameters.cs" />
-    <Compile Include="Enums\ValidateCharacterStatus.cs" />
+    <Compile Include="Enums\CharacterValidationStatus.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -48,9 +48,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Enums\ClientOperations.cs" />
-    <Compile Include="Parameters\AuthenticateRequestParameters.cs" />
-    <Compile Include="Parameters\AuthenticateResponseParameters.cs" />
-    <Compile Include="Enums\AuthenticationStatus.cs" />
     <Compile Include="Enums\CharacterClasses.cs" />
     <Compile Include="Enums\CharacterCreationStatus.cs" />
     <Compile Include="Parameters\CharacterFromDatabaseParameters.cs" />

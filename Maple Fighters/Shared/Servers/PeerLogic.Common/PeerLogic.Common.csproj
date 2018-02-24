@@ -74,6 +74,7 @@
     <Compile Include="Peer Logic\IClientPeerWrapper.cs" />
     <Compile Include="Peer Logic\IPeerLogicBase.cs" />
     <Compile Include="Peer Logic\PeerLogicBase.cs" />
+    <Compile Include="Peer Logic\S2S\Utils.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -2,7 +2,7 @@
 {
     public enum ChatOperations : byte
     {
-        Authenticate,
+        Authorize,
         ChatMessage
     }
 }

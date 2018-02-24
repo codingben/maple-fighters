@@ -19,10 +19,6 @@ namespace Registration.Application
             base.Startup();
 
             AddCommonComponents();
-
-            Server.Components.AddComponent(new DatabaseConnectionProvider());
-            Server.Components.AddComponent(new DatabaseUserCreator());
-            Server.Components.AddComponent(new DatabaseUserEmailVerifier());
         }
 
         public override void OnConnected(IClientPeer clientPeer)
@@ -30,6 +26,13 @@ namespace Registration.Application
             base.OnConnected(clientPeer);
 
             WrapClientPeer(clientPeer, new RegistrationPeerLogic());
+        }
+
+        private void AddComponents()
+        {
+            Server.Components.AddComponent(new DatabaseConnectionProvider());
+            Server.Components.AddComponent(new DatabaseUserCreator());
+            Server.Components.AddComponent(new DatabaseUserEmailVerifier());
         }
     }
 }

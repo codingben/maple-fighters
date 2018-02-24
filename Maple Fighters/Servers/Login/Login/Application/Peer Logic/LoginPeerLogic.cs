@@ -12,12 +12,12 @@ namespace Login.Application.PeerLogic
         {
             base.Initialize(peer);
 
-            AddHandlerForLoginOperation();
+            AddHandlerForAuthenticationOperation();
         }
 
-        private void AddHandlerForLoginOperation()
+        private void AddHandlerForAuthenticationOperation()
         {
-            OperationRequestHandlerRegister.SetHandler(LoginOperations.Login, new LoginOperationHandler());
+            OperationRequestHandlerRegister.SetAsyncHandler(LoginOperations.Authenticate, new AuthenticationOperationHandler());
         }
     }
 }

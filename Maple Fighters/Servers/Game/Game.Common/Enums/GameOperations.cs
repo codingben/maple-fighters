@@ -2,11 +2,11 @@
 {
     public enum GameOperations : byte
     {
-        Authenticate,
+        Authorize,
         EnterScene,
         ChangeScene,
         PositionChanged,
         PlayerStateChanged,
-        ValidateCharacter,
+        ValidateCharacter
     }
 }

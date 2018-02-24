@@ -77,10 +77,18 @@
     <Compile Include="Application\Components\Database\IDatabaseUserVerifier.cs" />
     <Compile Include="Application\LoginApplication.cs" />
     <Compile Include="Application\Peer Logic\LoginPeerLogic.cs" />
-    <Compile Include="Application\Peer Logic\Operations\LoginOperationHandler.cs" />
+    <Compile Include="Application\Peer Logic\Operations\AuthenticationOperationHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Services\Authorization\Authorization.Client.Common\Authorization.Client.Common.csproj">
+      <Project>{58359452-038A-44CD-AA7B-21D0C3507EC7}</Project>
+      <Name>Authorization.Client.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Services\Authorization\Authorization.Server.Common\Authorization.Server.Common.csproj">
+      <Project>{174C1938-CA68-4549-97DE-3470AFACB7C7}</Project>
+      <Name>Authorization.Server.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\Shared\Database\Database.Common\Database.Common.csproj">
       <Project>{46B701A0-8606-4EF1-B111-F001EE74F124}</Project>
       <Name>Database.Common</Name>

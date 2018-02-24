@@ -90,12 +90,9 @@
       <HintPath>..\..\..\packages\System.Collections.Specialized.4.3.0\lib\net46\System.Collections.Specialized.dll</HintPath>
     </Reference>
     <Reference Include="System.ComponentModel" />
-    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.ComponentModel.Primitives, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\System.ComponentModel.Primitives.4.3.0\lib\net45\System.ComponentModel.Primitives.dll</HintPath>
     </Reference>
-    <Reference Include="System.Configuration" />
-    <Reference Include="System.Configuration.Install" />
     <Reference Include="System.Console, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\System.Console.4.3.0\lib\net46\System.Console.dll</HintPath>
     </Reference>
@@ -109,8 +106,6 @@
     <Reference Include="System.Diagnostics.DiagnosticSource, Version=4.0.2.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\System.Diagnostics.DiagnosticSource.4.4.1\lib\net46\System.Diagnostics.DiagnosticSource.dll</HintPath>
     </Reference>
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Drawing.Design" />
     <Reference Include="System.Globalization.Calendars, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\System.Globalization.Calendars.4.3.0\lib\net46\System.Globalization.Calendars.dll</HintPath>
     </Reference>
@@ -127,7 +122,6 @@
     <Reference Include="System.IO.FileSystem.Primitives, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\System.IO.FileSystem.Primitives.4.3.0\lib\net46\System.IO.FileSystem.Primitives.dll</HintPath>
     </Reference>
-    <Reference Include="System.Management" />
     <Reference Include="System.Net.Http, Version=4.1.1.2, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\System.Net.Http.4.3.3\lib\net46\System.Net.Http.dll</HintPath>
     </Reference>
@@ -172,8 +166,6 @@
     <Reference Include="System.Threading.Tasks.Extensions, Version=4.1.1.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\System.Threading.Tasks.Extensions.4.4.0\lib\portable-net45+win8+wp8+wpa81\System.Threading.Tasks.Extensions.dll</HintPath>
     </Reference>
-    <Reference Include="System.Transactions" />
-    <Reference Include="System.Xml" />
     <Reference Include="System.Xml.ReaderWriter, Version=4.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\System.Xml.ReaderWriter.4.3.1\lib\net46\System.Xml.ReaderWriter.dll</HintPath>
     </Reference>
@@ -182,23 +174,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Access Token\DatabaseAccessTokenCreator.cs" />
-    <Compile Include="Access Token\DatabaseAccessTokenExistence.cs" />
-    <Compile Include="Access Token\DatabaseAccessTokenExistenceViaUserId.cs" />
-    <Compile Include="Access Token\DatabaseAccessTokenProvider.cs" />
-    <Compile Include="Access Token\DatabaseUserIdViaAccessTokenProvider.cs" />
-    <Compile Include="Access Token\IDatabaseAccessTokenCreator.cs" />
-    <Compile Include="Access Token\IDatabaseAccessTokenExistence.cs" />
-    <Compile Include="Access Token\IDatabaseAccessTokenExistenceViaUserId.cs" />
-    <Compile Include="Access Token\IDatabaseAccessTokenProvider.cs" />
-    <Compile Include="Access Token\IDatabaseUserIdViaAccessTokenProvider.cs" />
-    <Compile Include="Access Token\ILocalDatabaseAccessTokens.cs" />
-    <Compile Include="Access Token\LocalDatabaseAccessTokens.cs" />
     <Compile Include="Components\DatabaseConnectionProvider.cs" />
     <Compile Include="Components\IDatabaseConnectionProvider.cs" />
     <Compile Include="Configuration\DatabaseConnectionConfiguraiton.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Tables Definition\AccessTokensTableDefinition.cs" />
     <Compile Include="Tables Definition\CharactersTableDefinition.cs" />
     <Compile Include="Tables Definition\UsersTableDefinition.cs" />
   </ItemGroup>
@@ -206,14 +185,6 @@
     <ProjectReference Include="..\..\Servers\ComponentModel.Common\ComponentModel.Common.csproj">
       <Project>{00565794-9958-47D9-9E8E-6D7193D67B9D}</Project>
       <Name>ComponentModel.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Servers\PeerLogic.Common\PeerLogic.Common.csproj">
-      <Project>{F90F12D2-58E0-4718-A205-EBFD28C81742}</Project>
-      <Name>PeerLogic.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Servers\ServerApplication.Common\ServerApplication.Common.csproj">
-      <Project>{F82FBB67-7B1D-43B7-A415-3F407D40E5C7}</Project>
-      <Name>ServerApplication.Common</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

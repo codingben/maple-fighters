@@ -58,17 +58,16 @@
   <ItemGroup>
     <Compile Include="Application\ChatApplication.cs" />
     <Compile Include="Application\Peer Logics\Components\ChatMessageEventSender.cs" />
-    <Compile Include="Application\Peer Logics\AuthenticatedPeerLogic.cs" />
+    <Compile Include="Application\Peer Logics\AuthorizedClientPeerLogic.cs" />
     <Compile Include="Application\Peer Logics\Components\IChatMessageEventSender.cs" />
-    <Compile Include="Application\Peer Logics\Operations\AuthenticationOperationHandler.cs" />
     <Compile Include="Application\Peer Logics\Operations\ChatMessageOperationHandler.cs" />
-    <Compile Include="Application\Peer Logics\UnauthenticatedPeerLogic.cs" />
+    <Compile Include="Application\Peer Logics\UnauthenticatedClientPeerLogic.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Shared\Database\Database.Common\Database.Common.csproj">
-      <Project>{46B701A0-8606-4EF1-B111-F001EE74F124}</Project>
-      <Name>Database.Common</Name>
+    <ProjectReference Include="..\..\..\Services\Authorization\Authorization.Server.Common\Authorization.Server.Common.csproj">
+      <Project>{174C1938-CA68-4549-97DE-3470AFACB7C7}</Project>
+      <Name>Authorization.Server.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\Shared\Servers\ComponentModel.Common\ComponentModel.Common.csproj">
       <Project>{00565794-9958-47D9-9E8E-6D7193D67B9D}</Project>

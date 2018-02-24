@@ -1,0 +1,98 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{174C1938-CA68-4549-97DE-3470AFACB7C7}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Authorization.Server.Common</RootNamespace>
+    <AssemblyName>Authorization.Server.Common</AssemblyName>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="CommonCommunicationInterfaces, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\CommonCommunicationInterfaces.5.0.0\lib\net46\CommonCommunicationInterfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="CommunicationHelper, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\CommunicationHelper.4.0.0\lib\net46\CommunicationHelper.dll</HintPath>
+    </Reference>
+    <Reference Include="Coroutines, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Coroutines.5.0.5\lib\net46\Coroutines.dll</HintPath>
+    </Reference>
+    <Reference Include="JsonConfig, Version=1.0.5359.16918, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\JsonConfig.1.0.0\lib\JsonConfig.dll</HintPath>
+    </Reference>
+    <Reference Include="JsonFx, Version=2.0.1209.2802, Culture=neutral, PublicKeyToken=315052dd637f8a52, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\JsonFx.2.0.1209.2802\lib\net40\JsonFx.dll</HintPath>
+    </Reference>
+    <Reference Include="LogUtils, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Coroutines.5.0.5\lib\net46\LogUtils.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="ServerCommunicationHelper, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\ServerCommunicationHelper.3.1.0\lib\net46\ServerCommunicationHelper.dll</HintPath>
+    </Reference>
+    <Reference Include="ServerCommunicationInterfaces, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\ServerCommunicationInterfaces.3.0.0\lib\net46\ServerCommunicationInterfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.ValueTuple, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\System.ValueTuple.4.4.0\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="API\AuthorizationService.cs" />
+    <Compile Include="API\IAuthorizationServiceAPI.cs" />
+    <Compile Include="Enums\ServerOperations.cs" />
+    <Compile Include="Operations\AuthorizationOperationHandler.cs" />
+    <Compile Include="Parameters\AuthorizeAccesTokenRequestParameters.cs" />
+    <Compile Include="Parameters\AuthorizeUserRequestParameters.cs" />
+    <Compile Include="Parameters\AuthorizeAccessTokenResponseParameters.cs" />
+    <Compile Include="Parameters\AuthorizeUserResponseParameters.cs" />
+    <Compile Include="Parameters\CreateAuthorizationRequestParameters.cs" />
+    <Compile Include="Parameters\CreateAuthorizationResponseParameters.cs" />
+    <Compile Include="Parameters\RemoveAuthorizationRequestParameters.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Shared\Servers\ComponentModel.Common\ComponentModel.Common.csproj">
+      <Project>{00565794-9958-47D9-9E8E-6D7193D67B9D}</Project>
+      <Name>ComponentModel.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Shared\Servers\ServerApplication.Common\ServerApplication.Common.csproj">
+      <Project>{F82FBB67-7B1D-43B7-A415-3F407D40E5C7}</Project>
+      <Name>ServerApplication.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Authorization.Client.Common\Authorization.Client.Common.csproj">
+      <Project>{58359452-038A-44CD-AA7B-21D0C3507EC7}</Project>
+      <Name>Authorization.Client.Common</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

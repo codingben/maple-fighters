@@ -4,6 +4,7 @@
     {
         Succeed,
         UserNotExist,
-        PasswordIncorrect
+        PasswordIncorrect,
+        NonAuthorized
     }
 }
