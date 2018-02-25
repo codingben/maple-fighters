@@ -19,7 +19,7 @@ namespace Server2
         private void AddHandlerForTestOperation()
         {
             var eventSender = Components.GetComponent<IEventSenderWrapper>().AssertNotNull();
-            OperationRequestHandlerRegister.SetHandler(ServerOperations.Server1Operation, new Server1OperationHandler(eventSender));
+            OperationHandlerRegister.SetHandler(ServerOperations.Server1Operation, new Server1OperationHandler(eventSender));
         }
     }
 }

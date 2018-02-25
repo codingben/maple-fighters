@@ -30,7 +30,7 @@ namespace Server1
 
         private void RunTestForServer2Service()
         {
-            var server2Service = Server.Components.GetComponent<IServer2Service>().AssertNotNull();
+            var server2Service = Server.Components.GetComponent<IServer2ServiceAPI>().AssertNotNull();
             server2Service.TestAction += OnTestEvent;
 
             var coroutinesExecutor = Server.Components.GetComponent<ICoroutinesExecuter>().AssertNotNull();
@@ -41,14 +41,12 @@ namespace Server1
         {
             yield return new WaitForSeconds(10);
 
-            var server2Service = Server.Components.GetComponent<IServer2Service>().AssertNotNull();
+            var server2Service = Server.Components.GetComponent<IServer2ServiceAPI>().AssertNotNull();
             var coroutinesExecutor = Server.Components.GetComponent<ICoroutinesExecuter>().AssertNotNull();
             coroutinesExecutor.StartTask(async (y) =>
             {
                 var parameters = new Server1OperationRequestParameters(50);
-                var responseParams = await server2Service.SendYieldOperation<Server1OperationRequestParameters, Server1OperationResponseParameters>(y,
-                    (byte)ServerOperations.Server1Operation, parameters);
-
+                var responseParams = await server2Service.Server1Operation(y, parameters);
                 LogUtils.Log(MessageBuilder.Trace($"Received number: {responseParams.Number}"));
             });
         }

@@ -17,7 +17,7 @@ namespace Login.Application.PeerLogic
 
         private void AddHandlerForAuthenticationOperation()
         {
-            OperationRequestHandlerRegister.SetAsyncHandler(LoginOperations.Authenticate, new AuthenticationOperationHandler());
+            OperationHandlerRegister.SetAsyncHandler(LoginOperations.Authenticate, new AuthenticationOperationHandler());
         }
     }
 }

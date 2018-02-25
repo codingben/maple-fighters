@@ -26,7 +26,7 @@ namespace Game.Application.PeerLogics
 
         private void AddHandlerToValidateCharacterOperation()
         {
-            OperationRequestHandlerRegister.SetAsyncHandler(GameOperations.ValidateCharacter, new CharacterValidationOperationHandler(userId, OnCharacterSelected));
+            OperationHandlerRegister.SetAsyncHandler(GameOperations.ValidateCharacter, new CharacterValidationOperationHandler(userId, OnCharacterSelected));
         }
 
         private void OnCharacterSelected(CharacterFromDatabaseParameters? character)

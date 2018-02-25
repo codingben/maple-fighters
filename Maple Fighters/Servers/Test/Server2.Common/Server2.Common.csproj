@@ -55,7 +55,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ServiceAPI\IServer2Service.cs" />
+    <Compile Include="ServiceAPI\IServer2ServiceAPI.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Parameters\Server1OperationParameters.cs" />
     <Compile Include="Parameters\Server1OperationRequestParameters.cs" />

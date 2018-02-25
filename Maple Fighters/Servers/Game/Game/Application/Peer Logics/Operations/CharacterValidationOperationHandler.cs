@@ -34,9 +34,7 @@ namespace Game.Application.PeerLogic.Operations
 
         private async Task<ValidateCharacterResponseParameters?> GetCharacter(IYield yield, GetCharacterRequestParameters parameters)
         {
-            var character = await charactersServiceApi.SendYieldOperation<GetCharacterRequestParameters, GetCharacterResponseParameters>
-                (yield, (byte)ServerOperations.GetCharacter, parameters);
-
+            var character = await charactersServiceApi.GetCharacter(yield, parameters);
             onCharacterSelected?.Invoke(character.Character);
             return new ValidateCharacterResponseParameters(character.Character.HasValue ? CharacterValidationStatus.Ok : CharacterValidationStatus.Wrong);
         }

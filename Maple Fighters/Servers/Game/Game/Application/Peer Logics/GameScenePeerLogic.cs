@@ -48,23 +48,23 @@ namespace Game.Application.PeerLogics
 
         private void AddHandlerForEnterSceneOperation()
         {
-            OperationRequestHandlerRegister.SetHandler(GameOperations.EnterScene, new EnterSceneOperationHandler(sceneObject, character));
+            OperationHandlerRegister.SetHandler(GameOperations.EnterScene, new EnterSceneOperationHandler(sceneObject, character));
         }
 
         private void AddHandlerForUpdatePositionOperation()
         {
             var transform = sceneObject.Components.GetComponent<ITransform>().AssertNotNull();
-            OperationRequestHandlerRegister.SetHandler(GameOperations.PositionChanged, new UpdatePositionOperationHandler(transform));
+            OperationHandlerRegister.SetHandler(GameOperations.PositionChanged, new UpdatePositionOperationHandler(transform));
         }
 
         private void AddHandlerForUpdatePlayerStateOperation()
         {
-            OperationRequestHandlerRegister.SetHandler(GameOperations.PlayerStateChanged, new UpdatePlayerStateOperationHandler(sceneObject));
+            OperationHandlerRegister.SetHandler(GameOperations.PlayerStateChanged, new UpdatePlayerStateOperationHandler(sceneObject));
         }
 
         private void AddHandlerForChangeSceneOperation()
         {
-            OperationRequestHandlerRegister.SetHandler(GameOperations.ChangeScene, new ChangeSceneOperationHandler(sceneObject));
+            OperationHandlerRegister.SetHandler(GameOperations.ChangeScene, new ChangeSceneOperationHandler(sceneObject));
         }
 
         public override void Dispose()

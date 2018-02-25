@@ -26,17 +26,17 @@ namespace Characters.Service.Application.PeerLogics
 
         private void AddHandlerForCreateCharacterOperation()
         {
-            OperationRequestHandlerRegister.SetHandler(ClientOperations.CreateCharacter, new CreateCharacterOperationHandler(userId));
+            OperationHandlerRegister.SetHandler(ClientOperations.CreateCharacter, new CreateCharacterOperationHandler(userId));
         }
 
         private void AddHandlerForRemoveCharacterOperation()
         {
-            OperationRequestHandlerRegister.SetHandler(ClientOperations.RemoveCharacter, new RemoveCharacterOperationHandler(userId));
+            OperationHandlerRegister.SetHandler(ClientOperations.RemoveCharacter, new RemoveCharacterOperationHandler(userId));
         }
 
         private void AddHandlerForGetCharactersOperation()
         {
-            OperationRequestHandlerRegister.SetHandler(ClientOperations.GetCharacters, new GetCharactersOperationHandler(userId));
+            OperationHandlerRegister.SetHandler(ClientOperations.GetCharacters, new GetCharactersOperationHandler(userId));
         }
     }
 }

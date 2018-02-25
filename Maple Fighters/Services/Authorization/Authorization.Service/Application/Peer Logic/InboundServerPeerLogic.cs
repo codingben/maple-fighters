@@ -20,22 +20,22 @@ namespace Authorization.Service.Application.PeerLogic
 
         private void AddHandlerForCreateAuthorizationOperation()
         {
-            OperationRequestHandlerRegister.SetHandler(ServerOperations.CreateAuthorization, new CreateAuthorizationOperation());
+            OperationHandlerRegister.SetHandler(ServerOperations.CreateAuthorization, new CreateAuthorizationOperation());
         }
 
         private void AddHandlerForRemoveAuthorizationOperation()
         {
-            OperationRequestHandlerRegister.SetHandler(ServerOperations.RemoveAuthorization, new RemoveAuthorizationOperation());
+            OperationHandlerRegister.SetHandler(ServerOperations.RemoveAuthorization, new RemoveAuthorizationOperation());
         }
 
         private void AddHandlerForAccessTokenAuthorizationOperation()
         {
-            OperationRequestHandlerRegister.SetHandler(ServerOperations.AccessTokenAuthorization, new AccessTokenAuthorizationOperation());
+            OperationHandlerRegister.SetHandler(ServerOperations.AccessTokenAuthorization, new AccessTokenAuthorizationOperation());
         }
 
         private void AddHandlerForUserAuthorizationOperation()
         {
-            OperationRequestHandlerRegister.SetHandler(ServerOperations.UserAuthorization, new UserAuthorizationOperation());
+            OperationHandlerRegister.SetHandler(ServerOperations.UserAuthorization, new UserAuthorizationOperation());
         }
     }
 }

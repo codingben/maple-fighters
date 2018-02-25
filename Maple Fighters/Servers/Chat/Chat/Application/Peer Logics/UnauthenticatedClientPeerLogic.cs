@@ -18,7 +18,7 @@ namespace Chat.Application.PeerLogics
 
         private void AddHandlerForAuthorizationOperation()
         {
-            OperationRequestHandlerRegister.SetAsyncHandler(ChatOperations.Authorize, new AuthorizationOperationHandler(OnAuthorized, OnNonAuthorized));
+            OperationHandlerRegister.SetAsyncHandler(ChatOperations.Authorize, new AuthorizationOperationHandler(OnAuthorized, OnNonAuthorized));
         }
 
         private void OnAuthorized()

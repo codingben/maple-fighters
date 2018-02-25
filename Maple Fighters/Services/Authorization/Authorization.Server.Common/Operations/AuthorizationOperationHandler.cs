@@ -41,9 +41,7 @@ namespace Authorization.Server.Common
 
         private async Task<AuthorizeResponseParameters?> Authorize(IYield yield, AuthorizeAccesTokenRequestParameters parameters)
         {
-            var authorization = await authorizationServiceApi.SendYieldOperation<AuthorizeAccesTokenRequestParameters, AuthorizeAccessTokenResponseParameters>
-                (yield, (byte)ServerOperations.AccessTokenAuthorization, parameters);
-
+            var authorization = await authorizationServiceApi.AccessTokenAuthorization(yield, parameters);
             if (authorization.Status == AuthorizationStatus.Succeed)
             {
                 onAuthorized?.Invoke();

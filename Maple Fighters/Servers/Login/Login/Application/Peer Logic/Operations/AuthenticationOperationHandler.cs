@@ -49,9 +49,7 @@ namespace Login.Application.PeerLogic.Operations
 
         private async Task<AuthenticateResponseParameters?> AccessTokenProvider(IYield yield, AuthorizeUserRequestParameters parameters)
         {
-            var userAuthorization = await authorizationServiceApi.SendYieldOperation<AuthorizeUserRequestParameters, AuthorizeUserResponseParameters>
-                (yield, (byte)ServerOperations.UserAuthorization, parameters);
-
+            var userAuthorization = await authorizationServiceApi.UserAuthorization(yield, parameters);
             var responseParameters = userAuthorization.Status == AuthorizationStatus.Succeed
                 ? new AuthenticateResponseParameters(LoginStatus.Succeed, userAuthorization.AccessToken)
                 : new AuthenticateResponseParameters(LoginStatus.NonAuthorized);

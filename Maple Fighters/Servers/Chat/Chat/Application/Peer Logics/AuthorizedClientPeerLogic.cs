@@ -27,7 +27,7 @@ namespace Chat.Application.PeerLogics
         private void AddHandlerForChatMessageOperation()
         {
             var eventSenderWrapper = Components.GetComponent<IChatMessageEventSender>().AssertNotNull();
-            OperationRequestHandlerRegister.SetHandler(ChatOperations.ChatMessage, new ChatMessageOperationHandler(eventSenderWrapper));
+            OperationHandlerRegister.SetHandler(ChatOperations.ChatMessage, new ChatMessageOperationHandler(eventSenderWrapper));
         }
     }
 }

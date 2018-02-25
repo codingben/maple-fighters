@@ -17,7 +17,7 @@ namespace Characters.Service.Application.PeerLogics
 
         private void AddHandlerForGetCharacterOperation()
         {
-            OperationRequestHandlerRegister.SetHandler(ServerOperations.GetCharacter, new GetCharacterOperationHandler());
+            OperationHandlerRegister.SetHandler(ServerOperations.GetCharacter, new GetCharacterOperationHandler());
         }
     }
 }

@@ -15,7 +15,7 @@ namespace PeerLogic.Common
         public IContainer Components { get; } = new Container();
 
         protected IClientPeerWrapper<IClientPeer> PeerWrapper { get; private set; }
-        protected IOperationRequestHandlerRegister<TOperationCode> OperationRequestHandlerRegister { get; private set; }
+        protected IOperationRequestHandlerRegister<TOperationCode> OperationHandlerRegister { get; private set; }
         protected IEventSender<TEventCode> EventSender { get; private set; }
 
         public virtual void Initialize(IClientPeerWrapper<IClientPeer> peer)
@@ -29,7 +29,7 @@ namespace PeerLogic.Common
         public virtual void Dispose()
         {
             Components?.Dispose();
-            OperationRequestHandlerRegister?.Dispose();
+            OperationHandlerRegister?.Dispose();
         }
 
         private void AddEventsSenderHandler()
@@ -46,7 +46,7 @@ namespace PeerLogic.Common
             // Necessary for async operation handlers.
             var coroutinesExecutor = Components.AddComponent(new CoroutinesExecutor(new FiberCoroutinesExecutor(PeerWrapper.Peer.Fiber, 100)));
 
-            OperationRequestHandlerRegister = new OperationRequestsHandler<TOperationCode>(PeerWrapper.Peer.OperationRequestNotifier,
+            OperationHandlerRegister = new OperationRequestsHandler<TOperationCode>(PeerWrapper.Peer.OperationRequestNotifier,
                 PeerWrapper.Peer.OperationResponseSender, logOperationsRequest, logOperationsResponse, coroutinesExecutor);
         }
 

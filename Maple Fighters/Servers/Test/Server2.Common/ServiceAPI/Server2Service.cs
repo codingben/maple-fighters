@@ -1,27 +1,36 @@
 ﻿using System;
+using System.Threading.Tasks;
 using CommonCommunicationInterfaces;
+using CommonTools.Coroutines;
 using CommonTools.Log;
 using JsonConfig;
 using ServerApplication.Common.Components;
+using ServerCommunicationInterfaces;
 
 namespace Server2.Common
 {
-    public class Server2Service : ServiceBase<ServerOperations, ServerEvents>, IServer2Service
+    public class Server2Service : ServiceBase<ServerOperations, ServerEvents>, IServer2ServiceAPI
     {
         public event Action<EmptyParameters> TestAction;
 
-        protected override void OnConnected()
+        protected override void OnConnected(IOutboundServerPeer outboundServerPeer)
         {
-            base.OnConnected();
+            base.OnConnected(outboundServerPeer);
 
-            SetEventHandler(ServerEvents.Server1Event, TestAction);
+            OutboundServerPeerLogic.SetEventHandler(ServerEvents.Server1Event, TestAction);
         }
 
         protected override void OnDisconnected(DisconnectReason disconnectReason, string s)
         {
             base.OnDisconnected(disconnectReason, s);
 
-            RemoveEventHandler(ServerEvents.Server1Event);
+            OutboundServerPeerLogic.RemoveEventHandler(ServerEvents.Server1Event);
+        }
+
+        public Task<Server1OperationResponseParameters> Server1Operation(IYield yield, Server1OperationRequestParameters parameters)
+        {
+            return OutboundServerPeerLogic.SendOperation<Server1OperationRequestParameters, Server1OperationResponseParameters>
+                (yield, (byte)ServerOperations.Server1Operation, parameters);
         }
 
         protected override PeerConnectionInformation GetPeerConnectionInformation()

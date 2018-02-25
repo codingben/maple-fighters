@@ -1,9 +1,11 @@
-﻿using ServerApplication.Common.Components;
+﻿using System.Threading.Tasks;
+using CommonTools.Coroutines;
+using ComponentModel.Common;
 
 namespace Characters.Server.Common
 {
-    public interface ICharactersServiceAPI : IServiceBase
+    public interface ICharactersServiceAPI : IExposableComponent
     {
-        // Left blank intentionally
+        Task<GetCharacterResponseParameters> GetCharacter(IYield yield, GetCharacterRequestParameters parameters);
     }
 }

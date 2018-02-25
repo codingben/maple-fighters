@@ -18,7 +18,7 @@ namespace Characters.Service.Application.PeerLogics
 
         private void AddHandlerForAuthorizationOperation()
         {
-            OperationRequestHandlerRegister.SetAsyncHandler(ClientOperations.Authorize, new AuthorizationOperationHandler(OnAuthorized, OnNonAuthorized));
+            OperationHandlerRegister.SetAsyncHandler(ClientOperations.Authorize, new AuthorizationOperationHandler(OnAuthorized, OnNonAuthorized));
         }
 
         private void OnAuthorized(int userId)

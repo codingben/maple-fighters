@@ -18,7 +18,7 @@ namespace Game.Application.PeerLogics
 
         private void AddHandlerForAuthorizationOperation()
         {
-            OperationRequestHandlerRegister.SetAsyncHandler(GameOperations.Authorize, new AuthorizationOperationHandler(OnAuthorized, OnNonAuthorized));
+            OperationHandlerRegister.SetAsyncHandler(GameOperations.Authorize, new AuthorizationOperationHandler(OnAuthorized, OnNonAuthorized));
         }
 
         private void OnAuthorized(int userId)

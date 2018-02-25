@@ -17,7 +17,7 @@ namespace Registration.Application.PeerLogic
 
         private void AddHandlerForRegisterOperation()
         {
-            OperationRequestHandlerRegister.SetHandler(RegistrationOperations.Register, new RegisterOperationHandler());
+            OperationHandlerRegister.SetHandler(RegistrationOperations.Register, new RegisterOperationHandler());
         }
     }
 }
