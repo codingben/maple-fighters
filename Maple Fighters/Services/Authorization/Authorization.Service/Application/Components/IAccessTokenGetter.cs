@@ -5,5 +5,6 @@ namespace Authorization.Service.Application.Components
     internal interface IAccessTokenGetter : IExposableComponent
     {
         string Get(int userId);
+        int? Get(string accessToken);
     }
 }

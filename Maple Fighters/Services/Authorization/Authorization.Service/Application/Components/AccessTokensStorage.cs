@@ -11,17 +11,19 @@ namespace Authorization.Service.Application.Components
         private readonly object locker = new object();
         private readonly Dictionary<int, string> accessTokens = new Dictionary<int, string>();
 
-        public void Create(int userId)
+        public string Create(int userId)
         {
             lock (locker)
             {
                 if (accessTokens.ContainsKey(userId))
                 {
                     LogUtils.Log(MessageBuilder.Trace($"A user with id #{userId} already exists in a storage of an access tokens."));
-                    return;
+                    return null;
                 }
 
-                accessTokens.Add(userId, GenerateAccessToken());
+                var accessToken = GenerateAccessToken();
+                accessTokens.Add(userId, accessToken);
+                return accessToken;
             }
 
             string GenerateAccessToken() => Guid.NewGuid().ToString("N");
@@ -51,6 +53,21 @@ namespace Authorization.Service.Application.Components
                 }
 
                 LogUtils.Log(MessageBuilder.Trace($"Could not find an access token for user id #{userId}"));
+                return null;
+            }
+        }
+
+        public int? Get(string accessToken)
+        {
+            lock (locker)
+            {
+                if (accessTokens.ContainsValue(accessToken))
+                {
+                    var userId = accessTokens.FirstOrDefault(x => x.Value == accessToken).Key;
+                    return userId;
+                }
+
+                LogUtils.Log(MessageBuilder.Trace($"Could not find an user id with provided access token. Access Token: {accessToken}"));
                 return null;
             }
         }

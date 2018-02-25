@@ -9,7 +9,7 @@ namespace Authorization.Server.Common
         public string AccessToken;
         public AuthorizationStatus Status;
 
-        public AuthorizeUserResponseParameters(string accessToken, AuthorizationStatus status)
+        public AuthorizeUserResponseParameters(string accessToken = null, AuthorizationStatus status = AuthorizationStatus.Failed)
         {
             AccessToken = accessToken;
             Status = status;

@@ -1,9 +1,12 @@
-﻿using Authorization.Service.Application.PeerLogic;
+﻿using Authorization.Service.Application.Components;
+using Authorization.Service.Application.PeerLogic;
 using ServerApplication.Common.ApplicationBase;
 using ServerCommunicationInterfaces;
 
 namespace Authorization.Service.Application
 {
+    using Server = ServerApplication.Common.ApplicationBase.Server;
+
     public class AuthorizationServiceApplication : ApplicationBase
     {
         public AuthorizationServiceApplication(IFiberProvider fiberProvider, IServerConnector serverConnector) 
@@ -23,11 +26,12 @@ namespace Authorization.Service.Application
         {
             base.Startup();
 
+            AddComponents();
         }
 
         private void AddComponents()
         {
-
+            Server.Components.AddComponent(new AccessTokensStorage());
         }
     }
 }

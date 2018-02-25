@@ -1,17 +1,35 @@
-﻿using Authorization.Server.Common;
+﻿using Authorization.Client.Common;
+using Authorization.Server.Common;
+using Authorization.Service.Application.Components;
 using CommonCommunicationInterfaces;
+using CommonTools.Log;
 using ServerCommunicationHelper;
 
 namespace Authorization.Service.Application.PeerLogic.Operations
 {
+    using Server = ServerApplication.Common.ApplicationBase.Server;
+
     internal class UserAuthorizationOperation : IOperationRequestHandler<AuthorizeUserRequestParameters, AuthorizeUserResponseParameters>
     {
+        private readonly IAccessTokenCreator accessTokenCreator;
+        private readonly IAccessTokenExistence accessTokenExistence;
+
+        public UserAuthorizationOperation()
+        {
+            accessTokenCreator = Server.Components.GetComponent<IAccessTokenCreator>().AssertNotNull();
+            accessTokenExistence = Server.Components.GetComponent<IAccessTokenExistence>().AssertNotNull();
+        }
+
         public AuthorizeUserResponseParameters? Handle(MessageData<AuthorizeUserRequestParameters> messageData, ref MessageSendOptions sendOptions)
         {
-            // TODO: If an user does not exist, so create a new access token and return it
-            // TODO: If an user exists, so return authorization failed
+            var userId = messageData.Parameters.UserId;
+            if (accessTokenExistence.Exists(userId))
+            {
+                return new AuthorizeUserResponseParameters();
+            }
 
-            throw new System.NotImplementedException();
+            var accessToken = accessTokenCreator.Create(userId);
+            return new AuthorizeUserResponseParameters(accessToken, AuthorizationStatus.Succeed);
         }
     }
 }
