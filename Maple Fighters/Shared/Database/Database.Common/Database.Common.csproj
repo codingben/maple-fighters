@@ -64,20 +64,26 @@
     <Reference Include="ServerCommunicationInterfaces, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\ServerCommunicationInterfaces.3.0.0\lib\net46\ServerCommunicationInterfaces.dll</HintPath>
     </Reference>
-    <Reference Include="ServiceStack.Common, Version=1.0.44.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\ServiceStack.Common.Core.1.0.44\lib\netstandard1.3\ServiceStack.Common.dll</HintPath>
+    <Reference Include="ServiceStack, Version=5.0.0.0, Culture=neutral, PublicKeyToken=02c12cbda47e6587, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\ServiceStack.5.0.0\lib\net45\ServiceStack.dll</HintPath>
     </Reference>
-    <Reference Include="ServiceStack.Interfaces, Version=4.0.0.0, Culture=neutral, PublicKeyToken=e06fbc6124f57c43, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\ServiceStack.Interfaces.Core.1.0.44\lib\netstandard1.1\ServiceStack.Interfaces.dll</HintPath>
+    <Reference Include="ServiceStack.Client, Version=5.0.0.0, Culture=neutral, PublicKeyToken=02c12cbda47e6587, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\ServiceStack.Client.5.0.0\lib\net45\ServiceStack.Client.dll</HintPath>
     </Reference>
-    <Reference Include="ServiceStack.OrmLite, Version=1.0.44.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\ServiceStack.OrmLite.Core.1.0.44\lib\netstandard1.3\ServiceStack.OrmLite.dll</HintPath>
+    <Reference Include="ServiceStack.Common, Version=5.0.0.0, Culture=neutral, PublicKeyToken=02c12cbda47e6587, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\ServiceStack.Common.5.0.2\lib\net45\ServiceStack.Common.dll</HintPath>
     </Reference>
-    <Reference Include="ServiceStack.OrmLite.MySql, Version=4.5.14.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\ServiceStack.OrmLite.MySql.4.5.14\lib\net45\ServiceStack.OrmLite.MySql.dll</HintPath>
+    <Reference Include="ServiceStack.Interfaces, Version=5.0.0.0, Culture=neutral, PublicKeyToken=02c12cbda47e6587, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\ServiceStack.Interfaces.5.0.2\lib\net45\ServiceStack.Interfaces.dll</HintPath>
     </Reference>
-    <Reference Include="ServiceStack.Text, Version=1.0.44.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\ServiceStack.Text.Core.1.0.44\lib\netstandard1.3\ServiceStack.Text.dll</HintPath>
+    <Reference Include="ServiceStack.OrmLite, Version=5.0.0.0, Culture=neutral, PublicKeyToken=02c12cbda47e6587, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\ServiceStack.OrmLite.5.0.2\lib\net45\ServiceStack.OrmLite.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.OrmLite.MySql, Version=5.0.0.0, Culture=neutral, PublicKeyToken=02c12cbda47e6587, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\ServiceStack.OrmLite.MySql.5.0.0\lib\net45\ServiceStack.OrmLite.MySql.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Text, Version=5.0.0.0, Culture=neutral, PublicKeyToken=02c12cbda47e6587, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\ServiceStack.Text.5.0.2\lib\net45\ServiceStack.Text.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.AppContext, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">

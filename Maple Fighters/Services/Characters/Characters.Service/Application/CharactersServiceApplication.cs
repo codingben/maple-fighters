@@ -30,6 +30,7 @@ namespace Characters.Service.Application
         {
             base.Startup();
 
+            AddCommonComponents();
             AddComponents();
         }
 
@@ -40,6 +41,7 @@ namespace Characters.Service.Application
             Server.Components.AddComponent(new DatabaseCharacterCreator());
             Server.Components.AddComponent(new DatabaseCharacterRemover());
             Server.Components.AddComponent(new DatabaseCharacterNameVerifier());
+            Server.Components.AddComponent(new DatabaseCharacterGetter());
             Server.Components.AddComponent(new DatabaseCharactersGetter());
             Server.Components.AddComponent(new DatabaseCharacterExistence());
         }

@@ -2,6 +2,7 @@
 using CommonCommunicationInterfaces;
 using CommonTools.Log;
 using ComponentModel.Common;
+using ServerApplication.Common.ApplicationBase;
 using ServerApplication.Common.Components.Coroutines;
 using ServerCommunicationInterfaces;
 
@@ -20,7 +21,7 @@ namespace ServerApplication.Common.Components
         {
             base.OnAwake();
 
-            var coroutinesExecutor = Components.GetComponent<ICoroutinesExecuter>().AssertNotNull();
+            var coroutinesExecutor = Server.Components.GetComponent<ICoroutinesExecuter>().AssertNotNull();
             var serverConnectorProvider = Components.GetComponent<IServerConnectorProvider>().AssertNotNull();
             serviceConnectorProvider = new ServiceConnectorProvider(coroutinesExecutor, serverConnectorProvider);
             serviceConnectorProvider.Connect(GetPeerConnectionInformation(), OnConnected);

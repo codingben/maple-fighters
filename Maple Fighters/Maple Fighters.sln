@@ -8,6 +8,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Game", "Game", "{3D62116D-D193-4FB3-B99C-AA540E6E99D4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Game", "Servers\Game\Game\Game.csproj", "{DF693C06-200A-4903-B72F-AF600BB7D47A}"
+	ProjectSection(ProjectDependencies) = postProject
+		{58359452-038A-44CD-AA7B-21D0C3507EC7} = {58359452-038A-44CD-AA7B-21D0C3507EC7}
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{6BD1A4DA-D8A1-441D-AE30-7FFDAF884926}"
 EndProject

@@ -26,6 +26,7 @@ namespace Authorization.Service.Application
         {
             base.Startup();
 
+            AddCommonComponents();
             AddComponents();
         }
 

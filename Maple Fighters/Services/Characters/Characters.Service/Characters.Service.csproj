@@ -108,6 +108,10 @@
       <Project>{F82FBB67-7B1D-43B7-A415-3F407D40E5C7}</Project>
       <Name>ServerApplication.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Authorization\Authorization.Client.Common\Authorization.Client.Common.csproj">
+      <Project>{58359452-038A-44CD-AA7B-21D0C3507EC7}</Project>
+      <Name>Authorization.Client.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Authorization\Authorization.Server.Common\Authorization.Server.Common.csproj">
       <Project>{174c1938-ca68-4549-97de-3470afacb7c7}</Project>
       <Name>Authorization.Server.Common</Name>

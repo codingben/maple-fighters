@@ -36,10 +36,10 @@ namespace Authorization.Server.Common
 
         protected override PeerConnectionInformation GetPeerConnectionInformation()
         {
-            LogUtils.Assert(Config.Global.Authorization, MessageBuilder.Trace("Could not find an connection info for the Authorization service."));
+            LogUtils.Assert(Config.Global.AuthorizationService, MessageBuilder.Trace("Could not find an connection info for the Authorization service."));
 
-            var ip = (string)Config.Global.Authorization.IP;
-            var port = (int)Config.Global.Authorization.Port;
+            var ip = (string)Config.Global.AuthorizationService.IP;
+            var port = (int)Config.Global.AuthorizationService.Port;
             return new PeerConnectionInformation(ip, port);
         }
     }
