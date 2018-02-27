@@ -36,7 +36,9 @@ namespace Game.Application.PeerLogic.Operations
         {
             var character = await charactersServiceApi.GetCharacter(yield, parameters);
             onCharacterSelected?.Invoke(character.Character);
-            return new ValidateCharacterResponseParameters(character.Character.HasValue ? CharacterValidationStatus.Ok : CharacterValidationStatus.Wrong);
+
+            var status = character.Character.HasCharacter ? CharacterValidationStatus.Ok : CharacterValidationStatus.Wrong;
+            return new ValidateCharacterResponseParameters(status);
         }
     }
 }

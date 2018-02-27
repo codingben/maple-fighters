@@ -2,7 +2,7 @@
 {
     public enum AuthorizationStatus : byte
     {
-        Succeed,
-        Failed
+        Failed,
+        Succeed
     }
 }

@@ -12,7 +12,21 @@ namespace ServerApplication.Common.Components
         where TOperationCode : IComparable, IFormattable, IConvertible
         where TEventCode : IComparable, IFormattable, IConvertible
     {
-        protected OutboundServerPeerLogic<TOperationCode, TEventCode> OutboundServerPeerLogic;
+        protected OutboundServerPeerLogic<TOperationCode, TEventCode> OutboundServerPeerLogic
+        {
+            get
+            {
+                if (outboundServerPeerLogic != null && (serviceConnectorProvider != null && serviceConnectorProvider.IsConnected()))
+                {
+                    return outboundServerPeerLogic;
+                }
+
+                var peerDetails = GetPeerConnectionInformation();
+                LogUtils.Log($"An attempt to access outbound server peer logic but there is no connection to: {peerDetails.Ip}:{peerDetails.Port}");
+                return null;
+            }
+        }
+        private OutboundServerPeerLogic<TOperationCode, TEventCode> outboundServerPeerLogic;
         private ServiceConnectorProvider serviceConnectorProvider;
 
         private bool disposed;
@@ -38,12 +52,12 @@ namespace ServerApplication.Common.Components
                 serviceConnectorProvider.Disconnect();
             }
 
-            OutboundServerPeerLogic.Dispose();
+            outboundServerPeerLogic?.Dispose();
         }
 
         protected virtual void OnConnected(IOutboundServerPeer outboundServerPeer)
         {
-            OutboundServerPeerLogic = new OutboundServerPeerLogic<TOperationCode, TEventCode>(outboundServerPeer);
+            outboundServerPeerLogic = new OutboundServerPeerLogic<TOperationCode, TEventCode>(outboundServerPeer);
 
             SubscribeToDisconnectionNotifier();
 

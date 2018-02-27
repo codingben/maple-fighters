@@ -1,6 +1,6 @@
 ﻿namespace Character.Client.Common
 {
-    public enum ClientOperations : byte
+    public enum CharacterOperations : byte
     {
         Authorize,
         CreateCharacter,

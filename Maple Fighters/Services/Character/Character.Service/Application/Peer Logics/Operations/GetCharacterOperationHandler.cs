@@ -21,7 +21,7 @@ namespace CharacterService.Application.PeerLogics.Operations
             var userId = messageData.Parameters.UserId;
             var characterIndex = messageData.Parameters.CharacterIndex;
             var character = characterGetter.GetCharacter(userId, characterIndex);
-            return new GetCharacterResponseParameters(character);
+            return new GetCharacterResponseParameters(character.GetValueOrDefault());
         }
     }
 }

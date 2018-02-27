@@ -6,7 +6,7 @@ using ServerCommunicationInterfaces;
 
 namespace Authorization.Service.Application.PeerLogic
 {
-    internal class InboundServerPeerLogic : PeerLogicBase<ServerOperations, EmptyEventCode>
+    internal class InboundServerPeerLogic : PeerLogicBase<AuthorizationOperations, EmptyEventCode>
     {
         public override void Initialize(IClientPeerWrapper<IClientPeer> peer)
         {
@@ -20,22 +20,22 @@ namespace Authorization.Service.Application.PeerLogic
 
         private void AddHandlerForCreateAuthorizationOperation()
         {
-            OperationHandlerRegister.SetHandler(ServerOperations.CreateAuthorization, new CreateAuthorizationOperation());
+            OperationHandlerRegister.SetHandler(AuthorizationOperations.CreateAuthorization, new CreateAuthorizationOperation());
         }
 
         private void AddHandlerForRemoveAuthorizationOperation()
         {
-            OperationHandlerRegister.SetHandler(ServerOperations.RemoveAuthorization, new RemoveAuthorizationOperation());
+            OperationHandlerRegister.SetHandler(AuthorizationOperations.RemoveAuthorization, new RemoveAuthorizationOperation());
         }
 
         private void AddHandlerForAccessTokenAuthorizationOperation()
         {
-            OperationHandlerRegister.SetHandler(ServerOperations.AccessTokenAuthorization, new AccessTokenAuthorizationOperation());
+            OperationHandlerRegister.SetHandler(AuthorizationOperations.AccessTokenAuthorization, new AccessTokenAuthorizationOperation());
         }
 
         private void AddHandlerForUserAuthorizationOperation()
         {
-            OperationHandlerRegister.SetHandler(ServerOperations.UserAuthorization, new UserAuthorizationOperation());
+            OperationHandlerRegister.SetHandler(AuthorizationOperations.UserAuthorization, new UserAuthorizationOperation());
         }
     }
 }

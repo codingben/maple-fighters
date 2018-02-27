@@ -6,7 +6,7 @@ using Character.Server.Common;
 
 namespace Character.Service.Application.PeerLogics
 {
-    internal class InboundServerPeerLogic : PeerLogicBase<ServerOperations, EmptyEventCode>
+    internal class InboundServerPeerLogic : PeerLogicBase<CharacterOperations, EmptyEventCode>
     {
         public override void Initialize(IClientPeerWrapper<IClientPeer> peer)
         {
@@ -17,7 +17,7 @@ namespace Character.Service.Application.PeerLogics
 
         private void AddHandlerForGetCharacterOperation()
         {
-            OperationHandlerRegister.SetHandler(ServerOperations.GetCharacter, new GetCharacterOperationHandler());
+            OperationHandlerRegister.SetHandler(CharacterOperations.GetCharacter, new GetCharacterOperationHandler());
         }
     }
 }

@@ -19,6 +19,7 @@ namespace Registration.Application
             base.Startup();
 
             AddCommonComponents();
+            AddComponents();
         }
 
         public override void OnConnected(IClientPeer clientPeer)

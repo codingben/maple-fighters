@@ -1,6 +1,6 @@
 ﻿namespace Authorization.Server.Common
 {
-    public enum ServerOperations : byte
+    public enum AuthorizationOperations : byte
     {
         CreateAuthorization,
         RemoveAuthorization,

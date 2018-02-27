@@ -30,7 +30,7 @@ namespace ServerApplication.Common.Components
 
         private IEnumerator<IYieldInstruction> ConnectContinuously(PeerConnectionInformation connectionInformation, Action<IOutboundServerPeer> onConnected)
         {
-            const int WAIT_TIME = 30;
+            const int WAIT_TIME = 10;
 
             outboundServerPeer = null;
 

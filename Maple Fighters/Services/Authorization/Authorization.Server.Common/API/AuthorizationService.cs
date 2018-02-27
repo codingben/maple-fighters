@@ -8,30 +8,30 @@ using ServerApplication.Common.Components;
 
 namespace Authorization.Server.Common
 {
-    public class AuthorizationService : ServiceBase<ServerOperations, EmptyEventCode>, IAuthorizationServiceAPI
+    public class AuthorizationService : ServiceBase<AuthorizationOperations, EmptyEventCode>, IAuthorizationServiceAPI
     {
         public Task<CreateAuthorizationResponseParameters> CreateAuthorization(IYield yield, CreateAuthorizationRequestParameters parameters)
         {
-            return OutboundServerPeerLogic.SendOperation<CreateAuthorizationRequestParameters, CreateAuthorizationResponseParameters>
-                (yield, (byte)ServerOperations.CreateAuthorization, parameters);
+            return OutboundServerPeerLogic?.SendOperation<CreateAuthorizationRequestParameters, CreateAuthorizationResponseParameters>
+                (yield, (byte)AuthorizationOperations.CreateAuthorization, parameters);
         }
 
         public Task<EmptyParameters> RemoveAuthorization(IYield yield, RemoveAuthorizationRequestParameters parameters)
         {
-            return OutboundServerPeerLogic.SendOperation<RemoveAuthorizationRequestParameters, EmptyParameters>
-                (yield, (byte)ServerOperations.RemoveAuthorization, parameters);
+            return OutboundServerPeerLogic?.SendOperation<RemoveAuthorizationRequestParameters, EmptyParameters>
+                (yield, (byte)AuthorizationOperations.RemoveAuthorization, parameters);
         }
 
         public Task<AuthorizeAccessTokenResponseParameters> AccessTokenAuthorization(IYield yield, AuthorizeAccesTokenRequestParameters parameters)
         {
-            return OutboundServerPeerLogic.SendOperation<AuthorizeAccesTokenRequestParameters, AuthorizeAccessTokenResponseParameters>
-                (yield, (byte)ServerOperations.AccessTokenAuthorization, parameters);
+            return OutboundServerPeerLogic?.SendOperation<AuthorizeAccesTokenRequestParameters, AuthorizeAccessTokenResponseParameters>
+                (yield, (byte)AuthorizationOperations.AccessTokenAuthorization, parameters);
         }
 
         public Task<AuthorizeUserResponseParameters> UserAuthorization(IYield yield, AuthorizeUserRequestParameters parameters)
         {
-            return OutboundServerPeerLogic.SendOperation<AuthorizeUserRequestParameters, AuthorizeUserResponseParameters>
-                (yield, (byte)ServerOperations.UserAuthorization, parameters);
+            return OutboundServerPeerLogic?.SendOperation<AuthorizeUserRequestParameters, AuthorizeUserResponseParameters>
+                (yield, (byte)AuthorizationOperations.UserAuthorization, parameters);
         }
 
         protected override PeerConnectionInformation GetPeerConnectionInformation()

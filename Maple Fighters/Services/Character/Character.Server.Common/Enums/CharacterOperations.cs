@@ -1,6 +1,6 @@
 ﻿namespace Character.Server.Common
 {
-    public enum ServerOperations : byte
+    public enum CharacterOperations : byte
     {
         GetCharacter
     }

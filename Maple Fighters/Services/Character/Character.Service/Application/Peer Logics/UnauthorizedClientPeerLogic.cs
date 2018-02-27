@@ -7,7 +7,7 @@ using ServerCommunicationInterfaces;
 
 namespace Character.Service.Application.PeerLogics
 {
-    internal class UnauthorizedClientPeerLogic : PeerLogicBase<ClientOperations, EmptyEventCode>
+    internal class UnauthorizedClientPeerLogic : PeerLogicBase<CharacterOperations, EmptyEventCode>
     {
         public override void Initialize(IClientPeerWrapper<IClientPeer> peer)
         {
@@ -18,7 +18,7 @@ namespace Character.Service.Application.PeerLogics
 
         private void AddHandlerForAuthorizationOperation()
         {
-            OperationHandlerRegister.SetAsyncHandler(ClientOperations.Authorize, new AuthorizationOperationHandler(OnAuthorized, OnNonAuthorized));
+            OperationHandlerRegister.SetAsyncHandler(CharacterOperations.Authorize, new AuthorizationOperationHandler(OnAuthorized, OnNonAuthorized));
         }
 
         private void OnAuthorized(int userId)

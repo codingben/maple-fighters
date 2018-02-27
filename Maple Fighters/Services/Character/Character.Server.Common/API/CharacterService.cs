@@ -8,12 +8,12 @@ using ServerApplication.Common.Components;
 
 namespace Character.Server.Common
 {
-    public class CharacterService : ServiceBase<ServerOperations, EmptyEventCode>, ICharacterServiceAPI
+    public class CharacterService : ServiceBase<CharacterOperations, EmptyEventCode>, ICharacterServiceAPI
     {
         public Task<GetCharacterResponseParameters> GetCharacter(IYield yield, GetCharacterRequestParameters parameters)
         {
-            return OutboundServerPeerLogic.SendOperation<GetCharacterRequestParameters, GetCharacterResponseParameters>
-                (yield, (byte)ServerOperations.GetCharacter, parameters);
+            return OutboundServerPeerLogic?.SendOperation<GetCharacterRequestParameters, GetCharacterResponseParameters>
+                (yield, (byte)CharacterOperations.GetCharacter, parameters);
         }
 
         protected override PeerConnectionInformation GetPeerConnectionInformation()

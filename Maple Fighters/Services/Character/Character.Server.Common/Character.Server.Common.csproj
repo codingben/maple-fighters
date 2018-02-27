@@ -55,7 +55,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="API\CharacterService.cs" />
-    <Compile Include="Enums\ServerOperations.cs" />
+    <Compile Include="Enums\CharacterOperations.cs" />
     <Compile Include="Parameters\GetCharacterRequestParameters.cs" />
     <Compile Include="Parameters\GetCharacterResponseParameters.cs" />
     <Compile Include="API\ICharacterServiceAPI.cs" />

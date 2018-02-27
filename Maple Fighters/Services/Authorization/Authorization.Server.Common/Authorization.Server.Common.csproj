@@ -65,7 +65,7 @@
   <ItemGroup>
     <Compile Include="API\AuthorizationService.cs" />
     <Compile Include="API\IAuthorizationServiceAPI.cs" />
-    <Compile Include="Enums\ServerOperations.cs" />
+    <Compile Include="Enums\AuthorizationOperations.cs" />
     <Compile Include="Operations\AuthorizationOperationHandler.cs" />
     <Compile Include="Parameters\AuthorizeAccesTokenRequestParameters.cs" />
     <Compile Include="Parameters\AuthorizeUserRequestParameters.cs" />

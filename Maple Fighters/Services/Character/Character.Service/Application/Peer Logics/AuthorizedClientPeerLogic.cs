@@ -6,7 +6,7 @@ using ServerCommunicationInterfaces;
 
 namespace Character.Service.Application.PeerLogics
 {
-    internal class AuthorizedClientPeerLogic : PeerLogicBase<ClientOperations, EmptyEventCode>
+    internal class AuthorizedClientPeerLogic : PeerLogicBase<CharacterOperations, EmptyEventCode>
     {
         private readonly int userId;
 
@@ -26,17 +26,17 @@ namespace Character.Service.Application.PeerLogics
 
         private void AddHandlerForCreateCharacterOperation()
         {
-            OperationHandlerRegister.SetHandler(ClientOperations.CreateCharacter, new CreateCharacterOperationHandler(userId));
+            OperationHandlerRegister.SetHandler(CharacterOperations.CreateCharacter, new CreateCharacterOperationHandler(userId));
         }
 
         private void AddHandlerForRemoveCharacterOperation()
         {
-            OperationHandlerRegister.SetHandler(ClientOperations.RemoveCharacter, new RemoveCharacterOperationHandler(userId));
+            OperationHandlerRegister.SetHandler(CharacterOperations.RemoveCharacter, new RemoveCharacterOperationHandler(userId));
         }
 
         private void AddHandlerForGetCharactersOperation()
         {
-            OperationHandlerRegister.SetHandler(ClientOperations.GetCharacters, new GetCharactersOperationHandler(userId));
+            OperationHandlerRegister.SetHandler(CharacterOperations.GetCharacters, new GetCharactersOperationHandler(userId));
         }
     }
 }
