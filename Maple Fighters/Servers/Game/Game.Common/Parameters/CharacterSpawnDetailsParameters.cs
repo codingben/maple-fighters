@@ -1,5 +1,5 @@
 ﻿using System.IO;
-using Characters.Client.Common;
+using Character.Client.Common;
 using CommonCommunicationInterfaces;
 
 namespace Shared.Game.Common

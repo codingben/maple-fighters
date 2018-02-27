@@ -1,4 +1,4 @@
-﻿using Characters.Client.Common;
+﻿using Character.Client.Common;
 using ComponentModel.Common;
 using Game.InterestManagement;
 

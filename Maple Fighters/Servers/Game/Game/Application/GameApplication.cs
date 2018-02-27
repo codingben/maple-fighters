@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Reflection;
 using Authorization.Server.Common;
-using Characters.Server.Common;
+using Character.Server.Common;
 using Game.Application.Components;
 using Game.Application.PeerLogics;
 using PythonScripting;
@@ -41,7 +41,7 @@ namespace Game.Application
             Server.Components.AddComponent(new SceneContainer());
             Server.Components.AddComponent(new CharacterCreator());
             Server.Components.AddComponent(new AuthorizationService());
-            Server.Components.AddComponent(new CharactersService());
+            Server.Components.AddComponent(new CharacterService());
         }
 
         private void CreatePythonScriptEngine()

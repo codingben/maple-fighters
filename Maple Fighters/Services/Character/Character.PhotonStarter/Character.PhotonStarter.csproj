@@ -4,24 +4,23 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{AA536188-84FF-4286-A9E6-BAFBE1D8D37B}</ProjectGuid>
+    <ProjectGuid>{BEB77F9A-714D-46FE-ABFC-01D0C894EEF9}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Game.Common</RootNamespace>
-    <AssemblyName>Game.Common</AssemblyName>
+    <RootNamespace>Character.PhotonStarter</RootNamespace>
+    <AssemblyName>Character.PhotonStarter</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\..\..\..\Photon Tools\Servers\Character Service\bin\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>
-    </DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -35,58 +34,51 @@
     <Reference Include="CommonCommunicationInterfaces, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\CommonCommunicationInterfaces.5.0.0\lib\net46\CommonCommunicationInterfaces.dll</HintPath>
     </Reference>
-    <Reference Include="CommunicationHelper, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\CommunicationHelper.4.0.0\lib\net46\CommunicationHelper.dll</HintPath>
-    </Reference>
     <Reference Include="Coroutines, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Coroutines.5.0.5\lib\net46\Coroutines.dll</HintPath>
     </Reference>
     <Reference Include="LogUtils, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Coroutines.5.0.5\lib\net46\LogUtils.dll</HintPath>
     </Reference>
+    <Reference Include="Photon.SocketServer">
+      <HintPath>..\..\..\..\Photon Libraries\Photon.SocketServer.dll</HintPath>
+    </Reference>
     <Reference Include="PhotonCommonImplementation, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\PhotonCommonImplementation.2.1.0\lib\net46\PhotonCommonImplementation.dll</HintPath>
     </Reference>
+    <Reference Include="PhotonServerImplementation, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\PhotonServerImplementation.4.0.0\lib\net46\PhotonServerImplementation.dll</HintPath>
+    </Reference>
+    <Reference Include="ServerCommunicationInterfaces, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\ServerCommunicationInterfaces.3.0.0\lib\net46\ServerCommunicationInterfaces.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.ValueTuple, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\System.ValueTuple.4.4.0\lib\net461\System.ValueTuple.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Parameters\ChangeSceneRequestParameters.cs" />
-    <Compile Include="Parameters\ChangeSceneResponseParameters.cs" />
-    <Compile Include="Parameters\CharacterAddedEventParameters.cs" />
-    <Compile Include="Parameters\CharacterSpawnDetailsParameters.cs" />
-    <Compile Include="Parameters\CharactersAddedEventParameters.cs" />
-    <Compile Include="Enums\DirectionsUtils.cs" />
-    <Compile Include="Enums\Directions.cs" />
-    <Compile Include="Parameters\PlayerAttackedEventParameters.cs" />
-    <Compile Include="Parameters\ValidateCharacterRequestParameters.cs" />
-    <Compile Include="Parameters\SceneObjectsAddedEventParameters.cs" />
-    <Compile Include="Parameters\SceneObjectsRemovedEventParameters.cs" />
-    <Compile Include="Parameters\SceneObjectParameters.cs" />
-    <Compile Include="Parameters\SceneObjectAddedEventParameters.cs" />
-    <Compile Include="Parameters\SceneObjectPositionChangedEventParameters.cs" />
-    <Compile Include="Parameters\SceneObjectRemovedEventParameters.cs" />
-    <Compile Include="Enums\GameDataChannels.cs" />
-    <Compile Include="Enums\GameEvents.cs" />
-    <Compile Include="Enums\GameOperations.cs" />
-    <Compile Include="Parameters\EnterSceneResponseParameters.cs" />
-    <Compile Include="Enums\Maps.cs" />
-    <Compile Include="Enums\PlayerState.cs" />
-    <Compile Include="Parameters\PlayerStateChangedEventParameters.cs" />
+    <Compile Include="PhotonStarter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Parameters\UpdatePositionRequestParameters.cs" />
-    <Compile Include="Parameters\UpdatePlayerStateRequestParameters.cs" />
-    <Compile Include="Parameters\ValidateCharacterResponseParameters.cs" />
-    <Compile Include="Enums\CharacterValidationStatus.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\Services\Character\Character.Client.Common\Characters.Client.Common\Character.Client.Common.csproj">
-      <Project>{2EB94BA4-299A-47D9-93D0-E86D06463A18}</Project>
-      <Name>Character.Client.Common</Name>
+    <ProjectReference Include="..\..\..\Shared\Servers\PhotonStarter.Common\PhotonStarter.Common.csproj">
+      <Project>{9cf08cbc-8eae-4159-8620-1383d562b6ca}</Project>
+      <Name>PhotonStarter.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\Shared\Servers\ServerApplication.Common\ServerApplication.Common.csproj">
+      <Project>{F82FBB67-7B1D-43B7-A415-3F407D40E5C7}</Project>
+      <Name>ServerApplication.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Character.Service\Character.Service.csproj">
+      <Project>{40F51EE4-D13D-4EAD-BF38-53A4361136D9}</Project>
+      <Name>Character.Service</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

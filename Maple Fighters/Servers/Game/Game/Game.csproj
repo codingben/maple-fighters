@@ -104,7 +104,7 @@
     <Compile Include="Application\Components\Scene\ISceneContainer.cs" />
     <Compile Include="Application\Components\Scene\Map\PhysicsMapCreator.cs" />
     <Compile Include="Application\Components\Scene\SceneContainer.cs" />
-    <Compile Include="Application\Peer Logics\Components\CharactersSender.cs" />
+    <Compile Include="Application\Peer Logics\Components\CharacterSender.cs" />
     <Compile Include="Application\Peer Logics\Components\IPeerIdGetter.cs" />
     <Compile Include="Application\Peer Logics\Components\ISceneObjectGetter.cs" />
     <Compile Include="Application\Peer Logics\Components\SceneObjectGetter.cs" />
@@ -152,13 +152,13 @@
       <Project>{174C1938-CA68-4549-97DE-3470AFACB7C7}</Project>
       <Name>Authorization.Server.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\Services\Characters\Characters.Client.Common\Characters.Client.Common\Characters.Client.Common.csproj">
+    <ProjectReference Include="..\..\..\Services\Character\Character.Client.Common\Characters.Client.Common\Character.Client.Common.csproj">
       <Project>{2EB94BA4-299A-47D9-93D0-E86D06463A18}</Project>
-      <Name>Characters.Client.Common</Name>
+      <Name>Character.Client.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\Services\Characters\Characters.Server.Common\Characters.Server.Common.csproj">
-      <Project>{42bb62da-299c-4ec1-b83c-894e5d75e505}</Project>
-      <Name>Characters.Server.Common</Name>
+    <ProjectReference Include="..\..\..\Services\Character\Character.Server.Common\Character.Server.Common.csproj">
+      <Project>{42BB62DA-299C-4EC1-B83C-894E5D75E505}</Project>
+      <Name>Character.Server.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\Shared\Helper\MathematicsHelper\MathematicsHelper.csproj">
       <Project>{A3BE3E13-D3A1-4800-B471-A39F5ED4B554}</Project>

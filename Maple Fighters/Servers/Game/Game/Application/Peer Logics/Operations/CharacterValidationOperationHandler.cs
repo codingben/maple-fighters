@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Characters.Client.Common;
-using Characters.Server.Common;
+using Character.Client.Common;
+using Character.Server.Common;
 using CommonCommunicationInterfaces;
 using CommonTools.Coroutines;
 using CommonTools.Log;
@@ -15,14 +15,14 @@ namespace Game.Application.PeerLogic.Operations
     {
         private readonly int userId;
         private readonly Action<CharacterFromDatabaseParameters?> onCharacterSelected;
-        private readonly ICharactersServiceAPI charactersServiceApi;
+        private readonly ICharacterServiceAPI charactersServiceApi;
 
         public CharacterValidationOperationHandler(int userId, Action<CharacterFromDatabaseParameters?> onCharacterSelected)
         {
             this.userId = userId;
             this.onCharacterSelected = onCharacterSelected;
 
-            charactersServiceApi = Server.Components.GetComponent<ICharactersServiceAPI>().AssertNotNull();
+            charactersServiceApi = Server.Components.GetComponent<ICharacterServiceAPI>().AssertNotNull();
         }
 
         public Task<ValidateCharacterResponseParameters?> Handle(IYield yield, MessageData<ValidateCharacterRequestParameters> messageData, ref MessageSendOptions sendOptions)

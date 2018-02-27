@@ -1,4 +1,4 @@
-﻿using Characters.Client.Common;
+﻿using Character.Client.Common;
 using CommonTools.Log;
 using Game.Application.Components;
 using Game.Application.PeerLogic.Components;
@@ -42,7 +42,7 @@ namespace Game.Application.PeerLogics
 
             Components.AddComponent(new SceneObjectGetter(sceneObject));
             Components.AddComponent(new InterestManagementNotifier());
-            Components.AddComponent(new CharactersSender());
+            Components.AddComponent(new CharacterSender());
             Components.AddComponent(new PositionChangesListener());
         }
 

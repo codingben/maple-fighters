@@ -98,15 +98,15 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Server2.Common", "Servers\T
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{6916EEC2-55E8-435A-88CF-E1C5783E66AF}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Characters", "Characters", "{02144293-022C-4DA9-8BD4-E11F008316BA}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Character", "Character", "{02144293-022C-4DA9-8BD4-E11F008316BA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Characters.Service", "Services\Characters\Characters.Service\Characters.Service.csproj", "{40F51EE4-D13D-4EAD-BF38-53A4361136D9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Character.Service", "Services\Character\Character.Service\Character.Service.csproj", "{40F51EE4-D13D-4EAD-BF38-53A4361136D9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Characters.Server.Common", "Services\Characters\Characters.Server.Common\Characters.Server.Common.csproj", "{42BB62DA-299C-4EC1-B83C-894E5D75E505}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Character.Server.Common", "Services\Character\Character.Server.Common\Character.Server.Common.csproj", "{42BB62DA-299C-4EC1-B83C-894E5D75E505}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Characters.PhotonStarter", "Services\Characters\Characters.PhotonStarter\Characters.PhotonStarter.csproj", "{BEB77F9A-714D-46FE-ABFC-01D0C894EEF9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Character.PhotonStarter", "Services\Character\Character.PhotonStarter\Character.PhotonStarter.csproj", "{BEB77F9A-714D-46FE-ABFC-01D0C894EEF9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Characters.Client.Common", "Services\Characters\Characters.Client.Common\Characters.Client.Common\Characters.Client.Common.csproj", "{2EB94BA4-299A-47D9-93D0-E86D06463A18}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Character.Client.Common", "Services\Character\Character.Client.Common\Characters.Client.Common\Character.Client.Common.csproj", "{2EB94BA4-299A-47D9-93D0-E86D06463A18}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{1A509B72-DD2A-4940-B572-CC9D849656FC}"
 EndProject
