@@ -20,7 +20,7 @@ namespace Scripts.UI.Controllers
             ChatConnector.Instance.Connect();
         }
 
-        public void OnAuthenticated()
+        public void OnAuthorized()
         {
             chatWindow.SendChatMessage += OnSendChatMessage;
             chatWindow.IsConnected = true;

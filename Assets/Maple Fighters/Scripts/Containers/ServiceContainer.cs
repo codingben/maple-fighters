@@ -8,11 +8,23 @@ namespace Scripts.Containers
         {
             get
             {
-                if (_gameService == null)
+                if (gameService == null)
                 {
-                    _gameService = new GameService();
+                    gameService = new GameService();
                 }
-                return _gameService;
+                return gameService;
+            }
+        }
+
+        public static ICharacterService CharacterService
+        {
+            get
+            {
+                if (characterService == null)
+                {
+                    characterService = new CharacterService();
+                }
+                return characterService;
             }
         }
 
@@ -20,11 +32,11 @@ namespace Scripts.Containers
         {
             get
             {
-                if (_chatService == null)
+                if (chatService == null)
                 {
-                    _chatService = new ChatService();
+                    chatService = new ChatService();
                 }
-                return _chatService;
+                return chatService;
             }
         }
 
@@ -32,11 +44,11 @@ namespace Scripts.Containers
         {
             get
             {
-                if (_loginService == null)
+                if (loginService == null)
                 {
-                    _loginService = new LoginService();
+                    loginService = new LoginService();
                 }
-                return _loginService;
+                return loginService;
             }
         }
 
@@ -44,17 +56,18 @@ namespace Scripts.Containers
         {
             get
             {
-                if (_registrationService == null)
+                if (registrationService == null)
                 {
-                    _registrationService = new RegistrationService();
+                    registrationService = new RegistrationService();
                 }
-                return _registrationService;
+                return registrationService;
             }
         }
 
-        private static IChatService _chatService;
-        private static IGameService _gameService;
-        private static ILoginService _loginService;
-        private static IRegistrationService _registrationService;
+        private static IGameService gameService;
+        private static ICharacterService characterService;
+        private static IChatService chatService;
+        private static ILoginService loginService;
+        private static IRegistrationService registrationService;
     }
 }

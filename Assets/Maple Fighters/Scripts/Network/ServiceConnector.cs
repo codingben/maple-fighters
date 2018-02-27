@@ -1,16 +1,16 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using Authorization.Client.Common;
+using CommonCommunicationInterfaces;
 using CommonTools.Coroutines;
 using Scripts.Utils;
 using WaitForSeconds = CommonTools.Coroutines.WaitForSeconds;
 
 namespace Scripts.Services
 {
-    public class ServiceConnector<T> : DontDestroyOnLoad<T>
+    public abstract class ServiceConnector<T> : DontDestroyOnLoad<T>
         where T : ServiceConnector<T>
     {
-        private const int AUTO_TIME_FOR_DISCONNECT = 60;
-
         private IServiceBase serviceBase;
         private ICoroutine disconnectAutomatically;
 
@@ -31,24 +31,57 @@ namespace Scripts.Services
             CoroutinesExecutor.Dispose();
         }
 
-        protected async Task<ConnectionStatus> Connect(IYield yield, IServiceBase serviceBase, ConnectionInformation connectionInformation)
+        protected async Task Connect(IYield yield, IServiceBase serviceBase, ConnectionInformation connectionInformation)
         {
             this.serviceBase = serviceBase;
 
+            OnPreConnection();
+
             var connectionStatus = await serviceBase.Connect(yield, CoroutinesExecutor, connectionInformation);
-            return connectionStatus;
+            if (connectionStatus == ConnectionStatus.Failed)
+            {
+                OnConnectionFailed();
+                return;
+            }
+
+            OnConnectionEstablished();
         }
+
+        protected abstract void OnPreConnection();
+        protected abstract void OnConnectionFailed();
+        protected abstract void OnConnectionEstablished();
+
+        protected async Task Authorize(IYield yield, byte operationCode)
+        {
+            OnPreAuthorization();
+
+            var parameters = new AuthorizeRequestParameters(AccessTokenProvider.AccessToken);
+            var authorizationStatus = await serviceBase.SendOperation<AuthorizeRequestParameters, AuthorizeResponseParameters>
+                    (yield, operationCode, parameters, MessageSendOptions.DefaultReliable());
+            if (authorizationStatus.Status == AuthorizationStatus.Failed)
+            {
+                OnNonAuthorized();
+                return;
+            }
+
+            OnAuthorized();
+        }
+
+        protected abstract void OnPreAuthorization();
+        protected abstract void OnNonAuthorized();
+        protected abstract void OnAuthorized();
 
         protected void DisconnectAutomatically()
         {
             if (disconnectAutomatically == null)
             {
-                disconnectAutomatically = CoroutinesExecutor.StartCoroutine(DisconnectAutomaticallyRoutine());
+                disconnectAutomatically = CoroutinesExecutor.StartCoroutine(DisconnectAutomaticallyTimer());
             }
         }
 
-        protected IEnumerator<IYieldInstruction> DisconnectAutomaticallyRoutine()
+        protected IEnumerator<IYieldInstruction> DisconnectAutomaticallyTimer()
         {
+            const int AUTO_TIME_FOR_DISCONNECT = 60;
             yield return new WaitForSeconds(AUTO_TIME_FOR_DISCONNECT);
             Disconnect();
         }

@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using Authorization.Client.Common;
 using CommonCommunicationInterfaces;
 using CommonTools.Coroutines;
 using CommunicationHelper;
@@ -20,7 +21,7 @@ namespace Scripts.Services
         public UnityEvent<CharacterAddedEventParameters> CharacterAdded { get; } = new UnityEvent<CharacterAddedEventParameters>();
         public UnityEvent<CharactersAddedEventParameters> CharactersAdded { get; } = new UnityEvent<CharactersAddedEventParameters>();
 
-        private AuthenticationStatus authenticationStatus = AuthenticationStatus.Failed;
+        private AuthorizationStatus authorizationStatus = AuthorizationStatus.Failed;
 
         protected override void OnConnected()
         {
@@ -30,8 +31,12 @@ namespace Scripts.Services
         protected override void OnDisconnected()
         {
             RemoveEventsHandlers();
+            GoBackToLogin();
+        }
 
-            if (authenticationStatus == AuthenticationStatus.Succeed)
+        private void GoBackToLogin()
+        {
+            if (authorizationStatus == AuthorizationStatus.Succeed)
             {
                 SavedObjects.DestroyAll();
             }
@@ -63,17 +68,17 @@ namespace Scripts.Services
             RemoveEventHandler(GameEvents.CharactersAdded);
         }
 
-        public async Task<AuthenticationStatus> Authenticate(IYield yield)
+        public async Task<AuthorizationStatus> Authorize(IYield yield)
         {
             if (!IsConnected())
             {
-                return AuthenticationStatus.Failed;
+                return AuthorizationStatus.Failed;
             }
 
-            var parameters = new AuthenticateRequestParameters(AccessTokenProvider.AccessToken);
-            var requestId = OperationRequestSender.Send(GameOperations.Authenticate, parameters, MessageSendOptions.DefaultReliable());
-            var responseParameters = await SubscriptionProvider.ProvideSubscription<AuthenticateResponseParameters>(yield, requestId);
-            authenticationStatus = responseParameters.Status;
+            var parameters = new AuthorizeRequestParameters(AccessTokenProvider.AccessToken);
+            var requestId = OperationRequestSender.Send(GameOperations.Authorize, parameters, MessageSendOptions.DefaultReliable());
+            var responseParameters = await SubscriptionProvider.ProvideSubscription<AuthorizeResponseParameters>(yield, requestId);
+            authorizationStatus = responseParameters.Status;
             return responseParameters.Status;
         }
 
@@ -89,52 +94,16 @@ namespace Scripts.Services
             return responseParameters;
         }
 
-        public async Task<FetchCharactersResponseParameters> FetchCharacters(IYield yield)
+        public async Task<CharacterValidationStatus> ValidateCharacter(IYield yield, ValidateCharacterRequestParameters parameters)
         {
             if (!IsConnected())
             {
-                return new FetchCharactersResponseParameters(new CharacterFromDatabaseParameters[0]);
-            }
-
-            var requestId = OperationRequestSender.Send(GameOperations.FetchCharacters, new EmptyParameters(), MessageSendOptions.DefaultReliable());
-            var responseParameters = await SubscriptionProvider.ProvideSubscription<FetchCharactersResponseParameters>(yield, requestId);
-            return responseParameters;
-        }
-
-        public async Task<ValidateCharacterStatus> ValidateCharacter(IYield yield, ValidateCharacterRequestParameters parameters)
-        {
-            if (!IsConnected())
-            {
-                return ValidateCharacterStatus.Wrong;
+                return CharacterValidationStatus.Wrong;
             }
 
             var requestId = OperationRequestSender.Send(GameOperations.ValidateCharacter, parameters, MessageSendOptions.DefaultReliable());
             var responseParameters = await SubscriptionProvider.ProvideSubscription<ValidateCharacterResponseParameters>(yield, requestId);
             return responseParameters.Status;
-        }
-
-        public async Task<CreateCharacterResponseParameters> CreateCharacter(IYield yield, CreateCharacterRequestParameters parameters)
-        {
-            if (!IsConnected())
-            {
-                return new CreateCharacterResponseParameters(CharacterCreationStatus.Failed);
-            }
-
-            var requestId = OperationRequestSender.Send(GameOperations.CreateCharacter, parameters, MessageSendOptions.DefaultReliable());
-            var responseParameters = await SubscriptionProvider.ProvideSubscription<CreateCharacterResponseParameters>(yield, requestId);
-            return responseParameters;
-        }
-
-        public async Task<RemoveCharacterResponseParameters> RemoveCharacter(IYield yield, RemoveCharacterRequestParameters parameters)
-        {
-            if (!IsConnected())
-            {
-                return new RemoveCharacterResponseParameters(RemoveCharacterStatus.Failed);
-            }
-
-            var requestId = OperationRequestSender.Send(GameOperations.RemoveCharacter, parameters, MessageSendOptions.DefaultReliable());
-            var responseParameters = await SubscriptionProvider.ProvideSubscription<RemoveCharacterResponseParameters>(yield, requestId);
-            return responseParameters;
         }
 
         public async Task<ChangeSceneResponseParameters> ChangeScene(IYield yield, ChangeSceneRequestParameters parameters)

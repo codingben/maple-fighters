@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Character.Client.Common;
 using CommonTools.Coroutines;
 using CommonTools.Log;
 using Scripts.Containers;
+using Scripts.Services;
 using Scripts.UI.Core;
 using Scripts.UI.Windows;
 using Scripts.World;
@@ -31,7 +33,7 @@ namespace Scripts.UI.Controllers
 
         private void Start()
         {
-            coroutinesExecutor.StartTask(FetchCharacters);
+            coroutinesExecutor.StartTask(GetCharacters);
         }
 
         private void OnDestroy()
@@ -60,11 +62,11 @@ namespace Scripts.UI.Controllers
             coroutinesExecutor.Update();
         }
 
-        private async Task FetchCharacters(IYield yield)
+        private async Task GetCharacters(IYield yield)
         {
             charactersParent = UserInterfaceContainer.Instance.Get<BackgroundCharactersParent>().AssertNotNull().GameObject.transform;
 
-            var parameters = await ServiceContainer.GameService.FetchCharacters(yield);
+            var parameters = await ServiceContainer.CharacterService.GetCharacters(yield);
             if (parameters.Characters.Length == 0)
             {
                 Utils.ShowNotice("Something went wrong, could not fetch characters.", Application.Quit, true);
@@ -183,53 +185,59 @@ namespace Scripts.UI.Controllers
         {
             clickedCharacter.PlayWalkAnimationAction();
 
-            var parameters = new ValidateCharacterRequestParameters(characterIndex);
-            coroutinesExecutor.StartTask((y) => ValidateCharacter(y, parameters));
+            var noticeWindow = Utils.ShowNotice("Entering to the world... Please wait.", null, true);
+            noticeWindow.OkButton.interactable = false;
+
+            GameConnector.Instance.Connect(onAuthorized: () => 
+            {
+                var parameters = new ValidateCharacterRequestParameters(characterIndex);
+                coroutinesExecutor.StartTask((y) => ValidateCharacter(y, parameters));
+            });
         }
 
         private async Task ValidateCharacter(IYield yield, ValidateCharacterRequestParameters parameters)
         {
-            var noticeWindow = Utils.ShowNotice("Entering to the world... Please wait.", null, true);
-            noticeWindow.OkButton.interactable = false;
-
             var response = await ServiceContainer.GameService.ValidateCharacter(yield, parameters);
-
             switch (response)
             {
-                case ValidateCharacterStatus.Ok:
+                case CharacterValidationStatus.Ok:
                 {
-                    EnteredWorld(noticeWindow);
+                    EnteredWorld();
                     break;
                 }
-                case ValidateCharacterStatus.Wrong:
+                case CharacterValidationStatus.Wrong:
                 {
-                    noticeWindow.Message.text = "Cannot enter to the world with this character. Please try again.";
+                    var noticeWindow = UserInterfaceContainer.Instance.Get<NoticeWindow>().AssertNotNull();
+                    noticeWindow.Message.text = "Can not enter to the world with this character. Please try again.";
                     noticeWindow.OkButton.interactable = true;
                     break;
                 }
                 default:
                 {
+                    var noticeWindow = UserInterfaceContainer.Instance.Get<NoticeWindow>().AssertNotNull();
                     noticeWindow.Message.text = "Something went wrong, please try again.";
                     noticeWindow.OkButton.interactable = true;
                     break;
                 }
             }
 
-            if (response != ValidateCharacterStatus.Ok)
+            if (response != CharacterValidationStatus.Ok)
             {
                 clickedCharacter.PlayIdleAnimationAction();
             }
         }
 
-        private void EnteredWorld(NoticeWindow noticeWindow)
+        private void EnteredWorld()
         {
             var screenFade = UserInterfaceContainer.Instance.Get<ScreenFade>().AssertNotNull();
-            screenFade.Show(() => OnEnteredWorld(noticeWindow));
+            screenFade.Show(OnEnteredWorld);
         }
 
-        private void OnEnteredWorld(NoticeWindow noticeWindow)
+        private void OnEnteredWorld()
         {
+            var noticeWindow = UserInterfaceContainer.Instance.Get<NoticeWindow>().AssertNotNull();
             UserInterfaceContainer.Instance.Remove(noticeWindow);
+
             GameScenesController.Instance.LoadScene(Maps.Map_1);
         }
 
@@ -249,8 +257,7 @@ namespace Scripts.UI.Controllers
             var noticeWindow = Utils.ShowNotice("Deleting a character... Please wait.", null, true);
             noticeWindow.OkButton.interactable = false;
 
-            var responseParameters = await ServiceContainer.GameService.RemoveCharacter(yield, parameters);
-
+            var responseParameters = await ServiceContainer.CharacterService.RemoveCharacter(yield, parameters);
             switch (responseParameters.Status)
             {
                 case RemoveCharacterStatus.Succeed:

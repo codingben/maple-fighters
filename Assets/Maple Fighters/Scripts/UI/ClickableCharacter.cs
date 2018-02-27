@@ -1,7 +1,7 @@
 ﻿using System;
+using Character.Client.Common;
 using CommonTools.Log;
 using Scripts.UI.Core;
-using Shared.Game.Common;
 using UnityEngine;
 using UnityEngine.EventSystems;
 

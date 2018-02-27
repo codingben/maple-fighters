@@ -1,8 +1,4 @@
-﻿using System.Threading.Tasks;
-using Chat.Common;
-using CommonCommunicationInterfaces;
-using CommonTools.Coroutines;
-using CommunicationHelper;
+﻿using Chat.Common;
 
 namespace Scripts.Services
 {
@@ -18,19 +14,6 @@ namespace Scripts.Services
         protected override void OnDisconnected()
         {
             RemoveEventHandler(ChatEvents.ChatMessage);
-        }
-
-        public async Task<AuthenticationStatus> Authenticate(IYield yield)
-        {
-            if (!IsConnected())
-            {
-                return AuthenticationStatus.Failed;
-            }
-
-            var parameters = new AuthenticateRequestParameters(AccessTokenProvider.AccessToken);
-            var requestId = OperationRequestSender.Send(ChatOperations.Authenticate, parameters, MessageSendOptions.DefaultReliable());
-            var authenticationStatus = await SubscriptionProvider.ProvideSubscription<AuthenticateResponseParameters>(yield, requestId);
-            return authenticationStatus.Status;
         }
     }
 }

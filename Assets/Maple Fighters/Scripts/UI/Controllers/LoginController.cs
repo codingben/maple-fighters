@@ -8,6 +8,7 @@ using Scripts.Services;
 using Scripts.UI.Core;
 using Scripts.UI.Windows;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Scripts.UI.Controllers
 {
@@ -50,11 +51,11 @@ namespace Scripts.UI.Controllers
 
         private void OnLoginButtonClicked(string email, string password)
         {
-            var parameters = new LoginRequestParameters(email, password.CreateSha512());
+            var parameters = new AuthenticateRequestParameters(email, password.CreateSha512());
             CoroutinesExecutor.StartTask((y) => Connect(y, parameters));
         }
 
-        private async Task Connect(IYield yield, LoginRequestParameters parameters)
+        private async Task Connect(IYield yield, AuthenticateRequestParameters parameters)
         {
             var noticeWindow = Utils.ShowNotice("Logging in... Please wait.", () => loginWindow.Show());
             noticeWindow.OkButton.interactable = false;
@@ -74,17 +75,15 @@ namespace Scripts.UI.Controllers
             CoroutinesExecutor.StartTask((y) => Login(y, parameters));
         }
 
-        private async Task Login(IYield yield, LoginRequestParameters parameters)
+        private async Task Login(IYield yield, AuthenticateRequestParameters parameters)
         {
             var noticeWindow = UserInterfaceContainer.Instance.Get<NoticeWindow>().AssertNotNull();
             var responseParameters = await ServiceContainer.LoginService.Login(yield, parameters);
-
             switch (responseParameters.Status)
             {
                 case LoginStatus.Succeed:
                 {
                     noticeWindow.Message.text = "You have logged in successfully. Please wait.";
-                    LoginSucceed();
                     break;
                 }
                 case LoginStatus.UserNotExist:
@@ -115,15 +114,25 @@ namespace Scripts.UI.Controllers
             {
                 Disconnect();
             }
+
+            if (responseParameters.Status == LoginStatus.Succeed)
+            {
+                OnLoginSucceed();
+            }
         }
 
-        private void LoginSucceed()
+        private void OnLoginSucceed()
         {
-            GameConnector.Instance.Connect();
+            CharacterConnector.Instance.Connect(onAuthorized: () => 
+            {
+                SceneManager.LoadScene(loadSceneIndex, LoadSceneMode.Single);
+            });
         }
 
         private void OnRegisterButtonClicked()
         {
+            // TODO: It should access a registration controller (?)
+
             if (registrationWindow == null)
             {
                 registrationWindow = UserInterfaceContainer.Instance.Get<RegistrationWindow>().AssertNotNull();

@@ -13,3 +13,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ConnectionProtocol: 0
   DebugLevel: 0
+  LogOperationsRequest: 1
+  LogOperationsResponse: 1
+  LogEvents: 1

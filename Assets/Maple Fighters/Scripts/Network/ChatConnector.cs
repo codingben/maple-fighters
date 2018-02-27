@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using Chat.Common;
+﻿using Chat.Common;
 using CommonTools.Coroutines;
 using CommonTools.Log;
 using Scripts.Containers;
@@ -15,41 +14,46 @@ namespace Scripts.Services
     {
         public void Connect()
         {
-            CoroutinesExecutor.StartTask(Connect);
+            var connectionInformation = ServicesConfiguration.GetInstance().GetConnectionInformation(ServersType.Chat);
+            CoroutinesExecutor.StartTask((yield) => Connect(yield, ServiceContainer.ChatService, connectionInformation));
         }
 
-        private async Task Connect(IYield yield)
+        protected override void OnPreConnection()
         {
             var chatWindow = UserInterfaceContainer.Instance.Get<ChatWindow>().AssertNotNull();
             chatWindow.ChatMessageNotifier.Invoke("Connecting to a chat server...", ChatMessageColor.Green);
-
-            var connectionInformation = ServicesConfiguration.GetInstance().GetConnectionInformation(ServersType.Chat);
-            var connectionStatus = await Connect(yield, ServiceContainer.ChatService, connectionInformation);
-            if (connectionStatus == ConnectionStatus.Failed)
-            {
-                chatWindow.ChatMessageNotifier.Invoke("Could not connect to a chat server.", ChatMessageColor.Red);
-                return;
-            }
-
-            CoroutinesExecutor.StartTask(Authenticate);
         }
 
-        private async Task Authenticate(IYield yield)
+        protected override void OnConnectionFailed()
         {
             var chatWindow = UserInterfaceContainer.Instance.Get<ChatWindow>().AssertNotNull();
+            chatWindow.ChatMessageNotifier.Invoke("Could not connect to a chat server.", ChatMessageColor.Red);
+        }
 
-            var authenticationStatus = await ServiceContainer.ChatService.Authenticate(yield);
-            if (authenticationStatus == AuthenticationStatus.Failed)
-            {
-                ServiceContainer.ChatService.Dispose();
+        protected override void OnConnectionEstablished()
+        {
+            CoroutinesExecutor.StartTask((yield) => Authorize(yield, (byte)ChatOperations.Authorize));
+        }
 
-                chatWindow.ChatMessageNotifier.Invoke("Authentication with chat server failed.", ChatMessageColor.Red);
-                return;
-            }
+        protected override void OnPreAuthorization()
+        {
+            // Left blank intentionally
+        }
 
+        protected override void OnNonAuthorized()
+        {
+            var chatWindow = UserInterfaceContainer.Instance.Get<ChatWindow>().AssertNotNull();
+            chatWindow.ChatMessageNotifier.Invoke("Authentication with chat server failed.", ChatMessageColor.Red);
+
+            ServiceContainer.ChatService.Dispose();
+        }
+
+        protected override void OnAuthorized()
+        {
+            var chatWindow = UserInterfaceContainer.Instance.Get<ChatWindow>().AssertNotNull();
             chatWindow.ChatMessageNotifier.Invoke("Connected to a chat server successfully.", ChatMessageColor.Green);
 
-            ChatController.Instance.OnAuthenticated();
+            ChatController.Instance.OnAuthorized();
         }
     }
 }

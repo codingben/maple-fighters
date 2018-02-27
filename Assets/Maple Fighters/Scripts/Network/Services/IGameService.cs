@@ -6,14 +6,9 @@ namespace Scripts.Services
 {
     public interface IGameService : IServiceBase
     {
-        Task<AuthenticationStatus> Authenticate(IYield yield);
+        Task<CharacterValidationStatus> ValidateCharacter(IYield yield, ValidateCharacterRequestParameters parameters);
 
         Task<EnterSceneResponseParameters?> EnterScene(IYield yield);
-
-        Task<FetchCharactersResponseParameters> FetchCharacters(IYield yield);
-        Task<ValidateCharacterStatus> ValidateCharacter(IYield yield, ValidateCharacterRequestParameters parameters);
-        Task<CreateCharacterResponseParameters> CreateCharacter(IYield yield, CreateCharacterRequestParameters parameters);
-        Task<RemoveCharacterResponseParameters> RemoveCharacter(IYield yield, RemoveCharacterRequestParameters parameters);
         Task<ChangeSceneResponseParameters> ChangeScene(IYield yield, ChangeSceneRequestParameters parameters);
 
         UnityEvent<EnterSceneResponseParameters> EnteredScene { get; }

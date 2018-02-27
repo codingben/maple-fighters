@@ -1,9 +1,9 @@
 ﻿using System.Threading.Tasks;
+using Character.Client.Common;
 using CommonTools.Coroutines;
 using Scripts.Containers;
 using Scripts.UI.Core;
 using Scripts.UI.Windows;
-using Shared.Game.Common;
 
 namespace Scripts.UI.Controllers
 {
@@ -115,8 +115,7 @@ namespace Scripts.UI.Controllers
             var noticeWindow = Utils.ShowNotice("Creating a new character... Please wait.", ShowCharacterNamwWindow, true);
             noticeWindow.OkButton.interactable = false;
 
-            var responseParameters = await ServiceContainer.GameService.CreateCharacter(yield, characterRequestParameters);
-
+            var responseParameters = await ServiceContainer.CharacterService.CreateCharacter(yield, characterRequestParameters);
             switch (responseParameters.Status)
             {
                 case CharacterCreationStatus.Succeed:

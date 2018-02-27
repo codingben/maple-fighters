@@ -1,15 +1,15 @@
 ﻿using System;
+using Character.Client.Common;
 using CommonTools.Coroutines;
 using CommonTools.Log;
 using Scripts.Containers;
 using Scripts.ScriptableObjects;
 using Scripts.UI.Core;
 using Scripts.UI.Windows;
-using Shared.Game.Common;
 
 namespace Scripts.Services
 {
-    public class GameConnector : ServiceConnector<GameConnector>
+    public class CharacterConnector : ServiceConnector<CharacterConnector>
     {
         private Action onAuthorized;
 
@@ -17,8 +17,8 @@ namespace Scripts.Services
         {
             this.onAuthorized = onAuthorized;
 
-            var connectionInformation = ServicesConfiguration.GetInstance().GetConnectionInformation(ServersType.Game);
-            CoroutinesExecutor.StartTask((yield) => Connect(yield, ServiceContainer.GameService, connectionInformation));
+            var connectionInformation = ServicesConfiguration.GetInstance().GetConnectionInformation(ServersType.Character);
+            CoroutinesExecutor.StartTask((yield) => Connect(yield, ServiceContainer.CharacterService, connectionInformation));
         }
 
         protected override void OnPreConnection()
@@ -29,13 +29,13 @@ namespace Scripts.Services
         protected override void OnConnectionFailed()
         {
             var noticeWindow = UserInterfaceContainer.Instance.Get<NoticeWindow>().AssertNotNull();
-            noticeWindow.Message.text = "Could not connect to a game server.";
+            noticeWindow.Message.text = "Could not connect to a character service.";
             noticeWindow.OkButton.interactable = true;
         }
 
         protected override void OnConnectionEstablished()
         {
-            CoroutinesExecutor.StartTask((yield) => Authorize(yield, (byte)GameOperations.Authorize));
+            CoroutinesExecutor.StartTask((yield) => Authorize(yield, (byte)CharacterOperations.Authorize));
         }
 
         protected override void OnPreAuthorization()
@@ -46,7 +46,7 @@ namespace Scripts.Services
         protected override void OnNonAuthorized()
         {
             var noticeWindow = UserInterfaceContainer.Instance.Get<NoticeWindow>().AssertNotNull();
-            noticeWindow.Message.text = "Authentication with game server failed.";
+            noticeWindow.Message.text = "Authentication with character service failed.";
             noticeWindow.OkButton.interactable = true;
 
             ServiceContainer.GameService.Dispose();
@@ -54,6 +54,9 @@ namespace Scripts.Services
 
         protected override void OnAuthorized()
         {
+            var noticeWindow = UserInterfaceContainer.Instance.Get<NoticeWindow>().AssertNotNull();
+            noticeWindow.Hide();
+
             onAuthorized?.Invoke();
         }
     }

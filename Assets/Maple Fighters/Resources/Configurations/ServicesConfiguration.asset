@@ -18,41 +18,52 @@ MonoBehaviour:
       Ip: 127.0.0.1
       Port: 5055
     TcpConnectionDetails:
-      Ip: 127.0.0.1
-      Port: 4530
+      Ip: 
+      Port: 0
     WebConnectionDetails:
-      Ip: ws://127.0.0.1
-      Port: 9090
+      Ip: 
+      Port: 0
   - Name: Chat
-    ServerType: 1
+    ServerType: 2
     UdpConnectionDetails:
       Ip: 127.0.0.1
       Port: 5056
     TcpConnectionDetails:
-      Ip: 127.0.0.1
-      Port: 4531
+      Ip: 
+      Port: 0
     WebConnectionDetails:
-      Ip: ws://127.0.0.1
-      Port: 9091
+      Ip: 
+      Port: 0
   - Name: Login
-    ServerType: 2
+    ServerType: 3
     UdpConnectionDetails:
       Ip: 127.0.0.1
       Port: 5057
     TcpConnectionDetails:
-      Ip: 127.0.0.1
-      Port: 4532
+      Ip: 
+      Port: 0
     WebConnectionDetails:
-      Ip: ws://127.0.0.1
-      Port: 9092
+      Ip: 
+      Port: 0
   - Name: Registration
-    ServerType: 3
+    ServerType: 4
     UdpConnectionDetails:
       Ip: 127.0.0.1
       Port: 5058
     TcpConnectionDetails:
-      Ip: 127.0.0.1
-      Port: 4533
+      Ip: 
+      Port: 0
     WebConnectionDetails:
-      Ip: ws://127.0.0.1
-      Port: 9093
+      Ip: 
+      Port: 0
+  - Name: Character
+    ServerType: 1
+    UdpConnectionDetails:
+      Ip: 127.0.0.1
+      Port: 5061
+    TcpConnectionDetails:
+      Ip: 
+      Port: 0
+    WebConnectionDetails:
+      Ip: 
+      Port: 0

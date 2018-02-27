@@ -6,6 +6,6 @@ namespace Scripts.Services
 {
     public interface ILoginService : IServiceBase
     {
-        Task<LoginResponseParameters> Login(IYield yield, LoginRequestParameters parameters);
+        Task<AuthenticateResponseParameters> Login(IYield yield, AuthenticateRequestParameters parameters);
     }
 }

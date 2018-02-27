@@ -178,7 +178,7 @@ GameObject:
   - component: {fileID: 67935468}
   - component: {fileID: 67935469}
   m_Layer: 0
-  m_Name: Characters Creator
+  m_Name: Character Creator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -205,15 +205,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 67935467}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 95df84194fe8565409c6423919f87867, type: 3}
+  m_Script: {fileID: 11500000, guid: 59b775ed335be96429f5004dc470d685, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   dummyCharacter:
-    Id: 0
-    Name: Player
-    CharacterClass: 1
-    spawnPosition: {x: -12.8, y: -12.8}
-    spawnDirection: 2
+    Id: 1
+    Name: Dummy
+    CharacterClass: 0
+    spawnPosition: {x: 18, y: -1.815}
+    spawnDirection: 1
 --- !u!1 &80648314
 GameObject:
   m_ObjectHideFlags: 0

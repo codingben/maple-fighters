@@ -15,7 +15,7 @@ namespace Scripts.Services
         void SendOperation<TParams>(byte operationCode, TParams parameters, MessageSendOptions messageSendOptions)
             where TParams : struct, IParameters;
 
-        Task<TResponseParams> SendYieldOperation<TRequestParams, TResponseParams>(IYield yield, byte operationCode, TRequestParams parameters, MessageSendOptions messageSendOptions)
+        Task<TResponseParams> SendOperation<TRequestParams, TResponseParams>(IYield yield, byte operationCode, TRequestParams parameters, MessageSendOptions messageSendOptions)
             where TRequestParams : struct, IParameters
             where TResponseParams : struct, IParameters;
 

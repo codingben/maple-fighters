@@ -1,4 +1,4 @@
-﻿using Shared.Game.Common;
+﻿using Character.Client.Common;
 using UnityEngine;
 
 namespace Scripts.Gameplay.Actors

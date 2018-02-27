@@ -10,7 +10,46 @@ using Scripts.UI.Windows;
 
 namespace Scripts.UI.Controllers
 {
-    public class RegistrationController : ServiceConnector<RegistrationController>
+    public class RegistrationConnector : ServiceConnector<RegistrationConnector>
+    {
+        public void Connect()
+        {
+            var connectionInformation = ServicesConfiguration.GetInstance().GetConnectionInformation(ServersType.Registration);
+            CoroutinesExecutor.StartTask((yield) => Connect(yield, ServiceContainer.RegistrationService, connectionInformation));
+        }
+
+        protected override void OnPreConnection()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        protected override void OnConnectionFailed()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        protected override void OnConnectionEstablished()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        protected override void OnPreAuthorization()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        protected override void OnNonAuthorized()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        protected override void OnAuthorized()
+        {
+            throw new System.NotImplementedException();
+        }
+    }
+
+    public class RegistrationController : MonoSingleton<RegistrationController>
     {
         private RegistrationWindow registrationWindow;
         private LoginWindow loginWindow;
@@ -22,10 +61,8 @@ namespace Scripts.UI.Controllers
             SubscribeToRegistrationWindowEvents();
         }
 
-        protected override void OnDestroyed()
+        private void OnDestroy()
         {
-            base.OnDestroyed();
-
             UnsubscribeFromRegistrationWindowEvents();
 
             UserInterfaceContainer.Instance.Remove(registrationWindow);
@@ -111,6 +148,8 @@ namespace Scripts.UI.Controllers
         private void OnBackButtonClicked()
         {
             registrationWindow.ResetInputFields.Invoke();
+
+            // TODO: It should access a login controller (?)
 
             if (loginWindow == null)
             {

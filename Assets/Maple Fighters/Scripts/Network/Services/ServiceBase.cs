@@ -110,7 +110,7 @@ namespace Scripts.Services
             OperationRequestSender.Send(code, parameters, messageSendOptions);
         }
 
-        public async Task<TResponseParams> SendYieldOperation<TRequestParams, TResponseParams>(IYield yield, byte operationCode, TRequestParams parameters, MessageSendOptions messageSendOptions)
+        public async Task<TResponseParams> SendOperation<TRequestParams, TResponseParams>(IYield yield, byte operationCode, TRequestParams parameters, MessageSendOptions messageSendOptions)
             where TRequestParams : struct, IParameters
             where TResponseParams : struct, IParameters
         {
