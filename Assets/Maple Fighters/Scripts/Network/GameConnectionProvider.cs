@@ -9,7 +9,7 @@ using Shared.Game.Common;
 
 namespace Scripts.Services
 {
-    public class GameConnector : ServiceConnector<GameConnector>
+    public class GameConnectionProvider : ServiceConnectionProvider<GameConnectionProvider>
     {
         private Action onAuthorized;
 

@@ -1,5 +1,4 @@
 ﻿using System;
-using Chat.Common;
 using CommonTools.Log;
 using Scripts.Containers;
 using Scripts.Gameplay.Actors;
@@ -12,11 +11,7 @@ namespace Scripts.UI.Windows
 {
     public class ChatWindow : UserInterfaceWindow
     {
-        public bool IsConnected { get; set; }
-
-        public Action<string, ChatMessageColor> ChatMessageNotifier;
-        public Action<ChatMessageEventParameters> ChatMessageReceived;
-
+        public bool IsChatActive { get; set; }
         public event Action<string> SendChatMessage;
 
         [SerializeField] private TextMeshProUGUI chatText;
@@ -28,87 +23,77 @@ namespace Scripts.UI.Windows
         {
             base.OnAwake();
 
-            ChatMessageNotifier = OnChatMessageNotifier;
-            ChatMessageReceived = OnChatMessageReceived;
-        }
-
-        private void OnChatMessageNotifier(string message, ChatMessageColor color)
-        {
-            var chatMessageColor = color.ToString().ToLower();
-
-            chatText.text += chatText.text.Length > 0 
-                ? $"\n<color={chatMessageColor}>{message}</color>" 
-                : $"<color={chatMessageColor}>{message}</color>";
+            characterName = GetCharacterName();
         }
 
         private void Update()
         {
-            if (!IsConnected)
+            if (Input.GetKeyDown(KeyCode.Return))
             {
-                return;
+                OnEnterClicked();
             }
-
-            ActivateOrDeactivateInputField();
-            DetectTextChangesAndSendMessage();
         }
 
-        private void ActivateOrDeactivateInputField()
+        private void OnEnterClicked()
         {
-            if (!Input.GetKeyDown(KeyCode.Return))
+            if (IsChatActive && IsChatInputFieldActivated())
             {
-                return;
+                SendMessage();
+                ResetInputField();
             }
 
-            inputField.gameObject.SetActive(!inputField.gameObject.activeSelf);
+            SetActiveInputField(IsChatInputFieldActivated());
 
-            if (!inputField.gameObject.activeSelf)
-            {
-                FocusController.Instance.Focusable = Focusable.Game;
-                return;
-            }
-
-            inputField.ActivateInputField();
-            FocusController.Instance.Focusable = Focusable.Chat;
-        }
-
-        private void DetectTextChangesAndSendMessage()
-        {
-            if (inputField.gameObject.activeSelf || inputField.text.Length <= 0)
-            {
-                return;
-            }
-
-            SendMessage();
-            ResetInputField();
+            FocusController.Instance.Focusable = !IsChatInputFieldActivated() ? Focusable.Game : Focusable.Chat;
         }
 
         private void SendMessage()
         {
-            if (characterName == null)
-            {
-                characterName = GetCharacterName();
-            }
-
             var message = $"{characterName}: {inputField.text}";
             SendChatMessage?.Invoke(message);
 
-            AddMessageToChat(message);
+            AddMessage(message);
         }
 
-        private void AddMessageToChat(string message)
+        public void AddMessage(string message)
         {
-            chatText.text += $"\n{message}";
+            if (chatText.text.Length > 0)
+            {
+                chatText.text += $"\n{message}";
+            }
+            else
+            {
+                chatText.text += $"{message}";
+            }
+        }
+
+        public void AddMessage(string message, ChatMessageColor color)
+        {
+            if (chatText.text.Length > 0)
+            {
+                var chatMessageColor = color.ToString().ToLower();
+                chatText.text += $"\n<color={chatMessageColor}>{message}</color>";
+            }
+            else
+            {
+                var chatMessageColor = color.ToString().ToLower();
+                chatText.text += $"<color={chatMessageColor}>{message}</color>";
+            }
+        }
+
+        private void SetActiveInputField(bool active)
+        {
+            inputField.gameObject.SetActive(!active);
+
+            if (active)
+            {
+                inputField.ActivateInputField();
+            }
         }
 
         private void ResetInputField()
         {
             inputField.text = string.Empty;
-        }
-
-        private void OnChatMessageReceived(ChatMessageEventParameters parameters)
-        {
-            var message = parameters.Message;
-            AddMessageToChat(message);
         }
 
         private string GetCharacterName()
@@ -117,6 +102,11 @@ namespace Scripts.UI.Windows
             var characterInformation = localGameObject.GetComponent<CharacterInformationProvider>();
             var name = characterInformation.GetCharacterInfo().Name;
             return name;
+        }
+
+        private bool IsChatInputFieldActivated()
+        {
+            return inputField.gameObject.activeSelf;
         }
     }
 }

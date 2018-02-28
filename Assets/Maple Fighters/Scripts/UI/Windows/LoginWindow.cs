@@ -24,9 +24,9 @@ namespace Scripts.UI.Windows
             }
         }
 
+        public event Action<string> ShowNotice;
         public event Action<string, string> LoginButtonClicked;
         public event Action RegisterButtonClicked;
-        public event Action<string> ShowNotice;
 
         [Header("Configuration")]
         [SerializeField] private int passwordCharacters;
@@ -53,19 +53,18 @@ namespace Scripts.UI.Windows
 
         private void OnLoginButtonClicked()
         {
-            Hide();
-
             if (AcceptInputFieldsContent())
             {
                 Login();
+            }
+            else
+            {
+                Hide();
             }
         }
 
         private void OnRegisterButtonClicked()
         {
-            Hide();
-            ResetInputFields();
-
             RegisterButtonClicked?.Invoke();
         }
 
@@ -77,7 +76,7 @@ namespace Scripts.UI.Windows
             LoginButtonClicked?.Invoke(email, password);
         }
 
-        private void ResetInputFields()
+        public void ResetInputFields()
         {
             emailInputField.text = string.Empty;
             passwordInputField.text = string.Empty;

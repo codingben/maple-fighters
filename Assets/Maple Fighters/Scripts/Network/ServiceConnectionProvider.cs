@@ -8,13 +8,13 @@ using WaitForSeconds = CommonTools.Coroutines.WaitForSeconds;
 
 namespace Scripts.Services
 {
-    public abstract class ServiceConnector<T> : DontDestroyOnLoad<T>
-        where T : ServiceConnector<T>
+    public abstract class ServiceConnectionProvider<T> : DontDestroyOnLoad<T>
+        where T : ServiceConnectionProvider<T>
     {
+        protected readonly ExternalCoroutinesExecutor CoroutinesExecutor = new ExternalCoroutinesExecutor();
+
         private IServiceBase serviceBase;
         private ICoroutine disconnectAutomatically;
-
-        protected readonly ExternalCoroutinesExecutor CoroutinesExecutor = new ExternalCoroutinesExecutor();
 
         private void Update()
         {
@@ -22,11 +22,6 @@ namespace Scripts.Services
         }
 
         private void OnDestroy()
-        {
-            OnDestroyed();
-        }
-
-        protected virtual void OnDestroyed()
         {
             CoroutinesExecutor.Dispose();
         }
@@ -71,7 +66,7 @@ namespace Scripts.Services
         protected abstract void OnNonAuthorized();
         protected abstract void OnAuthorized();
 
-        protected void DisconnectAutomatically()
+        public void DisconnectAutomatically()
         {
             if (disconnectAutomatically == null)
             {
@@ -86,7 +81,7 @@ namespace Scripts.Services
             Disconnect();
         }
 
-        protected void Disconnect()
+        public void Disconnect()
         {
             disconnectAutomatically?.Dispose();
             disconnectAutomatically = null;
@@ -99,7 +94,7 @@ namespace Scripts.Services
             Disconnect();
         }
 
-        protected bool IsConnected()
+        public bool IsConnected()
         {
             return serviceBase != null && serviceBase.IsConnected();
         }

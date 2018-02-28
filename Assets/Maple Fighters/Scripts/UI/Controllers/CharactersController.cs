@@ -188,7 +188,7 @@ namespace Scripts.UI.Controllers
             var noticeWindow = Utils.ShowNotice("Entering to the world... Please wait.", null, true);
             noticeWindow.OkButton.interactable = false;
 
-            GameConnector.Instance.Connect(onAuthorized: () => 
+            GameConnectionProvider.Instance.Connect(onAuthorized: () => 
             {
                 var parameters = new ValidateCharacterRequestParameters(characterIndex);
                 coroutinesExecutor.StartTask((y) => ValidateCharacter(y, parameters));

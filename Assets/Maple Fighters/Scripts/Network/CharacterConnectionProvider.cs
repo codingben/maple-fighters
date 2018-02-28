@@ -9,7 +9,7 @@ using Scripts.UI.Windows;
 
 namespace Scripts.Services
 {
-    public class CharacterConnector : ServiceConnector<CharacterConnector>
+    public class CharacterConnectionProvider : ServiceConnectionProvider<CharacterConnectionProvider>
     {
         private Action onAuthorized;
 

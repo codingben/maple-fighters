@@ -40,7 +40,7 @@ namespace Scripts.UI
 
         public override void Hide()
         {
-            Hide(() => Destroy(gameObject));
+            Hide(onFinished: () => Destroy(gameObject));
         }
 
         private void SubscribeToMouseDetectionBackgroundEvent()

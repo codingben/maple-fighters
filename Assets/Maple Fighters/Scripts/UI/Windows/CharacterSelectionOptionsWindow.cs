@@ -41,7 +41,7 @@ namespace Scripts.UI.Windows
 
         public override void Hide()
         {
-            Hide(() => UserInterfaceContainer.Instance.Remove(this));
+            Hide(onFinished: () => UserInterfaceContainer.Instance.Remove(this));
 
             PlayCharacterIdleAnimation?.Invoke();
         }

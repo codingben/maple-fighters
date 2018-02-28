@@ -1,5 +1,6 @@
 ﻿using Chat.Common;
 using CommonCommunicationInterfaces;
+using CommonTools.Log;
 using Scripts.Containers;
 using Scripts.Services;
 using Scripts.UI.Core;
@@ -10,35 +11,40 @@ namespace Scripts.UI.Controllers
 {
     public class ChatController : DontDestroyOnLoad<ChatController>
     {
-        private ChatWindow chatWindow;
-
         private void Start()
         {
-            chatWindow = UserInterfaceContainer.Instance.Add<ChatWindow>();
-            chatWindow.IsConnected = false;
+            CreateChatWindow();
 
-            ChatConnector.Instance.Connect();
+            ChatConnectionProvider.Instance.Connect();
+        }
+
+        private void CreateChatWindow()
+        {
+            var chatWindow = UserInterfaceContainer.Instance.Add<ChatWindow>();
+            chatWindow.SendChatMessage += OnSendChatMessage;
+            chatWindow.IsChatActive = false;
+        }
+
+        private void RemoveChatWindow()
+        {
+            var chatWindow = UserInterfaceContainer.Instance.Get<ChatWindow>().AssertNotNull();
+            chatWindow.SendChatMessage -= OnSendChatMessage;
+            UserInterfaceContainer.Instance.Remove(chatWindow);
         }
 
         public void OnAuthorized()
         {
-            chatWindow.SendChatMessage += OnSendChatMessage;
-            chatWindow.IsConnected = true;
+            var chatWindow = UserInterfaceContainer.Instance.Get<ChatWindow>().AssertNotNull();
+            chatWindow.IsChatActive = true;
 
-            ServiceContainer.ChatService.ChatMessageReceived.AddListener(p => chatWindow.ChatMessageReceived.Invoke(p));
+            ServiceContainer.ChatService.ChatMessageReceived.AddListener(parameters => chatWindow.AddMessage(parameters.Message));
         }
 
         private void OnDestroy()
         {
-            if (chatWindow == null)
-            {
-                return;
-            }
-
-            chatWindow.SendChatMessage -= OnSendChatMessage;
+            RemoveChatWindow();
 
             ServiceContainer.ChatService.ChatMessageReceived.RemoveAllListeners();
-            UserInterfaceContainer.Instance.Remove(chatWindow);
         }
 
         private void OnSendChatMessage(string message)
