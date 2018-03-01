@@ -1,5 +1,4 @@
 ﻿using Chat.Common;
-using CommonCommunicationInterfaces;
 using CommonTools.Log;
 using Scripts.Containers;
 using Scripts.Services;
@@ -50,7 +49,7 @@ namespace Scripts.UI.Controllers
         private void OnSendChatMessage(string message)
         {
             var parameters = new ChatMessageRequestParameters(message);
-            ServiceContainer.ChatService.SendOperation((byte)ChatOperations.ChatMessage, parameters, MessageSendOptions.DefaultReliable());
+            ServiceContainer.ChatService.SendChatMessage(parameters);
         }
     }
 }

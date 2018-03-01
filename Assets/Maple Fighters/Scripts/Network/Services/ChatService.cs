@@ -1,4 +1,8 @@
-﻿using Chat.Common;
+﻿using System.Threading.Tasks;
+using Authorization.Client.Common;
+using Chat.Common;
+using CommonCommunicationInterfaces;
+using CommonTools.Coroutines;
 
 namespace Scripts.Services
 {
@@ -8,12 +12,23 @@ namespace Scripts.Services
 
         protected override void OnConnected()
         {
-            SetEventHandler(ChatEvents.ChatMessage, ChatMessageReceived);
+            ServerPeerHandler.SetEventHandler((byte)ChatEvents.ChatMessage, ChatMessageReceived);
         }
 
-        protected override void OnDisconnected()
+        protected override void OnDisconnected(DisconnectReason reason, string details)
         {
-            RemoveEventHandler(ChatEvents.ChatMessage);
+            ServerPeerHandler.RemoveEventHandler((byte)ChatEvents.ChatMessage);
+        }
+
+        public async Task<AuthorizeResponseParameters> Authorize(IYield yield, AuthorizeRequestParameters parameters)
+        {
+            return await ServerPeerHandler.SendOperation<AuthorizeRequestParameters, AuthorizeResponseParameters>
+                (yield, (byte)ChatOperations.Authorize, parameters, MessageSendOptions.DefaultReliable());
+        }
+
+        public void SendChatMessage(ChatMessageRequestParameters parameters)
+        {
+            ServerPeerHandler.SendOperation((byte)ChatOperations.ChatMessage, parameters, MessageSendOptions.DefaultReliable());
         }
     }
 }

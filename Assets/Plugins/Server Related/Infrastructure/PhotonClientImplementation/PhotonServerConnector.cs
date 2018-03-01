@@ -4,7 +4,6 @@ using CommonCommunicationInterfaces;
 using CommonTools.Coroutines;
 using CommonTools.Log;
 using ExitGames.Client.Photon;
-using UnityEngine;
 
 namespace PhotonClientImplementation
 {
@@ -20,14 +19,12 @@ namespace PhotonClientImplementation
         public async Task<IServerPeer> ConnectAsync(IYield yield, PeerConnectionInformation connectionInformation, ConnectionDetails connectionDetails)
         {
             var coroutinesExecuter = coroutinesExecuterProvider.Invoke();
-
             var photonPeer = new PhotonPeer(connectionInformation, connectionDetails.ConnectionProtocol, connectionDetails.DebugLevel, coroutinesExecuter);
             photonPeer.Connect();
 
             var statusCode = await WaitForStatusCodeChange(yield, photonPeer);
             if (statusCode == StatusCode.Connect)
             {
-                Debug.Log($"A new server has been connected: {connectionInformation.Ip}:{connectionInformation.Port}");
                 return photonPeer;
             }
 
@@ -53,7 +50,6 @@ namespace PhotonClientImplementation
             photonPeer.StatusChanged -= onStatusChanged;
 
             return statusCode;
-
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using CommonCommunicationInterfaces;
-using Scripts.Containers;
+﻿using Scripts.Containers;
 using Shared.Game.Common;
 using UnityEngine;
 
@@ -8,64 +7,48 @@ namespace Scripts.Gameplay.Actors
     public class PositionSender : MonoBehaviour
     {
         public Transform Character { get; set; }
-
         private Vector2 lastPosition;
-        private UpdatePositionRequestParameters parameters;
 
         private void Awake()
         {
             lastPosition = transform.position;
-
-            Directions direction;
-            GetDirection(out direction);
-
-            parameters = new UpdatePositionRequestParameters(transform.position.x, transform.position.y, direction);
         }
 
         private void Update()
         {
-            if (Vector2.Distance(transform.position, lastPosition) < 0.1f)
+            if (Vector2.Distance(transform.position, lastPosition) > 0.1f)
             {
-                return;
+                PositionChanged();
             }
+        }
 
-            ChangeParameters();
-            SendPositionChangedOperation();
-
+        private void PositionChanged()
+        {
             lastPosition = transform.position;
+            UpdatePositionOperation();
         }
 
-        private void ChangeParameters()
+        private void UpdatePositionOperation()
         {
-            Directions direction;
-            GetDirection(out direction);
-
-            parameters.X = transform.position.x;
-            parameters.Y = transform.position.y;
-            parameters.Direction = direction;
+            var parameters = new UpdatePositionRequestParameters(transform.position.x, transform.position.y, GetDirection());
+            ServiceContainer.GameService.UpdatePosition(parameters);
         }
 
-        private void SendPositionChangedOperation()
-        {
-            var messageSendOptions = MessageSendOptions.DefaultUnreliable((byte) GameDataChannels.Position);
-            ServiceContainer.GameService.SendOperation((byte)GameOperations.PositionChanged, parameters, messageSendOptions);
-        }
-
-        private void GetDirection(out Directions direction)
+        private Directions GetDirection()
         {
             if (Character?.localScale.x > 0)
             {
-                direction = Directions.Left;
-                return;
+                return Directions.Left;
             }
 
             if (Character?.localScale.x < 0)
             {
-                direction = Directions.Right;
-                return;
+                return Directions.Right;
             }
 
-            direction = Directions.None;
+            {
+                return Directions.None;
+            }
         }
     }
 }

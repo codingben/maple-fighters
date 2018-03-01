@@ -1,4 +1,7 @@
-﻿using ExitGames.Client.Photon;
+﻿using System;
+using CommonCommunicationInterfaces;
+using ExitGames.Client.Photon;
+using Scripts.Utils;
 using UnityEngine;
 
 namespace Scripts.ScriptableObjects
@@ -11,5 +14,36 @@ namespace Scripts.ScriptableObjects
         public bool LogOperationsRequest;
         public bool LogOperationsResponse;
         public bool LogEvents;
+
+        public PeerConnectionInformation GetPeerConnectionInformation(ConnectionInformation connectionInformation)
+        {
+            PeerConnectionInformation peerConnectionInformation;
+
+            switch (ConnectionProtocol)
+            {
+                case ConnectionProtocol.Udp:
+                {
+                    peerConnectionInformation = connectionInformation.UdpConnectionDetails;
+                    break;
+                }
+                case ConnectionProtocol.Tcp:
+                {
+                    peerConnectionInformation = connectionInformation.TcpConnectionDetails;
+                    break;
+                }
+                case ConnectionProtocol.WebSocket:
+                case ConnectionProtocol.WebSocketSecure:
+                {
+                    peerConnectionInformation = connectionInformation.WebConnectionDetails;
+                    break;
+                }
+                default:
+                {
+                    throw new ArgumentOutOfRangeException();
+                }
+            }
+
+            return peerConnectionInformation;
+        }
     }
 }

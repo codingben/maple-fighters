@@ -1,6 +1,6 @@
 ﻿namespace Scripts.Services
 {
-    public enum ServersType
+    public enum ServerType
     {
         Game,
         Character,

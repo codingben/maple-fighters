@@ -1,8 +1,9 @@
 ﻿using System;
+using System.Threading.Tasks;
+using Authorization.Client.Common;
 using CommonTools.Coroutines;
 using CommonTools.Log;
 using Scripts.Containers;
-using Scripts.ScriptableObjects;
 using Scripts.Services;
 using Scripts.UI.Core;
 using Scripts.UI.Windows;
@@ -17,8 +18,8 @@ namespace Scripts.UI.Controllers
         {
             this.onConnected = onConnected;
 
-            var connectionInformation = ServicesConfiguration.GetInstance().GetConnectionInformation(ServersType.Registration);
-            CoroutinesExecutor.StartTask((yield) => Connect(yield, ServiceContainer.RegistrationService, connectionInformation));
+            var serverConnectionInformation = GetServerConnectionInformation(ServerType.Registration);
+            CoroutinesExecutor.StartTask((yield) => Connect(yield, ServiceContainer.RegistrationService, serverConnectionInformation));
         }
 
         protected override void OnPreConnection()
@@ -36,6 +37,11 @@ namespace Scripts.UI.Controllers
         protected override void OnConnectionEstablished()
         {
             onConnected?.Invoke();
+        }
+
+        protected override Task<AuthorizeResponseParameters> Authorize(IYield yield, AuthorizeRequestParameters parameters)
+        {
+            throw new NotImplementedException();
         }
 
         protected override void OnPreAuthorization()

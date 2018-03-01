@@ -2,7 +2,6 @@
 using Authorization.Client.Common;
 using CommonCommunicationInterfaces;
 using CommonTools.Coroutines;
-using CommunicationHelper;
 using Scripts.Utils;
 using Shared.Game.Common;
 
@@ -28,10 +27,10 @@ namespace Scripts.Services
             SetEventsHandlers();
         }
 
-        protected override void OnDisconnected()
+        protected override void OnDisconnected(DisconnectReason reason, string details)
         {
-            RemoveEventsHandlers();
             GoBackToLogin();
+            RemoveEventsHandlers();
         }
 
         private void GoBackToLogin()
@@ -44,78 +43,82 @@ namespace Scripts.Services
 
         private void SetEventsHandlers()
         {
-            SetEventHandler(GameEvents.SceneObjectAdded, SceneObjectAdded);
-            SetEventHandler(GameEvents.SceneObjectRemoved, SceneObjectRemoved);
-            SetEventHandler(GameEvents.SceneObjectsAdded, SceneObjectsAdded);
-            SetEventHandler(GameEvents.SceneObjectsRemoved, SceneObjectsRemoved);
-            SetEventHandler(GameEvents.PositionChanged, PositionChanged);
-            SetEventHandler(GameEvents.PlayerStateChanged, PlayerStateChanged);
-            SetEventHandler(GameEvents.PlayerAttacked, PlayerAttacked);
-            SetEventHandler(GameEvents.CharacterAdded, CharacterAdded);
-            SetEventHandler(GameEvents.CharactersAdded, CharactersAdded);
+            ServerPeerHandler.SetEventHandler((byte)GameEvents.SceneObjectAdded, SceneObjectAdded);
+            ServerPeerHandler.SetEventHandler((byte)GameEvents.SceneObjectRemoved, SceneObjectRemoved);
+            ServerPeerHandler.SetEventHandler((byte)GameEvents.SceneObjectsAdded, SceneObjectsAdded);
+            ServerPeerHandler.SetEventHandler((byte)GameEvents.SceneObjectsRemoved, SceneObjectsRemoved);
+            ServerPeerHandler.SetEventHandler((byte)GameEvents.PositionChanged, PositionChanged);
+            ServerPeerHandler.SetEventHandler((byte)GameEvents.PlayerStateChanged, PlayerStateChanged);
+            ServerPeerHandler.SetEventHandler((byte)GameEvents.PlayerAttacked, PlayerAttacked);
+            ServerPeerHandler.SetEventHandler((byte)GameEvents.CharacterAdded, CharacterAdded);
+            ServerPeerHandler.SetEventHandler((byte)GameEvents.CharactersAdded, CharactersAdded);
         }
 
         private void RemoveEventsHandlers()
         {
-            RemoveEventHandler(GameEvents.SceneObjectAdded);
-            RemoveEventHandler(GameEvents.SceneObjectRemoved);
-            RemoveEventHandler(GameEvents.SceneObjectsAdded);
-            RemoveEventHandler(GameEvents.SceneObjectsRemoved);
-            RemoveEventHandler(GameEvents.PositionChanged);
-            RemoveEventHandler(GameEvents.PlayerStateChanged);
-            RemoveEventHandler(GameEvents.PlayerAttacked);
-            RemoveEventHandler(GameEvents.CharacterAdded);
-            RemoveEventHandler(GameEvents.CharactersAdded);
+            ServerPeerHandler.RemoveEventHandler((byte)GameEvents.SceneObjectAdded);
+            ServerPeerHandler.RemoveEventHandler((byte)GameEvents.SceneObjectRemoved);
+            ServerPeerHandler.RemoveEventHandler((byte)GameEvents.SceneObjectsAdded);
+            ServerPeerHandler.RemoveEventHandler((byte)GameEvents.SceneObjectsRemoved);
+            ServerPeerHandler.RemoveEventHandler((byte)GameEvents.PositionChanged);
+            ServerPeerHandler.RemoveEventHandler((byte)GameEvents.PlayerStateChanged);
+            ServerPeerHandler.RemoveEventHandler((byte)GameEvents.PlayerAttacked);
+            ServerPeerHandler.RemoveEventHandler((byte)GameEvents.CharacterAdded);
+            ServerPeerHandler.RemoveEventHandler((byte)GameEvents.CharactersAdded);
         }
 
-        public async Task<AuthorizationStatus> Authorize(IYield yield)
+        public async Task<AuthorizeResponseParameters> Authorize(IYield yield, AuthorizeRequestParameters parameters)
         {
-            if (!IsConnected())
+            if (!ServiceConnectionHandler.IsConnected())
             {
-                return AuthorizationStatus.Failed;
+                return new AuthorizeResponseParameters();
             }
 
-            var parameters = new AuthorizeRequestParameters(AccessTokenProvider.AccessToken);
-            var requestId = OperationRequestSender.Send(GameOperations.Authorize, parameters, MessageSendOptions.DefaultReliable());
-            var responseParameters = await SubscriptionProvider.ProvideSubscription<AuthorizeResponseParameters>(yield, requestId);
+            var responseParameters = await ServerPeerHandler.SendOperation<AuthorizeRequestParameters, AuthorizeResponseParameters>
+                (yield, (byte)GameOperations.Authorize, parameters, MessageSendOptions.DefaultReliable());
             authorizationStatus = responseParameters.Status;
-            return responseParameters.Status;
+            return responseParameters;
         }
 
         public async Task<EnterSceneResponseParameters?> EnterScene(IYield yield)
         {
-            if (!IsConnected())
+            if (!ServiceConnectionHandler.IsConnected())
             {
                 return null;
             }
 
-            var enteredSceneRequestId = OperationRequestSender.Send(GameOperations.EnterScene, new EmptyParameters(), MessageSendOptions.DefaultReliable());
-            var responseParameters = await SubscriptionProvider.ProvideSubscription<EnterSceneResponseParameters>(yield, enteredSceneRequestId);
-            return responseParameters;
+            var parameters = new EmptyParameters();
+            return await ServerPeerHandler.SendOperation<EmptyParameters, EnterSceneResponseParameters>
+                (yield, (byte)GameOperations.ChangeScene, parameters, MessageSendOptions.DefaultReliable());
         }
 
         public async Task<CharacterValidationStatus> ValidateCharacter(IYield yield, ValidateCharacterRequestParameters parameters)
         {
-            if (!IsConnected())
+            if (!ServiceConnectionHandler.IsConnected())
             {
                 return CharacterValidationStatus.Wrong;
             }
 
-            var requestId = OperationRequestSender.Send(GameOperations.ValidateCharacter, parameters, MessageSendOptions.DefaultReliable());
-            var responseParameters = await SubscriptionProvider.ProvideSubscription<ValidateCharacterResponseParameters>(yield, requestId);
+            var responseParameters = await ServerPeerHandler.SendOperation<ValidateCharacterRequestParameters, ValidateCharacterResponseParameters>
+                (yield, (byte)GameOperations.ValidateCharacter, parameters, MessageSendOptions.DefaultReliable());
             return responseParameters.Status;
         }
 
         public async Task<ChangeSceneResponseParameters> ChangeScene(IYield yield, ChangeSceneRequestParameters parameters)
         {
-            if (!IsConnected())
+            if (!ServiceConnectionHandler.IsConnected())
             {
                 return new ChangeSceneResponseParameters(0);
             }
 
-            var requestId = OperationRequestSender.Send(GameOperations.ChangeScene, parameters, MessageSendOptions.DefaultReliable());
-            var responseParameters = await SubscriptionProvider.ProvideSubscription<ChangeSceneResponseParameters>(yield, requestId);
-            return responseParameters;
+            return await ServerPeerHandler.SendOperation<ChangeSceneRequestParameters, ChangeSceneResponseParameters>
+                (yield, (byte)GameOperations.ChangeScene, parameters, MessageSendOptions.DefaultReliable());
         }
+
+        public void UpdatePosition(UpdatePositionRequestParameters parameters) =>
+            ServerPeerHandler.SendOperation((byte)GameOperations.PositionChanged, parameters, MessageSendOptions.DefaultUnreliable((byte)GameDataChannels.Position));
+
+        public void UpdatePlayerState(UpdatePlayerStateRequestParameters parameters) =>
+            ServerPeerHandler.SendOperation((byte)GameOperations.PositionChanged, parameters, MessageSendOptions.DefaultUnreliable((byte)GameDataChannels.Animations));
     }
 }

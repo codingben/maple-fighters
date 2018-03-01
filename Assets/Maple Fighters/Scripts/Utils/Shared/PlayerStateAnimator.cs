@@ -1,5 +1,4 @@
-﻿using CommonCommunicationInterfaces;
-using Scripts.Containers;
+﻿using Scripts.Containers;
 using Scripts.Gameplay.Actors;
 using Shared.Game.Common;
 using UnityEngine;
@@ -19,20 +18,24 @@ namespace Scripts.Utils.Shared
 
         private void Start()
         {
-            // When a new game objects added, so send them the last current state.
-            ServiceContainer.GameService.SceneObjectsAdded.AddListener((x) => 
-            {
-                SendPlayerStateChangedOperation(lastPlayerState);
-            });
+            SubscribeToGameServiceEvents();
+        }
 
-            ServiceContainer.GameService.PlayerStateChanged.AddListener((x) => 
-            {
-                var sceneObject = SceneObjectsContainer.Instance.GetRemoteSceneObject(x.SceneObjectId)?.GetGameObject();
-                if (sceneObject != null)
-                {
-                    sceneObject.GetComponent<PlayerStateSetter>()?.SetState(x.PlayerState);
-                }
-            });
+        private void OnDestroy()
+        {
+            UnsubscribeFromGameServiceEvents();
+        }
+
+        private void SubscribeToGameServiceEvents()
+        {
+            ServiceContainer.GameService.SceneObjectsAdded.AddListener(OnSceneObjectsAdded); // When a new game objects added, so send them the last current state.
+            ServiceContainer.GameService.PlayerStateChanged.AddListener(OnPlayerStateChanged);
+        }
+
+        private void UnsubscribeFromGameServiceEvents()
+        {
+            ServiceContainer.GameService.SceneObjectsAdded.RemoveListener(OnSceneObjectsAdded);
+            ServiceContainer.GameService.PlayerStateChanged.RemoveListener(OnPlayerStateChanged);
         }
 
         public void OnPlayerStateChanged(PlayerState playerState)
@@ -43,17 +46,29 @@ namespace Scripts.Utils.Shared
             }
 
             animator.SetState(playerState);
-
-            SendPlayerStateChangedOperation(playerState);
-
             lastPlayerState = playerState;
+
+            UpdatePlayerStateOperation();
         }
 
-        private void SendPlayerStateChangedOperation(PlayerState playerState)
+        private void OnPlayerStateChanged(PlayerStateChangedEventParameters parameters)
         {
-            var parameters = new UpdatePlayerStateRequestParameters(playerState);
-            var messageSendOptions = MessageSendOptions.DefaultUnreliable((byte)GameDataChannels.Animations);
-            ServiceContainer.GameService.SendOperation((byte)GameOperations.PlayerStateChanged, parameters, messageSendOptions);
+            var sceneObject = SceneObjectsContainer.Instance.GetRemoteSceneObject(parameters.SceneObjectId)?.GetGameObject();
+            if (sceneObject != null)
+            {
+                sceneObject.GetComponent<PlayerStateSetter>()?.SetState(parameters.PlayerState);
+            }
+        }
+
+        private void OnSceneObjectsAdded(SceneObjectsAddedEventParameters parameters)
+        {
+            UpdatePlayerStateOperation();
+        }
+
+        private void UpdatePlayerStateOperation()
+        {
+            var parameters = new UpdatePlayerStateRequestParameters(lastPlayerState);
+            ServiceContainer.GameService.UpdatePlayerState(parameters);
         }
     }
 }

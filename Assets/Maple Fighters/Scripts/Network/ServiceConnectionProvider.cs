@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Authorization.Client.Common;
-using CommonCommunicationInterfaces;
 using CommonTools.Coroutines;
+using Scripts.ScriptableObjects;
 using Scripts.Utils;
 using WaitForSeconds = CommonTools.Coroutines.WaitForSeconds;
 
@@ -26,13 +26,13 @@ namespace Scripts.Services
             CoroutinesExecutor.Dispose();
         }
 
-        protected async Task Connect(IYield yield, IServiceBase serviceBase, ConnectionInformation connectionInformation)
+        protected async Task Connect(IYield yield, IServiceBase serviceBase, ServerConnectionInformation serverConnectionInformation)
         {
             this.serviceBase = serviceBase;
 
             OnPreConnection();
 
-            var connectionStatus = await serviceBase.Connect(yield, CoroutinesExecutor, connectionInformation);
+            var connectionStatus = await serviceBase.ServiceConnectionHandler.Connect(yield, CoroutinesExecutor, serverConnectionInformation);
             if (connectionStatus == ConnectionStatus.Failed)
             {
                 OnConnectionFailed();
@@ -46,13 +46,12 @@ namespace Scripts.Services
         protected abstract void OnConnectionFailed();
         protected abstract void OnConnectionEstablished();
 
-        protected async Task Authorize(IYield yield, byte operationCode)
+        protected async Task Authorize(IYield yield)
         {
             OnPreAuthorization();
 
             var parameters = new AuthorizeRequestParameters(AccessTokenProvider.AccessToken);
-            var authorizationStatus = await serviceBase.SendOperation<AuthorizeRequestParameters, AuthorizeResponseParameters>
-                    (yield, operationCode, parameters, MessageSendOptions.DefaultReliable());
+            var authorizationStatus = await Authorize(yield, parameters);
             if (authorizationStatus.Status == AuthorizationStatus.Failed)
             {
                 OnNonAuthorized();
@@ -61,6 +60,8 @@ namespace Scripts.Services
 
             OnAuthorized();
         }
+
+        protected abstract Task<AuthorizeResponseParameters> Authorize(IYield yield, AuthorizeRequestParameters parameters);
 
         protected abstract void OnPreAuthorization();
         protected abstract void OnNonAuthorized();
@@ -96,7 +97,14 @@ namespace Scripts.Services
 
         public bool IsConnected()
         {
-            return serviceBase != null && serviceBase.IsConnected();
+            return serviceBase != null && serviceBase.ServiceConnectionHandler.IsConnected();
+        }
+
+        protected ServerConnectionInformation GetServerConnectionInformation(ServerType serverType)
+        {
+            var connectionInformation = ServicesConfiguration.GetInstance().GetConnectionInformation(serverType);
+            var peerConnectionInformation = NetworkConfiguration.GetInstance().GetPeerConnectionInformation(connectionInformation);
+            return new ServerConnectionInformation(serverType, peerConnectionInformation);
         }
     }
 }

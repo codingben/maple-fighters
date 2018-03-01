@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using Authorization.Client.Common;
 using Character.Client.Common;
 using CommonCommunicationInterfaces;
 using CommonTools.Coroutines;
@@ -8,50 +9,45 @@ namespace Scripts.Services
 {
     public sealed class CharacterService : ServiceBase<CharacterOperations, EmptyEventCode>, ICharacterService
     {
-        protected override void OnConnected()
+        public async Task<AuthorizeResponseParameters> Authorize(IYield yield, AuthorizeRequestParameters parameters)
         {
-            // Left blank intentionally
-        }
-
-        protected override void OnDisconnected()
-        {
-            // Left blank intentionally
+            return await ServerPeerHandler.SendOperation<AuthorizeRequestParameters, AuthorizeResponseParameters>
+                (yield, (byte)CharacterOperations.Authorize, parameters, MessageSendOptions.DefaultReliable());
         }
 
         public async Task<CreateCharacterResponseParameters> CreateCharacter(IYield yield, CreateCharacterRequestParameters parameters)
         {
-            if (!IsConnected())
+            if (!ServiceConnectionHandler.IsConnected())
             {
                 return new CreateCharacterResponseParameters(CharacterCreationStatus.Failed);
             }
-
-            var requestId = OperationRequestSender.Send(CharacterOperations.CreateCharacter, parameters, MessageSendOptions.DefaultReliable());
-            var responseParameters = await SubscriptionProvider.ProvideSubscription<CreateCharacterResponseParameters>(yield, requestId);
-            return responseParameters;
+            
+            return await ServerPeerHandler.SendOperation<CreateCharacterRequestParameters, CreateCharacterResponseParameters>
+                (yield, (byte)CharacterOperations.CreateCharacter, parameters, MessageSendOptions.DefaultReliable());
         }
 
         public async Task<RemoveCharacterResponseParameters> RemoveCharacter(IYield yield, RemoveCharacterRequestParameters parameters)
         {
-            if (!IsConnected())
+            if (!ServiceConnectionHandler.IsConnected())
             {
                 return new RemoveCharacterResponseParameters(RemoveCharacterStatus.Failed);
             }
+            
+            return await ServerPeerHandler.SendOperation<RemoveCharacterRequestParameters, RemoveCharacterResponseParameters>
+                (yield, (byte)CharacterOperations.RemoveCharacter, parameters, MessageSendOptions.DefaultReliable());
 
-            var requestId = OperationRequestSender.Send(CharacterOperations.RemoveCharacter, parameters, MessageSendOptions.DefaultReliable());
-            var responseParameters = await SubscriptionProvider.ProvideSubscription<RemoveCharacterResponseParameters>(yield, requestId);
-            return responseParameters;
         }
 
         public async Task<GetCharactersResponseParameters> GetCharacters(IYield yield)
         {
-            if (!IsConnected())
+            if (!ServiceConnectionHandler.IsConnected())
             {
                 return new GetCharactersResponseParameters(new CharacterFromDatabaseParameters[0]);
             }
 
-            var requestId = OperationRequestSender.Send(CharacterOperations.GetCharacters, new EmptyParameters(), MessageSendOptions.DefaultReliable());
-            var responseParameters = await SubscriptionProvider.ProvideSubscription<GetCharactersResponseParameters>(yield, requestId);
-            return responseParameters;
+            var parameters = new EmptyParameters();
+            return await ServerPeerHandler.SendOperation<EmptyParameters, GetCharactersResponseParameters>
+                (yield, (byte)CharacterOperations.RemoveCharacter, parameters, MessageSendOptions.DefaultReliable());
         }
     }
 }

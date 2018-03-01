@@ -1,8 +1,8 @@
-﻿using Chat.Common;
+﻿using System.Threading.Tasks;
+using Authorization.Client.Common;
 using CommonTools.Coroutines;
 using CommonTools.Log;
 using Scripts.Containers;
-using Scripts.ScriptableObjects;
 using Scripts.UI;
 using Scripts.UI.Controllers;
 using Scripts.UI.Core;
@@ -14,8 +14,8 @@ namespace Scripts.Services
     {
         public void Connect()
         {
-            var connectionInformation = ServicesConfiguration.GetInstance().GetConnectionInformation(ServersType.Chat);
-            CoroutinesExecutor.StartTask((yield) => Connect(yield, ServiceContainer.ChatService, connectionInformation));
+            var serverConnectionInformation = GetServerConnectionInformation(ServerType.Chat);
+            CoroutinesExecutor.StartTask((yield) => Connect(yield, ServiceContainer.ChatService, serverConnectionInformation));
         }
 
         protected override void OnPreConnection()
@@ -32,7 +32,12 @@ namespace Scripts.Services
 
         protected override void OnConnectionEstablished()
         {
-            CoroutinesExecutor.StartTask((yield) => Authorize(yield, (byte)ChatOperations.Authorize));
+            CoroutinesExecutor.StartTask(Authorize);
+        }
+
+        protected override Task<AuthorizeResponseParameters> Authorize(IYield yield, AuthorizeRequestParameters parameters)
+        {
+            return ServiceContainer.ChatService.Authorize(yield, parameters);
         }
 
         protected override void OnPreAuthorization()

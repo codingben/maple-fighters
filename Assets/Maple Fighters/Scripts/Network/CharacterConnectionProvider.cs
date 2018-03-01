@@ -1,9 +1,9 @@
 ﻿using System;
-using Character.Client.Common;
+using System.Threading.Tasks;
+using Authorization.Client.Common;
 using CommonTools.Coroutines;
 using CommonTools.Log;
 using Scripts.Containers;
-using Scripts.ScriptableObjects;
 using Scripts.UI.Core;
 using Scripts.UI.Windows;
 
@@ -17,8 +17,8 @@ namespace Scripts.Services
         {
             this.onAuthorized = onAuthorized;
 
-            var connectionInformation = ServicesConfiguration.GetInstance().GetConnectionInformation(ServersType.Character);
-            CoroutinesExecutor.StartTask((yield) => Connect(yield, ServiceContainer.CharacterService, connectionInformation));
+            var serverConnectionInformation = GetServerConnectionInformation(ServerType.Character);
+            CoroutinesExecutor.StartTask((yield) => Connect(yield, ServiceContainer.CharacterService, serverConnectionInformation));
         }
 
         protected override void OnPreConnection()
@@ -35,7 +35,12 @@ namespace Scripts.Services
 
         protected override void OnConnectionEstablished()
         {
-            CoroutinesExecutor.StartTask((yield) => Authorize(yield, (byte)CharacterOperations.Authorize));
+            CoroutinesExecutor.StartTask(Authorize);
+        }
+
+        protected override Task<AuthorizeResponseParameters> Authorize(IYield yield, AuthorizeRequestParameters parameters)
+        {
+            return ServiceContainer.CharacterService.Authorize(yield, parameters);
         }
 
         protected override void OnPreAuthorization()

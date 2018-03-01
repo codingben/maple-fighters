@@ -1,11 +1,11 @@
 ﻿using System;
+using System.Threading.Tasks;
+using Authorization.Client.Common;
 using CommonTools.Coroutines;
 using CommonTools.Log;
 using Scripts.Containers;
-using Scripts.ScriptableObjects;
 using Scripts.UI.Core;
 using Scripts.UI.Windows;
-using Shared.Game.Common;
 
 namespace Scripts.Services
 {
@@ -17,8 +17,8 @@ namespace Scripts.Services
         {
             this.onAuthorized = onAuthorized;
 
-            var connectionInformation = ServicesConfiguration.GetInstance().GetConnectionInformation(ServersType.Game);
-            CoroutinesExecutor.StartTask((yield) => Connect(yield, ServiceContainer.GameService, connectionInformation));
+            var serverConnectionInformation = GetServerConnectionInformation(ServerType.Game);
+            CoroutinesExecutor.StartTask((yield) => Connect(yield, ServiceContainer.GameService, serverConnectionInformation));
         }
 
         protected override void OnPreConnection()
@@ -35,7 +35,12 @@ namespace Scripts.Services
 
         protected override void OnConnectionEstablished()
         {
-            CoroutinesExecutor.StartTask((yield) => Authorize(yield, (byte)GameOperations.Authorize));
+            CoroutinesExecutor.StartTask(Authorize);
+        }
+
+        protected override Task<AuthorizeResponseParameters> Authorize(IYield yield, AuthorizeRequestParameters parameters)
+        {
+            return ServiceContainer.GameService.Authorize(yield, parameters);
         }
 
         protected override void OnPreAuthorization()
