@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using CommonTools.Log;
-using Shared.Game.Common;
+using Game.Common;
 using UnityEngine;
 
 namespace Scripts.Gameplay.Actors

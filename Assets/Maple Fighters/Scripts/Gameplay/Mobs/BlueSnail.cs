@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using Scripts.Containers;
 using Scripts.Gameplay.Actors;
-using Shared.Game.Common;
+using Game.Common;
 using UnityEngine;
 
 namespace Assets.Scripts

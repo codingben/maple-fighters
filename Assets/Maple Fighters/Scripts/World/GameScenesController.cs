@@ -1,7 +1,7 @@
 ﻿using CommonCommunicationInterfaces;
 using Scripts.Containers;
 using Scripts.Utils;
-using Shared.Game.Common;
+using Game.Common;
 using UnityEngine.SceneManagement;
 
 namespace Scripts.World

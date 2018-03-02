@@ -34,7 +34,7 @@ namespace Scripts.Services
             var networkConfiguration = NetworkConfiguration.GetInstance();
             var connectionDetails = new ConnectionDetails(networkConfiguration.ConnectionProtocol, networkConfiguration.DebugLevel);
 
-            var serverPeer = await serverConnector.ConnectAsync(yield, ServerConnectionInformation.PeerConnectionInformation, connectionDetails);
+            serverPeer = await serverConnector.ConnectAsync(yield, ServerConnectionInformation.PeerConnectionInformation, connectionDetails);
             if (serverPeer == null)
             {
                 return ConnectionStatus.Failed;
@@ -46,7 +46,10 @@ namespace Scripts.Services
 
         public void SetNetworkTrafficState(NetworkTrafficState state)
         {
-            serverPeer.NetworkTrafficState = state;
+            if (IsConnected())
+            {
+                serverPeer.NetworkTrafficState = state;
+            }
         }
 
         public void Dispose()

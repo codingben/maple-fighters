@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Authorization.Client.Common;
 using CommonTools.Coroutines;
@@ -8,7 +9,7 @@ using WaitForSeconds = CommonTools.Coroutines.WaitForSeconds;
 
 namespace Scripts.Services
 {
-    public abstract class ServiceConnectionProvider<T> : DontDestroyOnLoad<T>
+    public abstract class ServiceConnectionProvider<T> : DontDestroyOnLoad<T>, IDisposable
         where T : ServiceConnectionProvider<T>
     {
         protected readonly ExternalCoroutinesExecutor CoroutinesExecutor = new ExternalCoroutinesExecutor();
@@ -54,7 +55,6 @@ namespace Scripts.Services
             var authorizationStatus = await Authorize(yield, parameters);
             if (authorizationStatus.Status == AuthorizationStatus.Failed)
             {
-                OnNonAuthorized();
                 return;
             }
 
@@ -64,35 +64,36 @@ namespace Scripts.Services
         protected abstract Task<AuthorizeResponseParameters> Authorize(IYield yield, AuthorizeRequestParameters parameters);
 
         protected abstract void OnPreAuthorization();
-        protected abstract void OnNonAuthorized();
         protected abstract void OnAuthorized();
 
-        public void DisconnectAutomatically()
+        protected void DisconnectAutomatically(int timer)
         {
             if (disconnectAutomatically == null)
             {
-                disconnectAutomatically = CoroutinesExecutor.StartCoroutine(DisconnectAutomaticallyTimer());
+                disconnectAutomatically = CoroutinesExecutor.StartCoroutine(DisconnectAutomaticallyTimer(timer));
             }
         }
 
-        protected IEnumerator<IYieldInstruction> DisconnectAutomaticallyTimer()
+        protected IEnumerator<IYieldInstruction> DisconnectAutomaticallyTimer(int timer)
         {
-            const int AUTO_TIME_FOR_DISCONNECT = 60;
-            yield return new WaitForSeconds(AUTO_TIME_FOR_DISCONNECT);
-            Disconnect();
-        }
-
-        public void Disconnect()
-        {
-            disconnectAutomatically?.Dispose();
-            disconnectAutomatically = null;
-
-            serviceBase?.Dispose();
+            yield return new WaitForSeconds(timer);
+            Dispose();
         }
 
         private void OnApplicationQuit()
         {
-            Disconnect();
+            Dispose();
+        }
+
+        public void Dispose()
+        {
+            disconnectAutomatically?.Dispose();
+            disconnectAutomatically = null;
+
+            if (IsConnected())
+            {
+                serviceBase.Dispose();
+            }
         }
 
         public bool IsConnected()

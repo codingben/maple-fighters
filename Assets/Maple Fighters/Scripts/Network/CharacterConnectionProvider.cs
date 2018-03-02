@@ -6,6 +6,7 @@ using CommonTools.Log;
 using Scripts.Containers;
 using Scripts.UI.Core;
 using Scripts.UI.Windows;
+using Scripts.Utils;
 
 namespace Scripts.Services
 {
@@ -28,14 +29,27 @@ namespace Scripts.Services
 
         protected override void OnConnectionFailed()
         {
-            var noticeWindow = UserInterfaceContainer.Instance.Get<NoticeWindow>().AssertNotNull();
-            noticeWindow.Message.text = "Could not connect to a character service.";
-            noticeWindow.OkButton.interactable = true;
+            var isNoticeWindowExists = UserInterfaceContainer.Instance.Get<NoticeWindow>() != null;
+            if (isNoticeWindowExists)
+            {
+                var noticeWindow = UserInterfaceContainer.Instance.Get<NoticeWindow>();
+                noticeWindow.Message.text = "Could not connect to a character service.";
+                noticeWindow.OkButton.interactable = true;
+                noticeWindow.OkButtonClickedAction = LoadedObjects.DestroyAll;
+            }
+            else
+            {
+                var noticeWindow = UI.Utils.ShowNotice("Could not connect to a character service.", LoadedObjects.DestroyAll);
+                noticeWindow.OkButton.interactable = true;
+            }
         }
 
         protected override void OnConnectionEstablished()
         {
             CoroutinesExecutor.StartTask(Authorize);
+
+            const int TIME_TO_DISCONNECT = 120;
+            DisconnectAutomatically(TIME_TO_DISCONNECT);
         }
 
         protected override Task<AuthorizeResponseParameters> Authorize(IYield yield, AuthorizeRequestParameters parameters)
@@ -46,15 +60,6 @@ namespace Scripts.Services
         protected override void OnPreAuthorization()
         {
             // Left blank intentionally
-        }
-
-        protected override void OnNonAuthorized()
-        {
-            var noticeWindow = UserInterfaceContainer.Instance.Get<NoticeWindow>().AssertNotNull();
-            noticeWindow.Message.text = "Authentication with character service failed.";
-            noticeWindow.OkButton.interactable = true;
-
-            ServiceContainer.GameService.Dispose();
         }
 
         protected override void OnAuthorized()

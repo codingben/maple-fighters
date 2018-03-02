@@ -4,22 +4,22 @@ using UnityEngine.SceneManagement;
 
 namespace Scripts.Utils
 {
-    public static class SavedObjects
+    public static class LoadedObjects
     {
-        private static readonly List<GameObject> savedObjects = new List<GameObject>();
+        private static readonly List<GameObject> loadedObjects = new List<GameObject>();
 
         public static void DontDestroyOnLoad(this GameObject obj)
         {
             Object.DontDestroyOnLoad(obj);
 
-            savedObjects.Add(obj);
+            loadedObjects.Add(obj);
         }
 
         public static void Destroy(this GameObject obj)
         {
             Object.DestroyImmediate(obj);
 
-            savedObjects.Remove(obj);
+            loadedObjects.Remove(obj);
         }
 
         public static void DestroyAll()
@@ -37,12 +37,12 @@ namespace Scripts.Utils
 
         public static void RemoveSavedObjectOnly(this GameObject obj)
         {
-            savedObjects.Remove(obj);
+            loadedObjects.Remove(obj);
         }
 
         public static IEnumerable<GameObject> GetSavedObjects()
         {
-            return savedObjects;
+            return loadedObjects;
         }
     }
 }

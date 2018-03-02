@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Character.Client.Common;
@@ -9,7 +10,8 @@ using Scripts.Services;
 using Scripts.UI.Core;
 using Scripts.UI.Windows;
 using Scripts.World;
-using Shared.Game.Common;
+using Game.Common;
+using Scripts.Utils;
 using TMPro;
 using UnityEngine;
 using GameObject = UnityEngine.GameObject;
@@ -21,33 +23,36 @@ namespace Scripts.UI.Controllers
         private const string CHARACTERS_PATH = "Characters/{0}";
         private const int MAXIMUM_CHARACTERS = 3;
 
-        private Transform charactersParent;
-
-        private ChooseFighterText chooseFighterText;
         private CharacterSelectionOptionsWindow characterSelectionOptionsWindow;
-
         private ClickableCharacter clickedCharacter;
-
         private readonly ClickableCharacter[] characters = { null, null, null };
         private readonly ExternalCoroutinesExecutor coroutinesExecutor = new ExternalCoroutinesExecutor();
 
         private void Start()
         {
-            coroutinesExecutor.StartTask(GetCharacters);
+            var chooseFighterText = UserInterfaceContainer.Instance.Add<ChooseFighterText>();
+            chooseFighterText.Show();
+
+            Action getCharactersAction = () =>
+            {
+                coroutinesExecutor.StartTask(GetCharacters);
+            };
+
+            if (CharacterConnectionProvider.Instance.IsConnected())
+            {
+                getCharactersAction.Invoke();
+            }
+            else
+            {
+                CharacterConnectionProvider.Instance.Connect(onAuthorized: getCharactersAction);
+            }
         }
 
         private void OnDestroy()
         {
-            RemoveCharacters();
+            var chooseFighterText = UserInterfaceContainer.Instance.Get<ChooseFighterText>().AssertNotNull();
+            UserInterfaceContainer.Instance.Remove(chooseFighterText);
 
-            if (chooseFighterText != null)
-            {
-                UserInterfaceContainer.Instance.Remove(chooseFighterText);
-            }
-        }
-
-        private void RemoveCharacters()
-        {
             foreach (var clickableCharacter in characters)
             {
                 if (clickableCharacter != null)
@@ -64,12 +69,10 @@ namespace Scripts.UI.Controllers
 
         private async Task GetCharacters(IYield yield)
         {
-            charactersParent = UserInterfaceContainer.Instance.Get<BackgroundCharactersParent>().AssertNotNull().GameObject.transform;
-
             var parameters = await ServiceContainer.CharacterService.GetCharacters(yield);
             if (parameters.Characters.Length == 0)
             {
-                Utils.ShowNotice("Something went wrong, could not fetch characters.", Application.Quit, true);
+                Utils.ShowNotice("Failed to get characters, unfortunately.", LoadedObjects.DestroyAll);
                 return;
             }
 
@@ -79,16 +82,8 @@ namespace Scripts.UI.Controllers
             OnReceivedCharacters(characters);
         }
 
-        private void OnReceivedCharacters(IReadOnlyCollection<CharacterFromDatabaseParameters> characters)
+        private void OnReceivedCharacters(IEnumerable<CharacterFromDatabaseParameters> characters)
         {
-            if (characters.Count > MAXIMUM_CHARACTERS)
-            {
-                LogUtils.Log($"There can not be more than {MAXIMUM_CHARACTERS} characters.", LogMessageType.Error);
-                return;
-            }
-
-            ShowChooseFighterText();
-
             foreach (var character in characters)
             {
                 if (character.Index == CharacterIndex.Zero)
@@ -108,14 +103,14 @@ namespace Scripts.UI.Controllers
             var characterType = Resources.Load<GameObject>(string.Format(CHARACTERS_PATH, characterName));
             var anchoredPosition = characterType.GetComponent<RectTransform>().anchoredPosition;
 
-            var characterGameObject = Instantiate(characterType, Vector3.zero, Quaternion.identity, charactersParent);
+            var charactersParent = UserInterfaceContainer.Instance.Get<BackgroundCharactersParent>().AssertNotNull();
+            var characterGameObject = Instantiate(characterType, Vector3.zero, Quaternion.identity, charactersParent.gameObject.transform);
             characterGameObject.transform.SetAsFirstSibling();
             characterGameObject.GetComponent<RectTransform>().anchoredPosition = anchoredPosition;
 
             var characterComponent = characterGameObject.GetComponent<ClickableCharacter>().AssertNotNull();
             characterComponent.SetCharacter(index, character);
-            characterComponent.CharacterClicked += (clickedCharacter, characterIndex) 
-                => OnCharacterClicked(characterComponent, clickedCharacter, characterIndex);
+            characterComponent.CharacterClicked += (clickedCharacter, characterIndex) => OnCharacterClicked(characterComponent, clickedCharacter, characterIndex);
 
             characters[(int)character.Index] = characterComponent;
 
@@ -141,28 +136,15 @@ namespace Scripts.UI.Controllers
 
         private void OnCharacterClicked(ClickableCharacter clickableCharacter, CharacterFromDatabaseParameters character, int index)
         {
-            HideChooseFighterText();
-            RemoveCharacterSelectionOptionsWindowIfExists();
-            ShowCharacterSelectionOptionsWindow(clickableCharacter, character, index);
-        }
-
-        private void ShowChooseFighterText()
-        {
-            chooseFighterText = UserInterfaceContainer.Instance.Add<ChooseFighterText>();
-            chooseFighterText.Show();
-        }
-
-        private void HideChooseFighterText()
-        {
+            var chooseFighterText = UserInterfaceContainer.Instance.Get<ChooseFighterText>().AssertNotNull();
             chooseFighterText.Hide();
-        }
 
-        private void RemoveCharacterSelectionOptionsWindowIfExists()
-        {
             if (characterSelectionOptionsWindow != null)
             {
                 characterSelectionOptionsWindow.Hide();
             }
+
+            ShowCharacterSelectionOptionsWindow(clickableCharacter, character, index);
         }
 
         private void ShowCharacterSelectionOptionsWindow(ClickableCharacter clickableCharacter, CharacterFromDatabaseParameters character, int index)
@@ -235,6 +217,8 @@ namespace Scripts.UI.Controllers
 
         private void OnEnteredWorld()
         {
+            CharacterConnectionProvider.Instance.Dispose();
+
             var noticeWindow = UserInterfaceContainer.Instance.Get<NoticeWindow>().AssertNotNull();
             UserInterfaceContainer.Instance.Remove(noticeWindow);
 
@@ -248,8 +232,20 @@ namespace Scripts.UI.Controllers
 
         private void OnDeleteCharacterButtonClicked(int characterIndex)
         {
-            var parameters = new RemoveCharacterRequestParameters(characterIndex);
-            coroutinesExecutor.StartTask((y) => DeleteCharacter(y, parameters));
+            Action deleteCharacterAction = () =>
+            {
+                var parameters = new RemoveCharacterRequestParameters(characterIndex);
+                coroutinesExecutor.StartTask((y) => DeleteCharacter(y, parameters));
+            };
+
+            if (CharacterConnectionProvider.Instance.IsConnected())
+            {
+                deleteCharacterAction.Invoke();
+            }
+            else
+            {
+                CharacterConnectionProvider.Instance.Connect(onAuthorized: deleteCharacterAction);
+            }
         }
 
         private async Task DeleteCharacter(IYield yield, RemoveCharacterRequestParameters parameters)

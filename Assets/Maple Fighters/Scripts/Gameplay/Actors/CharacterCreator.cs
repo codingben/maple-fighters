@@ -2,7 +2,7 @@
 using CommonTools.Coroutines;
 using Scripts.Containers;
 using Scripts.Utils;
-using Shared.Game.Common;
+using Game.Common;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 

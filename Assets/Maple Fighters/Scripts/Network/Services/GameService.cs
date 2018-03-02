@@ -3,7 +3,7 @@ using Authorization.Client.Common;
 using CommonCommunicationInterfaces;
 using CommonTools.Coroutines;
 using Scripts.Utils;
-using Shared.Game.Common;
+using Game.Common;
 
 namespace Scripts.Services
 {
@@ -24,11 +24,15 @@ namespace Scripts.Services
 
         protected override void OnConnected()
         {
+            base.OnConnected();
+
             SetEventsHandlers();
         }
 
         protected override void OnDisconnected(DisconnectReason reason, string details)
         {
+            base.OnDisconnected(reason, details);
+
             GoBackToLogin();
             RemoveEventsHandlers();
         }
@@ -37,7 +41,11 @@ namespace Scripts.Services
         {
             if (authorizationStatus == AuthorizationStatus.Succeed)
             {
-                SavedObjects.DestroyAll();
+                LoadedObjects.DestroyAll();
+            }
+            else
+            {
+                GameConnectionProvider.Instance.OnNonAuthorized();
             }
         }
 
@@ -69,11 +77,6 @@ namespace Scripts.Services
 
         public async Task<AuthorizeResponseParameters> Authorize(IYield yield, AuthorizeRequestParameters parameters)
         {
-            if (!ServiceConnectionHandler.IsConnected())
-            {
-                return new AuthorizeResponseParameters();
-            }
-
             var responseParameters = await ServerPeerHandler.SendOperation<AuthorizeRequestParameters, AuthorizeResponseParameters>
                 (yield, (byte)GameOperations.Authorize, parameters, MessageSendOptions.DefaultReliable());
             authorizationStatus = responseParameters.Status;
@@ -82,23 +85,13 @@ namespace Scripts.Services
 
         public async Task<EnterSceneResponseParameters?> EnterScene(IYield yield)
         {
-            if (!ServiceConnectionHandler.IsConnected())
-            {
-                return null;
-            }
-
             var parameters = new EmptyParameters();
             return await ServerPeerHandler.SendOperation<EmptyParameters, EnterSceneResponseParameters>
-                (yield, (byte)GameOperations.ChangeScene, parameters, MessageSendOptions.DefaultReliable());
+                (yield, (byte)GameOperations.EnterScene, parameters, MessageSendOptions.DefaultReliable());
         }
 
         public async Task<CharacterValidationStatus> ValidateCharacter(IYield yield, ValidateCharacterRequestParameters parameters)
         {
-            if (!ServiceConnectionHandler.IsConnected())
-            {
-                return CharacterValidationStatus.Wrong;
-            }
-
             var responseParameters = await ServerPeerHandler.SendOperation<ValidateCharacterRequestParameters, ValidateCharacterResponseParameters>
                 (yield, (byte)GameOperations.ValidateCharacter, parameters, MessageSendOptions.DefaultReliable());
             return responseParameters.Status;
@@ -106,11 +99,6 @@ namespace Scripts.Services
 
         public async Task<ChangeSceneResponseParameters> ChangeScene(IYield yield, ChangeSceneRequestParameters parameters)
         {
-            if (!ServiceConnectionHandler.IsConnected())
-            {
-                return new ChangeSceneResponseParameters(0);
-            }
-
             return await ServerPeerHandler.SendOperation<ChangeSceneRequestParameters, ChangeSceneResponseParameters>
                 (yield, (byte)GameOperations.ChangeScene, parameters, MessageSendOptions.DefaultReliable());
         }
@@ -119,6 +107,6 @@ namespace Scripts.Services
             ServerPeerHandler.SendOperation((byte)GameOperations.PositionChanged, parameters, MessageSendOptions.DefaultUnreliable((byte)GameDataChannels.Position));
 
         public void UpdatePlayerState(UpdatePlayerStateRequestParameters parameters) =>
-            ServerPeerHandler.SendOperation((byte)GameOperations.PositionChanged, parameters, MessageSendOptions.DefaultUnreliable((byte)GameDataChannels.Animations));
+            ServerPeerHandler.SendOperation((byte)GameOperations.PlayerStateChanged, parameters, MessageSendOptions.DefaultUnreliable((byte)GameDataChannels.Animations));
     }
 }

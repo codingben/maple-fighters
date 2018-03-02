@@ -1,7 +1,10 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Character.Client.Common;
 using CommonTools.Coroutines;
+using CommonTools.Log;
 using Scripts.Containers;
+using Scripts.Services;
 using Scripts.UI.Core;
 using Scripts.UI.Windows;
 
@@ -107,14 +110,26 @@ namespace Scripts.UI.Controllers
         {
             characterRequestParameters.Name = characterName;
 
-            coroutinesExecutor.StartTask(CreateCharacter);
+            var noticeWindow = Utils.ShowNotice("Creating a new character... Please wait.", ShowCharacterNamwWindow, true);
+            noticeWindow.OkButton.interactable = false;
+
+            Action createCharacterAction = () =>
+            {
+                coroutinesExecutor.StartTask(CreateCharacter);
+            };
+
+            if (CharacterConnectionProvider.Instance.IsConnected())
+            {
+                createCharacterAction.Invoke();
+            }
+            else
+            {
+                CharacterConnectionProvider.Instance.Connect(onAuthorized: createCharacterAction);
+            }
         }
 
         private async Task CreateCharacter(IYield yield)
         {
-            var noticeWindow = Utils.ShowNotice("Creating a new character... Please wait.", ShowCharacterNamwWindow, true);
-            noticeWindow.OkButton.interactable = false;
-
             var responseParameters = await ServiceContainer.CharacterService.CreateCharacter(yield, characterRequestParameters);
             switch (responseParameters.Status)
             {
@@ -122,25 +137,29 @@ namespace Scripts.UI.Controllers
                 {
                     CharactersController.Instance.RecreateCharacter(GetLastCreatedCharacter());
 
-                    noticeWindow.Message.text = "Character created successfully.";
+                    var noticeWindow = UserInterfaceContainer.Instance.Get<NoticeWindow>().AssertNotNull();
+                        noticeWindow.Message.text = "Character created successfully.";
                     noticeWindow.OkButtonClickedAction = charactersSelectionWindow.DeactiveAll;
                     noticeWindow.OkButton.interactable = true;
                     break;
                 }
                 case CharacterCreationStatus.Failed:
                 {
-                    noticeWindow.Message.text = "Failed to create a new character, please try again.";
+                    var noticeWindow = UserInterfaceContainer.Instance.Get<NoticeWindow>().AssertNotNull();
+                        noticeWindow.Message.text = "Failed to create a new character, please try again.";
                     noticeWindow.OkButton.interactable = true;
                     break;
                 }
                 case CharacterCreationStatus.NameUsed:
                 {
-                    noticeWindow.Message.text = "The name is already in use, choose another name.";
+                    var noticeWindow = UserInterfaceContainer.Instance.Get<NoticeWindow>().AssertNotNull();
+                        noticeWindow.Message.text = "The name is already in use, choose another name.";
                     noticeWindow.OkButton.interactable = true;
                     break;
                 }
                 default:
                 {
+                    var noticeWindow = UserInterfaceContainer.Instance.Get<NoticeWindow>().AssertNotNull();
                     noticeWindow.Message.text = "Something went wrong, please try again.";
                     noticeWindow.OkButton.interactable = true;
                     break;

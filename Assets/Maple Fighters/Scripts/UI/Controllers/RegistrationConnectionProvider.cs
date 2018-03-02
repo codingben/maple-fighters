@@ -37,6 +37,9 @@ namespace Scripts.UI.Controllers
         protected override void OnConnectionEstablished()
         {
             onConnected?.Invoke();
+
+            const int TIME_TO_DISCONNECT = 60;
+            DisconnectAutomatically(TIME_TO_DISCONNECT);
         }
 
         protected override Task<AuthorizeResponseParameters> Authorize(IYield yield, AuthorizeRequestParameters parameters)
@@ -45,11 +48,6 @@ namespace Scripts.UI.Controllers
         }
 
         protected override void OnPreAuthorization()
-        {
-            // Left blank intentionally
-        }
-
-        protected override void OnNonAuthorized()
         {
             // Left blank intentionally
         }

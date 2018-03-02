@@ -1,4 +1,4 @@
-using Shared.Game.Common;
+using Game.Common;
 using UnityEngine;
 
 namespace Scripts.Gameplay.Actors
@@ -15,6 +15,11 @@ namespace Scripts.Gameplay.Actors
                 this.playerController = playerController;
             }
 
+            Jump();
+        }
+
+        private void Jump()
+        {
             const float JUMP_DIRECTION_FORCE = 0.075f;
 
             var direction = playerController.Rigidbody.velocity.x;

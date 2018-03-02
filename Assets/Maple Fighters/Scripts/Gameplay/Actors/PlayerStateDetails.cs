@@ -1,4 +1,4 @@
-﻿using Shared.Game.Common;
+﻿using Game.Common;
 
 namespace Scripts.Gameplay.Actors
 {

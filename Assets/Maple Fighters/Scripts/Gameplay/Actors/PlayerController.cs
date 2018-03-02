@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Scripts.Editor;
-using Scripts.World;
-using Shared.Game.Common;
+using Game.Common;
 using UnityEngine;
 
 #pragma warning disable 0109

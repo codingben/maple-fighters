@@ -31,6 +31,12 @@ namespace Scripts.UI.Controllers
             UserInterfaceContainer.Instance.Remove(chatWindow);
         }
 
+        public void OnNonAuthorized()
+        {
+            var chatWindow = UserInterfaceContainer.Instance.Get<ChatWindow>().AssertNotNull();
+            chatWindow.AddMessage("Authorization with chat server failed.", ChatMessageColor.Red);
+        }
+
         public void OnAuthorized()
         {
             var chatWindow = UserInterfaceContainer.Instance.Get<ChatWindow>().AssertNotNull();

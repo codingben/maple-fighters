@@ -1,4 +1,5 @@
-using Shared.Game.Common;
+using Game.Common;
+using Scripts.UI.Controllers;
 using UnityEngine;
 
 namespace Scripts.Gameplay.Actors
@@ -24,7 +25,14 @@ namespace Scripts.Gameplay.Actors
                 return;
             }
 
-            if (Input.GetKeyDown(playerController.Config.JumpKey))
+            if (FocusController.Instance.Focusable != Focusable.Game)
+            {
+                playerController.PlayerState = PlayerState.Idle;
+                return;
+            }
+
+            var jumpKey = playerController.Config.JumpKey;
+            if (Input.GetKeyDown(jumpKey))
             {
                 playerController.PlayerState = PlayerState.Jumping;
                 return;

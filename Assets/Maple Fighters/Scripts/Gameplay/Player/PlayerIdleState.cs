@@ -1,4 +1,5 @@
-﻿using Shared.Game.Common;
+﻿using Game.Common;
+using Scripts.UI.Controllers;
 using UnityEngine;
 
 namespace Scripts.Gameplay.Actors
@@ -23,17 +24,21 @@ namespace Scripts.Gameplay.Actors
                 return;
             }
 
-            if (Input.GetKeyDown(playerController.Config.JumpKey))
+            if (FocusController.Instance.Focusable == Focusable.Game)
             {
-                playerController.PlayerState = PlayerState.Jumping;
-                return;
-            }
+                var jumpKey = playerController.Config.JumpKey;
+                if (Input.GetKeyDown(jumpKey))
+                {
+                    playerController.PlayerState = PlayerState.Jumping;
+                    return;
+                }
 
-            var horizontal = Input.GetAxisRaw("Horizontal");
-            if (Mathf.Abs(horizontal) > 0)
-            {
-                playerController.PlayerState = PlayerState.Moving;
-                return;
+                var horizontal = Input.GetAxisRaw("Horizontal");
+                if (Mathf.Abs(horizontal) > 0)
+                {
+                    playerController.PlayerState = PlayerState.Moving;
+                    return;
+                }
             }
 
             if (playerController.Rigidbody.velocity != Vector2.zero)

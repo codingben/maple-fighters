@@ -15,7 +15,14 @@ namespace Scripts.Services
         {
             var serverPeerHandler = new ServerPeerHandler<TOperationCode, TEventCode>();
             ServerPeerHandler = serverPeerHandler;
-            ServiceConnectionHandler = new ServiceConnectionHandler(serverPeerHandler.Initialize);
+
+            Action<IServerPeer> onConnected = (serverPeer) => 
+            {
+                serverPeerHandler.Initialize(serverPeer);
+                OnConnected();
+            };
+
+            ServiceConnectionHandler = new ServiceConnectionHandler(onConnected);
         }
 
         public void Dispose()

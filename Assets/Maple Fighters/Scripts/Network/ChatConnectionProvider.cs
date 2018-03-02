@@ -45,14 +45,6 @@ namespace Scripts.Services
             // Left blank intentionally
         }
 
-        protected override void OnNonAuthorized()
-        {
-            var chatWindow = UserInterfaceContainer.Instance.Get<ChatWindow>().AssertNotNull();
-            chatWindow.AddMessage("Authentication with chat server failed.", ChatMessageColor.Red);
-
-            ServiceContainer.ChatService.Dispose();
-        }
-
         protected override void OnAuthorized()
         {
             var chatWindow = UserInterfaceContainer.Instance.Get<ChatWindow>().AssertNotNull();

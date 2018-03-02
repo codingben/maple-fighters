@@ -6,7 +6,7 @@ using Scripts.Coroutines;
 using Scripts.Gameplay;
 using Scripts.UI;
 using Scripts.UI.Core;
-using Shared.Game.Common;
+using Game.Common;
 using UnityEngine;
 
 namespace Scripts.World

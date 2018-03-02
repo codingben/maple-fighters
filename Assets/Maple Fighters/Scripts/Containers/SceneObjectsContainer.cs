@@ -3,7 +3,7 @@ using CommonTools.Coroutines;
 using CommonTools.Log;
 using Scripts.Gameplay;
 using Scripts.Utils;
-using Shared.Game.Common;
+using Game.Common;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 

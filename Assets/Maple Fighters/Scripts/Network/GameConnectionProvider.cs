@@ -6,6 +6,7 @@ using CommonTools.Log;
 using Scripts.Containers;
 using Scripts.UI.Core;
 using Scripts.UI.Windows;
+using Scripts.Utils;
 
 namespace Scripts.Services
 {
@@ -48,13 +49,12 @@ namespace Scripts.Services
             // Left blank intentionally
         }
 
-        protected override void OnNonAuthorized()
+        public void OnNonAuthorized()
         {
             var noticeWindow = UserInterfaceContainer.Instance.Get<NoticeWindow>().AssertNotNull();
-            noticeWindow.Message.text = "Authentication with game server failed.";
+            noticeWindow.Message.text = "Authorization with game server failed.";
             noticeWindow.OkButton.interactable = true;
-
-            ServiceContainer.GameService.Dispose();
+            noticeWindow.OkButtonClickedAction = LoadedObjects.DestroyAll;
         }
 
         protected override void OnAuthorized()

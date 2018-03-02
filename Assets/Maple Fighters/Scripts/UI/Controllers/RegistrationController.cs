@@ -107,24 +107,15 @@ namespace Scripts.UI.Controllers
                 }
             }
 
-            if (responseParameters.Status != RegisterStatus.Succeed)
-            {
-                OnRegistrationFailed();
-            }
-            else
+            if (responseParameters.Status == RegisterStatus.Succeed)
             {
                 OnRegistrationSucceed();
             }
         }
 
-        private void OnRegistrationFailed()
-        {
-            RegistrationConnectionProvider.Instance.DisconnectAutomatically();
-        }
-
         private void OnRegistrationSucceed()
         {
-            RegistrationConnectionProvider.Instance.Disconnect();
+            RegistrationConnectionProvider.Instance.Dispose();
         }
 
         private void OnBackButtonClicked()

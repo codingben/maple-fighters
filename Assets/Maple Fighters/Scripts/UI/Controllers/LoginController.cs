@@ -4,7 +4,6 @@ using CommonTools.Coroutines;
 using CommonTools.Log;
 using Login.Common;
 using Scripts.Containers;
-using Scripts.Services;
 using Scripts.UI.Core;
 using Scripts.UI.Windows;
 using UnityEngine;
@@ -128,21 +127,12 @@ namespace Scripts.UI.Controllers
             {
                 OnLoginSucceed();
             }
-            else
-            {
-                OnLoginFailed();
-            }
         }
 
         private void OnLoginSucceed()
         {
-            LoginConnectionProvider.Instance.Disconnect();
-            CharacterConnectionProvider.Instance.Connect(onAuthorized: () => SceneManager.LoadScene(loadSceneIndex, LoadSceneMode.Single));
-        }
-
-        private void OnLoginFailed()
-        {
-            LoginConnectionProvider.Instance.DisconnectAutomatically();
+            LoginConnectionProvider.Instance.Dispose();
+            SceneManager.LoadScene(loadSceneIndex, LoadSceneMode.Single);
         }
 
         private void OnRegisterButtonClicked()

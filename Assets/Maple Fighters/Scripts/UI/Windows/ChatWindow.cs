@@ -6,6 +6,7 @@ using Scripts.UI.Controllers;
 using Scripts.UI.Core;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace Scripts.UI.Windows
 {
@@ -19,13 +20,6 @@ namespace Scripts.UI.Windows
 
         private string characterName;
 
-        protected override void OnAwake()
-        {
-            base.OnAwake();
-
-            characterName = GetCharacterName();
-        }
-
         private void Update()
         {
             if (Input.GetKeyDown(KeyCode.Return))
@@ -36,19 +30,24 @@ namespace Scripts.UI.Windows
 
         private void OnEnterClicked()
         {
-            if (IsChatActive && IsChatInputFieldActivated())
+            SetActiveInputField(IsChatInputFieldActivated());
+
+            if (IsChatActive && !IsChatInputFieldActivated() && inputField.text.Length != 0)
             {
                 SendMessage();
                 ResetInputField();
             }
 
-            SetActiveInputField(IsChatInputFieldActivated());
-
-            FocusController.Instance.Focusable = !IsChatInputFieldActivated() ? Focusable.Game : Focusable.Chat;
+            FocusController.Instance.Focusable = IsChatInputFieldActivated() ? Focusable.Chat : Focusable.Game;
         }
 
         private void SendMessage()
         {
+            if (characterName == null)
+            {
+                characterName = GetCharacterName();
+            }
+
             var message = $"{characterName}: {inputField.text}";
             SendChatMessage?.Invoke(message);
 
@@ -85,10 +84,7 @@ namespace Scripts.UI.Windows
         {
             inputField.gameObject.SetActive(!active);
 
-            if (active)
-            {
-                inputField.ActivateInputField();
-            }
+            EventSystem.current.SetSelectedGameObject(IsChatInputFieldActivated() ? inputField.gameObject : null);
         }
 
         private void ResetInputField()

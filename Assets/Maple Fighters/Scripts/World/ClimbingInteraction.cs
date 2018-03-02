@@ -1,5 +1,5 @@
 ﻿using Scripts.Gameplay.Actors;
-using Shared.Game.Common;
+using Game.Common;
 using UnityEngine;
 
 #pragma warning disable 0109
