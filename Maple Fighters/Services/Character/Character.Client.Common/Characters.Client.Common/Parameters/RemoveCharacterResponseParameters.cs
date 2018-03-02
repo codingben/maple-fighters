@@ -7,7 +7,7 @@ namespace Character.Client.Common
     {
         public RemoveCharacterStatus Status;
 
-        public RemoveCharacterResponseParameters(RemoveCharacterStatus status)
+        public RemoveCharacterResponseParameters(RemoveCharacterStatus status = RemoveCharacterStatus.Failed)
         {
             Status = status;
         }

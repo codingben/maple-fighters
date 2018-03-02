@@ -46,12 +46,11 @@ namespace Authorization.Server.Common
             {
                 onAuthorized?.Invoke();
                 onAuthorizedArg?.Invoke(authorization.UserId);
+                return new AuthorizeResponseParameters(authorization.UserId, authorization.Status);
             }
-            else
-            {
-                onNonAuthorized?.Invoke();
-            }
-            return new AuthorizeResponseParameters(authorization.UserId, authorization.Status);
+
+            onNonAuthorized?.Invoke();
+            return null;
         }
     }
 }

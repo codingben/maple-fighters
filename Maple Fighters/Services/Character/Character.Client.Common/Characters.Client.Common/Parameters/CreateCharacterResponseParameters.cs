@@ -7,7 +7,7 @@ namespace Character.Client.Common
     {
         public CharacterCreationStatus Status;
 
-        public CreateCharacterResponseParameters(CharacterCreationStatus characterCreationStatus)
+        public CreateCharacterResponseParameters(CharacterCreationStatus characterCreationStatus = CharacterCreationStatus.Failed)
         {
             Status = characterCreationStatus;
         }

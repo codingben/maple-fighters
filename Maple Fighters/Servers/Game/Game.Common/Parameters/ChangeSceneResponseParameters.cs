@@ -7,7 +7,7 @@ namespace Game.Common
     {
         public Maps Map;
 
-        public ChangeSceneResponseParameters(Maps map)
+        public ChangeSceneResponseParameters(Maps map = 0)
         {
             Map = map;
         }

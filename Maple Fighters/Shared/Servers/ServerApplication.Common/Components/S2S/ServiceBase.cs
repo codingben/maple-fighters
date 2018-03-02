@@ -16,7 +16,7 @@ namespace ServerApplication.Common.Components
         {
             get
             {
-                if (outboundServerPeerLogic != null && (serviceConnectorProvider != null && serviceConnectorProvider.IsConnected()))
+                if (outboundServerPeerLogic != null && serviceConnectorProvider != null)
                 {
                     return outboundServerPeerLogic;
                 }
@@ -83,10 +83,7 @@ namespace ServerApplication.Common.Components
 
         private void UnsubscribeFromDisconnectionNotifier()
         {
-            if (serviceConnectorProvider?.PeerDisconnectionNotifier != null)
-            {
-                serviceConnectorProvider.PeerDisconnectionNotifier.Disconnected -= OnDisconnected;
-            }
+            serviceConnectorProvider.PeerDisconnectionNotifier.Disconnected -= OnDisconnected;
         }
 
         protected abstract PeerConnectionInformation GetPeerConnectionInformation();

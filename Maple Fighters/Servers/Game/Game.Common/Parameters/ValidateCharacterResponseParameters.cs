@@ -7,7 +7,7 @@ namespace Game.Common
     {
         public CharacterValidationStatus Status;
 
-        public ValidateCharacterResponseParameters(CharacterValidationStatus status)
+        public ValidateCharacterResponseParameters(CharacterValidationStatus status = CharacterValidationStatus.Wrong)
         {
             Status = status;
         }

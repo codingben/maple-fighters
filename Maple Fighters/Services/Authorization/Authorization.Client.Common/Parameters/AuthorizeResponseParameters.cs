@@ -8,7 +8,7 @@ namespace Authorization.Client.Common
         public int UserId;
         public AuthorizationStatus Status;
 
-        public AuthorizeResponseParameters(int userId, AuthorizationStatus status)
+        public AuthorizeResponseParameters(int userId, AuthorizationStatus status = AuthorizationStatus.Failed)
         {
             UserId = userId;
             Status = status;
