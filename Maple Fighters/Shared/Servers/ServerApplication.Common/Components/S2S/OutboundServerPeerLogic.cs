@@ -9,7 +9,7 @@ using ServerCommunicationInterfaces;
 
 namespace ServerApplication.Common.Components
 {
-    public class OutboundServerPeerLogic<TOperationCode, TEventCode> : IDisposable
+    public class OutboundServerPeerLogic<TOperationCode, TEventCode> : IOutboundServerPeerLogic
         where TOperationCode : IComparable, IFormattable, IConvertible
         where TEventCode : IComparable, IFormattable, IConvertible
     {
@@ -51,16 +51,18 @@ namespace ServerApplication.Common.Components
             return responseParameters;
         }
 
-        public void SetEventHandler<TParams>(TEventCode eventCode, Action<TParams> action)
+        public void SetEventHandler<TParams>(byte eventCode, Action<TParams> action)
             where TParams : struct, IParameters
         {
+            var code = (TEventCode)Enum.ToObject(typeof(TEventCode), eventCode);
             var eventHandler = new EventHandler<TParams>((x) => action?.Invoke(x.Parameters));
-            eventHandlerRegister.SetHandler(eventCode, eventHandler);
+            eventHandlerRegister.SetHandler(code, eventHandler);
         }
 
-        public void RemoveEventHandler(TEventCode eventCode)
+        public void RemoveEventHandler(byte eventCode)
         {
-            eventHandlerRegister.RemoveHandler(eventCode);
+            var code = (TEventCode)Enum.ToObject(typeof(TEventCode), eventCode);
+            eventHandlerRegister.RemoveHandler(code);
         }
 
         private void OnOperationRequestFailed(RawMessageResponseData data, short requestId)

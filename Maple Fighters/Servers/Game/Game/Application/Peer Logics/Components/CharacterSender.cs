@@ -6,7 +6,7 @@ using ComponentModel.Common;
 using Game.Application.SceneObjects.Components;
 using Game.InterestManagement;
 using PeerLogic.Common.Components;
-using Shared.Game.Common;
+using Game.Common;
 
 namespace Game.Application.PeerLogic.Components
 {

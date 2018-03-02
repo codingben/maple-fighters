@@ -2,7 +2,7 @@
 using Character.Client.Common;
 using CommonCommunicationInterfaces;
 
-namespace Shared.Game.Common
+namespace Game.Common
 {
     public struct CharacterSpawnDetailsParameters : IParameters
     {

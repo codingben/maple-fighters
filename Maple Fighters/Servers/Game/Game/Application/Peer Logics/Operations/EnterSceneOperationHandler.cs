@@ -4,7 +4,7 @@ using CommonTools.Log;
 using Game.Application.PeerLogic.Components;
 using Game.InterestManagement;
 using ServerCommunicationHelper;
-using Shared.Game.Common;
+using Game.Common;
 
 namespace Game.Application.PeerLogic.Operations
 {

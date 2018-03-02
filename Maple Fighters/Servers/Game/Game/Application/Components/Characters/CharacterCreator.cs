@@ -6,7 +6,7 @@ using Game.InterestManagement;
 using Physics.Box2D;
 using ServerApplication.Common.ApplicationBase;
 using ServerApplication.Common.Components;
-using Shared.Game.Common;
+using Game.Common;
 using SceneObject = Game.InterestManagement.SceneObject;
 
 namespace Game.Application.Components

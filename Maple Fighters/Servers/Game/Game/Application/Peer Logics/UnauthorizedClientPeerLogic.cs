@@ -3,7 +3,7 @@ using CommonTools.Log;
 using CommunicationHelper;
 using PeerLogic.Common;
 using ServerCommunicationInterfaces;
-using Shared.Game.Common;
+using Game.Common;
 
 namespace Game.Application.PeerLogics
 {

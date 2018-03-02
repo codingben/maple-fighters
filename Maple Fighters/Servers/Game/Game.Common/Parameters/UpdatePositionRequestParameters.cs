@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using CommonCommunicationInterfaces;
 
-namespace Shared.Game.Common
+namespace Game.Common
 {
     public struct UpdatePositionRequestParameters : IParameters
     {

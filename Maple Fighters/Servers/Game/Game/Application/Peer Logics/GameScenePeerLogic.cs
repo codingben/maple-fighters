@@ -7,7 +7,7 @@ using Game.InterestManagement;
 using PeerLogic.Common;
 using ServerApplication.Common.ApplicationBase;
 using ServerCommunicationInterfaces;
-using Shared.Game.Common;
+using Game.Common;
 
 namespace Game.Application.PeerLogics
 {

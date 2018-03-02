@@ -17,14 +17,14 @@ namespace Server2.Common
         {
             base.OnConnected(outboundServerPeer);
 
-            OutboundServerPeerLogic.SetEventHandler(ServerEvents.Server1Event, TestAction);
+            OutboundServerPeerLogic.SetEventHandler((byte)ServerEvents.Server1Event, TestAction);
         }
 
         protected override void OnDisconnected(DisconnectReason disconnectReason, string s)
         {
             base.OnDisconnected(disconnectReason, s);
 
-            OutboundServerPeerLogic.RemoveEventHandler(ServerEvents.Server1Event);
+            OutboundServerPeerLogic.RemoveEventHandler((byte)ServerEvents.Server1Event);
         }
 
         public Task<Server1OperationResponseParameters> Server1Operation(IYield yield, Server1OperationRequestParameters parameters)

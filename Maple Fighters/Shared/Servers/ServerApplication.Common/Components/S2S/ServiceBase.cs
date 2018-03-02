@@ -12,7 +12,7 @@ namespace ServerApplication.Common.Components
         where TOperationCode : IComparable, IFormattable, IConvertible
         where TEventCode : IComparable, IFormattable, IConvertible
     {
-        protected OutboundServerPeerLogic<TOperationCode, TEventCode> OutboundServerPeerLogic
+        protected IOutboundServerPeerLogic OutboundServerPeerLogic
         {
             get
             {
@@ -26,8 +26,8 @@ namespace ServerApplication.Common.Components
                 return null;
             }
         }
-        private OutboundServerPeerLogic<TOperationCode, TEventCode> outboundServerPeerLogic;
-        private ServiceConnectorProvider serviceConnectorProvider;
+        private IOutboundServerPeerLogic outboundServerPeerLogic;
+        private IServiceConnectorProvider serviceConnectorProvider;
 
         private bool disposed;
 
@@ -37,8 +37,8 @@ namespace ServerApplication.Common.Components
 
             var coroutinesExecutor = Server.Components.GetComponent<ICoroutinesExecuter>().AssertNotNull();
             var serverConnectorProvider = Components.GetComponent<IServerConnectorProvider>().AssertNotNull();
-            serviceConnectorProvider = new ServiceConnectorProvider(coroutinesExecutor, serverConnectorProvider);
-            serviceConnectorProvider.Connect(GetPeerConnectionInformation(), OnConnected);
+            serviceConnectorProvider = new ServiceConnectorProvider(coroutinesExecutor, serverConnectorProvider, OnConnected);
+            serviceConnectorProvider.Connect(GetPeerConnectionInformation());
         }
 
         protected override void OnDestroy()
@@ -46,12 +46,8 @@ namespace ServerApplication.Common.Components
             base.OnDestroy();
 
             disposed = true;
-
-            if (serviceConnectorProvider.IsConnected())
-            {
-                serviceConnectorProvider.Disconnect();
-            }
-
+            
+            serviceConnectorProvider?.Dispose();
             outboundServerPeerLogic?.Dispose();
         }
 
@@ -76,7 +72,7 @@ namespace ServerApplication.Common.Components
 
             if (!disposed)
             {
-                serviceConnectorProvider.Connect(GetPeerConnectionInformation(), OnConnected);
+                serviceConnectorProvider.Connect(GetPeerConnectionInformation());
             }
         }
 

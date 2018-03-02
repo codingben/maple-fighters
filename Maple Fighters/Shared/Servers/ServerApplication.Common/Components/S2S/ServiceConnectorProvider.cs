@@ -9,26 +9,28 @@ using ServerCommunicationInterfaces;
 
 namespace ServerApplication.Common.Components
 {
-    internal class ServiceConnectorProvider
+    internal class ServiceConnectorProvider : IServiceConnectorProvider
     {
         public IPeerDisconnectionNotifier PeerDisconnectionNotifier => outboundServerPeer.PeerDisconnectionNotifier;
 
         private IOutboundServerPeer outboundServerPeer;
         private readonly ICoroutinesExecuter coroutinesExecutor;
         private readonly IServerConnectorProvider serverConnectorProvider;
+        private readonly Action<IOutboundServerPeer> onConnected;
 
-        public ServiceConnectorProvider(ICoroutinesExecuter coroutinesExecutor, IServerConnectorProvider serverConnectorProvider)
+        public ServiceConnectorProvider(ICoroutinesExecuter coroutinesExecutor, IServerConnectorProvider serverConnectorProvider, Action<IOutboundServerPeer> onConnected)
         {
             this.coroutinesExecutor = coroutinesExecutor;
             this.serverConnectorProvider = serverConnectorProvider;
+            this.onConnected = onConnected;
         }
 
-        public void Connect(PeerConnectionInformation connectionInformation, Action<IOutboundServerPeer> onConnected = null)
+        public void Connect(PeerConnectionInformation connectionInformation)
         {
-            coroutinesExecutor.StartCoroutine(ConnectContinuously(connectionInformation, onConnected));
+            coroutinesExecutor.StartCoroutine(ConnectContinuously(connectionInformation));
         }
 
-        private IEnumerator<IYieldInstruction> ConnectContinuously(PeerConnectionInformation connectionInformation, Action<IOutboundServerPeer> onConnected)
+        private IEnumerator<IYieldInstruction> ConnectContinuously(PeerConnectionInformation connectionInformation)
         {
             const int WAIT_TIME = 10;
 
@@ -41,12 +43,12 @@ namespace ServerApplication.Common.Components
                     yield break;
                 }
 
-                coroutinesExecutor.StartTask((yield) => Connect(yield, connectionInformation, onConnected));
+                coroutinesExecutor.StartTask((yield) => Connect(yield, connectionInformation));
                 yield return new WaitForSeconds(WAIT_TIME);
             }
         }
 
-        private async Task Connect(IYield yield, PeerConnectionInformation connectionInformation, Action<IOutboundServerPeer> onConnected = null)
+        private async Task Connect(IYield yield, PeerConnectionInformation connectionInformation)
         {
             try
             {
@@ -77,7 +79,15 @@ namespace ServerApplication.Common.Components
             outboundServerPeer.NetworkTrafficState = state;
         }
 
-        public void Disconnect()
+        public void Dispose()
+        {
+            if (IsConnected())
+            {
+                Disconnect();
+            }
+        }
+
+        private void Disconnect()
         {
             outboundServerPeer.Disconnect();
             outboundServerPeer = null;

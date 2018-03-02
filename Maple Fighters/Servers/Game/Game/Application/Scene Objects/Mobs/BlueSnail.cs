@@ -6,7 +6,7 @@ using Game.Application.PeerLogic.Components;
 using Game.InterestManagement;
 using MathematicsHelper;
 using Physics.Box2D;
-using Shared.Game.Common;
+using Game.Common;
 using Math = System.Math;
 
 namespace Game.Application.SceneObjects

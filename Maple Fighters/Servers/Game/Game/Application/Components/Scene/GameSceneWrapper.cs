@@ -6,7 +6,7 @@ using MathematicsHelper;
 using Microsoft.Scripting.Hosting;
 using PythonScripting;
 using ServerApplication.Common.ApplicationBase;
-using Shared.Game.Common;
+using Game.Common;
 
 namespace Game.Application.Components
 {

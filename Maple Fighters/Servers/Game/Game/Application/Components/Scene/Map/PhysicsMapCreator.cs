@@ -6,7 +6,7 @@ using JsonConfig;
 using MathematicsHelper;
 using Physics.Box2D;
 using ServiceStack;
-using Shared.Game.Common;
+using Game.Common;
 
 namespace Game.Application.Components
 {
