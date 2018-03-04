@@ -9,14 +9,7 @@ using UnityEngine.SceneManagement;
 
 namespace Scripts.UI.Controllers
 {
-    [System.Serializable]
-    public class MarkSelection
-    {
-        public string Name;
-        public LayerMask MarkLayerMask;
-    }
-
-    public class MinimapController : DontDestroyOnLoad<MinimapController>
+    public class CameraMinimapController : DontDestroyOnLoad<CameraMinimapController>
     {
         private const string MINI_CAMERA_TAG = "Minimap Camera";
 

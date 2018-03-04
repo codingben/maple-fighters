@@ -10,10 +10,16 @@ namespace Scripts.UI.Controllers
 {
     public class ChatController : DontDestroyOnLoad<ChatController>
     {
+        private bool isChatWindowExists;
+
         private void Start()
         {
             CreateChatWindow();
+            Connect();
+        }
 
+        private void Connect()
+        {
             ChatConnectionProvider.Instance.Connect();
         }
 
@@ -22,12 +28,15 @@ namespace Scripts.UI.Controllers
             var chatWindow = UserInterfaceContainer.Instance.Add<ChatWindow>();
             chatWindow.SendChatMessage += OnSendChatMessage;
             chatWindow.IsChatActive = false;
+
+            isChatWindowExists = true;
         }
 
         private void RemoveChatWindow()
         {
             var chatWindow = UserInterfaceContainer.Instance.Get<ChatWindow>().AssertNotNull();
             chatWindow.SendChatMessage -= OnSendChatMessage;
+
             UserInterfaceContainer.Instance.Remove(chatWindow);
         }
 
@@ -47,9 +56,10 @@ namespace Scripts.UI.Controllers
 
         private void OnDestroy()
         {
-            RemoveChatWindow();
-
-            ServiceContainer.ChatService.ChatMessageReceived.RemoveAllListeners();
+            if (isChatWindowExists)
+            {
+                RemoveChatWindow();
+            }
         }
 
         private void OnSendChatMessage(string message)

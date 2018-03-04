@@ -25,12 +25,6 @@ namespace Scripts.Services
             ServiceConnectionHandler = new ServiceConnectionHandler(onConnected);
         }
 
-        public void Dispose()
-        {
-            ServerPeerHandler?.Dispose();
-            ServiceConnectionHandler?.Dispose();
-        }
-
         protected virtual void OnConnected()
         {
             SubscribeToDisconnectionNotifier();

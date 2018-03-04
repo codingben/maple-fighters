@@ -10,16 +10,14 @@ namespace Scripts.Utils
 
         public static void DontDestroyOnLoad(this GameObject obj)
         {
-            Object.DontDestroyOnLoad(obj);
-
             loadedObjects.Add(obj);
+            Object.DontDestroyOnLoad(obj);
         }
 
         public static void Destroy(this GameObject obj)
         {
-            Object.DestroyImmediate(obj);
-
             loadedObjects.Remove(obj);
+            Object.DestroyImmediate(obj);
         }
 
         public static void DestroyAll()

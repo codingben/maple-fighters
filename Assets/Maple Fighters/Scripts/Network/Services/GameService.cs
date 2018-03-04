@@ -2,7 +2,6 @@
 using Authorization.Client.Common;
 using CommonCommunicationInterfaces;
 using CommonTools.Coroutines;
-using Scripts.Utils;
 using Game.Common;
 
 namespace Scripts.Services
@@ -20,8 +19,6 @@ namespace Scripts.Services
         public UnityEvent<CharacterAddedEventParameters> CharacterAdded { get; } = new UnityEvent<CharacterAddedEventParameters>();
         public UnityEvent<CharactersAddedEventParameters> CharactersAdded { get; } = new UnityEvent<CharactersAddedEventParameters>();
 
-        private AuthorizationStatus authorizationStatus = AuthorizationStatus.Failed;
-
         protected override void OnConnected()
         {
             base.OnConnected();
@@ -33,20 +30,7 @@ namespace Scripts.Services
         {
             base.OnDisconnected(reason, details);
 
-            GoBackToLogin();
             RemoveEventsHandlers();
-        }
-
-        private void GoBackToLogin()
-        {
-            if (authorizationStatus == AuthorizationStatus.Succeed)
-            {
-                LoadedObjects.DestroyAll();
-            }
-            else
-            {
-                GameConnectionProvider.Instance.OnNonAuthorized();
-            }
         }
 
         private void SetEventsHandlers()
@@ -77,14 +61,17 @@ namespace Scripts.Services
 
         public async Task<AuthorizeResponseParameters> Authorize(IYield yield, AuthorizeRequestParameters parameters)
         {
-            var responseParameters = await ServerPeerHandler.SendOperation<AuthorizeRequestParameters, AuthorizeResponseParameters>
+            return await ServerPeerHandler.SendOperation<AuthorizeRequestParameters, AuthorizeResponseParameters>
                 (yield, (byte)GameOperations.Authorize, parameters, MessageSendOptions.DefaultReliable());
-            authorizationStatus = responseParameters.Status;
-            return responseParameters;
         }
 
         public async Task<EnterSceneResponseParameters?> EnterScene(IYield yield)
         {
+            if (!ServiceConnectionHandler.IsConnected())
+            {
+                return null;
+            }
+
             var parameters = new EmptyParameters();
             return await ServerPeerHandler.SendOperation<EmptyParameters, EnterSceneResponseParameters>
                 (yield, (byte)GameOperations.EnterScene, parameters, MessageSendOptions.DefaultReliable());

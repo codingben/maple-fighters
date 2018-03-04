@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Scripts.Gameplay;
 using Scripts.Utils;
 using UnityEngine;
 
@@ -45,7 +46,6 @@ namespace Scripts.UI.Core
             where T : IUserInterface
         {
             var userInterfaceName = typeof(T).Name;
-
             var userInterfaceObject = Resources.Load(string.Format(UI_RESOURCES_PATH, userInterfaceName)) as GameObject;
             if (userInterfaceObject == null)
             {
@@ -55,6 +55,8 @@ namespace Scripts.UI.Core
             var parent = viewType == ViewType.Foreground ? foreground : background;
             var userInterface = Instantiate(userInterfaceObject, Vector3.zero, Quaternion.identity, parent)
                 .GetComponent<T>();
+            userInterface.GameObject.name = userInterface.GameObject.name.RemoveCloneFromName();
+            userInterface.GameObject.name = userInterface.GameObject.name.MakeSpaceBetweenWords();
 
             if (index == Index.First)
             {

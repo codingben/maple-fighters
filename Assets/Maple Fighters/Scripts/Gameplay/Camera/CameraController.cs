@@ -1,9 +1,7 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Scripts.Gameplay.Camera
 {
-    [Obsolete("A camera controller has been replaced by a Cinemachine.")]
     public class CameraController : MonoBehaviour
     {
         public Transform Target { get; set; }

@@ -1,16 +1,15 @@
 ﻿using System.Threading.Tasks;
 using CommonTools.Coroutines;
+using CommonTools.Log;
 using Scripts.Containers;
 using Scripts.Utils;
 using Game.Common;
-using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace Scripts.Gameplay.Actors
 {
     public class CharacterCreator : DontDestroyOnLoad<CharacterCreator>
     {
-        [SerializeField] private DummyCharacter dummyCharacter;
         private readonly ExternalCoroutinesExecutor coroutinesExecutor = new ExternalCoroutinesExecutor();
 
         protected override void OnAwake()
@@ -56,10 +55,20 @@ namespace Scripts.Gameplay.Actors
         private async Task EnterScene(IYield yield)
         {
             var parameters = await ServiceContainer.GameService.EnterScene(yield);
+            OnEnteredScene(parameters);
+        }
+
+        private void OnEnteredScene(EnterSceneResponseParameters? parameters)
+        {
             if (!parameters.HasValue)
             {
-                parameters = DummyCharacter.CreateDummyCharacter(dummyCharacter.Id, dummyCharacter.Name, dummyCharacter.CharacterClass, 
-                    dummyCharacter.spawnPosition, dummyCharacter.spawnDirection);
+                if (DummyCharacterDetails.Instance == null)
+                {
+                    LogUtils.Log(MessageBuilder.Trace("Could not find dummy character details. Please add DummyCharacterDetails into a scene."), LogMessageType.Warning);
+                    return;
+                }
+
+                parameters = DummyCharacterDetails.Instance.GetDummyCharacterParameters();
             }
 
             // Will create scene object.

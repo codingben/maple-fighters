@@ -2,34 +2,52 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Authorization.Client.Common;
+using CommonCommunicationInterfaces;
 using CommonTools.Coroutines;
+using CommonTools.Log;
 using Scripts.ScriptableObjects;
 using Scripts.Utils;
 using WaitForSeconds = CommonTools.Coroutines.WaitForSeconds;
 
 namespace Scripts.Services
 {
-    public abstract class ServiceConnectionProvider<T> : DontDestroyOnLoad<T>, IDisposable
-        where T : ServiceConnectionProvider<T>
+    public abstract class ServiceConnectionProviderBase<T> : DontDestroyOnLoad<T>
+        where T : ServiceConnectionProviderBase<T>
     {
-        protected readonly ExternalCoroutinesExecutor CoroutinesExecutor = new ExternalCoroutinesExecutor();
+        protected ExternalCoroutinesExecutor CoroutinesExecutor
+        {
+            get
+            {
+                if (coroutinesExecutor == null)
+                {
+                    coroutinesExecutor = new ExternalCoroutinesExecutor();
+                }
 
-        private IServiceBase serviceBase;
+                return coroutinesExecutor;
+            }
+        }
+        private ExternalCoroutinesExecutor coroutinesExecutor = new ExternalCoroutinesExecutor();
+
+        private IServiceBase serviceBase => GetServiceBase();
         private ICoroutine disconnectAutomatically;
 
         private void Update()
         {
-            CoroutinesExecutor.Update();
+            CoroutinesExecutor?.Update();
         }
 
         private void OnDestroy()
         {
-            CoroutinesExecutor.Dispose();
+            CoroutinesExecutor?.Dispose();
         }
 
-        protected async Task Connect(IYield yield, IServiceBase serviceBase, ServerConnectionInformation serverConnectionInformation)
+        protected async Task Connect(IYield yield, ServerConnectionInformation serverConnectionInformation)
         {
-            this.serviceBase = serviceBase;
+            if (serviceBase == null || CoroutinesExecutor == null)
+            {
+                LogUtils.Log("A service base is not initialized.");
+                return;
+            }
 
             OnPreConnection();
 
@@ -40,12 +58,34 @@ namespace Scripts.Services
                 return;
             }
 
+            SubscribeToDisconnectionNotifier();
             OnConnectionEstablished();
         }
 
         protected abstract void OnPreConnection();
         protected abstract void OnConnectionFailed();
         protected abstract void OnConnectionEstablished();
+
+        protected virtual void OnDisconnected(DisconnectReason reason, string details)
+        {
+            UnsubscribeFromDisconnectionNotifier();
+
+            // It means that a client is not authorized; Authorize operation will not wait for a response.
+            if (reason == DisconnectReason.ServerDisconnect)
+            {
+                Dispose();
+            }
+        }
+
+        private void SubscribeToDisconnectionNotifier()
+        {
+            serviceBase.ServiceConnectionHandler.PeerDisconnectionNotifier.Disconnected += OnDisconnected;
+        }
+
+        private void UnsubscribeFromDisconnectionNotifier()
+        {
+            serviceBase.ServiceConnectionHandler.PeerDisconnectionNotifier.Disconnected -= OnDisconnected;
+        }
 
         protected async Task Authorize(IYield yield)
         {
@@ -65,6 +105,8 @@ namespace Scripts.Services
 
         protected abstract void OnPreAuthorization();
         protected abstract void OnAuthorized();
+
+        protected abstract IServiceBase GetServiceBase();
 
         protected void DisconnectAutomatically(int timer)
         {
@@ -87,13 +129,12 @@ namespace Scripts.Services
 
         public void Dispose()
         {
+            CoroutinesExecutor?.Dispose();
+
             disconnectAutomatically?.Dispose();
             disconnectAutomatically = null;
 
-            if (IsConnected())
-            {
-                serviceBase.Dispose();
-            }
+            serviceBase.ServiceConnectionHandler?.Dispose();
         }
 
         public bool IsConnected()

@@ -37,14 +37,12 @@ namespace Scripts.Services
         public void SendOperation<TParams>(byte operationCode, TParams parameters, MessageSendOptions messageSendOptions)
             where TParams : struct, IParameters
         {
-            var code = (TOperationCode)Enum.ToObject(typeof(TOperationCode), operationCode);
-
-            if (!serverPeer.IsConnected)
+            if (!IsConnected())
             {
-                LogUtils.Log(MessageBuilder.Trace($"Could not send {code} operation because no connection to a server."));
                 return;
             }
 
+            var code = (TOperationCode)Enum.ToObject(typeof(TOperationCode), operationCode);
             operationRequestSender.Send(code, parameters, messageSendOptions);
         }
 
@@ -52,14 +50,12 @@ namespace Scripts.Services
             where TRequestParams : struct, IParameters
             where TResponseParams : struct, IParameters
         {
-            var code = (TOperationCode)Enum.ToObject(typeof(TOperationCode), operationCode);
-
-            if (!serverPeer.IsConnected)
+            if (!IsConnected())
             {
-                LogUtils.Log(MessageBuilder.Trace($"Could not send {code} operation because no connection to a server."));
                 return default(TResponseParams);
             }
 
+            var code = (TOperationCode)Enum.ToObject(typeof(TOperationCode), operationCode);
             var requestId = operationRequestSender.Send(code, parameters, messageSendOptions);
             var responseParameters = await subscriptionProvider.ProvideSubscription<TResponseParams>(yield, requestId);
             return responseParameters;
@@ -82,6 +78,11 @@ namespace Scripts.Services
         private void OnOperationRequestFailed(RawMessageResponseData data, short requestId)
         {
             LogUtils.Log($"Sending an operaiton has been failed. Operation Code: {data.Code}");
+        }
+
+        private bool IsConnected()
+        {
+            return serverPeer != null && serverPeer.IsConnected;
         }
     }
 }

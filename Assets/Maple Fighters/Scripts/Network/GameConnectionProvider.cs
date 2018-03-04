@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Authorization.Client.Common;
+using CommonCommunicationInterfaces;
 using CommonTools.Coroutines;
 using CommonTools.Log;
 using Scripts.Containers;
@@ -10,16 +11,17 @@ using Scripts.Utils;
 
 namespace Scripts.Services
 {
-    public class GameConnectionProvider : ServiceConnectionProvider<GameConnectionProvider>
+    public class GameConnectionProvider : ServiceConnectionProviderBase<GameConnectionProvider>
     {
         private Action onAuthorized;
+        private AuthorizationStatus authorizationStatus = AuthorizationStatus.Failed;
 
         public void Connect(Action onAuthorized)
         {
             this.onAuthorized = onAuthorized;
 
             var serverConnectionInformation = GetServerConnectionInformation(ServerType.Game);
-            CoroutinesExecutor.StartTask((yield) => Connect(yield, ServiceContainer.GameService, serverConnectionInformation));
+            CoroutinesExecutor.StartTask((yield) => Connect(yield, serverConnectionInformation));
         }
 
         protected override void OnPreConnection()
@@ -37,6 +39,25 @@ namespace Scripts.Services
         protected override void OnConnectionEstablished()
         {
             CoroutinesExecutor.StartTask(Authorize);
+        }
+
+        protected override void OnDisconnected(DisconnectReason reason, string details)
+        {
+            base.OnDisconnected(reason, details);
+
+            GoBackToLogin();
+        }
+
+        private void GoBackToLogin()
+        {
+            if (authorizationStatus == AuthorizationStatus.Succeed)
+            {
+                LoadedObjects.DestroyAll();
+            }
+            else
+            {
+                OnNonAuthorized();
+            }
         }
 
         protected override Task<AuthorizeResponseParameters> Authorize(IYield yield, AuthorizeRequestParameters parameters)
@@ -59,7 +80,13 @@ namespace Scripts.Services
 
         protected override void OnAuthorized()
         {
+            authorizationStatus = AuthorizationStatus.Succeed;
             onAuthorized?.Invoke();
+        }
+
+        protected override IServiceBase GetServiceBase()
+        {
+            return ServiceContainer.GameService;
         }
     }
 }

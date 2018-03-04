@@ -17,12 +17,15 @@ namespace Scripts.UI.Windows
 
         [SerializeField] private TextMeshProUGUI chatText;
         [SerializeField] private TMP_InputField inputField;
+        [Header("Keyboard")]
+        [SerializeField] private KeyCode sendMessageKey = KeyCode.Return;
+        [SerializeField] private KeyCode sendMessageSecondaryKey = KeyCode.KeypadEnter;
 
         private string characterName;
 
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.Return))
+            if (Input.GetKeyDown(sendMessageKey) || Input.GetKeyDown(sendMessageSecondaryKey))
             {
                 OnEnterClicked();
             }
@@ -32,7 +35,7 @@ namespace Scripts.UI.Windows
         {
             SetActiveInputField(IsChatInputFieldActivated());
 
-            if (IsChatActive && !IsChatInputFieldActivated() && inputField.text.Length != 0)
+            if (IsChatActive && !IsChatInputFieldActivated() && !string.IsNullOrWhiteSpace(chatText.text))
             {
                 SendMessage();
                 ResetInputField();

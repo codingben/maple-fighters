@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Authorization.Client.Common;
+using CommonCommunicationInterfaces;
 using CommonTools.Coroutines;
 using CommonTools.Log;
 using Scripts.Containers;
@@ -10,12 +11,14 @@ using Scripts.UI.Windows;
 
 namespace Scripts.Services
 {
-    public class ChatConnectionProvider : ServiceConnectionProvider<ChatConnectionProvider>
+    public class ChatConnectionProvider : ServiceConnectionProviderBase<ChatConnectionProvider>
     {
+        private AuthorizationStatus authorizationStatus = AuthorizationStatus.Failed;
+
         public void Connect()
         {
             var serverConnectionInformation = GetServerConnectionInformation(ServerType.Chat);
-            CoroutinesExecutor.StartTask((yield) => Connect(yield, ServiceContainer.ChatService, serverConnectionInformation));
+            CoroutinesExecutor.StartTask((yield) => Connect(yield, serverConnectionInformation));
         }
 
         protected override void OnPreConnection()
@@ -35,6 +38,16 @@ namespace Scripts.Services
             CoroutinesExecutor.StartTask(Authorize);
         }
 
+        protected override void OnDisconnected(DisconnectReason reason, string details)
+        {
+            base.OnDisconnected(reason, details);
+
+            if (authorizationStatus == AuthorizationStatus.Failed)
+            {
+                ChatController.Instance.OnNonAuthorized();
+            }
+        }
+
         protected override Task<AuthorizeResponseParameters> Authorize(IYield yield, AuthorizeRequestParameters parameters)
         {
             return ServiceContainer.ChatService.Authorize(yield, parameters);
@@ -50,7 +63,14 @@ namespace Scripts.Services
             var chatWindow = UserInterfaceContainer.Instance.Get<ChatWindow>().AssertNotNull();
             chatWindow.AddMessage("Connected to a chat server successfully.", ChatMessageColor.Green);
 
+            authorizationStatus = AuthorizationStatus.Succeed;
+
             ChatController.Instance.OnAuthorized();
+        }
+
+        protected override IServiceBase GetServiceBase()
+        {
+            return ServiceContainer.ChatService;
         }
     }
 }

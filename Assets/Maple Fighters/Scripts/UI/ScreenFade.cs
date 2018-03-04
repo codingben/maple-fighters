@@ -14,10 +14,20 @@ namespace Scripts.UI
 
         private void OnEnable()
         {
-            SceneManager.sceneLoaded += OnSceneLoaded;
+            SubscribeToSceneLoaded();
         }
 
         private void OnDisable()
+        {
+            UnsubscribeFromSceneLoaded();
+        }
+
+        private void SubscribeToSceneLoaded()
+        {
+            SceneManager.sceneLoaded += OnSceneLoaded;
+        }
+
+        private void UnsubscribeFromSceneLoaded()
         {
             SceneManager.sceneLoaded -= OnSceneLoaded;
         }

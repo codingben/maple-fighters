@@ -1,8 +1,6 @@
-﻿using System;
-
-namespace Scripts.Services
+﻿namespace Scripts.Services
 {
-    public interface IServiceBase : IDisposable
+    public interface IServiceBase
     {
         IServiceConnectionHandler ServiceConnectionHandler { get; }
     }

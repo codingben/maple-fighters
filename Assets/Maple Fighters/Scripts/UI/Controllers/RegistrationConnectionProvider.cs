@@ -10,7 +10,7 @@ using Scripts.UI.Windows;
 
 namespace Scripts.UI.Controllers
 {
-    public class RegistrationConnectionProvider : ServiceConnectionProvider<RegistrationConnectionProvider>
+    public class RegistrationConnectionProvider : ServiceConnectionProviderBase<RegistrationConnectionProvider>
     {
         public Action onConnected;
 
@@ -19,7 +19,7 @@ namespace Scripts.UI.Controllers
             this.onConnected = onConnected;
 
             var serverConnectionInformation = GetServerConnectionInformation(ServerType.Registration);
-            CoroutinesExecutor.StartTask((yield) => Connect(yield, ServiceContainer.RegistrationService, serverConnectionInformation));
+            CoroutinesExecutor.StartTask((yield) => Connect(yield, serverConnectionInformation));
         }
 
         protected override void OnPreConnection()
@@ -55,6 +55,11 @@ namespace Scripts.UI.Controllers
         protected override void OnAuthorized()
         {
             // Left blank intentionally
+        }
+
+        protected override IServiceBase GetServiceBase()
+        {
+            return ServiceContainer.RegistrationService;
         }
     }
 }

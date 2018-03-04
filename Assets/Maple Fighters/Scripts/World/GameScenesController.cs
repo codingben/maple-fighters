@@ -12,7 +12,22 @@ namespace Scripts.World
         {
             base.OnAwake();
 
+            SubscribeToSceneLoaded();
+        }
+
+        private void OnDestroy()
+        {
+            UnsubscribeFromSceneLoaded();
+        }
+
+        private void SubscribeToSceneLoaded()
+        {
             SceneManager.sceneLoaded += OnSceneLoaded;
+        }
+
+        private void UnsubscribeFromSceneLoaded()
+        {
+            SceneManager.sceneLoaded -= OnSceneLoaded;
         }
 
         private void OnSceneLoaded(Scene scene, LoadSceneMode loadSceneMode)

@@ -18,10 +18,20 @@ namespace Scripts.UI
             backgroundImage = UserInterfaceContainer.Instance.Add<BackgroundImage>(ViewType.Background);
             backgroundCharactersParent = UserInterfaceContainer.Instance.Add<BackgroundCharactersParent>(ViewType.Background, Index.Last);
 
-            SceneManager.sceneLoaded += OnSceneLoaded;
+            SubscribeToSceneLoaded();
         }
 
         private void OnDestroy()
+        {
+            UnsubscribeFromSceneLoaded();
+        }
+
+        private void SubscribeToSceneLoaded()
+        {
+            SceneManager.sceneLoaded += OnSceneLoaded;
+        }
+
+        private void UnsubscribeFromSceneLoaded()
         {
             SceneManager.sceneLoaded -= OnSceneLoaded;
         }
