@@ -49,12 +49,13 @@ namespace PeerLogic.Common
             {
                 PeerLogic?.Dispose();
             });
+
+            UnsubscribeFromPeerDisconnectionNotifier();
         }
 
         private void OnDisconnected(DisconnectReason disconnectReason, string s)
         {
             Dispose();
-            UnsubscribeFromPeerDisconnectionNotifier();
         }
     }
 }

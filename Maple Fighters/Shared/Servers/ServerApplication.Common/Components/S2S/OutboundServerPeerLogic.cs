@@ -13,12 +13,15 @@ namespace ServerApplication.Common.Components
         where TOperationCode : IComparable, IFormattable, IConvertible
         where TEventCode : IComparable, IFormattable, IConvertible
     {
+        private readonly IOutboundServerPeer outboundServerPeer;
         private readonly IOperationRequestSender<TOperationCode> operationRequestSender;
         private readonly IEventHandlerRegister<TEventCode> eventHandlerRegister;
         private readonly IOperationResponseSubscriptionProvider subscriptionProvider;
 
         public OutboundServerPeerLogic(IOutboundServerPeer outboundServerPeer)
         {
+            this.outboundServerPeer = outboundServerPeer;
+
             var logOperationsRequest = (bool)Config.Global.Log.OperationsRequest;
             var logOperationsResponse = (bool)Config.Global.Log.OperationsResponse;
             var logEvents = (bool)Config.Global.Log.Events;
@@ -37,6 +40,12 @@ namespace ServerApplication.Common.Components
         public void SendOperation<TParams>(byte operationCode, TParams parameters)
             where TParams : struct, IParameters
         {
+            if (!IsConnected())
+            {
+                // If there is no connection, an operation request is not will be sent.
+                return;
+            }
+
             var code = (TOperationCode)Enum.ToObject(typeof(TOperationCode), operationCode);
             operationRequestSender.Send(code, parameters, MessageSendOptions.DefaultReliable());
         }
@@ -45,6 +54,12 @@ namespace ServerApplication.Common.Components
             where TRequestParams : struct, IParameters
             where TResponseParams : struct, IParameters
         {
+            if (!IsConnected())
+            {
+                // If there is no connection, an operation request is not will be sent.
+                return default(TResponseParams);
+            }
+
             var code = (TOperationCode)Enum.ToObject(typeof(TOperationCode), operationCode);
             var requestId = operationRequestSender.Send(code, parameters, MessageSendOptions.DefaultReliable());
             var responseParameters = await subscriptionProvider.ProvideSubscription<TResponseParams>(yield, requestId);
@@ -68,6 +83,11 @@ namespace ServerApplication.Common.Components
         private void OnOperationRequestFailed(RawMessageResponseData data, short requestId)
         {
             LogUtils.Log($"Sending an operaiton has been failed. Operation Code: {data.Code}");
+        }
+
+        private bool IsConnected()
+        {
+            return outboundServerPeer.IsConnected;
         }
     }
 }
