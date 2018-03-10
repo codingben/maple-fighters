@@ -3,7 +3,6 @@
     public enum ServerType
     {
         Game,
-        Character,
         Chat,
         Login,
         Registration

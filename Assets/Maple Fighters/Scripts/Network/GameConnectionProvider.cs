@@ -34,6 +34,7 @@ namespace Scripts.Services
             var noticeWindow = UserInterfaceContainer.Instance.Get<NoticeWindow>().AssertNotNull();
             noticeWindow.Message.text = "Could not connect to a game server.";
             noticeWindow.OkButton.interactable = true;
+            noticeWindow.OkButtonClickedAction = LoadedObjects.DestroyAll;
         }
 
         protected override void OnConnectionEstablished()
@@ -80,7 +81,11 @@ namespace Scripts.Services
 
         protected override void OnAuthorized()
         {
+            var noticeWindow = UserInterfaceContainer.Instance.Get<NoticeWindow>().AssertNotNull();
+            noticeWindow.Hide();
+
             authorizationStatus = AuthorizationStatus.Succeed;
+
             onAuthorized?.Invoke();
         }
 

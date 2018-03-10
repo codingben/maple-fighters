@@ -5,6 +5,7 @@ using Scripts.Gameplay.Actors;
 using Scripts.Services;
 using Scripts.UI;
 using Scripts.UI.Controllers;
+using Scripts.World;
 using UnityEngine;
 
 namespace Scripts.Gameplay
@@ -27,6 +28,11 @@ namespace Scripts.Gameplay
             yield return typeof(GameTimeProviderCreator);
             yield return typeof(UserInterfaceCreator);
             yield return typeof(CharacterCreator);
+
+            if (ServiceContainer.GameService.ServiceConnectionHandler.IsConnected())
+            {
+                yield return typeof(EnterSceneInvoker);
+            }
         }
 
         private IEnumerable<Type> GetContainersComponents()

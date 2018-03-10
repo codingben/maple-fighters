@@ -66,25 +66,25 @@ namespace Scripts.UI.Controllers
             });
             noticeWindow.OkButton.interactable = false;
 
-            Action loginAction = () =>
+            Action authenticateAction = () =>
             {
                 var parameters = new AuthenticateRequestParameters(email, password.CreateSha512());
-                coroutinesExecutor.StartTask((yield) => Login(yield, parameters));
+                coroutinesExecutor.StartTask((yield) => Authenticate(yield, parameters));
             };
 
             if (LoginConnectionProvider.Instance.IsConnected())
             {
-                loginAction.Invoke();
+                authenticateAction.Invoke();
             }
             else
             {
-                LoginConnectionProvider.Instance.Connect(onConnected: loginAction);
+                LoginConnectionProvider.Instance.Connect(onConnected: authenticateAction);
             }
         }
 
-        private async Task Login(IYield yield, AuthenticateRequestParameters parameters)
+        private async Task Authenticate(IYield yield, AuthenticateRequestParameters parameters)
         {
-            var responseParameters = await ServiceContainer.LoginService.Login(yield, parameters);
+            var responseParameters = await ServiceContainer.LoginService.Authenticate(yield, parameters);
             switch (responseParameters.Status)
             {
                 case LoginStatus.Succeed:
@@ -131,7 +131,6 @@ namespace Scripts.UI.Controllers
 
         private void OnLoginSucceed()
         {
-            LoginConnectionProvider.Instance.Dispose();
             SceneManager.LoadScene(loadSceneIndex, LoadSceneMode.Single);
         }
 

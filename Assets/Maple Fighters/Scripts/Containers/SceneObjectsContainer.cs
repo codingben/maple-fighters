@@ -39,7 +39,7 @@ namespace Scripts.Containers
         {
             SceneManager.sceneLoaded += OnSceneLoaded;
 
-            ServiceContainer.GameService.EnteredScene.AddListener(OnEnteredScene);
+            ServiceContainer.GameService.SceneEntered.AddListener(OnSceneEntered);
             ServiceContainer.GameService.SceneObjectAdded.AddListener(OnSceneObjectAdded);
             ServiceContainer.GameService.SceneObjectRemoved.AddListener(OnSceneObjectRemoved);
             ServiceContainer.GameService.SceneObjectsAdded.AddListener(OnSceneObjectsAdded);
@@ -50,7 +50,7 @@ namespace Scripts.Containers
         {
             SceneManager.sceneLoaded -= OnSceneLoaded;
 
-            ServiceContainer.GameService.EnteredScene.RemoveListener(OnEnteredScene);
+            ServiceContainer.GameService.SceneEntered.RemoveListener(OnSceneEntered);
             ServiceContainer.GameService.SceneObjectAdded.RemoveListener(OnSceneObjectAdded);
             ServiceContainer.GameService.SceneObjectRemoved.RemoveListener(OnSceneObjectRemoved);
             ServiceContainer.GameService.SceneObjectsAdded.RemoveListener(OnSceneObjectsAdded);
@@ -65,7 +65,7 @@ namespace Scripts.Containers
             }
         }
 
-        private void OnEnteredScene(EnterSceneResponseParameters parameters)
+        private void OnSceneEntered(EnterSceneResponseParameters parameters)
         {
             var sceneObject = parameters.SceneObject;
             AddSceneObject(sceneObject);

@@ -4,7 +4,7 @@ namespace Scripts.Containers
 {
     public static class ServiceContainer
     {
-        public static IGameService GameService
+        public static IGameServiceAPI GameService
         {
             get
             {
@@ -16,7 +16,7 @@ namespace Scripts.Containers
             }
         }
 
-        public static ICharacterService CharacterService
+        public static ICharacterServiceAPI CharacterService
         {
             get
             {
@@ -28,7 +28,7 @@ namespace Scripts.Containers
             }
         }
 
-        public static IChatService ChatService
+        public static IChatServiceAPI ChatService
         {
             get
             {
@@ -40,7 +40,7 @@ namespace Scripts.Containers
             }
         }
 
-        public static ILoginService LoginService
+        public static ILoginServiceAPI LoginService
         {
             get
             {
@@ -52,7 +52,7 @@ namespace Scripts.Containers
             }
         }
 
-        public static IRegistrationService RegistrationService
+        public static IRegistrationServiceAPI RegistrationService
         {
             get
             {
@@ -64,10 +64,10 @@ namespace Scripts.Containers
             }
         }
 
-        private static IGameService gameService;
-        private static ICharacterService characterService;
-        private static IChatService chatService;
-        private static ILoginService loginService;
-        private static IRegistrationService registrationService;
+        private static IGameServiceAPI gameService;
+        private static ICharacterServiceAPI characterService;
+        private static IChatServiceAPI chatService;
+        private static ILoginServiceAPI loginService;
+        private static IRegistrationServiceAPI registrationService;
     }
 }

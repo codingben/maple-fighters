@@ -4,7 +4,7 @@ using Registration.Common;
 
 namespace Scripts.Services
 {
-    public interface IRegistrationService : IServiceBase
+    public interface IRegistrationServiceAPI : IServiceBase
     {
         Task<RegisterResponseParameters> Register(IYield yield, RegisterRequestParameters parameters);
     }

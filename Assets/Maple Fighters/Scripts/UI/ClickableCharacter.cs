@@ -1,6 +1,6 @@
 ﻿using System;
-using Character.Client.Common;
 using CommonTools.Log;
+using Game.Common;
 using Scripts.UI.Core;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -12,10 +12,10 @@ namespace Scripts.UI
         public Action PlayIdleAnimationAction;
         public Action PlayWalkAnimationAction;
 
-        public event Action<CharacterFromDatabaseParameters, int> CharacterClicked;
+        public event Action<CharacterParameters, int> CharacterClicked;
 
         private int index;
-        private CharacterFromDatabaseParameters? character;
+        private CharacterParameters? character;
 
         private Animator animator;
 
@@ -55,7 +55,7 @@ namespace Scripts.UI
             screenMouseDetection.MouseClicked -= PlayIdleAnimation;
         }
 
-        public void SetCharacter(int index, CharacterFromDatabaseParameters character)
+        public void SetCharacter(int index, CharacterParameters character)
         {
             this.index = index;
             this.character = character;

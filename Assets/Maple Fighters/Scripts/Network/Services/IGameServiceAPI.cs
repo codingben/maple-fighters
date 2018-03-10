@@ -5,17 +5,16 @@ using Game.Common;
 
 namespace Scripts.Services
 {
-    public interface IGameService : IServiceBase
+    public interface IGameServiceAPI : IServiceBase
     {
         Task<AuthorizeResponseParameters> Authorize(IYield yield, AuthorizeRequestParameters parameters);
-        Task<CharacterValidationStatus> ValidateCharacter(IYield yield, ValidateCharacterRequestParameters parameters);
-        Task<EnterSceneResponseParameters?> EnterScene(IYield yield);
+        Task EnterScene(IYield yield);
         Task<ChangeSceneResponseParameters> ChangeScene(IYield yield, ChangeSceneRequestParameters parameters);
 
         void UpdatePosition(UpdatePositionRequestParameters parameters);
         void UpdatePlayerState(UpdatePlayerStateRequestParameters parameters);
 
-        UnityEvent<EnterSceneResponseParameters> EnteredScene { get; }
+        UnityEvent<EnterSceneResponseParameters> SceneEntered { get; }
 
         UnityEvent<SceneObjectAddedEventParameters> SceneObjectAdded { get; }
         UnityEvent<SceneObjectRemovedEventParameters> SceneObjectRemoved { get; }

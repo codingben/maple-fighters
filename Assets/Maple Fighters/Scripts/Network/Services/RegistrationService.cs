@@ -6,7 +6,7 @@ using Registration.Common;
 
 namespace Scripts.Services
 {
-    public sealed class RegistrationService : ServiceBase<RegistrationOperations, EmptyEventCode>, IRegistrationService
+    public sealed class RegistrationService : ServiceBase<RegistrationOperations, EmptyEventCode>, IRegistrationServiceAPI
     {
         public async Task<RegisterResponseParameters> Register(IYield yield, RegisterRequestParameters parameters)
         {

@@ -21,6 +21,12 @@ namespace Scripts.World
             coroutinesExecutor.ExecuteExternally();
         }
 
+        private void OnDestroy()
+        {
+            coroutinesExecutor.RemoveFromExternalExecutor();
+            coroutinesExecutor.Dispose();
+        }
+
         public void StartInteraction()
         {
             if (isTeleporting)

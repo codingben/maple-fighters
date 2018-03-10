@@ -1,18 +1,18 @@
-﻿using Character.Client.Common;
+﻿using Game.Common;
 using UnityEngine;
 
 namespace Scripts.Gameplay.Actors
 {
     public class CharacterInformationProvider : MonoBehaviour
     {
-        private CharacterFromDatabaseParameters character;
+        private CharacterParameters character;
 
-        public void SetCharacterInformation(CharacterFromDatabaseParameters character)
+        public void SetCharacterInformation(CharacterParameters character)
         {
             this.character = character;
         }
 
-        public CharacterFromDatabaseParameters GetCharacterInfo()
+        public CharacterParameters GetCharacterInfo()
         {
             return character;
         }

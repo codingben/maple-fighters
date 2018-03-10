@@ -1,15 +1,14 @@
 ﻿using System.Threading.Tasks;
-using Authorization.Client.Common;
-using Character.Client.Common;
 using CommonTools.Coroutines;
+using Game.Common;
 
 namespace Scripts.Services
 {
-    public interface ICharacterService : IServiceBase
+    public interface ICharacterServiceAPI
     {
-        Task<AuthorizeResponseParameters> Authorize(IYield yield, AuthorizeRequestParameters parameters);
         Task<GetCharactersResponseParameters> GetCharacters(IYield yield);
         Task<CreateCharacterResponseParameters> CreateCharacter(IYield yield, CreateCharacterRequestParameters parameters);
         Task<RemoveCharacterResponseParameters> RemoveCharacter(IYield yield, RemoveCharacterRequestParameters parameters);
+        Task<CharacterValidationStatus> ValidateCharacter(IYield yield, ValidateCharacterRequestParameters parameters);
     }
 }

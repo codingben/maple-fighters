@@ -1,5 +1,4 @@
-﻿using Character.Client.Common;
-using Game.Common;
+﻿using Game.Common;
 using UnityEngine;
 
 namespace Scripts.Gameplay.Actors
@@ -19,7 +18,7 @@ namespace Scripts.Gameplay.Actors
             const string OBJECT_FROM_GAME_RESOURCES = "Local Player";
 
             var sceneObject = new SceneObjectParameters(id, OBJECT_FROM_GAME_RESOURCES, spawnPosition.x, spawnPosition.y);
-            var characterFromDatabase = new CharacterFromDatabaseParameters(name, characterClass, CharacterIndex.Zero);
+            var characterFromDatabase = new CharacterParameters(name, characterClass, CharacterIndex.Zero);
             var character = new CharacterSpawnDetailsParameters(sceneObject.Id, characterFromDatabase, spawnDirection);
             return new EnterSceneResponseParameters(sceneObject, character);
         }

@@ -5,7 +5,7 @@ using CommonTools.Coroutines;
 
 namespace Scripts.Services
 {
-    public interface IChatService : IServiceBase
+    public interface IChatServiceAPI : IServiceBase
     {
         Task<AuthorizeResponseParameters> Authorize(IYield yield, AuthorizeRequestParameters parameters);
 

@@ -1,5 +1,4 @@
-﻿using Character.Client.Common;
-using Game.Common;
+﻿using Game.Common;
 using UnityEngine;
 
 namespace Scripts.Gameplay.Actors
@@ -49,7 +48,7 @@ namespace Scripts.Gameplay.Actors
             spriteRenderer.sortingOrder = OrderInLayer;
         }
 
-        private void InitializeCharacterInformationProvider(CharacterFromDatabaseParameters character)
+        private void InitializeCharacterInformationProvider(CharacterParameters character)
         {
             var characterInformationProvider = GetComponent<CharacterInformationProvider>();
             characterInformationProvider.SetCharacterInformation(character);

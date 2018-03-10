@@ -23,9 +23,15 @@ namespace Scripts.Services
 
         public async Task<ConnectionStatus> Connect(IYield yield, ICoroutinesExecutor coroutinesExecutor, ServerConnectionInformation serverConnectionInformation)
         {
+            var serverType = serverConnectionInformation.ServerType;
+
+            if (IsConnected())
+            {
+                throw new ServerConnectionFailed($"A connection already exists with a {serverType} server.");
+            }
+
             ServerConnectionInformation = serverConnectionInformation;
 
-            var serverType = ServerConnectionInformation.ServerType;
             var ip = ServerConnectionInformation.PeerConnectionInformation.Ip;
             var port = ServerConnectionInformation.PeerConnectionInformation.Port;
             LogUtils.Log($"Connecting to a {serverType} server. IP: {ip} Port: {port}");

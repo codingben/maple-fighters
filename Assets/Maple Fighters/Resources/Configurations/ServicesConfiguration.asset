@@ -24,7 +24,7 @@ MonoBehaviour:
       Ip: 
       Port: 0
   - Name: Chat
-    ServerType: 2
+    ServerType: 1
     UdpConnectionDetails:
       Ip: 127.0.0.1
       Port: 5056
@@ -35,7 +35,7 @@ MonoBehaviour:
       Ip: 
       Port: 0
   - Name: Login
-    ServerType: 3
+    ServerType: 2
     UdpConnectionDetails:
       Ip: 127.0.0.1
       Port: 5057
@@ -46,21 +46,10 @@ MonoBehaviour:
       Ip: 
       Port: 0
   - Name: Registration
-    ServerType: 4
+    ServerType: 3
     UdpConnectionDetails:
       Ip: 127.0.0.1
       Port: 5058
-    TcpConnectionDetails:
-      Ip: 
-      Port: 0
-    WebConnectionDetails:
-      Ip: 
-      Port: 0
-  - Name: Character
-    ServerType: 1
-    UdpConnectionDetails:
-      Ip: 127.0.0.1
-      Port: 5061
     TcpConnectionDetails:
       Ip: 
       Port: 0

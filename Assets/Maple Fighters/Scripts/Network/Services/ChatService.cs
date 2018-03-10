@@ -6,7 +6,7 @@ using CommonTools.Coroutines;
 
 namespace Scripts.Services
 {
-    public sealed class ChatService : ServiceBase<ChatOperations, ChatEvents>, IChatService
+    public sealed class ChatService : ServiceBase<ChatOperations, ChatEvents>, IChatServiceAPI
     {
         public UnityEvent<ChatMessageEventParameters> ChatMessageReceived { get; } = new UnityEvent<ChatMessageEventParameters>();
 

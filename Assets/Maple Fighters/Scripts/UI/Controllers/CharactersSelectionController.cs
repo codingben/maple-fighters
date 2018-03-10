@@ -1,10 +1,8 @@
-﻿using System;
-using System.Threading.Tasks;
-using Character.Client.Common;
+﻿using System.Threading.Tasks;
 using CommonTools.Coroutines;
 using CommonTools.Log;
+using Game.Common;
 using Scripts.Containers;
-using Scripts.Services;
 using Scripts.UI.Core;
 using Scripts.UI.Windows;
 
@@ -12,11 +10,10 @@ namespace Scripts.UI.Controllers
 {
     public class CharactersSelectionController : MonoSingleton<CharactersSelectionController>
     {
-        private ClickableCharacter clickedCharacter;
-
         private CharactersSelectionWindow charactersSelectionWindow;
         private CharacterNameWindow characterNameWindow;
 
+        private ClickableCharacter clickedCharacter;
         private CreateCharacterRequestParameters characterRequestParameters;
 
         private readonly ExternalCoroutinesExecutor coroutinesExecutor = new ExternalCoroutinesExecutor();
@@ -36,13 +33,14 @@ namespace Scripts.UI.Controllers
             if (charactersSelectionWindow)
             {
                 charactersSelectionWindow.Show();
-                return;
             }
+            else
+            {
+                charactersSelectionWindow = UserInterfaceContainer.Instance.Add<CharactersSelectionWindow>();
+                charactersSelectionWindow.Show();
 
-            charactersSelectionWindow = UserInterfaceContainer.Instance.Add<CharactersSelectionWindow>();
-            charactersSelectionWindow.Show();
-
-            SubscribeToCharactersSelectionWindowEvents();
+                SubscribeToCharactersSelectionWindowEvents();
+            }
         }
 
         private void ShowCharacterNamwWindow()
@@ -50,13 +48,14 @@ namespace Scripts.UI.Controllers
             if (characterNameWindow)
             {
                 characterNameWindow.Show();
-                return;
             }
+            else
+            {
+                characterNameWindow = UserInterfaceContainer.Instance.Add<CharacterNameWindow>();
+                characterNameWindow.Show();
 
-            characterNameWindow = UserInterfaceContainer.Instance.Add<CharacterNameWindow>();
-            characterNameWindow.Show();
-
-            SubscribeToCharacterNameWindow();
+                SubscribeToCharacterNameWindow();
+            }
         }
 
         private void OnDestroy()
@@ -113,19 +112,7 @@ namespace Scripts.UI.Controllers
             var noticeWindow = Utils.ShowNotice("Creating a new character... Please wait.", ShowCharacterNamwWindow, true);
             noticeWindow.OkButton.interactable = false;
 
-            Action createCharacterAction = () =>
-            {
-                coroutinesExecutor.StartTask(CreateCharacter);
-            };
-
-            if (CharacterConnectionProvider.Instance.IsConnected())
-            {
-                createCharacterAction.Invoke();
-            }
-            else
-            {
-                CharacterConnectionProvider.Instance.Connect(onAuthorized: createCharacterAction);
-            }
+            coroutinesExecutor.StartTask(CreateCharacter);
         }
 
         private async Task CreateCharacter(IYield yield)
@@ -202,9 +189,9 @@ namespace Scripts.UI.Controllers
             // Left blank intentionally
         }
 
-        private CharacterFromDatabaseParameters GetLastCreatedCharacter()
+        private CharacterParameters GetLastCreatedCharacter()
         {
-            return new CharacterFromDatabaseParameters(characterRequestParameters.Name, characterRequestParameters.CharacterClass, characterRequestParameters.Index);
+            return new CharacterParameters(characterRequestParameters.Name, characterRequestParameters.CharacterClass, characterRequestParameters.Index);
         }
     }
 }

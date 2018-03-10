@@ -1,30 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Character.Client.Common;
 using CommonTools.Coroutines;
 using CommonTools.Log;
 using Scripts.Containers;
-using Scripts.Services;
 using Scripts.UI.Core;
 using Scripts.UI.Windows;
-using Scripts.World;
 using Game.Common;
-using Scripts.Utils;
+using Scripts.World;
 using TMPro;
 using UnityEngine;
-using GameObject = UnityEngine.GameObject;
 
 namespace Scripts.UI.Controllers
 {
     public class CharactersController : MonoSingleton<CharactersController>
     {
-        private const string CHARACTERS_PATH = "Characters/{0}";
-        private const int MAXIMUM_CHARACTERS = 3;
-
-        private CharacterSelectionOptionsWindow characterSelectionOptionsWindow;
-        private ClickableCharacter clickedCharacter;
         private readonly ClickableCharacter[] characters = { null, null, null };
         private readonly ExternalCoroutinesExecutor coroutinesExecutor = new ExternalCoroutinesExecutor();
 
@@ -33,19 +23,7 @@ namespace Scripts.UI.Controllers
             var chooseFighterText = UserInterfaceContainer.Instance.Add<ChooseFighterText>();
             chooseFighterText.Show();
 
-            Action getCharactersAction = () =>
-            {
-                coroutinesExecutor.StartTask(GetCharacters);
-            };
-
-            if (CharacterConnectionProvider.Instance.IsConnected())
-            {
-                getCharactersAction.Invoke();
-            }
-            else
-            {
-                CharacterConnectionProvider.Instance.Connect(onAuthorized: getCharactersAction);
-            }
+            coroutinesExecutor.StartTask(GetCharacters);
         }
 
         private void OnDestroy()
@@ -70,20 +48,16 @@ namespace Scripts.UI.Controllers
         private async Task GetCharacters(IYield yield)
         {
             var parameters = await ServiceContainer.CharacterService.GetCharacters(yield);
-            if (parameters.Characters.Length == 0)
-            {
-                Utils.ShowNotice("Failed to get characters, unfortunately.", LoadedObjects.DestroyAll);
-                return;
-            }
-
-            var characters = new List<CharacterFromDatabaseParameters>(MAXIMUM_CHARACTERS);
-            characters.AddRange(parameters.Characters.ToList());
-
-            OnReceivedCharacters(characters);
+            OnReceivedCharacters(parameters);
         }
 
-        private void OnReceivedCharacters(IEnumerable<CharacterFromDatabaseParameters> characters)
+        private void OnReceivedCharacters(GetCharactersResponseParameters parameters)
         {
+            const int CHARACTERS_COUNT = 3;
+
+            var characters = new List<CharacterParameters>(CHARACTERS_COUNT);
+            characters.AddRange(parameters.Characters);
+
             foreach (var character in characters)
             {
                 if (character.Index == CharacterIndex.Zero)
@@ -96,11 +70,13 @@ namespace Scripts.UI.Controllers
             }
         }
 
-        private void CreateCharacter(CharacterFromDatabaseParameters character)
+        private void CreateCharacter(CharacterParameters character)
         {
+            const string CHARACTERS_RESOURCES_PATH = "Characters/{0}";
+
             var index = (int)character.Index;
             var characterName = character.HasCharacter ? $"{character.CharacterType} {index}" : $"Sample {index}";
-            var characterType = Resources.Load<GameObject>(string.Format(CHARACTERS_PATH, characterName));
+            var characterType = Resources.Load<GameObject>(string.Format(CHARACTERS_RESOURCES_PATH, characterName));
             var anchoredPosition = characterType.GetComponent<RectTransform>().anchoredPosition;
 
             var charactersParent = UserInterfaceContainer.Instance.Get<BackgroundCharactersParent>().AssertNotNull();
@@ -110,7 +86,7 @@ namespace Scripts.UI.Controllers
 
             var characterComponent = characterGameObject.GetComponent<ClickableCharacter>().AssertNotNull();
             characterComponent.SetCharacter(index, character);
-            characterComponent.CharacterClicked += (clickedCharacter, characterIndex) => OnCharacterClicked(characterComponent, clickedCharacter, characterIndex);
+            characterComponent.CharacterClicked += OnCharacterClicked;
 
             characters[(int)character.Index] = characterComponent;
 
@@ -126,7 +102,7 @@ namespace Scripts.UI.Controllers
             }
         }
 
-        public void RecreateCharacter(CharacterFromDatabaseParameters character)
+        public void RecreateCharacter(CharacterParameters character)
         {
             var index = (int)character.Index;
             characters[index].Hide();
@@ -134,57 +110,78 @@ namespace Scripts.UI.Controllers
             CreateCharacter(character);
         }
 
-        private void OnCharacterClicked(ClickableCharacter clickableCharacter, CharacterFromDatabaseParameters character, int index)
+        private void OnCharacterClicked(CharacterParameters character, int characterIndex)
         {
             var chooseFighterText = UserInterfaceContainer.Instance.Get<ChooseFighterText>().AssertNotNull();
             chooseFighterText.Hide();
 
+            var characterSelectionOptionsWindow = UserInterfaceContainer.Instance.Get<CharacterSelectionOptionsWindow>();
             if (characterSelectionOptionsWindow != null)
             {
-                characterSelectionOptionsWindow.Hide();
-            }
+                Action onCharacterSelectionOptionsWindowDisappeared = delegate
+                {
+                    characterSelectionOptionsWindow.Hide();
 
-            ShowCharacterSelectionOptionsWindow(clickableCharacter, character, index);
+                    var clickableCharacter = characters[characterIndex];
+                    ShowCharacterSelectionOptionsWindow(clickableCharacter, character, characterIndex);
+                };
+
+                characterSelectionOptionsWindow.Hide(onCharacterSelectionOptionsWindowDisappeared);
+            }
+            else
+            {
+                var clickableCharacter = characters[characterIndex];
+                ShowCharacterSelectionOptionsWindow(clickableCharacter, character, characterIndex);
+            }
+            
+            PlayWalkCharacterAnimation(characterIndex);
         }
 
-        private void ShowCharacterSelectionOptionsWindow(ClickableCharacter clickableCharacter, CharacterFromDatabaseParameters character, int index)
+        private void ShowCharacterSelectionOptionsWindow(ClickableCharacter clickableCharacter, CharacterParameters character, int characterIndex)
         {
-            characterSelectionOptionsWindow = UserInterfaceContainer.Instance.Add<CharacterSelectionOptionsWindow>();
-            characterSelectionOptionsWindow.StartButtonClicked += () => OnStartButtonClicked(index);
-            characterSelectionOptionsWindow.CreateCharacterButtonClicked += () => OnCreateCharacterButtonClicked(clickableCharacter, index);
-            characterSelectionOptionsWindow.DeleteCharacterButtonClicked += () => OnDeleteCharacterButtonClicked(index);
-            characterSelectionOptionsWindow.PlayCharacterIdleAnimation += clickableCharacter.PlayIdleAnimationAction;
+            var characterSelectionOptionsWindow = UserInterfaceContainer.Instance.Add<CharacterSelectionOptionsWindow>().AssertNotNull();
+            characterSelectionOptionsWindow.StartButtonClicked += () => OnStartButtonClicked(characterIndex);
+            characterSelectionOptionsWindow.CreateCharacterButtonClicked += () => OnCreateCharacterButtonClicked(clickableCharacter, characterIndex);
+            characterSelectionOptionsWindow.DeleteCharacterButtonClicked += () => OnDeleteCharacterButtonClicked(characterIndex);
+            characterSelectionOptionsWindow.PlayCharacterIdleAnimation += () =>  PlayIdleCharacterAnimation(characterIndex);
             characterSelectionOptionsWindow.StartButtonInteraction(character.HasCharacter);
             characterSelectionOptionsWindow.CreateCharacterButtonInteraction(!character.HasCharacter);
             characterSelectionOptionsWindow.DeleteCharacterButtonInteraction(character.HasCharacter);
             characterSelectionOptionsWindow.Show();
+        }
 
-            clickedCharacter = clickableCharacter;
+        private void PlayIdleCharacterAnimation(int characterIndex)
+        {
+            var clickedCharacter = characters[characterIndex];
+            clickedCharacter.PlayIdleAnimationAction();
+        }
+
+        private void PlayWalkCharacterAnimation(int characterIndex)
+        {
+            var clickedCharacter = characters[characterIndex];
             clickedCharacter.PlayWalkAnimationAction();
         }
 
         private void OnStartButtonClicked(int characterIndex)
         {
+            var clickedCharacter = characters[characterIndex];
             clickedCharacter.PlayWalkAnimationAction();
 
             var noticeWindow = Utils.ShowNotice("Entering to the world... Please wait.", null, true);
             noticeWindow.OkButton.interactable = false;
 
-            GameConnectionProvider.Instance.Connect(onAuthorized: () => 
-            {
-                var parameters = new ValidateCharacterRequestParameters(characterIndex);
-                coroutinesExecutor.StartTask((y) => ValidateCharacter(y, parameters));
-            });
+            var parameters = new ValidateCharacterRequestParameters(characterIndex);
+            coroutinesExecutor.StartTask((y) => ValidateCharacter(y, parameters));
         }
 
         private async Task ValidateCharacter(IYield yield, ValidateCharacterRequestParameters parameters)
         {
-            var response = await ServiceContainer.GameService.ValidateCharacter(yield, parameters);
-            switch (response)
+            var responseParameters = await ServiceContainer.CharacterService.ValidateCharacter(yield, parameters);
+            switch (responseParameters)
             {
                 case CharacterValidationStatus.Ok:
                 {
-                    EnteredWorld();
+                    OnCharacterValidated();
                     break;
                 }
                 case CharacterValidationStatus.Wrong:
@@ -203,26 +200,25 @@ namespace Scripts.UI.Controllers
                 }
             }
 
-            if (response != CharacterValidationStatus.Ok)
+            if (responseParameters != CharacterValidationStatus.Ok)
             {
-                clickedCharacter.PlayIdleAnimationAction();
+                var index = parameters.CharacterIndex;
+                PlayIdleCharacterAnimation(index);
             }
         }
 
-        private void EnteredWorld()
+        private void OnCharacterValidated()
         {
+            Action enterScene = delegate 
+            {
+                var noticeWindow = UserInterfaceContainer.Instance.Get<NoticeWindow>().AssertNotNull();
+                UserInterfaceContainer.Instance.Remove(noticeWindow);
+
+                GameScenesController.Instance.LoadScene(Maps.Map_1);
+            };
+
             var screenFade = UserInterfaceContainer.Instance.Get<ScreenFade>().AssertNotNull();
-            screenFade.Show(OnEnteredWorld);
-        }
-
-        private void OnEnteredWorld()
-        {
-            CharacterConnectionProvider.Instance.Dispose();
-
-            var noticeWindow = UserInterfaceContainer.Instance.Get<NoticeWindow>().AssertNotNull();
-            UserInterfaceContainer.Instance.Remove(noticeWindow);
-
-            GameScenesController.Instance.LoadScene(Maps.Map_1);
+            screenFade.Show(onFinished: enterScene);
         }
 
         private void OnCreateCharacterButtonClicked(ClickableCharacter clickableCharacter, int characterIndex)
@@ -232,50 +228,38 @@ namespace Scripts.UI.Controllers
 
         private void OnDeleteCharacterButtonClicked(int characterIndex)
         {
-            Action deleteCharacterAction = () =>
-            {
-                var parameters = new RemoveCharacterRequestParameters(characterIndex);
-                coroutinesExecutor.StartTask((y) => DeleteCharacter(y, parameters));
-            };
+            var noticeWindow = Utils.ShowNotice("Deleting a character... Please wait.", null, true);
+            noticeWindow.OkButton.interactable = false;
 
-            if (CharacterConnectionProvider.Instance.IsConnected())
-            {
-                deleteCharacterAction.Invoke();
-            }
-            else
-            {
-                CharacterConnectionProvider.Instance.Connect(onAuthorized: deleteCharacterAction);
-            }
+            var parameters = new RemoveCharacterRequestParameters(characterIndex);
+            coroutinesExecutor.StartTask((y) => DeleteCharacter(y, parameters));
         }
 
         private async Task DeleteCharacter(IYield yield, RemoveCharacterRequestParameters parameters)
         {
-            var noticeWindow = Utils.ShowNotice("Deleting a character... Please wait.", null, true);
-            noticeWindow.OkButton.interactable = false;
-
             var responseParameters = await ServiceContainer.CharacterService.RemoveCharacter(yield, parameters);
             switch (responseParameters.Status)
             {
                 case RemoveCharacterStatus.Succeed:
                 {
-                    RecreateCharacter(new CharacterFromDatabaseParameters
-                    {
-                        HasCharacter = false,
-                        Index = (CharacterIndex)parameters.CharacterIndex
-                    });
+                    var characterParameters = new CharacterParameters{HasCharacter = false, Index = (CharacterIndex)parameters.CharacterIndex};
+                    RecreateCharacter(characterParameters);
 
+                    var noticeWindow = UserInterfaceContainer.Instance.Get<NoticeWindow>().AssertNotNull();
                     noticeWindow.Message.text = "Character deleted successfully.";
                     noticeWindow.OkButton.interactable = true;
                     break;
                 }
                 case RemoveCharacterStatus.Failed:
                 {
+                    var noticeWindow = UserInterfaceContainer.Instance.Get<NoticeWindow>().AssertNotNull();
                     noticeWindow.Message.text = "Could not remove a character. Please try again.";
                     noticeWindow.OkButton.interactable = true;
                     break;
                 }
                 default:
                 {
+                    var noticeWindow = UserInterfaceContainer.Instance.Get<NoticeWindow>().AssertNotNull();
                     noticeWindow.Message.text = "Something went wrong, please try again.";
                     noticeWindow.OkButton.interactable = true;
                     break;

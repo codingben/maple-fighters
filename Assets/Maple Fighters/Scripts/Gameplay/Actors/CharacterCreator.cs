@@ -1,10 +1,8 @@
-﻿using System.Threading.Tasks;
-using CommonTools.Coroutines;
+﻿using CommonTools.Coroutines;
 using CommonTools.Log;
 using Scripts.Containers;
 using Scripts.Utils;
 using Game.Common;
-using UnityEngine.SceneManagement;
 
 namespace Scripts.Gameplay.Actors
 {
@@ -12,11 +10,21 @@ namespace Scripts.Gameplay.Actors
     {
         private readonly ExternalCoroutinesExecutor coroutinesExecutor = new ExternalCoroutinesExecutor();
 
-        protected override void OnAwake()
+        private void Start()
         {
-            base.OnAwake();
-
             SubscribeToEvents();
+
+            if (!ServiceContainer.GameService.ServiceConnectionHandler.IsConnected())
+            {
+                CreateDummyCharacter();
+            }
+        }
+
+        private void CreateDummyCharacter()
+        {
+            var parameters = DummyCharacterDetails.Instance.AssertNotNull("Could not find dummy character details. Please add DummyCharacterDetails into a scene.")
+                .GetDummyCharacterParameters();
+            ServiceContainer.GameService.SceneEntered?.Invoke(parameters);
         }
 
         private void Update()
@@ -33,49 +41,21 @@ namespace Scripts.Gameplay.Actors
 
         private void SubscribeToEvents()
         {
-            SceneManager.sceneLoaded += OnSceneLoaded;
-
+            ServiceContainer.GameService.SceneEntered.AddListener(OnSceneEntered);
             ServiceContainer.GameService.CharacterAdded.AddListener(OnCharacterAdded);
             ServiceContainer.GameService.CharactersAdded.AddListener(OnCharactersAdded);
         }
 
         private void UnsubscribeFromEvents()
         {
-            SceneManager.sceneLoaded -= OnSceneLoaded;
-
+            ServiceContainer.GameService.SceneEntered.RemoveListener(OnSceneEntered);
             ServiceContainer.GameService.CharacterAdded.RemoveListener(OnCharacterAdded);
             ServiceContainer.GameService.CharactersAdded.RemoveListener(OnCharactersAdded);
         }
 
-        private void OnSceneLoaded(Scene scene, LoadSceneMode sceneMode)
+        private void OnSceneEntered(EnterSceneResponseParameters parameters)
         {
-            coroutinesExecutor.StartTask(EnterScene);
-        }
-
-        private async Task EnterScene(IYield yield)
-        {
-            var parameters = await ServiceContainer.GameService.EnterScene(yield);
-            OnEnteredScene(parameters);
-        }
-
-        private void OnEnteredScene(EnterSceneResponseParameters? parameters)
-        {
-            if (!parameters.HasValue)
-            {
-                if (DummyCharacterDetails.Instance == null)
-                {
-                    LogUtils.Log(MessageBuilder.Trace("Could not find dummy character details. Please add DummyCharacterDetails into a scene."), LogMessageType.Warning);
-                    return;
-                }
-
-                parameters = DummyCharacterDetails.Instance.GetDummyCharacterParameters();
-            }
-
-            // Will create scene object.
-            ServiceContainer.GameService.EnteredScene.Invoke(parameters.Value);
-
-            // Will create a character for this scene object.
-            var characterSpawnDetails = parameters.Value.Character;
+            var characterSpawnDetails = parameters.Character;
             CreateCharacter(characterSpawnDetails);
         }
 
@@ -96,7 +76,7 @@ namespace Scripts.Gameplay.Actors
         private void CreateCharacter(CharacterSpawnDetailsParameters characterSpawnDetails)
         {
             var id = characterSpawnDetails.SceneObjectId;
-            var sceneObject = SceneObjectsContainer.Instance.GetRemoteSceneObject(id);
+            var sceneObject = SceneObjectsContainer.Instance.GetRemoteSceneObject(id).AssertNotNull();
             sceneObject?.GetGameObject().GetComponent<ICharacterCreator>().Create(characterSpawnDetails);
         }
     }

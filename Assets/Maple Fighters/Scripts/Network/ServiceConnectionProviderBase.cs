@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Authorization.Client.Common;
 using CommonCommunicationInterfaces;
@@ -51,7 +50,18 @@ namespace Scripts.Services
 
             OnPreConnection();
 
-            var connectionStatus = await serviceBase.ServiceConnectionHandler.Connect(yield, CoroutinesExecutor, serverConnectionInformation);
+            ConnectionStatus connectionStatus;
+
+            try
+            {
+                connectionStatus = await serviceBase.ServiceConnectionHandler.Connect(yield, CoroutinesExecutor, serverConnectionInformation);
+            }
+            catch (ServerConnectionFailed exception)
+            {
+                LogUtils.Log(exception.Message, LogMessageType.Error);
+                return;
+            }
+
             if (connectionStatus == ConnectionStatus.Failed)
             {
                 OnConnectionFailed();

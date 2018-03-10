@@ -6,9 +6,9 @@ using Game.Common;
 
 namespace Scripts.Services
 {
-    public sealed class GameService : ServiceBase<GameOperations, GameEvents>, IGameService
+    public class GameService : ServiceBase<GameOperations, GameEvents>, IGameServiceAPI
     {
-        public UnityEvent<EnterSceneResponseParameters> EnteredScene { get; } = new UnityEvent<EnterSceneResponseParameters>();
+        public UnityEvent<EnterSceneResponseParameters> SceneEntered { get; } = new UnityEvent<EnterSceneResponseParameters>();
         public UnityEvent<SceneObjectAddedEventParameters> SceneObjectAdded { get; } = new UnityEvent<SceneObjectAddedEventParameters>();
         public UnityEvent<SceneObjectRemovedEventParameters> SceneObjectRemoved { get; } = new UnityEvent<SceneObjectRemovedEventParameters>();
         public UnityEvent<SceneObjectsAddedEventParameters> SceneObjectsAdded { get; } = new UnityEvent<SceneObjectsAddedEventParameters>();
@@ -65,23 +65,13 @@ namespace Scripts.Services
                 (yield, (byte)GameOperations.Authorize, parameters, MessageSendOptions.DefaultReliable());
         }
 
-        public async Task<EnterSceneResponseParameters?> EnterScene(IYield yield)
+        public async Task EnterScene(IYield yield)
         {
-            if (!ServiceConnectionHandler.IsConnected())
-            {
-                return null;
-            }
-
             var parameters = new EmptyParameters();
-            return await ServerPeerHandler.SendOperation<EmptyParameters, EnterSceneResponseParameters>
+            var responseParameters = await ServerPeerHandler.SendOperation<EmptyParameters, EnterSceneResponseParameters>
                 (yield, (byte)GameOperations.EnterScene, parameters, MessageSendOptions.DefaultReliable());
-        }
 
-        public async Task<CharacterValidationStatus> ValidateCharacter(IYield yield, ValidateCharacterRequestParameters parameters)
-        {
-            var responseParameters = await ServerPeerHandler.SendOperation<ValidateCharacterRequestParameters, ValidateCharacterResponseParameters>
-                (yield, (byte)GameOperations.ValidateCharacter, parameters, MessageSendOptions.DefaultReliable());
-            return responseParameters.Status;
+            SceneEntered?.Invoke(responseParameters);
         }
 
         public async Task<ChangeSceneResponseParameters> ChangeScene(IYield yield, ChangeSceneRequestParameters parameters)

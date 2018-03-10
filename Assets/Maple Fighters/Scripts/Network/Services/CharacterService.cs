@@ -1,18 +1,17 @@
 ﻿using System.Threading.Tasks;
-using Authorization.Client.Common;
-using Character.Client.Common;
 using CommonCommunicationInterfaces;
 using CommonTools.Coroutines;
-using CommunicationHelper;
+using Game.Common;
 
 namespace Scripts.Services
 {
-    public sealed class CharacterService : ServiceBase<CharacterOperations, EmptyEventCode>, ICharacterService
+    public sealed class CharacterService : GameService, ICharacterServiceAPI
     {
-        public async Task<AuthorizeResponseParameters> Authorize(IYield yield, AuthorizeRequestParameters parameters)
+        public async Task<GetCharactersResponseParameters> GetCharacters(IYield yield)
         {
-            return await ServerPeerHandler.SendOperation<AuthorizeRequestParameters, AuthorizeResponseParameters>
-                (yield, (byte)CharacterOperations.Authorize, parameters, MessageSendOptions.DefaultReliable());
+            var parameters = new EmptyParameters();
+            return await ServerPeerHandler.SendOperation<EmptyParameters, GetCharactersResponseParameters>
+                (yield, (byte)CharacterOperations.GetCharacters, parameters, MessageSendOptions.DefaultReliable());
         }
 
         public async Task<CreateCharacterResponseParameters> CreateCharacter(IYield yield, CreateCharacterRequestParameters parameters)
@@ -27,11 +26,11 @@ namespace Scripts.Services
                 (yield, (byte)CharacterOperations.RemoveCharacter, parameters, MessageSendOptions.DefaultReliable());
         }
 
-        public async Task<GetCharactersResponseParameters> GetCharacters(IYield yield)
+        public async Task<CharacterValidationStatus> ValidateCharacter(IYield yield, ValidateCharacterRequestParameters parameters)
         {
-            var parameters = new EmptyParameters();
-            return await ServerPeerHandler.SendOperation<EmptyParameters, GetCharactersResponseParameters>
-                (yield, (byte)CharacterOperations.GetCharacters, parameters, MessageSendOptions.DefaultReliable());
+            var responseParameters = await ServerPeerHandler.SendOperation<ValidateCharacterRequestParameters, ValidateCharacterResponseParameters>
+                (yield, (byte)CharacterOperations.ValidateCharacter, parameters, MessageSendOptions.DefaultReliable());
+            return responseParameters.Status;
         }
     }
 }
