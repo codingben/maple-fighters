@@ -1,5 +1,4 @@
-﻿using Character.Client.Common;
-using CommonTools.Log;
+﻿using CommonTools.Log;
 using Game.Application.Components;
 using Game.Application.PeerLogic.Components;
 using Game.Application.PeerLogic.Operations;
@@ -13,13 +12,10 @@ namespace Game.Application.PeerLogics
 {
     internal class GameScenePeerLogic : PeerLogicBase<GameOperations, GameEvents>
     {
-        private readonly CharacterFromDatabaseParameters character;
         private readonly ISceneObject sceneObject;
 
-        public GameScenePeerLogic(CharacterFromDatabaseParameters character)
+        public GameScenePeerLogic(CharacterParameters character)
         {
-            this.character = character;
-
             sceneObject = CreateSceneObject(character);
         }
 
@@ -30,7 +26,6 @@ namespace Game.Application.PeerLogics
             AddCommonComponents();
             AddComponents();
 
-            AddHandlerForEnterSceneOperation();
             AddHandlerForUpdatePositionOperation();
             AddHandlerForUpdatePlayerStateOperation();
             AddHandlerForChangeSceneOperation();
@@ -48,7 +43,7 @@ namespace Game.Application.PeerLogics
 
         private void AddHandlerForEnterSceneOperation()
         {
-            OperationHandlerRegister.SetHandler(GameOperations.EnterScene, new EnterSceneOperationHandler(sceneObject, character));
+            OperationHandlerRegister.SetHandler(GameOperations.EnterScene, new EnterSceneOperationHandler(sceneObject));
         }
 
         private void AddHandlerForUpdatePositionOperation()
@@ -74,7 +69,7 @@ namespace Game.Application.PeerLogics
             sceneObject.Dispose();
         }
 
-        private ISceneObject CreateSceneObject(CharacterFromDatabaseParameters character)
+        private ISceneObject CreateSceneObject(CharacterParameters character)
         {
             var characterSceneObjectCreator = Server.Components.GetComponent<ICharacterCreator>().AssertNotNull();
             var characterSceneObject = characterSceneObjectCreator.Create(character);

@@ -7,7 +7,7 @@ using ServerCommunicationHelper;
 
 namespace CharacterService.Application.PeerLogics.Operations
 {
-    internal class GetCharacterOperationHandler : IOperationRequestHandler<GetCharacterRequestParameters, GetCharacterResponseParameters>
+    internal class GetCharacterOperationHandler : IOperationRequestHandler<GetCharacterRequestParametersEx, GetCharacterResponseParameters>
     {
         private readonly IDatabaseCharacterGetter characterGetter;
 
@@ -16,7 +16,7 @@ namespace CharacterService.Application.PeerLogics.Operations
             characterGetter = Server.Components.GetComponent<IDatabaseCharacterGetter>().AssertNotNull();
         }
 
-        public GetCharacterResponseParameters? Handle(MessageData<GetCharacterRequestParameters> messageData, ref MessageSendOptions sendOptions)
+        public GetCharacterResponseParameters? Handle(MessageData<GetCharacterRequestParametersEx> messageData, ref MessageSendOptions sendOptions)
         {
             var userId = messageData.Parameters.UserId;
             var characterIndex = messageData.Parameters.CharacterIndex;

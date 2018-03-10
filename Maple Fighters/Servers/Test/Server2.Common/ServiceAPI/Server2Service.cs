@@ -4,7 +4,7 @@ using CommonCommunicationInterfaces;
 using CommonTools.Coroutines;
 using CommonTools.Log;
 using JsonConfig;
-using ServerApplication.Common.Components;
+using ServerCommunication.Common;
 using ServerCommunicationInterfaces;
 
 namespace Server2.Common

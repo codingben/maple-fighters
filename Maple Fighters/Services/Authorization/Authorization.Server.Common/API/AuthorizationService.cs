@@ -4,7 +4,7 @@ using CommonTools.Coroutines;
 using CommonTools.Log;
 using CommunicationHelper;
 using JsonConfig;
-using ServerApplication.Common.Components;
+using ServerCommunication.Common;
 
 namespace Authorization.Server.Common
 {

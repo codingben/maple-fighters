@@ -109,6 +109,10 @@
     <Compile Include="Application\Peer Logics\Components\ISceneObjectGetter.cs" />
     <Compile Include="Application\Peer Logics\Components\SceneObjectGetter.cs" />
     <Compile Include="Application\Peer Logics\Components\Utils.cs" />
+    <Compile Include="Application\Peer Logics\Operations\CreateCharacterOperationHandler.cs" />
+    <Compile Include="Application\Peer Logics\Operations\EnterSceneOperationHandler.cs" />
+    <Compile Include="Application\Peer Logics\Operations\GetCharactersOperationHandler.cs" />
+    <Compile Include="Application\Peer Logics\Operations\RemoveCharacterOperationHandler.cs" />
     <Compile Include="Application\Scene Objects\Components\CharacterBody.cs" />
     <Compile Include="Application\Peer Logics\CharacterSelectionPeerLogic.cs" />
     <Compile Include="Application\Peer Logics\Components\PeerIdGetter.cs" />
@@ -116,7 +120,6 @@
     <Compile Include="Application\GameApplication.cs" />
     <Compile Include="Application\Peer Logics\Components\InterestManagementNotifier.cs" />
     <Compile Include="Application\Peer Logics\Operations\ChangeSceneOperationHandler.cs" />
-    <Compile Include="Application\Peer Logics\Operations\EnterSceneOperationHandler.cs" />
     <Compile Include="Application\Peer Logics\Operations\CharacterValidationOperationHandler.cs" />
     <Compile Include="Application\Peer Logics\GameScenePeerLogic.cs" />
     <Compile Include="Application\Peer Logics\Operations\UpdatePositionOperationHandler.cs" />
@@ -152,10 +155,6 @@
       <Project>{174C1938-CA68-4549-97DE-3470AFACB7C7}</Project>
       <Name>Authorization.Server.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\Services\Character\Character.Client.Common\Characters.Client.Common\Character.Client.Common.csproj">
-      <Project>{2EB94BA4-299A-47D9-93D0-E86D06463A18}</Project>
-      <Name>Character.Client.Common</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\Services\Character\Character.Server.Common\Character.Server.Common.csproj">
       <Project>{42BB62DA-299C-4EC1-B83C-894E5D75E505}</Project>
       <Name>Character.Server.Common</Name>
@@ -175,6 +174,10 @@
     <ProjectReference Include="..\..\..\Shared\Servers\ServerApplication.Common\ServerApplication.Common.csproj">
       <Project>{f82fbb67-7b1d-43b7-a415-3f407d40e5c7}</Project>
       <Name>ServerApplication.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Shared\Servers\ServerCommunication.Common\ServerCommunication.Common\ServerCommunication.Common.csproj">
+      <Project>{5e8328b3-e51c-4291-b7de-83673c4ce889}</Project>
+      <Name>ServerCommunication.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\Game.Common\Game.Common.csproj">
       <Project>{AA536188-84FF-4286-A9E6-BAFBE1D8D37B}</Project>

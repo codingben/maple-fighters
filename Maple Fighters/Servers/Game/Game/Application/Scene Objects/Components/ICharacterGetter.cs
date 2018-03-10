@@ -1,10 +1,10 @@
-﻿using Character.Client.Common;
-using ComponentModel.Common;
+﻿using ComponentModel.Common;
+using Game.Common;
 
 namespace Game.Application.SceneObjects.Components
 {
     internal interface ICharacterGetter : IExposableComponent
     {
-        CharacterFromDatabaseParameters GetCharacter();
+        CharacterParameters GetCharacter();
     }
 }

@@ -1,8 +1,8 @@
-﻿using Character.Client.Common;
-using CommonTools.Log;
+﻿using CommonTools.Log;
 using ComponentModel.Common;
 using Database.Common.Components;
 using Database.Common.TablesDefinition;
+using Game.Common;
 using ServiceStack.OrmLite;
 
 namespace CharacterService.Application.Components

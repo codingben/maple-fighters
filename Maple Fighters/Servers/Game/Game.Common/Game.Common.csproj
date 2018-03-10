@@ -51,6 +51,11 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Enums\Character\CharacterClasses.cs" />
+    <Compile Include="Enums\Character\CharacterCreationStatus.cs" />
+    <Compile Include="Enums\Character\CharacterIndex.cs" />
+    <Compile Include="Enums\Character\CharacterOperations.cs" />
+    <Compile Include="Enums\Character\RemoveCharacterStatus.cs" />
     <Compile Include="Parameters\ChangeSceneRequestParameters.cs" />
     <Compile Include="Parameters\ChangeSceneResponseParameters.cs" />
     <Compile Include="Parameters\CharacterAddedEventParameters.cs" />
@@ -58,6 +63,12 @@
     <Compile Include="Parameters\CharactersAddedEventParameters.cs" />
     <Compile Include="Enums\DirectionsUtils.cs" />
     <Compile Include="Enums\Directions.cs" />
+    <Compile Include="Parameters\Character\CharacterParameters.cs" />
+    <Compile Include="Parameters\Character\CreateCharacterRequestParameters.cs" />
+    <Compile Include="Parameters\Character\CreateCharacterResponseParameters.cs" />
+    <Compile Include="Parameters\Character\GetCharactersResponseParameters.cs" />
+    <Compile Include="Parameters\Character\RemoveCharacterRequestParameters.cs" />
+    <Compile Include="Parameters\Character\RemoveCharacterResponseParameters.cs" />
     <Compile Include="Parameters\PlayerAttackedEventParameters.cs" />
     <Compile Include="Parameters\ValidateCharacterRequestParameters.cs" />
     <Compile Include="Parameters\SceneObjectsAddedEventParameters.cs" />
@@ -81,12 +92,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\Services\Character\Character.Client.Common\Characters.Client.Common\Character.Client.Common.csproj">
-      <Project>{2EB94BA4-299A-47D9-93D0-E86D06463A18}</Project>
-      <Name>Character.Client.Common</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

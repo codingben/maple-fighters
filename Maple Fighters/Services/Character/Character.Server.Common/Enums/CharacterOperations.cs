@@ -2,6 +2,10 @@
 {
     public enum CharacterOperations : byte
     {
-        GetCharacter
+        CreateCharacter,
+        RemoveCharacter,
+        GetCharacters,
+        GetCharacter,
+        ValidateCharacter
     }
 }

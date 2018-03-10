@@ -1,5 +1,4 @@
 ﻿using System.IO;
-using Character.Client.Common;
 using CommonCommunicationInterfaces;
 
 namespace Game.Common
@@ -7,10 +6,10 @@ namespace Game.Common
     public struct CharacterSpawnDetailsParameters : IParameters
     {
         public int SceneObjectId;
-        public CharacterFromDatabaseParameters Character;
+        public CharacterParameters Character;
         public Directions Direction;
 
-        public CharacterSpawnDetailsParameters(int sceneObjectId, CharacterFromDatabaseParameters character, Directions direction)
+        public CharacterSpawnDetailsParameters(int sceneObjectId, CharacterParameters character, Directions direction)
         {
             SceneObjectId = sceneObjectId;
             Character = character;

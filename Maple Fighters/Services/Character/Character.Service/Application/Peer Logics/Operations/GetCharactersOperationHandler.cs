@@ -1,27 +1,26 @@
 ﻿using System.Linq;
-using Character.Client.Common;
+using Character.Server.Common;
 using CharacterService.Application.Components;
 using CommonCommunicationInterfaces;
 using CommonTools.Log;
+using Game.Common;
 using ServerApplication.Common.ApplicationBase;
 using ServerCommunicationHelper;
 
 namespace CharacterService.Application.PeerLogics.Operations
 {
-    internal class GetCharactersOperationHandler : IOperationRequestHandler<EmptyParameters, GetCharactersResponseParameters>
+    internal class GetCharactersOperationHandler : IOperationRequestHandler<GetCharactersRequestParameters, GetCharactersResponseParameters>
     {
-        private readonly int userId;
         private readonly IDatabaseCharactersGetter databaseCharactersGetter;
 
-        public GetCharactersOperationHandler(int userId)
+        public GetCharactersOperationHandler()
         {
-            this.userId = userId;
-
             databaseCharactersGetter = Server.Components.GetComponent<IDatabaseCharactersGetter>().AssertNotNull();
         }
 
-        public GetCharactersResponseParameters? Handle(MessageData<EmptyParameters> messageData, ref MessageSendOptions sendOptions)
+        public GetCharactersResponseParameters? Handle(MessageData<GetCharactersRequestParameters> messageData, ref MessageSendOptions sendOptions)
         {
+            var userId = messageData.Parameters.UserId;
             var characters = databaseCharactersGetter.GetCharacters(userId).ToArray();
             return new GetCharactersResponseParameters(characters);
         }

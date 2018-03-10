@@ -1,5 +1,5 @@
-﻿using Character.Client.Common;
-using ComponentModel.Common;
+﻿using ComponentModel.Common;
+using Game.Common;
 
 namespace CharacterService.Application.Components
 {

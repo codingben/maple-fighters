@@ -16,7 +16,7 @@ namespace PeerLogic.Common
 
         protected IClientPeerWrapper<IClientPeer> PeerWrapper { get; private set; }
         protected IOperationRequestHandlerRegister<TOperationCode> OperationHandlerRegister { get; private set; }
-        protected IEventSender<TEventCode> EventSender { get; private set; }
+        private IEventSender<TEventCode> EventSender { get; set; }
 
         public virtual void Initialize(IClientPeerWrapper<IClientPeer> peer)
         {
@@ -43,7 +43,7 @@ namespace PeerLogic.Common
             var logOperationsRequest = (bool)Config.Global.Log.OperationsRequest;
             var logOperationsResponse = (bool)Config.Global.Log.OperationsResponse;
 
-            // Necessary for async operation handlers.
+            // A coroutines executor is necessary to handle async operation handlers
             var coroutinesExecutor = Components.AddComponent(new CoroutinesExecutor(new FiberCoroutinesExecutor(PeerWrapper.Peer.Fiber, 100)));
 
             OperationHandlerRegister = new OperationRequestsHandler<TOperationCode>(PeerWrapper.Peer.OperationRequestNotifier,

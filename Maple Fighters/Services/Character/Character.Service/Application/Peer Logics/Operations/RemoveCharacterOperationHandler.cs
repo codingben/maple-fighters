@@ -1,28 +1,27 @@
-﻿using Character.Client.Common;
+﻿using Character.Server.Common;
 using CharacterService.Application.Components;
 using CommonCommunicationInterfaces;
 using CommonTools.Log;
+using Game.Common;
 using ServerApplication.Common.ApplicationBase;
 using ServerCommunicationHelper;
 
 namespace CharacterService.Application.PeerLogics.Operations
 {
-    internal class RemoveCharacterOperationHandler : IOperationRequestHandler<RemoveCharacterRequestParameters, RemoveCharacterResponseParameters>
+    internal class RemoveCharacterOperationHandler : IOperationRequestHandler<RemoveCharacterRequestParametersEx, RemoveCharacterResponseParameters>
     {
-        private readonly int userId;
         private readonly IDatabaseCharacterRemover databaseCharacterRemover;
         private readonly IDatabaseCharacterExistence databaseCharacterExistence;
 
-        public RemoveCharacterOperationHandler(int userId)
+        public RemoveCharacterOperationHandler()
         {
-            this.userId = userId;
-
             databaseCharacterRemover = Server.Components.GetComponent<IDatabaseCharacterRemover>().AssertNotNull();
             databaseCharacterExistence = Server.Components.GetComponent<IDatabaseCharacterExistence>().AssertNotNull();
         }
 
-        public RemoveCharacterResponseParameters? Handle(MessageData<RemoveCharacterRequestParameters> messageData, ref MessageSendOptions sendOptions)
+        public RemoveCharacterResponseParameters? Handle(MessageData<RemoveCharacterRequestParametersEx> messageData, ref MessageSendOptions sendOptions)
         {
+            var userId = messageData.Parameters.UserId;
             var characterIndex = messageData.Parameters.CharacterIndex;
             databaseCharacterRemover.Remove(userId, characterIndex);
 

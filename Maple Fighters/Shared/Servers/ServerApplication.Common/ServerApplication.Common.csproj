@@ -79,17 +79,11 @@
     <Compile Include="Components\IFiberStarter.cs" />
     <Compile Include="Components\IIdGenerator.cs" />
     <Compile Include="Components\IPeerContainer.cs" />
-    <Compile Include="Components\S2S\EventHandler.cs" />
-    <Compile Include="Components\S2S\IOutboundServerPeerLogic.cs" />
-    <Compile Include="Components\S2S\IServerConnectorProvider.cs" />
     <Compile Include="Components\IRandomNumberGenerator.cs" />
     <Compile Include="Components\PeerContainer.cs" />
-    <Compile Include="Components\S2S\IServiceConnectorProvider.cs" />
-    <Compile Include="Components\S2S\ServerConnectorProvider.cs" />
     <Compile Include="Components\RandomNumberGenerator.cs" />
-    <Compile Include="Components\S2S\OutboundServerPeerLogic.cs" />
-    <Compile Include="Components\S2S\ServiceBase.cs" />
-    <Compile Include="Components\S2S\ServiceConnectorProvider.cs" />
+    <Compile Include="Components\S2S\IServerConnectorProvider.cs" />
+    <Compile Include="Components\S2S\ServerConnectorProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -1,8 +1,8 @@
-﻿using Character.Client.Common;
-using CommonTools.Log;
+﻿using CommonTools.Log;
 using ComponentModel.Common;
 using Database.Common.Components;
 using Database.Common.TablesDefinition;
+using Game.Common;
 using ServiceStack.OrmLite;
 
 namespace CharacterService.Application.Components
@@ -18,7 +18,7 @@ namespace CharacterService.Application.Components
             databaseConnectionProvider = Components.GetComponent<IDatabaseConnectionProvider>().AssertNotNull();
         }
 
-        public CharacterFromDatabaseParameters? GetCharacter(int userId, int characterIndex)
+        public CharacterParameters? GetCharacter(int userId, int characterIndex)
         {
             using (var db = databaseConnectionProvider.GetDbConnection())
             {

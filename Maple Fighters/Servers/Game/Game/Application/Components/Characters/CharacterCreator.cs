@@ -1,5 +1,4 @@
-﻿using Character.Client.Common;
-using CommonTools.Log;
+﻿using CommonTools.Log;
 using ComponentModel.Common;
 using Game.Application.SceneObjects.Components;
 using Game.InterestManagement;
@@ -26,14 +25,14 @@ namespace Game.Application.Components
             characterSpawnDetailsProvider = Server.Components.GetComponent<ICharacterSpawnDetailsProvider>().AssertNotNull();
         }
 
-        public ISceneObject Create(CharacterFromDatabaseParameters character)
+        public ISceneObject Create(CharacterParameters character)
         {
             const Maps MAP = Maps.Map_1;
 
             var scene = sceneContainer.GetSceneWrapper(MAP).AssertNotNull();
             var spawnDetails = characterSpawnDetailsProvider.GetCharacterSpawnDetails(MAP);
-
-            var sceneObject = scene.GetScene().AddSceneObject(new SceneObject(IdGenerator.GetId(), SCENE_OBJECT_NAME, spawnDetails));
+            var id = IdGenerator.GetId();
+            var sceneObject = scene.GetScene().AddSceneObject(new SceneObject(id, SCENE_OBJECT_NAME, spawnDetails));
             sceneObject.Components.AddComponent(new InterestArea(spawnDetails.Position, scene.GetScene().RegionSize));
             sceneObject.Components.AddComponent(new InterestAreaNotifier());
             sceneObject.Components.AddComponent(new CharacterGetter(character));

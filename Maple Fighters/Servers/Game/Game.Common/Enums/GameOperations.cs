@@ -6,7 +6,6 @@
         EnterScene,
         ChangeScene,
         PositionChanged,
-        PlayerStateChanged,
-        ValidateCharacter
+        PlayerStateChanged
     }
 }

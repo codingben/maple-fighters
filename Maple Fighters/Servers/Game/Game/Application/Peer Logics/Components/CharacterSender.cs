@@ -20,10 +20,30 @@ namespace Game.Application.PeerLogic.Components
 
             eventSender = Components.GetComponent<IEventSenderWrapper>().AssertNotNull();
 
+            SubscribeToInterestAreaEvents();
+        }
+
+        protected override void OnDestroy()
+        {
+            base.OnDestroy();
+
+            UnsubscribeFromInterestAreaEvents();
+        }
+
+        private void SubscribeToInterestAreaEvents()
+        {
             var sceneObjectGetter = Components.GetComponent<ISceneObjectGetter>().AssertNotNull();
             var interestArea = sceneObjectGetter.GetSceneObject().Components.GetComponent<IInterestArea>().AssertNotNull();
             interestArea.SubscriberAdded += OnCharacterAdded;
             interestArea.SubscribersAdded += OnCharactersAdded;
+        }
+
+        private void UnsubscribeFromInterestAreaEvents()
+        {
+            var sceneObjectGetter = Components.GetComponent<ISceneObjectGetter>().AssertNotNull();
+            var interestArea = sceneObjectGetter.GetSceneObject().Components.GetComponent<IInterestArea>().AssertNotNull();
+            interestArea.SubscriberAdded -= OnCharacterAdded;
+            interestArea.SubscribersAdded -= OnCharactersAdded;
         }
 
         private void OnCharacterAdded(ISceneObject character)

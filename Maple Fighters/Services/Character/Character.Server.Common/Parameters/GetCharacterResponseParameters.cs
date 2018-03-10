@@ -1,16 +1,16 @@
 ﻿using System.IO;
-using Character.Client.Common;
 using CommonCommunicationInterfaces;
+using Game.Common;
 
 namespace Character.Server.Common
 {
     public struct GetCharacterResponseParameters : IParameters
     {
-        public CharacterFromDatabaseParameters Character;
+        public CharacterParameters Character;
 
-        public GetCharacterResponseParameters(CharacterFromDatabaseParameters character)
+        public GetCharacterResponseParameters(CharacterParameters characters)
         {
-            Character = character;
+            Character = characters;
         }
 
         public void Serialize(BinaryWriter writer)

@@ -1,30 +1,29 @@
-﻿using Character.Client.Common;
+﻿using Character.Server.Common;
 using CharacterService.Application.Components;
 using CommonCommunicationInterfaces;
 using CommonTools.Log;
+using Game.Common;
 using ServerApplication.Common.ApplicationBase;
 using ServerCommunicationHelper;
 
 namespace CharacterService.Application.PeerLogics.Operations
 {
-    internal class CreateCharacterOperationHandler : IOperationRequestHandler<CreateCharacterRequestParameters, CreateCharacterResponseParameters>
+    internal class CreateCharacterOperationHandler : IOperationRequestHandler<CreateCharacterRequestParametersEx, CreateCharacterResponseParameters>
     {
-        private readonly int userId;
         private readonly IDatabaseCharacterCreator databaseCharacterCreator;
         private readonly IDatabaseCharacterExistence databaseCharacterExistence;
         private readonly IDatabaseCharacterNameVerifier databaseCharacterNameVerifier;
 
-        public CreateCharacterOperationHandler(int userId)
+        public CreateCharacterOperationHandler()
         {
-            this.userId = userId;
-
             databaseCharacterCreator = Server.Components.GetComponent<IDatabaseCharacterCreator>().AssertNotNull();
             databaseCharacterExistence = Server.Components.GetComponent<IDatabaseCharacterExistence>().AssertNotNull();
             databaseCharacterNameVerifier = Server.Components.GetComponent<IDatabaseCharacterNameVerifier>().AssertNotNull();
         }
 
-        public CreateCharacterResponseParameters? Handle(MessageData<CreateCharacterRequestParameters> messageData, ref MessageSendOptions sendOptions)
+        public CreateCharacterResponseParameters? Handle(MessageData<CreateCharacterRequestParametersEx> messageData, ref MessageSendOptions sendOptions)
         {
+            var userId = messageData.Parameters.UserId;
             var characterClass = messageData.Parameters.CharacterClass;
             var name = messageData.Parameters.Name;
             var characterIndex = messageData.Parameters.Index;

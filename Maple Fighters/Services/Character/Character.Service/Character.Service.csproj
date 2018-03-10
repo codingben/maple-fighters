@@ -82,16 +82,18 @@
     <Compile Include="Application\Components\IDatabaseCharacterRemover.cs" />
     <Compile Include="Application\Components\IDatabaseCharactersGetter.cs" />
     <Compile Include="Application\Components\Utils.cs" />
-    <Compile Include="Application\Peer Logics\AuthorizedClientPeerLogic.cs" />
     <Compile Include="Application\Peer Logics\InboundServerPeerLogic.cs" />
     <Compile Include="Application\Peer Logics\Operations\CreateCharacterOperationHandler.cs" />
     <Compile Include="Application\Peer Logics\Operations\GetCharacterOperationHandler.cs" />
     <Compile Include="Application\Peer Logics\Operations\GetCharactersOperationHandler.cs" />
     <Compile Include="Application\Peer Logics\Operations\RemoveCharacterOperationHandler.cs" />
-    <Compile Include="Application\Peer Logics\UnauthorizedClientPeerLogic.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Servers\Game\Game.Common\Game.Common.csproj">
+      <Project>{AA536188-84FF-4286-A9E6-BAFBE1D8D37B}</Project>
+      <Name>Game.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\Shared\Database\Database.Common\Database.Common.csproj">
       <Project>{46B701A0-8606-4EF1-B111-F001EE74F124}</Project>
       <Name>Database.Common</Name>
@@ -108,6 +110,10 @@
       <Project>{F82FBB67-7B1D-43B7-A415-3F407D40E5C7}</Project>
       <Name>ServerApplication.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\Shared\Servers\ServerCommunication.Common\ServerCommunication.Common\ServerCommunication.Common.csproj">
+      <Project>{5e8328b3-e51c-4291-b7de-83673c4ce889}</Project>
+      <Name>ServerCommunication.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Authorization\Authorization.Client.Common\Authorization.Client.Common.csproj">
       <Project>{58359452-038A-44CD-AA7B-21D0C3507EC7}</Project>
       <Name>Authorization.Client.Common</Name>
@@ -115,10 +121,6 @@
     <ProjectReference Include="..\..\Authorization\Authorization.Server.Common\Authorization.Server.Common.csproj">
       <Project>{174c1938-ca68-4549-97de-3470afacb7c7}</Project>
       <Name>Authorization.Server.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Character.Client.Common\Characters.Client.Common\Character.Client.Common.csproj">
-      <Project>{2EB94BA4-299A-47D9-93D0-E86D06463A18}</Project>
-      <Name>Character.Client.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\Character.Server.Common\Character.Server.Common.csproj">
       <Project>{42bb62da-299c-4ec1-b83c-894e5d75e505}</Project>

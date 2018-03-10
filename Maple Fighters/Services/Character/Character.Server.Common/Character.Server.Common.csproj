@@ -56,12 +56,19 @@
   <ItemGroup>
     <Compile Include="API\CharacterService.cs" />
     <Compile Include="Enums\CharacterOperations.cs" />
-    <Compile Include="Parameters\GetCharacterRequestParameters.cs" />
-    <Compile Include="Parameters\GetCharacterResponseParameters.cs" />
+    <Compile Include="Parameters\CreateCharacterRequestParametersEx.cs" />
+    <Compile Include="Parameters\GetCharacterRequestParametersEx.cs" />
     <Compile Include="API\ICharacterServiceAPI.cs" />
+    <Compile Include="Parameters\GetCharacterResponseParameters.cs" />
+    <Compile Include="Parameters\GetCharactersRequestParameters.cs" />
+    <Compile Include="Parameters\RemoveCharacterRequestParametersEx.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Servers\Game\Game.Common\Game.Common.csproj">
+      <Project>{AA536188-84FF-4286-A9E6-BAFBE1D8D37B}</Project>
+      <Name>Game.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\Shared\Servers\ComponentModel.Common\ComponentModel.Common.csproj">
       <Project>{00565794-9958-47D9-9E8E-6D7193D67B9D}</Project>
       <Name>ComponentModel.Common</Name>
@@ -70,9 +77,9 @@
       <Project>{F82FBB67-7B1D-43B7-A415-3F407D40E5C7}</Project>
       <Name>ServerApplication.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Character.Client.Common\Characters.Client.Common\Character.Client.Common.csproj">
-      <Project>{2EB94BA4-299A-47D9-93D0-E86D06463A18}</Project>
-      <Name>Character.Client.Common</Name>
+    <ProjectReference Include="..\..\..\Shared\Servers\ServerCommunication.Common\ServerCommunication.Common\ServerCommunication.Common.csproj">
+      <Project>{5E8328B3-E51C-4291-B7DE-83673C4CE889}</Project>
+      <Name>ServerCommunication.Common</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

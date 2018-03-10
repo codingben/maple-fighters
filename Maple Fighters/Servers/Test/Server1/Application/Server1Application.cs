@@ -4,7 +4,7 @@ using CommonTools.Coroutines;
 using CommonTools.Log;
 using Server2.Common;
 using ServerApplication.Common.ApplicationBase;
-using ServerApplication.Common.Components.Coroutines;
+using ServerApplication.Common.Components;
 using ServerCommunicationInterfaces;
 
 namespace Server1

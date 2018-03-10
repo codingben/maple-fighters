@@ -1,14 +1,13 @@
-﻿using Character.Client.Common;
-using CommonTools.Log;
+﻿using CommonTools.Log;
 using CommunicationHelper;
 using Game.Application.PeerLogic.Operations;
+using Game.Common;
 using PeerLogic.Common;
 using ServerCommunicationInterfaces;
-using Game.Common;
 
 namespace Game.Application.PeerLogics
 {
-    internal class CharacterSelectionPeerLogic : PeerLogicBase<GameOperations, EmptyEventCode>
+    internal class CharacterSelectionPeerLogic : PeerLogicBase<CharacterOperations, EmptyEventCode>
     {
         private readonly int userId;
 
@@ -21,15 +20,33 @@ namespace Game.Application.PeerLogics
         {
             base.Initialize(peer);
 
+            AddHandlerForCreateCharacterOperation();
+            AddHandlerForRemoveCharacterOperation();
+            AddHandlerForGetCharactersOperation();
             AddHandlerToValidateCharacterOperation();
+        }
+
+        private void AddHandlerForCreateCharacterOperation()
+        {
+            OperationHandlerRegister.SetAsyncHandler(CharacterOperations.CreateCharacter, new CreateCharacterOperationHandler(userId));
+        }
+
+        private void AddHandlerForRemoveCharacterOperation()
+        {
+            OperationHandlerRegister.SetAsyncHandler(CharacterOperations.RemoveCharacter, new RemoveCharacterOperationHandler(userId));
+        }
+
+        private void AddHandlerForGetCharactersOperation()
+        {
+            OperationHandlerRegister.SetAsyncHandler(CharacterOperations.GetCharacters, new GetCharactersOperationHandler(userId));
         }
 
         private void AddHandlerToValidateCharacterOperation()
         {
-            OperationHandlerRegister.SetAsyncHandler(GameOperations.ValidateCharacter, new CharacterValidationOperationHandler(userId, OnCharacterSelected));
+            OperationHandlerRegister.SetAsyncHandler(CharacterOperations.ValidateCharacter, new CharacterValidationOperationHandler(userId, OnCharacterSelected));
         }
 
-        private void OnCharacterSelected(CharacterFromDatabaseParameters? character)
+        private void OnCharacterSelected(CharacterParameters? character)
         {
             if (character.HasValue)
             {

@@ -2,7 +2,7 @@
 using CommonTools.Coroutines;
 using ComponentModel.Common;
 
-namespace ServerApplication.Common.Components.Coroutines
+namespace ServerApplication.Common.Components
 {
     public interface ICoroutinesExecuter : ICoroutinesExecutor, IExposableComponent
     {

@@ -2,7 +2,6 @@
 using CommonTools.Log;
 using PeerLogic.Common;
 using ServerApplication.Common.Components;
-using ServerApplication.Common.Components.Coroutines;
 using ServerCommunicationInterfaces;
 
 namespace ServerApplication.Common.ApplicationBase
