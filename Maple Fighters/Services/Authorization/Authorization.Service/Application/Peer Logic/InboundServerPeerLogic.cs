@@ -12,30 +12,24 @@ namespace Authorization.Service.Application.PeerLogic
         {
             base.Initialize(peer);
 
-            AddHandlerForCreateAuthorizationOperation();
             AddHandlerForRemoveAuthorizationOperation();
             AddHandlerForAccessTokenAuthorizationOperation();
             AddHandlerForUserAuthorizationOperation();
         }
 
-        private void AddHandlerForCreateAuthorizationOperation()
-        {
-            OperationHandlerRegister.SetHandler(AuthorizationOperations.CreateAuthorization, new CreateAuthorizationOperation());
-        }
-
         private void AddHandlerForRemoveAuthorizationOperation()
         {
-            OperationHandlerRegister.SetHandler(AuthorizationOperations.RemoveAuthorization, new RemoveAuthorizationOperation());
+            OperationHandlerRegister.SetHandler(AuthorizationOperations.RemoveAuthorization, new RemoveAuthorizationOperationHandler());
         }
 
         private void AddHandlerForAccessTokenAuthorizationOperation()
         {
-            OperationHandlerRegister.SetHandler(AuthorizationOperations.AccessTokenAuthorization, new AccessTokenAuthorizationOperation());
+            OperationHandlerRegister.SetHandler(AuthorizationOperations.AccessTokenAuthorization, new AccessTokenAuthorizationOperationHandler());
         }
 
         private void AddHandlerForUserAuthorizationOperation()
         {
-            OperationHandlerRegister.SetHandler(AuthorizationOperations.UserAuthorization, new UserAuthorizationOperation());
+            OperationHandlerRegister.SetHandler(AuthorizationOperations.UserAuthorization, new UserAuthorizationOperationHandler());
         }
     }
 }

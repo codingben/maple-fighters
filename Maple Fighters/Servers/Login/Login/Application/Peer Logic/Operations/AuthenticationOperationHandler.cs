@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Authorization.Client.Common;
 using Authorization.Server.Common;
 using CommonCommunicationInterfaces;
@@ -17,9 +18,12 @@ namespace Login.Application.PeerLogic.Operations
         private readonly IDatabaseUserPasswordVerifier databaseUserPasswordVerifier;
         private readonly IDatabaseUserIdProvider databaseUserIdProvider;
         private readonly IAuthorizationServiceAPI authorizationServiceApi;
+        private readonly Action<int> onAuthenticated;
 
-        public AuthenticationOperationHandler()
+        public AuthenticationOperationHandler(Action<int> onAuthenticated)
         {
+            this.onAuthenticated = onAuthenticated;
+
             databaseUserVerifier = Server.Components.GetComponent<IDatabaseUserVerifier>().AssertNotNull();
             databaseUserPasswordVerifier = Server.Components.GetComponent<IDatabaseUserPasswordVerifier>().AssertNotNull();
             databaseUserIdProvider = Server.Components.GetComponent<IDatabaseUserIdProvider>().AssertNotNull();
@@ -53,6 +57,10 @@ namespace Login.Application.PeerLogic.Operations
             var responseParameters = userAuthorization.Status == AuthorizationStatus.Succeed
                 ? new AuthenticateResponseParameters(LoginStatus.Succeed, userAuthorization.AccessToken)
                 : new AuthenticateResponseParameters(LoginStatus.NonAuthorized);
+            if (responseParameters.Status == LoginStatus.Succeed)
+            {
+                onAuthenticated.Invoke(parameters.UserId);
+            }
             return responseParameters;
         }
     }

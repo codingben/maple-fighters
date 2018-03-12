@@ -82,11 +82,12 @@
     <Compile Include="Application\Components\IDatabaseCharacterRemover.cs" />
     <Compile Include="Application\Components\IDatabaseCharactersGetter.cs" />
     <Compile Include="Application\Components\Utils.cs" />
-    <Compile Include="Application\Peer Logics\InboundServerPeerLogic.cs" />
-    <Compile Include="Application\Peer Logics\Operations\CreateCharacterOperationHandler.cs" />
-    <Compile Include="Application\Peer Logics\Operations\GetCharacterOperationHandler.cs" />
-    <Compile Include="Application\Peer Logics\Operations\GetCharactersOperationHandler.cs" />
-    <Compile Include="Application\Peer Logics\Operations\RemoveCharacterOperationHandler.cs" />
+    <Compile Include="Application\Definition\CharactersTableDefinition.cs" />
+    <Compile Include="Application\Peer Logic\InboundServerPeerLogic.cs" />
+    <Compile Include="Application\Peer Logic\Operations\CreateCharacterOperationHandler.cs" />
+    <Compile Include="Application\Peer Logic\Operations\GetCharacterOperationHandler.cs" />
+    <Compile Include="Application\Peer Logic\Operations\GetCharactersOperationHandler.cs" />
+    <Compile Include="Application\Peer Logic\Operations\RemoveCharacterOperationHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

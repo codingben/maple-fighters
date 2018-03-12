@@ -63,7 +63,7 @@ namespace ServerCommunication.Common
             serviceConnectorProvider.SetNetworkTrafficState(NetworkTrafficState.Flowing);
         }
 
-        protected virtual void OnDisconnected(DisconnectReason disconnectReason, string s)
+        protected virtual void OnDisconnected(DisconnectReason disconnectReason, string details)
         {
             UnsubscribeFromDisconnectionNotifier();
 

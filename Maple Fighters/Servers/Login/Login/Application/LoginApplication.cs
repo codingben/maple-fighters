@@ -4,6 +4,7 @@ using Login.Application.Components;
 using Login.Application.PeerLogic;
 using ServerApplication.Common.ApplicationBase;
 using ServerCommunicationInterfaces;
+using UserProfile.Server.Common;
 
 namespace Login.Application
 {
@@ -32,11 +33,12 @@ namespace Login.Application
 
         private void AddComponents()
         {
+            Server.Components.AddComponent(new AuthorizationService());
+            Server.Components.AddComponent(new UserProfileService());
             Server.Components.AddComponent(new DatabaseConnectionProvider());
             Server.Components.AddComponent(new DatabaseUserVerifier());
             Server.Components.AddComponent(new DatabaseUserPasswordVerifier());
             Server.Components.AddComponent(new DatabaseUserIdProvider());
-            Server.Components.AddComponent(new AuthorizationService());
         }
     }
 }

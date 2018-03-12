@@ -10,16 +10,9 @@ namespace Authorization.Server.Common
 {
     public class AuthorizationService : ServiceBase<AuthorizationOperations, EmptyEventCode>, IAuthorizationServiceAPI
     {
-        public Task<CreateAuthorizationResponseParameters> CreateAuthorization(IYield yield, CreateAuthorizationRequestParameters parameters)
+        public void RemoveAuthorization(RemoveAuthorizationRequestParameters parameters)
         {
-            return OutboundServerPeerLogic?.SendOperation<CreateAuthorizationRequestParameters, CreateAuthorizationResponseParameters>
-                (yield, (byte)AuthorizationOperations.CreateAuthorization, parameters);
-        }
-
-        public Task<EmptyParameters> RemoveAuthorization(IYield yield, RemoveAuthorizationRequestParameters parameters)
-        {
-            return OutboundServerPeerLogic?.SendOperation<RemoveAuthorizationRequestParameters, EmptyParameters>
-                (yield, (byte)AuthorizationOperations.RemoveAuthorization, parameters);
+            OutboundServerPeerLogic?.SendOperation((byte)AuthorizationOperations.RemoveAuthorization, parameters);
         }
 
         public Task<AuthorizeAccessTokenResponseParameters> AccessTokenAuthorization(IYield yield, AuthorizeAccesTokenRequestParameters parameters)
@@ -36,7 +29,7 @@ namespace Authorization.Server.Common
 
         protected override PeerConnectionInformation GetPeerConnectionInformation()
         {
-            LogUtils.Assert(Config.Global.AuthorizationService, MessageBuilder.Trace("Could not find an connection info for the Authorization service."));
+            LogUtils.Assert(Config.Global.AuthorizationService, MessageBuilder.Trace("Could not find a connection info for the Authorization service."));
 
             var ip = (string)Config.Global.AuthorizationService.IP;
             var port = (int)Config.Global.AuthorizationService.Port;

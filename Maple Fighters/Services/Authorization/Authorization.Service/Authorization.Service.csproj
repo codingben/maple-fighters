@@ -63,10 +63,9 @@
     <Compile Include="Application\Components\IAccessTokenGetter.cs" />
     <Compile Include="Application\Components\IAccessTokenRemover.cs" />
     <Compile Include="Application\Peer Logic\InboundServerPeerLogic.cs" />
-    <Compile Include="Application\Peer Logic\Operations\AccessTokenAuthorizationOperation.cs" />
-    <Compile Include="Application\Peer Logic\Operations\CreateAuthorizationOperation.cs" />
-    <Compile Include="Application\Peer Logic\Operations\RemoveAuthorizationOperation.cs" />
-    <Compile Include="Application\Peer Logic\Operations\UserAuthorizationOperation.cs" />
+    <Compile Include="Application\Peer Logic\Operations\AccessTokenAuthorizationOperationHandler.cs" />
+    <Compile Include="Application\Peer Logic\Operations\RemoveAuthorizationOperationHandler.cs" />
+    <Compile Include="Application\Peer Logic\Operations\UserAuthorizationOperationHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

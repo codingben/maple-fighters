@@ -63,12 +63,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Application\Components\Database\DatabaseUserIdProvider.cs" />
-    <Compile Include="Application\Components\Database\DatabaseUserPasswordVerifier.cs" />
-    <Compile Include="Application\Components\Database\DatabaseUserVerifier.cs" />
-    <Compile Include="Application\Components\Database\IDatabaseUserIdProvider.cs" />
-    <Compile Include="Application\Components\Database\IDatabaseUserPasswordVerifier.cs" />
-    <Compile Include="Application\Components\Database\IDatabaseUserVerifier.cs" />
+    <Compile Include="Application\Components\DatabaseUserIdProvider.cs" />
+    <Compile Include="Application\Components\DatabaseUserPasswordVerifier.cs" />
+    <Compile Include="Application\Components\DatabaseUserVerifier.cs" />
+    <Compile Include="Application\Components\IDatabaseUserIdProvider.cs" />
+    <Compile Include="Application\Components\IDatabaseUserPasswordVerifier.cs" />
+    <Compile Include="Application\Components\IDatabaseUserVerifier.cs" />
     <Compile Include="Application\LoginApplication.cs" />
     <Compile Include="Application\Peer Logic\LoginPeerLogic.cs" />
     <Compile Include="Application\Peer Logic\Operations\AuthenticationOperationHandler.cs" />
@@ -82,6 +82,10 @@
     <ProjectReference Include="..\..\..\Services\Authorization\Authorization.Server.Common\Authorization.Server.Common.csproj">
       <Project>{174C1938-CA68-4549-97DE-3470AFACB7C7}</Project>
       <Name>Authorization.Server.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Services\UserProfile\UserProfile.Server.Common\UserProfile.Server.Common\UserProfile.Server.Common.csproj">
+      <Project>{C1B03627-1DF6-48F8-A868-D5216A510B86}</Project>
+      <Name>UserProfile.Server.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\Shared\Database\Database.Common\Database.Common.csproj">
       <Project>{46B701A0-8606-4EF1-B111-F001EE74F124}</Project>

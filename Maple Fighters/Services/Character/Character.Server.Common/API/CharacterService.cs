@@ -37,10 +37,10 @@ namespace Character.Server.Common
 
         protected override PeerConnectionInformation GetPeerConnectionInformation()
         {
-            LogUtils.Assert(Config.Global.CharactersService, MessageBuilder.Trace("Could not find an connection info for the Character service."));
+            LogUtils.Assert(Config.Global.CharacterService, MessageBuilder.Trace("Could not find a connection info for the Character service."));
 
-            var ip = (string)Config.Global.CharactersService.IP;
-            var port = (int)Config.Global.CharactersService.Port;
+            var ip = (string)Config.Global.CharacterService.IP;
+            var port = (int)Config.Global.CharacterService.Port;
             return new PeerConnectionInformation(ip, port);
         }
     }

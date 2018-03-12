@@ -193,8 +193,7 @@
     <Compile Include="Components\IDatabaseConnectionProvider.cs" />
     <Compile Include="Configuration\DatabaseConnectionConfiguraiton.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Tables Definition\CharactersTableDefinition.cs" />
-    <Compile Include="Tables Definition\UsersTableDefinition.cs" />
+    <Compile Include="Definition\UsersTableDefinition.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Servers\ComponentModel.Common\ComponentModel.Common.csproj">

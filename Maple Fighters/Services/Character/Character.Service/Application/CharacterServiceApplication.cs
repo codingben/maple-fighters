@@ -1,5 +1,5 @@
 ﻿using Authorization.Server.Common;
-using Character.Service.Application.PeerLogics;
+using Character.Service.Application.PeerLogic;
 using CharacterService.Application.Components;
 using Database.Common.Components;
 using ServerApplication.Common.ApplicationBase;

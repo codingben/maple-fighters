@@ -2,7 +2,6 @@
 {
     public enum AuthorizationOperations : byte
     {
-        CreateAuthorization,
         RemoveAuthorization,
         AccessTokenAuthorization,
         UserAuthorization

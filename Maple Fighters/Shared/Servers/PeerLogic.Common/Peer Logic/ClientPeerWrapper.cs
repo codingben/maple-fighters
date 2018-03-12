@@ -53,7 +53,7 @@ namespace PeerLogic.Common
             UnsubscribeFromPeerDisconnectionNotifier();
         }
 
-        private void OnDisconnected(DisconnectReason disconnectReason, string s)
+        private void OnDisconnected(DisconnectReason disconnectReason, string details)
         {
             Dispose();
         }

@@ -20,9 +20,9 @@ namespace Server2.Common
             OutboundServerPeerLogic.SetEventHandler((byte)ServerEvents.Server1Event, TestAction);
         }
 
-        protected override void OnDisconnected(DisconnectReason disconnectReason, string s)
+        protected override void OnDisconnected(DisconnectReason disconnectReason, string details)
         {
-            base.OnDisconnected(disconnectReason, s);
+            base.OnDisconnected(disconnectReason, details);
 
             OutboundServerPeerLogic.RemoveEventHandler((byte)ServerEvents.Server1Event);
         }
@@ -35,7 +35,7 @@ namespace Server2.Common
 
         protected override PeerConnectionInformation GetPeerConnectionInformation()
         {
-            LogUtils.Assert(Config.Global.Server2, MessageBuilder.Trace("Could not find an connection info for the Server2 server."));
+            LogUtils.Assert(Config.Global.Server2, MessageBuilder.Trace("Could not find a connection info for the Server2 server."));
 
             var ip = (string)Config.Global.Server2.IP;
             var port = (int)Config.Global.Server2.Port;

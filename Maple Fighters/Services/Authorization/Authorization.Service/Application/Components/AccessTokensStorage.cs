@@ -21,6 +21,8 @@ namespace Authorization.Service.Application.Components
                     return null;
                 }
 
+                LogUtils.Log($"Added an access token for the user id #{userId}");
+
                 var accessToken = GenerateAccessToken();
                 accessTokens.Add(userId, accessToken);
                 return accessToken;
@@ -38,6 +40,8 @@ namespace Authorization.Service.Application.Components
                     LogUtils.Log(MessageBuilder.Trace($"A user with id #{userId} does not exist in a storage of an access tokens."));
                     return;
                 }
+
+                LogUtils.Log($"Removed an access token for the user id #{userId}");
 
                 accessTokens.Remove(userId);
             }

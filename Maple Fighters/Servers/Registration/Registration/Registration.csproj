@@ -69,10 +69,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Application\Components\Database\DatabaseUserCreator.cs" />
-    <Compile Include="Application\Components\Database\DatabaseUserEmailVerifier.cs" />
-    <Compile Include="Application\Components\Database\IDatabaseUserCreator.cs" />
-    <Compile Include="Application\Components\Database\IDatabaseUserEmailVerifier.cs" />
+    <Compile Include="Application\Components\DatabaseUserCreator.cs" />
+    <Compile Include="Application\Components\DatabaseUserEmailVerifier.cs" />
+    <Compile Include="Application\Components\IDatabaseUserCreator.cs" />
+    <Compile Include="Application\Components\IDatabaseUserEmailVerifier.cs" />
     <Compile Include="Application\Peer Logic\Operations\RegisterOperationHandler.cs" />
     <Compile Include="Application\Peer Logic\RegistrationPeerLogic.cs" />
     <Compile Include="Application\RegistrationApplication.cs" />
