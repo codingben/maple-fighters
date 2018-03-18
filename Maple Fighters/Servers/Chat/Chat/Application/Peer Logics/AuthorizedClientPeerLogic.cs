@@ -4,11 +4,19 @@ using Chat.Common;
 using CommonTools.Log;
 using PeerLogic.Common;
 using ServerCommunicationInterfaces;
+using UserProfile.Server.Common;
 
 namespace Chat.Application.PeerLogics
 {
     internal class AuthorizedClientPeerLogic : PeerLogicBase<ChatOperations, ChatEvents>
     {
+        private readonly int userId;
+
+        public AuthorizedClientPeerLogic(int userId)
+        {
+            this.userId = userId;
+        }
+
         public override void Initialize(IClientPeerWrapper<IClientPeer> peer)
         {
             base.Initialize(peer);
@@ -22,6 +30,7 @@ namespace Chat.Application.PeerLogics
         private void AddComponents()
         {
             Components.AddComponent(new ChatMessageEventSender());
+            Components.AddComponent(new UserProfileTracker(userId, ServerType.Game));
         }
 
         private void AddHandlerForChatMessageOperation()

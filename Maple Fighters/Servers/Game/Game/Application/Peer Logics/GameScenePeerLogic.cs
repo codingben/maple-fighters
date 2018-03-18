@@ -7,15 +7,18 @@ using PeerLogic.Common;
 using ServerApplication.Common.ApplicationBase;
 using ServerCommunicationInterfaces;
 using Game.Common;
+using UserProfile.Server.Common;
 
 namespace Game.Application.PeerLogics
 {
     internal class GameScenePeerLogic : PeerLogicBase<GameOperations, GameEvents>
     {
+        private readonly int userId;
         private readonly ISceneObject sceneObject;
 
-        public GameScenePeerLogic(CharacterParameters character)
+        public GameScenePeerLogic(int userId, CharacterParameters character)
         {
+            this.userId = userId;
             sceneObject = CreateSceneObject(character);
         }
 
@@ -34,6 +37,9 @@ namespace Game.Application.PeerLogics
         private void AddComponents()
         {
             sceneObject.Components.AddComponent(new PeerIdGetter(PeerWrapper.PeerId));
+
+            var userProfileTracker = Components.AddComponent(new UserProfileTracker(userId, ServerType.Game));
+            userProfileTracker.ChangeUserProfileProperties();
 
             Components.AddComponent(new SceneObjectGetter(sceneObject));
             Components.AddComponent(new InterestManagementNotifier());

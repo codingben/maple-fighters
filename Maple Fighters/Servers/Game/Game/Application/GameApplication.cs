@@ -8,6 +8,7 @@ using GameServerProvider.Server.Common;
 using PythonScripting;
 using ServerApplication.Common.ApplicationBase;
 using ServerCommunicationInterfaces;
+using UserProfile.Server.Common;
 
 namespace Game.Application
 {
@@ -40,6 +41,7 @@ namespace Game.Application
 
             Server.Components.AddComponent(new AuthorizationService());
             Server.Components.AddComponent(new CharacterService());
+            Server.Components.AddComponent(new UserProfileService());
             Server.Components.AddComponent(new GameServerProviderService());
             Server.Components.AddComponent(new CharacterSpawnDetailsProvider());
             Server.Components.AddComponent(new SceneContainer());

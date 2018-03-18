@@ -1,58 +1,81 @@
 ﻿using Authorization.Server.Common;
 using CommonCommunicationInterfaces;
 using CommonTools.Log;
-using CommunicationHelper;
-using PeerLogic.Common;
-using ServerCommunicationInterfaces;
+using ComponentModel.Common;
+using PeerLogic.Common.Components;
 
 namespace UserProfile.Server.Common
 {
-    /*using Server = ServerApplication.Common.ApplicationBase.Server;
+    using Server = ServerApplication.Common.ApplicationBase.Server;
 
-    public class UserProfileTrackerPeerLogic : PeerLogicBase<EmptyOperationCode, EmptyEventCode>
+    public class UserProfileTracker : Component
     {
         private bool isManuallyDisconnected;
+        private bool isUserProfileChanged;
 
         private readonly int userId;
         private readonly ServerType serverType;
 
-        public UserProfileTrackerPeerLogic(int userId, ServerType serverType)
+        private IMinimalPeerGetter peerGetter;
+
+        public UserProfileTracker(int userId, ServerType serverType)
         {
             this.userId = userId;
             this.serverType = serverType;
         }
-
-        public override void Initialize(IClientPeerWrapper<IClientPeer> peer)
+        
+        protected override void OnAwake()
         {
-            base.Initialize(peer);
+            base.OnAwake();
 
-            var userProfileServiceAPI = Server.Components.GetComponent<IUserProfileServiceAPI>().AssertNotNull();
-            var parameters = new ChangeUserProfilePropertiesRequestParameters(userId, peer.PeerId, serverType, ConnectionStatus.Connected);
-            userProfileServiceAPI.ChangeUserProfileProperties(parameters);
+            peerGetter = Components.GetComponent<IMinimalPeerGetter>().AssertNotNull();
 
-            AddUserIdToConverter();
+            AddUserIdToPeerIdConverter();
 
             SubscribeToDisconnectionNotifier();
             SubscribeToUserProfilePropertiesChanged();
+            SubscribeToUserProfile();
         }
 
-        public override void Dispose()
+        protected override void OnDestroy()
         {
-            base.Dispose();
+            base.OnDestroy();
 
-            RemoveUserIdFromConverter();
+            RemoveUserIdToPeerIdFromConverter();
 
             UnsubscribeFromDisconnectionNotifier();
             UnsubscribeFromUserProfilePropertiesChanged();
+            UnsubscribeFromUserProfile();
         }
 
-        private void AddUserIdToConverter()
+        public void ChangeUserProfileProperties()
+        {
+            isUserProfileChanged = true;
+
+            var userProfileServiceAPI = Server.Components.GetComponent<IUserProfileServiceAPI>().AssertNotNull();
+            var parameters = new ChangeUserProfilePropertiesRequestParameters(userId, peerGetter.PeerId, serverType, ConnectionStatus.Connected);
+            userProfileServiceAPI.ChangeUserProfileProperties(parameters);
+        }
+
+        private void SubscribeToUserProfile()
+        {
+            var userProfileServiceAPI = Server.Components.GetComponent<IUserProfileServiceAPI>().AssertNotNull();
+            userProfileServiceAPI.SubscribeToUserProfile(userId);
+        }
+
+        private void UnsubscribeFromUserProfile()
+        {
+            var userProfileServiceAPI = Server.Components.GetComponent<IUserProfileServiceAPI>().AssertNotNull();
+            userProfileServiceAPI.UnsubscribeFromUserProfile(userId);
+        }
+
+        private void AddUserIdToPeerIdConverter()
         {
             var userToPeerIdConverter = Server.Components.GetComponent<IUserIdToPeerIdConverter>().AssertNotNull();
-            userToPeerIdConverter.Add(userId, PeerWrapper.PeerId);
+            userToPeerIdConverter.Add(userId, peerGetter.PeerId);
         }
 
-        private void RemoveUserIdFromConverter()
+        private void RemoveUserIdToPeerIdFromConverter()
         {
             var userToPeerIdConverter = Server.Components.GetComponent<IUserIdToPeerIdConverter>().AssertNotNull();
             userToPeerIdConverter.Remove(userId);
@@ -72,35 +95,33 @@ namespace UserProfile.Server.Common
 
         private void OnUserProfilePropertiesChanged(UserProfilePropertiesChangedEventParameters parameters)
         {
-            if (parameters.ConnectionStatus != ConnectionStatus.Connected || parameters.ServerType == serverType)
+            if (parameters.ConnectionStatus == ConnectionStatus.Connected && parameters.ServerType != serverType)
             {
-                return;
+                isManuallyDisconnected = true;
+                peerGetter.Peer.Disconnect();
             }
-
-            isManuallyDisconnected = true;
-            PeerWrapper.Peer.Disconnect();
         }
 
         private void SubscribeToDisconnectionNotifier()
         {
-            PeerWrapper.Peer.PeerDisconnectionNotifier.Disconnected += OnDisconnected;
+            peerGetter.Peer.PeerDisconnectionNotifier.Disconnected += OnDisconnected;
         }
 
         private void UnsubscribeFromDisconnectionNotifier()
         {
-            PeerWrapper.Peer.PeerDisconnectionNotifier.Disconnected -= OnDisconnected;
+            peerGetter.Peer.PeerDisconnectionNotifier.Disconnected -= OnDisconnected;
         }
 
         private void OnDisconnected(DisconnectReason disconnectReason, string details)
         {
             UnsubscribeFromDisconnectionNotifier();
 
-            if (!isManuallyDisconnected)
+            if (!isManuallyDisconnected && !isUserProfileChanged)
             {
                 OnClientDisconnected();
             }
 
-            RemoveUserIdFromConverter();
+            RemoveUserIdToPeerIdFromConverter();
         }
 
         private void OnClientDisconnected()
@@ -112,5 +133,5 @@ namespace UserProfile.Server.Common
             var authorizationServiceAPI = Server.Components.GetComponent<IAuthorizationServiceAPI>().AssertNotNull();
             authorizationServiceAPI.RemoveAuthorization(new RemoveAuthorizationRequestParameters(userId));
         }
-    }*/
+    }
 }

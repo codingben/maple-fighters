@@ -12,7 +12,7 @@ namespace ServerApplication.Common.Components
         {
             lock (locker)
             {
-                return random.Next(0, int.MaxValue);
+                return random.Next(int.MinValue, int.MaxValue);
             }
         }
 

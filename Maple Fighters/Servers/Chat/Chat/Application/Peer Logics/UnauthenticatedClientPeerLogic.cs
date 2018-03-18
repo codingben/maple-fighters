@@ -21,9 +21,9 @@ namespace Chat.Application.PeerLogics
             OperationHandlerRegister.SetAsyncHandler(ChatOperations.Authorize, new AuthorizationOperationHandler(OnAuthorized, OnNonAuthorized));
         }
 
-        private void OnAuthorized()
+        private void OnAuthorized(int userId)
         {
-            PeerWrapper.SetPeerLogic(new AuthorizedClientPeerLogic());
+            PeerWrapper.SetPeerLogic(new AuthorizedClientPeerLogic(userId));
         }
 
         private void OnNonAuthorized()

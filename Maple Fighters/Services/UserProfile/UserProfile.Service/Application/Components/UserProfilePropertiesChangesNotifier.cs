@@ -2,26 +2,59 @@
 using CommonTools.Log;
 using ComponentModel.Common;
 using PeerLogic.Common.Components;
+using ServerApplication.Common.Components;
 using UserProfile.Server.Common;
 
 namespace UserProfile.Service.Application.Components
 {
+    using Server = ServerApplication.Common.ApplicationBase.Server;
+
     internal class UserProfilePropertiesChangesNotifier : Component, IUserProfilePropertiesChangesNotifier
     {
-        private IEventSenderWrapper eventSenderWrapper;
+        private IMinimalPeerGetter peerGetter;
+        private IPeerContainer peerContainer;
+        private IServerIdToPeerIdConverter serverIdToPeerIdConverter;
+        private IUserIdToServerIdConverter userIdToServerIdConverter;
 
         protected override void OnAwake()
         {
             base.OnAwake();
 
-            eventSenderWrapper = Components.GetComponent<IEventSenderWrapper>().AssertNotNull();
+            peerGetter = Components.GetComponent<IMinimalPeerGetter>().AssertNotNull();
+
+            peerContainer = Server.Components.GetComponent<IPeerContainer>().AssertNotNull();
+            serverIdToPeerIdConverter = Server.Components.GetComponent<IServerIdToPeerIdConverter>().AssertNotNull();
+            userIdToServerIdConverter = Server.Components.GetComponent<IUserIdToServerIdConverter>().AssertNotNull();
         }
 
-
-        public void Notify(ServerType serverType, ConnectionStatus connectionStatus)
+        public void Notify(UserProfilePropertiesChangedEventParameters parameters)
         {
-            var parameters = new UserProfilePropertiesChangedEventParameters(serverType, connectionStatus);
-            eventSenderWrapper.Send((byte)UserProfileEvents.UserProfilePropertiesChanged, parameters, MessageSendOptions.DefaultReliable());
+            var userId = parameters.UserId;
+            var serverIds = userIdToServerIdConverter.Get(userId);
+
+            foreach (var serverId in serverIds)
+            {
+                var peerId = serverIdToPeerIdConverter.Get(serverId);
+                if (peerId == null)
+                {
+                    continue;
+                }
+
+                if (peerId == peerGetter.PeerId)
+                {
+                    continue;
+                }
+
+                var peerWrapper = peerContainer.GetPeerWrapper(peerId.Value);
+                if (peerWrapper == null)
+                {
+                    LogUtils.Log($"Could not find a peer wrapper of server with id {serverId}");
+                    continue;
+                }
+
+                var eventSenderWrapper = peerWrapper.PeerLogic.Components.GetComponent<IEventSenderWrapper>().AssertNotNull();
+                eventSenderWrapper.Send((byte)UserProfileEvents.UserProfilePropertiesChanged, parameters, MessageSendOptions.DefaultReliable());
+            }
         }
     }
 }

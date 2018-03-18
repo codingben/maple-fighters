@@ -5,6 +5,6 @@ namespace UserProfile.Service.Application.Components
 {
     internal interface IUserProfilePropertiesChangesNotifier : IExposableComponent
     {
-        void Notify(ServerType serverType, ConnectionStatus connectionStatus);
+        void Notify(UserProfilePropertiesChangedEventParameters parameters);
     }
 }

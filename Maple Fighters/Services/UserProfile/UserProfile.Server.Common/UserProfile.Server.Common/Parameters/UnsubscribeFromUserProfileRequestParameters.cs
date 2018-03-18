@@ -3,11 +3,11 @@ using CommonCommunicationInterfaces;
 
 namespace UserProfile.Server.Common
 {
-    public struct CreateUserProfileRequestParameters : IParameters
+    public struct UnsubscribeFromUserProfileRequestParameters : IParameters
     {
         public int UserId;
 
-        public CreateUserProfileRequestParameters(int userId)
+        public UnsubscribeFromUserProfileRequestParameters(int userId)
         {
             UserId = userId;
         }

@@ -8,12 +8,12 @@ namespace GameServerProvider.Service.Application.PeerLogic.Operations
 {
     using Server = ServerApplication.Common.ApplicationBase.Server;
 
-    internal class GameServerRegistrationOperationHandler : IOperationRequestHandler<RegisterGameServerRequestParameters, EmptyParameters>
+    internal class RegisterGameServerOperationHandler : IOperationRequestHandler<RegisterGameServerRequestParameters, EmptyParameters>
     {
         private readonly int peerId;
         private readonly IGameServerInformationCreator gameServerInformationCreator;
 
-        public GameServerRegistrationOperationHandler(int peerId)
+        public RegisterGameServerOperationHandler(int peerId)
         {
             this.peerId = peerId;
 

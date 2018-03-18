@@ -1,6 +1,8 @@
 ﻿using Authorization.Server.Common;
+using CommonTools.Log;
 using GameServerProvider.Service.Application.Components;
 using GameServerProvider.Service.Application.PeerLogics;
+using JsonConfig;
 using ServerApplication.Common.ApplicationBase;
 using ServerCommunicationInterfaces;
 using UserProfile.Server.Common;
@@ -29,8 +31,8 @@ namespace GameServerProvider.Service.Application
         {
             base.OnConnected(clientPeer);
 
-            const int TCP_PORT = 0000;
-            if (clientPeer.ConnectionInformation.Port == TCP_PORT)
+            var tcpPort = (int)Config.Global.ConnectionInfo.TcpPort;
+            if (clientPeer.ConnectionInformation.Port == tcpPort)
             {
                 WrapClientPeer(clientPeer, new InboundServerPeerLogic());
             }

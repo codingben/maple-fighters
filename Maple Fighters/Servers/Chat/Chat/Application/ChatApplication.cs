@@ -2,6 +2,7 @@
 using Chat.Application.PeerLogics;
 using ServerApplication.Common.ApplicationBase;
 using ServerCommunicationInterfaces;
+using UserProfile.Server.Common;
 
 namespace Chat.Application
 {
@@ -31,6 +32,7 @@ namespace Chat.Application
         private void AddComponents()
         {
             Server.Components.AddComponent(new AuthorizationService());
+            Server.Components.AddComponent(new UserProfileService());
         }
     }
 }

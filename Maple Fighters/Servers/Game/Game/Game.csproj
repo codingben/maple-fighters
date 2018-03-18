@@ -163,6 +163,10 @@
       <Project>{BCA5F453-1188-4521-A0AA-CC5F38228C57}</Project>
       <Name>GameServerProvider.Server.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\Services\UserProfile\UserProfile.Server.Common\UserProfile.Server.Common\UserProfile.Server.Common.csproj">
+      <Project>{C1B03627-1DF6-48F8-A868-D5216A510B86}</Project>
+      <Name>UserProfile.Server.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\Shared\Helper\MathematicsHelper\MathematicsHelper.csproj">
       <Project>{A3BE3E13-D3A1-4800-B471-A39F5ED4B554}</Project>
       <Name>MathematicsHelper</Name>

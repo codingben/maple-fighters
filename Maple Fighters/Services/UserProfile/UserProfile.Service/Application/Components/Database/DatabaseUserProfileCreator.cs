@@ -18,16 +18,16 @@ namespace UserProfile.Service.Application.Components
             databaseConnectionProvider = Components.GetComponent<IDatabaseConnectionProvider>().AssertNotNull();
         }
 
-        public void Create(int userId)
+        public void Create(int userId, int localId, ServerType serverType, ConnectionStatus connectionStatus)
         {
             using (var db = databaseConnectionProvider.GetDbConnection())
             {
                 var user = new UserProfilesTableDefinition
                 {
                     UserId = userId,
-                    CurrentServer = (byte)ServerType.Login,
-                    IsConnected = (byte)ConnectionStatus.Disconnected,
-                    LocalId = default(int)
+                    CurrentServer = (byte)serverType,
+                    IsConnected = (byte)connectionStatus,
+                    LocalId = localId
                 };
                 db.Insert(user);
             }

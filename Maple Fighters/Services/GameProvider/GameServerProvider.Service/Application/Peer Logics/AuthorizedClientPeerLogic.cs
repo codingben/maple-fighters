@@ -20,17 +20,21 @@ namespace GameServerProvider.Service.Application.PeerLogics
         {
             base.Initialize(peer);
 
+            AddCommonComponents();
+            AddComponents();
+
             AddHandlerForGameServersProviderOperation();
         }
 
         private void AddHandlerForGameServersProviderOperation()
         {
-            OperationHandlerRegister.SetHandler(ClientOperations.ProvideGameServers, new GameServersProviderOperationHandler(OnGameServersSent));
+            OperationHandlerRegister.SetHandler(ClientOperations.ProvideGameServers, new GameServersProviderOperationHandler());
         }
 
-        private void OnGameServersSent()
+        private void AddComponents()
         {
-            PeerWrapper.SetPeerLogic(new UserProfileTrackerPeerLogic(userId, ServerType.GameServerProvider));
+            var userProfileTracker = Components.AddComponent(new UserProfileTracker(userId, ServerType.GameServerProvider));
+            userProfileTracker.ChangeUserProfileProperties();
         }
     }
 }

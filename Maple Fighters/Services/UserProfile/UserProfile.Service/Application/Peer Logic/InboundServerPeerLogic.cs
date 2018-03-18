@@ -14,20 +14,38 @@ namespace UserProfile.Service.Application.PeerLogic
 
             AddCommonComponents();
 
-            AddHandlerForCreateUserProfileOperation();
+            AddHandlerForRegisterToUserProfileServiceOperation();
+            AddHandlerForUnregisterFromUserProfileServiceOperation();
             AddHandlerForChangeUserProfilePropertiesOperation();
+            AddHandlerForSubscribeToUserProfileOperation();
+            AddHandlerForUnsubscribeFromUserProfileOperation();
         }
-
-        private void AddHandlerForCreateUserProfileOperation()
-        {
-            OperationHandlerRegister.SetHandler(UserProfileOperations.CreateUserProfile, new CreateUserProfileOperationHandler());
-        }
-
+        
         private void AddHandlerForChangeUserProfilePropertiesOperation()
         {
             var userProfilePropertiesChangesNotifier = Components.AddComponent(new UserProfilePropertiesChangesNotifier());
-            OperationHandlerRegister.SetHandler(UserProfileOperations.ChangeUserProfileProperties, 
-                new ChangeUserProfilePropertiesOperationHandler(userProfilePropertiesChangesNotifier));
+            OperationHandlerRegister.SetHandler(UserProfileOperations.ChangeUserProfileProperties, new ChangeUserProfilePropertiesOperationHandler(userProfilePropertiesChangesNotifier));
+        }
+
+        private void AddHandlerForRegisterToUserProfileServiceOperation()
+        {
+            var peerId = PeerWrapper.PeerId;
+            OperationHandlerRegister.SetHandler(UserProfileOperations.Register, new RegisterToUserProfileServiceOperationHandler(peerId));
+        }
+
+        private void AddHandlerForUnregisterFromUserProfileServiceOperation()
+        {
+            OperationHandlerRegister.SetHandler(UserProfileOperations.Unregister, new UnregisterFromUserProfileServiceOperationHandler());
+        }
+
+        private void AddHandlerForSubscribeToUserProfileOperation()
+        {
+            OperationHandlerRegister.SetHandler(UserProfileOperations.Subscribe, new SubscribeToUserProfileOperationHandler());
+        }
+
+        private void AddHandlerForUnsubscribeFromUserProfileOperation()
+        {
+            OperationHandlerRegister.SetHandler(UserProfileOperations.Unsubscribe, new UnsubscribeFromUserProfileOperationHandler());
         }
     }
 }

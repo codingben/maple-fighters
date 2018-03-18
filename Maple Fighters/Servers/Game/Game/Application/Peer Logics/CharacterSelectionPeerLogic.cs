@@ -50,7 +50,7 @@ namespace Game.Application.PeerLogics
         {
             if (character.HasValue)
             {
-                PeerWrapper.SetPeerLogic(new GameScenePeerLogic(character.Value));
+                PeerWrapper.SetPeerLogic(new GameScenePeerLogic(userId, character.Value));
             }
             else
             {

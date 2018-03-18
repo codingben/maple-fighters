@@ -37,6 +37,8 @@ namespace UserProfile.Service.Application
             Server.Components.AddComponent(new DatabaseUserProfileCreator());
             Server.Components.AddComponent(new DatabaseUserProfilePropertiesUpdater());
             Server.Components.AddComponent(new DatabaseUserProfileExistence());
+            Server.Components.AddComponent(new ServerIdToPeerIdConverter());
+            Server.Components.AddComponent(new UserIdToServerIdConverter());
         }
     }
 }

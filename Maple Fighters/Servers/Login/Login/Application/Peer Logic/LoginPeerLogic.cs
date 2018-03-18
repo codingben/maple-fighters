@@ -23,7 +23,12 @@ namespace Login.Application.PeerLogic
 
         private void OnAuthenticated(int userId)
         {
-            PeerWrapper.SetPeerLogic(new UserProfileTrackerPeerLogic(userId, ServerType.Login));
+            OperationHandlerRegister.Dispose();
+
+            AddCommonComponents();
+
+            var userProfileTracker = Components.AddComponent(new UserProfileTracker(userId, ServerType.Login));
+            userProfileTracker.ChangeUserProfileProperties();
         }
     }
 }

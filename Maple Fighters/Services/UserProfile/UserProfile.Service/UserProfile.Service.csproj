@@ -75,12 +75,19 @@
     <Compile Include="Application\Components\Database\IDatabaseUserProfileExistence.cs" />
     <Compile Include="Application\Components\Database\IDatabaseUserProfilePropertiesUpdater.cs" />
     <Compile Include="Application\Components\Database\IDatabaseUserProfileCreator.cs" />
+    <Compile Include="Application\Components\IServerIdToPeerIdConverter.cs" />
+    <Compile Include="Application\Components\IUserIdToServerIdConverter.cs" />
     <Compile Include="Application\Components\IUserProfilePropertiesChangesNotifier.cs" />
+    <Compile Include="Application\Components\ServerIdToPeerIdConverter.cs" />
+    <Compile Include="Application\Components\UserIdToServerIdConverter.cs" />
     <Compile Include="Application\Components\UserProfilePropertiesChangesNotifier.cs" />
     <Compile Include="Application\Definition\UserProfilesTableDefinition.cs" />
     <Compile Include="Application\Peer Logic\InboundServerPeerLogic.cs" />
     <Compile Include="Application\Peer Logic\Operations\ChangeUserProfilePropertiesOperationHandler.cs" />
-    <Compile Include="Application\Peer Logic\Operations\CreateUserProfileOperationHandler.cs" />
+    <Compile Include="Application\Peer Logic\Operations\SubscribeToUserProfileOperationHandler.cs" />
+    <Compile Include="Application\Peer Logic\Operations\UnsubscribeFromUserProfileOperationHandler.cs" />
+    <Compile Include="Application\Peer Logic\Operations\UnregisterFromUserProfileServiceOperationHandler.cs" />
+    <Compile Include="Application\Peer Logic\Operations\RegisterToUserProfileServiceOperationHandler.cs" />
     <Compile Include="Application\UserProfileServiceApplication.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

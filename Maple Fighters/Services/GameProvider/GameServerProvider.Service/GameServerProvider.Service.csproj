@@ -40,6 +40,12 @@
     <Reference Include="Coroutines, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Coroutines.5.0.5\lib\net46\Coroutines.dll</HintPath>
     </Reference>
+    <Reference Include="JsonConfig, Version=1.0.5359.16918, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\JsonConfig.1.0.0\lib\JsonConfig.dll</HintPath>
+    </Reference>
+    <Reference Include="JsonFx, Version=2.0.1209.2802, Culture=neutral, PublicKeyToken=315052dd637f8a52, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\JsonFx.2.0.1209.2802\lib\net40\JsonFx.dll</HintPath>
+    </Reference>
     <Reference Include="LogUtils, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Coroutines.5.0.5\lib\net46\LogUtils.dll</HintPath>
     </Reference>
@@ -67,7 +73,7 @@
     <Compile Include="Application\Peer Logics\AuthorizedClientPeerLogic.cs" />
     <Compile Include="Application\Peer Logics\InboundServerPeerLogic.cs" />
     <Compile Include="Application\Peer Logics\Operations\GameServersProviderOperationHandler.cs" />
-    <Compile Include="Application\Peer Logics\Operations\GameServerRegistrationOperationHandler.cs" />
+    <Compile Include="Application\Peer Logics\Operations\RegisterGameServerOperationHandler.cs" />
     <Compile Include="Application\Peer Logics\UnauthorizedClientPeerLogic.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -83,6 +89,14 @@
     <ProjectReference Include="..\..\..\Shared\Servers\ServerApplication.Common\ServerApplication.Common.csproj">
       <Project>{F82FBB67-7B1D-43B7-A415-3F407D40E5C7}</Project>
       <Name>ServerApplication.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Shared\Servers\ServerCommunication.Common\ServerCommunication.Common\ServerCommunication.Common.csproj">
+      <Project>{5E8328B3-E51C-4291-B7DE-83673C4CE889}</Project>
+      <Name>ServerCommunication.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Authorization\Authorization.Client.Common\Authorization.Client.Common.csproj">
+      <Project>{58359452-038A-44CD-AA7B-21D0C3507EC7}</Project>
+      <Name>Authorization.Client.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Authorization\Authorization.Server.Common\Authorization.Server.Common.csproj">
       <Project>{174C1938-CA68-4549-97DE-3470AFACB7C7}</Project>

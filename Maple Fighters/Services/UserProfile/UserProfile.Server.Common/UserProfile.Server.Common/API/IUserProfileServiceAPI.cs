@@ -1,15 +1,11 @@
-﻿using System;
-using System.Threading.Tasks;
-using CommonTools.Coroutines;
-using ComponentModel.Common;
+﻿using ComponentModel.Common;
 
 namespace UserProfile.Server.Common
 {
     public interface IUserProfileServiceAPI : IExposableComponent
     {
-        event Action<UserProfilePropertiesChangedEventParameters> UserProfilePropertiesChanged;
-
-        Task<CreateUserProfileResponseParameters> CreateUserProfile(IYield yield, CreateUserProfileRequestParameters parameters);
+        void SubscribeToUserProfile(int userId);
+        void UnsubscribeFromUserProfile(int userId);
         void ChangeUserProfileProperties(ChangeUserProfilePropertiesRequestParameters parameters);
     }
 }

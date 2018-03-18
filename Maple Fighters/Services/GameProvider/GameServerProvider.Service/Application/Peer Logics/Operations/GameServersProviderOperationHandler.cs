@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using CommonCommunicationInterfaces;
 using CommonTools.Log;
 using GameServerProvider.Client.Common;
@@ -12,13 +11,10 @@ namespace GameServerProvider.Service.Application.PeerLogic.Operations
 
     internal class GameServersProviderOperationHandler : IOperationRequestHandler<EmptyParameters, GameServersProviderResponseParameters>
     {
-        private readonly Action gameServersSent;
         private readonly IGameServersInformationProvider gameServersInformationProvider;
 
-        public GameServersProviderOperationHandler(Action gameServersSent)
+        public GameServersProviderOperationHandler()
         {
-            this.gameServersSent = gameServersSent;
-
             gameServersInformationProvider = Server.Components.GetComponent<IGameServersInformationProvider>().AssertNotNull();
         }
 
@@ -36,7 +32,6 @@ namespace GameServerProvider.Service.Application.PeerLogic.Operations
                 gameServersInformation.Add(new GameServerInformationParameters(name, ip, port, connections, maxConnections));
             }
 
-            gameServersSent.Invoke();
             return new GameServersProviderResponseParameters(gameServersInformation.ToArray());
         }
     }

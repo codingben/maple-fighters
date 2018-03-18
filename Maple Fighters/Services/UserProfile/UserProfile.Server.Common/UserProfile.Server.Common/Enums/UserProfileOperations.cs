@@ -2,7 +2,10 @@
 {
     public enum UserProfileOperations : byte
     {
-        CreateUserProfile,
+        Register,
+        Unregister,
+        Subscribe,
+        Unsubscribe,
         ChangeUserProfileProperties
     }
 }

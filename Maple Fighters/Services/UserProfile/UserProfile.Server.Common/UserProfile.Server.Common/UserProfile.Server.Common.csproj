@@ -57,13 +57,23 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="API\IUserProfilePropertiesChangesEventInvoker.cs" />
     <Compile Include="API\IUserProfileServiceAPI.cs" />
+    <Compile Include="API\UserProfilePropertiesChangesEventInvoker.cs" />
     <Compile Include="API\UserProfileService.cs" />
+    <Compile Include="Common\IUserIdToPeerIdConverter.cs" />
+    <Compile Include="Common\UserIdToPeerIdConverter.cs" />
+    <Compile Include="Common\UserProfileListener.cs" />
     <Compile Include="Common\UserProfileTrackerPeerLogic.cs" />
+    <Compile Include="Common\UserProfileTracker.cs" />
     <Compile Include="Parameters\ChangeUserProfilePropertiesRequestParameters.cs" />
     <Compile Include="Enums\ConnectionStatus.cs" />
     <Compile Include="Parameters\CreateUserProfileRequestParameters.cs" />
     <Compile Include="Parameters\CreateUserProfileResponseParameters.cs" />
+    <Compile Include="Parameters\SubscribeToUserProfileRequestParameters.cs" />
+    <Compile Include="Parameters\RegisterToUserProfileServiceRequestParameters.cs" />
+    <Compile Include="Parameters\UnsubscribeFromUserProfileRequestParameters.cs" />
+    <Compile Include="Parameters\UnregisterFromUserProfileServiceRequestParameters.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Enums\ServerType.cs" />
     <Compile Include="Enums\UserProfileCreationStatus.cs" />

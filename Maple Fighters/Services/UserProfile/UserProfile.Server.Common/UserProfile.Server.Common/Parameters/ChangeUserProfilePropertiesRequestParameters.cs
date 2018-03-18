@@ -18,6 +18,14 @@ namespace UserProfile.Server.Common
             ConnectionStatus = connectionStatus;
         }
 
+        public ChangeUserProfilePropertiesRequestParameters(int userId, ConnectionStatus connectionStatus)
+        {
+            UserId = userId;
+            LocalId = 0;
+            ServerType = ServerType.Login;
+            ConnectionStatus = connectionStatus;
+        }
+
         public void Serialize(BinaryWriter writer)
         {
             writer.Write(UserId);

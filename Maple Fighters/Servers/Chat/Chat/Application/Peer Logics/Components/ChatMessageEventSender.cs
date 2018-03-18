@@ -25,7 +25,7 @@ namespace Chat.Application.PeerLogic.Components
         {
             foreach (var peerWrapper in peerContainer.GetAllPeerWrappers())
             {
-                if (peerWrapper.PeerId == peerGetter.GetPeerId())
+                if (peerWrapper.PeerId == peerGetter.PeerId)
                 {
                     continue;
                 }

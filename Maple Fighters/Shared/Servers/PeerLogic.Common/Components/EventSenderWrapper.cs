@@ -25,7 +25,7 @@ namespace PeerLogic.Common.Components
         public void Send<TParameters>(byte code, TParameters parameters, MessageSendOptions messageSendOptions)
             where TParameters : struct, IParameters
         {
-            if (peerGetter.GetPeer().IsConnected)
+            if (peerGetter.Peer.IsConnected)
             {
                 eventSender.Send(new MessageData<TParameters>(code, parameters), messageSendOptions);
             }
