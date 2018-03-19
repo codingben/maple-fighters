@@ -116,12 +116,10 @@ namespace UserProfile.Server.Common
         {
             UnsubscribeFromDisconnectionNotifier();
 
-            if (!isManuallyDisconnected && !isUserProfileChanged)
+            if (!isManuallyDisconnected && isUserProfileChanged)
             {
                 OnClientDisconnected();
             }
-
-            RemoveUserIdToPeerIdFromConverter();
         }
 
         private void OnClientDisconnected()

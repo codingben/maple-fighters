@@ -21,7 +21,7 @@ namespace UserProfile.Service.Application.Components
         {
             using (var db = databaseConnectionProvider.GetDbConnection())
             {
-                var exists = db.Exists<UserProfilesTableDefinition>(new UserProfilesTableDefinition { UserId = userId });
+                var exists = db.Exists<UserProfilesTableDefinition>(new { UserId = userId });
                 return exists;
             }
         }

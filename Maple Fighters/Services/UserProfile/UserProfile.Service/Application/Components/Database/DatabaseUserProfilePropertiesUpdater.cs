@@ -22,12 +22,12 @@ namespace UserProfile.Service.Application.Components
         {
             using (var db = databaseConnectionProvider.GetDbConnection())
             {
-                db.UpdateOnly(new UserProfilesTableDefinition
+                db.UpdateOnly(() => new UserProfilesTableDefinition
                 {
                     LocalId = localId,
                     CurrentServer = (byte)serverType,
                     IsConnected = (byte)connectionStatus
-                }, onlyFields: p => new[] { p.LocalId, p.CurrentServer, p.IsConnected }, where: p => p.UserId == userId);
+                }, where: p => p.UserId == userId);
             }
         }
     }

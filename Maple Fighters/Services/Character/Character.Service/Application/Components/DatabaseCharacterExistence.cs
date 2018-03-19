@@ -22,7 +22,7 @@ namespace CharacterService.Application.Components
         {
             using (var db = databaseConnectionProvider.GetDbConnection())
             {
-                var exists = db.Exists<CharactersTableDefinition>(new CharactersTableDefinition { UserId = userId, CharacterIndex = (int)characterIndex });
+                var exists = db.Exists<CharactersTableDefinition>(new { UserId = userId, CharacterIndex = (int)characterIndex });
                 return exists;
             }
         }
