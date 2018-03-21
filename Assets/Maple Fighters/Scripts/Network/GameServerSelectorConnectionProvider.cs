@@ -11,41 +11,30 @@ using Scripts.Utils;
 
 namespace Scripts.Services
 {
-    public class GameConnectionProvider : ServiceConnectionProviderBase<GameConnectionProvider>
+    public class GameServerSelectorConnectionProvider : ServiceConnectionProviderBase<GameServerSelectorConnectionProvider>
     {
         private Action onAuthorized;
         private AuthorizationStatus authorizationStatus = AuthorizationStatus.Failed;
-        private string serverName;
 
-        public void Connect(string serverName, Action onAuthorized, PeerConnectionInformation peerConnectionInformation)
+        public void Connect(Action onAuthorized)
         {
-            this.serverName = serverName;
             this.onAuthorized = onAuthorized;
 
-            var serverConnectionInformation = GetServerConnectionInformation(ServerType.Game, peerConnectionInformation);
+            var serverConnectionInformation = GetServerConnectionInformation(ServerType.GameServerProvider);
             CoroutinesExecutor.StartTask((yield) => Connect(yield, serverConnectionInformation));
         }
 
         protected override void OnPreConnection()
         {
-            var noticeWindow = UserInterfaceContainer.Instance.Add<NoticeWindow>().AssertNotNull();
-            noticeWindow.Message.text = $"Connecting to the {serverName} server... Please wait.";
+            // Left blank intentionally
         }
 
         protected override void OnConnectionFailed()
         {
-            Action onButtonClicked = delegate 
-            {
-                // TODO: Do it via controller which will update the list.
-
-                var gameServerSelectorWindow = UserInterfaceContainer.Instance.Add<GameServerSelectorWindow>().AssertNotNull();
-                gameServerSelectorWindow.Show();
-            };
-
             var noticeWindow = UserInterfaceContainer.Instance.Get<NoticeWindow>().AssertNotNull();
-            noticeWindow.Message.text = $"Could not connect to the {serverName} server.";
+            noticeWindow.Message.text = "Could not connect to a game server provider.";
             noticeWindow.OkButton.interactable = true;
-            noticeWindow.OkButtonClickedAction = onButtonClicked;
+            noticeWindow.OkButtonClickedAction = LoadedObjects.DestroyAll;
         }
 
         protected override void OnConnectionEstablished()
@@ -74,7 +63,7 @@ namespace Scripts.Services
 
         protected override Task<AuthorizeResponseParameters> Authorize(IYield yield, AuthorizeRequestParameters parameters)
         {
-            return ServiceContainer.GameService.Authorize(yield, parameters);
+            return ServiceContainer.GameServerProviderService.Authorize(yield, parameters);
         }
 
         protected override void OnPreAuthorization()
@@ -85,7 +74,7 @@ namespace Scripts.Services
         public void OnNonAuthorized()
         {
             var noticeWindow = UserInterfaceContainer.Instance.Get<NoticeWindow>().AssertNotNull();
-            noticeWindow.Message.text = $"Authorization with {serverName} server failed.";
+            noticeWindow.Message.text = "Authorization with game server provider failed.";
             noticeWindow.OkButton.interactable = true;
             noticeWindow.OkButtonClickedAction = LoadedObjects.DestroyAll;
         }
@@ -102,7 +91,7 @@ namespace Scripts.Services
 
         protected override IServiceBase GetServiceBase()
         {
-            return ServiceContainer.GameService;
+            return ServiceContainer.GameServerProviderService;
         }
     }
 }

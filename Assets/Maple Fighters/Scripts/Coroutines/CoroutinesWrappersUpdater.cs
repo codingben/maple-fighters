@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using CommonTools.Coroutines;
-using CommonTools.Log;
 using Scripts.Utils;
 using UnityEngine;
 
@@ -10,13 +9,13 @@ namespace Scripts.Coroutines
     {
         public static ExternalCoroutinesExecutor ExecuteExternally(this ExternalCoroutinesExecutor executer)
         {
-            CoroutinesWrappersUpdater.GetInstance().AddCoroutineExecutor(executer);
+            CoroutinesWrappersUpdater.GetInstance()?.AddCoroutineExecutor(executer);
             return executer;
         }
 
         public static ExternalCoroutinesExecutor RemoveFromExternalExecutor(this ExternalCoroutinesExecutor executer)
         {
-            CoroutinesWrappersUpdater.GetInstance().RemoveCoroutineExecutor(executer);
+            CoroutinesWrappersUpdater.GetInstance()?.RemoveCoroutineExecutor(executer);
             return executer;
         }
     }
@@ -27,12 +26,18 @@ namespace Scripts.Coroutines
 
         public static CoroutinesWrappersUpdater GetInstance()
         {
+            if(isDestroying)
+            {
+                return null;
+            }
+
             _instance = _instance ?? new GameObject(typeof(CoroutinesWrappersUpdater).ToString(), typeof(CoroutinesWrappersUpdater))
                 .GetComponent<CoroutinesWrappersUpdater>();
             return _instance;
         }
 
         private static CoroutinesWrappersUpdater _instance;
+        private static bool isDestroying;
 
         public void AddCoroutineExecutor(ExternalCoroutinesExecutor coroutineWrapper)
         {
@@ -59,18 +64,22 @@ namespace Scripts.Coroutines
 
             foreach (var externalCoroutinesExecutor in temp)
             {
-                externalCoroutinesExecutor.Update();
+                externalCoroutinesExecutor?.Update();
             }
         }
 
         private void OnDestroy()
         {
             Dispose();
+
+            isDestroying = true;
         }
 
         private void OnApplicationQuit()
         {
             Dispose();
+
+            isDestroying = true;
         }
 
         private void Dispose()

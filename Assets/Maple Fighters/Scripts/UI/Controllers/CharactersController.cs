@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using CommonTools.Coroutines;
 using CommonTools.Log;
+using CommunicationHelper;
 using Scripts.Containers;
 using Scripts.UI.Core;
 using Scripts.UI.Windows;
 using Game.Common;
+using Scripts.Utils;
 using Scripts.World;
 using TMPro;
 using UnityEngine;
@@ -38,6 +40,8 @@ namespace Scripts.UI.Controllers
                     Destroy(clickableCharacter.gameObject);
                 }
             }
+
+            coroutinesExecutor.Dispose();
         }
 
         private void Update()
@@ -47,7 +51,16 @@ namespace Scripts.UI.Controllers
 
         private async Task GetCharacters(IYield yield)
         {
+            ServiceContainer.GameService.SetServerPeerHandler<CharacterOperations, EmptyEventCode>();
+
             var parameters = await ServiceContainer.CharacterService.GetCharacters(yield);
+            if (parameters.Characters == null)
+            {
+                LogUtils.Log(MessageBuilder.Trace("Failed to get characters."));
+                LoadedObjects.DestroyAll();
+                return;
+            }
+
             OnReceivedCharacters(parameters);
         }
 
@@ -84,21 +97,21 @@ namespace Scripts.UI.Controllers
             characterGameObject.transform.SetAsFirstSibling();
             characterGameObject.GetComponent<RectTransform>().anchoredPosition = anchoredPosition;
 
+            // TODO: Refactor. Add<ClickableCharacter>
+
             var characterComponent = characterGameObject.GetComponent<ClickableCharacter>().AssertNotNull();
             characterComponent.SetCharacter(index, character);
             characterComponent.CharacterClicked += OnCharacterClicked;
 
             characters[(int)character.Index] = characterComponent;
 
-            if (!character.HasCharacter)
+            if (character.HasCharacter)
             {
-                return;
-            }
-
-            var characterNameComponent = characterGameObject.transform.GetChild(0).GetComponent<TextMeshProUGUI>().AssertNotNull();
-            if (characterNameComponent != null)
-            {
-                characterNameComponent.text = character.Name;
+                var characterNameComponent = characterGameObject.transform.GetChild(0)?.GetComponent<TextMeshProUGUI>().AssertNotNull();
+                if (characterNameComponent != null)
+                {
+                    characterNameComponent.text = character.Name;
+                }
             }
         }
 

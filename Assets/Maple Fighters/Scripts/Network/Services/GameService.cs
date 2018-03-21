@@ -6,7 +6,7 @@ using Game.Common;
 
 namespace Scripts.Services
 {
-    public class GameService : ServiceBase<GameOperations, GameEvents>, IGameServiceAPI
+    public class GameService : ServiceBase, IGameServiceAPI
     {
         public UnityEvent<EnterSceneResponseParameters> SceneEntered { get; } = new UnityEvent<EnterSceneResponseParameters>();
         public UnityEvent<SceneObjectAddedEventParameters> SceneObjectAdded { get; } = new UnityEvent<SceneObjectAddedEventParameters>();
@@ -18,6 +18,11 @@ namespace Scripts.Services
         public UnityEvent<PlayerAttackedEventParameters> PlayerAttacked { get; } = new UnityEvent<PlayerAttackedEventParameters>();
         public UnityEvent<CharacterAddedEventParameters> CharacterAdded { get; } = new UnityEvent<CharacterAddedEventParameters>();
         public UnityEvent<CharactersAddedEventParameters> CharactersAdded { get; } = new UnityEvent<CharactersAddedEventParameters>();
+
+        public GameService()
+        {
+            SetServerPeerHandler<GameOperations, GameEvents>();
+        }
 
         protected override void OnConnected()
         {
@@ -31,6 +36,16 @@ namespace Scripts.Services
             base.OnDisconnected(reason, details);
 
             RemoveEventsHandlers();
+        }
+        
+        protected override void OnServerPeerHandlerChanged<TEventCode>()
+        {
+            base.OnServerPeerHandlerChanged<TEventCode>();
+
+            if (typeof(GameEvents) == typeof(TEventCode))
+            {
+                SetEventsHandlers();
+            }
         }
 
         private void SetEventsHandlers()

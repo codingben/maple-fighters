@@ -4,6 +4,18 @@ namespace Scripts.Containers
 {
     public static class ServiceContainer
     {
+        public static IGameServerProviderServiceAPI GameServerProviderService
+        {
+            get
+            {
+                if (gameServerProviderService == null)
+                {
+                    gameServerProviderService = new GameServerProviderService();
+                }
+                return gameServerProviderService;
+            }
+        }
+
         public static IGameServiceAPI GameService
         {
             get
@@ -64,6 +76,7 @@ namespace Scripts.Containers
             }
         }
 
+        private static IGameServerProviderServiceAPI gameServerProviderService;
         private static IGameServiceAPI gameService;
         private static ICharacterServiceAPI characterService;
         private static IChatServiceAPI chatService;

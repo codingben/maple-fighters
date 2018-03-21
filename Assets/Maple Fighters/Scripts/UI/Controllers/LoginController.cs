@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using CommonTools.Coroutines;
 using CommonTools.Log;
@@ -7,7 +8,7 @@ using Scripts.Containers;
 using Scripts.UI.Core;
 using Scripts.UI.Windows;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using WaitForSeconds = CommonTools.Coroutines.WaitForSeconds;
 
 namespace Scripts.UI.Controllers
 {
@@ -131,7 +132,15 @@ namespace Scripts.UI.Controllers
 
         private void OnLoginSucceed()
         {
-            SceneManager.LoadScene(loadSceneIndex, LoadSceneMode.Single);
+            coroutinesExecutor.StartCoroutine(HideNoticeWindowAfterDelay());
+        }
+
+        private IEnumerator<IYieldInstruction> HideNoticeWindowAfterDelay()
+        {
+            yield return new WaitForSeconds(0.5f);
+
+            var noticeWindow = UserInterfaceContainer.Instance.Get<NoticeWindow>().AssertNotNull();
+            noticeWindow.Hide(GameServerSelectorController.Instance.Initialize);
         }
 
         private void OnRegisterButtonClicked()

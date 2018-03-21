@@ -158,5 +158,10 @@ namespace Scripts.Services
             var peerConnectionInformation = NetworkConfiguration.GetInstance().GetPeerConnectionInformation(connectionInformation);
             return new ServerConnectionInformation(serverType, peerConnectionInformation);
         }
+
+        protected ServerConnectionInformation GetServerConnectionInformation(ServerType serverType, PeerConnectionInformation peerConnectionInformation)
+        {
+            return new ServerConnectionInformation(serverType, peerConnectionInformation);
+        }
     }
 }

@@ -4,25 +4,33 @@ using CommonTools.Log;
 
 namespace Scripts.Services
 {
-    public class ServiceBase<TOperationCode, TEventCode> : IServiceBase
-        where TOperationCode : IComparable, IFormattable, IConvertible
-        where TEventCode : IComparable, IFormattable, IConvertible
+    public class ServiceBase : IServiceBase
     {
-        public IServiceConnectionHandler ServiceConnectionHandler { get; }
-        protected IServerPeerHandler ServerPeerHandler { get; }
+        public IServiceConnectionHandler ServiceConnectionHandler { get; private set; }
+        public IServerPeerHandler ServerPeerHandler { get; private set; }
 
-        protected ServiceBase()
+        public void SetServerPeerHandler<TOperationCode, TEventCode>()
+            where TOperationCode : IComparable, IFormattable, IConvertible
+            where TEventCode : IComparable, IFormattable, IConvertible
         {
+            ServerPeerHandler?.Dispose();
+
             var serverPeerHandler = new ServerPeerHandler<TOperationCode, TEventCode>();
             ServerPeerHandler = serverPeerHandler;
 
-            Action<IServerPeer> onConnected = (serverPeer) => 
+            if (ServiceConnectionHandler != null)
             {
-                serverPeerHandler.Initialize(serverPeer);
-                OnConnected();
-            };
-
-            ServiceConnectionHandler = new ServiceConnectionHandler(onConnected);
+                serverPeerHandler.Initialize(ServiceConnectionHandler.ServerPeer);
+                OnServerPeerHandlerChanged<TEventCode>();
+            }
+            else
+            {
+                ServiceConnectionHandler = new ServiceConnectionHandler(onConnected: (serverPeer) =>
+                {
+                    serverPeerHandler.Initialize(serverPeer);
+                    OnConnected();
+                });
+            }
         }
 
         protected virtual void OnConnected()
@@ -42,6 +50,12 @@ namespace Scripts.Services
             var ip = ServiceConnectionHandler.ServerConnectionInformation.PeerConnectionInformation.Ip;
             var port = ServiceConnectionHandler.ServerConnectionInformation.PeerConnectionInformation.Port;
             LogUtils.Log($"The connection has been closed with {ip}:{port}. Reason: {reason}");
+        }
+
+        protected virtual void OnServerPeerHandlerChanged<TEventCode>()
+            where TEventCode : IComparable, IFormattable, IConvertible
+        {
+            // Left blank intentionally
         }
 
         private void SubscribeToDisconnectionNotifier()

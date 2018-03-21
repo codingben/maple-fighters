@@ -12,17 +12,6 @@ MonoBehaviour:
   m_Name: ServicesConfiguration
   m_EditorClassIdentifier: 
   connectionInformations:
-  - Name: Game
-    ServerType: 0
-    UdpConnectionDetails:
-      Ip: 127.0.0.1
-      Port: 5055
-    TcpConnectionDetails:
-      Ip: 
-      Port: 0
-    WebConnectionDetails:
-      Ip: 
-      Port: 0
   - Name: Chat
     ServerType: 1
     UdpConnectionDetails:
@@ -50,6 +39,17 @@ MonoBehaviour:
     UdpConnectionDetails:
       Ip: 127.0.0.1
       Port: 5058
+    TcpConnectionDetails:
+      Ip: 
+      Port: 0
+    WebConnectionDetails:
+      Ip: 
+      Port: 0
+  - Name: Gane Server Provider
+    ServerType: 4
+    UdpConnectionDetails:
+      Ip: 127.0.0.1
+      Port: 5061
     TcpConnectionDetails:
       Ip: 
       Port: 0

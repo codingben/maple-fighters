@@ -7,6 +7,8 @@ namespace Scripts.Services
 {
     public interface IServiceConnectionHandler : IDisposable
     {
+        IServerPeer ServerPeer { get; }
+
         ServerConnectionInformation ServerConnectionInformation { get; }
         IPeerDisconnectionNotifier PeerDisconnectionNotifier { get; }
 

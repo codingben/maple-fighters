@@ -71,6 +71,8 @@ namespace Scripts.UI.Controllers
                 UnsubscribeFromCharacterNameWindow();
                 UserInterfaceContainer.Instance.Remove(characterNameWindow);
             }
+
+            coroutinesExecutor.Dispose();
         }
 
         private void SubscribeToCharactersSelectionWindowEvents()

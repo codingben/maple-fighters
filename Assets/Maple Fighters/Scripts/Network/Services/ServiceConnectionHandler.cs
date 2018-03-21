@@ -10,10 +10,12 @@ namespace Scripts.Services
 {
     internal class ServiceConnectionHandler : IServiceConnectionHandler
     {
-        public ServerConnectionInformation ServerConnectionInformation { get; private set; }
-        public IPeerDisconnectionNotifier PeerDisconnectionNotifier => serverPeer.PeerDisconnectionNotifier;
+        public IServerPeer ServerPeer { get; private set; }
 
-        private IServerPeer serverPeer;
+        public ServerConnectionInformation ServerConnectionInformation { get; private set; }
+        public IPeerDisconnectionNotifier PeerDisconnectionNotifier => ServerPeer.PeerDisconnectionNotifier;
+
+        private ServerType serverType;
         private readonly Action<IServerPeer> onConnected;
 
         public ServiceConnectionHandler(Action<IServerPeer> onConnected)
@@ -23,7 +25,7 @@ namespace Scripts.Services
 
         public async Task<ConnectionStatus> Connect(IYield yield, ICoroutinesExecutor coroutinesExecutor, ServerConnectionInformation serverConnectionInformation)
         {
-            var serverType = serverConnectionInformation.ServerType;
+            serverType = serverConnectionInformation.ServerType;
 
             if (IsConnected())
             {
@@ -40,13 +42,13 @@ namespace Scripts.Services
             var networkConfiguration = NetworkConfiguration.GetInstance();
             var connectionDetails = new ConnectionDetails(networkConfiguration.ConnectionProtocol, networkConfiguration.DebugLevel);
 
-            serverPeer = await serverConnector.ConnectAsync(yield, ServerConnectionInformation.PeerConnectionInformation, connectionDetails);
-            if (serverPeer == null)
+            ServerPeer = await serverConnector.ConnectAsync(yield, ServerConnectionInformation.PeerConnectionInformation, connectionDetails);
+            if (ServerPeer == null)
             {
                 return ConnectionStatus.Failed;
             }
 
-            onConnected?.Invoke(serverPeer);
+            onConnected?.Invoke(ServerPeer);
             return ConnectionStatus.Succeed;
         }
 
@@ -54,7 +56,7 @@ namespace Scripts.Services
         {
             if (IsConnected())
             {
-                serverPeer.NetworkTrafficState = state;
+                ServerPeer.NetworkTrafficState = state;
             }
         }
 
@@ -68,13 +70,13 @@ namespace Scripts.Services
 
         private void Disconnect()
         {
-            serverPeer.Disconnect();
-            serverPeer = null;
+            ServerPeer.Disconnect();
+            ServerPeer = null;
         }
 
         public bool IsConnected()
         {
-            return serverPeer != null && serverPeer.IsConnected;
+            return ServerPeer != null && ServerPeer.IsConnected;
         }
     }
 }

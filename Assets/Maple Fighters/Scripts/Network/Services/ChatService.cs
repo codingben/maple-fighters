@@ -6,9 +6,14 @@ using CommonTools.Coroutines;
 
 namespace Scripts.Services
 {
-    public sealed class ChatService : ServiceBase<ChatOperations, ChatEvents>, IChatServiceAPI
+    public sealed class ChatService : ServiceBase, IChatServiceAPI
     {
         public UnityEvent<ChatMessageEventParameters> ChatMessageReceived { get; } = new UnityEvent<ChatMessageEventParameters>();
+
+        public ChatService()
+        {
+            SetServerPeerHandler<ChatOperations, ChatEvents>();
+        }
 
         protected override void OnConnected()
         {

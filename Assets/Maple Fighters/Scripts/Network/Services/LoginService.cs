@@ -6,8 +6,13 @@ using Login.Common;
 
 namespace Scripts.Services
 {
-    public sealed class LoginService : ServiceBase<LoginOperations, EmptyEventCode>, ILoginServiceAPI
+    public sealed class LoginService : ServiceBase, ILoginServiceAPI
     {
+        public LoginService()
+        {
+            SetServerPeerHandler<LoginOperations, EmptyEventCode>();
+        }
+
         public async Task<AuthenticateResponseParameters> Authenticate(IYield yield, AuthenticateRequestParameters parameters)
         {
             var responseParameters = await ServerPeerHandler.SendOperation<AuthenticateRequestParameters, AuthenticateResponseParameters>

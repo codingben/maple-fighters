@@ -5,6 +5,7 @@
         Game,
         Chat,
         Login,
-        Registration
+        Registration,
+        GameServerProvider
     }
 }

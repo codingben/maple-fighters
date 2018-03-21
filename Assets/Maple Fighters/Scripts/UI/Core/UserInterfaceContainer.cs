@@ -42,7 +42,7 @@ namespace Scripts.UI.Core
             return type;
         }
 
-        public T Add<T>(ViewType viewType = ViewType.Foreground, Index index = Index.First)
+        public T Add<T>(ViewType viewType = ViewType.Foreground, Index index = Index.First, Transform parent = null)
             where T : IUserInterface
         {
             var userInterfaceName = typeof(T).Name;
@@ -52,11 +52,16 @@ namespace Scripts.UI.Core
                 throw new Exception($"Could not find an user interface with name {userInterfaceName}.");
             }
 
-            var parent = viewType == ViewType.Foreground ? foreground : background;
-            var userInterface = Instantiate(userInterfaceObject, Vector3.zero, Quaternion.identity, parent)
+            var parentView = viewType == ViewType.Foreground ? foreground : background;
+            var userInterface = Instantiate(userInterfaceObject, Vector3.zero, Quaternion.identity, parentView)
                 .GetComponent<T>();
             userInterface.GameObject.name = userInterface.GameObject.name.RemoveCloneFromName();
             userInterface.GameObject.name = userInterface.GameObject.name.MakeSpaceBetweenWords();
+
+            if (parent != null)
+            {
+                userInterface.GameObject.transform.SetParent(parent, true);
+            }
 
             if (index == Index.First)
             {
