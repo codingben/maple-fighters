@@ -4,6 +4,7 @@ using Game.Application.PeerLogic.Operations;
 using Game.Common;
 using PeerLogic.Common;
 using ServerCommunicationInterfaces;
+using UserProfile.Server.Common;
 
 namespace Game.Application.PeerLogics
 {
@@ -20,10 +21,19 @@ namespace Game.Application.PeerLogics
         {
             base.Initialize(peer);
 
+            AddCommonComponents();
+            AddComponents();
+
             AddHandlerForCreateCharacterOperation();
             AddHandlerForRemoveCharacterOperation();
             AddHandlerForGetCharactersOperation();
             AddHandlerToValidateCharacterOperation();
+        }
+
+        private void AddComponents()
+        {
+            var userProfileTracker = Components.AddComponent(new UserProfileTracker(userId, ServerType.Game));
+            userProfileTracker.ChangeUserProfileProperties();
         }
 
         private void AddHandlerForCreateCharacterOperation()

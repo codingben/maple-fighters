@@ -29,6 +29,7 @@ namespace Game.Application.PeerLogics
             AddCommonComponents();
             AddComponents();
 
+            AddHandlerForEnterSceneOperation();
             AddHandlerForUpdatePositionOperation();
             AddHandlerForUpdatePlayerStateOperation();
             AddHandlerForChangeSceneOperation();
@@ -38,9 +39,7 @@ namespace Game.Application.PeerLogics
         {
             sceneObject.Components.AddComponent(new PeerIdGetter(PeerWrapper.PeerId));
 
-            var userProfileTracker = Components.AddComponent(new UserProfileTracker(userId, ServerType.Game));
-            userProfileTracker.ChangeUserProfileProperties();
-
+            Components.AddComponent(new UserProfileTracker(userId, ServerType.Game));
             Components.AddComponent(new SceneObjectGetter(sceneObject));
             Components.AddComponent(new InterestManagementNotifier());
             Components.AddComponent(new CharacterSender());

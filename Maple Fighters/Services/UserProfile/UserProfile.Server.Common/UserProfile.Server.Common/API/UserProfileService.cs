@@ -97,7 +97,7 @@ namespace UserProfile.Server.Common
 
         public void UnsubscribeFromUserProfile(int userId)
         {
-            var parameters = new UnsubscribeFromUserProfileRequestParameters(userId);
+            var parameters = new UnsubscribeFromUserProfileRequestParameters(userId, serverId);
             OutboundServerPeerLogic?.SendOperation((byte)UserProfileOperations.Unsubscribe, parameters);
         }
 

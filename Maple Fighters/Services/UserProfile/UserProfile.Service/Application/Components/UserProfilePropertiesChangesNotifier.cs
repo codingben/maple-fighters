@@ -31,16 +31,21 @@ namespace UserProfile.Service.Application.Components
         {
             var userId = parameters.UserId;
             var serverIds = userIdToServerIdConverter.Get(userId);
+            if (serverIds == null)
+            {
+                LogUtils.Log($"Could not find server ids for user with id {userId}");
+                return;
+            }
 
             foreach (var serverId in serverIds)
             {
                 var peerId = serverIdToPeerIdConverter.Get(serverId);
-                if (peerId == null)
+                if (!peerId.HasValue)
                 {
                     continue;
                 }
 
-                if (peerId == peerGetter.PeerId)
+                if (peerId.Value == peerGetter.PeerId)
                 {
                     continue;
                 }

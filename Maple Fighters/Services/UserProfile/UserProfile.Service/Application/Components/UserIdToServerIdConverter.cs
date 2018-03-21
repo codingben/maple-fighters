@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using CommonTools.Log;
 using ComponentModel.Common;
 
@@ -13,9 +14,11 @@ namespace UserProfile.Service.Application.Components
         {
             lock (locker)
             {
-                if (userIdsToServerIds.ContainsKey(userId))
+                LogUtils.Log($"Adding a user id {userId} to server id {serverId}");
+
+                if (HasServerId(userId, serverId))
                 {
-                    LogUtils.Log(MessageBuilder.Trace($"Unable to add a user with id {serverId} because it already exists."));
+                    LogUtils.Log(MessageBuilder.Trace($"Unable to add a server with id {userId} to user id {userId} because it already exists."));
                     return;
                 }
 
@@ -31,25 +34,43 @@ namespace UserProfile.Service.Application.Components
             }
         }
 
-        public void Remove(int userId)
+        public void Remove(int userId, int serverId)
         {
             lock (locker)
             {
-                if (!userIdsToServerIds.ContainsKey(userId))
-                {
-                    LogUtils.Log(MessageBuilder.Trace($"Could not find a user with id {userId}."));
-                    return;
-                }
+                LogUtils.Log($"Removing a user id {userId}");
 
-                userIdsToServerIds.Remove(userId);
+                if (HasServerId(userId, serverId))
+                {
+                    var user = userIdsToServerIds[userId];
+                    user.Remove(serverId);
+
+                    if (user.Count == 0)
+                    {
+                        userIdsToServerIds.Remove(userId);
+                    }
+                }
+                else
+                {
+                    LogUtils.Log(MessageBuilder.Trace($"Could not find a server id {userId} which assigned to a user id {userId}."));
+                }
             }
         }
 
-        public int[] Get(int userId)
+        public IEnumerable<int> Get(int userId)
         {
             lock (locker)
             {
                 return userIdsToServerIds.TryGetValue(userId, out var serverIds) ? serverIds.ToArray() : null;
+            }
+        }
+
+        public bool HasServerId(int userId, int serverId)
+        {
+            lock (locker)
+            {
+                var serverIds = Get(userId);
+                return Get(userId) != null && serverIds.Any(id => serverId == id);
             }
         }
     }

@@ -20,7 +20,8 @@ namespace UserProfile.Service.Application.PeerLogic.Operations
         public EmptyParameters? Handle(MessageData<UnsubscribeFromUserProfileRequestParameters> messageData, ref MessageSendOptions sendOptions)
         {
             var userId = messageData.Parameters.UserId;
-            userIdToServerIdConverter.Remove(userId);
+            var serverId = messageData.Parameters.ServerId;
+            userIdToServerIdConverter.Remove(userId, serverId);
             return null;
         }
     }
