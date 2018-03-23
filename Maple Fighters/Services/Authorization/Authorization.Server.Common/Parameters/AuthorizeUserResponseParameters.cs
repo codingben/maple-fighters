@@ -17,14 +17,22 @@ namespace Authorization.Server.Common
 
         public void Serialize(BinaryWriter writer)
         {
-            writer.Write(AccessToken);
             writer.Write((byte)Status);
+
+            if (Status == AuthorizationStatus.Succeed)
+            {
+                writer.Write(AccessToken);
+            }
         }
 
         public void Deserialize(BinaryReader reader)
         {
-            AccessToken = reader.ReadString();
             Status = (AuthorizationStatus)reader.ReadByte();
+
+            if (Status == AuthorizationStatus.Succeed)
+            {
+                AccessToken = reader.ReadString();
+            }
         }
     }
 }

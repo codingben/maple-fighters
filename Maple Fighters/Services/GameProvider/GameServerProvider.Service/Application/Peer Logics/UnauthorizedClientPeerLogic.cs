@@ -1,13 +1,14 @@
 ﻿using Authorization.Server.Common;
 using CommonTools.Log;
 using CommunicationHelper;
-using GameServerProvider.Client.Common;
 using PeerLogic.Common;
 using ServerCommunicationInterfaces;
 
 namespace GameServerProvider.Service.Application.PeerLogics
 {
-    internal class UnauthorizedClientPeerLogic : PeerLogicBase<ClientOperations, EmptyEventCode>
+    using AuthorizationOperations = Authorization.Client.Common.AuthorizationOperations;
+
+    internal class UnauthorizedClientPeerLogic : PeerLogicBase<AuthorizationOperations, EmptyEventCode>
     {
         public override void Initialize(IClientPeerWrapper<IClientPeer> peer)
         {
@@ -18,7 +19,7 @@ namespace GameServerProvider.Service.Application.PeerLogics
 
         private void AddHandlerForAuthorizationOperation()
         {
-            OperationHandlerRegister.SetAsyncHandler(ClientOperations.Authorize, new AuthorizationOperationHandler(OnAuthorized, OnNonAuthorized));
+            OperationHandlerRegister.SetAsyncHandler(AuthorizationOperations.Authorize, new AuthorizationOperationHandler(OnAuthorized, OnNonAuthorized));
         }
 
         private void OnAuthorized(int userId)

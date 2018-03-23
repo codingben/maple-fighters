@@ -27,7 +27,7 @@ namespace Login.Application.PeerLogic
 
             AddCommonComponents();
 
-            var userProfileTracker = Components.AddComponent(new UserProfileTracker(userId, ServerType.Login));
+            var userProfileTracker = Components.AddComponent(new UserProfileTracker(userId, ServerType.Login, isUserProfileChanged: true));
             userProfileTracker.ChangeUserProfileProperties();
         }
     }

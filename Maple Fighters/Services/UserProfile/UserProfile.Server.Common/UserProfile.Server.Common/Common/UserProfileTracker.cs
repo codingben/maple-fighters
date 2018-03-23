@@ -11,17 +11,18 @@ namespace UserProfile.Server.Common
     public class UserProfileTracker : Component
     {
         private bool isManuallyDisconnected;
-        private bool isUserProfileChanged;
 
         private readonly int userId;
         private readonly ServerType serverType;
+        private readonly bool isUserProfileChanged;
 
         private IMinimalPeerGetter peerGetter;
 
-        public UserProfileTracker(int userId, ServerType serverType)
+        public UserProfileTracker(int userId, ServerType serverType, bool isUserProfileChanged = false)
         {
             this.userId = userId;
             this.serverType = serverType;
+            this.isUserProfileChanged = isUserProfileChanged;
         }
         
         protected override void OnAwake()
@@ -50,8 +51,6 @@ namespace UserProfile.Server.Common
 
         public void ChangeUserProfileProperties()
         {
-            isUserProfileChanged = true;
-
             var userProfileServiceAPI = Server.Components.GetComponent<IUserProfileServiceAPI>().AssertNotNull();
             var parameters = new ChangeUserProfilePropertiesRequestParameters(userId, peerGetter.PeerId, serverType, ConnectionStatus.Connected);
             userProfileServiceAPI.ChangeUserProfileProperties(parameters);

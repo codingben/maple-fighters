@@ -2,7 +2,6 @@
 {
     public enum GameOperations : byte
     {
-        Authorize,
         EnterScene,
         ChangeScene,
         PositionChanged,

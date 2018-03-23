@@ -39,7 +39,7 @@ namespace Game.Application.PeerLogics
         {
             sceneObject.Components.AddComponent(new PeerIdGetter(PeerWrapper.PeerId));
 
-            Components.AddComponent(new UserProfileTracker(userId, ServerType.Game));
+            Components.AddComponent(new UserProfileTracker(userId, ServerType.Game, isUserProfileChanged: true));
             Components.AddComponent(new SceneObjectGetter(sceneObject));
             Components.AddComponent(new InterestManagementNotifier());
             Components.AddComponent(new CharacterSender());

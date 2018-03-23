@@ -1,5 +1,4 @@
 ﻿using Authorization.Server.Common;
-using Chat.Common;
 using CommonTools.Log;
 using CommunicationHelper;
 using PeerLogic.Common;
@@ -7,7 +6,9 @@ using ServerCommunicationInterfaces;
 
 namespace Chat.Application.PeerLogics
 {
-    internal class UnauthorizedClientPeerLogic : PeerLogicBase<ChatOperations, EmptyEventCode>
+    using AuthorizationOperations = Authorization.Client.Common.AuthorizationOperations;
+
+    internal class UnauthorizedClientPeerLogic : PeerLogicBase<AuthorizationOperations, EmptyEventCode>
     {
         public override void Initialize(IClientPeerWrapper<IClientPeer> peer)
         {
@@ -18,7 +19,7 @@ namespace Chat.Application.PeerLogics
 
         private void AddHandlerForAuthorizationOperation()
         {
-            OperationHandlerRegister.SetAsyncHandler(ChatOperations.Authorize, new AuthorizationOperationHandler(OnAuthorized, OnNonAuthorized));
+            OperationHandlerRegister.SetAsyncHandler(AuthorizationOperations.Authorize, new AuthorizationOperationHandler(OnAuthorized, OnNonAuthorized));
         }
 
         private void OnAuthorized(int userId)

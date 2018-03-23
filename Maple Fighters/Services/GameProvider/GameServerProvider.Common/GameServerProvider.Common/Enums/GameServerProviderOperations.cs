@@ -1,8 +1,7 @@
 ﻿namespace GameServerProvider.Client.Common
 {
-    public enum ClientOperations : byte
+    public enum GameServerProviderOperations : byte
     {
-        Authorize,
         ProvideGameServers
     }
 }

@@ -54,7 +54,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Parameters\GameServerInformationParameters.cs" />
-    <Compile Include="Enums\ClientOperations.cs" />
+    <Compile Include="Enums\GameServerProviderOperations.cs" />
     <Compile Include="Parameters\GameServersProviderResponseParameters.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

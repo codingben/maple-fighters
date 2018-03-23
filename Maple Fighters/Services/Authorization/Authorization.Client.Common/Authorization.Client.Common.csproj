@@ -44,6 +44,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Enums\AuthorizationOperations.cs" />
     <Compile Include="Enums\AuthorizationStatus.cs" />
     <Compile Include="Parameters\AuthorizeRequestParameters.cs" />
     <Compile Include="Parameters\AuthorizeResponseParameters.cs" />

@@ -32,7 +32,7 @@ namespace Game.Application.PeerLogics
 
         private void AddComponents()
         {
-            var userProfileTracker = Components.AddComponent(new UserProfileTracker(userId, ServerType.Game));
+            var userProfileTracker = Components.AddComponent(new UserProfileTracker(userId, ServerType.Game, isUserProfileChanged: true));
             userProfileTracker.ChangeUserProfileProperties();
         }
 
