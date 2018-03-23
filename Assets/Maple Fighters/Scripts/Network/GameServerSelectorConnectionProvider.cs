@@ -4,6 +4,8 @@ using Authorization.Client.Common;
 using CommonCommunicationInterfaces;
 using CommonTools.Coroutines;
 using CommonTools.Log;
+using CommunicationHelper;
+using GameServerProvider.Client.Common;
 using Scripts.Containers;
 using Scripts.UI.Core;
 using Scripts.UI.Windows;
@@ -39,6 +41,8 @@ namespace Scripts.Services
 
         protected override void OnConnectionEstablished()
         {
+            ServiceContainer.GameServerProviderService.SetPeerLogic<AuthorizationService, AuthorizationOperations, EmptyEventCode>(new AuthorizationService());
+
             CoroutinesExecutor.StartTask(Authorize);
         }
 
@@ -51,11 +55,7 @@ namespace Scripts.Services
 
         private void GoBackToLogin()
         {
-            if (authorizationStatus == AuthorizationStatus.Succeed)
-            {
-                LoadedObjects.DestroyAll();
-            }
-            else
+            if (authorizationStatus == AuthorizationStatus.Failed)
             {
                 OnNonAuthorized();
             }
@@ -63,7 +63,8 @@ namespace Scripts.Services
 
         protected override Task<AuthorizeResponseParameters> Authorize(IYield yield, AuthorizeRequestParameters parameters)
         {
-            return ServiceContainer.GameServerProviderService.Authorize(yield, parameters);
+            var authorizationService = ServiceContainer.GameServerProviderService.GetPeerLogic<IAuthorizationServiceAPI>().AssertNotNull();
+            return authorizationService.Authorize(yield, parameters);
         }
 
         protected override void OnPreAuthorization()
@@ -81,11 +82,12 @@ namespace Scripts.Services
 
         protected override void OnAuthorized()
         {
+            ServiceContainer.GameServerProviderService.SetPeerLogic<GameServerProviderService, GameServerProviderOperations, EmptyEventCode>(new GameServerProviderService());
+
             var noticeWindow = UserInterfaceContainer.Instance.Get<NoticeWindow>().AssertNotNull();
             noticeWindow.Hide();
 
             authorizationStatus = AuthorizationStatus.Succeed;
-
             onAuthorized?.Invoke();
         }
 

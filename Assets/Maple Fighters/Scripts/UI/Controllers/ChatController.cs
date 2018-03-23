@@ -51,7 +51,8 @@ namespace Scripts.UI.Controllers
             var chatWindow = UserInterfaceContainer.Instance.Get<ChatWindow>().AssertNotNull();
             chatWindow.IsChatActive = true;
 
-            ServiceContainer.ChatService.ChatMessageReceived.AddListener(parameters => chatWindow.AddMessage(parameters.Message));
+            var chatService = ServiceContainer.ChatService.GetPeerLogic<IChatServiceAPI>().AssertNotNull();
+            chatService.ChatMessageReceived.AddListener(parameters => chatWindow.AddMessage(parameters.Message));
         }
 
         private void OnDestroy()
@@ -64,8 +65,8 @@ namespace Scripts.UI.Controllers
 
         private void OnSendChatMessage(string message)
         {
-            var parameters = new ChatMessageRequestParameters(message);
-            ServiceContainer.ChatService.SendChatMessage(parameters);
+            var chatService = ServiceContainer.ChatService.GetPeerLogic<IChatServiceAPI>().AssertNotNull();
+            chatService.SendChatMessage(new ChatMessageRequestParameters(message));
         }
     }
 }

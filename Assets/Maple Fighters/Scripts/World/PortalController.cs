@@ -7,6 +7,7 @@ using Scripts.Gameplay;
 using Scripts.UI;
 using Scripts.UI.Core;
 using Game.Common;
+using Scripts.Services;
 using UnityEngine;
 
 namespace Scripts.World
@@ -60,9 +61,9 @@ namespace Scripts.World
 
         private async Task ChangeScene(IYield yield)
         {
-            var portalId = GetComponent<NetworkIdentity>().Id;
-            var parameters = new ChangeSceneRequestParameters(portalId);
-            var responseParameters = await ServiceContainer.GameService.ChangeScene(yield, parameters);
+            var networkIdentity = GetComponent<NetworkIdentity>();
+            var gameService = ServiceContainer.GameService.GetPeerLogic<IGameServiceAPI>().AssertNotNull();
+            var responseParameters = await gameService.ChangeScene(yield, new ChangeSceneRequestParameters(networkIdentity.Id));
             var map = responseParameters.Map;
             if (map == 0)
             {

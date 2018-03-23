@@ -1,18 +1,12 @@
 ﻿using System.Threading.Tasks;
 using CommonCommunicationInterfaces;
 using CommonTools.Coroutines;
-using CommunicationHelper;
 using Login.Common;
 
 namespace Scripts.Services
 {
-    public sealed class LoginService : ServiceBase, ILoginServiceAPI
+    public sealed class LoginService : PeerLogicBase, ILoginServiceAPI
     {
-        public LoginService()
-        {
-            SetServerPeerHandler<LoginOperations, EmptyEventCode>();
-        }
-
         public async Task<AuthenticateResponseParameters> Authenticate(IYield yield, AuthenticateRequestParameters parameters)
         {
             var responseParameters = await ServerPeerHandler.SendOperation<AuthenticateRequestParameters, AuthenticateResponseParameters>

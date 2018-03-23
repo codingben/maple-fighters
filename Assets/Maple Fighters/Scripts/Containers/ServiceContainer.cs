@@ -4,83 +4,96 @@ namespace Scripts.Containers
 {
     public static class ServiceContainer
     {
-        public static IGameServerProviderServiceAPI GameServerProviderService
+        public static IServiceBase AuthorizationService
+        {
+            get
+            {
+                if (authorizationService == null)
+                {
+                    authorizationService = new ServiceBase();
+                }
+                return authorizationService;
+            }
+        }
+
+        public static IServiceBase GameServerProviderService
         {
             get
             {
                 if (gameServerProviderService == null)
                 {
-                    gameServerProviderService = new GameServerProviderService();
+                    gameServerProviderService = new ServiceBase();
                 }
                 return gameServerProviderService;
             }
         }
 
-        public static IGameServiceAPI GameService
+        public static IServiceBase GameService
         {
             get
             {
                 if (gameService == null)
                 {
-                    gameService = new GameService();
+                    gameService = new ServiceBase();
                 }
                 return gameService;
             }
         }
 
-        public static ICharacterServiceAPI CharacterService
+        public static IServiceBase CharacterService
         {
             get
             {
                 if (characterService == null)
                 {
-                    characterService = new CharacterService();
+                    characterService = new ServiceBase();
                 }
                 return characterService;
             }
         }
 
-        public static IChatServiceAPI ChatService
+        public static IServiceBase ChatService
         {
             get
             {
                 if (chatService == null)
                 {
-                    chatService = new ChatService();
+                    chatService = new ServiceBase();
                 }
                 return chatService;
             }
         }
 
-        public static ILoginServiceAPI LoginService
+        public static IServiceBase LoginService
         {
             get
             {
                 if (loginService == null)
                 {
-                    loginService = new LoginService();
+                    loginService = new ServiceBase();
                 }
                 return loginService;
             }
         }
 
-        public static IRegistrationServiceAPI RegistrationService
+        public static IServiceBase RegistrationService
         {
             get
             {
                 if (registrationService == null)
                 {
-                    registrationService = new RegistrationService();
+                    registrationService = new ServiceBase();
                 }
                 return registrationService;
             }
         }
 
-        private static IGameServerProviderServiceAPI gameServerProviderService;
-        private static IGameServiceAPI gameService;
-        private static ICharacterServiceAPI characterService;
-        private static IChatServiceAPI chatService;
-        private static ILoginServiceAPI loginService;
-        private static IRegistrationServiceAPI registrationService;
+        private static IServiceBase authorizationService;
+        private static IServiceBase gameServerProviderService;
+        private static IServiceBase gameService;
+        private static IServiceBase characterService;
+        private static IServiceBase chatService;
+        private static IServiceBase loginService;
+        private static IServiceBase registrationService;
     }
 }

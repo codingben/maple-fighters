@@ -3,6 +3,7 @@ using CommonTools.Coroutines;
 using CommonTools.Log;
 using Game.Common;
 using Scripts.Containers;
+using Scripts.Services;
 using Scripts.UI.Core;
 using Scripts.UI.Windows;
 
@@ -119,7 +120,8 @@ namespace Scripts.UI.Controllers
 
         private async Task CreateCharacter(IYield yield)
         {
-            var responseParameters = await ServiceContainer.CharacterService.CreateCharacter(yield, characterRequestParameters);
+            var characterService = ServiceContainer.GameService.GetPeerLogic<ICharacterServiceAPI>().AssertNotNull();
+            var responseParameters = await characterService.CreateCharacter(yield, characterRequestParameters);
             switch (responseParameters.Status)
             {
                 case CharacterCreationStatus.Succeed:

@@ -3,6 +3,7 @@ using CommonTools.Log;
 using Scripts.Containers;
 using Scripts.Utils;
 using Game.Common;
+using Scripts.Services;
 
 namespace Scripts.Gameplay.Actors
 {
@@ -24,7 +25,9 @@ namespace Scripts.Gameplay.Actors
         {
             var parameters = DummyCharacterDetails.Instance.AssertNotNull("Could not find dummy character details. Please add DummyCharacterDetails into a scene.")
                 .GetDummyCharacterParameters();
-            ServiceContainer.GameService.SceneEntered?.Invoke(parameters);
+
+            var gameService = ServiceContainer.GameService.GetPeerLogic<IGameServiceAPI>().AssertNotNull();
+            gameService.SceneEntered?.Invoke(parameters);
         }
 
         private void Update()
@@ -41,16 +44,18 @@ namespace Scripts.Gameplay.Actors
 
         private void SubscribeToEvents()
         {
-            ServiceContainer.GameService.SceneEntered.AddListener(OnSceneEntered);
-            ServiceContainer.GameService.CharacterAdded.AddListener(OnCharacterAdded);
-            ServiceContainer.GameService.CharactersAdded.AddListener(OnCharactersAdded);
+            var gameService = ServiceContainer.GameService.GetPeerLogic<IGameServiceAPI>().AssertNotNull();
+            gameService.SceneEntered.AddListener(OnSceneEntered);
+            gameService.CharacterAdded.AddListener(OnCharacterAdded);
+            gameService.CharactersAdded.AddListener(OnCharactersAdded);
         }
 
         private void UnsubscribeFromEvents()
         {
-            ServiceContainer.GameService.SceneEntered.RemoveListener(OnSceneEntered);
-            ServiceContainer.GameService.CharacterAdded.RemoveListener(OnCharacterAdded);
-            ServiceContainer.GameService.CharactersAdded.RemoveListener(OnCharactersAdded);
+            var gameService = ServiceContainer.GameService.GetPeerLogic<IGameServiceAPI>().AssertNotNull();
+            gameService.SceneEntered.RemoveListener(OnSceneEntered);
+            gameService.CharacterAdded.RemoveListener(OnCharacterAdded);
+            gameService.CharactersAdded.RemoveListener(OnCharactersAdded);
         }
 
         private void OnSceneEntered(EnterSceneResponseParameters parameters)

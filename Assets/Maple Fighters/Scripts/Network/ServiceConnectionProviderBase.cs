@@ -79,22 +79,16 @@ namespace Scripts.Services
         protected virtual void OnDisconnected(DisconnectReason reason, string details)
         {
             UnsubscribeFromDisconnectionNotifier();
-
-            // It means that a client is not authorized; Authorize operation will not wait for a response.
-            if (reason == DisconnectReason.ServerDisconnect)
-            {
-                Dispose();
-            }
         }
 
         private void SubscribeToDisconnectionNotifier()
         {
-            serviceBase.ServiceConnectionHandler.PeerDisconnectionNotifier.Disconnected += OnDisconnected;
+            serviceBase.ServiceConnectionHandler.ConnectionNotifier.Disconnected += OnDisconnected;
         }
 
         private void UnsubscribeFromDisconnectionNotifier()
         {
-            serviceBase.ServiceConnectionHandler.PeerDisconnectionNotifier.Disconnected -= OnDisconnected;
+            serviceBase.ServiceConnectionHandler.ConnectionNotifier.Disconnected -= OnDisconnected;
         }
 
         protected async Task Authorize(IYield yield)
@@ -105,6 +99,7 @@ namespace Scripts.Services
             var authorizationStatus = await Authorize(yield, parameters);
             if (authorizationStatus.Status == AuthorizationStatus.Failed)
             {
+                Dispose();
                 return;
             }
 

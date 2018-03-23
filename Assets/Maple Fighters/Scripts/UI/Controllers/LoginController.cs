@@ -5,6 +5,7 @@ using CommonTools.Coroutines;
 using CommonTools.Log;
 using Login.Common;
 using Scripts.Containers;
+using Scripts.Services;
 using Scripts.UI.Core;
 using Scripts.UI.Windows;
 using UnityEngine;
@@ -85,7 +86,8 @@ namespace Scripts.UI.Controllers
 
         private async Task Authenticate(IYield yield, AuthenticateRequestParameters parameters)
         {
-            var responseParameters = await ServiceContainer.LoginService.Authenticate(yield, parameters);
+            var loginService = ServiceContainer.LoginService.GetPeerLogic<ILoginServiceAPI>().AssertNotNull();
+            var responseParameters = await loginService.Authenticate(yield, parameters);
             switch (responseParameters.Status)
             {
                 case LoginStatus.Succeed:

@@ -1,71 +1,54 @@
 ﻿using System;
-using CommonCommunicationInterfaces;
 using CommonTools.Log;
 
 namespace Scripts.Services
 {
-    public class ServiceBase : IServiceBase
+    public sealed class ServiceBase : IServiceBase
     {
-        public IServiceConnectionHandler ServiceConnectionHandler { get; private set; }
-        public IServerPeerHandler ServerPeerHandler { get; private set; }
+        public IServiceConnectionHandler ServiceConnectionHandler { get; }
 
-        public void SetServerPeerHandler<TOperationCode, TEventCode>()
+        private IPeerLogicBase peerLogicBase;
+        private IServerPeerHandler ServerPeerHandler { get; set; }
+
+        public ServiceBase()
+        {
+            ServiceConnectionHandler = new ServiceConnectionHandler();
+        }
+
+        public void SetPeerLogic<T, TOperationCode, TEventCode>(T peerLogic)
+            where T : IPeerLogicBase
             where TOperationCode : IComparable, IFormattable, IConvertible
             where TEventCode : IComparable, IFormattable, IConvertible
         {
+            if (ServiceConnectionHandler.ServerPeer == null)
+            {
+                var peerLogicName = typeof(T).Name;
+                LogUtils.Log($"There is no connection to a server. Peer Logic: {peerLogicName}");
+                return;
+            }
+
+            peerLogicBase?.Dispose();
             ServerPeerHandler?.Dispose();
 
             var serverPeerHandler = new ServerPeerHandler<TOperationCode, TEventCode>();
+            serverPeerHandler.Initialize(ServiceConnectionHandler.ServerPeer);
             ServerPeerHandler = serverPeerHandler;
 
-            if (ServiceConnectionHandler != null)
+            peerLogicBase = peerLogic;
+            peerLogicBase.Awake(ServerPeerHandler);
+        }
+
+        public T GetPeerLogic<T>()
+            where T : IPeerLogicBase
+        {
+            if (peerLogicBase is T)
             {
-                serverPeerHandler.Initialize(ServiceConnectionHandler.ServerPeer);
-                OnServerPeerHandlerChanged<TEventCode>();
+                return (T)peerLogicBase;
             }
-            else
-            {
-                ServiceConnectionHandler = new ServiceConnectionHandler(onConnected: (serverPeer) =>
-                {
-                    serverPeerHandler.Initialize(serverPeer);
-                    OnConnected();
-                });
-            }
-        }
 
-        protected virtual void OnConnected()
-        {
-            SubscribeToDisconnectionNotifier();
-
-            var serverType = ServiceConnectionHandler.ServerConnectionInformation.ServerType;
-            var ip = ServiceConnectionHandler.ServerConnectionInformation.PeerConnectionInformation.Ip;
-            var port = ServiceConnectionHandler.ServerConnectionInformation.PeerConnectionInformation.Port;
-            LogUtils.Log($"A {serverType} server has been connected: {ip}:{port}");
-        }
-
-        protected virtual void OnDisconnected(DisconnectReason reason, string details)
-        {
-            UnsubscribeFromDisconnectionNotifier();
-
-            var ip = ServiceConnectionHandler.ServerConnectionInformation.PeerConnectionInformation.Ip;
-            var port = ServiceConnectionHandler.ServerConnectionInformation.PeerConnectionInformation.Port;
-            LogUtils.Log($"The connection has been closed with {ip}:{port}. Reason: {reason}");
-        }
-
-        protected virtual void OnServerPeerHandlerChanged<TEventCode>()
-            where TEventCode : IComparable, IFormattable, IConvertible
-        {
-            // Left blank intentionally
-        }
-
-        private void SubscribeToDisconnectionNotifier()
-        {
-            ServiceConnectionHandler.PeerDisconnectionNotifier.Disconnected += OnDisconnected;
-        }
-
-        private void UnsubscribeFromDisconnectionNotifier()
-        {
-            ServiceConnectionHandler.PeerDisconnectionNotifier.Disconnected -= OnDisconnected;
+            var type = typeof(T).Name;
+            LogUtils.Log(MessageBuilder.Trace($"Can not convert type {type}"));
+            return default(T);
         }
     }
 }

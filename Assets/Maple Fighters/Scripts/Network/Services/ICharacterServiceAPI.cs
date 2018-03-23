@@ -4,9 +4,10 @@ using Game.Common;
 
 namespace Scripts.Services
 {
-    public interface ICharacterServiceAPI
+    public interface ICharacterServiceAPI : IPeerLogicBase
     {
-        Task<GetCharactersResponseParameters> GetCharacters(IYield yield);
+        UnityEvent<GetCharactersResponseParameters> ReceivedCharacters { get; }
+
         Task<CreateCharacterResponseParameters> CreateCharacter(IYield yield, CreateCharacterRequestParameters parameters);
         Task<RemoveCharacterResponseParameters> RemoveCharacter(IYield yield, RemoveCharacterRequestParameters parameters);
         Task<CharacterValidationStatus> ValidateCharacter(IYield yield, ValidateCharacterRequestParameters parameters);

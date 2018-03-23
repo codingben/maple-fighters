@@ -1,13 +1,11 @@
 ﻿using System.Threading.Tasks;
-using Authorization.Client.Common;
 using CommonTools.Coroutines;
 using Game.Common;
 
 namespace Scripts.Services
 {
-    public interface IGameServiceAPI : IServiceBase
+    public interface IGameServiceAPI : IPeerLogicBase
     {
-        Task<AuthorizeResponseParameters> Authorize(IYield yield, AuthorizeRequestParameters parameters);
         Task EnterScene(IYield yield);
         Task<ChangeSceneResponseParameters> ChangeScene(IYield yield, ChangeSceneRequestParameters parameters);
 

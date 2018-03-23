@@ -1,6 +1,8 @@
 ﻿using CommonTools.Coroutines;
+using CommonTools.Log;
 using Scripts.Containers;
 using Scripts.Coroutines;
+using Scripts.Services;
 using Scripts.Utils;
 using UnityEngine.SceneManagement;
 
@@ -42,7 +44,8 @@ namespace Scripts.World
 
         private void OnSceneLoaded(Scene scene, LoadSceneMode loadSceneMode)
         {
-            coroutinesExecutor.StartTask(ServiceContainer.GameService.EnterScene);
+            var gameService = ServiceContainer.GameService.GetPeerLogic<IGameServiceAPI>().AssertNotNull();
+            coroutinesExecutor.StartTask(gameService.EnterScene);
         }
     }
 }

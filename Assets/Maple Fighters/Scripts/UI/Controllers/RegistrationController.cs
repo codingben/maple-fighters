@@ -4,6 +4,7 @@ using CommonTools.Coroutines;
 using CommonTools.Log;
 using Registration.Common;
 using Scripts.Containers;
+using Scripts.Services;
 using Scripts.UI.Core;
 using Scripts.UI.Windows;
 
@@ -80,7 +81,8 @@ namespace Scripts.UI.Controllers
 
         private async Task Register(IYield yield, RegisterRequestParameters parameters)
         {
-            var responseParameters = await ServiceContainer.RegistrationService.Register(yield, parameters);
+            var registrationService = ServiceContainer.RegistrationService.GetPeerLogic<IRegistrationServiceAPI>().AssertNotNull();
+            var responseParameters = await registrationService.Register(yield, parameters);
             switch (responseParameters.Status)
             {
                 case RegisterStatus.Succeed:

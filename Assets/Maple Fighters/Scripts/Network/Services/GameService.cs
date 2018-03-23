@@ -1,12 +1,11 @@
 ﻿using System.Threading.Tasks;
-using Authorization.Client.Common;
 using CommonCommunicationInterfaces;
 using CommonTools.Coroutines;
 using Game.Common;
 
 namespace Scripts.Services
 {
-    public class GameService : ServiceBase, IGameServiceAPI
+    public sealed class GameService : PeerLogicBase, IGameServiceAPI
     {
         public UnityEvent<EnterSceneResponseParameters> SceneEntered { get; } = new UnityEvent<EnterSceneResponseParameters>();
         public UnityEvent<SceneObjectAddedEventParameters> SceneObjectAdded { get; } = new UnityEvent<SceneObjectAddedEventParameters>();
@@ -19,33 +18,18 @@ namespace Scripts.Services
         public UnityEvent<CharacterAddedEventParameters> CharacterAdded { get; } = new UnityEvent<CharacterAddedEventParameters>();
         public UnityEvent<CharactersAddedEventParameters> CharactersAdded { get; } = new UnityEvent<CharactersAddedEventParameters>();
 
-        public GameService()
+        protected override void OnAwake()
         {
-            SetServerPeerHandler<GameOperations, GameEvents>();
-        }
-
-        protected override void OnConnected()
-        {
-            base.OnConnected();
+            base.OnAwake();
 
             SetEventsHandlers();
         }
 
-        protected override void OnDisconnected(DisconnectReason reason, string details)
+        protected override void OnDestroy()
         {
-            base.OnDisconnected(reason, details);
+            base.OnDestroy();
 
             RemoveEventsHandlers();
-        }
-        
-        protected override void OnServerPeerHandlerChanged<TEventCode>()
-        {
-            base.OnServerPeerHandlerChanged<TEventCode>();
-
-            if (typeof(GameEvents) == typeof(TEventCode))
-            {
-                SetEventsHandlers();
-            }
         }
 
         private void SetEventsHandlers()
@@ -74,17 +58,10 @@ namespace Scripts.Services
             ServerPeerHandler.RemoveEventHandler((byte)GameEvents.CharactersAdded);
         }
 
-        public async Task<AuthorizeResponseParameters> Authorize(IYield yield, AuthorizeRequestParameters parameters)
-        {
-            return await ServerPeerHandler.SendOperation<AuthorizeRequestParameters, AuthorizeResponseParameters>
-                (yield, (byte)GameOperations.Authorize, parameters, MessageSendOptions.DefaultReliable());
-        }
-
         public async Task EnterScene(IYield yield)
         {
-            var parameters = new EmptyParameters();
             var responseParameters = await ServerPeerHandler.SendOperation<EmptyParameters, EnterSceneResponseParameters>
-                (yield, (byte)GameOperations.EnterScene, parameters, MessageSendOptions.DefaultReliable());
+                (yield, (byte)GameOperations.EnterScene, new EmptyParameters(), MessageSendOptions.DefaultReliable());
 
             SceneEntered?.Invoke(responseParameters);
         }

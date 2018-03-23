@@ -1,6 +1,8 @@
 ﻿using System;
+using CommonTools.Log;
 using Scripts.Containers;
 using Game.Common;
+using Scripts.Services;
 using UnityEngine;
 
 namespace Scripts.Gameplay.Actors
@@ -22,12 +24,14 @@ namespace Scripts.Gameplay.Actors
 
         private void Start()
         {
-            ServiceContainer.GameService.PositionChanged.AddListener(OnPositionChanged);
+            var gameService = ServiceContainer.GameService.GetPeerLogic<IGameServiceAPI>().AssertNotNull();
+            gameService.PositionChanged.AddListener(OnPositionChanged);
         }
 
         private void OnDestroy()
         {
-            ServiceContainer.GameService.PositionChanged.RemoveListener(OnPositionChanged);
+            var gameService = ServiceContainer.GameService.GetPeerLogic<IGameServiceAPI>().AssertNotNull();
+            gameService.PositionChanged.RemoveListener(OnPositionChanged);
         }
 
         private void OnPositionChanged(SceneObjectPositionChangedEventParameters parameters)

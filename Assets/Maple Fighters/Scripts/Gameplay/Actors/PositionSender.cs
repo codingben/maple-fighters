@@ -1,5 +1,7 @@
-﻿using Scripts.Containers;
+﻿using CommonTools.Log;
+using Scripts.Containers;
 using Game.Common;
+using Scripts.Services;
 using UnityEngine;
 
 namespace Scripts.Gameplay.Actors
@@ -30,8 +32,8 @@ namespace Scripts.Gameplay.Actors
 
         private void UpdatePositionOperation()
         {
-            var parameters = new UpdatePositionRequestParameters(transform.position.x, transform.position.y, GetDirection());
-            ServiceContainer.GameService.UpdatePosition(parameters);
+            var gameService = ServiceContainer.GameService.GetPeerLogic<IGameServiceAPI>().AssertNotNull();
+            gameService.UpdatePosition(new UpdatePositionRequestParameters(transform.position.x, transform.position.y, GetDirection()));
         }
 
         private Directions GetDirection()

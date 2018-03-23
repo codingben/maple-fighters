@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using CommonTools.Coroutines;
 using CommonTools.Log;
-using CommunicationHelper;
 using Scripts.Containers;
 using Scripts.UI.Core;
 using Scripts.UI.Windows;
 using Game.Common;
-using Scripts.Utils;
+using Scripts.Services;
 using Scripts.World;
 using TMPro;
 using UnityEngine;
@@ -22,17 +21,34 @@ namespace Scripts.UI.Controllers
 
         private void Start()
         {
-            var chooseFighterText = UserInterfaceContainer.Instance.Add<ChooseFighterText>();
-            chooseFighterText.Show();
+            CreateChooseFighterTextUI();
 
-            coroutinesExecutor.StartTask(GetCharacters);
+            var characterService = ServiceContainer.GameService.GetPeerLogic<ICharacterServiceAPI>().AssertNotNull();
+            characterService.ReceivedCharacters.AddListener(OnReceivedCharacters);
         }
 
         private void OnDestroy()
         {
+            coroutinesExecutor.Dispose();
+
+            RemoveChooseFighterTextUI();
+            RemoveAllClickableCharacters();
+        }
+
+        private void CreateChooseFighterTextUI()
+        {
+            var chooseFighterText = UserInterfaceContainer.Instance.Add<ChooseFighterText>();
+            chooseFighterText.Show();
+        }
+
+        private void RemoveChooseFighterTextUI()
+        {
             var chooseFighterText = UserInterfaceContainer.Instance.Get<ChooseFighterText>().AssertNotNull();
             UserInterfaceContainer.Instance.Remove(chooseFighterText);
+        }
 
+        private void RemoveAllClickableCharacters()
+        {
             foreach (var clickableCharacter in characters)
             {
                 if (clickableCharacter != null)
@@ -40,28 +56,11 @@ namespace Scripts.UI.Controllers
                     Destroy(clickableCharacter.gameObject);
                 }
             }
-
-            coroutinesExecutor.Dispose();
         }
 
         private void Update()
         {
             coroutinesExecutor.Update();
-        }
-
-        private async Task GetCharacters(IYield yield)
-        {
-            ServiceContainer.GameService.SetServerPeerHandler<CharacterOperations, EmptyEventCode>();
-
-            var parameters = await ServiceContainer.CharacterService.GetCharacters(yield);
-            if (parameters.Characters == null)
-            {
-                LogUtils.Log(MessageBuilder.Trace("Failed to get characters."));
-                LoadedObjects.DestroyAll();
-                return;
-            }
-
-            OnReceivedCharacters(parameters);
         }
 
         private void OnReceivedCharacters(GetCharactersResponseParameters parameters)
@@ -189,7 +188,8 @@ namespace Scripts.UI.Controllers
 
         private async Task ValidateCharacter(IYield yield, ValidateCharacterRequestParameters parameters)
         {
-            var responseParameters = await ServiceContainer.CharacterService.ValidateCharacter(yield, parameters);
+            var characterService = ServiceContainer.GameService.GetPeerLogic<ICharacterServiceAPI>().AssertNotNull();
+            var responseParameters = await characterService.ValidateCharacter(yield, parameters);
             switch (responseParameters)
             {
                 case CharacterValidationStatus.Ok:
@@ -250,7 +250,8 @@ namespace Scripts.UI.Controllers
 
         private async Task DeleteCharacter(IYield yield, RemoveCharacterRequestParameters parameters)
         {
-            var responseParameters = await ServiceContainer.CharacterService.RemoveCharacter(yield, parameters);
+            var characterService = ServiceContainer.GameService.GetPeerLogic<ICharacterServiceAPI>().AssertNotNull();
+            var responseParameters = await characterService.RemoveCharacter(yield, parameters);
             switch (responseParameters.Status)
             {
                 case RemoveCharacterStatus.Succeed:

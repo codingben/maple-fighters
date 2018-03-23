@@ -1,14 +1,7 @@
-﻿using System;
-
-namespace Scripts.Services
+﻿namespace Scripts.Services
 {
-    public interface IServiceBase
+    public interface IServiceBase : IPeerLogicBaseHandler
     {
         IServiceConnectionHandler ServiceConnectionHandler { get; }
-        IServerPeerHandler ServerPeerHandler { get; }
-
-        void SetServerPeerHandler<TOperationCode, TEventCode>()
-            where TOperationCode : IComparable, IFormattable, IConvertible
-            where TEventCode : IComparable, IFormattable, IConvertible;
     }
 }

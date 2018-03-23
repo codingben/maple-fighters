@@ -1,7 +1,9 @@
 ﻿using System.Collections;
+using CommonTools.Log;
 using Scripts.Containers;
 using Scripts.Gameplay.Actors;
 using Game.Common;
+using Scripts.Services;
 using UnityEngine;
 
 namespace Assets.Scripts
@@ -10,7 +12,8 @@ namespace Assets.Scripts
     {
         private void Awake()
         {
-            ServiceContainer.GameService.PlayerAttacked.AddListener((parameters) => 
+            var gameService = ServiceContainer.GameService.GetPeerLogic<IGameServiceAPI>().AssertNotNull();
+            gameService.PlayerAttacked.AddListener((parameters) => 
             {
                 StartCoroutine(HitPlayer(new Vector2(parameters.ContactPointX, parameters.ContactPointY)));
             });

@@ -1,8 +1,10 @@
 ﻿using System.Threading.Tasks;
 using Authorization.Client.Common;
+using Chat.Common;
 using CommonCommunicationInterfaces;
 using CommonTools.Coroutines;
 using CommonTools.Log;
+using CommunicationHelper;
 using Scripts.Containers;
 using Scripts.UI;
 using Scripts.UI.Controllers;
@@ -35,6 +37,8 @@ namespace Scripts.Services
 
         protected override void OnConnectionEstablished()
         {
+            ServiceContainer.ChatService.SetPeerLogic<AuthorizationService, AuthorizationOperations, EmptyEventCode>(new AuthorizationService());
+
             CoroutinesExecutor.StartTask(Authorize);
         }
 
@@ -50,7 +54,8 @@ namespace Scripts.Services
 
         protected override Task<AuthorizeResponseParameters> Authorize(IYield yield, AuthorizeRequestParameters parameters)
         {
-            return ServiceContainer.ChatService.Authorize(yield, parameters);
+            var authorizationService = ServiceContainer.ChatService.GetPeerLogic<IAuthorizationServiceAPI>().AssertNotNull();
+            return authorizationService.Authorize(yield, parameters);
         }
 
         protected override void OnPreAuthorization()
@@ -60,11 +65,12 @@ namespace Scripts.Services
 
         protected override void OnAuthorized()
         {
+            ServiceContainer.ChatService.SetPeerLogic<ChatService, ChatOperations, ChatEvents>(new ChatService());
+
             var chatWindow = UserInterfaceContainer.Instance.Get<ChatWindow>().AssertNotNull();
             chatWindow.AddMessage("Connected to a chat server successfully.", ChatMessageColor.Green);
 
             authorizationStatus = AuthorizationStatus.Succeed;
-
             ChatController.Instance.OnAuthorized();
         }
 

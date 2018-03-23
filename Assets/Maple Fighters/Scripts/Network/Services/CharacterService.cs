@@ -1,24 +1,45 @@
 ﻿using System.Threading.Tasks;
 using CommonCommunicationInterfaces;
 using CommonTools.Coroutines;
+using CommonTools.Log;
 using Game.Common;
 using Scripts.Containers;
+using Scripts.Coroutines;
 
 namespace Scripts.Services
 {
-    public sealed class CharacterService : MicroserviceBase, ICharacterServiceAPI
+    public sealed class CharacterService : PeerLogicBase, ICharacterServiceAPI
     {
-        public CharacterService() 
-            : base(ServiceContainer.GameService)
+        public UnityEvent<GetCharactersResponseParameters> ReceivedCharacters { get; } = new UnityEvent<GetCharactersResponseParameters>();
+        private readonly ExternalCoroutinesExecutor coroutinesExecutor = new ExternalCoroutinesExecutor();
+
+        protected override void OnAwake()
         {
-            // Left blank intentionally
+            base.OnAwake();
+
+            coroutinesExecutor.ExecuteExternally();
+            coroutinesExecutor.StartTask(GetCharacters);
         }
 
-        public async Task<GetCharactersResponseParameters> GetCharacters(IYield yield)
+        protected override void OnDestroy()
         {
-            var parameters = new EmptyParameters();
-            return await ServerPeerHandler.SendOperation<EmptyParameters, GetCharactersResponseParameters>
-                    (yield, (byte)CharacterOperations.GetCharacters, parameters, MessageSendOptions.DefaultReliable());
+            base.OnDestroy();
+
+            ReceivedCharacters.RemoveAllListeners();
+            coroutinesExecutor.RemoveFromExternalExecutor();
+        }
+
+        public async Task GetCharacters(IYield yield)
+        {
+            var responseParameters = await ServerPeerHandler.SendOperation<EmptyParameters, GetCharactersResponseParameters>
+                (yield, (byte)CharacterOperations.GetCharacters, new EmptyParameters(), MessageSendOptions.DefaultReliable());
+            if (responseParameters.Characters == null)
+            {
+                LogUtils.Log(MessageBuilder.Trace("Failed to get characters."));
+                return;
+            }
+
+            ReceivedCharacters?.Invoke(responseParameters);
         }
 
         public async Task<CreateCharacterResponseParameters> CreateCharacter(IYield yield, CreateCharacterRequestParameters parameters)
@@ -39,7 +60,7 @@ namespace Scripts.Services
                 (yield, (byte)CharacterOperations.ValidateCharacter, parameters, MessageSendOptions.DefaultReliable());
             if (responseParameters.Status == CharacterValidationStatus.Ok)
             {
-                ServiceContainer.GameService.SetServerPeerHandler<GameOperations, GameEvents>();
+                ServiceContainer.GameService.SetPeerLogic<GameService, GameOperations, GameEvents>(new GameService());
             }
             return responseParameters.Status;
         }

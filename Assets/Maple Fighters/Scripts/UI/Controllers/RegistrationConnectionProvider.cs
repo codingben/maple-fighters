@@ -3,6 +3,8 @@ using System.Threading.Tasks;
 using Authorization.Client.Common;
 using CommonTools.Coroutines;
 using CommonTools.Log;
+using CommunicationHelper;
+using Registration.Common;
 using Scripts.Containers;
 using Scripts.Services;
 using Scripts.UI.Core;
@@ -36,10 +38,12 @@ namespace Scripts.UI.Controllers
 
         protected override void OnConnectionEstablished()
         {
-            onConnected?.Invoke();
+            ServiceContainer.RegistrationService.SetPeerLogic<RegistrationService, RegistrationOperations, EmptyEventCode>(new RegistrationService());
 
             const int TIME_TO_DISCONNECT = 60;
             DisconnectAutomatically(TIME_TO_DISCONNECT);
+
+            onConnected?.Invoke();
         }
 
         protected override Task<AuthorizeResponseParameters> Authorize(IYield yield, AuthorizeRequestParameters parameters)

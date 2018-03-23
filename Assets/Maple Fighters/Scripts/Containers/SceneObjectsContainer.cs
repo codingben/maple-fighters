@@ -4,6 +4,7 @@ using CommonTools.Log;
 using Scripts.Gameplay;
 using Scripts.Utils;
 using Game.Common;
+using Scripts.Services;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -39,22 +40,24 @@ namespace Scripts.Containers
         {
             SceneManager.sceneLoaded += OnSceneLoaded;
 
-            ServiceContainer.GameService.SceneEntered.AddListener(OnSceneEntered);
-            ServiceContainer.GameService.SceneObjectAdded.AddListener(OnSceneObjectAdded);
-            ServiceContainer.GameService.SceneObjectRemoved.AddListener(OnSceneObjectRemoved);
-            ServiceContainer.GameService.SceneObjectsAdded.AddListener(OnSceneObjectsAdded);
-            ServiceContainer.GameService.SceneObjectsRemoved.AddListener(OnSceneObjectsRemoved);
+            var gameService = ServiceContainer.GameService.GetPeerLogic<IGameServiceAPI>().AssertNotNull();
+            gameService.SceneEntered.AddListener(OnSceneEntered);
+            gameService.SceneObjectAdded.AddListener(OnSceneObjectAdded);
+            gameService.SceneObjectRemoved.AddListener(OnSceneObjectRemoved);
+            gameService.SceneObjectsAdded.AddListener(OnSceneObjectsAdded);
+            gameService.SceneObjectsRemoved.AddListener(OnSceneObjectsRemoved);
         }
 
         private void UnsubscribeFromEvents()
         {
             SceneManager.sceneLoaded -= OnSceneLoaded;
 
-            ServiceContainer.GameService.SceneEntered.RemoveListener(OnSceneEntered);
-            ServiceContainer.GameService.SceneObjectAdded.RemoveListener(OnSceneObjectAdded);
-            ServiceContainer.GameService.SceneObjectRemoved.RemoveListener(OnSceneObjectRemoved);
-            ServiceContainer.GameService.SceneObjectsAdded.RemoveListener(OnSceneObjectsAdded);
-            ServiceContainer.GameService.SceneObjectsRemoved.RemoveListener(OnSceneObjectsRemoved);
+            var gameService = ServiceContainer.GameService.GetPeerLogic<IGameServiceAPI>().AssertNotNull();
+            gameService.SceneEntered.RemoveListener(OnSceneEntered);
+            gameService.SceneObjectAdded.RemoveListener(OnSceneObjectAdded);
+            gameService.SceneObjectRemoved.RemoveListener(OnSceneObjectRemoved);
+            gameService.SceneObjectsAdded.RemoveListener(OnSceneObjectsAdded);
+            gameService.SceneObjectsRemoved.RemoveListener(OnSceneObjectsRemoved);
         }
 
         private void OnSceneLoaded(Scene scene, LoadSceneMode sceneMode)

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using CommonCommunicationInterfaces;
 using CommonTools.Coroutines;
 using CommonTools.Log;
@@ -10,45 +9,42 @@ namespace Scripts.Services
 {
     internal class ServiceConnectionHandler : IServiceConnectionHandler
     {
+        public IServiceConnectionNotifier ConnectionNotifier => serviceConnectionNotifier;
         public IServerPeer ServerPeer { get; private set; }
 
-        public ServerConnectionInformation ServerConnectionInformation { get; private set; }
-        public IPeerDisconnectionNotifier PeerDisconnectionNotifier => ServerPeer.PeerDisconnectionNotifier;
-
-        private ServerType serverType;
-        private readonly Action<IServerPeer> onConnected;
-
-        public ServiceConnectionHandler(Action<IServerPeer> onConnected)
-        {
-            this.onConnected = onConnected;
-        }
+        private ServerConnectionInformation ConnectionInformation { get; set; }
+        private readonly ServiceConnectionNotifier serviceConnectionNotifier = new ServiceConnectionNotifier();
 
         public async Task<ConnectionStatus> Connect(IYield yield, ICoroutinesExecutor coroutinesExecutor, ServerConnectionInformation serverConnectionInformation)
         {
-            serverType = serverConnectionInformation.ServerType;
+            var serverType = serverConnectionInformation.ServerType;
 
             if (IsConnected())
             {
                 throw new ServerConnectionFailed($"A connection already exists with a {serverType} server.");
             }
 
-            ServerConnectionInformation = serverConnectionInformation;
+            ConnectionInformation = serverConnectionInformation;
 
-            var ip = ServerConnectionInformation.PeerConnectionInformation.Ip;
-            var port = ServerConnectionInformation.PeerConnectionInformation.Port;
+            var ip = ConnectionInformation.PeerConnectionInformation.Ip;
+            var port = ConnectionInformation.PeerConnectionInformation.Port;
             LogUtils.Log($"Connecting to a {serverType} server. IP: {ip} Port: {port}");
 
             var serverConnector = new PhotonServerConnector(() => coroutinesExecutor);
             var networkConfiguration = NetworkConfiguration.GetInstance();
             var connectionDetails = new ConnectionDetails(networkConfiguration.ConnectionProtocol, networkConfiguration.DebugLevel);
 
-            ServerPeer = await serverConnector.ConnectAsync(yield, ServerConnectionInformation.PeerConnectionInformation, connectionDetails);
+            ServerPeer = await serverConnector.ConnectAsync(yield, ConnectionInformation.PeerConnectionInformation, connectionDetails);
             if (ServerPeer == null)
             {
                 return ConnectionStatus.Failed;
             }
 
-            onConnected?.Invoke(ServerPeer);
+            SubscribeToDisconnectionNotifier();
+            
+            LogUtils.Log($"A {serverType} server has been connected: {ip}:{port}");
+
+            serviceConnectionNotifier.Connection();
             return ConnectionStatus.Succeed;
         }
 
@@ -68,10 +64,31 @@ namespace Scripts.Services
             }
         }
 
+        private void SubscribeToDisconnectionNotifier()
+        {
+            ServerPeer.PeerDisconnectionNotifier.Disconnected += OnDisconnected;
+        }
+
+        private void UnsubscribeFromDisconnectionNotifier()
+        {
+            ServerPeer.PeerDisconnectionNotifier.Disconnected -= OnDisconnected;
+        }
+
         private void Disconnect()
         {
             ServerPeer.Disconnect();
             ServerPeer = null;
+        }
+
+        private void OnDisconnected(DisconnectReason reason, string details)
+        {
+            UnsubscribeFromDisconnectionNotifier();
+
+            var ip = ConnectionInformation.PeerConnectionInformation.Ip;
+            var port = ConnectionInformation.PeerConnectionInformation.Port;
+            LogUtils.Log($"The connection has been closed with {ip}:{port}. Reason: {reason}");
+
+            serviceConnectionNotifier.Disconnection(reason, details);
         }
 
         public bool IsConnected()

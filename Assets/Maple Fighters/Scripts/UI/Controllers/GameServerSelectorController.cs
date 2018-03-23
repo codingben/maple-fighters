@@ -118,8 +118,9 @@ namespace Scripts.UI.Controllers
         {
             isRefreshing = true;
 
-            var parameters = await ServiceContainer.GameServerProviderService.ProvideGameServers(yield);
-            foreach (var gameServerInformation in parameters.GameServerInformations)
+            var gameServerProviderService = ServiceContainer.GameServerProviderService.GetPeerLogic<IGameServerProviderServiceAPI>().AssertNotNull();
+            var responseParameters = await gameServerProviderService.ProvideGameServers(yield);
+            foreach (var gameServerInformation in responseParameters.GameServerInformations)
             {
                 gameServerInformations.Add(gameServerInformation.Name, gameServerInformation);
             }

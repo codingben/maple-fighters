@@ -1,6 +1,8 @@
-﻿using Scripts.Containers;
+﻿using CommonTools.Log;
+using Scripts.Containers;
 using Scripts.Gameplay.Actors;
 using Game.Common;
+using Scripts.Services;
 using UnityEngine;
 
 namespace Scripts.Utils.Shared
@@ -28,14 +30,16 @@ namespace Scripts.Utils.Shared
 
         private void SubscribeToGameServiceEvents()
         {
-            ServiceContainer.GameService.SceneObjectsAdded.AddListener(OnSceneObjectsAdded); // When a new game objects added, so send them the last current state.
-            ServiceContainer.GameService.PlayerStateChanged.AddListener(OnPlayerStateChanged);
+            var gameService = ServiceContainer.GameService.GetPeerLogic<IGameServiceAPI>().AssertNotNull();
+            gameService.SceneObjectsAdded.AddListener(OnSceneObjectsAdded);
+            gameService.PlayerStateChanged.AddListener(OnPlayerStateChanged);
         }
 
         private void UnsubscribeFromGameServiceEvents()
         {
-            ServiceContainer.GameService.SceneObjectsAdded.RemoveListener(OnSceneObjectsAdded);
-            ServiceContainer.GameService.PlayerStateChanged.RemoveListener(OnPlayerStateChanged);
+            var gameService = ServiceContainer.GameService.GetPeerLogic<IGameServiceAPI>().AssertNotNull();
+            gameService.SceneObjectsAdded.RemoveListener(OnSceneObjectsAdded);
+            gameService.PlayerStateChanged.RemoveListener(OnPlayerStateChanged);
         }
 
         public void OnPlayerStateChanged(PlayerState playerState)
@@ -60,6 +64,9 @@ namespace Scripts.Utils.Shared
             }
         }
 
+        /// <summary>
+        /// When a new game objects added, so send them the last current state.
+        /// </summary>
         private void OnSceneObjectsAdded(SceneObjectsAddedEventParameters parameters)
         {
             UpdatePlayerStateOperation();
@@ -67,8 +74,8 @@ namespace Scripts.Utils.Shared
 
         private void UpdatePlayerStateOperation()
         {
-            var parameters = new UpdatePlayerStateRequestParameters(lastPlayerState);
-            ServiceContainer.GameService.UpdatePlayerState(parameters);
+            var gameService = ServiceContainer.GameService.GetPeerLogic<IGameServiceAPI>().AssertNotNull();
+            gameService.UpdatePlayerState(new UpdatePlayerStateRequestParameters(lastPlayerState));
         }
     }
 }
