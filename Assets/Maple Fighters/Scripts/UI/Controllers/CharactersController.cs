@@ -84,34 +84,13 @@ namespace Scripts.UI.Controllers
 
         private void CreateCharacter(CharacterParameters character)
         {
-            const string CHARACTERS_RESOURCES_PATH = "Characters/{0}";
-
             var index = (int)character.Index;
-            var characterName = character.HasCharacter ? $"{character.CharacterType} {index}" : $"Sample {index}";
-            var characterType = Resources.Load<GameObject>(string.Format(CHARACTERS_RESOURCES_PATH, characterName));
-            var anchoredPosition = characterType.GetComponent<RectTransform>().anchoredPosition;
-
-            var charactersParent = UserInterfaceContainer.Instance.Get<BackgroundCharactersParent>().AssertNotNull();
-            var characterGameObject = Instantiate(characterType, Vector3.zero, Quaternion.identity, charactersParent.gameObject.transform);
-            characterGameObject.transform.SetAsFirstSibling();
-            characterGameObject.GetComponent<RectTransform>().anchoredPosition = anchoredPosition;
-
-            // TODO: Refactor. Add<ClickableCharacter>
-
+            var characterGameObject = CreateCharacterGameObject(character);
             var characterComponent = characterGameObject.GetComponent<ClickableCharacter>().AssertNotNull();
             characterComponent.SetCharacter(index, character);
             characterComponent.CharacterClicked += OnCharacterClicked;
 
-            characters[(int)character.Index] = characterComponent;
-
-            if (character.HasCharacter)
-            {
-                var characterNameComponent = characterGameObject.transform.GetChild(0)?.GetComponent<TextMeshProUGUI>().AssertNotNull();
-                if (characterNameComponent != null)
-                {
-                    characterNameComponent.text = character.Name;
-                }
-            }
+            characters[index] = characterComponent;
         }
 
         public void RecreateCharacter(CharacterParameters character)
@@ -279,6 +258,32 @@ namespace Scripts.UI.Controllers
                     break;
                 }
             }
+        }
+
+        private GameObject CreateCharacterGameObject(CharacterParameters character)
+        {
+            const string CHARACTERS_RESOURCES_PATH = "Characters/{0}";
+
+            var index = (int)character.Index;
+            var characterName = character.HasCharacter ? $"{character.CharacterType} {index}" : $"Sample {index}";
+            var characterType = Resources.Load<GameObject>(string.Format(CHARACTERS_RESOURCES_PATH, characterName));
+            var anchoredPosition = characterType.GetComponent<RectTransform>().anchoredPosition;
+
+            var charactersParent = UserInterfaceContainer.Instance.Get<BackgroundCharactersParent>().AssertNotNull();
+            var characterGameObject = Instantiate(characterType, Vector3.zero, Quaternion.identity, charactersParent.gameObject.transform);
+            characterGameObject.transform.SetAsFirstSibling();
+            characterGameObject.GetComponent<RectTransform>().anchoredPosition = anchoredPosition;
+
+            if (character.HasCharacter)
+            {
+                var characterNameComponent = characterGameObject.transform.GetChild(0).AssertNotNull("Could not find character name transform.")
+                    .GetComponent<TextMeshProUGUI>().AssertNotNull();
+                if (characterNameComponent != null)
+                {
+                    characterNameComponent.text = character.Name;
+                }
+            }
+            return characterGameObject;
         }
     }
 }

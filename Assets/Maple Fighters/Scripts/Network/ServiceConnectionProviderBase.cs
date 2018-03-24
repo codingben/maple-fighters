@@ -50,7 +50,7 @@ namespace Scripts.Services
 
             OnPreConnection();
 
-            ConnectionStatus connectionStatus;
+            var connectionStatus = ConnectionStatus.Failed;
 
             try
             {
@@ -59,7 +59,6 @@ namespace Scripts.Services
             catch (ServerConnectionFailed exception)
             {
                 LogUtils.Log(exception.Message, LogMessageType.Error);
-                return;
             }
 
             if (connectionStatus == ConnectionStatus.Failed)

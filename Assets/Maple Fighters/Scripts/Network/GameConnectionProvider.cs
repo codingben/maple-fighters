@@ -7,12 +7,15 @@ using CommonTools.Log;
 using CommunicationHelper;
 using Game.Common;
 using Scripts.Containers;
+using Scripts.UI.Controllers;
 using Scripts.UI.Core;
 using Scripts.UI.Windows;
 using Scripts.Utils;
 
 namespace Scripts.Services
 {
+    using Utils = UI.Utils;
+
     public class GameConnectionProvider : ServiceConnectionProviderBase<GameConnectionProvider>
     {
         private Action onAuthorized;
@@ -30,18 +33,15 @@ namespace Scripts.Services
 
         protected override void OnPreConnection()
         {
-            var noticeWindow = UserInterfaceContainer.Instance.Add<NoticeWindow>().AssertNotNull();
-            noticeWindow.Message.text = $"Connecting to the {serverName} server... Please wait.";
+            var noticeWindow = Utils.ShowNotice($"Connecting to the {serverName} server... Please wait.", null);
+            noticeWindow.OkButton.interactable = false;
         }
 
         protected override void OnConnectionFailed()
         {
             Action onButtonClicked = delegate 
             {
-                // TODO: Do it via controller which will update the list.
-
-                var gameServerSelectorWindow = UserInterfaceContainer.Instance.Add<GameServerSelectorWindow>().AssertNotNull();
-                gameServerSelectorWindow.Show();
+                GameServerSelectorController.Instance.Initialize();
             };
 
             var noticeWindow = UserInterfaceContainer.Instance.Get<NoticeWindow>().AssertNotNull();

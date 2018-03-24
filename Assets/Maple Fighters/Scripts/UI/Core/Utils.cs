@@ -36,9 +36,9 @@ namespace Scripts.UI
             }
         }
 
-        public static NoticeWindow ShowNotice(string message, Action okButtonClicked, bool background = false)
+        public static NoticeWindow ShowNotice(string message, Action okButtonClicked, bool background = false, Index index = Index.First)
         {
-            var noticeWindow = UserInterfaceContainer.Instance.Add<NoticeWindow>();
+            var noticeWindow = UserInterfaceContainer.Instance.Add<NoticeWindow>(ViewType.Foreground, index);
             noticeWindow.Initialize(message, okButtonClicked, background);
             noticeWindow.Show();
             return noticeWindow;

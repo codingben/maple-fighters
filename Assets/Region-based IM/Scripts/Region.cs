@@ -178,8 +178,7 @@ namespace InterestManagement.Scripts
 
         private IInterestArea GetSubscriberArea(ISceneObject sceneObject)
         {
-            // TODO: Check if is not null
-            return sceneObject.GetGameObject().GetComponent<IInterestArea>();
+            return sceneObject?.GetGameObject()?.GetComponent<IInterestArea>();
         }
     }
 }

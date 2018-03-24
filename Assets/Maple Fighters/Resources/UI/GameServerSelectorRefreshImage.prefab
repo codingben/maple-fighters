@@ -172,6 +172,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   showSpeed: 5
   hideSpeed: 5
+  MessageText: {fileID: 114720714413230716}
 --- !u!114 &114918377065792012
 MonoBehaviour:
   m_ObjectHideFlags: 1

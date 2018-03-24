@@ -44,16 +44,8 @@ namespace Scripts.UI.Windows
             refreshButton.onClick.RemoveListener(OnRefreshButtonClicked);
         }
 
-        public void CreateGameServerList(GameServerInformationParameters[] gameServerList)
+        public void CreateGameServerList(IEnumerable<GameServerInformationParameters> gameServerList)
         {
-            StopRefreshing();
-            RemoveGameServerList();
-
-            if (gameServerList.Length == 0)
-            {
-                return;
-            }
-
             foreach (var gameServer in gameServerList)
             {
                 var gameServerButton = UserInterfaceContainer.Instance.Add<ClickableGameServerButton>(ViewType.Foreground, Index.Last, this.gameServerList);
@@ -111,12 +103,15 @@ namespace Scripts.UI.Windows
 
         private void OnJoinButtonClicked()
         {
+            RemoveGameServerList();
+
             JoinButtonClicked?.Invoke();
         }
 
         private void OnRefreshButtonClicked()
         {
             StartRefreshing();
+            RemoveGameServerList();
 
             RefreshButtonClicked?.Invoke();
         }
@@ -127,7 +122,7 @@ namespace Scripts.UI.Windows
             refreshButton.interactable = false;
         }
 
-        private void StopRefreshing()
+        public void StopRefreshing()
         {
             joinButton.interactable = false;
             refreshButton.interactable = true;

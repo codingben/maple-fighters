@@ -7,7 +7,8 @@ namespace Scripts.Utils.Shared
     {
         public static void SetState(this Animator animator, PlayerState state)
         {
-            // TODO: Do a better way to get name of the animations.
+            // TODO: Do a better way to get name of the animations
+
             const string WALK_NAME = "Walking";
             const string JUMP_NAME = "Jump";
             const string ROPE_NAME = "Rope";

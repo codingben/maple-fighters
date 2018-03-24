@@ -13,6 +13,8 @@ using Scripts.Utils;
 
 namespace Scripts.Services
 {
+    using Utils = UI.Utils;
+
     public class GameServerSelectorConnectionProvider : ServiceConnectionProviderBase<GameServerSelectorConnectionProvider>
     {
         private Action onAuthorized;
@@ -33,10 +35,7 @@ namespace Scripts.Services
 
         protected override void OnConnectionFailed()
         {
-            var noticeWindow = UserInterfaceContainer.Instance.Get<NoticeWindow>().AssertNotNull();
-            noticeWindow.Message.text = "Could not connect to a game server provider.";
-            noticeWindow.OkButton.interactable = true;
-            noticeWindow.OkButtonClickedAction = LoadedObjects.DestroyAll;
+            Utils.ShowNotice("Could not connect to a game server provider.", LoadedObjects.DestroyAll, true, Index.Last);
         }
 
         protected override void OnConnectionEstablished()
