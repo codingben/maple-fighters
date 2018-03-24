@@ -52,8 +52,6 @@ namespace ServerCommunication.Common
         {
             try
             {
-                LogUtils.Log($"An attempt to connect to a server - {connectionInformation.Ip}:{connectionInformation.Port}");
-
                 outboundServerPeer = await serverConnectorProvider.GetServerConnector().Connect(yield, connectionInformation);
             }
             catch (CouldNotConnectToPeerException exception)
@@ -62,8 +60,6 @@ namespace ServerCommunication.Common
                 {
                     LogUtils.Log(MessageBuilder.Trace(exception.Message));
                 }
-
-                LogUtils.Log($"Could not connect to a server - {connectionInformation.Ip}:{connectionInformation.Port}");
             }
             finally
             {

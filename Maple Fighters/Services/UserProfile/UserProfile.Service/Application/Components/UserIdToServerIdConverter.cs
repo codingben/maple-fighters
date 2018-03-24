@@ -14,8 +14,6 @@ namespace UserProfile.Service.Application.Components
         {
             lock (locker)
             {
-                LogUtils.Log($"Adding a user id {userId} to server id {serverId}");
-
                 if (HasServerId(userId, serverId))
                 {
                     LogUtils.Log(MessageBuilder.Trace($"Unable to add a server with id {userId} to user id {userId} because it already exists."));
@@ -38,8 +36,6 @@ namespace UserProfile.Service.Application.Components
         {
             lock (locker)
             {
-                LogUtils.Log($"Removing a user id {userId}");
-
                 if (HasServerId(userId, serverId))
                 {
                     var user = userIdsToServerIds[userId];

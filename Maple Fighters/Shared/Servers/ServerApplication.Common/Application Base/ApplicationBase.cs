@@ -31,14 +31,14 @@ namespace ServerApplication.Common.ApplicationBase
         {
             peerContainer = Server.Components.AddComponent(new PeerContainer());
 
-            LogUtils.Log(MessageBuilder.Trace("An application has started."));
+            LogUtils.Log("An application has started.");
         }
 
         public virtual void Shutdown()
         {
             Server.Components.Dispose();
 
-            LogUtils.Log(MessageBuilder.Trace("An application has been stopped."));
+            LogUtils.Log("An application has been stopped.");
         }
 
         protected void AddCommonComponents()

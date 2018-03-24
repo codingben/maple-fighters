@@ -94,12 +94,8 @@ namespace UserProfile.Server.Common
 
         private void OnUserProfilePropertiesChanged(UserProfilePropertiesChangedEventParameters parameters)
         {
-            LogUtils.Log(MessageBuilder.Trace($"Server type: {serverType}"));
-
             if (parameters.ConnectionStatus == ConnectionStatus.Connected && parameters.ServerType != serverType)
             {
-                LogUtils.Log(MessageBuilder.Trace($"Disconnecting from: {serverType}"));
-
                 isManuallyDisconnected = true;
                 peerGetter.Peer.Disconnect();
             }
