@@ -10,6 +10,16 @@ namespace GameServerProvider.Service.Application.Components
         private readonly object locker = new object();
         private readonly Dictionary<int, GameServerInformation> gameServersInformation = new Dictionary<int, GameServerInformation>();
 
+        protected override void OnDestroy()
+        {
+            base.OnDestroy();
+
+            lock (locker)
+            {
+                gameServersInformation.Clear();
+            }
+        }
+
         public void Add(int id, GameServerInformation gameServerInformation)
         {
             lock (locker)

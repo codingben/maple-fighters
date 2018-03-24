@@ -83,7 +83,10 @@ namespace ServerCommunication.Common
 
         private void UnsubscribeFromDisconnectionNotifier()
         {
-            serviceConnectorProvider.PeerDisconnectionNotifier.Disconnected -= OnDisconnected;
+            if (serviceConnectorProvider.PeerDisconnectionNotifier != null)
+            {
+                serviceConnectorProvider.PeerDisconnectionNotifier.Disconnected -= OnDisconnected;
+            }
         }
 
         protected abstract PeerConnectionInformation GetPeerConnectionInformation();

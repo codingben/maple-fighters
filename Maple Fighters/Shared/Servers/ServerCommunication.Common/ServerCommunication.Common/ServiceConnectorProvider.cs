@@ -11,7 +11,7 @@ namespace ServerCommunication.Common
 {
     internal class ServiceConnectorProvider : IServiceConnectorProvider
     {
-        public IPeerDisconnectionNotifier PeerDisconnectionNotifier => outboundServerPeer.PeerDisconnectionNotifier;
+        public IPeerDisconnectionNotifier PeerDisconnectionNotifier => outboundServerPeer?.PeerDisconnectionNotifier;
 
         private IOutboundServerPeer outboundServerPeer;
         private readonly ICoroutinesExecuter coroutinesExecutor;

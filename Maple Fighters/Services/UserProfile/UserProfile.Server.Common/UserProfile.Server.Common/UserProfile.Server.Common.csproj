@@ -63,8 +63,6 @@
     <Compile Include="API\UserProfileService.cs" />
     <Compile Include="Common\IUserIdToPeerIdConverter.cs" />
     <Compile Include="Common\UserIdToPeerIdConverter.cs" />
-    <Compile Include="Common\UserProfileListener.cs" />
-    <Compile Include="Common\UserProfileTrackerPeerLogic.cs" />
     <Compile Include="Common\UserProfileTracker.cs" />
     <Compile Include="Parameters\ChangeUserProfilePropertiesRequestParameters.cs" />
     <Compile Include="Enums\ConnectionStatus.cs" />

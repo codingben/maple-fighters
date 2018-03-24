@@ -1,5 +1,4 @@
 ﻿using CommonCommunicationInterfaces;
-using CommonTools.Log;
 using CommunicationHelper;
 using GameServerProvider.Server.Common;
 using GameServerProvider.Service.Application.Components;
@@ -16,6 +15,8 @@ namespace GameServerProvider.Service.Application.PeerLogics
         public override void Initialize(IClientPeerWrapper<IClientPeer> peer)
         {
             base.Initialize(peer);
+
+            SubscribeToDisconnectionNotifier();
 
             AddHandlerForRegisterGameServerOperation();
         }
@@ -45,8 +46,8 @@ namespace GameServerProvider.Service.Application.PeerLogics
         private void UnregisterGameServer()
         {
             var peerId = PeerWrapper.PeerId;
-            var gameServerInformationRemover = Server.Components.GetComponent<IGameServerInformationRemover>().AssertNotNull();
-            gameServerInformationRemover.Remove(peerId);
+            var gameServerInformationRemover = Server.Components.GetComponent<IGameServerInformationRemover>();
+            gameServerInformationRemover?.Remove(peerId);
         }
     }
 }

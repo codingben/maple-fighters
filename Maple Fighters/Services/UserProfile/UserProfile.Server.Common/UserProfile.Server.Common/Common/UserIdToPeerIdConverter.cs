@@ -19,8 +19,6 @@ namespace UserProfile.Server.Common
                     return;
                 }
 
-                LogUtils.Log(MessageBuilder.Trace($"Added a user with id {userId}"));
-
                 userIdsToPeerIds.Add(userId, peerId);
             }
         }
@@ -34,8 +32,6 @@ namespace UserProfile.Server.Common
                     LogUtils.Log(MessageBuilder.Trace($"Could not find a user with id {userId}."));
                     return;
                 }
-
-                LogUtils.Log(MessageBuilder.Trace($"Removed a user with id {userId}"));
 
                 userIdsToPeerIds.Remove(userId);
             }
