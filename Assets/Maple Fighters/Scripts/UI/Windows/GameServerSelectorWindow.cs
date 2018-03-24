@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using GameServerProvider.Client.Common;
 using Scripts.UI.Core;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,28 +9,9 @@ namespace Scripts.UI.Windows
 {
     public class GameServerSelectorWindow : UserInterfaceBaseFadeEffect
     {
-        public bool ShowMessage
-        {
-            set
-            {
-                messageText.gameObject.SetActive(value);
-            }
-        }
-
-        public string Message
-        {
-            set
-            {
-                messageText.text = value;
-            }
-        }
-
         public event Action JoinButtonClicked;
         public event Action RefreshButtonClicked;
         public event Action<string> GameServerButtonClicked;
-
-        [Header("Text")]
-        [SerializeField] private TextMeshProUGUI messageText;
 
         [Header("Buttons")]
         [SerializeField] private Button joinButton;
@@ -63,24 +44,25 @@ namespace Scripts.UI.Windows
             refreshButton.onClick.RemoveListener(OnRefreshButtonClicked);
         }
 
-        public void CreateGameServerList(string[] gameServers)
+        public void CreateGameServerList(GameServerInformationParameters[] gameServerList)
         {
             StopRefreshing();
             RemoveGameServerList();
 
-            if (gameServers.Length == 0)
+            if (gameServerList.Length == 0)
             {
-                ShowMessage = true;
-                Message = "No servers found.";
                 return;
             }
 
-            foreach (var gameServerName in gameServers)
+            foreach (var gameServer in gameServerList)
             {
-                var gameServerButton = UserInterfaceContainer.Instance.Add<ClickableGameServerButton>(ViewType.Foreground, Index.Last, gameServerList);
-                gameServerButton.ServerName = gameServerName;
-                gameServerButton.ServerButtonClicked += () => OnGameServerButtonClicked(gameServerName);
-                gameServerButtons.Add(gameServerName, gameServerButton);
+                var gameServerButton = UserInterfaceContainer.Instance.Add<ClickableGameServerButton>(ViewType.Foreground, Index.Last, this.gameServerList);
+                gameServerButton.ServerName = gameServer.Name;
+                gameServerButton.Connections = gameServer.Connections;
+                gameServerButton.MaxConnections = gameServer.MaxConnections;
+                gameServerButton.ServerButtonClicked += () => OnGameServerButtonClicked(gameServer.Name);
+
+                gameServerButtons.Add(gameServer.Name, gameServerButton);
             }
         }
 
@@ -141,13 +123,13 @@ namespace Scripts.UI.Windows
 
         private void StartRefreshing()
         {
-            ShowMessage = true;
+            joinButton.interactable = false;
             refreshButton.interactable = false;
         }
 
         private void StopRefreshing()
         {
-            ShowMessage = false;
+            joinButton.interactable = false;
             refreshButton.interactable = true;
         }
     }

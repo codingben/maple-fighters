@@ -16,6 +16,22 @@ namespace Scripts.UI
             }
         }
 
+        public int Connections
+        {
+            set
+            {
+                playersBarSlider.value = value;
+            }
+        }
+
+        public int MaxConnections
+        {
+            set
+            {
+                playersBarSlider.maxValue = value;
+            }
+        }
+
         public bool Selected
         {
             set
@@ -32,6 +48,9 @@ namespace Scripts.UI
 
         [Header("Text")]
         [SerializeField] private TextMeshProUGUI gameServerText;
+
+        [Header("Slider")]
+        [SerializeField] private Slider playersBarSlider;
 
         [Header("Foreground")]
         [SerializeField] private Image frame;

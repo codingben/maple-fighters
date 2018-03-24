@@ -20,7 +20,6 @@ namespace Scripts.UI.Controllers
         [SerializeField] private int loadSceneIndex;
 
         private bool isInitialized;
-        private bool isRefreshing;
         private string gameServerName;
 
         private readonly ExternalCoroutinesExecutor coroutinesExecutor = new ExternalCoroutinesExecutor();
@@ -28,10 +27,10 @@ namespace Scripts.UI.Controllers
 
         public void Initialize()
         {
-            isInitialized = true;
             CreateGameServerSelectorWindow();
+            CreateGameServerSelectorRefreshImage();
 
-            GameServerSelectorConnectionProvider.Instance.Connect(() => coroutinesExecutor.StartTask(ProvideGameServerList));
+            GameServerSelectorConnectionProvider.Instance.Connect(OnRefreshButtonClicked);
         }
 
         private void Update()
@@ -51,6 +50,8 @@ namespace Scripts.UI.Controllers
 
         private void CreateGameServerSelectorWindow()
         {
+            isInitialized = true;
+
             var gameServerSelectorWindow = UserInterfaceContainer.Instance.Add<GameServerSelectorWindow>();
             gameServerSelectorWindow.JoinButtonClicked += OnJoinButtonClicked;
             gameServerSelectorWindow.RefreshButtonClicked += OnRefreshButtonClicked;
@@ -59,10 +60,19 @@ namespace Scripts.UI.Controllers
 
         private void RemoveGameServerSelectorWindow()
         {
+            isInitialized = false;
+
             var gameServerSelectorWindow = UserInterfaceContainer.Instance.Get<GameServerSelectorWindow>().AssertNotNull();
             gameServerSelectorWindow.JoinButtonClicked -= OnJoinButtonClicked;
             gameServerSelectorWindow.RefreshButtonClicked -= OnRefreshButtonClicked;
             gameServerSelectorWindow.GameServerButtonClicked -= OnGameServerButtonClicked;
+        }
+
+        private void CreateGameServerSelectorRefreshImage()
+        {
+            var gameServerSelectorWindow = UserInterfaceContainer.Instance.Get<GameServerSelectorWindow>().AssertNotNull();
+            var gameServerSelectorRefreshImage = UserInterfaceContainer.Instance.Add<GameServerSelectorRefreshImage>(ViewType.Foreground, Index.Last, gameServerSelectorWindow.transform);
+            gameServerSelectorRefreshImage.Show();
         }
 
         private void OnJoinButtonClicked()
@@ -85,19 +95,22 @@ namespace Scripts.UI.Controllers
 
         private void OnRefreshButtonClicked()
         {
-            if (isRefreshing)
-            {
-                return;
-            }
-
             if (gameServerInformations.Count != 0)
             {
                 gameServerInformations.Clear();
             }
 
-            coroutinesExecutor.StartTask(ProvideGameServerList);
-
-            isRefreshing = true;
+            var isRefreshImageExists = UserInterfaceContainer.Instance.Get<GameServerSelectorRefreshImage>();
+            if(!isRefreshImageExists)
+            {
+                var gameServerSelectorWindow = UserInterfaceContainer.Instance.Get<GameServerSelectorWindow>().AssertNotNull();
+                var gameServerSelectorRefreshImage = UserInterfaceContainer.Instance.Add<GameServerSelectorRefreshImage>(ViewType.Foreground, Index.Last, gameServerSelectorWindow.transform);
+                gameServerSelectorRefreshImage.Show(() => coroutinesExecutor.StartTask(ProvideGameServerList));
+            }
+            else
+            {
+                coroutinesExecutor.StartTask(ProvideGameServerList);
+            }
         }
 
         private void OnGameServerButtonClicked(string serverName)
@@ -116,26 +129,30 @@ namespace Scripts.UI.Controllers
 
         private async Task ProvideGameServerList(IYield yield)
         {
-            isRefreshing = true;
-
             var gameServerProviderService = ServiceContainer.GameServerProviderService.GetPeerLogic<IGameServerProviderServiceAPI>().AssertNotNull();
             var responseParameters = await gameServerProviderService.ProvideGameServers(yield);
             foreach (var gameServerInformation in responseParameters.GameServerInformations)
             {
-                gameServerInformations.Add(gameServerInformation.Name, gameServerInformation);
-            }
+                var gameServerName = gameServerInformation.Name;
+                if (gameServerInformations.ContainsKey(gameServerName))
+                {
+                    LogUtils.Log(MessageBuilder.Trace($"Duplication of the {gameServerName} game server. Can not add this one."));
+                    continue;
+                }
 
-            SetGameServerList();
+                gameServerInformations.Add(gameServerName, gameServerInformation);
+            }
+            
+            ShowGameServerList();
         }
 
-        private void SetGameServerList()
+        private void ShowGameServerList()
         {
-            var gameServerList = gameServerInformations.Select(gameServerInformation => gameServerInformation.Key).ToArray();
-            var gameServerSelectorWindow = UserInterfaceContainer.Instance.Get<GameServerSelectorWindow>().AssertNotNull();
-            gameServerSelectorWindow.ShowMessage = false;
-            gameServerSelectorWindow.CreateGameServerList(gameServerList);
+            var gameServerSelectorRefreshImage = UserInterfaceContainer.Instance.Get<GameServerSelectorRefreshImage>().AssertNotNull();
+            gameServerSelectorRefreshImage.Hide();
 
-            isRefreshing = false;
+            var gameServerSelectorWindow = UserInterfaceContainer.Instance.Get<GameServerSelectorWindow>().AssertNotNull();
+            gameServerSelectorWindow.CreateGameServerList(gameServerInformations.Values.ToArray());
         }
     }
 }
