@@ -94,7 +94,9 @@ namespace UserProfile.Server.Common
 
         private void OnUserProfilePropertiesChanged(UserProfilePropertiesChangedEventParameters parameters)
         {
-            if (parameters.ConnectionStatus == ConnectionStatus.Connected && parameters.ServerType != serverType)
+            var isConnected = parameters.ConnectionStatus == ConnectionStatus.Connected;
+            var isServerChanged = parameters.ServerType != serverType;
+            if (isConnected && isServerChanged)
             {
                 isManuallyDisconnected = true;
                 peerGetter.Peer.Disconnect();
