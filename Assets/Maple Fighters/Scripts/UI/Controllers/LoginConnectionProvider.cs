@@ -21,7 +21,7 @@ namespace Scripts.UI.Controllers
             this.onConnected = onConnected;
 
             var serverConnectionInformation = GetServerConnectionInformation(ServerType.Login);
-            CoroutinesExecutor.StartTask((yield) => Connect(yield, serverConnectionInformation));
+            CoroutinesExecutor.StartTask((yield) => Connect(yield, serverConnectionInformation, disconnectAutomatically: true, authorize: false));
         }
 
         protected override void OnPreConnection()
@@ -38,12 +38,7 @@ namespace Scripts.UI.Controllers
 
         protected override void OnConnectionEstablished()
         {
-            ServiceContainer.LoginService.SetPeerLogic<LoginService, LoginOperations, EmptyEventCode>(new LoginService());
-
-            const int TIME_TO_DISCONNECT = 60;
-            DisconnectAutomatically(TIME_TO_DISCONNECT);
-
-            onConnected?.Invoke();
+            onConnected.Invoke();
         }
 
         protected override Task<AuthorizeResponseParameters> Authorize(IYield yield, AuthorizeRequestParameters parameters)
@@ -59,6 +54,11 @@ namespace Scripts.UI.Controllers
         protected override void OnAuthorized()
         {
             // Left blank intentionally
+        }
+
+        protected override void SetPeerLogicAfterAuthorization()
+        {
+            GetServiceBase().SetPeerLogic<LoginPeerLogic, LoginOperations, EmptyEventCode>(new LoginPeerLogic());
         }
 
         protected override IServiceBase GetServiceBase()

@@ -5,7 +5,7 @@ using Game.Common;
 
 namespace Scripts.Services
 {
-    public sealed class GameService : PeerLogicBase, IGameServiceAPI
+    public sealed class GameScenePeerLogic : PeerLogicBase, IGameScenePeerLogicAPI
     {
         public UnityEvent<EnterSceneResponseParameters> SceneEntered { get; } = new UnityEvent<EnterSceneResponseParameters>();
         public UnityEvent<SceneObjectAddedEventParameters> SceneObjectAdded { get; } = new UnityEvent<SceneObjectAddedEventParameters>();

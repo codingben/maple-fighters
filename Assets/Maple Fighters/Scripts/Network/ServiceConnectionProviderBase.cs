@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Authorization.Client.Common;
 using CommonCommunicationInterfaces;
 using CommonTools.Coroutines;
 using CommonTools.Log;
+using CommunicationHelper;
 using Scripts.ScriptableObjects;
 using Scripts.Utils;
 using WaitForSeconds = CommonTools.Coroutines.WaitForSeconds;
@@ -40,7 +42,7 @@ namespace Scripts.Services
             CoroutinesExecutor?.Dispose();
         }
 
-        protected async Task Connect(IYield yield, ServerConnectionInformation serverConnectionInformation)
+        protected async Task Connect(IYield yield, ServerConnectionInformation serverConnectionInformation, bool disconnectAutomatically = false, bool authorize = true)
         {
             if (serviceBase == null || CoroutinesExecutor == null)
             {
@@ -67,8 +69,23 @@ namespace Scripts.Services
                 return;
             }
 
+            if (authorize)
+            {
+                serviceBase.SetPeerLogic<AuthorizationPeerLogic, AuthorizationOperations, EmptyEventCode>(new AuthorizationPeerLogic());
+            }
+            else
+            {
+                SetPeerLogicAfterAuthorization();
+            }
+
             SubscribeToDisconnectionNotifier();
             OnConnectionEstablished();
+
+            if (disconnectAutomatically)
+            {
+                const int TIME_TO_DISCONNECT = 60;
+                DisconnectAutomatically(TIME_TO_DISCONNECT);
+            }
         }
 
         protected abstract void OnPreConnection();
@@ -78,6 +95,7 @@ namespace Scripts.Services
         protected virtual void OnDisconnected(DisconnectReason reason, string details)
         {
             UnsubscribeFromDisconnectionNotifier();
+            Dispose();
         }
 
         private void SubscribeToDisconnectionNotifier()
@@ -94,14 +112,25 @@ namespace Scripts.Services
         {
             OnPreAuthorization();
 
-            var parameters = new AuthorizeRequestParameters(AccessTokenProvider.AccessToken);
-            var authorizationStatus = await Authorize(yield, parameters);
-            if (authorizationStatus.Status == AuthorizationStatus.Failed)
+            var authorizationStatus = AuthorizationStatus.Failed;
+
+            try
             {
-                Dispose();
+                var parameters = new AuthorizeRequestParameters(AccessTokenProvider.AccessToken);
+                var responseParameters = await Authorize(yield, parameters);
+                authorizationStatus = responseParameters.Status;
+            }
+            catch (Exception)
+            {
+                // Left blank intentionally
+            }
+
+            if (authorizationStatus == AuthorizationStatus.Failed)
+            {
                 return;
             }
 
+            SetPeerLogicAfterAuthorization();
             OnAuthorized();
         }
 
@@ -110,6 +139,7 @@ namespace Scripts.Services
         protected abstract void OnPreAuthorization();
         protected abstract void OnAuthorized();
 
+        protected abstract void SetPeerLogicAfterAuthorization();
         protected abstract IServiceBase GetServiceBase();
 
         protected void DisconnectAutomatically(int timer)

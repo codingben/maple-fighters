@@ -4,7 +4,7 @@ using Registration.Common;
 
 namespace Scripts.Services
 {
-    public interface IRegistrationServiceAPI : IPeerLogicBase
+    public interface IRegistrationPeerLogicAPI : IPeerLogicBase
     {
         Task<RegisterResponseParameters> Register(IYield yield, RegisterRequestParameters parameters);
     }

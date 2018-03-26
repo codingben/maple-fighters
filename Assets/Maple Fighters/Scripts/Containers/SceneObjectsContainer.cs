@@ -40,7 +40,7 @@ namespace Scripts.Containers
         {
             SceneManager.sceneLoaded += OnSceneLoaded;
 
-            var gameService = ServiceContainer.GameService.GetPeerLogic<IGameServiceAPI>().AssertNotNull();
+            var gameService = ServiceContainer.GameService.GetPeerLogic<IGameScenePeerLogicAPI>().AssertNotNull();
             gameService.SceneEntered.AddListener(OnSceneEntered);
             gameService.SceneObjectAdded.AddListener(OnSceneObjectAdded);
             gameService.SceneObjectRemoved.AddListener(OnSceneObjectRemoved);
@@ -52,7 +52,7 @@ namespace Scripts.Containers
         {
             SceneManager.sceneLoaded -= OnSceneLoaded;
 
-            var gameService = ServiceContainer.GameService.GetPeerLogic<IGameServiceAPI>().AssertNotNull();
+            var gameService = ServiceContainer.GameService.GetPeerLogic<IGameScenePeerLogicAPI>().AssertNotNull();
             gameService.SceneEntered.RemoveListener(OnSceneEntered);
             gameService.SceneObjectAdded.RemoveListener(OnSceneObjectAdded);
             gameService.SceneObjectRemoved.RemoveListener(OnSceneObjectRemoved);

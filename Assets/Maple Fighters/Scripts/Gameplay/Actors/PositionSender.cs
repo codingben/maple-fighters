@@ -32,7 +32,7 @@ namespace Scripts.Gameplay.Actors
 
         private void UpdatePositionOperation()
         {
-            var gameService = ServiceContainer.GameService.GetPeerLogic<IGameServiceAPI>().AssertNotNull();
+            var gameService = ServiceContainer.GameService.GetPeerLogic<IGameScenePeerLogicAPI>().AssertNotNull();
             gameService.UpdatePosition(new UpdatePositionRequestParameters(transform.position.x, transform.position.y, GetDirection()));
         }
 

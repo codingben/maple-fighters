@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using CommonTools.Log;
 using GameServerProvider.Client.Common;
 using Scripts.UI.Core;
 using UnityEngine;
@@ -9,6 +10,8 @@ namespace Scripts.UI.Windows
 {
     public class GameServerSelectorWindow : UserInterfaceBaseFadeEffect
     {
+        public GameServerSelectorRefreshImage GameServerSelectorRefreshImage => gameServerSelectorRefreshImage;
+
         public event Action JoinButtonClicked;
         public event Action RefreshButtonClicked;
         public event Action<string> GameServerButtonClicked;
@@ -19,6 +22,9 @@ namespace Scripts.UI.Windows
 
         [Header("Parent")]
         [SerializeField] private Transform gameServerList;
+
+        [Header("Image")]
+        [SerializeField] private GameServerSelectorRefreshImage gameServerSelectorRefreshImage;
 
         private readonly Dictionary<string, ClickableGameServerButton> gameServerButtons = new Dictionary<string, ClickableGameServerButton>();
 
@@ -103,26 +109,24 @@ namespace Scripts.UI.Windows
 
         private void OnJoinButtonClicked()
         {
-            RemoveGameServerList();
-
             JoinButtonClicked?.Invoke();
         }
 
         private void OnRefreshButtonClicked()
         {
-            StartRefreshing();
+            DisableAllButtons();
             RemoveGameServerList();
 
             RefreshButtonClicked?.Invoke();
         }
 
-        private void StartRefreshing()
+        private void DisableAllButtons()
         {
             joinButton.interactable = false;
             refreshButton.interactable = false;
         }
 
-        public void StopRefreshing()
+        public void EnableAllButtons()
         {
             joinButton.interactable = false;
             refreshButton.interactable = true;

@@ -81,7 +81,7 @@ namespace Scripts.UI.Controllers
 
         private async Task Register(IYield yield, RegisterRequestParameters parameters)
         {
-            var registrationService = ServiceContainer.RegistrationService.GetPeerLogic<IRegistrationServiceAPI>().AssertNotNull();
+            var registrationService = ServiceContainer.RegistrationService.GetPeerLogic<IRegistrationPeerLogicAPI>().AssertNotNull();
             var responseParameters = await registrationService.Register(yield, parameters);
             switch (responseParameters.Status)
             {

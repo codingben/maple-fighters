@@ -2,7 +2,7 @@
 
 namespace Scripts.Services
 {
-    public interface IChatServiceAPI : IPeerLogicBase
+    public interface IChatPeerLogicAPI : IPeerLogicBase
     {
         void SendChatMessage(ChatMessageRequestParameters parameters);
 

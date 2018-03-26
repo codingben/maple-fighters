@@ -17,9 +17,11 @@ namespace Scripts.UI.Windows
         [Header("Text")]
         [SerializeField] private TextMeshProUGUI MessageText;
 
-        public override void Hide()
+        protected override void OnAwake()
         {
-            Hide(() => UserInterfaceContainer.Instance.Remove(this));
+            base.OnAwake();
+
+            IsShowed = true;
         }
     }
 }

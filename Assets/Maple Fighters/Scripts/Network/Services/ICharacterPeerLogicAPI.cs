@@ -4,7 +4,7 @@ using Game.Common;
 
 namespace Scripts.Services
 {
-    public interface ICharacterServiceAPI : IPeerLogicBase
+    public interface ICharacterPeerLogicAPI : IPeerLogicBase
     {
         UnityEvent<GetCharactersResponseParameters> ReceivedCharacters { get; }
 

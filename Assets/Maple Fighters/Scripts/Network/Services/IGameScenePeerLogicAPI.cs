@@ -4,7 +4,7 @@ using Game.Common;
 
 namespace Scripts.Services
 {
-    public interface IGameServiceAPI : IPeerLogicBase
+    public interface IGameScenePeerLogicAPI : IPeerLogicBase
     {
         Task EnterScene(IYield yield);
         Task<ChangeSceneResponseParameters> ChangeScene(IYield yield, ChangeSceneRequestParameters parameters);

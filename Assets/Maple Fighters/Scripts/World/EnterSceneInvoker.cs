@@ -44,7 +44,7 @@ namespace Scripts.World
 
         private void OnSceneLoaded(Scene scene, LoadSceneMode loadSceneMode)
         {
-            var gameService = ServiceContainer.GameService.GetPeerLogic<IGameServiceAPI>().AssertNotNull();
+            var gameService = ServiceContainer.GameService.GetPeerLogic<IGameScenePeerLogicAPI>().AssertNotNull();
             coroutinesExecutor.StartTask(gameService.EnterScene);
         }
     }

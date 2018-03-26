@@ -8,7 +8,7 @@ using Scripts.Coroutines;
 
 namespace Scripts.Services
 {
-    public sealed class CharacterService : PeerLogicBase, ICharacterServiceAPI
+    public sealed class CharacterPeerLogic : PeerLogicBase, ICharacterPeerLogicAPI
     {
         public UnityEvent<GetCharactersResponseParameters> ReceivedCharacters { get; } = new UnityEvent<GetCharactersResponseParameters>();
         private readonly ExternalCoroutinesExecutor coroutinesExecutor = new ExternalCoroutinesExecutor();
@@ -60,7 +60,7 @@ namespace Scripts.Services
                 (yield, (byte)CharacterOperations.ValidateCharacter, parameters, MessageSendOptions.DefaultReliable());
             if (responseParameters.Status == CharacterValidationStatus.Ok)
             {
-                ServiceContainer.GameService.SetPeerLogic<GameService, GameOperations, GameEvents>(new GameService());
+                ServiceContainer.GameService.SetPeerLogic<GameScenePeerLogic, GameOperations, GameEvents>(new GameScenePeerLogic());
             }
             return responseParameters.Status;
         }

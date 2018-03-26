@@ -86,14 +86,14 @@ namespace Scripts.UI.Controllers
 
         private async Task Authenticate(IYield yield, AuthenticateRequestParameters parameters)
         {
-            var loginService = ServiceContainer.LoginService.GetPeerLogic<ILoginServiceAPI>().AssertNotNull();
+            var loginService = ServiceContainer.LoginService.GetPeerLogic<ILoginPeerLogicAPI>().AssertNotNull();
             var responseParameters = await loginService.Authenticate(yield, parameters);
             switch (responseParameters.Status)
             {
                 case LoginStatus.Succeed:
                 {
                     var noticeWindow = UserInterfaceContainer.Instance.Get<NoticeWindow>().AssertNotNull();
-                    noticeWindow.Message.text = "You have logged in successfully. Please wait.";
+                    noticeWindow.Message.text = "You have logged in successfully!";
                     break;
                 }
                 case LoginStatus.UserNotExist:
@@ -134,15 +134,14 @@ namespace Scripts.UI.Controllers
 
         private void OnLoginSucceed()
         {
-            coroutinesExecutor.StartCoroutine(HideNoticeWindowAfterDelay());
+            coroutinesExecutor.StartCoroutine(ConnectToMasterServerAfterDelay());
         }
 
-        private IEnumerator<IYieldInstruction> HideNoticeWindowAfterDelay()
+        private IEnumerator<IYieldInstruction> ConnectToMasterServerAfterDelay()
         {
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(0.25f);
 
-            var noticeWindow = UserInterfaceContainer.Instance.Get<NoticeWindow>().AssertNotNull();
-            noticeWindow.Hide(GameServerSelectorController.Instance.Initialize);
+            GameServerSelectorConnectionProvider.Instance.Connect();
         }
 
         private void OnRegisterButtonClicked()

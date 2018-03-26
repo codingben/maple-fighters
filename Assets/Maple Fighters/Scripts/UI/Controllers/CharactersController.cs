@@ -23,7 +23,7 @@ namespace Scripts.UI.Controllers
         {
             CreateChooseFighterTextUI();
 
-            var characterService = ServiceContainer.GameService.GetPeerLogic<ICharacterServiceAPI>().AssertNotNull();
+            var characterService = ServiceContainer.GameService.GetPeerLogic<ICharacterPeerLogicAPI>().AssertNotNull();
             characterService.ReceivedCharacters.AddListener(OnReceivedCharacters);
         }
 
@@ -167,7 +167,7 @@ namespace Scripts.UI.Controllers
 
         private async Task ValidateCharacter(IYield yield, ValidateCharacterRequestParameters parameters)
         {
-            var characterService = ServiceContainer.GameService.GetPeerLogic<ICharacterServiceAPI>().AssertNotNull();
+            var characterService = ServiceContainer.GameService.GetPeerLogic<ICharacterPeerLogicAPI>().AssertNotNull();
             var responseParameters = await characterService.ValidateCharacter(yield, parameters);
             switch (responseParameters)
             {
@@ -229,7 +229,7 @@ namespace Scripts.UI.Controllers
 
         private async Task DeleteCharacter(IYield yield, RemoveCharacterRequestParameters parameters)
         {
-            var characterService = ServiceContainer.GameService.GetPeerLogic<ICharacterServiceAPI>().AssertNotNull();
+            var characterService = ServiceContainer.GameService.GetPeerLogic<ICharacterPeerLogicAPI>().AssertNotNull();
             var responseParameters = await characterService.RemoveCharacter(yield, parameters);
             switch (responseParameters.Status)
             {

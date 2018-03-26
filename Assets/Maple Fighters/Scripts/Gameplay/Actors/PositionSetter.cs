@@ -24,13 +24,13 @@ namespace Scripts.Gameplay.Actors
 
         private void Start()
         {
-            var gameService = ServiceContainer.GameService.GetPeerLogic<IGameServiceAPI>().AssertNotNull();
+            var gameService = ServiceContainer.GameService.GetPeerLogic<IGameScenePeerLogicAPI>().AssertNotNull();
             gameService.PositionChanged.AddListener(OnPositionChanged);
         }
 
         private void OnDestroy()
         {
-            var gameService = ServiceContainer.GameService.GetPeerLogic<IGameServiceAPI>().AssertNotNull();
+            var gameService = ServiceContainer.GameService.GetPeerLogic<IGameScenePeerLogicAPI>().AssertNotNull();
             gameService.PositionChanged.RemoveListener(OnPositionChanged);
         }
 

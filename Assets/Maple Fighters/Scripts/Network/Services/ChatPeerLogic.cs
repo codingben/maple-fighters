@@ -3,7 +3,7 @@ using CommonCommunicationInterfaces;
 
 namespace Scripts.Services
 {
-    public sealed class ChatService : PeerLogicBase, IChatServiceAPI
+    public sealed class ChatPeerLogic : PeerLogicBase, IChatPeerLogicAPI
     {
         public UnityEvent<ChatMessageEventParameters> ChatMessageReceived { get; } = new UnityEvent<ChatMessageEventParameters>();
 

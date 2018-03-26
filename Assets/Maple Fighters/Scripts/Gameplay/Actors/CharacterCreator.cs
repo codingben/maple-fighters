@@ -26,7 +26,7 @@ namespace Scripts.Gameplay.Actors
             var parameters = DummyCharacterDetails.Instance.AssertNotNull("Could not find dummy character details. Please add DummyCharacterDetails into a scene.")
                 .GetDummyCharacterParameters();
 
-            var gameService = ServiceContainer.GameService.GetPeerLogic<IGameServiceAPI>().AssertNotNull();
+            var gameService = ServiceContainer.GameService.GetPeerLogic<IGameScenePeerLogicAPI>().AssertNotNull();
             gameService.SceneEntered?.Invoke(parameters);
         }
 
@@ -44,7 +44,7 @@ namespace Scripts.Gameplay.Actors
 
         private void SubscribeToEvents()
         {
-            var gameService = ServiceContainer.GameService.GetPeerLogic<IGameServiceAPI>().AssertNotNull();
+            var gameService = ServiceContainer.GameService.GetPeerLogic<IGameScenePeerLogicAPI>().AssertNotNull();
             gameService.SceneEntered.AddListener(OnSceneEntered);
             gameService.CharacterAdded.AddListener(OnCharacterAdded);
             gameService.CharactersAdded.AddListener(OnCharactersAdded);
@@ -52,7 +52,7 @@ namespace Scripts.Gameplay.Actors
 
         private void UnsubscribeFromEvents()
         {
-            var gameService = ServiceContainer.GameService.GetPeerLogic<IGameServiceAPI>().AssertNotNull();
+            var gameService = ServiceContainer.GameService.GetPeerLogic<IGameScenePeerLogicAPI>().AssertNotNull();
             gameService.SceneEntered.RemoveListener(OnSceneEntered);
             gameService.CharacterAdded.RemoveListener(OnCharacterAdded);
             gameService.CharactersAdded.RemoveListener(OnCharactersAdded);

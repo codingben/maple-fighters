@@ -5,7 +5,7 @@ using CommonTools.Coroutines;
 
 namespace Scripts.Services
 {
-    public sealed class AuthorizationService : PeerLogicBase, IAuthorizationServiceAPI
+    public sealed class AuthorizationPeerLogic : PeerLogicBase, IAuthorizationPeerLogicAPI
     {
         public async Task<AuthorizeResponseParameters> Authorize(IYield yield, AuthorizeRequestParameters parameters)
         {

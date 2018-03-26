@@ -62,7 +62,7 @@ namespace Scripts.World
         private async Task ChangeScene(IYield yield)
         {
             var networkIdentity = GetComponent<NetworkIdentity>();
-            var gameService = ServiceContainer.GameService.GetPeerLogic<IGameServiceAPI>().AssertNotNull();
+            var gameService = ServiceContainer.GameService.GetPeerLogic<IGameScenePeerLogicAPI>().AssertNotNull();
             var responseParameters = await gameService.ChangeScene(yield, new ChangeSceneRequestParameters(networkIdentity.Id));
             var map = responseParameters.Map;
             if (map == 0)

@@ -5,7 +5,7 @@ using Registration.Common;
 
 namespace Scripts.Services
 {
-    public sealed class RegistrationService : PeerLogicBase, IRegistrationServiceAPI
+    public sealed class RegistrationPeerLogic : PeerLogicBase, IRegistrationPeerLogicAPI
     {
         public async Task<RegisterResponseParameters> Register(IYield yield, RegisterRequestParameters parameters)
         {

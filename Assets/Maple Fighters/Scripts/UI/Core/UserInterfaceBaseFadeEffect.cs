@@ -6,22 +6,29 @@ namespace Scripts.UI.Core
 {
     public class UserInterfaceBaseFadeEffect : UserInterfaceBase
     {
+        [HideInInspector]
+        public bool IsShowed;
+
         [Header("Fade Speed")]
         [SerializeField] protected float showSpeed;
         [SerializeField] protected float hideSpeed;
-
-        protected bool IsShowed;
 
         private Coroutine fadeCoroutine;
 
         public void Show(Action onFinished)
         {
-            Fade(onFinished);
+            if (!IsShowed)
+            {
+                Fade(onFinished);
+            }
         }
 
         public void Hide(Action onFinished)
         {
-            UnFade(onFinished);
+            if (IsShowed)
+            {
+                UnFade(onFinished);
+            }
         }
 
         public override void Show()

@@ -5,7 +5,7 @@ using GameServerProvider.Client.Common;
 
 namespace Scripts.Services
 {
-    public sealed class GameServerProviderService : PeerLogicBase, IGameServerProviderServiceAPI
+    public sealed class GameServerProviderPeerLogic : PeerLogicBase, IGameServerProviderPeerLogicAPI
     {
         public async Task<GameServersProviderResponseParameters> ProvideGameServers(IYield yield)
         {

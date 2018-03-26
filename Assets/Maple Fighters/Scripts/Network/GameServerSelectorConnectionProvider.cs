@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Authorization.Client.Common;
 using CommonCommunicationInterfaces;
 using CommonTools.Coroutines;
@@ -7,41 +6,39 @@ using CommonTools.Log;
 using CommunicationHelper;
 using GameServerProvider.Client.Common;
 using Scripts.Containers;
+using Scripts.UI.Controllers;
 using Scripts.UI.Core;
 using Scripts.UI.Windows;
 using Scripts.Utils;
 
 namespace Scripts.Services
 {
-    using Utils = UI.Utils;
-
     public class GameServerSelectorConnectionProvider : ServiceConnectionProviderBase<GameServerSelectorConnectionProvider>
     {
-        private Action onAuthorized;
         private AuthorizationStatus authorizationStatus = AuthorizationStatus.Failed;
 
-        public void Connect(Action onAuthorized)
+        public void Connect()
         {
-            this.onAuthorized = onAuthorized;
-
             var serverConnectionInformation = GetServerConnectionInformation(ServerType.GameServerProvider);
-            CoroutinesExecutor.StartTask((yield) => Connect(yield, serverConnectionInformation));
+            CoroutinesExecutor.StartTask((yield) => Connect(yield, serverConnectionInformation, disconnectAutomatically: true));
         }
 
         protected override void OnPreConnection()
         {
-            // Left blank intentionally
+            var noticeWindow = UserInterfaceContainer.Instance.Get<NoticeWindow>().AssertNotNull();
+            noticeWindow.Message.text = "Connecting to master server...";
         }
 
         protected override void OnConnectionFailed()
         {
-            Utils.ShowNotice("Could not connect to a game server provider.", LoadedObjects.DestroyAll, true, Index.Last);
+            var noticeWindow = UserInterfaceContainer.Instance.Get<NoticeWindow>().AssertNotNull();
+            noticeWindow.Message.text = "Could not connect to master server.";
+            noticeWindow.OkButton.interactable = true;
+            noticeWindow.OkButtonClickedAction = LoadedObjects.DestroyAll;
         }
 
         protected override void OnConnectionEstablished()
         {
-            ServiceContainer.GameServerProviderService.SetPeerLogic<AuthorizationService, AuthorizationOperations, EmptyEventCode>(new AuthorizationService());
-
             CoroutinesExecutor.StartTask(Authorize);
         }
 
@@ -62,7 +59,7 @@ namespace Scripts.Services
 
         protected override Task<AuthorizeResponseParameters> Authorize(IYield yield, AuthorizeRequestParameters parameters)
         {
-            var authorizationService = ServiceContainer.GameServerProviderService.GetPeerLogic<IAuthorizationServiceAPI>().AssertNotNull();
+            var authorizationService = GetServiceBase().GetPeerLogic<IAuthorizationPeerLogicAPI>().AssertNotNull();
             return authorizationService.Authorize(yield, parameters);
         }
 
@@ -71,23 +68,27 @@ namespace Scripts.Services
             // Left blank intentionally
         }
 
-        public void OnNonAuthorized()
+        private void OnNonAuthorized()
         {
             var noticeWindow = UserInterfaceContainer.Instance.Get<NoticeWindow>().AssertNotNull();
-            noticeWindow.Message.text = "Authorization with game server provider failed.";
+            noticeWindow.Message.text = "Authorization with master server failed.";
             noticeWindow.OkButton.interactable = true;
             noticeWindow.OkButtonClickedAction = LoadedObjects.DestroyAll;
         }
 
         protected override void OnAuthorized()
         {
-            ServiceContainer.GameServerProviderService.SetPeerLogic<GameServerProviderService, GameServerProviderOperations, EmptyEventCode>(new GameServerProviderService());
-
             var noticeWindow = UserInterfaceContainer.Instance.Get<NoticeWindow>().AssertNotNull();
             noticeWindow.Hide();
 
             authorizationStatus = AuthorizationStatus.Succeed;
-            onAuthorized?.Invoke();
+
+            GameServerSelectorController.Instance.ShowGameServerSelectorUI();
+        }
+
+        protected override void SetPeerLogicAfterAuthorization()
+        {
+            GetServiceBase().SetPeerLogic<GameServerProviderPeerLogic, GameServerProviderOperations, EmptyEventCode>(new GameServerProviderPeerLogic());
         }
 
         protected override IServiceBase GetServiceBase()

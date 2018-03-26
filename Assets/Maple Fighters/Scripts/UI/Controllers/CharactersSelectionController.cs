@@ -120,7 +120,7 @@ namespace Scripts.UI.Controllers
 
         private async Task CreateCharacter(IYield yield)
         {
-            var characterService = ServiceContainer.GameService.GetPeerLogic<ICharacterServiceAPI>().AssertNotNull();
+            var characterService = ServiceContainer.GameService.GetPeerLogic<ICharacterPeerLogicAPI>().AssertNotNull();
             var responseParameters = await characterService.CreateCharacter(yield, characterRequestParameters);
             switch (responseParameters.Status)
             {

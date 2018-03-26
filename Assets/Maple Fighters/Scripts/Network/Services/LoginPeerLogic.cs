@@ -5,7 +5,7 @@ using Login.Common;
 
 namespace Scripts.Services
 {
-    public sealed class LoginService : PeerLogicBase, ILoginServiceAPI
+    public sealed class LoginPeerLogic : PeerLogicBase, ILoginPeerLogicAPI
     {
         public async Task<AuthenticateResponseParameters> Authenticate(IYield yield, AuthenticateRequestParameters parameters)
         {

@@ -33,7 +33,7 @@ namespace Scripts.Services
 
         protected override void OnPreConnection()
         {
-            var noticeWindow = Utils.ShowNotice($"Connecting to the {serverName} server... Please wait.", null);
+            var noticeWindow = Utils.ShowNotice($"Connecting to the {serverName} server...", null);
             noticeWindow.OkButton.interactable = false;
         }
 
@@ -41,7 +41,7 @@ namespace Scripts.Services
         {
             Action onButtonClicked = delegate 
             {
-                GameServerSelectorController.Instance.Initialize();
+                GameServerSelectorController.Instance.ShowGameServerSelectorUI();
             };
 
             var noticeWindow = UserInterfaceContainer.Instance.Get<NoticeWindow>().AssertNotNull();
@@ -52,8 +52,6 @@ namespace Scripts.Services
 
         protected override void OnConnectionEstablished()
         {
-            ServiceContainer.GameService.SetPeerLogic<AuthorizationService, AuthorizationOperations, EmptyEventCode>(new AuthorizationService());
-
             CoroutinesExecutor.StartTask(Authorize);
         }
 
@@ -78,7 +76,7 @@ namespace Scripts.Services
 
         protected override Task<AuthorizeResponseParameters> Authorize(IYield yield, AuthorizeRequestParameters parameters)
         {
-            var authorizationService = ServiceContainer.GameService.GetPeerLogic<IAuthorizationServiceAPI>().AssertNotNull();
+            var authorizationService = GetServiceBase().GetPeerLogic<IAuthorizationPeerLogicAPI>().AssertNotNull();
             return authorizationService.Authorize(yield, parameters);
         }
 
@@ -87,7 +85,7 @@ namespace Scripts.Services
             // Left blank intentionally
         }
 
-        public void OnNonAuthorized()
+        private void OnNonAuthorized()
         {
             var noticeWindow = UserInterfaceContainer.Instance.Get<NoticeWindow>().AssertNotNull();
             noticeWindow.Message.text = $"Authorization with {serverName} server failed.";
@@ -97,13 +95,17 @@ namespace Scripts.Services
 
         protected override void OnAuthorized()
         {
-            ServiceContainer.GameService.SetPeerLogic<CharacterService, CharacterOperations, EmptyEventCode>(new CharacterService());
-
             var noticeWindow = UserInterfaceContainer.Instance.Get<NoticeWindow>().AssertNotNull();
             noticeWindow.Hide();
 
             authorizationStatus = AuthorizationStatus.Succeed;
-            onAuthorized?.Invoke();
+
+            onAuthorized.Invoke();
+        }
+
+        protected override void SetPeerLogicAfterAuthorization()
+        {
+            GetServiceBase().SetPeerLogic<CharacterPeerLogic, CharacterOperations, EmptyEventCode>(new CharacterPeerLogic());
         }
 
         protected override IServiceBase GetServiceBase()

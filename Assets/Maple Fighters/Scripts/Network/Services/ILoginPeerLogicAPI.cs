@@ -4,7 +4,7 @@ using Login.Common;
 
 namespace Scripts.Services
 {
-    public interface ILoginServiceAPI : IPeerLogicBase
+    public interface ILoginPeerLogicAPI : IPeerLogicBase
     {
         Task<AuthenticateResponseParameters> Authenticate(IYield yield, AuthenticateRequestParameters parameters);
     }
