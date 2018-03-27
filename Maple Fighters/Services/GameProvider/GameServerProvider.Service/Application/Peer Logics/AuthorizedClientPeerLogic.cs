@@ -1,4 +1,5 @@
 ﻿using CommunicationHelper;
+using GameServerProvider.Client.Common;
 using GameServerProvider.Service.Application.PeerLogic.Operations;
 using PeerLogic.Common;
 using ServerCommunicationInterfaces;
@@ -6,9 +7,7 @@ using UserProfile.Server.Common;
 
 namespace GameServerProvider.Service.Application.PeerLogics
 {
-    using AuthorizationOperations = Authorization.Client.Common.AuthorizationOperations;
-
-    internal class AuthorizedClientPeerLogic : PeerLogicBase<AuthorizationOperations, EmptyEventCode>
+    internal class AuthorizedClientPeerLogic : PeerLogicBase<GameServerProviderOperations, EmptyEventCode>
     {
         private readonly int userId;
 
@@ -29,7 +28,7 @@ namespace GameServerProvider.Service.Application.PeerLogics
 
         private void AddHandlerForGameServersProviderOperation()
         {
-            OperationHandlerRegister.SetHandler(AuthorizationOperations.Authorize, new GameServersProviderOperationHandler());
+            OperationHandlerRegister.SetHandler(GameServerProviderOperations.ProvideGameServers, new GameServersProviderOperationHandler());
         }
 
         private void AddComponents()
