@@ -11,12 +11,12 @@ namespace Scripts.UI
         [SerializeField] private int[] skipBuildIndexes;
 
         private BackgroundImage backgroundImage;
-        private BackgroundCharactersParent backgroundCharactersParent;
+        private BackgroundCharacters backgroundCharactersParent;
 
         private void Start()
         {
             backgroundImage = UserInterfaceContainer.Instance.Add<BackgroundImage>(ViewType.Background);
-            backgroundCharactersParent = UserInterfaceContainer.Instance.Add<BackgroundCharactersParent>(ViewType.Background, Index.Last);
+            backgroundCharactersParent = UserInterfaceContainer.Instance.Add<BackgroundCharacters>(ViewType.Background, Index.Last);
 
             SubscribeToSceneLoaded();
         }

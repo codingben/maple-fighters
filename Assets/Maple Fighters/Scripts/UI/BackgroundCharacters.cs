@@ -2,7 +2,7 @@
 
 namespace Scripts.UI
 {
-    public class BackgroundCharactersParent : UniqueUserInterfaceBase
+    public class BackgroundCharacters : UniqueUserInterfaceBase
     {
         public override void Hide()
         {

@@ -269,7 +269,7 @@ namespace Scripts.UI.Controllers
             var characterType = Resources.Load<GameObject>(string.Format(CHARACTERS_RESOURCES_PATH, characterName));
             var anchoredPosition = characterType.GetComponent<RectTransform>().anchoredPosition;
 
-            var charactersParent = UserInterfaceContainer.Instance.Get<BackgroundCharactersParent>().AssertNotNull();
+            var charactersParent = UserInterfaceContainer.Instance.Get<BackgroundCharacters>().AssertNotNull();
             var characterGameObject = Instantiate(characterType, Vector3.zero, Quaternion.identity, charactersParent.gameObject.transform);
             characterGameObject.transform.SetAsFirstSibling();
             characterGameObject.GetComponent<RectTransform>().anchoredPosition = anchoredPosition;
