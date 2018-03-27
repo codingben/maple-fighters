@@ -185,6 +185,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd6b18933ce7cad4396ac3900ec8ddce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IsShowed: 0
   showSpeed: 1
   hideSpeed: 1
 --- !u!114 &114188474776552848
@@ -266,6 +267,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6802a3a34e6d9a843960daeaa78b2ef5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IsShowed: 0
   showSpeed: 10
   hideSpeed: 10
 --- !u!114 &114572978742761042
@@ -499,9 +501,9 @@ CanvasGroup:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1531253443867706}
   m_Enabled: 1
-  m_Alpha: 1
-  m_Interactable: 1
-  m_BlocksRaycasts: 1
+  m_Alpha: 0
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
 --- !u!225 &225933722643669916
 CanvasGroup:

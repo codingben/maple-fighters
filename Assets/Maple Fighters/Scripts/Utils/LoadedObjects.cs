@@ -14,7 +14,7 @@ namespace Scripts.Utils
             Object.DontDestroyOnLoad(obj);
         }
 
-        public static void Destroy(this GameObject obj)
+        private static void Destroy(this GameObject obj)
         {
             loadedObjects.Remove(obj);
             Object.DestroyImmediate(obj);

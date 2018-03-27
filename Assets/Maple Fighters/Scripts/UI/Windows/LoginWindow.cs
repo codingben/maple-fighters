@@ -37,6 +37,25 @@ namespace Scripts.UI.Windows
         [SerializeField] private Button loginButton;
         [SerializeField] private Button registerButton;
 
+        private bool isInitialized;
+
+        public override void Show()
+        {
+            if (!isInitialized)
+            {
+                isInitialized = true;
+
+                var oldShowSpeed = showSpeed;
+                showSpeed /= 5;
+
+                Show(() => { showSpeed = oldShowSpeed; });
+            }
+            else
+            {
+                base.Show();
+            }
+        }
+        
         private void Start()
         {
             loginButton.onClick.AddListener(OnLoginButtonClicked);

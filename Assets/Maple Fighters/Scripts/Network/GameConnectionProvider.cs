@@ -11,6 +11,7 @@ using Scripts.UI.Controllers;
 using Scripts.UI.Core;
 using Scripts.UI.Windows;
 using Scripts.Utils;
+using UnityEditorInternal;
 
 namespace Scripts.Services
 {
@@ -64,11 +65,11 @@ namespace Scripts.Services
 
         private void GoBackToLogin()
         {
-            if (authorizationStatus == AuthorizationStatus.Succeed)
+            if (authorizationStatus == AuthorizationStatus.Succeed && !IsDestroying)
             {
                 LoadedObjects.DestroyAll();
             }
-            else
+            else if(!IsDestroying)
             {
                 OnNonAuthorized();
             }

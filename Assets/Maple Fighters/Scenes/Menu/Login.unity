@@ -163,7 +163,7 @@ GameObject:
   - component: {fileID: 570759418}
   - component: {fileID: 570759419}
   m_Layer: 0
-  m_Name: Registration Connector
+  m_Name: Registration Connection Provider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -180,7 +180,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &570759419
 MonoBehaviour:
@@ -289,7 +289,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &700860015
 MonoBehaviour:
@@ -341,19 +341,6 @@ Prefab:
     - target: {fileID: 4855882389254736, guid: e782ff1fd96938d47bbf22cfe7de0863, type: 2}
       propertyPath: m_RootOrder
       value: 9
-      objectReference: {fileID: 0}
-    - target: {fileID: 1531253443867706, guid: e782ff1fd96938d47bbf22cfe7de0863, type: 2}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1719165333645854, guid: e782ff1fd96938d47bbf22cfe7de0863, type: 2}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 224907980033704690, guid: e782ff1fd96938d47bbf22cfe7de0863,
-        type: 2}
-      propertyPath: m_RootOrder
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e782ff1fd96938d47bbf22cfe7de0863, type: 2}
@@ -496,7 +483,7 @@ GameObject:
   - component: {fileID: 1250540802}
   - component: {fileID: 1250540803}
   m_Layer: 0
-  m_Name: Login Connector
+  m_Name: Login Connection Provider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -513,7 +500,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1250540803
 MonoBehaviour:
@@ -536,7 +523,7 @@ GameObject:
   - component: {fileID: 1264740941}
   - component: {fileID: 1264740940}
   m_Layer: 0
-  m_Name: GameServerSelector Connector
+  m_Name: Game Server Selector Connection Provider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -576,7 +563,7 @@ GameObject:
   - component: {fileID: 1377238115}
   - component: {fileID: 1377238114}
   m_Layer: 0
-  m_Name: Game Connector
+  m_Name: Game Connection Provider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -816,5 +803,5 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

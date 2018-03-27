@@ -32,6 +32,8 @@ namespace Scripts.Services
         private IServiceBase serviceBase => GetServiceBase();
         private ICoroutine disconnectAutomatically;
 
+        protected bool IsDestroying;
+
         private void Update()
         {
             CoroutinesExecutor?.Update();
@@ -39,7 +41,8 @@ namespace Scripts.Services
 
         private void OnDestroy()
         {
-            CoroutinesExecutor?.Dispose();
+            IsDestroying = true;
+            Dispose();
         }
 
         protected async Task Connect(IYield yield, ServerConnectionInformation serverConnectionInformation, bool disconnectAutomatically = false, bool authorize = true)
@@ -153,11 +156,6 @@ namespace Scripts.Services
         protected IEnumerator<IYieldInstruction> DisconnectAutomaticallyTimer(int timer)
         {
             yield return new WaitForSeconds(timer);
-            Dispose();
-        }
-
-        private void OnApplicationQuit()
-        {
             Dispose();
         }
 

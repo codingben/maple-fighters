@@ -7,8 +7,6 @@ namespace Scripts.UI
     {
         private void Start()
         {
-            Hide();
-
             UserInterfaceContainer.Instance.AddOnly(this);
         }
 
