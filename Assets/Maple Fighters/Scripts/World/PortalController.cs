@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using CommonTools.Coroutines;
 using CommonTools.Log;
 using Scripts.Containers;
@@ -63,15 +64,23 @@ namespace Scripts.World
         {
             var networkIdentity = GetComponent<NetworkIdentity>();
             var gameService = ServiceContainer.GameService.GetPeerLogic<IGameScenePeerLogicAPI>().AssertNotNull();
-            var responseParameters = await gameService.ChangeScene(yield, new ChangeSceneRequestParameters(networkIdentity.Id));
-            var map = responseParameters.Map;
-            if (map == 0)
-            {
-                LogUtils.Log(MessageBuilder.Trace("You can not teleport to scene index 0."));
-                return;
-            }
 
-            GameScenesController.Instance.LoadScene(map);
+            try
+            {
+                var responseParameters = await gameService.ChangeScene(yield, new ChangeSceneRequestParameters(networkIdentity.Id));
+                var map = responseParameters.Map;
+                if (map == 0)
+                {
+                    LogUtils.Log(MessageBuilder.Trace("You can not teleport to scene index 0."));
+                    return;
+                }
+
+                GameScenesController.Instance.LoadScene(map);
+            }
+            catch (Exception)
+            {
+                UI.Utils.ShowExceptionNotice();
+            }
         }
     }
 }

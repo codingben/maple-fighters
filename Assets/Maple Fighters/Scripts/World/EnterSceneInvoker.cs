@@ -1,4 +1,6 @@
-﻿using CommonTools.Coroutines;
+﻿using System;
+using System.Threading.Tasks;
+using CommonTools.Coroutines;
 using CommonTools.Log;
 using Scripts.Containers;
 using Scripts.Coroutines;
@@ -44,8 +46,20 @@ namespace Scripts.World
 
         private void OnSceneLoaded(Scene scene, LoadSceneMode loadSceneMode)
         {
-            var gameService = ServiceContainer.GameService.GetPeerLogic<IGameScenePeerLogicAPI>().AssertNotNull();
-            coroutinesExecutor.StartTask(gameService.EnterScene);
+            coroutinesExecutor.StartTask(EnterScene);
+        }
+
+        private async Task EnterScene(IYield yield)
+        {
+            try
+            {
+                var gameService = ServiceContainer.GameService.GetPeerLogic<IGameScenePeerLogicAPI>().AssertNotNull();
+                await gameService.EnterScene(yield);
+            }
+            catch (Exception)
+            {
+                UI.Utils.ShowExceptionNotice();
+            }
         }
     }
 }

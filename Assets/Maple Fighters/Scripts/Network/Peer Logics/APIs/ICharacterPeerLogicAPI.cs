@@ -6,8 +6,7 @@ namespace Scripts.Services
 {
     public interface ICharacterPeerLogicAPI : IPeerLogicBase
     {
-        UnityEvent<GetCharactersResponseParameters> ReceivedCharacters { get; }
-
+        Task<GetCharactersResponseParameters> GetCharacters(IYield yield);
         Task<CreateCharacterResponseParameters> CreateCharacter(IYield yield, CreateCharacterRequestParameters parameters);
         Task<RemoveCharacterResponseParameters> RemoveCharacter(IYield yield, RemoveCharacterRequestParameters parameters);
         Task<CharacterValidationStatus> ValidateCharacter(IYield yield, ValidateCharacterRequestParameters parameters);

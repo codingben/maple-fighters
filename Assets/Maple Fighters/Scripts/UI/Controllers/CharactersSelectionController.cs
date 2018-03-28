@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using CommonTools.Coroutines;
 using CommonTools.Log;
 using Game.Common;
@@ -120,41 +121,48 @@ namespace Scripts.UI.Controllers
 
         private async Task CreateCharacter(IYield yield)
         {
-            var characterService = ServiceContainer.GameService.GetPeerLogic<ICharacterPeerLogicAPI>().AssertNotNull();
-            var responseParameters = await characterService.CreateCharacter(yield, characterRequestParameters);
-            switch (responseParameters.Status)
+            try
             {
-                case CharacterCreationStatus.Succeed:
+                var characterService = ServiceContainer.GameService.GetPeerLogic<ICharacterPeerLogicAPI>().AssertNotNull();
+                var responseParameters = await characterService.CreateCharacter(yield, characterRequestParameters);
+                switch (responseParameters.Status)
                 {
-                    CharactersController.Instance.RecreateCharacter(GetLastCreatedCharacter());
+                    case CharacterCreationStatus.Succeed:
+                    {
+                        CharactersController.Instance.RecreateCharacter(GetLastCreatedCharacter());
 
-                    var noticeWindow = UserInterfaceContainer.Instance.Get<NoticeWindow>().AssertNotNull();
-                        noticeWindow.Message.text = "Character created successfully.";
-                    noticeWindow.OkButtonClickedAction = charactersSelectionWindow.DeactiveAll;
-                    noticeWindow.OkButton.interactable = true;
-                    break;
+                        var noticeWindow = UserInterfaceContainer.Instance.Get<NoticeWindow>().AssertNotNull();
+                            noticeWindow.Message.text = "Character created successfully.";
+                        noticeWindow.OkButtonClickedAction = charactersSelectionWindow.DeactiveAll;
+                        noticeWindow.OkButton.interactable = true;
+                        break;
+                    }
+                    case CharacterCreationStatus.Failed:
+                    {
+                        var noticeWindow = UserInterfaceContainer.Instance.Get<NoticeWindow>().AssertNotNull();
+                            noticeWindow.Message.text = "Failed to create a new character, please try again.";
+                        noticeWindow.OkButton.interactable = true;
+                        break;
+                    }
+                    case CharacterCreationStatus.NameUsed:
+                    {
+                        var noticeWindow = UserInterfaceContainer.Instance.Get<NoticeWindow>().AssertNotNull();
+                            noticeWindow.Message.text = "The name is already in use, choose another name.";
+                        noticeWindow.OkButton.interactable = true;
+                        break;
+                    }
+                    default:
+                    {
+                        var noticeWindow = UserInterfaceContainer.Instance.Get<NoticeWindow>().AssertNotNull();
+                        noticeWindow.Message.text = "Something went wrong, please try again.";
+                        noticeWindow.OkButton.interactable = true;
+                        break;
+                    }
                 }
-                case CharacterCreationStatus.Failed:
-                {
-                    var noticeWindow = UserInterfaceContainer.Instance.Get<NoticeWindow>().AssertNotNull();
-                        noticeWindow.Message.text = "Failed to create a new character, please try again.";
-                    noticeWindow.OkButton.interactable = true;
-                    break;
-                }
-                case CharacterCreationStatus.NameUsed:
-                {
-                    var noticeWindow = UserInterfaceContainer.Instance.Get<NoticeWindow>().AssertNotNull();
-                        noticeWindow.Message.text = "The name is already in use, choose another name.";
-                    noticeWindow.OkButton.interactable = true;
-                    break;
-                }
-                default:
-                {
-                    var noticeWindow = UserInterfaceContainer.Instance.Get<NoticeWindow>().AssertNotNull();
-                    noticeWindow.Message.text = "Something went wrong, please try again.";
-                    noticeWindow.OkButton.interactable = true;
-                    break;
-                }
+            }
+            catch (Exception)
+            {
+                Utils.ShowExceptionNotice();
             }
         }
 

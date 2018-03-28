@@ -81,37 +81,44 @@ namespace Scripts.UI.Controllers
 
         private async Task Register(IYield yield, RegisterRequestParameters parameters)
         {
-            var registrationService = ServiceContainer.RegistrationService.GetPeerLogic<IRegistrationPeerLogicAPI>().AssertNotNull();
-            var responseParameters = await registrationService.Register(yield, parameters);
-            switch (responseParameters.Status)
+            try
             {
-                case RegisterStatus.Succeed:
+                var registrationService = ServiceContainer.RegistrationService.GetPeerLogic<IRegistrationPeerLogicAPI>().AssertNotNull();
+                var responseParameters = await registrationService.Register(yield, parameters);
+                switch (responseParameters.Status)
                 {
-                    var noticeWindow = UserInterfaceContainer.Instance.Get<NoticeWindow>().AssertNotNull();
-                    noticeWindow.Message.text = "Registration is completed successfully.";
-                    noticeWindow.OkButtonClickedAction = OnBackButtonClicked;
-                    noticeWindow.OkButton.interactable = true;
-                    break;
+                    case RegisterStatus.Succeed:
+                    {
+                        var noticeWindow = UserInterfaceContainer.Instance.Get<NoticeWindow>().AssertNotNull();
+                        noticeWindow.Message.text = "Registration is completed successfully.";
+                        noticeWindow.OkButtonClickedAction = OnBackButtonClicked;
+                        noticeWindow.OkButton.interactable = true;
+                        break;
+                    }
+                    case RegisterStatus.EmailExists:
+                    {
+                        var noticeWindow = UserInterfaceContainer.Instance.Get<NoticeWindow>().AssertNotNull();
+                        noticeWindow.Message.text = "Email address already exists.";
+                        noticeWindow.OkButton.interactable = true;
+                        break;
+                    }
+                    default:
+                    {
+                        var noticeWindow = UserInterfaceContainer.Instance.Get<NoticeWindow>().AssertNotNull();
+                        noticeWindow.Message.text = "Something went wrong, please try again.";
+                        noticeWindow.OkButton.interactable = true;
+                        break;
+                    }
                 }
-                case RegisterStatus.EmailExists:
+
+                if (responseParameters.Status == RegisterStatus.Succeed)
                 {
-                    var noticeWindow = UserInterfaceContainer.Instance.Get<NoticeWindow>().AssertNotNull();
-                    noticeWindow.Message.text = "Email address already exists.";
-                    noticeWindow.OkButton.interactable = true;
-                    break;
-                }
-                default:
-                {
-                    var noticeWindow = UserInterfaceContainer.Instance.Get<NoticeWindow>().AssertNotNull();
-                    noticeWindow.Message.text = "Something went wrong, please try again.";
-                    noticeWindow.OkButton.interactable = true;
-                    break;
+                    OnRegistrationSucceed();
                 }
             }
-
-            if (responseParameters.Status == RegisterStatus.Succeed)
+            catch (Exception)
             {
-                OnRegistrationSucceed();
+                Utils.ShowExceptionNotice();
             }
         }
 

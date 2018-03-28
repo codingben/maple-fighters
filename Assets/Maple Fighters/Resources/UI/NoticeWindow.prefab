@@ -333,12 +333,12 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 14
+  m_fontSize: 13.5
   m_fontSizeBase: 10
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 12
-  m_fontSizeMax: 14
+  m_fontSizeMax: 13.5
   m_fontStyle: 0
   m_textAlignment: 514
   m_isAlignmentEnumConverted: 1
@@ -549,6 +549,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75d83d61ea10bec4787c2cceec816c58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IsShowed: 0
   showSpeed: 10
   hideSpeed: 10
   blackBackground: {fileID: 114586912464082996}

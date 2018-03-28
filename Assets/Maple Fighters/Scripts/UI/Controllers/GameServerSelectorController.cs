@@ -141,29 +141,36 @@ namespace Scripts.UI.Controllers
 
         private async Task ProvideGameServerList(IYield yield)
         {
-            var gameServerProviderService = ServiceContainer.GameServerProviderService.GetPeerLogic<IGameServerProviderPeerLogicAPI>().AssertNotNull();
-            var responseParameters = await gameServerProviderService.ProvideGameServers(yield);
-            foreach (var gameServerInformation in responseParameters.GameServerInformations)
+            try
             {
-                var gameServerName = gameServerInformation.Name;
-                if (gameServerInformations.ContainsKey(gameServerName))
+                var gameServerProviderService = ServiceContainer.GameServerProviderService.GetPeerLogic<IGameServerProviderPeerLogicAPI>().AssertNotNull();
+                var responseParameters = await gameServerProviderService.ProvideGameServers(yield);
+                foreach (var gameServerInformation in responseParameters.GameServerInformations)
                 {
-                    LogUtils.Log(MessageBuilder.Trace($"Duplication of the {gameServerName} game server. Can not add more than one."));
-                    continue;
+                    var gameServerName = gameServerInformation.Name;
+                    if (gameServerInformations.ContainsKey(gameServerName))
+                    {
+                        LogUtils.Log(MessageBuilder.Trace($"Duplication of the {gameServerName} game server. Can not add more than one."));
+                        continue;
+                    }
+
+                    gameServerInformations.Add(gameServerName, gameServerInformation);
                 }
 
-                gameServerInformations.Add(gameServerName, gameServerInformation);
-            }
+                gameServerSelectorWindow.EnableAllButtons();
 
-            gameServerSelectorWindow.EnableAllButtons();
-
-            if (gameServerInformations.Count != 0)
-            {
-                ShowGameServerList();
+                if (gameServerInformations.Count != 0)
+                {
+                    ShowGameServerList();
+                }
+                else
+                {
+                    gameServerSelectorWindow.GameServerSelectorRefreshImage.Message = "No servers found.";
+                }
             }
-            else
+            catch (Exception)
             {
-                gameServerSelectorWindow.GameServerSelectorRefreshImage.Message = "No servers found.";
+                Utils.ShowExceptionNotice();
             }
         }
 

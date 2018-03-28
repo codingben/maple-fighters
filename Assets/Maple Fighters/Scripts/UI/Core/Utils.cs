@@ -3,6 +3,7 @@ using System.Security.Cryptography;
 using System.Text.RegularExpressions;
 using Scripts.UI.Core;
 using Scripts.UI.Windows;
+using Scripts.Utils;
 
 namespace Scripts.UI
 {
@@ -42,6 +43,24 @@ namespace Scripts.UI
             noticeWindow.Initialize(message, okButtonClicked, background);
             noticeWindow.Show();
             return noticeWindow;
+        }
+
+        public static void ShowExceptionNotice(Index index = Index.Last, bool background = true)
+        {
+            const string EXCEPTION_MESSAGE = "An exception occurred during an operation.";
+
+            var noticeWindowExists = UserInterfaceContainer.Instance.Get<NoticeWindow>();
+            if (noticeWindowExists != null)
+            {
+                noticeWindowExists.Message.text = EXCEPTION_MESSAGE;
+                noticeWindowExists.OkButtonClickedAction = LoadedObjects.DestroyAll;
+                noticeWindowExists.OkButton.interactable = true;
+            }
+            else
+            {
+                var noticeWindow = ShowNotice(EXCEPTION_MESSAGE, LoadedObjects.DestroyAll, background, index);
+                noticeWindow.OkButton.interactable = true;
+            }
         }
 
         /// <summary>

@@ -1,45 +1,17 @@
 ﻿using System.Threading.Tasks;
 using CommonCommunicationInterfaces;
 using CommonTools.Coroutines;
-using CommonTools.Log;
 using Game.Common;
 using Scripts.Containers;
-using Scripts.Coroutines;
 
 namespace Scripts.Services
 {
     public sealed class CharacterPeerLogic : PeerLogicBase, ICharacterPeerLogicAPI
     {
-        public UnityEvent<GetCharactersResponseParameters> ReceivedCharacters { get; } = new UnityEvent<GetCharactersResponseParameters>();
-        private readonly ExternalCoroutinesExecutor coroutinesExecutor = new ExternalCoroutinesExecutor();
-
-        protected override void OnAwake()
+        public async Task<GetCharactersResponseParameters> GetCharacters(IYield yield)
         {
-            base.OnAwake();
-
-            coroutinesExecutor.ExecuteExternally();
-            coroutinesExecutor.StartTask(GetCharacters);
-        }
-
-        protected override void OnDestroy()
-        {
-            base.OnDestroy();
-
-            ReceivedCharacters.RemoveAllListeners();
-            coroutinesExecutor.RemoveFromExternalExecutor();
-        }
-
-        public async Task GetCharacters(IYield yield)
-        {
-            var responseParameters = await ServerPeerHandler.SendOperation<EmptyParameters, GetCharactersResponseParameters>
+            return await ServerPeerHandler.SendOperation<EmptyParameters, GetCharactersResponseParameters>
                 (yield, (byte)CharacterOperations.GetCharacters, new EmptyParameters(), MessageSendOptions.DefaultReliable());
-            if (responseParameters.Characters == null)
-            {
-                LogUtils.Log(MessageBuilder.Trace("Failed to get characters."));
-                return;
-            }
-
-            ReceivedCharacters?.Invoke(responseParameters);
         }
 
         public async Task<CreateCharacterResponseParameters> CreateCharacter(IYield yield, CreateCharacterRequestParameters parameters)
