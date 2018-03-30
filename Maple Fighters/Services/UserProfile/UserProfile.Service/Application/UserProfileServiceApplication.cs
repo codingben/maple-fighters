@@ -1,4 +1,5 @@
-﻿using Database.Common.Components;
+﻿using Authorization.Server.Common;
+using Database.Common.Components;
 using ServerApplication.Common.ApplicationBase;
 using ServerCommunicationInterfaces;
 using UserProfile.Service.Application.Components;
@@ -33,6 +34,7 @@ namespace UserProfile.Service.Application
 
         private void AddComponents()
         {
+            Server.Components.AddComponent(new AuthorizationService());
             Server.Components.AddComponent(new DatabaseConnectionProvider());
             Server.Components.AddComponent(new DatabaseUserProfileCreator());
             Server.Components.AddComponent(new DatabaseUserProfilePropertiesUpdater());

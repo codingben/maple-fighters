@@ -1,18 +1,36 @@
-﻿using PeerLogic.Common;
+﻿using Authorization.Server.Common;
+using CommonCommunicationInterfaces;
+using CommonTools.Log;
+using PeerLogic.Common;
 using ServerCommunicationInterfaces;
 using UserProfile.Server.Common;
 using UserProfile.Service.Application.Components;
+using UserProfile.Service.Application.PeerLogic.Components;
 using UserProfile.Service.Application.PeerLogic.Operations;
 
 namespace UserProfile.Service.Application.PeerLogic
 {
+    using Server = ServerApplication.Common.ApplicationBase.Server;
+
     internal class InboundServerPeerLogic : PeerLogicBase<UserProfileOperations, UserProfileEvents>
     {
+        private IUsersContainer usersContainer;
+        private IUserProfilePropertiesChangesNotifier userProfilePropertiesChangesNotifier;
+        private readonly IDatabaseUserProfilePropertiesUpdater databaseUserProfilePropertiesUpdater;
+
+        public InboundServerPeerLogic()
+        {
+            databaseUserProfilePropertiesUpdater = Server.Components.GetComponent<IDatabaseUserProfilePropertiesUpdater>().AssertNotNull();
+        }
+
         public override void Initialize(IClientPeerWrapper<IClientPeer> peer)
         {
             base.Initialize(peer);
 
+            SubscribeToDisconnectionNotifier();
+
             AddCommonComponents();
+            AddComponents();
 
             AddHandlerForRegisterToUserProfileServiceOperation();
             AddHandlerForUnregisterFromUserProfileServiceOperation();
@@ -20,11 +38,17 @@ namespace UserProfile.Service.Application.PeerLogic
             AddHandlerForSubscribeToUserProfileOperation();
             AddHandlerForUnsubscribeFromUserProfileOperation();
         }
-        
+
+        private void AddComponents()
+        {
+            usersContainer = Components.AddComponent(new UsersContainer());
+        }
+
         private void AddHandlerForChangeUserProfilePropertiesOperation()
         {
-            var userProfilePropertiesChangesNotifier = Components.AddComponent(new UserProfilePropertiesChangesNotifier());
-            OperationHandlerRegister.SetHandler(UserProfileOperations.ChangeUserProfileProperties, new ChangeUserProfilePropertiesOperationHandler(userProfilePropertiesChangesNotifier));
+            userProfilePropertiesChangesNotifier = Components.AddComponent(new UserProfilePropertiesChangesNotifier());
+            OperationHandlerRegister.SetHandler(UserProfileOperations.ChangeUserProfileProperties, 
+                new ChangeUserProfilePropertiesOperationHandler(usersContainer, userProfilePropertiesChangesNotifier));
         }
 
         private void AddHandlerForRegisterToUserProfileServiceOperation()
@@ -46,6 +70,41 @@ namespace UserProfile.Service.Application.PeerLogic
         private void AddHandlerForUnsubscribeFromUserProfileOperation()
         {
             OperationHandlerRegister.SetHandler(UserProfileOperations.Unsubscribe, new UnsubscribeFromUserProfileOperationHandler());
+        }
+
+        private void SubscribeToDisconnectionNotifier()
+        {
+            PeerWrapper.Peer.PeerDisconnectionNotifier.Disconnected += OnDisconnected;
+        }
+
+        private void UnsubscribeFromDisconnectionNotifier()
+        {
+            PeerWrapper.Peer.PeerDisconnectionNotifier.Disconnected -= OnDisconnected;
+        }
+
+        private void OnDisconnected(DisconnectReason reason, string details)
+        {
+            UnsubscribeFromDisconnectionNotifier();
+            HandleUnexpectedShutdown();
+        }
+
+        private void HandleUnexpectedShutdown()
+        {
+            foreach (var userId in usersContainer.Get())
+            {
+                databaseUserProfilePropertiesUpdater.Update(userId, default(int), ServerType.Login, ConnectionStatus.Disconnected);
+
+                var parameters = new UserProfilePropertiesChangedEventParameters(userId, ServerType.Login, ConnectionStatus.Disconnected);
+                userProfilePropertiesChangesNotifier.Notify(parameters);
+
+                RemoveAuthorization(userId);
+            }
+        }
+
+        private void RemoveAuthorization(int userId)
+        {
+            var authorizationServiceAPI = Server.Components.GetComponent<IAuthorizationServiceAPI>().AssertNotNull();
+            authorizationServiceAPI.RemoveAuthorization(new RemoveAuthorizationRequestParameters(userId));
         }
     }
 }

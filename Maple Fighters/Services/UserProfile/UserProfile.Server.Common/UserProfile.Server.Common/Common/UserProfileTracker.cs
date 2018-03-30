@@ -116,19 +116,25 @@ namespace UserProfile.Server.Common
         private void OnDisconnected(DisconnectReason disconnectReason, string details)
         {
             UnsubscribeFromDisconnectionNotifier();
-
-            if (!isManuallyDisconnected && isUserProfileChanged)
-            {
-                OnClientDisconnected();
-            }
+            ChangeUserToOfflineStatus();
         }
 
-        private void OnClientDisconnected()
+        private void ChangeUserToOfflineStatus()
         {
+            if (isManuallyDisconnected || !isUserProfileChanged)
+            {
+                return;
+            }
+
             var userProfileServiceAPI = Server.Components.GetComponent<IUserProfileServiceAPI>().AssertNotNull();
             var parameters = new ChangeUserProfilePropertiesRequestParameters(userId, ConnectionStatus.Disconnected);
             userProfileServiceAPI.ChangeUserProfileProperties(parameters);
 
+            RemoveAuthorizationForUser();
+        }
+
+        private void RemoveAuthorizationForUser()
+        {
             var authorizationServiceAPI = Server.Components.GetComponent<IAuthorizationServiceAPI>().AssertNotNull();
             authorizationServiceAPI.RemoveAuthorization(new RemoveAuthorizationRequestParameters(userId));
         }

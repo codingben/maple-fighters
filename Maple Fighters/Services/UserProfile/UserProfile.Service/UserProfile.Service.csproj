@@ -82,6 +82,8 @@
     <Compile Include="Application\Components\UserIdToServerIdConverter.cs" />
     <Compile Include="Application\Components\UserProfilePropertiesChangesNotifier.cs" />
     <Compile Include="Application\Definition\UserProfilesTableDefinition.cs" />
+    <Compile Include="Application\Peer Logic\Components\IUsersContainer.cs" />
+    <Compile Include="Application\Peer Logic\Components\UsersContainer.cs" />
     <Compile Include="Application\Peer Logic\InboundServerPeerLogic.cs" />
     <Compile Include="Application\Peer Logic\Operations\ChangeUserProfilePropertiesOperationHandler.cs" />
     <Compile Include="Application\Peer Logic\Operations\SubscribeToUserProfileOperationHandler.cs" />
@@ -107,6 +109,14 @@
     <ProjectReference Include="..\..\..\Shared\Servers\ServerApplication.Common\ServerApplication.Common.csproj">
       <Project>{F82FBB67-7B1D-43B7-A415-3F407D40E5C7}</Project>
       <Name>ServerApplication.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Shared\Servers\ServerCommunication.Common\ServerCommunication.Common\ServerCommunication.Common.csproj">
+      <Project>{5E8328B3-E51C-4291-B7DE-83673C4CE889}</Project>
+      <Name>ServerCommunication.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Authorization\Authorization.Server.Common\Authorization.Server.Common.csproj">
+      <Project>{174C1938-CA68-4549-97DE-3470AFACB7C7}</Project>
+      <Name>Authorization.Server.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\UserProfile.Server.Common\UserProfile.Server.Common\UserProfile.Server.Common.csproj">
       <Project>{C1B03627-1DF6-48F8-A868-D5216A510B86}</Project>

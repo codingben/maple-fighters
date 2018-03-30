@@ -3,6 +3,7 @@ using CommonTools.Log;
 using ServerCommunicationHelper;
 using UserProfile.Server.Common;
 using UserProfile.Service.Application.Components;
+using UserProfile.Service.Application.PeerLogic.Components;
 
 namespace UserProfile.Service.Application.PeerLogic.Operations
 {
@@ -14,9 +15,11 @@ namespace UserProfile.Service.Application.PeerLogic.Operations
         private readonly IDatabaseUserProfilePropertiesUpdater databaseUserProfilePropertiesUpdater;
         private readonly IUserProfilePropertiesChangesNotifier userProfilePropertiesChangesNotifier;
         private readonly IDatabaseUserProfileCreator databaseUserProfileCreator;
+        private readonly IUsersContainer usersContainer;
 
-        public ChangeUserProfilePropertiesOperationHandler(IUserProfilePropertiesChangesNotifier userProfilePropertiesChangesNotifier)
+        public ChangeUserProfilePropertiesOperationHandler(IUsersContainer usersContainer, IUserProfilePropertiesChangesNotifier userProfilePropertiesChangesNotifier)
         {
+            this.usersContainer = usersContainer;
             this.userProfilePropertiesChangesNotifier = userProfilePropertiesChangesNotifier;
 
             databaseUserProfileExistence = Server.Components.GetComponent<IDatabaseUserProfileExistence>().AssertNotNull();
@@ -38,6 +41,15 @@ namespace UserProfile.Service.Application.PeerLogic.Operations
             else
             {
                 databaseUserProfileCreator.Create(userId, localId, serverType, connectionStatus);
+            }
+
+            if (connectionStatus == ConnectionStatus.Connected)
+            {
+                usersContainer.Add(userId);
+            }
+            else
+            {
+                usersContainer.Remove(userId);
             }
 
             var parameters = new UserProfilePropertiesChangedEventParameters(userId, serverType, connectionStatus);
