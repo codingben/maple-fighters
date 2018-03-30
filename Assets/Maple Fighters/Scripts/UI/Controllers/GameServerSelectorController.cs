@@ -15,6 +15,8 @@ using UnityEngine.SceneManagement;
 
 namespace Scripts.UI.Controllers
 {
+    using WaitForSeconds = CommonTools.Coroutines.WaitForSeconds;
+
     public class GameServerSelectorController : MonoSingleton<GameServerSelectorController>
     {
         [SerializeField] private int loadSceneIndex;
@@ -145,6 +147,8 @@ namespace Scripts.UI.Controllers
 
         private async Task ProvideGameServerList(IYield yield)
         {
+            await yield.Return(new WaitForSeconds(1));
+
             var gameServerProviderService = ServiceContainer.GameServerProviderService.GetPeerLogic<IGameServerProviderPeerLogicAPI>().AssertNotNull();
             var responseParameters = await gameServerProviderService.ProvideGameServers(yield);
             foreach (var gameServerInformation in responseParameters.GameServerInformations)
