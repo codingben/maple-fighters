@@ -19,9 +19,9 @@ namespace Scripts.UI.Controllers
     {
         [SerializeField] private int loadSceneIndex;
 
-        private GameServerSelectorWindow gameServerSelectorWindow;
         private bool isInitialized;
         private string gameServerName;
+        private GameServerSelectorWindow gameServerSelectorWindow;
 
         private readonly ExternalCoroutinesExecutor coroutinesExecutor = new ExternalCoroutinesExecutor();
         private readonly Dictionary<string, GameServerInformationParameters> gameServerInformations = new Dictionary<string, GameServerInformationParameters>();
@@ -49,8 +49,10 @@ namespace Scripts.UI.Controllers
             coroutinesExecutor.Update();
         }
 
-        private void OnDestroy()
+        protected override void OnDestroyed()
         {
+            base.OnDestroyed();
+
             coroutinesExecutor.Dispose();
 
             if (IsGameServerSelectorWindowExists())
@@ -70,10 +72,11 @@ namespace Scripts.UI.Controllers
 
         private void RemoveGameServerSelectorWindow()
         {
-            gameServerSelectorWindow = UserInterfaceContainer.Instance.Get<GameServerSelectorWindow>().AssertNotNull();
             gameServerSelectorWindow.JoinButtonClicked -= OnJoinButtonClicked;
             gameServerSelectorWindow.RefreshButtonClicked -= OnRefreshButtonClicked;
             gameServerSelectorWindow.GameServerButtonClicked -= OnGameServerButtonClicked;
+
+            UserInterfaceContainer.Instance?.Remove(gameServerSelectorWindow);
         }
 
         private void OnJoinButtonClicked()
@@ -114,6 +117,7 @@ namespace Scripts.UI.Controllers
                     gameServerInformations.Clear();
                 }
 
+                gameServerSelectorWindow.OnRefreshBegan();
                 gameServerSelectorWindow.GameServerSelectorRefreshImage.Message = "Getting server list...";
 
                 Action provideGameServerList = () => coroutinesExecutor.StartTask(ProvideGameServerList);

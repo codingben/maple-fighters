@@ -6,7 +6,7 @@ namespace Scripts.UI
     {
         public override void Hide()
         {
-            UserInterfaceContainer.Instance.Remove(this);
+            UserInterfaceContainer.Instance?.Remove(this);
         }
     }
 }

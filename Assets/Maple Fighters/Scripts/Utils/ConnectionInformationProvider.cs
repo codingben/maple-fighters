@@ -10,7 +10,7 @@ namespace Scripts.Utils
         [UsedImplicitly] public string Name;
         [UsedImplicitly] public ServerType ServerType;
         [UsedImplicitly] public PeerConnectionInformation UdpConnectionDetails;
-        [UsedImplicitly] public PeerConnectionInformation TcpConnectionDetails;
-        [UsedImplicitly] public PeerConnectionInformation WebConnectionDetails;
+        [UsedImplicitly] public PeerConnectionInformation WebSocketConnectionDetails;
+        [UsedImplicitly] public PeerConnectionInformation WebSocketSecureConnectionDetails;
     }
 }

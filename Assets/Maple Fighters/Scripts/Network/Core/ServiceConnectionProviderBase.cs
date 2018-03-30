@@ -42,6 +42,9 @@ namespace Scripts.Services
         private void OnDestroy()
         {
             IsDestroying = true;
+
+            CoroutinesExecutor?.Dispose();
+
             Dispose();
         }
 
@@ -161,8 +164,6 @@ namespace Scripts.Services
 
         public void Dispose()
         {
-            CoroutinesExecutor?.Dispose();
-
             disconnectAutomatically?.Dispose();
             disconnectAutomatically = null;
 

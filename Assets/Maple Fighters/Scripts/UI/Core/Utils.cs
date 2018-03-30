@@ -39,9 +39,9 @@ namespace Scripts.UI
 
         public static NoticeWindow ShowNotice(string message, Action okButtonClicked, bool background = false, Index index = Index.First)
         {
-            var noticeWindow = UserInterfaceContainer.Instance.Add<NoticeWindow>(ViewType.Foreground, index);
-            noticeWindow.Initialize(message, okButtonClicked, background);
-            noticeWindow.Show();
+            var noticeWindow = UserInterfaceContainer.Instance?.Add<NoticeWindow>(ViewType.Foreground, index);
+            noticeWindow?.Initialize(message, okButtonClicked, background);
+            noticeWindow?.Show();
             return noticeWindow;
         }
 
@@ -49,7 +49,7 @@ namespace Scripts.UI
         {
             const string EXCEPTION_MESSAGE = "An exception occurred during an operation.";
 
-            var noticeWindowExists = UserInterfaceContainer.Instance.Get<NoticeWindow>();
+            var noticeWindowExists = UserInterfaceContainer.Instance?.Get<NoticeWindow>();
             if (noticeWindowExists != null)
             {
                 noticeWindowExists.Message.text = EXCEPTION_MESSAGE;
@@ -59,7 +59,10 @@ namespace Scripts.UI
             else
             {
                 var noticeWindow = ShowNotice(EXCEPTION_MESSAGE, LoadedObjects.DestroyAll, background, index);
-                noticeWindow.OkButton.interactable = true;
+                if (noticeWindow != null)
+                {
+                    noticeWindow.OkButton.interactable = true;
+                }
             }
         }
 

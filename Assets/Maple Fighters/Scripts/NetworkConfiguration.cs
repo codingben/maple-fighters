@@ -1,5 +1,6 @@
 ﻿using System;
 using CommonCommunicationInterfaces;
+using CommonTools.Log;
 using ExitGames.Client.Photon;
 using Scripts.Utils;
 using UnityEngine;
@@ -19,22 +20,27 @@ namespace Scripts.ScriptableObjects
         {
             PeerConnectionInformation peerConnectionInformation;
 
+            if (ConnectionProtocol == ConnectionProtocol.Tcp)
+            {
+                LogUtils.Log("TCP is not supported. TCP is only for communication between servers.");
+            }
+
             switch (ConnectionProtocol)
             {
                 case ConnectionProtocol.Udp:
+                case ConnectionProtocol.Tcp:
                 {
                     peerConnectionInformation = connectionInformation.UdpConnectionDetails;
                     break;
                 }
-                case ConnectionProtocol.Tcp:
+                case ConnectionProtocol.WebSocket:
                 {
-                    peerConnectionInformation = connectionInformation.TcpConnectionDetails;
+                    peerConnectionInformation = connectionInformation.WebSocketConnectionDetails;
                     break;
                 }
-                case ConnectionProtocol.WebSocket:
                 case ConnectionProtocol.WebSocketSecure:
                 {
-                    peerConnectionInformation = connectionInformation.WebConnectionDetails;
+                    peerConnectionInformation = connectionInformation.WebSocketSecureConnectionDetails;
                     break;
                 }
                 default:

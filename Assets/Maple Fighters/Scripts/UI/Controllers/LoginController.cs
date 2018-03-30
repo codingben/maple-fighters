@@ -16,6 +16,8 @@ namespace Scripts.UI.Controllers
     public class LoginController : MonoSingleton<LoginController>
     {
         [SerializeField] private int loadSceneIndex;
+
+        private LoginWindow loginWindow;
         private readonly ExternalCoroutinesExecutor coroutinesExecutor = new ExternalCoroutinesExecutor();
 
         private void Start()
@@ -28,8 +30,10 @@ namespace Scripts.UI.Controllers
             coroutinesExecutor.Update();
         }
 
-        private void OnDestroyed()
+        protected override void OnDestroyed()
         {
+            base.OnDestroyed();
+
             coroutinesExecutor.Dispose();
 
             RemoveLoginWindow();
@@ -37,7 +41,7 @@ namespace Scripts.UI.Controllers
 
         private void CreateLoginWindow()
         {
-            var loginWindow = UserInterfaceContainer.Instance.Add<LoginWindow>();
+            loginWindow = UserInterfaceContainer.Instance.Add<LoginWindow>();
             loginWindow.LoginButtonClicked += OnLoginButtonClicked;
             loginWindow.RegisterButtonClicked += OnRegisterButtonClicked;
             loginWindow.ShowNotice += (message) => Utils.ShowNotice(message, okButtonClicked: () => loginWindow.Show());
@@ -46,16 +50,14 @@ namespace Scripts.UI.Controllers
 
         private void RemoveLoginWindow()
         {
-            var loginWindow = UserInterfaceContainer.Instance.Get<LoginWindow>().AssertNotNull();
             loginWindow.LoginButtonClicked -= OnLoginButtonClicked;
             loginWindow.RegisterButtonClicked -= OnRegisterButtonClicked;
 
-            UserInterfaceContainer.Instance.Remove(loginWindow);
+            UserInterfaceContainer.Instance?.Remove(loginWindow);
         }
 
         private void OnLoginButtonClicked(string email, string password)
         {
-            var loginWindow = UserInterfaceContainer.Instance.Get<LoginWindow>().AssertNotNull();
             loginWindow.Hide(onFinished: () => Login(email, password));
         }
 
@@ -63,7 +65,6 @@ namespace Scripts.UI.Controllers
         {
             var noticeWindow = Utils.ShowNotice("Logging in... Please wait.", okButtonClicked: () =>
             {
-                var loginWindow = UserInterfaceContainer.Instance.Get<LoginWindow>().AssertNotNull();
                 loginWindow.Show();
             });
             noticeWindow.OkButton.interactable = false;
@@ -153,7 +154,6 @@ namespace Scripts.UI.Controllers
 
         private void OnRegisterButtonClicked()
         {
-            var loginWindow = UserInterfaceContainer.Instance.Get<LoginWindow>().AssertNotNull();
             loginWindow.Hide(onFinished: () => 
             {
                 loginWindow.ResetInputFields();

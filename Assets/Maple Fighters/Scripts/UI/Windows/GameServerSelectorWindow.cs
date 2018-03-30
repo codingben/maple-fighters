@@ -64,6 +64,12 @@ namespace Scripts.UI.Windows
             }
         }
 
+        public void OnRefreshBegan()
+        {
+            DisableAllButtons();
+            RemoveGameServerList();
+        }
+
         private void RemoveGameServerList()
         {
             if (gameServerButtons.Count == 0)
@@ -114,9 +120,6 @@ namespace Scripts.UI.Windows
 
         private void OnRefreshButtonClicked()
         {
-            DisableAllButtons();
-            RemoveGameServerList();
-
             RefreshButtonClicked?.Invoke();
         }
 

@@ -44,8 +44,8 @@ namespace Scripts.UI
                 return;
             }
 
-            UserInterfaceContainer.Instance.Remove(backgroundImage);
-            UserInterfaceContainer.Instance.Remove(backgroundCharactersParent);
+            UserInterfaceContainer.Instance?.Remove(backgroundImage);
+            UserInterfaceContainer.Instance?.Remove(backgroundCharactersParent);
 
             Destroy(gameObject);
         }

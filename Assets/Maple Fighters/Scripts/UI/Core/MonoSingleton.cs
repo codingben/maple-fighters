@@ -9,15 +9,33 @@ namespace Scripts.UI.Core
         {
             get
             {
+                if (isDestroying)
+                {
+                    return null;
+                }
+
                 _instance = _instance ?? FindObjectOfType(typeof(T)) as T;
                 return _instance;
             }
         }
 
         private static T _instance;
+        private static bool isDestroying;
+
+        private void OnDestroy()
+        {
+            OnDestroyed();
+        }
+
+        protected virtual void OnDestroyed()
+        {
+            isDestroying = true;
+            _instance = null;
+        }
 
         private void OnApplicationQuit()
         {
+            isDestroying = true;
             _instance = null;
         }
     }

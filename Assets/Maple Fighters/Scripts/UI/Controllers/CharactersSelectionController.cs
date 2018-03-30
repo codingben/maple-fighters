@@ -60,18 +60,20 @@ namespace Scripts.UI.Controllers
             }
         }
 
-        private void OnDestroy()
+        protected override void OnDestroyed()
         {
+            base.OnDestroyed();
+
             if (charactersSelectionWindow != null)
             {
                 UnsubscribeFromCharactersSelectionWindowEvents();
-                UserInterfaceContainer.Instance.Remove(charactersSelectionWindow);
+                UserInterfaceContainer.Instance?.Remove(charactersSelectionWindow);
             }
 
             if (characterNameWindow != null)
             {
                 UnsubscribeFromCharacterNameWindow();
-                UserInterfaceContainer.Instance.Remove(characterNameWindow);
+                UserInterfaceContainer.Instance?.Remove(characterNameWindow);
             }
 
             coroutinesExecutor.Dispose();

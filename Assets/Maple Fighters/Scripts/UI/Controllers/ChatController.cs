@@ -34,10 +34,13 @@ namespace Scripts.UI.Controllers
 
         private void RemoveChatWindow()
         {
-            var chatWindow = UserInterfaceContainer.Instance.Get<ChatWindow>().AssertNotNull();
-            chatWindow.SendChatMessage -= OnSendChatMessage;
+            var chatWindow = UserInterfaceContainer.Instance?.Get<ChatWindow>().AssertNotNull();
+            if (chatWindow != null)
+            {
+                chatWindow.SendChatMessage -= OnSendChatMessage;
+            }
 
-            UserInterfaceContainer.Instance.Remove(chatWindow);
+            UserInterfaceContainer.Instance?.Remove(chatWindow);
         }
 
         public void OnNonAuthorized()

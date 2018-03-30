@@ -41,7 +41,7 @@ namespace Scripts.UI.Windows
 
         public override void Hide()
         {
-            UserInterfaceContainer.Instance.Remove(this);
+            UserInterfaceContainer.Instance?.Remove(this);
             PlayCharacterIdleAnimation?.Invoke();
         }
 
@@ -54,9 +54,12 @@ namespace Scripts.UI.Windows
 
         private void UnsubscribeFromMouseDetectionBackgroundEvent()
         {
-            var screenMouseDetection = UserInterfaceContainer.Instance.Get<MouseDetectionBackground>().AssertNotNull();
-            screenMouseDetection.MouseClicked -= Hide;
-            screenMouseDetection.MouseClicked -= ShowChooseFighterText;
+            var screenMouseDetection = UserInterfaceContainer.Instance?.Get<MouseDetectionBackground>().AssertNotNull();
+            if (screenMouseDetection != null)
+            {
+                screenMouseDetection.MouseClicked -= Hide;
+                screenMouseDetection.MouseClicked -= ShowChooseFighterText;
+            }
         }
 
         private void ShowChooseFighterText()

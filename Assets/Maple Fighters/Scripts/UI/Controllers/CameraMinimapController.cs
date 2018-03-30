@@ -62,7 +62,7 @@ namespace Scripts.UI.Controllers
 
             if (minimapWindow != null)
             {
-                UserInterfaceContainer.Instance.Remove(minimapWindow);
+                UserInterfaceContainer.Instance?.Remove(minimapWindow);
             }
         }
 

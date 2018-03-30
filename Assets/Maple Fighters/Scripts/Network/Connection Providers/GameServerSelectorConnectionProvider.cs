@@ -13,6 +13,8 @@ using Scripts.Utils;
 
 namespace Scripts.Services
 {
+    using Utils = UI.Utils;
+
     public class GameServerSelectorConnectionProvider : ServiceConnectionProviderBase<GameServerSelectorConnectionProvider>
     {
         private AuthorizationStatus authorizationStatus = AuthorizationStatus.Failed;
@@ -46,15 +48,24 @@ namespace Scripts.Services
         {
             base.OnDisconnected(reason, details);
 
-            GoBackToLogin();
+            GoBackToLogin(reason);
         }
 
-        private void GoBackToLogin()
+        private void GoBackToLogin(DisconnectReason reason)
         {
             if (authorizationStatus == AuthorizationStatus.Failed)
             {
                 OnNonAuthorized();
             }
+            else if(reason != DisconnectReason.ServerDisconnect)
+            {
+                ShowConnectionTimeout();
+            }
+        }
+
+        private void ShowConnectionTimeout()
+        {
+            Utils.ShowNotice("The connection has timed out.", LoadedObjects.DestroyAll, true, Index.Last);
         }
 
         protected override Task<AuthorizeResponseParameters> Authorize(IYield yield, AuthorizeRequestParameters parameters)

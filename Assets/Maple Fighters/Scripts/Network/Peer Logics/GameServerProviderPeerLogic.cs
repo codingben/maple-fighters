@@ -9,8 +9,9 @@ namespace Scripts.Services
     {
         public async Task<GameServersProviderResponseParameters> ProvideGameServers(IYield yield)
         {
-            return await ServerPeerHandler.SendOperation<EmptyParameters, GameServersProviderResponseParameters>
+            var responseParameters = await ServerPeerHandler.SendOperation<EmptyParameters, GameServersProviderResponseParameters>
                 (yield, (byte)GameServerProviderOperations.ProvideGameServers, new EmptyParameters(), MessageSendOptions.DefaultReliable());
+            return responseParameters;
         }
     }
 }

@@ -51,8 +51,11 @@ namespace Scripts.UI
 
         private void UnsubscribeFromMouseDetectionBackgroundEvent()
         {
-            var screenMouseDetection = UserInterfaceContainer.Instance.Get<MouseDetectionBackground>().AssertNotNull();
-            screenMouseDetection.MouseClicked -= PlayIdleAnimation;
+            var screenMouseDetection = UserInterfaceContainer.Instance?.Get<MouseDetectionBackground>().AssertNotNull();
+            if (screenMouseDetection != null)
+            {
+                screenMouseDetection.MouseClicked -= PlayIdleAnimation;
+            }
         }
 
         public void SetCharacter(int index, CharacterParameters character)

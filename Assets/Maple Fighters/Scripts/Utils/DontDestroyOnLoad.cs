@@ -26,5 +26,10 @@ namespace Scripts.Utils
         {
             // Left blank intentionally
         }
+
+        private void OnApplicationQuit()
+        {
+            Instance = null;
+        }
     }
 }

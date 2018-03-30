@@ -29,7 +29,7 @@ namespace Scripts.UI.Windows
 
         public override void Hide()
         {
-            Hide(onFinished: () => UserInterfaceContainer.Instance.Remove(this));
+            Hide(onFinished: () => UserInterfaceContainer.Instance?.Remove(this));
         }
 
         private void Start()

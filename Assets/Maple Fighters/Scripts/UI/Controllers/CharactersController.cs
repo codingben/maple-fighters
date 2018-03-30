@@ -26,8 +26,10 @@ namespace Scripts.UI.Controllers
             coroutinesExecutor.StartTask(GetCharacters);
         }
 
-        private void OnDestroy()
+        protected override void OnDestroyed()
         {
+            base.OnDestroyed();
+
             coroutinesExecutor.Dispose();
 
             RemoveChooseFighterTextUI();
@@ -42,8 +44,8 @@ namespace Scripts.UI.Controllers
 
         private void RemoveChooseFighterTextUI()
         {
-            var chooseFighterText = UserInterfaceContainer.Instance.Get<ChooseFighterText>().AssertNotNull();
-            UserInterfaceContainer.Instance.Remove(chooseFighterText);
+            var chooseFighterText = UserInterfaceContainer.Instance?.Get<ChooseFighterText>().AssertNotNull();
+            UserInterfaceContainer.Instance?.Remove(chooseFighterText);
         }
 
         private void RemoveAllClickableCharacters()
@@ -231,7 +233,7 @@ namespace Scripts.UI.Controllers
             Action enterScene = delegate 
             {
                 var noticeWindow = UserInterfaceContainer.Instance.Get<NoticeWindow>().AssertNotNull();
-                UserInterfaceContainer.Instance.Remove(noticeWindow);
+                UserInterfaceContainer.Instance?.Remove(noticeWindow);
 
                 GameScenesController.Instance.LoadScene(Maps.Map_1);
             };
