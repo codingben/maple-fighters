@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using CommonTools.Coroutines;
 using CommonTools.Log;
 using Scripts.Containers;
@@ -10,6 +9,8 @@ using UnityEngine.SceneManagement;
 
 namespace Scripts.World
 {
+    using Utils = UI.Utils;
+
     public class EnterSceneInvoker : DontDestroyOnLoad<EnterSceneInvoker>
     {
         private readonly ExternalCoroutinesExecutor coroutinesExecutor = new ExternalCoroutinesExecutor();
@@ -46,20 +47,13 @@ namespace Scripts.World
 
         private void OnSceneLoaded(Scene scene, LoadSceneMode loadSceneMode)
         {
-            coroutinesExecutor.StartTask(EnterScene);
+            coroutinesExecutor.StartTask(EnterScene, exception => Utils.ShowExceptionNotice());
         }
 
         private async Task EnterScene(IYield yield)
         {
-            try
-            {
-                var gameService = ServiceContainer.GameService.GetPeerLogic<IGameScenePeerLogicAPI>().AssertNotNull();
-                await gameService.EnterScene(yield);
-            }
-            catch (Exception)
-            {
-                UI.Utils.ShowExceptionNotice();
-            }
+            var gameService = ServiceContainer.GameService.GetPeerLogic<IGameScenePeerLogicAPI>().AssertNotNull();
+            await gameService.EnterScene(yield);
         }
     }
 }

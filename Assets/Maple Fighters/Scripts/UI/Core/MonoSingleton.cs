@@ -22,6 +22,16 @@ namespace Scripts.UI.Core
         private static T _instance;
         private static bool isDestroying;
 
+        private void Awake()
+        {
+            OnAwake();
+        }
+
+        protected virtual void OnAwake()
+        {
+            isDestroying = false;
+        }
+
         private void OnDestroy()
         {
             OnDestroyed();

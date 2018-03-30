@@ -23,7 +23,7 @@ namespace Scripts.UI.Controllers
         {
             CreateChooseFighterTextUI();
 
-            coroutinesExecutor.StartTask(GetCharacters);
+            coroutinesExecutor.StartTask(GetCharacters, exception => Utils.ShowExceptionNotice());
         }
 
         protected override void OnDestroyed()
@@ -66,22 +66,15 @@ namespace Scripts.UI.Controllers
 
         private async Task GetCharacters(IYield yield)
         {
-            try
+            var characterService = ServiceContainer.GameService.GetPeerLogic<ICharacterPeerLogicAPI>().AssertNotNull();
+            var parameters = await characterService.GetCharacters(yield);
+            if (parameters.Characters == null)
             {
-                var characterService = ServiceContainer.GameService.GetPeerLogic<ICharacterPeerLogicAPI>().AssertNotNull();
-                var parameters = await characterService.GetCharacters(yield);
-                if (parameters.Characters == null)
-                {
-                    LogUtils.Log(MessageBuilder.Trace("Failed to get characters."));
-                }
-                else
-                {
-                    OnReceivedCharacters(parameters);
-                }
+                LogUtils.Log(MessageBuilder.Trace("Failed to get characters."));
             }
-            catch (Exception)
+            else
             {
-                Utils.ShowExceptionNotice();
+                OnReceivedCharacters(parameters);
             }
         }
 
@@ -184,47 +177,40 @@ namespace Scripts.UI.Controllers
             noticeWindow.OkButton.interactable = false;
 
             var parameters = new ValidateCharacterRequestParameters(characterIndex);
-            coroutinesExecutor.StartTask((y) => ValidateCharacter(y, parameters));
+            coroutinesExecutor.StartTask((y) => ValidateCharacter(y, parameters), exception => Utils.ShowExceptionNotice());
         }
 
         private async Task ValidateCharacter(IYield yield, ValidateCharacterRequestParameters parameters)
         {
-            try
+            var characterService = ServiceContainer.GameService.GetPeerLogic<ICharacterPeerLogicAPI>().AssertNotNull();
+            var responseParameters = await characterService.ValidateCharacter(yield, parameters);
+            switch (responseParameters)
             {
-                var characterService = ServiceContainer.GameService.GetPeerLogic<ICharacterPeerLogicAPI>().AssertNotNull();
-                var responseParameters = await characterService.ValidateCharacter(yield, parameters);
-                switch (responseParameters)
+                case CharacterValidationStatus.Ok:
                 {
-                    case CharacterValidationStatus.Ok:
-                    {
-                        OnCharacterValidated();
-                        break;
-                    }
-                    case CharacterValidationStatus.Wrong:
-                    {
-                        var noticeWindow = UserInterfaceContainer.Instance.Get<NoticeWindow>().AssertNotNull();
-                        noticeWindow.Message.text = "Can not enter to the world with this character. Please try again.";
-                        noticeWindow.OkButton.interactable = true;
-                        break;
-                    }
-                    default:
-                    {
-                        var noticeWindow = UserInterfaceContainer.Instance.Get<NoticeWindow>().AssertNotNull();
-                        noticeWindow.Message.text = "Something went wrong, please try again.";
-                        noticeWindow.OkButton.interactable = true;
-                        break;
-                    }
+                    OnCharacterValidated();
+                    break;
                 }
-
-                if (responseParameters != CharacterValidationStatus.Ok)
+                case CharacterValidationStatus.Wrong:
                 {
-                    var index = parameters.CharacterIndex;
-                    PlayIdleCharacterAnimation(index);
+                    var noticeWindow = UserInterfaceContainer.Instance.Get<NoticeWindow>().AssertNotNull();
+                    noticeWindow.Message.text = "Can not enter to the world with this character. Please try again.";
+                    noticeWindow.OkButton.interactable = true;
+                    break;
+                }
+                default:
+                {
+                    var noticeWindow = UserInterfaceContainer.Instance.Get<NoticeWindow>().AssertNotNull();
+                    noticeWindow.Message.text = "Something went wrong, please try again.";
+                    noticeWindow.OkButton.interactable = true;
+                    break;
                 }
             }
-            catch (Exception)
+
+            if (responseParameters != CharacterValidationStatus.Ok)
             {
-                Utils.ShowExceptionNotice();
+                var index = parameters.CharacterIndex;
+                PlayIdleCharacterAnimation(index);
             }
         }
 
@@ -253,46 +239,39 @@ namespace Scripts.UI.Controllers
             noticeWindow.OkButton.interactable = false;
 
             var parameters = new RemoveCharacterRequestParameters(characterIndex);
-            coroutinesExecutor.StartTask((y) => DeleteCharacter(y, parameters));
+            coroutinesExecutor.StartTask((y) => DeleteCharacter(y, parameters), exception => Utils.ShowExceptionNotice());
         }
 
         private async Task DeleteCharacter(IYield yield, RemoveCharacterRequestParameters parameters)
         {
-            try
+            var characterService = ServiceContainer.GameService.GetPeerLogic<ICharacterPeerLogicAPI>().AssertNotNull();
+            var responseParameters = await characterService.RemoveCharacter(yield, parameters);
+            switch (responseParameters.Status)
             {
-                var characterService = ServiceContainer.GameService.GetPeerLogic<ICharacterPeerLogicAPI>().AssertNotNull();
-                var responseParameters = await characterService.RemoveCharacter(yield, parameters);
-                switch (responseParameters.Status)
+                case RemoveCharacterStatus.Succeed:
                 {
-                    case RemoveCharacterStatus.Succeed:
-                    {
-                        var characterParameters = new CharacterParameters{HasCharacter = false, Index = (CharacterIndex)parameters.CharacterIndex};
-                        RecreateCharacter(characterParameters);
+                    var characterParameters = new CharacterParameters{HasCharacter = false, Index = (CharacterIndex)parameters.CharacterIndex};
+                    RecreateCharacter(characterParameters);
 
-                        var noticeWindow = UserInterfaceContainer.Instance.Get<NoticeWindow>().AssertNotNull();
-                        noticeWindow.Message.text = "Character deleted successfully.";
-                        noticeWindow.OkButton.interactable = true;
-                        break;
-                    }
-                    case RemoveCharacterStatus.Failed:
-                    {
-                        var noticeWindow = UserInterfaceContainer.Instance.Get<NoticeWindow>().AssertNotNull();
-                        noticeWindow.Message.text = "Could not remove a character. Please try again.";
-                        noticeWindow.OkButton.interactable = true;
-                        break;
-                    }
-                    default:
-                    {
-                        var noticeWindow = UserInterfaceContainer.Instance.Get<NoticeWindow>().AssertNotNull();
-                        noticeWindow.Message.text = "Something went wrong, please try again.";
-                        noticeWindow.OkButton.interactable = true;
-                        break;
-                    }
+                    var noticeWindow = UserInterfaceContainer.Instance.Get<NoticeWindow>().AssertNotNull();
+                    noticeWindow.Message.text = "Character deleted successfully.";
+                    noticeWindow.OkButton.interactable = true;
+                    break;
                 }
-            }
-            catch (Exception)
-            {
-                Utils.ShowExceptionNotice();
+                case RemoveCharacterStatus.Failed:
+                {
+                    var noticeWindow = UserInterfaceContainer.Instance.Get<NoticeWindow>().AssertNotNull();
+                    noticeWindow.Message.text = "Could not remove a character. Please try again.";
+                    noticeWindow.OkButton.interactable = true;
+                    break;
+                }
+                default:
+                {
+                    var noticeWindow = UserInterfaceContainer.Instance.Get<NoticeWindow>().AssertNotNull();
+                    noticeWindow.Message.text = "Something went wrong, please try again.";
+                    noticeWindow.OkButton.interactable = true;
+                    break;
+                }
             }
         }
 

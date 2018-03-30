@@ -51,6 +51,7 @@ namespace Scripts.Coroutines
 
         private void Start()
         {
+            isDestroying = false;
             _instance = this;
         }
 

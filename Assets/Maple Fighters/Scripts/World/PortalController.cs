@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using CommonTools.Coroutines;
 using CommonTools.Log;
 using Scripts.Containers;
@@ -13,6 +12,8 @@ using UnityEngine;
 
 namespace Scripts.World
 {
+    using Utils = UI.Utils;
+
     public class PortalController : MonoBehaviour
     {
         private bool isTeleporting;
@@ -57,30 +58,22 @@ namespace Scripts.World
         {
             isTeleporting = true;
 
-            coroutinesExecutor.StartTask(ChangeScene);
+            coroutinesExecutor.StartTask(ChangeScene, exception => Utils.ShowExceptionNotice());
         }
 
         private async Task ChangeScene(IYield yield)
         {
             var networkIdentity = GetComponent<NetworkIdentity>();
             var gameService = ServiceContainer.GameService.GetPeerLogic<IGameScenePeerLogicAPI>().AssertNotNull();
-
-            try
+            var responseParameters = await gameService.ChangeScene(yield, new ChangeSceneRequestParameters(networkIdentity.Id));
+            var map = responseParameters.Map;
+            if (map == 0)
             {
-                var responseParameters = await gameService.ChangeScene(yield, new ChangeSceneRequestParameters(networkIdentity.Id));
-                var map = responseParameters.Map;
-                if (map == 0)
-                {
-                    LogUtils.Log(MessageBuilder.Trace("You can not teleport to scene index 0."));
-                    return;
-                }
+                LogUtils.Log(MessageBuilder.Trace("You can not teleport to scene index 0."));
+                return;
+            }
 
-                GameScenesController.Instance.LoadScene(map);
-            }
-            catch (Exception)
-            {
-                UI.Utils.ShowExceptionNotice();
-            }
+            GameScenesController.Instance.LoadScene(map);
         }
     }
 }

@@ -67,7 +67,7 @@ namespace Scripts.UI.Controllers
             Action registerAction = () => 
             {
                 var parameters = new RegisterRequestParameters(email, password.CreateSha512(), firstName, lastName);
-                coroutinesExecutor.StartTask((yield) => Register(yield, parameters));
+                coroutinesExecutor.StartTask((yield) => Register(yield, parameters), exception => Utils.ShowExceptionNotice());
             };
 
             if (RegistrationConnectionProvider.Instance.IsConnected())
@@ -82,44 +82,37 @@ namespace Scripts.UI.Controllers
 
         private async Task Register(IYield yield, RegisterRequestParameters parameters)
         {
-            try
+            var registrationService = ServiceContainer.RegistrationService.GetPeerLogic<IRegistrationPeerLogicAPI>().AssertNotNull();
+            var responseParameters = await registrationService.Register(yield, parameters);
+            switch (responseParameters.Status)
             {
-                var registrationService = ServiceContainer.RegistrationService.GetPeerLogic<IRegistrationPeerLogicAPI>().AssertNotNull();
-                var responseParameters = await registrationService.Register(yield, parameters);
-                switch (responseParameters.Status)
+                case RegisterStatus.Succeed:
                 {
-                    case RegisterStatus.Succeed:
-                    {
-                        var noticeWindow = UserInterfaceContainer.Instance.Get<NoticeWindow>().AssertNotNull();
-                        noticeWindow.Message.text = "Registration is completed successfully.";
-                        noticeWindow.OkButtonClickedAction = OnBackButtonClicked;
-                        noticeWindow.OkButton.interactable = true;
-                        break;
-                    }
-                    case RegisterStatus.EmailExists:
-                    {
-                        var noticeWindow = UserInterfaceContainer.Instance.Get<NoticeWindow>().AssertNotNull();
-                        noticeWindow.Message.text = "Email address already exists.";
-                        noticeWindow.OkButton.interactable = true;
-                        break;
-                    }
-                    default:
-                    {
-                        var noticeWindow = UserInterfaceContainer.Instance.Get<NoticeWindow>().AssertNotNull();
-                        noticeWindow.Message.text = "Something went wrong, please try again.";
-                        noticeWindow.OkButton.interactable = true;
-                        break;
-                    }
+                    var noticeWindow = UserInterfaceContainer.Instance.Get<NoticeWindow>().AssertNotNull();
+                    noticeWindow.Message.text = "Registration is completed successfully.";
+                    noticeWindow.OkButtonClickedAction = OnBackButtonClicked;
+                    noticeWindow.OkButton.interactable = true;
+                    break;
                 }
-
-                if (responseParameters.Status == RegisterStatus.Succeed)
+                case RegisterStatus.EmailExists:
                 {
-                    OnRegistrationSucceed();
+                    var noticeWindow = UserInterfaceContainer.Instance.Get<NoticeWindow>().AssertNotNull();
+                    noticeWindow.Message.text = "Email address already exists.";
+                    noticeWindow.OkButton.interactable = true;
+                    break;
+                }
+                default:
+                {
+                    var noticeWindow = UserInterfaceContainer.Instance.Get<NoticeWindow>().AssertNotNull();
+                    noticeWindow.Message.text = "Something went wrong, please try again.";
+                    noticeWindow.OkButton.interactable = true;
+                    break;
                 }
             }
-            catch (Exception)
+
+            if (responseParameters.Status == RegisterStatus.Succeed)
             {
-                Utils.ShowExceptionNotice();
+                OnRegistrationSucceed();
             }
         }
 

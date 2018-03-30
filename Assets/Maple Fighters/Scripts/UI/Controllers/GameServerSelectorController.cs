@@ -120,7 +120,7 @@ namespace Scripts.UI.Controllers
                 gameServerSelectorWindow.OnRefreshBegan();
                 gameServerSelectorWindow.GameServerSelectorRefreshImage.Message = "Getting server list...";
 
-                Action provideGameServerList = () => coroutinesExecutor.StartTask(ProvideGameServerList);
+                Action provideGameServerList = () => coroutinesExecutor.StartTask(ProvideGameServerList, exception => Utils.ShowExceptionNotice());
                 if (!gameServerSelectorWindow.GameServerSelectorRefreshImage.IsShowed)
                 {
                     gameServerSelectorWindow.GameServerSelectorRefreshImage.Show(provideGameServerList);
@@ -145,36 +145,29 @@ namespace Scripts.UI.Controllers
 
         private async Task ProvideGameServerList(IYield yield)
         {
-            try
+            var gameServerProviderService = ServiceContainer.GameServerProviderService.GetPeerLogic<IGameServerProviderPeerLogicAPI>().AssertNotNull();
+            var responseParameters = await gameServerProviderService.ProvideGameServers(yield);
+            foreach (var gameServerInformation in responseParameters.GameServerInformations)
             {
-                var gameServerProviderService = ServiceContainer.GameServerProviderService.GetPeerLogic<IGameServerProviderPeerLogicAPI>().AssertNotNull();
-                var responseParameters = await gameServerProviderService.ProvideGameServers(yield);
-                foreach (var gameServerInformation in responseParameters.GameServerInformations)
+                var gameServerName = gameServerInformation.Name;
+                if (gameServerInformations.ContainsKey(gameServerName))
                 {
-                    var gameServerName = gameServerInformation.Name;
-                    if (gameServerInformations.ContainsKey(gameServerName))
-                    {
-                        LogUtils.Log(MessageBuilder.Trace($"Duplication of the {gameServerName} game server. Can not add more than one."));
-                        continue;
-                    }
-
-                    gameServerInformations.Add(gameServerName, gameServerInformation);
+                    LogUtils.Log(MessageBuilder.Trace($"Duplication of the {gameServerName} game server. Can not add more than one."));
+                    continue;
                 }
 
-                gameServerSelectorWindow.EnableAllButtons();
-
-                if (gameServerInformations.Count != 0)
-                {
-                    ShowGameServerList();
-                }
-                else
-                {
-                    gameServerSelectorWindow.GameServerSelectorRefreshImage.Message = "No servers found.";
-                }
+                gameServerInformations.Add(gameServerName, gameServerInformation);
             }
-            catch (Exception)
+
+            gameServerSelectorWindow.EnableAllButtons();
+
+            if (gameServerInformations.Count != 0)
             {
-                Utils.ShowExceptionNotice();
+                ShowGameServerList();
+            }
+            else
+            {
+                gameServerSelectorWindow.GameServerSelectorRefreshImage.Message = "No servers found.";
             }
         }
 

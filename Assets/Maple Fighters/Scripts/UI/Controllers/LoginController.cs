@@ -72,7 +72,7 @@ namespace Scripts.UI.Controllers
             Action authenticateAction = () =>
             {
                 var parameters = new AuthenticateRequestParameters(email, password.CreateSha512());
-                coroutinesExecutor.StartTask((yield) => Authenticate(yield, parameters));
+                coroutinesExecutor.StartTask((yield) => Authenticate(yield, parameters), exception => Utils.ShowExceptionNotice());
             };
 
             if (LoginConnectionProvider.Instance.IsConnected())
@@ -87,56 +87,49 @@ namespace Scripts.UI.Controllers
 
         private async Task Authenticate(IYield yield, AuthenticateRequestParameters parameters)
         {
-            try
+            var loginService = ServiceContainer.LoginService.GetPeerLogic<ILoginPeerLogicAPI>().AssertNotNull();
+            var responseParameters = await loginService.Authenticate(yield, parameters);
+            switch (responseParameters.Status)
             {
-                var loginService = ServiceContainer.LoginService.GetPeerLogic<ILoginPeerLogicAPI>().AssertNotNull();
-                var responseParameters = await loginService.Authenticate(yield, parameters);
-                switch (responseParameters.Status)
+                case LoginStatus.Succeed:
                 {
-                    case LoginStatus.Succeed:
-                    {
-                        var noticeWindow = UserInterfaceContainer.Instance.Get<NoticeWindow>().AssertNotNull();
-                        noticeWindow.Message.text = "You have logged in successfully!";
-                        break;
-                    }
-                    case LoginStatus.UserNotExist:
-                    {
-                        var noticeWindow = UserInterfaceContainer.Instance.Get<NoticeWindow>().AssertNotNull();
-                        noticeWindow.Message.text = "The user does not exist. Please check your typed email.";
-                        noticeWindow.OkButton.interactable = true;
-                        break;
-                    }
-                    case LoginStatus.PasswordIncorrect:
-                    {
-                        var noticeWindow = UserInterfaceContainer.Instance.Get<NoticeWindow>().AssertNotNull();
-                        noticeWindow.Message.text = "The password is incorrect, please type it again.";
-                        noticeWindow.OkButton.interactable = true;
-                        break;
-                    }
-                    case LoginStatus.NonAuthorized:
-                    {
-                        var noticeWindow = UserInterfaceContainer.Instance.Get<NoticeWindow>().AssertNotNull();
-                        noticeWindow.Message.text = "Authentication with login server failed.";
-                        noticeWindow.OkButton.interactable = true;
-                        break;
-                    }
-                    default:
-                    {
-                        var noticeWindow = UserInterfaceContainer.Instance.Get<NoticeWindow>().AssertNotNull();
-                        noticeWindow.Message.text = "Something went wrong, please try again.";
-                        noticeWindow.OkButton.interactable = true;
-                        break;
-                    }
+                    var noticeWindow = UserInterfaceContainer.Instance.Get<NoticeWindow>().AssertNotNull();
+                    noticeWindow.Message.text = "You have logged in successfully!";
+                    break;
                 }
-
-                if (responseParameters.Status == LoginStatus.Succeed)
+                case LoginStatus.UserNotExist:
                 {
-                    OnLoginSucceed();
+                    var noticeWindow = UserInterfaceContainer.Instance.Get<NoticeWindow>().AssertNotNull();
+                    noticeWindow.Message.text = "The user does not exist. Please check your typed email.";
+                    noticeWindow.OkButton.interactable = true;
+                    break;
+                }
+                case LoginStatus.PasswordIncorrect:
+                {
+                    var noticeWindow = UserInterfaceContainer.Instance.Get<NoticeWindow>().AssertNotNull();
+                    noticeWindow.Message.text = "The password is incorrect, please type it again.";
+                    noticeWindow.OkButton.interactable = true;
+                    break;
+                }
+                case LoginStatus.NonAuthorized:
+                {
+                    var noticeWindow = UserInterfaceContainer.Instance.Get<NoticeWindow>().AssertNotNull();
+                    noticeWindow.Message.text = "Authentication with login server failed.";
+                    noticeWindow.OkButton.interactable = true;
+                    break;
+                }
+                default:
+                {
+                    var noticeWindow = UserInterfaceContainer.Instance.Get<NoticeWindow>().AssertNotNull();
+                    noticeWindow.Message.text = "Something went wrong, please try again.";
+                    noticeWindow.OkButton.interactable = true;
+                    break;
                 }
             }
-            catch (Exception)
+
+            if (responseParameters.Status == LoginStatus.Succeed)
             {
-                Utils.ShowExceptionNotice();
+                OnLoginSucceed();
             }
         }
 
