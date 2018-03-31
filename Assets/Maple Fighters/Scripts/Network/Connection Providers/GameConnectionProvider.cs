@@ -95,7 +95,7 @@ namespace Scripts.Services
             // Left blank intentionally
         }
 
-        private void OnNonAuthorized()
+        protected override void OnNonAuthorized()
         {
             var noticeWindow = UserInterfaceContainer.Instance.Get<NoticeWindow>().AssertNotNull();
             noticeWindow.Message.text = $"Authorization with {serverName} server failed.";

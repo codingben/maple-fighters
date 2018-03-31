@@ -45,7 +45,7 @@ namespace Scripts.Services
 
             if (authorizationStatus == AuthorizationStatus.Failed)
             {
-                ChatController.Instance.OnNonAuthorized();
+                ChatController.Instance?.OnNonAuthorized();
             }
             else
             {
@@ -62,6 +62,11 @@ namespace Scripts.Services
         protected override void OnPreAuthorization()
         {
             // Left blank intentionally
+        }
+
+        protected override void OnNonAuthorized()
+        {
+            ChatController.Instance.OnNonAuthorized();
         }
 
         protected override void OnAuthorized()

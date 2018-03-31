@@ -147,7 +147,7 @@ namespace Scripts.UI.Controllers
 
         private async Task ProvideGameServerList(IYield yield)
         {
-            await yield.Return(new WaitForSeconds(1));
+            await yield.Return(new WaitForSeconds(0.5f));
 
             var gameServerProviderService = ServiceContainer.GameServerProviderService.GetPeerLogic<IGameServerProviderPeerLogicAPI>().AssertNotNull();
             var responseParameters = await gameServerProviderService.ProvideGameServers(yield);

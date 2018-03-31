@@ -51,6 +51,11 @@ namespace Scripts.UI.Controllers
             // Left blank intentionally
         }
 
+        protected override void OnNonAuthorized()
+        {
+            // Left blank intentionally
+        }
+
         protected override void OnAuthorized()
         {
             // Left blank intentionally

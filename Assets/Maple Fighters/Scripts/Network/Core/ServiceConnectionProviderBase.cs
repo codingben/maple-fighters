@@ -122,6 +122,7 @@ namespace Scripts.Services
 
             if (authorizationStatus == AuthorizationStatus.Failed)
             {
+                OnNonAuthorized();
                 return;
             }
 
@@ -132,6 +133,7 @@ namespace Scripts.Services
         protected abstract Task<AuthorizeResponseParameters> Authorize(IYield yield, AuthorizeRequestParameters parameters);
 
         protected abstract void OnPreAuthorization();
+        protected abstract void OnNonAuthorized();
         protected abstract void OnAuthorized();
 
         protected abstract void SetPeerLogicAfterAuthorization();
