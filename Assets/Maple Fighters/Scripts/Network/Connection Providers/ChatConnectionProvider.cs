@@ -47,6 +47,10 @@ namespace Scripts.Services
             {
                 ChatController.Instance.OnNonAuthorized();
             }
+            else
+            {
+                ChatController.Instance.OnConnectionClosed();
+            }
         }
 
         protected override Task<AuthorizeResponseParameters> Authorize(IYield yield, AuthorizeRequestParameters parameters)

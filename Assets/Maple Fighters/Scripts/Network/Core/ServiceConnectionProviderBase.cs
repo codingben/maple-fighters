@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Authorization.Client.Common;
 using CommonCommunicationInterfaces;
@@ -8,7 +7,6 @@ using CommonTools.Log;
 using CommunicationHelper;
 using Scripts.ScriptableObjects;
 using Scripts.Utils;
-using WaitForSeconds = CommonTools.Coroutines.WaitForSeconds;
 
 namespace Scripts.Services
 {
@@ -28,10 +26,7 @@ namespace Scripts.Services
             }
         }
         private ExternalCoroutinesExecutor coroutinesExecutor = new ExternalCoroutinesExecutor();
-
         private IServiceBase serviceBase => GetServiceBase();
-        private ICoroutine disconnectAutomatically;
-
         protected bool IsDestroying;
 
         private void Update()
@@ -48,7 +43,7 @@ namespace Scripts.Services
             Dispose();
         }
 
-        protected async Task Connect(IYield yield, ServerConnectionInformation serverConnectionInformation, bool disconnectAutomatically = false, bool authorize = true)
+        protected async Task Connect(IYield yield, ServerConnectionInformation serverConnectionInformation, bool authorize = true)
         {
             if (serviceBase == null || CoroutinesExecutor == null)
             {
@@ -86,12 +81,6 @@ namespace Scripts.Services
 
             SubscribeToDisconnectionNotifier();
             OnConnectionEstablished();
-
-            if (disconnectAutomatically)
-            {
-                const int TIME_TO_DISCONNECT = 60;
-                DisconnectAutomatically(TIME_TO_DISCONNECT);
-            }
         }
 
         protected abstract void OnPreConnection();
@@ -148,25 +137,8 @@ namespace Scripts.Services
         protected abstract void SetPeerLogicAfterAuthorization();
         protected abstract IServiceBase GetServiceBase();
 
-        protected void DisconnectAutomatically(int timer)
-        {
-            if (disconnectAutomatically == null)
-            {
-                disconnectAutomatically = CoroutinesExecutor.StartCoroutine(DisconnectAutomaticallyTimer(timer));
-            }
-        }
-
-        protected IEnumerator<IYieldInstruction> DisconnectAutomaticallyTimer(int timer)
-        {
-            yield return new WaitForSeconds(timer);
-            Dispose();
-        }
-
         public void Dispose()
         {
-            disconnectAutomatically?.Dispose();
-            disconnectAutomatically = null;
-
             serviceBase.ServiceConnectionHandler?.Dispose();
         }
 

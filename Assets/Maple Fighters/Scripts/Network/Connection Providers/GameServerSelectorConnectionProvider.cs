@@ -22,7 +22,7 @@ namespace Scripts.Services
         public void Connect()
         {
             var serverConnectionInformation = GetServerConnectionInformation(ServerType.GameServerProvider);
-            CoroutinesExecutor.StartTask((yield) => Connect(yield, serverConnectionInformation, disconnectAutomatically: true));
+            CoroutinesExecutor.StartTask((yield) => Connect(yield, serverConnectionInformation));
         }
 
         protected override void OnPreConnection()

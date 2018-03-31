@@ -66,12 +66,22 @@ namespace Scripts.Services
         {
             if (authorizationStatus == AuthorizationStatus.Succeed && !IsDestroying)
             {
-                LoadedObjects.DestroyAll();
+                ShowConnectionTimeout();
             }
             else if(!IsDestroying)
             {
                 OnNonAuthorized();
             }
+        }
+
+        private void ShowConnectionTimeout()
+        {
+            if (FocusController.Instance != null)
+            {
+                FocusController.Instance.Focusable = Focusable.UI;
+            }
+
+            Utils.ShowNotice("The connection has timed out.", LoadedObjects.DestroyAll, true, Index.Last);
         }
 
         protected override Task<AuthorizeResponseParameters> Authorize(IYield yield, AuthorizeRequestParameters parameters)

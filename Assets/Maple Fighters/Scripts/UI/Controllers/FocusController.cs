@@ -5,7 +5,8 @@ namespace Scripts.UI.Controllers
     public enum Focusable
     {
         Game,
-        Chat
+        Chat,
+        UI
     }
 
     public class FocusController : DontDestroyOnLoad<FocusController>

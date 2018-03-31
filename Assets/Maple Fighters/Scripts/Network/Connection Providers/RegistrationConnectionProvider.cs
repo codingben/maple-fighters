@@ -21,7 +21,7 @@ namespace Scripts.UI.Controllers
             this.onConnected = onConnected;
 
             var serverConnectionInformation = GetServerConnectionInformation(ServerType.Registration);
-            CoroutinesExecutor.StartTask((yield) => Connect(yield, serverConnectionInformation, disconnectAutomatically: true, authorize: false));
+            CoroutinesExecutor.StartTask((yield) => Connect(yield, serverConnectionInformation, authorize: false));
         }
 
         protected override void OnPreConnection()
