@@ -17,8 +17,6 @@ namespace Game.Application.PeerLogics
         private readonly int userId;
         private readonly ISceneObject sceneObject;
 
-        private const int INACTIVITY_TIMEOUT = 120; // In seconds
-
         public GameScenePeerLogic(int userId, CharacterParameters character)
         {
             this.userId = userId;
@@ -42,7 +40,7 @@ namespace Game.Application.PeerLogics
         {
             sceneObject.Components.AddComponent(new PeerIdGetter(PeerWrapper.PeerId));
 
-            Components.AddComponent(new InactivityTimeout(INACTIVITY_TIMEOUT, lookForOperationsRequest: true));
+            Components.AddComponent(new InactivityTimeout());
             Components.AddComponent(new UserProfileTracker(userId, ServerType.Game, isUserProfileChanged: true));
             Components.AddComponent(new SceneObjectGetter(sceneObject));
             Components.AddComponent(new InterestManagementNotifier());

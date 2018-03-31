@@ -3,6 +3,7 @@ using CommonCommunicationInterfaces;
 using CommonTools.Coroutines;
 using CommonTools.Log;
 using ComponentModel.Common;
+using JsonConfig;
 
 namespace PeerLogic.Common.Components
 {
@@ -14,12 +15,13 @@ namespace PeerLogic.Common.Components
         private readonly WaitForSeconds waitForSeconds;
         private readonly bool lookForOperationsRequest;
 
-        private const int DEFAULT_TIMEOUT = 60;
-
-        public InactivityTimeout(int time = DEFAULT_TIMEOUT, bool lookForOperationsRequest = false)
+        public InactivityTimeout()
         {
-            this.lookForOperationsRequest = lookForOperationsRequest;
+            LogUtils.Assert(Config.Global.Timeout, MessageBuilder.Trace("Could not find a configuration for the inactivity timeout."));
 
+            lookForOperationsRequest = (bool)Config.Global.Timeout.LookForOperationRequests;
+
+            var time = (int)Config.Global.Timeout.Time;
             waitForSeconds = new WaitForSeconds(time);
         }
 

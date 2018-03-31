@@ -12,7 +12,6 @@ namespace Game.Application.PeerLogics
     internal class CharacterSelectionPeerLogic : PeerLogicBase<CharacterOperations, EmptyEventCode>
     {
         private readonly int userId;
-        private const int INACTIVITY_TIMEOUT = 120; // In seconds
 
         public CharacterSelectionPeerLogic(int userId)
         {
@@ -34,7 +33,7 @@ namespace Game.Application.PeerLogics
 
         private void AddComponents()
         {
-            Components.AddComponent(new InactivityTimeout(INACTIVITY_TIMEOUT));
+            Components.AddComponent(new InactivityTimeout());
 
             var userProfileTracker = Components.AddComponent(new UserProfileTracker(userId, ServerType.Game, isUserProfileChanged: true));
             userProfileTracker.ChangeUserProfileProperties();
