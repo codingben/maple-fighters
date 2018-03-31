@@ -1,10 +1,9 @@
-﻿using System;
-using ComponentModel.Common;
+﻿using ComponentModel.Common;
 
 namespace PhotonControl
 {
-    internal interface IPhotonControl : IDisposable, IEntity, IPhotonControlGUI, IPhotonControlEvents
+    internal interface IPhotonControl : IEntity<IPhotonControl>, IPhotonControlGUI, IPhotonControlEvents
     {
-        IContainer<IPhotonControl> Components { get; }
+        // Left blank intentionally
     }
 }

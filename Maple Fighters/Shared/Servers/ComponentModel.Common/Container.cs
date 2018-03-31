@@ -80,7 +80,7 @@ namespace ComponentModel.Common
     }
 
     public sealed class Container<TOwner> : IContainer<TOwner>
-        where TOwner : IEntity
+        where TOwner : IEntity<TOwner>
     {
         private readonly TOwner owner;
         private readonly List<IComponent<TOwner>> components = new List<IComponent<TOwner>>();

@@ -17,11 +17,11 @@ namespace PeerLogic.Common.Components
 
         public InactivityTimeout()
         {
-            LogUtils.Assert(Config.Global.Timeout, MessageBuilder.Trace("Could not find a configuration for the inactivity timeout."));
+            LogUtils.Assert(Config.Global.InactivityTimeout, MessageBuilder.Trace("Could not find a configuration for the inactivity timeout."));
 
-            lookForOperationsRequest = (bool)Config.Global.Timeout.LookForOperationRequests;
+            lookForOperationsRequest = (bool)Config.Global.InactivityTimeout.LookForOperationRequests;
 
-            var time = (int)Config.Global.Timeout.Time;
+            var time = (int)Config.Global.InactivityTimeout.Time;
             waitForSeconds = new WaitForSeconds(time);
         }
 

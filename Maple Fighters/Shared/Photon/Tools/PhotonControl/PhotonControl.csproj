@@ -66,9 +66,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Photon Control\IPhotonControl.cs" />
     <Compile Include="Photon Control\Components\ClearLogsButtonHandler.cs" />
     <Compile Include="Photon Control\Components\ExitButtonHandler.cs" />
-    <Compile Include="Photon Control\IPhotonControl.cs" />
     <Compile Include="Photon Control\IPhotonControlEvents.cs" />
     <Compile Include="Photon Control\IPhotonControlGUI.cs" />
     <Compile Include="Photon Control\Components\IServersContainer.cs" />

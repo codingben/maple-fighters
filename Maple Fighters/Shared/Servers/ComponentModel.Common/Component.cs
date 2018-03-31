@@ -28,7 +28,7 @@
     }
 
     public class Component<TOwner> : IComponent<TOwner>
-        where TOwner : IEntity
+        where TOwner : IEntity<TOwner>
     {
         protected TOwner Entity { get; private set; }
 

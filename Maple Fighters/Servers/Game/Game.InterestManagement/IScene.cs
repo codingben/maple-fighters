@@ -1,13 +1,10 @@
-﻿using System;
-using ComponentModel.Common;
+﻿using ComponentModel.Common;
 using MathematicsHelper;
 
 namespace Game.InterestManagement
 {
-    public interface IScene : IEntity, IDisposable
+    public interface IScene : IEntity
     {
-        IContainer Components { get; }
-
         Vector2 RegionSize { get; }
         IRegion[,] GetAllRegions();
 

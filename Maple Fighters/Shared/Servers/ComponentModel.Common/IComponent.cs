@@ -8,7 +8,7 @@ namespace ComponentModel.Common
     }
 
     public interface IComponent<in TOwner> : IDisposable
-        where TOwner : IEntity
+        where TOwner : IEntity<TOwner>
     {
         void Awake(TOwner entity);
     }

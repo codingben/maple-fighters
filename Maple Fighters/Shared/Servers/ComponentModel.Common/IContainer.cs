@@ -15,7 +15,7 @@ namespace ComponentModel.Common
     }
 
     public interface IContainer<out TOwner> : IDisposable
-        where TOwner : IEntity
+        where TOwner : IEntity<TOwner>
     {
         T AddComponent<T>(T component)
             where T : IComponent<TOwner>;

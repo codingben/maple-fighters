@@ -1,7 +1,15 @@
-﻿namespace ComponentModel.Common
+﻿using System;
+
+namespace ComponentModel.Common
 {
-    public interface IEntity
+    public interface IEntity : IDisposable
     {
-        // Left blank intentionally
+        IContainer Components { get; }
+    }
+
+    public interface IEntity<out T> : IDisposable 
+        where T : IEntity<T>
+    {
+        IContainer<T> Components { get; }
     }
 }
