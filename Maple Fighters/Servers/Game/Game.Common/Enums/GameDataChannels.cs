@@ -1,4 +1,4 @@
-﻿namespace Shared.Game.Common
+﻿namespace Game.Common
 {
     public enum GameDataChannels : byte
     {

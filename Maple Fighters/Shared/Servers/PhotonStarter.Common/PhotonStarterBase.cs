@@ -6,11 +6,12 @@ using ServerApplication.Common.ApplicationBase;
 using ServerCommunicationInterfaces;
 using PhotonStarter.Common.Utils;
 using JsonConfig;
+using PhotonServerImplementation.Server;
 
 namespace PhotonStarter.Common
 {
     public abstract class PhotonStarterBase<T> : PhotonServerImplementation.ApplicationBase
-        where T : IApplicationBase
+        where T : class, IApplicationBase
     {
         private T application;
 
@@ -19,7 +20,9 @@ namespace PhotonStarter.Common
             LogUtils.Logger = CreateLogger();
             Config.Global = CreateJsonConfiguration();
 
-            application = CreateApplication(new PhotonFiberProvider());
+            var photonFiberProvider = new PhotonFiberProvider();
+            var serverConnector = new PhotonServerConnector(this, ApplicationName);
+            application = CreateApplication(photonFiberProvider, serverConnector);
             application.Startup();
         }
 
@@ -28,7 +31,7 @@ namespace PhotonStarter.Common
             application.Shutdown();
         }
 
-        protected abstract T CreateApplication(IFiberProvider fiberProvider);
+        protected abstract T CreateApplication(IFiberProvider fiberProvider, IServerConnector serverConnector);
 
         protected override PeerBase CreatePeer(InitRequest initRequest)
         {

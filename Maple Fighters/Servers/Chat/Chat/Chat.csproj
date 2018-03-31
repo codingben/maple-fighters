@@ -58,17 +58,24 @@
   <ItemGroup>
     <Compile Include="Application\ChatApplication.cs" />
     <Compile Include="Application\Peer Logics\Components\ChatMessageEventSender.cs" />
-    <Compile Include="Application\Peer Logics\AuthenticatedPeerLogic.cs" />
+    <Compile Include="Application\Peer Logics\AuthorizedClientPeerLogic.cs" />
     <Compile Include="Application\Peer Logics\Components\IChatMessageEventSender.cs" />
-    <Compile Include="Application\Peer Logics\Operations\AuthenticationOperationHandler.cs" />
     <Compile Include="Application\Peer Logics\Operations\ChatMessageOperationHandler.cs" />
-    <Compile Include="Application\Peer Logics\UnauthenticatedPeerLogic.cs" />
+    <Compile Include="Application\Peer Logics\UnauthenticatedClientPeerLogic.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Shared\Database\Database.Common\Database.Common.csproj">
-      <Project>{46B701A0-8606-4EF1-B111-F001EE74F124}</Project>
-      <Name>Database.Common</Name>
+    <ProjectReference Include="..\..\..\Services\Authorization\Authorization.Client.Common\Authorization.Client.Common.csproj">
+      <Project>{58359452-038A-44CD-AA7B-21D0C3507EC7}</Project>
+      <Name>Authorization.Client.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Services\Authorization\Authorization.Server.Common\Authorization.Server.Common.csproj">
+      <Project>{174C1938-CA68-4549-97DE-3470AFACB7C7}</Project>
+      <Name>Authorization.Server.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Services\UserProfile\UserProfile.Server.Common\UserProfile.Server.Common\UserProfile.Server.Common.csproj">
+      <Project>{C1B03627-1DF6-48F8-A868-D5216A510B86}</Project>
+      <Name>UserProfile.Server.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\Shared\Servers\ComponentModel.Common\ComponentModel.Common.csproj">
       <Project>{00565794-9958-47D9-9E8E-6D7193D67B9D}</Project>
@@ -81,6 +88,10 @@
     <ProjectReference Include="..\..\..\Shared\Servers\ServerApplication.Common\ServerApplication.Common.csproj">
       <Project>{F82FBB67-7B1D-43B7-A415-3F407D40E5C7}</Project>
       <Name>ServerApplication.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Shared\Servers\ServerCommunication.Common\ServerCommunication.Common\ServerCommunication.Common.csproj">
+      <Project>{5e8328b3-e51c-4291-b7de-83673c4ce889}</Project>
+      <Name>ServerCommunication.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\Chat.Common\Chat.Common\Chat.Common.csproj">
       <Project>{900E3927-BEC2-4CAB-A5A2-E1480FAAC11A}</Project>

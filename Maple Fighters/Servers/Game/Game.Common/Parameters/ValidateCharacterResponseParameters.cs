@@ -1,13 +1,13 @@
 ﻿using System.IO;
 using CommonCommunicationInterfaces;
 
-namespace Shared.Game.Common
+namespace Game.Common
 {
     public struct ValidateCharacterResponseParameters : IParameters
     {
-        public ValidateCharacterStatus Status;
+        public CharacterValidationStatus Status;
 
-        public ValidateCharacterResponseParameters(ValidateCharacterStatus status)
+        public ValidateCharacterResponseParameters(CharacterValidationStatus status = CharacterValidationStatus.Wrong)
         {
             Status = status;
         }
@@ -19,7 +19,7 @@ namespace Shared.Game.Common
 
         public void Deserialize(BinaryReader reader)
         {
-            Status = (ValidateCharacterStatus)reader.ReadByte();
+            Status = (CharacterValidationStatus)reader.ReadByte();
         }
     }
 }

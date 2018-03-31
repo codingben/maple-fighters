@@ -1,5 +1,5 @@
 ﻿using ComponentModel.Common;
-using Shared.Game.Common;
+using Game.Common;
 
 namespace Game.Application.SceneObjects
 {

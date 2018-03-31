@@ -1,73 +1,79 @@
 ﻿using CommonTools.Log;
 using CommunicationHelper;
 using Game.Application.PeerLogic.Operations;
+using Game.Common;
 using PeerLogic.Common;
+using PeerLogic.Common.Components;
 using ServerCommunicationInterfaces;
-using Shared.Game.Common;
+using UserProfile.Server.Common;
 
 namespace Game.Application.PeerLogics
 {
-    internal class CharacterSelectionPeerLogic : PeerLogicBase<GameOperations, EmptyEventCode>
+    internal class CharacterSelectionPeerLogic : PeerLogicBase<CharacterOperations, EmptyEventCode>
     {
-        private readonly int dbUserId;
-        private CharacterFromDatabaseParameters? choosedCharacter;
+        private readonly int userId;
 
-        public CharacterSelectionPeerLogic(int dbUserId)
+        public CharacterSelectionPeerLogic(int userId)
         {
-            this.dbUserId = dbUserId;
+            this.userId = userId;
         }
 
         public override void Initialize(IClientPeerWrapper<IClientPeer> peer)
         {
             base.Initialize(peer);
 
-            AddHandlerValidateCharacterOperation();
-            AddHandlerForFetchCharactersOperation();
+            AddCommonComponents();
+            AddComponents();
+
             AddHandlerForCreateCharacterOperation();
             AddHandlerForRemoveCharacterOperation();
+            AddHandlerForGetCharactersOperation();
+            AddHandlerToValidateCharacterOperation();
         }
 
-        private void AddHandlerValidateCharacterOperation()
+        private void AddComponents()
         {
-            OperationRequestHandlerRegister.SetHandler(GameOperations.ValidateCharacter, new ValidateCharacterOperationHandler(dbUserId, OnCharacterSelected));
-        }
+            Components.AddComponent(new InactivityTimeout());
 
-        private void AddHandlerForFetchCharactersOperation()
-        {
-            OperationRequestHandlerRegister.SetHandler(GameOperations.FetchCharacters, new FetchCharactersOperationHandler(dbUserId));
+            var userProfileTracker = Components.AddComponent(new UserProfileTracker(userId, ServerType.Game, isUserProfileChanged: true));
+            userProfileTracker.ChangeUserProfileProperties();
         }
 
         private void AddHandlerForCreateCharacterOperation()
         {
-            OperationRequestHandlerRegister.SetHandler(GameOperations.CreateCharacter, new CreateCharacterOperationHandler(dbUserId));
+            OperationHandlerRegister.SetAsyncHandler(CharacterOperations.CreateCharacter, new CreateCharacterOperationHandler(userId));
         }
 
         private void AddHandlerForRemoveCharacterOperation()
         {
-            OperationRequestHandlerRegister.SetHandler(GameOperations.RemoveCharacter, new RemoveCharacterOperationHandler(dbUserId));
+            OperationHandlerRegister.SetAsyncHandler(CharacterOperations.RemoveCharacter, new RemoveCharacterOperationHandler(userId));
         }
 
-        private void OnCharacterSelected(CharacterFromDatabaseParameters character)
+        private void AddHandlerForGetCharactersOperation()
         {
-            choosedCharacter = character;
+            OperationHandlerRegister.SetAsyncHandler(CharacterOperations.GetCharacters, new GetCharactersOperationHandler(userId));
+        }
 
-            if (choosedCharacter == null)
+        private void AddHandlerToValidateCharacterOperation()
+        {
+            OperationHandlerRegister.SetAsyncHandler(CharacterOperations.ValidateCharacter, new CharacterValidationOperationHandler(userId, OnCharacterSelected));
+        }
+
+        private void OnCharacterSelected(CharacterParameters? character)
+        {
+            if (character.HasValue)
             {
-                KickOutPeer();
-                return;
+                PeerWrapper.SetPeerLogic(new GameScenePeerLogic(userId, character.Value));
             }
+            else
+            {
+                var ip = PeerWrapper.Peer.ConnectionInformation.Ip;
+                var peerId = PeerWrapper.PeerId;
 
-            PeerWrapper.SetPeerLogic(new GameScenePeerLogic(choosedCharacter.Value));
-        }
+                LogUtils.Log(MessageBuilder.Trace($"A peer {ip} with id #{peerId} does not have character but trying to enter with character."));
 
-        private void KickOutPeer()
-        {
-            var ip = PeerWrapper.Peer.ConnectionInformation.Ip;
-            var peerId = PeerWrapper.PeerId;
-
-            LogUtils.Log(MessageBuilder.Trace($"A peer {ip} with id #{peerId} does not have character but trying to enter with character."));
-
-            PeerWrapper.Peer.Disconnect();
+                PeerWrapper.Peer.Disconnect();
+            }
         }
     }
 }

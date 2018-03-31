@@ -52,17 +52,17 @@
       <HintPath>..\..\..\packages\Coroutines.5.0.5\lib\net46\LogUtils.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Microsoft.Dynamic, Version=1.1.2.22, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\DynamicLanguageRuntime.1.1.2\lib\Net45\Microsoft.Dynamic.dll</HintPath>
+    <Reference Include="Microsoft.Dynamic, Version=1.2.0.0, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\DynamicLanguageRuntime.1.2.1\lib\net45\Microsoft.Dynamic.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Scripting, Version=1.1.2.22, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\DynamicLanguageRuntime.1.1.2\lib\Net45\Microsoft.Scripting.dll</HintPath>
+    <Reference Include="Microsoft.Scripting, Version=1.2.0.0, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\DynamicLanguageRuntime.1.2.1\lib\net45\Microsoft.Scripting.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Scripting.AspNet, Version=1.1.1.21, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\DynamicLanguageRuntime.1.1.2\lib\Net45\Microsoft.Scripting.AspNet.dll</HintPath>
+    <Reference Include="Microsoft.Scripting.Metadata, Version=1.2.0.0, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\DynamicLanguageRuntime.1.2.1\lib\net45\Microsoft.Scripting.Metadata.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Scripting.Metadata, Version=1.1.2.22, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\DynamicLanguageRuntime.1.1.2\lib\Net45\Microsoft.Scripting.Metadata.dll</HintPath>
+    <Reference Include="Microsoft.VisualStudio.CodeCoverage.Shim, Version=15.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\DynamicLanguageRuntime.1.2.1\lib\net45\Microsoft.VisualStudio.CodeCoverage.Shim.dll</HintPath>
     </Reference>
     <Reference Include="OpenTK, Version=2.0.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\OpenTK.2.0.0\lib\net20\OpenTK.dll</HintPath>
@@ -79,67 +79,52 @@
     <Reference Include="ServerCommunicationInterfaces, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\ServerCommunicationInterfaces.3.0.0\lib\net46\ServerCommunicationInterfaces.dll</HintPath>
     </Reference>
-    <Reference Include="ServiceStack.Common, Version=4.5.14.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\ServiceStack.Common.4.5.14\lib\net45\ServiceStack.Common.dll</HintPath>
+    <Reference Include="ServiceStack.Common, Version=5.0.0.0, Culture=neutral, PublicKeyToken=02c12cbda47e6587, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\ServiceStack.Common.5.0.2\lib\net45\ServiceStack.Common.dll</HintPath>
     </Reference>
-    <Reference Include="ServiceStack.Interfaces, Version=4.0.0.0, Culture=neutral, PublicKeyToken=e06fbc6124f57c43, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\ServiceStack.Interfaces.4.5.14\lib\portable-wp80+sl5+net45+win8+wpa81+monotouch+monoandroid+xamarin.ios10\ServiceStack.Interfaces.dll</HintPath>
+    <Reference Include="ServiceStack.Interfaces, Version=5.0.0.0, Culture=neutral, PublicKeyToken=02c12cbda47e6587, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\ServiceStack.Interfaces.5.0.2\lib\net45\ServiceStack.Interfaces.dll</HintPath>
     </Reference>
-    <Reference Include="ServiceStack.OrmLite, Version=4.5.14.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\ServiceStack.OrmLite.4.5.14\lib\net45\ServiceStack.OrmLite.dll</HintPath>
-    </Reference>
-    <Reference Include="ServiceStack.Text, Version=4.5.14.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\ServiceStack.Text.4.5.14\lib\net45\ServiceStack.Text.dll</HintPath>
+    <Reference Include="ServiceStack.Text, Version=5.0.0.0, Culture=neutral, PublicKeyToken=02c12cbda47e6587, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\ServiceStack.Text.5.0.2\lib\net45\ServiceStack.Text.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Data" />
     <Reference Include="System.ValueTuple, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\System.ValueTuple.4.4.0\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Application\Components\Characters\CharacterSpawnDetailsProvider.cs" />
-    <Compile Include="Application\Components\Characters\Database\DatabaseCharacterCreator.cs" />
-    <Compile Include="Application\Components\Characters\Database\DatabaseCharacterExistence.cs" />
-    <Compile Include="Application\Components\Characters\Database\DatabaseCharacterNameVerifier.cs" />
-    <Compile Include="Application\Components\Characters\Database\DatabaseCharacterRemover.cs" />
-    <Compile Include="Application\Components\Characters\Database\DatabaseCharactersGetter.cs" />
     <Compile Include="Application\Components\Scene\GameSceneWrapper.cs" />
     <Compile Include="Application\Components\Characters\CharacterCreator.cs" />
     <Compile Include="Application\Components\Characters\ICharacterCreator.cs" />
     <Compile Include="Application\Components\Characters\ICharacterSpawnDetailsProvider.cs" />
-    <Compile Include="Application\Components\Characters\Database\IDatabaseCharacterCreator.cs" />
-    <Compile Include="Application\Components\Characters\Database\IDatabaseCharacterExistence.cs" />
-    <Compile Include="Application\Components\Characters\Database\IDatabaseCharacterNameVerifier.cs" />
-    <Compile Include="Application\Components\Characters\Database\IDatabaseCharacterRemover.cs" />
-    <Compile Include="Application\Components\Characters\Database\IDatabaseCharactersGetter.cs" />
     <Compile Include="Application\Components\Scene\IGameSceneWrapper.cs" />
     <Compile Include="Application\Components\Scene\ISceneContainer.cs" />
     <Compile Include="Application\Components\Scene\Map\PhysicsMapCreator.cs" />
     <Compile Include="Application\Components\Scene\SceneContainer.cs" />
-    <Compile Include="Application\Peer Logics\Components\CharactersSender.cs" />
+    <Compile Include="Application\Peer Logics\Components\CharacterSender.cs" />
     <Compile Include="Application\Peer Logics\Components\IPeerIdGetter.cs" />
     <Compile Include="Application\Peer Logics\Components\ISceneObjectGetter.cs" />
     <Compile Include="Application\Peer Logics\Components\SceneObjectGetter.cs" />
     <Compile Include="Application\Peer Logics\Components\Utils.cs" />
+    <Compile Include="Application\Peer Logics\Operations\CreateCharacterOperationHandler.cs" />
+    <Compile Include="Application\Peer Logics\Operations\EnterSceneOperationHandler.cs" />
+    <Compile Include="Application\Peer Logics\Operations\GetCharactersOperationHandler.cs" />
+    <Compile Include="Application\Peer Logics\Operations\RemoveCharacterOperationHandler.cs" />
     <Compile Include="Application\Scene Objects\Components\CharacterBody.cs" />
     <Compile Include="Application\Peer Logics\CharacterSelectionPeerLogic.cs" />
     <Compile Include="Application\Peer Logics\Components\PeerIdGetter.cs" />
     <Compile Include="Application\Peer Logics\Components\PositionChangesListener.cs" />
     <Compile Include="Application\GameApplication.cs" />
     <Compile Include="Application\Peer Logics\Components\InterestManagementNotifier.cs" />
-    <Compile Include="Application\Peer Logics\Operations\AuthenticationOperationHandler.cs" />
     <Compile Include="Application\Peer Logics\Operations\ChangeSceneOperationHandler.cs" />
-    <Compile Include="Application\Peer Logics\Operations\CreateCharacterOperationHandler.cs" />
-    <Compile Include="Application\Peer Logics\Operations\EnterSceneOperationHandler.cs" />
-    <Compile Include="Application\Peer Logics\Operations\ValidateCharacterOperationHandler.cs" />
+    <Compile Include="Application\Peer Logics\Operations\CharacterValidationOperationHandler.cs" />
     <Compile Include="Application\Peer Logics\GameScenePeerLogic.cs" />
-    <Compile Include="Application\Peer Logics\Operations\FetchCharactersOperationHandler.cs" />
-    <Compile Include="Application\Peer Logics\Operations\RemoveCharacterOperationHandler.cs" />
     <Compile Include="Application\Peer Logics\Operations\UpdatePositionOperationHandler.cs" />
     <Compile Include="Application\Peer Logics\Operations\UpdatePlayerStateOperationHandler.cs" />
-    <Compile Include="Application\Peer Logics\UnauthenticatedPeerLogic.cs" />
+    <Compile Include="Application\Peer Logics\UnauthorizedClientPeerLogic.cs" />
     <Compile Include="Application\Scene Objects\Components\CharacterGetter.cs" />
     <Compile Include="Application\Scene Objects\Components\ICharacterBody.cs" />
     <Compile Include="Application\Scene Objects\Components\ICharacterGetter.cs" />
@@ -162,9 +147,25 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Shared\Database\Database.Common\Database.Common.csproj">
-      <Project>{46B701A0-8606-4EF1-B111-F001EE74F124}</Project>
-      <Name>Database.Common</Name>
+    <ProjectReference Include="..\..\..\Services\Authorization\Authorization.Client.Common\Authorization.Client.Common.csproj">
+      <Project>{58359452-038A-44CD-AA7B-21D0C3507EC7}</Project>
+      <Name>Authorization.Client.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Services\Authorization\Authorization.Server.Common\Authorization.Server.Common.csproj">
+      <Project>{174C1938-CA68-4549-97DE-3470AFACB7C7}</Project>
+      <Name>Authorization.Server.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Services\Character\Character.Server.Common\Character.Server.Common.csproj">
+      <Project>{42BB62DA-299C-4EC1-B83C-894E5D75E505}</Project>
+      <Name>Character.Server.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Services\GameProvider\GameServerProvider.Server.Common\GameServerProvider.Server.Common.csproj">
+      <Project>{BCA5F453-1188-4521-A0AA-CC5F38228C57}</Project>
+      <Name>GameServerProvider.Server.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Services\UserProfile\UserProfile.Server.Common\UserProfile.Server.Common\UserProfile.Server.Common.csproj">
+      <Project>{C1B03627-1DF6-48F8-A868-D5216A510B86}</Project>
+      <Name>UserProfile.Server.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\Shared\Helper\MathematicsHelper\MathematicsHelper.csproj">
       <Project>{A3BE3E13-D3A1-4800-B471-A39F5ED4B554}</Project>
@@ -178,6 +179,14 @@
       <Project>{F90F12D2-58E0-4718-A205-EBFD28C81742}</Project>
       <Name>PeerLogic.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\Shared\Servers\ServerApplication.Common\ServerApplication.Common.csproj">
+      <Project>{f82fbb67-7b1d-43b7-a415-3f407d40e5c7}</Project>
+      <Name>ServerApplication.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Shared\Servers\ServerCommunication.Common\ServerCommunication.Common\ServerCommunication.Common.csproj">
+      <Project>{5e8328b3-e51c-4291-b7de-83673c4ce889}</Project>
+      <Name>ServerCommunication.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Game.Common\Game.Common.csproj">
       <Project>{AA536188-84FF-4286-A9E6-BAFBE1D8D37B}</Project>
       <Name>Game.Common</Name>
@@ -185,10 +194,6 @@
     <ProjectReference Include="..\..\..\Shared\Python\PythonScripting\PythonScripting.csproj">
       <Project>{f74fa3b5-23f9-460d-b9bc-f6c0e98f7556}</Project>
       <Name>PythonScripting</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\Shared\Servers\ServerApplication.Common\ServerApplication.Common.csproj">
-      <Project>{f82fbb67-7b1d-43b7-a415-3f407d40e5c7}</Project>
-      <Name>ServerApplication.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\Game.InterestManagement\Game.InterestManagement.csproj">
       <Project>{DB7043AD-92FD-428A-BB43-18ED8D25B41D}</Project>

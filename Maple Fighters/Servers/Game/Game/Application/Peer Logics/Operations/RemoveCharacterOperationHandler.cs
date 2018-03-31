@@ -1,29 +1,36 @@
-﻿using CommonCommunicationInterfaces;
+﻿using System.Threading.Tasks;
+using Character.Server.Common;
+using Game.Common;
+using CommonCommunicationInterfaces;
+using CommonTools.Coroutines;
 using CommonTools.Log;
-using Game.Application.Components;
 using ServerApplication.Common.ApplicationBase;
 using ServerCommunicationHelper;
-using Shared.Game.Common;
 
 namespace Game.Application.PeerLogic.Operations
 {
-    internal class RemoveCharacterOperationHandler : IOperationRequestHandler<RemoveCharacterRequestParameters, RemoveCharacterResponseParameters>
+    internal class RemoveCharacterOperationHandler : IAsyncOperationRequestHandler<RemoveCharacterRequestParameters, RemoveCharacterResponseParameters>
     {
         private readonly int userId;
-        private readonly IDatabaseCharacterRemover databaseCharacterRemover;
+        private readonly ICharacterServiceAPI characterServiceAPI;
 
         public RemoveCharacterOperationHandler(int userId)
         {
             this.userId = userId;
 
-            databaseCharacterRemover = Server.Components.GetComponent<IDatabaseCharacterRemover>().AssertNotNull();
+            characterServiceAPI = Server.Components.GetComponent<ICharacterServiceAPI>().AssertNotNull();
         }
 
-        public RemoveCharacterResponseParameters? Handle(MessageData<RemoveCharacterRequestParameters> messageData, ref MessageSendOptions sendOptions)
+        public Task<RemoveCharacterResponseParameters?> Handle(IYield yield, MessageData<RemoveCharacterRequestParameters> messageData, ref MessageSendOptions sendOptions)
         {
-            var characterIndex = messageData.Parameters.CharacterIndex;
-            var removed = !databaseCharacterRemover.Remove(userId, characterIndex);
-            return new RemoveCharacterResponseParameters(removed ? RemoveCharacterStatus.Succeed : RemoveCharacterStatus.Failed);
+            var parameters = new RemoveCharacterRequestParametersEx(userId, messageData.Parameters.CharacterIndex);
+            return RemoveCharacter(yield, parameters);
+        }
+
+        private async Task<RemoveCharacterResponseParameters?> RemoveCharacter(IYield yield, RemoveCharacterRequestParametersEx parameters)
+        {
+            var responseParameters = await characterServiceAPI.RemoveCharacter(yield, parameters);
+            return responseParameters;
         }
     }
 }

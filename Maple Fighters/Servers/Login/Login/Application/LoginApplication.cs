@@ -1,16 +1,17 @@
-﻿using Database.Common.AccessToken;
+﻿using Authorization.Server.Common;
 using Database.Common.Components;
 using Login.Application.Components;
 using Login.Application.PeerLogic;
 using ServerApplication.Common.ApplicationBase;
 using ServerCommunicationInterfaces;
+using UserProfile.Server.Common;
 
 namespace Login.Application
 {
     public class LoginApplication : ApplicationBase
     {
-        public LoginApplication(IFiberProvider fiberProvider) 
-            : base(fiberProvider)
+        public LoginApplication(IFiberProvider fiberProvider, IServerConnector serverConnector)
+            : base(fiberProvider, serverConnector)
         {
             // Left blank intentionally
         }
@@ -20,15 +21,7 @@ namespace Login.Application
             base.Startup();
 
             AddCommonComponents();
-
-            Server.Components.AddComponent(new DatabaseConnectionProvider());
-            Server.Components.AddComponent(new DatabaseUserVerifier());
-            Server.Components.AddComponent(new DatabaseUserPasswordVerifier());
-            Server.Components.AddComponent(new DatabaseUserIdProvider());
-            Server.Components.AddComponent(new DatabaseAccessTokenCreator());
-            Server.Components.AddComponent(new DatabaseAccessTokenExistence());
-            Server.Components.AddComponent(new DatabaseAccessTokenProvider());
-            Server.Components.AddComponent(new DatabaseAccessTokenExistenceViaUserId());
+            AddComponents();
         }
 
         public override void OnConnected(IClientPeer clientPeer)
@@ -36,6 +29,16 @@ namespace Login.Application
             base.OnConnected(clientPeer);
 
             WrapClientPeer(clientPeer, new LoginPeerLogic());
+        }
+
+        private void AddComponents()
+        {
+            Server.Components.AddComponent(new AuthorizationService());
+            Server.Components.AddComponent(new UserProfileService());
+            Server.Components.AddComponent(new DatabaseConnectionProvider());
+            Server.Components.AddComponent(new DatabaseUserVerifier());
+            Server.Components.AddComponent(new DatabaseUserPasswordVerifier());
+            Server.Components.AddComponent(new DatabaseUserIdProvider());
         }
     }
 }

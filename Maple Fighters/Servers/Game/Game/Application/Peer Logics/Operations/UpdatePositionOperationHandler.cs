@@ -2,7 +2,7 @@
 using Game.InterestManagement;
 using MathematicsHelper;
 using ServerCommunicationHelper;
-using Shared.Game.Common;
+using Game.Common;
 
 namespace Game.Application.PeerLogic.Operations
 {

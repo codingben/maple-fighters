@@ -15,8 +15,8 @@ namespace PeerLogic.Common
         public IContainer Components { get; } = new Container();
 
         protected IClientPeerWrapper<IClientPeer> PeerWrapper { get; private set; }
-        protected IOperationRequestHandlerRegister<TOperationCode> OperationRequestHandlerRegister { get; private set; }
-        protected IEventSender<TEventCode> EventSender { get; private set; }
+        protected IOperationRequestHandlerRegister<TOperationCode> OperationHandlerRegister { get; private set; }
+        private IEventSender<TEventCode> EventSender { get; set; }
 
         public virtual void Initialize(IClientPeerWrapper<IClientPeer> peer)
         {
@@ -29,7 +29,7 @@ namespace PeerLogic.Common
         public virtual void Dispose()
         {
             Components?.Dispose();
-            OperationRequestHandlerRegister?.Dispose();
+            OperationHandlerRegister?.Dispose();
         }
 
         private void AddEventsSenderHandler()
@@ -43,16 +43,17 @@ namespace PeerLogic.Common
             var logOperationsRequest = (bool)Config.Global.Log.OperationsRequest;
             var logOperationsResponse = (bool)Config.Global.Log.OperationsResponse;
 
-            // Necessary for async operation handlers.
+            // A coroutines executor is necessary to handle async operation handlers
             var coroutinesExecutor = Components.AddComponent(new CoroutinesExecutor(new FiberCoroutinesExecutor(PeerWrapper.Peer.Fiber, 100)));
 
-            OperationRequestHandlerRegister = new OperationRequestsHandler<TOperationCode>(PeerWrapper.Peer.OperationRequestNotifier,
+            OperationHandlerRegister = new OperationRequestsHandler<TOperationCode>(PeerWrapper.Peer.OperationRequestNotifier,
                 PeerWrapper.Peer.OperationResponseSender, logOperationsRequest, logOperationsResponse, coroutinesExecutor);
         }
 
         protected void AddCommonComponents()
         {
             Components.AddComponent(new MinimalPeerGetter(PeerWrapper.PeerId, PeerWrapper.Peer));
+            Components.AddComponent(new ClientPeerGetter(PeerWrapper.PeerId, PeerWrapper.Peer));
             Components.AddComponent(new EventSenderWrapper(EventSender.AssertNotNull()));
         }
     }

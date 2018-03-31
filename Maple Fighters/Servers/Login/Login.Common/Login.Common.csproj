@@ -45,8 +45,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Enums\LoginOperations.cs" />
-    <Compile Include="Parameters\LoginRequestParameters.cs" />
-    <Compile Include="Parameters\LoginResponseParameters.cs" />
+    <Compile Include="Parameters\AuthenticateRequestParameters.cs" />
+    <Compile Include="Parameters\AuthenticateResponseParameters.cs" />
     <Compile Include="Enums\LoginStatus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

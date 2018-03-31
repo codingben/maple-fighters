@@ -2,6 +2,6 @@
 {
     public enum LoginOperations : byte
     {
-        Login
+        Authenticate
     }
 }

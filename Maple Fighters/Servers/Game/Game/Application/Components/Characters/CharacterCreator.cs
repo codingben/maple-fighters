@@ -5,7 +5,7 @@ using Game.InterestManagement;
 using Physics.Box2D;
 using ServerApplication.Common.ApplicationBase;
 using ServerApplication.Common.Components;
-using Shared.Game.Common;
+using Game.Common;
 using SceneObject = Game.InterestManagement.SceneObject;
 
 namespace Game.Application.Components
@@ -25,14 +25,14 @@ namespace Game.Application.Components
             characterSpawnDetailsProvider = Server.Components.GetComponent<ICharacterSpawnDetailsProvider>().AssertNotNull();
         }
 
-        public ISceneObject Create(CharacterFromDatabaseParameters character)
+        public ISceneObject Create(CharacterParameters character)
         {
             const Maps MAP = Maps.Map_1;
 
             var scene = sceneContainer.GetSceneWrapper(MAP).AssertNotNull();
             var spawnDetails = characterSpawnDetailsProvider.GetCharacterSpawnDetails(MAP);
-
-            var sceneObject = scene.GetScene().AddSceneObject(new SceneObject(IdGenerator.GetId(), SCENE_OBJECT_NAME, spawnDetails));
+            var id = IdGenerator.GetId();
+            var sceneObject = scene.GetScene().AddSceneObject(new SceneObject(id, SCENE_OBJECT_NAME, spawnDetails));
             sceneObject.Components.AddComponent(new InterestArea(spawnDetails.Position, scene.GetScene().RegionSize));
             sceneObject.Components.AddComponent(new InterestAreaNotifier());
             sceneObject.Components.AddComponent(new CharacterGetter(character));

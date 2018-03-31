@@ -29,9 +29,7 @@ namespace Registration.Application.PeerLogic.Operations
             var password = messageData.Parameters.Password;
             var firstName = messageData.Parameters.FirstName;
             var lastName = messageData.Parameters.LastName;
-
             databaseUserCreator.Create(email, password, firstName, lastName);
-
             return new RegisterResponseParameters(RegisterStatus.Succeed);
         }
     }

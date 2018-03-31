@@ -9,7 +9,7 @@ using Microsoft.Scripting.Hosting;
 using Physics.Box2D;
 using Physics.Box2D.PhysicsSimulation;
 using PythonScripting;
-using Shared.Game.Common;
+using Game.Common;
 
 namespace Game.Application.Components
 {

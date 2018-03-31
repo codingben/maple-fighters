@@ -1,0 +1,136 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{40F51EE4-D13D-4EAD-BF38-53A4361136D9}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Character.Service</RootNamespace>
+    <AssemblyName>Character.Service</AssemblyName>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="CommonCommunicationInterfaces, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\CommonCommunicationInterfaces.5.0.0\lib\net46\CommonCommunicationInterfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="CommunicationHelper, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\CommunicationHelper.4.0.0\lib\net46\CommunicationHelper.dll</HintPath>
+    </Reference>
+    <Reference Include="Coroutines, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Coroutines.5.0.5\lib\net46\Coroutines.dll</HintPath>
+    </Reference>
+    <Reference Include="LogUtils, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Coroutines.5.0.5\lib\net46\LogUtils.dll</HintPath>
+    </Reference>
+    <Reference Include="ServerCommunicationHelper, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\ServerCommunicationHelper.3.1.0\lib\net46\ServerCommunicationHelper.dll</HintPath>
+    </Reference>
+    <Reference Include="ServerCommunicationInterfaces, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\ServerCommunicationInterfaces.3.0.0\lib\net46\ServerCommunicationInterfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Common, Version=5.0.0.0, Culture=neutral, PublicKeyToken=02c12cbda47e6587, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\ServiceStack.Common.5.0.2\lib\net45\ServiceStack.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Interfaces, Version=5.0.0.0, Culture=neutral, PublicKeyToken=02c12cbda47e6587, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\ServiceStack.Interfaces.5.0.2\lib\net45\ServiceStack.Interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.OrmLite, Version=5.0.0.0, Culture=neutral, PublicKeyToken=02c12cbda47e6587, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\ServiceStack.OrmLite.5.0.2\lib\net45\ServiceStack.OrmLite.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Text, Version=5.0.0.0, Culture=neutral, PublicKeyToken=02c12cbda47e6587, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\ServiceStack.Text.5.0.2\lib\net45\ServiceStack.Text.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.ValueTuple, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\System.ValueTuple.4.4.0\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Application\CharacterServiceApplication.cs" />
+    <Compile Include="Application\Components\DatabaseCharacterCreator.cs" />
+    <Compile Include="Application\Components\DatabaseCharacterExistence.cs" />
+    <Compile Include="Application\Components\DatabaseCharacterGetter.cs" />
+    <Compile Include="Application\Components\DatabaseCharacterNameVerifier.cs" />
+    <Compile Include="Application\Components\DatabaseCharacterRemover.cs" />
+    <Compile Include="Application\Components\DatabaseCharactersGetter.cs" />
+    <Compile Include="Application\Components\IDatabaseCharacterCreator.cs" />
+    <Compile Include="Application\Components\IDatabaseCharacterExistence.cs" />
+    <Compile Include="Application\Components\IDatabaseCharacterGetter.cs" />
+    <Compile Include="Application\Components\IDatabaseCharacterNameVerifier.cs" />
+    <Compile Include="Application\Components\IDatabaseCharacterRemover.cs" />
+    <Compile Include="Application\Components\IDatabaseCharactersGetter.cs" />
+    <Compile Include="Application\Components\Utils.cs" />
+    <Compile Include="Application\Definition\CharactersTableDefinition.cs" />
+    <Compile Include="Application\Peer Logic\InboundServerPeerLogic.cs" />
+    <Compile Include="Application\Peer Logic\Operations\CreateCharacterOperationHandler.cs" />
+    <Compile Include="Application\Peer Logic\Operations\GetCharacterOperationHandler.cs" />
+    <Compile Include="Application\Peer Logic\Operations\GetCharactersOperationHandler.cs" />
+    <Compile Include="Application\Peer Logic\Operations\RemoveCharacterOperationHandler.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Servers\Game\Game.Common\Game.Common.csproj">
+      <Project>{AA536188-84FF-4286-A9E6-BAFBE1D8D37B}</Project>
+      <Name>Game.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Shared\Database\Database.Common\Database.Common.csproj">
+      <Project>{46B701A0-8606-4EF1-B111-F001EE74F124}</Project>
+      <Name>Database.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Shared\Servers\ComponentModel.Common\ComponentModel.Common.csproj">
+      <Project>{00565794-9958-47d9-9e8e-6d7193d67b9d}</Project>
+      <Name>ComponentModel.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Shared\Servers\PeerLogic.Common\PeerLogic.Common.csproj">
+      <Project>{F90F12D2-58E0-4718-A205-EBFD28C81742}</Project>
+      <Name>PeerLogic.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Shared\Servers\ServerApplication.Common\ServerApplication.Common.csproj">
+      <Project>{F82FBB67-7B1D-43B7-A415-3F407D40E5C7}</Project>
+      <Name>ServerApplication.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Shared\Servers\ServerCommunication.Common\ServerCommunication.Common\ServerCommunication.Common.csproj">
+      <Project>{5e8328b3-e51c-4291-b7de-83673c4ce889}</Project>
+      <Name>ServerCommunication.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Authorization\Authorization.Client.Common\Authorization.Client.Common.csproj">
+      <Project>{58359452-038A-44CD-AA7B-21D0C3507EC7}</Project>
+      <Name>Authorization.Client.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Authorization\Authorization.Server.Common\Authorization.Server.Common.csproj">
+      <Project>{174c1938-ca68-4549-97de-3470afacb7c7}</Project>
+      <Name>Authorization.Server.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Character.Server.Common\Character.Server.Common.csproj">
+      <Project>{42bb62da-299c-4ec1-b83c-894e5d75e505}</Project>
+      <Name>Character.Server.Common</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

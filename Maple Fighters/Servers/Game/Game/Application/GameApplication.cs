@@ -1,17 +1,21 @@
-﻿using Database.Common.AccessToken;
-using Database.Common.Components;
+﻿using System.Collections.Generic;
+using System.Reflection;
+using Authorization.Server.Common;
+using Character.Server.Common;
 using Game.Application.Components;
 using Game.Application.PeerLogics;
+using GameServerProvider.Server.Common;
 using PythonScripting;
 using ServerApplication.Common.ApplicationBase;
 using ServerCommunicationInterfaces;
+using UserProfile.Server.Common;
 
 namespace Game.Application
 {
     public class GameApplication : ApplicationBase
     {
-        public GameApplication(IFiberProvider fiberProvider) 
-            : base(fiberProvider)
+        public GameApplication(IFiberProvider fiberProvider, IServerConnector serverConnector)
+            : base(fiberProvider, serverConnector)
         {
             // Left blank intentionally
         }
@@ -28,34 +32,38 @@ namespace Game.Application
         {
             base.OnConnected(clientPeer);
 
-            WrapClientPeer(clientPeer, new UnauthenticatedPeerLogic());
+            WrapClientPeer(clientPeer, new UnauthorizedClientPeerLogic());
         }
 
         private void AddComponents()
         {
-            RunPythonScriptEngine();
+            CreatePythonScriptEngine();
 
+            Server.Components.AddComponent(new AuthorizationService());
+            Server.Components.AddComponent(new CharacterService());
+            Server.Components.AddComponent(new UserProfileService());
+            Server.Components.AddComponent(new GameServerProviderService());
             Server.Components.AddComponent(new CharacterSpawnDetailsProvider());
             Server.Components.AddComponent(new SceneContainer());
             Server.Components.AddComponent(new CharacterCreator());
-            Server.Components.AddComponent(new DatabaseConnectionProvider());
-            Server.Components.AddComponent(new DatabaseCharacterCreator());
-            Server.Components.AddComponent(new DatabaseCharacterRemover());
-            Server.Components.AddComponent(new DatabaseCharacterNameVerifier());
-            Server.Components.AddComponent(new DatabaseCharactersGetter());
-            Server.Components.AddComponent(new DatabaseCharacterExistence());
-            Server.Components.AddComponent(new DatabaseAccessTokenExistence());
-            Server.Components.AddComponent(new DatabaseAccessTokenProvider());
-            Server.Components.AddComponent(new DatabaseUserIdViaAccessTokenProvider());
-            Server.Components.AddComponent(new LocalDatabaseAccessTokens());
         }
 
-        private void RunPythonScriptEngine()
+        private void CreatePythonScriptEngine()
         {
             var pythonScriptEngine = Server.Components.AddComponent(new PythonScriptEngine());
-            pythonScriptEngine.GetScriptEngine().Runtime.LoadAssembly(typeof(MathematicsHelper.Vector2).Assembly);
-            pythonScriptEngine.GetScriptEngine().Runtime.LoadAssembly(typeof(InterestManagement.SceneObject).Assembly);
-            pythonScriptEngine.GetScriptEngine().Runtime.LoadAssembly(typeof(Physics.Box2D.PhysicsWorldInfo).Assembly);
+            var assemblies = GetPythonScriptEngineAssemblies();
+
+            foreach (var assembly in assemblies)
+            {
+                pythonScriptEngine.GetScriptEngine().Runtime.LoadAssembly(assembly);
+            }
+        }
+
+        private IEnumerable<Assembly> GetPythonScriptEngineAssemblies()
+        {
+            yield return typeof(MathematicsHelper.Vector2).Assembly;
+            yield return typeof(InterestManagement.SceneObject).Assembly;
+            yield return typeof(Physics.Box2D.PhysicsWorldInfo).Assembly;
         }
     }
 }

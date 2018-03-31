@@ -1,6 +1,6 @@
 from MathematicsHelper import *
 from Physics.Box2D import PhysicsWorldInfo
-from Shared.Game.Common import Maps
+from Game.Common import Maps
 
 sceneSize = Vector2(30, 30)
 regionSize = Vector2(10, 5)

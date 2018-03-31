@@ -2,7 +2,7 @@
 using CommonCommunicationInterfaces;
 using CommunicationHelper;
 
-namespace Shared.Game.Common
+namespace Game.Common
 {
     public struct SceneObjectsRemovedEventParameters : IParameters
     {

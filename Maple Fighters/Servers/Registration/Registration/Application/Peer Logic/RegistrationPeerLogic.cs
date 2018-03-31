@@ -1,5 +1,6 @@
 ﻿using CommunicationHelper;
 using PeerLogic.Common;
+using PeerLogic.Common.Components;
 using Registration.Application.PeerLogic.Operations;
 using Registration.Common;
 using ServerCommunicationInterfaces;
@@ -12,12 +13,20 @@ namespace Registration.Application.PeerLogic
         {
             base.Initialize(peer);
 
+            AddCommonComponents();
+            AddComponents();
+
             AddHandlerForRegisterOperation();
+        }
+
+        private void AddComponents()
+        {
+            Components.AddComponent(new InactivityTimeout());
         }
 
         private void AddHandlerForRegisterOperation()
         {
-            OperationRequestHandlerRegister.SetHandler(RegistrationOperations.Register, new RegisterOperationHandler());
+            OperationHandlerRegister.SetHandler(RegistrationOperations.Register, new RegisterOperationHandler());
         }
     }
 }

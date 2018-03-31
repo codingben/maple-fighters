@@ -1,7 +1,7 @@
 from MathematicsHelper import *
 from Game.InterestManagement import *
 from Game.Application.SceneObjects import *
-from Shared.Game.Common import Maps
+from Game.Common import Maps
 
 import os
 import json

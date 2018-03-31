@@ -6,9 +6,9 @@ namespace Registration.PhotonStarter
 {
     public class PhotonStarter : PhotonStarterBase<RegistrationApplication>
     {
-        protected override RegistrationApplication CreateApplication(IFiberProvider fiberProvider)
+        protected override RegistrationApplication CreateApplication(IFiberProvider fiberProvider, IServerConnector serverConnector)
         {
-            return new RegistrationApplication(fiberProvider);
+            return new RegistrationApplication(fiberProvider, serverConnector);
         }
     }
 }

@@ -1,24 +1,28 @@
 ﻿using CommonCommunicationInterfaces;
 using CommonTools.Log;
 using Game.Application.PeerLogic.Components;
+using Game.Application.SceneObjects.Components;
+using Game.Common;
 using Game.InterestManagement;
 using ServerCommunicationHelper;
-using Shared.Game.Common;
 
 namespace Game.Application.PeerLogic.Operations
 {
     internal class EnterSceneOperationHandler : IOperationRequestHandler<EmptyParameters, EnterSceneResponseParameters>
     {
         private readonly ISceneObject sceneObject;
-        private readonly CharacterFromDatabaseParameters character;
 
-        public EnterSceneOperationHandler(ISceneObject sceneObject, CharacterFromDatabaseParameters character)
+        public EnterSceneOperationHandler(ISceneObject sceneObject)
         {
             this.sceneObject = sceneObject;
-            this.character = character;
         }
 
         public EnterSceneResponseParameters? Handle(MessageData<EmptyParameters> messageData, ref MessageSendOptions sendOptions)
+        {
+            return EnterScene();
+        }
+
+        private EnterSceneResponseParameters EnterScene()
         {
             var interestArea = sceneObject.Components.GetComponent<IInterestArea>().AssertNotNull();
             interestArea.DetectOverlapsWithRegions();
@@ -36,7 +40,8 @@ namespace Game.Application.PeerLogic.Operations
         private CharacterSpawnDetailsParameters GetCharacterSpawnDetailsShared()
         {
             var transform = sceneObject.Components.GetComponent<ITransform>().AssertNotNull();
-            return new CharacterSpawnDetailsParameters(sceneObject.Id, character, transform.Direction.GetDirectionsFromDirection());
+            var character = sceneObject.Components.GetComponent<ICharacterGetter>().AssertNotNull();
+            return new CharacterSpawnDetailsParameters(sceneObject.Id, character.GetCharacter(), transform.Direction.GetDirectionsFromDirection());
         }
     }
 }

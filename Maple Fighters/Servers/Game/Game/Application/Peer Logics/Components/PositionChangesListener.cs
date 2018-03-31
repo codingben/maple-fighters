@@ -4,7 +4,7 @@ using ComponentModel.Common;
 using Game.Application.SceneObjects.Components;
 using Game.InterestManagement;
 using MathematicsHelper;
-using Shared.Game.Common;
+using Game.Common;
 
 namespace Game.Application.PeerLogic.Components
 {

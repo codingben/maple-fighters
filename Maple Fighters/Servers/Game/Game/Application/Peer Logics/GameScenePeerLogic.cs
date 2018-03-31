@@ -6,19 +6,20 @@ using Game.InterestManagement;
 using PeerLogic.Common;
 using ServerApplication.Common.ApplicationBase;
 using ServerCommunicationInterfaces;
-using Shared.Game.Common;
+using Game.Common;
+using PeerLogic.Common.Components;
+using UserProfile.Server.Common;
 
 namespace Game.Application.PeerLogics
 {
     internal class GameScenePeerLogic : PeerLogicBase<GameOperations, GameEvents>
     {
-        private readonly CharacterFromDatabaseParameters character;
+        private readonly int userId;
         private readonly ISceneObject sceneObject;
 
-        public GameScenePeerLogic(CharacterFromDatabaseParameters character)
+        public GameScenePeerLogic(int userId, CharacterParameters character)
         {
-            this.character = character;
-
+            this.userId = userId;
             sceneObject = CreateSceneObject(character);
         }
 
@@ -39,31 +40,33 @@ namespace Game.Application.PeerLogics
         {
             sceneObject.Components.AddComponent(new PeerIdGetter(PeerWrapper.PeerId));
 
+            Components.AddComponent(new InactivityTimeout());
+            Components.AddComponent(new UserProfileTracker(userId, ServerType.Game, isUserProfileChanged: true));
             Components.AddComponent(new SceneObjectGetter(sceneObject));
             Components.AddComponent(new InterestManagementNotifier());
-            Components.AddComponent(new CharactersSender());
+            Components.AddComponent(new CharacterSender());
             Components.AddComponent(new PositionChangesListener());
         }
 
         private void AddHandlerForEnterSceneOperation()
         {
-            OperationRequestHandlerRegister.SetHandler(GameOperations.EnterScene, new EnterSceneOperationHandler(sceneObject, character));
+            OperationHandlerRegister.SetHandler(GameOperations.EnterScene, new EnterSceneOperationHandler(sceneObject));
         }
 
         private void AddHandlerForUpdatePositionOperation()
         {
             var transform = sceneObject.Components.GetComponent<ITransform>().AssertNotNull();
-            OperationRequestHandlerRegister.SetHandler(GameOperations.PositionChanged, new UpdatePositionOperationHandler(transform));
+            OperationHandlerRegister.SetHandler(GameOperations.PositionChanged, new UpdatePositionOperationHandler(transform));
         }
 
         private void AddHandlerForUpdatePlayerStateOperation()
         {
-            OperationRequestHandlerRegister.SetHandler(GameOperations.PlayerStateChanged, new UpdatePlayerStateOperationHandler(sceneObject));
+            OperationHandlerRegister.SetHandler(GameOperations.PlayerStateChanged, new UpdatePlayerStateOperationHandler(sceneObject));
         }
 
         private void AddHandlerForChangeSceneOperation()
         {
-            OperationRequestHandlerRegister.SetHandler(GameOperations.ChangeScene, new ChangeSceneOperationHandler(sceneObject));
+            OperationHandlerRegister.SetHandler(GameOperations.ChangeScene, new ChangeSceneOperationHandler(sceneObject));
         }
 
         public override void Dispose()
@@ -73,7 +76,7 @@ namespace Game.Application.PeerLogics
             sceneObject.Dispose();
         }
 
-        private ISceneObject CreateSceneObject(CharacterFromDatabaseParameters character)
+        private ISceneObject CreateSceneObject(CharacterParameters character)
         {
             var characterSceneObjectCreator = Server.Components.GetComponent<ICharacterCreator>().AssertNotNull();
             var characterSceneObject = characterSceneObjectCreator.Create(character);

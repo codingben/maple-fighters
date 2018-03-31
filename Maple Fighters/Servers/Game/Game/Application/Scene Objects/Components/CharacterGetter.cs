@@ -1,19 +1,19 @@
 ﻿using ComponentModel.Common;
+using Game.Common;
 using Game.InterestManagement;
-using Shared.Game.Common;
 
 namespace Game.Application.SceneObjects.Components
 {
     internal class CharacterGetter : Component<ISceneObject>, ICharacterGetter
     {
-        private readonly CharacterFromDatabaseParameters character;
+        private readonly CharacterParameters character;
 
-        public CharacterGetter(CharacterFromDatabaseParameters character)
+        public CharacterGetter(CharacterParameters character)
         {
             this.character = character;
         }
 
-        public CharacterFromDatabaseParameters GetCharacter()
+        public CharacterParameters GetCharacter()
         {
             return character;
         }

@@ -1,13 +1,13 @@
 ﻿using System.IO;
 using CommonCommunicationInterfaces;
 
-namespace Shared.Game.Common
+namespace Game.Common
 {
     public struct ChangeSceneResponseParameters : IParameters
     {
         public Maps Map;
 
-        public ChangeSceneResponseParameters(Maps map)
+        public ChangeSceneResponseParameters(Maps map = 0)
         {
             Map = map;
         }

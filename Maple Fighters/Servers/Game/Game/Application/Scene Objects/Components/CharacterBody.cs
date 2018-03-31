@@ -7,7 +7,7 @@ using ComponentModel.Common;
 using Game.InterestManagement;
 using MathematicsHelper;
 using Physics.Box2D;
-using Shared.Game.Common;
+using Game.Common;
 
 namespace Game.Application.SceneObjects.Components
 {

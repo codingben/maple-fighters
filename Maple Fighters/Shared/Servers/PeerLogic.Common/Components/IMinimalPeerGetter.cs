@@ -5,7 +5,7 @@ namespace PeerLogic.Common.Components
 {
     public interface IMinimalPeerGetter : IExposableComponent
     {
-        int GetPeerId();
-        IMinimalPeer GetPeer();
+        int PeerId { get; }
+        IMinimalPeer Peer { get; }
     }
 }
