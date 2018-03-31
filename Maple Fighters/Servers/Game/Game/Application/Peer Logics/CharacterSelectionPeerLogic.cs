@@ -3,6 +3,7 @@ using CommunicationHelper;
 using Game.Application.PeerLogic.Operations;
 using Game.Common;
 using PeerLogic.Common;
+using PeerLogic.Common.Components;
 using ServerCommunicationInterfaces;
 using UserProfile.Server.Common;
 
@@ -11,6 +12,7 @@ namespace Game.Application.PeerLogics
     internal class CharacterSelectionPeerLogic : PeerLogicBase<CharacterOperations, EmptyEventCode>
     {
         private readonly int userId;
+        private const int INACTIVITY_TIMEOUT = 120; // In seconds
 
         public CharacterSelectionPeerLogic(int userId)
         {
@@ -32,6 +34,8 @@ namespace Game.Application.PeerLogics
 
         private void AddComponents()
         {
+            Components.AddComponent(new InactivityTimeout(INACTIVITY_TIMEOUT));
+
             var userProfileTracker = Components.AddComponent(new UserProfileTracker(userId, ServerType.Game, isUserProfileChanged: true));
             userProfileTracker.ChangeUserProfileProperties();
         }

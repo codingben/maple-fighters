@@ -53,6 +53,7 @@ namespace PeerLogic.Common
         protected void AddCommonComponents()
         {
             Components.AddComponent(new MinimalPeerGetter(PeerWrapper.PeerId, PeerWrapper.Peer));
+            Components.AddComponent(new ClientPeerGetter(PeerWrapper.PeerId, PeerWrapper.Peer));
             Components.AddComponent(new EventSenderWrapper(EventSender.AssertNotNull()));
         }
     }

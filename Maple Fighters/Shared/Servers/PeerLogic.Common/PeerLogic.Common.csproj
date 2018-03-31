@@ -63,6 +63,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Components\ClientPeerGetter.cs" />
+    <Compile Include="Components\IClientPeerGetter.cs" />
+    <Compile Include="Components\InactivityTimeout.cs" />
     <Compile Include="Peer Logic\ClientPeerWrapper.cs" />
     <Compile Include="Components\CoroutinesExecutor.cs" />
     <Compile Include="Components\EventSenderWrapper.cs" />

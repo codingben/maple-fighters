@@ -2,6 +2,7 @@
 using GameServerProvider.Client.Common;
 using GameServerProvider.Service.Application.PeerLogic.Operations;
 using PeerLogic.Common;
+using PeerLogic.Common.Components;
 using ServerCommunicationInterfaces;
 using UserProfile.Server.Common;
 
@@ -33,6 +34,8 @@ namespace GameServerProvider.Service.Application.PeerLogics
 
         private void AddComponents()
         {
+            Components.AddComponent(new InactivityTimeout());
+
             var userProfileTracker = Components.AddComponent(new UserProfileTracker(userId, ServerType.GameServerProvider, isUserProfileChanged: true));
             userProfileTracker.ChangeUserProfileProperties();
         }

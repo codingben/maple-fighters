@@ -52,7 +52,7 @@ namespace UserProfile.Service.Application.PeerLogic.Operations
                 usersContainer.Remove(userId);
             }
 
-            var parameters = new UserProfilePropertiesChangedEventParameters(userId, serverType, connectionStatus);
+            var parameters = new UserProfilePropertiesChangedEventParameters(userId, serverType);
             userProfilePropertiesChangesNotifier.Notify(parameters);
             return null;
         }

@@ -94,7 +94,7 @@ namespace UserProfile.Service.Application.PeerLogic
             {
                 databaseUserProfilePropertiesUpdater.Update(userId, default(int), ServerType.Login, ConnectionStatus.Disconnected);
 
-                var parameters = new UserProfilePropertiesChangedEventParameters(userId, ServerType.Login, ConnectionStatus.Disconnected);
+                var parameters = new UserProfilePropertiesChangedEventParameters(userId, ServerType.Login);
                 userProfilePropertiesChangesNotifier.Notify(parameters);
 
                 RemoveAuthorization(userId);

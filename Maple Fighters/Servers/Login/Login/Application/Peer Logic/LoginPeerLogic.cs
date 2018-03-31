@@ -2,6 +2,7 @@
 using Login.Application.PeerLogic.Operations;
 using Login.Common;
 using PeerLogic.Common;
+using PeerLogic.Common.Components;
 using ServerCommunicationInterfaces;
 using UserProfile.Server.Common;
 
@@ -13,7 +14,15 @@ namespace Login.Application.PeerLogic
         {
             base.Initialize(peer);
 
+            AddCommonComponents();
+            AddComponents();
+
             AddHandlerForAuthenticationOperation();
+        }
+
+        private void AddComponents()
+        {
+            Components.AddComponent(new InactivityTimeout());
         }
 
         private void AddHandlerForAuthenticationOperation()
@@ -24,8 +33,6 @@ namespace Login.Application.PeerLogic
         private void OnAuthenticated(int userId)
         {
             OperationHandlerRegister.Dispose();
-
-            AddCommonComponents();
 
             Components.AddComponent(new UserProfileTracker(userId, ServerType.Login, isUserProfileChanged: true));
         }

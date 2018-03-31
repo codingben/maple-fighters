@@ -1,4 +1,5 @@
-﻿using Authorization.Server.Common;
+﻿using System;
+using Authorization.Server.Common;
 using CommonCommunicationInterfaces;
 using CommonTools.Log;
 using ComponentModel.Common;
@@ -94,9 +95,13 @@ namespace UserProfile.Server.Common
 
         private void OnUserProfilePropertiesChanged(UserProfilePropertiesChangedEventParameters parameters)
         {
-            var isConnected = parameters.ConnectionStatus == ConnectionStatus.Connected;
             var isServerChanged = parameters.ServerType != serverType;
-            if (isConnected && isServerChanged)
+            if (isServerChanged)
+            {
+                DisconnectManually();
+            }
+
+            void DisconnectManually()
             {
                 isManuallyDisconnected = true;
                 peerGetter.Peer.Disconnect();
