@@ -66,13 +66,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ExitButtonHandler.cs" />
-    <Compile Include="IPhotonControl.cs" />
-    <Compile Include="IServersContainer.cs" />
-    <Compile Include="IServersController.cs" />
-    <Compile Include="IServersMenu.cs" />
-    <Compile Include="Logger.cs" />
-    <Compile Include="LogsFolderButtonHandler.cs" />
+    <Compile Include="Photon Control\Components\ClearLogsButtonHandler.cs" />
+    <Compile Include="Photon Control\Components\ExitButtonHandler.cs" />
+    <Compile Include="Photon Control\IPhotonControl.cs" />
+    <Compile Include="Photon Control\IPhotonControlEvents.cs" />
+    <Compile Include="Photon Control\IPhotonControlGUI.cs" />
+    <Compile Include="Photon Control\Components\IServersContainer.cs" />
+    <Compile Include="Photon Control\Components\IServersController.cs" />
+    <Compile Include="Photon Control\Components\IServersMenu.cs" />
+    <Compile Include="Photon Control\Logger.cs" />
+    <Compile Include="Photon Control\Components\LogsFolderButtonHandler.cs" />
     <Compile Include="PhotonControl.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -81,12 +84,12 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ServerDetails.cs" />
-    <Compile Include="ServersContainer.cs" />
-    <Compile Include="ServersController.cs" />
-    <Compile Include="ServersCreator.cs" />
-    <Compile Include="ServersMenu.cs" />
-    <Compile Include="Utils.cs" />
+    <Compile Include="Photon Control\Components\ServerDetails.cs" />
+    <Compile Include="Photon Control\Components\ServersContainer.cs" />
+    <Compile Include="Photon Control\Components\ServersController.cs" />
+    <Compile Include="Photon Control\Components\ServersCreator.cs" />
+    <Compile Include="Photon Control\Components\ServersMenu.cs" />
+    <Compile Include="Photon Control\Utils.cs" />
     <EmbeddedResource Include="PhotonControl.aa.resx">
       <DependentUpon>PhotonControl.cs</DependentUpon>
     </EmbeddedResource>

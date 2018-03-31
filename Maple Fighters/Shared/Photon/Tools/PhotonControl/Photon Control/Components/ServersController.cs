@@ -4,7 +4,7 @@ using System.Windows.Forms;
 using CommonTools.Log;
 using ComponentModel.Common;
 
-namespace PhotonControl
+namespace PhotonControl.Components
 {
     internal class ServersController : Component<IPhotonControl>, IServersController
     {

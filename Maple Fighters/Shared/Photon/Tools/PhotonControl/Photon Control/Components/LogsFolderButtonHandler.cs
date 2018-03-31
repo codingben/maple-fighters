@@ -1,7 +1,7 @@
 ﻿using System.Windows.Forms;
 using ComponentModel.Common;
 
-namespace PhotonControl
+namespace PhotonControl.Components
 {
     internal class LogsFolderButtonHandler : Component<IPhotonControl>
     {

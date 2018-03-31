@@ -4,7 +4,7 @@ using System.Xml;
 using CommonTools.Log;
 using ComponentModel.Common;
 
-namespace PhotonControl
+namespace PhotonControl.Components
 {
     internal class ServersCreator : Component<IPhotonControl>
     {
