@@ -12,8 +12,8 @@ namespace Scripts.UI.Windows
 {
     public class ChatWindow : UserInterfaceWindow
     {
-        public bool IsChatActive { get; set; }
         public event Action<string> SendChatMessage;
+        public bool IsChatActive { get; set; }
 
         [SerializeField] private TextMeshProUGUI chatText;
         [SerializeField] private TMP_InputField inputField;
@@ -35,7 +35,7 @@ namespace Scripts.UI.Windows
         {
             SetActiveInputField(IsChatInputFieldActivated());
 
-            if (IsChatActive && !IsChatInputFieldActivated() && !string.IsNullOrWhiteSpace(chatText.text))
+            if (IsChatActive && !IsChatInputFieldActivated() && !string.IsNullOrWhiteSpace(inputField.text))
             {
                 SendMessage();
                 ResetInputField();

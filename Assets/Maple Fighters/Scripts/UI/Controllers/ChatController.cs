@@ -51,8 +51,8 @@ namespace Scripts.UI.Controllers
 
         public void OnConnectionClosed()
         {
-            var chatWindow = UserInterfaceContainer.Instance.Get<ChatWindow>().AssertNotNull();
-            chatWindow.AddMessage("A connection with chat server has been closed.", ChatMessageColor.Red);
+            var chatWindow = UserInterfaceContainer.Instance?.Get<ChatWindow>().AssertNotNull();
+            chatWindow?.AddMessage("A connection with chat server has been closed.", ChatMessageColor.Red);
         }
 
         public void OnAuthorized()

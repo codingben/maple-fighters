@@ -49,7 +49,7 @@ namespace Scripts.Services
             }
             else
             {
-                ChatController.Instance.OnConnectionClosed();
+                ChatController.Instance?.OnConnectionClosed();
             }
         }
 
