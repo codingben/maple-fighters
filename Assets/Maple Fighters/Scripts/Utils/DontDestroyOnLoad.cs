@@ -29,6 +29,11 @@ namespace Scripts.Utils
 
         private void OnApplicationQuit()
         {
+            OnApplicationQuiting();
+        }
+
+        protected virtual void OnApplicationQuiting()
+        {
             Instance = null;
         }
     }

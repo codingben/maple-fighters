@@ -11,12 +11,12 @@ namespace Scripts.UI
         [SerializeField] private int[] skipBuildIndexes;
 
         private BackgroundImage backgroundImage;
-        private BackgroundCharacters backgroundCharactersParent;
+        private BackgroundCharacters backgroundCharacters;
 
         private void Start()
         {
             backgroundImage = UserInterfaceContainer.Instance.Add<BackgroundImage>(ViewType.Background);
-            backgroundCharactersParent = UserInterfaceContainer.Instance.Add<BackgroundCharacters>(ViewType.Background, Index.Last);
+            backgroundCharacters = UserInterfaceContainer.Instance.Add<BackgroundCharacters>(ViewType.Background, Index.Last);
 
             SubscribeToSceneLoaded();
         }
@@ -45,7 +45,7 @@ namespace Scripts.UI
             }
 
             UserInterfaceContainer.Instance?.Remove(backgroundImage);
-            UserInterfaceContainer.Instance?.Remove(backgroundCharactersParent);
+            UserInterfaceContainer.Instance?.Remove(backgroundCharacters);
 
             Destroy(gameObject);
         }

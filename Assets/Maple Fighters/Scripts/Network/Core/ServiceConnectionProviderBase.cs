@@ -27,6 +27,7 @@ namespace Scripts.Services
         }
         private ExternalCoroutinesExecutor coroutinesExecutor = new ExternalCoroutinesExecutor();
         private IServiceBase serviceBase => GetServiceBase();
+
         protected bool IsDestroying;
 
         private void Update()
@@ -39,6 +40,11 @@ namespace Scripts.Services
             IsDestroying = true;
 
             CoroutinesExecutor?.Dispose();
+        }
+
+        protected override void OnApplicationQuiting()
+        {
+            base.OnApplicationQuiting();
 
             Dispose();
         }
