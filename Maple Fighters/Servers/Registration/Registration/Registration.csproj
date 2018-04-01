@@ -74,7 +74,7 @@
     <Compile Include="Application\Components\IDatabaseUserCreator.cs" />
     <Compile Include="Application\Components\IDatabaseUserEmailVerifier.cs" />
     <Compile Include="Application\Peer Logic\Operations\RegisterOperationHandler.cs" />
-    <Compile Include="Application\Peer Logic\RegistrationPeerLogic.cs" />
+    <Compile Include="Application\Peer Logic\ClientPeerLogic.cs" />
     <Compile Include="Application\RegistrationApplication.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -3,13 +3,12 @@ using PeerLogic.Common;
 using PeerLogic.Common.Components;
 using Registration.Application.PeerLogic.Operations;
 using Registration.Common;
-using ServerCommunicationInterfaces;
 
 namespace Registration.Application.PeerLogic
 {
-    internal class RegistrationPeerLogic : PeerLogicBase<RegistrationOperations, EmptyEventCode>
+    internal class ClientPeerLogic : PeerLogicBase<RegistrationOperations, EmptyEventCode>
     {
-        public override void Initialize(IClientPeerWrapper<IClientPeer> peer)
+        public override void Initialize(IClientPeerWrapper peer)
         {
             base.Initialize(peer);
 

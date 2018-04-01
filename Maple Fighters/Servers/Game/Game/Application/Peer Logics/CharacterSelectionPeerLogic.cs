@@ -4,7 +4,6 @@ using Game.Application.PeerLogic.Operations;
 using Game.Common;
 using PeerLogic.Common;
 using PeerLogic.Common.Components;
-using ServerCommunicationInterfaces;
 using UserProfile.Server.Common;
 
 namespace Game.Application.PeerLogics
@@ -18,7 +17,7 @@ namespace Game.Application.PeerLogics
             this.userId = userId;
         }
 
-        public override void Initialize(IClientPeerWrapper<IClientPeer> peer)
+        public override void Initialize(IClientPeerWrapper peer)
         {
             base.Initialize(peer);
 
@@ -63,16 +62,16 @@ namespace Game.Application.PeerLogics
         {
             if (character.HasValue)
             {
-                PeerWrapper.SetPeerLogic(new GameScenePeerLogic(userId, character.Value));
+                ClientPeerWrapper.SetPeerLogic(new GameScenePeerLogic(userId, character.Value));
             }
             else
             {
-                var ip = PeerWrapper.Peer.ConnectionInformation.Ip;
-                var peerId = PeerWrapper.PeerId;
+                var ip = ClientPeerWrapper.Peer.ConnectionInformation.Ip;
+                var peerId = ClientPeerWrapper.PeerId;
 
                 LogUtils.Log(MessageBuilder.Trace($"A peer {ip} with id #{peerId} does not have character but trying to enter with character."));
 
-                PeerWrapper.Peer.Disconnect();
+                ClientPeerWrapper.Peer.Disconnect();
             }
         }
     }

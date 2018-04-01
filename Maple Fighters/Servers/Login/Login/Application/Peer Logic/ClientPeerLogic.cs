@@ -3,14 +3,13 @@ using Login.Application.PeerLogic.Operations;
 using Login.Common;
 using PeerLogic.Common;
 using PeerLogic.Common.Components;
-using ServerCommunicationInterfaces;
 using UserProfile.Server.Common;
 
 namespace Login.Application.PeerLogic
 {
-    internal class LoginPeerLogic : PeerLogicBase<LoginOperations, EmptyEventCode>
+    internal class ClientPeerLogic : PeerLogicBase<LoginOperations, EmptyEventCode>
     {
-        public override void Initialize(IClientPeerWrapper<IClientPeer> peer)
+        public override void Initialize(IClientPeerWrapper peer)
         {
             base.Initialize(peer);
 

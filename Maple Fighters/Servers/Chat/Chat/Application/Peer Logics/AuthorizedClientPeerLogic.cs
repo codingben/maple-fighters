@@ -3,7 +3,6 @@ using Chat.Application.PeerLogic.Operations;
 using Chat.Common;
 using CommonTools.Log;
 using PeerLogic.Common;
-using ServerCommunicationInterfaces;
 using UserProfile.Server.Common;
 
 namespace Chat.Application.PeerLogics
@@ -17,7 +16,7 @@ namespace Chat.Application.PeerLogics
             this.userId = userId;
         }
 
-        public override void Initialize(IClientPeerWrapper<IClientPeer> peer)
+        public override void Initialize(IClientPeerWrapper peer)
         {
             base.Initialize(peer);
 

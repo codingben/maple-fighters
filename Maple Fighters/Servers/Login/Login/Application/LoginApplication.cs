@@ -28,7 +28,7 @@ namespace Login.Application
         {
             base.OnConnected(clientPeer);
 
-            WrapClientPeer(clientPeer, new LoginPeerLogic());
+            WrapClientPeer(clientPeer, new ClientPeerLogic());
         }
 
         private void AddComponents()

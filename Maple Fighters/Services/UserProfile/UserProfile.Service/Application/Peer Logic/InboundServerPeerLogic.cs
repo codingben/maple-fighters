@@ -2,7 +2,6 @@
 using CommonCommunicationInterfaces;
 using CommonTools.Log;
 using PeerLogic.Common;
-using ServerCommunicationInterfaces;
 using UserProfile.Server.Common;
 using UserProfile.Service.Application.Components;
 using UserProfile.Service.Application.PeerLogic.Components;
@@ -23,7 +22,7 @@ namespace UserProfile.Service.Application.PeerLogic
             databaseUserProfilePropertiesUpdater = Server.Components.GetComponent<IDatabaseUserProfilePropertiesUpdater>().AssertNotNull();
         }
 
-        public override void Initialize(IClientPeerWrapper<IClientPeer> peer)
+        public override void Initialize(IClientPeerWrapper peer)
         {
             base.Initialize(peer);
 
@@ -53,7 +52,7 @@ namespace UserProfile.Service.Application.PeerLogic
 
         private void AddHandlerForRegisterToUserProfileServiceOperation()
         {
-            var peerId = PeerWrapper.PeerId;
+            var peerId = ClientPeerWrapper.PeerId;
             OperationHandlerRegister.SetHandler(UserProfileOperations.Register, new RegisterToUserProfileServiceOperationHandler(peerId));
         }
 
@@ -74,12 +73,12 @@ namespace UserProfile.Service.Application.PeerLogic
 
         private void SubscribeToDisconnectionNotifier()
         {
-            PeerWrapper.Peer.PeerDisconnectionNotifier.Disconnected += OnDisconnected;
+            ClientPeerWrapper.Peer.PeerDisconnectionNotifier.Disconnected += OnDisconnected;
         }
 
         private void UnsubscribeFromDisconnectionNotifier()
         {
-            PeerWrapper.Peer.PeerDisconnectionNotifier.Disconnected -= OnDisconnected;
+            ClientPeerWrapper.Peer.PeerDisconnectionNotifier.Disconnected -= OnDisconnected;
         }
 
         private void OnDisconnected(DisconnectReason reason, string details)

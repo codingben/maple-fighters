@@ -2,7 +2,6 @@
 using CommonTools.Log;
 using CommunicationHelper;
 using PeerLogic.Common;
-using ServerCommunicationInterfaces;
 
 namespace Chat.Application.PeerLogics
 {
@@ -10,7 +9,7 @@ namespace Chat.Application.PeerLogics
 
     internal class UnauthorizedClientPeerLogic : PeerLogicBase<AuthorizationOperations, EmptyEventCode>
     {
-        public override void Initialize(IClientPeerWrapper<IClientPeer> peer)
+        public override void Initialize(IClientPeerWrapper peer)
         {
             base.Initialize(peer);
 
@@ -24,17 +23,17 @@ namespace Chat.Application.PeerLogics
 
         private void OnAuthorized(int userId)
         {
-            PeerWrapper.SetPeerLogic(new AuthorizedClientPeerLogic(userId));
+            ClientPeerWrapper.SetPeerLogic(new AuthorizedClientPeerLogic(userId));
         }
 
         private void OnNonAuthorized()
         {
-            var ip = PeerWrapper.Peer.ConnectionInformation.Ip;
-            var peerId = PeerWrapper.PeerId;
+            var ip = ClientPeerWrapper.Peer.ConnectionInformation.Ip;
+            var peerId = ClientPeerWrapper.PeerId;
 
             LogUtils.Log(MessageBuilder.Trace($"An authorization for peer {ip} with id #{peerId} has been failed."));
 
-            PeerWrapper.Peer.Disconnect();
+            ClientPeerWrapper.Peer.Disconnect();
         }
     }
 }

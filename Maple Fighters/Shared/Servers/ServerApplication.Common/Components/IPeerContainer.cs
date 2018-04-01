@@ -6,10 +6,10 @@ namespace ServerApplication.Common.Components
 {
     public interface IPeerContainer
     {
-        void AddPeerLogic(IClientPeerWrapper<IClientPeer> peerLogic);
+        void AddPeerLogic(IClientPeerWrapper peerLogic);
 
-        IClientPeerWrapper<IClientPeer> GetPeerWrapper(int peerId);
-        IEnumerable<IClientPeerWrapper<IClientPeer>> GetAllPeerWrappers();
+        IClientPeerWrapper GetPeerWrapper(int peerId);
+        IEnumerable<IClientPeerWrapper> GetAllPeerWrappers();
 
         int GetPeersCount();
     }

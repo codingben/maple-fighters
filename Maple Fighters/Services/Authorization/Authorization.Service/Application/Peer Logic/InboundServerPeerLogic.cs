@@ -2,13 +2,12 @@
 using Authorization.Service.Application.PeerLogic.Operations;
 using CommunicationHelper;
 using PeerLogic.Common;
-using ServerCommunicationInterfaces;
 
 namespace Authorization.Service.Application.PeerLogic
 {
     internal class InboundServerPeerLogic : PeerLogicBase<AuthorizationOperations, EmptyEventCode>
     {
-        public override void Initialize(IClientPeerWrapper<IClientPeer> peer)
+        public override void Initialize(IClientPeerWrapper peer)
         {
             base.Initialize(peer);
 

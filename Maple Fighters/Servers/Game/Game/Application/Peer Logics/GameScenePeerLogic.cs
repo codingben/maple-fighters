@@ -5,7 +5,6 @@ using Game.Application.PeerLogic.Operations;
 using Game.InterestManagement;
 using PeerLogic.Common;
 using ServerApplication.Common.ApplicationBase;
-using ServerCommunicationInterfaces;
 using Game.Common;
 using PeerLogic.Common.Components;
 using UserProfile.Server.Common;
@@ -23,7 +22,7 @@ namespace Game.Application.PeerLogics
             sceneObject = CreateSceneObject(character);
         }
 
-        public override void Initialize(IClientPeerWrapper<IClientPeer> peer)
+        public override void Initialize(IClientPeerWrapper peer)
         {
             base.Initialize(peer);
 
@@ -38,7 +37,7 @@ namespace Game.Application.PeerLogics
 
         private void AddComponents()
         {
-            sceneObject.Components.AddComponent(new PeerIdGetter(PeerWrapper.PeerId));
+            sceneObject.Components.AddComponent(new PeerIdGetter(ClientPeerWrapper.PeerId));
 
             Components.AddComponent(new InactivityTimeout());
             Components.AddComponent(new UserProfileTracker(userId, ServerType.Game, isUserProfileChanged: true));

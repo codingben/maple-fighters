@@ -2,14 +2,9 @@
 
 namespace PeerLogic.Common
 {
-    public interface IClientPeerWrapper<out T>
-        where T : IClientPeer
+    public interface IClientPeerWrapper : IPeerLogicHandler
     {
         int PeerId { get; }
-        T Peer { get; }
-        IPeerLogicBase PeerLogic { get; }
-
-        void SetPeerLogic<TPeerLogic>(TPeerLogic peerLogic)
-            where TPeerLogic : IPeerLogicBase;
+        IClientPeer Peer { get; }
     }
 }

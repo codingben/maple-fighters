@@ -3,7 +3,6 @@ using GameServerProvider.Client.Common;
 using GameServerProvider.Service.Application.PeerLogic.Operations;
 using PeerLogic.Common;
 using PeerLogic.Common.Components;
-using ServerCommunicationInterfaces;
 using UserProfile.Server.Common;
 
 namespace GameServerProvider.Service.Application.PeerLogics
@@ -17,7 +16,7 @@ namespace GameServerProvider.Service.Application.PeerLogics
             this.userId = userId;
         }
 
-        public override void Initialize(IClientPeerWrapper<IClientPeer> peer)
+        public override void Initialize(IClientPeerWrapper peer)
         {
             base.Initialize(peer);
 

@@ -11,9 +11,9 @@ namespace ServerApplication.Common.Components
     public class PeerContainer : Component, IPeerContainer
     {
         private readonly object locker = new object();
-        private readonly Dictionary<int, IClientPeerWrapper<IClientPeer>> peerLogics = new Dictionary<int, IClientPeerWrapper<IClientPeer>>();
+        private readonly Dictionary<int, IClientPeerWrapper> peerLogics = new Dictionary<int, IClientPeerWrapper>();
 
-        public void AddPeerLogic(IClientPeerWrapper<IClientPeer> peerLogic)
+        public void AddPeerLogic(IClientPeerWrapper peerLogic)
         {
             lock (locker)
             {
@@ -28,7 +28,7 @@ namespace ServerApplication.Common.Components
             }
         }
 
-        private void RemovePeerLogic(IClientPeerWrapper<IClientPeer> peerLogic, DisconnectReason reason, string details)
+        private void RemovePeerLogic(IClientPeerWrapper peerLogic, DisconnectReason reason, string details)
         {
             lock (locker)
             {
@@ -63,7 +63,7 @@ namespace ServerApplication.Common.Components
             }
         }
 
-        public IClientPeerWrapper<IClientPeer> GetPeerWrapper(int peerId)
+        public IClientPeerWrapper GetPeerWrapper(int peerId)
         {
             lock (locker)
             {
@@ -71,7 +71,7 @@ namespace ServerApplication.Common.Components
             }
         }
 
-        public IEnumerable<IClientPeerWrapper<IClientPeer>> GetAllPeerWrappers()
+        public IEnumerable<IClientPeerWrapper> GetAllPeerWrappers()
         {
             lock (locker)
             {

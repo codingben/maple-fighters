@@ -70,7 +70,7 @@
     <Compile Include="Application\Components\IDatabaseUserPasswordVerifier.cs" />
     <Compile Include="Application\Components\IDatabaseUserVerifier.cs" />
     <Compile Include="Application\LoginApplication.cs" />
-    <Compile Include="Application\Peer Logic\LoginPeerLogic.cs" />
+    <Compile Include="Application\Peer Logic\ClientPeerLogic.cs" />
     <Compile Include="Application\Peer Logic\Operations\AuthenticationOperationHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -26,7 +26,7 @@ namespace Registration.Application
         {
             base.OnConnected(clientPeer);
 
-            WrapClientPeer(clientPeer, new RegistrationPeerLogic());
+            WrapClientPeer(clientPeer, new ClientPeerLogic());
         }
 
         private void AddComponents()

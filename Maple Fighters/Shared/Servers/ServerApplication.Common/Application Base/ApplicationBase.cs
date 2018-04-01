@@ -57,7 +57,7 @@ namespace ServerApplication.Common.ApplicationBase
             var idGenerator = Server.Components.GetComponent<IIdGenerator>().AssertNotNull();
             var peerId = idGenerator.GenerateId();
 
-            var clientPeerWrapper = new ClientPeerWrapper<IClientPeer>(clientPeer, peerId);
+            var clientPeerWrapper = new ClientPeerWrapper(clientPeer, peerId);
             clientPeerWrapper.SetPeerLogic(peerLogic);
 
             peerContainer.AddPeerLogic(clientPeerWrapper);

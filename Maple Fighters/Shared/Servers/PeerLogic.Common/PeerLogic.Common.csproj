@@ -76,6 +76,7 @@
     <Compile Include="Components\MinimalPeerGetter.cs" />
     <Compile Include="Peer Logic\IClientPeerWrapper.cs" />
     <Compile Include="Peer Logic\IPeerLogicBase.cs" />
+    <Compile Include="Peer Logic\IPeerLogicHandler.cs" />
     <Compile Include="Peer Logic\PeerLogicBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

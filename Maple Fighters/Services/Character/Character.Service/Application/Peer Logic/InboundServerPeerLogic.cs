@@ -1,14 +1,13 @@
 ﻿using CharacterService.Application.PeerLogics.Operations;
 using CommunicationHelper;
 using PeerLogic.Common;
-using ServerCommunicationInterfaces;
 using Character.Server.Common;
 
 namespace Character.Service.Application.PeerLogic
 {
     internal class InboundServerPeerLogic : PeerLogicBase<CharacterOperations, EmptyEventCode>
     {
-        public override void Initialize(IClientPeerWrapper<IClientPeer> peer)
+        public override void Initialize(IClientPeerWrapper peer)
         {
             base.Initialize(peer);
 

@@ -3,14 +3,13 @@ using ServerCommunicationInterfaces;
 
 namespace PeerLogic.Common
 {
-    public sealed class ClientPeerWrapper<T> : IClientPeerWrapper<T>
-        where T : class, IClientPeer
+    public sealed class ClientPeerWrapper : IClientPeerWrapper
     {
         public int PeerId { get; }
-        public T Peer { get; }
+        public IClientPeer Peer { get; }
         public IPeerLogicBase PeerLogic { get; private set; }
 
-        public ClientPeerWrapper(T peer, int peerId)
+        public ClientPeerWrapper(IClientPeer peer, int peerId)
         {
             Peer = peer;
             PeerId = peerId;
@@ -43,7 +42,7 @@ namespace PeerLogic.Common
             });
         }
 
-        private void Dispose()
+        public void Dispose()
         {
             Peer.Fiber.Enqueue(() =>
             {
