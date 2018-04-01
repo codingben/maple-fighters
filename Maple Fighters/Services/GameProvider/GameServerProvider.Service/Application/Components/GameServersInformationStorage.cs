@@ -52,7 +52,7 @@ namespace GameServerProvider.Service.Application.Components
             }
         }
 
-        public GameServerInformation[] Provide()
+        public IEnumerable<GameServerInformation> Provide()
         {
             lock (locker)
             {

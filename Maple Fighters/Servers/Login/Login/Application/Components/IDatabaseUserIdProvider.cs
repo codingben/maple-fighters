@@ -1,8 +1,6 @@
-﻿using ComponentModel.Common;
-
-namespace Login.Application.Components
+﻿namespace Login.Application.Components
 {
-    internal interface IDatabaseUserIdProvider : IExposableComponent
+    internal interface IDatabaseUserIdProvider
     {
         int GetUserId(string email);
     }

@@ -51,7 +51,7 @@ namespace ComponentModel.Common
         }
 
         public T GetComponent<T>()
-            where T : IExposableComponent
+            where T : class
         {
             if (typeof(T).IsInterface)
             {
@@ -127,7 +127,7 @@ namespace ComponentModel.Common
         }
 
         public T GetComponent<T>()
-            where T : IExposableComponent
+            where T : class
         {
             if (typeof(T).IsInterface)
             {

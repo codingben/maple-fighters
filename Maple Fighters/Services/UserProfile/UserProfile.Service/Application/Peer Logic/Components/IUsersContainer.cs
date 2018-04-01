@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
-using ComponentModel.Common;
 
 namespace UserProfile.Service.Application.PeerLogic.Components
 {
-    internal interface IUsersContainer : IExposableComponent
+    internal interface IUsersContainer
     {
         void Add(int userId);
         void Remove(int userId);

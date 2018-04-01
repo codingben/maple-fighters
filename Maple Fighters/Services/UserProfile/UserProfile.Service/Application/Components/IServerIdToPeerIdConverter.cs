@@ -1,8 +1,6 @@
-﻿using ComponentModel.Common;
-
-namespace UserProfile.Service.Application.Components
+﻿namespace UserProfile.Service.Application.Components
 {
-    internal interface IServerIdToPeerIdConverter : IExposableComponent
+    internal interface IServerIdToPeerIdConverter
     {
         void Add(int serverId, int peerId);
         void Remove(int serverId);

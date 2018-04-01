@@ -1,8 +1,6 @@
-﻿using ComponentModel.Common;
-
-namespace Authorization.Service.Application.Components
+﻿namespace Authorization.Service.Application.Components
 {
-    internal interface IAccessTokenRemover : IExposableComponent
+    internal interface IAccessTokenRemover
     {
         void Remove(int userId);
     }

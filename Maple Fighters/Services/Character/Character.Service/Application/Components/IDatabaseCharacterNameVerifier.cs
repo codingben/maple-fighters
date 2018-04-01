@@ -1,8 +1,6 @@
-﻿using ComponentModel.Common;
-
-namespace CharacterService.Application.Components
+﻿namespace CharacterService.Application.Components
 {
-    internal interface IDatabaseCharacterNameVerifier : IExposableComponent
+    internal interface IDatabaseCharacterNameVerifier
     {
         bool Verify(string name);
     }

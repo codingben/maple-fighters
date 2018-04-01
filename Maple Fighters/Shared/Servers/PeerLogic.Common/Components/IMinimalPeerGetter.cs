@@ -1,9 +1,8 @@
-﻿using ComponentModel.Common;
-using ServerCommunicationInterfaces;
+﻿using ServerCommunicationInterfaces;
 
 namespace PeerLogic.Common.Components
 {
-    public interface IMinimalPeerGetter : IExposableComponent
+    public interface IMinimalPeerGetter
     {
         int PeerId { get; }
         IMinimalPeer Peer { get; }

@@ -1,9 +1,8 @@
-﻿using ComponentModel.Common;
-using Game.Common;
+﻿using Game.Common;
 
 namespace CharacterService.Application.Components
 {
-    internal interface IDatabaseCharacterGetter : IExposableComponent
+    internal interface IDatabaseCharacterGetter
     {
         CharacterParameters? GetCharacter(int userId, int characterIndex);
     }

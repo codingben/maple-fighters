@@ -1,9 +1,8 @@
-﻿using ComponentModel.Common;
-using ServerCommunicationInterfaces;
+﻿using ServerCommunicationInterfaces;
 
 namespace ServerApplication.Common.Components
 {
-    public interface IFiberStarter : IExposableComponent
+    public interface IFiberStarter
     {
         IFiber GetFiberStarter();
     }

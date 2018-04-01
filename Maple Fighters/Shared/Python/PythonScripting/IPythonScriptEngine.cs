@@ -1,9 +1,8 @@
-﻿using ComponentModel.Common;
-using Microsoft.Scripting.Hosting;
+﻿using Microsoft.Scripting.Hosting;
 
 namespace PythonScripting
 {
-    public interface IPythonScriptEngine : IExposableComponent
+    public interface IPythonScriptEngine
     {
         ScriptEngine GetScriptEngine();
     }

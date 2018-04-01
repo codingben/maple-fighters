@@ -1,10 +1,9 @@
-﻿using ComponentModel.Common;
-using Game.InterestManagement;
+﻿using Game.InterestManagement;
 using Game.Common;
 
 namespace Game.Application.Components
 {
-    internal interface ICharacterSpawnDetailsProvider : IExposableComponent
+    internal interface ICharacterSpawnDetailsProvider
     {
         void AddCharacterSpawnDetails(Maps map, TransformDetails spawnPositionDetails);
 

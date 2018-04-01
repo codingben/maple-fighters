@@ -1,12 +1,10 @@
 ﻿using System;
-using ComponentModel.Common;
 
 namespace UserProfile.Server.Common
 {
-    public interface IUserProfilePropertiesChangesEventInvoker : IExposableComponent
+    public interface IUserProfilePropertiesChangesEventInvoker
     {
         event Action<UserProfilePropertiesChangedEventParameters> UserProfilePropertiesChanged;
-
         void Invoke(UserProfilePropertiesChangedEventParameters parameters);
     }
 }

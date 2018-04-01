@@ -1,9 +1,8 @@
 ﻿using CommonTools.Coroutines;
-using ComponentModel.Common;
 
 namespace Physics.Box2D
 {
-    public interface ISceneOrderExecutor : IExposableComponent
+    public interface ISceneOrderExecutor
     {
         ICoroutinesExecutor GetPreUpdateExecutor();
         ICoroutinesExecutor GetUpdateExecutor();

@@ -1,8 +1,6 @@
-﻿using ComponentModel.Common;
-
-namespace GameServerProvider.Service.Application.Components
+﻿namespace GameServerProvider.Service.Application.Components
 {
-    internal interface IGameServerInformationRemover : IExposableComponent
+    internal interface IGameServerInformationRemover
     {
         void Remove(int id);
     }

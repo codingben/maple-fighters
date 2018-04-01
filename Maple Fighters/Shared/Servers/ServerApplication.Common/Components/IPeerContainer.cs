@@ -1,11 +1,10 @@
 ﻿using System.Collections.Generic;
-using ComponentModel.Common;
 using PeerLogic.Common;
 using ServerCommunicationInterfaces;
 
 namespace ServerApplication.Common.Components
 {
-    public interface IPeerContainer : IExposableComponent
+    public interface IPeerContainer
     {
         void AddPeerLogic(IClientPeerWrapper<IClientPeer> peerLogic);
 

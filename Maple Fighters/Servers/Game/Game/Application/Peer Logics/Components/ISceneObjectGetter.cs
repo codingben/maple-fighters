@@ -1,9 +1,8 @@
-﻿using ComponentModel.Common;
-using Game.InterestManagement;
+﻿using Game.InterestManagement;
 
 namespace Game.Application.PeerLogic.Components
 {
-    internal interface ISceneObjectGetter : IExposableComponent
+    internal interface ISceneObjectGetter
     {
         ISceneObject GetSceneObject();
     }

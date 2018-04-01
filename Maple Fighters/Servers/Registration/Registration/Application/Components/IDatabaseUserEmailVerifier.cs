@@ -1,8 +1,6 @@
-﻿using ComponentModel.Common;
-
-namespace Registration.Application.Components
+﻿namespace Registration.Application.Components
 {
-    internal interface IDatabaseUserEmailVerifier : IExposableComponent
+    internal interface IDatabaseUserEmailVerifier
     {
         bool Verify(string email);
     }

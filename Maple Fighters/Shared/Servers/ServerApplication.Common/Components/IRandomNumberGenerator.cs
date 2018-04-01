@@ -1,8 +1,6 @@
-﻿using ComponentModel.Common;
-
-namespace ServerApplication.Common.Components
+﻿namespace ServerApplication.Common.Components
 {
-    public interface IRandomNumberGenerator : IExposableComponent
+    public interface IRandomNumberGenerator
     {
         int GenerateRandomNumber();
         int GenerateRandomNumber(int min, int max);

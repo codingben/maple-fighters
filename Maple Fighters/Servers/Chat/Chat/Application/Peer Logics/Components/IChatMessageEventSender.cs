@@ -1,8 +1,6 @@
-﻿using ComponentModel.Common;
-
-namespace Chat.Application.PeerLogic.Components
+﻿namespace Chat.Application.PeerLogic.Components
 {
-    internal interface IChatMessageEventSender : IExposableComponent
+    internal interface IChatMessageEventSender
     {
         void SendChatMessage(string message);
     }

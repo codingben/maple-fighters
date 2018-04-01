@@ -1,8 +1,6 @@
-﻿using ComponentModel.Common;
-
-namespace Authorization.Service.Application.Components
+﻿namespace Authorization.Service.Application.Components
 {
-    internal interface IAccessTokenExistence : IExposableComponent
+    internal interface IAccessTokenExistence
     {
         bool Exists(int userId);
         bool Exists(string accessToken);

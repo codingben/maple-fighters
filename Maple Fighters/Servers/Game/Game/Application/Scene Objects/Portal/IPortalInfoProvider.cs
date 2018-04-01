@@ -1,9 +1,8 @@
-﻿using ComponentModel.Common;
-using Game.Common;
+﻿using Game.Common;
 
 namespace Game.Application.SceneObjects
 {
-    internal interface IPortalInfoProvider : IExposableComponent
+    internal interface IPortalInfoProvider
     {
         Maps Map { get; }
     }

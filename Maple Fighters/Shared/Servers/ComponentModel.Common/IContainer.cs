@@ -11,7 +11,7 @@ namespace ComponentModel.Common
             where T : IComponent;
 
         T GetComponent<T>()
-            where T : IExposableComponent;
+            where T : class;
     }
 
     public interface IContainer<out TOwner> : IDisposable
@@ -24,6 +24,6 @@ namespace ComponentModel.Common
             where T : IComponent<TOwner>;
 
         T GetComponent<T>()
-            where T : IExposableComponent;
+            where T : class;
     }
 }

@@ -1,8 +1,6 @@
-﻿using ComponentModel.Common;
-
-namespace Authorization.Service.Application.Components
+﻿namespace Authorization.Service.Application.Components
 {
-    internal interface IAccessTokenGetter : IExposableComponent
+    internal interface IAccessTokenGetter
     {
         string Get(int userId);
         int? Get(string accessToken);

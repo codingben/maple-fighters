@@ -1,10 +1,10 @@
-﻿using ComponentModel.Common;
+﻿using System.Collections.Generic;
 
 namespace GameServerProvider.Service.Application.Components
 {
-    internal interface IGameServersInformationProvider : IExposableComponent
+    internal interface IGameServersInformationProvider
     {
-        GameServerInformation[] Provide();
+        IEnumerable<GameServerInformation> Provide();
         GameServerInformation? Provide(int id);
     }
 }

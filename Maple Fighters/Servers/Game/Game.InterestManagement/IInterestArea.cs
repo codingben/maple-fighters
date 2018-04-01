@@ -1,10 +1,9 @@
 using System;
 using System.Collections.Generic;
-using ComponentModel.Common;
 
 namespace Game.InterestManagement
 {
-    public interface IInterestArea : IExposableComponent
+    public interface IInterestArea
     {
         event Action<ISceneObject> SubscriberAdded;
         event Action<int> SubscriberRemoved;

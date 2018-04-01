@@ -1,10 +1,9 @@
 ﻿using System;
-using ComponentModel.Common;
 using MathematicsHelper;
 
 namespace Game.InterestManagement
 {
-    public interface ITransform : IExposableComponent
+    public interface ITransform
     {
         Vector2 Position { get; set; }
         Vector2 Size { get; }

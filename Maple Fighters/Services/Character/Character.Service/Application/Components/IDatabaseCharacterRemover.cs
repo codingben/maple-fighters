@@ -1,8 +1,6 @@
-﻿using ComponentModel.Common;
-
-namespace CharacterService.Application.Components
+﻿namespace CharacterService.Application.Components
 {
-    internal interface IDatabaseCharacterRemover : IExposableComponent
+    internal interface IDatabaseCharacterRemover
     {
         void Remove(int userId, int characterIndex);
     }

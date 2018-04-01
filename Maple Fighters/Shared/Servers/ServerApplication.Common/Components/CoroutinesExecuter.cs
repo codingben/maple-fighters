@@ -4,7 +4,7 @@ using ComponentModel.Common;
 
 namespace ServerApplication.Common.Components
 {
-    public interface ICoroutinesExecuter : ICoroutinesExecutor, IExposableComponent
+    public interface ICoroutinesExecuter : ICoroutinesExecutor
     {
         // Left blank intentionally
     }

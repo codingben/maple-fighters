@@ -1,8 +1,6 @@
-﻿using ComponentModel.Common;
-
-namespace Authorization.Service.Application.Components
+﻿namespace Authorization.Service.Application.Components
 {
-    internal interface IAccessTokenCreator : IExposableComponent
+    internal interface IAccessTokenCreator
     {
         string Create(int userId);
     }

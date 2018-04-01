@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
-using ComponentModel.Common;
 
 namespace PhotonControl
 {
-    internal interface IServersContainer : IExposableComponent
+    internal interface IServersContainer
     {
         void AddServer(string serverName);
         void RemoveServer(string serverName);

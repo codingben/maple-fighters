@@ -1,8 +1,6 @@
-﻿using ComponentModel.Common;
-
-namespace ServerApplication.Common.Components
+﻿namespace ServerApplication.Common.Components
 {
-    public interface IIdGenerator : IExposableComponent
+    public interface IIdGenerator
     {
         int GenerateId();
     }

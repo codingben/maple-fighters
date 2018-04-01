@@ -1,8 +1,6 @@
-﻿using ComponentModel.Common;
-
-namespace Login.Application.Components
+﻿namespace Login.Application.Components
 {
-    internal interface IDatabaseUserPasswordVerifier : IExposableComponent
+    internal interface IDatabaseUserPasswordVerifier
     {
         bool Verify(string email, string password);
     }

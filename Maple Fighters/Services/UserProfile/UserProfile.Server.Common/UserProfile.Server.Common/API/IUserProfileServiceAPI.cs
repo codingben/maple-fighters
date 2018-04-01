@@ -1,8 +1,6 @@
-﻿using ComponentModel.Common;
-
-namespace UserProfile.Server.Common
+﻿namespace UserProfile.Server.Common
 {
-    public interface IUserProfileServiceAPI : IExposableComponent
+    public interface IUserProfileServiceAPI
     {
         void SubscribeToUserProfile(int userId);
         void UnsubscribeFromUserProfile(int userId);

@@ -1,9 +1,8 @@
-﻿using ComponentModel.Common;
-using Game.Common;
+﻿using Game.Common;
 
 namespace Game.Application.Components
 {
-    public interface ISceneContainer : IExposableComponent
+    public interface ISceneContainer
     {
         IGameSceneWrapper GetSceneWrapper(Maps map);
     }

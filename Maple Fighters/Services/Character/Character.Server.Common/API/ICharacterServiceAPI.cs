@@ -1,11 +1,10 @@
 ﻿using System.Threading.Tasks;
 using CommonTools.Coroutines;
-using ComponentModel.Common;
 using Game.Common;
 
 namespace Character.Server.Common
 {
-    public interface ICharacterServiceAPI : IExposableComponent
+    public interface ICharacterServiceAPI
     {
         Task<CreateCharacterResponseParameters> CreateCharacter(IYield yield, CreateCharacterRequestParametersEx parameters);
         Task<RemoveCharacterResponseParameters> RemoveCharacter(IYield yield, RemoveCharacterRequestParametersEx parameters);

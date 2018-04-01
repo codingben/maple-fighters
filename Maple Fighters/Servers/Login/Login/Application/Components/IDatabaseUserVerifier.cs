@@ -1,8 +1,6 @@
-﻿using ComponentModel.Common;
-
-namespace Login.Application.Components
+﻿namespace Login.Application.Components
 {
-    internal interface IDatabaseUserVerifier : IExposableComponent
+    internal interface IDatabaseUserVerifier
     {
         bool IsExists(string email);
     }

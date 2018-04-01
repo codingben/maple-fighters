@@ -1,9 +1,8 @@
-﻿using ComponentModel.Common;
-using ServerCommunicationInterfaces;
+﻿using ServerCommunicationInterfaces;
 
 namespace ServerApplication.Common.Components
 {
-    public interface IServerConnectorProvider : IExposableComponent
+    public interface IServerConnectorProvider
     {
         IServerConnector GetServerConnector();
     }

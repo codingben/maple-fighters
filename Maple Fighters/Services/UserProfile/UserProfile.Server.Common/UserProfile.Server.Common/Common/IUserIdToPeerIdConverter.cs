@@ -1,8 +1,6 @@
-﻿using ComponentModel.Common;
-
-namespace UserProfile.Server.Common
+﻿namespace UserProfile.Server.Common
 {
-    internal interface IUserIdToPeerIdConverter : IExposableComponent
+    internal interface IUserIdToPeerIdConverter
     {
         void Add(int userId, int peerId);
         void Remove(int userId);

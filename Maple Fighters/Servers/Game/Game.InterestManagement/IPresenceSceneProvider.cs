@@ -1,8 +1,6 @@
-﻿using ComponentModel.Common;
-
-namespace Game.InterestManagement
+﻿namespace Game.InterestManagement
 {
-    public interface IPresenceSceneProvider : IExposableComponent
+    public interface IPresenceSceneProvider
     {
         IScene Scene { get; set; }
     }

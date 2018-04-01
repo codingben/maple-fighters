@@ -1,9 +1,8 @@
 ﻿using System.Windows.Forms;
-using ComponentModel.Common;
 
 namespace PhotonControl
 {
-    internal interface IServersMenu : IExposableComponent
+    internal interface IServersMenu
     {
         ToolStripMenuItem AddServerItemToServersMenu(string serverName);
         void RemoveServerItemFromServersMenu(string serverName);

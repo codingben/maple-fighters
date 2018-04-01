@@ -1,9 +1,8 @@
 ﻿using System.Data;
-using ComponentModel.Common;
 
 namespace Database.Common.Components
 {
-    public interface IDatabaseConnectionProvider : IExposableComponent
+    public interface IDatabaseConnectionProvider
     {
         IDbConnection GetDbConnection();
     }

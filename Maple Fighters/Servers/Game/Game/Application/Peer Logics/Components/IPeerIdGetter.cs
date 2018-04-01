@@ -1,8 +1,6 @@
-﻿using ComponentModel.Common;
-
-namespace Game.Application.PeerLogic.Components
+﻿namespace Game.Application.PeerLogic.Components
 {
-    internal interface IPeerIdGetter : IExposableComponent
+    internal interface IPeerIdGetter
     {
         int GetId();
     }

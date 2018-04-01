@@ -1,8 +1,6 @@
-﻿using ComponentModel.Common;
-
-namespace UserProfile.Service.Application.Components
+﻿namespace UserProfile.Service.Application.Components
 {
-    internal interface IDatabaseUserProfileExistence : IExposableComponent
+    internal interface IDatabaseUserProfileExistence
     {
         bool Exists(int userId);
     }

@@ -1,9 +1,8 @@
-﻿using ComponentModel.Common;
-using Game.Common;
+﻿using Game.Common;
 
 namespace Game.Application.SceneObjects.Components
 {
-    internal interface ICharacterBody : IExposableComponent
+    internal interface ICharacterBody
     {
         PlayerState PlayerState { set; }
     }

@@ -1,8 +1,6 @@
-﻿using ComponentModel.Common;
-
-namespace GameServerProvider.Service.Application.Components
+﻿namespace GameServerProvider.Service.Application.Components
 {
-    internal interface IGameServerInformationCreator : IExposableComponent
+    internal interface IGameServerInformationCreator
     {
         void Add(int id, GameServerInformation gameServerInformation);
     }

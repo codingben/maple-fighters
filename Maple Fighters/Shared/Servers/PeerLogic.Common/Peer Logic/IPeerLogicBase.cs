@@ -1,13 +1,10 @@
-﻿using System;
-using ComponentModel.Common;
+﻿using ComponentModel.Common;
 using ServerCommunicationInterfaces;
 
 namespace PeerLogic.Common
 {
-    public interface IPeerLogicBase : IDisposable
+    public interface IPeerLogicBase : IEntity
     {
-        IContainer Components { get; }
-
         void Initialize(IClientPeerWrapper<IClientPeer> peer);
     }
 }
