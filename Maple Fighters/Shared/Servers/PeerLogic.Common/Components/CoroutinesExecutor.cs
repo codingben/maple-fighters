@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using CommonTools.Coroutines;
 using ComponentModel.Common;
+using ICoroutinesExecutor = PeerLogic.Common.Components.Interfaces.ICoroutinesExecutor;
 
 namespace PeerLogic.Common.Components
 {

@@ -1,4 +1,5 @@
 from MathematicsHelper import *
+from Physics.Box2D.Core import PhysicsWorldInfo
 from Game.Common import Maps
 
 sceneSize = Vector2(40, 5)
