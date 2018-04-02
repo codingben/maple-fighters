@@ -5,6 +5,8 @@ using Microsoft.Scripting.Hosting;
 
 namespace PythonScripting
 {
+    using ArrayModule = IronPython.Modules.ArrayModule;
+
     public class PythonScriptEngine : Component, IPythonScriptEngine
     {
         private const string ENVIRONMENT_PYTHON_LIB_NAME = "IRON_PYTHON_LIB_DIR";
@@ -13,7 +15,7 @@ namespace PythonScripting
         public PythonScriptEngine()
         {
             scriptEngine = Python.CreateEngine();
-            scriptEngine.Runtime.LoadAssembly(typeof(IronPython.Modules.ArrayModule).Assembly);
+            scriptEngine.Runtime.LoadAssembly(typeof(ArrayModule).Assembly);
 
             foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
             {

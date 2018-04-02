@@ -1,12 +1,12 @@
 ﻿using CommonCommunicationInterfaces;
 using CommonTools.Log;
-using Game.Application.Components;
+using Game.Application.Components.Interfaces;
 using Game.Application.SceneObjects;
 using Game.Application.SceneObjects.Components;
-using Game.InterestManagement;
 using ServerApplication.Common.ApplicationBase;
 using ServerCommunicationHelper;
 using Game.Common;
+using InterestManagement.Components.Interfaces;
 
 namespace Game.Application.PeerLogic.Operations
 {
@@ -44,9 +44,12 @@ namespace Game.Application.PeerLogic.Operations
 
             // Setting the character's position in the destination scene.
             var spawnPositionDetails = CharacterSpawnDetailsProvider.GetCharacterSpawnDetails(portalInfoProvider.Map);
-            var transform = sceneObject.Components.GetComponent<ITransform>().AssertNotNull();
-            transform.Position = spawnPositionDetails.Position;
-            transform.Direction = spawnPositionDetails.Direction;
+
+            var positionTransform = sceneObject.Components.GetComponent<IPositionTransform>().AssertNotNull();
+            positionTransform.Position = spawnPositionDetails.Position;
+
+            var directionTransform = sceneObject.Components.GetComponent<IDirectionTransform>().AssertNotNull();
+            directionTransform.SetDirection(spawnPositionDetails.Direction);
 
             // Adding a character to the destination scene.
             var destinationScene = sceneContainer.GetSceneWrapper(portalInfoProvider.Map).AssertNotNull();

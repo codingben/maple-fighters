@@ -1,5 +1,5 @@
 from MathematicsHelper import *
-from Game.InterestManagement import *
+from InterestManagement import *
 from Game.Application.SceneObjects import *
 
 import os

@@ -3,6 +3,7 @@ using System.Windows.Forms;
 using System.Xml;
 using CommonTools.Log;
 using ComponentModel.Common;
+using PhotonControl.Components.Interfaces;
 
 namespace PhotonControl.Components
 {

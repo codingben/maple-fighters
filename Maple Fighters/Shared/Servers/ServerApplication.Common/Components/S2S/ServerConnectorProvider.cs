@@ -1,4 +1,5 @@
 ﻿using ComponentModel.Common;
+using ServerApplication.Common.Components.Interfaces;
 using ServerCommunicationInterfaces;
 
 namespace ServerApplication.Common.Components

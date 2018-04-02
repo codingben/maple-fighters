@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Authorization.Service.Application.Components.Interfaces;
 using CommonTools.Log;
 using ComponentModel.Common;
 

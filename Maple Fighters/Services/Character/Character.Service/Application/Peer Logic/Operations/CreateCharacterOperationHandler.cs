@@ -1,5 +1,5 @@
 ﻿using Character.Server.Common;
-using CharacterService.Application.Components;
+using CharacterService.Application.Components.Interfaces;
 using CommonCommunicationInterfaces;
 using CommonTools.Log;
 using Game.Common;

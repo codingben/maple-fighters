@@ -65,9 +65,9 @@
   <ItemGroup>
     <Compile Include="Application\Components\GameServerInformation.cs" />
     <Compile Include="Application\Components\GameServersInformationStorage.cs" />
-    <Compile Include="Application\Components\IGameServerInformationCreator.cs" />
-    <Compile Include="Application\Components\IGameServerInformationRemover.cs" />
-    <Compile Include="Application\Components\IGameServersInformationProvider.cs" />
+    <Compile Include="Application\Components\Interfaces\IGameServerInformationCreator.cs" />
+    <Compile Include="Application\Components\Interfaces\IGameServerInformationRemover.cs" />
+    <Compile Include="Application\Components\Interfaces\IGameServersInformationProvider.cs" />
     <Compile Include="Application\Components\Utils.cs" />
     <Compile Include="Application\GameServerProviderServiceApplication.cs" />
     <Compile Include="Application\Peer Logics\AuthorizedClientPeerLogic.cs" />

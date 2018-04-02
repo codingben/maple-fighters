@@ -53,10 +53,10 @@
     <Compile Include="Core\ContactFilterModified.cs" />
     <Compile Include="Core\ContactListenerModified.cs" />
     <Compile Include="Components\EntityManager.cs" />
-    <Compile Include="Components\IEntityManager.cs" />
+    <Compile Include="Components\Interfaces\IEntityManager.cs" />
     <Compile Include="Core\IPhysicsCollisionCallback.cs" />
-    <Compile Include="Components\IPhysicsWorldProvider.cs" />
-    <Compile Include="Components\ISceneOrderExecutor.cs" />
+    <Compile Include="Components\Interfaces\IPhysicsWorldProvider.cs" />
+    <Compile Include="Components\Interfaces\ISceneOrderExecutor.cs" />
     <Compile Include="Core\LayerMask.cs" />
     <Compile Include="Components\PhysicsSimulationExecutor.cs" />
     <Compile Include="Core\PhysicsUtils.cs" />

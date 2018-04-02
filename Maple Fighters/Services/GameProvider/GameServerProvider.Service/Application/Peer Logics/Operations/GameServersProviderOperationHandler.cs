@@ -2,7 +2,7 @@
 using CommonCommunicationInterfaces;
 using CommonTools.Log;
 using GameServerProvider.Client.Common;
-using GameServerProvider.Service.Application.Components;
+using GameServerProvider.Service.Application.Components.Interfaces;
 using ServerCommunicationHelper;
 
 namespace GameServerProvider.Service.Application.PeerLogic.Operations

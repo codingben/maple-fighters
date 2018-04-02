@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
 using CommonTools.Log;
 using ComponentModel.Common;
-using Game.InterestManagement;
+using Game.Application.Components.Interfaces;
 using Game.Common;
+using InterestManagement;
 
 namespace Game.Application.Components
 {

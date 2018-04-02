@@ -4,10 +4,13 @@ using Box2DX.Dynamics;
 using CommonTools.Coroutines;
 using CommonTools.Log;
 using ComponentModel.Common;
-using Game.InterestManagement;
+using Game.Application.SceneObjects.Components.Interfaces;
 using MathematicsHelper;
-using Physics.Box2D;
 using Game.Common;
+using InterestManagement;
+using InterestManagement.Components.Interfaces;
+using Physics.Box2D.Components.Interfaces;
+using Physics.Box2D.Core;
 
 namespace Game.Application.SceneObjects.Components
 {
@@ -19,13 +22,13 @@ namespace Game.Application.SceneObjects.Components
         private Vector2 lastPosition;
 
         private IScene scene;
-        private ITransform transform;
+        private IPositionTransform positionTransform;
 
         protected override void OnAwake()
         {
             base.OnAwake();
 
-            transform = Entity.Components.GetComponent<ITransform>().AssertNotNull();
+            positionTransform = Entity.Components.GetComponent<IPositionTransform>().AssertNotNull();
 
             var presenceSceneProvider = Entity.Components.GetComponent<IPresenceSceneProvider>().AssertNotNull();
             scene = presenceSceneProvider.Scene;
@@ -62,7 +65,7 @@ namespace Game.Application.SceneObjects.Components
 
         private void SetPosition()
         {
-            if (Vector2.Distance(transform.Position, lastPosition) < 0.1f)
+            if (Vector2.Distance(positionTransform.Position, lastPosition) < 0.1f)
             {
                 return;
             }
@@ -84,7 +87,7 @@ namespace Game.Application.SceneObjects.Components
                            -> body.MoveBody(transform.Position, SPEED);
                         */
 
-                        body.SetXForm(transform.Position.FromVector2(), body.GetAngle());
+                        body.SetXForm(positionTransform.Position.FromVector2(), body.GetAngle());
                     }
                     break;
                 }
@@ -98,13 +101,13 @@ namespace Game.Application.SceneObjects.Components
                     }
                     else
                     {
-                        body.SetXForm(transform.Position.FromVector2(), body.GetAngle());
+                        body.SetXForm(positionTransform.Position.FromVector2(), body.GetAngle());
                     }
                     break;
                 }
             }
 
-            lastPosition = transform.Position;
+            lastPosition = positionTransform.Position;
         }
     }
 }

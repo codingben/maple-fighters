@@ -2,7 +2,7 @@
 using CommonTools.Log;
 using CommunicationHelper;
 using JsonConfig;
-using ServerApplication.Common.Components;
+using ServerApplication.Common.Components.Interfaces;
 using ServerCommunication.Common;
 using ServerCommunicationInterfaces;
 

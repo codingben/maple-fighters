@@ -3,7 +3,7 @@ using Box2DX.Common;
 using Box2DX.Dynamics;
 using MathematicsHelper;
 
-namespace Physics.Box2D
+namespace Physics.Box2D.Core
 {
     public static class PhysicsUtils
     {

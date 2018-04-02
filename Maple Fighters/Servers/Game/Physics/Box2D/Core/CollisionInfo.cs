@@ -1,7 +1,7 @@
 ﻿using Box2DX.Dynamics;
 using MathematicsHelper;
 
-namespace Physics.Box2D
+namespace Physics.Box2D.Core
 {
     public struct CollisionInfo
     {

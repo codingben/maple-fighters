@@ -3,8 +3,10 @@ using Box2DX.Dynamics;
 using CommonTools.Coroutines;
 using CommonTools.Log;
 using ComponentModel.Common;
+using Physics.Box2D.Components.Interfaces;
+using Physics.Box2D.Core;
 
-namespace Physics.Box2D
+namespace Physics.Box2D.Components
 {
     public class EntityManager : Component, IEntityManager
     {

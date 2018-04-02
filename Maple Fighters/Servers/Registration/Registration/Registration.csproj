@@ -71,8 +71,8 @@
   <ItemGroup>
     <Compile Include="Application\Components\DatabaseUserCreator.cs" />
     <Compile Include="Application\Components\DatabaseUserEmailVerifier.cs" />
-    <Compile Include="Application\Components\IDatabaseUserCreator.cs" />
-    <Compile Include="Application\Components\IDatabaseUserEmailVerifier.cs" />
+    <Compile Include="Application\Components\Interfaces\IDatabaseUserCreator.cs" />
+    <Compile Include="Application\Components\Interfaces\IDatabaseUserEmailVerifier.cs" />
     <Compile Include="Application\Peer Logic\Operations\RegisterOperationHandler.cs" />
     <Compile Include="Application\Peer Logic\ClientPeerLogic.cs" />
     <Compile Include="Application\RegistrationApplication.cs" />

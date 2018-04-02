@@ -1,4 +1,5 @@
-﻿using Game.InterestManagement;
+﻿using InterestManagement;
+using InterestManagement.Components;
 using MathematicsHelper;
 using ServerApplication.Common.Components;
 

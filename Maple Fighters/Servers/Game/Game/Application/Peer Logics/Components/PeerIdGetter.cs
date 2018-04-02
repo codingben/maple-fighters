@@ -1,5 +1,6 @@
 ﻿using ComponentModel.Common;
-using Game.InterestManagement;
+using Game.Application.PeerLogic.Components.Interfaces;
+using InterestManagement.Components.Interfaces;
 
 namespace Game.Application.PeerLogic.Components
 {

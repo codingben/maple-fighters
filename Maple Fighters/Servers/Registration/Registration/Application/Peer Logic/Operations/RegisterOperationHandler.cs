@@ -1,6 +1,6 @@
 ﻿using CommonCommunicationInterfaces;
 using CommonTools.Log;
-using Registration.Application.Components;
+using Registration.Application.Components.Interfaces;
 using Registration.Common;
 using ServerApplication.Common.ApplicationBase;
 using ServerCommunicationHelper;

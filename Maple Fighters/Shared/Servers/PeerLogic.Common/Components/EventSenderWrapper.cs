@@ -1,6 +1,7 @@
 ﻿using CommonCommunicationInterfaces;
 using CommonTools.Log;
 using ComponentModel.Common;
+using PeerLogic.Common.Components.Interfaces;
 using ServerCommunicationInterfaces;
 
 namespace PeerLogic.Common.Components

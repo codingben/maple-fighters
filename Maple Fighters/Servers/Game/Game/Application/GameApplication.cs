@@ -59,11 +59,14 @@ namespace Game.Application
             }
         }
 
+        /// <summary>
+        /// Getting assemblies which can not be found by python script engine
+        /// </summary>
         private IEnumerable<Assembly> GetPythonScriptEngineAssemblies()
         {
             yield return typeof(MathematicsHelper.Vector2).Assembly;
-            yield return typeof(InterestManagement.SceneObject).Assembly;
-            yield return typeof(Physics.Box2D.PhysicsWorldInfo).Assembly;
+            yield return typeof(InterestManagement.Components.SceneObject).Assembly;
+            yield return typeof(Physics.Box2D.Core.PhysicsWorldInfo).Assembly;
         }
     }
 }

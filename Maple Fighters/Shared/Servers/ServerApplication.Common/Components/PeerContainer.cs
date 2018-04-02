@@ -4,7 +4,7 @@ using CommonCommunicationInterfaces;
 using CommonTools.Log;
 using ComponentModel.Common;
 using PeerLogic.Common;
-using ServerCommunicationInterfaces;
+using ServerApplication.Common.Components.Interfaces;
 
 namespace ServerApplication.Common.Components
 {

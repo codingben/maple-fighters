@@ -1,12 +1,15 @@
 ﻿using System.IO;
 using CommonTools.Log;
-using Game.InterestManagement;
+using Game.Application.Components.Interfaces;
 using JsonConfig;
 using MathematicsHelper;
 using Microsoft.Scripting.Hosting;
 using PythonScripting;
 using ServerApplication.Common.ApplicationBase;
 using Game.Common;
+using InterestManagement;
+using InterestManagement.Components;
+using InterestManagement.Components.Interfaces;
 
 namespace Game.Application.Components
 {
@@ -44,8 +47,8 @@ namespace Game.Application.Components
         public void CreateSceneObject(ISceneObject sceneObject)
         {
             var createdSceneObject = AddSceneObject(sceneObject);
-            var transform = createdSceneObject.Components.GetComponent<ITransform>().AssertNotNull();
-            var interestArea = createdSceneObject.Components.AddComponent(new InterestArea(transform.Position, RegionSize));
+            var positionTransform = createdSceneObject.Components.GetComponent<IPositionTransform>().AssertNotNull();
+            var interestArea = createdSceneObject.Components.AddComponent(new InterestArea(positionTransform.Position, RegionSize));
             interestArea.DetectOverlapsWithRegions();
         }
 

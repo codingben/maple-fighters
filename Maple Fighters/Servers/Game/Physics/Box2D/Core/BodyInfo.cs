@@ -1,4 +1,4 @@
-﻿namespace Physics.Box2D
+﻿namespace Physics.Box2D.Core
 {
     public struct BodyInfo
     {

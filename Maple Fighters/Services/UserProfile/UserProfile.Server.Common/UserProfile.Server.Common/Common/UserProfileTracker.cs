@@ -1,9 +1,8 @@
-﻿using System;
-using Authorization.Server.Common;
+﻿using Authorization.Server.Common;
 using CommonCommunicationInterfaces;
 using CommonTools.Log;
 using ComponentModel.Common;
-using PeerLogic.Common.Components;
+using PeerLogic.Common.Components.Interfaces;
 
 namespace UserProfile.Server.Common
 {

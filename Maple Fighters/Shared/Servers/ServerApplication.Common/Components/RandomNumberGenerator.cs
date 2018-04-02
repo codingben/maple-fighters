@@ -1,5 +1,6 @@
 ﻿using System;
 using ComponentModel.Common;
+using ServerApplication.Common.Components.Interfaces;
 
 namespace ServerApplication.Common.Components
 {

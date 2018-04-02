@@ -1,6 +1,7 @@
 ﻿using System.Data;
 using System.Data.Common;
 using ComponentModel.Common;
+using Database.Common.Components.Interfaces;
 using Database.Common.Configuration;
 using ServiceStack.OrmLite;
 

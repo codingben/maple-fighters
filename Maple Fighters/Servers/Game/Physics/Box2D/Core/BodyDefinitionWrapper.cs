@@ -1,7 +1,7 @@
 ﻿using Box2DX.Collision;
 using Box2DX.Dynamics;
 
-namespace Physics.Box2D
+namespace Physics.Box2D.Core
 {
     public struct BodyDefinitionWrapper
     {

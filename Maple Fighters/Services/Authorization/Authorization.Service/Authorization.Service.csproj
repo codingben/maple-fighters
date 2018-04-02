@@ -58,10 +58,10 @@
   <ItemGroup>
     <Compile Include="Application\AuthorizationServiceApplication.cs" />
     <Compile Include="Application\Components\AccessTokensStorage.cs" />
-    <Compile Include="Application\Components\IAccessTokenCreator.cs" />
-    <Compile Include="Application\Components\IAccessTokenExistence.cs" />
-    <Compile Include="Application\Components\IAccessTokenGetter.cs" />
-    <Compile Include="Application\Components\IAccessTokenRemover.cs" />
+    <Compile Include="Application\Components\Interfaces\IAccessTokenCreator.cs" />
+    <Compile Include="Application\Components\Interfaces\IAccessTokenExistence.cs" />
+    <Compile Include="Application\Components\Interfaces\IAccessTokenGetter.cs" />
+    <Compile Include="Application\Components\Interfaces\IAccessTokenRemover.cs" />
     <Compile Include="Application\Peer Logic\InboundServerPeerLogic.cs" />
     <Compile Include="Application\Peer Logic\Operations\AccessTokenAuthorizationOperationHandler.cs" />
     <Compile Include="Application\Peer Logic\Operations\RemoveAuthorizationOperationHandler.cs" />

@@ -1,6 +1,6 @@
 ﻿using Authorization.Client.Common;
 using Authorization.Server.Common;
-using Authorization.Service.Application.Components;
+using Authorization.Service.Application.Components.Interfaces;
 using CommonCommunicationInterfaces;
 using CommonTools.Log;
 using ServerCommunicationHelper;

@@ -4,6 +4,8 @@ using CommonTools.Coroutines;
 using CommonTools.Log;
 using ComponentModel.Common;
 using JsonConfig;
+using PeerLogic.Common.Components.Interfaces;
+using ICoroutinesExecutor = PeerLogic.Common.Components.Interfaces.ICoroutinesExecutor;
 
 namespace PeerLogic.Common.Components
 {

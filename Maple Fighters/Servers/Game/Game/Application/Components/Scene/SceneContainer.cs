@@ -3,13 +3,15 @@ using System.IO;
 using System.Threading;
 using CommonTools.Log;
 using ComponentModel.Common;
+using Game.Application.Components.Interfaces;
 using JsonConfig;
 using MathematicsHelper;
 using Microsoft.Scripting.Hosting;
-using Physics.Box2D;
-using Physics.Box2D.PhysicsSimulation;
 using PythonScripting;
 using Game.Common;
+using Physics.Box2D.Components;
+using Physics.Box2D.Core;
+using Physics.Box2D.PhysicsSimulation.Window;
 
 namespace Game.Application.Components
 {

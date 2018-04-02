@@ -4,6 +4,7 @@ using CommonTools.Log;
 using PeerLogic.Common;
 using UserProfile.Server.Common;
 using UserProfile.Service.Application.Components;
+using UserProfile.Service.Application.Components.Interfaces;
 using UserProfile.Service.Application.PeerLogic.Components;
 using UserProfile.Service.Application.PeerLogic.Operations;
 

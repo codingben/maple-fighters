@@ -1,7 +1,7 @@
 ﻿using OpenTK;
 using OpenTK.Graphics.OpenGL;
 
-namespace Physics.Box2D.PhysicsSimulation
+namespace Physics.Box2D.PhysicsSimulation.Window
 {
     public class CameraView
     {

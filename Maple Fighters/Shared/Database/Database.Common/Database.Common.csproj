@@ -190,7 +190,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Components\DatabaseConnectionProvider.cs" />
-    <Compile Include="Components\IDatabaseConnectionProvider.cs" />
+    <Compile Include="Components\Interfaces\IDatabaseConnectionProvider.cs" />
     <Compile Include="Configuration\DatabaseConnectionConfiguraiton.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Definition\UsersTableDefinition.cs" />

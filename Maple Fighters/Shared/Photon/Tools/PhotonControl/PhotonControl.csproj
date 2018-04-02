@@ -71,9 +71,9 @@
     <Compile Include="Photon Control\Components\ExitButtonHandler.cs" />
     <Compile Include="Photon Control\IPhotonControlEvents.cs" />
     <Compile Include="Photon Control\IPhotonControlGUI.cs" />
-    <Compile Include="Photon Control\Components\IServersContainer.cs" />
-    <Compile Include="Photon Control\Components\IServersController.cs" />
-    <Compile Include="Photon Control\Components\IServersMenu.cs" />
+    <Compile Include="Photon Control\Components\Interfaces\IServersContainer.cs" />
+    <Compile Include="Photon Control\Components\Interfaces\IServersController.cs" />
+    <Compile Include="Photon Control\Components\Interfaces\IServersMenu.cs" />
     <Compile Include="Photon Control\Logger.cs" />
     <Compile Include="Photon Control\Components\LogsFolderButtonHandler.cs" />
     <Compile Include="PhotonControl.cs">

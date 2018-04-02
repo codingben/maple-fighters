@@ -1,7 +1,8 @@
 ﻿using CommonTools.Log;
 using ComponentModel.Common;
-using Database.Common.Components;
+using Database.Common.Components.Interfaces;
 using Database.Common.TablesDefinition;
+using Registration.Application.Components.Interfaces;
 using ServiceStack.OrmLite;
 
 namespace Registration.Application.Components

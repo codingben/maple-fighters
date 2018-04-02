@@ -72,17 +72,17 @@
     <Compile Include="Application\Components\Database\DatabaseUserProfileExistence.cs" />
     <Compile Include="Application\Components\Database\DatabaseUserProfilePropertiesUpdater.cs" />
     <Compile Include="Application\Components\Database\DatabaseUserProfileCreator.cs" />
-    <Compile Include="Application\Components\Database\IDatabaseUserProfileExistence.cs" />
-    <Compile Include="Application\Components\Database\IDatabaseUserProfilePropertiesUpdater.cs" />
-    <Compile Include="Application\Components\Database\IDatabaseUserProfileCreator.cs" />
-    <Compile Include="Application\Components\IServerIdToPeerIdConverter.cs" />
-    <Compile Include="Application\Components\IUserIdToServerIdConverter.cs" />
-    <Compile Include="Application\Components\IUserProfilePropertiesChangesNotifier.cs" />
+    <Compile Include="Application\Components\Database\Interfaces\IDatabaseUserProfileExistence.cs" />
+    <Compile Include="Application\Components\Database\Interfaces\IDatabaseUserProfilePropertiesUpdater.cs" />
+    <Compile Include="Application\Components\Database\Interfaces\IDatabaseUserProfileCreator.cs" />
+    <Compile Include="Application\Components\Interfaces\IServerIdToPeerIdConverter.cs" />
+    <Compile Include="Application\Components\Interfaces\IUserIdToServerIdConverter.cs" />
+    <Compile Include="Application\Components\Interfaces\IUserProfilePropertiesChangesNotifier.cs" />
     <Compile Include="Application\Components\ServerIdToPeerIdConverter.cs" />
     <Compile Include="Application\Components\UserIdToServerIdConverter.cs" />
     <Compile Include="Application\Components\UserProfilePropertiesChangesNotifier.cs" />
     <Compile Include="Application\Definition\UserProfilesTableDefinition.cs" />
-    <Compile Include="Application\Peer Logic\Components\IUsersContainer.cs" />
+    <Compile Include="Application\Peer Logic\Components\Interfaces\IUsersContainer.cs" />
     <Compile Include="Application\Peer Logic\Components\UsersContainer.cs" />
     <Compile Include="Application\Peer Logic\InboundServerPeerLogic.cs" />
     <Compile Include="Application\Peer Logic\Operations\ChangeUserProfilePropertiesOperationHandler.cs" />
@@ -127,5 +127,6 @@
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

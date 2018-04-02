@@ -1,10 +1,12 @@
-﻿using Chat.Common;
+﻿using Chat.Application.PeerLogic.Components.Interfaces;
+using Chat.Common;
 using CommonCommunicationInterfaces;
 using CommonTools.Log;
 using ComponentModel.Common;
-using PeerLogic.Common.Components;
+using PeerLogic.Common;
+using PeerLogic.Common.Components.Interfaces;
 using ServerApplication.Common.ApplicationBase;
-using ServerApplication.Common.Components;
+using ServerApplication.Common.Components.Interfaces;
 
 namespace Chat.Application.PeerLogic.Components
 {
@@ -30,6 +32,11 @@ namespace Chat.Application.PeerLogic.Components
                     continue;
                 }
 
+                RaiseChatMessage(peerWrapper);
+            }
+
+            void RaiseChatMessage(IClientPeerWrapper peerWrapper)
+            {
                 var eventSenderWrapper = peerWrapper.PeerLogic.Components.GetComponent<IEventSenderWrapper>().AssertNotNull();
                 var parameters = new ChatMessageEventParameters(message);
                 eventSenderWrapper.Send((byte)ChatEvents.ChatMessage, parameters, MessageSendOptions.DefaultReliable());

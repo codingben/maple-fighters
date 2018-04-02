@@ -1,11 +1,14 @@
 ﻿using Box2DX.Dynamics;
 using CommonTools.Log;
 using Game.Application.SceneObjects.Components;
-using Game.InterestManagement;
+using Game.Application.SceneObjects.Components.Interfaces;
+using InterestManagement;
+using InterestManagement.Components;
+using InterestManagement.Components.Interfaces;
 using MathematicsHelper;
-using Physics.Box2D;
+using Physics.Box2D.Components.Interfaces;
+using Physics.Box2D.Core;
 using ServerApplication.Common.Components;
-using SceneObject = Game.InterestManagement.SceneObject;
 
 namespace Game.Application.SceneObjects
 {
@@ -23,7 +26,7 @@ namespace Game.Application.SceneObjects
             : base(IdGenerator.GetId(), name, new TransformDetails(position, size, Direction.Left))
         {
             InterestAreaNotifier = Components.AddComponent(new InterestAreaNotifier());
-            var physicsCollisionNotifier = Components.AddComponent(new PhysicsCollisionNotifier());
+            var physicsCollisionNotifier = Components.AddComponent(new PhysicsCollision());
 
             var fixtureDefinition = PhysicsUtils.CreateFixtureDefinition(size, LayerMask.Mob, physicsCollisionNotifier);
             bodyDefinitionWrapper = PhysicsUtils.CreateBodyDefinitionWrapper(fixtureDefinition, position, this);

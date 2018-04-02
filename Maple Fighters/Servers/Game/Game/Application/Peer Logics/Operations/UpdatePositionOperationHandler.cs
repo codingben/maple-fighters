@@ -1,26 +1,27 @@
 ﻿using CommonCommunicationInterfaces;
-using Game.InterestManagement;
 using MathematicsHelper;
 using ServerCommunicationHelper;
 using Game.Common;
+using InterestManagement;
+using InterestManagement.Components.Interfaces;
 
 namespace Game.Application.PeerLogic.Operations
 {
     internal class UpdatePositionOperationHandler : IOperationRequestHandler<UpdatePositionRequestParameters, EmptyParameters>
     {
-        private readonly ITransform transform;
+        private readonly IPositionTransform positionTransform;
+        private readonly IDirectionTransform directionTransform;
 
-        public UpdatePositionOperationHandler(ITransform transform)
+        public UpdatePositionOperationHandler(IPositionTransform positionTransform, IDirectionTransform directionTransform)
         {
-            this.transform = transform;
+            this.positionTransform = positionTransform;
+            this.directionTransform = directionTransform;
         }
 
         public EmptyParameters? Handle(MessageData<UpdatePositionRequestParameters> messageData, ref MessageSendOptions sendOptions)
         {
-            transform.Direction = (Direction)messageData.Parameters.Direction.FromDirections();
-
-            var newPosition = new Vector2(messageData.Parameters.X, messageData.Parameters.Y);
-            transform.SetPosition(newPosition);
+            positionTransform.SetPosition(new Vector2(messageData.Parameters.X, messageData.Parameters.Y));
+            directionTransform.SetDirection((Direction)messageData.Parameters.Direction.FromDirections());
             return null;
         }
     }

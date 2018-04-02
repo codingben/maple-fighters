@@ -1,9 +1,9 @@
 ﻿using CommonCommunicationInterfaces;
 using CommonTools.Log;
 using Game.Application.PeerLogic.Components;
-using Game.Application.SceneObjects.Components;
+using Game.Application.SceneObjects.Components.Interfaces;
 using Game.Common;
-using Game.InterestManagement;
+using InterestManagement.Components.Interfaces;
 using ServerCommunicationHelper;
 
 namespace Game.Application.PeerLogic.Operations
@@ -33,15 +33,15 @@ namespace Game.Application.PeerLogic.Operations
         {
             const string SCENE_OBJECT_NAME = "Local Player";
 
-            var transform = sceneObject.Components.GetComponent<ITransform>().AssertNotNull();
-            return new SceneObjectParameters(sceneObject.Id, SCENE_OBJECT_NAME, transform.Position.X, transform.Position.Y);
+            var positionTransform = sceneObject.Components.GetComponent<IPositionTransform>().AssertNotNull();
+            return new SceneObjectParameters(sceneObject.Id, SCENE_OBJECT_NAME, positionTransform.Position.X, positionTransform.Position.Y);
         }
 
         private CharacterSpawnDetailsParameters GetCharacterSpawnDetailsShared()
         {
-            var transform = sceneObject.Components.GetComponent<ITransform>().AssertNotNull();
             var character = sceneObject.Components.GetComponent<ICharacterGetter>().AssertNotNull();
-            return new CharacterSpawnDetailsParameters(sceneObject.Id, character.GetCharacter(), transform.Direction.GetDirectionsFromDirection());
+            var directionTransform = sceneObject.Components.GetComponent<IDirectionTransform>().AssertNotNull();
+            return new CharacterSpawnDetailsParameters(sceneObject.Id, character.GetCharacter(), directionTransform.Direction.GetDirectionsFromDirection());
         }
     }
 }

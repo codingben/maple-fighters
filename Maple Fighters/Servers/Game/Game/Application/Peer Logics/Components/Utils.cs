@@ -1,5 +1,5 @@
-﻿using Game.InterestManagement;
-using Game.Common;
+﻿using Game.Common;
+using InterestManagement;
 
 namespace Game.Application.PeerLogic.Components
 {

@@ -3,10 +3,11 @@ using System.Linq;
 using CommonCommunicationInterfaces;
 using CommonTools.Log;
 using ComponentModel.Common;
-using Game.Application.SceneObjects.Components;
-using Game.InterestManagement;
-using PeerLogic.Common.Components;
+using Game.Application.PeerLogic.Components.Interfaces;
+using Game.Application.SceneObjects.Components.Interfaces;
 using Game.Common;
+using InterestManagement.Components.Interfaces;
+using PeerLogic.Common.Components.Interfaces;
 
 namespace Game.Application.PeerLogic.Components
 {
@@ -33,7 +34,7 @@ namespace Game.Application.PeerLogic.Components
         private void SubscribeToInterestAreaEvents()
         {
             var sceneObjectGetter = Components.GetComponent<ISceneObjectGetter>().AssertNotNull();
-            var interestArea = sceneObjectGetter.GetSceneObject().Components.GetComponent<IInterestArea>().AssertNotNull();
+            var interestArea = sceneObjectGetter.GetSceneObject().Components.GetComponent<IInterestAreaEvents>().AssertNotNull();
             interestArea.SubscriberAdded += OnCharacterAdded;
             interestArea.SubscribersAdded += OnCharactersAdded;
         }
@@ -41,7 +42,7 @@ namespace Game.Application.PeerLogic.Components
         private void UnsubscribeFromInterestAreaEvents()
         {
             var sceneObjectGetter = Components.GetComponent<ISceneObjectGetter>().AssertNotNull();
-            var interestArea = sceneObjectGetter.GetSceneObject().Components.GetComponent<IInterestArea>().AssertNotNull();
+            var interestArea = sceneObjectGetter.GetSceneObject().Components.GetComponent<IInterestAreaEvents>().AssertNotNull();
             interestArea.SubscriberAdded -= OnCharacterAdded;
             interestArea.SubscribersAdded -= OnCharactersAdded;
         }
@@ -95,8 +96,8 @@ namespace Game.Application.PeerLogic.Components
                 return null;
             }
 
-            var transform = sceneObject.Components.GetComponent<ITransform>().AssertNotNull();
-            return new CharacterSpawnDetailsParameters(sceneObject.Id, characterGetter.GetCharacter(), transform.Direction.GetDirectionsFromDirection());
+            var directionTransform = sceneObject.Components.GetComponent<IDirectionTransform>().AssertNotNull();
+            return new CharacterSpawnDetailsParameters(sceneObject.Id, characterGetter.GetCharacter(), directionTransform.Direction.GetDirectionsFromDirection());
         }
     }
 }

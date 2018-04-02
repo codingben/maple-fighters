@@ -4,6 +4,7 @@ using CommonTools.Log;
 using ComponentModel.Common;
 using ServerApplication.Common.ApplicationBase;
 using ServerApplication.Common.Components;
+using ServerApplication.Common.Components.Interfaces;
 using ServerCommunicationInterfaces;
 
 namespace ServerCommunication.Common

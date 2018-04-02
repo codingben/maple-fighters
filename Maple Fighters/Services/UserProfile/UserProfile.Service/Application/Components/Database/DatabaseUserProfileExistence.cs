@@ -1,8 +1,9 @@
 ﻿using CommonTools.Log;
 using ComponentModel.Common;
-using Database.Common.Components;
+using Database.Common.Components.Interfaces;
 using Database.Common.TablesDefinition;
 using ServiceStack.OrmLite;
+using UserProfile.Service.Application.Components.Interfaces;
 
 namespace UserProfile.Service.Application.Components
 {

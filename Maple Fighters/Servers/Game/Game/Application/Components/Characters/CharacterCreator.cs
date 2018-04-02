@@ -1,12 +1,14 @@
 ﻿using CommonTools.Log;
 using ComponentModel.Common;
+using Game.Application.Components.Interfaces;
 using Game.Application.SceneObjects.Components;
-using Game.InterestManagement;
-using Physics.Box2D;
 using ServerApplication.Common.ApplicationBase;
 using ServerApplication.Common.Components;
 using Game.Common;
-using SceneObject = Game.InterestManagement.SceneObject;
+using InterestManagement.Components;
+using InterestManagement.Components.Interfaces;
+using Physics.Box2D.Components.Interfaces;
+using Physics.Box2D.Core;
 
 namespace Game.Application.Components
 {
@@ -44,10 +46,11 @@ namespace Game.Application.Components
 
         public void CreateCharacterBody(IGameSceneWrapper sceneWrapper, ISceneObject sceneObject)
         {
-            var spawnDetails = sceneObject.Components.GetComponent<ITransform>().AssertNotNull();
+            var sizeTransform = sceneObject.Components.GetComponent<ISizeTransform>().AssertNotNull();
+            var positionTransform = sceneObject.Components.GetComponent<IPositionTransform>().AssertNotNull();
 
-            var bodyFixtureDefinition = PhysicsUtils.CreateFixtureDefinition(spawnDetails.Size, LayerMask.Player);
-            var bodyDefinition = PhysicsUtils.CreateBodyDefinitionWrapper(bodyFixtureDefinition, spawnDetails.Position, sceneObject);
+            var bodyFixtureDefinition = PhysicsUtils.CreateFixtureDefinition(sizeTransform.Size, LayerMask.Player);
+            var bodyDefinition = PhysicsUtils.CreateBodyDefinitionWrapper(bodyFixtureDefinition, positionTransform.Position, sceneObject);
             bodyDefinition.BodyDefiniton.AllowSleep = false;
 
             var entityManager = sceneWrapper.GetScene().Components.GetComponent<IEntityManager>().AssertNotNull();

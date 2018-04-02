@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2027
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Servers", "Servers", "{E2552411-D347-4907-9C50-2B7EDCB4B64A}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Main Servers", "Main Servers", "{E2552411-D347-4907-9C50-2B7EDCB4B64A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Game", "Game", "{3D62116D-D193-4FB3-B99C-AA540E6E99D4}"
 EndProject
@@ -96,7 +96,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Server1.Common", "Servers\T
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Server2.Common", "Servers\Test\Server2.Common\Server2.Common.csproj", "{DDEDD983-2CFF-4D9E-999C-EB97140AFD0B}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{6916EEC2-55E8-435A-88CF-E1C5783E66AF}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Microservices", "Microservices", "{6916EEC2-55E8-435A-88CF-E1C5783E66AF}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Character", "Character", "{02144293-022C-4DA9-8BD4-E11F008316BA}"
 EndProject
@@ -106,7 +106,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Character.Server.Common", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Character.PhotonStarter", "Services\Character\Character.PhotonStarter\Character.PhotonStarter.csproj", "{BEB77F9A-714D-46FE-ABFC-01D0C894EEF9}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{1A509B72-DD2A-4940-B572-CC9D849656FC}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Microservices", "Microservices", "{1A509B72-DD2A-4940-B572-CC9D849656FC}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Authorization", "Authorization", "{2F9FA262-389E-4A0C-9C52-3DC0B62928E4}"
 EndProject

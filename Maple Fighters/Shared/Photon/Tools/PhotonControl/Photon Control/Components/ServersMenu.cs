@@ -1,6 +1,7 @@
 ﻿using System.Windows.Forms;
 using CommonTools.Log;
 using ComponentModel.Common;
+using PhotonControl.Components.Interfaces;
 
 namespace PhotonControl
 {

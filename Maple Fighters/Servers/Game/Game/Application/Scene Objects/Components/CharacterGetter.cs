@@ -1,6 +1,7 @@
 ﻿using ComponentModel.Common;
+using Game.Application.SceneObjects.Components.Interfaces;
 using Game.Common;
-using Game.InterestManagement;
+using InterestManagement.Components.Interfaces;
 
 namespace Game.Application.SceneObjects.Components
 {

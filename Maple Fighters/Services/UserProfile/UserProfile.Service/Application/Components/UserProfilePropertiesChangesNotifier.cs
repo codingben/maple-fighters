@@ -1,9 +1,11 @@
 ﻿using CommonCommunicationInterfaces;
 using CommonTools.Log;
 using ComponentModel.Common;
-using PeerLogic.Common.Components;
-using ServerApplication.Common.Components;
+using PeerLogic.Common;
+using PeerLogic.Common.Components.Interfaces;
+using ServerApplication.Common.Components.Interfaces;
 using UserProfile.Server.Common;
+using UserProfile.Service.Application.Components.Interfaces;
 
 namespace UserProfile.Service.Application.Components
 {
@@ -57,6 +59,11 @@ namespace UserProfile.Service.Application.Components
                     continue;
                 }
 
+                RaiseUserProfilePropertiesChanged(peerWrapper);
+            }
+
+            void RaiseUserProfilePropertiesChanged(IClientPeerWrapper peerWrapper)
+            {
                 var eventSenderWrapper = peerWrapper.PeerLogic.Components.GetComponent<IEventSenderWrapper>().AssertNotNull();
                 eventSenderWrapper.Send((byte)UserProfileEvents.UserProfilePropertiesChanged, parameters, MessageSendOptions.DefaultReliable());
             }

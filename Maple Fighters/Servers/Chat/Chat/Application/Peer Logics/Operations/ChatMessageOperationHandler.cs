@@ -1,4 +1,4 @@
-﻿using Chat.Application.PeerLogic.Components;
+﻿using Chat.Application.PeerLogic.Components.Interfaces;
 using Chat.Common;
 using CommonCommunicationInterfaces;
 using ServerCommunicationHelper;

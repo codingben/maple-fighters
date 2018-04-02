@@ -3,7 +3,7 @@ using System.Threading;
 using Box2DX.Collision;
 using Box2DX.Common;
 using Box2DX.Dynamics;
-using Physics.Box2D.PhysicsSimulation;
+using Physics.Box2D.PhysicsSimulation.Window;
 
 namespace Physics.Box2D.Test
 {

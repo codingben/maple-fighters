@@ -1,5 +1,5 @@
 from MathematicsHelper import *
-from Game.InterestManagement import *
+from InterestManagement import *
 
 import os
 import json

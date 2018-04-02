@@ -8,11 +8,12 @@ using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Graphics;
 using OpenTK.Input;
+using Physics.Box2D.Components.Interfaces;
 using IComponent = ComponentModel.Common.IComponent;
 using IContainer = ComponentModel.Common.IContainer;
 using Math = System.Math;
 
-namespace Physics.Box2D.PhysicsSimulation
+namespace Physics.Box2D.PhysicsSimulation.Window
 {
     public class PhysicsSimulationWindow : GameWindow, IComponent, IPhysicsSimulationWindow
     {

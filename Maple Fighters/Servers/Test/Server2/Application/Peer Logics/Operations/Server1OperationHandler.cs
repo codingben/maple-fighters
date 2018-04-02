@@ -1,6 +1,6 @@
 ﻿using CommonCommunicationInterfaces;
 using CommonTools.Log;
-using PeerLogic.Common.Components;
+using PeerLogic.Common.Components.Interfaces;
 using Server2.Common;
 using ServerCommunicationHelper;
 

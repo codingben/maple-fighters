@@ -2,6 +2,7 @@
 using System.Linq;
 using CommonTools.Log;
 using ComponentModel.Common;
+using UserProfile.Service.Application.Components.Interfaces;
 
 namespace UserProfile.Service.Application.Components
 {

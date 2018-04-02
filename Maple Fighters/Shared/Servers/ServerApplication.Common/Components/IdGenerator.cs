@@ -1,6 +1,7 @@
 ﻿using CommonTools.Log;
 using ComponentModel.Common;
 using ServerApplication.Common.ApplicationBase;
+using ServerApplication.Common.Components.Interfaces;
 
 namespace ServerApplication.Common.Components
 {

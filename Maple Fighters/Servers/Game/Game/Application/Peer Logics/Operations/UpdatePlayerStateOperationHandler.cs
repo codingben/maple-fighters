@@ -1,9 +1,9 @@
 ﻿using CommonCommunicationInterfaces;
 using CommonTools.Log;
-using Game.Application.SceneObjects.Components;
-using Game.InterestManagement;
+using Game.Application.SceneObjects.Components.Interfaces;
 using ServerCommunicationHelper;
 using Game.Common;
+using InterestManagement.Components.Interfaces;
 
 namespace Game.Application.PeerLogic.Operations
 {

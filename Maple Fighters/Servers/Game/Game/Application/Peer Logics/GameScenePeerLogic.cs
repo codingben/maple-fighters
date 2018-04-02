@@ -1,11 +1,11 @@
 ﻿using CommonTools.Log;
-using Game.Application.Components;
+using Game.Application.Components.Interfaces;
 using Game.Application.PeerLogic.Components;
 using Game.Application.PeerLogic.Operations;
-using Game.InterestManagement;
 using PeerLogic.Common;
 using ServerApplication.Common.ApplicationBase;
 using Game.Common;
+using InterestManagement.Components.Interfaces;
 using PeerLogic.Common.Components;
 using UserProfile.Server.Common;
 
@@ -54,8 +54,9 @@ namespace Game.Application.PeerLogics
 
         private void AddHandlerForUpdatePositionOperation()
         {
-            var transform = sceneObject.Components.GetComponent<ITransform>().AssertNotNull();
-            OperationHandlerRegister.SetHandler(GameOperations.PositionChanged, new UpdatePositionOperationHandler(transform));
+            var positionTransform = sceneObject.Components.GetComponent<IPositionTransform>().AssertNotNull();
+            var directionTransform = sceneObject.Components.GetComponent<IDirectionTransform>().AssertNotNull();
+            OperationHandlerRegister.SetHandler(GameOperations.PositionChanged, new UpdatePositionOperationHandler(positionTransform, directionTransform));
         }
 
         private void AddHandlerForUpdatePlayerStateOperation()

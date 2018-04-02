@@ -64,15 +64,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Components\ClientPeerGetter.cs" />
-    <Compile Include="Components\IClientPeerGetter.cs" />
+    <Compile Include="Components\Interfaces\IClientPeerGetter.cs" />
     <Compile Include="Components\InactivityTimeout.cs" />
     <Compile Include="Peer Logic\ClientPeerWrapper.cs" />
     <Compile Include="Components\CoroutinesExecutor.cs" />
     <Compile Include="Components\EventSenderWrapper.cs" />
     <Compile Include="Components\FiberCoroutinesExecuter.cs" />
-    <Compile Include="Components\ICoroutinesExecutor.cs" />
-    <Compile Include="Components\IEventSenderWrapper.cs" />
-    <Compile Include="Components\IMinimalPeerGetter.cs" />
+    <Compile Include="Components\Interfaces\ICoroutinesExecutor.cs" />
+    <Compile Include="Components\Interfaces\IEventSenderWrapper.cs" />
+    <Compile Include="Components\Interfaces\IMinimalPeerGetter.cs" />
     <Compile Include="Components\MinimalPeerGetter.cs" />
     <Compile Include="Peer Logic\IClientPeerWrapper.cs" />
     <Compile Include="Peer Logic\IPeerLogicBase.cs" />

@@ -1,8 +1,8 @@
-﻿using Game.InterestManagement;
-using MathematicsHelper;
+﻿using MathematicsHelper;
 using ServerApplication.Common.Components;
 using Game.Common;
-using SceneObject = Game.InterestManagement.SceneObject;
+using InterestManagement;
+using InterestManagement.Components;
 
 namespace Game.Application.SceneObjects
 {

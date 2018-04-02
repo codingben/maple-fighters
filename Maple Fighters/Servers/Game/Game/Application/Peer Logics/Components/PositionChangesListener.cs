@@ -1,10 +1,11 @@
 ﻿using CommonCommunicationInterfaces;
 using CommonTools.Log;
 using ComponentModel.Common;
-using Game.Application.SceneObjects.Components;
-using Game.InterestManagement;
+using Game.Application.PeerLogic.Components.Interfaces;
+using Game.Application.SceneObjects.Components.Interfaces;
 using MathematicsHelper;
 using Game.Common;
+using InterestManagement.Components.Interfaces;
 
 namespace Game.Application.PeerLogic.Components
 {
@@ -12,27 +13,43 @@ namespace Game.Application.PeerLogic.Components
     {
         private ISceneObjectGetter sceneObjectGetter;
         private IInterestAreaNotifier interestAreaNotifier;
-        private ITransform transform;
 
         protected override void OnAwake()
         {
             base.OnAwake();
 
             sceneObjectGetter = Components.GetComponent<ISceneObjectGetter>().AssertNotNull();
-
             interestAreaNotifier = sceneObjectGetter.GetSceneObject().Components.GetComponent<IInterestAreaNotifier>().AssertNotNull();
-            transform = sceneObjectGetter.GetSceneObject().Components.GetComponent<ITransform>().AssertNotNull();
-            transform.PositionChanged += UpdatePositionForAll;
+
+            SubscribeToPositionChanged();
         }
 
-        private void UpdatePositionForAll(Vector2 newPosition)
+        protected override void OnDestroy()
+        {
+            base.OnDestroy();
+
+            UnubscribeFromPositionChanged();
+        }
+
+        private void SubscribeToPositionChanged()
+        {
+            var transform = sceneObjectGetter.GetSceneObject().Components.GetComponent<IPositionTransform>().AssertNotNull();
+            transform.PositionChanged += UpdatePositionForOthers;
+        }
+
+        private void UnubscribeFromPositionChanged()
+        {
+            var transform = sceneObjectGetter.GetSceneObject().Components.GetComponent<IPositionTransform>().AssertNotNull();
+            transform.PositionChanged -= UpdatePositionForOthers;
+        }
+
+        private void UpdatePositionForOthers(Vector2 position)
         {
             var sceneObjectId = sceneObjectGetter.GetSceneObject().Id;
-            var direction = transform.Direction.GetDirectionsFromDirection();
-
-            var parameters = new SceneObjectPositionChangedEventParameters(sceneObjectId, newPosition.X, newPosition.Y, direction);
-            var messageSendOptions = MessageSendOptions.DefaultUnreliable((byte)GameDataChannels.Position);
-            interestAreaNotifier.NotifySubscribers((byte)GameEvents.PositionChanged, parameters, messageSendOptions);
+            var directionTransform = sceneObjectGetter.GetSceneObject().Components.GetComponent<IDirectionTransform>().AssertNotNull();
+            var direction = directionTransform.Direction.GetDirectionsFromDirection();
+            var parameters = new SceneObjectPositionChangedEventParameters(sceneObjectId, position.X, position.Y, direction);
+            interestAreaNotifier.NotifySubscribers((byte)GameEvents.PositionChanged, parameters, MessageSendOptions.DefaultUnreliable((byte)GameDataChannels.Position));
         }
     }
 }

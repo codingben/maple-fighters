@@ -4,9 +4,10 @@ using CommonTools.Log;
 using ComponentModel.Common;
 using JsonConfig;
 using MathematicsHelper;
-using Physics.Box2D;
 using ServiceStack;
 using Game.Common;
+using Physics.Box2D.Components.Interfaces;
+using Physics.Box2D.Core;
 
 namespace Game.Application.Components
 {

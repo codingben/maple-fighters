@@ -2,6 +2,7 @@
 using System.Linq;
 using CommonTools.Log;
 using ComponentModel.Common;
+using GameServerProvider.Service.Application.Components.Interfaces;
 
 namespace GameServerProvider.Service.Application.Components
 {

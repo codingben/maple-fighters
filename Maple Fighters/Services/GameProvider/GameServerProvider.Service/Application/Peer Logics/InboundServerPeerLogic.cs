@@ -1,7 +1,7 @@
 ﻿using CommonCommunicationInterfaces;
 using CommunicationHelper;
 using GameServerProvider.Server.Common;
-using GameServerProvider.Service.Application.Components;
+using GameServerProvider.Service.Application.Components.Interfaces;
 using GameServerProvider.Service.Application.PeerLogic.Operations;
 using PeerLogic.Common;
 

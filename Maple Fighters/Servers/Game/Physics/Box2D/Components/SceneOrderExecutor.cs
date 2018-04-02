@@ -1,11 +1,12 @@
 ﻿using CommonTools.Coroutines;
 using CommonTools.Log;
 using ComponentModel.Common;
+using Physics.Box2D.Components.Interfaces;
 using ServerApplication.Common.ApplicationBase;
-using ServerApplication.Common.Components;
+using ServerApplication.Common.Components.Interfaces;
 using ServerCommunicationInterfaces;
 
-namespace Physics.Box2D
+namespace Physics.Box2D.Components
 {
     public class SceneOrderExecutor : Component, ISceneOrderExecutor
     {

@@ -2,7 +2,7 @@
 using CommonTools.Log;
 using ServerCommunicationHelper;
 using UserProfile.Server.Common;
-using UserProfile.Service.Application.Components;
+using UserProfile.Service.Application.Components.Interfaces;
 using UserProfile.Service.Application.PeerLogic.Components;
 
 namespace UserProfile.Service.Application.PeerLogic.Operations

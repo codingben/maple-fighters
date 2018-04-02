@@ -1,6 +1,7 @@
-﻿using CommonTools.Log;
+﻿using CharacterService.Application.Components.Interfaces;
+using CommonTools.Log;
 using ComponentModel.Common;
-using Database.Common.Components;
+using Database.Common.Components.Interfaces;
 using Database.Common.TablesDefinition;
 using Game.Common;
 using ServiceStack.OrmLite;

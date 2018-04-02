@@ -5,7 +5,7 @@ using Authorization.Server.Common;
 using CommonCommunicationInterfaces;
 using CommonTools.Coroutines;
 using CommonTools.Log;
-using Login.Application.Components;
+using Login.Application.Components.Interfaces;
 using Login.Common;
 using ServerApplication.Common.ApplicationBase;
 using ServerCommunicationHelper;

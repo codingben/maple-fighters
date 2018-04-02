@@ -2,9 +2,10 @@
 using CommonCommunicationInterfaces;
 using CommonTools.Log;
 using ComponentModel.Common;
-using Game.InterestManagement;
-using PeerLogic.Common.Components;
+using Game.Application.PeerLogic.Components.Interfaces;
 using Game.Common;
+using InterestManagement.Components.Interfaces;
+using PeerLogic.Common.Components.Interfaces;
 
 namespace Game.Application.PeerLogic.Components
 {
@@ -18,18 +19,40 @@ namespace Game.Application.PeerLogic.Components
 
             eventSender = Components.GetComponent<IEventSenderWrapper>().AssertNotNull();
 
+            SubscribeToInterestAreaEvents();
+        }
+
+        protected override void OnDestroy()
+        {
+            base.OnDestroy();
+
+            UnsubscribeFromInterestAreaEvents();
+        }
+
+        private void SubscribeToInterestAreaEvents()
+        {
             var sceneObjectGetter = Components.GetComponent<ISceneObjectGetter>().AssertNotNull();
-            var interestArea = sceneObjectGetter.GetSceneObject().Components.GetComponent<IInterestArea>().AssertNotNull();
+            var interestArea = sceneObjectGetter.GetSceneObject().Components.GetComponent<IInterestAreaEvents>().AssertNotNull();
             interestArea.SubscriberAdded += OnSubscriberAdded;
             interestArea.SubscriberRemoved += OnSubscriberRemoved;
             interestArea.SubscribersAdded += OnSubscribersAdded;
             interestArea.SubscribersRemoved += OnSubscribersRemoved;
         }
 
+        private void UnsubscribeFromInterestAreaEvents()
+        {
+            var sceneObjectGetter = Components.GetComponent<ISceneObjectGetter>().AssertNotNull();
+            var interestArea = sceneObjectGetter.GetSceneObject().Components.GetComponent<IInterestAreaEvents>().AssertNotNull();
+            interestArea.SubscriberAdded -= OnSubscriberAdded;
+            interestArea.SubscriberRemoved -= OnSubscriberRemoved;
+            interestArea.SubscribersAdded -= OnSubscribersAdded;
+            interestArea.SubscribersRemoved -= OnSubscribersRemoved;
+        }
+
         private void OnSubscriberAdded(ISceneObject sceneObject)
         {
-            var transform = sceneObject.Components.GetComponent<ITransform>().AssertNotNull();
-            var sharedSceneObject = new SceneObjectParameters(sceneObject.Id, sceneObject.Name, transform.Position.X, transform.Position.Y);
+            var positionTransform = sceneObject.Components.GetComponent<IPositionTransform>().AssertNotNull();
+            var sharedSceneObject = new SceneObjectParameters(sceneObject.Id, sceneObject.Name, positionTransform.Position.X, positionTransform.Position.Y);
 
             var parameters = new SceneObjectAddedEventParameters(sharedSceneObject);
             eventSender.Send((byte)GameEvents.SceneObjectAdded, parameters, MessageSendOptions.DefaultReliable());
@@ -49,9 +72,9 @@ namespace Game.Application.PeerLogic.Components
                 sharedSceneObjects[i].Id = sceneObjects[i].Id;
                 sharedSceneObjects[i].Name = sceneObjects[i].Name;
 
-                var transform = sceneObjects[i].Components.GetComponent<ITransform>().AssertNotNull();
-                sharedSceneObjects[i].X = transform.Position.X;
-                sharedSceneObjects[i].Y = transform.Position.Y;
+                var positionTransform = sceneObjects[i].Components.GetComponent<IPositionTransform>().AssertNotNull();
+                sharedSceneObjects[i].X = positionTransform.Position.X;
+                sharedSceneObjects[i].Y = positionTransform.Position.Y;
             }
 
             var parameters = new SceneObjectsAddedEventParameters(sharedSceneObjects);

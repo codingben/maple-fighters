@@ -44,22 +44,25 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Direction.cs" />
-    <Compile Include="ExtensionMethods.cs" />
-    <Compile Include="IInterestArea.cs" />
-    <Compile Include="IPresenceSceneProvider.cs" />
-    <Compile Include="ITransform.cs" />
-    <Compile Include="PresenceSceneProvider.cs" />
-    <Compile Include="SceneObject.cs" />
-    <Compile Include="ISceneObject.cs" />
-    <Compile Include="InterestArea.cs" />
-    <Compile Include="IRegion.cs" />
-    <Compile Include="IScene.cs" />
-    <Compile Include="Region.cs" />
-    <Compile Include="Scene.cs" />
+    <Compile Include="Interest Management\Direction.cs" />
+    <Compile Include="Interest Management\ExtensionMethods.cs" />
+    <Compile Include="Interest Management\Components\Interfaces\IInterestArea.cs" />
+    <Compile Include="Interest Management\Components\Interfaces\IInterestAreaEvents.cs" />
+    <Compile Include="Interest Management\Components\Interfaces\IPositionTransform.cs" />
+    <Compile Include="Interest Management\Components\Interfaces\IPresenceSceneProvider.cs" />
+    <Compile Include="Interest Management\Components\Interfaces\ISizeTransform.cs" />
+    <Compile Include="Interest Management\Components\Interfaces\IDirectionTransform.cs" />
+    <Compile Include="Interest Management\Components\PresenceSceneProvider.cs" />
+    <Compile Include="Interest Management\Components\SceneObject.cs" />
+    <Compile Include="Interest Management\Components\Interfaces\ISceneObject.cs" />
+    <Compile Include="Interest Management\Components\InterestArea.cs" />
+    <Compile Include="Interest Management\IRegion.cs" />
+    <Compile Include="Interest Management\IScene.cs" />
+    <Compile Include="Interest Management\Region.cs" />
+    <Compile Include="Interest Management\Scene.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Transform.cs" />
-    <Compile Include="TransformDetails.cs" />
+    <Compile Include="Interest Management\Components\Transform.cs" />
+    <Compile Include="Interest Management\TransformDetails.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Shared\Servers\ComponentModel.Common\ComponentModel.Common.csproj">
@@ -74,5 +77,6 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

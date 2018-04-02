@@ -1,7 +1,8 @@
 ﻿using Box2DX.Dynamics;
 using ComponentModel.Common;
+using Physics.Box2D.Components.Interfaces;
 
-namespace Physics.Box2D
+namespace Physics.Box2D.Components
 {
     public class PhysicsWorldProvider : Component, IPhysicsWorldProvider
     {

@@ -3,10 +3,14 @@ using CommonCommunicationInterfaces;
 using CommonTools.Coroutines;
 using CommonTools.Log;
 using Game.Application.PeerLogic.Components;
-using Game.InterestManagement;
+using Game.Application.PeerLogic.Components.Interfaces;
+using Game.Application.SceneObjects.Interfaces;
 using MathematicsHelper;
-using Physics.Box2D;
 using Game.Common;
+using InterestManagement;
+using InterestManagement.Components.Interfaces;
+using Physics.Box2D.Components.Interfaces;
+using Physics.Box2D.Core;
 using Math = System.Math;
 
 namespace Game.Application.SceneObjects
@@ -22,7 +26,9 @@ namespace Game.Application.SceneObjects
         private float direction;
         private bool isAttacking;
 
-        private ITransform transform;
+        private IPositionTransform positionTransform;
+        private IDirectionTransform directionTransform;
+
         private Vector2 lastPosition;
 
         public BlueSnail(Vector2 position, Vector2 size, float speed, float distance) 
@@ -38,15 +44,45 @@ namespace Game.Application.SceneObjects
 
             CreateBody();
 
-            transform = Components.GetComponent<ITransform>().AssertNotNull();
-            transform.PositionChanged += OnPositionChanged;
+            directionTransform = Components.GetComponent<IDirectionTransform>().AssertNotNull();
 
-            var physicsCollisionNotifier = Components.GetComponent<IPhysicsCollisionNotifier>().AssertNotNull();
-            physicsCollisionNotifier.CollisionEnter += OnCollisionEnter;
+            SubscribeToPositionChanged();
+            SubscribeToCollisionEnter();
 
             var presenceSceneProvider = Components.GetComponent<IPresenceSceneProvider>().AssertNotNull();
             var executor = presenceSceneProvider.Scene.Components.GetComponent<ISceneOrderExecutor>().AssertNotNull();
             executor.GetPreUpdateExecutor().StartCoroutine(MoveMob());
+        }
+
+        public override void OnDestroy()
+        {
+            base.OnDestroy();
+
+            UnubscribeFromPositionChanged();
+            UnsubscribeFromCollisionEnter();
+        }
+
+        private void SubscribeToCollisionEnter()
+        {
+            var physicsCollisionNotifier = Components.GetComponent<IPhysicsCollisionNotifier>().AssertNotNull();
+            physicsCollisionNotifier.CollisionEnter += OnCollisionEnter;
+        }
+
+        private void UnsubscribeFromCollisionEnter()
+        {
+            var physicsCollisionNotifier = Components.GetComponent<IPhysicsCollisionNotifier>().AssertNotNull();
+            physicsCollisionNotifier.CollisionEnter -= OnCollisionEnter;
+        }
+
+        private void SubscribeToPositionChanged()
+        {
+            positionTransform = Components.GetComponent<IPositionTransform>().AssertNotNull();
+            positionTransform.PositionChanged += OnPositionChanged;
+        }
+
+        private void UnubscribeFromPositionChanged()
+        {
+            positionTransform.PositionChanged -= OnPositionChanged;
         }
 
         private IEnumerator<IYieldInstruction> MoveMob()
@@ -68,8 +104,8 @@ namespace Game.Application.SceneObjects
                         direction *= -1;
                     }
 
-                    transform.Direction = direction < 0 ? Direction.Left : Direction.Right;
-                    transform.SetPosition(position);
+                    positionTransform.SetPosition(position);
+                    directionTransform.SetDirection(direction < 0 ? Direction.Left : Direction.Right);
                     yield return null;
                 }
 
@@ -86,30 +122,25 @@ namespace Game.Application.SceneObjects
                -> GetBody().MoveBody(position, moveSpeed, true); 
             */
 
-            GetBody().SetXForm(position.FromVector2(), GetBody().GetAngle());
+            var body = GetBody().AssertNotNull();
+            body.SetXForm(position.FromVector2(), body.GetAngle());
 
-            if (Vector2.Distance(position, lastPosition) < 0.1f)
+            if (Vector2.Distance(position, lastPosition) > 0.1f)
             {
-                return;
+                UpdatePositionForAll();
+                lastPosition = position;
             }
 
-            var direction = transform.Direction.GetDirectionsFromDirection();
-
-            var parameters = new SceneObjectPositionChangedEventParameters(Id, position.X, position.Y, direction);
-            var sendOptions = MessageSendOptions.DefaultUnreliable((byte) GameDataChannels.Position);
-            InterestAreaNotifier.NotifySubscribers((byte)GameEvents.PositionChanged, parameters, sendOptions);
-
-            lastPosition = position;
+            void UpdatePositionForAll()
+            {
+                var direction = directionTransform.Direction.GetDirectionsFromDirection();
+                var parameters = new SceneObjectPositionChangedEventParameters(Id, position.X, position.Y, direction);
+                InterestAreaNotifier.NotifySubscribers((byte)GameEvents.PositionChanged, parameters, MessageSendOptions.DefaultUnreliable((byte)GameDataChannels.Position));
+            }
         }
 
-        private void OnCollisionEnter(CollisionInfo collisionInfo)
+        private void OnCollisionEnter(CollisionInfo collisionInfo, ISceneObject hittedSceneObject)
         {
-            if (!(collisionInfo.Body.GetUserData() is ISceneObject hittedSceneObject))
-            {
-                LogUtils.Log(MessageBuilder.Trace("Could not get data from a body."));
-                return;
-            }
-
             var peerIdGetter = hittedSceneObject.Components.GetComponent<IPeerIdGetter>();
             if (peerIdGetter != null && !isAttacking)
             {
@@ -121,13 +152,18 @@ namespace Game.Application.SceneObjects
         {
             isAttacking = true;
 
-            var transform = sceneObject.Components.GetComponent<ITransform>().AssertNotNull();
-            var orientation = (transform.Position - collisionInfo.Position).Normalize();
+            var positionTransform = sceneObject.Components.GetComponent<IPositionTransform>().AssertNotNull();
+            var orientation = (positionTransform.Position - collisionInfo.Position).Normalize();
 
             direction = orientation.X < 0 ? -MOVE_DIRECTION : MOVE_DIRECTION;
 
-            var parameters = new PlayerAttackedEventParameters(collisionInfo.Position.X, collisionInfo.Position.Y);
-            InterestAreaNotifier.NotifySubscriberOnly(peerId, (byte)GameEvents.PlayerAttacked, parameters, MessageSendOptions.DefaultUnreliable());
+            RaisePlayerAttacked();
+
+            void RaisePlayerAttacked()
+            {
+                var parameters = new PlayerAttackedEventParameters(collisionInfo.Position.X, collisionInfo.Position.Y);
+                InterestAreaNotifier.NotifySubscriberOnly(peerId, (byte)GameEvents.PlayerAttacked, parameters, MessageSendOptions.DefaultUnreliable());
+            }
         }
     }
 }

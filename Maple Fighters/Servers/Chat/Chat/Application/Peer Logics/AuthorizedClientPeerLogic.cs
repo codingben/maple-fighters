@@ -1,4 +1,5 @@
 ﻿using Chat.Application.PeerLogic.Components;
+using Chat.Application.PeerLogic.Components.Interfaces;
 using Chat.Application.PeerLogic.Operations;
 using Chat.Common;
 using CommonTools.Log;
