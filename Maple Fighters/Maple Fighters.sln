@@ -7,16 +7,16 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Main Servers", "Main Server
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Game", "Game", "{3D62116D-D193-4FB3-B99C-AA540E6E99D4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Game", "Servers\Game\Game\Game.csproj", "{DF693C06-200A-4903-B72F-AF600BB7D47A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Game", "MainServers\Game\Game\Game.csproj", "{DF693C06-200A-4903-B72F-AF600BB7D47A}"
 	ProjectSection(ProjectDependencies) = postProject
 		{58359452-038A-44CD-AA7B-21D0C3507EC7} = {58359452-038A-44CD-AA7B-21D0C3507EC7}
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{6BD1A4DA-D8A1-441D-AE30-7FFDAF884926}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Game.PhotonStarter", "Servers\Game\Game.PhotonStarter\Game.PhotonStarter.csproj", "{BA247981-850D-416E-AE85-10BEC7349F21}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Game.PhotonStarter", "MainServers\Game\Game.PhotonStarter\Game.PhotonStarter.csproj", "{BA247981-850D-416E-AE85-10BEC7349F21}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Game.Common", "Servers\Game\Game.Common\Game.Common.csproj", "{AA536188-84FF-4286-A9E6-BAFBE1D8D37B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Game.Common", "MainServers\Game\Game.Common\Game.Common.csproj", "{AA536188-84FF-4286-A9E6-BAFBE1D8D37B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Client", "Client", "{46B2DB14-93E8-4C3F-8382-BEB6F9CC3CD7}"
 EndProject
@@ -28,7 +28,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Helper", "Helper", "{15D448
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MathematicsHelper", "Shared\Helper\MathematicsHelper\MathematicsHelper.csproj", "{A3BE3E13-D3A1-4800-B471-A39F5ED4B554}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Game.InterestManagement", "Servers\Game\Game.InterestManagement\Game.InterestManagement.csproj", "{DB7043AD-92FD-428A-BB43-18ED8D25B41D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Game.InterestManagement", "MainServers\Game\Game.InterestManagement\Game.InterestManagement.csproj", "{DB7043AD-92FD-428A-BB43-18ED8D25B41D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Python", "Python", "{A6880D1E-AF42-4785-ACD7-2A97BBF4E83D}"
 EndProject
@@ -36,25 +36,25 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PythonScripting", "Shared\P
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Chat", "Chat", "{E7B92426-12DC-48E6-A5EE-D697E7D37CB2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chat", "Servers\Chat\Chat\Chat.csproj", "{4EA8869D-4447-448A-ACF7-C46A4640324D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chat", "MainServers\Chat\Chat\Chat.csproj", "{4EA8869D-4447-448A-ACF7-C46A4640324D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chat.PhotonStarter", "Servers\Chat\Chat.PhotonStarter\Chat.PhotonStarter.csproj", "{0DEC7208-CD13-4900-95A3-5519727A3902}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chat.PhotonStarter", "MainServers\Chat\Chat.PhotonStarter\Chat.PhotonStarter.csproj", "{0DEC7208-CD13-4900-95A3-5519727A3902}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Registration", "Registration", "{ECC73817-FE03-4C27-8609-5AD5A8D8CE63}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Registration", "Servers\Registration\Registration\Registration.csproj", "{5EA5F3C7-5040-4EE3-9B31-DE10977D553E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Registration", "MainServers\Registration\Registration\Registration.csproj", "{5EA5F3C7-5040-4EE3-9B31-DE10977D553E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Registration.PhotonStarter", "Servers\Registration\Registration.PhotonStarter\Registration.PhotonStarter.csproj", "{A6A97506-4C26-4A57-95E6-B96936EEBD82}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Registration.PhotonStarter", "MainServers\Registration\Registration.PhotonStarter\Registration.PhotonStarter.csproj", "{A6A97506-4C26-4A57-95E6-B96936EEBD82}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Registration.Common", "Servers\Registration\Registration.Common\Registration.Common.csproj", "{50468D7F-3700-4C7C-805B-AB08CB5BA77A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Registration.Common", "MainServers\Registration\Registration.Common\Registration.Common.csproj", "{50468D7F-3700-4C7C-805B-AB08CB5BA77A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Login", "Login", "{387A6691-0218-4C4C-83E8-E21E8CBDB460}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Login", "Servers\Login\Login\Login.csproj", "{857924CC-235A-40F4-AB42-739FD420D80B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Login", "MainServers\Login\Login\Login.csproj", "{857924CC-235A-40F4-AB42-739FD420D80B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Login.PhotonStarter", "Servers\Login\Login.PhotonStarter\Login.PhotonStarter.csproj", "{14B4F196-70A2-4D76-B065-557DDF298665}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Login.PhotonStarter", "MainServers\Login\Login.PhotonStarter\Login.PhotonStarter.csproj", "{14B4F196-70A2-4D76-B065-557DDF298665}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Login.Common", "Servers\Login\Login.Common\Login.Common.csproj", "{828BFB93-CA48-4B37-89D3-FC907903035D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Login.Common", "MainServers\Login\Login.Common\Login.Common.csproj", "{828BFB93-CA48-4B37-89D3-FC907903035D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Database", "Database", "{CAEC4E64-6E4B-40C3-9E6E-7077AEE6AF9E}"
 EndProject
@@ -68,11 +68,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhotonStarter.Common", "Sha
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Physics", "Physics", "{FECC31E7-FAC1-465A-9835-BD33E6173CAE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Physics.Box2D", "Servers\Game\Physics\Box2D\Physics.Box2D.csproj", "{2E057EC4-7919-4326-AB31-3116A259BA49}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Physics.Box2D", "MainServers\Game\Physics\Box2D\Physics.Box2D.csproj", "{2E057EC4-7919-4326-AB31-3116A259BA49}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Physics.Box2D.Simulation", "Servers\Game\Physics\Box2D.Simulation\Physics.Box2D.Simulation.csproj", "{A80A032C-8FDC-45F5-B039-BAFA6097F58A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Physics.Box2D.Simulation", "MainServers\Game\Physics\Box2D.Simulation\Physics.Box2D.Simulation.csproj", "{A80A032C-8FDC-45F5-B039-BAFA6097F58A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Physics.Box2D.Test", "Servers\Game\Physics\Box2D.Test\Physics.Box2D.Test.csproj", "{9C9BE28D-1C84-45D3-B655-89C874B36890}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Physics.Box2D.Test", "MainServers\Game\Physics\Box2D.Test\Physics.Box2D.Test.csproj", "{9C9BE28D-1C84-45D3-B655-89C874B36890}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Photon", "Photon", "{BE6B3CF0-D922-4545-90A1-5939B86190F2}"
 EndProject
@@ -82,39 +82,39 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhotonControl", "Shared\Pho
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{BD1F040E-F2F2-4BC1-BE81-DFF5430E65AB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Server1", "Servers\Test\Server1\Server1.csproj", "{91E27598-4F90-490A-A19D-FAED59B2FD31}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Server1", "MainServers\Test\Server1\Server1.csproj", "{91E27598-4F90-490A-A19D-FAED59B2FD31}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Server2", "Servers\Test\Server2\Server2.csproj", "{6D45E0D3-9B4C-40F8-9EBB-CB5A800C212C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Server2", "MainServers\Test\Server2\Server2.csproj", "{6D45E0D3-9B4C-40F8-9EBB-CB5A800C212C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Server1.PhotonStarter", "Servers\Test\Server1.PhotonStarter\Server1.PhotonStarter.csproj", "{4DAC0ACB-1C0F-4104-A679-541221766D53}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Server1.PhotonStarter", "MainServers\Test\Server1.PhotonStarter\Server1.PhotonStarter.csproj", "{4DAC0ACB-1C0F-4104-A679-541221766D53}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Server2.PhotonStarter", "Servers\Test\Server2.PhotonStarter\Server2.PhotonStarter.csproj", "{30A122CF-6A57-4FD6-BA7D-E274E5C46CE4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Server2.PhotonStarter", "MainServers\Test\Server2.PhotonStarter\Server2.PhotonStarter.csproj", "{30A122CF-6A57-4FD6-BA7D-E274E5C46CE4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Server1.Common", "Servers\Test\Server1.Common\Server1.Common.csproj", "{91EE78F1-F2BE-4D2D-8FD2-E8CC8C7F0A99}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Server1.Common", "MainServers\Test\Server1.Common\Server1.Common.csproj", "{91EE78F1-F2BE-4D2D-8FD2-E8CC8C7F0A99}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Server2.Common", "Servers\Test\Server2.Common\Server2.Common.csproj", "{DDEDD983-2CFF-4D9E-999C-EB97140AFD0B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Server2.Common", "MainServers\Test\Server2.Common\Server2.Common.csproj", "{DDEDD983-2CFF-4D9E-999C-EB97140AFD0B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Microservices", "Microservices", "{6916EEC2-55E8-435A-88CF-E1C5783E66AF}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Character", "Character", "{02144293-022C-4DA9-8BD4-E11F008316BA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Character.Service", "Services\Character\Character.Service\Character.Service.csproj", "{40F51EE4-D13D-4EAD-BF38-53A4361136D9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Character.Service", "Microservices\Character\Character.Service\Character.Service.csproj", "{40F51EE4-D13D-4EAD-BF38-53A4361136D9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Character.Server.Common", "Services\Character\Character.Server.Common\Character.Server.Common.csproj", "{42BB62DA-299C-4EC1-B83C-894E5D75E505}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Character.Server.Common", "Microservices\Character\Character.Server.Common\Character.Server.Common.csproj", "{42BB62DA-299C-4EC1-B83C-894E5D75E505}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Character.PhotonStarter", "Services\Character\Character.PhotonStarter\Character.PhotonStarter.csproj", "{BEB77F9A-714D-46FE-ABFC-01D0C894EEF9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Character.PhotonStarter", "Microservices\Character\Character.PhotonStarter\Character.PhotonStarter.csproj", "{BEB77F9A-714D-46FE-ABFC-01D0C894EEF9}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Microservices", "Microservices", "{1A509B72-DD2A-4940-B572-CC9D849656FC}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Authorization", "Authorization", "{2F9FA262-389E-4A0C-9C52-3DC0B62928E4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authorization.Service", "Services\Authorization\Authorization.Service\Authorization.Service.csproj", "{675EF2C1-8C93-4AB2-B463-BF5C0CB5BCA8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authorization.Service", "Microservices\Authorization\Authorization.Service\Authorization.Service.csproj", "{675EF2C1-8C93-4AB2-B463-BF5C0CB5BCA8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authorization.PhotonStarter", "Services\Authorization\Authorization.PhotonStarter\Authorization.PhotonStarter.csproj", "{11A23BD0-0A7B-4248-B13E-7A269544FD1D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authorization.PhotonStarter", "Microservices\Authorization\Authorization.PhotonStarter\Authorization.PhotonStarter.csproj", "{11A23BD0-0A7B-4248-B13E-7A269544FD1D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authorization.Server.Common", "Services\Authorization\Authorization.Server.Common\Authorization.Server.Common.csproj", "{174C1938-CA68-4549-97DE-3470AFACB7C7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authorization.Server.Common", "Microservices\Authorization\Authorization.Server.Common\Authorization.Server.Common.csproj", "{174C1938-CA68-4549-97DE-3470AFACB7C7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authorization.Client.Common", "Services\Authorization\Authorization.Client.Common\Authorization.Client.Common.csproj", "{58359452-038A-44CD-AA7B-21D0C3507EC7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authorization.Client.Common", "Microservices\Authorization\Authorization.Client.Common\Authorization.Client.Common.csproj", "{58359452-038A-44CD-AA7B-21D0C3507EC7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServerCommunication.Common", "Shared\Servers\ServerCommunication.Common\ServerCommunication.Common\ServerCommunication.Common.csproj", "{5E8328B3-E51C-4291-B7DE-83673C4CE889}"
 EndProject
@@ -122,21 +122,21 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UserProfile", "UserProfile"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GameServerProvider", "GameServerProvider", "{01E94047-328A-44F3-B043-8E6573080867}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameServerProvider.Service", "Services\GameProvider\GameServerProvider.Service\GameServerProvider.Service.csproj", "{13577C83-9D4E-4781-8275-C6FBC86CC87B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameServerProvider.Service", "Microservices\GameProvider\GameServerProvider.Service\GameServerProvider.Service.csproj", "{13577C83-9D4E-4781-8275-C6FBC86CC87B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameServerProvider.PhotonStarter", "Services\GameProvider\GameServerProvider.PhotonStarter\GameServerProvider.PhotonStarter.csproj", "{D45D4521-6C21-4B77-B65B-A3BA843D001B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameServerProvider.PhotonStarter", "Microservices\GameProvider\GameServerProvider.PhotonStarter\GameServerProvider.PhotonStarter.csproj", "{D45D4521-6C21-4B77-B65B-A3BA843D001B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserProfile.Service", "Services\UserProfile\UserProfile.Service\UserProfile.Service.csproj", "{BC54A4AB-8CC6-4E26-A04B-2D8B63989A10}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserProfile.Service", "Microservices\UserProfile\UserProfile.Service\UserProfile.Service.csproj", "{BC54A4AB-8CC6-4E26-A04B-2D8B63989A10}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserProfile.PhotonStarter", "Services\UserProfile\UserProfile.PhotonStarter\UserProfile.PhotonStarter.csproj", "{B68549D2-071D-420D-894B-2DBBB4B58AA0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserProfile.PhotonStarter", "Microservices\UserProfile\UserProfile.PhotonStarter\UserProfile.PhotonStarter.csproj", "{B68549D2-071D-420D-894B-2DBBB4B58AA0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameServerProvider.Server.Common", "Services\GameProvider\GameServerProvider.Server.Common\GameServerProvider.Server.Common.csproj", "{BCA5F453-1188-4521-A0AA-CC5F38228C57}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameServerProvider.Server.Common", "Microservices\GameProvider\GameServerProvider.Server.Common\GameServerProvider.Server.Common.csproj", "{BCA5F453-1188-4521-A0AA-CC5F38228C57}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameServerProvider.Client.Common", "Services\GameProvider\GameServerProvider.Common\GameServerProvider.Client.Common.csproj", "{BAD68870-855B-458B-AC4A-472DEDBC6057}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameServerProvider.Client.Common", "Microservices\GameProvider\GameServerProvider.Common\GameServerProvider.Client.Common.csproj", "{BAD68870-855B-458B-AC4A-472DEDBC6057}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserProfile.Server.Common", "Services\UserProfile\UserProfile.Server.Common\UserProfile.Server.Common.csproj", "{C1B03627-1DF6-48F8-A868-D5216A510B86}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserProfile.Server.Common", "Microservices\UserProfile\UserProfile.Server.Common\UserProfile.Server.Common.csproj", "{C1B03627-1DF6-48F8-A868-D5216A510B86}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chat.Common", "Servers\Chat\Chat.Common\Chat.Common.csproj", "{900E3927-BEC2-4CAB-A5A2-E1480FAAC11A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chat.Common", "MainServers\Chat\Chat.Common\Chat.Common.csproj", "{900E3927-BEC2-4CAB-A5A2-E1480FAAC11A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
