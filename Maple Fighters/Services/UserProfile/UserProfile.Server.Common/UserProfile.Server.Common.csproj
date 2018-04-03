@@ -83,23 +83,23 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\Shared\Servers\ComponentModel.Common\ComponentModel.Common.csproj">
+    <ProjectReference Include="..\..\..\Shared\Servers\ComponentModel.Common\ComponentModel.Common.csproj">
       <Project>{00565794-9958-47D9-9E8E-6D7193D67B9D}</Project>
       <Name>ComponentModel.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\Shared\Servers\PeerLogic.Common\PeerLogic.Common.csproj">
+    <ProjectReference Include="..\..\..\Shared\Servers\PeerLogic.Common\PeerLogic.Common.csproj">
       <Project>{F90F12D2-58E0-4718-A205-EBFD28C81742}</Project>
       <Name>PeerLogic.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\Shared\Servers\ServerApplication.Common\ServerApplication.Common.csproj">
+    <ProjectReference Include="..\..\..\Shared\Servers\ServerApplication.Common\ServerApplication.Common.csproj">
       <Project>{f82fbb67-7b1d-43b7-a415-3f407d40e5c7}</Project>
       <Name>ServerApplication.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\Shared\Servers\ServerCommunication.Common\ServerCommunication.Common\ServerCommunication.Common.csproj">
+    <ProjectReference Include="..\..\..\Shared\Servers\ServerCommunication.Common\ServerCommunication.Common\ServerCommunication.Common.csproj">
       <Project>{5E8328B3-E51C-4291-B7DE-83673C4CE889}</Project>
       <Name>ServerCommunication.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\Authorization\Authorization.Server.Common\Authorization.Server.Common.csproj">
+    <ProjectReference Include="..\..\Authorization\Authorization.Server.Common\Authorization.Server.Common.csproj">
       <Project>{174C1938-CA68-4549-97DE-3470AFACB7C7}</Project>
       <Name>Authorization.Server.Common</Name>
     </ProjectReference>

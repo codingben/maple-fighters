@@ -102,11 +102,11 @@
       <Project>{174C1938-CA68-4549-97DE-3470AFACB7C7}</Project>
       <Name>Authorization.Server.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\UserProfile\UserProfile.Server.Common\UserProfile.Server.Common\UserProfile.Server.Common.csproj">
+    <ProjectReference Include="..\..\UserProfile\UserProfile.Server.Common\UserProfile.Server.Common.csproj">
       <Project>{C1B03627-1DF6-48F8-A868-D5216A510B86}</Project>
       <Name>UserProfile.Server.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\GameServerProvider.Common\GameServerProvider.Common\GameServerProvider.Client.Common.csproj">
+    <ProjectReference Include="..\GameServerProvider.Common\GameServerProvider.Client.Common.csproj">
       <Project>{BAD68870-855B-458B-AC4A-472DEDBC6057}</Project>
       <Name>GameServerProvider.Client.Common</Name>
     </ProjectReference>

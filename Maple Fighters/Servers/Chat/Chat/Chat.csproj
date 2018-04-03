@@ -73,8 +73,8 @@
       <Project>{174C1938-CA68-4549-97DE-3470AFACB7C7}</Project>
       <Name>Authorization.Server.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\Services\UserProfile\UserProfile.Server.Common\UserProfile.Server.Common\UserProfile.Server.Common.csproj">
-      <Project>{C1B03627-1DF6-48F8-A868-D5216A510B86}</Project>
+    <ProjectReference Include="..\..\..\Services\UserProfile\UserProfile.Server.Common\UserProfile.Server.Common.csproj">
+      <Project>{c1b03627-1df6-48f8-a868-d5216a510b86}</Project>
       <Name>UserProfile.Server.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\Shared\Servers\ComponentModel.Common\ComponentModel.Common.csproj">
@@ -93,7 +93,7 @@
       <Project>{5e8328b3-e51c-4291-b7de-83673c4ce889}</Project>
       <Name>ServerCommunication.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Chat.Common\Chat.Common\Chat.Common.csproj">
+    <ProjectReference Include="..\Chat.Common\Chat.Common.csproj">
       <Project>{900E3927-BEC2-4CAB-A5A2-E1480FAAC11A}</Project>
       <Name>Chat.Common</Name>
     </ProjectReference>
