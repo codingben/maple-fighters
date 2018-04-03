@@ -40,6 +40,9 @@
     <Reference Include="LogUtils, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Coroutines.5.0.5\lib\net46\LogUtils.dll</HintPath>
     </Reference>
+    <Reference Include="MySql.Data, Version=6.9.11.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\MySql.Data.6.9.11\lib\net45\MySql.Data.dll</HintPath>
+    </Reference>
     <Reference Include="Photon.SocketServer">
       <HintPath>..\..\..\..\Photon Libraries\Photon.SocketServer.dll</HintPath>
     </Reference>

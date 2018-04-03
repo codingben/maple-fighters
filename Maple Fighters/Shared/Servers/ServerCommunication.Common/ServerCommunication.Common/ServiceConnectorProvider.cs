@@ -19,6 +19,9 @@ namespace ServerCommunication.Common
         private readonly IServerConnectorProvider serverConnectorProvider;
         private readonly Action<IOutboundServerPeer> onConnected;
 
+        private bool isConnecting;
+        private string exceptionMessage;
+
         public ServiceConnectorProvider(ICoroutinesExecuter coroutinesExecutor, IServerConnectorProvider serverConnectorProvider, Action<IOutboundServerPeer> onConnected)
         {
             this.coroutinesExecutor = coroutinesExecutor;
@@ -39,27 +42,34 @@ namespace ServerCommunication.Common
 
             while (true)
             {
+                yield return new WaitForSeconds(DELAY_TIME);
+
                 if (IsConnected())
                 {
                     yield break;
                 }
 
-                coroutinesExecutor.StartTask((yield) => Connect(yield, connectionInformation));
-                yield return new WaitForSeconds(DELAY_TIME);
+                if (!isConnecting)
+                {
+                    coroutinesExecutor.StartTask((yield) => Connect(yield, connectionInformation));
+                }
             }
         }
 
         private async Task Connect(IYield yield, PeerConnectionInformation connectionInformation)
         {
+            isConnecting = true;
+
             try
             {
                 outboundServerPeer = await serverConnectorProvider.GetServerConnector().Connect(yield, connectionInformation);
             }
             catch (CouldNotConnectToPeerException exception)
             {
-                if (exception.Message != string.Empty)
+                if (exception.Message != string.Empty && !exception.Message.Equals(exceptionMessage))
                 {
-                    LogUtils.Log(MessageBuilder.Trace(exception.Message));
+                    LogUtils.Log($"Failed connect to {connectionInformation.Ip}:{connectionInformation.Port}. Details: {exception.Message}");
+                    exceptionMessage = exception.Message;
                 }
             }
             finally
@@ -69,6 +79,8 @@ namespace ServerCommunication.Common
                     onConnected?.Invoke(outboundServerPeer);
                 }
             }
+
+            isConnecting = false;
         }
 
         public void SetNetworkTrafficState(NetworkTrafficState state)
