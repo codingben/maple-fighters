@@ -97,10 +97,13 @@ namespace Scripts.Services
 
         protected override void OnNonAuthorized()
         {
-            var noticeWindow = UserInterfaceContainer.Instance.Get<NoticeWindow>().AssertNotNull();
-            noticeWindow.Message.text = $"Authorization with {serverName} server failed.";
-            noticeWindow.OkButton.interactable = true;
-            noticeWindow.OkButtonClickedAction = LoadedObjects.DestroyAll;
+            var noticeWindow = UserInterfaceContainer.Instance?.Get<NoticeWindow>();
+            if (noticeWindow != null)
+            {
+                noticeWindow.Message.text = $"Authorization with {serverName} server failed.";
+                noticeWindow.OkButton.interactable = true;
+                noticeWindow.OkButtonClickedAction = LoadedObjects.DestroyAll;
+            }
         }
 
         protected override void OnAuthorized()

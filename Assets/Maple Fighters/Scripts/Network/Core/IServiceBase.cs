@@ -1,6 +1,8 @@
-﻿namespace Scripts.Services
+﻿using System;
+
+namespace Scripts.Services
 {
-    public interface IServiceBase : IPeerLogicBaseHandler
+    public interface IServiceBase : IPeerLogicBaseHandler, IDisposable
     {
         IServiceConnectionHandler ServiceConnectionHandler { get; }
     }

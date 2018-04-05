@@ -26,7 +26,7 @@ namespace Scripts.Services
             }
         }
         private ExternalCoroutinesExecutor coroutinesExecutor = new ExternalCoroutinesExecutor();
-        private IServiceBase serviceBase => GetServiceBase();
+        private IServiceBase serviceBase;
 
         protected bool IsDestroying;
 
@@ -51,11 +51,7 @@ namespace Scripts.Services
 
         protected async Task Connect(IYield yield, ServerConnectionInformation serverConnectionInformation, bool authorize = true)
         {
-            if (serviceBase == null || CoroutinesExecutor == null)
-            {
-                LogUtils.Log("A service base is not initialized.");
-                return;
-            }
+            serviceBase = GetServiceBase();
 
             OnPreConnection();
 
@@ -147,7 +143,11 @@ namespace Scripts.Services
 
         public void Dispose()
         {
-            serviceBase.ServiceConnectionHandler?.Dispose();
+            if (serviceBase != null)
+            {
+                serviceBase.Dispose();
+                serviceBase = null;
+            }
         }
 
         public bool IsConnected()

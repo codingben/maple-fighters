@@ -43,11 +43,7 @@ namespace Scripts.Services
         {
             base.OnDisconnected(reason, details);
 
-            if (authorizationStatus == AuthorizationStatus.Failed)
-            {
-                ChatController.Instance?.OnNonAuthorized();
-            }
-            else
+            if (authorizationStatus == AuthorizationStatus.Succeed)
             {
                 ChatController.Instance?.OnConnectionClosed();
             }
@@ -66,7 +62,7 @@ namespace Scripts.Services
 
         protected override void OnNonAuthorized()
         {
-            ChatController.Instance.OnNonAuthorized();
+            ChatController.Instance?.OnNonAuthorized();
         }
 
         protected override void OnAuthorized()

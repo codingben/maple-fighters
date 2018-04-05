@@ -8,7 +8,7 @@ namespace Scripts.Services
         public IServiceConnectionHandler ServiceConnectionHandler { get; }
 
         private IPeerLogicBase peerLogicBase;
-        private IServerPeerHandler ServerPeerHandler { get; set; }
+        private IServerPeerHandler serverPeerHandler;
 
         public ServiceBase()
         {
@@ -28,14 +28,14 @@ namespace Scripts.Services
             }
 
             peerLogicBase?.Dispose();
-            ServerPeerHandler?.Dispose();
+            serverPeerHandler?.Dispose();
 
-            var serverPeerHandler = new ServerPeerHandler<TOperationCode, TEventCode>();
-            serverPeerHandler.Initialize(ServiceConnectionHandler.ServerPeer);
-            ServerPeerHandler = serverPeerHandler;
+            var peerHandler = new ServerPeerHandler<TOperationCode, TEventCode>();
+            peerHandler.Initialize(ServiceConnectionHandler.ServerPeer);
+            serverPeerHandler = peerHandler;
 
             peerLogicBase = peerLogic;
-            peerLogicBase.Awake(ServerPeerHandler);
+            peerLogicBase.Awake(serverPeerHandler);
         }
 
         public T GetPeerLogic<T>()
@@ -49,6 +49,17 @@ namespace Scripts.Services
             var type = typeof(T).Name;
             LogUtils.Log(MessageBuilder.Trace($"Can not convert type {type}"));
             return default(T);
+        }
+
+        public void Dispose()
+        {
+            if (serverPeerHandler != null)
+            {
+                serverPeerHandler.Dispose();
+                serverPeerHandler = null;
+            }
+
+            ServiceConnectionHandler?.Dispose();
         }
     }
 }
