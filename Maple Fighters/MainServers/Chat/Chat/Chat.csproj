@@ -57,11 +57,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Application\ChatApplication.cs" />
-    <Compile Include="Application\Peer Logics\Components\ChatMessageEventSender.cs" />
-    <Compile Include="Application\Peer Logics\AuthorizedClientPeerLogic.cs" />
-    <Compile Include="Application\Peer Logics\Components\Interfaces\IChatMessageEventSender.cs" />
-    <Compile Include="Application\Peer Logics\Operations\ChatMessageOperationHandler.cs" />
-    <Compile Include="Application\Peer Logics\UnauthenticatedClientPeerLogic.cs" />
+    <Compile Include="Application\Peer Logic\Components\ChatMessageEventSender.cs" />
+    <Compile Include="Application\Peer Logic\AuthorizedClientPeerLogic.cs" />
+    <Compile Include="Application\Peer Logic\Components\Interfaces\IChatMessageEventSender.cs" />
+    <Compile Include="Application\Peer Logic\Operations\ChatMessageOperationHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

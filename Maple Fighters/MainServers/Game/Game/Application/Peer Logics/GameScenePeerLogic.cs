@@ -22,10 +22,8 @@ namespace Game.Application.PeerLogics
             sceneObject = CreateSceneObject(character);
         }
 
-        public override void Initialize(IClientPeerWrapper peer)
+        protected override void OnInitialized()
         {
-            base.Initialize(peer);
-
             AddCommonComponents();
             AddComponents();
 
@@ -69,10 +67,8 @@ namespace Game.Application.PeerLogics
             OperationHandlerRegister.SetHandler(GameOperations.ChangeScene, new ChangeSceneOperationHandler(sceneObject));
         }
 
-        public override void Dispose()
+        protected override void OnDispose()
         {
-            base.Dispose();
-
             sceneObject.Dispose();
         }
 

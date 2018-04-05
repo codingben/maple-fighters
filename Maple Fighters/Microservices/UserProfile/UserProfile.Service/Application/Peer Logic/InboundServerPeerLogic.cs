@@ -23,10 +23,8 @@ namespace UserProfile.Service.Application.PeerLogic
             databaseUserProfilePropertiesUpdater = Server.Components.GetComponent<IDatabaseUserProfilePropertiesUpdater>().AssertNotNull();
         }
 
-        public override void Initialize(IClientPeerWrapper peer)
+        protected override void OnInitialized()
         {
-            base.Initialize(peer);
-
             SubscribeToDisconnectionNotifier();
 
             AddCommonComponents();

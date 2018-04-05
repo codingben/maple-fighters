@@ -17,10 +17,8 @@ namespace Game.Application.PeerLogics
             this.userId = userId;
         }
 
-        public override void Initialize(IClientPeerWrapper peer)
+        protected override void OnInitialized()
         {
-            base.Initialize(peer);
-
             AddCommonComponents();
             AddComponents();
 

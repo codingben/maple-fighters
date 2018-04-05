@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Reflection;
+using Authorization.Client.Common;
 using Authorization.Server.Common;
 using Character.Server.Common;
 using Game.Application.Components;
@@ -32,7 +33,7 @@ namespace Game.Application
         {
             base.OnConnected(clientPeer);
 
-            WrapClientPeer(clientPeer, new UnauthorizedClientPeerLogic());
+            WrapClientPeer(clientPeer, new UnauthorizedClientPeerLogic<CharacterSelectionPeerLogic>());
         }
 
         private void AddComponents()

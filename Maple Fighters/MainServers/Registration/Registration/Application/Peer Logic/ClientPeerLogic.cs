@@ -8,10 +8,8 @@ namespace Registration.Application.PeerLogic
 {
     internal class ClientPeerLogic : PeerLogicBase<RegistrationOperations, EmptyEventCode>
     {
-        public override void Initialize(IClientPeerWrapper peer)
+        protected override void OnInitialized()
         {
-            base.Initialize(peer);
-
             AddCommonComponents();
             AddComponents();
 

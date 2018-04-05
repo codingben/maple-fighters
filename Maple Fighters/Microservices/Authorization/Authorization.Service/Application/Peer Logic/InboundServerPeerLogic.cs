@@ -7,10 +7,8 @@ namespace Authorization.Service.Application.PeerLogic
 {
     internal class InboundServerPeerLogic : PeerLogicBase<AuthorizationOperations, EmptyEventCode>
     {
-        public override void Initialize(IClientPeerWrapper peer)
+        protected override void OnInitialized()
         {
-            base.Initialize(peer);
-
             AddHandlerForRemoveAuthorizationOperation();
             AddHandlerForAccessTokenAuthorizationOperation();
             AddHandlerForUserAuthorizationOperation();

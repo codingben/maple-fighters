@@ -17,36 +17,44 @@ namespace PeerLogic.Common
         protected IOperationRequestHandlerRegister<TOperationCode> OperationHandlerRegister { get; private set; }
         private IEventSender<TEventCode> EventSender { get; set; }
 
-        public virtual void Initialize(IClientPeerWrapper clientPeerWrapper)
+        public void Initialize(IClientPeerWrapper clientPeerWrapper)
         {
             ClientPeerWrapper = clientPeerWrapper;
 
-            AddEventsSenderHandler();
-            AddOperationRequestsHandler();
+            SetEventsSenderHandler();
+            SetOperationRequestsHandler();
+
+            OnInitialized();
         }
 
-        public virtual void Dispose()
+        protected abstract void OnInitialized();
+
+        public void Dispose()
         {
             Components?.Dispose();
             OperationHandlerRegister?.Dispose();
+
+            OnDispose();
         }
 
-        private void AddEventsSenderHandler()
+        protected virtual void OnDispose()
+        {
+            // Left blank intentionally
+        }
+
+        private void SetEventsSenderHandler()
         {
             var logEvents = (bool)Config.Global.Log.Events;
             EventSender = new EventSender<TEventCode>(ClientPeerWrapper.Peer.EventSender, logEvents);
         }
 
-        private void AddOperationRequestsHandler()
+        private void SetOperationRequestsHandler()
         {
             var logOperationsRequest = (bool)Config.Global.Log.OperationsRequest;
             var logOperationsResponse = (bool)Config.Global.Log.OperationsResponse;
-
-            // A coroutines executor is necessary to handle async operation handlers
-            var coroutinesExecutor = Components.AddComponent(new CoroutinesExecutor(new FiberCoroutinesExecutor(ClientPeerWrapper.Peer.Fiber, 100)));
-
-            OperationHandlerRegister = new OperationRequestsHandler<TOperationCode>(ClientPeerWrapper.Peer.OperationRequestNotifier,
-                ClientPeerWrapper.Peer.OperationResponseSender, logOperationsRequest, logOperationsResponse, coroutinesExecutor);
+            var coroutinesExecutor = Components.AddComponent(new CoroutinesExecutor(new FiberCoroutinesExecutor(ClientPeerWrapper.Peer.Fiber, 100))); // A coroutines executor is necessary to handle async operation handlers
+            OperationHandlerRegister = new OperationRequestsHandler<TOperationCode>(ClientPeerWrapper.Peer.OperationRequestNotifier, ClientPeerWrapper.Peer.OperationResponseSender, 
+                logOperationsRequest, logOperationsResponse, coroutinesExecutor);
         }
 
         protected void AddCommonComponents()

@@ -7,10 +7,8 @@ namespace Character.Service.Application.PeerLogic
 {
     internal class InboundServerPeerLogic : PeerLogicBase<CharacterOperations, EmptyEventCode>
     {
-        public override void Initialize(IClientPeerWrapper peer)
+        protected override void OnInitialized()
         {
-            base.Initialize(peer);
-
             AddHandlerForCreateCharacterOperation();
             AddHandlerForRemoveCharacterOperation();
             AddHandlerForGetCharactersOperation();

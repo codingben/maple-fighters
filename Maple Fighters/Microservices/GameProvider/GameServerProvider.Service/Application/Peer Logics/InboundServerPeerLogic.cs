@@ -11,10 +11,8 @@ namespace GameServerProvider.Service.Application.PeerLogics
 
     internal class InboundServerPeerLogic : PeerLogicBase<ServerOperations, EmptyEventCode>
     {
-        public override void Initialize(IClientPeerWrapper peer)
+        protected override void OnInitialized()
         {
-            base.Initialize(peer);
-
             SubscribeToDisconnectionNotifier();
 
             AddHandlerForRegisterGameServerOperation();

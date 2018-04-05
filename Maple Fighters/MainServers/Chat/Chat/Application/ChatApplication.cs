@@ -1,4 +1,5 @@
-﻿using Authorization.Server.Common;
+﻿using Authorization.Client.Common;
+using Authorization.Server.Common;
 using Chat.Application.PeerLogics;
 using ServerApplication.Common.ApplicationBase;
 using ServerCommunicationInterfaces;
@@ -26,7 +27,7 @@ namespace Chat.Application
         {
             base.OnConnected(clientPeer);
 
-            WrapClientPeer(clientPeer, new UnauthorizedClientPeerLogic());
+            WrapClientPeer(clientPeer, new UnauthorizedClientPeerLogic<AuthorizedClientPeerLogic>());
         }
 
         private void AddComponents()

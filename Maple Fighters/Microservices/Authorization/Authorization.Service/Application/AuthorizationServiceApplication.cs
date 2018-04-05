@@ -1,6 +1,7 @@
 ﻿using Authorization.Service.Application.Components;
 using Authorization.Service.Application.PeerLogic;
 using ServerApplication.Common.ApplicationBase;
+using ServerCommunication.Common;
 using ServerCommunicationInterfaces;
 
 namespace Authorization.Service.Application
@@ -19,7 +20,7 @@ namespace Authorization.Service.Application
         {
             base.OnConnected(clientPeer);
 
-            WrapClientPeer(clientPeer, new InboundServerPeerLogic());
+            WrapClientPeer(clientPeer, new UnauthenticatedServerPeerLogic<InboundServerPeerLogic>());
         }
 
         public override void Startup()

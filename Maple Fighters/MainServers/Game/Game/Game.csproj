@@ -124,7 +124,6 @@
     <Compile Include="Application\Peer Logics\GameScenePeerLogic.cs" />
     <Compile Include="Application\Peer Logics\Operations\UpdatePositionOperationHandler.cs" />
     <Compile Include="Application\Peer Logics\Operations\UpdatePlayerStateOperationHandler.cs" />
-    <Compile Include="Application\Peer Logics\UnauthorizedClientPeerLogic.cs" />
     <Compile Include="Application\Scene Objects\Components\CharacterGetter.cs" />
     <Compile Include="Application\Scene Objects\Components\Interfaces\ICharacterBody.cs" />
     <Compile Include="Application\Scene Objects\Components\Interfaces\ICharacterGetter.cs" />

@@ -1,6 +1,7 @@
 ﻿using Authorization.Server.Common;
 using Database.Common.Components;
 using ServerApplication.Common.ApplicationBase;
+using ServerCommunication.Common;
 using ServerCommunicationInterfaces;
 using UserProfile.Service.Application.Components;
 using UserProfile.Service.Application.PeerLogic;
@@ -29,7 +30,7 @@ namespace UserProfile.Service.Application
         {
             base.OnConnected(clientPeer);
 
-            WrapClientPeer(clientPeer, new InboundServerPeerLogic());
+            WrapClientPeer(clientPeer, new UnauthenticatedServerPeerLogic<InboundServerPeerLogic>());
         }
 
         private void AddComponents()

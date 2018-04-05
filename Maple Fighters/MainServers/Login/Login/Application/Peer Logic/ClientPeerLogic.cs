@@ -9,10 +9,8 @@ namespace Login.Application.PeerLogic
 {
     internal class ClientPeerLogic : PeerLogicBase<LoginOperations, EmptyEventCode>
     {
-        public override void Initialize(IClientPeerWrapper peer)
+        protected override void OnInitialized()
         {
-            base.Initialize(peer);
-
             AddCommonComponents();
             AddComponents();
 

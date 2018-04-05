@@ -10,6 +10,13 @@ namespace Authorization.Server.Common
 {
     public class AuthorizationService : ServiceBase<AuthorizationOperations, EmptyEventCode>, IAuthorizationServiceAPI
     {
+        protected override void OnAuthenticated()
+        {
+            base.OnAuthenticated();
+
+            LogUtils.Log(MessageBuilder.Trace("Authenticated with Authorization service."));
+        }
+
         public void RemoveAuthorization(RemoveAuthorizationRequestParameters parameters)
         {
             OutboundServerPeerLogic?.SendOperation((byte)AuthorizationOperations.RemoveAuthorization, parameters);
@@ -34,6 +41,14 @@ namespace Authorization.Server.Common
             var ip = (string)Config.Global.AuthorizationService.IP;
             var port = (int)Config.Global.AuthorizationService.Port;
             return new PeerConnectionInformation(ip, port);
+        }
+
+        protected override string GetSecretKey()
+        {
+            LogUtils.Assert(Config.Global.AuthorizationService, MessageBuilder.Trace("Could not find a configuration for the Authorization service."));
+
+            var secretKey = (string)Config.Global.AuthorizationService.SecretKey;
+            return secretKey;
         }
     }
 }

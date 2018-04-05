@@ -3,6 +3,7 @@ using Character.Service.Application.PeerLogic;
 using CharacterService.Application.Components;
 using Database.Common.Components;
 using ServerApplication.Common.ApplicationBase;
+using ServerCommunication.Common;
 using ServerCommunicationInterfaces;
 
 namespace Character.Service.Application
@@ -21,7 +22,7 @@ namespace Character.Service.Application
         {
             base.OnConnected(clientPeer);
 
-            WrapClientPeer(clientPeer, new InboundServerPeerLogic());
+            WrapClientPeer(clientPeer, new UnauthenticatedServerPeerLogic<InboundServerPeerLogic>());
         }
 
         public override void Startup()

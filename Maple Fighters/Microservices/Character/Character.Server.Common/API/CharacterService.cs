@@ -11,6 +11,13 @@ namespace Character.Server.Common
 {
     public class CharacterService : ServiceBase<CharacterOperations, EmptyEventCode>, ICharacterServiceAPI
     {
+        protected override void OnAuthenticated()
+        {
+            base.OnAuthenticated();
+
+            LogUtils.Log(MessageBuilder.Trace("Authenticated with Character service."));
+        }
+
         public Task<CreateCharacterResponseParameters> CreateCharacter(IYield yield, CreateCharacterRequestParametersEx parameters)
         {
             return OutboundServerPeerLogic?.SendOperation<CreateCharacterRequestParametersEx, CreateCharacterResponseParameters>
@@ -42,6 +49,14 @@ namespace Character.Server.Common
             var ip = (string)Config.Global.CharacterService.IP;
             var port = (int)Config.Global.CharacterService.Port;
             return new PeerConnectionInformation(ip, port);
+        }
+
+        protected override string GetSecretKey()
+        {
+            LogUtils.Assert(Config.Global.CharacterService, MessageBuilder.Trace("Could not find a configuration for the Character service."));
+
+            var secretKey = (string)Config.Global.CharacterService.SecretKey;
+            return secretKey;
         }
     }
 }

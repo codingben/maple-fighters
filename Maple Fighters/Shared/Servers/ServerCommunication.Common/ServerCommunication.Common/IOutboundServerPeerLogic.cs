@@ -5,7 +5,7 @@ using CommonTools.Coroutines;
 
 namespace ServerCommunication.Common
 {
-    public interface IOutboundServerPeerLogic : IDisposable
+    public interface IOutboundServerPeerLogic : IOutboundServerPeerLogicBase
     {
         void SendOperation<TParams>(byte operationCode, TParams parameters)
             where TParams : struct, IParameters;

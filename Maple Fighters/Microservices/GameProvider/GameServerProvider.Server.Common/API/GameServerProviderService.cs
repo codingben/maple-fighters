@@ -4,7 +4,6 @@ using CommunicationHelper;
 using JsonConfig;
 using ServerApplication.Common.Components.Interfaces;
 using ServerCommunication.Common;
-using ServerCommunicationInterfaces;
 
 namespace GameServerProvider.Server.Common
 {
@@ -12,9 +11,11 @@ namespace GameServerProvider.Server.Common
 
     public class GameServerProviderService : ServiceBase<EmptyOperationCode, EmptyEventCode>
     {
-        protected override void OnConnected(IOutboundServerPeer outboundServerPeer)
+        protected override void OnAuthenticated()
         {
-            base.OnConnected(outboundServerPeer);
+            base.OnAuthenticated();
+
+            LogUtils.Log(MessageBuilder.Trace("Authenticated with GameServerProvider service."));
 
             RegisterGameServer();
         }
@@ -45,6 +46,14 @@ namespace GameServerProvider.Server.Common
             var ip = (string)Config.Global.GameServerProviderService.IP;
             var port = (int)Config.Global.GameServerProviderService.Port;
             return new PeerConnectionInformation(ip, port);
+        }
+
+        protected override string GetSecretKey()
+        {
+            LogUtils.Assert(Config.Global.GameServerProviderService, MessageBuilder.Trace("Could not find a configuration for the GameServerProvider service."));
+
+            var secretKey = (string)Config.Global.GameServerProviderService.SecretKey;
+            return secretKey;
         }
     }
 }

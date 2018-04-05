@@ -4,7 +4,6 @@ using CommonTools.Log;
 using JsonConfig;
 using ServerApplication.Common.Components.Interfaces;
 using ServerCommunication.Common;
-using ServerCommunicationInterfaces;
 
 namespace UserProfile.Server.Common
 {
@@ -25,9 +24,11 @@ namespace UserProfile.Server.Common
             userIdToPeerIdConverter = Server.Components.AddComponent(new UserIdToPeerIdConverter());
         }
 
-        protected override void OnConnected(IOutboundServerPeer outboundServerPeer)
+        protected override void OnAuthenticated()
         {
-            base.OnConnected(outboundServerPeer);
+            base.OnAuthenticated();
+
+            LogUtils.Log(MessageBuilder.Trace("Authenticated with UserProfile service."));
 
             SubscribeToUserPropertiesChanges();
             RegisterToUserProfileService();
@@ -103,11 +104,19 @@ namespace UserProfile.Server.Common
 
         protected override PeerConnectionInformation GetPeerConnectionInformation()
         {
-            LogUtils.Assert(Config.Global.UserProfileService, MessageBuilder.Trace("Could not find a connection info for the User Profile service."));
+            LogUtils.Assert(Config.Global.UserProfileService, MessageBuilder.Trace("Could not find a configuration for the UserProfile service."));
 
             var ip = (string)Config.Global.UserProfileService.IP;
             var port = (int)Config.Global.UserProfileService.Port;
             return new PeerConnectionInformation(ip, port);
+        }
+
+        protected override string GetSecretKey()
+        {
+            LogUtils.Assert(Config.Global.UserProfileService, MessageBuilder.Trace("Could not find a configuration for the UserProfile service."));
+
+            var secretKey = (string)Config.Global.UserProfileService.SecretKey;
+            return secretKey;
         }
     }
 }

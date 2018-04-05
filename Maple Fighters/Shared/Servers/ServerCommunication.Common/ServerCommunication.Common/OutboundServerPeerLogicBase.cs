@@ -9,18 +9,23 @@ using ServerCommunicationInterfaces;
 
 namespace ServerCommunication.Common
 {
-    public class OutboundServerPeerLogic<TOperationCode, TEventCode> : IOutboundServerPeerLogic
+    public class OutboundServerPeerLogicBase<TOperationCode, TEventCode> : IOutboundServerPeerLogic
         where TOperationCode : IComparable, IFormattable, IConvertible
         where TEventCode : IComparable, IFormattable, IConvertible
     {
         private readonly IOutboundServerPeer outboundServerPeer;
-        private readonly IOperationRequestSender<TOperationCode> operationRequestSender;
-        private readonly IEventHandlerRegister<TEventCode> eventHandlerRegister;
-        private readonly IOperationResponseSubscriptionProvider subscriptionProvider;
+        private IOperationRequestSender<TOperationCode> operationRequestSender;
+        private IEventHandlerRegister<TEventCode> eventHandlerRegister;
+        private IOperationResponseSubscriptionProvider subscriptionProvider;
 
-        public OutboundServerPeerLogic(IOutboundServerPeer outboundServerPeer)
+        public OutboundServerPeerLogicBase(IOutboundServerPeer outboundServerPeer)
         {
             this.outboundServerPeer = outboundServerPeer;
+        }
+
+        public void Initialize()
+        {
+            LogUtils.Assert(Config.Global.Log, MessageBuilder.Trace("Could not find a log configuration."));
 
             var logOperationsRequest = (bool)Config.Global.Log.OperationsRequest;
             var logOperationsResponse = (bool)Config.Global.Log.OperationsResponse;
@@ -29,12 +34,26 @@ namespace ServerCommunication.Common
             operationRequestSender = new OperationRequestSender<TOperationCode>(outboundServerPeer.OperationRequestSender, logOperationsRequest);
             subscriptionProvider = new OperationResponseSubscriptionProvider<TOperationCode>(outboundServerPeer.OperationResponseNotifier, OnOperationRequestFailed, logOperationsResponse);
             eventHandlerRegister = new EventHandlerRegister<TEventCode>(outboundServerPeer.EventNotifier, logEvents);
+
+            OnInitialized();
+        }
+
+        protected virtual void OnInitialized()
+        {
+            // Left blank intentionally
         }
 
         public void Dispose()
         {
             eventHandlerRegister?.Dispose();
             subscriptionProvider?.Dispose();
+
+            OnDispose();
+        }
+
+        protected virtual void OnDispose()
+        {
+            // Left blank intentionally
         }
 
         public void SendOperation<TParams>(byte operationCode, TParams parameters)
@@ -59,9 +78,18 @@ namespace ServerCommunication.Common
             }
 
             var code = (TOperationCode)Enum.ToObject(typeof(TOperationCode), operationCode);
-            var requestId = operationRequestSender.Send(code, parameters, MessageSendOptions.DefaultReliable());
-            var responseParameters = await subscriptionProvider.ProvideSubscription<TResponseParams>(yield, requestId);
-            return responseParameters;
+
+            try
+            {
+                var requestId = operationRequestSender.Send(code, parameters, MessageSendOptions.DefaultReliable());
+                var responseParameters = await subscriptionProvider.ProvideSubscription<TResponseParams>(yield, requestId);
+                return responseParameters;
+            }
+            catch (OperationNotHandledException)
+            {
+                LogUtils.Log($"Operation {code} not handled; sent a default operation response.");
+                return default(TResponseParams);
+            }
         }
 
         public void SetEventHandler<TParams>(byte eventCode, Action<TParams> action)
@@ -85,7 +113,7 @@ namespace ServerCommunication.Common
 
         private bool IsConnected()
         {
-            return outboundServerPeer.IsConnected;
+            return outboundServerPeer != null && outboundServerPeer.IsConnected;
         }
     }
 }

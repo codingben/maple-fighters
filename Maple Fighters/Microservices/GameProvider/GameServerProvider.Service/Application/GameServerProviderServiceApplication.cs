@@ -1,8 +1,10 @@
-﻿using Authorization.Server.Common;
+﻿using Authorization.Client.Common;
+using Authorization.Server.Common;
 using GameServerProvider.Service.Application.Components;
 using GameServerProvider.Service.Application.PeerLogics;
 using JsonConfig;
 using ServerApplication.Common.ApplicationBase;
+using ServerCommunication.Common;
 using ServerCommunicationInterfaces;
 using UserProfile.Server.Common;
 
@@ -33,11 +35,11 @@ namespace GameServerProvider.Service.Application
             var tcpPort = (int)Config.Global.ConnectionInfo.TcpPort;
             if (clientPeer.ConnectionInformation.Port == tcpPort)
             {
-                WrapClientPeer(clientPeer, new InboundServerPeerLogic());
+                WrapClientPeer(clientPeer, new UnauthenticatedServerPeerLogic<InboundServerPeerLogic>());
             }
             else
             {
-                WrapClientPeer(clientPeer, new UnauthorizedClientPeerLogic());
+                WrapClientPeer(clientPeer, new UnauthorizedClientPeerLogic<AuthorizedClientPeerLogic>());
             }
         }
 

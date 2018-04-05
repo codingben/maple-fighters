@@ -18,6 +18,7 @@ namespace ServerCommunication.Common
         private readonly ICoroutinesExecuter coroutinesExecutor;
         private readonly IServerConnectorProvider serverConnectorProvider;
         private readonly Action<IOutboundServerPeer> onConnected;
+        private ICoroutine connectContinuously;
 
         private bool isConnecting;
         private string exceptionMessage;
@@ -31,7 +32,7 @@ namespace ServerCommunication.Common
 
         public void Connect(PeerConnectionInformation connectionInformation)
         {
-            coroutinesExecutor.StartCoroutine(ConnectContinuously(connectionInformation));
+            connectContinuously = coroutinesExecutor.StartCoroutine(ConnectContinuously(connectionInformation));
         }
 
         private IEnumerator<IYieldInstruction> ConnectContinuously(PeerConnectionInformation connectionInformation)
@@ -94,6 +95,8 @@ namespace ServerCommunication.Common
             {
                 Disconnect();
             }
+
+            connectContinuously?.Dispose();
         }
 
         private void Disconnect()

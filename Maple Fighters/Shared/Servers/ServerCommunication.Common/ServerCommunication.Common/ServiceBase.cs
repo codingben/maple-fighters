@@ -23,14 +23,16 @@ namespace ServerCommunication.Common
                 }
 
                 var peerDetails = GetPeerConnectionInformation();
-                LogUtils.Log($"An attempt to access outbound server peer logic but there is no connection to: {peerDetails.Ip}:{peerDetails.Port}");
+                LogUtils.Log($"An attempt to access outbound server peer logic but there is no initialized peer to: {peerDetails.Ip}:{peerDetails.Port}");
                 return null;
             }
         }
         private IOutboundServerPeerLogic outboundServerPeerLogic;
+        private IOutboundServerPeerLogicBase serverAuthenticationPeerLogic;
         private IServiceConnectorProvider serviceConnectorProvider;
 
         private bool disposed;
+        private bool isAuthenticated;
 
         protected override void OnAwake()
         {
@@ -49,12 +51,32 @@ namespace ServerCommunication.Common
             disposed = true;
             
             serviceConnectorProvider?.Dispose();
+            serverAuthenticationPeerLogic?.Dispose();
             outboundServerPeerLogic?.Dispose();
         }
-
-        protected virtual void OnConnected(IOutboundServerPeer outboundServerPeer)
+        
+        private void Authenticated(IOutboundServerPeer outboundServerPeer)
         {
-            outboundServerPeerLogic = new OutboundServerPeerLogic<TOperationCode, TEventCode>(outboundServerPeer);
+            serverAuthenticationPeerLogic.Dispose();
+
+            outboundServerPeerLogic = new OutboundServerPeerLogicBase<TOperationCode, TEventCode>(outboundServerPeer);
+            outboundServerPeerLogic.Initialize();
+
+            isAuthenticated = true;
+
+            OnAuthenticated();
+        }
+
+        protected virtual void OnAuthenticated()
+        {
+            // Left blank intentionally
+        }
+
+        private void OnConnected(IOutboundServerPeer outboundServerPeer)
+        {
+            var secretKey = GetSecretKey();
+            serverAuthenticationPeerLogic = new ServerAuthenticationPeerLogic(outboundServerPeer, secretKey, onAuthenticated: () => Authenticated(outboundServerPeer));
+            serverAuthenticationPeerLogic.Initialize();
 
             SubscribeToDisconnectionNotifier();
 
@@ -68,10 +90,14 @@ namespace ServerCommunication.Common
         {
             UnsubscribeFromDisconnectionNotifier();
 
-            var peerConnectionInformation = GetPeerConnectionInformation();
-            LogUtils.Log($"Disconnected from a server - {peerConnectionInformation.Ip}:{peerConnectionInformation.Port}");
+            serviceConnectorProvider?.Dispose();
+            outboundServerPeerLogic?.Dispose();
+            serverAuthenticationPeerLogic?.Dispose();
 
-            if (!disposed)
+            var peerConnectionInformation = GetPeerConnectionInformation();
+            LogUtils.Log($"A connection with the server {peerConnectionInformation.Ip}:{peerConnectionInformation.Port} has been closed.");
+
+            if (!disposed && isAuthenticated)
             {
                 serviceConnectorProvider.Connect(GetPeerConnectionInformation());
             }
@@ -91,5 +117,6 @@ namespace ServerCommunication.Common
         }
 
         protected abstract PeerConnectionInformation GetPeerConnectionInformation();
+        protected abstract string GetSecretKey();
     }
 }
