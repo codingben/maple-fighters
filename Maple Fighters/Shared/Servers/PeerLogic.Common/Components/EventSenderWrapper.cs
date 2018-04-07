@@ -9,7 +9,7 @@ namespace PeerLogic.Common.Components
     public class EventSenderWrapper : Component, IEventSenderWrapper
     {
         private readonly IEventSender eventSender;
-        private IMinimalPeerGetter peerGetter;
+        private IClientPeerProvider clientPeerProvider;
 
         public EventSenderWrapper(IEventSender eventSender)
         {
@@ -20,13 +20,13 @@ namespace PeerLogic.Common.Components
         {
             base.OnAwake();
 
-            peerGetter = Components.GetComponent<IMinimalPeerGetter>().AssertNotNull();
+            clientPeerProvider = Components.GetComponent<IClientPeerProvider>().AssertNotNull();
         }
 
         public void Send<TParameters>(byte code, TParameters parameters, MessageSendOptions messageSendOptions)
             where TParameters : struct, IParameters
         {
-            if (peerGetter.Peer.IsConnected)
+            if (clientPeerProvider.Peer.IsConnected)
             {
                 eventSender.Send(new MessageData<TParameters>(code, parameters), messageSendOptions);
             }

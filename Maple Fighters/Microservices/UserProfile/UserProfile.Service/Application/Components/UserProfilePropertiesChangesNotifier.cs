@@ -3,17 +3,15 @@ using CommonTools.Log;
 using ComponentModel.Common;
 using PeerLogic.Common;
 using PeerLogic.Common.Components.Interfaces;
-using ServerApplication.Common.Components.Interfaces;
+using ServerApplication.Common.ApplicationBase;
 using UserProfile.Server.Common;
 using UserProfile.Service.Application.Components.Interfaces;
 
 namespace UserProfile.Service.Application.Components
 {
-    using Server = ServerApplication.Common.ApplicationBase.Server;
-
     internal class UserProfilePropertiesChangesNotifier : Component, IUserProfilePropertiesChangesNotifier
     {
-        private IMinimalPeerGetter peerGetter;
+        private IClientPeerProvider clientPeerProvider;
         private IPeerContainer peerContainer;
         private IServerIdToPeerIdConverter serverIdToPeerIdConverter;
         private IUserIdToServerIdConverter userIdToServerIdConverter;
@@ -22,11 +20,11 @@ namespace UserProfile.Service.Application.Components
         {
             base.OnAwake();
 
-            peerGetter = Components.GetComponent<IMinimalPeerGetter>().AssertNotNull();
+            clientPeerProvider = Components.GetComponent<IClientPeerProvider>().AssertNotNull();
 
-            peerContainer = Server.Components.GetComponent<IPeerContainer>().AssertNotNull();
-            serverIdToPeerIdConverter = Server.Components.GetComponent<IServerIdToPeerIdConverter>().AssertNotNull();
-            userIdToServerIdConverter = Server.Components.GetComponent<IUserIdToServerIdConverter>().AssertNotNull();
+            peerContainer = ServerComponents.GetComponent<IPeerContainer>().AssertNotNull();
+            serverIdToPeerIdConverter = ServerComponents.GetComponent<IServerIdToPeerIdConverter>().AssertNotNull();
+            userIdToServerIdConverter = ServerComponents.GetComponent<IUserIdToServerIdConverter>().AssertNotNull();
         }
 
         public void Notify(UserProfilePropertiesChangedEventParameters parameters)
@@ -47,7 +45,7 @@ namespace UserProfile.Service.Application.Components
                     continue;
                 }
 
-                if (peerId.Value == peerGetter.PeerId)
+                if (peerId.Value == clientPeerProvider.PeerId)
                 {
                     continue;
                 }

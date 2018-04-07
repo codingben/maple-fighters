@@ -2,9 +2,9 @@
 using CommonCommunicationInterfaces;
 using CommonTools.Coroutines;
 using CommonTools.Log;
+using Components.Common.Interfaces;
 using Server2.Common;
 using ServerApplication.Common.ApplicationBase;
-using ServerApplication.Common.Components;
 using ServerCommunicationInterfaces;
 
 namespace Server1
@@ -23,17 +23,17 @@ namespace Server1
 
             AddCommonComponents();
 
-            Server.Components.AddComponent(new Server2Service());
+            ServerComponents.AddComponent(new Server2Service());
 
             RunTestForServer2Service();
         }
 
         private void RunTestForServer2Service()
         {
-            var server2Service = Server.Components.GetComponent<IServer2ServiceAPI>().AssertNotNull();
+            var server2Service = ServerComponents.GetComponent<IServer2ServiceAPI>().AssertNotNull();
             server2Service.TestAction += OnTestEvent;
 
-            var coroutinesExecutor = Server.Components.GetComponent<ICoroutinesExecuter>().AssertNotNull();
+            var coroutinesExecutor = ServerComponents.GetComponent<ICoroutinesManager>().AssertNotNull();
             coroutinesExecutor.StartCoroutine(Server2Service());
         }
 
@@ -41,8 +41,8 @@ namespace Server1
         {
             yield return new WaitForSeconds(10);
 
-            var server2Service = Server.Components.GetComponent<IServer2ServiceAPI>().AssertNotNull();
-            var coroutinesExecutor = Server.Components.GetComponent<ICoroutinesExecuter>().AssertNotNull();
+            var server2Service = ServerComponents.GetComponent<IServer2ServiceAPI>().AssertNotNull();
+            var coroutinesExecutor = ServerComponents.GetComponent<ICoroutinesManager>().AssertNotNull();
             coroutinesExecutor.StartTask(async (y) =>
             {
                 var parameters = new Server1OperationRequestParameters(50);

@@ -16,9 +16,9 @@ namespace CharacterService.Application.PeerLogics.Operations
 
         public CreateCharacterOperationHandler()
         {
-            databaseCharacterCreator = Server.Components.GetComponent<IDatabaseCharacterCreator>().AssertNotNull();
-            databaseCharacterExistence = Server.Components.GetComponent<IDatabaseCharacterExistence>().AssertNotNull();
-            databaseCharacterNameVerifier = Server.Components.GetComponent<IDatabaseCharacterNameVerifier>().AssertNotNull();
+            databaseCharacterCreator = ServerComponents.GetComponent<IDatabaseCharacterCreator>().AssertNotNull();
+            databaseCharacterExistence = ServerComponents.GetComponent<IDatabaseCharacterExistence>().AssertNotNull();
+            databaseCharacterNameVerifier = ServerComponents.GetComponent<IDatabaseCharacterNameVerifier>().AssertNotNull();
         }
 
         public CreateCharacterResponseParameters? Handle(MessageData<CreateCharacterRequestParametersEx> messageData, ref MessageSendOptions sendOptions)

@@ -15,7 +15,7 @@ namespace CharacterService.Application.PeerLogics.Operations
 
         public GetCharactersOperationHandler()
         {
-            databaseCharactersGetter = Server.Components.GetComponent<IDatabaseCharactersGetter>().AssertNotNull();
+            databaseCharactersGetter = ServerComponents.GetComponent<IDatabaseCharactersGetter>().AssertNotNull();
         }
 
         public GetCharactersResponseParameters? Handle(MessageData<GetCharactersRequestParameters> messageData, ref MessageSendOptions sendOptions)

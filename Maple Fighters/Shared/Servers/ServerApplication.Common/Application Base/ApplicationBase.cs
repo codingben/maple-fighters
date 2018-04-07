@@ -1,8 +1,11 @@
 ﻿using CommonTools.Coroutines;
 using CommonTools.Log;
+using Components.Common;
+using Components.Common.Interfaces;
 using PeerLogic.Common;
+using PeerLogic.Common.Components;
+using PeerLogic.Common.Components.Interfaces;
 using ServerApplication.Common.Components;
-using ServerApplication.Common.Components.Interfaces;
 using ServerCommunicationInterfaces;
 
 namespace ServerApplication.Common.ApplicationBase
@@ -30,14 +33,14 @@ namespace ServerApplication.Common.ApplicationBase
 
         public virtual void Startup()
         {
-            peerContainer = Server.Components.AddComponent(new PeerContainer());
+            peerContainer = ServerComponents.AddComponent(new PeerContainer());
 
             LogUtils.Log("An application has started.");
         }
 
         public virtual void Shutdown()
         {
-            Server.Components.Dispose();
+            ServerComponents.RemoveAllComponents();
 
             LogUtils.Log("An application has been stopped.");
         }
@@ -46,16 +49,16 @@ namespace ServerApplication.Common.ApplicationBase
         {
             TimeProviders.DefaultTimeProvider = new TimeProvider();
 
-            Server.Components.AddComponent(new RandomNumberGenerator());
-            Server.Components.AddComponent(new IdGenerator());
-            var fiber = Server.Components.AddComponent(new FiberProvider(fiberProvider)).AssertNotNull();
-            Server.Components.AddComponent(new CoroutinesExecutor(new FiberCoroutinesExecutor(fiber.GetFiberStarter(), 100)));
-            Server.Components.AddComponent(new ServerConnectorProvider(serverConnector));
+            ServerComponents.AddComponent(new RandomNumberGenerator());
+            ServerComponents.AddComponent(new IdGenerator());
+            var fiber = ServerComponents.AddComponent(new FiberProvider(fiberProvider)).AssertNotNull();
+            ServerComponents.AddComponent(new CoroutinesManager(new FiberCoroutinesExecutor(fiber.GetFiberStarter(), 100)));
+            ServerComponents.AddComponent(new ServerConnectorProvider(serverConnector));
         }
 
         protected void WrapClientPeer(IClientPeer clientPeer, IPeerLogicBase peerLogic)
         {
-            var idGenerator = Server.Components.GetComponent<IIdGenerator>().AssertNotNull();
+            var idGenerator = ServerComponents.GetComponent<IIdGenerator>().AssertNotNull();
             var peerId = idGenerator.GenerateId();
 
             var clientPeerWrapper = new ClientPeerWrapper(clientPeer, peerId);

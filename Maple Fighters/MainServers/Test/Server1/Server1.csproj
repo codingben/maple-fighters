@@ -67,6 +67,10 @@
       <Project>{00565794-9958-47D9-9E8E-6D7193D67B9D}</Project>
       <Name>ComponentModel.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\Shared\Servers\Components.Common\Components.Common\Components.Common.csproj">
+      <Project>{3FF99885-F430-4270-92DA-12F59AC343F3}</Project>
+      <Name>Components.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\Shared\Servers\ServerApplication.Common\ServerApplication.Common.csproj">
       <Project>{F82FBB67-7B1D-43B7-A415-3F407D40E5C7}</Project>
       <Name>ServerApplication.Common</Name>

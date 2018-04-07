@@ -8,8 +8,6 @@ using ServerCommunicationInterfaces;
 
 namespace Character.Service.Application
 {
-    using Server = ServerApplication.Common.ApplicationBase.Server;
-
     public class CharacterServiceApplication : ApplicationBase
     {
         public CharacterServiceApplication(IFiberProvider fiberProvider, IServerConnector serverConnector) 
@@ -35,14 +33,14 @@ namespace Character.Service.Application
 
         private void AddComponents()
         {
-            Server.Components.AddComponent(new AuthorizationService());
-            Server.Components.AddComponent(new DatabaseConnectionProvider());
-            Server.Components.AddComponent(new DatabaseCharacterCreator());
-            Server.Components.AddComponent(new DatabaseCharacterRemover());
-            Server.Components.AddComponent(new DatabaseCharacterNameVerifier());
-            Server.Components.AddComponent(new DatabaseCharacterGetter());
-            Server.Components.AddComponent(new DatabaseCharactersGetter());
-            Server.Components.AddComponent(new DatabaseCharacterExistence());
+            ServerComponents.AddComponent(new AuthorizationService());
+            ServerComponents.AddComponent(new DatabaseConnectionProvider());
+            ServerComponents.AddComponent(new DatabaseCharacterCreator());
+            ServerComponents.AddComponent(new DatabaseCharacterRemover());
+            ServerComponents.AddComponent(new DatabaseCharacterNameVerifier());
+            ServerComponents.AddComponent(new DatabaseCharacterGetter());
+            ServerComponents.AddComponent(new DatabaseCharactersGetter());
+            ServerComponents.AddComponent(new DatabaseCharacterExistence());
         }
     }
 }

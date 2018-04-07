@@ -87,6 +87,10 @@
       <Project>{00565794-9958-47D9-9E8E-6D7193D67B9D}</Project>
       <Name>ComponentModel.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\Shared\Servers\Components.Common\Components.Common\Components.Common.csproj">
+      <Project>{3FF99885-F430-4270-92DA-12F59AC343F3}</Project>
+      <Name>Components.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\Shared\Servers\PeerLogic.Common\PeerLogic.Common.csproj">
       <Project>{F90F12D2-58E0-4718-A205-EBFD28C81742}</Project>
       <Name>PeerLogic.Common</Name>

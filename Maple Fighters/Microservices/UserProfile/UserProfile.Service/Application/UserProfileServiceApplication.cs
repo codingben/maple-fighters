@@ -8,8 +8,6 @@ using UserProfile.Service.Application.PeerLogic;
 
 namespace UserProfile.Service.Application
 {
-    using Server = ServerApplication.Common.ApplicationBase.Server;
-
     public class UserProfileServiceApplication : ApplicationBase
     {
         public UserProfileServiceApplication(IFiberProvider fiberProvider, IServerConnector serverConnector) 
@@ -35,13 +33,13 @@ namespace UserProfile.Service.Application
 
         private void AddComponents()
         {
-            Server.Components.AddComponent(new AuthorizationService());
-            Server.Components.AddComponent(new DatabaseConnectionProvider());
-            Server.Components.AddComponent(new DatabaseUserProfileCreator());
-            Server.Components.AddComponent(new DatabaseUserProfilePropertiesUpdater());
-            Server.Components.AddComponent(new DatabaseUserProfileExistence());
-            Server.Components.AddComponent(new ServerIdToPeerIdConverter());
-            Server.Components.AddComponent(new UserIdToServerIdConverter());
+            ServerComponents.AddComponent(new AuthorizationService());
+            ServerComponents.AddComponent(new DatabaseConnectionProvider());
+            ServerComponents.AddComponent(new DatabaseUserProfileCreator());
+            ServerComponents.AddComponent(new DatabaseUserProfilePropertiesUpdater());
+            ServerComponents.AddComponent(new DatabaseUserProfileExistence());
+            ServerComponents.AddComponent(new ServerIdToPeerIdConverter());
+            ServerComponents.AddComponent(new UserIdToServerIdConverter());
         }
     }
 }

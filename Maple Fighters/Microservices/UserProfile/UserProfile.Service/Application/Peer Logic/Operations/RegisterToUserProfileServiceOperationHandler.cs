@@ -1,13 +1,12 @@
 ﻿using CommonCommunicationInterfaces;
 using CommonTools.Log;
+using ServerApplication.Common.ApplicationBase;
 using ServerCommunicationHelper;
 using UserProfile.Server.Common;
 using UserProfile.Service.Application.Components.Interfaces;
 
 namespace UserProfile.Service.Application.PeerLogic.Operations
 {
-    using Server = ServerApplication.Common.ApplicationBase.Server;
-
     internal class RegisterToUserProfileServiceOperationHandler : IOperationRequestHandler<RegisterToUserProfileServiceRequestParameters, EmptyParameters>
     {
         private readonly int peerId;
@@ -17,7 +16,7 @@ namespace UserProfile.Service.Application.PeerLogic.Operations
         {
             this.peerId = peerId;
 
-            serverIdToPeerIdConverter = Server.Components.GetComponent<IServerIdToPeerIdConverter>().AssertNotNull();
+            serverIdToPeerIdConverter = ServerComponents.GetComponent<IServerIdToPeerIdConverter>().AssertNotNull();
         }
 
         public EmptyParameters? Handle(MessageData<RegisterToUserProfileServiceRequestParameters> messageData, ref MessageSendOptions sendOptions)

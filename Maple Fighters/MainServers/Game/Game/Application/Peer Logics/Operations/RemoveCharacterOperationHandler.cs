@@ -18,7 +18,7 @@ namespace Game.Application.PeerLogic.Operations
         {
             this.userId = userId;
 
-            characterServiceAPI = Server.Components.GetComponent<ICharacterServiceAPI>().AssertNotNull();
+            characterServiceAPI = ServerComponents.GetComponent<ICharacterServiceAPI>().AssertNotNull();
         }
 
         public Task<RemoveCharacterResponseParameters?> Handle(IYield yield, MessageData<RemoveCharacterRequestParameters> messageData, ref MessageSendOptions sendOptions)

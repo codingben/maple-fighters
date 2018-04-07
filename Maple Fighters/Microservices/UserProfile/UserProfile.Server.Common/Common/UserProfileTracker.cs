@@ -3,11 +3,10 @@ using CommonCommunicationInterfaces;
 using CommonTools.Log;
 using ComponentModel.Common;
 using PeerLogic.Common.Components.Interfaces;
+using ServerApplication.Common.ApplicationBase;
 
 namespace UserProfile.Server.Common
 {
-    using Server = ServerApplication.Common.ApplicationBase.Server;
-
     public class UserProfileTracker : Component
     {
         private bool isManuallyDisconnected;
@@ -16,7 +15,7 @@ namespace UserProfile.Server.Common
         private readonly ServerType serverType;
         private readonly bool isUserProfileChanged;
 
-        private IMinimalPeerGetter peerGetter;
+        private IClientPeerProvider clientPeerProvider;
 
         public UserProfileTracker(int userId, ServerType serverType, bool isUserProfileChanged = false)
         {
@@ -29,7 +28,7 @@ namespace UserProfile.Server.Common
         {
             base.OnAwake();
 
-            peerGetter = Components.GetComponent<IMinimalPeerGetter>().AssertNotNull();
+            clientPeerProvider = Components.GetComponent<IClientPeerProvider>().AssertNotNull();
 
             AddUserIdToPeerIdConverter();
 
@@ -51,32 +50,32 @@ namespace UserProfile.Server.Common
 
         public void ChangeUserProfileProperties()
         {
-            var userProfileServiceAPI = Server.Components.GetComponent<IUserProfileServiceAPI>().AssertNotNull();
-            var parameters = new ChangeUserProfilePropertiesRequestParameters(userId, peerGetter.PeerId, serverType, ConnectionStatus.Connected);
+            var userProfileServiceAPI = ServerComponents.GetComponent<IUserProfileServiceAPI>().AssertNotNull();
+            var parameters = new ChangeUserProfilePropertiesRequestParameters(userId, clientPeerProvider.PeerId, serverType, ConnectionStatus.Connected);
             userProfileServiceAPI.ChangeUserProfileProperties(parameters);
         }
 
         private void SubscribeToUserProfile()
         {
-            var userProfileServiceAPI = Server.Components.GetComponent<IUserProfileServiceAPI>().AssertNotNull();
+            var userProfileServiceAPI = ServerComponents.GetComponent<IUserProfileServiceAPI>().AssertNotNull();
             userProfileServiceAPI.SubscribeToUserProfile(userId);
         }
 
         private void UnsubscribeFromUserProfile()
         {
-            var userProfileServiceAPI = Server.Components.GetComponent<IUserProfileServiceAPI>().AssertNotNull();
+            var userProfileServiceAPI = ServerComponents.GetComponent<IUserProfileServiceAPI>().AssertNotNull();
             userProfileServiceAPI.UnsubscribeFromUserProfile(userId);
         }
 
         private void AddUserIdToPeerIdConverter()
         {
-            var userToPeerIdConverter = Server.Components.GetComponent<IUserIdToPeerIdConverter>().AssertNotNull();
-            userToPeerIdConverter.Add(userId, peerGetter.PeerId);
+            var userToPeerIdConverter = ServerComponents.GetComponent<IUserIdToPeerIdConverter>().AssertNotNull();
+            userToPeerIdConverter.Add(userId, clientPeerProvider.PeerId);
         }
 
         private void RemoveUserIdToPeerIdFromConverter()
         {
-            var userToPeerIdConverter = Server.Components.GetComponent<IUserIdToPeerIdConverter>().AssertNotNull();
+            var userToPeerIdConverter = ServerComponents.GetComponent<IUserIdToPeerIdConverter>().AssertNotNull();
             userToPeerIdConverter.Remove(userId);
         }
 
@@ -103,18 +102,18 @@ namespace UserProfile.Server.Common
             void DisconnectManually()
             {
                 isManuallyDisconnected = true;
-                peerGetter.Peer.Disconnect();
+                clientPeerProvider.Peer.Disconnect();
             }
         }
 
         private void SubscribeToDisconnectionNotifier()
         {
-            peerGetter.Peer.PeerDisconnectionNotifier.Disconnected += OnDisconnected;
+            clientPeerProvider.Peer.PeerDisconnectionNotifier.Disconnected += OnDisconnected;
         }
 
         private void UnsubscribeFromDisconnectionNotifier()
         {
-            peerGetter.Peer.PeerDisconnectionNotifier.Disconnected -= OnDisconnected;
+            clientPeerProvider.Peer.PeerDisconnectionNotifier.Disconnected -= OnDisconnected;
         }
 
         private void OnDisconnected(DisconnectReason disconnectReason, string details)
@@ -130,7 +129,7 @@ namespace UserProfile.Server.Common
                 return;
             }
 
-            var userProfileServiceAPI = Server.Components.GetComponent<IUserProfileServiceAPI>().AssertNotNull();
+            var userProfileServiceAPI = ServerComponents.GetComponent<IUserProfileServiceAPI>().AssertNotNull();
             var parameters = new ChangeUserProfilePropertiesRequestParameters(userId, ConnectionStatus.Disconnected);
             userProfileServiceAPI.ChangeUserProfileProperties(parameters);
 
@@ -139,7 +138,7 @@ namespace UserProfile.Server.Common
 
         private void RemoveAuthorizationForUser()
         {
-            var authorizationServiceAPI = Server.Components.GetComponent<IAuthorizationServiceAPI>().AssertNotNull();
+            var authorizationServiceAPI = ServerComponents.GetComponent<IAuthorizationServiceAPI>().AssertNotNull();
             authorizationServiceAPI.RemoveAuthorization(new RemoveAuthorizationRequestParameters(userId));
         }
     }

@@ -1,5 +1,6 @@
 ﻿using CommonCommunicationInterfaces;
 using CommonTools.Log;
+using ServerApplication.Common.ApplicationBase;
 using ServerCommunicationHelper;
 using UserProfile.Server.Common;
 using UserProfile.Service.Application.Components.Interfaces;
@@ -7,8 +8,6 @@ using UserProfile.Service.Application.PeerLogic.Components;
 
 namespace UserProfile.Service.Application.PeerLogic.Operations
 {
-    using Server = ServerApplication.Common.ApplicationBase.Server;
-
     internal class ChangeUserProfilePropertiesOperationHandler : IOperationRequestHandler<ChangeUserProfilePropertiesRequestParameters, EmptyParameters>
     {
         private readonly IDatabaseUserProfileExistence databaseUserProfileExistence;
@@ -22,9 +21,9 @@ namespace UserProfile.Service.Application.PeerLogic.Operations
             this.usersContainer = usersContainer;
             this.userProfilePropertiesChangesNotifier = userProfilePropertiesChangesNotifier;
 
-            databaseUserProfileExistence = Server.Components.GetComponent<IDatabaseUserProfileExistence>().AssertNotNull();
-            databaseUserProfilePropertiesUpdater = Server.Components.GetComponent<IDatabaseUserProfilePropertiesUpdater>().AssertNotNull();
-            databaseUserProfileCreator = Server.Components.GetComponent<IDatabaseUserProfileCreator>().AssertNotNull();
+            databaseUserProfileExistence = ServerComponents.GetComponent<IDatabaseUserProfileExistence>().AssertNotNull();
+            databaseUserProfilePropertiesUpdater = ServerComponents.GetComponent<IDatabaseUserProfilePropertiesUpdater>().AssertNotNull();
+            databaseUserProfileCreator = ServerComponents.GetComponent<IDatabaseUserProfileCreator>().AssertNotNull();
         }
 
         public EmptyParameters? Handle(MessageData<ChangeUserProfilePropertiesRequestParameters> messageData, ref MessageSendOptions sendOptions)

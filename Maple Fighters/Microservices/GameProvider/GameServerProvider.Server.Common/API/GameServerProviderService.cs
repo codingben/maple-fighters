@@ -2,15 +2,19 @@
 using CommonTools.Log;
 using CommunicationHelper;
 using JsonConfig;
-using ServerApplication.Common.Components.Interfaces;
 using ServerCommunication.Common;
 
 namespace GameServerProvider.Server.Common
 {
-    using Server = ServerApplication.Common.ApplicationBase.Server;
-
     public class GameServerProviderService : ServiceBase<EmptyOperationCode, EmptyEventCode>
     {
+        private readonly int connections;
+
+        public GameServerProviderService(int connections)
+        {
+            this.connections = connections;
+        }
+
         protected override void OnAuthenticated()
         {
             base.OnAuthenticated();
@@ -22,9 +26,7 @@ namespace GameServerProvider.Server.Common
 
         private void RegisterGameServer()
         {
-            var peerContainer = Server.Components.GetComponent<IPeerContainer>().AssertNotNull();
             var parameters = GetGameServerDetailsParameters();
-            parameters.Connections = peerContainer.GetPeersCount();
             OutboundServerPeerLogic?.SendOperation((byte)ServerOperations.RegisterGameServer, parameters);
         }
 
@@ -36,7 +38,7 @@ namespace GameServerProvider.Server.Common
             var ip = (string)Config.Global.ConnectionDetails.IP;
             var port = (int)Config.Global.ConnectionDetails.Port;
             var maxConnections = (int)Config.Global.ConnectionDetails.MaxConnections;
-            return new RegisterGameServerRequestParameters(name, ip, port, maxConnections);
+            return new RegisterGameServerRequestParameters(name, ip, port, connections, maxConnections);
         }
 
         protected override PeerConnectionInformation GetPeerConnectionInformation()

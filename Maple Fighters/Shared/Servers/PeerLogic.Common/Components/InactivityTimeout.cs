@@ -3,15 +3,15 @@ using CommonCommunicationInterfaces;
 using CommonTools.Coroutines;
 using CommonTools.Log;
 using ComponentModel.Common;
+using Components.Common.Interfaces;
 using JsonConfig;
 using PeerLogic.Common.Components.Interfaces;
-using ICoroutinesExecutor = PeerLogic.Common.Components.Interfaces.ICoroutinesExecutor;
 
 namespace PeerLogic.Common.Components
 {
     public class InactivityTimeout : Component
     {
-        private IClientPeerGetter peerGetter;
+        private IClientPeerProvider clientPeerProvider;
         private ICoroutine disconnectInactivityTask;
 
         private readonly WaitForSeconds waitForSeconds;
@@ -31,15 +31,15 @@ namespace PeerLogic.Common.Components
         {
             base.OnAwake();
 
-            peerGetter = Components.GetComponent<IClientPeerGetter>().AssertNotNull();
+            clientPeerProvider = Components.GetComponent<IClientPeerProvider>().AssertNotNull();
 
             if (lookForOperationsRequest)
             {
                 SubscribeToOperationRequested();
             }
 
-            var coroutinesExecutor = Components.GetComponent<ICoroutinesExecutor>().AssertNotNull();
-            disconnectInactivityTask = coroutinesExecutor.StartTask(DisconnectInactivity);
+            var coroutinesManager = Components.GetComponent<ICoroutinesManager>().AssertNotNull();
+            disconnectInactivityTask = coroutinesManager.StartTask(DisconnectInactivity);
         }
 
         protected override void OnDestroy()
@@ -56,12 +56,12 @@ namespace PeerLogic.Common.Components
 
         private void SubscribeToOperationRequested()
         {
-            peerGetter.Peer.OperationRequestNotifier.OperationRequested += OnOperationRequestReceived;
+            clientPeerProvider.Peer.OperationRequestNotifier.OperationRequested += OnOperationRequestReceived;
         }
 
         private void UnsubscribeFromOperationRequested()
         {
-            peerGetter.Peer.OperationRequestNotifier.OperationRequested -= OnOperationRequestReceived;
+            clientPeerProvider.Peer.OperationRequestNotifier.OperationRequested -= OnOperationRequestReceived;
         }
 
         private void OnOperationRequestReceived(RawMessageData rawMessageData, short code, MessageSendOptions messageSendOptions)
@@ -72,7 +72,17 @@ namespace PeerLogic.Common.Components
         private async Task DisconnectInactivity(IYield yield)
         {
             await yield.Return(waitForSeconds);
-            peerGetter.Peer.Disconnect();
+            Disconnect();
+        }
+
+        private void Disconnect()
+        {
+            var ip = clientPeerProvider.Peer.ConnectionInformation.Ip;
+            var port = clientPeerProvider.Peer.ConnectionInformation.Port;
+
+            LogUtils.Log(MessageBuilder.Trace($"Disconnecting a peer {ip}:{port} due to inactivity timeout."));
+
+            clientPeerProvider.Peer.Disconnect();
         }
     }
 }

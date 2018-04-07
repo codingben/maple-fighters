@@ -2,19 +2,18 @@
 using Authorization.Service.Application.Components.Interfaces;
 using CommonCommunicationInterfaces;
 using CommonTools.Log;
+using ServerApplication.Common.ApplicationBase;
 using ServerCommunicationHelper;
 
 namespace Authorization.Service.Application.PeerLogic.Operations
 {
-    using Server = ServerApplication.Common.ApplicationBase.Server;
-
     internal class RemoveAuthorizationOperationHandler : IOperationRequestHandler<RemoveAuthorizationRequestParameters, EmptyParameters>
     {
         private readonly IAccessTokenRemover accessTokenRemover;
 
         public RemoveAuthorizationOperationHandler()
         {
-            accessTokenRemover = Server.Components.GetComponent<IAccessTokenRemover>().AssertNotNull();
+            accessTokenRemover = ServerComponents.GetComponent<IAccessTokenRemover>().AssertNotNull();
         }
 
         public EmptyParameters? Handle(MessageData<RemoveAuthorizationRequestParameters> messageData, ref MessageSendOptions sendOptions)

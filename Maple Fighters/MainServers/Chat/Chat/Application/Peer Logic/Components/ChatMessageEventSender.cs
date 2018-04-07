@@ -6,28 +6,27 @@ using ComponentModel.Common;
 using PeerLogic.Common;
 using PeerLogic.Common.Components.Interfaces;
 using ServerApplication.Common.ApplicationBase;
-using ServerApplication.Common.Components.Interfaces;
 
 namespace Chat.Application.PeerLogic.Components
 {
     internal class ChatMessageEventSender : Component, IChatMessageEventSender
     {
         private IPeerContainer peerContainer;
-        private IMinimalPeerGetter peerGetter;
+        private IClientPeerProvider clientPeerProvider;
 
         protected override void OnAwake()
         {
             base.OnAwake();
 
-            peerContainer = Server.Components.GetComponent<IPeerContainer>().AssertNotNull();
-            peerGetter = Components.GetComponent<IMinimalPeerGetter>().AssertNotNull();
+            peerContainer = ServerComponents.GetComponent<IPeerContainer>().AssertNotNull();
+            clientPeerProvider = Components.GetComponent<IClientPeerProvider>().AssertNotNull();
         }
 
         public void SendChatMessage(string message)
         {
             foreach (var peerWrapper in peerContainer.GetAllPeerWrappers())
             {
-                if (peerWrapper.PeerId == peerGetter.PeerId)
+                if (peerWrapper.PeerId == clientPeerProvider.PeerId)
                 {
                     continue;
                 }

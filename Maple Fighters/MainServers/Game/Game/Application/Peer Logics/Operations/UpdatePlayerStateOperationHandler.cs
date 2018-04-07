@@ -1,6 +1,6 @@
 ﻿using CommonCommunicationInterfaces;
 using CommonTools.Log;
-using Game.Application.SceneObjects.Components.Interfaces;
+using Game.Application.GameObjects.Components.Interfaces;
 using ServerCommunicationHelper;
 using Game.Common;
 using InterestManagement.Components.Interfaces;

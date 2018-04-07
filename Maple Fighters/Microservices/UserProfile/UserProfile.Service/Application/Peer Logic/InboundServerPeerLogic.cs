@@ -2,6 +2,7 @@
 using CommonCommunicationInterfaces;
 using CommonTools.Log;
 using PeerLogic.Common;
+using ServerApplication.Common.ApplicationBase;
 using UserProfile.Server.Common;
 using UserProfile.Service.Application.Components;
 using UserProfile.Service.Application.Components.Interfaces;
@@ -10,8 +11,6 @@ using UserProfile.Service.Application.PeerLogic.Operations;
 
 namespace UserProfile.Service.Application.PeerLogic
 {
-    using Server = ServerApplication.Common.ApplicationBase.Server;
-
     internal class InboundServerPeerLogic : PeerLogicBase<UserProfileOperations, UserProfileEvents>
     {
         private IUsersContainer usersContainer;
@@ -20,7 +19,7 @@ namespace UserProfile.Service.Application.PeerLogic
 
         public InboundServerPeerLogic()
         {
-            databaseUserProfilePropertiesUpdater = Server.Components.GetComponent<IDatabaseUserProfilePropertiesUpdater>().AssertNotNull();
+            databaseUserProfilePropertiesUpdater = ServerComponents.GetComponent<IDatabaseUserProfilePropertiesUpdater>().AssertNotNull();
         }
 
         protected override void OnInitialized()
@@ -101,7 +100,7 @@ namespace UserProfile.Service.Application.PeerLogic
 
         private void RemoveAuthorization(int userId)
         {
-            var authorizationServiceAPI = Server.Components.GetComponent<IAuthorizationServiceAPI>().AssertNotNull();
+            var authorizationServiceAPI = ServerComponents.GetComponent<IAuthorizationServiceAPI>().AssertNotNull();
             authorizationServiceAPI.RemoveAuthorization(new RemoveAuthorizationRequestParameters(userId));
         }
     }

@@ -31,8 +31,8 @@ namespace Game.Application.PeerLogic.Components
 
         private void SubscribeToInterestAreaEvents()
         {
-            var sceneObjectGetter = Components.GetComponent<ISceneObjectGetter>().AssertNotNull();
-            var interestArea = sceneObjectGetter.GetSceneObject().Components.GetComponent<IInterestAreaEvents>().AssertNotNull();
+            var playerGameObjectGetter = Components.GetComponent<IPlayerGameObjectGetter>().AssertNotNull();
+            var interestArea = playerGameObjectGetter.GetPlayerGameObject().Components.GetComponent<IInterestAreaEvents>().AssertNotNull();
             interestArea.SubscriberAdded += OnSubscriberAdded;
             interestArea.SubscriberRemoved += OnSubscriberRemoved;
             interestArea.SubscribersAdded += OnSubscribersAdded;
@@ -41,8 +41,8 @@ namespace Game.Application.PeerLogic.Components
 
         private void UnsubscribeFromInterestAreaEvents()
         {
-            var sceneObjectGetter = Components.GetComponent<ISceneObjectGetter>().AssertNotNull();
-            var interestArea = sceneObjectGetter.GetSceneObject().Components.GetComponent<IInterestAreaEvents>().AssertNotNull();
+            var playerGameObjectGetter = Components.GetComponent<IPlayerGameObjectGetter>().AssertNotNull();
+            var interestArea = playerGameObjectGetter.GetPlayerGameObject().Components.GetComponent<IInterestAreaEvents>().AssertNotNull();
             interestArea.SubscriberAdded -= OnSubscriberAdded;
             interestArea.SubscriberRemoved -= OnSubscriberRemoved;
             interestArea.SubscribersAdded -= OnSubscribersAdded;

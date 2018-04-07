@@ -3,9 +3,11 @@ using System.Reflection;
 using Authorization.Client.Common;
 using Authorization.Server.Common;
 using Character.Server.Common;
+using CommonTools.Log;
 using Game.Application.Components;
 using Game.Application.PeerLogics;
 using GameServerProvider.Server.Common;
+using PeerLogic.Common.Components.Interfaces;
 using PythonScripting;
 using ServerApplication.Common.ApplicationBase;
 using ServerCommunicationInterfaces;
@@ -40,18 +42,19 @@ namespace Game.Application
         {
             CreatePythonScriptEngine();
 
-            Server.Components.AddComponent(new AuthorizationService());
-            Server.Components.AddComponent(new CharacterService());
-            Server.Components.AddComponent(new UserProfileService());
-            Server.Components.AddComponent(new GameServerProviderService());
-            Server.Components.AddComponent(new CharacterSpawnDetailsProvider());
-            Server.Components.AddComponent(new SceneContainer());
-            Server.Components.AddComponent(new CharacterCreator());
+            ServerComponents.AddComponent(new AuthorizationService());
+            ServerComponents.AddComponent(new CharacterService());
+            ServerComponents.AddComponent(new UserProfileService());
+            var peerContainer = ServerComponents.GetComponent<IPeerContainer>().AssertNotNull();
+            ServerComponents.AddComponent(new GameServerProviderService(peerContainer.GetPeersCount()));
+            ServerComponents.AddComponent(new CharacterSpawnDetailsProvider());
+            ServerComponents.AddComponent(new SceneContainer());
+            ServerComponents.AddComponent(new PlayerGameObjectCreator());
         }
 
         private void CreatePythonScriptEngine()
         {
-            var pythonScriptEngine = Server.Components.AddComponent(new PythonScriptEngine());
+            var pythonScriptEngine = ServerComponents.AddComponent(new PythonScriptEngine());
             var assemblies = GetPythonScriptEngineAssemblies();
 
             foreach (var assembly in assemblies)

@@ -1,7 +1,7 @@
 ﻿using CommonCommunicationInterfaces;
 using CommonTools.Log;
 using Game.Application.PeerLogic.Components;
-using Game.Application.SceneObjects.Components.Interfaces;
+using Game.Application.GameObjects.Components.Interfaces;
 using Game.Common;
 using InterestManagement.Components.Interfaces;
 using ServerCommunicationHelper;
@@ -39,9 +39,9 @@ namespace Game.Application.PeerLogic.Operations
 
         private CharacterSpawnDetailsParameters GetCharacterSpawnDetailsShared()
         {
-            var character = sceneObject.Components.GetComponent<ICharacterGetter>().AssertNotNull();
+            var characterGetter = sceneObject.Components.GetComponent<ICharacterParametersGetter>().AssertNotNull();
             var directionTransform = sceneObject.Components.GetComponent<IDirectionTransform>().AssertNotNull();
-            return new CharacterSpawnDetailsParameters(sceneObject.Id, character.GetCharacter(), directionTransform.Direction.GetDirectionsFromDirection());
+            return new CharacterSpawnDetailsParameters(sceneObject.Id, characterGetter.GetCharacter(), directionTransform.Direction.GetDirectionsFromDirection());
         }
     }
 }

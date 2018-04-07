@@ -3,19 +3,18 @@ using CommonCommunicationInterfaces;
 using CommonTools.Log;
 using GameServerProvider.Client.Common;
 using GameServerProvider.Service.Application.Components.Interfaces;
+using ServerApplication.Common.ApplicationBase;
 using ServerCommunicationHelper;
 
 namespace GameServerProvider.Service.Application.PeerLogic.Operations
 {
-    using Server = ServerApplication.Common.ApplicationBase.Server;
-
     internal class GameServersProviderOperationHandler : IOperationRequestHandler<EmptyParameters, GameServersProviderResponseParameters>
     {
         private readonly IGameServersInformationProvider gameServersInformationProvider;
 
         public GameServersProviderOperationHandler()
         {
-            gameServersInformationProvider = Server.Components.GetComponent<IGameServersInformationProvider>().AssertNotNull();
+            gameServersInformationProvider = ServerComponents.GetComponent<IGameServersInformationProvider>().AssertNotNull();
         }
 
         public GameServersProviderResponseParameters? Handle(MessageData<EmptyParameters> messageData, ref MessageSendOptions sendOptions)

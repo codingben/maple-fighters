@@ -10,8 +10,6 @@ using UserProfile.Server.Common;
 
 namespace GameServerProvider.Service.Application
 {
-    using Server = ServerApplication.Common.ApplicationBase.Server;
-
     public class GameServerProviderServiceApplication : ApplicationBase
     {
         public GameServerProviderServiceApplication(IFiberProvider fiberProvider, IServerConnector serverConnector) 
@@ -45,9 +43,9 @@ namespace GameServerProvider.Service.Application
 
         private void AddComponents()
         {
-            Server.Components.AddComponent(new AuthorizationService());
-            Server.Components.AddComponent(new UserProfileService());
-            Server.Components.AddComponent(new GameServersInformationStorage());
+            ServerComponents.AddComponent(new AuthorizationService());
+            ServerComponents.AddComponent(new UserProfileService());
+            ServerComponents.AddComponent(new GameServersInformationStorage());
         }
     }
 }

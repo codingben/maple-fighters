@@ -4,11 +4,10 @@ using GameServerProvider.Server.Common;
 using GameServerProvider.Service.Application.Components.Interfaces;
 using GameServerProvider.Service.Application.PeerLogic.Operations;
 using PeerLogic.Common;
+using ServerApplication.Common.ApplicationBase;
 
 namespace GameServerProvider.Service.Application.PeerLogics
 {
-    using Server = ServerApplication.Common.ApplicationBase.Server;
-
     internal class InboundServerPeerLogic : PeerLogicBase<ServerOperations, EmptyEventCode>
     {
         protected override void OnInitialized()
@@ -43,7 +42,7 @@ namespace GameServerProvider.Service.Application.PeerLogics
         private void UnregisterGameServer()
         {
             var peerId = ClientPeerWrapper.PeerId;
-            var gameServerInformationRemover = Server.Components.GetComponent<IGameServerInformationRemover>();
+            var gameServerInformationRemover = ServerComponents.GetComponent<IGameServerInformationRemover>();
             gameServerInformationRemover?.Remove(peerId);
         }
     }

@@ -4,7 +4,7 @@ using CommonCommunicationInterfaces;
 using CommonTools.Log;
 using ComponentModel.Common;
 using Game.Application.PeerLogic.Components.Interfaces;
-using Game.Application.SceneObjects.Components.Interfaces;
+using Game.Application.GameObjects.Components.Interfaces;
 using Game.Common;
 using InterestManagement.Components.Interfaces;
 using PeerLogic.Common.Components.Interfaces;
@@ -33,16 +33,16 @@ namespace Game.Application.PeerLogic.Components
 
         private void SubscribeToInterestAreaEvents()
         {
-            var sceneObjectGetter = Components.GetComponent<ISceneObjectGetter>().AssertNotNull();
-            var interestArea = sceneObjectGetter.GetSceneObject().Components.GetComponent<IInterestAreaEvents>().AssertNotNull();
+            var playerGameObjectGetter = Components.GetComponent<IPlayerGameObjectGetter>().AssertNotNull();
+            var interestArea = playerGameObjectGetter.GetPlayerGameObject().Components.GetComponent<IInterestAreaEvents>().AssertNotNull();
             interestArea.SubscriberAdded += OnCharacterAdded;
             interestArea.SubscribersAdded += OnCharactersAdded;
         }
 
         private void UnsubscribeFromInterestAreaEvents()
         {
-            var sceneObjectGetter = Components.GetComponent<ISceneObjectGetter>().AssertNotNull();
-            var interestArea = sceneObjectGetter.GetSceneObject().Components.GetComponent<IInterestAreaEvents>().AssertNotNull();
+            var playerGameObjectGetter = Components.GetComponent<IPlayerGameObjectGetter>().AssertNotNull();
+            var interestArea = playerGameObjectGetter.GetPlayerGameObject().Components.GetComponent<IInterestAreaEvents>().AssertNotNull();
             interestArea.SubscriberAdded -= OnCharacterAdded;
             interestArea.SubscribersAdded -= OnCharactersAdded;
         }
@@ -90,7 +90,7 @@ namespace Game.Application.PeerLogic.Components
         private CharacterSpawnDetailsParameters? CreateCharacterSpawnDetails(ISceneObject sceneObject)
         {
             // It may be null because not every object on a scene is a character.
-            var characterGetter = sceneObject.Components.GetComponent<ICharacterGetter>();
+            var characterGetter = sceneObject.Components.GetComponent<ICharacterParametersGetter>();
             if (characterGetter == null)
             {
                 return null;

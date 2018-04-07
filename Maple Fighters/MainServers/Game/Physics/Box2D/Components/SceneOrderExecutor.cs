@@ -18,7 +18,7 @@ namespace Physics.Box2D.Components
         {
             base.OnAwake();
 
-            var fiber = Server.Components.GetComponent<IFiberStarter>().AssertNotNull();
+            var fiber = ServerComponents.GetComponent<IFiberStarter>().AssertNotNull();
             IScheduler fiberExecutor = fiber.GetFiberStarter();
             fiberExecutor.ScheduleOnInterval(Update, 0, 10);
         }

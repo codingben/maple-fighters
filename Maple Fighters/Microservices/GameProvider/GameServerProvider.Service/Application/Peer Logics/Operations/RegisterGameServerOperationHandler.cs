@@ -3,12 +3,11 @@ using CommonTools.Log;
 using GameServerProvider.Server.Common;
 using GameServerProvider.Service.Application.Components;
 using GameServerProvider.Service.Application.Components.Interfaces;
+using ServerApplication.Common.ApplicationBase;
 using ServerCommunicationHelper;
 
 namespace GameServerProvider.Service.Application.PeerLogic.Operations
 {
-    using Server = ServerApplication.Common.ApplicationBase.Server;
-
     internal class RegisterGameServerOperationHandler : IOperationRequestHandler<RegisterGameServerRequestParameters, EmptyParameters>
     {
         private readonly int peerId;
@@ -18,7 +17,7 @@ namespace GameServerProvider.Service.Application.PeerLogic.Operations
         {
             this.peerId = peerId;
 
-            gameServerInformationCreator = Server.Components.GetComponent<IGameServerInformationCreator>().AssertNotNull();
+            gameServerInformationCreator = ServerComponents.GetComponent<IGameServerInformationCreator>().AssertNotNull();
         }
 
         public EmptyParameters? Handle(MessageData<RegisterGameServerRequestParameters> messageData, ref MessageSendOptions sendOptions)

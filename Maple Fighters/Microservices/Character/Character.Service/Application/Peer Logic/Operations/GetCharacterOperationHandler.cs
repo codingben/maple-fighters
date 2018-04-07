@@ -13,7 +13,7 @@ namespace CharacterService.Application.PeerLogics.Operations
 
         public GetCharacterOperationHandler()
         {
-            characterGetter = Server.Components.GetComponent<IDatabaseCharacterGetter>().AssertNotNull();
+            characterGetter = ServerComponents.GetComponent<IDatabaseCharacterGetter>().AssertNotNull();
         }
 
         public GetCharacterResponseParameters? Handle(MessageData<GetCharacterRequestParametersEx> messageData, ref MessageSendOptions sendOptions)

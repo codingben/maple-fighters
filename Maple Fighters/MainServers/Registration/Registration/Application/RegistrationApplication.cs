@@ -31,9 +31,9 @@ namespace Registration.Application
 
         private void AddComponents()
         {
-            Server.Components.AddComponent(new DatabaseConnectionProvider());
-            Server.Components.AddComponent(new DatabaseUserCreator());
-            Server.Components.AddComponent(new DatabaseUserEmailVerifier());
+            ServerComponents.AddComponent(new DatabaseConnectionProvider());
+            ServerComponents.AddComponent(new DatabaseUserCreator());
+            ServerComponents.AddComponent(new DatabaseUserEmailVerifier());
         }
     }
 }

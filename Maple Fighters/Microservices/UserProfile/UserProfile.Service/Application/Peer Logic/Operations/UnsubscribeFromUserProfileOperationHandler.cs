@@ -1,20 +1,19 @@
 ﻿using CommonCommunicationInterfaces;
 using CommonTools.Log;
+using ServerApplication.Common.ApplicationBase;
 using ServerCommunicationHelper;
 using UserProfile.Server.Common;
 using UserProfile.Service.Application.Components.Interfaces;
 
 namespace UserProfile.Service.Application.PeerLogic.Operations
 {
-    using Server = ServerApplication.Common.ApplicationBase.Server;
-
     internal class UnsubscribeFromUserProfileOperationHandler : IOperationRequestHandler<UnsubscribeFromUserProfileRequestParameters, EmptyParameters>
     {
         private readonly IUserIdToServerIdConverter userIdToServerIdConverter;
 
         public UnsubscribeFromUserProfileOperationHandler()
         {
-            userIdToServerIdConverter = Server.Components.GetComponent<IUserIdToServerIdConverter>().AssertNotNull();
+            userIdToServerIdConverter = ServerComponents.GetComponent<IUserIdToServerIdConverter>().AssertNotNull();
         }
 
         public EmptyParameters? Handle(MessageData<UnsubscribeFromUserProfileRequestParameters> messageData, ref MessageSendOptions sendOptions)

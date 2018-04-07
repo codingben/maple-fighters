@@ -24,10 +24,10 @@ namespace Login.Application.PeerLogic.Operations
         {
             this.onAuthenticated = onAuthenticated;
 
-            databaseUserVerifier = Server.Components.GetComponent<IDatabaseUserVerifier>().AssertNotNull();
-            databaseUserPasswordVerifier = Server.Components.GetComponent<IDatabaseUserPasswordVerifier>().AssertNotNull();
-            databaseUserIdProvider = Server.Components.GetComponent<IDatabaseUserIdProvider>().AssertNotNull();
-            authorizationServiceApi = Server.Components.GetComponent<IAuthorizationServiceAPI>().AssertNotNull();
+            databaseUserVerifier = ServerComponents.GetComponent<IDatabaseUserVerifier>().AssertNotNull();
+            databaseUserPasswordVerifier = ServerComponents.GetComponent<IDatabaseUserPasswordVerifier>().AssertNotNull();
+            databaseUserIdProvider = ServerComponents.GetComponent<IDatabaseUserIdProvider>().AssertNotNull();
+            authorizationServiceApi = ServerComponents.GetComponent<IAuthorizationServiceAPI>().AssertNotNull();
         }
 
         public Task<AuthenticateResponseParameters?> Handle(IYield yield, MessageData<AuthenticateRequestParameters> messageData, ref MessageSendOptions sendOptions)

@@ -1,6 +1,7 @@
 ﻿using System;
 using CommonTools.Log;
 using ComponentModel.Common;
+using Components.Common;
 using PeerLogic.Common.Components;
 using ServerCommunicationHelper;
 using JsonConfig;
@@ -52,15 +53,14 @@ namespace PeerLogic.Common
         {
             var logOperationsRequest = (bool)Config.Global.Log.OperationsRequest;
             var logOperationsResponse = (bool)Config.Global.Log.OperationsResponse;
-            var coroutinesExecutor = Components.AddComponent(new CoroutinesExecutor(new FiberCoroutinesExecutor(ClientPeerWrapper.Peer.Fiber, 100))); // A coroutines executor is necessary to handle async operation handlers
+            var coroutinesManager = Components.AddComponent(new CoroutinesManager(new FiberCoroutinesExecutor(ClientPeerWrapper.Peer.Fiber, 100))); // A coroutines executor is necessary to handle async operation handlers
             OperationHandlerRegister = new OperationRequestsHandler<TOperationCode>(ClientPeerWrapper.Peer.OperationRequestNotifier, ClientPeerWrapper.Peer.OperationResponseSender, 
-                logOperationsRequest, logOperationsResponse, coroutinesExecutor);
+                logOperationsRequest, logOperationsResponse, coroutinesManager);
         }
 
         protected void AddCommonComponents()
         {
-            Components.AddComponent(new MinimalPeerGetter(ClientPeerWrapper.PeerId, ClientPeerWrapper.Peer));
-            Components.AddComponent(new ClientPeerGetter(ClientPeerWrapper.PeerId, ClientPeerWrapper.Peer));
+            Components.AddComponent(new ClientPeerProvider(ClientPeerWrapper.PeerId, ClientPeerWrapper.Peer));
             Components.AddComponent(new EventSenderWrapper(EventSender.AssertNotNull()));
         }
     }

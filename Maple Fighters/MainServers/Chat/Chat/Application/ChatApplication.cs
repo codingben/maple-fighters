@@ -32,8 +32,8 @@ namespace Chat.Application
 
         private void AddComponents()
         {
-            Server.Components.AddComponent(new AuthorizationService());
-            Server.Components.AddComponent(new UserProfileService());
+            ServerComponents.AddComponent(new AuthorizationService());
+            ServerComponents.AddComponent(new UserProfileService());
         }
     }
 }

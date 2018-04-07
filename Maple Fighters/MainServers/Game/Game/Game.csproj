@@ -97,8 +97,8 @@
   <ItemGroup>
     <Compile Include="Application\Components\Characters\CharacterSpawnDetailsProvider.cs" />
     <Compile Include="Application\Components\Scene\GameSceneWrapper.cs" />
-    <Compile Include="Application\Components\Characters\CharacterCreator.cs" />
-    <Compile Include="Application\Components\Characters\Interfaces\ICharacterCreator.cs" />
+    <Compile Include="Application\Components\Characters\PlayerGameObjectCreator.cs" />
+    <Compile Include="Application\Components\Characters\Interfaces\IPlayerGameObjectCreator.cs" />
     <Compile Include="Application\Components\Characters\Interfaces\ICharacterSpawnDetailsProvider.cs" />
     <Compile Include="Application\Components\Scene\Interfaces\IGameSceneWrapper.cs" />
     <Compile Include="Application\Components\Scene\Interfaces\ISceneContainer.cs" />
@@ -106,14 +106,14 @@
     <Compile Include="Application\Components\Scene\SceneContainer.cs" />
     <Compile Include="Application\Peer Logics\Components\CharacterSender.cs" />
     <Compile Include="Application\Peer Logics\Components\Interfaces\IPeerIdGetter.cs" />
-    <Compile Include="Application\Peer Logics\Components\Interfaces\ISceneObjectGetter.cs" />
-    <Compile Include="Application\Peer Logics\Components\SceneObjectGetter.cs" />
+    <Compile Include="Application\Peer Logics\Components\Interfaces\IPlayerGameObjectGetter.cs" />
+    <Compile Include="Application\Peer Logics\Components\PlayerGameObjectGetter.cs" />
     <Compile Include="Application\Peer Logics\Components\Utils.cs" />
     <Compile Include="Application\Peer Logics\Operations\CreateCharacterOperationHandler.cs" />
     <Compile Include="Application\Peer Logics\Operations\EnterSceneOperationHandler.cs" />
     <Compile Include="Application\Peer Logics\Operations\GetCharactersOperationHandler.cs" />
     <Compile Include="Application\Peer Logics\Operations\RemoveCharacterOperationHandler.cs" />
-    <Compile Include="Application\Scene Objects\Components\CharacterBody.cs" />
+    <Compile Include="Application\Game Objects\Components\CharacterBody.cs" />
     <Compile Include="Application\Peer Logics\CharacterSelectionPeerLogic.cs" />
     <Compile Include="Application\Peer Logics\Components\PeerIdGetter.cs" />
     <Compile Include="Application\Peer Logics\Components\PositionChangesListener.cs" />
@@ -124,19 +124,22 @@
     <Compile Include="Application\Peer Logics\GameScenePeerLogic.cs" />
     <Compile Include="Application\Peer Logics\Operations\UpdatePositionOperationHandler.cs" />
     <Compile Include="Application\Peer Logics\Operations\UpdatePlayerStateOperationHandler.cs" />
-    <Compile Include="Application\Scene Objects\Components\CharacterGetter.cs" />
-    <Compile Include="Application\Scene Objects\Components\Interfaces\ICharacterBody.cs" />
-    <Compile Include="Application\Scene Objects\Components\Interfaces\ICharacterGetter.cs" />
-    <Compile Include="Application\Scene Objects\Components\Interfaces\IInterestAreaNotifier.cs" />
-    <Compile Include="Application\Scene Objects\Components\InterestAreaNotifier.cs" />
-    <Compile Include="Application\Scene Objects\Components\Interfaces\IPhysicsCollisionNotifier.cs" />
-    <Compile Include="Application\Scene Objects\Mobs\BlueSnail.cs" />
-    <Compile Include="Application\Scene Objects\Mobs\Mob.cs" />
-    <Compile Include="Application\Scene Objects\NPCs\Guardian.cs" />
-    <Compile Include="Application\Scene Objects\Components\PhysicsCollision.cs" />
-    <Compile Include="Application\Scene Objects\Portal\Interfaces\IPortalInfoProvider.cs" />
-    <Compile Include="Application\Scene Objects\Portal\Portal.cs" />
-    <Compile Include="Application\Scene Objects\Portal\PortalInfoProvider.cs" />
+    <Compile Include="Application\Game Objects\Components\CharacterParametersGetter.cs" />
+    <Compile Include="Application\Game Objects\Components\Interfaces\ICharacterBody.cs" />
+    <Compile Include="Application\Game Objects\Components\Interfaces\ICharacterParametersGetter.cs" />
+    <Compile Include="Application\Game Objects\Components\Interfaces\IInterestAreaNotifier.cs" />
+    <Compile Include="Application\Game Objects\Components\InterestAreaNotifier.cs" />
+    <Compile Include="Application\Game Objects\Components\Interfaces\IPhysicsCollisionNotifier.cs" />
+    <Compile Include="Application\Game Objects\Mobs\BlueSnail.cs" />
+    <Compile Include="Application\Game Objects\GameObject\BodyGameObject.cs" />
+    <Compile Include="Application\Game Objects\GameObject\GameObject.cs" />
+    <Compile Include="Application\Game Objects\Mobs\MobBase.cs" />
+    <Compile Include="Application\Game Objects\NPCs\Guardian.cs" />
+    <Compile Include="Application\Game Objects\Components\PhysicsCollision.cs" />
+    <Compile Include="Application\Game Objects\Player\PlayerGameObject.cs" />
+    <Compile Include="Application\Game Objects\Portal\Interfaces\IPortalInfoProvider.cs" />
+    <Compile Include="Application\Game Objects\Portal\Portal.cs" />
+    <Compile Include="Application\Game Objects\Portal\PortalInfoProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -173,6 +176,10 @@
     <ProjectReference Include="..\..\..\Shared\Servers\ComponentModel.Common\ComponentModel.Common.csproj">
       <Project>{00565794-9958-47D9-9E8E-6D7193D67B9D}</Project>
       <Name>ComponentModel.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Shared\Servers\Components.Common\Components.Common\Components.Common.csproj">
+      <Project>{3FF99885-F430-4270-92DA-12F59AC343F3}</Project>
+      <Name>Components.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\Shared\Servers\PeerLogic.Common\PeerLogic.Common.csproj">
       <Project>{F90F12D2-58E0-4718-A205-EBFD28C81742}</Project>

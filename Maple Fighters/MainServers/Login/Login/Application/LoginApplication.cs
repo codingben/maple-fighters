@@ -33,12 +33,12 @@ namespace Login.Application
 
         private void AddComponents()
         {
-            Server.Components.AddComponent(new AuthorizationService());
-            Server.Components.AddComponent(new UserProfileService());
-            Server.Components.AddComponent(new DatabaseConnectionProvider());
-            Server.Components.AddComponent(new DatabaseUserVerifier());
-            Server.Components.AddComponent(new DatabaseUserPasswordVerifier());
-            Server.Components.AddComponent(new DatabaseUserIdProvider());
+            ServerComponents.AddComponent(new AuthorizationService());
+            ServerComponents.AddComponent(new UserProfileService());
+            ServerComponents.AddComponent(new DatabaseConnectionProvider());
+            ServerComponents.AddComponent(new DatabaseUserVerifier());
+            ServerComponents.AddComponent(new DatabaseUserPasswordVerifier());
+            ServerComponents.AddComponent(new DatabaseUserIdProvider());
         }
     }
 }

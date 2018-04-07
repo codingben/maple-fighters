@@ -3,12 +3,11 @@ using Authorization.Server.Common;
 using Authorization.Service.Application.Components.Interfaces;
 using CommonCommunicationInterfaces;
 using CommonTools.Log;
+using ServerApplication.Common.ApplicationBase;
 using ServerCommunicationHelper;
 
 namespace Authorization.Service.Application.PeerLogic.Operations
 {
-    using Server = ServerApplication.Common.ApplicationBase.Server;
-
     internal class UserAuthorizationOperationHandler : IOperationRequestHandler<AuthorizeUserRequestParameters, AuthorizeUserResponseParameters>
     {
         private readonly IAccessTokenCreator accessTokenCreator;
@@ -16,8 +15,8 @@ namespace Authorization.Service.Application.PeerLogic.Operations
 
         public UserAuthorizationOperationHandler()
         {
-            accessTokenCreator = Server.Components.GetComponent<IAccessTokenCreator>().AssertNotNull();
-            accessTokenExistence = Server.Components.GetComponent<IAccessTokenExistence>().AssertNotNull();
+            accessTokenCreator = ServerComponents.GetComponent<IAccessTokenCreator>().AssertNotNull();
+            accessTokenExistence = ServerComponents.GetComponent<IAccessTokenExistence>().AssertNotNull();
         }
 
         public AuthorizeUserResponseParameters? Handle(MessageData<AuthorizeUserRequestParameters> messageData, ref MessageSendOptions sendOptions)

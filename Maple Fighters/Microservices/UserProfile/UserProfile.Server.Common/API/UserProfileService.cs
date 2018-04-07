@@ -1,14 +1,14 @@
 ﻿using System;
 using CommonCommunicationInterfaces;
 using CommonTools.Log;
+using Components.Common.Interfaces;
 using JsonConfig;
-using ServerApplication.Common.Components.Interfaces;
+using PeerLogic.Common.Components.Interfaces;
+using ServerApplication.Common.ApplicationBase;
 using ServerCommunication.Common;
 
 namespace UserProfile.Server.Common
 {
-    using Server = ServerApplication.Common.ApplicationBase.Server;
-
     public class UserProfileService : ServiceBase<UserProfileOperations, UserProfileEvents>, IUserProfileServiceAPI
     {
         private readonly int serverId;
@@ -17,11 +17,11 @@ namespace UserProfile.Server.Common
 
         public UserProfileService()
         {
-            var idGenerator = Server.Components.GetComponent<IRandomNumberGenerator>().AssertNotNull();
+            var idGenerator = ServerComponents.GetComponent<IRandomNumberGenerator>().AssertNotNull();
             serverId = idGenerator.GenerateRandomNumber();
 
-            peerContainer = Server.Components.GetComponent<IPeerContainer>().AssertNotNull();
-            userIdToPeerIdConverter = Server.Components.AddComponent(new UserIdToPeerIdConverter());
+            peerContainer = ServerComponents.GetComponent<IPeerContainer>().AssertNotNull();
+            userIdToPeerIdConverter = ServerComponents.AddComponent(new UserIdToPeerIdConverter());
         }
 
         protected override void OnAuthenticated()

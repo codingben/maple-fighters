@@ -1,6 +1,6 @@
 from MathematicsHelper import *
 from InterestManagement import *
-from Game.Application.SceneObjects import *
+from Game.Application.GameObjects import *
 
 import os
 import json

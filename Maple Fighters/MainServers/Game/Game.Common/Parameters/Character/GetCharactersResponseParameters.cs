@@ -15,12 +15,21 @@ namespace Game.Common
 
         public void Serialize(BinaryWriter writer)
         {
-            writer.WriteArray(Characters);
+            writer.Write(Characters != null && Characters.Length > 0);
+
+            if (Characters?.Length > 0)
+            {
+                writer.WriteArray(Characters);
+            }
         }
 
         public void Deserialize(BinaryReader reader)
         {
-            Characters = reader.ReadArray<CharacterParameters>();
+            var hasArray = reader.ReadBoolean();
+            if (hasArray)
+            {
+                Characters = reader.ReadArray<CharacterParameters>();
+            }
         }
     }
 }

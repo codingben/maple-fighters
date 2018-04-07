@@ -15,8 +15,8 @@ namespace CharacterService.Application.PeerLogics.Operations
 
         public RemoveCharacterOperationHandler()
         {
-            databaseCharacterRemover = Server.Components.GetComponent<IDatabaseCharacterRemover>().AssertNotNull();
-            databaseCharacterExistence = Server.Components.GetComponent<IDatabaseCharacterExistence>().AssertNotNull();
+            databaseCharacterRemover = ServerComponents.GetComponent<IDatabaseCharacterRemover>().AssertNotNull();
+            databaseCharacterExistence = ServerComponents.GetComponent<IDatabaseCharacterExistence>().AssertNotNull();
         }
 
         public RemoveCharacterResponseParameters? Handle(MessageData<RemoveCharacterRequestParametersEx> messageData, ref MessageSendOptions sendOptions)

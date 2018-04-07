@@ -11,12 +11,12 @@ namespace GameServerProvider.Server.Common
         public int Connections;
         public int MaxConnections;
 
-        public RegisterGameServerRequestParameters(string name, string ip, int port, int maxConnections)
+        public RegisterGameServerRequestParameters(string name, string ip, int port, int connections, int maxConnections)
         {
             Name = name;
             IP = ip;
             Port = port;
-            Connections = 0;
+            Connections = connections;
             MaxConnections = maxConnections;
         }
 

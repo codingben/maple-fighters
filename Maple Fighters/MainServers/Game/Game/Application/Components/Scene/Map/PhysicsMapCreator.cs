@@ -31,6 +31,7 @@ namespace Game.Application.Components
         private void CreateScenePhysics(Maps map)
         {
             var physicsWorldProvider = Components.GetComponent<IPhysicsWorldProvider>().AssertNotNull();
+            var world = physicsWorldProvider.GetWorld().AssertNotNull();
 
             var pythonScenesPath = (string)Config.Global.Python.Scenes;
             var path = $"{pythonScenesPath}/{map}/{DATA_FILE_NAME}";
@@ -45,7 +46,7 @@ namespace Game.Application.Components
 
             foreach (var groundCollider in scenePhysicsData.GroundColliders)
             {
-                physicsWorldProvider.GetWorld().CreateGround(
+                world.CreateGround(
                     new Vector2(
                         float.Parse(groundCollider.Position.X, CultureInfo.InvariantCulture.NumberFormat),
                         float.Parse(groundCollider.Position.Y, CultureInfo.InvariantCulture.NumberFormat)),

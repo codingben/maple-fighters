@@ -21,7 +21,7 @@ namespace Game.Application.PeerLogic.Operations
             this.userId = userId;
             this.onCharacterSelected = onCharacterSelected;
 
-            characterServiceAPI = Server.Components.GetComponent<ICharacterServiceAPI>().AssertNotNull();
+            characterServiceAPI = ServerComponents.GetComponent<ICharacterServiceAPI>().AssertNotNull();
         }
 
         public Task<ValidateCharacterResponseParameters?> Handle(IYield yield, MessageData<ValidateCharacterRequestParameters> messageData, ref MessageSendOptions sendOptions)
@@ -36,6 +36,11 @@ namespace Game.Application.PeerLogic.Operations
             onCharacterSelected?.Invoke(responseParameters.Character);
 
             var status = responseParameters.Character.HasCharacter ? CharacterValidationStatus.Ok : CharacterValidationStatus.Wrong;
+            if (status == CharacterValidationStatus.Wrong)
+            {
+                return null;
+            }
+
             return new ValidateCharacterResponseParameters(status);
         }
     }

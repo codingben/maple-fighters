@@ -4,12 +4,11 @@ using Authorization.Client.Common;
 using CommonCommunicationInterfaces;
 using CommonTools.Coroutines;
 using CommonTools.Log;
+using ServerApplication.Common.ApplicationBase;
 using ServerCommunicationHelper;
 
 namespace Authorization.Server.Common
 {
-    using Server = ServerApplication.Common.ApplicationBase.Server;
-
     public class AuthorizationOperationHandler : IAsyncOperationRequestHandler<AuthorizeRequestParameters, AuthorizeResponseParameters>
     {
         private readonly Action onAuthorized;
@@ -22,7 +21,7 @@ namespace Authorization.Server.Common
             this.onAuthorized = onAuthorized;
             this.onNonAuthorized = onNonAuthorized;
 
-            authorizationServiceApi = Server.Components.GetComponent<IAuthorizationServiceAPI>().AssertNotNull();
+            authorizationServiceApi = ServerComponents.GetComponent<IAuthorizationServiceAPI>().AssertNotNull();
         }
 
         public AuthorizationOperationHandler(Action<int> onAuthorizedArg, Action onNonAuthorized)
@@ -30,7 +29,7 @@ namespace Authorization.Server.Common
             this.onAuthorizedArg = onAuthorizedArg;
             this.onNonAuthorized = onNonAuthorized;
 
-            authorizationServiceApi = Server.Components.GetComponent<IAuthorizationServiceAPI>().AssertNotNull();
+            authorizationServiceApi = ServerComponents.GetComponent<IAuthorizationServiceAPI>().AssertNotNull();
         }
 
         public Task<AuthorizeResponseParameters?> Handle(IYield yield, MessageData<AuthorizeRequestParameters> messageData, ref MessageSendOptions sendOptions)

@@ -6,8 +6,6 @@ using ServerCommunicationInterfaces;
 
 namespace Authorization.Service.Application
 {
-    using Server = ServerApplication.Common.ApplicationBase.Server;
-
     public class AuthorizationServiceApplication : ApplicationBase
     {
         public AuthorizationServiceApplication(IFiberProvider fiberProvider, IServerConnector serverConnector) 
@@ -33,7 +31,7 @@ namespace Authorization.Service.Application
 
         private void AddComponents()
         {
-            Server.Components.AddComponent(new AccessTokensStorage());
+            ServerComponents.AddComponent(new AccessTokensStorage());
         }
     }
 }

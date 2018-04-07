@@ -5,7 +5,6 @@ using CommonTools.Coroutines;
 using CommonTools.Log;
 using JsonConfig;
 using ServerCommunication.Common;
-using ServerCommunicationInterfaces;
 
 namespace Server2.Common
 {
@@ -13,9 +12,9 @@ namespace Server2.Common
     {
         public event Action<EmptyParameters> TestAction;
 
-        protected override void OnConnected(IOutboundServerPeer outboundServerPeer)
+        protected override void OnAuthenticated()
         {
-            base.OnConnected(outboundServerPeer);
+            base.OnAuthenticated();
 
             OutboundServerPeerLogic.SetEventHandler((byte)ServerEvents.Server1Event, TestAction);
         }
@@ -40,6 +39,11 @@ namespace Server2.Common
             var ip = (string)Config.Global.Server2.IP;
             var port = (int)Config.Global.Server2.Port;
             return new PeerConnectionInformation(ip, port);
+        }
+
+        protected override string GetSecretKey()
+        {
+            return "TestKey";
         }
     }
 }

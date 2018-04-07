@@ -5,6 +5,9 @@ namespace Server2
 {
     internal class ClientPeerLogic : PeerLogicBase<EmptyOperationCode, EmptyEventCode>
     {
-        // TODO: Implement
+        protected override void OnInitialized()
+        {
+            // TODO: Implement
+        }
     }
 }
