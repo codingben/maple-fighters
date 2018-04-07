@@ -26,8 +26,8 @@ namespace Scripts.Gameplay.Actors
             var parameters = DummyCharacterDetails.Instance.AssertNotNull("Could not find dummy character details. Please add DummyCharacterDetails into a scene.")
                 .GetDummyCharacterParameters();
 
-            var gameService = ServiceContainer.GameService.GetPeerLogic<IGameScenePeerLogicAPI>().AssertNotNull();
-            gameService.SceneEntered?.Invoke(parameters);
+            var gameScenePeerLogic = ServiceContainer.GameService.GetPeerLogic<IGameScenePeerLogicAPI>().AssertNotNull();
+            gameScenePeerLogic.SceneEntered?.Invoke(parameters);
         }
 
         private void Update()
@@ -44,18 +44,18 @@ namespace Scripts.Gameplay.Actors
 
         private void SubscribeToEvents()
         {
-            var gameService = ServiceContainer.GameService.GetPeerLogic<IGameScenePeerLogicAPI>().AssertNotNull();
-            gameService.SceneEntered.AddListener(OnSceneEntered);
-            gameService.CharacterAdded.AddListener(OnCharacterAdded);
-            gameService.CharactersAdded.AddListener(OnCharactersAdded);
+            var gameScenePeerLogic = ServiceContainer.GameService.GetPeerLogic<IGameScenePeerLogicAPI>().AssertNotNull();
+            gameScenePeerLogic.SceneEntered.AddListener(OnSceneEntered);
+            gameScenePeerLogic.CharacterAdded.AddListener(OnCharacterAdded);
+            gameScenePeerLogic.CharactersAdded.AddListener(OnCharactersAdded);
         }
 
         private void UnsubscribeFromEvents()
         {
-            var gameService = ServiceContainer.GameService.GetPeerLogic<IGameScenePeerLogicAPI>().AssertNotNull();
-            gameService.SceneEntered.RemoveListener(OnSceneEntered);
-            gameService.CharacterAdded.RemoveListener(OnCharacterAdded);
-            gameService.CharactersAdded.RemoveListener(OnCharactersAdded);
+            var gameScenePeerLogic = ServiceContainer.GameService.GetPeerLogic<IGameScenePeerLogicAPI>().AssertNotNull();
+            gameScenePeerLogic.SceneEntered.RemoveListener(OnSceneEntered);
+            gameScenePeerLogic.CharacterAdded.RemoveListener(OnCharacterAdded);
+            gameScenePeerLogic.CharactersAdded.RemoveListener(OnCharactersAdded);
         }
 
         private void OnSceneEntered(EnterSceneResponseParameters parameters)

@@ -122,7 +122,7 @@ namespace Scripts.UI.Controllers
                 gameServerSelectorWindow.OnRefreshBegan();
                 gameServerSelectorWindow.GameServerSelectorRefreshImage.Message = "Getting server list...";
 
-                Action provideGameServerList = () => coroutinesExecutor.StartTask(ProvideGameServerList, exception => Utils.ShowExceptionNotice());
+                Action provideGameServerList = () => coroutinesExecutor.StartTask(ProvideGameServerList, exception => ServiceConnectionProviderUtils.OnOperationFailed());
                 if (!gameServerSelectorWindow.GameServerSelectorRefreshImage.IsShowed)
                 {
                     gameServerSelectorWindow.GameServerSelectorRefreshImage.Show(provideGameServerList);
@@ -149,8 +149,8 @@ namespace Scripts.UI.Controllers
         {
             await yield.Return(new WaitForSeconds(0.5f));
 
-            var gameServerProviderService = ServiceContainer.GameServerProviderService.GetPeerLogic<IGameServerProviderPeerLogicAPI>().AssertNotNull();
-            var responseParameters = await gameServerProviderService.ProvideGameServers(yield);
+            var gameServerProviderPeerLogic = ServiceContainer.GameServerProviderService.GetPeerLogic<IGameServerProviderPeerLogicAPI>().AssertNotNull();
+            var responseParameters = await gameServerProviderPeerLogic.ProvideGameServers(yield);
             foreach (var gameServerInformation in responseParameters.GameServerInformations)
             {
                 var gameServerName = gameServerInformation.Name;

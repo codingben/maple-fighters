@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using CommonTools.Coroutines;
 using CommonTools.Log;
 using Game.Common;
@@ -118,13 +117,13 @@ namespace Scripts.UI.Controllers
             var noticeWindow = Utils.ShowNotice("Creating a new character... Please wait.", ShowCharacterNamwWindow, true);
             noticeWindow.OkButton.interactable = false;
 
-            coroutinesExecutor.StartTask(CreateCharacter, exception => Utils.ShowExceptionNotice());
+            coroutinesExecutor.StartTask(CreateCharacter, exception => ServiceConnectionProviderUtils.OnOperationFailed());
         }
 
         private async Task CreateCharacter(IYield yield)
         {
-            var characterService = ServiceContainer.GameService.GetPeerLogic<ICharacterPeerLogicAPI>().AssertNotNull();
-            var responseParameters = await characterService.CreateCharacter(yield, characterRequestParameters);
+            var characterPeerLogic = ServiceContainer.GameService.GetPeerLogic<ICharacterPeerLogicAPI>().AssertNotNull();
+            var responseParameters = await characterPeerLogic.CreateCharacter(yield, characterRequestParameters);
             switch (responseParameters.Status)
             {
                 case CharacterCreationStatus.Succeed:

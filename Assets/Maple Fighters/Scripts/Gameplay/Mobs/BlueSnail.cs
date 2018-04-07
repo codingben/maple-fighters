@@ -12,8 +12,8 @@ namespace Assets.Scripts
     {
         private void Awake()
         {
-            var gameService = ServiceContainer.GameService.GetPeerLogic<IGameScenePeerLogicAPI>().AssertNotNull();
-            gameService.PlayerAttacked.AddListener((parameters) => 
+            var gameScenePeerLogic = ServiceContainer.GameService.GetPeerLogic<IGameScenePeerLogicAPI>().AssertNotNull();
+            gameScenePeerLogic.PlayerAttacked.AddListener((parameters) => 
             {
                 StartCoroutine(HitPlayer(new Vector2(parameters.ContactPointX, parameters.ContactPointY)));
             });

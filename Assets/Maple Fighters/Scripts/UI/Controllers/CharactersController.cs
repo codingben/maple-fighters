@@ -23,7 +23,7 @@ namespace Scripts.UI.Controllers
         {
             CreateChooseFighterTextUI();
 
-            coroutinesExecutor.StartTask(GetCharacters, exception => Utils.ShowExceptionNotice());
+            coroutinesExecutor.StartTask(GetCharacters, exception => ServiceConnectionProviderUtils.OnOperationFailed());
         }
 
         protected override void OnDestroyed()
@@ -70,12 +70,10 @@ namespace Scripts.UI.Controllers
             var parameters = await characterService.GetCharacters(yield);
             if (parameters.Characters == null)
             {
-                LogUtils.Log(MessageBuilder.Trace("Failed to get characters."));
+                throw new Exception("Failed to get characters.");
             }
-            else
-            {
-                OnReceivedCharacters(parameters);
-            }
+
+            OnReceivedCharacters(parameters);
         }
 
         private void OnReceivedCharacters(GetCharactersResponseParameters parameters)
@@ -177,13 +175,13 @@ namespace Scripts.UI.Controllers
             noticeWindow.OkButton.interactable = false;
 
             var parameters = new ValidateCharacterRequestParameters(characterIndex);
-            coroutinesExecutor.StartTask((y) => ValidateCharacter(y, parameters), exception => Utils.ShowExceptionNotice());
+            coroutinesExecutor.StartTask((y) => ValidateCharacter(y, parameters), exception => ServiceConnectionProviderUtils.OnOperationFailed());
         }
 
         private async Task ValidateCharacter(IYield yield, ValidateCharacterRequestParameters parameters)
         {
-            var characterService = ServiceContainer.GameService.GetPeerLogic<ICharacterPeerLogicAPI>().AssertNotNull();
-            var responseParameters = await characterService.ValidateCharacter(yield, parameters);
+            var characterPeerLogic = ServiceContainer.GameService.GetPeerLogic<ICharacterPeerLogicAPI>().AssertNotNull();
+            var responseParameters = await characterPeerLogic.ValidateCharacter(yield, parameters);
             switch (responseParameters)
             {
                 case CharacterValidationStatus.Ok:
@@ -239,13 +237,13 @@ namespace Scripts.UI.Controllers
             noticeWindow.OkButton.interactable = false;
 
             var parameters = new RemoveCharacterRequestParameters(characterIndex);
-            coroutinesExecutor.StartTask((y) => DeleteCharacter(y, parameters), exception => Utils.ShowExceptionNotice());
+            coroutinesExecutor.StartTask((y) => DeleteCharacter(y, parameters), exception => ServiceConnectionProviderUtils.OnOperationFailed());
         }
 
         private async Task DeleteCharacter(IYield yield, RemoveCharacterRequestParameters parameters)
         {
-            var characterService = ServiceContainer.GameService.GetPeerLogic<ICharacterPeerLogicAPI>().AssertNotNull();
-            var responseParameters = await characterService.RemoveCharacter(yield, parameters);
+            var characterPeerLogic = ServiceContainer.GameService.GetPeerLogic<ICharacterPeerLogicAPI>().AssertNotNull();
+            var responseParameters = await characterPeerLogic.RemoveCharacter(yield, parameters);
             switch (responseParameters.Status)
             {
                 case RemoveCharacterStatus.Succeed:

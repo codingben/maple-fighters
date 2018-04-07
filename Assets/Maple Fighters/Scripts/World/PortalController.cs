@@ -12,8 +12,6 @@ using UnityEngine;
 
 namespace Scripts.World
 {
-    using Utils = UI.Utils;
-
     public class PortalController : MonoBehaviour
     {
         private bool isTeleporting;
@@ -58,14 +56,14 @@ namespace Scripts.World
         {
             isTeleporting = true;
 
-            coroutinesExecutor.StartTask(ChangeScene, exception => Utils.ShowExceptionNotice());
+            coroutinesExecutor.StartTask(ChangeScene, exception => ServiceConnectionProviderUtils.OnOperationFailed());
         }
 
         private async Task ChangeScene(IYield yield)
         {
             var networkIdentity = GetComponent<NetworkIdentity>();
-            var gameService = ServiceContainer.GameService.GetPeerLogic<IGameScenePeerLogicAPI>().AssertNotNull();
-            var responseParameters = await gameService.ChangeScene(yield, new ChangeSceneRequestParameters(networkIdentity.Id));
+            var gameScenePeerLogic = ServiceContainer.GameService.GetPeerLogic<IGameScenePeerLogicAPI>().AssertNotNull();
+            var responseParameters = await gameScenePeerLogic.ChangeScene(yield, new ChangeSceneRequestParameters(networkIdentity.Id));
             var map = responseParameters.Map;
             if (map == 0)
             {

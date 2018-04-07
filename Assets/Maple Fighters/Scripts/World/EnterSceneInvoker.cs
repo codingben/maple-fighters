@@ -9,8 +9,6 @@ using UnityEngine.SceneManagement;
 
 namespace Scripts.World
 {
-    using Utils = UI.Utils;
-
     public class EnterSceneInvoker : DontDestroyOnLoad<EnterSceneInvoker>
     {
         private readonly ExternalCoroutinesExecutor coroutinesExecutor = new ExternalCoroutinesExecutor();
@@ -47,13 +45,13 @@ namespace Scripts.World
 
         private void OnSceneLoaded(Scene scene, LoadSceneMode loadSceneMode)
         {
-            coroutinesExecutor.StartTask(EnterScene, exception => Utils.ShowExceptionNotice());
+            coroutinesExecutor.StartTask(EnterScene, exception => ServiceConnectionProviderUtils.OnOperationFailed());
         }
 
         private async Task EnterScene(IYield yield)
         {
-            var gameService = ServiceContainer.GameService.GetPeerLogic<IGameScenePeerLogicAPI>().AssertNotNull();
-            await gameService.EnterScene(yield);
+            var gameScenePeerLogic = ServiceContainer.GameService.GetPeerLogic<IGameScenePeerLogicAPI>().AssertNotNull();
+            await gameScenePeerLogic.EnterScene(yield);
         }
     }
 }

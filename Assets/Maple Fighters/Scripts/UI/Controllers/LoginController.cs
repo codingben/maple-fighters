@@ -72,7 +72,7 @@ namespace Scripts.UI.Controllers
             Action authenticateAction = () =>
             {
                 var parameters = new AuthenticateRequestParameters(email, password.CreateSha512());
-                coroutinesExecutor.StartTask((yield) => Authenticate(yield, parameters), exception => Utils.ShowExceptionNotice());
+                coroutinesExecutor.StartTask((yield) => Authenticate(yield, parameters), exception => ServiceConnectionProviderUtils.OnOperationFailed());
             };
 
             if (LoginConnectionProvider.Instance.IsConnected())
@@ -87,8 +87,8 @@ namespace Scripts.UI.Controllers
 
         private async Task Authenticate(IYield yield, AuthenticateRequestParameters parameters)
         {
-            var loginService = ServiceContainer.LoginService.GetPeerLogic<ILoginPeerLogicAPI>().AssertNotNull();
-            var responseParameters = await loginService.Authenticate(yield, parameters);
+            var loginPeerLogic = ServiceContainer.LoginService.GetPeerLogic<ILoginPeerLogicAPI>().AssertNotNull();
+            var responseParameters = await loginPeerLogic.Authenticate(yield, parameters);
             switch (responseParameters.Status)
             {
                 case LoginStatus.Succeed:

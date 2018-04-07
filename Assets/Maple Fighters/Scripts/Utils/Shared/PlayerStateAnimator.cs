@@ -30,16 +30,16 @@ namespace Scripts.Utils.Shared
 
         private void SubscribeToGameServiceEvents()
         {
-            var gameService = ServiceContainer.GameService.GetPeerLogic<IGameScenePeerLogicAPI>().AssertNotNull();
-            gameService.SceneObjectsAdded.AddListener(OnSceneObjectsAdded);
-            gameService.PlayerStateChanged.AddListener(OnPlayerStateChanged);
+            var gameScenePeerLogic = ServiceContainer.GameService.GetPeerLogic<IGameScenePeerLogicAPI>().AssertNotNull();
+            gameScenePeerLogic.SceneObjectsAdded.AddListener(OnSceneObjectsAdded);
+            gameScenePeerLogic.PlayerStateChanged.AddListener(OnPlayerStateChanged);
         }
 
         private void UnsubscribeFromGameServiceEvents()
         {
-            var gameService = ServiceContainer.GameService.GetPeerLogic<IGameScenePeerLogicAPI>().AssertNotNull();
-            gameService.SceneObjectsAdded.RemoveListener(OnSceneObjectsAdded);
-            gameService.PlayerStateChanged.RemoveListener(OnPlayerStateChanged);
+            var gameScenePeerLogic = ServiceContainer.GameService.GetPeerLogic<IGameScenePeerLogicAPI>().AssertNotNull();
+            gameScenePeerLogic.SceneObjectsAdded.RemoveListener(OnSceneObjectsAdded);
+            gameScenePeerLogic.PlayerStateChanged.RemoveListener(OnPlayerStateChanged);
         }
 
         public void OnPlayerStateChanged(PlayerState playerState)
@@ -74,8 +74,8 @@ namespace Scripts.Utils.Shared
 
         private void UpdatePlayerStateOperation()
         {
-            var gameService = ServiceContainer.GameService.GetPeerLogic<IGameScenePeerLogicAPI>().AssertNotNull();
-            gameService.UpdatePlayerState(new UpdatePlayerStateRequestParameters(lastPlayerState));
+            var gameScenePeerLogic = ServiceContainer.GameService.GetPeerLogic<IGameScenePeerLogicAPI>().AssertNotNull();
+            gameScenePeerLogic.UpdatePlayerState(new UpdatePlayerStateRequestParameters(lastPlayerState));
         }
     }
 }

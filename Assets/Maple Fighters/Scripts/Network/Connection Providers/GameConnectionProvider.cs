@@ -86,8 +86,8 @@ namespace Scripts.Services
 
         protected override Task<AuthorizeResponseParameters> Authorize(IYield yield, AuthorizeRequestParameters parameters)
         {
-            var authorizationService = GetServiceBase().GetPeerLogic<IAuthorizationPeerLogicAPI>().AssertNotNull();
-            return authorizationService.Authorize(yield, parameters);
+            var authorizationPeerLogic = GetServiceBase().GetPeerLogic<IAuthorizationPeerLogicAPI>().AssertNotNull();
+            return authorizationPeerLogic.Authorize(yield, parameters);
         }
 
         protected override void OnPreAuthorization()

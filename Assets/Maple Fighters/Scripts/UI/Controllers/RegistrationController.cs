@@ -67,7 +67,7 @@ namespace Scripts.UI.Controllers
             Action registerAction = () => 
             {
                 var parameters = new RegisterRequestParameters(email, password.CreateSha512(), firstName, lastName);
-                coroutinesExecutor.StartTask((yield) => Register(yield, parameters), exception => Utils.ShowExceptionNotice());
+                coroutinesExecutor.StartTask((yield) => Register(yield, parameters), exception => ServiceConnectionProviderUtils.OnOperationFailed());
             };
 
             if (RegistrationConnectionProvider.Instance.IsConnected())
@@ -82,8 +82,8 @@ namespace Scripts.UI.Controllers
 
         private async Task Register(IYield yield, RegisterRequestParameters parameters)
         {
-            var registrationService = ServiceContainer.RegistrationService.GetPeerLogic<IRegistrationPeerLogicAPI>().AssertNotNull();
-            var responseParameters = await registrationService.Register(yield, parameters);
+            var registrationPeerLogic = ServiceContainer.RegistrationService.GetPeerLogic<IRegistrationPeerLogicAPI>().AssertNotNull();
+            var responseParameters = await registrationPeerLogic.Register(yield, parameters);
             switch (responseParameters.Status)
             {
                 case RegisterStatus.Succeed:

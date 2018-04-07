@@ -10,7 +10,7 @@ using Scripts.Utils;
 
 namespace Scripts.Services
 {
-    public abstract class ServiceConnectionProviderBase<T> : DontDestroyOnLoad<T>
+    public abstract class ServiceConnectionProviderBase<T> : DontDestroyOnLoad<T>, IServiceConnectionProviderBase
         where T : ServiceConnectionProviderBase<T>
     {
         protected ExternalCoroutinesExecutor CoroutinesExecutor

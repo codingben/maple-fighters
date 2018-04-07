@@ -32,8 +32,8 @@ namespace Scripts.Gameplay.Actors
 
         private void UpdatePositionOperation()
         {
-            var gameService = ServiceContainer.GameService.GetPeerLogic<IGameScenePeerLogicAPI>().AssertNotNull();
-            gameService.UpdatePosition(new UpdatePositionRequestParameters(transform.position.x, transform.position.y, GetDirection()));
+            var gameScenePeerLogic = ServiceContainer.GameService.GetPeerLogic<IGameScenePeerLogicAPI>().AssertNotNull();
+            gameScenePeerLogic.UpdatePosition(new UpdatePositionRequestParameters(transform.position.x, transform.position.y, GetDirection()));
         }
 
         private Directions GetDirection()

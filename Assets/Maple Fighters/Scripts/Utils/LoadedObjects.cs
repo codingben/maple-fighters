@@ -14,7 +14,7 @@ namespace Scripts.Utils
             Object.DontDestroyOnLoad(obj);
         }
 
-        private static void Destroy(this GameObject obj)
+        public static void Destroy(this GameObject obj)
         {
             loadedObjects.Remove(obj);
             Object.DestroyImmediate(obj);
@@ -23,7 +23,7 @@ namespace Scripts.Utils
         public static void DestroyAll()
         {
             var objects = new List<GameObject>();
-            objects.AddRange(GetSavedObjects());
+            objects.AddRange(GetLoadedObjects());
 
             foreach (var obj in objects)
             {
@@ -33,12 +33,7 @@ namespace Scripts.Utils
             SceneManager.LoadScene(0, LoadSceneMode.Single);
         }
 
-        public static void RemoveSavedObjectOnly(this GameObject obj)
-        {
-            loadedObjects.Remove(obj);
-        }
-
-        public static IEnumerable<GameObject> GetSavedObjects()
+        public static IEnumerable<GameObject> GetLoadedObjects()
         {
             return loadedObjects;
         }
