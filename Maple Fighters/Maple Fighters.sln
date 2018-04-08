@@ -116,7 +116,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authorization.Server.Common
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authorization.Client.Common", "Microservices\Authorization\Authorization.Client.Common\Authorization.Client.Common.csproj", "{58359452-038A-44CD-AA7B-21D0C3507EC7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServerCommunication.Common", "Shared\Servers\ServerCommunication.Common\ServerCommunication.Common\ServerCommunication.Common.csproj", "{5E8328B3-E51C-4291-B7DE-83673C4CE889}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServerCommunication.Common", "Shared\Servers\ServerCommunication.Common\ServerCommunication.Common.csproj", "{5E8328B3-E51C-4291-B7DE-83673C4CE889}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UserProfile", "UserProfile", "{57D74F37-3111-4A33-A96E-84E1C1D46CCF}"
 EndProject

@@ -103,7 +103,7 @@
       <Project>{F82FBB67-7B1D-43B7-A415-3F407D40E5C7}</Project>
       <Name>ServerApplication.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\Shared\Servers\ServerCommunication.Common\ServerCommunication.Common\ServerCommunication.Common.csproj">
+    <ProjectReference Include="..\..\..\Shared\Servers\ServerCommunication.Common\ServerCommunication.Common.csproj">
       <Project>{5e8328b3-e51c-4291-b7de-83673c4ce889}</Project>
       <Name>ServerCommunication.Common</Name>
     </ProjectReference>
