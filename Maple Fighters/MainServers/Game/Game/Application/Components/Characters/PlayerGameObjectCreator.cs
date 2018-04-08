@@ -37,7 +37,7 @@ namespace Game.Application.Components
             var character = new PlayerGameObject(spawnDetails);
             var sceneObject = scene.AddSceneObject(character);
             sceneObject.Components.AddComponent(new InterestArea(spawnDetails.Position, scene.RegionSize));
-            sceneObject.Components.AddComponent(new CharacterBody());
+            sceneObject.Components.AddComponent(new PlayerPositionController());
             return character;
         }
     }

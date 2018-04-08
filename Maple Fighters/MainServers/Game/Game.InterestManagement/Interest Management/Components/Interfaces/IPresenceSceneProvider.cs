@@ -2,6 +2,7 @@
 {
     public interface IPresenceSceneProvider
     {
-        IScene Scene { get; set; }
+        void SetScene(IScene scene);
+        IScene GetScene();
     }
 }

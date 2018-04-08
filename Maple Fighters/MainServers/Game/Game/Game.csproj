@@ -113,7 +113,7 @@
     <Compile Include="Application\Peer Logics\Operations\EnterSceneOperationHandler.cs" />
     <Compile Include="Application\Peer Logics\Operations\GetCharactersOperationHandler.cs" />
     <Compile Include="Application\Peer Logics\Operations\RemoveCharacterOperationHandler.cs" />
-    <Compile Include="Application\Game Objects\Components\CharacterBody.cs" />
+    <Compile Include="Application\Game Objects\Components\PlayerPositionController.cs" />
     <Compile Include="Application\Peer Logics\CharacterSelectionPeerLogic.cs" />
     <Compile Include="Application\Peer Logics\Components\PeerIdGetter.cs" />
     <Compile Include="Application\Peer Logics\Components\PositionChangesListener.cs" />
@@ -125,7 +125,7 @@
     <Compile Include="Application\Peer Logics\Operations\UpdatePositionOperationHandler.cs" />
     <Compile Include="Application\Peer Logics\Operations\UpdatePlayerStateOperationHandler.cs" />
     <Compile Include="Application\Game Objects\Components\CharacterParametersGetter.cs" />
-    <Compile Include="Application\Game Objects\Components\Interfaces\ICharacterBody.cs" />
+    <Compile Include="Application\Game Objects\Components\Interfaces\IPlayerPositionController.cs" />
     <Compile Include="Application\Game Objects\Components\Interfaces\ICharacterParametersGetter.cs" />
     <Compile Include="Application\Game Objects\Components\Interfaces\IInterestAreaNotifier.cs" />
     <Compile Include="Application\Game Objects\Components\InterestAreaNotifier.cs" />

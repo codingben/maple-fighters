@@ -2,7 +2,7 @@
 
 namespace Game.Application.GameObjects.Components.Interfaces
 {
-    internal interface ICharacterBody
+    internal interface IPlayerPositionController
     {
         PlayerState PlayerState { set; }
     }

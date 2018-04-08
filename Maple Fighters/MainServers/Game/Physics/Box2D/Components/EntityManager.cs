@@ -71,9 +71,11 @@ namespace Physics.Box2D.Components
             addBodies.Add(bodyInfo);
         }
 
-        public void RemoveBody(Body body, int id)
+        public void RemoveBody(int id)
         {
+            var body = bodies[id];
             bodies.Remove(id);
+
             removeBodies.Add(body);
         }
 

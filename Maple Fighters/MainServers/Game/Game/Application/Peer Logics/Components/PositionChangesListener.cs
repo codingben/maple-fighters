@@ -33,14 +33,14 @@ namespace Game.Application.PeerLogic.Components
 
         private void SubscribeToPositionChanged()
         {
-            var transform = playerGameObjectGetter.GetPlayerGameObject().Components.GetComponent<IPositionTransform>().AssertNotNull();
-            transform.PositionChanged += UpdatePositionForOthers;
+            var positionChangesNotifier = playerGameObjectGetter.GetPlayerGameObject().Components.GetComponent<IPositionChangesNotifier>().AssertNotNull();
+            positionChangesNotifier.PositionChanged += UpdatePositionForOthers;
         }
 
         private void UnubscribeFromPositionChanged()
         {
-            var transform = playerGameObjectGetter.GetPlayerGameObject().Components.GetComponent<IPositionTransform>().AssertNotNull();
-            transform.PositionChanged -= UpdatePositionForOthers;
+            var positionChangesNotifier = playerGameObjectGetter.GetPlayerGameObject().Components.GetComponent<IPositionChangesNotifier>().AssertNotNull();
+            positionChangesNotifier.PositionChanged -= UpdatePositionForOthers;
         }
 
         private void UpdatePositionForOthers(Vector2 position)

@@ -23,10 +23,10 @@ namespace Game.Application.PeerLogic.Operations
         {
             var playerState = messageData.Parameters.PlayerState;
 
-            var characterBody = sceneObject.Components.GetComponent<ICharacterBody>();
-            if (characterBody != null)
+            var playerPositionController = sceneObject.Components.GetComponent<IPlayerPositionController>();
+            if (playerPositionController != null)
             {
-                characterBody.PlayerState = playerState;
+                playerPositionController.PlayerState = playerState;
             }
 
             var parameters = new PlayerStateChangedEventParameters(playerState, sceneObject.Id);

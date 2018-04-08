@@ -30,14 +30,14 @@ namespace Game.Application.PeerLogic.Operations
 
             // Getting portal info.
             var portalSceneObjectId = messageData.Parameters.PortalId;
-            var portalSceneObject = presenceSceneProvider.Scene.GetSceneObject(portalSceneObjectId).AssertNotNull();
+            var portalSceneObject = presenceSceneProvider.GetScene().GetSceneObject(portalSceneObjectId).AssertNotNull();
             var portalInfoProvider = portalSceneObject.Components.GetComponent<IPortalInfoProvider>().AssertNotNull();
 
             // Removing body from the old physics world.
             playerGameObject.RemoveBody();
 
             // Removing a character from his old scene.
-            presenceSceneProvider.Scene.RemoveSceneObject(playerGameObject.Id);
+            presenceSceneProvider.GetScene().RemoveSceneObject(playerGameObject.Id, onDestroy: false);
 
             // Setting the character's position in the destination scene.
             var spawnPositionDetails = CharacterSpawnDetailsProvider.GetCharacterSpawnDetails(portalInfoProvider.Map);
@@ -50,7 +50,7 @@ namespace Game.Application.PeerLogic.Operations
 
             // Adding a character to the destination scene.
             var destinationScene = sceneContainer.GetSceneWrapper(portalInfoProvider.Map).AssertNotNull($"Could not find a scene with map {portalInfoProvider.Map}");
-            destinationScene.GetScene().AddSceneObject(playerGameObject);
+            destinationScene.GetScene().AddSceneObject(playerGameObject, onAwake: false);
 
             // Setting the character's interest area in the destination scene.
             var interestArea = playerGameObject.Components.GetComponent<IInterestArea>().AssertNotNull();

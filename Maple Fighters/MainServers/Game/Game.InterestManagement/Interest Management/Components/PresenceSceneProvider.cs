@@ -1,15 +1,29 @@
-﻿using ComponentModel.Common;
+﻿using System;
+using ComponentModel.Common;
 using InterestManagement.Components.Interfaces;
 
 namespace InterestManagement.Components
 {
-    public class PresenceSceneProvider : Component<ISceneObject>, IPresenceSceneProvider
+    public class PresenceSceneProvider : Component<ISceneObject>, IPresenceSceneProvider, IPresenceSceneChangesNotifier
     {
-        public IScene Scene { get; set; }
+        public event Action<IScene> SceneChanged;
+        private IScene scene;
 
         public PresenceSceneProvider(IScene scene = null)
         {
-            Scene = scene;
+            this.scene = scene;
+        }
+
+        public void SetScene(IScene scene)
+        {
+            this.scene = scene;
+
+            SceneChanged?.Invoke(scene);
+        }
+
+        public IScene GetScene()
+        {
+            return scene;
         }
     }
 }

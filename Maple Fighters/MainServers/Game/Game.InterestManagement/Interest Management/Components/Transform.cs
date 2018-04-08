@@ -5,7 +5,7 @@ using MathematicsHelper;
 
 namespace InterestManagement.Components
 {
-    public class Transform : Component<ISceneObject>, IPositionTransform, ISizeTransform, IDirectionTransform
+    public class Transform : Component<ISceneObject>, IPositionTransform, IPositionChangesNotifier, ISizeTransform, IDirectionTransform
     {
         public event Action<Vector2> PositionChanged;
 

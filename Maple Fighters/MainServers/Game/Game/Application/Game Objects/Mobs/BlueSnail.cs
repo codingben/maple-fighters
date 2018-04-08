@@ -42,13 +42,14 @@ namespace Game.Application.GameObjects
         {
             base.OnAwake();
 
+            positionTransform = Components.GetComponent<IPositionTransform>().AssertNotNull();
             directionTransform = Components.GetComponent<IDirectionTransform>().AssertNotNull();
 
             SubscribeToPositionChanged();
             SubscribeToCollisionEnter();
 
             var presenceSceneProvider = Components.GetComponent<IPresenceSceneProvider>().AssertNotNull();
-            var executor = presenceSceneProvider.Scene.Components.GetComponent<ISceneOrderExecutor>().AssertNotNull();
+            var executor = presenceSceneProvider.GetScene().Components.GetComponent<ISceneOrderExecutor>().AssertNotNull();
             executor.GetPreUpdateExecutor().StartCoroutine(MoveMob());
         }
 
@@ -74,13 +75,14 @@ namespace Game.Application.GameObjects
 
         private void SubscribeToPositionChanged()
         {
-            positionTransform = Components.GetComponent<IPositionTransform>().AssertNotNull();
-            positionTransform.PositionChanged += OnPositionChanged;
+            var positionChangesNotifier = Components.GetComponent<IPositionChangesNotifier>().AssertNotNull();
+            positionChangesNotifier.PositionChanged += OnPositionChanged;
         }
 
         private void UnubscribeFromPositionChanged()
         {
-            positionTransform.PositionChanged -= OnPositionChanged;
+            var positionChangesNotifier = Components.GetComponent<IPositionChangesNotifier>().AssertNotNull();
+            positionChangesNotifier.PositionChanged -= OnPositionChanged;
         }
 
         private IEnumerator<IYieldInstruction> MoveMob()

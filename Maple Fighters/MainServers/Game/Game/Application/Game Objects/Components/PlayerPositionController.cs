@@ -7,21 +7,23 @@ using ComponentModel.Common;
 using Game.Application.GameObjects.Components.Interfaces;
 using MathematicsHelper;
 using Game.Common;
+using InterestManagement;
 using InterestManagement.Components.Interfaces;
 using Physics.Box2D.Components.Interfaces;
 using Physics.Box2D.Core;
 
 namespace Game.Application.GameObjects.Components
 {
-    internal class CharacterBody : Component<ISceneObject>, ICharacterBody
+    internal class PlayerPositionController : Component<ISceneObject>, IPlayerPositionController
     {
         public PlayerState PlayerState { private get; set; }
 
         private Body body;
         private Vector2 lastPosition;
 
-        private IPresenceSceneProvider presenceSceneProvider;
         private IPositionTransform positionTransform;
+        private IPresenceSceneProvider presenceSceneProvider;
+        private ICoroutine updatePosition;
 
         protected override void OnAwake()
         {
@@ -30,21 +32,43 @@ namespace Game.Application.GameObjects.Components
             positionTransform = Entity.Components.GetComponent<IPositionTransform>().AssertNotNull();
             presenceSceneProvider = Entity.Components.GetComponent<IPresenceSceneProvider>().AssertNotNull();
 
-            var executor = presenceSceneProvider.Scene.Components.GetComponent<ISceneOrderExecutor>().AssertNotNull();
-            executor.GetPreUpdateExecutor().StartCoroutine(UpdatePosition());
+            var presenceSceneChangesNotifier = Entity.Components.GetComponent<IPresenceSceneChangesNotifier>().AssertNotNull();
+            presenceSceneChangesNotifier.SceneChanged += OnSceneChanged;
+
+            var executor = presenceSceneProvider.GetScene().Components.GetComponent<ISceneOrderExecutor>().AssertNotNull();
+            updatePosition = executor.GetPreUpdateExecutor().StartCoroutine(UpdatePosition());
+        }
+
+        protected override void OnDestroy()
+        {
+            base.OnDestroy();
+
+            var presenceSceneChangesNotifier = Entity.Components.GetComponent<IPresenceSceneChangesNotifier>().AssertNotNull();
+            presenceSceneChangesNotifier.SceneChanged -= OnSceneChanged;
+        }
+
+        private void OnSceneChanged(IScene scene)
+        {
+            if (scene == null)
+            {
+                updatePosition.Dispose();
+                return;
+            }
+
+            var executor = presenceSceneProvider.GetScene().Components.GetComponent<ISceneOrderExecutor>().AssertNotNull();
+            updatePosition = executor.GetPreUpdateExecutor().StartCoroutine(UpdatePosition());
         }
 
         private IEnumerator<IYieldInstruction> UpdatePosition()
         {
-            var entityManager = presenceSceneProvider.Scene.Components.GetComponent<IEntityManager>().AssertNotNull();
+            yield return null; // Hack
+
+            var entityManager = presenceSceneProvider.GetScene().Components.GetComponent<IEntityManager>().AssertNotNull();
+            body = entityManager.GetBody(Entity.Id).AssertNotNull("Could not find a body.");
 
             while (true)
             {
-                if (body == null)
-                {
-                    body = entityManager.GetBody(Entity.Id);
-                }
-                else
+                if (body != null)
                 {
                     SetPosition();
                 }
@@ -74,6 +98,7 @@ namespace Game.Application.GameObjects.Components
                     }
                     break;
                 }
+                case PlayerState.Jumping:
                 case PlayerState.Falling:
                 case PlayerState.Rope:
                 case PlayerState.Ladder:

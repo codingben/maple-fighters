@@ -1,5 +1,6 @@
 ﻿using Box2DX.Dynamics;
 using CommonTools.Log;
+using Game.Application.GameObjects.Interfaces;
 using InterestManagement;
 using InterestManagement.Components.Interfaces;
 using Physics.Box2D.Components.Interfaces;
@@ -10,20 +11,21 @@ namespace Game.Application.GameObjects
     public class BodyGameObject : GameObject
     {
         private Body body;
-        private readonly BodyDefinitionWrapper bodyDefinitionWrapper;
+        private readonly LayerMask layerMask;
+        private readonly bool allowSleep;
 
         protected BodyGameObject(string name, TransformDetails transformDetails, LayerMask layerMask, bool allowSleep = false) 
             : base(name, transformDetails)
         {
-            var physicsCollisionNotifier = Components.AddComponent(new PhysicsCollision());
-            var fixtureDefinition = PhysicsUtils.CreateFixtureDefinition(transformDetails.Size, layerMask, physicsCollisionNotifier);
-            bodyDefinitionWrapper = PhysicsUtils.CreateBodyDefinitionWrapper(fixtureDefinition, transformDetails.Position, this);
-            bodyDefinitionWrapper.BodyDefiniton.AllowSleep = allowSleep;
+            this.layerMask = layerMask;
+            this.allowSleep = allowSleep;
         }
 
         public override void OnAwake()
         {
             base.OnAwake();
+
+            Components.AddComponent(new PhysicsCollision());
 
             CreateBody();
         }
@@ -38,15 +40,15 @@ namespace Game.Application.GameObjects
         public void CreateBody()
         {
             var presenceSceneProvider = Components.GetComponent<IPresenceSceneProvider>().AssertNotNull();
-            var entityManager = presenceSceneProvider.Scene.Components.GetComponent<IEntityManager>().AssertNotNull();
-            entityManager.AddBody(new BodyInfo(Id, bodyDefinitionWrapper));
+            var entityManager = presenceSceneProvider.GetScene().Components.GetComponent<IEntityManager>().AssertNotNull();
+            entityManager.AddBody(GetBodyInfo());
         }
 
         public void RemoveBody()
         {
             var presenceSceneProvider = Components.GetComponent<IPresenceSceneProvider>().AssertNotNull();
-            var entityManager = presenceSceneProvider.Scene.Components.GetComponent<IEntityManager>().AssertNotNull();
-            entityManager.RemoveBody(body, Id);
+            var entityManager = presenceSceneProvider.GetScene().Components.GetComponent<IEntityManager>().AssertNotNull();
+            entityManager.RemoveBody(Id);
         }
 
         protected Body GetBody()
@@ -57,9 +59,20 @@ namespace Game.Application.GameObjects
             }
 
             var presenceSceneProvider = Components.GetComponent<IPresenceSceneProvider>().AssertNotNull();
-            var entityManager = presenceSceneProvider.Scene.Components.GetComponent<IEntityManager>().AssertNotNull();
+            var entityManager = presenceSceneProvider.GetScene().Components.GetComponent<IEntityManager>().AssertNotNull();
             body = entityManager.GetBody(Id).AssertNotNull();
             return body;
+        }
+
+        private BodyInfo GetBodyInfo()
+        {
+            var sizeTransform = Components.GetComponent<ISizeTransform>().AssertNotNull();
+            var positionTransform = Components.GetComponent<IPositionTransform>().AssertNotNull();
+            var physicsCollisionNotifier = Components.GetComponent<IPhysicsCollisionNotifier>().AssertNotNull();
+            var fixtureDefinition = PhysicsUtils.CreateFixtureDefinition(sizeTransform.Size, layerMask, physicsCollisionNotifier);
+            var bodyDefinitionWrapper = PhysicsUtils.CreateBodyDefinitionWrapper(fixtureDefinition, positionTransform.Position, this);
+            bodyDefinitionWrapper.BodyDefiniton.AllowSleep = allowSleep;
+            return new BodyInfo(Id, bodyDefinitionWrapper);
         }
     }
 }

@@ -39,7 +39,7 @@ namespace InterestManagement
             RegionSize = regionSize;
         }
 
-        public ISceneObject AddSceneObject(ISceneObject sceneObject)
+        public ISceneObject AddSceneObject(ISceneObject sceneObject, bool onAwake = true)
         {
             if (sceneObjects.ContainsKey(sceneObject.Id))
             {
@@ -48,9 +48,13 @@ namespace InterestManagement
             }
 
             var presenceSceneProvider = sceneObject.Components.GetComponent<IPresenceSceneProvider>().AssertNotNull();
-            presenceSceneProvider.Scene = this;
+            presenceSceneProvider.SetScene(this);
 
-            sceneObject.OnAwake();
+            if (onAwake)
+            {
+                sceneObject.OnAwake();
+            }
+
             sceneObjects.Add(sceneObject.Id, sceneObject);
 
             var debug = (bool)Config.Global.Log.InterestManagement;
@@ -61,7 +65,7 @@ namespace InterestManagement
             return sceneObject;
         }
 
-        public void RemoveSceneObject(int id)
+        public void RemoveSceneObject(int id, bool onDestroy = true)
         {
             if (!sceneObjects.ContainsKey(id))
             {
@@ -70,13 +74,13 @@ namespace InterestManagement
             }
 
             var sceneObject = sceneObjects[id];
-            sceneObject.OnDestroy();
+            if (onDestroy)
+            {
+                sceneObject.OnDestroy();
+            }
 
             var presenceSceneProvider = sceneObject.Components?.GetComponent<IPresenceSceneProvider>()?.AssertNotNull();
-            if (presenceSceneProvider != null)
-            {
-                presenceSceneProvider.Scene = null;
-            }
+            presenceSceneProvider?.SetScene(null);
 
             sceneObjects.Remove(id);
 
