@@ -46,6 +46,7 @@ namespace GameServerProvider.Service.Application
             ServerComponents.AddComponent(new AuthorizationService());
             ServerComponents.AddComponent(new UserProfileService());
             ServerComponents.AddComponent(new GameServersInformationStorage());
+            ServerComponents.AddComponent(new UpdateGameServerConnectionsInfo());
         }
     }
 }

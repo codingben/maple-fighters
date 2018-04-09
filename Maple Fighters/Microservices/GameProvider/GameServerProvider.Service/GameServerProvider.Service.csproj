@@ -65,15 +65,19 @@
   <ItemGroup>
     <Compile Include="Application\Components\GameServerInformation.cs" />
     <Compile Include="Application\Components\GameServersInformationStorage.cs" />
+    <Compile Include="Application\Components\Interfaces\IGameServerInformationChanger.cs" />
     <Compile Include="Application\Components\Interfaces\IGameServerInformationCreator.cs" />
     <Compile Include="Application\Components\Interfaces\IGameServerInformationRemover.cs" />
     <Compile Include="Application\Components\Interfaces\IGameServersInformationProvider.cs" />
+    <Compile Include="Application\Components\Interfaces\IUpdateGameServerConnectionsInfo.cs" />
+    <Compile Include="Application\Components\UpdateGameServerConnectionsInfo.cs" />
     <Compile Include="Application\Components\Utils.cs" />
     <Compile Include="Application\GameServerProviderServiceApplication.cs" />
     <Compile Include="Application\Peer Logics\AuthorizedClientPeerLogic.cs" />
     <Compile Include="Application\Peer Logics\InboundServerPeerLogic.cs" />
     <Compile Include="Application\Peer Logics\Operations\GameServersProviderOperationHandler.cs" />
     <Compile Include="Application\Peer Logics\Operations\RegisterGameServerOperationHandler.cs" />
+    <Compile Include="Application\Peer Logics\Operations\UpdateGameServerConnectionsOperationHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

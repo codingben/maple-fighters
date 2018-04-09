@@ -15,6 +15,7 @@ namespace GameServerProvider.Service.Application.PeerLogics
             SubscribeToDisconnectionNotifier();
 
             AddHandlerForRegisterGameServerOperation();
+            AddHandlerForUpdateGameServerConnectionsOperation();
         }
 
         private void AddHandlerForRegisterGameServerOperation()
@@ -22,7 +23,13 @@ namespace GameServerProvider.Service.Application.PeerLogics
             var peerId = ClientPeerWrapper.PeerId;
             OperationHandlerRegister.SetHandler(ServerOperations.RegisterGameServer, new RegisterGameServerOperationHandler(peerId));
         }
-        
+
+        private void AddHandlerForUpdateGameServerConnectionsOperation()
+        {
+            var peerId = ClientPeerWrapper.PeerId;
+            OperationHandlerRegister.SetHandler(ServerOperations.UpdateGameServerConnections, new UpdateGameServerConnectionsOperationHandler(peerId));
+        }
+
         private void SubscribeToDisconnectionNotifier()
         {
             ClientPeerWrapper.Peer.PeerDisconnectionNotifier.Disconnected += OnDisconnected;

@@ -2,6 +2,7 @@
 {
     public enum ServerOperations : byte
     {
-        RegisterGameServer
+        RegisterGameServer,
+        UpdateGameServerConnections
     }
 }

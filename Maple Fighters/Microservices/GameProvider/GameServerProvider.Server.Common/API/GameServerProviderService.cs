@@ -1,18 +1,28 @@
-﻿using CommonCommunicationInterfaces;
+﻿using System.Collections.Generic;
+using CommonCommunicationInterfaces;
+using CommonTools.Coroutines;
 using CommonTools.Log;
 using CommunicationHelper;
+using Components.Common.Interfaces;
 using JsonConfig;
+using PeerLogic.Common.Components.Interfaces;
+using ServerApplication.Common.ApplicationBase;
 using ServerCommunication.Common;
 
 namespace GameServerProvider.Server.Common
 {
     public class GameServerProviderService : ServiceBase<EmptyOperationCode, EmptyEventCode>
     {
-        private readonly int connections;
+        private int connections;
+        private readonly IPeerContainer peerContainer;
+        private ICoroutine updateGameServerConnectionsContinuously;
 
-        public GameServerProviderService(int connections)
+        private const int CONNECTIONS_UPDATE_TIME = 30;
+
+        public GameServerProviderService()
         {
-            this.connections = connections;
+            peerContainer = ServerComponents.GetComponent<IPeerContainer>().AssertNotNull();
+            connections = peerContainer.GetPeersCount();
         }
 
         protected override void OnAuthenticated()
@@ -22,12 +32,42 @@ namespace GameServerProvider.Server.Common
             LogUtils.Log(MessageBuilder.Trace("Authenticated with GameServerProvider service."));
 
             RegisterGameServer();
+
+            var coroutinesManager = ServerComponents.GetComponent<ICoroutinesManager>().AssertNotNull();
+            updateGameServerConnectionsContinuously = coroutinesManager.StartCoroutine(UpdateGameServerConnectionsContinuously());
+        }
+
+        protected override void OnDisconnected(DisconnectReason disconnectReason, string details)
+        {
+            base.OnDisconnected(disconnectReason, details);
+
+            updateGameServerConnectionsContinuously?.Dispose();
+        }
+
+        private IEnumerator<IYieldInstruction> UpdateGameServerConnectionsContinuously()
+        {
+            while (true)
+            {
+                var peersCount = peerContainer.GetPeersCount();
+                if (connections != peersCount)
+                {
+                    connections = peersCount;
+                    UpdateGameServerConnections();
+                }
+                yield return new WaitForSeconds(CONNECTIONS_UPDATE_TIME);
+            }
         }
 
         private void RegisterGameServer()
         {
             var parameters = GetGameServerDetailsParameters();
             OutboundServerPeerLogic?.SendOperation((byte)ServerOperations.RegisterGameServer, parameters);
+        }
+
+        private void UpdateGameServerConnections()
+        {
+            var parameters = new UpdateGameServerConnectionsInfoRequestParameters(connections);
+            OutboundServerPeerLogic?.SendOperation((byte)ServerOperations.UpdateGameServerConnections, parameters);
         }
 
         private RegisterGameServerRequestParameters GetGameServerDetailsParameters()

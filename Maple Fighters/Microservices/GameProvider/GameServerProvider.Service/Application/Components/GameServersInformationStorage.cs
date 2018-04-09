@@ -6,7 +6,7 @@ using GameServerProvider.Service.Application.Components.Interfaces;
 
 namespace GameServerProvider.Service.Application.Components
 {
-    internal class GameServersInformationStorage : Component, IGameServerInformationCreator, IGameServerInformationRemover, IGameServersInformationProvider
+    internal class GameServersInformationStorage : Component, IGameServerInformationCreator, IGameServerInformationRemover, IGameServerInformationChanger, IGameServersInformationProvider
     {
         private readonly object locker = new object();
         private readonly Dictionary<int, GameServerInformation> gameServersInformation = new Dictionary<int, GameServerInformation>();
@@ -50,6 +50,20 @@ namespace GameServerProvider.Service.Application.Components
                 LogUtils.Log($"Removed a game server with id #{id}");
 
                 gameServersInformation.Remove(id);
+            }
+        }
+
+        public void Change(int id, GameServerInformation gameServerInformation)
+        {
+            lock (locker)
+            {
+                if (!gameServersInformation.ContainsKey(id))
+                {
+                    LogUtils.Log(MessageBuilder.Trace($"A game server with id #{id} does not exist in a storage."));
+                    return;
+                }
+
+                gameServersInformation[id] = gameServerInformation;
             }
         }
 

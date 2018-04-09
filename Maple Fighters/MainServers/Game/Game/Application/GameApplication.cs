@@ -45,8 +45,7 @@ namespace Game.Application
             ServerComponents.AddComponent(new AuthorizationService());
             ServerComponents.AddComponent(new CharacterService());
             ServerComponents.AddComponent(new UserProfileService());
-            var peerContainer = ServerComponents.GetComponent<IPeerContainer>().AssertNotNull();
-            ServerComponents.AddComponent(new GameServerProviderService(peerContainer.GetPeersCount()));
+            ServerComponents.AddComponent(new GameServerProviderService());
             ServerComponents.AddComponent(new CharacterSpawnDetailsProvider());
             ServerComponents.AddComponent(new SceneContainer());
             ServerComponents.AddComponent(new PlayerGameObjectCreator());
