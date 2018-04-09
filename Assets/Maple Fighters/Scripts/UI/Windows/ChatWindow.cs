@@ -15,6 +15,26 @@ namespace Scripts.UI.Windows
         public event Action<string> SendChatMessage;
         public bool IsChatActive { get; set; }
 
+        private string ChatText
+        {
+            set
+            {
+                var time = DateTime.Now.ToString("HH:mm");
+                if (ChatText.Length > 0)
+                {
+                    chatText.text += $"\n<color=white>[{time}]</color> {value}";
+                }
+                else
+                {
+                    chatText.text += $"<color=white>[{time}]</color> {value}";
+                }
+            }
+            get
+            {
+                return chatText.text;
+            }
+        }
+
         [SerializeField] private TextMeshProUGUI chatText;
         [SerializeField] private TMP_InputField inputField;
         [Header("Keyboard")]
@@ -25,7 +45,8 @@ namespace Scripts.UI.Windows
 
         private void Update()
         {
-            if (Input.GetKeyDown(sendMessageKey) || Input.GetKeyDown(sendMessageSecondaryKey))
+            if (IsFocusable() 
+                && (Input.GetKeyDown(sendMessageKey) || Input.GetKeyDown(sendMessageSecondaryKey)))
             {
                 OnEnterClicked();
             }
@@ -59,28 +80,13 @@ namespace Scripts.UI.Windows
 
         public void AddMessage(string message)
         {
-            if (chatText.text.Length > 0)
-            {
-                chatText.text += $"\n{message}";
-            }
-            else
-            {
-                chatText.text += $"{message}";
-            }
+            ChatText = $"{message}";
         }
 
         public void AddMessage(string message, ChatMessageColor color)
         {
-            if (chatText.text.Length > 0)
-            {
-                var chatMessageColor = color.ToString().ToLower();
-                chatText.text += $"\n<color={chatMessageColor}>{message}</color>";
-            }
-            else
-            {
-                var chatMessageColor = color.ToString().ToLower();
-                chatText.text += $"<color={chatMessageColor}>{message}</color>";
-            }
+            var chatMessageColor = color.ToString().ToLower();
+            ChatText = $"<color={chatMessageColor}>{message}</color>";
         }
 
         private void SetActiveInputField(bool active)
@@ -106,6 +112,24 @@ namespace Scripts.UI.Windows
         private bool IsChatInputFieldActivated()
         {
             return inputField.gameObject.activeSelf;
+        }
+
+        private bool IsFocusable()
+        {
+            if (FocusController.Instance.Focusable == Focusable.UI)
+            {
+                if (inputField.interactable)
+                {
+                    inputField.interactable = false;
+                }
+                return false;
+            }
+
+            if (!inputField.interactable)
+            {
+                inputField.interactable = true;
+            }
+            return true;
         }
     }
 }
