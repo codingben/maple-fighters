@@ -19,7 +19,7 @@ namespace Login.Application.PeerLogic
 
         private void AddComponents()
         {
-            Components.AddComponent(new InactivityTimeout());
+            Components.AddComponent(new InactivityTimeout(seconds: 60, lookForOperations: false));
         }
 
         private void AddHandlerForAuthenticationOperation()

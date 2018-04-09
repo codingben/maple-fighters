@@ -30,7 +30,7 @@ namespace Game.Application.PeerLogics
 
         private void AddComponents()
         {
-            Components.AddComponent(new InactivityTimeout());
+            Components.AddComponent(new InactivityTimeout(seconds: 120, lookForOperations: false));
 
             var userProfileTracker = Components.AddComponent(new UserProfileTracker(userId, ServerType.Game, isUserProfileChanged: true));
             userProfileTracker.ChangeUserProfileProperties();

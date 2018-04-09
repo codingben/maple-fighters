@@ -20,7 +20,7 @@ namespace Authorization.Client.Common
 
         private void AddComponents()
         {
-            Components.AddComponent(new InactivityTimeout());
+            Components.AddComponent(new InactivityTimeout(seconds: 15, lookForOperations: false));
         }
 
         private void AddHandlerForAuthorizationOperation()

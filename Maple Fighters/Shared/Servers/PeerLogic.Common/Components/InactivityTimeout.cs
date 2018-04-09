@@ -4,7 +4,6 @@ using CommonTools.Coroutines;
 using CommonTools.Log;
 using ComponentModel.Common;
 using Components.Common.Interfaces;
-using JsonConfig;
 using PeerLogic.Common.Components.Interfaces;
 
 namespace PeerLogic.Common.Components
@@ -15,16 +14,12 @@ namespace PeerLogic.Common.Components
         private ICoroutine disconnectInactivityTask;
 
         private readonly WaitForSeconds waitForSeconds;
-        private readonly bool lookForOperationsRequest;
+        private readonly bool lookForOperations;
 
-        public InactivityTimeout()
+        public InactivityTimeout(int seconds, bool lookForOperations)
         {
-            LogUtils.Assert(Config.Global.InactivityTimeout, MessageBuilder.Trace("Could not find a configuration for the inactivity timeout."));
-
-            lookForOperationsRequest = (bool)Config.Global.InactivityTimeout.LookForOperationRequests;
-
-            var time = (int)Config.Global.InactivityTimeout.Time;
-            waitForSeconds = new WaitForSeconds(time);
+            this.lookForOperations = lookForOperations;
+            waitForSeconds = new WaitForSeconds(seconds);
         }
 
         protected override void OnAwake()
@@ -33,7 +28,7 @@ namespace PeerLogic.Common.Components
 
             clientPeerProvider = Components.GetComponent<IClientPeerProvider>().AssertNotNull();
 
-            if (lookForOperationsRequest)
+            if (lookForOperations)
             {
                 SubscribeToOperationRequested();
             }
@@ -48,7 +43,7 @@ namespace PeerLogic.Common.Components
 
             disconnectInactivityTask.Dispose();
 
-            if (lookForOperationsRequest)
+            if (lookForOperations)
             {
                 UnsubscribeFromOperationRequested();
             }

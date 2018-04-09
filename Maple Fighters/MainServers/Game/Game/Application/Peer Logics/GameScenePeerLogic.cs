@@ -38,7 +38,7 @@ namespace Game.Application.PeerLogics
         {
             playerGameObject.Components.AddComponent(new PeerIdGetter(ClientPeerWrapper.PeerId));
 
-            Components.AddComponent(new InactivityTimeout());
+            Components.AddComponent(new InactivityTimeout(seconds: 240, lookForOperations: true));
             Components.AddComponent(new UserProfileTracker(userId, ServerType.Game, isUserProfileChanged: true));
             Components.AddComponent(new PlayerGameObjectGetter(playerGameObject));
             Components.AddComponent(new InterestManagementNotifier());
