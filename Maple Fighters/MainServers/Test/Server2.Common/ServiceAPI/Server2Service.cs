@@ -5,30 +5,34 @@ using CommonTools.Coroutines;
 using CommonTools.Log;
 using JsonConfig;
 using ServerCommunication.Common;
+using ServerCommunicationInterfaces;
 
 namespace Server2.Common
 {
-    public class Server2Service : ServiceBase<ServerOperations, ServerEvents>, IServer2ServiceAPI
+    public class Server2Service : ServiceBase, IServer2ServiceAPI
     {
         public event Action<EmptyParameters> TestAction;
 
-        protected override void OnAuthenticated()
-        {
-            base.OnAuthenticated();
+        private IOutboundServerPeerLogic outboundServerPeerLogic;
 
-            OutboundServerPeerLogic.SetEventHandler((byte)ServerEvents.Server1Event, TestAction);
+        protected override void OnConnectionEstablished(IOutboundServerPeer outboundServerPeer)
+        {
+            base.OnConnectionEstablished(outboundServerPeer);
+
+            outboundServerPeerLogic = outboundServerPeer.CreateOutboundServerPeerLogic<ServerOperations, ServerEvents>();
+            outboundServerPeerLogic.SetEventHandler((byte)ServerEvents.Server1Event, TestAction);
         }
 
-        protected override void OnDisconnected(DisconnectReason disconnectReason, string details)
+        protected override void OnConnectionClosed(DisconnectReason disconnectReason)
         {
-            base.OnDisconnected(disconnectReason, details);
+            base.OnConnectionClosed(disconnectReason);
 
-            OutboundServerPeerLogic.RemoveEventHandler((byte)ServerEvents.Server1Event);
+            outboundServerPeerLogic.RemoveEventHandler((byte)ServerEvents.Server1Event);
         }
 
         public Task<Server1OperationResponseParameters> Server1Operation(IYield yield, Server1OperationRequestParameters parameters)
         {
-            return OutboundServerPeerLogic?.SendOperation<Server1OperationRequestParameters, Server1OperationResponseParameters>
+            return outboundServerPeerLogic.SendOperation<Server1OperationRequestParameters, Server1OperationResponseParameters>
                 (yield, (byte)ServerOperations.Server1Operation, parameters);
         }
 
@@ -39,11 +43,6 @@ namespace Server2.Common
             var ip = (string)Config.Global.Server2.IP;
             var port = (int)Config.Global.Server2.Port;
             return new PeerConnectionInformation(ip, port);
-        }
-
-        protected override string GetSecretKey()
-        {
-            return "TestKey";
         }
     }
 }

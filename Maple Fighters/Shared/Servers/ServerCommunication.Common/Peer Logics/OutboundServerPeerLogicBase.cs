@@ -59,12 +59,14 @@ namespace ServerCommunication.Common
         public void SendOperation<TParams>(byte operationCode, TParams parameters)
             where TParams : struct, IParameters
         {
+            var code = (TOperationCode)Enum.ToObject(typeof(TOperationCode), operationCode);
+
             if (!IsConnected())
             {
+                LogUtils.Log($"Failed to send {code} operation because there is no connection with a server.");
                 return;
             }
 
-            var code = (TOperationCode)Enum.ToObject(typeof(TOperationCode), operationCode);
             operationRequestSender.Send(code, parameters, MessageSendOptions.DefaultReliable());
         }
 
@@ -72,12 +74,13 @@ namespace ServerCommunication.Common
             where TRequestParams : struct, IParameters
             where TResponseParams : struct, IParameters
         {
+            var code = (TOperationCode)Enum.ToObject(typeof(TOperationCode), operationCode);
+
             if (!IsConnected())
             {
+                LogUtils.Log($"Failed to send {code} operation because there is no connection with a server.");
                 return default(TResponseParams);
             }
-
-            var code = (TOperationCode)Enum.ToObject(typeof(TOperationCode), operationCode);
 
             try
             {

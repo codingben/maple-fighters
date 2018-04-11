@@ -10,7 +10,7 @@ using ServerCommunicationInterfaces;
 
 namespace ServerCommunication.Common
 {
-    internal class ServiceConnectorProvider : IServiceConnectorProvider
+    internal class ServiceConnectionProvider : IServiceConnectionProvider
     {
         public IPeerDisconnectionNotifier PeerDisconnectionNotifier => outboundServerPeer?.PeerDisconnectionNotifier;
 
@@ -23,7 +23,7 @@ namespace ServerCommunication.Common
         private bool isConnecting;
         private string exceptionMessage;
 
-        public ServiceConnectorProvider(ICoroutinesManager coroutinesManager, IServerConnectorProvider serverConnectorProvider, Action<IOutboundServerPeer> onConnected)
+        public ServiceConnectionProvider(ICoroutinesManager coroutinesManager, IServerConnectorProvider serverConnectorProvider, Action<IOutboundServerPeer> onConnected)
         {
             this.coroutinesManager = coroutinesManager;
             this.serverConnectorProvider = serverConnectorProvider;
@@ -45,12 +45,7 @@ namespace ServerCommunication.Common
             {
                 yield return new WaitForSeconds(DELAY_TIME);
 
-                if (IsConnected())
-                {
-                    yield break;
-                }
-
-                if (!isConnecting)
+                if (!isConnecting && !IsConnected())
                 {
                     coroutinesManager.StartTask((yield) => Connect(yield, connectionInformation));
                 }
@@ -77,6 +72,9 @@ namespace ServerCommunication.Common
             {
                 if (IsConnected())
                 {
+                    SetNetworkTrafficState(NetworkTrafficState.Flowing);
+
+                    connectContinuously?.Dispose();
                     onConnected?.Invoke(outboundServerPeer);
                 }
             }
@@ -91,18 +89,16 @@ namespace ServerCommunication.Common
 
         public void Dispose()
         {
-            if (IsConnected())
-            {
-                Disconnect();
-            }
-
             connectContinuously?.Dispose();
         }
 
-        private void Disconnect()
+        public void Disconnect()
         {
-            outboundServerPeer.Disconnect();
-            outboundServerPeer = null;
+            if (IsConnected())
+            {
+                outboundServerPeer.Disconnect();
+                outboundServerPeer = null;
+            }
         }
 
         public bool IsConnected()

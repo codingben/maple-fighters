@@ -8,16 +8,20 @@ using JsonConfig;
 using PeerLogic.Common.Components.Interfaces;
 using ServerApplication.Common.ApplicationBase;
 using ServerCommunication.Common;
+using ServerCommunicationInterfaces;
 
 namespace GameServerProvider.Server.Common
 {
-    public class GameServerProviderService : ServiceBase<EmptyOperationCode, EmptyEventCode>
+    public class GameServerProviderService : ServiceBase
     {
-        private int connections;
+        private const int CONNECTIONS_UPDATE_TIME = 30;
+
         private readonly IPeerContainer peerContainer;
+        private int connections;
         private ICoroutine updateGameServerConnectionsContinuously;
 
-        private const int CONNECTIONS_UPDATE_TIME = 30;
+        private IOutboundServerPeerLogicBase commonServerAuthenticationPeerLogic;
+        private IOutboundServerPeerLogic outboundServerPeerLogic;
 
         public GameServerProviderService()
         {
@@ -25,23 +29,33 @@ namespace GameServerProvider.Server.Common
             connections = peerContainer.GetPeersCount();
         }
 
-        protected override void OnAuthenticated()
+        protected override void OnConnectionEstablished(IOutboundServerPeer outboundServerPeer)
         {
-            base.OnAuthenticated();
+            base.OnConnectionEstablished(outboundServerPeer);
 
+            var secretKey = GetSecretKey().AssertNotNull(MessageBuilder.Trace("Secret key not found."));
+            commonServerAuthenticationPeerLogic = outboundServerPeer.CreateCommonServerAuthenticationPeerLogic(secretKey, OnAuthenticated);
+            outboundServerPeerLogic = outboundServerPeer.CreateOutboundServerPeerLogic<ServerOperations, EmptyEventCode>();
+        }
+
+        protected override void OnConnectionClosed(DisconnectReason disconnectReason)
+        {
+            base.OnConnectionClosed(disconnectReason);
+
+            commonServerAuthenticationPeerLogic.Dispose();
+            outboundServerPeerLogic.Dispose();
+
+            updateGameServerConnectionsContinuously?.Dispose();
+        }
+
+        private void OnAuthenticated()
+        {
             LogUtils.Log(MessageBuilder.Trace("Authenticated with GameServerProvider service."));
 
             RegisterGameServer();
 
             var coroutinesManager = ServerComponents.GetComponent<ICoroutinesManager>().AssertNotNull();
             updateGameServerConnectionsContinuously = coroutinesManager.StartCoroutine(UpdateGameServerConnectionsContinuously());
-        }
-
-        protected override void OnDisconnected(DisconnectReason disconnectReason, string details)
-        {
-            base.OnDisconnected(disconnectReason, details);
-
-            updateGameServerConnectionsContinuously?.Dispose();
         }
 
         private IEnumerator<IYieldInstruction> UpdateGameServerConnectionsContinuously()
@@ -61,13 +75,13 @@ namespace GameServerProvider.Server.Common
         private void RegisterGameServer()
         {
             var parameters = GetGameServerDetailsParameters();
-            OutboundServerPeerLogic?.SendOperation((byte)ServerOperations.RegisterGameServer, parameters);
+            outboundServerPeerLogic.SendOperation((byte)ServerOperations.RegisterGameServer, parameters);
         }
 
         private void UpdateGameServerConnections()
         {
             var parameters = new UpdateGameServerConnectionsInfoRequestParameters(connections);
-            OutboundServerPeerLogic?.SendOperation((byte)ServerOperations.UpdateGameServerConnections, parameters);
+            outboundServerPeerLogic.SendOperation((byte)ServerOperations.UpdateGameServerConnections, parameters);
         }
 
         private RegisterGameServerRequestParameters GetGameServerDetailsParameters()
@@ -90,7 +104,7 @@ namespace GameServerProvider.Server.Common
             return new PeerConnectionInformation(ip, port);
         }
 
-        protected override string GetSecretKey()
+        private string GetSecretKey()
         {
             LogUtils.Assert(Config.Global.GameServerProviderService, MessageBuilder.Trace("Could not find a configuration for the GameServerProvider service."));
 

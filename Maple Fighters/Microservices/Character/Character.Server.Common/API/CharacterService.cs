@@ -6,39 +6,58 @@ using CommunicationHelper;
 using Game.Common;
 using JsonConfig;
 using ServerCommunication.Common;
+using ServerCommunicationInterfaces;
 
 namespace Character.Server.Common
 {
-    public class CharacterService : ServiceBase<CharacterOperations, EmptyEventCode>, ICharacterServiceAPI
+    public class CharacterService : ServiceBase, ICharacterServiceAPI
     {
-        protected override void OnAuthenticated()
-        {
-            base.OnAuthenticated();
+        private IOutboundServerPeerLogicBase commonServerAuthenticationPeerLogic;
+        private IOutboundServerPeerLogic outboundServerPeerLogic;
 
-            LogUtils.Log(MessageBuilder.Trace("Authenticated with Character service."));
+        protected override void OnConnectionEstablished(IOutboundServerPeer outboundServerPeer)
+        {
+            base.OnConnectionEstablished(outboundServerPeer);
+
+            var secretKey = GetSecretKey().AssertNotNull(MessageBuilder.Trace("Secret key not found."));
+            commonServerAuthenticationPeerLogic = outboundServerPeer.CreateCommonServerAuthenticationPeerLogic(secretKey, OnAuthenticated);
+            outboundServerPeerLogic = outboundServerPeer.CreateOutboundServerPeerLogic<CharacterOperations, EmptyEventCode>();
+        }
+
+        protected override void OnConnectionClosed(DisconnectReason disconnectReason)
+        {
+            base.OnConnectionClosed(disconnectReason);
+
+            commonServerAuthenticationPeerLogic.Dispose();
+            outboundServerPeerLogic.Dispose();
+        }
+
+        private void OnAuthenticated()
+        {
+            LogUtils.Log(MessageBuilder.Trace("Authenticated with CharacterService service."));
         }
 
         public Task<CreateCharacterResponseParameters> CreateCharacter(IYield yield, CreateCharacterRequestParametersEx parameters)
         {
-            return OutboundServerPeerLogic?.SendOperation<CreateCharacterRequestParametersEx, CreateCharacterResponseParameters>
+            return outboundServerPeerLogic.SendOperation<CreateCharacterRequestParametersEx, CreateCharacterResponseParameters>
                 (yield, (byte)CharacterOperations.CreateCharacter, parameters);
         }
 
         public Task<RemoveCharacterResponseParameters> RemoveCharacter(IYield yield, RemoveCharacterRequestParametersEx parameters)
         {
-            return OutboundServerPeerLogic?.SendOperation<RemoveCharacterRequestParametersEx, RemoveCharacterResponseParameters>
+            return outboundServerPeerLogic.SendOperation<RemoveCharacterRequestParametersEx, RemoveCharacterResponseParameters>
                 (yield, (byte)CharacterOperations.RemoveCharacter, parameters);
         }
 
         public Task<GetCharactersResponseParameters> GetCharacters(IYield yield, GetCharactersRequestParameters parameters)
         {
-            return OutboundServerPeerLogic?.SendOperation<GetCharactersRequestParameters, GetCharactersResponseParameters>
+            return outboundServerPeerLogic.SendOperation<GetCharactersRequestParameters, GetCharactersResponseParameters>
                 (yield, (byte)CharacterOperations.GetCharacters, parameters);
         }
 
         public Task<GetCharacterResponseParameters> GetCharacter(IYield yield, GetCharacterRequestParametersEx parameters)
         {
-            return OutboundServerPeerLogic?.SendOperation<GetCharacterRequestParametersEx, GetCharacterResponseParameters>
+            return outboundServerPeerLogic.SendOperation<GetCharacterRequestParametersEx, GetCharacterResponseParameters>
                 (yield, (byte)CharacterOperations.GetCharacter, parameters);
         }
 
@@ -51,7 +70,7 @@ namespace Character.Server.Common
             return new PeerConnectionInformation(ip, port);
         }
 
-        protected override string GetSecretKey()
+        private string GetSecretKey()
         {
             LogUtils.Assert(Config.Global.CharacterService, MessageBuilder.Trace("Could not find a configuration for the Character service."));
 

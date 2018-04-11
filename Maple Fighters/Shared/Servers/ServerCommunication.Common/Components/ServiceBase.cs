@@ -1,5 +1,4 @@
-﻿using System;
-using CommonCommunicationInterfaces;
+﻿using CommonCommunicationInterfaces;
 using CommonTools.Log;
 using ComponentModel.Common;
 using Components.Common.Interfaces;
@@ -8,114 +7,72 @@ using ServerCommunicationInterfaces;
 
 namespace ServerCommunication.Common
 {
-    public abstract class ServiceBase<TOperationCode, TEventCode> : Component
-        where TOperationCode : IComparable, IFormattable, IConvertible
-        where TEventCode : IComparable, IFormattable, IConvertible
+    public abstract class ServiceBase : IComponent
     {
-        protected IOutboundServerPeerLogic OutboundServerPeerLogic
-        {
-            get
-            {
-                if (outboundServerPeerLogic != null && serviceConnectorProvider != null)
-                {
-                    return outboundServerPeerLogic;
-                }
-
-                var peerDetails = GetPeerConnectionInformation();
-                LogUtils.Log($"An attempt to access outbound server peer logic but there is no initialized peer to: {peerDetails.Ip}:{peerDetails.Port}");
-                return null;
-            }
-        }
-        private IOutboundServerPeerLogic outboundServerPeerLogic;
-        private IOutboundServerPeerLogicBase serverAuthenticationPeerLogic;
-        private IServiceConnectorProvider serviceConnectorProvider;
-
+        private IServiceConnectionProvider serviceConnectionProvider;
         private bool disposed;
-        private bool isAuthenticated;
 
-        protected override void OnAwake()
+        public void Awake(IContainer components)
         {
-            base.OnAwake();
-
-            var coroutinesManager = Components.GetComponent<ICoroutinesManager>().AssertNotNull();
-            var serverConnectorProvider = Components.GetComponent<IServerConnectorProvider>().AssertNotNull();
-            serviceConnectorProvider = new ServiceConnectorProvider(coroutinesManager, serverConnectorProvider, OnConnected);
-            serviceConnectorProvider.Connect(GetPeerConnectionInformation());
+            var coroutinesManager = components.GetComponent<ICoroutinesManager>().AssertNotNull();
+            var serverConnectorProvider = components.GetComponent<IServerConnectorProvider>().AssertNotNull();
+            serviceConnectionProvider = new ServiceConnectionProvider(coroutinesManager, serverConnectorProvider, OnConnected);
+            serviceConnectionProvider.Connect(GetPeerConnectionInformation());
         }
 
-        protected override void OnDestroy()
+        public void Dispose()
         {
-            base.OnDestroy();
-
             disposed = true;
-            
-            serviceConnectorProvider?.Dispose();
-            serverAuthenticationPeerLogic?.Dispose();
-            outboundServerPeerLogic?.Dispose();
-        }
-        
-        private void Authenticated(IOutboundServerPeer outboundServerPeer)
-        {
-            serverAuthenticationPeerLogic.Dispose();
 
-            outboundServerPeerLogic = new OutboundServerPeerLogicBase<TOperationCode, TEventCode>(outboundServerPeer);
-            outboundServerPeerLogic.Initialize();
-
-            isAuthenticated = true;
-
-            OnAuthenticated();
-        }
-
-        protected virtual void OnAuthenticated()
-        {
-            // Left blank intentionally
+            serviceConnectionProvider?.Dispose();
+            serviceConnectionProvider?.Disconnect();
         }
 
         private void OnConnected(IOutboundServerPeer outboundServerPeer)
         {
-            var secretKey = GetSecretKey();
-            serverAuthenticationPeerLogic = new ServerAuthenticationPeerLogic(outboundServerPeer, secretKey, onAuthenticated: () => Authenticated(outboundServerPeer));
-            serverAuthenticationPeerLogic.Initialize();
-
             SubscribeToDisconnectionNotifier();
 
-            var peerConnectionInformation = GetPeerConnectionInformation();
-            LogUtils.Log($"A connection with {peerConnectionInformation.Ip}:{peerConnectionInformation.Port} has been established successfully.");
-
-            serviceConnectorProvider.SetNetworkTrafficState(NetworkTrafficState.Flowing);
+            OnConnectionEstablished(outboundServerPeer);
         }
 
-        protected virtual void OnDisconnected(DisconnectReason disconnectReason, string details)
+        private void OnDisconnected(DisconnectReason disconnectReason, string details)
         {
             UnsubscribeFromDisconnectionNotifier();
 
-            serviceConnectorProvider?.Dispose();
-            outboundServerPeerLogic?.Dispose();
-            serverAuthenticationPeerLogic?.Dispose();
-
-            var peerConnectionInformation = GetPeerConnectionInformation();
-            LogUtils.Log($"A connection with the server {peerConnectionInformation.Ip}:{peerConnectionInformation.Port} has been closed.");
-
-            if (!disposed && isAuthenticated)
-            {
-                serviceConnectorProvider.Connect(GetPeerConnectionInformation());
-            }
+            OnConnectionClosed(disconnectReason);
         }
 
         private void SubscribeToDisconnectionNotifier()
         {
-            serviceConnectorProvider.PeerDisconnectionNotifier.Disconnected += OnDisconnected;
+            serviceConnectionProvider.PeerDisconnectionNotifier.Disconnected += OnDisconnected;
         }
 
         private void UnsubscribeFromDisconnectionNotifier()
         {
-            if (serviceConnectorProvider.PeerDisconnectionNotifier != null)
+            if (serviceConnectionProvider.PeerDisconnectionNotifier != null)
             {
-                serviceConnectorProvider.PeerDisconnectionNotifier.Disconnected -= OnDisconnected;
+                serviceConnectionProvider.PeerDisconnectionNotifier.Disconnected -= OnDisconnected;
+            }
+        }
+
+        protected virtual void OnConnectionEstablished(IOutboundServerPeer outboundServerPeer)
+        {
+            var peerConnectionInformation = GetPeerConnectionInformation();
+            LogUtils.Log($"A connection with {peerConnectionInformation.Ip}:{peerConnectionInformation.Port} has been established successfully.");
+        }
+
+        protected virtual void OnConnectionClosed(DisconnectReason disconnectReason)
+        {
+            var peerConnectionInformation = GetPeerConnectionInformation();
+            LogUtils.Log($"A connection with the server {peerConnectionInformation.Ip}:{peerConnectionInformation.Port} has been closed.");
+
+            var isManuallyDisconnected = disconnectReason == DisconnectReason.ServerDisconnect; // For example, if a connection is not authenticated
+            if (!disposed && !isManuallyDisconnected)
+            {
+                serviceConnectionProvider.Connect(GetPeerConnectionInformation());
             }
         }
 
         protected abstract PeerConnectionInformation GetPeerConnectionInformation();
-        protected abstract string GetSecretKey();
     }
 }

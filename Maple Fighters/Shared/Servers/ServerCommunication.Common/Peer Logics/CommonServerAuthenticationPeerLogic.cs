@@ -9,14 +9,14 @@ using ServerCommunicationInterfaces;
 
 namespace ServerCommunication.Common
 {
-    public class ServerAuthenticationPeerLogic : OutboundServerPeerLogicBase<AuthenticationOperations, EmptyEventCode>
+    public class CommonServerAuthenticationPeerLogic : OutboundServerPeerLogicBase<AuthenticationOperations, EmptyEventCode>
     {
         private readonly string secretKey;
         private readonly Action onAuthenticated;
         private ICoroutine authenticationTask;
         private bool isAuthenticated;
 
-        public ServerAuthenticationPeerLogic(IOutboundServerPeer outboundServerPeer, string secretKey, Action onAuthenticated) 
+        public CommonServerAuthenticationPeerLogic(IOutboundServerPeer outboundServerPeer, string secretKey, Action onAuthenticated) 
             : base(outboundServerPeer)
         {
             this.secretKey = secretKey.AssertNotNull(MessageBuilder.Trace("Secret key not found."));
@@ -54,7 +54,7 @@ namespace ServerCommunication.Common
             if (responseParameters.Status == AuthenticationStatus.Succeed)
             {
                 isAuthenticated = true;
-                onAuthenticated.Invoke();
+                onAuthenticated?.Invoke();
             }
         }
     }

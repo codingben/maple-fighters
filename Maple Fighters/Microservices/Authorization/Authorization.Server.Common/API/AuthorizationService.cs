@@ -5,32 +5,51 @@ using CommonTools.Log;
 using CommunicationHelper;
 using JsonConfig;
 using ServerCommunication.Common;
+using ServerCommunicationInterfaces;
 
 namespace Authorization.Server.Common
 {
-    public class AuthorizationService : ServiceBase<AuthorizationOperations, EmptyEventCode>, IAuthorizationServiceAPI
+    public class AuthorizationService : ServiceBase, IAuthorizationServiceAPI
     {
-        protected override void OnAuthenticated()
-        {
-            base.OnAuthenticated();
+        private IOutboundServerPeerLogicBase commonServerAuthenticationPeerLogic;
+        private IOutboundServerPeerLogic outboundServerPeerLogic;
 
-            LogUtils.Log(MessageBuilder.Trace("Authenticated with Authorization service."));
+        protected override void OnConnectionEstablished(IOutboundServerPeer outboundServerPeer)
+        {
+            base.OnConnectionEstablished(outboundServerPeer);
+
+            var secretKey = GetSecretKey().AssertNotNull(MessageBuilder.Trace("Secret key not found."));
+            commonServerAuthenticationPeerLogic = outboundServerPeer.CreateCommonServerAuthenticationPeerLogic(secretKey, OnAuthenticated);
+            outboundServerPeerLogic = outboundServerPeer.CreateOutboundServerPeerLogic<AuthorizationOperations, EmptyEventCode>();
+        }
+
+        protected override void OnConnectionClosed(DisconnectReason disconnectReason)
+        {
+            base.OnConnectionClosed(disconnectReason);
+
+            commonServerAuthenticationPeerLogic.Dispose();
+            outboundServerPeerLogic.Dispose();
+        }
+
+        private void OnAuthenticated()
+        {
+            LogUtils.Log(MessageBuilder.Trace("Authenticated with AuthorizationService service."));
         }
 
         public void RemoveAuthorization(RemoveAuthorizationRequestParameters parameters)
         {
-            OutboundServerPeerLogic?.SendOperation((byte)AuthorizationOperations.RemoveAuthorization, parameters);
+            outboundServerPeerLogic.SendOperation((byte)AuthorizationOperations.RemoveAuthorization, parameters);
         }
 
         public Task<AuthorizeAccessTokenResponseParameters> AccessTokenAuthorization(IYield yield, AuthorizeAccesTokenRequestParameters parameters)
         {
-            return OutboundServerPeerLogic?.SendOperation<AuthorizeAccesTokenRequestParameters, AuthorizeAccessTokenResponseParameters>
+            return outboundServerPeerLogic.SendOperation<AuthorizeAccesTokenRequestParameters, AuthorizeAccessTokenResponseParameters>
                 (yield, (byte)AuthorizationOperations.AccessTokenAuthorization, parameters);
         }
 
         public Task<AuthorizeUserResponseParameters> UserAuthorization(IYield yield, AuthorizeUserRequestParameters parameters)
         {
-            return OutboundServerPeerLogic?.SendOperation<AuthorizeUserRequestParameters, AuthorizeUserResponseParameters>
+            return outboundServerPeerLogic.SendOperation<AuthorizeUserRequestParameters, AuthorizeUserResponseParameters>
                 (yield, (byte)AuthorizationOperations.UserAuthorization, parameters);
         }
 
@@ -43,7 +62,7 @@ namespace Authorization.Server.Common
             return new PeerConnectionInformation(ip, port);
         }
 
-        protected override string GetSecretKey()
+        private string GetSecretKey()
         {
             LogUtils.Assert(Config.Global.AuthorizationService, MessageBuilder.Trace("Could not find a configuration for the Authorization service."));
 

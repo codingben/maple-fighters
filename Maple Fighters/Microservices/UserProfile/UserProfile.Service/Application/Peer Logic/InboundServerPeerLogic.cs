@@ -16,6 +16,7 @@ namespace UserProfile.Service.Application.PeerLogic
         private IUsersContainer usersContainer;
         private IUserProfilePropertiesChangesNotifier userProfilePropertiesChangesNotifier;
         private readonly IDatabaseUserProfilePropertiesUpdater databaseUserProfilePropertiesUpdater;
+        private int serverId = -1;
 
         public InboundServerPeerLogic()
         {
@@ -30,7 +31,6 @@ namespace UserProfile.Service.Application.PeerLogic
             AddComponents();
 
             AddHandlerForRegisterToUserProfileServiceOperation();
-            AddHandlerForUnregisterFromUserProfileServiceOperation();
             AddHandlerForChangeUserProfilePropertiesOperation();
             AddHandlerForSubscribeToUserProfileOperation();
             AddHandlerForUnsubscribeFromUserProfileOperation();
@@ -50,13 +50,7 @@ namespace UserProfile.Service.Application.PeerLogic
 
         private void AddHandlerForRegisterToUserProfileServiceOperation()
         {
-            var peerId = ClientPeerWrapper.PeerId;
-            OperationHandlerRegister.SetHandler(UserProfileOperations.Register, new RegisterToUserProfileServiceOperationHandler(peerId));
-        }
-
-        private void AddHandlerForUnregisterFromUserProfileServiceOperation()
-        {
-            OperationHandlerRegister.SetHandler(UserProfileOperations.Unregister, new UnregisterFromUserProfileServiceOperationHandler());
+            OperationHandlerRegister.SetHandler(UserProfileOperations.Register, new RegisterToUserProfileServiceOperationHandler(OnRegisterToUserProfileService));
         }
 
         private void AddHandlerForSubscribeToUserProfileOperation()
@@ -79,15 +73,36 @@ namespace UserProfile.Service.Application.PeerLogic
             ClientPeerWrapper.Peer.PeerDisconnectionNotifier.Disconnected -= OnDisconnected;
         }
 
+        private void OnRegisterToUserProfileService(int id)
+        {
+            serverId = id;
+
+            var serverIdToPeerIdConverter = ServerComponents.GetComponent<IServerIdToPeerIdConverter>().AssertNotNull();
+            serverIdToPeerIdConverter.Add(serverId, ClientPeerWrapper.PeerId);
+        }
+
+        private void UnregisterFromUserProfileService()
+        {
+            var serverIdToPeerIdConverter = ServerComponents.GetComponent<IServerIdToPeerIdConverter>().AssertNotNull();
+            serverIdToPeerIdConverter.Remove(serverId);
+        }
+
         private void OnDisconnected(DisconnectReason reason, string details)
         {
             UnsubscribeFromDisconnectionNotifier();
+
+            if (serverId != 0)
+            {
+                UnregisterFromUserProfileService();
+            }
+
             HandleUnexpectedShutdown();
         }
 
         private void HandleUnexpectedShutdown()
         {
-            foreach (var userId in usersContainer.Get())
+            var users = usersContainer.Get();
+            foreach (var userId in users)
             {
                 databaseUserProfilePropertiesUpdater.Update(userId, default(int), ServerType.Login, ConnectionStatus.Disconnected);
 

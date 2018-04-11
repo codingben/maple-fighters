@@ -88,7 +88,6 @@
     <Compile Include="Application\Peer Logic\Operations\ChangeUserProfilePropertiesOperationHandler.cs" />
     <Compile Include="Application\Peer Logic\Operations\SubscribeToUserProfileOperationHandler.cs" />
     <Compile Include="Application\Peer Logic\Operations\UnsubscribeFromUserProfileOperationHandler.cs" />
-    <Compile Include="Application\Peer Logic\Operations\UnregisterFromUserProfileServiceOperationHandler.cs" />
     <Compile Include="Application\Peer Logic\Operations\RegisterToUserProfileServiceOperationHandler.cs" />
     <Compile Include="Application\UserProfileServiceApplication.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

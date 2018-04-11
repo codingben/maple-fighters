@@ -1,28 +1,23 @@
-﻿using CommonCommunicationInterfaces;
-using CommonTools.Log;
-using ServerApplication.Common.ApplicationBase;
+﻿using System;
+using CommonCommunicationInterfaces;
 using ServerCommunicationHelper;
 using UserProfile.Server.Common;
-using UserProfile.Service.Application.Components.Interfaces;
 
 namespace UserProfile.Service.Application.PeerLogic.Operations
 {
     internal class RegisterToUserProfileServiceOperationHandler : IOperationRequestHandler<RegisterToUserProfileServiceRequestParameters, EmptyParameters>
     {
-        private readonly int peerId;
-        private readonly IServerIdToPeerIdConverter serverIdToPeerIdConverter;
+        private readonly Action<int> onRegistered;
 
-        public RegisterToUserProfileServiceOperationHandler(int peerId)
+        public RegisterToUserProfileServiceOperationHandler(Action<int> onRegistered)
         {
-            this.peerId = peerId;
-
-            serverIdToPeerIdConverter = ServerComponents.GetComponent<IServerIdToPeerIdConverter>().AssertNotNull();
+            this.onRegistered = onRegistered;
         }
 
         public EmptyParameters? Handle(MessageData<RegisterToUserProfileServiceRequestParameters> messageData, ref MessageSendOptions sendOptions)
         {
             var serverId = messageData.Parameters.ServerId;
-            serverIdToPeerIdConverter.Add(serverId, peerId);
+            onRegistered?.Invoke(serverId);
             return null;
         }
     }

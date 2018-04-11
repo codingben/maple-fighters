@@ -6,14 +6,17 @@ using JsonConfig;
 using PeerLogic.Common.Components.Interfaces;
 using ServerApplication.Common.ApplicationBase;
 using ServerCommunication.Common;
+using ServerCommunicationInterfaces;
 
 namespace UserProfile.Server.Common
 {
-    public class UserProfileService : ServiceBase<UserProfileOperations, UserProfileEvents>, IUserProfileServiceAPI
+    public class UserProfileService : ServiceBase, IUserProfileServiceAPI
     {
         private readonly int serverId;
         private readonly IPeerContainer peerContainer;
         private readonly IUserIdToPeerIdConverter userIdToPeerIdConverter;
+        private IOutboundServerPeerLogicBase commonServerAuthenticationPeerLogic;
+        private IOutboundServerPeerLogic outboundServerPeerLogic;
 
         public UserProfileService()
         {
@@ -24,33 +27,44 @@ namespace UserProfile.Server.Common
             userIdToPeerIdConverter = ServerComponents.AddComponent(new UserIdToPeerIdConverter());
         }
 
-        protected override void OnAuthenticated()
+        protected override void OnConnectionEstablished(IOutboundServerPeer outboundServerPeer)
         {
-            base.OnAuthenticated();
+            base.OnConnectionEstablished(outboundServerPeer);
 
+            var secretKey = GetSecretKey().AssertNotNull(MessageBuilder.Trace("Secret key not found."));
+            commonServerAuthenticationPeerLogic = outboundServerPeer.CreateCommonServerAuthenticationPeerLogic(secretKey, OnAuthenticated);
+            outboundServerPeerLogic = outboundServerPeer.CreateOutboundServerPeerLogic<UserProfileOperations, UserProfileEvents>();
+
+            SubscribeToUserPropertiesChanges();
+        }
+
+        protected override void OnConnectionClosed(DisconnectReason disconnectReason)
+        {
+            base.OnConnectionClosed(disconnectReason);
+
+            commonServerAuthenticationPeerLogic.Dispose();
+            outboundServerPeerLogic.Dispose();
+
+            UnsubscribeFromUserPropertiesChanges();
+        }
+
+        private void OnAuthenticated()
+        {
             LogUtils.Log(MessageBuilder.Trace("Authenticated with UserProfile service."));
 
             SubscribeToUserPropertiesChanges();
             RegisterToUserProfileService();
         }
 
-        protected override void OnDisconnected(DisconnectReason disconnectReason, string details)
-        {
-            base.OnDisconnected(disconnectReason, details);
-
-            UnsubscribeFromUserPropertiesChanges();
-            UnregisterFromUserProfileService();
-        }
-
         private void SubscribeToUserPropertiesChanges()
         {
             Action<UserProfilePropertiesChangedEventParameters> action = OnUserProfilePropertiesChanged;
-            OutboundServerPeerLogic?.SetEventHandler((byte)UserProfileEvents.UserProfilePropertiesChanged, action);
+            outboundServerPeerLogic.SetEventHandler((byte)UserProfileEvents.UserProfilePropertiesChanged, action);
         }
 
         private void UnsubscribeFromUserPropertiesChanges()
         {
-            OutboundServerPeerLogic?.RemoveEventHandler((byte)UserProfileEvents.UserProfilePropertiesChanged);
+            outboundServerPeerLogic.RemoveEventHandler((byte)UserProfileEvents.UserProfilePropertiesChanged);
         }
 
         private void OnUserProfilePropertiesChanged(UserProfilePropertiesChangedEventParameters parameters)
@@ -76,30 +90,24 @@ namespace UserProfile.Server.Common
         private void RegisterToUserProfileService()
         {
             var parameters = new RegisterToUserProfileServiceRequestParameters(serverId);
-            OutboundServerPeerLogic?.SendOperation((byte)UserProfileOperations.Register, parameters);
-        }
-
-        private void UnregisterFromUserProfileService()
-        {
-            var parameters = new UnregisterFromUserProfileServiceRequestParameters(serverId);
-            OutboundServerPeerLogic?.SendOperation((byte)UserProfileOperations.Unregister, parameters);
+            outboundServerPeerLogic.SendOperation((byte)UserProfileOperations.Register, parameters);
         }
 
         public void ChangeUserProfileProperties(ChangeUserProfilePropertiesRequestParameters parameters)
         {
-            OutboundServerPeerLogic?.SendOperation((byte)UserProfileOperations.ChangeUserProfileProperties, parameters);
+            outboundServerPeerLogic.SendOperation((byte)UserProfileOperations.ChangeUserProfileProperties, parameters);
         }
 
         public void SubscribeToUserProfile(int userId)
         {
             var parameters = new SubscribeToUserProfileRequestParameters(userId, serverId);
-            OutboundServerPeerLogic?.SendOperation((byte)UserProfileOperations.Subscribe, parameters);
+            outboundServerPeerLogic.SendOperation((byte)UserProfileOperations.Subscribe, parameters);
         }
 
         public void UnsubscribeFromUserProfile(int userId)
         {
             var parameters = new UnsubscribeFromUserProfileRequestParameters(userId, serverId);
-            OutboundServerPeerLogic?.SendOperation((byte)UserProfileOperations.Unsubscribe, parameters);
+            outboundServerPeerLogic.SendOperation((byte)UserProfileOperations.Unsubscribe, parameters);
         }
 
         protected override PeerConnectionInformation GetPeerConnectionInformation()
@@ -111,7 +119,7 @@ namespace UserProfile.Server.Common
             return new PeerConnectionInformation(ip, port);
         }
 
-        protected override string GetSecretKey()
+        private string GetSecretKey()
         {
             LogUtils.Assert(Config.Global.UserProfileService, MessageBuilder.Trace("Could not find a configuration for the UserProfile service."));
 
