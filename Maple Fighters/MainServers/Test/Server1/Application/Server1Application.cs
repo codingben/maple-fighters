@@ -39,7 +39,7 @@ namespace Server1
 
         private IEnumerator<IYieldInstruction> Server2Service()
         {
-            yield return new WaitForSeconds(10);
+            yield return new WaitForSeconds(15);
 
             var server2Service = ServerComponents.GetComponent<IServer2ServiceAPI>().AssertNotNull();
             var coroutinesExecutor = ServerComponents.GetComponent<ICoroutinesManager>().AssertNotNull();

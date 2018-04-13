@@ -5,7 +5,6 @@ using CommonTools.Coroutines;
 using CommonTools.Log;
 using JsonConfig;
 using ServerCommunication.Common;
-using ServerCommunicationInterfaces;
 
 namespace Server2.Common
 {
@@ -15,11 +14,11 @@ namespace Server2.Common
 
         private IOutboundServerPeerLogic outboundServerPeerLogic;
 
-        protected override void OnConnectionEstablished(IOutboundServerPeer outboundServerPeer)
+        protected override void OnConnectionEstablished()
         {
-            base.OnConnectionEstablished(outboundServerPeer);
+            base.OnConnectionEstablished();
 
-            outboundServerPeerLogic = outboundServerPeer.CreateOutboundServerPeerLogic<ServerOperations, ServerEvents>();
+            outboundServerPeerLogic = OutboundServerPeer.CreateOutboundServerPeerLogic<ServerOperations, ServerEvents>();
             outboundServerPeerLogic.SetEventHandler((byte)ServerEvents.Server1Event, TestAction);
         }
 

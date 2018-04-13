@@ -9,7 +9,9 @@ namespace ServerCommunication.Common
             where TOperationCode : IComparable, IFormattable, IConvertible
             where TEventCode : IComparable, IFormattable, IConvertible
         {
-            return new OutboundServerPeerLogicBase<TOperationCode, TEventCode>(outboundServerPeer);
+            IOutboundServerPeerLogic outboundServerPeerLogicBase = new OutboundServerPeerLogicBase<TOperationCode, TEventCode>(outboundServerPeer);
+            outboundServerPeerLogicBase.Initialize();
+            return outboundServerPeerLogicBase;
         }
 
         public static IOutboundServerPeerLogicBase CreateCommonServerAuthenticationPeerLogic(this IOutboundServerPeer outboundServerPeer, 

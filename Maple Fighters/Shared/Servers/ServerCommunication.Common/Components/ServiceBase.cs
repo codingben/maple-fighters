@@ -9,6 +9,7 @@ namespace ServerCommunication.Common
 {
     public abstract class ServiceBase : IComponent
     {
+        protected IOutboundServerPeer OutboundServerPeer { get; private set; }
         private IServiceConnectionProvider serviceConnectionProvider;
         private bool disposed;
 
@@ -30,9 +31,11 @@ namespace ServerCommunication.Common
 
         private void OnConnected(IOutboundServerPeer outboundServerPeer)
         {
+            OutboundServerPeer = outboundServerPeer;
+
             SubscribeToDisconnectionNotifier();
 
-            OnConnectionEstablished(outboundServerPeer);
+            OnConnectionEstablished();
         }
 
         private void OnDisconnected(DisconnectReason disconnectReason, string details)
@@ -55,7 +58,7 @@ namespace ServerCommunication.Common
             }
         }
 
-        protected virtual void OnConnectionEstablished(IOutboundServerPeer outboundServerPeer)
+        protected virtual void OnConnectionEstablished()
         {
             var peerConnectionInformation = GetPeerConnectionInformation();
             LogUtils.Log($"A connection with {peerConnectionInformation.Ip}:{peerConnectionInformation.Port} has been established successfully.");

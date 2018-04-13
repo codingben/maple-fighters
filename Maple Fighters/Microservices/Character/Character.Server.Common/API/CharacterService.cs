@@ -6,7 +6,6 @@ using CommunicationHelper;
 using Game.Common;
 using JsonConfig;
 using ServerCommunication.Common;
-using ServerCommunicationInterfaces;
 
 namespace Character.Server.Common
 {
@@ -15,13 +14,12 @@ namespace Character.Server.Common
         private IOutboundServerPeerLogicBase commonServerAuthenticationPeerLogic;
         private IOutboundServerPeerLogic outboundServerPeerLogic;
 
-        protected override void OnConnectionEstablished(IOutboundServerPeer outboundServerPeer)
+        protected override void OnConnectionEstablished()
         {
-            base.OnConnectionEstablished(outboundServerPeer);
+            base.OnConnectionEstablished();
 
             var secretKey = GetSecretKey().AssertNotNull(MessageBuilder.Trace("Secret key not found."));
-            commonServerAuthenticationPeerLogic = outboundServerPeer.CreateCommonServerAuthenticationPeerLogic(secretKey, OnAuthenticated);
-            outboundServerPeerLogic = outboundServerPeer.CreateOutboundServerPeerLogic<CharacterOperations, EmptyEventCode>();
+            commonServerAuthenticationPeerLogic = OutboundServerPeer.CreateCommonServerAuthenticationPeerLogic(secretKey, OnAuthenticated);
         }
 
         protected override void OnConnectionClosed(DisconnectReason disconnectReason)
@@ -29,11 +27,14 @@ namespace Character.Server.Common
             base.OnConnectionClosed(disconnectReason);
 
             commonServerAuthenticationPeerLogic.Dispose();
-            outboundServerPeerLogic.Dispose();
+            outboundServerPeerLogic?.Dispose();
         }
 
         private void OnAuthenticated()
         {
+            commonServerAuthenticationPeerLogic.Dispose();
+            outboundServerPeerLogic = OutboundServerPeer.CreateOutboundServerPeerLogic<CharacterOperations, EmptyEventCode>();
+
             LogUtils.Log(MessageBuilder.Trace("Authenticated with CharacterService service."));
         }
 

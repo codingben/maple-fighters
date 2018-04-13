@@ -6,7 +6,6 @@ using JsonConfig;
 using PeerLogic.Common.Components.Interfaces;
 using ServerApplication.Common.ApplicationBase;
 using ServerCommunication.Common;
-using ServerCommunicationInterfaces;
 
 namespace UserProfile.Server.Common
 {
@@ -27,15 +26,12 @@ namespace UserProfile.Server.Common
             userIdToPeerIdConverter = ServerComponents.AddComponent(new UserIdToPeerIdConverter());
         }
 
-        protected override void OnConnectionEstablished(IOutboundServerPeer outboundServerPeer)
+        protected override void OnConnectionEstablished()
         {
-            base.OnConnectionEstablished(outboundServerPeer);
+            base.OnConnectionEstablished();
 
             var secretKey = GetSecretKey().AssertNotNull(MessageBuilder.Trace("Secret key not found."));
-            commonServerAuthenticationPeerLogic = outboundServerPeer.CreateCommonServerAuthenticationPeerLogic(secretKey, OnAuthenticated);
-            outboundServerPeerLogic = outboundServerPeer.CreateOutboundServerPeerLogic<UserProfileOperations, UserProfileEvents>();
-
-            SubscribeToUserPropertiesChanges();
+            commonServerAuthenticationPeerLogic = OutboundServerPeer.CreateCommonServerAuthenticationPeerLogic(secretKey, OnAuthenticated);
         }
 
         protected override void OnConnectionClosed(DisconnectReason disconnectReason)
@@ -43,13 +39,16 @@ namespace UserProfile.Server.Common
             base.OnConnectionClosed(disconnectReason);
 
             commonServerAuthenticationPeerLogic.Dispose();
-            outboundServerPeerLogic.Dispose();
+            outboundServerPeerLogic?.Dispose();
 
             UnsubscribeFromUserPropertiesChanges();
         }
 
         private void OnAuthenticated()
         {
+            commonServerAuthenticationPeerLogic.Dispose();
+            outboundServerPeerLogic = OutboundServerPeer.CreateOutboundServerPeerLogic<UserProfileOperations, UserProfileEvents>();
+
             LogUtils.Log(MessageBuilder.Trace("Authenticated with UserProfile service."));
 
             SubscribeToUserPropertiesChanges();

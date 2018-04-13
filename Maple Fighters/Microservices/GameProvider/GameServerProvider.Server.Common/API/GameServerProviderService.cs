@@ -29,13 +29,12 @@ namespace GameServerProvider.Server.Common
             connections = peerContainer.GetPeersCount();
         }
 
-        protected override void OnConnectionEstablished(IOutboundServerPeer outboundServerPeer)
+        protected override void OnConnectionEstablished()
         {
-            base.OnConnectionEstablished(outboundServerPeer);
+            base.OnConnectionEstablished();
 
             var secretKey = GetSecretKey().AssertNotNull(MessageBuilder.Trace("Secret key not found."));
-            commonServerAuthenticationPeerLogic = outboundServerPeer.CreateCommonServerAuthenticationPeerLogic(secretKey, OnAuthenticated);
-            outboundServerPeerLogic = outboundServerPeer.CreateOutboundServerPeerLogic<ServerOperations, EmptyEventCode>();
+            commonServerAuthenticationPeerLogic = OutboundServerPeer.CreateCommonServerAuthenticationPeerLogic(secretKey, OnAuthenticated);
         }
 
         protected override void OnConnectionClosed(DisconnectReason disconnectReason)
@@ -43,13 +42,16 @@ namespace GameServerProvider.Server.Common
             base.OnConnectionClosed(disconnectReason);
 
             commonServerAuthenticationPeerLogic.Dispose();
-            outboundServerPeerLogic.Dispose();
+            outboundServerPeerLogic?.Dispose();
 
             updateGameServerConnectionsContinuously?.Dispose();
         }
 
         private void OnAuthenticated()
         {
+            commonServerAuthenticationPeerLogic.Dispose();
+            outboundServerPeerLogic = OutboundServerPeer.CreateOutboundServerPeerLogic<ServerOperations, EmptyEventCode>();
+
             LogUtils.Log(MessageBuilder.Trace("Authenticated with GameServerProvider service."));
 
             RegisterGameServer();
