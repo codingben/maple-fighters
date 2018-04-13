@@ -17,9 +17,9 @@ namespace Scripts.Services
         private IEventHandlerRegister<TEventCode> eventHandlerRegister;
         private IOperationResponseSubscriptionProvider subscriptionProvider;
 
-        public void Initialize(IServerPeer serverPeer)
+        public void Initialize(IServerPeer peer)
         {
-            this.serverPeer = serverPeer;
+            serverPeer = peer;
 
             var networkConfiguration = NetworkConfiguration.GetInstance();
             operationRequestSender = new OperationRequestSender<TOperationCode>(serverPeer.OperationRequestSender, networkConfiguration.LogOperationsRequest);

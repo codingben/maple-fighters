@@ -1,5 +1,6 @@
 ﻿using System;
 using CommonTools.Log;
+using PhotonClientImplementation;
 
 namespace Scripts.Services
 {
@@ -20,18 +21,11 @@ namespace Scripts.Services
             where TOperationCode : IComparable, IFormattable, IConvertible
             where TEventCode : IComparable, IFormattable, IConvertible
         {
-            if (ServiceConnectionHandler.ServerPeer == null)
-            {
-                var peerLogicName = typeof(T).Name;
-                LogUtils.Log($"There is no connection to a server. Peer Logic: {peerLogicName}");
-                return;
-            }
-
             peerLogicBase?.Dispose();
             serverPeerHandler?.Dispose();
 
             var peerHandler = new ServerPeerHandler<TOperationCode, TEventCode>();
-            peerHandler.Initialize(ServiceConnectionHandler.ServerPeer);
+            peerHandler.Initialize(ServiceConnectionHandler.ServerPeer ?? new PhotonPeer());
             serverPeerHandler = peerHandler;
 
             peerLogicBase = new T();

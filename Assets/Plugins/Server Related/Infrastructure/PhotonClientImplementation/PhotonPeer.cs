@@ -11,11 +11,14 @@ namespace PhotonClientImplementation
     {
         public ExitGames.Client.Photon.PhotonPeer RawPeer { get; }
 
-        public bool IsConnected => RawPeer.PeerState == PeerStateValue.Connected;
+        public bool IsConnected => RawPeer?.PeerState == PeerStateValue.Connected;
 
         public NetworkTrafficState NetworkTrafficState
         {
-            get { return networkTrafficState; }
+            get
+            {
+                return networkTrafficState;
+            }
             set
             {
                 if (networkTrafficState == NetworkTrafficState.Paused && value == NetworkTrafficState.Flowing)
@@ -74,6 +77,11 @@ namespace PhotonClientImplementation
 
         private NetworkTrafficState networkTrafficState;
 
+        public PhotonPeer()
+        {
+            // Left blank intentionally
+        }
+
         public PhotonPeer(PeerConnectionInformation serverConnectionInformation,
             ConnectionProtocol connectionProtocol, DebugLevel debugLevel, ICoroutinesExecutor coroutinesExecuter)
         {
@@ -83,14 +91,14 @@ namespace PhotonClientImplementation
 
             RawPeer = new ExitGames.Client.Photon.PhotonPeer(this, connectionProtocol) { ChannelCount = 4 };
 
-#if UNITY_WEBGL || UNITY_XBOXONE || WEBSOCKET
+            #if UNITY_WEBGL || UNITY_XBOXONE || WEBSOCKET
             if (connectionProtocol == ConnectionProtocol.WebSocket ||
                 connectionProtocol == ConnectionProtocol.WebSocketSecure)
             {
                 var websocketType = typeof(SocketWebTcpCoroutine);
                 RawPeer.SocketImplementationConfig[ConnectionProtocol.WebSocket] = websocketType;
             }
-#endif 
+            #endif 
 
             RawPeer.DebugOut = debugLevel;
 
@@ -200,16 +208,22 @@ namespace PhotonClientImplementation
             switch (statusCode)
             {
                 case StatusCode.Disconnect:
+                {
                     Disconnected?.Invoke(DisconnectReason.ManagedDisconnect, null);
                     break;
+                }
                 case StatusCode.TimeoutDisconnect:
+                {
                     Disconnected?.Invoke(DisconnectReason.TimeoutDisconnect, null);
                     break;
+                }
                 case StatusCode.DisconnectByServer:
                 case StatusCode.DisconnectByServerUserLimit:
                 case StatusCode.DisconnectByServerLogic:
+                {
                     Disconnected?.Invoke(DisconnectReason.ServerDisconnect, statusCode.ToString());
                     break;
+                }
             }
 
             StatusChanged?.Invoke(statusCode);

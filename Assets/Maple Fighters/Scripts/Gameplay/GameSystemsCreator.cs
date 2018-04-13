@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Game.Common;
 using Scripts.Containers;
 using Scripts.Gameplay.Actors;
 using Scripts.Services;
@@ -32,6 +33,10 @@ namespace Scripts.Gameplay
             if (ServiceContainer.GameService.ServiceConnectionHandler.IsConnected())
             {
                 yield return typeof(EnterSceneInvoker);
+            }
+            else
+            {
+                ServiceContainer.GameService.SetPeerLogic<GameScenePeerLogic, GameOperations, GameEvents>();
             }
         }
 
