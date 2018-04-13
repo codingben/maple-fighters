@@ -56,8 +56,8 @@ namespace Scripts.UI.Windows
             {
                 var gameServerButton = UserInterfaceContainer.Instance.Add<ClickableGameServerButton>(ViewType.Foreground, Index.Last, this.gameServerList);
                 gameServerButton.ServerName = gameServer.Name;
-                gameServerButton.Connections = gameServer.Connections;
                 gameServerButton.MaxConnections = gameServer.MaxConnections;
+                gameServerButton.Connections = gameServer.Connections;
                 gameServerButton.ServerButtonClicked += () => OnGameServerButtonClicked(gameServer.Name);
 
                 gameServerButtons.Add(gameServer.Name, gameServerButton);
