@@ -9,7 +9,7 @@ namespace Authorization.Server.Common
         public int UserId;
         public AuthorizationStatus Status;
 
-        public AuthorizeAccessTokenResponseParameters(int userId, AuthorizationStatus status)
+        public AuthorizeAccessTokenResponseParameters(int userId, AuthorizationStatus status = AuthorizationStatus.Failed)
         {
             UserId = userId;
             Status = status;

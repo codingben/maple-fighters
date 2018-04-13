@@ -8,7 +8,6 @@ using JsonConfig;
 using PeerLogic.Common.Components.Interfaces;
 using ServerApplication.Common.ApplicationBase;
 using ServerCommunication.Common;
-using ServerCommunicationInterfaces;
 
 namespace GameServerProvider.Server.Common
 {
@@ -20,7 +19,6 @@ namespace GameServerProvider.Server.Common
         private int connections;
         private ICoroutine updateGameServerConnectionsContinuously;
 
-        private IOutboundServerPeerLogicBase commonServerAuthenticationPeerLogic;
         private IOutboundServerPeerLogic outboundServerPeerLogic;
 
         public GameServerProviderService()
@@ -34,22 +32,20 @@ namespace GameServerProvider.Server.Common
             base.OnConnectionEstablished();
 
             var secretKey = GetSecretKey().AssertNotNull(MessageBuilder.Trace("Secret key not found."));
-            commonServerAuthenticationPeerLogic = OutboundServerPeer.CreateCommonServerAuthenticationPeerLogic(secretKey, OnAuthenticated);
+            outboundServerPeerLogic = OutboundServerPeer.CreateCommonServerAuthenticationPeerLogic(secretKey, OnAuthenticated);
         }
 
         protected override void OnConnectionClosed(DisconnectReason disconnectReason)
         {
             base.OnConnectionClosed(disconnectReason);
 
-            commonServerAuthenticationPeerLogic.Dispose();
-            outboundServerPeerLogic?.Dispose();
-
+            outboundServerPeerLogic.Dispose();
             updateGameServerConnectionsContinuously?.Dispose();
         }
 
         private void OnAuthenticated()
         {
-            commonServerAuthenticationPeerLogic.Dispose();
+            outboundServerPeerLogic.Dispose();
             outboundServerPeerLogic = OutboundServerPeer.CreateOutboundServerPeerLogic<ServerOperations, EmptyEventCode>();
 
             LogUtils.Log(MessageBuilder.Trace("Authenticated with GameServerProvider service."));
@@ -77,13 +73,13 @@ namespace GameServerProvider.Server.Common
         private void RegisterGameServer()
         {
             var parameters = GetGameServerDetailsParameters();
-            outboundServerPeerLogic.SendOperation((byte)ServerOperations.RegisterGameServer, parameters);
+            outboundServerPeerLogic?.SendOperation((byte)ServerOperations.RegisterGameServer, parameters);
         }
 
         private void UpdateGameServerConnections()
         {
             var parameters = new UpdateGameServerConnectionsInfoRequestParameters(connections);
-            outboundServerPeerLogic.SendOperation((byte)ServerOperations.UpdateGameServerConnections, parameters);
+            outboundServerPeerLogic?.SendOperation((byte)ServerOperations.UpdateGameServerConnections, parameters);
         }
 
         private RegisterGameServerRequestParameters GetGameServerDetailsParameters()

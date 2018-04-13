@@ -31,6 +31,11 @@ namespace Server2.Common
 
         public Task<Server1OperationResponseParameters> Server1Operation(IYield yield, Server1OperationRequestParameters parameters)
         {
+            if (outboundServerPeerLogic == null)
+            {
+                return Task.FromResult(new Server1OperationResponseParameters());
+            }
+
             return outboundServerPeerLogic.SendOperation<Server1OperationRequestParameters, Server1OperationResponseParameters>
                 (yield, (byte)ServerOperations.Server1Operation, parameters);
         }

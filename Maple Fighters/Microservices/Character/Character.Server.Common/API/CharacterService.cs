@@ -11,7 +11,6 @@ namespace Character.Server.Common
 {
     public class CharacterService : ServiceBase, ICharacterServiceAPI
     {
-        private IOutboundServerPeerLogicBase commonServerAuthenticationPeerLogic;
         private IOutboundServerPeerLogic outboundServerPeerLogic;
 
         protected override void OnConnectionEstablished()
@@ -19,20 +18,19 @@ namespace Character.Server.Common
             base.OnConnectionEstablished();
 
             var secretKey = GetSecretKey().AssertNotNull(MessageBuilder.Trace("Secret key not found."));
-            commonServerAuthenticationPeerLogic = OutboundServerPeer.CreateCommonServerAuthenticationPeerLogic(secretKey, OnAuthenticated);
+            outboundServerPeerLogic = OutboundServerPeer.CreateCommonServerAuthenticationPeerLogic(secretKey, OnAuthenticated);
         }
 
         protected override void OnConnectionClosed(DisconnectReason disconnectReason)
         {
             base.OnConnectionClosed(disconnectReason);
 
-            commonServerAuthenticationPeerLogic.Dispose();
-            outboundServerPeerLogic?.Dispose();
+            outboundServerPeerLogic.Dispose();
         }
 
         private void OnAuthenticated()
         {
-            commonServerAuthenticationPeerLogic.Dispose();
+            outboundServerPeerLogic.Dispose();
             outboundServerPeerLogic = OutboundServerPeer.CreateOutboundServerPeerLogic<CharacterOperations, EmptyEventCode>();
 
             LogUtils.Log(MessageBuilder.Trace("Authenticated with CharacterService service."));
@@ -40,24 +38,44 @@ namespace Character.Server.Common
 
         public Task<CreateCharacterResponseParameters> CreateCharacter(IYield yield, CreateCharacterRequestParametersEx parameters)
         {
+            if (outboundServerPeerLogic == null)
+            {
+                return Task.FromResult(new CreateCharacterResponseParameters());
+            }
+
             return outboundServerPeerLogic.SendOperation<CreateCharacterRequestParametersEx, CreateCharacterResponseParameters>
                 (yield, (byte)CharacterOperations.CreateCharacter, parameters);
         }
 
         public Task<RemoveCharacterResponseParameters> RemoveCharacter(IYield yield, RemoveCharacterRequestParametersEx parameters)
         {
+            if (outboundServerPeerLogic == null)
+            {
+                return Task.FromResult(new RemoveCharacterResponseParameters());
+            }
+
             return outboundServerPeerLogic.SendOperation<RemoveCharacterRequestParametersEx, RemoveCharacterResponseParameters>
                 (yield, (byte)CharacterOperations.RemoveCharacter, parameters);
         }
 
         public Task<GetCharactersResponseParameters> GetCharacters(IYield yield, GetCharactersRequestParameters parameters)
         {
+            if (outboundServerPeerLogic == null)
+            {
+                return Task.FromResult(new GetCharactersResponseParameters());
+            }
+
             return outboundServerPeerLogic.SendOperation<GetCharactersRequestParameters, GetCharactersResponseParameters>
                 (yield, (byte)CharacterOperations.GetCharacters, parameters);
         }
 
         public Task<GetCharacterResponseParameters> GetCharacter(IYield yield, GetCharacterRequestParametersEx parameters)
         {
+            if (outboundServerPeerLogic == null)
+            {
+                return Task.FromResult(new GetCharacterResponseParameters());
+            }
+
             return outboundServerPeerLogic.SendOperation<GetCharacterRequestParametersEx, GetCharacterResponseParameters>
                 (yield, (byte)CharacterOperations.GetCharacter, parameters);
         }

@@ -9,15 +9,15 @@ namespace ServerCommunication.Common
             where TOperationCode : IComparable, IFormattable, IConvertible
             where TEventCode : IComparable, IFormattable, IConvertible
         {
-            IOutboundServerPeerLogic outboundServerPeerLogicBase = new OutboundServerPeerLogicBase<TOperationCode, TEventCode>(outboundServerPeer);
+            var outboundServerPeerLogicBase = new OutboundServerPeerLogicBase<TOperationCode, TEventCode>(outboundServerPeer);
             outboundServerPeerLogicBase.Initialize();
             return outboundServerPeerLogicBase;
         }
 
-        public static IOutboundServerPeerLogicBase CreateCommonServerAuthenticationPeerLogic(this IOutboundServerPeer outboundServerPeer, 
+        public static IOutboundServerPeerLogic CreateCommonServerAuthenticationPeerLogic(this IOutboundServerPeer outboundServerPeer, 
             string secretKey, Action onAuthenticated)
         {
-            IOutboundServerPeerLogicBase commonServerAuthenticationPeerLogic = new CommonServerAuthenticationPeerLogic(outboundServerPeer, 
+            var commonServerAuthenticationPeerLogic = new CommonServerAuthenticationPeerLogic(outboundServerPeer, 
                 secretKey, onAuthenticated);
             commonServerAuthenticationPeerLogic.Initialize();
             return commonServerAuthenticationPeerLogic;

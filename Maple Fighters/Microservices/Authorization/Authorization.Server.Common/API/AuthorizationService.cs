@@ -10,7 +10,6 @@ namespace Authorization.Server.Common
 {
     public class AuthorizationService : ServiceBase, IAuthorizationServiceAPI
     {
-        private IOutboundServerPeerLogicBase commonServerAuthenticationPeerLogic;
         private IOutboundServerPeerLogic outboundServerPeerLogic;
 
         protected override void OnConnectionEstablished()
@@ -18,20 +17,19 @@ namespace Authorization.Server.Common
             base.OnConnectionEstablished();
 
             var secretKey = GetSecretKey().AssertNotNull(MessageBuilder.Trace("Secret key not found."));
-            commonServerAuthenticationPeerLogic = OutboundServerPeer.CreateCommonServerAuthenticationPeerLogic(secretKey, OnAuthenticated);
+            outboundServerPeerLogic = OutboundServerPeer.CreateCommonServerAuthenticationPeerLogic(secretKey, OnAuthenticated);
         }
 
         protected override void OnConnectionClosed(DisconnectReason disconnectReason)
         {
             base.OnConnectionClosed(disconnectReason);
 
-            commonServerAuthenticationPeerLogic.Dispose();
-            outboundServerPeerLogic?.Dispose();
+            outboundServerPeerLogic.Dispose();
         }
 
         private void OnAuthenticated()
         {
-            commonServerAuthenticationPeerLogic.Dispose();
+            outboundServerPeerLogic.Dispose();
             outboundServerPeerLogic = OutboundServerPeer.CreateOutboundServerPeerLogic<AuthorizationOperations, EmptyEventCode>();
 
             LogUtils.Log(MessageBuilder.Trace("Authenticated with AuthorizationService service."));
@@ -39,17 +37,27 @@ namespace Authorization.Server.Common
 
         public void RemoveAuthorization(RemoveAuthorizationRequestParameters parameters)
         {
-            outboundServerPeerLogic.SendOperation((byte)AuthorizationOperations.RemoveAuthorization, parameters);
+            outboundServerPeerLogic?.SendOperation((byte)AuthorizationOperations.RemoveAuthorization, parameters);
         }
 
         public Task<AuthorizeAccessTokenResponseParameters> AccessTokenAuthorization(IYield yield, AuthorizeAccesTokenRequestParameters parameters)
         {
+            if (outboundServerPeerLogic == null)
+            {
+                return Task.FromResult(new AuthorizeAccessTokenResponseParameters());
+            }
+
             return outboundServerPeerLogic.SendOperation<AuthorizeAccesTokenRequestParameters, AuthorizeAccessTokenResponseParameters>
                 (yield, (byte)AuthorizationOperations.AccessTokenAuthorization, parameters);
         }
 
         public Task<AuthorizeUserResponseParameters> UserAuthorization(IYield yield, AuthorizeUserRequestParameters parameters)
         {
+            if (outboundServerPeerLogic == null)
+            {
+                return Task.FromResult(new AuthorizeUserResponseParameters());
+            }
+
             return outboundServerPeerLogic.SendOperation<AuthorizeUserRequestParameters, AuthorizeUserResponseParameters>
                 (yield, (byte)AuthorizationOperations.UserAuthorization, parameters);
         }
