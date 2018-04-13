@@ -99,7 +99,7 @@ namespace Scripts.Services
 
         protected override void SetPeerLogicAfterAuthorization()
         {
-            GetServiceBase().SetPeerLogic<GameServerProviderPeerLogic, GameServerProviderOperations, EmptyEventCode>(new GameServerProviderPeerLogic());
+            GetServiceBase().SetPeerLogic<GameServerProviderPeerLogic, GameServerProviderOperations, EmptyEventCode>();
         }
 
         protected override IServiceBase GetServiceBase()

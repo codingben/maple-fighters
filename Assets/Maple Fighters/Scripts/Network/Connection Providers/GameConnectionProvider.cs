@@ -118,7 +118,7 @@ namespace Scripts.Services
 
         protected override void SetPeerLogicAfterAuthorization()
         {
-            GetServiceBase().SetPeerLogic<CharacterPeerLogic, CharacterOperations, EmptyEventCode>(new CharacterPeerLogic());
+            GetServiceBase().SetPeerLogic<CharacterPeerLogic, CharacterOperations, EmptyEventCode>();
         }
 
         protected override IServiceBase GetServiceBase()

@@ -74,7 +74,7 @@ namespace Scripts.Services
 
             if (authorize)
             {
-                serviceBase.SetPeerLogic<AuthorizationPeerLogic, AuthorizationOperations, EmptyEventCode>(new AuthorizationPeerLogic());
+                serviceBase.SetPeerLogic<AuthorizationPeerLogic, AuthorizationOperations, EmptyEventCode>();
             }
             else
             {

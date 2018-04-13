@@ -32,7 +32,7 @@ namespace Scripts.Services
                 (yield, (byte)CharacterOperations.ValidateCharacter, parameters, MessageSendOptions.DefaultReliable());
             if (responseParameters.Status == CharacterValidationStatus.Ok)
             {
-                ServiceContainer.GameService.SetPeerLogic<GameScenePeerLogic, GameOperations, GameEvents>(new GameScenePeerLogic());
+                ServiceContainer.GameService.SetPeerLogic<GameScenePeerLogic, GameOperations, GameEvents>();
             }
             return responseParameters.Status;
         }

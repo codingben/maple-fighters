@@ -63,7 +63,7 @@ namespace Scripts.UI.Controllers
 
         protected override void SetPeerLogicAfterAuthorization()
         {
-            GetServiceBase().SetPeerLogic<RegistrationPeerLogic, RegistrationOperations, EmptyEventCode>(new RegistrationPeerLogic());
+            GetServiceBase().SetPeerLogic<RegistrationPeerLogic, RegistrationOperations, EmptyEventCode>();
         }
 
         protected override IServiceBase GetServiceBase()

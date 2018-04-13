@@ -15,8 +15,8 @@ namespace Scripts.Services
             ServiceConnectionHandler = new ServiceConnectionHandler();
         }
 
-        public void SetPeerLogic<T, TOperationCode, TEventCode>(T peerLogic)
-            where T : IPeerLogicBase
+        public void SetPeerLogic<T, TOperationCode, TEventCode>()
+            where T : IPeerLogicBase, new()
             where TOperationCode : IComparable, IFormattable, IConvertible
             where TEventCode : IComparable, IFormattable, IConvertible
         {
@@ -34,7 +34,7 @@ namespace Scripts.Services
             peerHandler.Initialize(ServiceConnectionHandler.ServerPeer);
             serverPeerHandler = peerHandler;
 
-            peerLogicBase = peerLogic;
+            peerLogicBase = new T();
             peerLogicBase.Awake(serverPeerHandler);
         }
 

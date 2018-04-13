@@ -77,7 +77,7 @@ namespace Scripts.Services
 
         protected override void SetPeerLogicAfterAuthorization()
         {
-            GetServiceBase().SetPeerLogic<ChatPeerLogic, ChatOperations, ChatEvents>(new ChatPeerLogic());
+            GetServiceBase().SetPeerLogic<ChatPeerLogic, ChatOperations, ChatEvents>();
         }
 
         protected override IServiceBase GetServiceBase()
