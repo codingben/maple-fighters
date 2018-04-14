@@ -5,7 +5,7 @@ namespace InterestManagement.Scripts
 {
     public struct Rectangle
     {
-        public static readonly Rectangle EMPTY = new Rectangle();
+        public static readonly Rectangle Empty = new Rectangle();
 
         public float X { get; set; }
         public float Y { get; set; }
@@ -76,7 +76,7 @@ namespace InterestManagement.Scripts
 
                 return new Rectangle(x1, y1, x2 - x1, y2 - y1);
             }
-            return EMPTY;
+            return Empty;
         }
 
         public bool IntersectsWith(Rectangle rect)

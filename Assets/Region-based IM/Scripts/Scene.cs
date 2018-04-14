@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using CommonTools.Log;
 using Scripts.Gameplay;
 using UnityEngine;
@@ -7,40 +8,44 @@ namespace InterestManagement.Scripts
 {
     public class Scene : MonoBehaviour
     {
-        public IRegion[,] Regions { get; private set; }
         public Vector2 RegionSize => regionSize;
 
         [SerializeField] private Vector2 sceneSize;
         [SerializeField] private Vector2 regionSize;
         [SerializeField] private GameObject regionGameObject;
 
-        private readonly Dictionary<int, ISceneObject> sceneObjects = new Dictionary<int, ISceneObject>();
+        private IRegion[,] regions;
+        private readonly HashSet<ISceneObject> sceneObjects = new HashSet<ISceneObject>();
 
         private void Awake()
         {
-            var regionsX = (int) (sceneSize.x / regionSize.x);
-            var regionsY = (int) (sceneSize.y / regionSize.y);
+            CreateRegions();
+        }
 
-            Regions = new IRegion[regionsX, regionsY];
+        private void CreateRegions()
+        {
+            var regionsX = (int)(sceneSize.x / regionSize.x);
+            var regionsY = (int)(sceneSize.y / regionSize.y);
+
+            regions = new IRegion[regionsX, regionsY];
 
             var x = -(sceneSize.x / 2) + regionSize.x / 2;
             var y = -(sceneSize.y / 2) + regionSize.y / 2;
 
             var regionId = 1;
 
-            for (var i = 0; i < Regions.GetLength(0); i++)
+            for (var i = 0; i < regionsX; i++)
             {
-                for (var j = 0; j < Regions.GetLength(1); j++)
+                for (var j = 0; j < regionsY; j++)
                 {
-                    var region = Instantiate(regionGameObject).GetComponent<Region>();
+                    var region = Instantiate(regionGameObject.AssertNotNull("Could not find region game object.")).GetComponent<Region>();
                     region.Id = regionId;
-                    region.name = $"I: {i} J: {j}";
-                    region.transform.position = new Vector3(x + (i * regionSize.x), y + (j * regionSize.y));
+                    region.transform.position = new Vector3(x + (i * regionSize.x), y + (j * regionSize.y), -1);
                     region.transform.localScale = new Vector3(regionSize.x, regionSize.y);
-                    region.PublisherArea = new Rectangle(new Vector2(x + (i * regionSize.x), y + (j * regionSize.y)),
-                        new Vector3(regionSize.x, regionSize.y));
+                    region.PublisherArea = new Rectangle(position: new Vector2(x + (i * regionSize.x), y + (j * regionSize.y)),
+                        size: new Vector3(regionSize.x, regionSize.y));
 
-                    Regions[i, j] = region;
+                    regions[i, j] = region;
 
                     regionId++;
                 }
@@ -49,54 +54,52 @@ namespace InterestManagement.Scripts
 
         public ISceneObject AddSceneObject(ISceneObject sceneObject)
         {
-            if (sceneObjects.ContainsKey(sceneObject.Id))
+            if (!sceneObjects.Add(sceneObject))
             {
-                LogUtils.Log(MessageBuilder.Trace($"A scene object with a id #{sceneObject.Id} already exists in a scene."), LogMessageType.Error);
+                LogUtils.Log(MessageBuilder.Trace($"A scene object with a id #{sceneObject.Id} already exists in a scene."), LogMessageType.Warning);
                 return null;
             }
 
-            sceneObjects.Add(sceneObject.Id, sceneObject);
-
-            LogUtils.Log(MessageBuilder.Trace($"A new scene object: {sceneObject.GetGameObject().name}"), LogMessageType.Error);
+            LogUtils.Log(MessageBuilder.Trace($"A new scene object: {sceneObject.GetGameObject().name}"));
             return sceneObject;
         }
 
-        public void RemoveSceneObject(int id)
+        public void RemoveSceneObject(ISceneObject sceneObject)
         {
-            if (!sceneObjects.ContainsKey(id))
+            if (!sceneObjects.Remove(sceneObject))
             {
-                LogUtils.Log(MessageBuilder.Trace($"A scene object with a id #{id} does not exists in a scene."), LogMessageType.Error);
+                LogUtils.Log(MessageBuilder.Trace($"A scene object with id #{sceneObject.Id} does not exist in a scene."), LogMessageType.Warning);
                 return;
             }
 
-            LogUtils.Log(MessageBuilder.Trace($"Removed scene object: {sceneObjects[id].GetGameObject().name}"), LogMessageType.Error);
+            LogUtils.Log(MessageBuilder.Trace($"Removed scene object: {sceneObject.GetGameObject().name}"));
 
-            sceneObjects.Remove(id);
-
-            RemoveSubscriptionFromPublishers(id);
+            RemoveSubscriptionFromPublishers(sceneObject);
         }
 
-        private void RemoveSubscriptionFromPublishers(int id)
+        private void RemoveSubscriptionFromPublishers(ISceneObject sceneObject)
         {
-            foreach (var region in Regions)
+            foreach (var region in regions)
             {
-                if (region.HasSubscription(id))
+                if (region.HasSubscription(sceneObject))
                 {
-                    region.RemoveSubscriptionForAllSubscribers(id);
+                    region.RemoveSubscriptionForAllSubscribers(sceneObject);
                 }
             }
         }
 
         public ISceneObject GetSceneObject(int id)
         {
-            ISceneObject sceneObject;
-            if (sceneObjects.TryGetValue(id, out sceneObject))
+            var sceneObject = sceneObjects.Single(x => x.Id.Equals(id));
+            if (sceneObject != null)
             {
                 return sceneObject;
             }
 
-            LogUtils.Log(MessageBuilder.Trace($"Could not find a scene object with id #{id}"), LogMessageType.Error);
+            LogUtils.Log(MessageBuilder.Trace($"Could not find a scene object with id #{id}"), LogMessageType.Warning);
             return null;
         }
+
+        public IRegion[,] GetAllRegions() => regions;
     }
 }
