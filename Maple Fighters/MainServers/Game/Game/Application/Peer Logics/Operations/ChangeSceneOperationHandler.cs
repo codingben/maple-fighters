@@ -37,7 +37,7 @@ namespace Game.Application.PeerLogic.Operations
             playerGameObject.RemoveBody();
 
             // Removing a character from his old scene.
-            presenceSceneProvider.GetScene().RemoveSceneObject(playerGameObject.Id, onDestroy: false);
+            presenceSceneProvider.GetScene().RemoveSceneObject(playerGameObject, onDestroy: false);
 
             // Setting the character's position in the destination scene.
             var spawnPositionDetails = CharacterSpawnDetailsProvider.GetCharacterSpawnDetails(portalInfoProvider.Map);

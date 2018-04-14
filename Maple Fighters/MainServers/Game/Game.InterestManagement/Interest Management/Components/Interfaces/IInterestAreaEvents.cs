@@ -6,13 +6,13 @@ namespace InterestManagement.Components.Interfaces
     public interface IInterestAreaEvents
     {
         event Action<ISceneObject> SubscriberAdded;
-        event Action<int> SubscriberRemoved;
+        event Action<ISceneObject> SubscriberRemoved;
         event Action<ISceneObject[]> SubscribersAdded;
-        event Action<int[]> SubscribersRemoved;
+        event Action<ISceneObject[]> SubscribersRemoved;
 
         void AddSubscriber(ISceneObject sceneObject);
-        void RemoveSubscriber(int sceneObjectId);
+        void RemoveSubscriber(ISceneObject sceneObject);
         void AddSubscribers(IEnumerable<ISceneObject> sceneObjects);
-        void RemoveSubscribers(IEnumerable<int> sceneObjectIds);
+        void RemoveSubscribers(IEnumerable<ISceneObject> sceneObjects);
     }
 }

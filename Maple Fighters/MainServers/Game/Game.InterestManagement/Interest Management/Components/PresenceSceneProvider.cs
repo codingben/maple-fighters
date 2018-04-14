@@ -9,10 +9,7 @@ namespace InterestManagement.Components
         public event Action<IScene> SceneChanged;
         private IScene scene;
 
-        public PresenceSceneProvider(IScene scene = null)
-        {
-            this.scene = scene;
-        }
+        public PresenceSceneProvider(IScene scene = null) => this.scene = scene;
 
         public void SetScene(IScene scene)
         {
@@ -21,9 +18,6 @@ namespace InterestManagement.Components
             SceneChanged?.Invoke(scene);
         }
 
-        public IScene GetScene()
-        {
-            return scene;
-        }
+        public IScene GetScene() => scene;
     }
 }

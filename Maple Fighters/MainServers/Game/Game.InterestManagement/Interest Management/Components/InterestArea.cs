@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using CommonTools.Log;
@@ -8,92 +7,18 @@ using MathematicsHelper;
 
 namespace InterestManagement.Components
 {
-    public class InterestArea : Component<ISceneObject>, IInterestArea, IInterestAreaEvents
+    public class InterestArea : Component<ISceneObject>, IInterestArea
     {
-        public event Action<ISceneObject> SubscriberAdded;
-        public event Action<int> SubscriberRemoved;
-        public event Action<ISceneObject[]> SubscribersAdded;
-        public event Action<int[]> SubscribersRemoved;
-
-        public void AddSubscriber(ISceneObject sceneObject)
-        {
-            if (subscribers.ContainsKey(sceneObject.Id))
-            {
-                return;
-            }
-
-            subscribers.Add(sceneObject.Id, sceneObject);
-
-            SubscriberAdded?.Invoke(sceneObject);
-        }
-
-        public void RemoveSubscriber(int sceneObjectId)
-        {
-            if (!subscribers.ContainsKey(sceneObjectId))
-            {
-                return;
-            }
-
-            subscribers.Remove(sceneObjectId);
-
-            SubscriberRemoved?.Invoke(sceneObjectId);
-        }
-
-        public void AddSubscribers(IEnumerable<ISceneObject> sceneObjects)
-        {
-            var subscribersAdded = new List<ISceneObject>();
-
-            foreach (var sceneObject in sceneObjects)
-            {
-                if (subscribers.ContainsKey(sceneObject.Id))
-                {
-                    continue;
-                }
-
-                subscribersAdded.Add(sceneObject);
-                subscribers.Add(sceneObject.Id, sceneObject);
-            }
-
-            if (subscribersAdded.Count == 0) return;
-            {
-                SubscribersAdded?.Invoke(subscribersAdded.ToArray());
-            }
-        }
-
-        public void RemoveSubscribers(IEnumerable<int> sceneObjectIds)
-        {
-            var subscribersRemoved = new List<int>();
-
-            foreach (var id in sceneObjectIds)
-            {
-                if (!subscribers.ContainsKey(id))
-                {
-                    continue;
-                }
-
-                subscribersRemoved.Add(id);
-                subscribers.Remove(id);
-            }
-
-            if (subscribersRemoved.Count == 0) return;
-            {
-                SubscribersRemoved?.Invoke(subscribersRemoved.ToArray());
-            }
-        }
-
-        private readonly Dictionary<int, ISceneObject> subscribers = new Dictionary<int, ISceneObject>();
-
         private Rectangle interestArea;
         private IPresenceSceneProvider presenceSceneProvider;
 
-        public InterestArea(Vector2 position, Vector2 areaSize)
-        {
-            interestArea = new Rectangle(position, areaSize);
-        }
+        public InterestArea(Vector2 position, Vector2 areaSize) => interestArea = new Rectangle(position, areaSize);
 
         protected override void OnAwake()
         {
             base.OnAwake();
+
+            Entity.Components.AddComponent(new NearbySubscribers());
 
             presenceSceneProvider = Entity.Components.GetComponent<IPresenceSceneProvider>().AssertNotNull();
 
@@ -103,8 +28,6 @@ namespace InterestManagement.Components
         protected override void OnDestroy()
         {
             base.OnDestroy();
-
-            subscribers.Clear();
 
             UnubscribeFromPositionChanged();
         }
@@ -125,7 +48,7 @@ namespace InterestManagement.Components
         {
             interestArea.SetPosition(position);
 
-            if (presenceSceneProvider.GetScene() != null)
+            if (Entity != null && presenceSceneProvider.GetScene() != null)
             {
                 DetectOverlapsWithRegions();
             }
@@ -137,32 +60,14 @@ namespace InterestManagement.Components
             interestArea.SetSize(size);
         }
 
-        public IEnumerable<IRegion> GetSubscribedPublishers()
-        {
-            var regions = presenceSceneProvider.GetScene().GetAllRegions();
-            return regions.Cast<IRegion>().Where(region => region.HasSubscription(Entity.Id)).ToArray();
-        }
-
         public void DetectOverlapsWithRegions()
         {
-            if (Entity == null)
-            {
-                LogUtils.Log(MessageBuilder.Trace("Entity is null."));
-                return;
-            }
-
             var sceneRegions = presenceSceneProvider.GetScene().GetAllRegions();
             foreach (var region in sceneRegions)
             {
-                if (region == null)
-                {
-                    LogUtils.Log(MessageBuilder.Trace("Region is null."));
-                    continue;
-                }
-
                 if (IsIntersect(region.PublisherArea, interestArea))
                 {
-                    if (region.HasSubscription(Entity.Id))
+                    if (region.HasSubscription(Entity))
                     {
                         continue;
                     }
@@ -171,17 +76,20 @@ namespace InterestManagement.Components
                 }
                 else
                 {
-                    if (region.HasSubscription(Entity.Id))
+                    if (region.HasSubscription(Entity))
                     {
-                        region.RemoveSubscription(Entity.Id);
+                        region.RemoveSubscription(Entity);
                     }
                 }
             }
+
+            bool IsIntersect(Rectangle publisherArea, Rectangle interestArea) => !Rectangle.Intersect(publisherArea, interestArea).Equals(Rectangle.Empty);
         }
 
-        private bool IsIntersect(Rectangle publisherArea, Rectangle interestArea)
+        public IEnumerable<IRegion> GetSubscribedPublishers()
         {
-            return !Rectangle.Intersect(publisherArea, interestArea).Equals(Rectangle.Empty);
+            var regions = presenceSceneProvider.GetScene().GetAllRegions();
+            return regions.Cast<IRegion>().Where(region => region.HasSubscription(Entity)).ToArray();
         }
     }
 }

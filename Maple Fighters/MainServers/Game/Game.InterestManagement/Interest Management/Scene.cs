@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using CommonTools.Log;
 using ComponentModel.Common;
 using InterestManagement.Components.Interfaces;
@@ -13,7 +14,7 @@ namespace InterestManagement
         public Vector2 RegionSize { get; }
 
         private readonly IRegion[,] regions;
-        private readonly Dictionary<int, ISceneObject> sceneObjects = new Dictionary<int, ISceneObject>();
+        private readonly HashSet<ISceneObject> sceneObjects = new HashSet<ISceneObject>();
 
         protected Scene(Vector2 sceneSize, Vector2 regionSize)
         {
@@ -25,14 +26,13 @@ namespace InterestManagement
             var x = -(sceneSize.X / 2) + regionSize.X / 2;
             var y = -(sceneSize.Y / 2) + regionSize.Y / 2;
 
-            for (var i = 0; i < regions.GetLength(0); i++)
+            for (var i = 0; i < regionsX; i++)
             {
-                for (var j = 0; j < regions.GetLength(1); j++)
+                for (var j = 0; j < regionsY; j++)
                 {
                     var regionPositionX = x + (i * regionSize.X);
                     var regionPositionY = y + (j * regionSize.Y);
-
-                    regions[i, j] = new Region(new Rectangle(new Vector2(regionPositionX, regionPositionY), new Vector2(regionSize.X, regionSize.Y)));
+                    regions[i, j] = new Region(new Rectangle(position: new Vector2(regionPositionX, regionPositionY), size: new Vector2(regionSize.X, regionSize.Y)));
                 }
             }
 
@@ -41,103 +41,116 @@ namespace InterestManagement
 
         public ISceneObject AddSceneObject(ISceneObject sceneObject, bool onAwake = true)
         {
-            if (sceneObjects.ContainsKey(sceneObject.Id))
+            if (!sceneObjects.Add(sceneObject))
             {
                 LogUtils.Log(MessageBuilder.Trace($"A scene object with a id #{sceneObject.Id} already exists in a scene."), LogMessageType.Warning);
                 return null;
             }
 
-            var presenceSceneProvider = sceneObject.Components.GetComponent<IPresenceSceneProvider>().AssertNotNull();
-            presenceSceneProvider.SetScene(this);
-
-            if (onAwake)
-            {
-                sceneObject.OnAwake();
-            }
-
-            sceneObjects.Add(sceneObject.Id, sceneObject);
-
-            var debug = (bool)Config.Global.Log.InterestManagement;
-            if (debug)
-            {
-                LogUtils.Log(MessageBuilder.Trace($"A new scene object: {sceneObject.Name} Id: {sceneObject.Id}"));
-            }
+            Log();
+            Awake();
             return sceneObject;
+
+            void Log()
+            {
+                var debug = (bool)Config.Global.Log.InterestManagement;
+                if (debug)
+                {
+                    LogUtils.Log(MessageBuilder.Trace($"A new scene object: {sceneObject.Name} Id: {sceneObject.Id}"));
+                }
+            }
+
+            void Awake()
+            {
+                var presenceSceneProvider = sceneObject.Components.GetComponent<IPresenceSceneProvider>().AssertNotNull();
+                presenceSceneProvider.SetScene(this);
+
+                if (onAwake)
+                {
+                    sceneObject.OnAwake();
+                }
+            }
         }
 
-        public void RemoveSceneObject(int id, bool onDestroy = true)
+        public void RemoveSceneObject(ISceneObject sceneObject, bool onDestroy = true)
         {
-            if (!sceneObjects.ContainsKey(id))
+            if (!sceneObjects.Remove(sceneObject))
             {
-                LogUtils.Log(MessageBuilder.Trace($"A scene object with a id #{id} does not exists in a scene."), LogMessageType.Warning);
+                LogUtils.Log(MessageBuilder.Trace($"A scene object with id #{sceneObject.Id} does not exist in a scene."), LogMessageType.Warning);
                 return;
             }
 
-            var sceneObject = sceneObjects[id];
-            if (onDestroy)
+            Log();
+            Destroy();
+
+            RemoveSubscriptionFromPublishers();
+
+            void Log()
             {
-                sceneObject.OnDestroy();
-            }
-
-            var presenceSceneProvider = sceneObject.Components?.GetComponent<IPresenceSceneProvider>()?.AssertNotNull();
-            presenceSceneProvider?.SetScene(null);
-
-            sceneObjects.Remove(id);
-
-            var debug = (bool)Config.Global.Log.InterestManagement;
-            if (debug)
-            {
-                var name = sceneObject.Name;
-                var sceneObjectId = sceneObject.Id;
-                LogUtils.Log(MessageBuilder.Trace($"Removed scene object: {name} Id: {sceneObjectId}"));
-            }
-
-            RemoveSceneObjectFromRegions(id);
-        }
-
-        /// <summary>
-        /// Remove a scene objct for all other scene objects in his region.
-        /// </summary>
-        private void RemoveSceneObjectFromRegions(int id)
-        {
-            foreach (var region in regions)
-            {
-                if (region.HasSubscription(id))
+                var debug = (bool)Config.Global.Log.InterestManagement;
+                if (debug)
                 {
-                    region.RemoveSubscriptionForAllSubscribers(id);
+                    var name = sceneObject.Name;
+                    var sceneObjectId = sceneObject.Id;
+                    LogUtils.Log(MessageBuilder.Trace($"Removed scene object: {name} Id: {sceneObjectId}"));
+                }
+            }
+
+            void Destroy()
+            {
+                if (onDestroy)
+                {
+                    sceneObject.OnDestroy();
+                }
+
+                var presenceSceneProvider = sceneObject.Components?.GetComponent<IPresenceSceneProvider>()?.AssertNotNull();
+                presenceSceneProvider?.SetScene(null);
+            }
+            
+            void RemoveSubscriptionFromPublishers()
+            {
+                foreach (var region in regions)
+                {
+                    if (region.HasSubscription(sceneObject))
+                    {
+                        region.RemoveSubscriptionForAllSubscribers(sceneObject);
+                    }
                 }
             }
         }
 
         public void Dispose()
         {
-            var scenesObjectsTemp = new List<ISceneObject>();
-            scenesObjectsTemp.AddRange(sceneObjects.Values);
-
-            foreach (var sceneObject in scenesObjectsTemp)
-            {
-                sceneObject.Dispose();
-            }
-
-            sceneObjects.Clear();
+            DisposeSceneObjects();
 
             Components?.Dispose();
+
+            void DisposeSceneObjects()
+            {
+                var scenesObjectsTemp = new List<ISceneObject>();
+                scenesObjectsTemp.AddRange(sceneObjects);
+
+                foreach (var sceneObject in scenesObjectsTemp)
+                {
+                    sceneObject.Dispose();
+                }
+
+                sceneObjects.Clear();
+            }
         }
 
         public ISceneObject GetSceneObject(int id)
         {
-            if (sceneObjects.TryGetValue(id, out var sceneObject))
+            var sceneObject = sceneObjects.Single(x => x.Id.Equals(id));
+            if (sceneObject != null)
             {
                 return sceneObject;
             }
 
-            LogUtils.Log(MessageBuilder.Trace($"Could not find a scene object with id #{id}"), LogMessageType.Error);
+            LogUtils.Log(MessageBuilder.Trace($"Could not find a scene object with id #{id}"), LogMessageType.Warning);
             return null;
         }
 
-        public IRegion[,] GetAllRegions()
-        {
-            return regions;
-        }
+        public IRegion[,] GetAllRegions() => regions;
     }
 }

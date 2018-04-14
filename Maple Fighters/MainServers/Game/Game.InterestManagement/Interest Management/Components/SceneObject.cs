@@ -34,7 +34,7 @@ namespace InterestManagement.Components
         public void Dispose()
         {
             var presenceSceneProvider = Components.GetComponent<IPresenceSceneProvider>().AssertNotNull();
-            presenceSceneProvider.GetScene().RemoveSceneObject(Id);
+            presenceSceneProvider.GetScene().RemoveSceneObject(this);
 
             Components?.Dispose();
         }

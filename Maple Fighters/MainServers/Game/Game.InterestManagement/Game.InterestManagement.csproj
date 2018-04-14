@@ -46,8 +46,8 @@
   <ItemGroup>
     <Compile Include="Interest Management\Components\Interfaces\IPositionChangesNotifier.cs" />
     <Compile Include="Interest Management\Components\Interfaces\IPresenceSceneChangesNotifier.cs" />
+    <Compile Include="Interest Management\Components\NearbySubscribers.cs" />
     <Compile Include="Interest Management\Direction.cs" />
-    <Compile Include="Interest Management\ExtensionMethods.cs" />
     <Compile Include="Interest Management\Components\Interfaces\IInterestArea.cs" />
     <Compile Include="Interest Management\Components\Interfaces\IInterestAreaEvents.cs" />
     <Compile Include="Interest Management\Components\Interfaces\IPositionTransform.cs" />

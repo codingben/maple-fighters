@@ -10,8 +10,8 @@ namespace InterestManagement
         IRegion[,] GetAllRegions();
 
         ISceneObject AddSceneObject(ISceneObject sceneObject, bool onAwake = true);
-        void RemoveSceneObject(int id, bool onDestroy = true);
+        void RemoveSceneObject(ISceneObject sceneObject, bool onDestroy = true);
 
-        ISceneObject GetSceneObject(int sceneObjectId);
+        ISceneObject GetSceneObject(int id);
     }
 }
