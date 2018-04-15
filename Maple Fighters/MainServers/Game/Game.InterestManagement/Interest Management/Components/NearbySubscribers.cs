@@ -40,19 +40,19 @@ namespace InterestManagement.Components
 
         public void AddSubscribers(IEnumerable<ISceneObject> sceneObjects)
         {
-            var subscribersAdded = sceneObjects.Where(sceneObject => subscribers.Add(sceneObject)).ToList();
-            if (subscribersAdded.Count == 0) return;
+            var subscribersAdded = sceneObjects.Where(sceneObject => subscribers.Add(sceneObject)).ToArray();
+            if (subscribersAdded.Length == 0) return;
             {
-                SubscribersAdded?.Invoke(subscribersAdded.ToArray());
+                SubscribersAdded?.Invoke(subscribersAdded);
             }
         }
 
         public void RemoveSubscribers(IEnumerable<ISceneObject> sceneObjects)
         {
-            var subscribersRemoved = sceneObjects.Where(sceneObject => subscribers.Remove(sceneObject)).ToList();
-            if (subscribersRemoved.Count == 0) return;
+            var subscribersRemoved = sceneObjects.Where(sceneObject => subscribers.Remove(sceneObject)).ToArray();
+            if (subscribersRemoved.Length == 0) return;
             {
-                SubscribersRemoved?.Invoke(subscribersRemoved.ToArray());
+                SubscribersRemoved?.Invoke(subscribersRemoved);
             }
         }
     }
