@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using CommonTools.Log;
-using Scripts.Gameplay;
+using TMPro;
 using UnityEngine;
 
 namespace InterestManagement.Scripts
@@ -11,53 +11,66 @@ namespace InterestManagement.Scripts
         public int Id { get; set; }
         public Rectangle PublisherArea { get; set; }
 
+        [SerializeField] private TextMeshPro regionText;
+
         private readonly HashSet<ISceneObject> sceneObjects = new HashSet<ISceneObject>();
+
+        private void Awake()
+        {
+            if (!regionText)
+            {
+                Debug.LogWarning("Region text component is null.");
+            }
+        }
 
         private void Update()
         {
-            name = $"Region Id: {Id} Entities: {sceneObjects.Count}";
+            if (regionText != null)
+            {
+                regionText.text = $"Region Id: {Id} Entities: {sceneObjects.Count}";
+            }
         }
 
         public void AddSubscription(ISceneObject sceneObject)
         {
             if (!sceneObjects.Add(sceneObject))
             {
-                LogUtils.Log(MessageBuilder.Trace($"A scene object with id #{sceneObject.Id} already exists in a region."), LogMessageType.Warning);
+                Debug.LogWarning(MessageBuilder.Trace($"A scene object with id #{sceneObject.Id} already exists in a region."));
                 return;
             }
 
             AddSubscribersForSubscriber(sceneObject);
             AddSubscriberForSubscribers(sceneObject);
 
-            LogUtils.Log(MessageBuilder.Trace($"Added subscription id #{sceneObject.Id} to Region id #{Id}"));
+            Debug.Log(MessageBuilder.Trace($"Added subscription id #{sceneObject.Id} to Region id #{Id}"));
         }
 
         public void RemoveSubscription(ISceneObject sceneObject)
         {
             if (!sceneObjects.Remove(sceneObject))
             {
-                LogUtils.Log(MessageBuilder.Trace($"A scene object with id #{sceneObject.Id} does not exist in a region."), LogMessageType.Warning);
+                Debug.LogWarning(MessageBuilder.Trace($"A scene object with id #{sceneObject.Id} does not exist in a region."));
                 return;
             }
 
             RemoveSubscribersForSubscriber(sceneObject);
             RemoveSubscriberForSubscribers(sceneObject);
 
-            LogUtils.Log(MessageBuilder.Trace($"Removed subscription id #{sceneObject.Id} from Region id #{Id}"));
+            Debug.Log(MessageBuilder.Trace($"Removed subscription id #{sceneObject.Id} from Region id #{Id}"));
         }
 
         public void RemoveSubscriptionForAllSubscribers(ISceneObject sceneObject)
         {
             if (!sceneObjects.Remove(sceneObject))
             {
-                LogUtils.Log(MessageBuilder.Trace($"A scene object with id #{sceneObject.Id} does not exist in a region."), LogMessageType.Warning);
+                Debug.LogWarning(MessageBuilder.Trace($"A scene object with id #{sceneObject.Id} does not exist in a region."));
                 return;
             }
 
             RemoveAllSubscribersForSubscriber(sceneObject);
             RemoveSubscriberForAllSubscribers(sceneObject);
 
-            LogUtils.Log(MessageBuilder.Trace($"Removed subscription id #{sceneObject.Id} from Region id #{Id}"));
+            Debug.Log(MessageBuilder.Trace($"Removed subscription id #{sceneObject.Id} from Region id #{Id}"));
         }
 
         /// <summary>
@@ -66,7 +79,7 @@ namespace InterestManagement.Scripts
         /// <param name="sceneObject">A new subscriber</param>
         private void AddSubscribersForSubscriber(ISceneObject sceneObject)
         {
-            var subscribers = GetAllSubscribers().Where(subscriber => subscriber.Id != sceneObject.Id).ToArray();
+            var subscribers = GetSubscribersExcept(sceneObject.Id);
             if (subscribers.Length <= 0) return;
             {
                 var subscriberArea = sceneObject.GetGameObject().GetComponent<IInterestAreaEvents>();
@@ -82,7 +95,7 @@ namespace InterestManagement.Scripts
         {
             var subscribersToRemoveList = new List<ISceneObject>();
 
-            foreach (var subscriber in GetAllSubscribers())
+            foreach (var subscriber in sceneObjects)
             {
                 var subscriberArea = subscriber.GetGameObject().GetComponent<IInterestArea>();
                 var subscribedPublishers = subscriberArea?.GetSubscribedPublishers();
@@ -111,7 +124,7 @@ namespace InterestManagement.Scripts
         /// <param name="sceneObject">A new subscriber</param>
         private void AddSubscriberForSubscribers(ISceneObject sceneObject)
         {
-            var subscribers = GetAllSubscribers().Where(subscriber => subscriber.Id != sceneObject.Id).ToArray();
+            var subscribers = GetSubscribersExcept(sceneObject.Id);
             foreach (var subscriber in subscribers)
             {
                 var subscriberArea = subscriber.GetGameObject().GetComponent<IInterestAreaEvents>();
@@ -141,7 +154,7 @@ namespace InterestManagement.Scripts
         /// </summary>
         private void RemoveSubscriberForAllSubscribers(ISceneObject sceneObject)
         {
-            foreach (var subscriber in GetAllSubscribers())
+            foreach (var subscriber in sceneObjects)
             {
                 var subscriberArea = subscriber.GetGameObject().GetComponent<IInterestAreaEvents>();
                 subscriberArea.RemoveSubscriber(sceneObject);

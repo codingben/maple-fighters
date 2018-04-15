@@ -9,6 +9,7 @@ TagManager:
   - Ladder
   - Minimap Camera
   - Ground
+  - Scene
   layers:
   - Default
   - TransparentFX

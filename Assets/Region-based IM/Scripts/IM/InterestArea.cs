@@ -1,30 +1,37 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using CommonTools.Log;
-using Scripts.Gameplay;
 using UnityEngine;
 
 namespace InterestManagement.Scripts
 {
     public class InterestArea : MonoBehaviour, IInterestArea
     {
-        private Scene scene;
-        private NetworkIdentity networkIdentity;
+        [SerializeField] private Transform interestAreaTransform;
+
+        private IScene scene;
+        private ISceneObject sceneObject;
         private Rectangle interestArea;
-        private static int id;
 
         private void Awake()
         {
-            scene = FindObjectOfType<Scene>().AssertNotNull();
+            var sceneEvents = GameObject.FindGameObjectWithTag("Scene").GetComponent<ISceneEvents>();
+            sceneEvents.RegionsCreated += OnRegionsCreated;
+
+            scene = GameObject.FindGameObjectWithTag("Scene").GetComponent<IScene>();
             interestArea = new Rectangle(transform.position, scene.RegionSize);
 
-            networkIdentity = GetComponent<NetworkIdentity>().AssertNotNull();
-            networkIdentity.Id = ++id;
-
-            name = $"Entity {networkIdentity.Id}";
-
+            sceneObject = GetComponent<ISceneObject>();
             gameObject.AddComponent(typeof(NearbySubscribers));
+
+            if (interestAreaTransform != null)
+            {
+                interestAreaTransform.localScale = new Vector3(scene.RegionSize.x, scene.RegionSize.y, interestAreaTransform.localScale.z);
+            }
+        }
+
+        private void OnRegionsCreated()
+        {
+            DetectOverlapsWithRegions();
         }
 
         private void Update()
@@ -42,15 +49,9 @@ namespace InterestManagement.Scripts
             }
         }
 
-        public void SetSize()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void DetectOverlapsWithRegions()
+        private void DetectOverlapsWithRegions()
         {
             var sceneRegions = scene.GetAllRegions();
-            var sceneObject = networkIdentity;
 
             foreach (var region in sceneRegions)
             {
@@ -83,7 +84,6 @@ namespace InterestManagement.Scripts
         public IEnumerable<IRegion> GetSubscribedPublishers()
         {
             var regions = scene.GetAllRegions();
-            var sceneObject = networkIdentity;
             return regions.Cast<IRegion>().Where(region => region.HasSubscription(sceneObject)).ToArray();
         }
     }

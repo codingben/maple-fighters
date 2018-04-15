@@ -1,13 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
-using CommonTools.Log;
-using Scripts.Gameplay;
 using UnityEngine;
 
 namespace InterestManagement.Scripts
 {
-    public class Scene : MonoBehaviour
+    public class Scene : MonoBehaviour, IScene, ISceneEvents
     {
+        public event Action RegionsCreated;
         public Vector2 RegionSize => regionSize;
 
         [SerializeField] private Vector2 sceneSize;
@@ -19,10 +20,10 @@ namespace InterestManagement.Scripts
 
         private void Awake()
         {
-            CreateRegions();
+            StartCoroutine(CreateRegions());
         }
 
-        private void CreateRegions()
+        private IEnumerator CreateRegions()
         {
             var regionsX = (int)(sceneSize.x / regionSize.x);
             var regionsY = (int)(sceneSize.y / regionSize.y);
@@ -38,9 +39,9 @@ namespace InterestManagement.Scripts
             {
                 for (var j = 0; j < regionsY; j++)
                 {
-                    var region = Instantiate(regionGameObject.AssertNotNull("Could not find region game object.")).GetComponent<Region>();
+                    var region = Instantiate(regionGameObject).GetComponent<Region>();
                     region.Id = regionId;
-                    region.transform.position = new Vector3(x + (i * regionSize.x), y + (j * regionSize.y), -1);
+                    region.transform.position = new Vector3(x + (i * regionSize.x), y + (j * regionSize.y), region.transform.position.z);
                     region.transform.localScale = new Vector3(regionSize.x, regionSize.y);
                     region.PublisherArea = new Rectangle(position: new Vector2(x + (i * regionSize.x), y + (j * regionSize.y)),
                         size: new Vector3(regionSize.x, regionSize.y));
@@ -48,19 +49,22 @@ namespace InterestManagement.Scripts
                     regions[i, j] = region;
 
                     regionId++;
+                    yield return new WaitForSeconds(0.1f);
                 }
             }
+
+            RegionsCreated?.Invoke();
         }
 
         public ISceneObject AddSceneObject(ISceneObject sceneObject)
         {
             if (!sceneObjects.Add(sceneObject))
             {
-                LogUtils.Log(MessageBuilder.Trace($"A scene object with a id #{sceneObject.Id} already exists in a scene."), LogMessageType.Warning);
+                Debug.LogWarning($"A scene object with a id #{sceneObject.Id} already exists in a scene.");
                 return null;
             }
 
-            LogUtils.Log(MessageBuilder.Trace($"A new scene object: {sceneObject.GetGameObject().name}"));
+            Debug.Log($"A new scene object: {sceneObject.GetGameObject().name}");
             return sceneObject;
         }
 
@@ -68,11 +72,11 @@ namespace InterestManagement.Scripts
         {
             if (!sceneObjects.Remove(sceneObject))
             {
-                LogUtils.Log(MessageBuilder.Trace($"A scene object with id #{sceneObject.Id} does not exist in a scene."), LogMessageType.Warning);
+                Debug.LogWarning($"A scene object with id #{sceneObject.Id} does not exist in a scene.");
                 return;
             }
 
-            LogUtils.Log(MessageBuilder.Trace($"Removed scene object: {sceneObject.GetGameObject().name}"));
+            Debug.Log($"Removed scene object: {sceneObject.GetGameObject().name}");
 
             RemoveSubscriptionFromPublishers(sceneObject);
         }
@@ -81,6 +85,11 @@ namespace InterestManagement.Scripts
         {
             foreach (var region in regions)
             {
+                if (region == null)
+                {
+                    continue;
+                }
+
                 if (region.HasSubscription(sceneObject))
                 {
                     region.RemoveSubscriptionForAllSubscribers(sceneObject);
@@ -96,7 +105,7 @@ namespace InterestManagement.Scripts
                 return sceneObject;
             }
 
-            LogUtils.Log(MessageBuilder.Trace($"Could not find a scene object with id #{id}"), LogMessageType.Warning);
+            Debug.LogWarning($"Could not find a scene object with id #{id}");
             return null;
         }
 
