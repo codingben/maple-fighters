@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using CommonTools.Log;
 using TMPro;
 using UnityEngine;
 
@@ -19,7 +18,7 @@ namespace InterestManagement.Scripts
         {
             if (!regionText)
             {
-                Debug.LogWarning("Region text component is null.");
+                Debug.LogWarning("Region::Awake() -> Region text component is null.");
             }
         }
 
@@ -35,42 +34,42 @@ namespace InterestManagement.Scripts
         {
             if (!sceneObjects.Add(sceneObject))
             {
-                Debug.LogWarning(MessageBuilder.Trace($"A scene object with id #{sceneObject.Id} already exists in a region."));
+                Debug.LogWarning($"A scene object with id #{sceneObject.Id} already exists in a region.");
                 return;
             }
 
             AddSubscribersForSubscriber(sceneObject);
             AddSubscriberForSubscribers(sceneObject);
 
-            Debug.Log(MessageBuilder.Trace($"Added subscription id #{sceneObject.Id} to Region id #{Id}"));
+            Debug.Log($"Added subscription id #{sceneObject.Id} to Region id #{Id}");
         }
 
         public void RemoveSubscription(ISceneObject sceneObject)
         {
             if (!sceneObjects.Remove(sceneObject))
             {
-                Debug.LogWarning(MessageBuilder.Trace($"A scene object with id #{sceneObject.Id} does not exist in a region."));
+                Debug.LogWarning($"A scene object with id #{sceneObject.Id} does not exist in a region.");
                 return;
             }
 
             RemoveSubscribersForSubscriber(sceneObject);
             RemoveSubscriberForSubscribers(sceneObject);
 
-            Debug.Log(MessageBuilder.Trace($"Removed subscription id #{sceneObject.Id} from Region id #{Id}"));
+            Debug.Log($"Removed subscription id #{sceneObject.Id} from Region id #{Id}");
         }
 
         public void RemoveSubscriptionForAllSubscribers(ISceneObject sceneObject)
         {
             if (!sceneObjects.Remove(sceneObject))
             {
-                Debug.LogWarning(MessageBuilder.Trace($"A scene object with id #{sceneObject.Id} does not exist in a region."));
+                Debug.LogWarning($"A scene object with id #{sceneObject.Id} does not exist in a region.");
                 return;
             }
 
             RemoveAllSubscribersForSubscriber(sceneObject);
             RemoveSubscriberForAllSubscribers(sceneObject);
 
-            Debug.Log(MessageBuilder.Trace($"Removed subscription id #{sceneObject.Id} from Region id #{Id}"));
+            Debug.Log($"Removed subscription id #{sceneObject.Id} from Region id #{Id}");
         }
 
         /// <summary>

@@ -26,7 +26,7 @@ namespace InterestManagement.Scripts
         private void Move()
         {
             var newPosition = new Vector3(target.position.x, target.position.y, transform.position.z);
-            transform.position = Vector3.Lerp(transform.position, newPosition, speed * Time.smoothDeltaTime);
+            transform.position = Vector3.Lerp(transform.position, newPosition, speed * Time.deltaTime);
         }
     }
 }

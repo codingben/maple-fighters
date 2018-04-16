@@ -8,6 +8,8 @@ namespace InterestManagement.Scripts
 {
     public class Scene : MonoBehaviour, IScene, ISceneEvents
     {
+        public const string SCENE_TAG = "Scene";
+
         public event Action RegionsCreated;
         public Vector2 RegionSize => regionSize;
 

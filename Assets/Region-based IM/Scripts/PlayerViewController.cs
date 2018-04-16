@@ -8,8 +8,6 @@ namespace InterestManagement.Scripts
 
         private void Start()
         {
-            interestAreaEvents = GetComponent<IInterestAreaEvents>();
-
             SubscribeToInterestAreaEvents();
         }
 
@@ -20,6 +18,7 @@ namespace InterestManagement.Scripts
 
         private void SubscribeToInterestAreaEvents()
         {
+            interestAreaEvents = GetComponent<IInterestAreaEvents>();
             if (interestAreaEvents != null)
             {
                 interestAreaEvents.SubscribersAdded += OnSubscribersAdded;

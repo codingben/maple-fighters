@@ -18,7 +18,7 @@ namespace InterestManagement.Scripts
 
         private void Start()
         {
-            scene = GameObject.FindGameObjectWithTag("Scene").GetComponent<IScene>();
+            scene = GameObject.FindGameObjectWithTag(Scene.SCENE_TAG).GetComponent<IScene>();
             scene?.AddSceneObject(this);
         }
 

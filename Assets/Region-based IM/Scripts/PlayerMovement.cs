@@ -10,8 +10,7 @@ namespace InterestManagement.Scripts
         {
             var horizontal = Input.GetAxis("Horizontal");
             var vertical = Input.GetAxis("Vertical");
-
-            transform.Translate(new Vector3(horizontal * speed, vertical * speed) * Time.smoothDeltaTime);
+            transform.Translate(new Vector3(horizontal * speed, vertical * speed) * Time.deltaTime);
         }
     }
 }
