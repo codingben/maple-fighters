@@ -8,12 +8,12 @@ namespace Scripts.Gameplay.Actors
     {
         [SerializeField] private DummyCharacter dummyCharacter;
 
-        public EnterSceneResponseParameters GetDummyCharacterParameters() =>
-            DummyCharacter.CreateDummyCharacter(dummyCharacter.Id, dummyCharacter.Name, dummyCharacter.CharacterClass, dummyCharacter.spawnPosition, dummyCharacter.spawnDirection);
-
-        private void Start()
+        public EnterSceneResponseParameters GetDummyCharacterParameters()
         {
             Destroy(gameObject);
+
+            return DummyCharacter.CreateDummyCharacter(dummyCharacter.Id, dummyCharacter.Name, dummyCharacter.CharacterClass,
+                dummyCharacter.spawnPosition, dummyCharacter.spawnDirection);
         }
     }
 }

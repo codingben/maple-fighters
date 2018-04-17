@@ -9,13 +9,14 @@ namespace InterestManagement.Scripts
     public class Scene : MonoBehaviour, IScene, ISceneEvents
     {
         public const string SCENE_TAG = "Scene";
+        private const string REGION_GAME_OBJECT_NAME = "Region";
 
         public event Action RegionsCreated;
         public Vector2 RegionSize => regionSize;
 
+        [Header("Interest Management")]
         [SerializeField] private Vector2 sceneSize;
         [SerializeField] private Vector2 regionSize;
-        [SerializeField] private GameObject regionGameObject;
 
         private IRegion[,] regions;
         private readonly HashSet<ISceneObject> sceneObjects = new HashSet<ISceneObject>();
@@ -36,6 +37,7 @@ namespace InterestManagement.Scripts
             var y = -(sceneSize.y / 2) + regionSize.y / 2;
 
             var regionId = 1;
+            var regionGameObject = Resources.Load<GameObject>(REGION_GAME_OBJECT_NAME);
 
             for (var i = 0; i < regionsX; i++)
             {
@@ -44,7 +46,6 @@ namespace InterestManagement.Scripts
                     var region = Instantiate(regionGameObject).GetComponent<Region>();
                     region.Id = regionId;
                     region.transform.position = new Vector3(x + (i * regionSize.x), y + (j * regionSize.y), region.transform.position.z);
-                    region.transform.localScale = new Vector3(regionSize.x, regionSize.y);
                     region.PublisherArea = new Rectangle(position: new Vector2(x + (i * regionSize.x), y + (j * regionSize.y)),
                         size: new Vector3(regionSize.x, regionSize.y));
 

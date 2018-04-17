@@ -28,7 +28,7 @@ namespace Scripts.World
             spriteRenderer = GetComponent<SpriteRenderer>();
         }
 
-        private void Start()
+        private void OnEnable()
         {
             switch (startingState)
             {

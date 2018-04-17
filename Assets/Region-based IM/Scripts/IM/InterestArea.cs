@@ -4,10 +4,9 @@ using UnityEngine;
 
 namespace InterestManagement.Scripts
 {
+    [RequireComponent(typeof(NearbySubscribers))]
     public class InterestArea : MonoBehaviour, IInterestArea
     {
-        [SerializeField] private Transform interestAreaGraphics;
-
         private IScene scene;
         private ISceneEvents sceneEvents;
         private ISceneObject sceneObject;
@@ -30,18 +29,19 @@ namespace InterestManagement.Scripts
             {
                 interestArea = new Rectangle(transform.position, scene.RegionSize);
             }
+        }
 
-            if (interestAreaGraphics == null)
+        private void Start()
+        {
+            DetectOverlapsWithRegions();
+        }
+
+        private void OnDestroy()
+        {
+            if (sceneEvents != null)
             {
-                Debug.LogWarning("InterestArea::Awake() -> Interest area graphics game object not found.");
+                sceneEvents.RegionsCreated -= OnRegionsCreated;
             }
-
-            if (interestAreaGraphics != null && scene != null)
-            {
-                interestAreaGraphics.localScale = new Vector3(scene.RegionSize.x, scene.RegionSize.y, interestAreaGraphics.localScale.z);
-            }
-
-            gameObject.AddComponent(typeof(NearbySubscribers));
         }
 
         private void OnRegionsCreated()

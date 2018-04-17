@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using CommonTools.Coroutines;
 using CommonTools.Log;
 using Scripts.Gameplay;
 using Scripts.Utils;
@@ -13,8 +12,6 @@ namespace Scripts.Containers
     public class SceneObjectsContainer : DontDestroyOnLoad<SceneObjectsContainer>
     {
         private readonly Dictionary<int, ISceneObject> sceneObjects = new Dictionary<int, ISceneObject>();
-        private readonly ExternalCoroutinesExecutor coroutinesExecutor = new ExternalCoroutinesExecutor();
-
         private int localSceneObjectId;
 
         protected override void OnAwake()
@@ -24,15 +21,8 @@ namespace Scripts.Containers
             SubscribeToEvents();
         }
 
-        private void Update()
-        {
-            coroutinesExecutor.Update();
-        }
-
         private void OnDestroy()
         {
-            coroutinesExecutor.Dispose();
-
             UnsubscribeFromEvents();
         }
 
@@ -108,29 +98,27 @@ namespace Scripts.Containers
             }
         }
 
-        private void AddSceneObject(SceneObjectParameters sceneObject)
+        private void AddSceneObject(SceneObjectParameters parameters)
         {
-            if (sceneObjects.ContainsKey(sceneObject.Id))
+            if (sceneObjects.ContainsKey(parameters.Id))
             {
-                LogUtils.Log(MessageBuilder.Trace($"Scene object with id #{sceneObject.Id} already exists."), LogMessageType.Warning);
+                LogUtils.Log(MessageBuilder.Trace($"Scene object with id #{parameters.Id} already exists."), LogMessageType.Warning);
                 return;
             }
 
-            var position = new Vector3(sceneObject.X, sceneObject.Y);
-            var obj = CreateSceneObject(sceneObject.Name, position);
-            if (obj == null)
+            var position = new Vector3(parameters.X, parameters.Y);
+            var sceneObject = CreateSceneObject(parameters.Name, position);
+            if (sceneObject == null)
             {
                 return;
             }
 
-            obj.name = sceneObject.Name;
+            sceneObject.name = parameters.Name;
 
-            var networkIdentity = obj.GetComponent<ISceneObject>();
-            networkIdentity.Id = sceneObject.Id;
+            var networkIdentity = GetNetworkIdentity(parameters.Id, sceneObject);
+            sceneObjects.Add(parameters.Id, networkIdentity);
 
-            sceneObjects.Add(sceneObject.Id, networkIdentity);
-
-            LogUtils.Log(MessageBuilder.Trace($"Added a new scene object with id #{sceneObject.Id}"));
+            LogUtils.Log(MessageBuilder.Trace($"Added a new scene object with id #{parameters.Id}"));
         }
 
         private void RemoveSceneObject(int id)
@@ -191,6 +179,20 @@ namespace Scripts.Containers
 
             LogUtils.Log(MessageBuilder.Trace($"Could not find a scene object with id #{id}"), LogMessageType.Warning);
             return null;
+        }
+
+        private ISceneObject GetNetworkIdentity(int id, GameObject sceneObject)
+        {
+            var networkIdentity = GetComponent<ISceneObject>();
+            if (networkIdentity != null)
+            {
+                networkIdentity.Id = id;
+                return networkIdentity;
+            }
+
+            networkIdentity = sceneObject.AddComponent<NetworkIdentity>();
+            networkIdentity.Id = id;
+            return networkIdentity;
         }
     }
 }

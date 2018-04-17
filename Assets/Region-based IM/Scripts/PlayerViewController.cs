@@ -6,7 +6,7 @@ namespace InterestManagement.Scripts
     {
         private IInterestAreaEvents interestAreaEvents;
 
-        private void Start()
+        private void Awake()
         {
             SubscribeToInterestAreaEvents();
         }

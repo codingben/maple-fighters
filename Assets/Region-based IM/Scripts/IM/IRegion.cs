@@ -4,6 +4,8 @@ namespace InterestManagement.Scripts
 {
     public interface IRegion
     {
+        int Id { get; }
+
         Rectangle PublisherArea { get; }
 
         void AddSubscription(ISceneObject sceneObject);

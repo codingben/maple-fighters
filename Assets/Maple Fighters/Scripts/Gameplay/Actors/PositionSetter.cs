@@ -7,7 +7,6 @@ using UnityEngine;
 
 namespace Scripts.Gameplay.Actors
 {
-    [RequireComponent(typeof(NetworkIdentity))]
     public class PositionSetter : MonoBehaviour
     {
         public event Action<Directions> DirectionChanged; 
@@ -15,11 +14,11 @@ namespace Scripts.Gameplay.Actors
         private const float SPEED = 15;
         private Vector3 position = Vector3.zero;
 
-        private NetworkIdentity networkIdentity;
+        private ISceneObject sceneObject;
 
         private void Awake()
         {
-            networkIdentity = GetComponent<NetworkIdentity>();
+            sceneObject = GetComponent<ISceneObject>();
         }
 
         private void Start()
@@ -37,7 +36,7 @@ namespace Scripts.Gameplay.Actors
         private void OnPositionChanged(SceneObjectPositionChangedEventParameters parameters)
         {
             var id = parameters.SceneObjectId;
-            if (networkIdentity.Id != id)
+            if (sceneObject.Id != id)
             {
                 return;
             }

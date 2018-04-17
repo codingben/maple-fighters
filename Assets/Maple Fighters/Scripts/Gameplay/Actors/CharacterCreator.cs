@@ -1,5 +1,4 @@
-﻿using CommonTools.Coroutines;
-using CommonTools.Log;
+﻿using CommonTools.Log;
 using Scripts.Containers;
 using Scripts.Utils;
 using Game.Common;
@@ -9,36 +8,13 @@ namespace Scripts.Gameplay.Actors
 {
     public class CharacterCreator : DontDestroyOnLoad<CharacterCreator>
     {
-        private readonly ExternalCoroutinesExecutor coroutinesExecutor = new ExternalCoroutinesExecutor();
-
         private void Start()
         {
             SubscribeToEvents();
-
-            if (!ServiceContainer.GameService.ServiceConnectionHandler.IsConnected())
-            {
-                CreateDummyCharacter();
-            }
-        }
-
-        private void CreateDummyCharacter()
-        {
-            var parameters = DummyCharacterDetails.Instance.AssertNotNull("Could not find dummy character details. Please add DummyCharacterDetails into a scene.")
-                .GetDummyCharacterParameters();
-
-            var gameScenePeerLogic = ServiceContainer.GameService.GetPeerLogic<IGameScenePeerLogicAPI>().AssertNotNull();
-            gameScenePeerLogic.SceneEntered?.Invoke(parameters);
-        }
-
-        private void Update()
-        {
-            coroutinesExecutor.Update();
         }
 
         private void OnDestroy()
         {
-            coroutinesExecutor.Dispose();
-
             UnsubscribeFromEvents();
         }
 

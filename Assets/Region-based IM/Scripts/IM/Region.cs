@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using TMPro;
 using UnityEngine;
 
 namespace InterestManagement.Scripts
@@ -10,25 +9,7 @@ namespace InterestManagement.Scripts
         public int Id { get; set; }
         public Rectangle PublisherArea { get; set; }
 
-        [SerializeField] private TextMeshPro regionText;
-
         private readonly HashSet<ISceneObject> sceneObjects = new HashSet<ISceneObject>();
-
-        private void Awake()
-        {
-            if (!regionText)
-            {
-                Debug.LogWarning("Region::Awake() -> Region text component is null.");
-            }
-        }
-
-        private void Update()
-        {
-            if (regionText != null)
-            {
-                regionText.text = $"Region Id: {Id} Entities: {sceneObjects.Count}";
-            }
-        }
 
         public void AddSubscription(ISceneObject sceneObject)
         {

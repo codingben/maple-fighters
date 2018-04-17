@@ -200,6 +200,53 @@ Transform:
   m_Father: {fileID: 507957442}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &298437731
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 298437733}
+  - component: {fileID: 298437732}
+  m_Layer: 0
+  m_Name: Dummy IM
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &298437732
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 298437731}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9436aa6885fdf243aa50d218bfbcced, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dummySceneObjects:
+  - Name: BlueSnail
+    Position: {x: -2, y: -8.1}
+  - Name: Portal
+    Position: {x: 12.5, y: -1.125}
+  showVisualGraphics: 0
+--- !u!4 &298437733
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 298437731}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1724481667}
+  m_Father: {fileID: 0}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &354198740
 GameObject:
   m_ObjectHideFlags: 0
@@ -1027,7 +1074,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4251996867058534, guid: ccc6c976ed85fb949a45d852df9bbedd, type: 2}
       propertyPath: m_RootOrder
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1684394793478968, guid: ccc6c976ed85fb949a45d852df9bbedd, type: 2}
       propertyPath: m_Name
@@ -1350,7 +1397,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4958778868778470, guid: c62798122d611604e8faee898620178f, type: 2}
       propertyPath: m_RootOrder
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 114181910534384476, guid: c62798122d611604e8faee898620178f,
         type: 2}
@@ -1371,6 +1418,11 @@ Prefab:
         type: 2}
       propertyPath: dummyCharacter.spawnDirection
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114181910534384476, guid: c62798122d611604e8faee898620178f,
+        type: 2}
+      propertyPath: dummyCharacter.Id
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c62798122d611604e8faee898620178f, type: 2}
@@ -2261,6 +2313,48 @@ Transform:
   m_Father: {fileID: 613930296}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1724481666
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1724481667}
+  - component: {fileID: 1724481668}
+  m_Layer: 0
+  m_Name: Scene
+  m_TagString: Scene
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1724481667
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1724481666}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 298437733}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1724481668
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1724481666}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 785e8eb3de4f3814db032aba0a12462d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneSize: {x: 30, y: 30}
+  regionSize: {x: 10, y: 5}
 --- !u!1 &1739647703
 GameObject:
   m_ObjectHideFlags: 0
@@ -2454,7 +2548,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4734854308829650, guid: 621d7263540066e48bf8d77e250ce2d8, type: 2}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 621d7263540066e48bf8d77e250ce2d8, type: 2}
