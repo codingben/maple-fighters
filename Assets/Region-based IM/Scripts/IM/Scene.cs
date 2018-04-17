@@ -17,6 +17,8 @@ namespace InterestManagement.Scripts
         [Header("Interest Management")]
         [SerializeField] private Vector2 sceneSize;
         [SerializeField] private Vector2 regionSize;
+        [Header("Visual Graphics")]
+        [SerializeField] private bool showVisualGraphics = true;
 
         private IRegion[,] regions;
         private readonly HashSet<ISceneObject> sceneObjects = new HashSet<ISceneObject>();
@@ -48,6 +50,11 @@ namespace InterestManagement.Scripts
                     region.transform.position = new Vector3(x + (i * regionSize.x), y + (j * regionSize.y), region.transform.position.z);
                     region.PublisherArea = new Rectangle(position: new Vector2(x + (i * regionSize.x), y + (j * regionSize.y)),
                         size: new Vector3(regionSize.x, regionSize.y));
+
+                    if (showVisualGraphics)
+                    {
+                        region.GetComponent<RegionVisualGraphics>()?.CreateRegionVisualGraphics();
+                    }
 
                     regions[i, j] = region;
 

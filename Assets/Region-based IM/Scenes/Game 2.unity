@@ -465,30 +465,9 @@ Prefab:
       propertyPath: m_RootOrder
       value: 4
       objectReference: {fileID: 0}
-    - target: {fileID: 114557463531402304, guid: c41ca7f7f4d7c654dbe86fc7009b7f28,
-        type: 2}
-      propertyPath: interestAreaGraphics
-      value: 
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c41ca7f7f4d7c654dbe86fc7009b7f28, type: 2}
   m_IsPrefabParent: 0
---- !u!1 &1104748294 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1488367611644938, guid: c41ca7f7f4d7c654dbe86fc7009b7f28,
-    type: 2}
-  m_PrefabInternal: {fileID: 1104748292}
---- !u!114 &1104748295
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1104748294}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cf2c9aab074ea5043af638e87e3f347a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &1469727244 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4607055039782234, guid: d3b55afbadf51a445a18a35671fa94c8,
@@ -533,28 +512,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 3
       objectReference: {fileID: 0}
-    - target: {fileID: 114645945822971514, guid: d3b55afbadf51a445a18a35671fa94c8,
-        type: 2}
-      propertyPath: interestAreaGraphics
-      value: 
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d3b55afbadf51a445a18a35671fa94c8, type: 2}
   m_IsPrefabParent: 0
---- !u!1 &1901209272 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1276315164564848, guid: d3b55afbadf51a445a18a35671fa94c8,
-    type: 2}
-  m_PrefabInternal: {fileID: 1901209271}
---- !u!114 &1901209273
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1901209272}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 56e89150c41c6174abb7dba8cba8e9db, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  showVisualGraphics: 1

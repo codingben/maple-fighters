@@ -12,14 +12,7 @@ using UnityEngine;
 
 namespace Assets.Scripts
 {
-    [Serializable]
-    public class DummySceneObject
-    {
-        public string Name;
-        public Vector2 Position;
-    }
-
-    public class DummyIM : MonoBehaviour
+    public class DummySceneObjects : MonoBehaviour
     {
         [SerializeField] private DummySceneObject[] dummySceneObjects;
 
@@ -62,10 +55,10 @@ namespace Assets.Scripts
             gameScenePeerLogic.SceneEntered?.Invoke(parameters);
 
             var id = parameters.SceneObject.Id;
-            var dummySceneObject = SceneObjectsContainer.Instance.GetRemoteSceneObject(id)
-                .AssertNotNull(MessageBuilder.Trace($"Could not find a scene object with id ${id}"))?.GetGameObject();
+            var dummySceneObject = SceneObjectsContainer.Instance.GetRemoteSceneObject(id)?.GetGameObject();
             if (dummySceneObject == null)
             {
+                LogUtils.Log(MessageBuilder.Trace($"Could not find a scene object with id ${id}"));
                 return;
             }
 
@@ -83,17 +76,6 @@ namespace Assets.Scripts
             }
 
             AddComponents(dummySceneObject, components);
-
-            var interestAreaVisualGraphics = dummySceneObject.GetComponent<InterestAreaVisualGraphics>();
-            if (interestAreaVisualGraphics != null)
-            {
-                const int Z = -1;
-                interestAreaVisualGraphics.InterestAreaGraphics.transform.localScale = new Vector3(
-                    interestAreaVisualGraphics.InterestAreaGraphics.transform.localScale.x,
-                    interestAreaVisualGraphics.InterestAreaGraphics.transform.localScale.y,
-                    Z
-                );
-            }
         }
 
         private void CreateDummySceneObjects()
@@ -106,10 +88,10 @@ namespace Assets.Scripts
 
             for (var i = 1; i < (id + 1); ++i)
             {
-                var dummySceneObject = SceneObjectsContainer.Instance.GetRemoteSceneObject(i)
-                    .AssertNotNull(MessageBuilder.Trace($"Could not find a scene object with id ${i}"))?.GetGameObject();
+                var dummySceneObject = SceneObjectsContainer.Instance.GetRemoteSceneObject(i)?.GetGameObject();
                 if (dummySceneObject == null)
                 {
+                    LogUtils.Log(MessageBuilder.Trace($"Could not find a scene object with id ${i}"));
                     continue;
                 }
 
@@ -126,17 +108,6 @@ namespace Assets.Scripts
                 }
 
                 AddComponents(dummySceneObject, components);
-
-                var interestAreaVisualGraphics = dummySceneObject.GetComponent<InterestAreaVisualGraphics>();
-                if (interestAreaVisualGraphics != null)
-                {
-                    const int Z = -1;
-                    interestAreaVisualGraphics.InterestAreaGraphics.transform.localScale = new Vector3(
-                        interestAreaVisualGraphics.InterestAreaGraphics.transform.localScale.x,
-                        interestAreaVisualGraphics.InterestAreaGraphics.transform.localScale.y,
-                        Z
-                    );
-                }
             }
 
             StartCoroutine(DisableNonPlayerEntity());
@@ -150,15 +121,19 @@ namespace Assets.Scripts
 
             for (var i = 1; i < (id + 1); ++i)
             {
-                var dummySceneObject = SceneObjectsContainer.Instance.GetRemoteSceneObject(i)
-                    .AssertNotNull(MessageBuilder.Trace($"Could not find a scene object with id ${i}"))?.GetGameObject();
-                var entity = dummySceneObject?.GetComponent<ISceneObject>().AssertNotNull();
+                var dummySceneObject = SceneObjectsContainer.Instance.GetRemoteSceneObject(i)?.GetGameObject();
+                if (dummySceneObject == null)
+                {
+                    LogUtils.Log(MessageBuilder.Trace($"Could not find a scene object with id ${i}"));
+                    continue;
+                }
 
+                var entity = dummySceneObject.GetComponent<ISceneObject>().AssertNotNull();
                 foreach (var region in localEntity.GetSubscribedPublishers())
                 {
                     if (!region.HasSubscription(entity))
                     {
-                        dummySceneObject?.gameObject.SetActive(false);
+                        dummySceneObject.gameObject.SetActive(false);
                     }
                 }
             }

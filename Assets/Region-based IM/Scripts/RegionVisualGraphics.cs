@@ -9,10 +9,7 @@ namespace InterestManagement.Scripts
     {
         private const string GAME_OBJECT_NAME = "Region Graphics";
 
-        [Header("Visual Graphics")]
-        [SerializeField] private bool showVisualGraphics = true;
         [SerializeField] private int regionTextIndex = 0;
-
         private TextMeshPro regionText;
 
         private IRegion region;
@@ -24,11 +21,6 @@ namespace InterestManagement.Scripts
 
             var sceneGameObject = GameObject.FindGameObjectWithTag(Scene.SCENE_TAG);
             scene = sceneGameObject.GetComponent<IScene>();
-
-            if (showVisualGraphics && scene != null)
-            {
-                CreateRegionVisualGraphics();
-            }
         }
 
         private void Update()
@@ -39,8 +31,13 @@ namespace InterestManagement.Scripts
             }
         }
 
-        private void CreateRegionVisualGraphics()
+        public void CreateRegionVisualGraphics()
         {
+            if (scene == null)
+            {
+                return;
+            }
+
             var interestAreaGraphics = Resources.Load<GameObject>(GAME_OBJECT_NAME);
             if(interestAreaGraphics == null)
             {
@@ -48,9 +45,9 @@ namespace InterestManagement.Scripts
             }
 
             interestAreaGraphics.transform.localScale = new Vector3(scene.RegionSize.x, scene.RegionSize.y, interestAreaGraphics.transform.localScale.z);
-            regionText = interestAreaGraphics.transform.GetChild(regionTextIndex).GetComponent<TextMeshPro>();
 
-            Instantiate(interestAreaGraphics, transform);
+            var interestAreaGraphicsGameObject = Instantiate(interestAreaGraphics, transform);
+            regionText = interestAreaGraphicsGameObject.transform.GetChild(regionTextIndex).GetComponent<TextMeshPro>();
         }
     }
 }

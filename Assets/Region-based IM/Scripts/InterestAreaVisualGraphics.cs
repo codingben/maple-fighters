@@ -28,14 +28,12 @@ namespace InterestManagement.Scripts
         private void CreateInterestAreaVisualGraphics()
         {
             InterestAreaGraphics = Resources.Load<GameObject>(GAME_OBJECT_NAME);
-            if (InterestAreaGraphics == null)
+            if (InterestAreaGraphics != null)
             {
-                return;
+                InterestAreaGraphics.transform.localScale = new Vector3(scene.RegionSize.x, scene.RegionSize.y,
+                    InterestAreaGraphics.transform.localScale.z);
+                Instantiate(InterestAreaGraphics, transform);
             }
-
-            InterestAreaGraphics.transform.localScale = new Vector3(scene.RegionSize.x, scene.RegionSize.y, InterestAreaGraphics.transform.localScale.z);
-
-            Instantiate(InterestAreaGraphics, transform);
         }
     }
 }
