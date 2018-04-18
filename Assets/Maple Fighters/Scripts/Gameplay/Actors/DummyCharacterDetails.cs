@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace Scripts.Gameplay.Actors
 {
+    // TODO: Remove
     public class DummyCharacterDetails : MonoSingleton<DummyCharacterDetails>
     {
         [SerializeField] private DummyCharacter dummyCharacter;

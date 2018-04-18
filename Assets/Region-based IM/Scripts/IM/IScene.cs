@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Scripts.Gameplay;
+using UnityEngine;
 
 namespace InterestManagement.Scripts
 {

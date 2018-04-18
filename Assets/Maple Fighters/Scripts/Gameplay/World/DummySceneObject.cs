@@ -7,6 +7,8 @@ namespace Assets.Scripts
     public class DummySceneObject
     {
         public string Name;
+        public int Id;
         public Vector2 Position;
+        public Action<GameObject> AddComponents;
     }
 }

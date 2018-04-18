@@ -30,40 +30,35 @@ namespace Scripts.World
 
         public void StartInteraction()
         {
-            if (isTeleporting)
+            if (!isTeleporting)
             {
-                return;
+                var screenFade = UserInterfaceContainer.Instance.Get<ScreenFade>().AssertNotNull();
+                screenFade?.Show(Teleport);
             }
-
-            var screenFade = UserInterfaceContainer.Instance.Get<ScreenFade>().AssertNotNull();
-            screenFade?.Show(Teleport);
         }
 
         public void StopInteraction()
         {
             if (isTeleporting)
             {
-                return;
+                var screenFade = UserInterfaceContainer.Instance.Get<ScreenFade>().AssertNotNull();
+                screenFade?.Hide();
+
+                coroutinesExecutor.Dispose();
             }
-
-            var screenFade = UserInterfaceContainer.Instance.Get<ScreenFade>().AssertNotNull();
-            screenFade?.Hide();
-
-            coroutinesExecutor.Dispose();
         }
 
         private void Teleport()
         {
             isTeleporting = true;
-
             coroutinesExecutor.StartTask(ChangeScene, exception => ServiceConnectionProviderUtils.OnOperationFailed());
         }
 
         private async Task ChangeScene(IYield yield)
         {
-            var networkIdentity = GetComponent<NetworkIdentity>();
+            var sceneObject = GetComponent<ISceneObject>();
             var gameScenePeerLogic = ServiceContainer.GameService.GetPeerLogic<IGameScenePeerLogicAPI>().AssertNotNull();
-            var responseParameters = await gameScenePeerLogic.ChangeScene(yield, new ChangeSceneRequestParameters(networkIdentity.Id));
+            var responseParameters = await gameScenePeerLogic.ChangeScene(yield, new ChangeSceneRequestParameters(sceneObject.Id));
             var map = responseParameters.Map;
             if (map == 0)
             {

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using Scripts.Gameplay;
+
 namespace InterestManagement.Scripts
 {
     public interface IInterestAreaEvents

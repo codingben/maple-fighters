@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Game.Common;
 using Scripts.Containers;
 using Scripts.Gameplay.Actors;
 using Scripts.Services;
@@ -19,8 +18,14 @@ namespace Scripts.Gameplay
             CreateGameSystems(GetContainersComponents());
             CreateGameSystems(GetGUIControllersComponents());
             CreateGameSystems(GetConnectionProviderComponents());
+            CreateGameSystems(GetControllersComponents());
 
             Destroy(gameObject);
+        }
+
+        private IEnumerable<Type> GetControllersComponents()
+        {
+            yield return typeof(GameScenesController);
         }
 
         private IEnumerable<Type> GetCreatorsComponents()
@@ -33,10 +38,6 @@ namespace Scripts.Gameplay
             if (ServiceContainer.GameService.ServiceConnectionHandler.IsConnected())
             {
                 yield return typeof(EnterSceneInvoker);
-            }
-            else
-            {
-                ServiceContainer.GameService.SetPeerLogic<GameScenePeerLogic, GameOperations, GameEvents>();
             }
         }
 

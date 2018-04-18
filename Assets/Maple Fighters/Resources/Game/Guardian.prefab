@@ -90,6 +90,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4767100953068380}
+  - component: {fileID: 114686676719352746}
   m_Layer: 0
   m_Name: Guardian
   m_TagString: Untagged
@@ -298,6 +299,18 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: Guardian
+--- !u!114 &114686676719352746
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1686953422270814}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed66d6b0c6100b742897ba2510e288ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: 0
 --- !u!114 &114699999040006202
 MonoBehaviour:
   m_ObjectHideFlags: 1

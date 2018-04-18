@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Scripts.Gameplay;
 using UnityEngine;
 
 namespace InterestManagement.Scripts

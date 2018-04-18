@@ -209,6 +209,7 @@ GameObject:
   m_Component:
   - component: {fileID: 298437733}
   - component: {fileID: 298437732}
+  - component: {fileID: 298437734}
   m_Layer: 0
   m_Name: Dummy Scene Objects
   m_TagString: Untagged
@@ -227,11 +228,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae0be70c8c50c1e48a7c8ea92b69f532, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dummySceneObjects:
-  - Name: BlueSnail
-    Position: {x: -2, y: -8.1}
-  - Name: Portal
-    Position: {x: 12.5, y: -1.125}
   showVisualGraphics: 0
 --- !u!4 &298437733
 Transform:
@@ -244,8 +240,19 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1724481667}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &298437734
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 298437731}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc84396760fb9514281088a2964bf91d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &354198740
 GameObject:
   m_ObjectHideFlags: 0
@@ -313,6 +320,46 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   groundInteraction: 274
+--- !u!1 &492292231
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 492292232}
+  - component: {fileID: 492292233}
+  m_Layer: 0
+  m_Name: Dummy Peer Logics
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &492292232
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 492292231}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1724481667}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &492292233
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 492292231}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 194457dcd1c43a7488d8c6fc38454bf0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &507957440
 GameObject:
   m_ObjectHideFlags: 0
@@ -1396,7 +1443,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4958778868778470, guid: c62798122d611604e8faee898620178f, type: 2}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 114181910534384476, guid: c62798122d611604e8faee898620178f,
         type: 2}
@@ -2332,7 +2379,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1724481667
 Transform:
   m_ObjectHideFlags: 0
@@ -2343,6 +2390,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 492292232}
   - {fileID: 298437733}
   - {fileID: 1025816376}
   m_Father: {fileID: 0}

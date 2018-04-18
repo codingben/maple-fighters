@@ -1,29 +1,29 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using CommonTools.Log;
 using Game.Common;
 using InterestManagement.Scripts;
 using Scripts.Containers;
+using Scripts.Gameplay;
 using Scripts.Gameplay.Actors;
 using Scripts.Services;
 using UnityEngine;
 
 namespace Assets.Scripts
 {
-    public class DummySceneObjects : MonoBehaviour
+    public class DummySceneObjectsCreator : MonoBehaviour
     {
-        [SerializeField] private DummySceneObject[] dummySceneObjects;
-
         [Header("Visual Graphics")]
         public bool showVisualGraphics;
 
-        private int id;
         private ISceneEvents sceneEvents;
+        private IDummySceneObjectsProvider dummySceneObjectsProvider;
 
         private void Awake()
         {
+            dummySceneObjectsProvider = GetComponent<IDummySceneObjectsProvider>().AssertNotNull();
+
             var sceneGameObject = GameObject.FindGameObjectWithTag(Scene.SCENE_TAG);
             sceneEvents = sceneGameObject.GetComponent<ISceneEvents>();
             if (sceneEvents != null)
@@ -62,52 +62,39 @@ namespace Assets.Scripts
                 return;
             }
 
-            var components = new List<Type>
-            {
-                typeof(Entity),
-                typeof(InterestArea),
-                typeof(NearbySubscribers),
-                typeof(PlayerViewController)
-            };
-
             if (showVisualGraphics)
             {
-                components.Add(typeof(InterestAreaVisualGraphics));
+                dummySceneObject.AddComponent(typeof(InterestAreaVisualGraphics));
             }
 
-            AddComponents(dummySceneObject, components);
+            dummySceneObject.AddComponent(typeof(InterestArea));
+            dummySceneObject.AddComponent(typeof(PlayerViewController));
         }
 
         private void CreateDummySceneObjects()
         {
-            foreach (var dummyParameters in GetDummySceneObjects())
+            foreach (var dummyParameters in GetDummySceneObjectsParameters())
             {
                 var gameScenePeerLogic = ServiceContainer.GameService.GetPeerLogic<IGameScenePeerLogicAPI>().AssertNotNull();
                 gameScenePeerLogic.SceneObjectAdded?.Invoke(dummyParameters);
             }
 
-            for (var i = 1; i < (id + 1); ++i)
+            foreach (var dummySceneObject in dummySceneObjectsProvider.GetSceneObjects())
             {
-                var dummySceneObject = SceneObjectsContainer.Instance.GetRemoteSceneObject(i)?.GetGameObject();
-                if (dummySceneObject == null)
+                var id = dummySceneObject.Id;
+                var sceneObject = SceneObjectsContainer.Instance.GetRemoteSceneObject(id)?.GetGameObject();
+                if (sceneObject == null)
                 {
-                    LogUtils.Log(MessageBuilder.Trace($"Could not find a scene object with id ${i}"));
+                    LogUtils.Log(MessageBuilder.Trace($"Could not find a scene object with id ${id}"));
                     continue;
                 }
 
-                var components = new List<Type>
-                {
-                    typeof(Entity),
-                    typeof(InterestArea),
-                    typeof(NearbySubscribers)
-                };
-
                 if (showVisualGraphics)
                 {
-                    components.Add(typeof(InterestAreaVisualGraphics));
+                    sceneObject.AddComponent(typeof(InterestAreaVisualGraphics));
                 }
 
-                AddComponents(dummySceneObject, components);
+                dummySceneObject.AddComponents?.Invoke(sceneObject);
             }
 
             StartCoroutine(DisableNonPlayerEntity());
@@ -119,37 +106,31 @@ namespace Assets.Scripts
 
             var localEntity = SceneObjectsContainer.Instance.GetLocalSceneObject().GetGameObject().GetComponent<IInterestArea>().AssertNotNull();
 
-            for (var i = 1; i < (id + 1); ++i)
+            foreach (var dummySceneObject in dummySceneObjectsProvider.GetSceneObjects())
             {
-                var dummySceneObject = SceneObjectsContainer.Instance.GetRemoteSceneObject(i)?.GetGameObject();
-                if (dummySceneObject == null)
+                var id = dummySceneObject.Id;
+                var sceneObject = SceneObjectsContainer.Instance.GetRemoteSceneObject(id)?.GetGameObject();
+                if (sceneObject == null)
                 {
-                    LogUtils.Log(MessageBuilder.Trace($"Could not find a scene object with id ${i}"));
+                    LogUtils.Log(MessageBuilder.Trace($"Could not find a scene object with id ${id}"));
                     continue;
                 }
 
-                var entity = dummySceneObject.GetComponent<ISceneObject>().AssertNotNull();
+                var entity = sceneObject.GetComponent<ISceneObject>().AssertNotNull();
                 foreach (var region in localEntity.GetSubscribedPublishers())
                 {
                     if (!region.HasSubscription(entity))
                     {
-                        dummySceneObject.gameObject.SetActive(false);
+                        sceneObject.gameObject.SetActive(false);
                     }
                 }
             }
         }
 
-        private void AddComponents(GameObject dummySceneObject, IEnumerable<Type> components)
+        private IEnumerable<SceneObjectAddedEventParameters> GetDummySceneObjectsParameters()
         {
-            foreach (var component in components)
-            {
-                dummySceneObject.AddComponent(component);
-            }
-        }
-
-        private IEnumerable<SceneObjectAddedEventParameters> GetDummySceneObjects()
-        {
-            return dummySceneObjects.Select(dummySceneObject => new SceneObjectParameters(++id, dummySceneObject.Name, dummySceneObject.Position.x, dummySceneObject.Position.y))
+            return dummySceneObjectsProvider.GetSceneObjects()
+                .Select(dummySceneObject => new SceneObjectParameters(dummySceneObject.Id, dummySceneObject.Name, dummySceneObject.Position.x, dummySceneObject.Position.y))
                 .Select(parameters => new SceneObjectAddedEventParameters(parameters));
         }
     }

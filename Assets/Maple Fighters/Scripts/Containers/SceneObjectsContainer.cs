@@ -115,8 +115,10 @@ namespace Scripts.Containers
 
             sceneObject.name = parameters.Name;
 
-            var networkIdentity = GetNetworkIdentity(parameters.Id, sceneObject);
-            sceneObjects.Add(parameters.Id, networkIdentity);
+            var sceneObjectComponent = sceneObject.GetComponent<ISceneObject>();
+            sceneObjectComponent.Id = parameters.Id;
+
+            sceneObjects.Add(parameters.Id, sceneObjectComponent);
 
             LogUtils.Log(MessageBuilder.Trace($"Added a new scene object with id #{parameters.Id}"));
         }
@@ -140,13 +142,13 @@ namespace Scripts.Containers
         {
             const string SCENE_OBJECTS_FOLDER_PATH = "Game/{0}";
 
-            var obj = Resources.Load(string.Format(SCENE_OBJECTS_FOLDER_PATH, name)).AssertNotNull();
-            if (obj != null)
+            var sceneObject = Resources.Load(string.Format(SCENE_OBJECTS_FOLDER_PATH, name)).AssertNotNull($"Could not find {name} scene object.");
+            if (sceneObject != null)
             {
-                var sceneObject = Instantiate(obj, position, Quaternion.identity) as GameObject;
-                if (sceneObject != null)
+                var gameObject = Instantiate(sceneObject, position, Quaternion.identity) as GameObject;
+                if (gameObject != null)
                 {
-                    return sceneObject;
+                    return gameObject;
                 }
 
                 LogUtils.Log(MessageBuilder.Trace($"Could not create a scene object with name {name}"), LogMessageType.Error);
@@ -179,20 +181,6 @@ namespace Scripts.Containers
 
             LogUtils.Log(MessageBuilder.Trace($"Could not find a scene object with id #{id}"), LogMessageType.Warning);
             return null;
-        }
-
-        private ISceneObject GetNetworkIdentity(int id, GameObject sceneObject)
-        {
-            var networkIdentity = GetComponent<ISceneObject>();
-            if (networkIdentity != null)
-            {
-                networkIdentity.Id = id;
-                return networkIdentity;
-            }
-
-            networkIdentity = sceneObject.AddComponent<NetworkIdentity>();
-            networkIdentity.Id = id;
-            return networkIdentity;
         }
     }
 }
