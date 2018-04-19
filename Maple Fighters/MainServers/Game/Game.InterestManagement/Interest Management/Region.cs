@@ -89,7 +89,7 @@ namespace InterestManagement
 
                 foreach (var subscriber in sceneObjects)
                 {
-                    var hasSubscription = GetSubscribedPublishers(subscriber)?.Any(x => x.HasSubscription(subscriber));
+                    var hasSubscription = GetSubscribedPublishers(subscriber)?.Any(x => x.HasSubscription(sceneObject));
                     if (hasSubscription != null && !hasSubscription.Value)
                     {
                         subscribersToRemoveList.Add(subscriber);
