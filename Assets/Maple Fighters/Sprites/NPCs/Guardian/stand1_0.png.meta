@@ -1,9 +1,10 @@
 fileFormatVersion: 2
 guid: 0f6d6064766855f46b9474066d87a5e2
-timeCreated: 1506435538
+timeCreated: 1524141812
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName: {}
+  externalObjects: {}
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -44,7 +45,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteBorder: {x: 0, y: 0, z: 4, w: 0}
   spritePixelsToUnits: 50
   alphaUsage: 1
   alphaIsTransparency: 1
@@ -57,6 +58,7 @@ TextureImporter:
   platformSettings:
   - buildTarget: DefaultTexturePlatform
     maxTextureSize: 8192
+    resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 2
     compressionQuality: 50
@@ -65,6 +67,7 @@ TextureImporter:
     overridden: 0
   - buildTarget: Standalone
     maxTextureSize: 8192
+    resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 2
     compressionQuality: 50
@@ -73,6 +76,7 @@ TextureImporter:
     overridden: 0
   - buildTarget: WebGL
     maxTextureSize: 8192
+    resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 2
     compressionQuality: 50
@@ -82,8 +86,34 @@ TextureImporter:
   spriteSheet:
     serializedVersion: 2
     sprites: []
-    outline: []
-    physicsShape: []
+    outline:
+    - - {x: 14, y: 3.5}
+      - {x: 16, y: 0.5}
+      - {x: 19, y: 1.5}
+      - {x: 25, y: 6.5}
+      - {x: 13, y: 36.5}
+      - {x: -21, y: 36.5}
+      - {x: -28, y: 33.5}
+      - {x: -28, y: -16.5}
+      - {x: -24, y: -34.5}
+      - {x: 20, y: -34.5}
+      - {x: 26, y: -21.5}
+      - {x: 26, y: -12.5}
+      - {x: 14, y: 0.5}
+    physicsShape:
+    - - {x: 14, y: 3.5}
+      - {x: 16, y: 0.5}
+      - {x: 19, y: 1.5}
+      - {x: 25, y: 6.5}
+      - {x: 13, y: 36.5}
+      - {x: -21, y: 36.5}
+      - {x: -28, y: 33.5}
+      - {x: -28, y: -16.5}
+      - {x: -24, y: -34.5}
+      - {x: 20, y: -34.5}
+      - {x: 26, y: -21.5}
+      - {x: 26, y: -12.5}
+      - {x: 14, y: 0.5}
   spritePackingTag: 
   userData: 
   assetBundleName: 

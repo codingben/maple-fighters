@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 222533289541078324}
   - component: {fileID: 114294286452158982}
   - component: {fileID: 223883472008175846}
+  - component: {fileID: 114636907088949808}
   m_Layer: 0
   m_Name: Text
   m_TagString: Untagged
@@ -75,6 +76,7 @@ GameObject:
   - component: {fileID: 114547476822811382}
   - component: {fileID: 223301235362989802}
   - component: {fileID: 114388627064294970}
+  - component: {fileID: 114778788380026166}
   m_Layer: 0
   m_Name: Name Text
   m_TagString: Untagged
@@ -299,6 +301,18 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: Guardian
+--- !u!114 &114636907088949808
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1034734239042624}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ffcdb701b6439d348b25bef7ddabaecb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parent: {fileID: 4767100953068380}
 --- !u!114 &114686676719352746
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -327,6 +341,18 @@ MonoBehaviour:
   hideSpeed: 1
   fadeColor: {r: 1, g: 1, b: 1, a: 0.78431374}
   unFadeColor: {r: 1, g: 1, b: 1, a: 0}
+--- !u!114 &114778788380026166
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1621121282164936}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ffcdb701b6439d348b25bef7ddabaecb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parent: {fileID: 4767100953068380}
 --- !u!212 &212321321135036826
 SpriteRenderer:
   m_ObjectHideFlags: 1

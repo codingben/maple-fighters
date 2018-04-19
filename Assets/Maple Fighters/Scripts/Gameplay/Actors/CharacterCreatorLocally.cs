@@ -11,7 +11,7 @@ namespace Scripts.Gameplay.Actors
             base.Create(characterSpawnDetails);
 
             SetCharacterToPositionSender();
-            SetDirectionOnCreation();
+            ChangeCharacterDirection();
 
             InitializePlayerController();
         }
@@ -35,7 +35,7 @@ namespace Scripts.Gameplay.Actors
             positionSender.Character = character.transform;
         }
 
-        private void SetDirectionOnCreation()
+        private void ChangeCharacterDirection()
         {
             const float SCALE = 1;
 
@@ -54,23 +54,12 @@ namespace Scripts.Gameplay.Actors
                     break;
                 }
             }
-
-            SetCharacterNameDirection();
-        }
-
-        private void SetCharacterNameDirection()
-        {
-            var characterNameComponent = characterSprite.GetComponent<CharacterName>();
-            characterNameComponent.OnDirectionChanged(direction);
         }
 
         private void InitializePlayerController()
         {
             var playerStateAnimatorNetwork = characterSprite.AddComponent<PlayerStateAnimator>();
-            var characterName = characterSprite.GetComponent<CharacterName>();
-
             var playerController = character.GetComponent<PlayerController>();
-            playerController.DirectionChanged += characterName.OnDirectionChanged;
             playerController.PlayerStateChanged += playerStateAnimatorNetwork.OnPlayerStateChanged;
         }
     }

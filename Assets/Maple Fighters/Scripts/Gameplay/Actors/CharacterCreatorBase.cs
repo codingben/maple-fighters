@@ -6,7 +6,7 @@ namespace Scripts.Gameplay.Actors
     public class CharacterCreatorBase : MonoBehaviour, ICharacterCreator
     {
         [Header("Sprite")]
-        public int OrderInLayer;
+        [SerializeField] protected int OrderInLayer;
 
         protected GameObject character;
         protected GameObject characterSprite;

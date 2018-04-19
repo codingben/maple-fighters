@@ -14,7 +14,6 @@ namespace Scripts.Gameplay.Actors
 
             InitializePlayerStateSetter();
             InitializeSpriteRenderer();
-            InitializeCharacterNameDirectionSetter();
             InitializeCharacterName(characterSpawnDetails.Character.Name);
         }
 
@@ -49,13 +48,6 @@ namespace Scripts.Gameplay.Actors
         {
             var playerStateSetter = GetComponent<PlayerStateSetter>();
             playerStateSetter.Animator = characterSprite.GetComponent<Animator>();
-        }
-
-        private void InitializeCharacterNameDirectionSetter()
-        {
-            var characterNameComponent = characterSprite.GetComponent<CharacterName>();
-            var positionSettter = GetComponent<PositionSetter>();
-            positionSettter.DirectionChanged += characterNameComponent.OnDirectionChanged;
         }
     }
 }
