@@ -1,5 +1,4 @@
-﻿using Scripts.Gameplay.Actors;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Scripts.World
 {
@@ -12,7 +11,8 @@ namespace Scripts.World
             var portalGameObject = collider.transform;
             if (portalGameObject.CompareTag(PORTAL_TAG))
             {
-                portalGameObject.GetComponent<PortalController>().StartInteraction();
+                var portalController = portalGameObject.GetComponent<PortalController>();
+                portalController.StartInteraction();
             }
         }
 
@@ -21,7 +21,8 @@ namespace Scripts.World
             var portalGameObject = collider.transform;
             if (portalGameObject.CompareTag(PORTAL_TAG))
             {
-                portalGameObject.GetComponent<PortalController>().StopInteraction();
+                var portalController = portalGameObject.GetComponent<PortalController>();
+                portalController.StopInteraction();
             }
         }
     }

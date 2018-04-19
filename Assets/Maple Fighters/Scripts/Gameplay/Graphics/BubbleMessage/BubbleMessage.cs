@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using Scripts.World;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -6,7 +7,6 @@ namespace Assets.Scripts.Graphics
 {
     public class BubbleMessage : MonoBehaviour
     {
-        [SerializeField] private int time;
         [SerializeField] private Vector2 position;
         [SerializeField] private Text messageText;
 
@@ -15,17 +15,19 @@ namespace Assets.Scripts.Graphics
             transform.position = new Vector3(transform.position.x + position.x, transform.position.y + position.y);
         }
 
-        public void Initialize(string message)
+        public void Initialize(string message, int time)
         {
             messageText.text = message;
 
-            StartCoroutine(WaitForDestroy());
+            StartCoroutine(WaitForDestroy(time));
         }
 
-        private IEnumerator WaitForDestroy()
+        private IEnumerator WaitForDestroy(int time)
         {
             yield return new WaitForSeconds(time);
-            Destroy(gameObject);
+
+            var fadeEffect = GetComponent<FadeEffect>();
+            fadeEffect?.UnFade(() => Destroy(gameObject));
         }
     }
 }

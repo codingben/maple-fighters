@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 
 namespace Scripts.World
@@ -45,7 +46,7 @@ namespace Scripts.World
             }
         }
 
-        private void Fade()
+        public void Fade(Action onFinished = null)
         {
             spriteRenderer.color = unFadeColor;
 
@@ -54,10 +55,10 @@ namespace Scripts.World
                 StopCoroutine(fadeCoroutine);
             }
 
-            fadeCoroutine = StartCoroutine(FadeRoutine(showSpeed));
+            fadeCoroutine = StartCoroutine(FadeRoutine(showSpeed, onFinished));
         }
 
-        private void UnFade()
+        public void UnFade(Action onFinished = null)
         {
             spriteRenderer.color = fadeColor;
 
@@ -66,10 +67,10 @@ namespace Scripts.World
                 StopCoroutine(fadeCoroutine);
             }
 
-            fadeCoroutine = StartCoroutine(UnFadeRoutine(hideSpeed));
+            fadeCoroutine = StartCoroutine(UnFadeRoutine(hideSpeed, onFinished));
         }
 
-        private IEnumerator FadeRoutine(float speed)
+        private IEnumerator FadeRoutine(float speed, Action onFinished)
         {
             var color = new Color(0, 0, 0, 0.25f);
 
@@ -77,6 +78,7 @@ namespace Scripts.World
             {
                 if (spriteRenderer.color.a >= fadeColor.a)
                 {
+                    onFinished?.Invoke();
                     yield break;
                 }
 
@@ -85,7 +87,7 @@ namespace Scripts.World
             }
         }
 
-        private IEnumerator UnFadeRoutine(float speed)
+        private IEnumerator UnFadeRoutine(float speed, Action onFinished)
         {
             var color = new Color(0, 0, 0, 1);
 
@@ -93,6 +95,7 @@ namespace Scripts.World
             {
                 if (spriteRenderer.color.a <= 0)
                 {
+                    onFinished?.Invoke();
                     yield break;
                 }
 

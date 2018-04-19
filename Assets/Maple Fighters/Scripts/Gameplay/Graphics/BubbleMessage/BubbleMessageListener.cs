@@ -28,7 +28,8 @@ namespace Assets.Scripts.Graphics
             {
                 var owner = sceneObject.GetGameObject().transform;
                 var message = parameters.Message;
-                BubbleMessageCreator.Create(owner, message);
+                var time = parameters.Time;
+                BubbleMessageCreator.Create(owner, message, time);
             }
         }
     }
