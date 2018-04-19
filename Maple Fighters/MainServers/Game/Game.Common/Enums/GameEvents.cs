@@ -10,6 +10,7 @@
         CharactersAdded,
         PositionChanged,
         PlayerStateChanged,
-        PlayerAttacked
+        PlayerAttacked,
+        BubbleMessage
     }
 }

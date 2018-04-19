@@ -56,6 +56,7 @@
     <Compile Include="Enums\Character\CharacterIndex.cs" />
     <Compile Include="Enums\Character\CharacterOperations.cs" />
     <Compile Include="Enums\Character\RemoveCharacterStatus.cs" />
+    <Compile Include="Parameters\BubbleMessageEventParameters.cs" />
     <Compile Include="Parameters\ChangeSceneRequestParameters.cs" />
     <Compile Include="Parameters\ChangeSceneResponseParameters.cs" />
     <Compile Include="Parameters\CharacterAddedEventParameters.cs" />

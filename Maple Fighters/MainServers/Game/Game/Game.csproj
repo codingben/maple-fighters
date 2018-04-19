@@ -104,6 +104,7 @@
     <Compile Include="Application\Components\Scene\Interfaces\ISceneContainer.cs" />
     <Compile Include="Application\Components\Scene\Map\PhysicsMapCreator.cs" />
     <Compile Include="Application\Components\Scene\SceneContainer.cs" />
+    <Compile Include="Application\Game Objects\NPCs\BubbleMessageNotifier.cs" />
     <Compile Include="Application\Peer Logics\Components\CharacterSender.cs" />
     <Compile Include="Application\Peer Logics\Components\Interfaces\IPeerIdGetter.cs" />
     <Compile Include="Application\Peer Logics\Components\Interfaces\IPlayerGameObjectGetter.cs" />
@@ -134,7 +135,7 @@
     <Compile Include="Application\Game Objects\GameObject\BodyGameObject.cs" />
     <Compile Include="Application\Game Objects\GameObject\GameObject.cs" />
     <Compile Include="Application\Game Objects\Mobs\MobBase.cs" />
-    <Compile Include="Application\Game Objects\NPCs\Guardian.cs" />
+    <Compile Include="Application\Game Objects\NPCs\Guardian\Guardian.cs" />
     <Compile Include="Application\Game Objects\Components\PhysicsCollision.cs" />
     <Compile Include="Application\Game Objects\Player\PlayerGameObject.cs" />
     <Compile Include="Application\Game Objects\Portal\Interfaces\IPortalInfoProvider.cs" />

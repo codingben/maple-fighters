@@ -18,9 +18,13 @@ direction = data["Direction"]
 
 position = Vector2(x, y)
 
+message = "Dangerously there!!"
+
 if direction > 0:
 	guardian = Guardian(name, position, Direction.Left)
 	scene.CreateSceneObject(guardian)
+	guardian.CreateBubbleMessageNotifier(message)
 else:
 	guardian = Guardian(name, position, Direction.Right)
 	scene.CreateSceneObject(guardian)
+	guardian.CreateBubbleMessageNotifier(message)

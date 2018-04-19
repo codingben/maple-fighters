@@ -10,5 +10,10 @@ namespace Game.Application.GameObjects
         {
             // Left blank intentionally
         }
+
+        public void CreateBubbleMessageNotifier(string message)
+        {
+            Components.AddComponent(new BubbleMessageNotifier(message));
+        }
     }
 }
