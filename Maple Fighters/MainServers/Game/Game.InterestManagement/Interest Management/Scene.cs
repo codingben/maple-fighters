@@ -39,7 +39,7 @@ namespace InterestManagement
             RegionSize = regionSize;
         }
 
-        public ISceneObject AddSceneObject(ISceneObject sceneObject, bool onAwake = true)
+        public ISceneObject AddSceneObject(ISceneObject sceneObject)
         {
             if (!sceneObjects.Add(sceneObject))
             {
@@ -48,7 +48,6 @@ namespace InterestManagement
             }
 
             Log();
-            Awake();
             return sceneObject;
 
             void Log()
@@ -59,20 +58,9 @@ namespace InterestManagement
                     LogUtils.Log(MessageBuilder.Trace($"A new scene object: {sceneObject.Name} Id: {sceneObject.Id}"));
                 }
             }
-
-            void Awake()
-            {
-                var presenceSceneProvider = sceneObject.Components.GetComponent<IPresenceSceneProvider>().AssertNotNull();
-                presenceSceneProvider.SetScene(this);
-
-                if (onAwake)
-                {
-                    sceneObject.OnAwake();
-                }
-            }
         }
 
-        public void RemoveSceneObject(ISceneObject sceneObject, bool onDestroy = true)
+        public void RemoveSceneObject(ISceneObject sceneObject)
         {
             if (!sceneObjects.Remove(sceneObject))
             {
@@ -81,8 +69,6 @@ namespace InterestManagement
             }
 
             Log();
-            Destroy();
-
             RemoveSubscriptionFromPublishers();
 
             void Log()
@@ -96,17 +82,6 @@ namespace InterestManagement
                 }
             }
 
-            void Destroy()
-            {
-                if (onDestroy)
-                {
-                    sceneObject.OnDestroy();
-                }
-
-                var presenceSceneProvider = sceneObject.Components?.GetComponent<IPresenceSceneProvider>()?.AssertNotNull();
-                presenceSceneProvider?.SetScene(null);
-            }
-            
             void RemoveSubscriptionFromPublishers()
             {
                 foreach (var region in regions)

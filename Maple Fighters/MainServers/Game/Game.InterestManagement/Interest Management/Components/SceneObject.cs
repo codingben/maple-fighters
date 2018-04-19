@@ -21,18 +21,25 @@ namespace InterestManagement.Components
             Components.AddComponent(new PresenceSceneProvider());
         }
 
-        public virtual void OnAwake()
+        public void Awake()
+        {
+            OnAwake();
+        }
+
+        protected virtual void OnAwake()
         {
             // Left blank intentionally
         }
 
-        public virtual void OnDestroy()
+        protected virtual void OnDestroy()
         {
             // Left blank intentionally
         }
 
         public void Dispose()
         {
+            OnDestroy();
+
             var presenceSceneProvider = Components.GetComponent<IPresenceSceneProvider>().AssertNotNull();
             presenceSceneProvider.GetScene().RemoveSceneObject(this);
 

@@ -7,7 +7,6 @@ namespace InterestManagement.Components.Interfaces
         int Id { get; }
         string Name { get; }
 
-        void OnAwake();
-        void OnDestroy();
+        void Awake();
     }
 }

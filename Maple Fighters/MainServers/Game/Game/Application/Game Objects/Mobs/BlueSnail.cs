@@ -38,7 +38,7 @@ namespace Game.Application.GameObjects
             this.distance = distance;
         }
 
-        public override void OnAwake()
+        protected override void OnAwake()
         {
             base.OnAwake();
 
@@ -53,7 +53,7 @@ namespace Game.Application.GameObjects
             executor.GetPreUpdateExecutor().StartCoroutine(MoveMob());
         }
 
-        public override void OnDestroy()
+        protected override void OnDestroy()
         {
             base.OnDestroy();
 

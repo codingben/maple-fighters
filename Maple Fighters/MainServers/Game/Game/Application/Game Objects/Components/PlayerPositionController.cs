@@ -88,14 +88,7 @@ namespace Game.Application.GameObjects.Components
                 case PlayerState.Idle:
                 case PlayerState.Moving:
                 {
-                    if (body.GetMass() == 0)
-                    {
-                        body.SetMassFromShapes();
-                    }
-                    else
-                    {
-                        body.SetXForm(positionTransform.Position.FromVector2(), body.GetAngle());
-                    }
+                    MovingState();
                     break;
                 }
                 case PlayerState.Jumping:
@@ -103,19 +96,36 @@ namespace Game.Application.GameObjects.Components
                 case PlayerState.Rope:
                 case PlayerState.Ladder:
                 {
-                    if (body.GetMass() > 0)
-                    {
-                        body.SetMass(new MassData());
-                    }
-                    else
-                    {
-                        body.SetXForm(positionTransform.Position.FromVector2(), body.GetAngle());
-                    }
+                    LadderState();
                     break;
                 }
             }
 
             lastPosition = positionTransform.Position;
+
+            void MovingState()
+            {
+                if (body.GetMass() == 0)
+                {
+                    body.SetMassFromShapes();
+                }
+                else
+                {
+                    body.SetXForm(positionTransform.Position.FromVector2(), body.GetAngle());
+                }
+            }
+
+            void LadderState()
+            {
+                if (body.GetMass() > 0)
+                {
+                    body.SetMass(new MassData());
+                }
+                else
+                {
+                    body.SetXForm(positionTransform.Position.FromVector2(), body.GetAngle());
+                }
+            }
         }
     }
 }

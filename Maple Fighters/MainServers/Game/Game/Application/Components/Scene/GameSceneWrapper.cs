@@ -47,9 +47,19 @@ namespace Game.Application.Components
         public void CreateSceneObject(ISceneObject sceneObject)
         {
             var createdSceneObject = AddSceneObject(sceneObject);
-            var positionTransform = createdSceneObject.Components.GetComponent<IPositionTransform>().AssertNotNull();
-            var interestArea = createdSceneObject.Components.AddComponent(new InterestArea(positionTransform.Position, RegionSize));
-            interestArea.DetectOverlapsWithRegions();
+            var presenceSceneProvider = createdSceneObject.Components.GetComponent<IPresenceSceneProvider>().AssertNotNull();
+            presenceSceneProvider.SetScene(this);
+
+            AddCommonComponents();
+
+            createdSceneObject.Awake();
+
+            void AddCommonComponents()
+            {
+                var positionTransform = createdSceneObject.Components.GetComponent<IPositionTransform>().AssertNotNull();
+                var interestArea = createdSceneObject.Components.AddComponent(new InterestArea(positionTransform.Position, RegionSize));
+                interestArea.DetectOverlapsWithRegions();
+            }
         }
 
         public void AddCharacterSpawnDetails(TransformDetails transformDetails) => characterSpawnDetailsProvider.AddCharacterSpawnDetails(map, transformDetails);

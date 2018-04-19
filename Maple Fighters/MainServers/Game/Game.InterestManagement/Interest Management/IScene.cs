@@ -9,8 +9,8 @@ namespace InterestManagement
         Vector2 RegionSize { get; }
         IRegion[,] GetAllRegions();
 
-        ISceneObject AddSceneObject(ISceneObject sceneObject, bool onAwake = true);
-        void RemoveSceneObject(ISceneObject sceneObject, bool onDestroy = true);
+        ISceneObject AddSceneObject(ISceneObject sceneObject);
+        void RemoveSceneObject(ISceneObject sceneObject);
 
         ISceneObject GetSceneObject(int id);
     }

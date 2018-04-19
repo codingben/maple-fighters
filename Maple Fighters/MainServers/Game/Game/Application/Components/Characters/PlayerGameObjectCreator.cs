@@ -5,6 +5,7 @@ using Game.Application.GameObjects;
 using Game.Application.GameObjects.Components;
 using Game.Common;
 using InterestManagement.Components;
+using InterestManagement.Components.Interfaces;
 
 namespace Game.Application.Components
 {
@@ -36,9 +37,19 @@ namespace Game.Application.Components
             var scene = sceneContainer.GetSceneWrapper(MAP).AssertNotNull($"Could not find a scene with map {MAP}").GetScene();
             var character = new PlayerGameObject(spawnDetails);
             var sceneObject = scene.AddSceneObject(character);
-            sceneObject.Components.AddComponent(new InterestArea(spawnDetails.Position, scene.RegionSize));
-            sceneObject.Components.AddComponent(new PlayerPositionController());
+            var presenceSceneProvider = sceneObject.Components.GetComponent<IPresenceSceneProvider>().AssertNotNull();
+            presenceSceneProvider.SetScene(scene);
+
+            AddCommonComponents();
+
+            sceneObject.Awake();
             return character;
+
+            void AddCommonComponents()
+            {
+                sceneObject.Components.AddComponent(new InterestArea(spawnDetails.Position, scene.RegionSize));
+                sceneObject.Components.AddComponent(new PlayerPositionController());
+            }
         }
     }
 }

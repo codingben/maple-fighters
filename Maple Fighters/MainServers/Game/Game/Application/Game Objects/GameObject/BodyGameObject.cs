@@ -21,7 +21,7 @@ namespace Game.Application.GameObjects
             this.allowSleep = allowSleep;
         }
 
-        public override void OnAwake()
+        protected override void OnAwake()
         {
             base.OnAwake();
 
@@ -30,7 +30,7 @@ namespace Game.Application.GameObjects
             CreateBody();
         }
 
-        public override void OnDestroy()
+        protected override void OnDestroy()
         {
             base.OnDestroy();
 
