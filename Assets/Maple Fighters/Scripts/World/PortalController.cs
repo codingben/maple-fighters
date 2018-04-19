@@ -22,12 +22,6 @@ namespace Scripts.World
             coroutinesExecutor.ExecuteExternally();
         }
 
-        private void OnDestroy()
-        {
-            coroutinesExecutor.RemoveFromExternalExecutor();
-            coroutinesExecutor.Dispose();
-        }
-
         public void StartInteraction()
         {
             if (!isTeleporting)
@@ -43,15 +37,14 @@ namespace Scripts.World
             {
                 var screenFade = UserInterfaceContainer.Instance.Get<ScreenFade>().AssertNotNull();
                 screenFade?.Hide();
-
-                coroutinesExecutor.Dispose();
             }
         }
 
         private void Teleport()
         {
             isTeleporting = true;
-            coroutinesExecutor.StartTask(ChangeScene, exception => ServiceConnectionProviderUtils.OnOperationFailed());
+
+            coroutinesExecutor.StartTask(ChangeScene, onException: exception => ServiceConnectionProviderUtils.OnOperationFailed());
         }
 
         private async Task ChangeScene(IYield yield)
@@ -67,6 +60,8 @@ namespace Scripts.World
             }
 
             GameScenesController.Instance.LoadScene(map);
+
+            coroutinesExecutor.RemoveFromExternalExecutor();
         }
     }
 }

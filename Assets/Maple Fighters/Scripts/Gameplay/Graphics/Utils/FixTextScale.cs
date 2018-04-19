@@ -1,4 +1,5 @@
-﻿using Game.Common;
+﻿using CommonTools.Log;
+using Game.Common;
 using UnityEngine;
 
 namespace Assets.Scripts.Gameplay.Utils
@@ -11,11 +12,21 @@ namespace Assets.Scripts.Gameplay.Utils
 
         private void Awake()
         {
+            if (parent == null)
+            {
+                LogUtils.Log("Parent is null.");
+            }
+
             scale = transform.localScale.x;
         }
 
         private void Update()
         {
+            if (parent == null)
+            {
+                return;
+            }
+
             var direction = GetDirection();
             switch (direction)
             {

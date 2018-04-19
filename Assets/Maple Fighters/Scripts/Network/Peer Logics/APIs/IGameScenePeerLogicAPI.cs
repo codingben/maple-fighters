@@ -25,5 +25,7 @@ namespace Scripts.Services
 
         UnityEvent<CharacterAddedEventParameters> CharacterAdded { get; }
         UnityEvent<CharactersAddedEventParameters> CharactersAdded { get; }
+
+        UnityEvent<BubbleMessageEventParameters> BubbleMessageReceived { get; }
     }
 }

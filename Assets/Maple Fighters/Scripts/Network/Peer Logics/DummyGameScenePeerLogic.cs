@@ -21,6 +21,7 @@ namespace Scripts.Services
         public UnityEvent<PlayerAttackedEventParameters> PlayerAttacked { get; } = new UnityEvent<PlayerAttackedEventParameters>();
         public UnityEvent<CharacterAddedEventParameters> CharacterAdded { get; } = new UnityEvent<CharacterAddedEventParameters>();
         public UnityEvent<CharactersAddedEventParameters> CharactersAdded { get; } = new UnityEvent<CharactersAddedEventParameters>();
+        public UnityEvent<BubbleMessageEventParameters> BubbleMessageReceived { get; } = new UnityEvent<BubbleMessageEventParameters>();
 
         public DummyGameScenePeerLogic()
         {
@@ -57,6 +58,7 @@ namespace Scripts.Services
             ServerPeerHandler.SetEventHandler((byte)GameEvents.PlayerAttacked, PlayerAttacked);
             ServerPeerHandler.SetEventHandler((byte)GameEvents.CharacterAdded, CharacterAdded);
             ServerPeerHandler.SetEventHandler((byte)GameEvents.CharactersAdded, CharactersAdded);
+            ServerPeerHandler.SetEventHandler((byte)GameEvents.BubbleMessage, BubbleMessageReceived);
         }
 
         private void RemoveEventsHandlers()
@@ -70,6 +72,7 @@ namespace Scripts.Services
             ServerPeerHandler.RemoveEventHandler((byte)GameEvents.PlayerAttacked);
             ServerPeerHandler.RemoveEventHandler((byte)GameEvents.CharacterAdded);
             ServerPeerHandler.RemoveEventHandler((byte)GameEvents.CharactersAdded);
+            ServerPeerHandler.RemoveEventHandler((byte)GameEvents.BubbleMessage);
         }
 
         public async Task EnterScene(IYield yield)
