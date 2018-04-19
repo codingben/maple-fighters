@@ -11,10 +11,12 @@ namespace Game.Application.GameObjects
     public class BubbleMessageNotifier : Component<ISceneObject>
     {
         private readonly string message;
+        private readonly int time;
 
-        public BubbleMessageNotifier(string message)
+        public BubbleMessageNotifier(string message, int time)
         {
             this.message = message;
+            this.time = time;
         }
 
         protected override void OnAwake()
@@ -44,7 +46,7 @@ namespace Game.Application.GameObjects
             void RaiseBubbleMessage()
             {
                 var interestAreaNotifier = Entity.Components.GetComponent<IInterestAreaNotifier>().AssertNotNull();
-                var parameters = new BubbleMessageEventParameters(Entity.Id, message);
+                var parameters = new BubbleMessageEventParameters(Entity.Id, message, time);
                 interestAreaNotifier.NotifySubscriberOnly(peerIdGetter.GetId(), (byte)GameEvents.BubbleMessage, parameters, MessageSendOptions.DefaultReliable());
             }
         }

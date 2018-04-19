@@ -11,9 +11,9 @@ namespace Game.Application.GameObjects
             // Left blank intentionally
         }
 
-        public void CreateBubbleMessageNotifier(string message)
+        public void CreateBubbleMessageNotifier(string message, int time)
         {
-            Components.AddComponent(new BubbleMessageNotifier(message));
+            Components.AddComponent(new BubbleMessageNotifier(message, time));
         }
     }
 }
