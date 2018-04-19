@@ -12,6 +12,11 @@ namespace InterestManagement.Scripts
 
         private readonly HashSet<ISceneObject> sceneObjects = new HashSet<ISceneObject>();
 
+        private void Update()
+        {
+            name = $"Region (Id: {Id} Entities: {sceneObjects.Count})";
+        }
+
         public void AddSubscription(ISceneObject sceneObject)
         {
             if (!sceneObjects.Add(sceneObject))

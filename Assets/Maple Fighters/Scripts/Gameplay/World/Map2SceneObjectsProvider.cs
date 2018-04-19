@@ -21,7 +21,7 @@ namespace Assets.Scripts
             {
                 Id = 2,
                 Name = "Portal",
-                Position = new Vector2(-12.5f, -1.125f),
+                Position = new Vector2(12.5f, -1.125f),
                 AddComponents = (gameObject) =>
                 {
                     AddCommonComponents(gameObject);

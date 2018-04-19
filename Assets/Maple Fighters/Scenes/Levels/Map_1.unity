@@ -238,7 +238,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &438923632
 Transform:
   m_ObjectHideFlags: 0
@@ -251,7 +251,6 @@ Transform:
   m_Children:
   - {fileID: 1583060891}
   - {fileID: 1094532426}
-  - {fileID: 666441079}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -486,7 +485,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 581949298}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 18, y: -1.815, z: -10}
+  m_LocalPosition: {x: 13.030865, y: -0.7264991, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 572659480}
@@ -721,68 +720,6 @@ MonoBehaviour:
     type: 3}
   colorCorrectionSelectiveShader: {fileID: 4800000, guid: e515e0f94cefc4c0db54b45cba621544,
     type: 3}
---- !u!1001 &666441078
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 438923632}
-    m_Modifications:
-    - target: {fileID: 4958778868778470, guid: c62798122d611604e8faee898620178f, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4958778868778470, guid: c62798122d611604e8faee898620178f, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4958778868778470, guid: c62798122d611604e8faee898620178f, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4958778868778470, guid: c62798122d611604e8faee898620178f, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4958778868778470, guid: c62798122d611604e8faee898620178f, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4958778868778470, guid: c62798122d611604e8faee898620178f, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4958778868778470, guid: c62798122d611604e8faee898620178f, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4958778868778470, guid: c62798122d611604e8faee898620178f, type: 2}
-      propertyPath: m_RootOrder
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 114181910534384476, guid: c62798122d611604e8faee898620178f,
-        type: 2}
-      propertyPath: dummyCharacter.spawnPosition.x
-      value: 18
-      objectReference: {fileID: 0}
-    - target: {fileID: 114181910534384476, guid: c62798122d611604e8faee898620178f,
-        type: 2}
-      propertyPath: dummyCharacter.spawnPosition.y
-      value: -1.815
-      objectReference: {fileID: 0}
-    - target: {fileID: 114181910534384476, guid: c62798122d611604e8faee898620178f,
-        type: 2}
-      propertyPath: dummyCharacter.Id
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: c62798122d611604e8faee898620178f, type: 2}
-  m_IsPrefabParent: 0
---- !u!4 &666441079 stripped
-Transform:
-  m_PrefabParentObject: {fileID: 4958778868778470, guid: c62798122d611604e8faee898620178f,
-    type: 2}
-  m_PrefabInternal: {fileID: 666441078}
 --- !u!1 &695763818
 GameObject:
   m_ObjectHideFlags: 0
@@ -1151,6 +1088,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1094532426}
   - component: {fileID: 1094532427}
+  - component: {fileID: 1094532429}
   - component: {fileID: 1094532428}
   m_Layer: 0
   m_Name: Dummy Scene Objects
@@ -1195,6 +1133,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32281adcd6e1fd049a26c29ab6f26e72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1094532429
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1094532425}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2381ff4e1199de4fa49d2dea6a8ad4a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dummyCharacter:
+    Id: 0
+    Name: Dummy
+    CharacterClass: 0
+    spawnPosition: {x: 18, y: -1.815}
+    spawnDirection: 1
 --- !u!1 &1388639404
 GameObject:
   m_ObjectHideFlags: 0

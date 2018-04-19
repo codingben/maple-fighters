@@ -39,7 +39,7 @@ namespace Scripts.World
 
         public void StopInteraction()
         {
-            if (isTeleporting)
+            if (!isTeleporting)
             {
                 var screenFade = UserInterfaceContainer.Instance.Get<ScreenFade>().AssertNotNull();
                 screenFade?.Hide();

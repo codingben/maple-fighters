@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Scripts.Gameplay;
+using Scripts.UI;
 using UnityEngine;
 
 namespace InterestManagement.Scripts
@@ -18,7 +19,7 @@ namespace InterestManagement.Scripts
         [Header("Interest Management")]
         [SerializeField] private Vector2 sceneSize;
         [SerializeField] private Vector2 regionSize;
-        [Header("Visual Graphics")]
+        [Header("Region Visual Graphics")]
         [SerializeField] private bool showVisualGraphics = true;
 
         private IRegion[,] regions;
@@ -51,6 +52,7 @@ namespace InterestManagement.Scripts
                     region.transform.position = new Vector3(x + (i * regionSize.x), y + (j * regionSize.y), region.transform.position.z);
                     region.PublisherArea = new Rectangle(position: new Vector2(x + (i * regionSize.x), y + (j * regionSize.y)),
                         size: new Vector3(regionSize.x, regionSize.y));
+                    region.name.RemoveCloneFromName();
 
                     if (showVisualGraphics)
                     {

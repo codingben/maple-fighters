@@ -209,6 +209,7 @@ GameObject:
   m_Component:
   - component: {fileID: 298437733}
   - component: {fileID: 298437732}
+  - component: {fileID: 298437735}
   - component: {fileID: 298437734}
   m_Layer: 0
   m_Name: Dummy Scene Objects
@@ -253,6 +254,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc84396760fb9514281088a2964bf91d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &298437735
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 298437731}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2381ff4e1199de4fa49d2dea6a8ad4a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dummyCharacter:
+    Id: 0
+    Name: Dummy
+    CharacterClass: 1
+    spawnPosition: {x: -12.8, y: -12.8}
+    spawnDirection: 2
 --- !u!1 &354198740
 GameObject:
   m_ObjectHideFlags: 0
@@ -1406,78 +1424,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 0.9469818}
   m_EdgeRadius: 0
---- !u!1001 &1025816375
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 1724481667}
-    m_Modifications:
-    - target: {fileID: 4958778868778470, guid: c62798122d611604e8faee898620178f, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4958778868778470, guid: c62798122d611604e8faee898620178f, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4958778868778470, guid: c62798122d611604e8faee898620178f, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4958778868778470, guid: c62798122d611604e8faee898620178f, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4958778868778470, guid: c62798122d611604e8faee898620178f, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4958778868778470, guid: c62798122d611604e8faee898620178f, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4958778868778470, guid: c62798122d611604e8faee898620178f, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4958778868778470, guid: c62798122d611604e8faee898620178f, type: 2}
-      propertyPath: m_RootOrder
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 114181910534384476, guid: c62798122d611604e8faee898620178f,
-        type: 2}
-      propertyPath: dummyCharacter.spawnPosition.x
-      value: -12.8
-      objectReference: {fileID: 0}
-    - target: {fileID: 114181910534384476, guid: c62798122d611604e8faee898620178f,
-        type: 2}
-      propertyPath: dummyCharacter.spawnPosition.y
-      value: -12.8
-      objectReference: {fileID: 0}
-    - target: {fileID: 114181910534384476, guid: c62798122d611604e8faee898620178f,
-        type: 2}
-      propertyPath: dummyCharacter.CharacterClass
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114181910534384476, guid: c62798122d611604e8faee898620178f,
-        type: 2}
-      propertyPath: dummyCharacter.spawnDirection
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 114181910534384476, guid: c62798122d611604e8faee898620178f,
-        type: 2}
-      propertyPath: dummyCharacter.Id
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: c62798122d611604e8faee898620178f, type: 2}
-  m_IsPrefabParent: 0
---- !u!4 &1025816376 stripped
-Transform:
-  m_PrefabParentObject: {fileID: 4958778868778470, guid: c62798122d611604e8faee898620178f,
-    type: 2}
-  m_PrefabInternal: {fileID: 1025816375}
 --- !u!1 &1087086926
 GameObject:
   m_ObjectHideFlags: 0
@@ -2379,7 +2325,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1724481667
 Transform:
   m_ObjectHideFlags: 0
@@ -2392,7 +2338,6 @@ Transform:
   m_Children:
   - {fileID: 492292232}
   - {fileID: 298437733}
-  - {fileID: 1025816376}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

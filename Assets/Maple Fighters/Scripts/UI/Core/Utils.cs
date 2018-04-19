@@ -53,12 +53,12 @@ namespace Scripts.UI
             if (noticeWindowExists != null)
             {
                 noticeWindowExists.Message.text = EXCEPTION_MESSAGE;
-                noticeWindowExists.OkButtonClickedAction = LoadedObjects.DestroyAll;
+                noticeWindowExists.OkButtonClickedAction = LoadedObjectsUtils.GoBackToLogin;
                 noticeWindowExists.OkButton.interactable = true;
             }
             else
             {
-                var noticeWindow = ShowNotice(EXCEPTION_MESSAGE, LoadedObjects.DestroyAll, background, index);
+                var noticeWindow = ShowNotice(EXCEPTION_MESSAGE, LoadedObjectsUtils.GoBackToLogin, background, index);
                 if (noticeWindow != null)
                 {
                     noticeWindow.OkButton.interactable = true;

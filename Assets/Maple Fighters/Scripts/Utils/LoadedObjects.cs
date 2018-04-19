@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace Scripts.Utils
 {
@@ -29,8 +28,6 @@ namespace Scripts.Utils
             {
                 obj.Destroy();
             }
-
-            SceneManager.LoadScene(0, LoadSceneMode.Single);
         }
 
         public static IEnumerable<GameObject> GetLoadedObjects()
