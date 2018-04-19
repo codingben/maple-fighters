@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using CommonTools.Log;
@@ -45,36 +46,26 @@ namespace Assets.Scripts
 
         private void OnRegionsCreated()
         {
-            CreateDummyPlayerCharacter();
+            CreateDummyPlayer();
             CreateDummySceneObjects();
         }
 
-        private void CreateDummyPlayerCharacter()
+        private void CreateDummyPlayer()
         {
-            var dummyCharacterDetailsProvider = GetComponent<DummyCharacterDetailsProvider>()
-                .AssertNotNull("Could not find dummy character details. Please add DummyCharacterDetails into a scene.");
+            int id;
+            CreateDummyPlayerSceneObject(out id);
+            CreateCommonComponentsToSceneObject(id, typeof(InterestArea), typeof(PlayerViewController));
+        }
+
+        private void CreateDummyPlayerSceneObject(out int id)
+        {
+            var dummyCharacterDetailsProvider = GetComponent<DummyCharacterDetailsProvider>().AssertNotNull("Could not find dummy character details.");
             var parameters = dummyCharacterDetailsProvider.GetDummyCharacterParameters();
 
             var gameScenePeerLogic = ServiceContainer.GameService.GetPeerLogic<IGameScenePeerLogicAPI>().AssertNotNull();
             gameScenePeerLogic.SceneEntered?.Invoke(parameters);
 
-            var id = parameters.SceneObject.Id;
-            var sceneObject = SceneObjectsContainer.Instance.GetRemoteSceneObject(id)?.GetGameObject();
-            if (sceneObject == null)
-            {
-                LogUtils.Log(MessageBuilder.Trace($"Could not find a scene object with id ${id}"));
-                return;
-            }
-
-            sceneObject.gameObject.name = $"{sceneObject.gameObject.name} (Id: {id})";
-
-            if (showVisualGraphics)
-            {
-                sceneObject.AddComponent(typeof(InterestAreaVisualGraphics));
-            }
-
-            sceneObject.AddComponent(typeof(InterestArea));
-            sceneObject.AddComponent(typeof(PlayerViewController));
+            id = parameters.SceneObject.Id;
         }
 
         private void CreateDummySceneObjects()
@@ -85,24 +76,21 @@ namespace Assets.Scripts
                 gameScenePeerLogic.SceneObjectAdded?.Invoke(dummyParameters);
             }
 
+            InitializeDummySceneObjects();
+        }
+
+        private void InitializeDummySceneObjects()
+        {
             foreach (var dummySceneObject in dummySceneObjectsProvider.GetSceneObjects())
             {
                 var id = dummySceneObject.Id;
-                var sceneObject = SceneObjectsContainer.Instance.GetRemoteSceneObject(id)?.GetGameObject();
-                if (sceneObject == null)
+                CreateCommonComponentsToSceneObject(id);
+
+                var sceneObject = SceneObjectsContainer.Instance.GetRemoteSceneObject(id);
+                if (sceneObject != null)
                 {
-                    LogUtils.Log(MessageBuilder.Trace($"Could not find a scene object with id ${id}"));
-                    continue;
+                    dummySceneObject.AddComponents?.Invoke(sceneObject.GetGameObject());
                 }
-
-                sceneObject.gameObject.name = $"{sceneObject.gameObject.name} (Id: {id})";
-
-                if (showVisualGraphics)
-                {
-                    sceneObject.AddComponent(typeof(InterestAreaVisualGraphics));
-                }
-
-                dummySceneObject.AddComponents?.Invoke(sceneObject);
             }
 
             StartCoroutine(DisableNonPlayerEntity());
@@ -132,6 +120,28 @@ namespace Assets.Scripts
                         sceneObject.gameObject.SetActive(false);
                     }
                 }
+            }
+        }
+
+        private void CreateCommonComponentsToSceneObject(int id, params Type[] components)
+        {
+            var sceneObject = SceneObjectsContainer.Instance.GetRemoteSceneObject(id)?.GetGameObject();
+            if (sceneObject == null)
+            {
+                LogUtils.Log(MessageBuilder.Trace($"Could not find a scene object with id {id}"));
+                return;
+            }
+
+            sceneObject.gameObject.name = $"{sceneObject.gameObject.name} (Id: {id})";
+
+            if (showVisualGraphics)
+            {
+                sceneObject.AddComponent(typeof(InterestAreaVisualGraphics));
+            }
+
+            foreach (var component in components)
+            {
+                sceneObject.AddComponent(component);
             }
         }
 
