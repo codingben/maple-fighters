@@ -11,7 +11,7 @@ namespace Scripts.World
             var portalGameObject = collider.transform;
             if (portalGameObject.CompareTag(PORTAL_TAG))
             {
-                var portalController = portalGameObject.GetComponent<PortalController>();
+                var portalController = portalGameObject.GetComponent<IPortalControllerBase>();
                 portalController.StartInteraction();
             }
         }
@@ -21,7 +21,7 @@ namespace Scripts.World
             var portalGameObject = collider.transform;
             if (portalGameObject.CompareTag(PORTAL_TAG))
             {
-                var portalController = portalGameObject.GetComponent<PortalController>();
+                var portalController = portalGameObject.GetComponent<IPortalControllerBase>();
                 portalController.StopInteraction();
             }
         }

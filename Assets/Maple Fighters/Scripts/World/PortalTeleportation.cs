@@ -2,28 +2,22 @@
 using CommonTools.Coroutines;
 using CommonTools.Log;
 using Scripts.Containers;
-using Scripts.Coroutines;
 using Scripts.Gameplay;
 using Scripts.UI;
 using Scripts.UI.Core;
 using Game.Common;
 using Scripts.Services;
-using UnityEngine;
 
 namespace Scripts.World
 {
-    public class PortalController : MonoBehaviour
+    public class PortalTeleportation : PortalControllerBase
     {
         private bool isTeleporting;
-        private readonly ExternalCoroutinesExecutor coroutinesExecutor = new ExternalCoroutinesExecutor();
 
-        private void Awake()
+        public override void StartInteraction()
         {
-            coroutinesExecutor.ExecuteExternally();
-        }
+            base.StartInteraction();
 
-        public void StartInteraction()
-        {
             if (!isTeleporting)
             {
                 var screenFade = UserInterfaceContainer.Instance.Get<ScreenFade>().AssertNotNull();
@@ -31,8 +25,10 @@ namespace Scripts.World
             }
         }
 
-        public void StopInteraction()
+        public override void StopInteraction()
         {
+            base.StopInteraction();
+
             if (!isTeleporting)
             {
                 var screenFade = UserInterfaceContainer.Instance.Get<ScreenFade>().AssertNotNull();
@@ -44,7 +40,7 @@ namespace Scripts.World
         {
             isTeleporting = true;
 
-            coroutinesExecutor.StartTask(ChangeScene, onException: exception => ServiceConnectionProviderUtils.OnOperationFailed());
+            CoroutinesExecutor.StartTask(ChangeScene, onException: exception => ServiceConnectionProviderUtils.OnOperationFailed());
         }
 
         private async Task ChangeScene(IYield yield)
@@ -61,7 +57,7 @@ namespace Scripts.World
 
             GameScenesController.Instance.LoadScene(map);
 
-            coroutinesExecutor.RemoveFromExternalExecutor();
+            Dispose();
         }
     }
 }
