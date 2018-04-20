@@ -3,6 +3,8 @@
 /[Oo]bj/
 /[Bb]uild/
 /[Bb]uilds/
+
+# Directories
 /Assets/StreamingAssets/
 /Assets/AssetStoreTools*
 
@@ -26,6 +28,7 @@ ExportedObj/
 
 # Unity3D generated meta files
 *.pidb.meta
+*.pdb.meta
 
 # Unity3D Generated File On Crash Reports
 sysinfo.txt
@@ -33,6 +36,8 @@ sysinfo.txt
 # Builds
 *.apk
 *.unitypackage
+
+# Directories
 Assets/Plugins/Map Editor
 Assets/Plugins/Map Editor.meta
 Assets/Plugins/PostProcessing/
