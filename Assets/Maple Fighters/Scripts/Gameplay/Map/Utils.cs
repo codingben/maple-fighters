@@ -18,5 +18,14 @@ namespace Scripts.Gameplay
             var result = Regex.Replace(value, "[A-Z]", " $0").Trim();
             return result;
         }
+
+        /// <summary>
+        /// Removing a "(Clone)" from a name of the created game object.
+        /// </summary>
+        public static string RemoveCloneFromName(this string value)
+        {
+            var result = value.Replace("(Clone)", string.Empty);
+            return result;
+        }
     }
 }

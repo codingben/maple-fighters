@@ -106,8 +106,7 @@ namespace Scripts.Containers
                 return;
             }
 
-            var position = new Vector3(parameters.X, parameters.Y);
-            var sceneObject = CreateSceneObject(parameters.Name, position);
+            var sceneObject = CreateSceneObject(parameters.Name, new Vector3(parameters.X, parameters.Y), parameters.Direction);
             if (sceneObject == null)
             {
                 return;
@@ -138,7 +137,7 @@ namespace Scripts.Containers
             LogUtils.Log(MessageBuilder.Trace($"Removed a scene object with id #{id}"));
         }
 
-        private GameObject CreateSceneObject(string name, Vector3 position)
+        private GameObject CreateSceneObject(string name, Vector3 position, Directions direction)
         {
             const string SCENE_OBJECTS_FOLDER_PATH = "Game/{0}";
 
@@ -148,6 +147,7 @@ namespace Scripts.Containers
                 var gameObject = Instantiate(sceneObject, position, Quaternion.identity) as GameObject;
                 if (gameObject != null)
                 {
+                    //gameObject.transform.ChangeDirection(direction); // TODO: Fix
                     return gameObject;
                 }
 

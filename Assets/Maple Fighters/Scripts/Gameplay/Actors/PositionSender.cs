@@ -9,7 +9,9 @@ namespace Scripts.Gameplay.Actors
     public class PositionSender : MonoBehaviour
     {
         public Transform Character { get; set; }
+
         private Vector2 lastPosition;
+        private Directions lastDirection = Directions.None;
 
         private void Awake()
         {
@@ -22,11 +24,20 @@ namespace Scripts.Gameplay.Actors
             {
                 PositionChanged();
             }
+            else
+            {
+                if (GetDirection() != lastDirection)
+                {
+                    PositionChanged();
+                }
+            }
         }
 
         private void PositionChanged()
         {
             lastPosition = transform.position;
+            lastDirection = GetDirection();
+
             UpdatePositionOperation();
         }
 

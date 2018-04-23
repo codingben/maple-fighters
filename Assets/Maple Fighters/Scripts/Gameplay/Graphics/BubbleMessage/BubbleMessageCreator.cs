@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Scripts.Gameplay;
+using UnityEngine;
 
 namespace Assets.Scripts.Graphics
 {
@@ -12,6 +13,7 @@ namespace Assets.Scripts.Graphics
             var bubbleMessageGameObject = Object.Instantiate(bubbleMessageObject, owner.position, Quaternion.identity, owner);
             var bubbleMessage = bubbleMessageGameObject.GetComponent<BubbleMessage>();
             bubbleMessage.Initialize(message, time);
+            bubbleMessageGameObject.name.RemoveCloneFromName();
         }
     }
 }

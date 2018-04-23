@@ -9,6 +9,6 @@ namespace Scripts.Services
         Task<GetCharactersResponseParameters> GetCharacters(IYield yield);
         Task<CreateCharacterResponseParameters> CreateCharacter(IYield yield, CreateCharacterRequestParameters parameters);
         Task<RemoveCharacterResponseParameters> RemoveCharacter(IYield yield, RemoveCharacterRequestParameters parameters);
-        Task<CharacterValidationStatus> ValidateCharacter(IYield yield, ValidateCharacterRequestParameters parameters);
+        Task<ValidateCharacterResponseParameters> ValidateCharacter(IYield yield, ValidateCharacterRequestParameters parameters);
     }
 }

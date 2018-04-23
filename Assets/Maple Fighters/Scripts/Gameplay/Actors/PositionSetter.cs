@@ -1,5 +1,4 @@
-﻿using System;
-using CommonTools.Log;
+﻿using CommonTools.Log;
 using Scripts.Containers;
 using Game.Common;
 using Scripts.Services;
@@ -9,11 +8,22 @@ namespace Scripts.Gameplay.Actors
 {
     public class PositionSetter : MonoBehaviour
     {
-        public event Action<Directions> DirectionChanged; 
-
         private const float SPEED = 15;
         private Vector3 position = Vector3.zero;
 
+        private Transform Character
+        {
+            get
+            {
+                if (character == null)
+                {
+                    var characterBase = GetComponent<CharacterCreatorBase>();
+                    character = characterBase?.Character.transform;
+                }
+                return character;
+            }
+        }
+        private Transform character;
         private ISceneObject sceneObject;
 
         private void Awake()
@@ -65,21 +75,25 @@ namespace Scripts.Gameplay.Actors
         {
             const float SCALE = 1;
 
+            var character = Character;
+            if (character == null)
+            {
+                character = transform;
+            }
+
             switch (direction)
             {
                 case Directions.Left:
                 {
-                    transform.localScale = new Vector3(SCALE, transform.localScale.y, transform.localScale.z);
+                    character.localScale = new Vector3(SCALE, character.localScale.y, character.localScale.z);
                     break;
                 }
                 case Directions.Right:
                 {
-                    transform.localScale = new Vector3(-SCALE, transform.localScale.y, transform.localScale.z);
+                    character.localScale = new Vector3(-SCALE, character.localScale.y, character.localScale.z);
                     break;
                 }
             }
-
-            DirectionChanged?.Invoke(direction);
         }
     }
 }

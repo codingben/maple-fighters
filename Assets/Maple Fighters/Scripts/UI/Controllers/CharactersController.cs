@@ -91,6 +91,8 @@ namespace Scripts.UI.Controllers
                     continue;
                 }
 
+                LogUtils.Log($"Character Name: {character.Name} Character Index: {character.Index} Has Character: {character.HasCharacter}", LogMessageType.Warning);
+
                 CreateCharacter(character);
             }
         }
@@ -182,11 +184,12 @@ namespace Scripts.UI.Controllers
         {
             var characterPeerLogic = ServiceContainer.GameService.GetPeerLogic<ICharacterPeerLogicAPI>().AssertNotNull();
             var responseParameters = await characterPeerLogic.ValidateCharacter(yield, parameters);
-            switch (responseParameters)
+            switch (responseParameters.Status)
             {
                 case CharacterValidationStatus.Ok:
                 {
-                    OnCharacterValidated();
+                    var map = responseParameters.Map;
+                    OnCharacterValidated(map);
                     break;
                 }
                 case CharacterValidationStatus.Wrong:
@@ -205,21 +208,21 @@ namespace Scripts.UI.Controllers
                 }
             }
 
-            if (responseParameters != CharacterValidationStatus.Ok)
+            if (responseParameters.Status != CharacterValidationStatus.Ok)
             {
                 var index = parameters.CharacterIndex;
                 PlayIdleCharacterAnimation(index);
             }
         }
 
-        private void OnCharacterValidated()
+        private void OnCharacterValidated(Maps map)
         {
             Action enterScene = delegate 
             {
                 var noticeWindow = UserInterfaceContainer.Instance.Get<NoticeWindow>().AssertNotNull();
                 UserInterfaceContainer.Instance?.Remove(noticeWindow);
 
-                GameScenesController.Instance.LoadScene(Maps.Map_1);
+                GameScenesController.Instance.LoadScene(map);
             };
 
             var screenFade = UserInterfaceContainer.Instance.Get<ScreenFade>().AssertNotNull();

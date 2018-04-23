@@ -65,14 +65,5 @@ namespace Scripts.UI
                 }
             }
         }
-
-        /// <summary>
-        /// Removing a "(Clone)" from a name of the created game object.
-        /// </summary>
-        public static string RemoveCloneFromName(this string value)
-        {
-            var result = value.Replace("(Clone)", string.Empty);
-            return result;
-        }
     }
 }

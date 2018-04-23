@@ -10,7 +10,7 @@ namespace Scripts.Gameplay.Actors
         public EnterSceneResponseParameters GetDummyCharacterParameters()
         {
             return DummyCharacter.CreateDummyCharacter(dummyCharacter.Id, dummyCharacter.Name, dummyCharacter.CharacterClass,
-                dummyCharacter.spawnPosition, dummyCharacter.spawnDirection);
+                dummyCharacter.SpawnPosition, dummyCharacter.SpawnDirection);
         }
     }
 }

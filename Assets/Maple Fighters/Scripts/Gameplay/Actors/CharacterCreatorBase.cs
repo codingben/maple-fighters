@@ -5,6 +5,8 @@ namespace Scripts.Gameplay.Actors
 {
     public class CharacterCreatorBase : MonoBehaviour, ICharacterCreator
     {
+        public GameObject Character => character;
+
         [Header("Sprite")]
         [SerializeField] protected int OrderInLayer;
 
@@ -27,6 +29,7 @@ namespace Scripts.Gameplay.Actors
             character = Instantiate(gameObject, Vector3.zero, Quaternion.identity, transform);
             character.transform.localPosition = gameObject.transform.localPosition;
             character.transform.SetAsFirstSibling();
+            character.name.RemoveCloneFromName();
 
             characterSprite = character.transform.GetChild(CHARACTER_INDEX).gameObject;
 

@@ -14,6 +14,8 @@ namespace Assets.Scripts
                 Id = 1,
                 Name = "BlueSnail",
                 Position = new Vector2(-2, -8.1f),
+                SpawnDirection = Directions.Left,
+
                 AddComponents = AddCommonComponents
             };
 
@@ -22,6 +24,8 @@ namespace Assets.Scripts
                 Id = 2,
                 Name = "Portal",
                 Position = new Vector2(12.5f, -1.125f),
+                SpawnDirection = Directions.Left,
+
                 AddComponents = (gameObject) =>
                 {
                     AddCommonComponents(gameObject);

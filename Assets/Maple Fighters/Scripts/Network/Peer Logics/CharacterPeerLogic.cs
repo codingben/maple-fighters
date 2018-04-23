@@ -26,7 +26,7 @@ namespace Scripts.Services
                 (yield, (byte)CharacterOperations.RemoveCharacter, parameters, MessageSendOptions.DefaultReliable());
         }
 
-        public async Task<CharacterValidationStatus> ValidateCharacter(IYield yield, ValidateCharacterRequestParameters parameters)
+        public async Task<ValidateCharacterResponseParameters> ValidateCharacter(IYield yield, ValidateCharacterRequestParameters parameters)
         {
             var responseParameters = await ServerPeerHandler.SendOperation<ValidateCharacterRequestParameters, ValidateCharacterResponseParameters>
                 (yield, (byte)CharacterOperations.ValidateCharacter, parameters, MessageSendOptions.DefaultReliable());
@@ -34,7 +34,7 @@ namespace Scripts.Services
             {
                 ServiceContainer.GameService.SetPeerLogic<GameScenePeerLogic, GameOperations, GameEvents>();
             }
-            return responseParameters.Status;
+            return responseParameters;
         }
     }
 }

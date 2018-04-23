@@ -22,11 +22,14 @@ namespace Assets.Scripts.Gameplay.Utils
 
         private void Update()
         {
-            if (parent == null)
+            if (parent != null)
             {
-                return;
+                ChangeDirection();
             }
+        }
 
+        private void ChangeDirection()
+        {
             var direction = GetDirection();
             switch (direction)
             {

@@ -148,7 +148,7 @@ namespace Assets.Scripts
         private IEnumerable<SceneObjectAddedEventParameters> GetDummySceneObjectsParameters()
         {
             return dummySceneObjectsProvider.GetSceneObjects()
-                .Select(dummySceneObject => new SceneObjectParameters(dummySceneObject.Id, dummySceneObject.Name, dummySceneObject.Position.x, dummySceneObject.Position.y))
+                .Select(dummySceneObject => new SceneObjectParameters(dummySceneObject.Id, dummySceneObject.Name, dummySceneObject.Position.x, dummySceneObject.Position.y, dummySceneObject.SpawnDirection))
                 .Select(parameters => new SceneObjectAddedEventParameters(parameters));
         }
     }
