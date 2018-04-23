@@ -41,7 +41,8 @@ namespace Game.Application.PeerLogic.Operations
                 return null;
             }
 
-            return new ValidateCharacterResponseParameters(status);
+            var map = responseParameters.Character.LastMap;
+            return new ValidateCharacterResponseParameters(status, map);
         }
     }
 }

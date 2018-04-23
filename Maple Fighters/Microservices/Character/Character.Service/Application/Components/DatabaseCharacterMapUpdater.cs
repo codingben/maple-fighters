@@ -3,12 +3,11 @@ using CommonTools.Log;
 using ComponentModel.Common;
 using Database.Common.Components.Interfaces;
 using Database.Common.TablesDefinition;
-using Game.Common;
 using ServiceStack.OrmLite;
 
 namespace CharacterService.Application.Components
 {
-    internal class DatabaseCharacterCreator : Component, IDatabaseCharacterCreator
+    internal class DatabaseCharacterMapUpdater : Component, IDatabaseCharacterMapUpdater
     {
         private IDatabaseConnectionProvider databaseConnectionProvider;
 
@@ -19,18 +18,14 @@ namespace CharacterService.Application.Components
             databaseConnectionProvider = Components.GetComponent<IDatabaseConnectionProvider>().AssertNotNull();
         }
 
-        public void Create(int userId, string name, CharacterClasses characterClass, CharacterIndex characterIndex)
+        public void Update(int userId, byte map)
         {
             using (var db = databaseConnectionProvider.GetDbConnection())
             {
-                var user = new CharactersTableDefinition
+                db.UpdateOnly(() => new CharactersTableDefinition
                 {
-                    UserId = userId,
-                    Name = name,
-                    CharacterType = characterClass.ToString(),
-                    CharacterIndex = (byte)characterIndex
-                };
-                db.Insert(user);
+                    LastMap = map
+                }, @where: p => p.UserId == userId);
             }
         }
     }

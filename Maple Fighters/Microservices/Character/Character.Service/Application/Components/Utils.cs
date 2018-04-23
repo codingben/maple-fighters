@@ -10,21 +10,27 @@ namespace CharacterService.Application.Components
         {
             if (charactersTableDefinition.CharacterType == CharacterClasses.Arrow.ToString())
             {
-                return new CharacterParameters(charactersTableDefinition.Name, CharacterClasses.Arrow, (CharacterIndex)charactersTableDefinition.CharacterIndex);
+                return ToParameters(CharacterClasses.Arrow);
             }
 
             if (charactersTableDefinition.CharacterType == CharacterClasses.Knight.ToString())
             {
-                return new CharacterParameters(charactersTableDefinition.Name, CharacterClasses.Knight, (CharacterIndex)charactersTableDefinition.CharacterIndex);
+                return ToParameters(CharacterClasses.Knight);
             }
 
             if (charactersTableDefinition.CharacterType == CharacterClasses.Wizard.ToString())
             {
-                return new CharacterParameters(charactersTableDefinition.Name, CharacterClasses.Wizard, (CharacterIndex)charactersTableDefinition.CharacterIndex);
+                return ToParameters(CharacterClasses.Wizard);
             }
 
             LogUtils.Log(MessageBuilder.Trace($"Can not get character type of user id #{charactersTableDefinition.UserId}"));
             return new CharacterParameters { HasCharacter = false, Index = (CharacterIndex)charactersTableDefinition.CharacterIndex };
+
+            CharacterParameters ToParameters(CharacterClasses characterClass)
+            {
+                return new CharacterParameters(charactersTableDefinition.Name, characterClass,
+                    (CharacterIndex)charactersTableDefinition.CharacterIndex, (Maps)charactersTableDefinition.LastMap);
+            }
         }
     }
 }

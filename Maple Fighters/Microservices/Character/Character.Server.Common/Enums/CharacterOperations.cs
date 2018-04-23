@@ -6,6 +6,7 @@
         RemoveCharacter,
         GetCharacters,
         GetCharacter,
-        ValidateCharacter
+        ValidateCharacter,
+        ChangeCharacterMap
     }
 }

@@ -49,7 +49,7 @@ namespace CharacterService.Application.Components
                 {
                     if (character.HasCharacter)
                     {
-                        characters[(int)character.Index] = new CharacterParameters(character.Name, character.CharacterType, character.Index);
+                        characters[(int)character.Index] = new CharacterParameters(character.Name, character.CharacterType, character.Index, character.LastMap);
                     }
                 }
                 return characters;

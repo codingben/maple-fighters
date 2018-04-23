@@ -13,6 +13,7 @@ namespace Character.Service.Application.PeerLogic
             AddHandlerForRemoveCharacterOperation();
             AddHandlerForGetCharactersOperation();
             AddHandlerForGetCharacterOperation();
+            AddHandlerForChangeCharacterMapOperation();
         }
 
         private void AddHandlerForCreateCharacterOperation()
@@ -33,6 +34,11 @@ namespace Character.Service.Application.PeerLogic
         private void AddHandlerForGetCharacterOperation()
         {
             OperationHandlerRegister.SetHandler(CharacterOperations.GetCharacter, new GetCharacterOperationHandler());
+        }
+
+        private void AddHandlerForChangeCharacterMapOperation()
+        {
+            OperationHandlerRegister.SetHandler(CharacterOperations.ChangeCharacterMap, new ChangeCharacterMapOperationHandler());
         }
     }
 }

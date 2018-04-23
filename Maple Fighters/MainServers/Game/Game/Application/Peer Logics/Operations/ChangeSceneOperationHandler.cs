@@ -1,4 +1,5 @@
-﻿using CommonCommunicationInterfaces;
+﻿using Character.Server.Common;
+using CommonCommunicationInterfaces;
 using CommonTools.Log;
 using Game.Application.Components.Interfaces;
 using Game.Application.GameObjects;
@@ -11,16 +12,20 @@ namespace Game.Application.PeerLogic.Operations
 {
     internal class ChangeSceneOperationHandler : IOperationRequestHandler<ChangeSceneRequestParameters, ChangeSceneResponseParameters>
     {
+        private readonly int userId;
         private readonly PlayerGameObject playerGameObject;
         private readonly ISceneContainer sceneContainer;
         private readonly ICharacterSpawnDetailsProvider CharacterSpawnDetailsProvider;
+        private readonly ICharacterServiceAPI characterServiceApi;
 
-        public ChangeSceneOperationHandler(PlayerGameObject playerGameObject)
+        public ChangeSceneOperationHandler(int userId, PlayerGameObject playerGameObject)
         {
+            this.userId = userId;
             this.playerGameObject = playerGameObject;
 
             sceneContainer = ServerComponents.GetComponent<ISceneContainer>().AssertNotNull();
             CharacterSpawnDetailsProvider = ServerComponents.GetComponent<ICharacterSpawnDetailsProvider>().AssertNotNull();
+            characterServiceApi = ServerComponents.GetComponent<ICharacterServiceAPI>().AssertNotNull();
         }
 
         public ChangeSceneResponseParameters? Handle(MessageData<ChangeSceneRequestParameters> messageData, ref MessageSendOptions sendOptions)
@@ -50,6 +55,9 @@ namespace Game.Application.PeerLogic.Operations
 
             // Creating a new body in the new physics world.
             CreateBodyToNewWorld();
+
+            // Change last map of the character.
+            ChangeCharacterLastMap();
 
             return new ChangeSceneResponseParameters(portalInfoProvider.Map);
 
@@ -93,6 +101,11 @@ namespace Game.Application.PeerLogic.Operations
             void CreateBodyToNewWorld()
             {
                 playerGameObject.CreateBody();
+            }
+
+            void ChangeCharacterLastMap()
+            {
+                characterServiceApi.ChangeCharacterMap(new ChangeCharacterMapParameters(userId, portalInfoProvider.Map));
             }
         }
     }

@@ -65,7 +65,7 @@ namespace Game.Application.PeerLogics
 
         private void AddHandlerForChangeSceneOperation()
         {
-            OperationHandlerRegister.SetHandler(GameOperations.ChangeScene, new ChangeSceneOperationHandler(playerGameObject));
+            OperationHandlerRegister.SetHandler(GameOperations.ChangeScene, new ChangeSceneOperationHandler(userId, playerGameObject));
         }
 
         protected override void OnDispose()

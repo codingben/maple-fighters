@@ -36,6 +36,11 @@ namespace Character.Server.Common
             LogUtils.Log(MessageBuilder.Trace("Authenticated with CharacterService service."));
         }
 
+        public void ChangeCharacterMap(ChangeCharacterMapParameters parameters)
+        {
+            outboundServerPeerLogic?.SendOperation((byte)CharacterOperations.ChangeCharacterMap, parameters);
+        }
+
         public Task<CreateCharacterResponseParameters> CreateCharacter(IYield yield, CreateCharacterRequestParametersEx parameters)
         {
             if (outboundServerPeerLogic == null)

@@ -59,6 +59,7 @@
   <ItemGroup>
     <Compile Include="API\CharacterService.cs" />
     <Compile Include="Enums\CharacterOperations.cs" />
+    <Compile Include="Parameters\ChangeCharacterMapParameters.cs" />
     <Compile Include="Parameters\CreateCharacterRequestParametersEx.cs" />
     <Compile Include="Parameters\GetCharacterRequestParametersEx.cs" />
     <Compile Include="API\ICharacterServiceAPI.cs" />

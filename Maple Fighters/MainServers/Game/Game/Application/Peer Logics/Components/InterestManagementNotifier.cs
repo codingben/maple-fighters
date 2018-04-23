@@ -52,7 +52,9 @@ namespace Game.Application.PeerLogic.Components
         private void OnSubscriberAdded(ISceneObject sceneObject)
         {
             var positionTransform = sceneObject.Components.GetComponent<IPositionTransform>().AssertNotNull();
-            var sharedSceneObject = new SceneObjectParameters(sceneObject.Id, sceneObject.Name, positionTransform.Position.X, positionTransform.Position.Y);
+            var directionTransform = sceneObject.Components.GetComponent<IDirectionTransform>().AssertNotNull();
+            var sharedSceneObject = new SceneObjectParameters(sceneObject.Id, sceneObject.Name, 
+                positionTransform.Position.X, positionTransform.Position.Y, directionTransform.Direction.GetDirectionsFromDirection());
 
             var parameters = new SceneObjectAddedEventParameters(sharedSceneObject);
             eventSender.Send((byte)GameEvents.SceneObjectAdded, parameters, MessageSendOptions.DefaultReliable());
@@ -75,6 +77,9 @@ namespace Game.Application.PeerLogic.Components
                 var positionTransform = sceneObjects[i].Components.GetComponent<IPositionTransform>().AssertNotNull();
                 sharedSceneObjects[i].X = positionTransform.Position.X;
                 sharedSceneObjects[i].Y = positionTransform.Position.Y;
+
+                var directionTransform = sceneObjects[i].Components.GetComponent<IDirectionTransform>().AssertNotNull();
+                sharedSceneObjects[i].Direction = directionTransform.Direction.GetDirectionsFromDirection();
             }
 
             var parameters = new SceneObjectsAddedEventParameters(sharedSceneObjects);

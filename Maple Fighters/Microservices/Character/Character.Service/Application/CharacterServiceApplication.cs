@@ -41,6 +41,7 @@ namespace Character.Service.Application
             ServerComponents.AddComponent(new DatabaseCharacterGetter());
             ServerComponents.AddComponent(new DatabaseCharactersGetter());
             ServerComponents.AddComponent(new DatabaseCharacterExistence());
+            ServerComponents.AddComponent(new DatabaseCharacterMapUpdater());
         }
     }
 }

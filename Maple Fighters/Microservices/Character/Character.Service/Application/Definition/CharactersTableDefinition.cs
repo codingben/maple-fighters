@@ -15,6 +15,9 @@ namespace Database.Common.TablesDefinition
         public string CharacterType { get; set; }
 
         [Alias("character_index")]
-        public int CharacterIndex { get; set; }
+        public byte CharacterIndex { get; set; }
+
+        [Alias("last_map")]
+        public byte LastMap { get; set; }
     }
 }

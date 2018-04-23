@@ -24,17 +24,16 @@ namespace Game.Application.Components
 
         public PlayerGameObject Create(CharacterParameters character)
         {
-            var playerGameObject = CreatePlayerGameObject();
+            var map = character.LastMap;
+            var playerGameObject = CreatePlayerGameObject(map);
             playerGameObject.Components.AddComponent(new CharacterParametersGetter(character));
             return playerGameObject;
         }
 
-        private PlayerGameObject CreatePlayerGameObject()
+        private PlayerGameObject CreatePlayerGameObject(Maps map)
         {
-            const Maps MAP = Maps.Map_1;
-
-            var spawnDetails = characterSpawnDetailsProvider.GetCharacterSpawnDetails(MAP);
-            var scene = sceneContainer.GetSceneWrapper(MAP).AssertNotNull($"Could not find a scene with map {MAP}").GetScene();
+            var spawnDetails = characterSpawnDetailsProvider.GetCharacterSpawnDetails(map);
+            var scene = sceneContainer.GetSceneWrapper(map).AssertNotNull($"Could not find a scene with map {map}").GetScene();
             var character = new PlayerGameObject(spawnDetails);
             var sceneObject = scene.AddSceneObject(character);
             var presenceSceneProvider = sceneObject.Components.GetComponent<IPresenceSceneProvider>().AssertNotNull();

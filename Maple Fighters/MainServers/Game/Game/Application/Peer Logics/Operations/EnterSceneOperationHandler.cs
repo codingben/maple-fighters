@@ -34,7 +34,9 @@ namespace Game.Application.PeerLogic.Operations
             const string SCENE_OBJECT_NAME = "Local Player";
 
             var positionTransform = sceneObject.Components.GetComponent<IPositionTransform>().AssertNotNull();
-            return new SceneObjectParameters(sceneObject.Id, SCENE_OBJECT_NAME, positionTransform.Position.X, positionTransform.Position.Y);
+            var directionTransform = sceneObject.Components.GetComponent<IDirectionTransform>().AssertNotNull();
+            return new SceneObjectParameters(sceneObject.Id, SCENE_OBJECT_NAME, positionTransform.Position.X, positionTransform.Position.Y, 
+                directionTransform.Direction.GetDirectionsFromDirection());
         }
 
         private CharacterSpawnDetailsParameters GetCharacterSpawnDetailsShared()
