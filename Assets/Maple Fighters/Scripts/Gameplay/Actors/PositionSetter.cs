@@ -11,17 +11,14 @@ namespace Scripts.Gameplay.Actors
         private const float SPEED = 15;
         private Vector3 position = Vector3.zero;
 
-        private Transform Character
+        private Transform GetCharacter()
         {
-            get
+            if (character == null)
             {
-                if (character == null)
-                {
-                    var characterBase = GetComponent<CharacterCreatorBase>();
-                    character = characterBase?.Character.transform;
-                }
-                return character;
+                var characterBase = GetComponent<CharacterCreatorBase>();
+                character = characterBase?.Character.transform;
             }
+            return character;
         }
         private Transform character;
         private ISceneObject sceneObject;
@@ -75,7 +72,7 @@ namespace Scripts.Gameplay.Actors
         {
             const float SCALE = 1;
 
-            var character = Character;
+            var character = GetCharacter();
             if (character == null)
             {
                 character = transform;

@@ -13,7 +13,7 @@ namespace Assets.Scripts.Graphics
             var bubbleMessageGameObject = Object.Instantiate(bubbleMessageObject, owner.position, Quaternion.identity, owner);
             var bubbleMessage = bubbleMessageGameObject.GetComponent<BubbleMessage>();
             bubbleMessage.Initialize(message, time);
-            bubbleMessageGameObject.name.RemoveCloneFromName();
+            bubbleMessageGameObject.name = bubbleMessageGameObject.name.RemoveCloneFromName();
         }
     }
 }

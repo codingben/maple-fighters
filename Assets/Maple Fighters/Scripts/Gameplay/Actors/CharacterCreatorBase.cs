@@ -29,13 +29,15 @@ namespace Scripts.Gameplay.Actors
             character = Instantiate(gameObject, Vector3.zero, Quaternion.identity, transform);
             character.transform.localPosition = gameObject.transform.localPosition;
             character.transform.SetAsFirstSibling();
-            character.name.RemoveCloneFromName();
+            character.name = character.name.RemoveCloneFromName();
 
             characterSprite = character.transform.GetChild(CHARACTER_INDEX).gameObject;
 
             InitializeCharacterName(characterName);
             InitializeSpriteRenderer();
             InitializeCharacterInformationProvider(characterSpawnDetails.Character);
+
+            ChangeCharacterDirection();
         }
 
         private void InitializeCharacterName(string characterName)
@@ -55,6 +57,27 @@ namespace Scripts.Gameplay.Actors
         {
             var characterInformationProvider = GetComponent<CharacterInformationProvider>();
             characterInformationProvider.SetCharacterInformation(character);
+        }
+
+        private void ChangeCharacterDirection()
+        {
+            const float SCALE = 1;
+
+            var transform = character.transform;
+
+            switch (direction)
+            {
+                case Directions.Left:
+                {
+                    transform.localScale = new Vector3(SCALE, transform.localScale.y, transform.localScale.z);
+                    break;
+                }
+                case Directions.Right:
+                {
+                    transform.localScale = new Vector3(-SCALE, transform.localScale.y, transform.localScale.z);
+                    break;
+                }
+            }
         }
     }
 }

@@ -61,9 +61,9 @@ namespace Scripts.Containers
         private void OnSceneEntered(EnterSceneResponseParameters parameters)
         {
             var sceneObject = parameters.SceneObject;
-            AddSceneObject(sceneObject);
-
             localSceneObjectId = sceneObject.Id;
+
+            AddSceneObject(sceneObject);
 
             LogUtils.Log(MessageBuilder.Trace($"Local scene object Id: {sceneObject.Id}"));
         }
@@ -100,26 +100,29 @@ namespace Scripts.Containers
 
         private void AddSceneObject(SceneObjectParameters parameters)
         {
-            if (sceneObjects.ContainsKey(parameters.Id))
+            var id = parameters.Id;
+            var name = parameters.Name;
+
+            if (sceneObjects.ContainsKey(id))
             {
-                LogUtils.Log(MessageBuilder.Trace($"Scene object with id #{parameters.Id} already exists."), LogMessageType.Warning);
+                LogUtils.Log(MessageBuilder.Trace($"Scene object with id #{id} already exists."), LogMessageType.Warning);
                 return;
             }
 
-            var sceneObject = CreateSceneObject(parameters.Name, new Vector3(parameters.X, parameters.Y), parameters.Direction);
+            var sceneObject = CreateSceneObject(name, new Vector3(parameters.X, parameters.Y));
             if (sceneObject == null)
             {
                 return;
             }
 
-            sceneObject.name = parameters.Name;
+            sceneObject.name = name;
 
             var sceneObjectComponent = sceneObject.GetComponent<ISceneObject>();
-            sceneObjectComponent.Id = parameters.Id;
+            sceneObjectComponent.Id = id;
 
-            sceneObjects.Add(parameters.Id, sceneObjectComponent);
+            sceneObjects.Add(id, sceneObjectComponent);
 
-            LogUtils.Log(MessageBuilder.Trace($"Added a new scene object with id #{parameters.Id}"));
+            LogUtils.Log(MessageBuilder.Trace($"Added a new scene object with id #{id}"));
         }
 
         private void RemoveSceneObject(int id)
@@ -137,7 +140,7 @@ namespace Scripts.Containers
             LogUtils.Log(MessageBuilder.Trace($"Removed a scene object with id #{id}"));
         }
 
-        private GameObject CreateSceneObject(string name, Vector3 position, Directions direction)
+        private GameObject CreateSceneObject(string name, Vector3 position)
         {
             const string SCENE_OBJECTS_FOLDER_PATH = "Game/{0}";
 
@@ -147,7 +150,6 @@ namespace Scripts.Containers
                 var gameObject = Instantiate(sceneObject, position, Quaternion.identity) as GameObject;
                 if (gameObject != null)
                 {
-                    //gameObject.transform.ChangeDirection(direction); // TODO: Fix
                     return gameObject;
                 }
 

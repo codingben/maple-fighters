@@ -11,8 +11,6 @@ namespace Scripts.Gameplay.Actors
             base.Create(characterSpawnDetails);
 
             SetCharacterToPositionSender();
-            ChangeCharacterDirection();
-
             InitializePlayerController();
         }
 
@@ -33,27 +31,6 @@ namespace Scripts.Gameplay.Actors
         {
             var positionSender = GetComponent<PositionSender>();
             positionSender.Character = character.transform;
-        }
-
-        private void ChangeCharacterDirection()
-        {
-            const float SCALE = 1;
-
-            var transform = character.transform;
-
-            switch (direction)
-            {
-                case Directions.Left:
-                {
-                    transform.localScale = new Vector3(SCALE, transform.localScale.y, transform.localScale.z);
-                    break;
-                }
-                case Directions.Right:
-                {
-                    transform.localScale = new Vector3(-SCALE, transform.localScale.y, transform.localScale.z);
-                    break;
-                }
-            }
         }
 
         private void InitializePlayerController()
