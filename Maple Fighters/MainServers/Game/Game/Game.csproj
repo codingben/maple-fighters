@@ -96,6 +96,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Application\Components\Characters\CharacterSpawnDetailsProvider.cs" />
+    <Compile Include="Application\Components\Python\PythonAssemblies.cs" />
     <Compile Include="Application\Components\Scene\GameSceneWrapper.cs" />
     <Compile Include="Application\Components\Characters\PlayerGameObjectCreator.cs" />
     <Compile Include="Application\Components\Characters\Interfaces\IPlayerGameObjectCreator.cs" />

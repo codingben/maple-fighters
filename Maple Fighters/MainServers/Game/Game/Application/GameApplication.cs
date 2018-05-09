@@ -4,6 +4,7 @@ using Authorization.Client.Common;
 using Authorization.Server.Common;
 using Character.Server.Common;
 using Game.Application.Components;
+using Game.Application.Components.Python;
 using Game.Application.PeerLogics;
 using GameServerProvider.Server.Common;
 using PythonScripting;
@@ -38,36 +39,15 @@ namespace Game.Application
 
         private void AddComponents()
         {
-            CreatePythonScriptEngine();
-
             ServerComponents.AddComponent(new AuthorizationService());
             ServerComponents.AddComponent(new CharacterService());
             ServerComponents.AddComponent(new UserProfileService());
             ServerComponents.AddComponent(new GameServerProviderService());
+            ServerComponents.AddComponent(new PythonScriptEngine());
+            ServerComponents.AddComponent(new PythonAssemblies());
             ServerComponents.AddComponent(new CharacterSpawnDetailsProvider());
             ServerComponents.AddComponent(new SceneContainer());
             ServerComponents.AddComponent(new PlayerGameObjectCreator());
-        }
-
-        private void CreatePythonScriptEngine()
-        {
-            var pythonScriptEngine = ServerComponents.AddComponent(new PythonScriptEngine());
-            var assemblies = GetPythonScriptEngineAssemblies();
-
-            foreach (var assembly in assemblies)
-            {
-                pythonScriptEngine.GetScriptEngine().Runtime.LoadAssembly(assembly);
-            }
-        }
-
-        /// <summary>
-        /// Getting assemblies which can not be found by python script engine
-        /// </summary>
-        private IEnumerable<Assembly> GetPythonScriptEngineAssemblies()
-        {
-            yield return typeof(MathematicsHelper.Vector2).Assembly;
-            yield return typeof(InterestManagement.Components.SceneObject).Assembly;
-            yield return typeof(Physics.Box2D.Core.PhysicsWorldInfo).Assembly;
         }
     }
 }
