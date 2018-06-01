@@ -39,8 +39,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Component.cs" />
+    <Compile Include="Components.cs" />
     <Compile Include="Container.cs" />
     <Compile Include="IComponent.cs" />
+    <Compile Include="IComponents.cs" />
     <Compile Include="IContainer.cs" />
     <Compile Include="IEntity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

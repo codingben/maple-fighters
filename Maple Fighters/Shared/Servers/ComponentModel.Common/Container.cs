@@ -1,13 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using CommonTools.Log;
-
-namespace ComponentModel.Common
+﻿namespace ComponentModel.Common
 {
     public sealed class Container : IContainer
     {
         private readonly IContainer owner;
-        private readonly List<IComponent> components = new List<IComponent>();
+        private readonly IComponents components = new Components();
 
         public Container()
         {
@@ -17,65 +13,34 @@ namespace ComponentModel.Common
         public T AddComponent<T>(T component)
             where T : IComponent
         {
-            var isExists = components.OfType<T>().FirstOrDefault();
-            if (isExists != null)
+            if (components.Add(component) != null)
             {
-                var componentName = typeof(T).Name;
-                LogUtils.Log(MessageBuilder.Trace($"Component {componentName} already exists!"));
-                return default(T);
+                component.Awake(owner);
+                return component;
             }
-
-            components.Add(component);
-            component.Awake(owner);
-            return component;
+            return default(T);
         }
 
         public void RemoveComponent<T>()
             where T : IComponent
         {
-            var component = components.OfType<T>().FirstOrDefault();
-            if (component == null)
-            {
-                var componentName = typeof(T).Name;
-                LogUtils.Log(MessageBuilder.Trace($"Could not remove component {componentName} because it does not exist."));
-                return;
-            }
-
-            var index = components.IndexOf(component);
-            if (index != -1)
-            {
-                components.RemoveAt(index);
-            }
-
-            component.Dispose();
+            components.Remove<T>();
         }
 
         public T GetComponent<T>()
             where T : class
         {
-            if (typeof(T).IsInterface)
-            {
-                var component = components.OfType<T>().FirstOrDefault();
-                return component;
-            }
-
-            var componentName = typeof(T).Name;
-            LogUtils.Log(MessageBuilder.Trace($"Could not get a {componentName} via not interface type."));
-            return default(T);
+            return components.Get<T>();
         }
 
         public void Dispose()
         {
-            var componentsListTemp = new List<IComponent>();
-            componentsListTemp.AddRange(components);
-            componentsListTemp.ForEach(component => component.Dispose());
+            components.Dispose();
+        }
 
-            foreach (var component in componentsListTemp)
-            {
-                components.Remove(component);
-            }
-
-            componentsListTemp.Clear();
+        public int Count()
+        {
+            return components.Count();
         }
     }
 
@@ -83,7 +48,7 @@ namespace ComponentModel.Common
         where TOwner : IEntity<TOwner>
     {
         private readonly TOwner owner;
-        private readonly List<IComponent<TOwner>> components = new List<IComponent<TOwner>>();
+        private readonly IComponents components = new Components();
 
         public Container(TOwner owner)
         {
@@ -93,65 +58,34 @@ namespace ComponentModel.Common
         public T AddComponent<T>(T component)
             where T : IComponent<TOwner>
         {
-            var isExists = components.OfType<T>().FirstOrDefault();
-            if (isExists != null)
+            if (components.Add(component) != null)
             {
-                var componentName = typeof(T).Name;
-                LogUtils.Log(MessageBuilder.Trace($"Component {componentName} already exists!"));
-                return default(T);
+                component.Awake(owner);
+                return component;
             }
-
-            components.Add(component);
-            component.Awake(owner);
-            return component;
+            return default(T);
         }
 
         public void RemoveComponent<T>()
             where T : IComponent<TOwner>
         {
-            var component = components.OfType<T>().FirstOrDefault();
-            if (component == null)
-            {
-                var componentName = typeof(T).Name;
-                LogUtils.Log(MessageBuilder.Trace($"Could not remove component {componentName} because it does not exist."));
-                return;
-            }
-
-            var index = components.IndexOf(component);
-            if (index != -1)
-            {
-                components.RemoveAt(index);
-            }
-
-            component.Dispose();
+            components.Remove<T>();
         }
 
         public T GetComponent<T>()
             where T : class
         {
-            if (typeof(T).IsInterface)
-            {
-                var component = components.OfType<T>().FirstOrDefault();
-                return component;
-            }
-
-            var componentName = typeof(T).Name;
-            LogUtils.Log(MessageBuilder.Trace($"Could not get a {componentName} via not interface type."));
-            return default(T);
+            return components.Get<T>();
         }
 
         public void Dispose()
         {
-            var componentsListTemp = new List<IComponent<TOwner>>();
-            componentsListTemp.AddRange(components);
-            componentsListTemp.ForEach(component => component.Dispose());
+            components.Dispose();
+        }
 
-            foreach (var component in componentsListTemp)
-            {
-                components.Remove(component);
-            }
-
-            componentsListTemp.Clear();
+        public int Count()
+        {
+            return components.Count();
         }
     }
 }
