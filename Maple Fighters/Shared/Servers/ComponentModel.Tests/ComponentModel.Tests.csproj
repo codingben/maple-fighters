@@ -70,9 +70,14 @@
     <Compile Include="ComponentTests.cs" />
     <Compile Include="ContainerTests.cs" />
     <Compile Include="ITestComponent.cs" />
+    <Compile Include="ITestEntity.cs" />
     <Compile Include="Logger.cs" />
+    <Compile Include="OwnerComponentTests.cs" />
+    <Compile Include="OwnerContainerTests.cs" />
+    <Compile Include="OwnerTestComponent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestComponent.cs" />
+    <Compile Include="TestEntity.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

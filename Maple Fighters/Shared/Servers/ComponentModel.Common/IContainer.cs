@@ -12,6 +12,8 @@ namespace ComponentModel.Common
 
         T GetComponent<T>()
             where T : class;
+
+        int Count();
     }
 
     public interface IContainer<out TOwner> : IDisposable
@@ -25,5 +27,7 @@ namespace ComponentModel.Common
 
         T GetComponent<T>()
             where T : class;
+
+        int Count();
     }
 }
