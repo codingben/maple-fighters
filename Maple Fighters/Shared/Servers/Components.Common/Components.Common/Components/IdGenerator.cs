@@ -12,7 +12,7 @@ namespace Components.Common
         {
             lock (locker)
             {
-                return (int) checked(id++);
+                return (int) checked(++id);
             }
         }
     }
