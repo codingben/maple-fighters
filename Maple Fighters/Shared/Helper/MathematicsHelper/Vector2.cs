@@ -72,12 +72,7 @@ namespace MathematicsHelper
 
         public override bool Equals(object obj)
         {
-            if (obj is Vector2)
-            {
-                return Equals(this);
-            }
-
-            return false;
+            return obj is Vector2 && Equals(this);
         }
 
         public bool Equals(Vector2 other)
@@ -159,7 +154,7 @@ namespace MathematicsHelper
 
         public static Vector2 operator /(Vector2 value1, float divider)
         {
-            float factor = 1 / divider;
+            var factor = 1 / divider;
             value1.X *= factor;
             value1.Y *= factor;
             return value1;
