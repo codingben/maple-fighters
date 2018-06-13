@@ -7,26 +7,29 @@ using Config = JsonConfig.Config;
 
 namespace InterestManagement
 {
-    internal sealed class Region : IRegion
+    public sealed class Region : IRegion
     {
         public Rectangle PublisherArea { get; }
-
         private readonly HashSet<ISceneObject> sceneObjects = new HashSet<ISceneObject>();
 
-        public Region(Rectangle rectangle) => PublisherArea = rectangle;
+        public Region(Rectangle rectangle)
+        {
+            PublisherArea = rectangle;
+        }
 
-        public void AddSubscription(ISceneObject sceneObject)
+        public bool AddSubscription(ISceneObject sceneObject)
         {
             if (!sceneObjects.Add(sceneObject))
             {
                 LogUtils.Log(MessageBuilder.Trace($"A scene object with id #{sceneObject.Id} already exists in a region."), LogMessageType.Warning);
-                return;
+                return false;
             }
 
             Log();
 
             AddSubscribersForSubscriber();
             AddSubscriberForSubscribers();
+            return true;
 
             void Log()
             {
@@ -60,18 +63,19 @@ namespace InterestManagement
             }
         }
 
-        public void RemoveSubscription(ISceneObject sceneObject)
+        public bool RemoveSubscription(ISceneObject sceneObject)
         {
             if (!sceneObjects.Remove(sceneObject))
             {
                 LogUtils.Log(MessageBuilder.Trace($"A scene object with id #{sceneObject.Id} does not exist in a region."), LogMessageType.Warning);
-                return;
+                return false;
             }
 
             Log();
 
             RemoveSubscribersForSubscriber();
             RemoveSubscriberForSubscribers();
+            return true;
 
             void Log()
             {
@@ -126,18 +130,19 @@ namespace InterestManagement
             }
         }
 
-        public void RemoveSubscriptionForAllSubscribers(ISceneObject sceneObject)
+        public bool RemoveSubscriptionForAllSubscribers(ISceneObject sceneObject)
         {
             if (!sceneObjects.Remove(sceneObject))
             {
                 LogUtils.Log(MessageBuilder.Trace($"A scene object with id #{sceneObject.Id} does not exist in a region."), LogMessageType.Warning);
-                return;
+                return false;
             }
 
             Log();
 
             RemoveAllSubscribersForSubscriber();
             RemoveSubscriberForAllSubscribers();
+            return true;
 
             void Log()
             {

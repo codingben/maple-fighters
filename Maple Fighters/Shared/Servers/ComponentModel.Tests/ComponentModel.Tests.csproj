@@ -71,7 +71,6 @@
     <Compile Include="ContainerTests.cs" />
     <Compile Include="ITestComponent.cs" />
     <Compile Include="ITestEntity.cs" />
-    <Compile Include="Logger.cs" />
     <Compile Include="OwnerComponentTests.cs" />
     <Compile Include="OwnerContainerTests.cs" />
     <Compile Include="OwnerTestComponent.cs" />

@@ -16,7 +16,7 @@ namespace InterestManagement
         private readonly IRegion[,] regions;
         private readonly HashSet<ISceneObject> sceneObjects = new HashSet<ISceneObject>();
 
-        protected Scene(Vector2 sceneSize, Vector2 regionSize)
+        public Scene(Vector2 sceneSize, Vector2 regionSize)
         {
             var regionsX = (int)(sceneSize.X / regionSize.X);
             var regionsY = (int)(sceneSize.Y / regionSize.Y);
@@ -60,16 +60,17 @@ namespace InterestManagement
             }
         }
 
-        public void RemoveSceneObject(ISceneObject sceneObject)
+        public bool RemoveSceneObject(ISceneObject sceneObject)
         {
             if (!sceneObjects.Remove(sceneObject))
             {
                 LogUtils.Log(MessageBuilder.Trace($"A scene object with id #{sceneObject.Id} does not exist in a scene."), LogMessageType.Warning);
-                return;
+                return false;
             }
 
             Log();
             RemoveSubscriptionFromPublishers();
+            return true;
 
             void Log()
             {
@@ -116,7 +117,7 @@ namespace InterestManagement
 
         public ISceneObject GetSceneObject(int id)
         {
-            var sceneObject = sceneObjects.Single(x => x.Id.Equals(id));
+            var sceneObject = sceneObjects.SingleOrDefault(x => x.Id.Equals(id));
             if (sceneObject != null)
             {
                 return sceneObject;
@@ -126,6 +127,7 @@ namespace InterestManagement
             return null;
         }
 
+        public IReadOnlyCollection<ISceneObject> GetAllSceneObjects() => sceneObjects;
         public IRegion[,] GetAllRegions() => regions;
     }
 }

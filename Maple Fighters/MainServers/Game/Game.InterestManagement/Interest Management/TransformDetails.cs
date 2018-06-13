@@ -14,5 +14,10 @@ namespace InterestManagement
             Size = size;
             Direction = direction;
         }
+
+        public static TransformDetails Empty()
+        {
+            return new TransformDetails(Vector2.Zero, Vector2.Zero, Direction.Left);
+        }
     }
 }

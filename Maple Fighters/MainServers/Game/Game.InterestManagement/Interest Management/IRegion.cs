@@ -8,9 +8,9 @@ namespace InterestManagement
     {
         Rectangle PublisherArea { get; }
 
-        void AddSubscription(ISceneObject sceneObject);
-        void RemoveSubscription(ISceneObject sceneObject);
-        void RemoveSubscriptionForAllSubscribers(ISceneObject sceneObject);
+        bool AddSubscription(ISceneObject sceneObject);
+        bool RemoveSubscription(ISceneObject sceneObject);
+        bool RemoveSubscriptionForAllSubscribers(ISceneObject sceneObject);
 
         bool HasSubscription(ISceneObject sceneObject);
 

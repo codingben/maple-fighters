@@ -1,4 +1,5 @@
-﻿using ComponentModel.Common;
+﻿using System.Collections.Generic;
+using ComponentModel.Common;
 using InterestManagement.Components.Interfaces;
 using MathematicsHelper;
 
@@ -10,8 +11,9 @@ namespace InterestManagement
         IRegion[,] GetAllRegions();
 
         ISceneObject AddSceneObject(ISceneObject sceneObject);
-        void RemoveSceneObject(ISceneObject sceneObject);
+        bool RemoveSceneObject(ISceneObject sceneObject);
 
         ISceneObject GetSceneObject(int id);
+        IReadOnlyCollection<ISceneObject> GetAllSceneObjects();
     }
 }

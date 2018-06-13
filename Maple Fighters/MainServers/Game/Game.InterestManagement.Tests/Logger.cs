@@ -1,6 +1,6 @@
 ﻿using CommonTools.Log;
 
-namespace ComponentModel.Tests
+namespace Game.InterestManagement.Tests
 {
     public class Logger : ILogger
     {

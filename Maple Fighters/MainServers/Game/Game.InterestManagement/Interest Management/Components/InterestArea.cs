@@ -12,13 +12,16 @@ namespace InterestManagement.Components
         private Rectangle interestArea;
         private IPresenceSceneProvider presenceSceneProvider;
 
-        public InterestArea(Vector2 position, Vector2 areaSize) => interestArea = new Rectangle(position, areaSize);
+        public InterestArea(Vector2 position, Vector2 areaSize)
+        {
+            interestArea = new Rectangle(position, areaSize);
+        }
 
         protected override void OnAwake()
         {
             base.OnAwake();
 
-            Entity.Components.AddComponent(new NearbySubscribers());
+            Entity.Components.AddComponent(new NearbySubscribersCollection());
 
             presenceSceneProvider = Entity.Components.GetComponent<IPresenceSceneProvider>().AssertNotNull();
 

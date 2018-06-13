@@ -10,8 +10,8 @@ namespace InterestManagement.Components
 
         public int Id { get; }
         public string Name { get; }
-
-        protected SceneObject(int id, string name, TransformDetails transformDetails)
+        
+        public SceneObject(int id, string name, TransformDetails transformDetails)
         {
             Id = id;
             Name = name;
@@ -41,7 +41,7 @@ namespace InterestManagement.Components
             OnDestroy();
 
             var presenceSceneProvider = Components.GetComponent<IPresenceSceneProvider>().AssertNotNull();
-            presenceSceneProvider.GetScene().RemoveSceneObject(this);
+            presenceSceneProvider.GetScene()?.RemoveSceneObject(this);
 
             Components?.Dispose();
         }

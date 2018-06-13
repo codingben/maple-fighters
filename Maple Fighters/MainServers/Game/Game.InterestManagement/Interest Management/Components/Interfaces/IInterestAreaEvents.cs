@@ -10,9 +10,9 @@ namespace InterestManagement.Components.Interfaces
         event Action<ISceneObject[]> SubscribersAdded;
         event Action<ISceneObject[]> SubscribersRemoved;
 
-        void AddSubscriber(ISceneObject sceneObject);
-        void RemoveSubscriber(ISceneObject sceneObject);
-        void AddSubscribers(IEnumerable<ISceneObject> sceneObjects);
-        void RemoveSubscribers(IEnumerable<ISceneObject> sceneObjects);
+        bool AddSubscriber(ISceneObject sceneObject);
+        bool RemoveSubscriber(ISceneObject sceneObject);
+        bool AddSubscribers(IEnumerable<ISceneObject> sceneObjects);
+        bool RemoveSubscribers(IEnumerable<ISceneObject> sceneObjects);
     }
 }

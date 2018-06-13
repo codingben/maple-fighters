@@ -6,7 +6,7 @@ using InterestManagement.Components.Interfaces;
 
 namespace InterestManagement.Components
 {
-    public class NearbySubscribers : Component<ISceneObject>, IInterestAreaEvents
+    public class NearbySubscribersCollection : Component<ISceneObject>, IInterestAreaEvents
     {
         public event Action<ISceneObject> SubscriberAdded;
         public event Action<ISceneObject> SubscriberRemoved;
@@ -22,38 +22,50 @@ namespace InterestManagement.Components
             subscribers.Clear();
         }
 
-        public void AddSubscriber(ISceneObject sceneObject)
+        public bool AddSubscriber(ISceneObject sceneObject)
         {
             if (subscribers.Add(sceneObject))
             {
                 SubscriberAdded?.Invoke(sceneObject);
+                return true;
             }
+
+            return false;
         }
 
-        public void RemoveSubscriber(ISceneObject sceneObject)
+        public bool RemoveSubscriber(ISceneObject sceneObject)
         {
             if (subscribers.Remove(sceneObject))
             {
                 SubscriberRemoved?.Invoke(sceneObject);
+                return true;
             }
+
+            return false;
         }
 
-        public void AddSubscribers(IEnumerable<ISceneObject> sceneObjects)
+        public bool AddSubscribers(IEnumerable<ISceneObject> sceneObjects)
         {
             var subscribersAdded = sceneObjects.Where(sceneObject => subscribers.Add(sceneObject)).ToArray();
-            if (subscribersAdded.Length == 0) return;
+            if (subscribersAdded.Length == 0)
             {
-                SubscribersAdded?.Invoke(subscribersAdded);
+                return false;
             }
+
+            SubscribersAdded?.Invoke(subscribersAdded);
+            return true;
         }
 
-        public void RemoveSubscribers(IEnumerable<ISceneObject> sceneObjects)
+        public bool RemoveSubscribers(IEnumerable<ISceneObject> sceneObjects)
         {
             var subscribersRemoved = sceneObjects.Where(sceneObject => subscribers.Remove(sceneObject)).ToArray();
-            if (subscribersRemoved.Length == 0) return;
+            if (subscribersRemoved.Length == 0)
             {
-                SubscribersRemoved?.Invoke(subscribersRemoved);
+                return false;
             }
+
+            SubscribersRemoved?.Invoke(subscribersRemoved);
+            return true;
         }
     }
 }
