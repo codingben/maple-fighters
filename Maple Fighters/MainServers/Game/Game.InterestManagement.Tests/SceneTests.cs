@@ -1,5 +1,4 @@
-﻿using System;
-using CommonTools.Log;
+﻿using CommonTools.Log;
 using InterestManagement;
 using InterestManagement.Components;
 using MathematicsHelper;

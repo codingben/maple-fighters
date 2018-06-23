@@ -22,7 +22,6 @@ namespace InterestManagement.Components
             base.OnAwake();
 
             Entity.Components.AddComponent(new NearbySubscribersCollection());
-
             presenceSceneProvider = Entity.Components.GetComponent<IPresenceSceneProvider>().AssertNotNull();
 
             SubscribeToPositionChanged();
@@ -59,8 +58,8 @@ namespace InterestManagement.Components
 
         public void SetSize()
         {
-            var size = presenceSceneProvider.GetScene().RegionSize;
-            interestArea.SetSize(size);
+            var scene = presenceSceneProvider.GetScene();
+            interestArea.SetSize(scene.RegionSize);
         }
 
         public void DetectOverlapsWithRegions()
