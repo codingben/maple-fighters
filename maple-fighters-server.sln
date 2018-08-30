@@ -303,6 +303,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhotonControl.Application",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhotonControl.UnitTests", "tools\PhotonControl\PhotonControl.UnitTests\PhotonControl.UnitTests.csproj", "{C7F83DA5-C3FC-45FE-BDF0-FED122E80EC1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.ComponentModel.Tests", "lib\Common\Common.ComponentModel.Tests\Common.ComponentModel.Tests.csproj", "{8B0C40C6-A638-41F0-93A7-17FE6BAA0259}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -725,6 +727,10 @@ Global
 		{C7F83DA5-C3FC-45FE-BDF0-FED122E80EC1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C7F83DA5-C3FC-45FE-BDF0-FED122E80EC1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C7F83DA5-C3FC-45FE-BDF0-FED122E80EC1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8B0C40C6-A638-41F0-93A7-17FE6BAA0259}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8B0C40C6-A638-41F0-93A7-17FE6BAA0259}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8B0C40C6-A638-41F0-93A7-17FE6BAA0259}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8B0C40C6-A638-41F0-93A7-17FE6BAA0259}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -876,6 +882,7 @@ Global
 		{DBF58800-32AF-47D8-943F-52E896CE8209} = {E194BA9B-2618-4FB8-82AE-08560637FFFD}
 		{E388BDFA-90F4-40E0-AC33-A16611529718} = {DBF58800-32AF-47D8-943F-52E896CE8209}
 		{C7F83DA5-C3FC-45FE-BDF0-FED122E80EC1} = {DBF58800-32AF-47D8-943F-52E896CE8209}
+		{8B0C40C6-A638-41F0-93A7-17FE6BAA0259} = {B37FE882-0224-4941-9617-1565475C67DA}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {20317580-AFD3-4C35-BADC-B5E94CD0B788}
