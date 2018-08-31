@@ -3,6 +3,7 @@
     public static class ExtensionMethods
     {
         public static T AssertNotNull<T>(this T component)
+            where T : class
         {
             if (component == null)
             {

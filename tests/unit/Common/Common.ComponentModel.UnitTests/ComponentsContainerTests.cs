@@ -35,6 +35,30 @@ namespace Common.ComponentModel.UnitTests
         }
 
         [Fact]
+        public void Add_Throws_Exception_When_Two_Same_Components_Added()
+        {
+            // Arrange
+            IComponentsContainer componentsContainer = new ComponentsContainer();
+            componentsContainer.Add(new UnexposableComponent());
+
+            // Act & Assert
+            Should.Throw<ComponentModelException>(
+                () => componentsContainer.Add(new UnexposableComponent()));
+        }
+
+        [Fact]
+        public void AddAndExpose_Throws_Exception_When_Two_Same_Components_Added()
+        {
+            // Arrange
+            IExposableComponentsContainer componentsContainer = new ComponentsContainer();
+            componentsContainer.Add(new ExposableComponent());
+
+            // Act & Assert
+            Should.Throw<ComponentModelException>(
+                () => componentsContainer.Add(new ExposableComponent()));
+        }
+
+        [Fact]
         public void Remove_Exposable_Component()
         {
             // Arrange

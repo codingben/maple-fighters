@@ -22,61 +22,40 @@ namespace Common.ComponentModel
             };
         }
 
-        public TComponent Insert<TComponent>(TComponent component)
+        public void TryAdd<TComponent>(TComponent component)
             where TComponent : class
         {
             var exposedState = Utils.GetComponentExposedState<TComponent>();
-
-            if (collections[exposedState].Contains(component))
-            {
-                throw new ComponentModelException(
-                    $"Component {typeof(TComponent).Name} already exists!");
-            }
-
-            collections[exposedState].Add(component);
-            return component;
+            collections[exposedState].AddIfNotExists(component);
         }
 
-        public TComponent InsertAndExpose<TComponent>(TComponent component)
+        public void TryAddExposedOnly<TComponent>(TComponent component)
             where TComponent : class
         {
-            var exposedState = Utils.GetComponentExposedState<TComponent>();
-
-            if (Utils.IsComponent<TComponent>() &&
-                exposedState != ExposedState.Exposable)
+            if (Utils.IsComponentExposed<TComponent>())
             {
-                throw new ComponentModelException(
-                    $"Component {typeof(TComponent).Name} should be exposable.");
+                collections[ExposedState.Exposable].AddIfNotExists(component);
             }
-
-            if (collections[ExposedState.Exposable].Contains(component))
-            {
-                throw new ComponentModelException(
-                    $"Component {typeof(TComponent).Name} already exists!");
-            }
-
-            collections[ExposedState.Exposable].Add(component);
-            return component;
         }
 
         public TComponent Remove<TComponent>()
             where TComponent : class
         {
             var exposedState = Utils.GetComponentExposedState<TComponent>();
+            var collection = collections[exposedState];
 
-            var component = collections[exposedState].OfType<TComponent>()
+            var component = collection.OfType<TComponent>()
                 .FirstOrDefault();
             if (component == null)
             {
                 throw new ComponentModelException(
-                    $"Could not remove component {typeof(TComponent).Name} because it does not exist.");
+                    $"Could not remove component {typeof(TComponent).Name} because it was not found.");
             }
 
-            var index = collections[exposedState]
-                .IndexOf(component);
+            var index = collection.IndexOf(component);
             if (index != -1)
             {
-                collections[exposedState].RemoveAt(index);
+                collection.RemoveAt(index);
             }
 
             return component;
@@ -88,42 +67,46 @@ namespace Common.ComponentModel
             var component = collections[exposedState].OfType<TComponent>()
                 .FirstOrDefault();
 
+            return ProvideComponentByLifeTime(component);
+        }
+
+        public IEnumerable<object> GetAll()
+        {
+            return collections[ExposedState.Unexposable]
+                .Concat(collections[ExposedState.Exposable]);
+        }
+
+        public void Dispose()
+        {
+            collections[ExposedState.Unexposable].Clear();
+            collections[ExposedState.Exposable].Clear();
+        }
+
+        private TComponent ProvideComponentByLifeTime<TComponent>(
+            TComponent component) where TComponent : class
+        {
             var lifeTime = Utils.GetComponentLifeTime<TComponent>();
 
             switch (lifeTime)
             {
                 case LifeTime.Singleton:
                 {
-                    return component;
+                    break;
                 }
 
                 case LifeTime.PerThread:
                 {
-                    // TODO: Implement
-                    break;
+                    throw new NotImplementedException();
                 }
 
                 case LifeTime.PerCall:
                 {
-                    return (TComponent)Activator.CreateInstance(typeof(TComponent));
+                    return (TComponent)Activator.CreateInstance(
+                        typeof(TComponent));
                 }
             }
 
-            return default(TComponent);
-        }
-
-        public IEnumerable<object> GetAll()
-        {
-            var objects = new List<object>();
-            objects.AddRange(collections[ExposedState.Unexposable]);
-            objects.AddRange(collections[ExposedState.Exposable]);
-            return objects.AsReadOnly();
-        }
-
-        public void Dispose()
-        {
-            var collecion = (Dictionary<ExposedState, List<object>>)collections;
-            collecion.Clear();
+            return component;
         }
     }
 }

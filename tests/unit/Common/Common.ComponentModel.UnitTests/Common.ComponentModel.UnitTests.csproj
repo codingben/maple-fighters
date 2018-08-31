@@ -63,6 +63,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ComponentBaseTests.cs" />
+    <Compile Include="ComponentCollectionsTests.cs" />
     <Compile Include="ComponentsContainerTests.cs" />
     <Compile Include="Generic\ComponentBaseTests.cs" />
     <Compile Include="Generic\ComponentsContainerTests.cs" />

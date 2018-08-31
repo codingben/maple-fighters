@@ -14,35 +14,27 @@ namespace Common.ComponentModel
 
         TComponent IComponentsContainer.Add<TComponent>(TComponent component)
         {
-            if (components.Insert(component) != null)
-            {
-                if (component is IComponent componentBase)
-                {
-                    componentBase.Awake(this);
-                }
+            components.TryAdd(component);
 
-                return component;
+            if (component is IComponent componentBase)
+            {
+                componentBase.Awake(this);
             }
 
-            throw new ComponentModelException(
-                $"Failed to add {typeof(TComponent).Name} component.");
+            return component;
         }
 
         TComponent IExposableComponentsContainer.Add<TComponent>(
             TComponent component)
         {
-            if (components.InsertAndExpose(component) != null)
-            {
-                if (component is IComponent componentBase)
-                {
-                    componentBase.Awake(this);
-                }
+            components.TryAddExposedOnly(component);
 
-                return component;
+            if (component is IComponent componentBase)
+            {
+                componentBase.Awake(this);
             }
 
-            throw new ComponentModelException(
-                $"Failed to add {typeof(TComponent).Name} component.");
+            return component;
         }
 
         void IComponentsContainer.Remove<TComponent>()

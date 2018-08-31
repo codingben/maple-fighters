@@ -40,6 +40,7 @@
     <Compile Include="ComponentSettingsAttribute.cs" />
     <Compile Include="ComponentsContainer.cs" />
     <Compile Include="ExposedState.cs" />
+    <Compile Include="ExtensionMethods.cs" />
     <Compile Include="Utils.cs" />
     <Compile Include="Generic\ComponentBase.cs" />
     <Compile Include="Generic\IComponent.cs" />

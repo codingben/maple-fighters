@@ -5,10 +5,10 @@ namespace Common.ComponentModel
 {
     public interface IComponentCollections : IDisposable
     {
-        TComponent Insert<TComponent>(TComponent component)
+        void TryAdd<TComponent>(TComponent component)
             where TComponent : class;
 
-        TComponent InsertAndExpose<TComponent>(TComponent component)
+        void TryAddExposedOnly<TComponent>(TComponent component)
             where TComponent : class;
 
         TComponent Remove<TComponent>()

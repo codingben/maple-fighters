@@ -16,7 +16,7 @@ namespace Common.ComponentModel
                 if (IsComponent<TComponent>())
                 {
                     throw new ComponentModelException(
-                        $"A component {component.Name} should have a component settings attribute.");
+                        $"A component {component.Name} should have a component settings.");
                 }
             }
 
@@ -66,6 +66,21 @@ namespace Common.ComponentModel
 
             throw new ComponentModelException(
                 $"Could not get a {typeof(T).Name} via not interface type.");
+        }
+
+        public static bool IsComponentExposed<TComponent>()
+            where TComponent : class
+        {
+            var exposedState = GetComponentExposedState<TComponent>();
+
+            if (IsComponent<TComponent>() &&
+                exposedState != ExposedState.Exposable)
+            {
+                throw new ComponentModelException(
+                    $"Component {typeof(TComponent).Name} should be exposable.");
+            }
+
+            return true;
         }
     }
 }
