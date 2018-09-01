@@ -6,16 +6,16 @@ using Xunit;
 
 namespace Common.ComponentModel.Generic.UnitTests
 {
-    public class ComponentsContainerTests
+    public class OwnerComponentsProviderTests
     {
         [Fact]
         public void Add_Returns_UnexposableComponent()
         {
             // Arrange
-            IComponentsContainer componentsContainer = new ComponentsContainer<IDummyObject>(null);
+            IComponentsProvider componentsProvider = new OwnerComponentsProvider<IDummyObject>(null);
 
             // Act
-            var component = componentsContainer.Add(new UnexposableComponent());
+            var component = componentsProvider.Add(new UnexposableComponent());
 
             // Assert
             component.ShouldNotBeNull();
@@ -25,10 +25,10 @@ namespace Common.ComponentModel.Generic.UnitTests
         public void AddAndExpose_Returns_ExposableComponent()
         {
             // Arrange
-            IExposableComponentsContainer componentsContainer = new ComponentsContainer<IDummyObject>(null);
+            IExposedComponentsProvider componentsProvider = new OwnerComponentsProvider<IDummyObject>(null);
 
             // Act
-            var component = componentsContainer.Add(new ExposableComponent());
+            var component = componentsProvider.Add(new ExposableComponent());
 
             // Assert
             component.ShouldNotBeNull();
@@ -38,63 +38,63 @@ namespace Common.ComponentModel.Generic.UnitTests
         public void Add_Throws_Exception_When_Two_Same_Components_Added()
         {
             // Arrange
-            IComponentsContainer componentsContainer = new ComponentsContainer<IDummyObject>(null);
-            componentsContainer.Add(new UnexposableComponent());
+            IComponentsProvider componentsProvider = new OwnerComponentsProvider<IDummyObject>(null);
+            componentsProvider.Add(new UnexposableComponent());
 
             // Act & Assert
             Should.Throw<ComponentModelException>(
-                () => componentsContainer.Add(new UnexposableComponent()));
+                () => componentsProvider.Add(new UnexposableComponent()));
         }
 
         [Fact]
         public void AddAndExpose_Throws_Exception_When_Two_Same_Components_Added()
         {
             // Arrange
-            IExposableComponentsContainer componentsContainer = new ComponentsContainer<IDummyObject>(null);
-            componentsContainer.Add(new ExposableComponent());
+            IExposedComponentsProvider componentsProvider = new OwnerComponentsProvider<IDummyObject>(null);
+            componentsProvider.Add(new ExposableComponent());
 
             // Act & Assert
             Should.Throw<ComponentModelException>(
-                () => componentsContainer.Add(new ExposableComponent()));
+                () => componentsProvider.Add(new ExposableComponent()));
         }
 
         [Fact]
         public void Remove_Exposable_Component()
         {
             // Arrange
-            IComponentsContainer componentsContainer = new ComponentsContainer<IDummyObject>(null);
-            componentsContainer.Add(new ExposableComponent());
+            IComponentsProvider componentsProvider = new OwnerComponentsProvider<IDummyObject>(null);
+            componentsProvider.Add(new ExposableComponent());
 
             // Act
-            componentsContainer.Remove<ExposableComponent>();
+            componentsProvider.Remove<ExposableComponent>();
 
             // Assert
-            componentsContainer.Get<IExposableComponent>().ShouldBeNull();
+            componentsProvider.Get<IExposableComponent>().ShouldBeNull();
         }
 
         [Fact]
         public void Remove_Unexposable_Component()
         {
             // Arrange
-            IComponentsContainer componentsContainer = new ComponentsContainer<IDummyObject>(null);
-            componentsContainer.Add(new UnexposableComponent());
+            IComponentsProvider componentsProvider = new OwnerComponentsProvider<IDummyObject>(null);
+            componentsProvider.Add(new UnexposableComponent());
 
             // Act
-            componentsContainer.Remove<UnexposableComponent>();
+            componentsProvider.Remove<UnexposableComponent>();
 
             // Assert
-            componentsContainer.Get<IUnexposableComponent>().ShouldBeNull();
+            componentsProvider.Get<IUnexposableComponent>().ShouldBeNull();
         }
 
         [Fact]
         public void Get_Returns_Exposable_Component()
         {
             // Arrange
-            IComponentsContainer componentsContainer = new ComponentsContainer<IDummyObject>(null);
-            componentsContainer.Add(new ExposableComponent());
+            IComponentsProvider componentsProvider = new OwnerComponentsProvider<IDummyObject>(null);
+            componentsProvider.Add(new ExposableComponent());
 
             // Act
-            var exposableComponent = componentsContainer.Get<IExposableComponent>();
+            var exposableComponent = componentsProvider.Get<IExposableComponent>();
 
             // Assert
             exposableComponent.ShouldNotBeNull();
@@ -104,11 +104,11 @@ namespace Common.ComponentModel.Generic.UnitTests
         public void Get_Returns_Exposable_Only_Component()
         {
             // Arrange
-            IExposableComponentsContainer componentsContainer = new ComponentsContainer<IDummyObject>(null);
-            componentsContainer.Add(new ExposableComponent());
+            IExposedComponentsProvider componentsProvider = new OwnerComponentsProvider<IDummyObject>(null);
+            componentsProvider.Add(new ExposableComponent());
 
             // Act
-            var exposableComponent = componentsContainer.Get<IExposableComponent>();
+            var exposableComponent = componentsProvider.Get<IExposableComponent>();
 
             // Assert
             exposableComponent.ShouldNotBeNull();
@@ -118,11 +118,11 @@ namespace Common.ComponentModel.Generic.UnitTests
         public void Get_Returns_Unexposable_Component()
         {
             // Arrange
-            IComponentsContainer componentsContainer = new ComponentsContainer<IDummyObject>(null);
-            componentsContainer.Add(new UnexposableComponent());
+            IComponentsProvider componentsProvider = new OwnerComponentsProvider<IDummyObject>(null);
+            componentsProvider.Add(new UnexposableComponent());
 
             // Act
-            var unexposableComponent = componentsContainer.Get<IUnexposableComponent>();
+            var unexposableComponent = componentsProvider.Get<IUnexposableComponent>();
 
             // Assert
             unexposableComponent.ShouldNotBeNull();
@@ -132,24 +132,24 @@ namespace Common.ComponentModel.Generic.UnitTests
         public void Get_Throws_Error_When_Not_Interface()
         {
             // Arrange
-            IComponentsContainer componentsContainer = new ComponentsContainer<IDummyObject>(null);
-            componentsContainer.Add(new UnexposableComponent());
+            IComponentsProvider componentsProvider = new OwnerComponentsProvider<IDummyObject>(null);
+            componentsProvider.Add(new UnexposableComponent());
 
             // Act && Assert
             Should.Throw<ComponentModelException>(() => 
-                componentsContainer.Get<UnexposableComponent>());
+                componentsProvider.Get<UnexposableComponent>());
         }
 
         [Fact]
         public void Dispose_Components()
         {
             // Arrange
-            IComponentsContainer componentsContainer = new ComponentsContainer<IDummyObject>(null);
-            var otherTestableComponent = componentsContainer.AddAndMock<IOtherTestableComponent>();
-            componentsContainer.Add(new TestableComponent());
+            IComponentsProvider componentsProvider = new OwnerComponentsProvider<IDummyObject>(null);
+            var otherTestableComponent = componentsProvider.AddAndMock<IOtherTestableComponent>();
+            componentsProvider.Add(new TestableComponent());
 
             // Act
-            componentsContainer.Dispose();
+            componentsProvider.Dispose();
 
             // Assert
             otherTestableComponent.Received().Test();
@@ -190,8 +190,7 @@ namespace Common.ComponentModel.Generic.UnitTests
         {
             base.OnRemoved();
 
-            var otherTestableComponent = Components.Get<IOtherTestableComponent>()
-                .AssertNotNull();
+            var otherTestableComponent = Components.Get<IOtherTestableComponent>().AssertNotNull();
             otherTestableComponent.Test();
         }
     }

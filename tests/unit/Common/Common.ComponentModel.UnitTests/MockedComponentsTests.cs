@@ -12,10 +12,10 @@ namespace Common.ComponentModel.UnitTests
         private void Mocked_DummyCharacter_Received_Move()
         {
             // Arrange
-            ISceneObject sceneObject = new SceneObject();
+            IGameObject gameObject = new GameObject();
 
-            var dummyCharacter = sceneObject.ExposableComponents.AddAndMock<IDummyCharacter>();
-            var transform = sceneObject.ExposableComponents.Get<ITransform>();
+            var dummyCharacter = gameObject.ExposedComponents.AddAndMock<IDummyCharacter>();
+            var transform = gameObject.ExposedComponents.Get<ITransform>();
 
             // Act
             transform.SetPosition();
@@ -27,25 +27,25 @@ namespace Common.ComponentModel.UnitTests
 
     public interface ISceneObject
     {
-        IExposableComponentsContainer ExposableComponents { get; }
+        int Id { get; }
     }
 
     public interface IGameObject
     {
-        int Id { get; }
+        IExposedComponentsProvider ExposedComponents { get; }
     }
 
-    public class SceneObject : ISceneObject, IGameObject
+    public class GameObject : IGameObject, ISceneObject
     {
         public int Id { get; }
-        public IExposableComponentsContainer ExposableComponents =>
-            (ComponentsContainer<IGameObject>)Components;
+        public IExposedComponentsProvider ExposedComponents =>
+            Components.ProvideExposed<ISceneObject>();
 
-        protected IComponentsContainer Components { get; }
+        protected IComponentsProvider Components { get; }
 
-        public SceneObject()
+        public GameObject()
         {
-            Components = new ComponentsContainer<IGameObject>(this);
+            Components = new OwnerComponentsProvider<ISceneObject>(this);
             Components.Add(new Transform());
         }
     }
@@ -56,7 +56,7 @@ namespace Common.ComponentModel.UnitTests
     }
 
     [ComponentSettings(ExposedState.Exposable)]
-    public class Transform : ComponentBase<IGameObject>, ITransform
+    public class Transform : ComponentBase<ISceneObject>, ITransform
     {
         public void SetPosition()
         {

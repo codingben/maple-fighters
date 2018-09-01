@@ -4,9 +4,9 @@ namespace Common.ComponentModel
 {
     public class ComponentBase : IComponent
     {
-        protected IComponentsContainer Components { get; private set; }
+        protected IComponentsProvider Components { get; private set; }
 
-        void IComponent.Awake(IComponentsContainer components)
+        void IComponent.Awake(IComponentsProvider components)
         {
             Components = components;
 

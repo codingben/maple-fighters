@@ -2,20 +2,20 @@
 
 namespace Common.ComponentModel.Generic
 {
-    public sealed class ComponentsContainer<TOwner> : IComponentsContainer,
-                                                      IExposableComponentsContainer
+    public sealed class OwnerComponentsProvider<TOwner> : IComponentsProvider,
+                                                          IExposedComponentsProvider
         where TOwner : class
     {
         private readonly TOwner owner;
-        private readonly IComponentCollections components;
+        private readonly IComponentsContainer components;
 
-        public ComponentsContainer(TOwner owner)
+        public OwnerComponentsProvider(TOwner owner)
         {
             this.owner = owner;
-            components = new ComponentCollections();
+            components = new ComponentsContainer();
         }
 
-        TComponent IComponentsContainer.Add<TComponent>(TComponent component)
+        TComponent IComponentsProvider.Add<TComponent>(TComponent component)
         {
             components.TryAdd(component);
 
@@ -27,8 +27,7 @@ namespace Common.ComponentModel.Generic
             return component;
         }
 
-        TComponent IExposableComponentsContainer.Add<TComponent>(
-            TComponent component)
+        TComponent IExposedComponentsProvider.Add<TComponent>(TComponent component)
         {
             components.TryAddExposedOnly(component);
 
@@ -40,7 +39,7 @@ namespace Common.ComponentModel.Generic
             return component;
         }
 
-        void IComponentsContainer.Remove<TComponent>()
+        void IComponentsProvider.Remove<TComponent>()
         {
             var component = components.Remove<TComponent>();
             if (component is IComponent<TOwner> componentBase)
@@ -49,26 +48,14 @@ namespace Common.ComponentModel.Generic
             }
         }
 
-        TComponent IComponentsContainer.Get<TComponent>()
+        public TComponent Get<TComponent>()
+            where TComponent : class
         {
             TComponent component = null;
 
-            if (Utils.IsInterface<TComponent>())
+            if (ComponentUtils.IsInterface<TComponent>())
             {
-                component = components.Find<TComponent>(ExposedState.Unexposable) 
-                    ?? components.Find<TComponent>(ExposedState.Exposable);
-            }
-
-            return component;
-        }
-
-        TComponent IExposableComponentsContainer.Get<TComponent>()
-        {
-            TComponent component = null;
-
-            if (Utils.IsInterface<TComponent>())
-            {
-                component = components.Find<TComponent>(ExposedState.Exposable);
+                component = components.Find<TComponent>();
             }
 
             return component;

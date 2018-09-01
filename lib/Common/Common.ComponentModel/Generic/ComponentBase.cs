@@ -6,9 +6,9 @@ namespace Common.ComponentModel.Generic
         where TOwner : class
     {
         protected TOwner Owner { get; private set; }
-        protected IComponentsContainer Components { get; private set; }
+        protected IComponentsProvider Components { get; private set; }
 
-        void IComponent<TOwner>.Awake(TOwner owner, IComponentsContainer components)
+        void IComponent<TOwner>.Awake(TOwner owner, IComponentsProvider components)
         {
             Owner = owner;
             Components = components;

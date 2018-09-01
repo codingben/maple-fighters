@@ -1,6 +1,5 @@
-﻿using Common.ComponentModel.Tests;
-using Common.UnitTestsBase;
-using NSubstitute;
+﻿using System;
+using System.Linq;
 using Shouldly;
 using Xunit;
 
@@ -9,190 +8,210 @@ namespace Common.ComponentModel.UnitTests
     public class ComponentsContainerTests
     {
         [Fact]
-        public void Add_Returns_UnexposableComponent()
+        public void TryAdd_Should_Not_Throw_Error()
         {
             // Arrange
             IComponentsContainer componentsContainer = new ComponentsContainer();
+            componentsContainer.TryAdd(new SingletonComponent());
 
             // Act
-            var component = componentsContainer.Add(new UnexposableComponent());
+            var component =
+                componentsContainer.Find<SingletonComponent>();
 
             // Assert
             component.ShouldNotBeNull();
         }
 
         [Fact]
-        public void AddAndExpose_Returns_ExposableComponent()
-        {
-            // Arrange
-            IExposableComponentsContainer componentsContainer = new ComponentsContainer();
-
-            // Act
-            var component = componentsContainer.Add(new ExposableComponent());
-
-            // Assert
-            component.ShouldNotBeNull();
-        }
-
-        [Fact]
-        public void Add_Throws_Exception_When_Two_Same_Components_Added()
+        public void TryAdd_Should_Throw_Error_When_Added_Two_Same_Components()
         {
             // Arrange
             IComponentsContainer componentsContainer = new ComponentsContainer();
-            componentsContainer.Add(new UnexposableComponent());
+            componentsContainer.TryAdd(new SingletonComponent());
 
             // Act & Assert
             Should.Throw<ComponentModelException>(
-                () => componentsContainer.Add(new UnexposableComponent()));
+                () => componentsContainer.TryAdd(new SingletonComponent()));
         }
 
         [Fact]
-        public void AddAndExpose_Throws_Exception_When_Two_Same_Components_Added()
+        public void TryAdd_Should_Throw_Error_When_No_Attribute()
         {
             // Arrange
-            IExposableComponentsContainer componentsContainer = new ComponentsContainer();
-            componentsContainer.Add(new ExposableComponent());
+            IComponentsContainer componentsContainer = new ComponentsContainer();
 
             // Act & Assert
             Should.Throw<ComponentModelException>(
-                () => componentsContainer.Add(new ExposableComponent()));
+                () => componentsContainer.TryAdd(new NoAttributeComponent()));
         }
 
         [Fact]
-        public void Remove_Exposable_Component()
+        public void TryAddExposed_Throws_Error_When_Not_Exposed()
         {
             // Arrange
             IComponentsContainer componentsContainer = new ComponentsContainer();
-            componentsContainer.Add(new ExposableComponent());
+
+            // Act & Assert
+            Should.Throw<ComponentModelException>(
+                () => componentsContainer.TryAddExposedOnly(new SingletonComponent()));
+        }
+
+        [Fact]
+        public void Remove_Should_Find_Component()
+        {
+            // Arrange
+            IComponentsContainer componentsContainer = new ComponentsContainer();
+            componentsContainer.TryAdd(new SingletonComponent());
 
             // Act
-            componentsContainer.Remove<ExposableComponent>();
+            componentsContainer.Remove<SingletonComponent>();
 
             // Assert
-            componentsContainer.Get<IExposableComponent>().ShouldBeNull();
+            var someComponent =
+                componentsContainer.Find<SingletonComponent>();
+
+            someComponent.ShouldBeNull();
         }
 
         [Fact]
-        public void Remove_Unexposable_Component()
+        public void Remove_Should_Throw_Error_When_Component_Not_Found()
         {
             // Arrange
             IComponentsContainer componentsContainer = new ComponentsContainer();
-            componentsContainer.Add(new UnexposableComponent());
+
+            // Act & Assert
+            Should.Throw<ComponentModelException>(
+                () => componentsContainer.Remove<SingletonComponent>());
+        }
+
+        [Fact]
+        public void Find_Should_Return_Singleton_Component()
+        {
+            // Arrange
+            IComponentsContainer componentsContainer = new ComponentsContainer();
+
+            var component = new SingletonComponent();
+            componentsContainer.TryAdd(component);
 
             // Act
-            componentsContainer.Remove<UnexposableComponent>();
+            var someComponent =
+                componentsContainer.Find<SingletonComponent>();
 
             // Assert
-            componentsContainer.Get<IUnexposableComponent>().ShouldBeNull();
+            someComponent.ShouldBeSameAs(component);
         }
 
         [Fact]
-        public void Get_Returns_Exposable_Component()
+        public void Find_Should_Return_PerThread_Component()
         {
             // Arrange
             IComponentsContainer componentsContainer = new ComponentsContainer();
-            componentsContainer.Add(new ExposableComponent());
+            componentsContainer.TryAdd(new PerThreadComponent());
+
+            // Act & Assert
+            Should.Throw<NotImplementedException>(
+                () => componentsContainer.Find<PerThreadComponent>());
+        }
+
+        [Fact]
+        public void Find_Should_Return_PerCall_Component()
+        {
+            // Arrange
+            IComponentsContainer componentsContainer = new ComponentsContainer();
+
+            var component = new PerCallComponent();
+            componentsContainer.TryAdd(component);
 
             // Act
-            var exposableComponent = componentsContainer.Get<IExposableComponent>();
+            var someComponent =
+                componentsContainer.Find<PerCallComponent>();
 
             // Assert
-            exposableComponent.ShouldNotBeNull();
+            someComponent.ShouldNotBeSameAs(component);
         }
 
         [Fact]
-        public void Get_Returns_Exposable_Only_Component()
-        {
-            // Arrange
-            IExposableComponentsContainer componentsContainer = new ComponentsContainer();
-            componentsContainer.Add(new ExposableComponent());
-
-            // Act
-            var exposableComponent = componentsContainer.Get<IExposableComponent>();
-
-            // Assert
-            exposableComponent.ShouldNotBeNull();
-        }
-
-        [Fact]
-        public void Get_Returns_Unexposable_Component()
+        public void GetAll_Should_Returns_All_Components()
         {
             // Arrange
             IComponentsContainer componentsContainer = new ComponentsContainer();
-            componentsContainer.Add(new UnexposableComponent());
+            componentsContainer.TryAdd(new SingletonComponent());
+            componentsContainer.TryAddExposedOnly(new PerThreadComponent());
+            componentsContainer.TryAdd(new PerCallComponent());
 
-            // Act
-            var unexposableComponent = componentsContainer.Get<IUnexposableComponent>();
-
-            // Assert
-            unexposableComponent.ShouldNotBeNull();
+            // Act & Assert
+            componentsContainer.GetAll().Count().ShouldBeLessThanOrEqualTo(3);
         }
 
         [Fact]
-        public void Get_Throws_Error_When_Not_Interface()
+        public void After_Dispose_Should_Not_Return_Any_Components()
         {
             // Arrange
             IComponentsContainer componentsContainer = new ComponentsContainer();
-            componentsContainer.Add(new UnexposableComponent());
-
-            // Act && Assert
-            Should.Throw<ComponentModelException>(() => 
-                componentsContainer.Get<UnexposableComponent>());
-        }
-
-        [Fact]
-        public void Dispose_Components()
-        {
-            // Arrange
-            IComponentsContainer componentsContainer = new ComponentsContainer();
-            var otherTestableComponent = componentsContainer.AddAndMock<IOtherTestableComponent>();
-            componentsContainer.Add(new TestableComponent());
+            componentsContainer.TryAdd(new SingletonComponent());
+            componentsContainer.TryAddExposedOnly(new PerThreadComponent());
+            componentsContainer.TryAdd(new PerCallComponent());
 
             // Act
             componentsContainer.Dispose();
 
             // Assert
-            otherTestableComponent.Received().Test();
+            componentsContainer.GetAll().Count().ShouldBeLessThanOrEqualTo(0);
         }
     }
 
-    public interface IUnexposableComponent
-    {
-        // Left blank intentionally
-    }
-
     [ComponentSettings(ExposedState.Unexposable)]
-    public class UnexposableComponent : ComponentBase, IUnexposableComponent
+    public class SingletonComponent : IComponent
     {
-        // Left blank intentionally
-    }
-
-    public interface IExposableComponent
-    {
-        // Left blank intentionally
-    }
-
-    [ComponentSettings(ExposedState.Exposable)]
-    public class ExposableComponent : ComponentBase, IExposableComponent
-    {
-        // Left blank intentionally
-    }
-
-    [ComponentSettings(ExposedState.Unexposable)]
-    public class TestableComponent : ComponentBase
-    {
-        protected override void OnRemoved()
+        public void Awake(IComponentsProvider components)
         {
-            base.OnRemoved();
+            throw new NotImplementedException();
+        }
 
-            var otherTestableComponent = Components.Get<IOtherTestableComponent>()
-                .AssertNotNull();
-            otherTestableComponent.Test();
+        public void Dispose()
+        {
+            throw new NotImplementedException();
         }
     }
 
-    public interface IOtherTestableComponent
+    [ComponentSettings(ExposedState.Exposable, LifeTime.PerThread)]
+    public class PerThreadComponent : IComponent
     {
-        void Test();
+        public void Awake(IComponentsProvider components)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Dispose()
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    [ComponentSettings(ExposedState.Unexposable, LifeTime.PerCall)]
+    public class PerCallComponent : IComponent
+    {
+        public void Awake(IComponentsProvider components)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Dispose()
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class NoAttributeComponent : IComponent
+    {
+        public void Awake(IComponentsProvider components)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Dispose()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

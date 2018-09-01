@@ -4,6 +4,6 @@ namespace Common.ComponentModel
 {
     public interface IComponent : IDisposable
     {
-        void Awake(IComponentsContainer components);
+        void Awake(IComponentsProvider components);
     }
 }

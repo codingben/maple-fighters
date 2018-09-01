@@ -1,21 +1,19 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using Common.ComponentModel.Generic;
 
 namespace Common.ComponentModel
 {
     public static class ExtensionMethods
     {
-        public static void AddIfNotExists<TComponent>(
-            this IList<object> collection,
-            TComponent component) where TComponent : class
+        public static IExposedComponentsProvider ProvideExposed(
+            this IComponentsProvider components)
         {
-            if (collection.OfType<TComponent>().Any())
-            {
-                throw new ComponentModelException(
-                    $"Component {typeof(TComponent).Name} already exists!");
-            }
+            return (ComponentsProvider)components;
+        }
 
-            collection.Add(component);
+        public static IExposedComponentsProvider ProvideExposed<TOwner>(
+            this IComponentsProvider components) where TOwner : class
+        {
+            return (OwnerComponentsProvider<TOwner>)components;
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace Common.ComponentModel
 {
-    public interface IExposableComponentsContainer
+    public interface IExposedComponentsProvider
     {
         TComponent Add<TComponent>(TComponent component)
             where TComponent : class;

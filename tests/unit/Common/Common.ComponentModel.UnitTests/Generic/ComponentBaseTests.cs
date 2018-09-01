@@ -12,10 +12,10 @@ namespace Common.ComponentModel.Generic.UnitTests
         {
             // Arrange
             IDummyOwner dummyOwner = new DummyOwner();
-            var otherDummyComponent = dummyOwner.ExposableComponents.AddAndMock<IOtherDummyComponent>();
+            var otherDummyComponent = dummyOwner.ExposedComponents.AddAndMock<IOtherDummyComponent>();
 
             // Act
-            dummyOwner.ExposableComponents.Add(new DummyComponent());
+            dummyOwner.ExposedComponents.Add(new DummyComponent());
 
             // Assert
             otherDummyComponent.Received().Create();
@@ -26,9 +26,9 @@ namespace Common.ComponentModel.Generic.UnitTests
         {
             // Arrange
             IDummyOwner dummyOwner = new DummyOwner();
-            var otherDummyComponent = dummyOwner.ExposableComponents.AddAndMock<IOtherDummyComponent>();
+            var otherDummyComponent = dummyOwner.ExposedComponents.AddAndMock<IOtherDummyComponent>();
 
-            dummyOwner.ExposableComponents.Add(new DummyComponent());
+            dummyOwner.ExposedComponents.Add(new DummyComponent());
 
             // Act
             dummyOwner.Kill();
@@ -52,8 +52,7 @@ namespace Common.ComponentModel.Generic.UnitTests
         {
             base.OnAwake();
 
-            var otherDummyComponent = Components.Get<IOtherDummyComponent>()
-                .AssertNotNull();
+            var otherDummyComponent = Components.Get<IOtherDummyComponent>().AssertNotNull();
             otherDummyComponent.Create();
         }
 
@@ -61,8 +60,7 @@ namespace Common.ComponentModel.Generic.UnitTests
         {
             base.OnRemoved();
 
-            var otherDummyComponent = Components.Get<IOtherDummyComponent>()
-                .AssertNotNull();
+            var otherDummyComponent = Components.Get<IOtherDummyComponent>().AssertNotNull();
             otherDummyComponent.Destroy();
         }
     }
@@ -71,19 +69,19 @@ namespace Common.ComponentModel.Generic.UnitTests
     {
         void Kill();
 
-        IExposableComponentsContainer ExposableComponents { get; }
+        IExposedComponentsProvider ExposedComponents { get; }
     }
 
     public class DummyOwner : IDummyOwner
     {
-        public IExposableComponentsContainer ExposableComponents =>
-            (ComponentsContainer<IDummyOwner>)Components;
+        public IExposedComponentsProvider ExposedComponents =>
+            Components.ProvideExposed<IDummyOwner>();
 
-        protected IComponentsContainer Components { get; }
+        protected IComponentsProvider Components { get; }
 
         public DummyOwner()
         {
-            Components = new ComponentsContainer<IDummyOwner>(this);
+            Components = new OwnerComponentsProvider<IDummyOwner>(this);
         }
 
         public void Kill()

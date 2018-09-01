@@ -1,16 +1,22 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Common.ComponentModel
 {
     public interface IComponentsContainer : IDisposable
     {
-        TComponent Add<TComponent>(TComponent component)
+        void TryAdd<TComponent>(TComponent component)
             where TComponent : class;
 
-        void Remove<TComponent>()
+        void TryAddExposedOnly<TComponent>(TComponent component)
             where TComponent : class;
 
-        TComponent Get<TComponent>()
+        TComponent Remove<TComponent>()
             where TComponent : class;
+
+        TComponent Find<TComponent>()
+            where TComponent : class;
+
+        IEnumerable<object> GetAll();
     }
 }

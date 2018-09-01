@@ -2,9 +2,9 @@
 
 namespace Common.ComponentModel
 {
-    public class Utils
+    public class ComponentUtils
     {
-        public static ComponentSettingsAttribute GetComponentSettings<TComponent>()
+        private static ComponentSettingsAttribute GetComponentSettings<TComponent>()
             where TComponent : class
         {
             var component = typeof(TComponent);
@@ -16,17 +16,17 @@ namespace Common.ComponentModel
                 if (IsComponent<TComponent>())
                 {
                     throw new ComponentModelException(
-                        $"A component {component.Name} should have a component settings.");
+                        $"A component {component.Name} should have component settings.");
                 }
             }
 
             return componentSettings;
         }
 
-        public static ExposedState GetComponentExposedState<TComponent>()
+        public static ExposedState GetExposedState<TComponent>()
             where TComponent : class
         {
-            var exposedState = ExposedState.Unexposable;
+            var exposedState = ExposedState.Exposable;
 
             var componentSettings = GetComponentSettings<TComponent>();
             if (componentSettings != null)
@@ -37,7 +37,7 @@ namespace Common.ComponentModel
             return exposedState;
         }
 
-        public static LifeTime GetComponentLifeTime<TComponent>()
+        public static LifeTime GetLifeTime<TComponent>()
             where TComponent : class
         {
             var lifeTime = LifeTime.Singleton;
@@ -65,19 +65,20 @@ namespace Common.ComponentModel
             }
 
             throw new ComponentModelException(
-                $"Could not get a {typeof(T).Name} via not interface type.");
+                $"Could not get a {typeof(T).Name} component via not interface type.");
         }
 
-        public static bool IsComponentExposed<TComponent>()
+        public static bool IsExposed<TComponent>()
             where TComponent : class
         {
-            var exposedState = GetComponentExposedState<TComponent>();
-
-            if (IsComponent<TComponent>() &&
-                exposedState != ExposedState.Exposable)
+            if (IsComponent<TComponent>())
             {
-                throw new ComponentModelException(
-                    $"Component {typeof(TComponent).Name} should be exposable.");
+                var exposedState = GetExposedState<TComponent>();
+                if (exposedState != ExposedState.Exposable)
+                {
+                    throw new ComponentModelException(
+                        $"A component {typeof(TComponent).Name} should be exposed.");
+                }
             }
 
             return true;

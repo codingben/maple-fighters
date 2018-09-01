@@ -1,84 +1,114 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Common.ComponentModel
 {
-    public sealed class ComponentsContainer : IComponentsContainer,
-                                              IExposableComponentsContainer
+    public sealed class ComponentsContainer : IComponentsContainer
     {
-        private readonly IComponentCollections components;
+        private readonly ComponentsCollection<object> components;
 
         public ComponentsContainer()
         {
-            components = new ComponentCollections();
+            components = new ComponentsCollection<object>();
         }
 
-        TComponent IComponentsContainer.Add<TComponent>(TComponent component)
+        public void TryAdd<TComponent>(TComponent component)
+            where TComponent : class
         {
-            components.TryAdd(component);
-
-            if (component is IComponent componentBase)
+            var exposedState = ComponentUtils.GetExposedState<TComponent>();
+            var isExists = components.IsExists<TComponent>(exposedState);
+            if (!isExists)
             {
-                componentBase.Awake(this);
+                components[exposedState].Add(component);
+            }
+        }
+
+        public void TryAddExposedOnly<TComponent>(TComponent component)
+            where TComponent : class
+        {
+            if (ComponentUtils.IsExposed<TComponent>())
+            {
+                var isExists = components.IsExists<TComponent>(
+                    ExposedState.Exposable);
+                if (!isExists)
+                {
+                    components[ExposedState.Exposable].Add(component);
+                }
+            }
+        }
+
+        public TComponent Remove<TComponent>()
+            where TComponent : class
+        {
+            var exposedState = ComponentUtils.GetExposedState<TComponent>();
+            var collection = components[exposedState];
+
+            var component = collection.OfType<TComponent>()
+                .FirstOrDefault();
+            if (component == null)
+            {
+                throw new ComponentModelException(
+                    $"Could not remove component {typeof(TComponent).Name} because it was not found.");
+            }
+
+            var index = collection.IndexOf(component);
+            if (index != -1)
+            {
+                collection.RemoveAt(index);
             }
 
             return component;
         }
 
-        TComponent IExposableComponentsContainer.Add<TComponent>(
-            TComponent component)
+        public TComponent Find<TComponent>()
+            where TComponent : class
         {
-            components.TryAddExposedOnly(component);
-
-            if (component is IComponent componentBase)
+            var component = components.GetAllComponents().OfType<TComponent>()
+                .FirstOrDefault();
+            if (component != null)
             {
-                componentBase.Awake(this);
+                component = ProvideComponentByLifeTime(component);
             }
 
             return component;
         }
 
-        void IComponentsContainer.Remove<TComponent>()
+        public IEnumerable<object> GetAll()
         {
-            var component = components.Remove<TComponent>();
-            if (component is IComponent componentBase)
-            {
-                componentBase.Dispose();
-            }
+            return components.GetAllComponents();
         }
 
-        TComponent IComponentsContainer.Get<TComponent>()
+        public void Dispose()
         {
-            TComponent component = null;
+            components.Clear();
+        }
 
-            if (Utils.IsInterface<TComponent>())
+        private TComponent ProvideComponentByLifeTime<TComponent>(
+            TComponent component) where TComponent : class
+        {
+            var lifeTime = ComponentUtils.GetLifeTime<TComponent>();
+
+            switch (lifeTime)
             {
-                component = components.Find<TComponent>(ExposedState.Unexposable) 
-                    ?? components.Find<TComponent>(ExposedState.Exposable);
+                case LifeTime.Singleton:
+                {
+                    break;
+                }
+
+                case LifeTime.PerThread:
+                {
+                    throw new NotImplementedException();
+                }
+
+                case LifeTime.PerCall:
+                {
+                    return (TComponent)Activator.CreateInstance(
+                        typeof(TComponent));
+                }
             }
 
             return component;
-        }
-
-        TComponent IExposableComponentsContainer.Get<TComponent>()
-        {
-            TComponent component = null;
-
-            if (Utils.IsInterface<TComponent>())
-            {
-                component = components.Find<TComponent>(ExposedState.Exposable);
-            }
-
-            return component;
-        }
-
-        void IDisposable.Dispose()
-        {
-            foreach (var component in components.GetAll())
-            {
-                (component as IDisposable)?.Dispose();
-            }
-
-            components.Dispose();
         }
     }
 }

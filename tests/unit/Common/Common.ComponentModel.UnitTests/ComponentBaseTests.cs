@@ -11,11 +11,11 @@ namespace Common.ComponentModel.UnitTests
         public void OnAwake_Called()
         {
             // Arrange
-            IComponentsContainer components = new ComponentsContainer();
-            var otherDummyComponent = components.AddAndMock<IOtherDummyComponent>();
+            IComponentsProvider componentsProvider = new ComponentsProvider();
+            var otherDummyComponent = componentsProvider.AddAndMock<IOtherDummyComponent>();
 
             // Act
-            components.Add(new DummyComponent());
+            componentsProvider.Add(new DummyComponent());
 
             // Assert
             otherDummyComponent.Received().Create();
@@ -25,13 +25,13 @@ namespace Common.ComponentModel.UnitTests
         public void OnRemoved_Called()
         {
             // Arrange
-            IComponentsContainer components = new ComponentsContainer();
-            var otherDummyComponent = components.AddAndMock<IOtherDummyComponent>();
+            IComponentsProvider componentsProvider = new ComponentsProvider();
+            var otherDummyComponent = componentsProvider.AddAndMock<IOtherDummyComponent>();
 
-            components.Add(new DummyComponent());
+            componentsProvider.Add(new DummyComponent());
 
             // Act
-            components.Remove<DummyComponent>();
+            componentsProvider.Remove<DummyComponent>();
 
             // Assert
             otherDummyComponent.Received().Destroy();
@@ -52,8 +52,7 @@ namespace Common.ComponentModel.UnitTests
         {
             base.OnAwake();
 
-            var otherDummyComponent = Components.Get<IOtherDummyComponent>()
-                .AssertNotNull();
+            var otherDummyComponent = Components.Get<IOtherDummyComponent>().AssertNotNull();
             otherDummyComponent.Create();
         }
 
@@ -61,8 +60,7 @@ namespace Common.ComponentModel.UnitTests
         {
             base.OnRemoved();
 
-            var otherDummyComponent = Components.Get<IOtherDummyComponent>()
-                .AssertNotNull();
+            var otherDummyComponent = Components.Get<IOtherDummyComponent>().AssertNotNull();
             otherDummyComponent.Destroy();
         }
     }
