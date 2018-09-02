@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Common.ComponentModel
+namespace Common.ComponentModel.Core
 {
     public interface IComponentsContainer : IDisposable
     {

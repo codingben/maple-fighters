@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Common.ComponentModel
+namespace Common.ComponentModel.Core
 {
     public class ComponentUtils
     {

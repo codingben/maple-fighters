@@ -1,4 +1,5 @@
 ﻿using System;
+using Common.ComponentModel.Core;
 
 namespace Common.ComponentModel
 {

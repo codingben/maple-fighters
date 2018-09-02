@@ -35,19 +35,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ComponentBase.cs" />
-    <Compile Include="ComponentModelException.cs" />
-    <Compile Include="ComponentsContainer.cs" />
-    <Compile Include="ComponentsCollection.cs" />
+    <Compile Include="Core\ComponentModelException.cs" />
+    <Compile Include="Core\ComponentsContainer.cs" />
+    <Compile Include="Core\ComponentsCollection.cs" />
     <Compile Include="ComponentSettingsAttribute.cs" />
     <Compile Include="ComponentsProvider.cs" />
     <Compile Include="ExposedState.cs" />
     <Compile Include="ExtensionMethods.cs" />
-    <Compile Include="ComponentUtils.cs" />
+    <Compile Include="Core\ComponentUtils.cs" />
     <Compile Include="Generic\ComponentBase.cs" />
     <Compile Include="Generic\IComponent.cs" />
     <Compile Include="Generic\OwnerComponentsProvider.cs" />
     <Compile Include="IComponent.cs" />
-    <Compile Include="IComponentsContainer.cs" />
+    <Compile Include="Core\IComponentsContainer.cs" />
     <Compile Include="IComponentsProvider.cs" />
     <Compile Include="IExposedComponentsProvider.cs" />
     <Compile Include="LifeTime.cs" />

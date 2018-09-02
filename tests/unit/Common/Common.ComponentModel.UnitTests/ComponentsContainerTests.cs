@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using Common.ComponentModel.Core;
 using Shouldly;
 using Xunit;
 

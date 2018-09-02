@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace Common.ComponentModel
+namespace Common.ComponentModel.Core
 {
     public sealed class ComponentsCollection<TComponent>
         where TComponent : class, new()

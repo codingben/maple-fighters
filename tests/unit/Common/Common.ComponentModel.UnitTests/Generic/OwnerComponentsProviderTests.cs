@@ -1,4 +1,5 @@
-﻿using Common.ComponentModel.Tests;
+﻿using Common.ComponentModel.Core;
+using Common.ComponentModel.Tests;
 using Common.UnitTestsBase;
 using NSubstitute;
 using Shouldly;
