@@ -34,7 +34,19 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IdGenerator.cs" />
+    <Compile Include="IIdGenerator.cs" />
+    <Compile Include="IRandomNumberGenerator.cs" />
+    <Compile Include="IServerComponentsProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RandomNumberGenerator.cs" />
+    <Compile Include="ServerComponentsProvider.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Common\Common.ComponentModel\Common.ComponentModel.csproj">
+      <Project>{C1AFE671-D598-4C89-B045-30CC20023849}</Project>
+      <Name>Common.ComponentModel</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -34,7 +34,20 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApplicationBase.cs" />
+    <Compile Include="ApplicationException.cs" />
+    <Compile Include="IApplicationBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Common\Common.ComponentModel\Common.ComponentModel.csproj">
+      <Project>{C1AFE671-D598-4C89-B045-30CC20023849}</Project>
+      <Name>Common.ComponentModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ServerCommon.Application.Components\ServerCommon.Application.Components.csproj">
+      <Project>{BDA69EC2-FD94-4BC0-9AD9-17BED767F48C}</Project>
+      <Name>ServerCommon.Application.Components</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
