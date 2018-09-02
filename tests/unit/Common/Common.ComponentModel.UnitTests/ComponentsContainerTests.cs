@@ -9,11 +9,11 @@ namespace Common.ComponentModel.UnitTests
     public class ComponentsContainerTests
     {
         [Fact]
-        public void TryAdd_Should_Not_Throw_Error()
+        public void Add_Should_Not_Throw_Error()
         {
             // Arrange
             IComponentsContainer componentsContainer = new ComponentsContainer();
-            componentsContainer.TryAdd(new SingletonComponent());
+            componentsContainer.Add(new SingletonComponent());
 
             // Act
             var component =
@@ -24,37 +24,37 @@ namespace Common.ComponentModel.UnitTests
         }
 
         [Fact]
-        public void TryAdd_Should_Throw_Error_When_Added_Two_Same_Components()
+        public void Add_Should_Throw_Error_When_Added_Two_Same_Components()
         {
             // Arrange
             IComponentsContainer componentsContainer = new ComponentsContainer();
-            componentsContainer.TryAdd(new SingletonComponent());
+            componentsContainer.Add(new SingletonComponent());
 
             // Act & Assert
             Should.Throw<ComponentModelException>(
-                () => componentsContainer.TryAdd(new SingletonComponent()));
+                () => componentsContainer.Add(new SingletonComponent()));
         }
 
         [Fact]
-        public void TryAdd_Should_Throw_Error_When_No_Attribute()
+        public void Add_Should_Throw_Error_When_No_Attribute()
         {
             // Arrange
             IComponentsContainer componentsContainer = new ComponentsContainer();
 
             // Act & Assert
             Should.Throw<ComponentModelException>(
-                () => componentsContainer.TryAdd(new NoAttributeComponent()));
+                () => componentsContainer.Add(new NoAttributeComponent()));
         }
 
         [Fact]
-        public void TryAddExposed_Throws_Error_When_Not_Exposed()
+        public void AddExposed_Throws_Error_When_Not_Exposed()
         {
             // Arrange
             IComponentsContainer componentsContainer = new ComponentsContainer();
 
             // Act & Assert
             Should.Throw<ComponentModelException>(
-                () => componentsContainer.TryAddExposedOnly(new SingletonComponent()));
+                () => componentsContainer.AddExposedOnly(new SingletonComponent()));
         }
 
         [Fact]
@@ -62,7 +62,7 @@ namespace Common.ComponentModel.UnitTests
         {
             // Arrange
             IComponentsContainer componentsContainer = new ComponentsContainer();
-            componentsContainer.TryAdd(new SingletonComponent());
+            componentsContainer.Add(new SingletonComponent());
 
             // Act
             componentsContainer.Remove<SingletonComponent>();
@@ -92,7 +92,7 @@ namespace Common.ComponentModel.UnitTests
             IComponentsContainer componentsContainer = new ComponentsContainer();
 
             var component = new SingletonComponent();
-            componentsContainer.TryAdd(component);
+            componentsContainer.Add(component);
 
             // Act
             var someComponent =
@@ -107,7 +107,7 @@ namespace Common.ComponentModel.UnitTests
         {
             // Arrange
             IComponentsContainer componentsContainer = new ComponentsContainer();
-            componentsContainer.TryAdd(new PerThreadComponent());
+            componentsContainer.Add(new PerThreadComponent());
 
             // Act & Assert
             Should.Throw<NotImplementedException>(
@@ -121,7 +121,7 @@ namespace Common.ComponentModel.UnitTests
             IComponentsContainer componentsContainer = new ComponentsContainer();
 
             var component = new PerCallComponent();
-            componentsContainer.TryAdd(component);
+            componentsContainer.Add(component);
 
             // Act
             var someComponent =
@@ -136,9 +136,9 @@ namespace Common.ComponentModel.UnitTests
         {
             // Arrange
             IComponentsContainer componentsContainer = new ComponentsContainer();
-            componentsContainer.TryAdd(new SingletonComponent());
-            componentsContainer.TryAddExposedOnly(new PerThreadComponent());
-            componentsContainer.TryAdd(new PerCallComponent());
+            componentsContainer.Add(new SingletonComponent());
+            componentsContainer.AddExposedOnly(new PerThreadComponent());
+            componentsContainer.Add(new PerCallComponent());
 
             // Act & Assert
             componentsContainer.GetAll().Count().ShouldBeLessThanOrEqualTo(3);
@@ -149,9 +149,9 @@ namespace Common.ComponentModel.UnitTests
         {
             // Arrange
             IComponentsContainer componentsContainer = new ComponentsContainer();
-            componentsContainer.TryAdd(new SingletonComponent());
-            componentsContainer.TryAddExposedOnly(new PerThreadComponent());
-            componentsContainer.TryAdd(new PerCallComponent());
+            componentsContainer.Add(new SingletonComponent());
+            componentsContainer.AddExposedOnly(new PerThreadComponent());
+            componentsContainer.Add(new PerCallComponent());
 
             // Act
             componentsContainer.Dispose();

@@ -38,6 +38,11 @@ namespace Common.ComponentModel.Core
             return exposedComponents.Concat(unexposedComponents);
         }
 
+        public IEnumerable<TComponent> GetExposedComponents()
+        {
+            return exposedComponents;
+        }
+
         public void Clear()
         {
             exposedComponents.Clear();

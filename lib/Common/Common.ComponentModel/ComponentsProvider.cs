@@ -15,7 +15,7 @@ namespace Common.ComponentModel
 
         TComponent IComponentsProvider.Add<TComponent>(TComponent component)
         {
-            components.TryAdd(component);
+            components.Add(component);
 
             if (component is IComponent componentBase)
             {
@@ -27,7 +27,7 @@ namespace Common.ComponentModel
 
         TComponent IExposedComponentsProvider.Add<TComponent>(TComponent component)
         {
-            components.TryAddExposedOnly(component);
+            components.AddExposedOnly(component);
 
             if (component is IComponent componentBase)
             {
@@ -46,14 +46,25 @@ namespace Common.ComponentModel
             }
         }
 
-        public TComponent Get<TComponent>()
-            where TComponent : class
+        TComponent IComponentsProvider.Get<TComponent>()
         {
             TComponent component = null;
 
             if (ComponentUtils.IsInterface<TComponent>())
             {
                 component = components.Find<TComponent>();
+            }
+
+            return component;
+        }
+
+        TComponent IExposedComponentsProvider.Get<TComponent>()
+        {
+            TComponent component = null;
+
+            if (ComponentUtils.IsInterface<TComponent>())
+            {
+                component = components.FindExposedOnly<TComponent>();
             }
 
             return component;

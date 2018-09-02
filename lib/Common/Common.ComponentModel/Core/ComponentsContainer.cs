@@ -13,7 +13,7 @@ namespace Common.ComponentModel.Core
             components = new ComponentsCollection<object>();
         }
 
-        public void TryAdd<TComponent>(TComponent component)
+        public void Add<TComponent>(TComponent component)
             where TComponent : class
         {
             var exposedState = ComponentUtils.GetExposedState<TComponent>();
@@ -24,7 +24,7 @@ namespace Common.ComponentModel.Core
             }
         }
 
-        public void TryAddExposedOnly<TComponent>(TComponent component)
+        public void AddExposedOnly<TComponent>(TComponent component)
             where TComponent : class
         {
             if (ComponentUtils.IsExposed<TComponent>())
@@ -69,6 +69,24 @@ namespace Common.ComponentModel.Core
             if (component != null)
             {
                 component = ProvideComponentByLifeTime(component);
+            }
+
+            return component;
+        }
+
+        public TComponent FindExposedOnly<TComponent>()
+            where TComponent : class
+        {
+            var component = components.GetExposedComponents().OfType<TComponent>()
+                .FirstOrDefault();
+            if (component != null)
+            {
+                component = ProvideComponentByLifeTime(component);
+            }
+            else
+            {
+                throw new ComponentModelException(
+                    $"A component {typeof(TComponent).Name} not found. Please make sure it is exposed.");
             }
 
             return component;
