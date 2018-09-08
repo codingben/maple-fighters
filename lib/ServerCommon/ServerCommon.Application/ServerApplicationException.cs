@@ -2,9 +2,9 @@
 
 namespace ServerCommon.Application
 {
-    public class ApplicationException : Exception
+    public class ServerApplicationException : Exception
     {
-        public ApplicationException(string message)
+        public ServerApplicationException(string message)
             : base(message)
         {
             // Left blank intentionally

@@ -37,10 +37,8 @@
     <Compile Include="IdGenerator.cs" />
     <Compile Include="IIdGenerator.cs" />
     <Compile Include="IRandomNumberGenerator.cs" />
-    <Compile Include="IServerComponentsProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RandomNumberGenerator.cs" />
-    <Compile Include="ServerComponentsProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Common\Common.ComponentModel\Common.ComponentModel.csproj">

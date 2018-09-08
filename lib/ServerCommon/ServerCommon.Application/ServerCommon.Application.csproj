@@ -34,8 +34,8 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ApplicationBase.cs" />
-    <Compile Include="ApplicationException.cs" />
+    <Compile Include="ServerApplicationBase.cs" />
+    <Compile Include="ServerApplicationException.cs" />
     <Compile Include="IApplicationBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
