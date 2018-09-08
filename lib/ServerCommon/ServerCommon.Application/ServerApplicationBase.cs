@@ -1,5 +1,6 @@
 ﻿using Common.ComponentModel;
 using ServerCommon.Application.Components;
+using ServerCommunicationInterfaces;
 
 namespace ServerCommon.Application
 {
@@ -12,7 +13,7 @@ namespace ServerCommon.Application
                 if (components == null)
                 {
                     throw new ServerApplicationException(
-                        "Components should be initialized from OnStartup().");
+                        "Components should be initialized from OnStartup method!");
                 }
 
                 return components;
@@ -39,6 +40,11 @@ namespace ServerCommon.Application
             OnShutdown();
         }
 
+        public void Connected(IClientPeer clientPeer)
+        {
+            OnConnected(clientPeer);
+        }
+
         protected virtual void OnStartup()
         {
             Components = new ComponentsProvider();
@@ -47,6 +53,11 @@ namespace ServerCommon.Application
         protected virtual void OnShutdown()
         {
             Components.Dispose();
+        }
+
+        protected virtual void OnConnected(IClientPeer clientPeer)
+        {
+            // TODO: Implement
         }
 
         private void AddCommonComponents()
