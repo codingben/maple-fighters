@@ -7,8 +7,8 @@
     <ProjectGuid>{0D1F61DD-6F1A-4D2D-9B40-6B4D2FBAC30D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Common.MathmaticsHelper</RootNamespace>
-    <AssemblyName>Common.MathmaticsHelper</AssemblyName>
+    <RootNamespace>Common.MathematicsHelper</RootNamespace>
+    <AssemblyName>Common.MathematicsHelper</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -35,6 +35,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Rectangle.cs" />
+    <Compile Include="Vector2.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

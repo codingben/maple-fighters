@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Common.MathmaticsHelper")]
+[assembly: AssemblyTitle("Common.MathematicsHelper.UnitTests")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Common.MathmaticsHelper")]
+[assembly: AssemblyProduct("Common.MathematicsHelper.UnitTests")]
 [assembly: AssemblyCopyright("Copyright ©  2018")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("0d1f61dd-6f1a-4d2d-9b40-6b4d2fbac30d")]
+[assembly: Guid("32b74361-4996-453c-99b5-db42cfb602b0")]
 
 // Version information for an assembly consists of the following four values:
 //

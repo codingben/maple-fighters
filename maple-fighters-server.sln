@@ -229,9 +229,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.Components", "lib\Co
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.Components.UnitTests", "tests\unit\Common\Common.Components.UnitTests\Common.Components.UnitTests.csproj", "{921E0CA1-ADE9-4334-950A-B852FB0C78F4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.MathmaticsHelper", "lib\Common\Common.MathmaticsHelper\Common.MathmaticsHelper.csproj", "{0D1F61DD-6F1A-4D2D-9B40-6B4D2FBAC30D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.MathematicsHelper", "lib\Common\Common.MathematicsHelper\Common.MathematicsHelper.csproj", "{0D1F61DD-6F1A-4D2D-9B40-6B4D2FBAC30D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.MathmaticsHelper.UnitTests", "tests\unit\Common\Common.MathmaticsHelper.UnitTests\Common.MathmaticsHelper.UnitTests.csproj", "{32B74361-4996-453C-99B5-DB42CFB602B0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.MathematicsHelper.UnitTests", "tests\unit\Common\Common.MathematicsHelper.UnitTests\Common.MathematicsHelper.UnitTests.csproj", "{32B74361-4996-453C-99B5-DB42CFB602B0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.PythonScripting", "lib\Common\Common.PythonScripting\Common.PythonScripting.csproj", "{76EE6660-3198-4F3F-ADBF-B48AC0CE3C3E}"
 EndProject
