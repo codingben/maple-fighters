@@ -23,12 +23,17 @@ namespace ServerCommon.PeerLogic
             OnInitialized();
         }
 
+        public void Dispose()
+        {
+            OnDispose();
+        }
+
         public virtual void OnInitialized()
         {
             // Left blank intentionally
         }
 
-        public void Dispose()
+        public virtual void OnDispose()
         {
             Components?.Dispose();
         }

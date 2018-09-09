@@ -2,7 +2,7 @@
 
 namespace ServerCommon.Application.Components
 {
-    [ComponentSettings(ExposedState.Unexposable, LifeTime.PerCall)]
+    [ComponentSettings(ExposedState.Unexposable)]
     public class IdGenerator : ComponentBase, IIdGenerator
     {
         private uint id = uint.MinValue;

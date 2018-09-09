@@ -34,10 +34,10 @@
       <HintPath>..\..\..\packages\CommonCommunicationInterfaces.4.3.0\lib\net46\CommonCommunicationInterfaces.dll</HintPath>
     </Reference>
     <Reference Include="Coroutines, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Coroutines.5.0.1\lib\net46\Coroutines.dll</HintPath>
+      <HintPath>..\..\..\packages\Coroutines.5.0.5\lib\net46\Coroutines.dll</HintPath>
     </Reference>
     <Reference Include="LogUtils, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Coroutines.5.0.1\lib\net46\LogUtils.dll</HintPath>
+      <HintPath>..\..\..\packages\Coroutines.5.0.5\lib\net46\LogUtils.dll</HintPath>
     </Reference>
     <Reference Include="ServerCommunicationInterfaces, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\ServerCommunicationInterfaces.2.0.0\lib\net46\ServerCommunicationInterfaces.dll</HintPath>
@@ -50,15 +50,29 @@
     <Compile Include="ServerApplicationException.cs" />
     <Compile Include="IApplicationBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ServerExposedComponents.cs" />
+    <Compile Include="TimeProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Common\Common.ComponentModel\Common.ComponentModel.csproj">
       <Project>{C1AFE671-D598-4C89-B045-30CC20023849}</Project>
       <Name>Common.ComponentModel</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Common\Common.Components\Common.Components.csproj">
+      <Project>{2B10158D-FFBE-46A8-A637-1B7BBE56700D}</Project>
+      <Name>Common.Components</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ServerCommon.Application.Components\ServerCommon.Application.Components.csproj">
       <Project>{BDA69EC2-FD94-4BC0-9AD9-17BED767F48C}</Project>
       <Name>ServerCommon.Application.Components</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ServerCommon.PeerLogic.Components\ServerCommon.PeerLogic.Components.csproj">
+      <Project>{41A8AAA5-4D96-4E46-9D62-2B46C5619A34}</Project>
+      <Name>ServerCommon.PeerLogic.Components</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ServerCommon.PeerLogic\ServerCommon.PeerLogic.csproj">
+      <Project>{F286466C-C0EB-4D2C-AD3F-640AEA24B278}</Project>
+      <Name>ServerCommon.PeerLogic</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -33,19 +33,31 @@
     <Reference Include="CommonCommunicationInterfaces, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\CommonCommunicationInterfaces.4.3.0\lib\net46\CommonCommunicationInterfaces.dll</HintPath>
     </Reference>
+    <Reference Include="CommunicationHelper, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\CommunicationHelper.3.2.5\lib\net46\CommunicationHelper.dll</HintPath>
+    </Reference>
     <Reference Include="Coroutines, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Coroutines.5.0.1\lib\net46\Coroutines.dll</HintPath>
+      <HintPath>..\..\..\packages\Coroutines.5.0.5\lib\net46\Coroutines.dll</HintPath>
     </Reference>
     <Reference Include="LogUtils, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Coroutines.5.0.1\lib\net46\LogUtils.dll</HintPath>
+      <HintPath>..\..\..\packages\Coroutines.5.0.5\lib\net46\LogUtils.dll</HintPath>
+    </Reference>
+    <Reference Include="ServerCommunicationHelper, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\ServerCommunicationHelper.3.0.0\lib\net46\ServerCommunicationHelper.dll</HintPath>
     </Reference>
     <Reference Include="ServerCommunicationInterfaces, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\ServerCommunicationInterfaces.2.0.0\lib\net46\ServerCommunicationInterfaces.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.ValueTuple, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\System.ValueTuple.4.4.0\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ClientPeerLogicBase.cs" />
+    <Compile Include="EventSenderProvider.cs" />
+    <Compile Include="IEventSenderProvider.cs" />
     <Compile Include="IPeersLogicProvider.cs" />
     <Compile Include="PeerLogicsCollection.cs" />
     <Compile Include="PeersLogicProvider.cs" />
@@ -55,6 +67,10 @@
     <ProjectReference Include="..\..\Common\Common.ComponentModel\Common.ComponentModel.csproj">
       <Project>{C1AFE671-D598-4C89-B045-30CC20023849}</Project>
       <Name>Common.ComponentModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Common\Common.Components\Common.Components.csproj">
+      <Project>{2B10158D-FFBE-46A8-A637-1B7BBE56700D}</Project>
+      <Name>Common.Components</Name>
     </ProjectReference>
     <ProjectReference Include="..\ServerCommon.Application.Components\ServerCommon.Application.Components.csproj">
       <Project>{BDA69EC2-FD94-4BC0-9AD9-17BED767F48C}</Project>

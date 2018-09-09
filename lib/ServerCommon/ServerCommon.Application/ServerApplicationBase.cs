@@ -1,34 +1,32 @@
 ﻿using Common.ComponentModel;
+using Common.Components;
+using CommonTools.Coroutines;
+using CommonTools.Log;
 using ServerCommon.Application.Components;
+using ServerCommon.PeerLogic;
+using ServerCommon.PeerLogic.Components;
 using ServerCommunicationInterfaces;
 
 namespace ServerCommon.Application
 {
     public class ServerApplicationBase : IApplicationBase
     {
-        protected IComponentsProvider Components
+        protected IComponentsProvider Components { get; } = new ComponentsProvider();
+
+        private readonly IFiberProvider fiberProvider;
+        private readonly IServerConnector serverConnector;
+
+        public ServerApplicationBase(
+            ILogger logger, IFiberProvider fiberProvider, IServerConnector serverConnector)
         {
-            get
-            {
-                if (components == null)
-                {
-                    throw new ServerApplicationException(
-                        "Components should be initialized from OnStartup method!");
-                }
+            LogUtils.Logger = logger;
+            TimeProviders.DefaultTimeProvider = new TimeProvider();
 
-                return components;
-            }
+            this.fiberProvider = fiberProvider;
+            this.serverConnector = serverConnector;
 
-            set
-            {
-                if (components == null)
-                {
-                    components = value;
-                }
-            }
+            ServerExposedComponents.SetProvider(Components.ProvideExposed());
         }
-
-        private IComponentsProvider components;
 
         public void Startup()
         {
@@ -47,23 +45,46 @@ namespace ServerCommon.Application
 
         protected virtual void OnStartup()
         {
-            Components = new ComponentsProvider();
+            // Left blank intentionally
         }
 
         protected virtual void OnShutdown()
         {
-            Components.Dispose();
+            Components?.Dispose();
         }
 
         protected virtual void OnConnected(IClientPeer clientPeer)
         {
-            // TODO: Implement
+            // Left blank intentionally
         }
 
         private void AddCommonComponents()
         {
-            Components.Add(new IdGenerator());
             Components.Add(new RandomNumberGenerator());
+            IFiberStarter fiber = Components.Add(new FiberStarter(fiberProvider));
+            var executor = new FiberCoroutinesExecutor(
+                fiber.GetFiberStarter(), updateRateMilliseconds: 100);
+            Components.Add(new CoroutinesManager(executor));
+            Components.Add(new ServerConnectorProvider(serverConnector));
+        }
+
+        private void AddPeerRelatedComponents()
+        {
+            Components.Add(new IdGenerator());
+            Components.Add(new PeersLogicProvider());
+        }
+
+        protected void WrapClientPeer(IClientPeer clientPeer, IPeerLogicBase peerLogic)
+        {
+            var idGenerator = Components.Get<IIdGenerator>().AssertNotNull();
+            var id = idGenerator.GenerateId();
+
+            IPeerLogicProvider peerLogicProvider =
+                new PeerLogicProvider<IClientPeer>(clientPeer, id);
+            peerLogicProvider.SetPeerLogic(peerLogic);
+
+            var peersLogicProvider = Components.Get<IPeersLogicProvider>().AssertNotNull();
+            peersLogicProvider.AddPeerLogic(peerLogicProvider);
         }
     }
 }
