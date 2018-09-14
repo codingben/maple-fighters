@@ -305,6 +305,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhotonControl.UnitTests", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.ComponentModel.Tests", "lib\Common\Common.ComponentModel.Tests\Common.ComponentModel.Tests.csproj", "{8B0C40C6-A638-41F0-93A7-17FE6BAA0259}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServerCommon.Configuration", "lib\ServerCommon\ServerCommon.Configuration\ServerCommon.Configuration.csproj", "{E294B8AA-54DC-427C-8730-7776155C524C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -731,6 +733,10 @@ Global
 		{8B0C40C6-A638-41F0-93A7-17FE6BAA0259}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8B0C40C6-A638-41F0-93A7-17FE6BAA0259}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8B0C40C6-A638-41F0-93A7-17FE6BAA0259}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E294B8AA-54DC-427C-8730-7776155C524C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E294B8AA-54DC-427C-8730-7776155C524C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E294B8AA-54DC-427C-8730-7776155C524C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E294B8AA-54DC-427C-8730-7776155C524C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -883,6 +889,7 @@ Global
 		{E388BDFA-90F4-40E0-AC33-A16611529718} = {DBF58800-32AF-47D8-943F-52E896CE8209}
 		{C7F83DA5-C3FC-45FE-BDF0-FED122E80EC1} = {DBF58800-32AF-47D8-943F-52E896CE8209}
 		{8B0C40C6-A638-41F0-93A7-17FE6BAA0259} = {B37FE882-0224-4941-9617-1565475C67DA}
+		{E294B8AA-54DC-427C-8730-7776155C524C} = {7AD3F564-C73B-47F9-8FEA-79156A386A3B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {20317580-AFD3-4C35-BADC-B5E94CD0B788}

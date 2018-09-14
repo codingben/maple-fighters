@@ -28,12 +28,12 @@ namespace ServerCommon.PeerLogic
             OnDispose();
         }
 
-        public virtual void OnInitialized()
+        protected internal virtual void OnInitialized()
         {
             // Left blank intentionally
         }
 
-        public virtual void OnDispose()
+        protected internal virtual void OnDispose()
         {
             Components?.Dispose();
         }

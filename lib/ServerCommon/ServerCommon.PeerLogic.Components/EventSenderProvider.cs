@@ -1,6 +1,7 @@
 ﻿using System;
 using Common.ComponentModel;
 using CommonCommunicationInterfaces;
+using ServerCommon.Configuration;
 using ServerCommunicationHelper;
 using ServerCommunicationInterfaces;
 
@@ -18,12 +19,16 @@ namespace ServerCommon.PeerLogic.Components
             IEventSender eventSender)
         {
             this.minimalPeer = minimalPeer;
-            this.eventSender = new EventSender<TEventCode>(
-                eventSender, log: true); // TODO: Get log from the configuration
+            this.eventSender =
+                new EventSender<TEventCode>(
+                    eventSender,
+                    log: ServerSettings.Peer.LogEvents);
         }
 
         public void Send<TParameters, TEnumCode>(
-            TEnumCode code, TParameters parameters, MessageSendOptions options)
+            TEnumCode code,
+            TParameters parameters,
+            MessageSendOptions options)
             where TParameters : struct, IParameters
             where TEnumCode : IComparable, IFormattable, IConvertible
         {
@@ -31,7 +36,9 @@ namespace ServerCommon.PeerLogic.Components
             {
                 var codeByte = Convert.ToByte(code);
                 var eventCode = (TEventCode)Enum.Parse(
-                    typeof(TEventCode), codeByte.ToString(), true);
+                    enumType: typeof(TEventCode),
+                    value: codeByte.ToString(),
+                    ignoreCase: true);
 
                 eventSender.Send(eventCode, parameters, options);
             }

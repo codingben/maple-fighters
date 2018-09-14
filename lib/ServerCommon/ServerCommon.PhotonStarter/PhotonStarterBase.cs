@@ -24,9 +24,13 @@ namespace ServerCommon.PhotonStarter
         protected override void Setup()
         {
             var photonFiberProvider = new PhotonFiberProvider();
-            var serverConnector = new PhotonServerConnector(this, ApplicationName);
+            var serverConnector =
+                new PhotonServerConnector(this, ApplicationName);
 
-            application = CreateApplication(logger, photonFiberProvider, serverConnector);
+            application = CreateApplication(
+                logger,
+                photonFiberProvider,
+                serverConnector);
             application.Startup();
 
             logger.Log("An application has started.");
@@ -48,7 +52,9 @@ namespace ServerCommon.PhotonStarter
         }
 
         protected abstract TApplication CreateApplication(
-            ILogger logger, IFiberProvider fiberProvider, IServerConnector serverConnector);
+            ILogger logger,
+            IFiberProvider fiberProvider,
+            IServerConnector serverConnector);
 
         private void OnCreatePeer(IClientPeer clientPeer)
         {

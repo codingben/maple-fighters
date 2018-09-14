@@ -17,7 +17,9 @@ namespace ServerCommon.Application
         private readonly IServerConnector serverConnector;
 
         public ServerApplicationBase(
-            ILogger logger, IFiberProvider fiberProvider, IServerConnector serverConnector)
+            ILogger logger,
+            IFiberProvider fiberProvider,
+            IServerConnector serverConnector)
         {
             LogUtils.Logger = logger;
             TimeProviders.DefaultTimeProvider = new TimeProvider();
@@ -74,7 +76,9 @@ namespace ServerCommon.Application
             Components.Add(new PeersLogicProvider());
         }
 
-        protected void WrapClientPeer(IClientPeer clientPeer, IPeerLogicBase peerLogic)
+        protected void WrapClientPeer(
+            IClientPeer clientPeer,
+            IPeerLogicBase peerLogic)
         {
             var idGenerator = Components.Get<IIdGenerator>().AssertNotNull();
             var id = idGenerator.GenerateId();

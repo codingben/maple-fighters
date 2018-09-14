@@ -1,6 +1,7 @@
 ﻿using System;
 using Common.Components;
 using CommonTools.Log;
+using ServerCommon.Configuration;
 using ServerCommunicationHelper;
 using ServerCommunicationInterfaces;
 
@@ -16,7 +17,7 @@ namespace ServerCommon.PeerLogic.Components
             private set;
         }
 
-        public override void OnInitialized()
+        protected override void OnInitialized()
         {
             base.OnInitialized();
 
@@ -25,7 +26,7 @@ namespace ServerCommon.PeerLogic.Components
             OperationHandlerRegister = ProvideOperationHandlerRegister();
         }
 
-        public override void OnDispose()
+        protected override void OnDispose()
         {
             base.OnDispose();
 
@@ -34,23 +35,26 @@ namespace ServerCommon.PeerLogic.Components
 
         private void AddCommonComponents()
         {
-            var executor = new FiberCoroutinesExecutor(Peer.Fiber, updateRateMilliseconds: 100);
+            var executor = new FiberCoroutinesExecutor(
+                Peer.Fiber,
+                updateRateMilliseconds: 100);
 
             Components.Add(new CoroutinesManager(executor));
-            Components.Add(new EventSenderProvider<TEventCode>(Peer, Peer.EventSender));
+            Components.Add(new EventSenderProvider<TEventCode>(
+                Peer, 
+                Peer.EventSender));
         }
 
         private IOperationRequestHandlerRegister<TOperationCode> ProvideOperationHandlerRegister()
         {
             var coroutinesManager = Components.Get<ICoroutinesManager>().AssertNotNull();
 
-            // TODO: Get logs from the configuration
             return new OperationRequestsHandler<TOperationCode>(
                 Peer.OperationRequestNotifier,
                 Peer.OperationResponseSender,
-                logRequests: true,
-                logResponses: true,
-                coroutinesExecutor: coroutinesManager);
+                ServerSettings.Peer.Operations.LogRequests,
+                ServerSettings.Peer.Operations.LogResponses,
+                coroutinesManager);
         }
     }
 }
