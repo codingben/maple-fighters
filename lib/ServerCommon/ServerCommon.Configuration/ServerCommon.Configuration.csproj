@@ -46,6 +46,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServerConfiguration.cs" />
     <Compile Include="ServerSettings.cs" />
+    <Compile Include="ServerSettingsException.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -5,12 +5,12 @@ namespace ServerCommon.Configuration
 {
     public static class ServerConfiguration
     {
-        static ServerConfiguration()
+        public static void Setup()
         {
-            InitializePeerConfiguration();
+            SetupPeerConfiguration();
         }
 
-        private static void InitializePeerConfiguration()
+        public static void SetupPeerConfiguration()
         {
             ServerSettings.Peer = new ConfigurationBuilder<IPeer>()
                 .UseInMemoryConfig()

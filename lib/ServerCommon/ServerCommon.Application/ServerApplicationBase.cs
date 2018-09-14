@@ -3,6 +3,7 @@ using Common.Components;
 using CommonTools.Coroutines;
 using CommonTools.Log;
 using ServerCommon.Application.Components;
+using ServerCommon.Configuration;
 using ServerCommon.PeerLogic;
 using ServerCommon.PeerLogic.Components;
 using ServerCommunicationInterfaces;
@@ -27,7 +28,10 @@ namespace ServerCommon.Application
             this.fiberProvider = fiberProvider;
             this.serverConnector = serverConnector;
 
-            ServerExposedComponents.SetProvider(Components.ProvideExposed());
+            var exposedComponents = Components.ProvideExposed();
+            ServerExposedComponents.SetProvider(exposedComponents);
+
+            ServerConfiguration.Setup();
         }
 
         public void Startup()
