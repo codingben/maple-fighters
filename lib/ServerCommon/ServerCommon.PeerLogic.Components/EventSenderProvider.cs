@@ -18,17 +18,22 @@ namespace ServerCommon.PeerLogic.Components
             IEventSender eventSender)
         {
             this.minimalPeer = minimalPeer;
-            this.eventSender = new EventSender<TEventCode>(eventSender, log: true); // TODO: Get log from the configuration
+            this.eventSender = new EventSender<TEventCode>(
+                eventSender, log: true); // TODO: Get log from the configuration
         }
 
-        public void Send<TParameters, T>(
-            T code, TParameters parameters, MessageSendOptions options)
+        public void Send<TParameters, TEnumCode>(
+            TEnumCode code, TParameters parameters, MessageSendOptions options)
             where TParameters : struct, IParameters
-            where T : TEventCode
+            where TEnumCode : IComparable, IFormattable, IConvertible
         {
             if (minimalPeer.IsConnected)
             {
-                eventSender.Send(code, parameters, options);
+                var codeByte = Convert.ToByte(code);
+                var eventCode = (TEventCode)Enum.Parse(
+                    typeof(TEventCode), codeByte.ToString(), true);
+
+                eventSender.Send(eventCode, parameters, options);
             }
         }
     }
