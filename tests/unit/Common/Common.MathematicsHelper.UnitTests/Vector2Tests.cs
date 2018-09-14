@@ -147,7 +147,7 @@ namespace Common.MathematicsHelper.UnitTests
             var result = point2 + point1;
 
             // Assert
-            result.ShouldBeSameAs(Vector2.One);
+            result.ShouldBe(Vector2.One);
         }
 
         [Fact]
@@ -161,7 +161,7 @@ namespace Common.MathematicsHelper.UnitTests
             var result = point2 - point1;
 
             // Assert
-            result.ShouldBeSameAs(Vector2.One);
+            result.ShouldBe(Vector2.One);
         }
 
         [Fact]
@@ -175,7 +175,7 @@ namespace Common.MathematicsHelper.UnitTests
             var result = point1 * point2;
 
             // Assert
-            result.ShouldBeSameAs(Vector2.One);
+            result.ShouldBe(Vector2.One);
         }
 
         [Fact]
@@ -189,8 +189,8 @@ namespace Common.MathematicsHelper.UnitTests
             var result2 = (1 * point1);
 
             // Assert
-            result1.ShouldBeSameAs(Vector2.One);
-            result2.ShouldBeSameAs(Vector2.One);
+            result1.ShouldBe(Vector2.One);
+            result2.ShouldBe(Vector2.One);
         }
 
         [Fact]
@@ -205,8 +205,8 @@ namespace Common.MathematicsHelper.UnitTests
             var result2 = (point1 / 1);
 
             // Assert
-            result1.ShouldBeSameAs(Vector2.One);
-            result2.ShouldBeSameAs(Vector2.One);
+            result1.ShouldBe(Vector2.One);
+            result2.ShouldBe(Vector2.One);
         }
     }
 }
