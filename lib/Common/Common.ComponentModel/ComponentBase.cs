@@ -2,6 +2,9 @@
 
 namespace Common.ComponentModel
 {
+    /// <summary>
+    /// A component base which every component must inherit from it.
+    /// </summary>
     public class ComponentBase : IComponent
     {
         protected IComponentsProvider Components { get; private set; }

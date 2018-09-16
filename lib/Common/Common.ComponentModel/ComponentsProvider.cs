@@ -48,25 +48,17 @@ namespace Common.ComponentModel
 
         TComponent IComponentsProvider.Get<TComponent>()
         {
-            TComponent component = null;
-
-            if (ComponentUtils.IsInterface<TComponent>())
-            {
-                component = components.Find<TComponent>();
-            }
-
+            Utils.AssertNotInterface<TComponent>();
+            
+            var component = components.Find<TComponent>();
             return component;
         }
 
         TComponent IExposedComponentsProvider.Get<TComponent>()
         {
-            TComponent component = null;
-
-            if (ComponentUtils.IsInterface<TComponent>())
-            {
-                component = components.FindExposedOnly<TComponent>();
-            }
-
+            Utils.AssertNotInterface<TComponent>();
+            
+            var component = components.FindExposedOnly<TComponent>();
             return component;
         }
 

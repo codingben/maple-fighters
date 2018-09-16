@@ -3,6 +3,10 @@ using Common.ComponentModel.Core;
 
 namespace Common.ComponentModel.Generic
 {
+    /// <summary>
+    /// Represents a components container and allows to set an owner.
+    /// </summary>
+    /// <typeparam name="TOwner">An entity which owns this component.</typeparam>
     public sealed class OwnerComponentsProvider<TOwner> : IComponentsProvider,
                                                           IExposedComponentsProvider
         where TOwner : class
@@ -51,25 +55,17 @@ namespace Common.ComponentModel.Generic
 
         TComponent IComponentsProvider.Get<TComponent>()
         {
-            TComponent component = null;
+            Utils.AssertNotInterface<TComponent>();
 
-            if (ComponentUtils.IsInterface<TComponent>())
-            {
-                component = components.Find<TComponent>();
-            }
-
+            var component = components.Find<TComponent>();
             return component;
         }
 
         TComponent IExposedComponentsProvider.Get<TComponent>()
         {
-            TComponent component = null;
+            Utils.AssertNotInterface<TComponent>();
 
-            if (ComponentUtils.IsInterface<TComponent>())
-            {
-                component = components.FindExposedOnly<TComponent>();
-            }
-
+            var component = components.FindExposedOnly<TComponent>();
             return component;
         }
 

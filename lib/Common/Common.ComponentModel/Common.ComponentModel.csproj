@@ -35,14 +35,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ComponentBase.cs" />
-    <Compile Include="Core\ComponentModelException.cs" />
+    <Compile Include="Core\ComponentsContainerUtils.cs" />
+    <Compile Include="Core\Utils.cs" />
+    <Compile Include="Exceptions\ComponentAlreadyExistsException.cs" />
     <Compile Include="Core\ComponentsContainer.cs" />
     <Compile Include="Core\ComponentsCollection.cs" />
     <Compile Include="ComponentSettingsAttribute.cs" />
     <Compile Include="ComponentsProvider.cs" />
+    <Compile Include="Exceptions\ComponentNotExposedException.cs" />
+    <Compile Include="Exceptions\ComponentNotFoundException.cs" />
+    <Compile Include="Exceptions\ComponentSettingsMissingException.cs" />
+    <Compile Include="Exceptions\InterfaceExpectedException.cs" />
     <Compile Include="ExposedState.cs" />
     <Compile Include="ExtensionMethods.cs" />
-    <Compile Include="Core\ComponentUtils.cs" />
     <Compile Include="Generic\ComponentBase.cs" />
     <Compile Include="Generic\IComponent.cs" />
     <Compile Include="Generic\OwnerComponentsProvider.cs" />

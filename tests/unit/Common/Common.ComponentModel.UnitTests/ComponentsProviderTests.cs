@@ -1,4 +1,5 @@
 ﻿using Common.ComponentModel.Core;
+using Common.ComponentModel.Exceptions;
 using Common.ComponentModel.Tests;
 using Common.UnitTestsBase;
 using NSubstitute;
@@ -43,7 +44,7 @@ namespace Common.ComponentModel.UnitTests
             componentsProvider.Add(new UnexposableComponent());
 
             // Act & Assert
-            Should.Throw<ComponentModelException>(
+            Should.Throw<ComponentAlreadyExistsException<UnexposableComponent>>(
                 () => componentsProvider.Add(new UnexposableComponent()));
         }
 
@@ -55,7 +56,7 @@ namespace Common.ComponentModel.UnitTests
             componentsProvider.Add(new ExposableComponent());
 
             // Act & Assert
-            Should.Throw<ComponentModelException>(
+            Should.Throw<ComponentAlreadyExistsException<ExposableComponent>>(
                 () => componentsProvider.Add(new ExposableComponent()));
         }
 
@@ -137,7 +138,7 @@ namespace Common.ComponentModel.UnitTests
             componentsProvider.Add(new UnexposableComponent());
 
             // Act && Assert
-            Should.Throw<ComponentModelException>(() => 
+            Should.Throw<InterfaceExpectedException<UnexposableComponent>>(() => 
                 componentsProvider.Get<UnexposableComponent>());
         }
 

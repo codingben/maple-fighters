@@ -11,7 +11,8 @@ namespace Common.ComponentModel
         }
 
         public static IExposedComponentsProvider ProvideExposed<TOwner>(
-            this IComponentsProvider components) where TOwner : class
+            this IComponentsProvider components) 
+            where TOwner : class
         {
             return (OwnerComponentsProvider<TOwner>)components;
         }

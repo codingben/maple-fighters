@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Linq;
 using Common.ComponentModel.Core;
+using Common.ComponentModel.Exceptions;
+
 using Shouldly;
 using Xunit;
 
@@ -31,7 +33,7 @@ namespace Common.ComponentModel.UnitTests
             componentsContainer.Add(new SingletonComponent());
 
             // Act & Assert
-            Should.Throw<ComponentModelException>(
+            Should.Throw<ComponentAlreadyExistsException<SingletonComponent>>(
                 () => componentsContainer.Add(new SingletonComponent()));
         }
 
@@ -42,7 +44,7 @@ namespace Common.ComponentModel.UnitTests
             IComponentsContainer componentsContainer = new ComponentsContainer();
 
             // Act & Assert
-            Should.Throw<ComponentModelException>(
+            Should.Throw<ComponentSettingsMissingException<NoAttributeComponent>>(
                 () => componentsContainer.Add(new NoAttributeComponent()));
         }
 
@@ -53,7 +55,7 @@ namespace Common.ComponentModel.UnitTests
             IComponentsContainer componentsContainer = new ComponentsContainer();
 
             // Act & Assert
-            Should.Throw<ComponentModelException>(
+            Should.Throw<ComponentNotExposedException<SingletonComponent>>(
                 () => componentsContainer.AddExposedOnly(new SingletonComponent()));
         }
 
@@ -81,7 +83,7 @@ namespace Common.ComponentModel.UnitTests
             IComponentsContainer componentsContainer = new ComponentsContainer();
 
             // Act & Assert
-            Should.Throw<ComponentModelException>(
+            Should.Throw<ComponentNotFoundException<SingletonComponent>>(
                 () => componentsContainer.Remove<SingletonComponent>());
         }
 
