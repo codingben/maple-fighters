@@ -38,6 +38,7 @@ namespace Common.ComponentModel.UnitTests
     public class GameObject : IGameObject, ISceneObject
     {
         public int Id { get; }
+
         public IExposedComponentsProvider ExposedComponents =>
             Components.ProvideExposed<ISceneObject>();
 

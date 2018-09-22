@@ -1,7 +1,7 @@
 ﻿using Common.ComponentModel;
 using ServerCommunicationInterfaces;
 
-namespace Common.Components
+namespace ServerCommon.Application.Components
 {
     [ComponentSettings(ExposedState.Unexposable)]
     public class FiberStarter : ComponentBase, IFiberStarter

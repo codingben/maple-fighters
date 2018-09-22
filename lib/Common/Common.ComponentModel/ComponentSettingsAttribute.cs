@@ -6,6 +6,7 @@ namespace Common.ComponentModel
     public class ComponentSettingsAttribute : Attribute
     {
         public ExposedState ExposedState { get; }
+
         public LifeTime LifeTime { get; }
 
         public ComponentSettingsAttribute(

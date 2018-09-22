@@ -2,7 +2,6 @@
 using System.Linq;
 using Common.ComponentModel.Core;
 using Common.ComponentModel.Exceptions;
-
 using Shouldly;
 using Xunit;
 

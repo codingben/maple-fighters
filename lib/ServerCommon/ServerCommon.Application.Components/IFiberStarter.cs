@@ -1,6 +1,6 @@
 ﻿using ServerCommunicationInterfaces;
 
-namespace Common.Components
+namespace ServerCommon.Application.Components
 {
     public interface IFiberStarter
     {

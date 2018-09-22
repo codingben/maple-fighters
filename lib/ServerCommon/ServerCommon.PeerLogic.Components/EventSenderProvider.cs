@@ -28,7 +28,7 @@ namespace ServerCommon.PeerLogic.Components
         public void Send<TParameters, TEnumCode>(
             TEnumCode code,
             TParameters parameters,
-            MessageSendOptions options)
+            MessageSendOptions messageSendOptions)
             where TParameters : struct, IParameters
             where TEnumCode : IComparable, IFormattable, IConvertible
         {
@@ -40,7 +40,7 @@ namespace ServerCommon.PeerLogic.Components
                     value: codeByte.ToString(),
                     ignoreCase: true);
 
-                eventSender.Send(eventCode, parameters, options);
+                eventSender.Send(eventCode, parameters, messageSendOptions);
             }
         }
     }

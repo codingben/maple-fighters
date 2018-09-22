@@ -1,5 +1,4 @@
-﻿using Common.ComponentModel.Core;
-using Common.ComponentModel.Exceptions;
+﻿using Common.ComponentModel.Exceptions;
 using Common.ComponentModel.Tests;
 using Common.UnitTestsBase;
 using NSubstitute;

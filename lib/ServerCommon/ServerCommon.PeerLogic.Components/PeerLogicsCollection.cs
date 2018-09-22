@@ -19,7 +19,7 @@ namespace ServerCommon.PeerLogic.Components
                 if (!peerLogics.TryGetValue(id, out var peerLogic))
                 {
                     throw new PeerLogicException(
-                        $"A peer with id {id} does not exist in a peer logics collection.");
+                        $"A peer with id {id} does not exist in a peers logic collection.");
                 }
 
                 return peerLogic;

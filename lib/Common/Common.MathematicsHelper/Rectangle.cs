@@ -7,14 +7,19 @@ namespace Common.MathematicsHelper
         public static readonly Rectangle Empty = new Rectangle();
 
         public float X { get; private set; }
+
         public float Y { get; private set; }
 
         public float Width { get; private set; }
+
         public float Height { get; private set; }
 
         public float Left => X;
+
         public float Top => Y;
+
         public float Right => X + Width;
+
         public float Bottom => Y + Height;
 
         public Vector2 Position => new Vector2(X, Y);

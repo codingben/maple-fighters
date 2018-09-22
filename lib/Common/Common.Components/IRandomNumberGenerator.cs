@@ -1,4 +1,4 @@
-﻿namespace ServerCommon.Application.Components
+﻿namespace Common.Components
 {
     public interface IRandomNumberGenerator
     {

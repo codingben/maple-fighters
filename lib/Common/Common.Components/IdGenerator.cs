@@ -1,6 +1,6 @@
 ﻿using Common.ComponentModel;
 
-namespace ServerCommon.Application.Components
+namespace Common.Components
 {
     [ComponentSettings(ExposedState.Unexposable)]
     public class IdGenerator : ComponentBase, IIdGenerator

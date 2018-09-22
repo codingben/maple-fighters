@@ -16,7 +16,7 @@ namespace ServerCommon.Application
             if (_components == null)
             {
                 throw new ServerApplicationException(
-                    "Server components prvoider is not initialized.");
+                    "Server components provider is not initialized.");
             }
 
             return _components;

@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using Common.ComponentModel;
+using Common.Components;
 using CommonTools.Log;
-using ServerCommon.Application.Components;
 
 namespace ServerCommon.PeerLogic.Components
 {

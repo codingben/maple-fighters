@@ -11,6 +11,7 @@ namespace ServerCommon.PeerLogic
             Components.ProvideExposed();
 
         protected TPeer Peer { get; private set; }
+
         protected int PeerId { get; private set; }
 
         protected IComponentsProvider Components => new ComponentsProvider();
