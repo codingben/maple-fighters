@@ -4,13 +4,14 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{41A8AAA5-4D96-4E46-9D62-2B46C5619A34}</ProjectGuid>
+    <ProjectGuid>{119DCFD8-63CD-47CC-B26F-9BACB91A062B}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ServerCommon.PeerLogic.Components</RootNamespace>
-    <AssemblyName>ServerCommon.PeerLogic.Components</AssemblyName>
+    <RootNamespace>ServerCommon.PeerLogic.Common</RootNamespace>
+    <AssemblyName>ServerCommon.PeerLogic.Common</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -55,12 +56,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EventSenderProvider.cs" />
-    <Compile Include="IEventSenderProvider.cs" />
-    <Compile Include="IPeersLogicProvider.cs" />
-    <Compile Include="PeerLogicsCollection.cs" />
-    <Compile Include="PeersLogicProvider.cs" />
+    <Compile Include="ClientPeerLogicBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Common\Common.ComponentModel\Common.ComponentModel.csproj">
@@ -79,13 +79,14 @@
       <Project>{E294B8AA-54DC-427C-8730-7776155C524C}</Project>
       <Name>ServerCommon.Configuration</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ServerCommon.PeerLogic.Components\ServerCommon.PeerLogic.Components.csproj">
+      <Project>{41A8AAA5-4D96-4E46-9D62-2B46C5619A34}</Project>
+      <Name>ServerCommon.PeerLogic.Components</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ServerCommon.PeerLogic\ServerCommon.PeerLogic.csproj">
       <Project>{F286466C-C0EB-4D2C-AD3F-640AEA24B278}</Project>
       <Name>ServerCommon.PeerLogic</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

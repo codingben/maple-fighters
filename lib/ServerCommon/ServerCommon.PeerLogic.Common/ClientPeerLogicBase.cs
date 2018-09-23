@@ -8,30 +8,50 @@ using ServerCommunicationInterfaces;
 
 namespace ServerCommon.PeerLogic.Components
 {
+    /// <inheritdoc />
+    /// <summary>
+    /// A common implementation for the client peer logic which handles operations and events.
+    /// </summary>
+    /// <typeparam name="TOperationCode">The operations.</typeparam>
+    /// <typeparam name="TEventCode">The events.</typeparam>
     public class ClientPeerLogicBase<TOperationCode, TEventCode> : PeerLogicBase<IClientPeer>
         where TOperationCode : IComparable, IFormattable, IConvertible
         where TEventCode : IComparable, IFormattable, IConvertible
     {
         protected IOperationRequestHandlerRegister<TOperationCode> OperationHandlerRegister
-        { 
+        {
             get;
             private set;
         }
 
-        protected override void OnInitialized()
+        protected override void Setup()
         {
-            base.OnInitialized();
+            base.Setup();
 
             AddCommonComponents();
 
             OperationHandlerRegister = ProvideOperationHandlerRegister();
+
+            OnSetup();
         }
 
-        protected override void OnDispose()
+        protected override void Cleanup()
         {
-            base.OnDispose();
-
+            base.Cleanup();
+            
             OperationHandlerRegister?.Dispose();
+
+            OnCleanup();
+        }
+
+        protected virtual void OnSetup()
+        {
+            // Left blank intentionally
+        }
+
+        protected virtual void OnCleanup()
+        {
+            // Left blank intentionally
         }
 
         private void AddCommonComponents()

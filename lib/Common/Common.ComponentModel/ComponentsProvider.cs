@@ -3,6 +3,9 @@ using Common.ComponentModel.Core;
 
 namespace Common.ComponentModel
 {
+    /// <summary>
+    /// Represents a components container.
+    /// </summary>
     public sealed class ComponentsProvider : IComponentsProvider,
                                              IExposedComponentsProvider
     {

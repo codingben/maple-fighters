@@ -5,11 +5,11 @@ namespace ServerCommon.PeerLogic.Components
 {
     public interface IEventSenderProvider
     {
-        void Send<TParameters, TEnumCode>(
+        void Send<TEnumCode, TParameters>(
             TEnumCode code,
             TParameters parameters,
             MessageSendOptions messageSendOptions)
-            where TParameters : struct, IParameters
-            where TEnumCode : IComparable, IFormattable, IConvertible;
+            where TEnumCode : IComparable, IFormattable, IConvertible
+            where TParameters : struct, IParameters;
     }
 }

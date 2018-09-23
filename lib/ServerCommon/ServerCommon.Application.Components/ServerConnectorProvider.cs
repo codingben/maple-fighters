@@ -1,4 +1,5 @@
-﻿using Common.ComponentModel;
+﻿using System;
+using Common.ComponentModel;
 using ServerCommunicationInterfaces;
 
 namespace ServerCommon.Application.Components
@@ -10,7 +11,9 @@ namespace ServerCommon.Application.Components
 
         public ServerConnectorProvider(IServerConnector serverConnector)
         {
-            this.serverConnector = serverConnector;
+            this.serverConnector = serverConnector
+                                   ?? throw new ArgumentNullException(
+                                       nameof(serverConnector));
         }
 
         public IServerConnector GetServerConnector()

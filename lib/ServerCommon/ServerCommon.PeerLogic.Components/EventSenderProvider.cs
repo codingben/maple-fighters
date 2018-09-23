@@ -25,12 +25,12 @@ namespace ServerCommon.PeerLogic.Components
                     log: ServerSettings.Peer.LogEvents);
         }
 
-        public void Send<TParameters, TEnumCode>(
+        public void Send<TEnumCode, TParameters>(
             TEnumCode code,
             TParameters parameters,
             MessageSendOptions messageSendOptions)
-            where TParameters : struct, IParameters
             where TEnumCode : IComparable, IFormattable, IConvertible
+            where TParameters : struct, IParameters
         {
             if (minimalPeer.IsConnected)
             {

@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using Common.ComponentModel;
-using Common.Components;
-using CommonTools.Log;
 
 namespace ServerCommon.PeerLogic.Components
 {
@@ -12,26 +10,16 @@ namespace ServerCommon.PeerLogic.Components
         private readonly object locker = new object();
         private readonly PeerLogicsCollection<IPeerLogicProvider> peerLogics;
 
-        private IIdGenerator idGenerator;
-
         public PeersLogicProvider()
         {
             peerLogics = new PeerLogicsCollection<IPeerLogicProvider>();
         }
 
-        protected override void OnAwake()
-        {
-            base.OnAwake();
-
-            idGenerator = Components.Get<IIdGenerator>().AssertNotNull();
-        }
-
-        public void AddPeerLogic(IPeerLogicProvider peerLogic)
+        public void AddPeerLogic(int peerId, IPeerLogicProvider peerLogic)
         {
             lock (locker)
             {
-                var id = idGenerator.GenerateId();
-                peerLogics.Add(id, peerLogic);
+                peerLogics.Add(peerId, peerLogic);
             }
         }
 
@@ -50,18 +38,21 @@ namespace ServerCommon.PeerLogic.Components
                 var logics = peerLogics.GetAll();
                 foreach (var logic in logics)
                 {
-                    logic.RemovePeerLogic();
+                    logic.UnsetPeerLogic();
                 }
 
                 peerLogics.RemoveAll();
             }
         }
 
-        public IPeerLogicProvider ProvidePeerLogic(int peerId)
+        public void ProvidePeerLogic(
+            int peerId,
+            Action<IPeerLogicProvider> peerLogicProvider)
         {
             lock (locker)
             {
-                return peerLogics[peerId];
+                var logic = peerLogics[peerId];
+                peerLogicProvider.Invoke(logic);
             }
         }
 

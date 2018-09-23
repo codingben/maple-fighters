@@ -3,6 +3,11 @@ using ServerCommunicationInterfaces;
 
 namespace ServerCommon.PeerLogic
 {
+    /// <inheritdoc />
+    /// <summary>
+    /// Provides the peer logic of the client peer.
+    /// </summary>
+    /// <typeparam name="TPeer">The client peer.</typeparam>
     public class PeerLogicProvider<TPeer> : IPeerLogicProvider
         where TPeer : class, IMinimalPeer
     {
@@ -16,27 +21,39 @@ namespace ServerCommon.PeerLogic
             this.peerId = peerId;
         }
 
+        /// <inheritdoc />
+        /// <summary>
+        /// See <see cref="IPeerLogicProvider.SetPeerLogic{T}"/> for more information.
+        /// </summary>
         public void SetPeerLogic<TPeerLogic>(TPeerLogic peerLogic)
             where TPeerLogic : IPeerLogicBase
         {
             peer.Fiber.Enqueue(() =>
             {
-                peer.NetworkTrafficState = NetworkTrafficState.Paused;
-
-                RemovePeerLogic();
+                UnsetPeerLogic();
 
                 peerLogicBase = peerLogic as PeerLogicBase<TPeer>;
-                peerLogicBase?.Initialize(peer, peerId);
+                peerLogicBase?.SetPeer(peer, peerId);
 
                 peer.NetworkTrafficState = NetworkTrafficState.Flowing;
             });
         }
 
-        public void RemovePeerLogic()
+        /// <inheritdoc />
+        /// <summary>
+        /// See <see cref="IPeerLogicProvider.UnsetPeerLogic"/> for more information.
+        /// </summary>
+        public void UnsetPeerLogic()
         {
+            peer.NetworkTrafficState = NetworkTrafficState.Paused;
+
             peerLogicBase?.Dispose();
         }
 
+        /// <inheritdoc />
+        /// <summary>
+        /// See <see cref="IPeerLogicProvider.ProvidePeerLogic"/> for more information.
+        /// </summary>
         public IPeerLogicBase ProvidePeerLogic()
         {
             if (peerLogicBase == null)

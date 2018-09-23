@@ -11,6 +11,11 @@ namespace ServerCommon.Logging
         public Logger()
         {
             logger = LogManager.GetLogger(typeof(Logger));
+
+            if (logger == null)
+            {
+                throw new LoggerNotFoundException();
+            }
         }
 
         public void Log(
@@ -27,11 +32,13 @@ namespace ServerCommon.Logging
                         logger.Info(message);
                         break;
                     }
+
                     case LogMessageType.Warning:
                     {
                         logger.Warn(message);
                         break;
                     }
+
                     case LogMessageType.Error:
                     {
                         logger.Error(message);

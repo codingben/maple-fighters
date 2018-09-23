@@ -7,8 +7,7 @@ namespace ServerCommon.Application
     {
         public float GetCurrentTime()
         {
-            var time = (float)(Environment.TickCount * 1E-03);
-            return time;
+            return (float)(Environment.TickCount * 1E-03);
         }
     }
 }
