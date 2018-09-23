@@ -7,7 +7,7 @@ namespace Common.ComponentModel.Core
     /// <summary>
     /// A collection of the exposed and unexposed components.
     /// </summary>
-    public sealed class ComponentsCollection
+    internal sealed class ComponentsCollection
     {
         private readonly List<object> exposedComponents;
         private readonly List<object> unexposedComponents;

@@ -36,6 +36,7 @@
   <ItemGroup>
     <Compile Include="ComponentBase.cs" />
     <Compile Include="Core\ComponentsContainerUtils.cs" />
+    <Compile Include="Core\ComponentSettingsUtils.cs" />
     <Compile Include="Core\Utils.cs" />
     <Compile Include="Exceptions\ComponentAlreadyExistsException.cs" />
     <Compile Include="Core\ComponentsContainer.cs" />
@@ -55,7 +56,7 @@
     <Compile Include="Core\IComponentsContainer.cs" />
     <Compile Include="IComponentsProvider.cs" />
     <Compile Include="IExposedComponentsProvider.cs" />
-    <Compile Include="LifeTime.cs" />
+    <Compile Include="Lifetime.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

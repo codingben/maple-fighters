@@ -2,7 +2,7 @@
 
 namespace Common.ComponentModel.Core
 {
-    public static class Utils
+    internal static class Utils
     {
         public static void AssertNotInterface<TComponent>()
             where TComponent : class

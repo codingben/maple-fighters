@@ -7,14 +7,14 @@ namespace Common.ComponentModel
     {
         public ExposedState ExposedState { get; }
 
-        public LifeTime LifeTime { get; }
+        public Lifetime Lifetime { get; }
 
         public ComponentSettingsAttribute(
             ExposedState exposedState,
-            LifeTime lifeTime = LifeTime.Singleton)
+            Lifetime lifeTime = Lifetime.Singleton)
         {
             ExposedState = exposedState;
-            LifeTime = lifeTime;
+            Lifetime = lifeTime;
         }
     }
 }

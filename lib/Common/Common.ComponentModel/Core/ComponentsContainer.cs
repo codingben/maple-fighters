@@ -41,7 +41,9 @@ namespace Common.ComponentModel.Core
         public void AddExposedOnly<TComponent>(TComponent component)
             where TComponent : class
         {
-            if (ComponentsContainerUtils.IsExposed<TComponent>())
+            var exposedState =
+                ComponentsContainerUtils.GetExposedState<TComponent>();
+            if (exposedState == ExposedState.Exposable)
             {
                 var isExists = components.IsExists<TComponent>(
                     ExposedState.Exposable);
@@ -49,6 +51,10 @@ namespace Common.ComponentModel.Core
                 {
                     components[ExposedState.Exposable].Add(component);
                 }
+            }
+            else
+            {
+                throw new ComponentNotExposedException<TComponent>();
             }
         }
 
@@ -90,9 +96,7 @@ namespace Common.ComponentModel.Core
                 .FirstOrDefault();
             if (component != null)
             {
-                component =
-                    ComponentsContainerUtils.ProvideComponentByLifeTime(
-                        component);
+                ComponentsContainerUtils.SetComponentByLifetime(ref component);
             }
 
             return component;
@@ -109,9 +113,7 @@ namespace Common.ComponentModel.Core
                 .FirstOrDefault();
             if (component != null)
             {
-                component =
-                    ComponentsContainerUtils.ProvideComponentByLifeTime(
-                        component);
+                ComponentsContainerUtils.SetComponentByLifetime(ref component);
             }
             else
             {

@@ -176,7 +176,7 @@ namespace Common.ComponentModel.UnitTests
         }
     }
 
-    [ComponentSettings(ExposedState.Exposable, LifeTime.PerThread)]
+    [ComponentSettings(ExposedState.Exposable, Lifetime.PerThread)]
     public class PerThreadComponent : IComponent
     {
         public void Awake(IComponentsProvider components)
@@ -190,7 +190,7 @@ namespace Common.ComponentModel.UnitTests
         }
     }
 
-    [ComponentSettings(ExposedState.Unexposable, LifeTime.PerCall)]
+    [ComponentSettings(ExposedState.Unexposable, Lifetime.PerCall)]
     public class PerCallComponent : IComponent
     {
         public void Awake(IComponentsProvider components)

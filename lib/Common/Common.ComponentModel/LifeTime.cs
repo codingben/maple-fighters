@@ -1,6 +1,6 @@
 ﻿namespace Common.ComponentModel
 {
-    public enum LifeTime
+    public enum Lifetime
     {
         /// <summary>
         /// Creates a one-time component in the process.
