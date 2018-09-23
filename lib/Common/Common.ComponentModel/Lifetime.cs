@@ -1,4 +1,4 @@
-﻿namespace Common.ComponentModel
+namespace Common.ComponentModel
 {
     public enum Lifetime
     {
