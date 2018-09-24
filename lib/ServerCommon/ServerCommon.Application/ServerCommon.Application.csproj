@@ -70,6 +70,10 @@
       <Project>{E294B8AA-54DC-427C-8730-7776155C524C}</Project>
       <Name>ServerCommon.Configuration</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ServerCommon.Logging\ServerCommon.Logging.csproj">
+      <Project>{40470F37-59BB-45B3-9BD0-886703A0EC2B}</Project>
+      <Name>ServerCommon.Logging</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ServerCommon.PeerLogic.Components\ServerCommon.PeerLogic.Components.csproj">
       <Project>{41A8AAA5-4D96-4E46-9D62-2B46C5619A34}</Project>
       <Name>ServerCommon.PeerLogic.Components</Name>

@@ -15,6 +15,13 @@ namespace ServerCommon.PeerLogic.Components
             peerLogics = new PeerLogicsCollection<IPeerLogicProvider>();
         }
 
+        protected override void OnRemoved()
+        {
+            base.OnRemoved();
+
+            RemoveAllPeersLogic();
+        }
+
         public void AddPeerLogic(int peerId, IPeerLogicProvider peerLogic)
         {
             lock (locker)

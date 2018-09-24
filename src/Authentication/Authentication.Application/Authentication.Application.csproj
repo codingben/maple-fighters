@@ -30,11 +30,57 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CommonCommunicationInterfaces, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\CommonCommunicationInterfaces.4.3.0\lib\net46\CommonCommunicationInterfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="CommunicationHelper, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\CommunicationHelper.3.2.5\lib\net46\CommunicationHelper.dll</HintPath>
+    </Reference>
+    <Reference Include="Coroutines, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Coroutines.5.0.5\lib\net46\Coroutines.dll</HintPath>
+    </Reference>
+    <Reference Include="LogUtils, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Coroutines.5.0.5\lib\net46\LogUtils.dll</HintPath>
+    </Reference>
+    <Reference Include="ServerCommunicationHelper, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\ServerCommunicationHelper.3.0.0\lib\net46\ServerCommunicationHelper.dll</HintPath>
+    </Reference>
+    <Reference Include="ServerCommunicationInterfaces, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\ServerCommunicationInterfaces.2.0.0\lib\net46\ServerCommunicationInterfaces.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.ValueTuple, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\System.ValueTuple.4.4.0\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AuthenticationApplication.cs" />
+    <Compile Include="Peer Logic\ClientPeerLogic.cs" />
+    <Compile Include="Peer Logic\Operations\LoginOperationHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\lib\ServerCommon\ServerCommon.Application\ServerCommon.Application.csproj">
+      <Project>{478144C1-2DA6-4AED-9B7A-5004A7855F1C}</Project>
+      <Name>ServerCommon.Application</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\lib\ServerCommon\ServerCommon.PeerLogic.Common\ServerCommon.PeerLogic.Common.csproj">
+      <Project>{119DCFD8-63CD-47CC-B26F-9BACB91A062B}</Project>
+      <Name>ServerCommon.PeerLogic.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\lib\ServerCommon\ServerCommon.PeerLogic\ServerCommon.PeerLogic.csproj">
+      <Project>{F286466C-C0EB-4D2C-AD3F-640AEA24B278}</Project>
+      <Name>ServerCommon.PeerLogic</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Authentication.Common.Enums\Authentication.Common.Enums.csproj">
+      <Project>{D312D1B6-9289-4659-A0C8-2AB87464FD15}</Project>
+      <Name>Authentication.Common.Enums</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

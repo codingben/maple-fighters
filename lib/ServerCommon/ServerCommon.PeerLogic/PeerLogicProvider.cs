@@ -33,7 +33,7 @@ namespace ServerCommon.PeerLogic
                 UnsetPeerLogic();
 
                 peerLogicBase = peerLogic as PeerLogicBase<TPeer>;
-                peerLogicBase?.SetPeer(peer, peerId);
+                peerLogicBase?.Setup(peer, peerId);
 
                 peer.NetworkTrafficState = NetworkTrafficState.Flowing;
             });

@@ -4,6 +4,7 @@ using CommonTools.Coroutines;
 using CommonTools.Log;
 using ServerCommon.Application.Components;
 using ServerCommon.Configuration;
+using ServerCommon.Logging;
 using ServerCommon.PeerLogic;
 using ServerCommon.PeerLogic.Components;
 using ServerCommunicationInterfaces;
@@ -16,24 +17,24 @@ namespace ServerCommon.Application
     /// </summary>
     public class ServerApplicationBase : IApplicationBase
     {
-        protected IComponentsProvider Components { get; } = new ComponentsProvider();
+        protected IComponentsProvider Components { get; }
 
         private readonly IFiberProvider fiberProvider;
         private readonly IServerConnector serverConnector;
 
-        internal ServerApplicationBase(
-            ILogger logger,
+        protected internal ServerApplicationBase(
             IFiberProvider fiberProvider,
             IServerConnector serverConnector)
         {
-            LogUtils.Logger = logger;
-            TimeProviders.DefaultTimeProvider = new TimeProvider();
-
             this.fiberProvider = fiberProvider;
             this.serverConnector = serverConnector;
 
-            var exposedComponents = Components.ProvideExposed();
-            ServerExposedComponents.SetProvider(exposedComponents);
+            LogUtils.Logger = new Logger();
+            TimeProviders.DefaultTimeProvider = new TimeProvider();
+
+            Components = new ComponentsProvider();
+            ServerExposedComponents.SetProvider(Components.ProvideExposed());
+
             ServerConfiguration.Setup();
         }
 
@@ -61,22 +62,42 @@ namespace ServerCommon.Application
         /// </summary>
         public void Connected(IClientPeer clientPeer)
         {
-            OnConnected(clientPeer);
+            var idGenerator = Components.Get<IIdGenerator>();
+            if (idGenerator == null)
+            {
+                idGenerator = Components.Add(new IdGenerator());
+            }
+
+            OnConnected(clientPeer, idGenerator.GenerateId());
         }
 
         protected virtual void OnStartup()
         {
-            // Left blank intentionally
+            LogUtils.Log("An application has started.");
         }
 
         protected virtual void OnShutdown()
         {
             Components?.Dispose();
+
+            LogUtils.Log("An application has been stopped.");
         }
 
-        protected virtual void OnConnected(IClientPeer clientPeer)
+        protected virtual void OnConnected(IClientPeer clientPeer, int peerId)
         {
-            // Left blank intentionally
+            // TODO: Find a way to unsubscribe from this event
+            clientPeer.PeerDisconnectionNotifier.Disconnected += (x, y) => OnDisconnected(peerId);
+
+            LogUtils.Log(
+                $"A new peer ({peerId}) has been connected to the server.");
+        }
+
+        private void OnDisconnected(int peerId)
+        {
+            UnwrapClientPeer(peerId);
+
+            LogUtils.Log(
+                $"The peer ({peerId}) has been disconnected from the server.");
         }
 
         /// <summary>
@@ -110,19 +131,20 @@ namespace ServerCommon.Application
         /// <summary>
         /// Sets a peer logic for the client peer.
         /// </summary>
+        /// <typeparam name="TPeerLogic">The peer logic.</typeparam>
         /// <param name="clientPeer">The client peer.</param>
-        /// <param name="peerLogic">The actual logic.</param>
-        protected void WrapClientPeer(
+        /// <param name="peerId">Unique id of the peer.</param>
+        /// <param name="peerLogic">The peer logic instance.</param>
+        protected void WrapClientPeer<TPeerLogic>(
             IClientPeer clientPeer,
-            IPeerLogicBase peerLogic)
+            int peerId,
+            IPeerLogicBase peerLogic = null)
+            where TPeerLogic : IPeerLogicBase, new()
         {
-            var idGenerator = Components.Get<IIdGenerator>();
-            if (idGenerator == null)
+            if (peerLogic == null)
             {
-                idGenerator = Components.Add(new IdGenerator());
+                peerLogic = new TPeerLogic();
             }
-
-            var peerId = idGenerator.GenerateId();
 
             IPeerLogicProvider peerLogicProvider =
                 new PeerLogicProvider<IClientPeer>(clientPeer, peerId);
@@ -135,6 +157,16 @@ namespace ServerCommon.Application
             }
 
             peersLogicProvider.AddPeerLogic(peerId, peerLogicProvider);
+        }
+
+        /// <summary>
+        /// Removes the peer logic from the client peer.
+        /// </summary>
+        /// <param name="peerId">Unique id of the peer.</param>
+        private void UnwrapClientPeer(int peerId)
+        {
+            var peersLogicProvider = Components.Get<IPeersLogicProvider>().AssertNotNull();
+            peersLogicProvider.RemovePeerLogic(peerId);
         }
     }
 }

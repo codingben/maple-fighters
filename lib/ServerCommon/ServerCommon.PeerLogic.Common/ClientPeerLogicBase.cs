@@ -1,12 +1,15 @@
 ﻿using System;
+using Common.ComponentModel;
 using Common.Components;
 using CommonTools.Log;
+using ServerCommon.Application;
 using ServerCommon.Application.Components;
 using ServerCommon.Configuration;
+using ServerCommon.PeerLogic.Components;
 using ServerCommunicationHelper;
 using ServerCommunicationInterfaces;
 
-namespace ServerCommon.PeerLogic.Components
+namespace ServerCommon.PeerLogic.Common
 {
     /// <inheritdoc />
     /// <summary>
@@ -18,40 +21,27 @@ namespace ServerCommon.PeerLogic.Components
         where TOperationCode : IComparable, IFormattable, IConvertible
         where TEventCode : IComparable, IFormattable, IConvertible
     {
+        protected IExposedComponentsProvider ServerComponents =>
+            ServerExposedComponents.Provide();
+
         protected IOperationRequestHandlerRegister<TOperationCode> OperationHandlerRegister
         {
             get;
             private set;
         }
 
-        protected override void Setup()
+        /// <inheritdoc />
+        public override void OnSetup()
         {
-            base.Setup();
-
             AddCommonComponents();
 
             OperationHandlerRegister = ProvideOperationHandlerRegister();
-
-            OnSetup();
         }
 
-        protected override void Cleanup()
+        /// <inheritdoc />
+        public override void OnCleanup()
         {
-            base.Cleanup();
-            
             OperationHandlerRegister?.Dispose();
-
-            OnCleanup();
-        }
-
-        protected virtual void OnSetup()
-        {
-            // Left blank intentionally
-        }
-
-        protected virtual void OnCleanup()
-        {
-            // Left blank intentionally
         }
 
         private void AddCommonComponents()

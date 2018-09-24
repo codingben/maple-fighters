@@ -12,8 +12,6 @@ namespace ServerCommon.PeerLogic.Components
 
         void RemovePeerLogic(int peerId);
 
-        void RemoveAllPeersLogic();
-
         void ProvidePeerLogic(
             int peerId,
             Action<IPeerLogicProvider> peerLogicProvider);
