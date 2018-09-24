@@ -2,6 +2,7 @@
 
 namespace Common.ComponentModel
 {
+    /// <inheritdoc />
     /// <summary>
     /// A component base which every component must inherit from it.
     /// </summary>
