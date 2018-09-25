@@ -7,7 +7,6 @@ using ServerCommon.Application.Components;
 using ServerCommon.Configuration;
 using ServerCommon.PeerLogic.Components;
 using ServerCommunicationHelper;
-using ServerCommunicationInterfaces;
 
 namespace ServerCommon.PeerLogic.Common
 {
@@ -17,7 +16,7 @@ namespace ServerCommon.PeerLogic.Common
     /// </summary>
     /// <typeparam name="TOperationCode">The operations.</typeparam>
     /// <typeparam name="TEventCode">The events.</typeparam>
-    public class ClientPeerLogicBase<TOperationCode, TEventCode> : PeerLogicBase<IClientPeer>
+    public class MainPeerLogicBase<TOperationCode, TEventCode> : PeerLogicBase
         where TOperationCode : IComparable, IFormattable, IConvertible
         where TEventCode : IComparable, IFormattable, IConvertible
     {

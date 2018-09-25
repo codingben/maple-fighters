@@ -1,11 +1,12 @@
-﻿using Authentication.Common.Enums;
+﻿using Authentication.Application.Peer.Logic.Operations;
+using Authentication.Common.Enums;
 using CommonTools.Log;
 using CommunicationHelper;
 using ServerCommon.PeerLogic.Common;
 
-namespace Authentication.Application.PeerLogic
+namespace Authentication.Application.Peer.Logic
 {
-    public class ClientPeerLogic : ClientPeerLogicBase<AuthenticationOperations, EmptyEventCode>
+    public class MainPeerLogic : MainPeerLogicBase<AuthenticationOperations, EmptyEventCode>
     {
         public override void OnSetup()
         {

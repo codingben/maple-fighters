@@ -1,6 +1,4 @@
-﻿using ServerCommunicationInterfaces;
-
-namespace ServerCommon.Application
+﻿namespace ServerCommon.Application
 {
     /// <summary>
     /// Represents an access to the server application from the outside.
@@ -16,11 +14,5 @@ namespace ServerCommon.Application
         /// Kills the server application.
         /// </summary>
         void Shutdown();
-
-        /// <summary>
-        /// Called when a new client connected.
-        /// </summary>
-        /// <param name="clientPeer">The client peer.</param>
-        void Connected(IClientPeer clientPeer);
     }
 }

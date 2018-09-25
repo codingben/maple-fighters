@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{119DCFD8-63CD-47CC-B26F-9BACB91A062B}</ProjectGuid>
+    <ProjectGuid>{82123DDA-C7FE-43DA-99EF-4C04F14E8BAA}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ServerCommon.PeerLogic.Common</RootNamespace>
-    <AssemblyName>ServerCommon.PeerLogic.Common</AssemblyName>
+    <RootNamespace>ServerCommon.PeerBase</RootNamespace>
+    <AssemblyName>ServerCommon.PeerBase</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -34,29 +34,21 @@
     <Reference Include="CommonCommunicationInterfaces, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\CommonCommunicationInterfaces.4.3.0\lib\net46\CommonCommunicationInterfaces.dll</HintPath>
     </Reference>
-    <Reference Include="CommunicationHelper, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\CommunicationHelper.3.2.5\lib\net46\CommunicationHelper.dll</HintPath>
-    </Reference>
     <Reference Include="Coroutines, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Coroutines.5.0.5\lib\net46\Coroutines.dll</HintPath>
     </Reference>
     <Reference Include="LogUtils, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Coroutines.5.0.5\lib\net46\LogUtils.dll</HintPath>
     </Reference>
-    <Reference Include="ServerCommunicationHelper, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\ServerCommunicationHelper.3.0.0\lib\net46\ServerCommunicationHelper.dll</HintPath>
-    </Reference>
     <Reference Include="ServerCommunicationInterfaces, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\ServerCommunicationInterfaces.2.0.0\lib\net46\ServerCommunicationInterfaces.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.ValueTuple, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\System.ValueTuple.4.4.0\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MainPeerLogicBase.cs" />
+    <Compile Include="CommonPeerBase.cs" />
+    <Compile Include="IPeerBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -71,17 +63,9 @@
       <Project>{2B10158D-FFBE-46A8-A637-1B7BBE56700D}</Project>
       <Name>Common.Components</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ServerCommon.Application.Components\ServerCommon.Application.Components.csproj">
-      <Project>{BDA69EC2-FD94-4BC0-9AD9-17BED767F48C}</Project>
-      <Name>ServerCommon.Application.Components</Name>
-    </ProjectReference>
     <ProjectReference Include="..\ServerCommon.Application\ServerCommon.Application.csproj">
       <Project>{478144C1-2DA6-4AED-9B7A-5004A7855F1C}</Project>
       <Name>ServerCommon.Application</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ServerCommon.Configuration\ServerCommon.Configuration.csproj">
-      <Project>{E294B8AA-54DC-427C-8730-7776155C524C}</Project>
-      <Name>ServerCommon.Configuration</Name>
     </ProjectReference>
     <ProjectReference Include="..\ServerCommon.PeerLogic.Components\ServerCommon.PeerLogic.Components.csproj">
       <Project>{41A8AAA5-4D96-4E46-9D62-2B46C5619A34}</Project>

@@ -57,9 +57,9 @@
   <ItemGroup>
     <Compile Include="EventSenderProvider.cs" />
     <Compile Include="IEventSenderProvider.cs" />
-    <Compile Include="IPeersLogicProvider.cs" />
-    <Compile Include="PeerLogicsCollection.cs" />
-    <Compile Include="PeersLogicProvider.cs" />
+    <Compile Include="IPeersLogicsProvider.cs" />
+    <Compile Include="PeersLogicsCollection.cs" />
+    <Compile Include="PeersLogicsProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

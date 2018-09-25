@@ -73,6 +73,10 @@
       <Project>{40470F37-59BB-45B3-9BD0-886703A0EC2B}</Project>
       <Name>ServerCommon.Logging</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ServerCommon.PeerBase\ServerCommon.PeerBase.csproj">
+      <Project>{82123DDA-C7FE-43DA-99EF-4C04F14E8BAA}</Project>
+      <Name>ServerCommon.PeerBase</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

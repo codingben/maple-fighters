@@ -56,14 +56,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AuthenticationApplication.cs" />
-    <Compile Include="Peer Logic\ClientPeerLogic.cs" />
-    <Compile Include="Peer Logic\Operations\LoginOperationHandler.cs" />
+    <Compile Include="Peer\Logic\MainPeerLogic.cs" />
+    <Compile Include="Peer\Logic\Operations\LoginOperationHandler.cs" />
+    <Compile Include="Peer\PeerBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\lib\ServerCommon\ServerCommon.Application\ServerCommon.Application.csproj">
       <Project>{478144C1-2DA6-4AED-9B7A-5004A7855F1C}</Project>
       <Name>ServerCommon.Application</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\lib\ServerCommon\ServerCommon.PeerBase\ServerCommon.PeerBase.csproj">
+      <Project>{82123DDA-C7FE-43DA-99EF-4C04F14E8BAA}</Project>
+      <Name>ServerCommon.PeerBase</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\lib\ServerCommon\ServerCommon.PeerLogic.Common\ServerCommon.PeerLogic.Common.csproj">
       <Project>{119DCFD8-63CD-47CC-B26F-9BACB91A062B}</Project>

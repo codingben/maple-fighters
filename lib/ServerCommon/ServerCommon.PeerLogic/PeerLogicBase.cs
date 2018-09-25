@@ -7,14 +7,12 @@ namespace ServerCommon.PeerLogic
     /// <summary>
     /// A base implementation for the client peer logic.
     /// </summary>
-    /// <typeparam name="TPeer">The client peer.</typeparam>
-    public abstract class PeerLogicBase<TPeer> : IPeerLogicBase, IDisposable
-        where TPeer : IMinimalPeer
+    public abstract class PeerLogicBase : IPeerLogicBase, IDisposable
     {
         public IExposedComponentsProvider ExposedComponents =>
             Components.ProvideExposed();
 
-        protected TPeer Peer { get; private set; }
+        protected IClientPeer Peer { get; private set; }
 
         protected int PeerId { get; private set; }
 
@@ -25,7 +23,7 @@ namespace ServerCommon.PeerLogic
         /// </summary>
         /// <param name="peer">The client peer.</param>
         /// <param name="peerId">The client peer id.</param>
-        public void Setup(TPeer peer, int peerId)
+        public void Setup(IClientPeer peer, int peerId)
         {
             Peer = peer;
             PeerId = peerId;

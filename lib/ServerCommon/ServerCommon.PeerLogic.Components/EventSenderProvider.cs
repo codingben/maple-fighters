@@ -22,7 +22,7 @@ namespace ServerCommon.PeerLogic.Components
             this.eventSender =
                 new EventSender<TEventCode>(
                     eventSender,
-                    log: ServerSettings.Peer.LogEvents);
+                    ServerSettings.Peer.LogEvents);
         }
 
         public void Send<TEnumCode, TParameters>(
@@ -35,10 +35,11 @@ namespace ServerCommon.PeerLogic.Components
             if (minimalPeer.IsConnected)
             {
                 var codeByte = Convert.ToByte(code);
-                var eventCode = (TEventCode)Enum.Parse(
-                    enumType: typeof(TEventCode),
-                    value: codeByte.ToString(),
-                    ignoreCase: true);
+                var eventCode =
+                    (TEventCode)Enum.Parse(
+                        typeof(TEventCode),
+                        codeByte.ToString(),
+                        true);
 
                 eventSender.Send(eventCode, parameters, messageSendOptions);
             }

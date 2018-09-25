@@ -2,7 +2,7 @@
 using CommonTools.Log;
 using ServerCommunicationHelper;
 
-namespace Authentication.Application.PeerLogic
+namespace Authentication.Application.Peer.Logic.Operations
 {
     public class LoginOperationHandler : IOperationRequestHandler<EmptyParameters, EmptyParameters>
     {

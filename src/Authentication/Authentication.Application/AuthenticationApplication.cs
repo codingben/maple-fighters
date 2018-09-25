@@ -1,5 +1,4 @@
-﻿using Authentication.Application.PeerLogic;
-using CommonTools.Log;
+﻿using CommonTools.Log;
 using ServerCommon.Application;
 using ServerCommunicationInterfaces;
 
@@ -7,8 +6,8 @@ namespace Authentication.Application
 {
     public class AuthenticationApplication : ServerApplicationBase
     {
-        public AuthenticationApplication(IFiberProvider fiberProvider, IServerConnector serverConnector)
-            : base(fiberProvider, serverConnector)
+        public AuthenticationApplication(IFiberProvider fiberProvider)
+            : base(fiberProvider)
         {
             // Left blank intentionally
         }
@@ -18,8 +17,6 @@ namespace Authentication.Application
             base.OnStartup();
 
             LogUtils.Log("OnStartup");
-
-            AddS2SRelatedComponents();
         }
 
         protected override void OnShutdown()
@@ -27,13 +24,6 @@ namespace Authentication.Application
             base.OnShutdown();
 
             LogUtils.Log("OnShutdown");
-        }
-
-        protected override void OnConnected(IClientPeer clientPeer, int peerId)
-        {
-            base.OnConnected(clientPeer, peerId);
-
-            WrapClientPeer<ClientPeerLogic>(clientPeer, peerId);
         }
     }
 }

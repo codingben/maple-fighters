@@ -7,15 +7,14 @@ namespace ServerCommon.PeerLogic
     /// <summary>
     /// Provides the peer logic of the client peer.
     /// </summary>
-    /// <typeparam name="TPeer">The client peer.</typeparam>
-    public class PeerLogicProvider<TPeer> : IPeerLogicProvider
-        where TPeer : class, IMinimalPeer
+    public class PeerLogicProvider : IPeerLogicProvider
     {
-        private readonly TPeer peer;
+        private readonly IClientPeer peer;
         private readonly int peerId;
-        private PeerLogicBase<TPeer> peerLogicBase;
 
-        public PeerLogicProvider(TPeer peer, int peerId)
+        private PeerLogicBase peerLogicBase;
+
+        public PeerLogicProvider(IClientPeer peer, int peerId)
         {
             this.peer = peer;
             this.peerId = peerId;
@@ -32,7 +31,7 @@ namespace ServerCommon.PeerLogic
             {
                 UnsetPeerLogic();
 
-                peerLogicBase = peerLogic as PeerLogicBase<TPeer>;
+                peerLogicBase = peerLogic as PeerLogicBase;
                 peerLogicBase?.Setup(peer, peerId);
 
                 peer.NetworkTrafficState = NetworkTrafficState.Flowing;
