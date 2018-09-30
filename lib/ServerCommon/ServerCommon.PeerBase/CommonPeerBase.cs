@@ -19,13 +19,14 @@ namespace ServerCommon.PeerBase
 
         private int PeerId => ProvidePeerId();
 
-        private IExposedComponentsProvider ServerComponents { get; }
+        private IExposedComponentsProvider ServerComponents => 
+            ServerExposedComponents.Provide();
 
         private IPeerLogicProvider PeerLogicProvider { get; set; }
 
         protected internal CommonPeerBase()
         {
-            ServerComponents = ServerExposedComponents.Provide();
+            // Left blank intentionally
         }
 
         /// <inheritdoc />

@@ -1,5 +1,6 @@
 ﻿using CommonTools.Log;
 using ServerCommon.Application;
+using ServerCommon.Configuration;
 using ServerCommunicationInterfaces;
 
 namespace Authentication.Application
@@ -9,12 +10,16 @@ namespace Authentication.Application
         public AuthenticationApplication(IFiberProvider fiberProvider)
             : base(fiberProvider)
         {
-            // Left blank intentionally
+            ServerSettings.Peer.LogEvents = true;
+            ServerSettings.Peer.Operations.LogRequests = true;
+            ServerSettings.Peer.Operations.LogResponses = true;
         }
 
         protected override void OnStartup()
         {
             base.OnStartup();
+
+            AddCommonComponents();
 
             LogUtils.Log("OnStartup");
         }

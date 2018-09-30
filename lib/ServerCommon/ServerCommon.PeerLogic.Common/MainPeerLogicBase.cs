@@ -43,6 +43,11 @@ namespace ServerCommon.PeerLogic.Common
             OperationHandlerRegister?.Dispose();
         }
 
+        /// <summary>
+        /// Adds common components:
+        /// 1. <see cref="ICoroutinesManager"/>
+        /// 2. <see cref="IEventSenderProvider"/>
+        /// </summary>
         private void AddCommonComponents()
         {
             var executor = new FiberCoroutinesExecutor(

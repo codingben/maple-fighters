@@ -16,7 +16,9 @@ namespace ServerCommon.Application
     /// </summary>
     public class ServerApplicationBase : IApplicationBase
     {
-        protected IComponentsProvider Components => new ComponentsProvider();
+        protected IComponentsProvider Components { get; }
+
+        protected IExposedComponentsProvider ExposedComponents { get; }
 
         private readonly IFiberProvider fiberProvider;
 
@@ -27,24 +29,19 @@ namespace ServerCommon.Application
             LogUtils.Logger = new Logger();
             TimeProviders.DefaultTimeProvider = new TimeProvider();
 
-            ServerExposedComponents.SetProvider(Components.ProvideExposed());
+            Components = new ComponentsProvider();
+            ExposedComponents = Components.ProvideExposed();
+
+            ServerExposedComponents.SetProvider(ExposedComponents);
             ServerConfiguration.Setup();
         }
 
-        /// <inheritdoc />
-        /// <summary>
-        /// See <see cref="IApplicationBase.Startup"/> for more information.
-        /// </summary>
-        public void Startup()
+        void IApplicationBase.Startup()
         {
             OnStartup();
         }
 
-        /// <inheritdoc />
-        /// <summary>
-        /// See <see cref="IApplicationBase.Shutdown"/> for more information.
-        /// </summary>
-        public void Shutdown()
+        void IApplicationBase.Shutdown()
         {
             OnShutdown();
         }
@@ -63,21 +60,26 @@ namespace ServerCommon.Application
 
         /// <summary>
         /// Adds common components:
-        /// IdGenerator
-        /// RandomNumberGenerator
-        /// FiberStarter
-        /// CoroutinesManager
-        /// PeersLogicProvider
+        /// 1. <see cref="IIdGenerator"/>
+        /// 2. <see cref="IRandomNumberGenerator"/>
+        /// 3. <see cref="IFiberStarter"/>
+        /// 4. <see cref="ICoroutinesManager"/>
+        /// 5. <see cref="IPeersLogicsProvider"/>
         /// </summary>
         protected void AddCommonComponents()
         {
             Components.Add(new IdGenerator());
             Components.Add(new RandomNumberGenerator());
-            IFiberStarter fiber = Components.Add(new FiberStarter(fiberProvider));
+
+            IFiberStarter fiber =
+                Components.Add(new FiberStarter(fiberProvider));
+
             var executor = new FiberCoroutinesExecutor(
-                fiber.GetFiberStarter(), updateRateMilliseconds: 100);
+                fiber.GetFiberStarter(),
+                updateRateMilliseconds: 100);
+
             Components.Add(new CoroutinesManager(executor));
-            Components.Add(new PeersLogicsProvider());
+            ExposedComponents.Add(new PeersLogicsProvider());
         }
     }
 }

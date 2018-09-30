@@ -9,7 +9,8 @@ namespace ServerCommon.Application.Components
         private readonly IDisposable scheduler;
 
         public FiberCoroutinesExecutor(
-            IScheduler fiber, int updateRateMilliseconds)
+            IScheduler fiber, 
+            int updateRateMilliseconds)
         {
             scheduler = fiber.ScheduleOnInterval(
                 action: Update,
