@@ -9,7 +9,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{23DAB423
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tools", "tools", "{E194BA9B-2618-4FB8-82AE-08560637FFFD}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Authentication", "Authentication", "{FF0073D3-7E19-4D22-9369-813CA0B83C83}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Authenticator", "Authenticator", "{FF0073D3-7E19-4D22-9369-813CA0B83C83}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Authorization", "Authorization", "{E12FFD9A-E05D-4A77-9D77-E971ACC6038D}"
 EndProject
@@ -29,9 +29,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "integration", "integration"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "unit", "unit", "{334B7921-7DF9-4B85-A86E-4075202455C3}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Authentication", "Authentication", "{8ADA6126-A5D7-4881-BAA3-658C119D1ECD}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Authenticator", "Authenticator", "{8ADA6126-A5D7-4881-BAA3-658C119D1ECD}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Authentication", "Authentication", "{9E053CFC-DDDA-4E43-B2EF-F9591A7AF644}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Authenticator", "Authenticator", "{9E053CFC-DDDA-4E43-B2EF-F9591A7AF644}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Authorization", "Authorization", "{4BF9172D-6312-44AE-B043-68F6D10BC10D}"
 EndProject
@@ -67,23 +67,23 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{B49E1D
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{CA3D7E2F-4A40-4CA4-8B26-70E796C71B07}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authentication.Application", "src\Authentication\Authentication.Application\Authentication.Application.csproj", "{E20F98AA-67C6-408D-8A92-39E47A1A77D5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authenticator.Application", "src\Authenticator\Authenticator.Application\Authenticator.Application.csproj", "{E20F98AA-67C6-408D-8A92-39E47A1A77D5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authentication.Domain", "src\Authentication\Authentication.Domain\Authentication.Domain.csproj", "{FB2E99EB-16B4-4035-9F27-9C74A849B441}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authenticator.Domain", "src\Authenticator\Authenticator.Domain\Authenticator.Domain.csproj", "{FB2E99EB-16B4-4035-9F27-9C74A849B441}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authentication.Infrastructure", "src\Authentication\Authentication.Infrastructure\Authentication.Infrastructure.csproj", "{0D005D32-E09C-40E4-B005-3D8583E32BC0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authenticator.Infrastructure", "src\Authenticator\Authenticator.Infrastructure\Authenticator.Infrastructure.csproj", "{0D005D32-E09C-40E4-B005-3D8583E32BC0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authentication.PhotonStarter", "src\Authentication\Authentication.PhotonStarter\Authentication.PhotonStarter.csproj", "{FDCA2DFA-7087-4E96-86C7-01989F7F6ADE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authenticator.PhotonStarter", "src\Authenticator\Authenticator.PhotonStarter\Authenticator.PhotonStarter.csproj", "{FDCA2DFA-7087-4E96-86C7-01989F7F6ADE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authentication.UnitTests", "tests\unit\Authentication\Authentication.UnitTests\Authentication.UnitTests.csproj", "{1019B414-AF99-4827-9389-B426117A7816}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authenticator.UnitTests", "tests\unit\Authenticator\Authenticator.UnitTests\Authenticator.UnitTests.csproj", "{1019B414-AF99-4827-9389-B426117A7816}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authentication.IntegrationTests", "tests\integration\Authentication\Authentication.IntegrationTests\Authentication.IntegrationTests.csproj", "{207A0F06-3A7C-472F-97A7-9AD9A7FB86FA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authenticator.IntegrationTests", "tests\integration\Authenticator\Authenticator.IntegrationTests\Authenticator.IntegrationTests.csproj", "{207A0F06-3A7C-472F-97A7-9AD9A7FB86FA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authentication.Common.Parameters", "src\Authentication\Authentication.Common.Parameters\Authentication.Common.Parameters.csproj", "{A102CDE4-CC98-46FD-86B4-C0F1DE34DF61}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authenticator.Common.Parameters", "src\Authenticator\Authenticator.Common.Parameters\Authenticator.Common.Parameters.csproj", "{A102CDE4-CC98-46FD-86B4-C0F1DE34DF61}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{1AC54CEA-7B98-452D-A537-5414C1E6A137}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authentication.Common.Enums", "src\Authentication\Authentication.Common.Enums\Authentication.Common.Enums.csproj", "{D312D1B6-9289-4659-A0C8-2AB87464FD15}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authenticator.Common.Enums", "src\Authenticator\Authenticator.Common.Enums\Authenticator.Common.Enums.csproj", "{D312D1B6-9289-4659-A0C8-2AB87464FD15}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authorization.Application", "src\Authorization\Authorization.Application\Authorization.Application.csproj", "{F8D01BD2-DFAF-4487-BF8F-2A24F0F7AC94}"
 EndProject
