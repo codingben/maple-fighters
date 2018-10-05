@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{4FD14F0B-C24A-40E5-8FF4-5F3C368DD340}</ProjectGuid>
+    <ProjectGuid>{4098036F-2ADE-4A50-B536-AA669ADF7931}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Authorization.Infrastructure</RootNamespace>
-    <AssemblyName>Authorization.Infrastructure</AssemblyName>
+    <RootNamespace>Authorizer.Common.API</RootNamespace>
+    <AssemblyName>Authorizer.Common.API</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

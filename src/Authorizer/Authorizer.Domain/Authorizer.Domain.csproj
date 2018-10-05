@@ -7,8 +7,8 @@
     <ProjectGuid>{B1603C9B-F414-43A5-9871-A38A0525C75B}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Authorization.Domain</RootNamespace>
-    <AssemblyName>Authorization.Domain</AssemblyName>
+    <RootNamespace>Authorizer.Domain</RootNamespace>
+    <AssemblyName>Authorizer.Domain</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

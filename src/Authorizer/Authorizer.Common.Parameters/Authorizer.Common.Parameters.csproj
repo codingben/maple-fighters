@@ -7,8 +7,8 @@
     <ProjectGuid>{023825CA-AEC2-484D-A4E5-9037D7BDD2E8}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Authorization.Common.Parameters</RootNamespace>
-    <AssemblyName>Authorization.Common.Parameters</AssemblyName>
+    <RootNamespace>Authorizer.Common.Parameters</RootNamespace>
+    <AssemblyName>Authorizer.Common.Parameters</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

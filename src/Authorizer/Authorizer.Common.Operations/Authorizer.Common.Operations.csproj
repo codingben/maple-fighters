@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{89F155F9-9796-4EE1-BA53-B04B4EE753BE}</ProjectGuid>
+    <ProjectGuid>{FEB5DD49-BF25-4778-9A7B-D90E2CD4AAF5}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Authorization.Common.Enums</RootNamespace>
-    <AssemblyName>Authorization.Common.Enums</AssemblyName>
+    <RootNamespace>Authorizer.Common.Operations</RootNamespace>
+    <AssemblyName>Authorizer.Common.Operations</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{FC1C6EAC-F2DD-419D-8CF9-5663724C54C4}</ProjectGuid>
+    <ProjectGuid>{89F155F9-9796-4EE1-BA53-B04B4EE753BE}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Authorization.Common.PeerLogicBase</RootNamespace>
-    <AssemblyName>Authorization.Common.PeerLogicBase</AssemblyName>
+    <RootNamespace>Authorizer.Common.Enums</RootNamespace>
+    <AssemblyName>Authorizer.Common.Enums</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
