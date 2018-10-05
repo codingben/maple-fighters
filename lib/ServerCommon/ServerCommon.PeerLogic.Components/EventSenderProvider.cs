@@ -22,7 +22,7 @@ namespace ServerCommon.PeerLogic.Components
             this.eventSender =
                 new EventSender<TEventCode>(
                     eventSender,
-                    ServerSettings.Peer.LogEvents);
+                    ServerSettings.InboundPeer.LogEvents);
         }
 
         public void Send<TEnumCode, TParameters>(

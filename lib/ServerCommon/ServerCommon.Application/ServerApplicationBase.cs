@@ -63,22 +63,22 @@ namespace ServerCommon.Application
         /// 1. <see cref="IIdGenerator"/>
         /// 2. <see cref="IRandomNumberGenerator"/>
         /// 3. <see cref="IFiberStarter"/>
-        /// 4. <see cref="ICoroutinesManager"/>
+        /// 4. <see cref="ICoroutinesExecutor"/>
         /// 5. <see cref="IPeersLogicsProvider"/>
         /// </summary>
         protected void AddCommonComponents()
         {
-            Components.Add(new IdGenerator());
+            ExposedComponents.Add(new IdGenerator());
             Components.Add(new RandomNumberGenerator());
 
             IFiberStarter fiber =
                 Components.Add(new FiberStarter(fiberProvider));
 
-            var executor = new FiberCoroutinesExecutor(
-                fiber.GetFiberStarter(),
-                updateRateMilliseconds: 100);
-
-            Components.Add(new CoroutinesManager(executor));
+            Components.Add(
+                new CoroutinesExecutor(
+                    new FiberCoroutinesExecutor(
+                        fiber.GetFiberStarter(),
+                        updateRateMilliseconds: 100)));
             ExposedComponents.Add(new PeersLogicsProvider());
         }
     }

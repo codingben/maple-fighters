@@ -12,9 +12,15 @@ namespace ServerCommon.Configuration
 
         public static void SetupPeerConfiguration()
         {
-            ServerSettings.Peer = new ConfigurationBuilder<IPeer>()
-                .UseInMemoryConfig()
-                .Build();
+            ServerSettings.InboundPeer =
+                new ConfigurationBuilder<IInboundPeer>()
+                    .UseInMemoryConfig()
+                    .Build();
+
+            ServerSettings.OutboundPeer =
+                new ConfigurationBuilder<IInboundPeer>()
+                    .UseInMemoryConfig()
+                    .Build();
         }
     }
 }

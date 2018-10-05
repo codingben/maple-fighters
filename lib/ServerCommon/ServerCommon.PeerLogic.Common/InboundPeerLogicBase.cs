@@ -1,27 +1,30 @@
 ﻿using System;
 using Common.ComponentModel;
 using Common.Components;
+using CommonTools.Coroutines;
 using CommonTools.Log;
-using ServerCommon.Application;
 using ServerCommon.Application.Components;
 using ServerCommon.Configuration;
 using ServerCommon.PeerLogic.Components;
 using ServerCommunicationHelper;
+using ServerCommunicationInterfaces;
 
 namespace ServerCommon.PeerLogic.Common
 {
-    /// <inheritdoc />
     /// <summary>
-    /// A common implementation for the client peer logic which handles operations and events.
+    /// A common implementation for the inbound connection which handles operations and events.
     /// </summary>
     /// <typeparam name="TOperationCode">The operations.</typeparam>
     /// <typeparam name="TEventCode">The events.</typeparam>
-    public class MainPeerLogicBase<TOperationCode, TEventCode> : PeerLogicBase
+    public class InboundPeerLogicBase<TOperationCode, TEventCode> : PeerLogicBase<IClientPeer>, IPeerLogicBase
         where TOperationCode : IComparable, IFormattable, IConvertible
         where TEventCode : IComparable, IFormattable, IConvertible
     {
-        protected IExposedComponentsProvider ServerComponents =>
-            ServerExposedComponents.Provide();
+        public IExposedComponentsProvider ExposedComponents =>
+            Components.ProvideExposed();
+
+        protected IComponentsProvider Components => 
+            new ComponentsProvider();
 
         protected IOperationRequestHandlerRegister<TOperationCode> OperationHandlerRegister
         {
@@ -34,7 +37,16 @@ namespace ServerCommon.PeerLogic.Common
         {
             AddCommonComponents();
 
-            OperationHandlerRegister = ProvideOperationHandlerRegister();
+            var coroutinesManager =
+                Components.Get<ICoroutinesExecutor>().AssertNotNull();
+
+            OperationHandlerRegister =
+                new OperationRequestsHandler<TOperationCode>(
+                    Peer.OperationRequestNotifier,
+                    Peer.OperationResponseSender,
+                    ServerSettings.InboundPeer.Operations.LogRequests,
+                    ServerSettings.InboundPeer.Operations.LogResponses,
+                    coroutinesManager);
         }
 
         /// <inheritdoc />
@@ -45,31 +57,19 @@ namespace ServerCommon.PeerLogic.Common
 
         /// <summary>
         /// Adds common components:
-        /// 1. <see cref="ICoroutinesManager"/>
+        /// 1. <see cref="ICoroutinesExecutor"/>
         /// 2. <see cref="IEventSenderProvider"/>
         /// </summary>
         private void AddCommonComponents()
         {
-            var executor = new FiberCoroutinesExecutor(
-                Peer.Fiber,
-                updateRateMilliseconds: 100);
-
-            Components.Add(new CoroutinesManager(executor));
+            Components.Add(
+                new CoroutinesExecutor(
+                    new FiberCoroutinesExecutor(
+                        Peer.Fiber,
+                        updateRateMilliseconds: 100)));
             Components.Add(new EventSenderProvider<TEventCode>(
                 Peer, 
                 Peer.EventSender));
-        }
-
-        private IOperationRequestHandlerRegister<TOperationCode> ProvideOperationHandlerRegister()
-        {
-            var coroutinesManager = Components.Get<ICoroutinesManager>().AssertNotNull();
-
-            return new OperationRequestsHandler<TOperationCode>(
-                Peer.OperationRequestNotifier,
-                Peer.OperationResponseSender,
-                ServerSettings.Peer.Operations.LogRequests,
-                ServerSettings.Peer.Operations.LogResponses,
-                coroutinesManager);
         }
     }
 }

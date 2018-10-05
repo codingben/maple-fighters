@@ -1,6 +1,6 @@
 ﻿namespace ServerCommon.Configuration.Definitions
 {
-    public interface IPeer
+    public interface IInboundPeer
     {
         IPeerOperations Operations { get; set; }
 

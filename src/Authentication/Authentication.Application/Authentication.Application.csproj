@@ -58,7 +58,7 @@
     <Compile Include="AuthenticationApplication.cs" />
     <Compile Include="Peer\Logic\MainPeerLogic.cs" />
     <Compile Include="Peer\Logic\Operations\LoginOperationHandler.cs" />
-    <Compile Include="Peer\PeerBase.cs" />
+    <Compile Include="Peer\AuthenticatorPeer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

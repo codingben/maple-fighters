@@ -46,8 +46,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CoroutinesManager.cs" />
-    <Compile Include="ICoroutinesManager.cs" />
+    <Compile Include="CoroutinesExecutor.cs" />
     <Compile Include="IdGenerator.cs" />
     <Compile Include="IIdGenerator.cs" />
     <Compile Include="IRandomNumberGenerator.cs" />

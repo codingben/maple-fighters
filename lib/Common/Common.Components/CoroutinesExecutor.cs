@@ -5,13 +5,13 @@ using CommonTools.Coroutines;
 namespace Common.Components
 {
     [ComponentSettings(ExposedState.Unexposable)]
-    public class CoroutinesManager : ComponentBase, ICoroutinesManager
+    public class CoroutinesExecutor : ComponentBase, ICoroutinesExecutor
     {
         public int Count => executor.Count;
 
         private readonly ICoroutinesExecutor executor;
 
-        public CoroutinesManager(ICoroutinesExecutor executor)
+        public CoroutinesExecutor(ICoroutinesExecutor executor)
         {
             this.executor = executor;
         }

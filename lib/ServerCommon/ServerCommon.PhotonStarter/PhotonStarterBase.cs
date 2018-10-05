@@ -10,7 +10,7 @@ namespace ServerCommon.PhotonStarter
     using PeerBase = Photon.SocketServer.PeerBase;
 
     /// <summary>
-    /// The starter of the server application which uses photon socket.
+    /// The starter of the server application which uses photon socket server.
     /// </summary>
     /// <typeparam name="TApplication">The server application.</typeparam>
     /// <typeparam name="TPeerBase">The client peer.</typeparam>

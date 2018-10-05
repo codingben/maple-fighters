@@ -6,7 +6,7 @@ using ServerCommon.PeerLogic.Common;
 
 namespace Authentication.Application.Peer.Logic
 {
-    public class MainPeerLogic : MainPeerLogicBase<AuthenticationOperations, EmptyEventCode>
+    public class MainPeerLogic : InboundPeerLogicBase<AuthenticationOperations, EmptyEventCode>
     {
         public override void OnSetup()
         {

@@ -5,7 +5,7 @@ using ServerCommunicationInterfaces;
 
 namespace Authentication.PhotonStarter
 {
-    public class AuthenticationStartup : PhotonStarterBase<AuthenticationApplication, PeerBase>
+    public class AuthenticationStartup : PhotonStarterBase<AuthenticationApplication, AuthenticatorPeer>
     {
         protected override AuthenticationApplication CreateApplication(
             IFiberProvider fiberProvider)

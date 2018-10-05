@@ -41,13 +41,6 @@ namespace ServerCommon.PeerLogic.Components
         {
             lock (locker)
             {
-                var logics = peersLogics.GetAllLogics();
-                foreach (var peerLogic in logics)
-                {
-                    var peerLogicBase = peerLogic as PeerLogicBase;
-                    peerLogicBase?.Dispose();
-                }
-
                 peersLogics.RemoveAll();
             }
         }

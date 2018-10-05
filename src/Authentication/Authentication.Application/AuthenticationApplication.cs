@@ -10,9 +10,12 @@ namespace Authentication.Application
         public AuthenticationApplication(IFiberProvider fiberProvider)
             : base(fiberProvider)
         {
-            ServerSettings.Peer.LogEvents = true;
-            ServerSettings.Peer.Operations.LogRequests = true;
-            ServerSettings.Peer.Operations.LogResponses = true;
+            ServerSettings.InboundPeer.LogEvents = true;
+            ServerSettings.InboundPeer.Operations.LogRequests = true;
+            ServerSettings.InboundPeer.Operations.LogResponses = true;
+            ServerSettings.OutboundPeer.LogEvents = true;
+            ServerSettings.OutboundPeer.Operations.LogRequests = true;
+            ServerSettings.OutboundPeer.Operations.LogResponses = true;
         }
 
         protected override void OnStartup()

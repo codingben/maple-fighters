@@ -1,5 +1,4 @@
 ﻿using System;
-using Common.ComponentModel;
 using ServerCommunicationInterfaces;
 
 namespace ServerCommon.PeerLogic
@@ -7,23 +6,20 @@ namespace ServerCommon.PeerLogic
     /// <summary>
     /// A base implementation for the client peer logic.
     /// </summary>
-    public abstract class PeerLogicBase : IPeerLogicBase, IDisposable
+    /// <typeparam name="TPeer">The peer.</typeparam>
+    public abstract class PeerLogicBase<TPeer> : IDisposable
+        where TPeer : class, IMinimalPeer
     {
-        public IExposedComponentsProvider ExposedComponents =>
-            Components.ProvideExposed();
-
-        protected IClientPeer Peer { get; private set; }
+        protected TPeer Peer { get; private set; }
 
         protected int PeerId { get; private set; }
 
-        protected IComponentsProvider Components => new ComponentsProvider();
-
         /// <summary>
-        /// Sets the client peer and peer id.
+        /// Sets the peer and peer id.
         /// </summary>
-        /// <param name="peer">The client peer.</param>
-        /// <param name="peerId">The client peer id.</param>
-        public void Setup(IClientPeer peer, int peerId)
+        /// <param name="peer">The peer.</param>
+        /// <param name="peerId">The peer id.</param>
+        public void Setup(TPeer peer, int peerId)
         {
             Peer = peer;
             PeerId = peerId;
@@ -37,8 +33,6 @@ namespace ServerCommon.PeerLogic
         /// </summary>
         public void Dispose()
         {
-            Components?.Dispose();
-
             OnCleanup();
         }
 
