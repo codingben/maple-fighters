@@ -23,8 +23,9 @@ namespace ServerCommon.Communication.PeerLogic
                 MessageSendOptions.DefaultReliable());
         }
 
-        public async Task<TResponseParameters> SendOperationAsync<TRequestParameters, TResponseParameters>(
-            IYield yield,
+        public async Task<TResponseParameters>
+            SendOperationAsync<TRequestParameters, TResponseParameters>(
+            IYield yield, 
             TOperationCode code,
             TRequestParameters parameters)
             where TRequestParameters : struct, IParameters

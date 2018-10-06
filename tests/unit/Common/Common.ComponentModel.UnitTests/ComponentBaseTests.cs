@@ -12,7 +12,8 @@ namespace Common.ComponentModel.UnitTests
         {
             // Arrange
             IComponents components = new ComponentsProvider();
-            var otherDummyComponent = components.AddAndMock<IOtherDummyComponent>();
+            var otherDummyComponent =
+                components.AddAndMock<IOtherDummyComponent>();
 
             // Act
             components.Add(new DummyComponent());
@@ -26,7 +27,8 @@ namespace Common.ComponentModel.UnitTests
         {
             // Arrange
             IComponents components = new ComponentsProvider();
-            var otherDummyComponent = components.AddAndMock<IOtherDummyComponent>();
+            var otherDummyComponent =
+                components.AddAndMock<IOtherDummyComponent>();
 
             components.Add(new DummyComponent());
 
@@ -52,7 +54,8 @@ namespace Common.ComponentModel.UnitTests
         {
             base.OnAwake();
 
-            var otherDummyComponent = Components.Get<IOtherDummyComponent>().AssertNotNull();
+            var otherDummyComponent = Components.Get<IOtherDummyComponent>()
+                .AssertNotNull();
             otherDummyComponent.Create();
         }
 
@@ -60,7 +63,8 @@ namespace Common.ComponentModel.UnitTests
         {
             base.OnRemoved();
 
-            var otherDummyComponent = Components.Get<IOtherDummyComponent>().AssertNotNull();
+            var otherDummyComponent = Components.Get<IOtherDummyComponent>()
+                .AssertNotNull();
             otherDummyComponent.Destroy();
         }
     }

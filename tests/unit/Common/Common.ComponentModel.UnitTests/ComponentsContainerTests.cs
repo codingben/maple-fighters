@@ -13,7 +13,8 @@ namespace Common.ComponentModel.UnitTests
         public void Add_Should_Not_Throw_Error()
         {
             // Arrange
-            IComponentsContainer componentsContainer = new ComponentsContainer();
+            IComponentsContainer componentsContainer =
+                new ComponentsContainer();
             componentsContainer.Add(new SingletonComponent());
 
             // Act
@@ -28,7 +29,8 @@ namespace Common.ComponentModel.UnitTests
         public void Add_Should_Throw_Error_When_Added_Two_Same_Components()
         {
             // Arrange
-            IComponentsContainer componentsContainer = new ComponentsContainer();
+            IComponentsContainer componentsContainer =
+                new ComponentsContainer();
             componentsContainer.Add(new SingletonComponent());
 
             // Act & Assert
@@ -40,7 +42,8 @@ namespace Common.ComponentModel.UnitTests
         public void Add_Should_Throw_Error_When_No_Attribute()
         {
             // Arrange
-            IComponentsContainer componentsContainer = new ComponentsContainer();
+            IComponentsContainer componentsContainer =
+                new ComponentsContainer();
 
             // Act & Assert
             Should.Throw<ComponentSettingsMissingException<NoAttributeComponent>>(
@@ -51,7 +54,8 @@ namespace Common.ComponentModel.UnitTests
         public void AddExposed_Throws_Error_When_Not_Exposed()
         {
             // Arrange
-            IComponentsContainer componentsContainer = new ComponentsContainer();
+            IComponentsContainer componentsContainer =
+                new ComponentsContainer();
 
             // Act & Assert
             Should.Throw<ComponentNotExposedException<SingletonComponent>>(
@@ -62,7 +66,8 @@ namespace Common.ComponentModel.UnitTests
         public void Remove_Should_Find_Component()
         {
             // Arrange
-            IComponentsContainer componentsContainer = new ComponentsContainer();
+            IComponentsContainer componentsContainer =
+                new ComponentsContainer();
             componentsContainer.Add(new SingletonComponent());
 
             // Act
@@ -79,7 +84,8 @@ namespace Common.ComponentModel.UnitTests
         public void Remove_Should_Throw_Error_When_Component_Not_Found()
         {
             // Arrange
-            IComponentsContainer componentsContainer = new ComponentsContainer();
+            IComponentsContainer componentsContainer =
+                new ComponentsContainer();
 
             // Act & Assert
             Should.Throw<ComponentNotFoundException<SingletonComponent>>(
@@ -90,7 +96,8 @@ namespace Common.ComponentModel.UnitTests
         public void Find_Should_Return_Singleton_Component()
         {
             // Arrange
-            IComponentsContainer componentsContainer = new ComponentsContainer();
+            IComponentsContainer componentsContainer =
+                new ComponentsContainer();
 
             var component = new SingletonComponent();
             componentsContainer.Add(component);
@@ -107,7 +114,8 @@ namespace Common.ComponentModel.UnitTests
         public void Find_Should_Return_PerThread_Component()
         {
             // Arrange
-            IComponentsContainer componentsContainer = new ComponentsContainer();
+            IComponentsContainer componentsContainer =
+                new ComponentsContainer();
             componentsContainer.Add(new PerThreadComponent());
 
             // Act & Assert
@@ -119,7 +127,8 @@ namespace Common.ComponentModel.UnitTests
         public void Find_Should_Return_PerCall_Component()
         {
             // Arrange
-            IComponentsContainer componentsContainer = new ComponentsContainer();
+            IComponentsContainer componentsContainer =
+                new ComponentsContainer();
 
             var component = new PerCallComponent();
             componentsContainer.Add(component);
@@ -136,7 +145,8 @@ namespace Common.ComponentModel.UnitTests
         public void GetAll_Should_Returns_All_Components()
         {
             // Arrange
-            IComponentsContainer componentsContainer = new ComponentsContainer();
+            IComponentsContainer componentsContainer =
+                new ComponentsContainer();
             componentsContainer.Add(new SingletonComponent());
             componentsContainer.AddExposedOnly(new PerThreadComponent());
             componentsContainer.Add(new PerCallComponent());
@@ -149,7 +159,8 @@ namespace Common.ComponentModel.UnitTests
         public void After_Dispose_Should_Not_Return_Any_Components()
         {
             // Arrange
-            IComponentsContainer componentsContainer = new ComponentsContainer();
+            IComponentsContainer componentsContainer =
+                new ComponentsContainer();
             componentsContainer.Add(new SingletonComponent());
             componentsContainer.AddExposedOnly(new PerThreadComponent());
             componentsContainer.Add(new PerCallComponent());

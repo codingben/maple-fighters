@@ -8,7 +8,8 @@ using ServerCommunicationInterfaces;
 namespace ServerCommon.PeerLogic.Components
 {
     [ComponentSettings(ExposedState.Exposable)]
-    public class EventSenderProvider<TEventCode> : ComponentBase, IEventSenderProvider
+    public class EventSenderProvider<TEventCode> : ComponentBase,
+                                                   IEventSenderProvider
         where TEventCode : IComparable, IFormattable, IConvertible
     {
         private readonly IMinimalPeer minimalPeer;

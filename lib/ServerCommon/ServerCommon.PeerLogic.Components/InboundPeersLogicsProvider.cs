@@ -4,7 +4,8 @@ using Common.ComponentModel;
 namespace ServerCommon.PeerLogic.Components
 {
     [ComponentSettings(ExposedState.Exposable)]
-    public class InboundPeersLogicsProvider : ComponentBase, IPeersLogicsProvider
+    public class InboundPeersLogicsProvider : ComponentBase,
+                                              IPeersLogicsProvider
     {
         private readonly object locker = new object();
         private readonly PeersLogicsCollection<IInboundPeerLogicBase> peersLogics;

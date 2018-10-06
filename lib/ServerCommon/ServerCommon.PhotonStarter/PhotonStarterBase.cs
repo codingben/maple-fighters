@@ -47,7 +47,6 @@ namespace ServerCommon.PhotonStarter
         }
 
         protected abstract TApplication CreateApplication(
-            IFiberProvider fiberProvider,
-            IServerConnector serverConnector);
+            IFiberProvider fiberProvider, IServerConnector serverConnector);
     }
 }

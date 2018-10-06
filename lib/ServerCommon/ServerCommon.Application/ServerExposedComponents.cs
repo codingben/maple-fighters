@@ -18,9 +18,9 @@ namespace ServerCommon.Application
                     "The server components provider has already been initialized.");
             }
 
-            _components = components
-                          ?? throw new ArgumentNullException(
-                              nameof(components));
+            _components =
+                components ?? throw new ArgumentNullException(
+                    nameof(components));
         }
 
         public static IExposedComponents Provide()

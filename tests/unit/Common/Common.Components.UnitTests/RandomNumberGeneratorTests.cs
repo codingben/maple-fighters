@@ -18,7 +18,8 @@ namespace Common.Components.UnitTests
         private void GenerateRandomNumber()
         {
             // Arrange
-            var randomNumberGenerator = components.Get<IRandomNumberGenerator>();
+            var randomNumberGenerator =
+                components.Get<IRandomNumberGenerator>();
 
             // Act
             var number = randomNumberGenerator.GenerateRandomNumber();
@@ -33,7 +34,8 @@ namespace Common.Components.UnitTests
         private void GenerateRandomNumber_WithParameters(int min, int max)
         {
             // Arrange
-            var randomNumberGenerator = components.Get<IRandomNumberGenerator>();
+            var randomNumberGenerator =
+                components.Get<IRandomNumberGenerator>();
 
             // Act
             var number = randomNumberGenerator.GenerateRandomNumber(min, max);

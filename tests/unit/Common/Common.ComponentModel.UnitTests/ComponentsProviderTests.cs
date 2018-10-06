@@ -146,7 +146,8 @@ namespace Common.ComponentModel.UnitTests
         {
             // Arrange
             IComponents components = new ComponentsProvider();
-            var otherTestableComponent = components.AddAndMock<IOtherTestableComponent>();
+            var otherTestableComponent =
+                components.AddAndMock<IOtherTestableComponent>();
             components.Add(new TestableComponent());
 
             // Act
@@ -199,7 +200,8 @@ namespace Common.ComponentModel.UnitTests
         {
             base.OnRemoved();
 
-            var otherTestableComponent = Components.Get<IOtherTestableComponent>().AssertNotNull();
+            var otherTestableComponent = Components
+                .Get<IOtherTestableComponent>().AssertNotNull();
             otherTestableComponent.Test();
         }
     }

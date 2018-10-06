@@ -14,7 +14,8 @@ namespace Common.ComponentModel.UnitTests
             // Arrange
             IGameObject gameObject = new GameObject();
 
-            var dummyCharacter = gameObject.ExposedComponents.AddAndMock<IDummyCharacter>();
+            var dummyCharacter =
+                gameObject.ExposedComponents.AddAndMock<IDummyCharacter>();
             var transform = gameObject.ExposedComponents.Get<ITransform>();
 
             // Act
@@ -61,7 +62,8 @@ namespace Common.ComponentModel.UnitTests
     {
         public void SetPosition()
         {
-            var dummyCharacter = Components.Get<IDummyCharacter>().AssertNotNull();
+            var dummyCharacter =
+                Components.Get<IDummyCharacter>().AssertNotNull();
             dummyCharacter.Move();
         }
     }

@@ -12,7 +12,8 @@ namespace Common.ComponentModel.Generic.UnitTests
         {
             // Arrange
             IDummyOwner dummyOwner = new DummyOwner();
-            var otherDummyComponent = dummyOwner.ExposedComponents.AddAndMock<IOtherDummyComponent>();
+            var otherDummyComponent = dummyOwner.ExposedComponents
+                .AddAndMock<IOtherDummyComponent>();
 
             // Act
             dummyOwner.ExposedComponents.Add(new DummyComponent());
@@ -26,7 +27,8 @@ namespace Common.ComponentModel.Generic.UnitTests
         {
             // Arrange
             IDummyOwner dummyOwner = new DummyOwner();
-            var otherDummyComponent = dummyOwner.ExposedComponents.AddAndMock<IOtherDummyComponent>();
+            var otherDummyComponent = dummyOwner.ExposedComponents
+                .AddAndMock<IOtherDummyComponent>();
 
             dummyOwner.ExposedComponents.Add(new DummyComponent());
 
@@ -52,7 +54,8 @@ namespace Common.ComponentModel.Generic.UnitTests
         {
             base.OnAwake();
 
-            var otherDummyComponent = Components.Get<IOtherDummyComponent>().AssertNotNull();
+            var otherDummyComponent = Components.Get<IOtherDummyComponent>()
+                .AssertNotNull();
             otherDummyComponent.Create();
         }
 
@@ -60,7 +63,8 @@ namespace Common.ComponentModel.Generic.UnitTests
         {
             base.OnRemoved();
 
-            var otherDummyComponent = Components.Get<IOtherDummyComponent>().AssertNotNull();
+            var otherDummyComponent = Components.Get<IOtherDummyComponent>()
+                .AssertNotNull();
             otherDummyComponent.Destroy();
         }
     }
