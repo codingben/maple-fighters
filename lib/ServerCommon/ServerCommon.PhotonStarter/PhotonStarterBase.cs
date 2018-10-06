@@ -1,5 +1,6 @@
 ﻿using Photon.SocketServer;
 using PhotonServerImplementation;
+using PhotonServerImplementation.Server;
 using ServerCommon.Application;
 using ServerCommon.PeerBase;
 using ServerCommunicationInterfaces;
@@ -22,9 +23,9 @@ namespace ServerCommon.PhotonStarter
 
         protected override void Setup()
         {
-            var photonFiberProvider = new PhotonFiberProvider();
-
-            application = CreateApplication(photonFiberProvider);
+            application = CreateApplication(
+                new PhotonFiberProvider(),
+                new PhotonServerConnector(this, ApplicationName));
             application.Startup();
         }
 
@@ -46,6 +47,7 @@ namespace ServerCommon.PhotonStarter
         }
 
         protected abstract TApplication CreateApplication(
-            IFiberProvider fiberProvider);
+            IFiberProvider fiberProvider,
+            IServerConnector serverConnector);
     }
 }

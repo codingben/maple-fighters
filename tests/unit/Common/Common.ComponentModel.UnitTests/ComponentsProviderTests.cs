@@ -157,13 +157,26 @@ namespace Common.ComponentModel.UnitTests
         }
     }
 
+    public class BaseComponent : IComponent
+    {
+        public void Awake(IComponents components)
+        {
+            // Left blank intentionally
+        }
+
+        public void Dispose()
+        {
+            // Left blank intentionally
+        }
+    }
+
     public interface IUnexposableComponent
     {
         // Left blank intentionally
     }
 
     [ComponentSettings(ExposedState.Unexposable)]
-    public class UnexposableComponent : ComponentBase, IUnexposableComponent
+    public class UnexposableComponent : BaseComponent, IUnexposableComponent
     {
         // Left blank intentionally
     }
@@ -174,7 +187,7 @@ namespace Common.ComponentModel.UnitTests
     }
 
     [ComponentSettings(ExposedState.Exposable)]
-    public class ExposableComponent : ComponentBase, IExposableComponent
+    public class ExposableComponent : BaseComponent, IExposableComponent
     {
         // Left blank intentionally
     }

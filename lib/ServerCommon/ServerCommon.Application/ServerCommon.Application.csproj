@@ -66,6 +66,10 @@
       <Project>{BDA69EC2-FD94-4BC0-9AD9-17BED767F48C}</Project>
       <Name>ServerCommon.Application.Components</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ServerCommon.Communication.Components\ServerCommon.Communication.Components.csproj">
+      <Project>{3C2CED3C-3F36-4A78-81A2-7B57DB0B879B}</Project>
+      <Name>ServerCommon.Communication.Components</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ServerCommon.Configuration\ServerCommon.Configuration.csproj">
       <Project>{E294B8AA-54DC-427C-8730-7776155C524C}</Project>
       <Name>ServerCommon.Configuration</Name>

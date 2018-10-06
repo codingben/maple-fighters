@@ -3,6 +3,7 @@ using Common.Components;
 using CommonTools.Coroutines;
 using CommonTools.Log;
 using ServerCommon.Application.Components;
+using ServerCommon.Communication.Components;
 using ServerCommon.Configuration;
 using ServerCommon.Logging;
 using ServerCommon.PeerLogic.Components;
@@ -22,10 +23,13 @@ namespace ServerCommon.Application
         protected IComponents Components => new ComponentsProvider();
 
         private readonly IFiberProvider fiberProvider;
+        private readonly IServerConnector serverConnector;
 
-        protected internal ServerApplicationBase(IFiberProvider fiberProvider)
+        protected internal ServerApplicationBase(
+            IFiberProvider fiberProvider, IServerConnector serverConnector)
         {
             this.fiberProvider = fiberProvider;
+            this.serverConnector = serverConnector;
 
             LogUtils.Logger = new Logger();
             TimeProviders.DefaultTimeProvider = new TimeProvider();
@@ -63,21 +67,21 @@ namespace ServerCommon.Application
         /// 3. <see cref="IFiberStarter"/>
         /// 4. <see cref="ICoroutinesExecutor"/>
         /// 5. <see cref="IPeersLogicsProvider"/>
+        /// 6. <see cref="IS2sConnectionProvider"/>
         /// </summary>
         protected void AddCommonComponents()
         {
             ExposedComponents.Add(new IdGenerator());
             Components.Add(new RandomNumberGenerator());
-
             IFiberStarter fiber =
                 Components.Add(new FiberStarter(fiberProvider));
-
             Components.Add(
                 new CoroutinesExecutor(
                     new FiberCoroutinesExecutor(
                         fiber.GetFiberStarter(),
                         updateRateMilliseconds: 100)));
             ExposedComponents.Add(new InboundPeersLogicsProvider());
+            Components.Add(new S2sConnectionProvider(serverConnector));
         }
     }
 }
