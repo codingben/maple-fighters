@@ -21,10 +21,10 @@ namespace ServerCommon.PeerLogic.Common
         where TOperationCode : IComparable, IFormattable, IConvertible
         where TEventCode : IComparable, IFormattable, IConvertible
     {
-        public IExposedComponentsProvider ExposedComponents =>
+        public IExposedComponents ExposedComponents =>
             Components.ProvideExposed();
 
-        protected IComponentsProvider Components => 
+        protected IComponents Components => 
             new ComponentsProvider();
 
         protected IOperationRequestHandlerRegister<TOperationCode> OperationHandlerRegister

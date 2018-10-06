@@ -12,11 +12,11 @@ namespace Common.ComponentModel.Generic
     {
         protected TOwner Owner { get; private set; }
 
-        protected IComponentsProvider Components { get; private set; }
+        protected IComponents Components { get; private set; }
         
         void IComponent<TOwner>.Awake(
             TOwner owner,
-            IComponentsProvider components)
+            IComponents components)
         {
             Owner = owner;
             Components = components;

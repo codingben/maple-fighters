@@ -66,6 +66,10 @@
       <Project>{478144C1-2DA6-4AED-9B7A-5004A7855F1C}</Project>
       <Name>ServerCommon.Application</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\lib\ServerCommon\ServerCommon.PeerBase\ServerCommon.PeerBase.csproj">
+      <Project>{82123DDA-C7FE-43DA-99EF-4C04F14E8BAA}</Project>
+      <Name>ServerCommon.PeerBase</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\lib\ServerCommon\ServerCommon.PhotonStarter\ServerCommon.PhotonStarter.csproj">
       <Project>{391DA727-90F4-410A-8E84-4E287310941A}</Project>
       <Name>ServerCommon.PhotonStarter</Name>

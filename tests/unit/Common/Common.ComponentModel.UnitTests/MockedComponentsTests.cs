@@ -32,17 +32,17 @@ namespace Common.ComponentModel.UnitTests
 
     public interface IGameObject
     {
-        IExposedComponentsProvider ExposedComponents { get; }
+        IExposedComponents ExposedComponents { get; }
     }
 
     public class GameObject : IGameObject, ISceneObject
     {
         public int Id { get; }
 
-        public IExposedComponentsProvider ExposedComponents =>
+        public IExposedComponents ExposedComponents =>
             Components.ProvideExposed<ISceneObject>();
 
-        protected IComponentsProvider Components { get; }
+        protected IComponents Components { get; }
 
         public GameObject()
         {

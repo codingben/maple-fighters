@@ -165,7 +165,7 @@ namespace Common.ComponentModel.UnitTests
     [ComponentSettings(ExposedState.Unexposable)]
     public class SingletonComponent : IComponent
     {
-        public void Awake(IComponentsProvider components)
+        public void Awake(IComponents components)
         {
             throw new NotImplementedException();
         }
@@ -179,7 +179,7 @@ namespace Common.ComponentModel.UnitTests
     [ComponentSettings(ExposedState.Exposable, Lifetime.PerThread)]
     public class PerThreadComponent : IComponent
     {
-        public void Awake(IComponentsProvider components)
+        public void Awake(IComponents components)
         {
             throw new NotImplementedException();
         }
@@ -193,7 +193,7 @@ namespace Common.ComponentModel.UnitTests
     [ComponentSettings(ExposedState.Unexposable, Lifetime.PerCall)]
     public class PerCallComponent : IComponent
     {
-        public void Awake(IComponentsProvider components)
+        public void Awake(IComponents components)
         {
             throw new NotImplementedException();
         }
@@ -206,7 +206,7 @@ namespace Common.ComponentModel.UnitTests
 
     public class NoAttributeComponent : IComponent
     {
-        public void Awake(IComponentsProvider components)
+        public void Awake(IComponents components)
         {
             throw new NotImplementedException();
         }

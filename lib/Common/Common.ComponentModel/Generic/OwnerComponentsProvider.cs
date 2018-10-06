@@ -7,8 +7,8 @@ namespace Common.ComponentModel.Generic
     /// Represents a components container and allows to set an owner.
     /// </summary>
     /// <typeparam name="TOwner">An entity which owns this component.</typeparam>
-    public sealed class OwnerComponentsProvider<TOwner> : IComponentsProvider,
-                                                          IExposedComponentsProvider
+    public sealed class OwnerComponentsProvider<TOwner> : IComponents,
+                                                          IExposedComponents
         where TOwner : class
     {
         private readonly TOwner owner;
@@ -20,7 +20,7 @@ namespace Common.ComponentModel.Generic
             components = new ComponentsContainer();
         }
 
-        TComponent IComponentsProvider.Add<TComponent>(TComponent component)
+        TComponent IComponents.Add<TComponent>(TComponent component)
         {
             components.Add(component);
 
@@ -32,7 +32,7 @@ namespace Common.ComponentModel.Generic
             return component;
         }
 
-        TComponent IExposedComponentsProvider.Add<TComponent>(TComponent component)
+        TComponent IExposedComponents.Add<TComponent>(TComponent component)
         {
             components.AddExposedOnly(component);
 
@@ -44,7 +44,7 @@ namespace Common.ComponentModel.Generic
             return component;
         }
 
-        void IComponentsProvider.Remove<TComponent>()
+        void IComponents.Remove<TComponent>()
         {
             var component = components.Remove<TComponent>();
             if (component is IComponent<TOwner> componentBase)
@@ -53,7 +53,7 @@ namespace Common.ComponentModel.Generic
             }
         }
 
-        TComponent IComponentsProvider.Get<TComponent>()
+        TComponent IComponents.Get<TComponent>()
         {
             Utils.AssertNotInterface<TComponent>();
 
@@ -61,7 +61,7 @@ namespace Common.ComponentModel.Generic
             return component;
         }
 
-        TComponent IExposedComponentsProvider.Get<TComponent>()
+        TComponent IExposedComponents.Get<TComponent>()
         {
             Utils.AssertNotInterface<TComponent>();
 

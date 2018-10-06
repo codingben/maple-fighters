@@ -54,8 +54,8 @@
     <Compile Include="Generic\OwnerComponentsProvider.cs" />
     <Compile Include="IComponent.cs" />
     <Compile Include="Core\IComponentsContainer.cs" />
-    <Compile Include="IComponentsProvider.cs" />
-    <Compile Include="IExposedComponentsProvider.cs" />
+    <Compile Include="IComponents.cs" />
+    <Compile Include="IExposedComponents.cs" />
     <Compile Include="Lifetime.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

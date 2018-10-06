@@ -8,9 +8,9 @@ namespace Common.ComponentModel
     /// </summary>
     public class ComponentBase : IComponent
     {
-        protected IComponentsProvider Components { get; private set; }
+        protected IComponents Components { get; private set; }
 
-        void IComponent.Awake(IComponentsProvider components)
+        void IComponent.Awake(IComponents components)
         {
             Components = components;
 

@@ -7,6 +7,6 @@ namespace ServerCommon.PeerLogic
     /// </summary>
     public interface IInboundPeerLogicBase
     {
-        IExposedComponentsProvider ExposedComponents { get; }
+        IExposedComponents ExposedComponents { get; }
     }
 }

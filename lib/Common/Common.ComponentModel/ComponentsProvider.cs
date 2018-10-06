@@ -6,8 +6,8 @@ namespace Common.ComponentModel
     /// <summary>
     /// Represents a components container.
     /// </summary>
-    public sealed class ComponentsProvider : IComponentsProvider,
-                                             IExposedComponentsProvider
+    public sealed class ComponentsProvider : IComponents,
+                                             IExposedComponents
     {
         private readonly IComponentsContainer components;
 
@@ -16,7 +16,7 @@ namespace Common.ComponentModel
             components = new ComponentsContainer();
         }
 
-        TComponent IComponentsProvider.Add<TComponent>(TComponent component)
+        TComponent IComponents.Add<TComponent>(TComponent component)
         {
             components.Add(component);
 
@@ -28,7 +28,7 @@ namespace Common.ComponentModel
             return component;
         }
 
-        TComponent IExposedComponentsProvider.Add<TComponent>(TComponent component)
+        TComponent IExposedComponents.Add<TComponent>(TComponent component)
         {
             components.AddExposedOnly(component);
 
@@ -40,7 +40,7 @@ namespace Common.ComponentModel
             return component;
         }
 
-        void IComponentsProvider.Remove<TComponent>()
+        void IComponents.Remove<TComponent>()
         {
             var component = components.Remove<TComponent>();
             if (component is IComponent componentBase)
@@ -49,7 +49,7 @@ namespace Common.ComponentModel
             }
         }
 
-        TComponent IComponentsProvider.Get<TComponent>()
+        TComponent IComponents.Get<TComponent>()
         {
             Utils.AssertNotInterface<TComponent>();
             
@@ -57,7 +57,7 @@ namespace Common.ComponentModel
             return component;
         }
 
-        TComponent IExposedComponentsProvider.Get<TComponent>()
+        TComponent IExposedComponents.Get<TComponent>()
         {
             Utils.AssertNotInterface<TComponent>();
             

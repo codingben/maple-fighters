@@ -8,9 +8,9 @@ namespace ServerCommon.Application
     /// </summary>
     public static class ServerExposedComponents
     {
-        private static IExposedComponentsProvider _components;
+        private static IExposedComponents _components;
 
-        public static void SetProvider(IExposedComponentsProvider components)
+        public static void SetProvider(IExposedComponents components)
         {
             if (_components != null)
             {
@@ -23,7 +23,7 @@ namespace ServerCommon.Application
                               nameof(components));
         }
 
-        public static IExposedComponentsProvider Provide()
+        public static IExposedComponents Provide()
         {
             if (_components == null)
             {

@@ -7,12 +7,12 @@ namespace Common.Components.UnitTests
 {
     public class IdGeneratorTests
     {
-        private readonly IComponentsProvider componentsProvider;
+        private readonly IComponents components;
 
         public IdGeneratorTests()
         {
-            componentsProvider = new ComponentsProvider();
-            componentsProvider.Add(new IdGenerator());
+            components = new ComponentsProvider();
+            components.Add(new IdGenerator());
         }
 
         [Theory]
@@ -20,7 +20,7 @@ namespace Common.Components.UnitTests
         private void GenerateId(int id)
         {
             // Arrange
-            var idGenerator = componentsProvider.Get<IIdGenerator>().AssertNotNull();
+            var idGenerator = components.Get<IIdGenerator>().AssertNotNull();
 
             // Act
             var generateId = idGenerator.GenerateId();

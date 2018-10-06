@@ -69,15 +69,15 @@ namespace Common.ComponentModel.Generic.UnitTests
     {
         void Kill();
 
-        IExposedComponentsProvider ExposedComponents { get; }
+        IExposedComponents ExposedComponents { get; }
     }
 
     public class DummyOwner : IDummyOwner
     {
-        public IExposedComponentsProvider ExposedComponents =>
+        public IExposedComponents ExposedComponents =>
             Components.ProvideExposed<IDummyOwner>();
 
-        protected IComponentsProvider Components { get; }
+        protected IComponents Components { get; }
 
         public DummyOwner()
         {

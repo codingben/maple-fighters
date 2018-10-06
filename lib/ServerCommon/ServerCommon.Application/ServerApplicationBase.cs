@@ -16,9 +16,10 @@ namespace ServerCommon.Application
     /// </summary>
     public class ServerApplicationBase : IApplicationBase
     {
-        protected IComponentsProvider Components { get; }
+        protected IExposedComponents ExposedComponents =>
+            Components.ProvideExposed();
 
-        protected IExposedComponentsProvider ExposedComponents { get; }
+        protected IComponents Components => new ComponentsProvider();
 
         private readonly IFiberProvider fiberProvider;
 
@@ -28,9 +29,6 @@ namespace ServerCommon.Application
 
             LogUtils.Logger = new Logger();
             TimeProviders.DefaultTimeProvider = new TimeProvider();
-
-            Components = new ComponentsProvider();
-            ExposedComponents = Components.ProvideExposed();
 
             ServerExposedComponents.SetProvider(ExposedComponents);
             ServerConfiguration.Setup();

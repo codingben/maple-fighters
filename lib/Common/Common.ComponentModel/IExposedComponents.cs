@@ -4,7 +4,7 @@
     /// Represents only the exposed components in the component's container.
     /// NOTE: This provider should be accessed by other entities on other threads.
     /// </summary>
-    public interface IExposedComponentsProvider
+    public interface IExposedComponents
     {
         /// <summary>
         /// Adds and awakes a new exposed component to the component's container.

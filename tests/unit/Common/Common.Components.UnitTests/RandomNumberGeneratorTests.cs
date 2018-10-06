@@ -6,19 +6,19 @@ namespace Common.Components.UnitTests
 {
     public class RandomNumberGeneratorTests
     {
-        private readonly IComponentsProvider componentsProvider;
+        private readonly IComponents components;
 
         public RandomNumberGeneratorTests()
         {
-            componentsProvider = new ComponentsProvider();
-            componentsProvider.Add(new RandomNumberGenerator());
+            components = new ComponentsProvider();
+            components.Add(new RandomNumberGenerator());
         }
 
         [Fact]
         private void GenerateRandomNumber()
         {
             // Arrange
-            var randomNumberGenerator = componentsProvider.Get<IRandomNumberGenerator>();
+            var randomNumberGenerator = components.Get<IRandomNumberGenerator>();
 
             // Act
             var number = randomNumberGenerator.GenerateRandomNumber();
@@ -33,7 +33,7 @@ namespace Common.Components.UnitTests
         private void GenerateRandomNumber_WithParameters(int min, int max)
         {
             // Arrange
-            var randomNumberGenerator = componentsProvider.Get<IRandomNumberGenerator>();
+            var randomNumberGenerator = components.Get<IRandomNumberGenerator>();
 
             // Act
             var number = randomNumberGenerator.GenerateRandomNumber(min, max);

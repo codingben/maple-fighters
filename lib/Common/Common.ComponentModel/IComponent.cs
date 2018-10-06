@@ -8,6 +8,6 @@ namespace Common.ComponentModel
     /// </summary>
     public interface IComponent : IDisposable
     {
-        void Awake(IComponentsProvider components);
+        void Awake(IComponents components);
     }
 }

@@ -6,7 +6,7 @@ namespace Common.ComponentModel
     /// <summary>
     /// Represents an access to the component's container.
     /// </summary>
-    public interface IComponentsProvider : IDisposable
+    public interface IComponents : IDisposable
     {
         /// <summary>
         /// Adds and awakes a new component to the component's container.

@@ -15,7 +15,7 @@ namespace ServerCommon.PeerBase
     /// </summary>
     public class PeerBase : MinimalPeerBase
     {
-        private IExposedComponentsProvider ServerComponents => 
+        private IExposedComponents ServerComponents => 
             ServerExposedComponents.Provide();
 
         private IPeerLogicBase<IClientPeer> PeerLogicBase { get; set; }

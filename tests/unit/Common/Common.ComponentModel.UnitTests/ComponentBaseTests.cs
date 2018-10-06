@@ -11,11 +11,11 @@ namespace Common.ComponentModel.UnitTests
         public void OnAwake_Called()
         {
             // Arrange
-            IComponentsProvider componentsProvider = new ComponentsProvider();
-            var otherDummyComponent = componentsProvider.AddAndMock<IOtherDummyComponent>();
+            IComponents components = new ComponentsProvider();
+            var otherDummyComponent = components.AddAndMock<IOtherDummyComponent>();
 
             // Act
-            componentsProvider.Add(new DummyComponent());
+            components.Add(new DummyComponent());
 
             // Assert
             otherDummyComponent.Received().Create();
@@ -25,13 +25,13 @@ namespace Common.ComponentModel.UnitTests
         public void OnRemoved_Called()
         {
             // Arrange
-            IComponentsProvider componentsProvider = new ComponentsProvider();
-            var otherDummyComponent = componentsProvider.AddAndMock<IOtherDummyComponent>();
+            IComponents components = new ComponentsProvider();
+            var otherDummyComponent = components.AddAndMock<IOtherDummyComponent>();
 
-            componentsProvider.Add(new DummyComponent());
+            components.Add(new DummyComponent());
 
             // Act
-            componentsProvider.Remove<DummyComponent>();
+            components.Remove<DummyComponent>();
 
             // Assert
             otherDummyComponent.Received().Destroy();

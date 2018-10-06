@@ -15,6 +15,6 @@ namespace Common.ComponentModel.Generic
         /// </summary>
         /// <param name="owner">The entity owner.</param>
         /// <param name="components">The components provider.</param>
-        void Awake(TOwner owner, IComponentsProvider components);
+        void Awake(TOwner owner, IComponents components);
     }
 }
