@@ -13,8 +13,7 @@ namespace ServerCommon.Communication.PeerLogic
     /// </summary>
     /// <typeparam name="TOperationCode">The operations.</typeparam>
     /// <typeparam name="TEventCode">The events.</typeparam>
-    public class OutboundPeerLogicBase<TOperationCode, TEventCode>
-        : PeerLogicBase<IOutboundServerPeer>
+    public class OutboundPeerLogicBase<TOperationCode, TEventCode> : PeerLogicBase<IOutboundServerPeer>
         where TOperationCode : IComparable, IFormattable, IConvertible
         where TEventCode : IComparable, IFormattable, IConvertible
     {

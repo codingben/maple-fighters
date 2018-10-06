@@ -7,6 +7,6 @@ namespace ServerCommon.PeerBase
     /// </summary>
     public interface IPeerBase
     {
-        void Connected(IMinimalPeer peer);
+        void Connected(IClientPeer peer);
     }
 }

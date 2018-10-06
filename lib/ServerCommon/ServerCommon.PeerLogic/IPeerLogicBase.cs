@@ -1,12 +1,11 @@
-﻿using Common.ComponentModel;
+﻿using System;
+using ServerCommunicationInterfaces;
 
 namespace ServerCommon.PeerLogic
 {
-    /// <summary>
-    /// Exposes a safe access to the peer logic.
-    /// </summary>
-    public interface IPeerLogicBase
+    public interface IPeerLogicBase<in TPeer> : IDisposable
+        where TPeer : class, IMinimalPeer
     {
-        IExposedComponentsProvider ExposedComponents { get; }
+        void Setup(TPeer peer, int peerId);
     }
 }

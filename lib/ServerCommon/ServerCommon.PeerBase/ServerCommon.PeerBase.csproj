@@ -47,9 +47,9 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="InboundPeerBase.cs" />
-    <Compile Include="IPeerBase.cs" />
     <Compile Include="PeerBase.cs" />
+    <Compile Include="IPeerBase.cs" />
+    <Compile Include="MinimalPeerBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -49,11 +49,10 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IInboundPeerLogicBase.cs" />
     <Compile Include="IPeerLogicBase.cs" />
-    <Compile Include="IPeerLogicProvider.cs" />
     <Compile Include="PeerLogicException.cs" />
     <Compile Include="PeerLogicBase.cs" />
-    <Compile Include="PeerLogicProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

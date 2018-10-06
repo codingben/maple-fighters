@@ -7,13 +7,15 @@ namespace ServerCommon.PeerLogic.Components
     /// </summary>
     public interface IPeersLogicsProvider
     {
-        void AddPeerLogic(int peerId, IPeerLogicBase peerLogic);
+        void AddPeerLogic(
+            int peerId,
+            IInboundPeerLogicBase peerLogic);
 
         void RemovePeerLogic(int peerId);
 
         void ProvidePeerLogic(
             int peerId,
-            Action<IPeerLogicBase> peerLogic);
+            Action<IInboundPeerLogicBase> peerLogic);
 
         int CountPeers();
     }

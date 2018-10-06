@@ -59,7 +59,7 @@
     <Compile Include="IEventSenderProvider.cs" />
     <Compile Include="IPeersLogicsProvider.cs" />
     <Compile Include="PeersLogicsCollection.cs" />
-    <Compile Include="PeersLogicsProvider.cs" />
+    <Compile Include="InboundPeersLogicsProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

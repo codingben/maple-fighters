@@ -79,7 +79,7 @@ namespace ServerCommon.Application
                     new FiberCoroutinesExecutor(
                         fiber.GetFiberStarter(),
                         updateRateMilliseconds: 100)));
-            ExposedComponents.Add(new PeersLogicsProvider());
+            ExposedComponents.Add(new InboundPeersLogicsProvider());
         }
     }
 }

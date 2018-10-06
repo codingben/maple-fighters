@@ -4,14 +4,14 @@ using Common.ComponentModel;
 namespace ServerCommon.PeerLogic.Components
 {
     [ComponentSettings(ExposedState.Exposable)]
-    public class PeersLogicsProvider : ComponentBase, IPeersLogicsProvider
+    public class InboundPeersLogicsProvider : ComponentBase, IPeersLogicsProvider
     {
         private readonly object locker = new object();
-        private readonly PeersLogicsCollection<IPeerLogicBase> peersLogics;
+        private readonly PeersLogicsCollection<IInboundPeerLogicBase> peersLogics;
 
-        public PeersLogicsProvider()
+        public InboundPeersLogicsProvider()
         {
-            peersLogics = new PeersLogicsCollection<IPeerLogicBase>();
+            peersLogics = new PeersLogicsCollection<IInboundPeerLogicBase>();
         }
 
         protected override void OnRemoved()
@@ -21,7 +21,9 @@ namespace ServerCommon.PeerLogic.Components
             RemoveAllPeersLogics();
         }
 
-        public void AddPeerLogic(int peerId, IPeerLogicBase peerLogic)
+        public void AddPeerLogic(
+            int peerId,
+            IInboundPeerLogicBase peerLogic)
         {
             lock (locker)
             {
@@ -47,7 +49,7 @@ namespace ServerCommon.PeerLogic.Components
 
         public void ProvidePeerLogic(
             int peerId,
-            Action<IPeerLogicBase> peerLogic)
+            Action<IInboundPeerLogicBase> peerLogic)
         {
             lock (locker)
             {

@@ -39,13 +39,10 @@ namespace ServerCommon.PeerLogic.Components
 
         public void Remove(int peerId)
         {
-            if (!peersLogics.ContainsKey(peerId))
+            if (peersLogics.ContainsKey(peerId))
             {
-                throw new PeerLogicException(
-                    $"Failed to remove a peer with id {peerId} because it does not exist.");
+                peersLogics.Remove(peerId);
             }
-
-            peersLogics.Remove(peerId);
         }
 
         public IEnumerable<TPeerLogic> GetAllLogics()

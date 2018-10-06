@@ -4,7 +4,7 @@ using ServerCommon.PeerBase;
 
 namespace Authenticator.Application.Peer
 {
-    public class AuthenticatorPeer : InboundPeerBase
+    public class AuthenticatorPeer : PeerBase
     {
         protected override void OnConnected()
         {

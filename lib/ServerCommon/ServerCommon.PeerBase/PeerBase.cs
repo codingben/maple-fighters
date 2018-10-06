@@ -1,59 +1,81 @@
-﻿using CommonCommunicationInterfaces;
+﻿using Common.ComponentModel;
+using Common.Components;
+using CommonCommunicationInterfaces;
 using CommonTools.Log;
+using ServerCommon.Application;
 using ServerCommon.PeerLogic;
+using ServerCommon.PeerLogic.Components;
 using ServerCommunicationInterfaces;
 
 namespace ServerCommon.PeerBase
 {
     /// <inheritdoc />
     /// <summary>
-    /// A base implementation for the peer.
+    /// A common peer implementation for the inbound communication. 
     /// </summary>
-    public abstract class PeerBase : IPeerBase
+    public class PeerBase : MinimalPeerBase
     {
-        protected IMinimalPeer Peer { get; private set; }
+        private IExposedComponentsProvider ServerComponents => 
+            ServerExposedComponents.Provide();
 
-        protected int PeerId => ProvidePeerId();
+        private IPeerLogicBase<IClientPeer> PeerLogicBase { get; set; }
 
-        protected IPeerLogicProvider PeerLogicProvider { get; private set; }
-
-        public void Connected(IMinimalPeer peer)
+        protected internal PeerBase()
         {
-            Peer = peer;
-            PeerLogicProvider = ProvidePeerLogic();
-
-            OnConnected();
-            SubscribeToDisconnectionNotifier();
+            // Left blank intentionally
         }
 
-        protected virtual void OnConnected()
+        /// <summary>
+        /// Sets a peer logic for the peer.
+        /// </summary>
+        /// <typeparam name="TPeerLogic">The peer logic.</typeparam>
+        /// <param name="peerLogic">The peer logic instance.</param>
+        protected void BindPeerLogic<TPeerLogic>(
+            TPeerLogic peerLogic = default(TPeerLogic))
+            where TPeerLogic : IInboundPeerLogicBase, new()
         {
-            LogUtils.Log(
-                $"A new peer ({PeerId}) has been connected to the server.");
+            Peer.Fiber.Enqueue(() =>
+            {
+                if (peerLogic == null)
+                {
+                    peerLogic = new TPeerLogic();
+                }
+
+                UnbindPeerLogic();
+
+                if (peerLogic is IPeerLogicBase<IClientPeer> @base)
+                {
+                    PeerLogicBase = @base;
+                    PeerLogicBase.Setup(Peer, PeerId);
+                }
+
+                Peer.NetworkTrafficState = NetworkTrafficState.Flowing;
+
+                var peersLogicsProvider = 
+                    ServerComponents.Get<IPeersLogicsProvider>().AssertNotNull();
+                peersLogicsProvider.AddPeerLogic(PeerId, peerLogic);
+            });
         }
 
-        protected virtual void OnDisconnected(
-            DisconnectReason reason,
-            string details)
+        /// <summary>
+        /// Removes the peer logic from the client peer.
+        /// </summary>
+        protected void UnbindPeerLogic()
         {
-            UnsubscribeFromDisconnectionNotifier();
+            Peer.NetworkTrafficState = NetworkTrafficState.Paused;
 
-            LogUtils.Log(
-                $"The peer ({PeerId}) has been disconnected from the server.");
+            PeerLogicBase?.Dispose();
+
+            var peersLogicsProvider = 
+                ServerComponents.Get<IPeersLogicsProvider>().AssertNotNull();
+            peersLogicsProvider.RemovePeerLogic(PeerId);
         }
 
-        private void SubscribeToDisconnectionNotifier()
+        protected override int ProvidePeerId()
         {
-            Peer.PeerDisconnectionNotifier.Disconnected += OnDisconnected;
+            var idGenerator =
+                ServerComponents.Get<IIdGenerator>().AssertNotNull();
+            return idGenerator.GenerateId();
         }
-
-        private void UnsubscribeFromDisconnectionNotifier()
-        {
-            Peer.PeerDisconnectionNotifier.Disconnected -= OnDisconnected;
-        }
-
-        protected abstract int ProvidePeerId();
-
-        protected abstract IPeerLogicProvider ProvidePeerLogic();
     }
 }
