@@ -3,6 +3,7 @@ using Common.Components;
 using CommonCommunicationInterfaces;
 using CommonTools.Log;
 using ServerCommon.Application;
+using ServerCommon.Application.Components;
 using ServerCommon.PeerLogic;
 using ServerCommon.PeerLogic.Components;
 using ServerCommunicationInterfaces;
@@ -22,7 +23,7 @@ namespace ServerCommon.PeerBase
 
         protected internal PeerBase()
         {
-            // Left blank intentionally
+            SubscribeToServerShutdownNotifier();
         }
 
         /// <summary>
@@ -69,6 +70,28 @@ namespace ServerCommon.PeerBase
             var peersLogicsProvider = 
                 ServerComponents.Get<IPeersLogicsProvider>().AssertNotNull();
             peersLogicsProvider.RemovePeerLogic(PeerId);
+        }
+
+        private void OnServerShutdown()
+        {
+            UnsubscribeFromServerShutdownNotifier();
+            UnbindPeerLogic();
+        }
+
+        private void SubscribeToServerShutdownNotifier()
+        {
+            var serverShutdownNotifier =
+                ServerComponents.Get<IServerShutdownNotifier>().AssertNotNull();
+
+            serverShutdownNotifier.Shutdown += OnServerShutdown;
+        }
+
+        private void UnsubscribeFromServerShutdownNotifier()
+        {
+            var serverShutdownNotifier =
+                ServerComponents.Get<IServerShutdownNotifier>().AssertNotNull();
+
+            serverShutdownNotifier.Shutdown -= OnServerShutdown;
         }
 
         protected override int ProvidePeerId()

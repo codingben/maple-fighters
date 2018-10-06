@@ -68,6 +68,7 @@ namespace ServerCommon.Application
         /// 4. <see cref="ICoroutinesExecutor"/>
         /// 5. <see cref="IPeersLogicsProvider"/>
         /// 6. <see cref="IS2sConnectionProvider"/>
+        /// 7. <see cref="IServerShutdownNotifier"/>
         /// </summary>
         protected void AddCommonComponents()
         {
@@ -82,6 +83,7 @@ namespace ServerCommon.Application
                         updateRateMilliseconds: 100)));
             ExposedComponents.Add(new InboundPeersLogicsProvider());
             Components.Add(new S2sConnectionProvider(serverConnector));
+            ExposedComponents.Add(new ServerShutdownTracker());
         }
     }
 }
