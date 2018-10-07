@@ -5,7 +5,7 @@ using CommonTools.Coroutines;
 
 namespace ServerCommon.Communication.PeerLogic
 {
-    public interface IServerPeerLogic<in TOperationCode, in TEventCode> : IDisposable
+    public interface IOutboundPeerLogic<in TOperationCode, in TEventCode> : IDisposable
         where TOperationCode : IComparable, IFormattable, IConvertible
         where TEventCode : IComparable, IFormattable, IConvertible
     {

@@ -13,7 +13,7 @@ namespace ServerCommon.Communication.Components
         where TOperationCode : IComparable, IFormattable, IConvertible
         where TEventCode : IComparable, IFormattable, IConvertible
     {
-        protected IServerPeerLogic<TOperationCode, TEventCode> ServerPeerLogic
+        protected IOutboundPeerLogic<TOperationCode, TEventCode> ServerPeerLogic
         {
             get;
             private set;
@@ -52,7 +52,7 @@ namespace ServerCommon.Communication.Components
             IOutboundServerPeer serverPeer)
         {
             ServerPeerLogic =
-                new CommonServerPeerLogic<TOperationCode, TEventCode>();
+                new OutboundPeerLogic<TOperationCode, TEventCode>();
 
             var @base = (IPeerLogicBase<IOutboundServerPeer>)ServerPeerLogic;
             @base?.Setup(serverPeer, default(int));
