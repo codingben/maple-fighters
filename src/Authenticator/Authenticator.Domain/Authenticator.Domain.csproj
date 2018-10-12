@@ -30,11 +30,33 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="MongoDB.Bson, Version=2.7.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\MongoDB.Bson.2.7.0\lib\net45\MongoDB.Bson.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Aggregates\User\Account.cs" />
+    <Compile Include="Aggregates\User\AccountFactory.cs" />
+    <Compile Include="Aggregates\User\IAccountRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\lib\Common\Common.MongoDB\Common.MongoDB.csproj">
+      <Project>{263590D6-4984-477E-8D22-67C477870E8C}</Project>
+      <Name>Common.MongoDB</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\lib\Common\Common.Repository\Common.Repository.csproj">
+      <Project>{65C156F0-FA83-4905-9AB0-CC4D04A05627}</Project>
+      <Name>Common.Repository</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Exceptions\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
