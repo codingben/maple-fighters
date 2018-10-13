@@ -30,6 +30,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Coroutines, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Coroutines.5.0.5\lib\net46\Coroutines.dll</HintPath>
+    </Reference>
+    <Reference Include="LogUtils, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Coroutines.5.0.5\lib\net46\LogUtils.dll</HintPath>
+    </Reference>
     <Reference Include="MongoDB.Bson, Version=2.7.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\MongoDB.Bson.2.7.0\lib\net45\MongoDB.Bson.dll</HintPath>
     </Reference>
@@ -38,11 +44,21 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Aggregates\User\Account.cs" />
+    <Compile Include="Aggregates\User\Services\AccountCreationStatus.cs" />
     <Compile Include="Aggregates\User\AccountFactory.cs" />
+    <Compile Include="Aggregates\User\Services\AuthenticationStatus.cs" />
     <Compile Include="Aggregates\User\IAccountRepository.cs" />
+    <Compile Include="Aggregates\User\Services\ILoginService.cs" />
+    <Compile Include="Aggregates\User\Services\IRegistrationService.cs" />
+    <Compile Include="Aggregates\User\Services\LoginService.cs" />
+    <Compile Include="Aggregates\User\Services\RegistrationService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\lib\Common\Common.ComponentModel\Common.ComponentModel.csproj">
+      <Project>{C1AFE671-D598-4C89-B045-30CC20023849}</Project>
+      <Name>Common.ComponentModel</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\lib\Common\Common.MongoDB\Common.MongoDB.csproj">
       <Project>{263590D6-4984-477E-8D22-67C477870E8C}</Project>
       <Name>Common.MongoDB</Name>
@@ -52,9 +68,7 @@
       <Name>Common.Repository</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Exceptions\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>

@@ -34,8 +34,11 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IAsyncEditableRepository.cs" />
     <Compile Include="IEditableRepository.cs" />
     <Compile Include="IEntity.cs" />
+    <Compile Include="IAsyncReadableRepository.cs" />
+    <Compile Include="IAsyncRepository.cs" />
     <Compile Include="IReadableRepository.cs" />
     <Compile Include="IRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

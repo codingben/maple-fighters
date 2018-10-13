@@ -1,6 +1,6 @@
 ﻿namespace Authenticator.Domain.Aggregates.User
 {
-    public class AccountFactory
+    public static class AccountFactory
     {
         public static Account CreateAccount(
             string email,

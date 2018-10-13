@@ -39,5 +39,23 @@ namespace ServerCommon.Configuration
         }
 
         private static IInboundPeer _outboundPeer;
+
+        public static IDatabases Databases
+        {
+            get
+            {
+                if (_databases == null)
+                {
+                    throw new ServerSettingsException(
+                        "The databases configuration is not initialized.");
+                }
+
+                return _databases;
+            }
+
+            set => _databases = value;
+        }
+
+        private static IDatabases _databases;
     }
 }

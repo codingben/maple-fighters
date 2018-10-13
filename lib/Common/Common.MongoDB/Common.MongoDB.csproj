@@ -54,9 +54,11 @@
   <ItemGroup>
     <Compile Include="IEntity.cs" />
     <Compile Include="IMongoDatabaseProvider.cs" />
+    <Compile Include="IMongoAsyncRepository.cs" />
     <Compile Include="IMongoRepository.cs" />
     <Compile Include="MongoDatabaseProvider.cs" />
-    <Compile Include="RepositoryBase.cs" />
+    <Compile Include="MongoAsyncRepositoryBase.cs" />
+    <Compile Include="MongoRepositoryBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

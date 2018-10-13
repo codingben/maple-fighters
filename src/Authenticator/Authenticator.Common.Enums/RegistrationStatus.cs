@@ -1,15 +1,15 @@
 ﻿namespace Authenticator.Common.Enums
 {
-    public enum AuthenticatorOperations
+    public enum RegistrationStatus : byte
     {
         /// <summary>
-        /// The login.
+        /// The email exists.
         /// </summary>
-        Login,
+        EmailAlreadyInUse,
 
         /// <summary>
-        /// The register.
+        /// The created.
         /// </summary>
-        Register
+        Created
     }
 }

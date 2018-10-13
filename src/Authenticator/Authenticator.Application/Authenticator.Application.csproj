@@ -59,9 +59,18 @@
     <Compile Include="Peer\Logic\MainPeerLogic.cs" />
     <Compile Include="Peer\Logic\Operations\LoginOperationHandler.cs" />
     <Compile Include="Peer\AuthenticatorPeer.cs" />
+    <Compile Include="Peer\Logic\Operations\RegisterOperationHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\lib\Common\Common.ComponentModel\Common.ComponentModel.csproj">
+      <Project>{C1AFE671-D598-4C89-B045-30CC20023849}</Project>
+      <Name>Common.ComponentModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\lib\Common\Common.MongoDB\Common.MongoDB.csproj">
+      <Project>{263590D6-4984-477E-8D22-67C477870E8C}</Project>
+      <Name>Common.MongoDB</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\lib\ServerCommon\ServerCommon.Application\ServerCommon.Application.csproj">
       <Project>{478144C1-2DA6-4AED-9B7A-5004A7855F1C}</Project>
       <Name>ServerCommon.Application</Name>
@@ -85,6 +94,18 @@
     <ProjectReference Include="..\Authenticator.Common.Enums\Authenticator.Common.Enums.csproj">
       <Project>{D312D1B6-9289-4659-A0C8-2AB87464FD15}</Project>
       <Name>Authenticator.Common.Enums</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Authenticator.Common.Parameters\Authenticator.Common.Parameters.csproj">
+      <Project>{A102CDE4-CC98-46FD-86B4-C0F1DE34DF61}</Project>
+      <Name>Authenticator.Common.Parameters</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Authenticator.Domain\Authenticator.Domain.csproj">
+      <Project>{FB2E99EB-16B4-4035-9F27-9C74A849B441}</Project>
+      <Name>Authenticator.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Authenticator.Infrastructure\Authenticator.Infrastructure.csproj">
+      <Project>{0D005D32-E09C-40E4-B005-3D8583E32BC0}</Project>
+      <Name>Authenticator.Infrastructure</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

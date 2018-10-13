@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace Common.Repository
 {
@@ -9,7 +10,7 @@ namespace Common.Repository
     /// </summary>
     /// <typeparam name="TEntity">The entity.</typeparam>
     /// <typeparam name="TKey">The entity's Id.</typeparam>
-    public interface IReadableRepository<TEntity, TKey>
+    public interface IAsyncReadableRepository<TEntity, TKey>
         where TEntity : IEntity<TKey>
     {
         /// <summary>
@@ -17,7 +18,7 @@ namespace Common.Repository
         /// </summary>
         /// <param name="predicate">The prediction.</param>
         /// <returns>Returns the found entity.</returns>
-        TEntity Read(
+        Task<TEntity> ReadAsync(
             Expression<Func<TEntity, bool>> predicate);
 
         /// <summary>
@@ -25,7 +26,7 @@ namespace Common.Repository
         /// </summary>
         /// <param name="predicate">The prediction.</param>
         /// <returns>Returns the found entities.</returns>
-        IEnumerable<TEntity> ReadMany(
+        Task<IEnumerable<TEntity>> ReadManyAsync(
             Expression<Func<TEntity, bool>> predicate);
     }
 }

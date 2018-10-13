@@ -8,7 +8,7 @@ namespace ServerCommon.PeerLogic.Components
         void Send<TEnumCode, TParameters>(
             TEnumCode code, 
             TParameters parameters, 
-            MessageSendOptions messageSendOptions)
+            MessageSendOptions sendOptions)
             where TEnumCode : IComparable, IFormattable, IConvertible
             where TParameters : struct, IParameters;
     }

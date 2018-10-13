@@ -41,7 +41,9 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Definitions\IDatabases.cs" />
     <Compile Include="Definitions\IInboundPeer.cs" />
+    <Compile Include="Definitions\IMongo.cs" />
     <Compile Include="Definitions\IOutboundPeer.cs" />
     <Compile Include="Definitions\IPeerOperations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
