@@ -74,6 +74,10 @@
       <Project>{65C156F0-FA83-4905-9AB0-CC4D04A05627}</Project>
       <Name>Common.Repository</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\lib\ServerCommon\ServerCommon.Application\ServerCommon.Application.csproj">
+      <Project>{478144C1-2DA6-4AED-9B7A-5004A7855F1C}</Project>
+      <Name>ServerCommon.Application</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Authenticator.Domain\Authenticator.Domain.csproj">
       <Project>{FB2E99EB-16B4-4035-9F27-9C74A849B441}</Project>
       <Name>Authenticator.Domain</Name>

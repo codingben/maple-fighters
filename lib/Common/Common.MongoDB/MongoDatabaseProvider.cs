@@ -3,6 +3,9 @@ using MongoDB.Driver;
 
 namespace Common.MongoDB
 {
+    /// <summary>
+    /// Provides the mongo database.
+    /// </summary>
     [ComponentSettings(ExposedState.Unexposable)]
     public class MongoDatabaseProvider : ComponentBase, IMongoDatabaseProvider
     {
