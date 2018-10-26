@@ -1,8 +1,11 @@
-﻿using System;
+﻿using Authenticator.Application.Peer.Logic.Operations.Converters;
+using Authenticator.Application.Peer.Logic.Operations.Validators;
 using Authenticator.Common.Enums;
 using Authenticator.Common.Parameters;
 using Authenticator.Domain.Aggregates.User.Services;
+using Common.ParametersValidation;
 using CommonCommunicationInterfaces;
+using FluentValidation;
 using ServerCommunicationHelper;
 
 namespace Authenticator.Application.Peer.Logic.Operations
@@ -11,50 +14,36 @@ namespace Authenticator.Application.Peer.Logic.Operations
         IOperationRequestHandler<LoginRequestParameters, LoginResponseParameters>
     {
         private readonly ILoginService loginService;
+        private readonly IValidator<LoginRequestParameters> loginParametersValidator;
 
         public LoginOperationHandler(ILoginService loginService)
         {
             this.loginService = loginService;
+
+            loginParametersValidator = new LoginParametersValidator();
         }
 
         public LoginResponseParameters? Handle(
             MessageData<LoginRequestParameters> messageData,
             ref MessageSendOptions sendOptions)
         {
-            // TODO: Parameters validator
-            var email = messageData.Parameters.Email;
-            var password = messageData.Parameters.Password;
+            var loginStatus = LoginStatus.Failed;
 
-            var authenticationStatus = loginService.Authenticate(email, password);
-            LoginStatus loginStatus;
-
-            switch (authenticationStatus)
+            var validationResult =
+                loginParametersValidator.Validate(messageData.Parameters);
+            if (validationResult.IsValid)
             {
-                case AuthenticationStatus.Authenticated:
-                {
-                    loginStatus = LoginStatus.Succeed;
-                    break;
-                }
+                var authenticationStatus =
+                    loginService.Authenticate(
+                        messageData.Parameters.Email,
+                        messageData.Parameters.Password);
 
-                case AuthenticationStatus.NotFound:
-                {
-                    loginStatus = LoginStatus.WrongEmail;
-                    break;
-                }
-
-                case AuthenticationStatus.WrongPassword:
-                {
-                    loginStatus = LoginStatus.WrongPassword;
-                    break;
-                }
-
-                default:
-                {
-                    throw new ArgumentOutOfRangeException();
-                }
+                loginStatus = authenticationStatus.ToLoginStatus();
             }
 
-            return new LoginResponseParameters(loginStatus);
+            return new LoginResponseParameters(
+                loginStatus,
+                validationResult.ToErrorMessage());
         }
     }
 }

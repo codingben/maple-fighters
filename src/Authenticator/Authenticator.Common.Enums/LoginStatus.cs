@@ -3,6 +3,11 @@
     public enum LoginStatus : byte
     {
         /// <summary>
+        /// The failed.
+        /// </summary>
+        Failed,
+
+        /// <summary>
         /// The wrong email.
         /// </summary>
         WrongEmail,

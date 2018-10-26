@@ -1,9 +1,12 @@
-﻿using System;
+﻿using Authenticator.Application.Peer.Logic.Operations.Converters;
+using Authenticator.Application.Peer.Logic.Operations.Validators;
 using Authenticator.Common.Enums;
 using Authenticator.Common.Parameters;
 using Authenticator.Domain.Aggregates.User;
 using Authenticator.Domain.Aggregates.User.Services;
+using Common.ParametersValidation;
 using CommonCommunicationInterfaces;
+using FluentValidation;
 using ServerCommunicationHelper;
 
 namespace Authenticator.Application.Peer.Logic.Operations
@@ -12,53 +15,42 @@ namespace Authenticator.Application.Peer.Logic.Operations
         IOperationRequestHandler<RegisterRequestParameters, RegisterResponseParameters>
     {
         private readonly IRegistrationService registrationService;
+        private readonly IValidator<RegisterRequestParameters> registerParametersValidator;
 
         public RegisterOperationHandler(
             IRegistrationService registrationService)
         {
             this.registrationService = registrationService;
+
+            registerParametersValidator = new RegisterParametersValidator();
         }
 
         public RegisterResponseParameters? Handle(
             MessageData<RegisterRequestParameters> messageData,
             ref MessageSendOptions sendOptions)
         {
-            // TODO: Parameters validator
-            var email = messageData.Parameters.Email;
-            var password = messageData.Parameters.Password;
-            var firstName = messageData.Parameters.FirstName;
-            var lastName = messageData.Parameters.LastName;
+            var registrationStatus = RegistrationStatus.Failed;
 
-            var account = AccountFactory.CreateAccount(
-                email,
-                password,
-                firstName,
-                lastName);
-
-            var accountCreationStatus = registrationService.CreateAccount(account);
-            RegistrationStatus registrationStatus;
-
-            switch (accountCreationStatus)
+            var validationResult =
+                registerParametersValidator.Validate(messageData.Parameters);
+            if (validationResult.IsValid)
             {
-                case AccountCreationStatus.Succeed:
-                {
-                    registrationStatus = RegistrationStatus.Created;
-                    break;
-                }
+                var account = AccountFactory.CreateAccount(
+                    messageData.Parameters.Email,
+                    messageData.Parameters.Password,
+                    messageData.Parameters.FirstName,
+                    messageData.Parameters.LastName);
 
-                case AccountCreationStatus.EmailExists:
-                {
-                    registrationStatus = RegistrationStatus.EmailAlreadyInUse;
-                    break;
-                }
+                var accountCreationStatus =
+                    registrationService.CreateAccount(account);
 
-                default:
-                {
-                    throw new ArgumentOutOfRangeException();
-                }
+                registrationStatus =
+                    accountCreationStatus.ToRegistrationStatus();
             }
 
-            return new RegisterResponseParameters(registrationStatus);
+            return new RegisterResponseParameters(
+                registrationStatus,
+                validationResult.ToErrorMessage());
         }
     }
 }

@@ -3,6 +3,11 @@
     public enum RegistrationStatus : byte
     {
         /// <summary>
+        /// The failed.
+        /// </summary>
+        Failed,
+
+        /// <summary>
         /// The email exists.
         /// </summary>
         EmailAlreadyInUse,

@@ -39,9 +39,13 @@
     <Reference Include="Coroutines, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Coroutines.5.0.5\lib\net46\Coroutines.dll</HintPath>
     </Reference>
+    <Reference Include="FluentValidation, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7de548da2fbae0f0, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\FluentValidation.8.0.100\lib\net45\FluentValidation.dll</HintPath>
+    </Reference>
     <Reference Include="LogUtils, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Coroutines.5.0.5\lib\net46\LogUtils.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="ServerCommunicationHelper, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\ServerCommunicationHelper.3.0.0\lib\net46\ServerCommunicationHelper.dll</HintPath>
     </Reference>
@@ -49,17 +53,25 @@
       <HintPath>..\..\..\packages\ServerCommunicationInterfaces.2.0.0\lib\net46\ServerCommunicationInterfaces.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.ComponentModel.Primitives, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\System.ComponentModel.Primitives.4.3.0\lib\net45\System.ComponentModel.Primitives.dll</HintPath>
+    </Reference>
     <Reference Include="System.Core" />
-    <Reference Include="System.ValueTuple, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\System.ValueTuple.4.4.0\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\System.ValueTuple.4.5.0\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AuthenticationApplication.cs" />
     <Compile Include="Peer\Logic\MainPeerLogic.cs" />
+    <Compile Include="Peer\Logic\Operations\Converters\ExtensionMethods.cs" />
     <Compile Include="Peer\Logic\Operations\LoginOperationHandler.cs" />
     <Compile Include="Peer\AuthenticatorPeer.cs" />
     <Compile Include="Peer\Logic\Operations\RegisterOperationHandler.cs" />
+    <Compile Include="Peer\Logic\Operations\Validators\LoginParametersValidator.cs" />
+    <Compile Include="Peer\Logic\Operations\Validators\RegisterParametersValidator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -70,6 +82,10 @@
     <ProjectReference Include="..\..\..\lib\Common\Common.MongoDB\Common.MongoDB.csproj">
       <Project>{263590D6-4984-477E-8D22-67C477870E8C}</Project>
       <Name>Common.MongoDB</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\lib\Common\Common.ParametersValidation\Common.ParametersValidation.csproj">
+      <Project>{41F5F951-B6A6-4F67-BBC1-EBEF53F62FA8}</Project>
+      <Name>Common.ParametersValidation</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\lib\ServerCommon\ServerCommon.Application\ServerCommon.Application.csproj">
       <Project>{478144C1-2DA6-4AED-9B7A-5004A7855F1C}</Project>
