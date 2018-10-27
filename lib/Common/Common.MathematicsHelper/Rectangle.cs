@@ -1,11 +1,9 @@
-﻿using System;
+﻿using System.Collections.Generic;
 
 namespace Common.MathematicsHelper
 {
     public struct Rectangle
     {
-        public static readonly Rectangle Empty = new Rectangle();
-
         public float X { get; private set; }
 
         public float Y { get; private set; }
@@ -52,45 +50,7 @@ namespace Common.MathematicsHelper
             Height = size.Y;
         }
 
-        public override bool Equals(object other)
-        {
-            if (!(other is Rectangle))
-            {
-                return false;
-            }
-
-            var rectangle = (Rectangle)other;
-
-            return (rectangle.X == X) &&
-                   (rectangle.Y == Y) &&
-                   (rectangle.Width == Width) &&
-                   (rectangle.Height == Height);
-        }
-
-        public override int GetHashCode()
-        {
-            return (int)((uint)X ^
-                        (((uint)Y << 13) | ((uint)Y >> 19)) ^
-                            (((uint)Width << 26) | ((uint)Width >> 6)) ^
-                                (((uint)Height << 7) | ((uint)Height >> 25)));
-        }
-
-        public static Rectangle Intersect(Rectangle a, Rectangle b)
-        {
-            var x1 = Math.Max(a.X, b.X);
-            var x2 = Math.Min(a.X + a.Width, b.X + b.Width);
-            var y1 = Math.Max(a.Y, b.Y);
-            var y2 = Math.Min(a.Y + a.Height, b.Y + b.Height);
-
-            if (x2 >= x1 && y2 >= y1)
-            {
-                return new Rectangle(x1, y1, x2 - x1, y2 - y1);
-            }
-
-            return Empty;
-        }
-
-        public bool IntersectsWith(Rectangle rectangle)
+        public bool Intersects(Rectangle rectangle)
         {
             return (rectangle.X < X + Width) &&
                    (X < (rectangle.X + rectangle.Width)) &&
@@ -101,6 +61,40 @@ namespace Common.MathematicsHelper
         public override string ToString()
         {
             return $"X: {X} Y: {Y} Width: {Width} Height: {Height}";
+        }
+
+        public IEnumerable<Vector2> GetFixedCorners()
+        {
+            var corners = GetCorners();
+
+            for (var i = 0; i < corners.Length; i++)
+            {
+                corners[i].X += X;
+                corners[i].Y += Y;
+            }
+
+            return corners;
+        }
+
+        public Vector2[] GetCorners()
+        {
+            var topLeft = new Vector2(
+                x: -(Width / 2) + 0.1f,
+                y: (Height / 2) - 0.1f);
+
+            var topRight = new Vector2(
+                x: (Width / 2) - 0.1f,
+                y: (Height / 2) - 0.1f);
+
+            var bottomLeft = new Vector2(
+                x: (Width / 2) - 0.1f,
+                y: -(Height / 2) + 0.1f);
+
+            var bottomRight = new Vector2(
+                x: -(Width / 2) + 0.1f,
+                y: -(Height / 2) + 0.1f);
+
+            return new[] { topLeft, topRight, bottomLeft, bottomRight };
         }
     }
 }
