@@ -3,6 +3,9 @@ using Common.MathematicsHelper;
 
 namespace Game.InterestManagement
 {
+    /// <summary>
+    /// The transform in the scene of the scene object.
+    /// </summary>
     public interface ITransform
     {
         /// <summary>

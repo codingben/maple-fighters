@@ -42,11 +42,16 @@ namespace Game.InterestManagement
                     if (region.Subscribe(sceneObject))
                     {
                         // TODO: Optimize if possible
-                        foreach (var sceneObject in region.GetAllSceneObjects())
+                        foreach (var nearbySceneObject in region.GetAllSceneObjects())
                         {
-                            if (nearbySceneObjects.Add(sceneObject))
+                            if (sceneObject.Id == nearbySceneObject.Id)
                             {
-                                NearbySceneObjectAdded?.Invoke(sceneObject);
+                                continue;
+                            }
+
+                            if (nearbySceneObjects.Add(nearbySceneObject))
+                            {
+                                NearbySceneObjectAdded?.Invoke(nearbySceneObject);
                             }
                         }
                     }
@@ -58,11 +63,16 @@ namespace Game.InterestManagement
                         nearbyRegions.Remove(region);
 
                         // TODO: Optimize if possible
-                        foreach (var sceneObject in region.GetAllSceneObjects())
+                        foreach (var nearbySceneObject in region.GetAllSceneObjects())
                         {
-                            if (nearbySceneObjects.Remove(sceneObject))
+                            if (sceneObject.Id == nearbySceneObject.Id)
                             {
-                                NearbySceneObjectRemoved?.Invoke(sceneObject);
+                                continue;
+                            }
+
+                            if (nearbySceneObjects.Remove(nearbySceneObject))
+                            {
+                                NearbySceneObjectRemoved?.Invoke(nearbySceneObject);
                             }
                         }
                     }
