@@ -51,10 +51,6 @@
       <Project>{0D1F61DD-6F1A-4D2D-9B40-6B4D2FBAC30D}</Project>
       <Name>Common.MathematicsHelper</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\tests\unit\Common\Common.ComponentModel.UnitTests\Common.ComponentModel.UnitTests.csproj">
-      <Project>{FFBA98A3-BDE7-46BD-9C47-ADFAD88D1AA2}</Project>
-      <Name>Common.ComponentModel.UnitTests</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
