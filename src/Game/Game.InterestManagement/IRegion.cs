@@ -1,9 +1,16 @@
-﻿namespace Game.InterestManagement
+﻿using System.Collections.Generic;
+using Common.MathematicsHelper;
+
+namespace Game.InterestManagement
 {
     public interface IRegion
     {
-        void AddSceneObject(ISceneObject sceneObject);
+        bool Subscribe(ISceneObject sceneObject);
 
-        void RemoveSceneObject(ISceneObject sceneObject);
+        bool Unsubscribe(ISceneObject sceneObject);
+
+        Rectangle GetRectangle();
+
+        IEnumerable<ISceneObject> GetAllSceneObjects();
     }
 }

@@ -4,6 +4,8 @@
     {
         int Id { get; }
 
+        IScene Scene { get; }
+
         ITransform Transform { get; }
     }
 }

@@ -19,7 +19,7 @@ namespace Game.InterestManagement
 
             foreach (var region in regions)
             {
-                region.AddSceneObject(sceneObject);
+                region.Subscribe(sceneObject);
             }
         }
 
@@ -31,7 +31,7 @@ namespace Game.InterestManagement
 
             foreach (var region in regions)
             {
-                region.RemoveSceneObject(sceneObject);
+                region.Unsubscribe(sceneObject);
             }
         }
     }

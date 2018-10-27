@@ -34,6 +34,8 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IInterestArea.cs" />
+    <Compile Include="InterestArea.cs" />
     <Compile Include="IRegion.cs" />
     <Compile Include="IMatrixRegion.cs" />
     <Compile Include="IScene.cs" />
