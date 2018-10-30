@@ -41,6 +41,8 @@ namespace Game.InterestManagement
                 {
                     if (region.Subscribe(sceneObject))
                     {
+                        nearbyRegions.Add(region);
+
                         // TODO: Optimize if possible
                         foreach (var nearbySceneObject in region.GetAllSceneObjects())
                         {
