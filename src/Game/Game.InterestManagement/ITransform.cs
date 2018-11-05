@@ -9,18 +9,18 @@ namespace Game.InterestManagement
     public interface ITransform
     {
         /// <summary>
-        /// Gets position and the size of the object.
-        /// </summary>
-        Rectangle Rectangle { get; }
-
-        /// <summary>
         /// The notifier of the new position.
         /// </summary>
         event Action PositionChanged;
 
         /// <summary>
-        /// The notifier of the new size.
+        /// Gets position of the object.
         /// </summary>
-        event Action SizeChanged;
+        Vector2 Position { get; }
+
+        /// <summary>
+        /// Gets size of the object.
+        /// </summary>
+        Vector2 Size { get; }
     }
 }

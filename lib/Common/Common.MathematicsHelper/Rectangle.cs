@@ -2,7 +2,7 @@
 
 namespace Common.MathematicsHelper
 {
-    public struct Rectangle
+    public struct Rectangle : IRectangle
     {
         public float X { get; private set; }
 
@@ -21,6 +21,8 @@ namespace Common.MathematicsHelper
         public float Bottom => Y + Height;
 
         public Vector2 Position => new Vector2(X, Y);
+
+        public Vector2 Size => new Vector2(Width, Height);
 
         public Rectangle(float x, float y, float width, float height)
         {
@@ -50,12 +52,20 @@ namespace Common.MathematicsHelper
             Height = size.Y;
         }
 
-        public bool Intersects(Rectangle rectangle)
+        public bool Intersects(Rectangle other)
         {
-            return (rectangle.X < X + Width) &&
-                   (X < (rectangle.X + rectangle.Width)) &&
-                   (rectangle.Y < Y + Height) &&
-                   (Y < rectangle.Y + rectangle.Height);
+            return (other.X < X + Width) &&
+                   (X < (other.X + other.Width)) &&
+                   (other.Y < Y + Height) &&
+                   (Y < other.Y + other.Height);
+        }
+
+        public bool Intersects(Vector2 position, Vector2 size)
+        {
+            return (position.X < X + Width) &&
+                   (X < (position.X + size.X)) &&
+                   (position.Y < Y + Height) &&
+                   (Y < position.Y + size.Y);
         }
 
         public override string ToString()
@@ -63,36 +73,46 @@ namespace Common.MathematicsHelper
             return $"X: {X} Y: {Y} Width: {Width} Height: {Height}";
         }
 
-        public IEnumerable<Vector2> GetFixedCorners()
-        {
-            var corners = GetCorners();
-
-            for (var i = 0; i < corners.Length; i++)
-            {
-                corners[i].X += X;
-                corners[i].Y += Y;
-            }
-
-            return corners;
-        }
-
-        public Vector2[] GetCorners()
+        public Vector2[] GetVertices()
         {
             var topLeft = new Vector2(
-                x: -(Width / 2) + 0.1f,
-                y: (Height / 2) - 0.1f);
+                x: X + (-(Width / 2) + 0.1f),
+                y: Y + ((Height / 2) - 0.1f));
 
             var topRight = new Vector2(
-                x: (Width / 2) - 0.1f,
-                y: (Height / 2) - 0.1f);
+                x: X + ((Width / 2) - 0.1f),
+                y: Y + ((Height / 2) - 0.1f));
 
             var bottomLeft = new Vector2(
-                x: (Width / 2) - 0.1f,
-                y: -(Height / 2) + 0.1f);
+                x: X + ((Width / 2) - 0.1f),
+                y: Y + (-(Height / 2) + 0.1f));
 
             var bottomRight = new Vector2(
-                x: -(Width / 2) + 0.1f,
-                y: -(Height / 2) + 0.1f);
+                x: X + (-(Width / 2) + 0.1f),
+                y: Y + (-(Height / 2) + 0.1f));
+
+            return new[] { topLeft, topRight, bottomLeft, bottomRight };
+        }
+
+        public static IEnumerable<Vector2> GetVertices(
+            Vector2 position,
+            Vector2 size)
+        {
+            var topLeft = new Vector2(
+                x: position.X + (-(size.X / 2) + 0.1f),
+                y: position.Y + ((size.Y / 2) - 0.1f));
+
+            var topRight = new Vector2(
+                x: position.X + ((size.X / 2) - 0.1f),
+                y: position.Y + ((size.Y / 2) - 0.1f));
+
+            var bottomLeft = new Vector2(
+                x: position.X + ((size.X / 2) - 0.1f),
+                y: position.Y + (-(size.Y / 2) + 0.1f));
+
+            var bottomRight = new Vector2(
+                x: position.X + (-(size.X / 2) + 0.1f),
+                y: position.Y + (-(size.Y / 2) + 0.1f));
 
             return new[] { topLeft, topRight, bottomLeft, bottomRight };
         }

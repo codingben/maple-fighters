@@ -5,30 +5,26 @@ namespace Game.InterestManagement
 {
     public class Region : IRegion
     {
-        private readonly Rectangle rectangle;
+        public IRectangle Rectangle { get; }
+
         private readonly HashSet<ISceneObject> sceneObjects = new HashSet<ISceneObject>();
 
         public Region(Vector2 position, Vector2 size)
         {
-            rectangle = new Rectangle(position, size);
+            Rectangle = new Rectangle(position, size);
         }
 
-        public bool Subscribe(ISceneObject sceneObject)
+        public void Subscribe(ISceneObject sceneObject)
         {
-            return sceneObjects.Add(sceneObject);
+            sceneObjects.Add(sceneObject);
         }
 
-        public bool Unsubscribe(ISceneObject sceneObject)
+        public void Unsubscribe(ISceneObject sceneObject)
         {
-            return sceneObjects.Remove(sceneObject);
+            sceneObjects.Remove(sceneObject);
         }
 
-        public Rectangle GetRectangle()
-        {
-            return rectangle;
-        }
-
-        public IEnumerable<ISceneObject> GetAllSceneObjects()
+        public IEnumerable<ISceneObject> GetAllSubscribers()
         {
             return sceneObjects;
         }

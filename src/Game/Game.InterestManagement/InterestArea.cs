@@ -7,19 +7,20 @@ namespace Game.InterestManagement
     public class InterestArea : IInterestArea
     {
         /// <inheritdoc />
-        public event Action<ISceneObject> NearbySceneObjectAdded;
+        public event Action<IRegion[]> NearbyRegionsAdded;
 
         /// <inheritdoc />
-        public event Action<ISceneObject> NearbySceneObjectRemoved;
+        public event Action<IRegion[]> NearbyRegionsRemoved;
 
-        private readonly ISceneObject sceneObject;
+        private readonly IScene scene;
+        private readonly ITransform transform;
 
-        private readonly HashSet<IRegion> nearbyRegions = new HashSet<IRegion>();
-        private readonly HashSet<ISceneObject> nearbySceneObjects = new HashSet<ISceneObject>();
+        private readonly List<IRegion> nearbyRegions = new List<IRegion>();
 
-        public InterestArea(ISceneObject sceneObject)
+        public InterestArea(IScene scene, ITransform transform)
         {
-            this.sceneObject = sceneObject;
+            this.scene = scene;
+            this.transform = transform;
             
             SubscribeToTransformEvents();
         }
@@ -29,80 +30,57 @@ namespace Game.InterestManagement
             UnsubscribeFromTransformEvents();
         }
 
-        private void UpdateNearbyRegions()
-        {
-            SubscribeToNearbyRegionsIfNeeded();
-
-            var regions = nearbyRegions.ToArray();
-            foreach (var region in regions)
-            {
-                var otherRectangle = sceneObject.Transform.Rectangle;
-                if (region.GetRectangle().Intersects(otherRectangle))
-                {
-                    if (region.Subscribe(sceneObject))
-                    {
-                        nearbyRegions.Add(region);
-
-                        // TODO: Optimize if possible
-                        foreach (var nearbySceneObject in region.GetAllSceneObjects())
-                        {
-                            if (sceneObject.Id == nearbySceneObject.Id)
-                            {
-                                continue;
-                            }
-
-                            if (nearbySceneObjects.Add(nearbySceneObject))
-                            {
-                                NearbySceneObjectAdded?.Invoke(nearbySceneObject);
-                            }
-                        }
-                    }
-                }
-                else
-                {
-                    if (region.Unsubscribe(sceneObject))
-                    {
-                        nearbyRegions.Remove(region);
-
-                        // TODO: Optimize if possible
-                        foreach (var nearbySceneObject in region.GetAllSceneObjects())
-                        {
-                            if (sceneObject.Id == nearbySceneObject.Id)
-                            {
-                                continue;
-                            }
-
-                            if (nearbySceneObjects.Remove(nearbySceneObject))
-                            {
-                                NearbySceneObjectRemoved?.Invoke(nearbySceneObject);
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        private void SubscribeToNearbyRegionsIfNeeded()
-        {
-            var corners = sceneObject.Transform.Rectangle.GetFixedCorners();
-            var regions = sceneObject.Scene.MatrixRegion.GetRegions(corners);
-
-            foreach (var region in regions)
-            {
-                nearbyRegions.Add(region);
-            }
-        }
-
         private void SubscribeToTransformEvents()
         {
-            sceneObject.Transform.PositionChanged += UpdateNearbyRegions;
-            sceneObject.Transform.SizeChanged += UpdateNearbyRegions;
+            transform.PositionChanged += UpdateNearbyRegions;
         }
 
         private void UnsubscribeFromTransformEvents()
         {
-            sceneObject.Transform.PositionChanged -= UpdateNearbyRegions;
-            sceneObject.Transform.SizeChanged -= UpdateNearbyRegions;
+            transform.PositionChanged -= UpdateNearbyRegions;
+        }
+
+        private void UpdateNearbyRegions()
+        {
+            SubscribeToNearbyRegions();
+            UnsubscribeFromNearbyRegions();
+        }
+
+        private void SubscribeToNearbyRegions()
+        {
+            var newRegions = scene.MatrixRegion.GetRegions(transform).ToArray();
+
+            foreach (var region in newRegions)
+            {
+                if (!nearbyRegions.Contains(region))
+                {
+                    nearbyRegions.Add(region);
+                }
+            }
+
+            if (newRegions.Any())
+            {
+                NearbyRegionsAdded?.Invoke(newRegions);
+            }
+        }
+
+        private void UnsubscribeFromNearbyRegions()
+        {
+            var oldRegions = 
+                nearbyRegions.Where(
+                    x => !x.Rectangle.Intersects(
+                             transform.Position, 
+                             transform.Size)).ToArray();
+
+            foreach (var region in oldRegions)
+            {
+                nearbyRegions.Remove(region);
+            }
+
+            if (oldRegions.Any())
+            {
+                NearbyRegionsRemoved?.Invoke(oldRegions);
+            }
         }
     }
 }
