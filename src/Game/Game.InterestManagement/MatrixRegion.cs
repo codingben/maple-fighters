@@ -78,5 +78,13 @@ namespace Game.InterestManagement
 
             return matrices.Distinct(new Matrix2Comparer());
         }
+
+        public void Dispose()
+        {
+            foreach (var region in regions)
+            {
+                region?.Dispose();
+            }
+        }
     }
 }

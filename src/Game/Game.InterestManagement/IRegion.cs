@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Common.MathematicsHelper;
 
 namespace Game.InterestManagement
@@ -6,8 +7,18 @@ namespace Game.InterestManagement
     /// <summary>
     /// Represents the region in the scene with scene objects.
     /// </summary>
-    public interface IRegion
+    public interface IRegion : IDisposable
     {
+        /// <summary>
+        /// The notifier of the new subscriber to the region.
+        /// </summary>
+        event Action<ISceneObject> SubscriberAdded;
+
+        /// <summary>
+        /// The notifier of the removed subscriber from the region.
+        /// </summary>
+        event Action<ISceneObject> SubscriberRemoved;
+
         /// <summary>
         /// Gets the geometric shape of the region.
         /// </summary>

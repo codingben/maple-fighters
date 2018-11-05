@@ -28,6 +28,8 @@ namespace Game.InterestManagement
         public void Dispose()
         {
             UnsubscribeFromPositionChanged();
+
+            nearbyRegions?.Clear();
         }
 
         private void SubscribeToPositionChanged()
@@ -50,7 +52,6 @@ namespace Game.InterestManagement
         {
             var newRegions =
                 scene.MatrixRegion.GetRegions(transform)?.ToArray();
-
             if (newRegions != null)
             {
                 foreach (var region in newRegions)

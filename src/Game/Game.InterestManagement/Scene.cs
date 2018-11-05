@@ -32,5 +32,10 @@ namespace Game.InterestManagement
                 region.Unsubscribe(sceneObject);
             }
         }
+
+        public void Dispose()
+        {
+            MatrixRegion?.Dispose();
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Common.MathematicsHelper;
 
 namespace Game.InterestManagement
@@ -6,7 +7,7 @@ namespace Game.InterestManagement
     /// <summary>
     /// Represents the matrix region inside the scene.
     /// </summary>
-    public interface IMatrixRegion
+    public interface IMatrixRegion : IDisposable
     {
         /// <summary>
         /// Gets the regions by the scene object position.

@@ -1,9 +1,11 @@
-﻿namespace Game.InterestManagement
+﻿using System;
+
+namespace Game.InterestManagement
 {
     /// <summary>
     /// Represents the scene which has the regions.
     /// </summary>
-    public interface IScene
+    public interface IScene : IDisposable
     {
         /// <summary>
         /// Gets the access to the scene regions.
