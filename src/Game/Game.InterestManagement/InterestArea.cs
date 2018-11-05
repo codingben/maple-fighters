@@ -21,21 +21,21 @@ namespace Game.InterestManagement
         {
             this.scene = scene;
             this.transform = transform;
-            
-            SubscribeToTransformEvents();
+
+            SubscribeToPositionChanged();
         }
 
         public void Dispose()
         {
-            UnsubscribeFromTransformEvents();
+            UnsubscribeFromPositionChanged();
         }
 
-        private void SubscribeToTransformEvents()
+        private void SubscribeToPositionChanged()
         {
             transform.PositionChanged += UpdateNearbyRegions;
         }
 
-        private void UnsubscribeFromTransformEvents()
+        private void UnsubscribeFromPositionChanged()
         {
             transform.PositionChanged -= UpdateNearbyRegions;
         }
@@ -48,25 +48,29 @@ namespace Game.InterestManagement
 
         private void SubscribeToNearbyRegions()
         {
-            var newRegions = scene.MatrixRegion.GetRegions(transform).ToArray();
+            var newRegions =
+                scene.MatrixRegion.GetRegions(transform)?.ToArray();
 
-            foreach (var region in newRegions)
+            if (newRegions != null)
             {
-                if (!nearbyRegions.Contains(region))
+                foreach (var region in newRegions)
                 {
-                    nearbyRegions.Add(region);
+                    if (!nearbyRegions.Contains(region))
+                    {
+                        nearbyRegions.Add(region);
+                    }
                 }
-            }
 
-            if (newRegions.Any())
-            {
-                NearbyRegionsAdded?.Invoke(newRegions);
+                if (newRegions.Length != 0)
+                {
+                    NearbyRegionsAdded?.Invoke(newRegions);
+                }
             }
         }
 
         private void UnsubscribeFromNearbyRegions()
         {
-            var oldRegions = 
+            var oldRegions =
                 nearbyRegions.Where(
                     x => !x.Rectangle.Intersects(
                              transform.Position, 
@@ -77,7 +81,7 @@ namespace Game.InterestManagement
                 nearbyRegions.Remove(region);
             }
 
-            if (oldRegions.Any())
+            if (oldRegions.Length != 0)
             {
                 NearbyRegionsRemoved?.Invoke(oldRegions);
             }
