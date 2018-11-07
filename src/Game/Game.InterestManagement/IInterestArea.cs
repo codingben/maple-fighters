@@ -8,13 +8,11 @@ namespace Game.InterestManagement
     public interface IInterestArea : IDisposable
     {
         /// <summary>
-        /// The notifier of the new nearby regions.
+        /// Gets the nearby scene objects collection.
         /// </summary>
-        event Action<IRegion[]> NearbyRegionsAdded;
-
-        /// <summary>
-        /// The notifier of the removed nearby regions.
-        /// </summary>
-        event Action<IRegion[]> NearbyRegionsRemoved;
+        /// <returns>
+        /// The <see cref="INearbySubscriberCollection"/>.
+        /// </returns>
+        INearbySubscriberCollection GetNearbySubscribers();
     }
 }

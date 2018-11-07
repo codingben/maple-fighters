@@ -1,26 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 namespace Game.InterestManagement
 {
     public class InterestArea : IInterestArea
     {
-        /// <inheritdoc />
-        public event Action<IRegion[]> NearbyRegionsAdded;
-
-        /// <inheritdoc />
-        public event Action<IRegion[]> NearbyRegionsRemoved;
-
         private readonly IScene scene;
-        private readonly ITransform transform;
+        private readonly ISceneObject sceneObject;
 
         private readonly List<IRegion> nearbyRegions = new List<IRegion>();
 
-        public InterestArea(IScene scene, ITransform transform)
+        private readonly NearbySubscriberCollection nearbySubscriberCollection;
+
+        public InterestArea(IScene scene, ISceneObject sceneObject)
         {
             this.scene = scene;
-            this.transform = transform;
+            this.sceneObject = sceneObject;
+
+            nearbySubscriberCollection =
+                new NearbySubscriberCollection(sceneObject);
 
             SubscribeToPositionChanged();
         }
@@ -32,29 +30,35 @@ namespace Game.InterestManagement
             nearbyRegions?.Clear();
         }
 
+        /// <inheritdoc />
+        public INearbySubscriberCollection GetNearbySubscribers()
+        {
+            return nearbySubscriberCollection;
+        }
+
         private void SubscribeToPositionChanged()
         {
-            transform.PositionChanged += UpdateNearbyRegions;
+            sceneObject.Transform.PositionChanged += UpdateNearbyRegions;
         }
 
         private void UnsubscribeFromPositionChanged()
         {
-            transform.PositionChanged -= UpdateNearbyRegions;
+            sceneObject.Transform.PositionChanged -= UpdateNearbyRegions;
         }
 
         private void UpdateNearbyRegions()
         {
-            SubscribeToNearbyRegions();
-            UnsubscribeFromNearbyRegions();
+            SubscribeToVisibleRegions();
+            UnsubscribeFromInvisibleRegions();
         }
 
-        private void SubscribeToNearbyRegions()
+        private void SubscribeToVisibleRegions()
         {
-            var newRegions =
-                scene.MatrixRegion.GetRegions(transform)?.ToArray();
-            if (newRegions != null)
+            var visibleRegions =
+                scene.MatrixRegion.GetRegions(sceneObject.Transform)?.ToArray();
+            if (visibleRegions != null)
             {
-                foreach (var region in newRegions)
+                foreach (var region in visibleRegions)
                 {
                     if (!nearbyRegions.Contains(region))
                     {
@@ -62,29 +66,31 @@ namespace Game.InterestManagement
                     }
                 }
 
-                if (newRegions.Length != 0)
+                if (visibleRegions.Length != 0)
                 {
-                    NearbyRegionsAdded?.Invoke(newRegions);
+                    nearbySubscriberCollection.OnNearbyRegionsAdded(
+                        visibleRegions);
                 }
             }
         }
 
-        private void UnsubscribeFromNearbyRegions()
+        private void UnsubscribeFromInvisibleRegions()
         {
-            var oldRegions =
+            var invisibleRegions =
                 nearbyRegions.Where(
                     x => !x.Rectangle.Intersects(
-                             transform.Position, 
-                             transform.Size)).ToArray();
+                             sceneObject.Transform.Position,
+                             sceneObject.Transform.Size)).ToArray();
 
-            foreach (var region in oldRegions)
+            foreach (var region in invisibleRegions)
             {
                 nearbyRegions.Remove(region);
             }
 
-            if (oldRegions.Length != 0)
+            if (invisibleRegions.Length != 0)
             {
-                NearbyRegionsRemoved?.Invoke(oldRegions);
+                nearbySubscriberCollection.OnNearbyRegionsRemoved(
+                    invisibleRegions);
             }
         }
     }

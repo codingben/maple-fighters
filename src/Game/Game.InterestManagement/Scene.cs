@@ -13,9 +13,7 @@ namespace Game.InterestManagement
 
         public void AddSceneObject(ISceneObject sceneObject)
         {
-            var transform = sceneObject.Transform;
-            var regions = MatrixRegion.GetRegions(transform);
-
+            var regions = MatrixRegion.GetRegions(sceneObject.Transform);
             foreach (var region in regions)
             {
                 region.Subscribe(sceneObject);
@@ -24,9 +22,7 @@ namespace Game.InterestManagement
 
         public void RemoveSceneObject(ISceneObject sceneObject)
         {
-            var transform = sceneObject.Transform;
-            var regions = MatrixRegion.GetRegions(transform);
-
+            var regions = MatrixRegion.GetRegions(sceneObject.Transform);
             foreach (var region in regions)
             {
                 region.Unsubscribe(sceneObject);
