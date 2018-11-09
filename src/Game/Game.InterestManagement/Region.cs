@@ -24,16 +24,18 @@ namespace Game.InterestManagement
 
         public void Subscribe(ISceneObject sceneObject)
         {
-            sceneObjects.Add(sceneObject);
-
-            SubscriberAdded?.Invoke(sceneObject);
+            if (sceneObjects.Add(sceneObject))
+            {
+                SubscriberAdded?.Invoke(sceneObject);
+            }
         }
 
         public void Unsubscribe(ISceneObject sceneObject)
         {
-            sceneObjects.Remove(sceneObject);
-
-            SubscriberRemoved?.Invoke(sceneObject);
+            if (sceneObjects.Remove(sceneObject))
+            {
+                SubscriberRemoved?.Invoke(sceneObject);
+            }
         }
 
         public IEnumerable<ISceneObject> GetAllSubscribers()

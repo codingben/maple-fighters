@@ -11,8 +11,8 @@ namespace Game.InterestManagement
         /// Gets the nearby scene objects collection.
         /// </summary>
         /// <returns>
-        /// The <see cref="INearbySubscriberCollection"/>.
+        /// The <see cref="INearbySceneObjectsCollection"/>.
         /// </returns>
-        INearbySubscriberCollection GetNearbySubscribers();
+        INearbySceneObjectsCollection GetNearbySceneObjects();
     }
 }

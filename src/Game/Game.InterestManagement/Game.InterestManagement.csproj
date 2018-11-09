@@ -36,7 +36,7 @@
   <ItemGroup>
     <Compile Include="ExtensionMethods.cs" />
     <Compile Include="IInterestArea.cs" />
-    <Compile Include="INearbySubscriberCollection.cs" />
+    <Compile Include="INearbySceneObjectsCollection.cs" />
     <Compile Include="InterestArea.cs" />
     <Compile Include="IRegion.cs" />
     <Compile Include="IMatrixRegion.cs" />
@@ -46,7 +46,7 @@
     <Compile Include="Matrix2.cs" />
     <Compile Include="Matrix2Comparer.cs" />
     <Compile Include="MatrixRegion.cs" />
-    <Compile Include="NearbySubscribersCollection.cs" />
+    <Compile Include="NearbySceneObjectsCollection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Region.cs" />
     <Compile Include="Scene.cs" />
