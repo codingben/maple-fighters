@@ -17,11 +17,17 @@ namespace Game.InterestManagement
 
         public MatrixRegion(Vector2 sceneSize, Vector2 regionSize)
         {
+            if (sceneSize.Equals(Vector2.Zero)
+                || regionSize.Equals(Vector2.Zero))
+            {
+                throw new InvalidMatrixRegionSize();
+            }
+
             SceneSize = sceneSize;
             RegionSize = regionSize;
 
-            rows = (int)(sceneSize.X / regionSize.X);
-            columns = (int)(sceneSize.Y / regionSize.Y);
+            rows = (int)(SceneSize.X / SceneSize.X);
+            columns = (int)(RegionSize.Y / RegionSize.Y);
             regions = new IRegion[rows, columns];
 
             InitializeRegions();
@@ -55,6 +61,11 @@ namespace Game.InterestManagement
             }
         }
 
+        public IRegion[,] GetAllRegions()
+        {
+            return regions;
+        }
+
         private IEnumerable<Matrix2> GetMatrices(IEnumerable<Vector2> positions)
         {
             var matrices = new List<Matrix2>();
@@ -67,6 +78,7 @@ namespace Game.InterestManagement
                 var row = (int)Math.Floor(x / RegionSize.X);
                 var column = (int)Math.Floor(y / RegionSize.Y);
 
+                // Make sure it is not out of bounds.
                 if ((row < 0 || row >= rows)
                     || (column < 0 || column >= columns))
                 {

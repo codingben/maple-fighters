@@ -22,5 +22,17 @@ namespace Game.InterestManagement
         /// Gets size of the object.
         /// </summary>
         Vector2 Size { get; }
+
+        /// <summary>
+        /// Sets the new position to the object.
+        /// </summary>
+        /// <param name="position">The position.</param>
+        void SetPosition(Vector2 position);
+
+        /// <summary>
+        /// Sets the new size to the object.
+        /// </summary>
+        /// <param name="size">The new size.</param>
+        void SetSize(Vector2 size);
     }
 }

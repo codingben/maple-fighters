@@ -38,6 +38,7 @@
     <Compile Include="IInterestArea.cs" />
     <Compile Include="INearbySceneObjectsCollection.cs" />
     <Compile Include="InterestArea.cs" />
+    <Compile Include="InvalidMatrixRegionSize.cs" />
     <Compile Include="IRegion.cs" />
     <Compile Include="IMatrixRegion.cs" />
     <Compile Include="IScene.cs" />
