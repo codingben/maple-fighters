@@ -4,11 +4,13 @@ using Common.MathematicsHelper;
 
 namespace Game.InterestManagement
 {
-    /// <summary>
-    /// Represents the region in the scene with scene objects.
-    /// </summary>
     public interface IRegion : IDisposable
     {
+        /// <summary>
+        /// Gets the geometric shape of the region.
+        /// </summary>
+        IRectangle Rectangle { get; }
+
         /// <summary>
         /// The notifier of the new subscriber to the region.
         /// </summary>
@@ -18,11 +20,6 @@ namespace Game.InterestManagement
         /// The notifier of the removed subscriber from the region.
         /// </summary>
         event Action<ISceneObject> SubscriberRemoved;
-
-        /// <summary>
-        /// Gets the geometric shape of the region.
-        /// </summary>
-        IRectangle Rectangle { get; }
 
         /// <summary>
         /// Adds a new scene object to the region.
@@ -41,5 +38,11 @@ namespace Game.InterestManagement
         /// </summary>
         /// <returns>All the relevant scene objects.</returns>
         IEnumerable<ISceneObject> GetAllSubscribers();
+
+        /// <summary>
+        /// Checks if the region has subscribers.
+        /// </summary>
+        /// <returns>It has subscribers or not.</returns>
+        bool HasSubscribers();
     }
 }

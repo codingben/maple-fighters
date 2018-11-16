@@ -3,10 +3,7 @@ using System.Collections.Generic;
 
 namespace Game.InterestManagement
 {
-    /// <summary>
-    /// Represents the nearby scene objects on the interest area.
-    /// </summary>
-    public interface INearbySceneObjectsCollection : IDisposable
+    public interface INearbySceneObjectsEvents : IDisposable
     {
         /// <summary>
         /// Occurs when a new scene object has been entered to the region.

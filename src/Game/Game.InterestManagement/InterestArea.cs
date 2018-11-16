@@ -5,18 +5,21 @@ namespace Game.InterestManagement
 {
     public class InterestArea : IInterestArea
     {
+        public INearbySceneObjectsEvents NearbySceneObjectsEvents =>
+            nearbySceneObjectsCollection;
+
         private readonly IScene scene;
         private readonly ISceneObject sceneObject;
-        private readonly List<IRegion> nearbyRegions = new List<IRegion>();
-        private readonly NearbySceneObjectsCollection nearbySceneObjects;
+        private readonly List<IRegion> nearbyRegions;
+        private readonly NearbySceneObjectsCollection nearbySceneObjectsCollection;
 
         public InterestArea(IScene scene, ISceneObject sceneObject)
         {
             this.scene = scene;
             this.sceneObject = sceneObject;
 
-            nearbySceneObjects = 
-                new NearbySceneObjectsCollection(excludedId: sceneObject.Id);
+            nearbySceneObjectsCollection = new NearbySceneObjectsCollection();
+            nearbyRegions = new List<IRegion>();
 
             SubscribeToPositionChanged();
         }
@@ -26,12 +29,6 @@ namespace Game.InterestManagement
             UnsubscribeFromPositionChanged();
 
             nearbyRegions?.Clear();
-        }
-
-        /// <inheritdoc />
-        public INearbySceneObjectsCollection GetNearbySceneObjects()
-        {
-            return nearbySceneObjects;
         }
 
         private void SubscribeToPositionChanged()
@@ -66,7 +63,14 @@ namespace Game.InterestManagement
                     region.Subscribe(sceneObject);
 
                     nearbyRegions.Add(region);
-                    nearbySceneObjects.Add(region.GetAllSubscribers());
+
+                    if (region.HasSubscribers())
+                    {
+                        var subscribers = region.GetAllSubscribers()
+                            .ExcludeSceneObject(sceneObject);
+
+                        nearbySceneObjectsCollection.Add(subscribers);
+                    }
 
                     SubscribeToRegionEvents(region);
                 }
@@ -89,7 +93,14 @@ namespace Game.InterestManagement
                 region.Unsubscribe(sceneObject);
 
                 nearbyRegions.Remove(region);
-                nearbySceneObjects.Remove(region.GetAllSubscribers());
+
+                if (region.HasSubscribers())
+                {
+                    var subscribers = region.GetAllSubscribers()
+                        .ExcludeSceneObject(sceneObject);
+
+                    nearbySceneObjectsCollection.Remove(subscribers);
+                }
 
                 UnsubscribeFromRegionEvents(region);
             }
@@ -109,12 +120,12 @@ namespace Game.InterestManagement
 
         private void OnSubscriberAdded(ISceneObject sceneObject)
         {
-            nearbySceneObjects.Add(sceneObject);
+            nearbySceneObjectsCollection.Add(sceneObject);
         }
 
         private void OnSubscriberRemoved(ISceneObject sceneObject)
         {
-            nearbySceneObjects.Remove(sceneObject);
+            nearbySceneObjectsCollection.Remove(sceneObject);
         }
     }
 }

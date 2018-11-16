@@ -11,27 +11,19 @@ namespace Game.InterestManagement
             MatrixRegion = new MatrixRegion(sceneSize, regionSize);
         }
 
+        public void Dispose()
+        {
+            MatrixRegion?.Dispose();
+        }
+
         public void AddSceneObject(ISceneObject sceneObject)
         {
-            var regions = MatrixRegion.GetRegions(sceneObject.Transform);
-            foreach (var region in regions)
-            {
-                region.Subscribe(sceneObject);
-            }
+            // TODO: Implement
         }
 
         public void RemoveSceneObject(ISceneObject sceneObject)
         {
-            var regions = MatrixRegion.GetRegions(sceneObject.Transform);
-            foreach (var region in regions)
-            {
-                region.Unsubscribe(sceneObject);
-            }
-        }
-
-        public void Dispose()
-        {
-            MatrixRegion?.Dispose();
+            // TODO: Implement
         }
     }
 }

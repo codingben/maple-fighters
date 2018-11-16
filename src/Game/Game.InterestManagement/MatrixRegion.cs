@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Common.MathematicsHelper;
 
 namespace Game.InterestManagement
@@ -12,6 +11,7 @@ namespace Game.InterestManagement
         private readonly int rows;
         private readonly int columns;
         private readonly IRegion[,] regions;
+        private HashSet<IRegion> cachedRegions;
 
         public MatrixRegion(Vector2 sceneSize, Vector2 regionSize)
         {
@@ -42,52 +42,48 @@ namespace Game.InterestManagement
             }
         }
 
-        public IEnumerable<IRegion> GetRegions(IEnumerable<Vector2> positions)
-        {
-            var matrices = GetMatrices(positions);
-
-            foreach (var matrix in matrices)
-            {
-                yield return regions[matrix.Row, matrix.Column];
-            }
-        }
-
-        public IRegion[,] GetAllRegions()
-        {
-            return regions;
-        }
-
-        private IEnumerable<Matrix2> GetMatrices(IEnumerable<Vector2> positions)
-        {
-            var matrices = new List<Matrix2>();
-
-            foreach (var position in positions)
-            {
-                var x = Math.Abs(position.X - (-(sceneSize.X / 2)));
-                var y = Math.Abs(position.Y - (-(sceneSize.Y / 2)));
-
-                var row = (int)Math.Floor(x / regionSize.X);
-                var column = (int)Math.Floor(y / regionSize.Y);
-
-                // Make sure it is not out of bounds.
-                if ((row < 0 || row >= rows)
-                    || (column < 0 || column >= columns))
-                {
-                    continue;
-                }
-
-                matrices.Add(new Matrix2(row, column));
-            }
-
-            return matrices.Distinct(new Matrix2Comparer());
-        }
-
         public void Dispose()
         {
             foreach (var region in regions)
             {
                 region?.Dispose();
             }
+        }
+
+        public IEnumerable<IRegion> GetRegions(IEnumerable<Vector2> points)
+        {
+            if (cachedRegions == null)
+            {
+                cachedRegions = new HashSet<IRegion>();
+            }
+            else
+            {
+                cachedRegions.Clear();
+            }
+
+            foreach (var point in points)
+            {
+                var row = (int)Math.Floor(
+                    Math.Abs(point.X - (-(sceneSize.X / 2))) / regionSize.X);
+                var column = (int)Math.Floor(
+                    Math.Abs(point.Y - (-(sceneSize.Y / 2))) / regionSize.Y);
+
+                if ((row < 0 || row >= rows)
+                    || (column < 0 || column >= columns))
+                {
+                    continue;
+                }
+
+                var region = regions[row, column];
+                cachedRegions.Add(region);
+            }
+
+            return cachedRegions;
+        }
+
+        public IRegion[,] GetAllRegions()
+        {
+            return regions;
         }
     }
 }

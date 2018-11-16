@@ -1,8 +1,5 @@
 ﻿namespace Game.InterestManagement
 {
-    /// <summary>
-    /// Represents the scene object inside the scene and regions.
-    /// </summary>
     public interface ISceneObject
     {
         /// <summary>

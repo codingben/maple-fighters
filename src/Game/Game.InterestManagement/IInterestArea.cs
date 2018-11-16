@@ -2,17 +2,11 @@
 
 namespace Game.InterestManagement
 {
-    /// <summary>
-    /// Supposed to be attached to the scene object to detect nearby regions.
-    /// </summary>
     public interface IInterestArea : IDisposable
     {
         /// <summary>
-        /// Gets the nearby scene objects collection.
+        /// Gets the notifier of the interest area events.
         /// </summary>
-        /// <returns>
-        /// The <see cref="INearbySceneObjectsCollection"/>.
-        /// </returns>
-        INearbySceneObjectsCollection GetNearbySceneObjects();
+        INearbySceneObjectsEvents NearbySceneObjectsEvents { get; }
     }
 }

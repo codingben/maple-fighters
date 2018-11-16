@@ -36,16 +36,13 @@
   <ItemGroup>
     <Compile Include="ExtensionMethods.cs" />
     <Compile Include="IInterestArea.cs" />
-    <Compile Include="INearbySceneObjectsCollection.cs" />
+    <Compile Include="INearbySceneObjectsEvents.cs" />
     <Compile Include="InterestArea.cs" />
-    <Compile Include="InvalidMatrixRegionSize.cs" />
     <Compile Include="IRegion.cs" />
     <Compile Include="IMatrixRegion.cs" />
     <Compile Include="IScene.cs" />
     <Compile Include="ISceneObject.cs" />
     <Compile Include="ITransform.cs" />
-    <Compile Include="Matrix2.cs" />
-    <Compile Include="Matrix2Comparer.cs" />
     <Compile Include="MatrixRegion.cs" />
     <Compile Include="NearbySceneObjectsCollection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

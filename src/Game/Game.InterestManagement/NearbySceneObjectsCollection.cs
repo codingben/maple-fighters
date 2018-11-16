@@ -4,26 +4,21 @@ using System.Linq;
 
 namespace Game.InterestManagement
 {
-    public class NearbySceneObjectsCollection : INearbySceneObjectsCollection
+    public class NearbySceneObjectsCollection : INearbySceneObjectsEvents
     {
-        /// <inheritdoc />
         public event Action<ISceneObject> SceneObjectAdded;
 
-        /// <inheritdoc />
         public event Action<ISceneObject> SceneObjectRemoved;
 
-        /// <inheritdoc />
         public event Action<IEnumerable<ISceneObject>> SceneObjectsAdded;
 
-        /// <inheritdoc />
         public event Action<IEnumerable<ISceneObject>> SceneObjectsRemoved;
 
-        private readonly int excludedId;
-        private readonly HashSet<ISceneObject> nearbySceneObjects = new HashSet<ISceneObject>();
+        private readonly HashSet<ISceneObject> nearbySceneObjects;
 
-        public NearbySceneObjectsCollection(int excludedId)
+        public NearbySceneObjectsCollection()
         {
-            this.excludedId = excludedId;
+            nearbySceneObjects = new HashSet<ISceneObject>();
         }
 
         public void Dispose()
@@ -33,12 +28,11 @@ namespace Game.InterestManagement
 
         public void Add(IEnumerable<ISceneObject> sceneObjects)
         {
-            var visibleSceneObjects = 
+            var visibleSceneObjects =
                 sceneObjects
                     .Where(
                         sceneObject =>
-                            sceneObject.Id != excludedId
-                            && nearbySceneObjects.Add(sceneObject))
+                            nearbySceneObjects.Add(sceneObject))
                     .ToArray();
 
             if (visibleSceneObjects.Length != 0)
@@ -49,8 +43,7 @@ namespace Game.InterestManagement
 
         public void Add(ISceneObject sceneObject)
         {
-            if (sceneObject.Id != excludedId
-                && nearbySceneObjects.Add(sceneObject))
+            if (nearbySceneObjects.Add(sceneObject))
             {
                 SceneObjectAdded?.Invoke(sceneObject);
             }
@@ -62,8 +55,7 @@ namespace Game.InterestManagement
                 sceneObjects
                     .Where(
                         sceneObject =>
-                            sceneObject.Id != excludedId
-                            && nearbySceneObjects.Remove(sceneObject))
+                            nearbySceneObjects.Remove(sceneObject))
                     .ToArray();
 
             if (invisibleSceneObjects.Length != 0)
@@ -74,8 +66,7 @@ namespace Game.InterestManagement
 
         public void Remove(ISceneObject sceneObject)
         {
-            if (sceneObject.Id != excludedId
-                && nearbySceneObjects.Remove(sceneObject))
+            if (nearbySceneObjects.Remove(sceneObject))
             {
                 SceneObjectRemoved?.Invoke(sceneObject);
             }

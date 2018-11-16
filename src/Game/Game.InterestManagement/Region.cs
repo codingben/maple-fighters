@@ -1,25 +1,36 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Common.MathematicsHelper;
 
 namespace Game.InterestManagement
 {
-    public class Region : IRegion
+    public struct Region : IRegion
     {
-        /// <inheritdoc />
-        public event Action<ISceneObject> SubscriberAdded;
-
-        /// <inheritdoc />
-        public event Action<ISceneObject> SubscriberRemoved;
-
-        /// <inheritdoc />
         public IRectangle Rectangle { get; }
 
-        private readonly HashSet<ISceneObject> sceneObjects = new HashSet<ISceneObject>();
+        public event Action<ISceneObject> SubscriberAdded;
+
+        public event Action<ISceneObject> SubscriberRemoved;
+
+        private readonly HashSet<ISceneObject> sceneObjects;
 
         public Region(Vector2 position, Vector2 size)
         {
             Rectangle = new Rectangle(position, size);
+
+            SubscriberAdded = null;
+            SubscriberRemoved = null;
+
+            sceneObjects = new HashSet<ISceneObject>();
+        }
+
+        public void Dispose()
+        {
+            SubscriberAdded = null;
+            SubscriberRemoved = null;
+
+            sceneObjects?.Clear();
         }
 
         public void Subscribe(ISceneObject sceneObject)
@@ -43,12 +54,9 @@ namespace Game.InterestManagement
             return sceneObjects;
         }
 
-        public void Dispose()
+        public bool HasSubscribers()
         {
-            SubscriberAdded = null;
-            SubscriberRemoved = null;
-
-            sceneObjects?.Clear();
+            return sceneObjects != null && sceneObjects.Any();
         }
     }
 }
