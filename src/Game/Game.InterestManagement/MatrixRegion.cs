@@ -11,7 +11,7 @@ namespace Game.InterestManagement
         private readonly int rows;
         private readonly int columns;
         private readonly IRegion[,] regions;
-        private Bounds bounds;
+        private Bounds worldBounds;
 
         public MatrixRegion(Vector2 worldSize, Vector2 regionSize)
         {
@@ -43,7 +43,7 @@ namespace Game.InterestManagement
 
             var upperBound = new Vector2(worldSize.X / 2, worldSize.Y / 2);
             var lowerBound = new Vector2(worldSize.X / 2, worldSize.Y / 2) * -1;
-            bounds = new Bounds(upperBound, lowerBound);
+            worldBounds = new Bounds(upperBound, lowerBound);
         }
 
         public void Dispose()
@@ -58,7 +58,7 @@ namespace Game.InterestManagement
         {
             foreach (var point in points)
             {
-                if (bounds.IsInsideBounds(point))
+                if (worldBounds.IsInsideBounds(point))
                 {
                     var row = (int)Math.Floor(
                         Math.Abs(point.X - (-(worldSize.X / 2)))
