@@ -6,23 +6,23 @@ namespace Game.InterestManagement
 {
     public class MatrixRegion : IMatrixRegion
     {
-        private readonly Vector2 sceneSize;
+        private readonly Vector2 worldSize;
         private readonly Vector2 regionSize;
         private readonly int rows;
         private readonly int columns;
         private readonly IRegion[,] regions;
-        private HashSet<IRegion> cachedRegions;
+        private Bounds bounds;
 
-        public MatrixRegion(Vector2 sceneSize, Vector2 regionSize)
+        public MatrixRegion(Vector2 worldSize, Vector2 regionSize)
         {
-            this.sceneSize = sceneSize;
+            this.worldSize = worldSize;
             this.regionSize = regionSize;
 
-            rows = (int)(sceneSize.X / regionSize.X);
-            columns = (int)(sceneSize.Y / regionSize.Y);
+            rows = (int)(worldSize.X / regionSize.X);
+            columns = (int)(worldSize.Y / regionSize.Y);
 
-            var x1 = -(sceneSize.X / 2) + (regionSize.X / 2);
-            var y1 = -(sceneSize.Y / 2) + (regionSize.Y / 2);
+            var x1 = -(worldSize.X / 2) + (regionSize.X / 2);
+            var y1 = -(worldSize.Y / 2) + (regionSize.Y / 2);
 
             for (var row = 0; row < rows; row++)
             {
@@ -40,6 +40,10 @@ namespace Game.InterestManagement
                     regions[row, column] = new Region(position, regionSize);
                 }
             }
+
+            var upperBound = new Vector2(worldSize.X / 2, worldSize.Y / 2);
+            var lowerBound = new Vector2(worldSize.X / 2, worldSize.Y / 2) * -1;
+            bounds = new Bounds(upperBound, lowerBound);
         }
 
         public void Dispose()
@@ -52,33 +56,25 @@ namespace Game.InterestManagement
 
         public IEnumerable<IRegion> GetRegions(IEnumerable<Vector2> points)
         {
-            if (cachedRegions == null)
-            {
-                cachedRegions = new HashSet<IRegion>();
-            }
-            else
-            {
-                cachedRegions.Clear();
-            }
-
             foreach (var point in points)
             {
-                var row = (int)Math.Floor(
-                    Math.Abs(point.X - (-(sceneSize.X / 2))) / regionSize.X);
-                var column = (int)Math.Floor(
-                    Math.Abs(point.Y - (-(sceneSize.Y / 2))) / regionSize.Y);
-
-                if ((row < 0 || row >= rows)
-                    || (column < 0 || column >= columns))
+                if (bounds.IsInsideBounds(point))
                 {
-                    continue;
+                    var row = (int)Math.Floor(
+                        Math.Abs(point.X - (-(worldSize.X / 2)))
+                        / regionSize.X);
+                    var column = (int)Math.Floor(
+                        Math.Abs(point.Y - (-(worldSize.Y / 2)))
+                        / regionSize.Y);
+
+                    if (row >= rows || column >= columns)
+                    {
+                        continue;
+                    }
+
+                    yield return regions[row, column];
                 }
-
-                var region = regions[row, column];
-                cachedRegions.Add(region);
             }
-
-            return cachedRegions;
         }
 
         public IRegion[,] GetAllRegions()

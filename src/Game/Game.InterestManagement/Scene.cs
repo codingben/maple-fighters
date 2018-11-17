@@ -6,24 +6,14 @@ namespace Game.InterestManagement
     {
         public IMatrixRegion MatrixRegion { get; }
 
-        public Scene(Vector2 sceneSize, Vector2 regionSize)
+        public Scene(Vector2 worldSize, Vector2 regionSize)
         {
-            MatrixRegion = new MatrixRegion(sceneSize, regionSize);
+            MatrixRegion = new MatrixRegion(worldSize, regionSize);
         }
 
         public void Dispose()
         {
             MatrixRegion?.Dispose();
-        }
-
-        public void AddSceneObject(ISceneObject sceneObject)
-        {
-            // TODO: Implement
-        }
-
-        public void RemoveSceneObject(ISceneObject sceneObject)
-        {
-            // TODO: Implement
         }
     }
 }

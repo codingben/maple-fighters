@@ -21,6 +21,8 @@ namespace Game.InterestManagement
             nearbySceneObjectsCollection = new NearbySceneObjectsCollection();
             nearbyRegions = new List<IRegion>();
 
+            UpdateNearbyRegions();
+
             SubscribeToPositionChanged();
         }
 
@@ -82,7 +84,7 @@ namespace Game.InterestManagement
             var invisibleRegions =
                 nearbyRegions
                     .Where(
-                        region => 
+                        region =>
                             !region.Rectangle.Intersects(
                                 sceneObject.Transform.Position,
                                 sceneObject.Transform.Size))
