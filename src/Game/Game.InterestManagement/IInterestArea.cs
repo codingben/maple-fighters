@@ -2,11 +2,12 @@
 
 namespace Game.InterestManagement
 {
-    public interface IInterestArea : IDisposable
+    public interface IInterestArea<out TObject> : IDisposable
+        where TObject : ISceneObject
     {
         /// <summary>
         /// Gets the notifier of the interest area events.
         /// </summary>
-        INearbySceneObjectsEvents NearbySceneObjectsEvents { get; }
+        INearbySceneObjectsEvents<TObject> NearbySceneObjectsEvents { get; }
     }
 }

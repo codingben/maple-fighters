@@ -4,21 +4,22 @@ using System.Linq;
 
 namespace Game.InterestManagement
 {
-    public class NearbySceneObjectsCollection : INearbySceneObjectsEvents
+    public class NearbySceneObjectsCollection<TObject> : INearbySceneObjectsEvents<TObject>
+        where TObject : ISceneObject
     {
-        public event Action<ISceneObject> SceneObjectAdded;
+        public event Action<TObject> SceneObjectAdded;
 
-        public event Action<ISceneObject> SceneObjectRemoved;
+        public event Action<TObject> SceneObjectRemoved;
 
-        public event Action<IEnumerable<ISceneObject>> SceneObjectsAdded;
+        public event Action<IEnumerable<TObject>> SceneObjectsAdded;
 
-        public event Action<IEnumerable<ISceneObject>> SceneObjectsRemoved;
+        public event Action<IEnumerable<TObject>> SceneObjectsRemoved;
 
-        private readonly HashSet<ISceneObject> nearbySceneObjects;
+        private readonly HashSet<TObject> nearbySceneObjects;
 
         public NearbySceneObjectsCollection()
         {
-            nearbySceneObjects = new HashSet<ISceneObject>();
+            nearbySceneObjects = new HashSet<TObject>();
         }
 
         public void Dispose()
@@ -26,7 +27,7 @@ namespace Game.InterestManagement
             nearbySceneObjects?.Clear();
         }
 
-        public void Add(IEnumerable<ISceneObject> sceneObjects)
+        public void Add(IEnumerable<TObject> sceneObjects)
         {
             var visibleSceneObjects =
                 sceneObjects
@@ -41,7 +42,7 @@ namespace Game.InterestManagement
             }
         }
 
-        public void Add(ISceneObject sceneObject)
+        public void Add(TObject sceneObject)
         {
             if (nearbySceneObjects.Add(sceneObject))
             {
@@ -49,9 +50,9 @@ namespace Game.InterestManagement
             }
         }
 
-        public void Remove(IEnumerable<ISceneObject> sceneObjects)
+        public void Remove(IEnumerable<TObject> sceneObjects)
         {
-            var invisibleSceneObjects = 
+            var invisibleSceneObjects =
                 sceneObjects
                     .Where(
                         sceneObject =>
@@ -64,7 +65,7 @@ namespace Game.InterestManagement
             }
         }
 
-        public void Remove(ISceneObject sceneObject)
+        public void Remove(TObject sceneObject)
         {
             if (nearbySceneObjects.Remove(sceneObject))
             {

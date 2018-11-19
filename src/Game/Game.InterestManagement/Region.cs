@@ -5,15 +5,16 @@ using Common.MathematicsHelper;
 
 namespace Game.InterestManagement
 {
-    public struct Region : IRegion
+    public struct Region<TObject> : IRegion<TObject>
+        where TObject : ISceneObject
     {
         public IRectangle Rectangle { get; }
 
-        public event Action<ISceneObject> SubscriberAdded;
+        public event Action<TObject> SubscriberAdded;
 
-        public event Action<ISceneObject> SubscriberRemoved;
+        public event Action<TObject> SubscriberRemoved;
 
-        private readonly HashSet<ISceneObject> sceneObjects;
+        private readonly HashSet<TObject> sceneObjects;
 
         public Region(Vector2 position, Vector2 size)
         {
@@ -22,7 +23,7 @@ namespace Game.InterestManagement
             SubscriberAdded = null;
             SubscriberRemoved = null;
 
-            sceneObjects = new HashSet<ISceneObject>();
+            sceneObjects = new HashSet<TObject>();
         }
 
         public void Dispose()
@@ -33,7 +34,7 @@ namespace Game.InterestManagement
             sceneObjects?.Clear();
         }
 
-        public void Subscribe(ISceneObject sceneObject)
+        public void Subscribe(TObject sceneObject)
         {
             if (sceneObjects.Add(sceneObject))
             {
@@ -41,7 +42,7 @@ namespace Game.InterestManagement
             }
         }
 
-        public void Unsubscribe(ISceneObject sceneObject)
+        public void Unsubscribe(TObject sceneObject)
         {
             if (sceneObjects.Remove(sceneObject))
             {
@@ -49,7 +50,7 @@ namespace Game.InterestManagement
             }
         }
 
-        public IEnumerable<ISceneObject> GetAllSubscribers()
+        public IEnumerable<TObject> GetAllSubscribers()
         {
             return sceneObjects;
         }

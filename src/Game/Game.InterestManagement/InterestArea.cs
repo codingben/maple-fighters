@@ -3,23 +3,24 @@ using System.Linq;
 
 namespace Game.InterestManagement
 {
-    public class InterestArea : IInterestArea
+    public class InterestArea<TObject> : IInterestArea<TObject>
+        where TObject : ISceneObject
     {
-        public INearbySceneObjectsEvents NearbySceneObjectsEvents =>
-            nearbySceneObjectsCollection;
+        public INearbySceneObjectsEvents<TObject> NearbySceneObjectsEvents =>
+            sceneObjects;
 
-        private readonly IScene scene;
-        private readonly ISceneObject sceneObject;
-        private readonly List<IRegion> nearbyRegions;
-        private readonly NearbySceneObjectsCollection nearbySceneObjectsCollection;
+        private readonly IScene<TObject> scene;
+        private readonly TObject sceneObject;
+        private readonly List<IRegion<TObject>> regions;
+        private readonly NearbySceneObjectsCollection<TObject> sceneObjects;
 
-        public InterestArea(IScene scene, ISceneObject sceneObject)
+        public InterestArea(IScene<TObject> scene, TObject sceneObject)
         {
             this.scene = scene;
             this.sceneObject = sceneObject;
 
-            nearbySceneObjectsCollection = new NearbySceneObjectsCollection();
-            nearbyRegions = new List<IRegion>();
+            regions = new List<IRegion<TObject>>();
+            sceneObjects = new NearbySceneObjectsCollection<TObject>();
 
             UpdateNearbyRegions();
 
@@ -30,7 +31,7 @@ namespace Game.InterestManagement
         {
             UnsubscribeFromPositionChanged();
 
-            nearbyRegions?.Clear();
+            regions?.Clear();
         }
 
         private void SubscribeToPositionChanged()
@@ -57,21 +58,21 @@ namespace Game.InterestManagement
             {
                 foreach (var region in visibleRegions)
                 {
-                    if (nearbyRegions.Contains(region))
+                    if (regions.Contains(region))
                     {
                         continue;
                     }
 
                     region.Subscribe(sceneObject);
 
-                    nearbyRegions.Add(region);
+                    regions.Add(region);
 
                     if (region.HasSubscribers())
                     {
                         var subscribers = region.GetAllSubscribers()
                             .ExcludeSceneObject(sceneObject);
 
-                        nearbySceneObjectsCollection.Add(subscribers);
+                        sceneObjects.Add(subscribers);
                     }
 
                     SubscribeToRegionEvents(region);
@@ -82,7 +83,7 @@ namespace Game.InterestManagement
         private void UnsubscribeFromInvisibleRegions()
         {
             var invisibleRegions =
-                nearbyRegions
+                regions
                     .Where(
                         region =>
                             !region.Rectangle.Intersects(
@@ -94,40 +95,40 @@ namespace Game.InterestManagement
             {
                 region.Unsubscribe(sceneObject);
 
-                nearbyRegions.Remove(region);
+                regions.Remove(region);
 
                 if (region.HasSubscribers())
                 {
                     var subscribers = region.GetAllSubscribers()
                         .ExcludeSceneObject(sceneObject);
 
-                    nearbySceneObjectsCollection.Remove(subscribers);
+                    sceneObjects.Remove(subscribers);
                 }
 
                 UnsubscribeFromRegionEvents(region);
             }
         }
 
-        private void SubscribeToRegionEvents(IRegion region)
+        private void SubscribeToRegionEvents(IRegion<TObject> region)
         {
             region.SubscriberAdded += OnSubscriberAdded;
             region.SubscriberRemoved += OnSubscriberRemoved;
         }
 
-        private void UnsubscribeFromRegionEvents(IRegion region)
+        private void UnsubscribeFromRegionEvents(IRegion<TObject> region)
         {
             region.SubscriberAdded -= OnSubscriberAdded;
             region.SubscriberRemoved -= OnSubscriberRemoved;
         }
 
-        private void OnSubscriberAdded(ISceneObject sceneObject)
+        private void OnSubscriberAdded(TObject sceneObject)
         {
-            nearbySceneObjectsCollection.Add(sceneObject);
+            sceneObjects.Add(sceneObject);
         }
 
-        private void OnSubscriberRemoved(ISceneObject sceneObject)
+        private void OnSubscriberRemoved(TObject sceneObject)
         {
-            nearbySceneObjectsCollection.Remove(sceneObject);
+            sceneObjects.Remove(sceneObject);
         }
     }
 }

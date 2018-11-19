@@ -4,13 +4,14 @@ using Common.MathematicsHelper;
 
 namespace Game.InterestManagement
 {
-    public class MatrixRegion : IMatrixRegion
+    public class MatrixRegion<TObject> : IMatrixRegion<TObject>
+        where TObject : ISceneObject
     {
         private readonly Vector2 worldSize;
         private readonly Vector2 regionSize;
         private readonly int rows;
         private readonly int columns;
-        private readonly IRegion[,] regions;
+        private readonly IRegion<TObject>[,] regions;
         private Bounds worldBounds;
 
         public MatrixRegion(Vector2 worldSize, Vector2 regionSize)
@@ -30,14 +31,15 @@ namespace Game.InterestManagement
                 {
                     if (regions == null)
                     {
-                        regions = new IRegion[rows, columns];
+                        regions = new IRegion<TObject>[rows, columns];
                     }
 
                     var x2 = x1 + (row * regionSize.X);
                     var y2 = y1 + (column * regionSize.Y);
                     var position = new Vector2(x2, y2);
 
-                    regions[row, column] = new Region(position, regionSize);
+                    regions[row, column] =
+                        new Region<TObject>(position, regionSize);
                 }
             }
 
@@ -54,7 +56,8 @@ namespace Game.InterestManagement
             }
         }
 
-        public IEnumerable<IRegion> GetRegions(IEnumerable<Vector2> points)
+        public IEnumerable<IRegion<TObject>> GetRegions(
+            IEnumerable<Vector2> points)
         {
             foreach (var point in points)
             {
@@ -77,7 +80,7 @@ namespace Game.InterestManagement
             }
         }
 
-        public IRegion[,] GetAllRegions()
+        public IRegion<TObject>[,] GetAllRegions()
         {
             return regions;
         }
