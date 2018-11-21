@@ -2,12 +2,12 @@
 
 namespace Game.InterestManagement
 {
-    public struct Bounds
+    public struct SceneBounds
     {
         private readonly Vector2 upperBound;
         private readonly Vector2 lowerBound;
 
-        public Bounds(Vector2 upperBound, Vector2 lowerBound)
+        public SceneBounds(Vector2 upperBound, Vector2 lowerBound)
         {
             this.upperBound = upperBound;
             this.lowerBound = lowerBound;

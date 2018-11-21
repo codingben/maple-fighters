@@ -2,7 +2,7 @@
 
 namespace Common.MathematicsHelper
 {
-    public struct Rectangle : IRectangle
+    public struct Rectangle
     {
         public float X { get; private set; }
 

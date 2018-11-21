@@ -67,20 +67,6 @@ namespace Common.MathematicsHelper.UnitTests
         }
 
         [Fact]
-        private void Max_Out_Result()
-        {
-            // Arrange
-            var min = new Vector2(1, 1);
-            var max = new Vector2(2, 2);
-
-            // Act
-            Vector2.Max(ref min, ref max, out var point);
-
-            // Assert
-            point.Equals(max).ShouldBeTrue();
-        }
-
-        [Fact]
         private void Min()
         {
             // Arrange
@@ -93,21 +79,7 @@ namespace Common.MathematicsHelper.UnitTests
             // Assert
             point.Equals(min).ShouldBeTrue();
         }
-
-        [Fact]
-        private void Min_Out_Result()
-        {
-            // Arrange
-            var min = new Vector2(1, 1);
-            var max = new Vector2(2, 2);
-
-            // Act
-            Vector2.Min(ref min, ref max, out var point);
-
-            // Assert
-            point.Equals(min).ShouldBeTrue();
-        }
-
+        
         [Fact]
         private void Equality_With_Operator_Returns_True()
         {

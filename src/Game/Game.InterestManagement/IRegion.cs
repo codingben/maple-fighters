@@ -8,11 +8,6 @@ namespace Game.InterestManagement
         where TObject : ISceneObject
     {
         /// <summary>
-        /// Gets the geometric shape of the region.
-        /// </summary>
-        IRectangle Rectangle { get; }
-
-        /// <summary>
         /// The notifier of the new subscriber to the region.
         /// </summary>
         event Action<TObject> SubscriberAdded;
@@ -41,9 +36,17 @@ namespace Game.InterestManagement
         IEnumerable<TObject> GetAllSubscribers();
 
         /// <summary>
-        /// Checks if the region has subscribers.
+        /// Gets the subscriber count.
         /// </summary>
-        /// <returns>It has subscribers or not.</returns>
-        bool HasSubscribers();
+        /// <returns>The count.</returns>
+        int SubscriberCount();
+
+        /// <summary>
+        /// Checks if the region overlaps with the other rectangle.
+        /// </summary>
+        /// <param name="position">The other position.</param>
+        /// <param name="size">The other size.</param>
+        /// <returns>If overlaps or not.</returns>
+        bool IsOverlaps(Vector2 position, Vector2 size);
     }
 }

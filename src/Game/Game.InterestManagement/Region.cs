@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Common.MathematicsHelper;
 
 namespace Game.InterestManagement
@@ -8,21 +7,19 @@ namespace Game.InterestManagement
     public struct Region<TObject> : IRegion<TObject>
         where TObject : ISceneObject
     {
-        public IRectangle Rectangle { get; }
-
         public event Action<TObject> SubscriberAdded;
 
         public event Action<TObject> SubscriberRemoved;
 
+        private Rectangle rectangle;
         private readonly HashSet<TObject> sceneObjects;
 
         public Region(Vector2 position, Vector2 size)
         {
-            Rectangle = new Rectangle(position, size);
-
             SubscriberAdded = null;
             SubscriberRemoved = null;
 
+            rectangle = new Rectangle(position, size);
             sceneObjects = new HashSet<TObject>();
         }
 
@@ -55,9 +52,24 @@ namespace Game.InterestManagement
             return sceneObjects;
         }
 
-        public bool HasSubscribers()
+        public int SubscriberCount()
         {
-            return sceneObjects != null && sceneObjects.Any();
+            return sceneObjects.Count;
+        }
+
+        public bool IsOverlaps(Vector2 position, Vector2 size)
+        {
+            return rectangle.Intersects(position, size);
+        }
+
+        public Vector2 GetPosition()
+        {
+            return rectangle.Position;
+        }
+
+        public Vector2 GetSize()
+        {
+            return rectangle.Size;
         }
     }
 }

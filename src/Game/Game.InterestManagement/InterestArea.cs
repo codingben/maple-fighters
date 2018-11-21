@@ -67,7 +67,7 @@ namespace Game.InterestManagement
 
                     regions.Add(region);
 
-                    if (region.HasSubscribers())
+                    if (region.SubscriberCount() != 0)
                     {
                         var subscribers = region.GetAllSubscribers()
                             .ExcludeSceneObject(sceneObject);
@@ -86,7 +86,7 @@ namespace Game.InterestManagement
                 regions
                     .Where(
                         region =>
-                            !region.Rectangle.Intersects(
+                            !region.IsOverlaps(
                                 sceneObject.Transform.Position,
                                 sceneObject.Transform.Size))
                     .ToArray();
@@ -97,7 +97,7 @@ namespace Game.InterestManagement
 
                 regions.Remove(region);
 
-                if (region.HasSubscribers())
+                if (region.SubscriberCount() != 0)
                 {
                     var subscribers = region.GetAllSubscribers()
                         .ExcludeSceneObject(sceneObject);

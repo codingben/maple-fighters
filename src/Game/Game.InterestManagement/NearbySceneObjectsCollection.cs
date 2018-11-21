@@ -15,16 +15,16 @@ namespace Game.InterestManagement
 
         public event Action<IEnumerable<TObject>> SceneObjectsRemoved;
 
-        private readonly HashSet<TObject> nearbySceneObjects;
+        private readonly HashSet<TObject> collection;
 
         public NearbySceneObjectsCollection()
         {
-            nearbySceneObjects = new HashSet<TObject>();
+            collection = new HashSet<TObject>();
         }
 
         public void Dispose()
         {
-            nearbySceneObjects?.Clear();
+            collection?.Clear();
         }
 
         public void Add(IEnumerable<TObject> sceneObjects)
@@ -33,7 +33,7 @@ namespace Game.InterestManagement
                 sceneObjects
                     .Where(
                         sceneObject =>
-                            nearbySceneObjects.Add(sceneObject))
+                            collection.Add(sceneObject))
                     .ToArray();
 
             if (visibleSceneObjects.Length != 0)
@@ -44,7 +44,7 @@ namespace Game.InterestManagement
 
         public void Add(TObject sceneObject)
         {
-            if (nearbySceneObjects.Add(sceneObject))
+            if (collection.Add(sceneObject))
             {
                 SceneObjectAdded?.Invoke(sceneObject);
             }
@@ -56,7 +56,7 @@ namespace Game.InterestManagement
                 sceneObjects
                     .Where(
                         sceneObject =>
-                            nearbySceneObjects.Remove(sceneObject))
+                            collection.Remove(sceneObject))
                     .ToArray();
 
             if (invisibleSceneObjects.Length != 0)
@@ -67,7 +67,7 @@ namespace Game.InterestManagement
 
         public void Remove(TObject sceneObject)
         {
-            if (nearbySceneObjects.Remove(sceneObject))
+            if (collection.Remove(sceneObject))
             {
                 SceneObjectRemoved?.Invoke(sceneObject);
             }

@@ -16,8 +16,9 @@ namespace Common.MathematicsHelper
 
         public static Vector2 Right => new Vector2(1, 0);
 
-        public float X;
-        public float Y;
+        public float X { get; private set; }
+
+        public float Y { get; private set; }
 
         public Vector2(float x, float y)
         {
@@ -37,44 +38,35 @@ namespace Common.MathematicsHelper
 
         public static float Distance(Vector2 a, Vector2 b)
         {
-            var value1 = a.X - b.X;
-            var value2 = a.Y - b.Y;
+            var x = a.X - b.X;
+            var y = a.Y - b.Y;
 
-            return (float)Math.Sqrt((value1 * value1) + (value2 * value2));
+            return (float)Math.Sqrt((x * x) + (y * y));
         }
 
-        public static void Distance(ref Vector2 a, ref Vector2 b, out float result)
+        public static void Distance(
+            ref Vector2 a,
+            ref Vector2 b,
+            out float result)
         {
-            var value1 = a.X - b.X;
-            var value2 = a.Y - b.Y;
+            var x = a.X - b.X;
+            var y = a.Y - b.Y;
 
-            result = (float)Math.Sqrt((value1 * value1) + (value2 * value2));
+            result = (float)Math.Sqrt((x * x) + (y * y));
         }
 
-        public static Vector2 Max(Vector2 value1, Vector2 value2)
-        {
-            return new Vector2(
-                value1.X > value2.X ? value1.X : value2.X,
-                value1.Y > value2.Y ? value1.Y : value2.Y);
-        }
-
-        public static void Max(ref Vector2 value1, ref Vector2 value2, out Vector2 result)
-        {
-            result.X = value1.X > value2.X ? value1.X : value2.X;
-            result.Y = value1.Y > value2.Y ? value1.Y : value2.Y;
-        }
-
-        public static Vector2 Min(Vector2 value1, Vector2 value2)
+        public static Vector2 Max(Vector2 a, Vector2 b)
         {
             return new Vector2(
-                value1.X < value2.X ? value1.X : value2.X,
-                value1.Y < value2.Y ? value1.Y : value2.Y);
+                a.X > b.X ? a.X : b.X,
+                a.Y > b.Y ? a.Y : b.Y);
         }
 
-        public static void Min(ref Vector2 value1, ref Vector2 value2, out Vector2 result)
+        public static Vector2 Min(Vector2 a, Vector2 b)
         {
-            result.X = value1.X < value2.X ? value1.X : value2.X;
-            result.Y = value1.Y < value2.Y ? value1.Y : value2.Y;
+            return new Vector2(
+                a.X < b.X ? a.X : b.X,
+                a.Y < b.Y ? a.Y : b.Y);
         }
 
         public override string ToString()
@@ -82,9 +74,9 @@ namespace Common.MathematicsHelper
             return $"X: {X} Y: {Y}";
         }
 
-        public override bool Equals(object obj)
+        public override bool Equals(object other)
         {
-            return obj is Vector2 && Equals(this);
+            return other is Vector2 && Equals(this);
         }
 
         public bool Equals(Vector2 other)
@@ -113,38 +105,38 @@ namespace Common.MathematicsHelper
             return value;
         }
 
-        public static bool operator ==(Vector2 value1, Vector2 value2)
+        public static bool operator ==(Vector2 a, Vector2 b)
         {
-            return value1.X == value2.X && value1.Y == value2.Y;
+            return a.X == b.X && a.Y == b.Y;
         }
 
-        public static bool operator !=(Vector2 value1, Vector2 value2)
+        public static bool operator !=(Vector2 a, Vector2 b)
         {
-            return value1.X != value2.X || value1.Y != value2.Y;
+            return a.X != b.X || a.Y != b.Y;
         }
 
-        public static Vector2 operator +(Vector2 value1, Vector2 value2)
+        public static Vector2 operator +(Vector2 a, Vector2 b)
         {
-            value1.X += value2.X;
-            value1.Y += value2.Y;
+            a.X += b.X;
+            a.Y += b.Y;
 
-            return value1;
+            return a;
         }
 
-        public static Vector2 operator -(Vector2 value1, Vector2 value2)
+        public static Vector2 operator -(Vector2 a, Vector2 b)
         {
-            value1.X -= value2.X;
-            value1.Y -= value2.Y;
+            a.X -= b.X;
+            a.Y -= b.Y;
 
-            return value1;
+            return a;
         }
 
-        public static Vector2 operator *(Vector2 value1, Vector2 value2)
+        public static Vector2 operator *(Vector2 a, Vector2 b)
         {
-            value1.X *= value2.X;
-            value1.Y *= value2.Y;
+            a.X *= b.X;
+            a.Y *= b.Y;
 
-            return value1;
+            return a;
         }
 
         public static Vector2 operator *(Vector2 value, float scaleFactor)
@@ -163,22 +155,22 @@ namespace Common.MathematicsHelper
             return value;
         }
 
-        public static Vector2 operator /(Vector2 value1, Vector2 value2)
+        public static Vector2 operator /(Vector2 a, Vector2 b)
         {
-            value1.X /= value2.X;
-            value1.Y /= value2.Y;
+            a.X /= b.X;
+            a.Y /= b.Y;
 
-            return value1;
+            return a;
         }
 
-        public static Vector2 operator /(Vector2 value1, float divider)
+        public static Vector2 operator /(Vector2 value, float divider)
         {
             var factor = 1 / divider;
 
-            value1.X *= factor;
-            value1.Y *= factor;
+            value.X *= factor;
+            value.Y *= factor;
 
-            return value1;
+            return value;
         }
     }
 }

@@ -7,7 +7,7 @@ namespace Game.InterestManagement
     public static class ExtensionMethods
     {
         public static IEnumerable<IRegion<TObject>> GetRegions<TObject>(
-            this IMatrixRegion<TObject> matrixRegion,
+            this IMatrixRegion<TObject> @this,
             ITransform transform)
             where TObject : ISceneObject
         {
@@ -15,7 +15,7 @@ namespace Game.InterestManagement
                 transform.Position,
                 transform.Size);
 
-            return matrixRegion.GetRegions(vertices);
+            return @this.GetRegions(vertices);
         }
 
         public static IEnumerable<TObject> ExcludeSceneObject<TObject>(

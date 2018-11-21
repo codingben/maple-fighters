@@ -7,23 +7,28 @@ namespace Game.InterestManagement
     public class MatrixRegion<TObject> : IMatrixRegion<TObject>
         where TObject : ISceneObject
     {
-        private readonly Vector2 worldSize;
+        private readonly Vector2 sceneSize;
         private readonly Vector2 regionSize;
         private readonly int rows;
         private readonly int columns;
         private readonly IRegion<TObject>[,] regions;
-        private Bounds worldBounds;
 
-        public MatrixRegion(Vector2 worldSize, Vector2 regionSize)
+        private readonly object locker = new object();
+
+        // TODO: Optimize
+        private HashSet<IRegion<TObject>> temporaryRegions;
+        private SceneBounds sceneBounds;
+
+        public MatrixRegion(Vector2 sceneSize, Vector2 regionSize)
         {
-            this.worldSize = worldSize;
+            this.sceneSize = sceneSize;
             this.regionSize = regionSize;
 
-            rows = (int)(worldSize.X / regionSize.X);
-            columns = (int)(worldSize.Y / regionSize.Y);
+            rows = (int)(sceneSize.X / regionSize.X);
+            columns = (int)(sceneSize.Y / regionSize.Y);
 
-            var x1 = -(worldSize.X / 2) + (regionSize.X / 2);
-            var y1 = -(worldSize.Y / 2) + (regionSize.Y / 2);
+            var x1 = -(sceneSize.X / 2) + (regionSize.X / 2);
+            var y1 = -(sceneSize.Y / 2) + (regionSize.Y / 2);
 
             for (var row = 0; row < rows; row++)
             {
@@ -43,9 +48,9 @@ namespace Game.InterestManagement
                 }
             }
 
-            var upperBound = new Vector2(worldSize.X / 2, worldSize.Y / 2);
-            var lowerBound = new Vector2(worldSize.X / 2, worldSize.Y / 2) * -1;
-            worldBounds = new Bounds(upperBound, lowerBound);
+            sceneBounds = new SceneBounds(
+                upperBound: new Vector2(sceneSize.X / 2, sceneSize.Y / 2),
+                lowerBound: new Vector2(sceneSize.X / 2, sceneSize.Y / 2) * -1);
         }
 
         public void Dispose()
@@ -59,24 +64,39 @@ namespace Game.InterestManagement
         public IEnumerable<IRegion<TObject>> GetRegions(
             IEnumerable<Vector2> points)
         {
-            foreach (var point in points)
+            lock (locker)
             {
-                if (worldBounds.IsInsideBounds(point))
+                if (temporaryRegions == null)
                 {
-                    var row = (int)Math.Floor(
-                        Math.Abs(point.X - (-(worldSize.X / 2)))
-                        / regionSize.X);
-                    var column = (int)Math.Floor(
-                        Math.Abs(point.Y - (-(worldSize.Y / 2)))
-                        / regionSize.Y);
-
-                    if (row >= rows || column >= columns)
-                    {
-                        continue;
-                    }
-
-                    yield return regions[row, column];
+                    temporaryRegions = new HashSet<IRegion<TObject>>();
                 }
+                else
+                {
+                    temporaryRegions.Clear();
+                }
+
+                foreach (var point in points)
+                {
+                    if (sceneBounds.IsInsideBounds(point))
+                    {
+                        var row = (int)Math.Floor(
+                            Math.Abs(point.X - (-(sceneSize.X / 2)))
+                            / regionSize.X);
+                        var column = (int)Math.Floor(
+                            Math.Abs(point.Y - (-(sceneSize.Y / 2)))
+                            / regionSize.Y);
+
+                        if (row >= rows || column >= columns)
+                        {
+                            continue;
+                        }
+
+                        var region = regions[row, column];
+                        temporaryRegions.Add(region);
+                    }
+                }
+
+                return temporaryRegions;
             }
         }
 
