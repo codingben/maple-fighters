@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using Common.MathematicsHelper;
 
 namespace Game.InterestManagement
@@ -16,15 +15,6 @@ namespace Game.InterestManagement
                 transform.Size);
 
             return @this.GetRegions(vertices);
-        }
-
-        public static IEnumerable<TObject> ExcludeSceneObject<TObject>(
-            this IEnumerable<TObject> sceneObjects,
-            TObject excludedSceneObject)
-            where TObject : ISceneObject
-        {
-            return sceneObjects.Where(x => x.Id != excludedSceneObject.Id)
-                .ToArray();
         }
     }
 }

@@ -34,7 +34,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="SceneBounds.cs" />
+    <Compile Include="SceneBoundaries.cs" />
     <Compile Include="ExtensionMethods.cs" />
     <Compile Include="IInterestArea.cs" />
     <Compile Include="INearbySceneObjectsEvents.cs" />

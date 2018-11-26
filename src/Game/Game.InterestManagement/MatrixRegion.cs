@@ -12,12 +12,11 @@ namespace Game.InterestManagement
         private readonly int rows;
         private readonly int columns;
         private readonly IRegion<TObject>[,] regions;
-
         private readonly object locker = new object();
 
         // TODO: Optimize
         private HashSet<IRegion<TObject>> temporaryRegions;
-        private SceneBounds sceneBounds;
+        private SceneBoundaries sceneBoundaries;
 
         public MatrixRegion(Vector2 sceneSize, Vector2 regionSize)
         {
@@ -48,8 +47,8 @@ namespace Game.InterestManagement
                 }
             }
 
-            sceneBounds = new SceneBounds(
-                upperBound: new Vector2(sceneSize.X / 2, sceneSize.Y / 2),
+            sceneBoundaries = new SceneBoundaries(
+                upperBound: new Vector2(sceneSize.X / 2, sceneSize.Y / 2), 
                 lowerBound: new Vector2(sceneSize.X / 2, sceneSize.Y / 2) * -1);
         }
 
@@ -77,7 +76,7 @@ namespace Game.InterestManagement
 
                 foreach (var point in points)
                 {
-                    if (sceneBounds.IsInsideBounds(point))
+                    if (sceneBoundaries.IsInsideBounds(point))
                     {
                         var row = (int)Math.Floor(
                             Math.Abs(point.X - (-(sceneSize.X / 2)))

@@ -63,17 +63,15 @@ namespace Game.InterestManagement
                         continue;
                     }
 
-                    region.Subscribe(sceneObject);
-
                     regions.Add(region);
 
                     if (region.SubscriberCount() != 0)
                     {
-                        var subscribers = region.GetAllSubscribers()
-                            .ExcludeSceneObject(sceneObject);
-
+                        var subscribers = region.GetAllSubscribers();
                         sceneObjects.Add(subscribers);
                     }
+
+                    region.Subscribe(sceneObject);
 
                     SubscribeToRegionEvents(region);
                 }
@@ -93,16 +91,23 @@ namespace Game.InterestManagement
 
             foreach (var region in invisibleRegions)
             {
-                region.Unsubscribe(sceneObject);
-
                 regions.Remove(region);
+
+                region.Unsubscribe(sceneObject);
 
                 if (region.SubscriberCount() != 0)
                 {
-                    var subscribers = region.GetAllSubscribers()
-                        .ExcludeSceneObject(sceneObject);
-
-                    sceneObjects.Remove(subscribers);
+                    var subscribers = region.GetAllSubscribers();
+                    foreach (var subscriber in subscribers)
+                    {
+                        if (!regions.Any(
+                                x => x.IsOverlaps(
+                                    subscriber.Transform.Position,
+                                    subscriber.Transform.Size)))
+                        {
+                            sceneObjects.Remove(subscriber);
+                        }
+                    }
                 }
 
                 UnsubscribeFromRegionEvents(region);
