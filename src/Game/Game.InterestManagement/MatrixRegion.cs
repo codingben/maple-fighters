@@ -76,7 +76,7 @@ namespace Game.InterestManagement
 
                 foreach (var point in points)
                 {
-                    if (sceneBoundaries.IsInsideBounds(point))
+                    if (sceneBoundaries.WithinBoundaries(point))
                     {
                         var row = (int)Math.Floor(
                             Math.Abs(point.X - (-(sceneSize.X / 2)))

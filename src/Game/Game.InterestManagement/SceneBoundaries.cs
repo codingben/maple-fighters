@@ -13,7 +13,7 @@ namespace Game.InterestManagement
             this.lowerBound = lowerBound;
         }
 
-        public bool IsInsideBounds(Vector2 position)
+        public bool WithinBoundaries(Vector2 position)
         {
             return position.X < upperBound.X && position.Y < upperBound.Y &&
                    position.X > lowerBound.X && position.Y > lowerBound.Y;
