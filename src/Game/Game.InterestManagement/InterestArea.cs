@@ -100,10 +100,7 @@ namespace Game.InterestManagement
                     var subscribers = region.GetAllSubscribers();
                     foreach (var subscriber in subscribers)
                     {
-                        if (!regions.Any(
-                                x => x.IsOverlaps(
-                                    subscriber.Transform.Position,
-                                    subscriber.Transform.Size)))
+                        if (!IsOverlapsWithNearbyRegions(subscriber))
                         {
                             sceneObjects.Remove(subscriber);
                         }
@@ -133,7 +130,18 @@ namespace Game.InterestManagement
 
         private void OnSubscriberRemoved(TObject sceneObject)
         {
-            sceneObjects.Remove(sceneObject);
+            if (!IsOverlapsWithNearbyRegions(sceneObject))
+            {
+                sceneObjects.Remove(sceneObject);
+            }
+        }
+
+        private bool IsOverlapsWithNearbyRegions(TObject sceneObject)
+        {
+            return regions.Any(
+                x => x.IsOverlaps(
+                    sceneObject.Transform.Position,
+                    sceneObject.Transform.Size));
         }
     }
 }
