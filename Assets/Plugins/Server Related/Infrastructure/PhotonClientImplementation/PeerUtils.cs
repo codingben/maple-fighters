@@ -6,6 +6,7 @@ using ExitGames.Client.Photon;
 
 namespace PhotonClientImplementation
 {
+	// @author amit115532 (Amit Ozalvo)
     public static class PeerUtils
     {
         public static IEnumerator<IYieldInstruction> WaitForDisconnect(this PhotonPeer peer)

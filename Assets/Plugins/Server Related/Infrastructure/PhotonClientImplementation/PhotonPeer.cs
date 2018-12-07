@@ -7,6 +7,7 @@ using ExitGames.Client.Photon;
 
 namespace PhotonClientImplementation
 {
+	// @author amit115532 (Amit Ozalvo)
     public sealed class PhotonPeer : IServerPeer, IPhotonPeerListener, IOperationRequestSender, IEventNotifier, IPeerDisconnectionNotifier, IOperationResponseNotifier
     {
         public ExitGames.Client.Photon.PhotonPeer RawPeer { get; }

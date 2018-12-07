@@ -7,6 +7,7 @@ using ExitGames.Client.Photon;
 
 namespace PhotonClientImplementation
 {
+	// @author amit115532 (Amit Ozalvo)
     public class PhotonServerConnector
     {
         private readonly Func<ICoroutinesExecutor> coroutinesExecuterProvider;

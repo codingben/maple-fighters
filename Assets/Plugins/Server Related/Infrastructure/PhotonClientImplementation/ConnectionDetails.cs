@@ -2,6 +2,7 @@
 
 namespace PhotonClientImplementation
 {
+	// @author amit115532 (Amit Ozalvo)
     public struct ConnectionDetails
     {
         public ConnectionProtocol ConnectionProtocol { get; }

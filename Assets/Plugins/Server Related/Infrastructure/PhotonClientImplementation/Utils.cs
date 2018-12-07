@@ -6,6 +6,7 @@ using UnityEngine;
 
 namespace PhotonClientImplementation
 {
+	// @author amit115532 (Amit Ozalvo)
     public static class Utils
     {
         public static OperationRequest ToPhotonOperationRequest<TParam>(MessageData<TParam> request, short requestId) 
