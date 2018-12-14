@@ -26,8 +26,7 @@ namespace Scripts.UI.Controllers
         private void CreateChatWindow()
         {
             var chatWindow = UserInterfaceContainer.Instance.Add<ChatWindow>();
-            chatWindow.SendChatMessage += OnSendChatMessage;
-            chatWindow.IsChatActive = false;
+            chatWindow.MessageAdded += OnMessageAdded;
 
             isChatWindowExists = true;
         }
@@ -37,7 +36,7 @@ namespace Scripts.UI.Controllers
             var chatWindow = UserInterfaceContainer.Instance?.Get<ChatWindow>().AssertNotNull();
             if (chatWindow != null)
             {
-                chatWindow.SendChatMessage -= OnSendChatMessage;
+                chatWindow.MessageAdded -= OnMessageAdded;
             }
 
             UserInterfaceContainer.Instance?.Remove(chatWindow);
@@ -58,8 +57,6 @@ namespace Scripts.UI.Controllers
         public void OnAuthorized()
         {
             var chatWindow = UserInterfaceContainer.Instance.Get<ChatWindow>().AssertNotNull();
-            chatWindow.IsChatActive = true;
-
             var chatPeerLogic = ServiceContainer.ChatService.GetPeerLogic<IChatPeerLogicAPI>().AssertNotNull();
             chatPeerLogic.ChatMessageReceived.AddListener(parameters => chatWindow.AddMessage(parameters.Message));
         }
@@ -72,10 +69,10 @@ namespace Scripts.UI.Controllers
             }
         }
 
-        private void OnSendChatMessage(string message)
+        private void OnMessageAdded(string message)
         {
-            var chatPeerLogic = ServiceContainer.ChatService.GetPeerLogic<IChatPeerLogicAPI>().AssertNotNull();
-            chatPeerLogic.SendChatMessage(new ChatMessageRequestParameters(message));
+            var chatPeerLogic = ServiceContainer.ChatService.GetPeerLogic<IChatPeerLogicAPI>();
+            chatPeerLogic?.SendChatMessage(new ChatMessageRequestParameters(message));
         }
     }
 }

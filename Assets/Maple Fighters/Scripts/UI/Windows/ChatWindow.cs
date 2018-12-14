@@ -12,57 +12,63 @@ namespace Scripts.UI.Windows
 {
     public class ChatWindow : UserInterfaceWindow
     {
-        public event Action<string> SendChatMessage;
-        public bool IsChatActive { get; set; }
+        public event Action<string> MessageAdded;
 
-        private string ChatText
-        {
-            set
-            {
-                var time = DateTime.Now.ToString("HH:mm");
-                if (ChatText.Length > 0)
-                {
-                    chatText.text += $"\n<color=white>[{time}]</color> {value}";
-                }
-                else
-                {
-                    chatText.text += $"<color=white>[{time}]</color> {value}";
-                }
-            }
-            get
-            {
-                return chatText.text;
-            }
-        }
+        private const KeyCode SendMessageKeyCode = KeyCode.Return;
+        private const KeyCode SecondarySendMessageKeyCode = KeyCode.KeypadEnter;
+        private const KeyCode CloseMessageKeyCode = KeyCode.Escape;
 
-        [SerializeField] private TextMeshProUGUI chatText;
-        [SerializeField] private TMP_InputField inputField;
-        [Header("Keyboard")]
-        [SerializeField] private KeyCode sendMessageKey = KeyCode.Return;
-        [SerializeField] private KeyCode sendMessageSecondaryKey = KeyCode.KeypadEnter;
+        [SerializeField]
+        private TextMeshProUGUI chatText;
+
+        [SerializeField]
+        private TMP_InputField chatInputField;
 
         private string characterName;
 
         private void Update()
         {
-            if (IsFocusable() 
-                && (Input.GetKeyDown(sendMessageKey) || Input.GetKeyDown(sendMessageSecondaryKey)))
+            // TODO: Remove this from here
+            if (FocusController.Instance.Focusable == Focusable.Chat)
             {
-                OnEnterClicked();
+                FocusableState();
+            }
+            else
+            {
+                UnFocusableState();
             }
         }
 
-        private void OnEnterClicked()
+        private void FocusableState()
         {
-            SetActiveInputField(IsChatInputFieldActivated());
+            var isAnySendKeyPressed = IsAnySendKeyPressed();
+            var isEscapeKeyPressed = IsEscapeKeyPressed();
 
-            if (IsChatActive && !IsChatInputFieldActivated() && !string.IsNullOrWhiteSpace(inputField.text))
+            if (isAnySendKeyPressed || isEscapeKeyPressed)
             {
-                SendMessage();
-                ResetInputField();
-            }
+                if (isAnySendKeyPressed)
+                {
+                    SendMessage();
+                }
 
-            FocusController.Instance.Focusable = IsChatInputFieldActivated() ? Focusable.Chat : Focusable.Game;
+                ActivateOrDeactivateInputField();
+                SelectOrDeselectChatInputField();
+
+                // TODO: Remove this from here
+                FocusController.Instance.SetState(Focusable.Game);
+            }
+        }
+
+        private void UnFocusableState()
+        {
+            if (IsAnySendKeyPressed())
+            {
+                ActivateOrDeactivateInputField();
+                SelectOrDeselectChatInputField();
+
+                // TODO: Remove this from here
+                FocusController.Instance.SetState(Focusable.Chat);
+            }
         }
 
         private void SendMessage()
@@ -72,64 +78,65 @@ namespace Scripts.UI.Windows
                 characterName = GetCharacterName();
             }
 
-            var message = $"{characterName}: {inputField.text}";
-            SendChatMessage?.Invoke(message);
+            var text = chatInputField.text;
+            if (!string.IsNullOrWhiteSpace(text))
+            {
+                var message = $"{characterName}: {text}";
+                AddMessage(message);
 
-            AddMessage(message);
+                MessageAdded?.Invoke(message);
+            }
         }
 
-        public void AddMessage(string message)
+        public void AddMessage(string message, ChatMessageColor color = ChatMessageColor.None)
         {
-            ChatText = $"{message}";
+            if (color != ChatMessageColor.None)
+            {
+                var colorName = color.ToString().ToLower();
+                message = $"<color={colorName}>{message}</color>";
+            }
+
+            var isEmpty = chatText.text.Length == 0;
+            chatText.text += !isEmpty ? $"\n{message}" : $"{message}";
         }
 
-        public void AddMessage(string message, ChatMessageColor color)
+        private void ActivateOrDeactivateInputField()
         {
-            var chatMessageColor = color.ToString().ToLower();
-            ChatText = $"<color={chatMessageColor}>{message}</color>";
+            var active = !chatInputField.gameObject.activeSelf;
+
+            chatInputField.text = string.Empty;
+            chatInputField.gameObject.SetActive(active);
         }
 
-        private void SetActiveInputField(bool active)
+        private void SelectOrDeselectChatInputField()
         {
-            inputField.gameObject.SetActive(!active);
-
-            EventSystem.current.SetSelectedGameObject(IsChatInputFieldActivated() ? inputField.gameObject : null);
+            var active = chatInputField.gameObject.activeSelf;
+            var selected = active ? chatInputField.gameObject : null;
+            EventSystem.current.SetSelectedGameObject(selected);
         }
 
-        private void ResetInputField()
+        private bool IsAnySendKeyPressed()
         {
-            inputField.text = string.Empty;
+            return Input.GetKeyDown(SendMessageKeyCode)
+                   || Input.GetKeyDown(SecondarySendMessageKeyCode);
+        }
+
+        private bool IsEscapeKeyPressed()
+        {
+            return Input.GetKeyDown(CloseMessageKeyCode);
         }
 
         private string GetCharacterName()
         {
-            var localGameObject = SceneObjectsContainer.Instance.GetLocalSceneObject().GetGameObject().AssertNotNull();
-            var characterInformation = localGameObject.GetComponent<CharacterInformationProvider>();
-            var name = characterInformation.GetCharacterInfo().Name;
-            return name;
-        }
+            var sceneObject = 
+                SceneObjectsContainer.Instance.GetLocalSceneObject()
+                    .AssertNotNull();
 
-        private bool IsChatInputFieldActivated()
-        {
-            return inputField.gameObject.activeSelf;
-        }
+            var character = 
+                sceneObject.GetGameObject()
+                    .GetComponent<CharacterInformationProvider>();
 
-        private bool IsFocusable()
-        {
-            if (FocusController.Instance.Focusable == Focusable.UI)
-            {
-                if (inputField.interactable)
-                {
-                    inputField.interactable = false;
-                }
-                return false;
-            }
-
-            if (!inputField.interactable)
-            {
-                inputField.interactable = true;
-            }
-            return true;
+            return character.GetCharacterInfo().Name;
         }
     }
 }

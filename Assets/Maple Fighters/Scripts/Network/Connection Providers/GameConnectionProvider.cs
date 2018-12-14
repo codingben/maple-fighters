@@ -76,10 +76,7 @@ namespace Scripts.Services
 
         private void ShowConnectionTimeout()
         {
-            if (FocusController.Instance != null)
-            {
-                FocusController.Instance.Focusable = Focusable.UI;
-            }
+            FocusController.Instance?.SetState(Focusable.UI);
 
             Utils.ShowNotice("The connection has timed out.", LoadedObjectsUtils.GoBackToLogin, true, Index.Last);
         }
