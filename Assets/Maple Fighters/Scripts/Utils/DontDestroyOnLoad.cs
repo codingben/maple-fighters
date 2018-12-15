@@ -15,7 +15,7 @@ namespace Scripts.Utils
                 return;
             }
 
-            gameObject.DontDestroyOnLoad();
+            DontDestroyOnLoad(gameObject);
 
             Instance = this as T;
 

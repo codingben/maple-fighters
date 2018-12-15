@@ -41,7 +41,7 @@ namespace Assets.Scripts
                 sceneEvents.RegionsCreated -= OnRegionsCreated;
             }
 
-            LoadedObjects.DestroyAll();
+            SavedObjects.DestroyAll();
         }
 
         private void OnRegionsCreated()

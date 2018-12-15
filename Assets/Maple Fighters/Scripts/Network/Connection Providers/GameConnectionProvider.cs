@@ -78,7 +78,7 @@ namespace Scripts.Services
         {
             FocusController.Instance?.SetState(Focusable.UI);
 
-            Utils.ShowNotice("The connection has timed out.", LoadedObjectsUtils.GoBackToLogin, true, Index.Last);
+            Utils.ShowNotice("The connection has timed out.", SavedObjectsUtils.GoBackToLogin, true, Index.Last);
         }
 
         protected override Task<AuthorizeResponseParameters> Authorize(IYield yield, AuthorizeRequestParameters parameters)
@@ -99,7 +99,7 @@ namespace Scripts.Services
             {
                 noticeWindow.Message.text = $"Authorization with {serverName} server failed.";
                 noticeWindow.OkButton.interactable = true;
-                noticeWindow.OkButtonClickedAction = LoadedObjectsUtils.GoBackToLogin;
+                noticeWindow.OkButtonClickedAction = SavedObjectsUtils.GoBackToLogin;
             }
         }
 

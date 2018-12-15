@@ -2,11 +2,11 @@
 
 namespace Scripts.Utils
 {
-    public static class LoadedObjectsUtils
+    public static class SavedObjectsUtils
     {
         public static void GoBackToLogin()
         {
-            LoadedObjects.DestroyAll();
+            SavedObjects.DestroyAll();
 
             const int LEVEL_INDEX = 0;
             SceneManager.LoadScene(LEVEL_INDEX, LoadSceneMode.Single);
