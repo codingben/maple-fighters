@@ -7,8 +7,11 @@ using UnityEngine;
 
 namespace Scripts.ScriptableObjects
 {
-    [CreateAssetMenu(fileName = "NetworkConfiguration", menuName = "Scriptable Objects/NetworkConfiguration", order = 0)]
-    public class NetworkConfiguration : ScriptableObjectSingleton<NetworkConfiguration>
+    [CreateAssetMenu(
+        fileName = "NetworkConfiguration",
+        menuName = "Scriptable Objects/NetworkConfiguration",
+        order = 0)]
+    public class NetworkConfiguration : ScriptableSingleton<NetworkConfiguration>
     {
         public ConnectionProtocol ConnectionProtocol = ConnectionProtocol.Udp;
         public DebugLevel DebugLevel = DebugLevel.OFF;
@@ -16,13 +19,15 @@ namespace Scripts.ScriptableObjects
         public bool LogOperationsResponse;
         public bool LogEvents;
 
-        public PeerConnectionInformation GetPeerConnectionInformation(ConnectionInformation connectionInformation)
+        public PeerConnectionInformation GetPeerConnectionInformation(
+            ConnectionInformation connectionInformation)
         {
             PeerConnectionInformation peerConnectionInformation;
 
             if (ConnectionProtocol == ConnectionProtocol.Tcp)
             {
-                LogUtils.Log("TCP is not supported. TCP is only for communication between servers.");
+                LogUtils.Log(
+                    "TCP is not supported. TCP is only for communication between servers.");
             }
 
             switch (ConnectionProtocol)
@@ -30,19 +35,25 @@ namespace Scripts.ScriptableObjects
                 case ConnectionProtocol.Udp:
                 case ConnectionProtocol.Tcp:
                 {
-                    peerConnectionInformation = connectionInformation.UdpConnectionDetails;
+                    peerConnectionInformation =
+                        connectionInformation.UdpConnectionDetails;
                     break;
                 }
+
                 case ConnectionProtocol.WebSocket:
                 {
-                    peerConnectionInformation = connectionInformation.WebSocketConnectionDetails;
+                    peerConnectionInformation = connectionInformation
+                        .WebSocketConnectionDetails;
                     break;
                 }
+
                 case ConnectionProtocol.WebSocketSecure:
                 {
-                    peerConnectionInformation = connectionInformation.WebSocketSecureConnectionDetails;
+                    peerConnectionInformation = connectionInformation
+                        .WebSocketSecureConnectionDetails;
                     break;
                 }
+
                 default:
                 {
                     throw new ArgumentOutOfRangeException();

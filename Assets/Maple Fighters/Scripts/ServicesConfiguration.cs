@@ -5,12 +5,20 @@ using UnityEngine;
 
 namespace Scripts.ScriptableObjects
 {
-    [CreateAssetMenu(fileName = "ServicesConfiguration", menuName = "Scriptable Objects/ServicesConfiguration", order = 1)]
-    public class ServicesConfiguration : ScriptableObjectSingleton<ServicesConfiguration>
+    [CreateAssetMenu(
+        fileName = "ServicesConfiguration",
+        menuName = "Scriptable Objects/ServicesConfiguration",
+        order = 1)]
+    public class ServicesConfiguration : ScriptableSingleton<ServicesConfiguration>
     {
-        public ConnectionInformation GetConnectionInformation(ServerType type) 
-            => connectionInformations.FirstOrDefault(connectionInformation => connectionInformation.ServerType == type);
+        [SerializeField]
+        private ConnectionInformation[] connectionInformations;
 
-        [SerializeField] private ConnectionInformation[] connectionInformations;
+        public ConnectionInformation GetConnectionInformation(
+            ServerType serverType)
+        {
+            return connectionInformations.FirstOrDefault(
+                x => x.ServerType == serverType);
+        }
     }
 }
