@@ -8,7 +8,7 @@ namespace Scripts.UI.Controllers
         {
             base.OnAwake();
 
-            UserInterfaceContainer.Instance.AddOnly(this);
+            UserInterfaceContainer.GetInstance().AddOnly(this);
         }
     }
 }

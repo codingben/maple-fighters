@@ -9,15 +9,22 @@ namespace Scripts.UI.Windows
     public class NoticeWindow : UserInterfaceBaseFadeEffect
     {
         public TextMeshProUGUI Message => messageText;
+
         public Button OkButton => okButton;
+
         public Action OkButtonClickedAction;
 
         [Header("Images")]
-        [SerializeField] private Image blackBackground;
+        [SerializeField]
+        private Image blackBackground;
+
         [Header("Buttons")]
-        [SerializeField] private Button okButton;
+        [SerializeField]
+        private Button okButton;
+
         [Header("Texts")]
-        [SerializeField] private TextMeshProUGUI messageText;
+        [SerializeField]
+        private TextMeshProUGUI messageText;
 
         public void Initialize(string message, Action okButtonClicked, bool background = false)
         {
@@ -29,7 +36,7 @@ namespace Scripts.UI.Windows
 
         public override void Hide()
         {
-            Hide(onFinished: () => UserInterfaceContainer.Instance?.Remove(this));
+            Hide(onFinished: () => UserInterfaceContainer.GetInstance()?.Remove(this));
         }
 
         private void Start()

@@ -13,8 +13,6 @@ using Scripts.Utils;
 
 namespace Scripts.Services
 {
-    using Utils = UI.Utils;
-
     public class GameServerSelectorConnectionProvider : ServiceConnectionProviderBase<GameServerSelectorConnectionProvider>
     {
         private AuthorizationStatus authorizationStatus = AuthorizationStatus.Failed;
@@ -27,13 +25,13 @@ namespace Scripts.Services
 
         protected override void OnPreConnection()
         {
-            var noticeWindow = UserInterfaceContainer.Instance.Get<NoticeWindow>().AssertNotNull();
+            var noticeWindow = UserInterfaceContainer.GetInstance().Get<NoticeWindow>().AssertNotNull();
             noticeWindow.Message.text = "Connecting to master server...";
         }
 
         protected override void OnConnectionFailed()
         {
-            var noticeWindow = UserInterfaceContainer.Instance.Get<NoticeWindow>().AssertNotNull();
+            var noticeWindow = UserInterfaceContainer.GetInstance().Get<NoticeWindow>().AssertNotNull();
             noticeWindow.Message.text = "Could not connect to master server.";
             noticeWindow.OkButton.interactable = true;
             noticeWindow.OkButtonClickedAction = SavedObjectsUtils.GoBackToLogin;
@@ -57,7 +55,7 @@ namespace Scripts.Services
             {
                 OnNonAuthorized();
             }
-            else if(reason != DisconnectReason.ServerDisconnect)
+            else if (reason != DisconnectReason.ServerDisconnect)
             {
                 ShowConnectionTimeout();
             }
@@ -65,7 +63,7 @@ namespace Scripts.Services
 
         private void ShowConnectionTimeout()
         {
-            Utils.ShowNotice("The connection has timed out.", SavedObjectsUtils.GoBackToLogin, true, Index.Last);
+            UI.Utils.ShowNotice("The connection has timed out.", SavedObjectsUtils.GoBackToLogin, true, Index.Last);
         }
 
         protected override Task<AuthorizeResponseParameters> Authorize(IYield yield, AuthorizeRequestParameters parameters)
@@ -81,7 +79,7 @@ namespace Scripts.Services
 
         protected override void OnNonAuthorized()
         {
-            var noticeWindow = UserInterfaceContainer.Instance.Get<NoticeWindow>().AssertNotNull();
+            var noticeWindow = UserInterfaceContainer.GetInstance().Get<NoticeWindow>().AssertNotNull();
             noticeWindow.Message.text = "Authorization with master server failed.";
             noticeWindow.OkButton.interactable = true;
             noticeWindow.OkButtonClickedAction = SavedObjectsUtils.GoBackToLogin;
@@ -89,12 +87,12 @@ namespace Scripts.Services
 
         protected override void OnAuthorized()
         {
-            var noticeWindow = UserInterfaceContainer.Instance.Get<NoticeWindow>().AssertNotNull();
+            var noticeWindow = UserInterfaceContainer.GetInstance().Get<NoticeWindow>().AssertNotNull();
             noticeWindow.Hide();
 
             authorizationStatus = AuthorizationStatus.Succeed;
 
-            GameServerSelectorController.Instance.ShowGameServerSelectorUI();
+            GameServerSelectorController.GetInstance().ShowGameServerSelectorUI();
         }
 
         protected override void SetPeerLogicAfterAuthorization()

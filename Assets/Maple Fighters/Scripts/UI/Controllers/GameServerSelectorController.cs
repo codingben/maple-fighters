@@ -10,6 +10,7 @@ using Scripts.Containers;
 using Scripts.Services;
 using Scripts.UI.Core;
 using Scripts.UI.Windows;
+using Scripts.Utils;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -19,14 +20,22 @@ namespace Scripts.UI.Controllers
 
     public class GameServerSelectorController : MonoSingleton<GameServerSelectorController>
     {
-        [SerializeField] private int loadSceneIndex;
+        [SerializeField]
+        private int loadSceneIndex;
 
-        private bool isInitialized;
         private string gameServerName;
         private GameServerSelectorWindow gameServerSelectorWindow;
 
-        private readonly ExternalCoroutinesExecutor coroutinesExecutor = new ExternalCoroutinesExecutor();
-        private readonly Dictionary<string, GameServerInformationParameters> gameServerInformations = new Dictionary<string, GameServerInformationParameters>();
+        private ExternalCoroutinesExecutor coroutinesExecutor;
+        private Dictionary<string, GameServerInformationParameters> gameServerInformations;
+
+        protected override void OnAwake()
+        {
+            base.OnAwake();
+
+            coroutinesExecutor = new ExternalCoroutinesExecutor();
+            gameServerInformations = new Dictionary<string, GameServerInformationParameters>();
+        }
 
         public void ShowGameServerSelectorUI()
         {
@@ -35,9 +44,8 @@ namespace Scripts.UI.Controllers
                 gameServerSelectorWindow = CreateGameServerSelectorWindow();
             }
 
-            if (!isInitialized)
+            if (!gameServerSelectorWindow.IsShowed)
             {
-                isInitialized = true;
                 gameServerSelectorWindow.Show(RefreshGameServerList);
             }
             else
@@ -51,9 +59,9 @@ namespace Scripts.UI.Controllers
             coroutinesExecutor.Update();
         }
 
-        protected override void OnDestroyed()
+        protected override void OnDestroying()
         {
-            base.OnDestroyed();
+            base.OnDestroying();
 
             coroutinesExecutor.Dispose();
 
@@ -65,7 +73,7 @@ namespace Scripts.UI.Controllers
 
         private GameServerSelectorWindow CreateGameServerSelectorWindow()
         {
-            gameServerSelectorWindow = UserInterfaceContainer.Instance.Add<GameServerSelectorWindow>();
+            gameServerSelectorWindow = UserInterfaceContainer.GetInstance().Add<GameServerSelectorWindow>();
             gameServerSelectorWindow.JoinButtonClicked += OnJoinButtonClicked;
             gameServerSelectorWindow.RefreshButtonClicked += OnRefreshButtonClicked;
             gameServerSelectorWindow.GameServerButtonClicked += OnGameServerButtonClicked;
@@ -78,7 +86,7 @@ namespace Scripts.UI.Controllers
             gameServerSelectorWindow.RefreshButtonClicked -= OnRefreshButtonClicked;
             gameServerSelectorWindow.GameServerButtonClicked -= OnGameServerButtonClicked;
 
-            UserInterfaceContainer.Instance?.Remove(gameServerSelectorWindow);
+            UserInterfaceContainer.GetInstance()?.Remove(gameServerSelectorWindow);
         }
 
         private void OnJoinButtonClicked()
@@ -92,7 +100,7 @@ namespace Scripts.UI.Controllers
             Action onHide = delegate 
             {
                 var gameServerInfo = gameServerInformations[gameServerName];
-                GameConnectionProvider.Instance.Connect(gameServerInfo.Name, OnGameConnected, new PeerConnectionInformation(gameServerInfo.IP, gameServerInfo.Port));
+                GameConnectionProvider.GetInstance().Connect(gameServerInfo.Name, OnGameConnected, new PeerConnectionInformation(gameServerInfo.IP, gameServerInfo.Port));
             };
 
             gameServerSelectorWindow.Hide(onHide);
@@ -112,7 +120,7 @@ namespace Scripts.UI.Controllers
 
         private void RefreshGameServerList()
         {
-            if (GameServerSelectorConnectionProvider.Instance.IsConnected())
+            if (GameServerSelectorConnectionProvider.GetInstance().IsConnected())
             {
                 if (gameServerInformations.Count != 0)
                 {

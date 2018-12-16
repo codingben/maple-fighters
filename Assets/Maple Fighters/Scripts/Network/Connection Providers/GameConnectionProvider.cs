@@ -41,10 +41,10 @@ namespace Scripts.Services
         {
             Action onButtonClicked = delegate 
             {
-                GameServerSelectorController.Instance.ShowGameServerSelectorUI();
+                GameServerSelectorController.GetInstance().ShowGameServerSelectorUI();
             };
 
-            var noticeWindow = UserInterfaceContainer.Instance.Get<NoticeWindow>().AssertNotNull();
+            var noticeWindow = UserInterfaceContainer.GetInstance().Get<NoticeWindow>().AssertNotNull();
             noticeWindow.Message.text = $"Could not connect to the {serverName} server.";
             noticeWindow.OkButton.interactable = true;
             noticeWindow.OkButtonClickedAction = onButtonClicked;
@@ -68,7 +68,7 @@ namespace Scripts.Services
             {
                 ShowConnectionTimeout();
             }
-            else if(!IsDestroying)
+            else if (!IsDestroying)
             {
                 OnNonAuthorized();
             }
@@ -76,7 +76,7 @@ namespace Scripts.Services
 
         private void ShowConnectionTimeout()
         {
-            FocusController.Instance?.SetState(Focusable.UI);
+            FocusController.GetInstance()?.SetState(Focusable.UI);
 
             Utils.ShowNotice("The connection has timed out.", SavedObjectsUtils.GoBackToLogin, true, Index.Last);
         }
@@ -94,7 +94,7 @@ namespace Scripts.Services
 
         protected override void OnNonAuthorized()
         {
-            var noticeWindow = UserInterfaceContainer.Instance?.Get<NoticeWindow>();
+            var noticeWindow = UserInterfaceContainer.GetInstance()?.Get<NoticeWindow>();
             if (noticeWindow != null)
             {
                 noticeWindow.Message.text = $"Authorization with {serverName} server failed.";
@@ -105,7 +105,7 @@ namespace Scripts.Services
 
         protected override void OnAuthorized()
         {
-            var noticeWindow = UserInterfaceContainer.Instance.Get<NoticeWindow>().AssertNotNull();
+            var noticeWindow = UserInterfaceContainer.GetInstance().Get<NoticeWindow>().AssertNotNull();
             noticeWindow.Hide();
 
             authorizationStatus = AuthorizationStatus.Succeed;

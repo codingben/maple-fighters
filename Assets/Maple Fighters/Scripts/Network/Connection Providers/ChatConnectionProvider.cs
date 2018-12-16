@@ -24,13 +24,13 @@ namespace Scripts.Services
 
         protected override void OnPreConnection()
         {
-            var chatWindow = UserInterfaceContainer.Instance.Get<ChatWindow>().AssertNotNull();
+            var chatWindow = UserInterfaceContainer.GetInstance().Get<ChatWindow>().AssertNotNull();
             chatWindow.AddMessage("Connecting to a chat server...", ChatMessageColor.Green);
         }
 
         protected override void OnConnectionFailed()
         {
-            var chatWindow = UserInterfaceContainer.Instance.Get<ChatWindow>().AssertNotNull();
+            var chatWindow = UserInterfaceContainer.GetInstance().Get<ChatWindow>().AssertNotNull();
             chatWindow.AddMessage("Could not connect to a chat server.", ChatMessageColor.Red);
         }
 
@@ -45,7 +45,7 @@ namespace Scripts.Services
 
             if (authorizationStatus == AuthorizationStatus.Succeed)
             {
-                ChatController.Instance?.OnConnectionClosed();
+                ChatController.GetInstance()?.OnConnectionClosed();
             }
         }
 
@@ -62,17 +62,17 @@ namespace Scripts.Services
 
         protected override void OnNonAuthorized()
         {
-            ChatController.Instance?.OnNonAuthorized();
+            ChatController.GetInstance()?.OnNonAuthorized();
         }
 
         protected override void OnAuthorized()
         {
-            var chatWindow = UserInterfaceContainer.Instance.Get<ChatWindow>().AssertNotNull();
+            var chatWindow = UserInterfaceContainer.GetInstance().Get<ChatWindow>().AssertNotNull();
             chatWindow.AddMessage("Connected to a chat server successfully.", ChatMessageColor.Green);
 
             authorizationStatus = AuthorizationStatus.Succeed;
 
-            ChatController.Instance.OnAuthorized();
+            ChatController.GetInstance().OnAuthorized();
         }
 
         protected override void SetPeerLogicAfterAuthorization()

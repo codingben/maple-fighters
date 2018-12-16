@@ -8,8 +8,8 @@ using Scripts.Containers;
 using Scripts.Services;
 using Scripts.UI.Core;
 using Scripts.UI.Windows;
+using Scripts.Utils;
 using UnityEngine;
-using WaitForSeconds = CommonTools.Coroutines.WaitForSeconds;
 
 namespace Scripts.UI.Controllers
 {
@@ -18,7 +18,14 @@ namespace Scripts.UI.Controllers
         [SerializeField] private int loadSceneIndex;
 
         private LoginWindow loginWindow;
-        private readonly ExternalCoroutinesExecutor coroutinesExecutor = new ExternalCoroutinesExecutor();
+        private ExternalCoroutinesExecutor coroutinesExecutor;
+
+        protected override void OnAwake()
+        {
+            base.OnAwake();
+
+            coroutinesExecutor = new ExternalCoroutinesExecutor();
+        }
 
         private void Start()
         {
@@ -30,9 +37,9 @@ namespace Scripts.UI.Controllers
             coroutinesExecutor.Update();
         }
 
-        protected override void OnDestroyed()
+        protected override void OnDestroying()
         {
-            base.OnDestroyed();
+            base.OnDestroying();
 
             coroutinesExecutor.Dispose();
 
@@ -41,7 +48,7 @@ namespace Scripts.UI.Controllers
 
         private void CreateLoginWindow()
         {
-            loginWindow = UserInterfaceContainer.Instance.Add<LoginWindow>();
+            loginWindow = UserInterfaceContainer.GetInstance().Add<LoginWindow>();
             loginWindow.LoginButtonClicked += OnLoginButtonClicked;
             loginWindow.RegisterButtonClicked += OnRegisterButtonClicked;
             loginWindow.ShowNotice += (message) => Utils.ShowNotice(message, okButtonClicked: () => loginWindow.Show());
@@ -53,7 +60,7 @@ namespace Scripts.UI.Controllers
             loginWindow.LoginButtonClicked -= OnLoginButtonClicked;
             loginWindow.RegisterButtonClicked -= OnRegisterButtonClicked;
 
-            UserInterfaceContainer.Instance?.Remove(loginWindow);
+            UserInterfaceContainer.GetInstance()?.Remove(loginWindow);
         }
 
         private void OnLoginButtonClicked(string email, string password)
@@ -63,10 +70,12 @@ namespace Scripts.UI.Controllers
 
         private void Login(string email, string password)
         {
-            var noticeWindow = Utils.ShowNotice("Logging in... Please wait.", okButtonClicked: () =>
-            {
-                loginWindow.Show();
-            });
+            var noticeWindow = Utils.ShowNotice(
+                message: "Logging in... Please wait.", 
+                okButtonClicked: () =>
+                {
+                    loginWindow.Show();
+                });
             noticeWindow.OkButton.interactable = false;
 
             Action authenticateAction = () =>
@@ -75,13 +84,13 @@ namespace Scripts.UI.Controllers
                 coroutinesExecutor.StartTask((yield) => Authenticate(yield, parameters), exception => ServiceConnectionProviderUtils.OnOperationFailed());
             };
 
-            if (LoginConnectionProvider.Instance.IsConnected())
+            if (LoginConnectionProvider.GetInstance().IsConnected())
             {
                 authenticateAction.Invoke();
             }
             else
             {
-                LoginConnectionProvider.Instance.Connect(onConnected: authenticateAction);
+                LoginConnectionProvider.GetInstance().Connect(onConnected: authenticateAction);
             }
         }
 
@@ -93,34 +102,38 @@ namespace Scripts.UI.Controllers
             {
                 case LoginStatus.Succeed:
                 {
-                    var noticeWindow = UserInterfaceContainer.Instance.Get<NoticeWindow>().AssertNotNull();
+                    var noticeWindow = UserInterfaceContainer.GetInstance().Get<NoticeWindow>().AssertNotNull();
                     noticeWindow.Message.text = "You have logged in successfully!";
                     break;
                 }
+
                 case LoginStatus.UserNotExist:
                 {
-                    var noticeWindow = UserInterfaceContainer.Instance.Get<NoticeWindow>().AssertNotNull();
+                    var noticeWindow = UserInterfaceContainer.GetInstance().Get<NoticeWindow>().AssertNotNull();
                     noticeWindow.Message.text = "The user does not exist. Please check your typed email.";
                     noticeWindow.OkButton.interactable = true;
                     break;
                 }
+
                 case LoginStatus.PasswordIncorrect:
                 {
-                    var noticeWindow = UserInterfaceContainer.Instance.Get<NoticeWindow>().AssertNotNull();
+                    var noticeWindow = UserInterfaceContainer.GetInstance().Get<NoticeWindow>().AssertNotNull();
                     noticeWindow.Message.text = "The password is incorrect, please type it again.";
                     noticeWindow.OkButton.interactable = true;
                     break;
                 }
+
                 case LoginStatus.NonAuthorized:
                 {
-                    var noticeWindow = UserInterfaceContainer.Instance.Get<NoticeWindow>().AssertNotNull();
+                    var noticeWindow = UserInterfaceContainer.GetInstance().Get<NoticeWindow>().AssertNotNull();
                     noticeWindow.Message.text = "Authentication with login server failed.";
                     noticeWindow.OkButton.interactable = true;
                     break;
                 }
+
                 default:
                 {
-                    var noticeWindow = UserInterfaceContainer.Instance.Get<NoticeWindow>().AssertNotNull();
+                    var noticeWindow = UserInterfaceContainer.GetInstance().Get<NoticeWindow>().AssertNotNull();
                     noticeWindow.Message.text = "Something went wrong, please try again.";
                     noticeWindow.OkButton.interactable = true;
                     break;
@@ -140,9 +153,9 @@ namespace Scripts.UI.Controllers
 
         private IEnumerator<IYieldInstruction> ConnectToMasterServerAfterDelay()
         {
-            yield return new WaitForSeconds(0.25f);
+            yield return new CommonTools.Coroutines.WaitForSeconds(0.25f);
 
-            GameServerSelectorConnectionProvider.Instance.Connect();
+            GameServerSelectorConnectionProvider.GetInstance().Connect();
         }
 
         private void OnRegisterButtonClicked()
@@ -151,7 +164,7 @@ namespace Scripts.UI.Controllers
             {
                 loginWindow.ResetInputFields();
 
-                var registrationWindow = UserInterfaceContainer.Instance.Get<RegistrationWindow>().AssertNotNull();
+                var registrationWindow = UserInterfaceContainer.GetInstance().Get<RegistrationWindow>().AssertNotNull();
                 registrationWindow.Show();
             });
         }

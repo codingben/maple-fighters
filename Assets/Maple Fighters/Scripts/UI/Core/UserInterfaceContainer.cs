@@ -7,27 +7,25 @@ using UnityEngine;
 
 namespace Scripts.UI.Core
 {
-    public enum ViewType
+    public class UserInterfaceContainer : MonoSingleton<UserInterfaceContainer>
     {
-        Background,
-        Foreground
-    }
-
-    public enum Index
-    {
-        First,
-        Last
-    }
-
-    public class UserInterfaceContainer : DontDestroyOnLoad<UserInterfaceContainer>
-    {
-        private const string UI_RESOURCES_PATH = "UI/{0}";
+        private const string UiResourcesPath = "UI/{0}";
 
         [Header("Views")]
-        [SerializeField] private Transform background;
-        [SerializeField] private Transform foreground;
+        [SerializeField]
+        private Transform background;
 
-        private readonly List<IUserInterface> userInterfaces = new List<IUserInterface>();
+        [SerializeField]
+        private Transform foreground;
+
+        private List<IUserInterface> userInterfaces;
+
+        protected override void OnAwake()
+        {
+            base.OnAwake();
+
+            userInterfaces = new List<IUserInterface>();
+        }
 
         public T AddOnly<T>(T type)
             where T : IUserInterface
@@ -46,7 +44,7 @@ namespace Scripts.UI.Core
             where T : IUserInterface
         {
             var userInterfaceName = typeof(T).Name;
-            var userInterfaceObject = Resources.Load(string.Format(UI_RESOURCES_PATH, userInterfaceName)) as GameObject;
+            var userInterfaceObject = Resources.Load(string.Format(UiResourcesPath, userInterfaceName)) as GameObject;
             if (userInterfaceObject == null)
             {
                 throw new Exception($"Could not find an user interface with name {userInterfaceName}.");

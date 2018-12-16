@@ -27,7 +27,7 @@ namespace Scripts.UI
         private IEnumerator HideAfterSomeTime()
         {
             yield return new WaitForSeconds(time);
-            Hide(() => UserInterfaceContainer.Instance.Remove(this));
+            Hide(() => UserInterfaceContainer.GetInstance().Remove(this));
         }
     }
 }

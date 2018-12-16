@@ -86,7 +86,7 @@ namespace Assets.Scripts
                 var id = dummySceneObject.Id;
                 CreateCommonComponentsToSceneObject(id);
 
-                var sceneObject = SceneObjectsContainer.Instance.GetRemoteSceneObject(id);
+                var sceneObject = SceneObjectsContainer.GetInstance().GetRemoteSceneObject(id);
                 if (sceneObject != null)
                 {
                     dummySceneObject.AddComponents?.Invoke(sceneObject.GetGameObject());
@@ -100,12 +100,12 @@ namespace Assets.Scripts
         {
             yield return null;
 
-            var localEntity = SceneObjectsContainer.Instance.GetLocalSceneObject().GetGameObject().GetComponent<IInterestArea>().AssertNotNull();
+            var localEntity = SceneObjectsContainer.GetInstance().GetLocalSceneObject().GetGameObject().GetComponent<IInterestArea>().AssertNotNull();
 
             foreach (var dummySceneObject in dummySceneObjectsProvider.GetSceneObjects())
             {
                 var id = dummySceneObject.Id;
-                var sceneObject = SceneObjectsContainer.Instance.GetRemoteSceneObject(id)?.GetGameObject();
+                var sceneObject = SceneObjectsContainer.GetInstance().GetRemoteSceneObject(id)?.GetGameObject();
                 if (sceneObject == null)
                 {
                     LogUtils.Log(MessageBuilder.Trace($"Could not find a scene object with id ${id}"));
@@ -125,7 +125,7 @@ namespace Assets.Scripts
 
         private void CreateCommonComponentsToSceneObject(int id, params Type[] components)
         {
-            var sceneObject = SceneObjectsContainer.Instance.GetRemoteSceneObject(id)?.GetGameObject();
+            var sceneObject = SceneObjectsContainer.GetInstance().GetRemoteSceneObject(id)?.GetGameObject();
             if (sceneObject == null)
             {
                 LogUtils.Log(MessageBuilder.Trace($"Could not find a scene object with id {id}"));

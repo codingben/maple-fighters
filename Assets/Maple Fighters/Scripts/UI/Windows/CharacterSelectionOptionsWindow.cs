@@ -9,13 +9,12 @@ namespace Scripts.UI.Windows
     public class CharacterSelectionOptionsWindow : UserInterfaceWindowFadeEffect
     {
         public event Action StartButtonClicked;
-        public event Action CreateCharacterButtonClicked;
-        public event Action DeleteCharacterButtonClicked;
-        public event Action PlayCharacterIdleAnimation;
 
-        public void StartButtonInteraction(bool interctable) => startButton.interactable = interctable;
-        public void CreateCharacterButtonInteraction(bool interctable) => createCharacterButton.interactable = interctable;
-        public void DeleteCharacterButtonInteraction(bool interctable) => deleteCharacterButton.interactable = interctable;
+        public event Action CreateCharacterButtonClicked;
+
+        public event Action DeleteCharacterButtonClicked;
+
+        public event Action PlayCharacterIdleAnimation;
 
         [SerializeField] private Button startButton;
         [SerializeField] private Button createCharacterButton;
@@ -41,20 +40,21 @@ namespace Scripts.UI.Windows
 
         public override void Hide()
         {
-            UserInterfaceContainer.Instance?.Remove(this);
+            UserInterfaceContainer.GetInstance()?.Remove(this);
+
             PlayCharacterIdleAnimation?.Invoke();
         }
 
         private void SubscribeToMouseDetectionBackgroundEvent()
         {
-            var screenMouseDetection = UserInterfaceContainer.Instance.Get<MouseDetectionBackground>().AssertNotNull();
+            var screenMouseDetection = UserInterfaceContainer.GetInstance().Get<MouseDetectionBackground>().AssertNotNull();
             screenMouseDetection.MouseClicked += Hide;
             screenMouseDetection.MouseClicked += ShowChooseFighterText;
         }
 
         private void UnsubscribeFromMouseDetectionBackgroundEvent()
         {
-            var screenMouseDetection = UserInterfaceContainer.Instance?.Get<MouseDetectionBackground>().AssertNotNull();
+            var screenMouseDetection = UserInterfaceContainer.GetInstance()?.Get<MouseDetectionBackground>().AssertNotNull();
             if (screenMouseDetection != null)
             {
                 screenMouseDetection.MouseClicked -= Hide;
@@ -64,7 +64,7 @@ namespace Scripts.UI.Windows
 
         private void ShowChooseFighterText()
         {
-            var chooseFighterText = UserInterfaceContainer.Instance.Get<ChooseFighterText>().AssertNotNull();
+            var chooseFighterText = UserInterfaceContainer.GetInstance().Get<ChooseFighterText>().AssertNotNull();
             chooseFighterText.Show();
         }
 
@@ -87,6 +87,21 @@ namespace Scripts.UI.Windows
             Hide();
 
             DeleteCharacterButtonClicked?.Invoke();
+        }
+
+        public void StartButtonInteraction(bool interctable)
+        {
+            startButton.interactable = interctable;
+        }
+
+        public void CreateCharacterButtonInteraction(bool interctable)
+        {
+            createCharacterButton.interactable = interctable;
+        }
+
+        public void DeleteCharacterButtonInteraction(bool interctable)
+        {
+            deleteCharacterButton.interactable = interctable;
         }
     }
 }

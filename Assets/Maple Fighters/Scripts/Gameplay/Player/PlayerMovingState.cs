@@ -25,7 +25,7 @@ namespace Scripts.Gameplay.Actors
                 return;
             }
 
-            if (FocusController.Instance.Focusable != Focusable.Game)
+            if (FocusController.GetInstance().Focusable != Focusable.Game)
             {
                 playerController.PlayerState = PlayerState.Idle;
                 return;

@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using CommonTools.Coroutines;
 using CommonTools.Log;
+using Game.Common;
 using Scripts.Containers;
+using Scripts.Services;
 using Scripts.UI.Core;
 using Scripts.UI.Windows;
-using Game.Common;
-using Scripts.Services;
+using Scripts.Utils;
 using Scripts.World;
 using TMPro;
 using UnityEngine;
@@ -17,7 +18,14 @@ namespace Scripts.UI.Controllers
     public class CharactersController : MonoSingleton<CharactersController>
     {
         private readonly ClickableCharacter[] characters = { null, null, null };
-        private readonly ExternalCoroutinesExecutor coroutinesExecutor = new ExternalCoroutinesExecutor();
+        private ExternalCoroutinesExecutor coroutinesExecutor;
+
+        protected override void OnAwake()
+        {
+            base.OnAwake();
+
+            coroutinesExecutor = new ExternalCoroutinesExecutor();
+        }
 
         private void Start()
         {
@@ -26,9 +34,9 @@ namespace Scripts.UI.Controllers
             coroutinesExecutor.StartTask(GetCharacters, exception => ServiceConnectionProviderUtils.OnOperationFailed());
         }
 
-        protected override void OnDestroyed()
+        protected override void OnDestroying()
         {
-            base.OnDestroyed();
+            base.OnDestroying();
 
             coroutinesExecutor.Dispose();
 
@@ -38,14 +46,14 @@ namespace Scripts.UI.Controllers
 
         private void CreateChooseFighterTextUI()
         {
-            var chooseFighterText = UserInterfaceContainer.Instance.Add<ChooseFighterText>();
+            var chooseFighterText = UserInterfaceContainer.GetInstance().Add<ChooseFighterText>();
             chooseFighterText.Show();
         }
 
         private void RemoveChooseFighterTextUI()
         {
-            var chooseFighterText = UserInterfaceContainer.Instance?.Get<ChooseFighterText>().AssertNotNull();
-            UserInterfaceContainer.Instance?.Remove(chooseFighterText);
+            var chooseFighterText = UserInterfaceContainer.GetInstance()?.Get<ChooseFighterText>().AssertNotNull();
+            UserInterfaceContainer.GetInstance()?.Remove(chooseFighterText);
         }
 
         private void RemoveAllClickableCharacters()
@@ -118,10 +126,10 @@ namespace Scripts.UI.Controllers
 
         private void OnCharacterClicked(CharacterParameters character, int characterIndex)
         {
-            var chooseFighterText = UserInterfaceContainer.Instance.Get<ChooseFighterText>().AssertNotNull();
+            var chooseFighterText = UserInterfaceContainer.GetInstance().Get<ChooseFighterText>().AssertNotNull();
             chooseFighterText.Hide();
 
-            var characterSelectionOptionsWindow = UserInterfaceContainer.Instance.Get<CharacterSelectionOptionsWindow>();
+            var characterSelectionOptionsWindow = UserInterfaceContainer.GetInstance().Get<CharacterSelectionOptionsWindow>();
             if (characterSelectionOptionsWindow != null)
             {
                 Action onCharacterSelectionOptionsWindowDisappeared = delegate
@@ -145,7 +153,7 @@ namespace Scripts.UI.Controllers
 
         private void ShowCharacterSelectionOptionsWindow(ClickableCharacter clickableCharacter, CharacterParameters character, int characterIndex)
         {
-            var characterSelectionOptionsWindow = UserInterfaceContainer.Instance.Add<CharacterSelectionOptionsWindow>().AssertNotNull();
+            var characterSelectionOptionsWindow = UserInterfaceContainer.GetInstance().Add<CharacterSelectionOptionsWindow>().AssertNotNull();
             characterSelectionOptionsWindow.StartButtonClicked += () => OnStartButtonClicked(characterIndex);
             characterSelectionOptionsWindow.CreateCharacterButtonClicked += () => OnCreateCharacterButtonClicked(clickableCharacter, characterIndex);
             characterSelectionOptionsWindow.DeleteCharacterButtonClicked += () => OnDeleteCharacterButtonClicked(characterIndex);
@@ -194,14 +202,14 @@ namespace Scripts.UI.Controllers
                 }
                 case CharacterValidationStatus.Wrong:
                 {
-                    var noticeWindow = UserInterfaceContainer.Instance.Get<NoticeWindow>().AssertNotNull();
+                    var noticeWindow = UserInterfaceContainer.GetInstance().Get<NoticeWindow>().AssertNotNull();
                     noticeWindow.Message.text = "Can not enter to the world with this character. Please try again.";
                     noticeWindow.OkButton.interactable = true;
                     break;
                 }
                 default:
                 {
-                    var noticeWindow = UserInterfaceContainer.Instance.Get<NoticeWindow>().AssertNotNull();
+                    var noticeWindow = UserInterfaceContainer.GetInstance().Get<NoticeWindow>().AssertNotNull();
                     noticeWindow.Message.text = "Something went wrong, please try again.";
                     noticeWindow.OkButton.interactable = true;
                     break;
@@ -219,19 +227,19 @@ namespace Scripts.UI.Controllers
         {
             Action enterScene = delegate 
             {
-                var noticeWindow = UserInterfaceContainer.Instance.Get<NoticeWindow>().AssertNotNull();
-                UserInterfaceContainer.Instance?.Remove(noticeWindow);
+                var noticeWindow = UserInterfaceContainer.GetInstance().Get<NoticeWindow>().AssertNotNull();
+                UserInterfaceContainer.GetInstance()?.Remove(noticeWindow);
 
-                GameScenesController.Instance.LoadScene(map);
+                GameScenesController.GetInstance().LoadScene(map);
             };
 
-            var screenFade = UserInterfaceContainer.Instance.Get<ScreenFade>().AssertNotNull();
+            var screenFade = UserInterfaceContainer.GetInstance().Get<ScreenFade>().AssertNotNull();
             screenFade.Show(onFinished: enterScene);
         }
 
         private void OnCreateCharacterButtonClicked(ClickableCharacter clickableCharacter, int characterIndex)
         {
-            CharactersSelectionController.Instance.ShowCharactersSelectionWindow(clickableCharacter, characterIndex);
+            CharactersSelectionController.GetInstance().ShowCharactersSelectionWindow(clickableCharacter, characterIndex);
         }
 
         private void OnDeleteCharacterButtonClicked(int characterIndex)
@@ -254,21 +262,21 @@ namespace Scripts.UI.Controllers
                     var characterParameters = new CharacterParameters{HasCharacter = false, Index = (CharacterIndex)parameters.CharacterIndex};
                     RecreateCharacter(characterParameters);
 
-                    var noticeWindow = UserInterfaceContainer.Instance.Get<NoticeWindow>().AssertNotNull();
+                    var noticeWindow = UserInterfaceContainer.GetInstance().Get<NoticeWindow>().AssertNotNull();
                     noticeWindow.Message.text = "Character deleted successfully.";
                     noticeWindow.OkButton.interactable = true;
                     break;
                 }
                 case RemoveCharacterStatus.Failed:
                 {
-                    var noticeWindow = UserInterfaceContainer.Instance.Get<NoticeWindow>().AssertNotNull();
+                    var noticeWindow = UserInterfaceContainer.GetInstance().Get<NoticeWindow>().AssertNotNull();
                     noticeWindow.Message.text = "Could not remove a character. Please try again.";
                     noticeWindow.OkButton.interactable = true;
                     break;
                 }
                 default:
                 {
-                    var noticeWindow = UserInterfaceContainer.Instance.Get<NoticeWindow>().AssertNotNull();
+                    var noticeWindow = UserInterfaceContainer.GetInstance().Get<NoticeWindow>().AssertNotNull();
                     noticeWindow.Message.text = "Something went wrong, please try again.";
                     noticeWindow.OkButton.interactable = true;
                     break;
@@ -285,7 +293,7 @@ namespace Scripts.UI.Controllers
             var characterType = Resources.Load<GameObject>(string.Format(CHARACTERS_RESOURCES_PATH, characterName));
             var anchoredPosition = characterType.GetComponent<RectTransform>().anchoredPosition;
 
-            var charactersParent = UserInterfaceContainer.Instance.Get<BackgroundCharacters>().AssertNotNull();
+            var charactersParent = UserInterfaceContainer.GetInstance().Get<BackgroundCharacters>().AssertNotNull();
             var characterGameObject = Instantiate(characterType, Vector3.zero, Quaternion.identity, charactersParent.gameObject.transform);
             characterGameObject.transform.SetAsFirstSibling();
             characterGameObject.GetComponent<RectTransform>().anchoredPosition = anchoredPosition;

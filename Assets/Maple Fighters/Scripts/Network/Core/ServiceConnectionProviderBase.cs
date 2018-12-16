@@ -10,7 +10,7 @@ using Scripts.Utils;
 
 namespace Scripts.Services
 {
-    public abstract class ServiceConnectionProviderBase<T> : DontDestroyOnLoad<T>, IServiceConnectionProviderBase
+    public abstract class ServiceConnectionProviderBase<T> : MonoSingleton<T>, IServiceConnectionProviderBase
         where T : ServiceConnectionProviderBase<T>
     {
         protected ExternalCoroutinesExecutor CoroutinesExecutor
@@ -25,26 +25,29 @@ namespace Scripts.Services
                 return coroutinesExecutor;
             }
         }
-        private ExternalCoroutinesExecutor coroutinesExecutor = new ExternalCoroutinesExecutor();
+
+        private ExternalCoroutinesExecutor coroutinesExecutor;
         private IServiceBase serviceBase;
 
-        protected bool IsDestroying;
+        protected bool IsDestroying { get; private set; }
 
         private void Update()
         {
             CoroutinesExecutor?.Update();
         }
 
-        private void OnDestroy()
+        protected override void OnDestroying()
         {
+            base.OnDestroying();
+
             IsDestroying = true;
 
             CoroutinesExecutor?.Dispose();
         }
 
-        protected override void OnApplicationQuiting()
+        protected override void OnApplicationQuitting()
         {
-            base.OnApplicationQuiting();
+            base.OnApplicationQuitting();
 
             Dispose();
         }
@@ -86,7 +89,9 @@ namespace Scripts.Services
         }
 
         protected abstract void OnPreConnection();
+
         protected abstract void OnConnectionFailed();
+
         protected abstract void OnConnectionEstablished();
 
         protected virtual void OnDisconnected(DisconnectReason reason, string details)
@@ -135,10 +140,13 @@ namespace Scripts.Services
         protected abstract Task<AuthorizeResponseParameters> Authorize(IYield yield, AuthorizeRequestParameters parameters);
 
         protected abstract void OnPreAuthorization();
+
         protected abstract void OnNonAuthorized();
+
         protected abstract void OnAuthorized();
 
         protected abstract void SetPeerLogicAfterAuthorization();
+
         protected abstract IServiceBase GetServiceBase();
 
         public void Dispose()

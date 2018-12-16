@@ -6,22 +6,28 @@ using Scripts.Containers;
 using Scripts.Services;
 using Scripts.UI.Core;
 using Scripts.UI.Windows;
+using Scripts.Utils;
 
 namespace Scripts.UI.Controllers
 {
     public class CharactersSelectionController : MonoSingleton<CharactersSelectionController>
     {
+        private ExternalCoroutinesExecutor coroutinesExecutor;
         private CharactersSelectionWindow charactersSelectionWindow;
         private CharacterNameWindow characterNameWindow;
-
         private ClickableCharacter clickedCharacter;
         private CreateCharacterRequestParameters characterRequestParameters;
 
-        private readonly ExternalCoroutinesExecutor coroutinesExecutor = new ExternalCoroutinesExecutor();
+        protected override void OnAwake()
+        {
+            base.OnAwake();
+
+            coroutinesExecutor = new ExternalCoroutinesExecutor();
+        }
 
         private void Update()
         {
-            coroutinesExecutor.Update();
+            coroutinesExecutor?.Update();
         }
 
         public void ShowCharactersSelectionWindow(ClickableCharacter clickableCharacter, int characterIndex)
@@ -37,7 +43,7 @@ namespace Scripts.UI.Controllers
             }
             else
             {
-                charactersSelectionWindow = UserInterfaceContainer.Instance.Add<CharactersSelectionWindow>();
+                charactersSelectionWindow = UserInterfaceContainer.GetInstance().Add<CharactersSelectionWindow>();
                 charactersSelectionWindow.Show();
 
                 SubscribeToCharactersSelectionWindowEvents();
@@ -52,30 +58,32 @@ namespace Scripts.UI.Controllers
             }
             else
             {
-                characterNameWindow = UserInterfaceContainer.Instance.Add<CharacterNameWindow>();
+                characterNameWindow = UserInterfaceContainer.GetInstance().Add<CharacterNameWindow>();
                 characterNameWindow.Show();
 
                 SubscribeToCharacterNameWindow();
             }
         }
 
-        protected override void OnDestroyed()
+        protected override void OnDestroying()
         {
-            base.OnDestroyed();
+            base.OnDestroying();
 
             if (charactersSelectionWindow != null)
             {
                 UnsubscribeFromCharactersSelectionWindowEvents();
-                UserInterfaceContainer.Instance?.Remove(charactersSelectionWindow);
+
+                UserInterfaceContainer.GetInstance()?.Remove(charactersSelectionWindow);
             }
 
             if (characterNameWindow != null)
             {
                 UnsubscribeFromCharacterNameWindow();
-                UserInterfaceContainer.Instance?.Remove(characterNameWindow);
+
+                UserInterfaceContainer.GetInstance()?.Remove(characterNameWindow);
             }
 
-            coroutinesExecutor.Dispose();
+            coroutinesExecutor?.Dispose();
         }
 
         private void SubscribeToCharactersSelectionWindowEvents()
@@ -128,31 +136,34 @@ namespace Scripts.UI.Controllers
             {
                 case CharacterCreationStatus.Succeed:
                 {
-                    CharactersController.Instance.RecreateCharacter(GetLastCreatedCharacter());
+                    CharactersController.GetInstance().RecreateCharacter(GetLastCreatedCharacter());
 
-                    var noticeWindow = UserInterfaceContainer.Instance.Get<NoticeWindow>().AssertNotNull();
-                        noticeWindow.Message.text = "Character created successfully.";
+                    var noticeWindow = UserInterfaceContainer.GetInstance().Get<NoticeWindow>().AssertNotNull();
+                    noticeWindow.Message.text = "Character created successfully.";
                     noticeWindow.OkButtonClickedAction = charactersSelectionWindow.DeactiveAll;
                     noticeWindow.OkButton.interactable = true;
                     break;
                 }
+
                 case CharacterCreationStatus.Failed:
                 {
-                    var noticeWindow = UserInterfaceContainer.Instance.Get<NoticeWindow>().AssertNotNull();
-                        noticeWindow.Message.text = "Failed to create a new character, please try again.";
+                    var noticeWindow = UserInterfaceContainer.GetInstance().Get<NoticeWindow>().AssertNotNull();
+                    noticeWindow.Message.text = "Failed to create a new character, please try again.";
                     noticeWindow.OkButton.interactable = true;
                     break;
                 }
+
                 case CharacterCreationStatus.NameUsed:
                 {
-                    var noticeWindow = UserInterfaceContainer.Instance.Get<NoticeWindow>().AssertNotNull();
-                        noticeWindow.Message.text = "The name is already in use, choose another name.";
+                    var noticeWindow = UserInterfaceContainer.GetInstance().Get<NoticeWindow>().AssertNotNull();
+                    noticeWindow.Message.text = "The name is already in use, choose another name.";
                     noticeWindow.OkButton.interactable = true;
                     break;
                 }
+
                 default:
                 {
-                    var noticeWindow = UserInterfaceContainer.Instance.Get<NoticeWindow>().AssertNotNull();
+                    var noticeWindow = UserInterfaceContainer.GetInstance().Get<NoticeWindow>().AssertNotNull();
                     noticeWindow.Message.text = "Something went wrong, please try again.";
                     noticeWindow.OkButton.interactable = true;
                     break;

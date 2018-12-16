@@ -1,8 +1,8 @@
 ﻿using System.Collections;
 using CommonTools.Log;
+using Game.Common;
 using Scripts.Containers;
 using Scripts.Gameplay.Actors;
-using Game.Common;
 using Scripts.Services;
 using UnityEngine;
 
@@ -21,7 +21,7 @@ namespace Assets.Scripts
 
         private IEnumerator HitPlayer(Vector3 contactPoint)
         {
-            var player = SceneObjectsContainer.Instance.GetLocalSceneObject().GetGameObject();
+            var player = SceneObjectsContainer.GetInstance().GetLocalSceneObject().GetGameObject();
 
             var playerController = player?.transform.GetChild(0).GetComponent<PlayerController>();
             if (playerController == null || playerController.PlayerState == PlayerState.Attacked)

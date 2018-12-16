@@ -31,7 +31,7 @@ namespace Scripts.UI.Controllers
 
         protected override void OnConnectionFailed()
         {
-            var noticeWindow = UserInterfaceContainer.Instance.Get<NoticeWindow>().AssertNotNull();
+            var noticeWindow = UserInterfaceContainer.GetInstance().Get<NoticeWindow>().AssertNotNull();
             noticeWindow.Message.text = "Could not connect to a registration server.";
             noticeWindow.OkButton.interactable = true;
         }

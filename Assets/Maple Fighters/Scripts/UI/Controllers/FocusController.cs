@@ -3,27 +3,9 @@ using Scripts.Utils;
 
 namespace Scripts.UI.Controllers
 {
-    public enum Focusable
+    public class FocusController : MonoSingleton<FocusController>
     {
-        /// <summary>
-        /// The game.
-        /// </summary>
-        Game,
-
-        /// <summary>
-        /// The chat.
-        /// </summary>
-        Chat,
-
-        /// <summary>
-        /// The ui.
-        /// </summary>
-        UI
-    }
-
-    public class FocusController : DontDestroyOnLoad<FocusController>
-    {
-        public event Action<Focusable> FocusableStateChanged;
+        public event Action<Focusable> StateChanged;
 
         public Focusable Focusable { get; private set; } = Focusable.Game;
 
@@ -31,7 +13,7 @@ namespace Scripts.UI.Controllers
         {
             Focusable = focusable;
 
-            FocusableStateChanged?.Invoke(focusable);
+            StateChanged?.Invoke(focusable);
         }
     }
 }

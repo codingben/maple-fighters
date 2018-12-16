@@ -7,7 +7,7 @@ namespace Scripts.UI
     {
         private void Start()
         {
-            UserInterfaceContainer.Instance.AddOnly(this);
+            UserInterfaceContainer.GetInstance().AddOnly(this);
         }
 
         private void OnEnable()

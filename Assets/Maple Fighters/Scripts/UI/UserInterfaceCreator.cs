@@ -6,13 +6,13 @@ namespace Scripts.UI
 {
     public class UserInterfaceCreator : MonoBehaviour
     {
-        private const string USER_INTERFACE_FROM_RESOURCES = "UI/User Interface";
+        private const string UserInterfacePath = "UI/User Interface";
 
         private void Awake()
         {
-            if (UserInterfaceContainer.Instance == null)
+            if (UserInterfaceContainer.GetInstance() == null)
             {
-                var userInterfaceObject = Resources.Load<GameObject>(USER_INTERFACE_FROM_RESOURCES);
+                var userInterfaceObject = Resources.Load<GameObject>(UserInterfacePath);
                 var userInterfaceGameObject = Instantiate(userInterfaceObject, Vector3.zero, Quaternion.identity);
                 userInterfaceGameObject.name = userInterfaceGameObject.name.RemoveCloneFromName();
             }

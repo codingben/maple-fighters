@@ -1,12 +1,12 @@
 ﻿using System.Threading.Tasks;
 using CommonTools.Coroutines;
 using CommonTools.Log;
+using Game.Common;
 using Scripts.Containers;
 using Scripts.Gameplay;
+using Scripts.Services;
 using Scripts.UI;
 using Scripts.UI.Core;
-using Game.Common;
-using Scripts.Services;
 
 namespace Scripts.World
 {
@@ -20,7 +20,7 @@ namespace Scripts.World
 
             if (!isTeleporting)
             {
-                var screenFade = UserInterfaceContainer.Instance.Get<ScreenFade>().AssertNotNull();
+                var screenFade = UserInterfaceContainer.GetInstance().Get<ScreenFade>().AssertNotNull();
                 screenFade?.Show(Teleport);
             }
         }
@@ -31,7 +31,7 @@ namespace Scripts.World
 
             if (!isTeleporting)
             {
-                var screenFade = UserInterfaceContainer.Instance.Get<ScreenFade>().AssertNotNull();
+                var screenFade = UserInterfaceContainer.GetInstance().Get<ScreenFade>().AssertNotNull();
                 screenFade?.Hide();
             }
         }
@@ -55,7 +55,7 @@ namespace Scripts.World
                 return;
             }
 
-            GameScenesController.Instance.LoadScene(map);
+            GameScenesController.GetInstance().LoadScene(map);
 
             Dispose();
         }

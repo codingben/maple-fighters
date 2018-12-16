@@ -3,7 +3,7 @@ using Scripts.Utils;
 
 namespace Scripts.Services
 {
-    public class GameTimeProviderCreator : DontDestroyOnLoad<GameTimeProviderCreator>
+    public class GameTimeProviderCreator : MonoSingleton<GameTimeProviderCreator>
     {
         protected override void OnAwake()
         {

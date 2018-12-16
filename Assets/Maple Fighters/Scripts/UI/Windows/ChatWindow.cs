@@ -29,7 +29,7 @@ namespace Scripts.UI.Windows
         private void Update()
         {
             // TODO: Remove this from here
-            if (FocusController.Instance.Focusable == Focusable.Chat)
+            if (FocusController.GetInstance().Focusable == Focusable.Chat)
             {
                 FocusableState();
             }
@@ -55,7 +55,7 @@ namespace Scripts.UI.Windows
                 SelectOrDeselectChatInputField();
 
                 // TODO: Remove this from here
-                FocusController.Instance.SetState(Focusable.Game);
+                FocusController.GetInstance().SetState(Focusable.Game);
             }
         }
 
@@ -67,7 +67,7 @@ namespace Scripts.UI.Windows
                 SelectOrDeselectChatInputField();
 
                 // TODO: Remove this from here
-                FocusController.Instance.SetState(Focusable.Chat);
+                FocusController.GetInstance().SetState(Focusable.Chat);
             }
         }
 
@@ -129,7 +129,7 @@ namespace Scripts.UI.Windows
         private string GetCharacterName()
         {
             var sceneObject = 
-                SceneObjectsContainer.Instance.GetLocalSceneObject()
+                SceneObjectsContainer.GetInstance().GetLocalSceneObject()
                     .AssertNotNull();
 
             var character = 

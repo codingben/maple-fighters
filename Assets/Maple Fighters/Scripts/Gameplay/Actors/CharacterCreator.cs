@@ -1,20 +1,22 @@
 ﻿using CommonTools.Log;
-using Scripts.Containers;
-using Scripts.Utils;
 using Game.Common;
+using Scripts.Containers;
 using Scripts.Services;
+using Scripts.Utils;
 
 namespace Scripts.Gameplay.Actors
 {
-    public class CharacterCreator : DontDestroyOnLoad<CharacterCreator>
+    public class CharacterCreator : MonoSingleton<CharacterCreator>
     {
         private void Start()
         {
             SubscribeToEvents();
         }
-
-        private void OnDestroy()
+        
+        protected override void OnDestroying()
         {
+            base.OnDestroying();
+
             UnsubscribeFromEvents();
         }
 
@@ -57,7 +59,7 @@ namespace Scripts.Gameplay.Actors
         private void CreateCharacter(CharacterSpawnDetailsParameters characterSpawnDetails)
         {
             var id = characterSpawnDetails.SceneObjectId;
-            var sceneObject = SceneObjectsContainer.Instance.GetRemoteSceneObject(id).AssertNotNull();
+            var sceneObject = SceneObjectsContainer.GetInstance().GetRemoteSceneObject(id).AssertNotNull();
             sceneObject?.GetGameObject().GetComponent<ICharacterCreator>().Create(characterSpawnDetails);
         }
     }

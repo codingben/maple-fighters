@@ -1,28 +1,32 @@
 ﻿using System.Collections.Generic;
 using CommonTools.Log;
-using Scripts.Gameplay;
-using Scripts.Utils;
 using Game.Common;
+using Scripts.Gameplay;
 using Scripts.Services;
+using Scripts.Utils;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace Scripts.Containers
 {
-    public class SceneObjectsContainer : DontDestroyOnLoad<SceneObjectsContainer>
+    public class SceneObjectsContainer : MonoSingleton<SceneObjectsContainer>
     {
-        private readonly Dictionary<int, ISceneObject> sceneObjects = new Dictionary<int, ISceneObject>();
+        private Dictionary<int, ISceneObject> sceneObjects;
         private int localSceneObjectId;
 
         protected override void OnAwake()
         {
             base.OnAwake();
 
+            sceneObjects = new Dictionary<int, ISceneObject>();
+
             SubscribeToEvents();
         }
 
-        private void OnDestroy()
+        protected override void OnDestroying()
         {
+            base.OnDestroying();
+
             UnsubscribeFromEvents();
         }
 

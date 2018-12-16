@@ -23,7 +23,7 @@ namespace Assets.Scripts.Graphics
         private void OnBubbleMessageReceived(BubbleMessageEventParameters parameters)
         {
             var id = parameters.RequesterId;
-            var sceneObject = SceneObjectsContainer.Instance.GetRemoteSceneObject(id);
+            var sceneObject = SceneObjectsContainer.GetInstance().GetRemoteSceneObject(id);
             if (sceneObject != null)
             {
                 var owner = sceneObject.GetGameObject().transform;

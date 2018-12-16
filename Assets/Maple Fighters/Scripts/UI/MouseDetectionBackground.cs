@@ -10,9 +10,9 @@ namespace Scripts.UI
 
         protected void Awake()
         {
-            if (UserInterfaceContainer.Instance.Get<MouseDetectionBackground>() == null)
+            if (UserInterfaceContainer.GetInstance().Get<MouseDetectionBackground>() == null)
             {
-                UserInterfaceContainer.Instance.AddOnly(this);
+                UserInterfaceContainer.GetInstance().AddOnly(this);
             }
         }
 

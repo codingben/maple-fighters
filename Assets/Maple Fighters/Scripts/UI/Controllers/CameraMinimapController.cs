@@ -9,9 +9,9 @@ using UnityEngine.SceneManagement;
 
 namespace Scripts.UI.Controllers
 {
-    public class CameraMinimapController : DontDestroyOnLoad<CameraMinimapController>
+    public class CameraMinimapController : MonoSingleton<CameraMinimapController>
     {
-        private const string MINI_CAMERA_TAG = "Minimap Camera";
+        private const string MiniCameraTag = "Minimap Camera";
 
         [SerializeField] private MarkSelection[] markSelections;
 
@@ -21,8 +21,8 @@ namespace Scripts.UI.Controllers
 
         private void Start()
         {
-            minimapCamera = GameObject.FindGameObjectWithTag(MINI_CAMERA_TAG).GetComponent<Camera>();
-            minimapWindow = UserInterfaceContainer.Instance.Add<MinimapWindow>();
+            minimapCamera = GameObject.FindGameObjectWithTag(MiniCameraTag).GetComponent<Camera>();
+            minimapWindow = UserInterfaceContainer.GetInstance().Add<MinimapWindow>();
 
             SubscribeToEvents();
         }
@@ -31,7 +31,7 @@ namespace Scripts.UI.Controllers
         {
             if (minimapCamera == null)
             {
-                minimapCamera = GameObject.FindGameObjectWithTag(MINI_CAMERA_TAG).GetComponent<Camera>();
+                minimapCamera = GameObject.FindGameObjectWithTag(MiniCameraTag).GetComponent<Camera>();
                 minimapCamera.cullingMask = markSelections[curMarkLayer].MarkLayerMask;
             }
         }
@@ -56,19 +56,21 @@ namespace Scripts.UI.Controllers
             SceneManager.sceneLoaded -= OnSceneLoaded;
         }
 
-        private void OnDestroy()
+        protected override void OnDestroying()
         {
+            base.OnDestroying();
+
             UnsubscribeFromEvents();
 
             if (minimapWindow != null)
             {
-                UserInterfaceContainer.Instance?.Remove(minimapWindow);
+                UserInterfaceContainer.GetInstance()?.Remove(minimapWindow);
             }
         }
 
         private void OnMarkSelectionChanged(int selection)
         {
-            if(selection >= markSelections.Length)
+            if (selection >= markSelections.Length)
             {
                 LogUtils.Log("You have selected a mark which is out of range of a mark selections.", LogMessageType.Error);
                 return;
@@ -83,6 +85,7 @@ namespace Scripts.UI.Controllers
         private IEnumerator SetSelectedGameObjectToNull()
         {
             yield return new WaitForEndOfFrame();
+
             EventSystem.current.SetSelectedGameObject(null);
         }
     }

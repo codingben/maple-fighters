@@ -1,12 +1,12 @@
 ﻿using CommonCommunicationInterfaces;
+using Game.Common;
 using Scripts.Containers;
 using Scripts.Utils;
-using Game.Common;
 using UnityEngine.SceneManagement;
 
 namespace Scripts.World
 {
-    public class GameScenesController : DontDestroyOnLoad<GameScenesController>
+    public class GameScenesController : MonoSingleton<GameScenesController>
     {
         protected override void OnAwake()
         {
@@ -15,8 +15,10 @@ namespace Scripts.World
             SubscribeToSceneLoaded();
         }
 
-        private void OnDestroy()
+        protected override void OnDestroying()
         {
+            base.OnDestroying();
+
             UnsubscribeFromSceneLoaded();
         }
 

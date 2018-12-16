@@ -9,13 +9,15 @@ using UnityEngine.SceneManagement;
 
 namespace Scripts.World
 {
-    public class EnterSceneInvoker : DontDestroyOnLoad<EnterSceneInvoker>
+    public class EnterSceneInvoker : MonoSingleton<EnterSceneInvoker>
     {
-        private readonly ExternalCoroutinesExecutor coroutinesExecutor = new ExternalCoroutinesExecutor();
+        private ExternalCoroutinesExecutor coroutinesExecutor;
 
         protected override void OnAwake()
         {
             base.OnAwake();
+
+            coroutinesExecutor = new ExternalCoroutinesExecutor();
 
             SubscribeToSceneLoaded();
         }

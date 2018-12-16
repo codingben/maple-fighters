@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using CommonTools.Log;
 using GameServerProvider.Client.Common;
 using Scripts.UI.Core;
 using UnityEngine;
@@ -13,7 +12,9 @@ namespace Scripts.UI.Windows
         public GameServerSelectorRefreshImage GameServerSelectorRefreshImage => gameServerSelectorRefreshImage;
 
         public event Action JoinButtonClicked;
+
         public event Action RefreshButtonClicked;
+
         public event Action<string> GameServerButtonClicked;
 
         [Header("Buttons")]
@@ -54,7 +55,7 @@ namespace Scripts.UI.Windows
         {
             foreach (var gameServer in gameServerList)
             {
-                var gameServerButton = UserInterfaceContainer.Instance.Add<ClickableGameServerButton>(ViewType.Foreground, Index.Last, this.gameServerList);
+                var gameServerButton = UserInterfaceContainer.GetInstance().Add<ClickableGameServerButton>(ViewType.Foreground, Index.Last, this.gameServerList);
                 gameServerButton.ServerName = gameServer.Name;
                 gameServerButton.MaxConnections = gameServer.MaxConnections;
                 gameServerButton.Connections = gameServer.Connections;

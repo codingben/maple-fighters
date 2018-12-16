@@ -3,7 +3,7 @@ using Scripts.Utils;
 
 namespace Scripts.Services
 {
-    public class LogUtilsCreator : DontDestroyOnLoad<LogUtilsCreator>
+    public class LogUtilsCreator : MonoSingleton<LogUtilsCreator>
     {
         protected override void OnAwake()
         {

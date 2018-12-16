@@ -39,7 +39,7 @@ namespace Scripts.UI
 
         public static NoticeWindow ShowNotice(string message, Action okButtonClicked, bool background = false, Index index = Index.First)
         {
-            var noticeWindow = UserInterfaceContainer.Instance?.Add<NoticeWindow>(ViewType.Foreground, index);
+            var noticeWindow = UserInterfaceContainer.GetInstance()?.Add<NoticeWindow>(ViewType.Foreground, index);
             noticeWindow?.Initialize(message, okButtonClicked, background);
             noticeWindow?.Show();
             return noticeWindow;
@@ -47,18 +47,18 @@ namespace Scripts.UI
 
         public static void ShowExceptionNotice(Index index = Index.Last, bool background = true)
         {
-            const string EXCEPTION_MESSAGE = "An exception occurred during an operation.";
+            const string ExceptionMessage = "An exception occurred during an operation.";
 
-            var noticeWindowExists = UserInterfaceContainer.Instance?.Get<NoticeWindow>();
+            var noticeWindowExists = UserInterfaceContainer.GetInstance()?.Get<NoticeWindow>();
             if (noticeWindowExists != null)
             {
-                noticeWindowExists.Message.text = EXCEPTION_MESSAGE;
+                noticeWindowExists.Message.text = ExceptionMessage;
                 noticeWindowExists.OkButtonClickedAction = SavedObjectsUtils.GoBackToLogin;
                 noticeWindowExists.OkButton.interactable = true;
             }
             else
             {
-                var noticeWindow = ShowNotice(EXCEPTION_MESSAGE, SavedObjectsUtils.GoBackToLogin, background, index);
+                var noticeWindow = ShowNotice(ExceptionMessage, SavedObjectsUtils.GoBackToLogin, background, index);
                 if (noticeWindow != null)
                 {
                     noticeWindow.OkButton.interactable = true;

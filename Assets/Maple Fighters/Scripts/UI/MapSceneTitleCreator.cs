@@ -9,7 +9,7 @@ namespace Scripts.UI
 
         private void Start()
         {
-            var mapSceneTitleText = UserInterfaceContainer.Instance.Add<MapSceneTitleText>();
+            var mapSceneTitleText = UserInterfaceContainer.GetInstance().Add<MapSceneTitleText>();
             mapSceneTitleText.Text = titleText;
 
             Destroy(gameObject);

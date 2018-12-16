@@ -19,7 +19,7 @@ namespace Scripts.QuickAccess
         {
             yield return null;
 
-            var loginWindow = UserInterfaceContainer.Instance.Get<LoginWindow>().AssertNotNull();
+            var loginWindow = UserInterfaceContainer.GetInstance().Get<LoginWindow>().AssertNotNull();
             loginWindow.Email = QuickLoginConfiguration.GetInstance().Email;
             loginWindow.Password = QuickLoginConfiguration.GetInstance().Password;
 

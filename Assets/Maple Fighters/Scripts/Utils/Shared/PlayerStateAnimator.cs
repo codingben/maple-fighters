@@ -1,7 +1,7 @@
 ﻿using CommonTools.Log;
+using Game.Common;
 using Scripts.Containers;
 using Scripts.Gameplay.Actors;
-using Game.Common;
 using Scripts.Services;
 using UnityEngine;
 
@@ -57,7 +57,7 @@ namespace Scripts.Utils.Shared
 
         private void OnPlayerStateChanged(PlayerStateChangedEventParameters parameters)
         {
-            var sceneObject = SceneObjectsContainer.Instance.GetRemoteSceneObject(parameters.SceneObjectId)?.GetGameObject();
+            var sceneObject = SceneObjectsContainer.GetInstance().GetRemoteSceneObject(parameters.SceneObjectId)?.GetGameObject();
             if (sceneObject != null)
             {
                 sceneObject.GetComponent<PlayerStateSetter>()?.SetState(parameters.PlayerState);

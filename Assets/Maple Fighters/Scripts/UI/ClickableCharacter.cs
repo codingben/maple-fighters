@@ -45,13 +45,13 @@ namespace Scripts.UI
 
         private void SubscribeToMouseDetectionBackgroundEvent()
         {
-            var screenMouseDetection = UserInterfaceContainer.Instance.Get<MouseDetectionBackground>().AssertNotNull();
+            var screenMouseDetection = UserInterfaceContainer.GetInstance().Get<MouseDetectionBackground>().AssertNotNull();
             screenMouseDetection.MouseClicked += PlayIdleAnimation;
         }
 
         private void UnsubscribeFromMouseDetectionBackgroundEvent()
         {
-            var screenMouseDetection = UserInterfaceContainer.Instance?.Get<MouseDetectionBackground>().AssertNotNull();
+            var screenMouseDetection = UserInterfaceContainer.GetInstance()?.Get<MouseDetectionBackground>().AssertNotNull();
             if (screenMouseDetection != null)
             {
                 screenMouseDetection.MouseClicked -= PlayIdleAnimation;

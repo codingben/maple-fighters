@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 namespace Scripts.UI
 {
-    public class BackgroundController : DontDestroyOnLoad<BackgroundController>
+    public class BackgroundController : MonoSingleton<BackgroundController>
     {
         [SerializeField] private int[] skipBuildIndexes;
 
@@ -15,14 +15,16 @@ namespace Scripts.UI
 
         private void Start()
         {
-            backgroundImage = UserInterfaceContainer.Instance.Add<BackgroundImage>(ViewType.Background);
-            backgroundCharacters = UserInterfaceContainer.Instance.Add<BackgroundCharacters>(ViewType.Background, Index.Last);
+            backgroundImage = UserInterfaceContainer.GetInstance().Add<BackgroundImage>(ViewType.Background);
+            backgroundCharacters = UserInterfaceContainer.GetInstance().Add<BackgroundCharacters>(ViewType.Background, Index.Last);
 
             SubscribeToSceneLoaded();
         }
 
-        private void OnDestroy()
+        protected override void OnDestroying()
         {
+            base.OnDestroying();
+
             UnsubscribeFromSceneLoaded();
         }
 
@@ -44,8 +46,8 @@ namespace Scripts.UI
                 return;
             }
 
-            UserInterfaceContainer.Instance?.Remove(backgroundImage);
-            UserInterfaceContainer.Instance?.Remove(backgroundCharacters);
+            UserInterfaceContainer.GetInstance()?.Remove(backgroundImage);
+            UserInterfaceContainer.GetInstance()?.Remove(backgroundCharacters);
 
             Destroy(gameObject);
         }
