@@ -9,7 +9,12 @@ namespace Assets.Scripts
     {
         private void Awake()
         {
-            ServiceContainer.GameService.SetPeerLogic<DummyGameScenePeerLogic, GameOperations, GameEvents>();
+            if (ServiceContainer.GameService
+                    .GetPeerLogic<IGameScenePeerLogicAPI>() == null)
+            {
+                ServiceContainer.GameService
+                    .SetPeerLogic<DummyGameScenePeerLogic, GameOperations, GameEvents>();
+            }
         }
     }
 }

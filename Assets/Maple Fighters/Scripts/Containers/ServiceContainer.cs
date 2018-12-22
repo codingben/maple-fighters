@@ -12,6 +12,7 @@ namespace Scripts.Containers
                 {
                     authorizationService = new ServiceBase();
                 }
+
                 return authorizationService;
             }
         }
@@ -24,6 +25,7 @@ namespace Scripts.Containers
                 {
                     gameServerProviderService = new ServiceBase();
                 }
+
                 return gameServerProviderService;
             }
         }
@@ -36,6 +38,7 @@ namespace Scripts.Containers
                 {
                     gameService = new ServiceBase();
                 }
+
                 return gameService;
             }
         }
@@ -48,6 +51,7 @@ namespace Scripts.Containers
                 {
                     characterService = new ServiceBase();
                 }
+
                 return characterService;
             }
         }
@@ -60,6 +64,7 @@ namespace Scripts.Containers
                 {
                     chatService = new ServiceBase();
                 }
+
                 return chatService;
             }
         }
@@ -72,6 +77,7 @@ namespace Scripts.Containers
                 {
                     loginService = new ServiceBase();
                 }
+
                 return loginService;
             }
         }
@@ -84,6 +90,7 @@ namespace Scripts.Containers
                 {
                     registrationService = new ServiceBase();
                 }
+
                 return registrationService;
             }
         }

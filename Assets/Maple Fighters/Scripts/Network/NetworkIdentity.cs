@@ -13,6 +13,7 @@ namespace Scripts.Gameplay
             {
                 return id;
             }
+
             set
             {
                 id = value;
@@ -21,7 +22,7 @@ namespace Scripts.Gameplay
 
         public GameObject GetGameObject()
         {
-            return Equals(gameObject, null) ? null : gameObject;
+            return gameObject;
         }
     }
 }

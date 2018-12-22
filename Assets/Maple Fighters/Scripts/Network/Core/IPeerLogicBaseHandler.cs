@@ -4,12 +4,12 @@ namespace Scripts.Services
 {
     public interface IPeerLogicBaseHandler
     {
-        void SetPeerLogic<T, TOperationCode, TEventCode>()
-            where T : IPeerLogicBase, new()
+        void SetPeerLogic<TPeerLogic, TOperationCode, TEventCode>()
+            where TPeerLogic : IPeerLogicBase, new()
             where TOperationCode : IComparable, IFormattable, IConvertible
             where TEventCode : IComparable, IFormattable, IConvertible;
 
-        T GetPeerLogic<T>()
-            where T : IPeerLogicBase;
+        TPeerLogic GetPeerLogic<TPeerLogic>()
+            where TPeerLogic : IPeerLogicBase;
     }
 }

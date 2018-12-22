@@ -50,7 +50,7 @@ namespace Scripts.Utils
 
         protected virtual void OnDestroying()
         {
-            instance = null;
+            // Left blank intentionally
         }
     }
 }

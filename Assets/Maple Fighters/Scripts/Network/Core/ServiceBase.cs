@@ -1,5 +1,4 @@
 ﻿using System;
-using CommonTools.Log;
 using PhotonClientImplementation;
 
 namespace Scripts.Services
@@ -16,33 +15,33 @@ namespace Scripts.Services
             ServiceConnectionHandler = new ServiceConnectionHandler();
         }
 
-        public void SetPeerLogic<T, TOperationCode, TEventCode>()
-            where T : IPeerLogicBase, new()
+        public void SetPeerLogic<TPeerLogic, TOperationCode, TEventCode>()
+            where TPeerLogic : IPeerLogicBase, new()
             where TOperationCode : IComparable, IFormattable, IConvertible
             where TEventCode : IComparable, IFormattable, IConvertible
         {
-            peerLogicBase?.Dispose();
-            serverPeerHandler?.Dispose();
+            var peerHandler =
+                new ServerPeerHandler<TOperationCode, TEventCode>();
+            peerHandler.Initialize(
+                ServiceConnectionHandler.ServerPeer ?? new PhotonPeer());
 
-            var peerHandler = new ServerPeerHandler<TOperationCode, TEventCode>();
-            peerHandler.Initialize(ServiceConnectionHandler.ServerPeer ?? new PhotonPeer());
+            serverPeerHandler?.Dispose();
             serverPeerHandler = peerHandler;
 
-            peerLogicBase = new T();
+            peerLogicBase?.Dispose();
+            peerLogicBase = new TPeerLogic();
             peerLogicBase.Awake(serverPeerHandler);
         }
 
-        public T GetPeerLogic<T>()
-            where T : IPeerLogicBase
+        public TPeerLogic GetPeerLogic<TPeerLogic>()
+            where TPeerLogic : IPeerLogicBase
         {
-            if (peerLogicBase is T)
+            if (peerLogicBase is TPeerLogic)
             {
-                return (T)peerLogicBase;
+                return (TPeerLogic)peerLogicBase;
             }
 
-            var type = typeof(T).Name;
-            LogUtils.Log(MessageBuilder.Trace($"Can not convert type {type}"));
-            return default(T);
+            return default(TPeerLogic);
         }
 
         public void Dispose()
