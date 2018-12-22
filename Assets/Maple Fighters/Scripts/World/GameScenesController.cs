@@ -40,7 +40,7 @@ namespace Scripts.World
         public void LoadScene(Maps map)
         {
             ServiceContainer.GameService.ServiceConnectionHandler.SetNetworkTrafficState(NetworkTrafficState.Paused);
-            SceneManager.LoadScene((int)map, LoadSceneMode.Single);
+            SceneManager.LoadScene(map.ToString());
         }
     }
 }

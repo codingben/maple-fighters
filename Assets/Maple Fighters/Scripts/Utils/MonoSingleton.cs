@@ -45,7 +45,7 @@ namespace Scripts.Utils
 
         protected virtual void OnApplicationQuitting()
         {
-            instance = null;
+            // Left blank intentionally
         }
 
         protected virtual void OnDestroying()

@@ -1,16 +1,12 @@
 ﻿using System.Threading.Tasks;
 using CommonCommunicationInterfaces;
 using CommonTools.Coroutines;
-using CommonTools.Log;
-using ComponentModel.Common;
 using Game.Common;
 
 namespace Scripts.Services
 {
     public sealed class DummyGameScenePeerLogic : PeerLogicBase, IGameScenePeerLogicAPI, IDummyGameScenePeerLogicAPI
     {
-        public IContainer Components { get; } = new Container();
-
         public UnityEvent<EnterSceneResponseParameters> SceneEntered { get; } = new UnityEvent<EnterSceneResponseParameters>();
         public UnityEvent<SceneObjectAddedEventParameters> SceneObjectAdded { get; } = new UnityEvent<SceneObjectAddedEventParameters>();
         public UnityEvent<SceneObjectRemovedEventParameters> SceneObjectRemoved { get; } = new UnityEvent<SceneObjectRemovedEventParameters>();
@@ -22,16 +18,6 @@ namespace Scripts.Services
         public UnityEvent<CharacterAddedEventParameters> CharacterAdded { get; } = new UnityEvent<CharacterAddedEventParameters>();
         public UnityEvent<CharactersAddedEventParameters> CharactersAdded { get; } = new UnityEvent<CharactersAddedEventParameters>();
         public UnityEvent<BubbleMessageEventParameters> BubbleMessageReceived { get; } = new UnityEvent<BubbleMessageEventParameters>();
-
-        public DummyGameScenePeerLogic()
-        {
-            AddComponents();
-        }
-
-        private void AddComponents()
-        {
-            Components.AddComponent(new PortalContainer());
-        }
 
         protected override void OnAwake()
         {
@@ -86,8 +72,7 @@ namespace Scripts.Services
         public Task<ChangeSceneResponseParameters> ChangeScene(IYield yield, ChangeSceneRequestParameters parameters)
         {
             var id = parameters.PortalId;
-            var portalContainer = Components.GetComponent<IPortalContainer>().AssertNotNull();
-            var map = portalContainer.GetMap(id);
+            var map = DummyPortalContainer.GetInstance().GetMap(id);
             return Task.FromResult(new ChangeSceneResponseParameters(map));
         }
 

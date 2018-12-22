@@ -486,7 +486,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 581949298}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 13.030865, y: -0.7264991, z: -10}
+  m_LocalPosition: {x: 18, y: -1.815, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 572659480}
@@ -979,7 +979,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae0be70c8c50c1e48a7c8ea92b69f532, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  showVisualGraphics: 0
 --- !u!114 &1094532428
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1170,6 +1169,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1583060891}
   - component: {fileID: 1583060892}
+  - component: {fileID: 1583060893}
   m_Layer: 0
   m_Name: Dummy Peer Logics
   m_TagString: Untagged
@@ -1199,6 +1199,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 194457dcd1c43a7488d8c6fc38454bf0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1583060893
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1583060890}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17a769862c576734b9f06f94c1af918e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1781862595

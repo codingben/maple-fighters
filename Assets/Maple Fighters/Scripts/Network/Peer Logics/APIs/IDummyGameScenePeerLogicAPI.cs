@@ -1,9 +1,7 @@
-﻿using ComponentModel.Common;
-
-namespace Scripts.Services
+﻿namespace Scripts.Services
 {
     public interface IDummyGameScenePeerLogicAPI : IPeerLogicBase
     {
-        IContainer Components { get; }
+        // Left blank intentionally
     }
 }

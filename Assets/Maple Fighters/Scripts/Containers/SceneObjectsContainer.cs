@@ -2,7 +2,6 @@
 using CommonTools.Log;
 using Game.Common;
 using Scripts.Gameplay;
-using Scripts.Services;
 using Scripts.Utils;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -12,7 +11,7 @@ namespace Scripts.Containers
     public class SceneObjectsContainer : MonoSingleton<SceneObjectsContainer>
     {
         private Dictionary<int, ISceneObject> sceneObjects;
-        private int localSceneObjectId;
+        private int localSceneObject;
 
         protected override void OnAwake()
         {
@@ -20,173 +19,142 @@ namespace Scripts.Containers
 
             sceneObjects = new Dictionary<int, ISceneObject>();
 
-            SubscribeToEvents();
+            // TODO: Remove it; Should be called from SceneLeft event!
+            SceneManager.sceneLoaded += (x, y) => 
+            {
+                if (sceneObjects.ContainsKey(localSceneObject))
+                {
+                    sceneObjects.Remove(localSceneObject);
+                }
+            };
         }
 
         protected override void OnDestroying()
         {
             base.OnDestroying();
 
-            UnsubscribeFromEvents();
+            sceneObjects.Clear();
         }
 
-        private void SubscribeToEvents()
+        public void SetLocalSceneObject(int id)
         {
-            SceneManager.sceneLoaded += OnSceneLoaded;
-
-            var gameScenePeerLogic = ServiceContainer.GameService.GetPeerLogic<IGameScenePeerLogicAPI>().AssertNotNull();
-            gameScenePeerLogic.SceneEntered.AddListener(OnSceneEntered);
-            gameScenePeerLogic.SceneObjectAdded.AddListener(OnSceneObjectAdded);
-            gameScenePeerLogic.SceneObjectRemoved.AddListener(OnSceneObjectRemoved);
-            gameScenePeerLogic.SceneObjectsAdded.AddListener(OnSceneObjectsAdded);
-            gameScenePeerLogic.SceneObjectsRemoved.AddListener(OnSceneObjectsRemoved);
+            localSceneObject = id;
         }
 
-        private void UnsubscribeFromEvents()
-        {
-            SceneManager.sceneLoaded -= OnSceneLoaded;
-
-            var gameScenePeerLogic = ServiceContainer.GameService.GetPeerLogic<IGameScenePeerLogicAPI>().AssertNotNull();
-            gameScenePeerLogic.SceneEntered.RemoveListener(OnSceneEntered);
-            gameScenePeerLogic.SceneObjectAdded.RemoveListener(OnSceneObjectAdded);
-            gameScenePeerLogic.SceneObjectRemoved.RemoveListener(OnSceneObjectRemoved);
-            gameScenePeerLogic.SceneObjectsAdded.RemoveListener(OnSceneObjectsAdded);
-            gameScenePeerLogic.SceneObjectsRemoved.RemoveListener(OnSceneObjectsRemoved);
-        }
-
-        private void OnSceneLoaded(Scene scene, LoadSceneMode sceneMode)
-        {
-            if (sceneObjects.ContainsKey(localSceneObjectId))
-            {
-                sceneObjects.Remove(localSceneObjectId);
-            }
-        }
-
-        private void OnSceneEntered(EnterSceneResponseParameters parameters)
-        {
-            var sceneObject = parameters.SceneObject;
-            localSceneObjectId = sceneObject.Id;
-
-            AddSceneObject(sceneObject);
-
-            LogUtils.Log(MessageBuilder.Trace($"Local scene object Id: {sceneObject.Id}"));
-        }
-
-        private void OnSceneObjectAdded(SceneObjectAddedEventParameters parameters)
-        {
-            var sceneObject = parameters.SceneObject;
-            AddSceneObject(sceneObject);
-        }
-
-        private void OnSceneObjectRemoved(SceneObjectRemovedEventParameters parameters)
-        {
-            var id = parameters.SceneObjectId;
-            RemoveSceneObject(id);
-        }
-
-        private void OnSceneObjectsAdded(SceneObjectsAddedEventParameters parameters)
-        {
-            var sceneObjects = parameters.SceneObjects;
-            foreach (var sceneObject in sceneObjects)
-            {
-                AddSceneObject(sceneObject);
-            }
-        }
-
-        private void OnSceneObjectsRemoved(SceneObjectsRemovedEventParameters parameters)
-        {
-            var ids = parameters.SceneObjectsId;
-            foreach (var id in ids)
-            {
-                RemoveSceneObject(id);
-            }
-        }
-
-        private void AddSceneObject(SceneObjectParameters parameters)
+        public void AddSceneObject(SceneObjectParameters parameters)
         {
             var id = parameters.Id;
             var name = parameters.Name;
 
             if (sceneObjects.ContainsKey(id))
             {
-                LogUtils.Log(MessageBuilder.Trace($"Scene object with id #{id} already exists."), LogMessageType.Warning);
-                return;
+                LogUtils.Log(
+                    MessageBuilder.Trace(
+                        $"Scene object with id #{id} already exists."),
+                    LogMessageType.Warning);
             }
-
-            var sceneObject = CreateSceneObject(name, new Vector3(parameters.X, parameters.Y));
-            if (sceneObject == null)
+            else
             {
-                return;
-            }
-
-            sceneObject.name = name;
-
-            var sceneObjectComponent = sceneObject.GetComponent<ISceneObject>();
-            sceneObjectComponent.Id = id;
-
-            sceneObjects.Add(id, sceneObjectComponent);
-
-            LogUtils.Log(MessageBuilder.Trace($"Added a new scene object with id #{id}"));
-        }
-
-        private void RemoveSceneObject(int id)
-        {
-            var sceneObject = GetRemoteSceneObject(id)?.GetGameObject();
-            if (sceneObject == null)
-            {
-                return;
-            }
-
-            sceneObjects.Remove(id);
-
-            Destroy(sceneObject);
-
-            LogUtils.Log(MessageBuilder.Trace($"Removed a scene object with id #{id}"));
-        }
-
-        private GameObject CreateSceneObject(string name, Vector3 position)
-        {
-            const string SCENE_OBJECTS_FOLDER_PATH = "Game/{0}";
-
-            var sceneObject = Resources.Load(string.Format(SCENE_OBJECTS_FOLDER_PATH, name)).AssertNotNull($"Could not find {name} scene object.");
-            if (sceneObject != null)
-            {
-                var gameObject = Instantiate(sceneObject, position, Quaternion.identity) as GameObject;
+                var gameObject = CreateGameObject(
+                    name,
+                    new Vector3(parameters.X, parameters.Y));
                 if (gameObject != null)
                 {
-                    return gameObject;
+                    var sceneObject = gameObject.GetComponent<ISceneObject>();
+                    sceneObject.Id = id;
+
+                    sceneObjects.Add(id, sceneObject);
+
+                    LogUtils.Log(
+                        MessageBuilder.Trace(
+                            $"Added a new scene object with id #{id}"));
                 }
-
-                LogUtils.Log(MessageBuilder.Trace($"Could not create a scene object with name {name}"), LogMessageType.Error);
-                return null;
             }
+        }
 
-            LogUtils.Log(MessageBuilder.Trace($"Could not find a scene object with name {name}"), LogMessageType.Error);
-            return null;
+        public void RemoveSceneObject(int id)
+        {
+            var sceneObject = GetRemoteSceneObject(id)?.GetGameObject();
+            if (sceneObject != null)
+            {
+                Destroy(sceneObject);
+
+                sceneObjects.Remove(id);
+
+                LogUtils.Log(
+                    MessageBuilder.Trace(
+                        $"Removed a scene object with id #{id}"));
+            }
+        }
+
+        public void RemoveAllSceneObjects()
+        {
+            sceneObjects.Clear();
         }
 
         public ISceneObject GetLocalSceneObject()
         {
             ISceneObject sceneObject;
-            if (sceneObjects.TryGetValue(localSceneObjectId, out sceneObject))
+
+            if (!sceneObjects.TryGetValue(localSceneObject, out sceneObject))
             {
-                return sceneObject;
+                LogUtils.Log(
+                    MessageBuilder.Trace(
+                        $"Could not find a local scene object with id #{localSceneObject}"),
+                    LogMessageType.Warning);
             }
 
-            LogUtils.Log(MessageBuilder.Trace($"Could not find a local scene object with id #{localSceneObjectId}"), LogMessageType.Warning);
-            return null;
+            return sceneObject;
         }
 
         public ISceneObject GetRemoteSceneObject(int id)
         {
             ISceneObject sceneObject;
-            if (sceneObjects.TryGetValue(id, out sceneObject))
+
+            if (!sceneObjects.TryGetValue(id, out sceneObject))
             {
-                return sceneObject;
+                LogUtils.Log(
+                    MessageBuilder.Trace(
+                        $"Could not find a scene object with id #{id}"),
+                    LogMessageType.Warning);
             }
 
-            LogUtils.Log(MessageBuilder.Trace($"Could not find a scene object with id #{id}"), LogMessageType.Warning);
-            return null;
+            return sceneObject;
+        }
+
+        private GameObject CreateGameObject(string name, Vector3 position)
+        {
+            GameObject gameObject = null;
+
+            var sceneObject = Resources.Load($"Game/{name}")
+                .AssertNotNull($"Could not find {name} scene object.");
+            if (sceneObject != null)
+            {
+                gameObject = 
+                    Instantiate(sceneObject, position, Quaternion.identity) 
+                        as GameObject;
+
+                if (gameObject != null)
+                {
+                    gameObject.name = name;
+                }
+                else
+                {
+                    LogUtils.Log(
+                        MessageBuilder.Trace(
+                            $"Could not create a scene object with name {name}"),
+                        LogMessageType.Error);
+                }
+            }
+            else
+            {
+                LogUtils.Log(
+                    MessageBuilder.Trace(
+                        $"Could not find a scene object with name {name}"),
+                    LogMessageType.Error);
+            }
+
+            return gameObject;
         }
     }
 }

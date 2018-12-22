@@ -17,7 +17,7 @@ namespace Assets.Scripts
     public class DummySceneObjectsCreator : MonoBehaviour
     {
         [Header("Interest Area Visual Graphics")]
-        public bool showVisualGraphics;
+        private bool showVisualGraphics;
 
         private ISceneEvents sceneEvents;
         private IDummySceneObjectsProvider dummySceneObjectsProvider;
@@ -28,6 +28,7 @@ namespace Assets.Scripts
 
             var sceneGameObject = GameObject.FindGameObjectWithTag(Scene.SCENE_TAG);
             sceneEvents = sceneGameObject.GetComponent<ISceneEvents>();
+
             if (sceneEvents != null)
             {
                 sceneEvents.RegionsCreated += OnRegionsCreated;
@@ -41,6 +42,7 @@ namespace Assets.Scripts
                 sceneEvents.RegionsCreated -= OnRegionsCreated;
             }
 
+            SceneObjectsContainer.GetInstance().RemoveAllSceneObjects();
             SavedObjects.DestroyAll();
         }
 

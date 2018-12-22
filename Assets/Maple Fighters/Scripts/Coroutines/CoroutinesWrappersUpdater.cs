@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using CommonTools.Coroutines;
+using Scripts.Gameplay;
 using UnityEngine;
 
 namespace Scripts.Coroutines
@@ -15,8 +16,10 @@ namespace Scripts.Coroutines
 
             if (instance == null)
             {
-                var name = typeof(CoroutinesWrappersUpdater).ToString();
+                var name = typeof(CoroutinesWrappersUpdater).Name
+                    .MakeSpaceBetweenWords();
                 var type = typeof(CoroutinesWrappersUpdater);
+
                 instance = new GameObject(name, type)
                     .GetComponent<CoroutinesWrappersUpdater>();
             }
