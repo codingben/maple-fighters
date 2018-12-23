@@ -68,7 +68,7 @@ namespace InterestManagement.Scripts
             var subscribers = GetSubscribersExcept(sceneObject.Id);
             if (subscribers.Length <= 0) return;
             {
-                var subscriberArea = sceneObject.GetGameObject().GetComponent<IInterestAreaEvents>();
+                var subscriberArea = sceneObject.GameObject.GetComponent<IInterestAreaEvents>();
                 subscriberArea?.AddSubscribers(subscribers);
             }
         }
@@ -83,7 +83,7 @@ namespace InterestManagement.Scripts
 
             foreach (var subscriber in sceneObjects)
             {
-                var subscriberArea = subscriber.GetGameObject().GetComponent<IInterestArea>();
+                var subscriberArea = subscriber.GameObject.GetComponent<IInterestArea>();
                 var subscribedPublishers = subscriberArea?.GetSubscribedPublishers();
                 if (subscribedPublishers == null)
                 {
@@ -99,7 +99,7 @@ namespace InterestManagement.Scripts
 
             if (subscribersToRemoveList.Count <= 0) return;
             {
-                var subscriberArea = sceneObject.GetGameObject().GetComponent<IInterestAreaEvents>();
+                var subscriberArea = sceneObject.GameObject.GetComponent<IInterestAreaEvents>();
                 subscriberArea.RemoveSubscribers(subscribersToRemoveList);
             }
         }
@@ -113,7 +113,7 @@ namespace InterestManagement.Scripts
             var subscribers = GetSubscribersExcept(sceneObject.Id);
             foreach (var subscriber in subscribers)
             {
-                var subscriberArea = subscriber.GetGameObject().GetComponent<IInterestAreaEvents>();
+                var subscriberArea = subscriber.GameObject.GetComponent<IInterestAreaEvents>();
                 subscriberArea?.AddSubscriber(sceneObject);
             }
         }
@@ -125,11 +125,11 @@ namespace InterestManagement.Scripts
         {
             foreach (var subscriber in sceneObjects)
             {
-                var subscriberArea = subscriber.GetGameObject().GetComponent<IInterestArea>();
+                var subscriberArea = subscriber.GameObject.GetComponent<IInterestArea>();
                 var hasSubscription = subscriberArea?.GetSubscribedPublishers().Any(publisher => publisher.HasSubscription(sceneObject));
                 if (hasSubscription != null && !hasSubscription.Value)
                 {
-                    var interestAreaEvents = subscriber.GetGameObject().GetComponent<IInterestAreaEvents>();
+                    var interestAreaEvents = subscriber.GameObject.GetComponent<IInterestAreaEvents>();
                     interestAreaEvents?.RemoveSubscriber(sceneObject);
                 }
             }
@@ -142,7 +142,7 @@ namespace InterestManagement.Scripts
         {
             foreach (var subscriber in sceneObjects)
             {
-                var subscriberArea = subscriber.GetGameObject().GetComponent<IInterestAreaEvents>();
+                var subscriberArea = subscriber.GameObject.GetComponent<IInterestAreaEvents>();
                 subscriberArea.RemoveSubscriber(sceneObject);
             }
         }
@@ -152,7 +152,7 @@ namespace InterestManagement.Scripts
         /// </summary>
         private void RemoveAllSubscribersForSubscriber(ISceneObject sceneObject)
         {
-            var subscriberArea = sceneObject.GetGameObject().GetComponent<IInterestAreaEvents>();
+            var subscriberArea = sceneObject.GameObject.GetComponent<IInterestAreaEvents>();
             subscriberArea?.RemoveSubscribers(sceneObjects);
         }
 

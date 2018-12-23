@@ -6,6 +6,6 @@ namespace Scripts.Gameplay
     {
         int Id { get; set; }
 
-        GameObject GetGameObject();
+        GameObject GameObject { get; }
     }
 }

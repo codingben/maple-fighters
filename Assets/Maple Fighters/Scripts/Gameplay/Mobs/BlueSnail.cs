@@ -21,7 +21,7 @@ namespace Assets.Scripts
 
         private IEnumerator HitPlayer(Vector3 contactPoint)
         {
-            var player = SceneObjectsContainer.GetInstance().GetLocalSceneObject().GetGameObject();
+            var player = SceneObjectsContainer.GetInstance().GetLocalSceneObject().GameObject;
 
             var playerController = player?.transform.GetChild(0).GetComponent<PlayerController>();
             if (playerController == null || playerController.PlayerState == PlayerState.Attacked)

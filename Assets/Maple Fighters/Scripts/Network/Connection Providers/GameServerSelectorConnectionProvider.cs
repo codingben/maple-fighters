@@ -34,7 +34,7 @@ namespace Scripts.Services
             var noticeWindow = UserInterfaceContainer.GetInstance().Get<NoticeWindow>().AssertNotNull();
             noticeWindow.Message.text = "Could not connect to master server.";
             noticeWindow.OkButton.interactable = true;
-            noticeWindow.OkButtonClickedAction = SavedObjectsUtils.GoBackToLogin;
+            noticeWindow.OkButtonClickedAction = SavedGameObjectsUtils.GetInstance().GoBackToLogin;
         }
 
         protected override void OnConnectionEstablished()
@@ -63,7 +63,7 @@ namespace Scripts.Services
 
         private void ShowConnectionTimeout()
         {
-            UI.Utils.ShowNotice("The connection has timed out.", SavedObjectsUtils.GoBackToLogin, true, Index.Last);
+            UI.Utils.ShowNotice("The connection has timed out.", SavedGameObjectsUtils.GetInstance().GoBackToLogin, true, Index.Last);
         }
 
         protected override Task<AuthorizeResponseParameters> Authorize(IYield yield, AuthorizeRequestParameters parameters)
@@ -82,7 +82,7 @@ namespace Scripts.Services
             var noticeWindow = UserInterfaceContainer.GetInstance().Get<NoticeWindow>().AssertNotNull();
             noticeWindow.Message.text = "Authorization with master server failed.";
             noticeWindow.OkButton.interactable = true;
-            noticeWindow.OkButtonClickedAction = SavedObjectsUtils.GoBackToLogin;
+            noticeWindow.OkButtonClickedAction = SavedGameObjectsUtils.GetInstance().GoBackToLogin;
         }
 
         protected override void OnAuthorized()

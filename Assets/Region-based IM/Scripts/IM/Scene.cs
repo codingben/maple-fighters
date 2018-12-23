@@ -77,7 +77,7 @@ namespace InterestManagement.Scripts
                 return null;
             }
 
-            Debug.Log($"A new scene object: {sceneObject.GetGameObject().name}");
+            Debug.Log($"A new scene object: {sceneObject.GameObject.name}");
             return sceneObject;
         }
 
@@ -89,7 +89,7 @@ namespace InterestManagement.Scripts
                 return;
             }
 
-            Debug.Log($"Removed scene object: {sceneObject.GetGameObject().name}");
+            Debug.Log($"Removed scene object: {sceneObject.GameObject.name}");
 
             RemoveSubscriptionFromPublishers(sceneObject);
         }

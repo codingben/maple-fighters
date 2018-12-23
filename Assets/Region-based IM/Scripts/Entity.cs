@@ -6,7 +6,8 @@ namespace InterestManagement.Scripts
     public class Entity : MonoBehaviour, ISceneObject
     {
         public int Id { get; set; }
-        public GameObject GetGameObject() => gameObject;
+
+        public GameObject GameObject => gameObject;
 
         private static int id;
         private IScene scene;

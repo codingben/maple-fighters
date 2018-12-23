@@ -26,7 +26,7 @@ namespace Assets.Scripts.Graphics
             var sceneObject = SceneObjectsContainer.GetInstance().GetRemoteSceneObject(id);
             if (sceneObject != null)
             {
-                var owner = sceneObject.GetGameObject().transform;
+                var owner = sceneObject.GameObject.transform;
                 var message = parameters.Message;
                 var time = parameters.Time;
                 BubbleMessageCreator.Create(owner, message, time);

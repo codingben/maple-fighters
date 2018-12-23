@@ -74,7 +74,7 @@ namespace Scripts.Containers
 
         public void RemoveSceneObject(int id)
         {
-            var sceneObject = GetRemoteSceneObject(id)?.GetGameObject();
+            var sceneObject = GetRemoteSceneObject(id)?.GameObject;
             if (sceneObject != null)
             {
                 Destroy(sceneObject);

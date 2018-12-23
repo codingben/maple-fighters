@@ -43,7 +43,7 @@ namespace Assets.Scripts
             }
 
             SceneObjectsContainer.GetInstance().RemoveAllSceneObjects();
-            SavedObjects.DestroyAll();
+            SavedGameObjects.GetInstance().DestroyAll();
         }
 
         private void OnRegionsCreated()
@@ -91,7 +91,7 @@ namespace Assets.Scripts
                 var sceneObject = SceneObjectsContainer.GetInstance().GetRemoteSceneObject(id);
                 if (sceneObject != null)
                 {
-                    dummySceneObject.AddComponents?.Invoke(sceneObject.GetGameObject());
+                    dummySceneObject.AddComponents?.Invoke(sceneObject.GameObject);
                 }
             }
 
@@ -102,12 +102,12 @@ namespace Assets.Scripts
         {
             yield return null;
 
-            var localEntity = SceneObjectsContainer.GetInstance().GetLocalSceneObject().GetGameObject().GetComponent<IInterestArea>().AssertNotNull();
+            var localEntity = SceneObjectsContainer.GetInstance().GetLocalSceneObject().GameObject.GetComponent<IInterestArea>().AssertNotNull();
 
             foreach (var dummySceneObject in dummySceneObjectsProvider.GetSceneObjects())
             {
                 var id = dummySceneObject.Id;
-                var sceneObject = SceneObjectsContainer.GetInstance().GetRemoteSceneObject(id)?.GetGameObject();
+                var sceneObject = SceneObjectsContainer.GetInstance().GetRemoteSceneObject(id)?.GameObject;
                 if (sceneObject == null)
                 {
                     LogUtils.Log(MessageBuilder.Trace($"Could not find a scene object with id ${id}"));
@@ -127,7 +127,7 @@ namespace Assets.Scripts
 
         private void CreateCommonComponentsToSceneObject(int id, params Type[] components)
         {
-            var sceneObject = SceneObjectsContainer.GetInstance().GetRemoteSceneObject(id)?.GetGameObject();
+            var sceneObject = SceneObjectsContainer.GetInstance().GetRemoteSceneObject(id)?.GameObject;
             if (sceneObject == null)
             {
                 LogUtils.Log(MessageBuilder.Trace($"Could not find a scene object with id {id}"));

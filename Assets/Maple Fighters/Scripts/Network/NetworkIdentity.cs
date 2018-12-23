@@ -20,9 +20,6 @@ namespace Scripts.Gameplay
             }
         }
 
-        public GameObject GetGameObject()
-        {
-            return gameObject;
-        }
+        public GameObject GameObject => gameObject;
     }
 }

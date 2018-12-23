@@ -1,14 +1,12 @@
 ﻿using CommonTools.Log;
-using Scripts.Utils;
+using UnityEngine;
 
 namespace Scripts.Services
 {
-    public class LogUtilsCreator : MonoSingleton<LogUtilsCreator>
+    public class LogUtilsCreator : MonoBehaviour
     {
-        protected override void OnAwake()
+        private void OnAwake()
         {
-            base.OnAwake();
-
             LogUtils.Logger = new Logger();
 
             Destroy(gameObject);

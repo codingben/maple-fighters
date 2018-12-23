@@ -133,7 +133,7 @@ namespace Scripts.UI.Windows
                     .AssertNotNull();
 
             var character = 
-                sceneObject.GetGameObject()
+                sceneObject.GameObject
                     .GetComponent<CharacterInformationProvider>();
 
             return character.GetCharacterInfo().Name;

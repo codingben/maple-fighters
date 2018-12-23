@@ -60,7 +60,7 @@ namespace Scripts.Gameplay.Actors
         {
             var id = characterSpawnDetails.SceneObjectId;
             var sceneObject = SceneObjectsContainer.GetInstance().GetRemoteSceneObject(id).AssertNotNull();
-            sceneObject?.GetGameObject().GetComponent<ICharacterCreator>().Create(characterSpawnDetails);
+            sceneObject?.GameObject.GetComponent<ICharacterCreator>().Create(characterSpawnDetails);
         }
     }
 }

@@ -57,7 +57,7 @@ namespace Scripts.Utils.Shared
 
         private void OnPlayerStateChanged(PlayerStateChangedEventParameters parameters)
         {
-            var sceneObject = SceneObjectsContainer.GetInstance().GetRemoteSceneObject(parameters.SceneObjectId)?.GetGameObject();
+            var sceneObject = SceneObjectsContainer.GetInstance().GetRemoteSceneObject(parameters.SceneObjectId)?.GameObject;
             if (sceneObject != null)
             {
                 sceneObject.GetComponent<PlayerStateSetter>()?.SetState(parameters.PlayerState);

@@ -40,7 +40,7 @@ namespace InterestManagement.Scripts
         {
             foreach (var sceneObject in sceneObjects)
             {
-                sceneObject.GetGameObject().SetActive(true);
+                sceneObject.GameObject.SetActive(true);
             }
         }
 
@@ -48,7 +48,7 @@ namespace InterestManagement.Scripts
         {
             foreach (var sceneObject in sceneObjects)
             {
-                sceneObject.GetGameObject().SetActive(false);
+                sceneObject.GameObject.SetActive(false);
             }
         }
     }

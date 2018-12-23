@@ -1,14 +1,12 @@
 ﻿using CommonTools.Coroutines;
-using Scripts.Utils;
+using UnityEngine;
 
 namespace Scripts.Services
 {
-    public class GameTimeProviderCreator : MonoSingleton<GameTimeProviderCreator>
+    public class GameTimeProviderCreator : MonoBehaviour
     {
-        protected override void OnAwake()
+        private void OnAwake()
         {
-            base.OnAwake();
-
             TimeProviders.DefaultTimeProvider = new GameTimeProvider();
 
             Destroy(gameObject);
