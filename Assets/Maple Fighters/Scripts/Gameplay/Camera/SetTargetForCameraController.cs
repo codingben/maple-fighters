@@ -1,6 +1,6 @@
-﻿using CommonTools.Log;
+﻿using Cinemachine;
+using CommonTools.Log;
 using UnityEngine;
-using Cinemachine;
 
 namespace Scripts.Gameplay.Camera
 {
@@ -8,19 +8,32 @@ namespace Scripts.Gameplay.Camera
 
     public class SetTargetForCameraController : MonoBehaviour
     {
+        private const string MinimapCameraTag = "Minimap Camera";
+
         private void Awake()
         {
-            var cinemachineBrain = Camera.main.GetComponent<CinemachineBrain>().AssertNotNull();
-            cinemachineBrain.ActiveVirtualCamera.Follow = transform;
-
-            const string MINIMAP_CAMERA_TAG = "Minimap Camera";
-            var minimapCamera = GameObject.FindGameObjectWithTag(MINIMAP_CAMERA_TAG)?.GetComponent<CameraController>();
-            if (minimapCamera != null)
-            {
-                minimapCamera.Target = transform;
-            }
+            SetTargetToCinemachineBrain();
+            SetTargetToCameraController();
 
             Destroy(this);
+        }
+
+        private void SetTargetToCinemachineBrain()
+        {
+            var cinemachineBrain = Camera.main.GetComponent<CinemachineBrain>()
+                .AssertNotNull();
+            cinemachineBrain.ActiveVirtualCamera.Follow = transform;
+        }
+
+        private void SetTargetToCameraController()
+        {
+            var minimapCamera =
+                GameObject.FindGameObjectWithTag(MinimapCameraTag)
+                    ?.GetComponent<CameraController>();
+            if (minimapCamera != null)
+            {
+                minimapCamera.SetTarget(transform);
+            }
         }
     }
 }

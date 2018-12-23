@@ -5,7 +5,7 @@ namespace Scripts.Services
 {
     public class GameTimeProviderCreator : MonoBehaviour
     {
-        private void OnAwake()
+        private void Awake()
         {
             TimeProviders.DefaultTimeProvider = new GameTimeProvider();
 

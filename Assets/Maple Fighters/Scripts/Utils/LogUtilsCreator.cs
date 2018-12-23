@@ -5,7 +5,7 @@ namespace Scripts.Services
 {
     public class LogUtilsCreator : MonoBehaviour
     {
-        private void OnAwake()
+        private void Awake()
         {
             LogUtils.Logger = new Logger();
 

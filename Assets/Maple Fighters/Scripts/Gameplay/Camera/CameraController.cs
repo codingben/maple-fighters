@@ -4,8 +4,6 @@ namespace Scripts.Gameplay.Camera
 {
     public class CameraController : MonoBehaviour
     {
-        public Transform Target { get; set; }
-
         [Header("General")]
         [SerializeField] private float moveSpeed;
 
@@ -19,9 +17,16 @@ namespace Scripts.Gameplay.Camera
         [SerializeField] private float centerX;
         [SerializeField] private float centerY;
 
+        private Transform target;
+
+        public void SetTarget(Transform target)
+        {
+            this.target = target;
+        }
+
         private void LateUpdate()
         {
-            if (Target != null)
+            if (target != null)
             {
                 Move();
             }
@@ -29,11 +34,17 @@ namespace Scripts.Gameplay.Camera
 
         private void Move()
         {
-            var x = Mathf.Clamp(Target.position.x, minX, maxX);
-            var y = Mathf.Clamp(Target.position.y, minY, maxY);
+            var x = Mathf.Clamp(target.position.x, minX, maxX);
+            var y = Mathf.Clamp(target.position.y, minY, maxY);
 
-            var newPosition = new Vector3(centerX + x, centerY + y, transform.position.z);
-            transform.position = Vector3.Lerp(transform.position, newPosition, moveSpeed * Time.deltaTime);
+            var newPosition = new Vector3(
+                centerX + x,
+                centerY + y,
+                transform.position.z);
+            transform.position = Vector3.Lerp(
+                transform.position,
+                newPosition,
+                moveSpeed * Time.deltaTime);
         }
     }
 }
