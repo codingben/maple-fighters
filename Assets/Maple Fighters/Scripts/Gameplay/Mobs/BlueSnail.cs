@@ -10,31 +10,74 @@ namespace Assets.Scripts
 {
     public class BlueSnail : MonoBehaviour
     {
+        [Header("Attack")]
+        [SerializeField]
+        private Vector2 hitAmount;
+
         private void Awake()
         {
-            var gameScenePeerLogic = ServiceContainer.GameService.GetPeerLogic<IGameScenePeerLogicAPI>().AssertNotNull();
-            gameScenePeerLogic.PlayerAttacked.AddListener((parameters) => 
-            {
-                StartCoroutine(HitPlayer(new Vector2(parameters.ContactPointX, parameters.ContactPointY)));
-            });
+            var gameScenePeerLogic = 
+                ServiceContainer.GameService
+                    .GetPeerLogic<IGameScenePeerLogicAPI>().AssertNotNull();
+            gameScenePeerLogic.PlayerAttacked.AddListener(OnPlayerAttacked);
         }
 
-        private IEnumerator HitPlayer(Vector3 contactPoint)
+        private void OnDestroy()
         {
-            var player = SceneObjectsContainer.GetInstance().GetLocalSceneObject().GameObject;
+            var gameScenePeerLogic =
+                ServiceContainer.GameService
+                    .GetPeerLogic<IGameScenePeerLogicAPI>().AssertNotNull();
+            gameScenePeerLogic.PlayerAttacked.RemoveListener(OnPlayerAttacked);
+        }
 
-            var playerController = player?.transform.GetChild(0).GetComponent<PlayerController>();
-            if (playerController == null || playerController.PlayerState == PlayerState.Attacked)
+        private void OnPlayerAttacked(PlayerAttackedEventParameters parameters)
+        {
+            var point = 
+                new Vector2(parameters.ContactPointX, parameters.ContactPointY);
+
+            StartCoroutine(BounceTheLocalPlayer(point));
+        }
+
+        private IEnumerator BounceTheLocalPlayer(Vector3 contactPoint)
+        {
+            var player = 
+                SceneObjectsContainer.GetInstance().GetLocalSceneObject()
+                    .GameObject;
+            if (player != null)
             {
-                yield break;
+                const int CharacterIndex = 0;
+
+                var characterGameObject =
+                    player.transform.GetChild(CharacterIndex);
+                if (characterGameObject != null)
+                {
+                    var playerController = 
+                        characterGameObject.GetComponent<PlayerController>();
+                    if (playerController != null)
+                    {
+                        if (playerController.PlayerState == PlayerState.Attacked)
+                        {
+                            yield break;
+                        }
+
+                        playerController.PlayerState = PlayerState.Attacked;
+
+                        yield return new WaitForSeconds(0.1f);
+
+                        // TODO: Move this piece of code to player's script.
+                        var direction =
+                            (player.transform.position - contactPoint)
+                            .normalized;
+                        var force = 
+                            new Vector2(
+                                (direction.x > 0 ? 1 : -1) * hitAmount.x,
+                                hitAmount.y);
+
+                        var rigidbody = player.GetComponent<Rigidbody2D>();
+                        rigidbody.AddForce(force, ForceMode2D.Impulse);
+                    }
+                }
             }
-
-            playerController.PlayerState = PlayerState.Attacked;
-
-            yield return new WaitForSeconds(0.1f);
-
-            var direction = (player.transform.position - contactPoint).normalized;
-            player.GetComponent<Rigidbody2D>().AddForce(new Vector2((direction.x > 0 ? 1 : -1) * 3, 3.0f), ForceMode2D.Impulse);
         }
     }
 }
