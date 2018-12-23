@@ -12,16 +12,22 @@ namespace Scripts.QuickAccess
         #if UNITY_EDITOR
         private void Start()
         {
-            StartCoroutine(WaitFrame());
+            StartCoroutine(WaitFrameBeforeDestroy());
         }
 
-        private IEnumerator WaitFrame()
+        private IEnumerator WaitFrameBeforeDestroy()
         {
             yield return null;
 
-            var loginWindow = UserInterfaceContainer.GetInstance().Get<LoginWindow>().AssertNotNull();
-            loginWindow.Email = QuickLoginConfiguration.GetInstance().Email;
-            loginWindow.Password = QuickLoginConfiguration.GetInstance().Password;
+            var quickLoginConfiguration = QuickLoginConfiguration.GetInstance();
+            if (quickLoginConfiguration != null)
+            {
+                var loginWindow = 
+                    UserInterfaceContainer.GetInstance().Get<LoginWindow>()
+                        .AssertNotNull();
+                loginWindow.Email = quickLoginConfiguration.Email;
+                loginWindow.Password = quickLoginConfiguration.Password;
+            }
 
             Destroy(gameObject);
         }
