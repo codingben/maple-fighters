@@ -7,14 +7,17 @@ namespace Assets.Scripts.Gameplay.Utils
     [ExecuteInEditMode]
     public class FixTextScale : MonoBehaviour
     {
-        [SerializeField] private Transform parent;
+        [SerializeField]
+        private Transform parent;
         private float scale;
 
         private void Awake()
         {
             if (parent == null)
             {
-                LogUtils.Log("Parent is null.");
+                LogUtils.Log(
+                    MessageBuilder.Trace("Parent is null."),
+                    LogMessageType.Warning);
             }
 
             scale = transform.localScale.x;
@@ -30,17 +33,25 @@ namespace Assets.Scripts.Gameplay.Utils
 
         private void ChangeDirection()
         {
-            var direction = GetDirection();
-            switch (direction)
+            switch (GetDirection())
             {
                 case Directions.Left:
                 {
-                    transform.localScale = new Vector3(scale, transform.localScale.y, transform.localScale.z);
+                    transform.localScale = 
+                        new Vector3(
+                            scale,
+                            transform.localScale.y,
+                            transform.localScale.z);
                     break;
                 }
+
                 case Directions.Right:
                 {
-                    transform.localScale = new Vector3(-scale, transform.localScale.y, transform.localScale.z);
+                    transform.localScale = 
+                        new Vector3(
+                            -scale,
+                            transform.localScale.y,
+                            transform.localScale.z);
                     break;
                 }
             }
@@ -48,19 +59,22 @@ namespace Assets.Scripts.Gameplay.Utils
 
         private Directions GetDirection()
         {
-            if (parent?.localScale.x > 0)
+            var direction = Directions.None;
+
+            if (parent != null)
             {
-                return Directions.Left;
+                if (parent.localScale.x > 0)
+                {
+                    direction = Directions.Left;
+                }
+
+                if (parent.localScale.x < 0)
+                {
+                    direction = Directions.Right;
+                }
             }
 
-            if (parent?.localScale.x < 0)
-            {
-                return Directions.Right;
-            }
-
-            {
-                return Directions.None;
-            }
+            return direction;
         }
     }
 }

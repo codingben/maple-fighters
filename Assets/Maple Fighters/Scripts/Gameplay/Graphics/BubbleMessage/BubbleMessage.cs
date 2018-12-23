@@ -7,22 +7,31 @@ namespace Assets.Scripts.Graphics
 {
     public class BubbleMessage : MonoBehaviour
     {
-        [SerializeField] private Vector2 position;
-        [SerializeField] private Text messageText;
+        [SerializeField]
+        private Vector2 position;
+
+        [SerializeField]
+        private Text messageText;
 
         private void Awake()
         {
-            transform.position = new Vector3(transform.position.x + position.x, transform.position.y + position.y);
+            transform.position = 
+                new Vector3(
+                    transform.position.x + position.x,
+                    transform.position.y + position.y);
         }
 
-        public void Initialize(string message, int time)
+        public void SetMessage(string message)
         {
             messageText.text = message;
-
-            StartCoroutine(WaitForDestroy(time));
         }
 
-        private IEnumerator WaitForDestroy(int time)
+        public void WaitAndDestroy(int time)
+        {
+            StartCoroutine(WaitSomeTimeBeforeDestroy(time));
+        }
+
+        private IEnumerator WaitSomeTimeBeforeDestroy(int time)
         {
             yield return new WaitForSeconds(time);
 

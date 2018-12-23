@@ -10,26 +10,31 @@ namespace Assets.Scripts.Graphics
     {
         private void Awake()
         {
-            var gameScenePeerLogic = ServiceContainer.GameService.GetPeerLogic<IGameScenePeerLogicAPI>().AssertNotNull();
+            var gameScenePeerLogic = 
+                ServiceContainer.GameService
+                    .GetPeerLogic<IGameScenePeerLogicAPI>().AssertNotNull();
             gameScenePeerLogic.BubbleMessageReceived.AddListener(OnBubbleMessageReceived);
         }
 
         private void OnDestroy()
         {
-            var gameScenePeerLogic = ServiceContainer.GameService.GetPeerLogic<IGameScenePeerLogicAPI>().AssertNotNull();
+            var gameScenePeerLogic = 
+                ServiceContainer.GameService
+                    .GetPeerLogic<IGameScenePeerLogicAPI>().AssertNotNull();
             gameScenePeerLogic.BubbleMessageReceived.RemoveListener(OnBubbleMessageReceived);
         }
 
         private void OnBubbleMessageReceived(BubbleMessageEventParameters parameters)
         {
             var id = parameters.RequesterId;
-            var sceneObject = SceneObjectsContainer.GetInstance().GetRemoteSceneObject(id);
+            var sceneObject = SceneObjectsContainer.GetInstance()
+                .GetRemoteSceneObject(id);
             if (sceneObject != null)
             {
                 var owner = sceneObject.GameObject.transform;
                 var message = parameters.Message;
                 var time = parameters.Time;
-                BubbleMessageCreator.Create(owner, message, time);
+                BubbleMessageCreator.GetInstance().Create(owner, message, time);
             }
         }
     }
