@@ -3,61 +3,88 @@ using CommonTools.Coroutines;
 using CommonTools.Log;
 using Game.Common;
 using Scripts.Containers;
+using Scripts.Coroutines;
 using Scripts.Gameplay;
 using Scripts.Services;
 using Scripts.UI;
 using Scripts.UI.Core;
+using UnityEngine;
 
 namespace Scripts.World
 {
-    public class PortalTeleportation : PortalControllerBase
+    public class PortalTeleportation : MonoBehaviour
     {
         private bool isTeleporting;
+        private ExternalCoroutinesExecutor coroutinesExecutor;
 
-        public override void StartInteraction()
+        private void Awake()
         {
-            base.StartInteraction();
-
-            if (!isTeleporting)
-            {
-                var screenFade = UserInterfaceContainer.GetInstance().Get<ScreenFade>().AssertNotNull();
-                screenFade?.Show(Teleport);
-            }
+            coroutinesExecutor = new ExternalCoroutinesExecutor();
+            coroutinesExecutor.ExecuteExternally();
         }
 
-        public override void StopInteraction()
+        private void OnDestroy()
         {
-            base.StopInteraction();
+            coroutinesExecutor.RemoveFromExternalExecutor();
+        }
 
-            if (!isTeleporting)
+        public void StartInteraction()
+        {
+            if (isTeleporting)
             {
-                var screenFade = UserInterfaceContainer.GetInstance().Get<ScreenFade>().AssertNotNull();
-                screenFade?.Hide();
+                return;
             }
+
+            var screenFade = 
+                UserInterfaceContainer.GetInstance().Get<ScreenFade>()
+                    .AssertNotNull();
+            screenFade.Show(Teleport);
+        }
+
+        public void StopInteraction()
+        {
+            if (isTeleporting)
+            {
+                return;
+            }
+
+            var screenFade = 
+                UserInterfaceContainer.GetInstance().Get<ScreenFade>()
+                    .AssertNotNull();
+            screenFade.Hide();
         }
 
         private void Teleport()
         {
             isTeleporting = true;
 
-            CoroutinesExecutor.StartTask(ChangeScene, onException: exception => ServiceConnectionProviderUtils.OnOperationFailed());
+            coroutinesExecutor.StartTask(
+                ChangeScene,
+                onException: exception =>
+                    ServiceConnectionProviderUtils.OnOperationFailed());
         }
 
         private async Task ChangeScene(IYield yield)
         {
             var sceneObject = GetComponent<ISceneObject>();
-            var gameScenePeerLogic = ServiceContainer.GameService.GetPeerLogic<IGameScenePeerLogicAPI>().AssertNotNull();
-            var responseParameters = await gameScenePeerLogic.ChangeScene(yield, new ChangeSceneRequestParameters(sceneObject.Id));
+            var gameScenePeerLogic = 
+                ServiceContainer.GameService
+                    .GetPeerLogic<IGameScenePeerLogicAPI>().AssertNotNull();
+
+            var responseParameters = 
+                await gameScenePeerLogic.ChangeScene(
+                    yield,
+                    new ChangeSceneRequestParameters(sceneObject.Id));
+
             var map = responseParameters.Map;
-            if (map == 0)
+            if (map != 0)
+            {
+                GameScenesController.GetInstance().LoadScene(map);
+            }
+            else
             {
                 LogUtils.Log(MessageBuilder.Trace("You can not teleport to scene index 0."));
-                return;
             }
-
-            GameScenesController.GetInstance().LoadScene(map);
-
-            Dispose();
         }
     }
 }

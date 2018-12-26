@@ -34,12 +34,15 @@ namespace Scripts.World
 
         private void OnSceneLoaded(Scene scene, LoadSceneMode loadSceneMode)
         {
-            ServiceContainer.GameService.ServiceConnectionHandler.SetNetworkTrafficState(NetworkTrafficState.Flowing);
+            ServiceContainer.GameService.ServiceConnectionHandler
+                .SetNetworkTrafficState(NetworkTrafficState.Flowing);
         }
 
         public void LoadScene(Maps map)
         {
-            ServiceContainer.GameService.ServiceConnectionHandler.SetNetworkTrafficState(NetworkTrafficState.Paused);
+            ServiceContainer.GameService.ServiceConnectionHandler
+                .SetNetworkTrafficState(NetworkTrafficState.Paused);
+
             SceneManager.LoadScene(map.ToString());
         }
     }

@@ -6,20 +6,36 @@ namespace Scripts.World
 {
     public class FadeEffect : MonoBehaviour
     {
-        protected enum FadeState
+        private enum FadeState
         {
+            /// <summary>
+            /// The fade.
+            /// </summary>
             Fade,
+
+            /// <summary>
+            /// The unfade.
+            /// </summary>
             UnFade
         }
 
         [Header("Fade Settings")]
-        [SerializeField] private FadeState startingState;
+        [SerializeField]
+        private FadeState startingState;
+
         [Header("Fade Speed")]
-        [SerializeField] private float showSpeed;
-        [SerializeField] private float hideSpeed;
+        [SerializeField]
+        private float showSpeed;
+
+        [SerializeField]
+        private float hideSpeed;
+
         [Header("Fade Color")]
-        [SerializeField] private Color fadeColor;
-        [SerializeField] private Color unFadeColor;
+        [SerializeField]
+        private Color fadeColor;
+
+        [SerializeField]
+        private Color unFadeColor;
 
         private Coroutine fadeCoroutine;
         private SpriteRenderer spriteRenderer;
@@ -38,6 +54,7 @@ namespace Scripts.World
                     Fade();
                     break;
                 }
+
                 case FadeState.UnFade:
                 {
                     UnFade();
@@ -55,7 +72,8 @@ namespace Scripts.World
                 StopCoroutine(fadeCoroutine);
             }
 
-            fadeCoroutine = StartCoroutine(FadeRoutine(showSpeed, onFinished));
+            fadeCoroutine = 
+                StartCoroutine(FadeRoutine(showSpeed, onFinished));
         }
 
         public void UnFade(Action onFinished = null)
@@ -67,7 +85,8 @@ namespace Scripts.World
                 StopCoroutine(fadeCoroutine);
             }
 
-            fadeCoroutine = StartCoroutine(UnFadeRoutine(hideSpeed, onFinished));
+            fadeCoroutine =
+                StartCoroutine(UnFadeRoutine(hideSpeed, onFinished));
         }
 
         private IEnumerator FadeRoutine(float speed, Action onFinished)

@@ -22,17 +22,19 @@ namespace Scripts.World
             SubscribeToSceneLoaded();
         }
 
-        private void Update()
+        protected override void OnDestroying()
         {
-            coroutinesExecutor.Update();
-        }
+            base.OnDestroying();
 
-        private void OnDestroy()
-        {
             coroutinesExecutor.RemoveFromExternalExecutor();
             coroutinesExecutor.Dispose();
 
             UnsubscribeFromSceneLoaded();
+        }
+
+        private void Update()
+        {
+            coroutinesExecutor.Update();
         }
 
         private void SubscribeToSceneLoaded()
@@ -47,12 +49,17 @@ namespace Scripts.World
 
         private void OnSceneLoaded(Scene scene, LoadSceneMode loadSceneMode)
         {
-            coroutinesExecutor.StartTask(EnterScene, exception => ServiceConnectionProviderUtils.OnOperationFailed());
+            coroutinesExecutor.StartTask(
+                EnterScene,
+                exception =>
+                    ServiceConnectionProviderUtils.OnOperationFailed());
         }
 
         private async Task EnterScene(IYield yield)
         {
-            var gameScenePeerLogic = ServiceContainer.GameService.GetPeerLogic<IGameScenePeerLogicAPI>().AssertNotNull();
+            var gameScenePeerLogic = 
+                ServiceContainer.GameService
+                    .GetPeerLogic<IGameScenePeerLogicAPI>().AssertNotNull();
             await gameScenePeerLogic.EnterScene(yield);
         }
     }
