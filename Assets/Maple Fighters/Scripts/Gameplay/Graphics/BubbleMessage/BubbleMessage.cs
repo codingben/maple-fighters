@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 namespace Assets.Scripts.Graphics
 {
+    [RequireComponent(typeof(FadeEffect))]
     public class BubbleMessage : MonoBehaviour
     {
         [SerializeField]
@@ -36,7 +37,7 @@ namespace Assets.Scripts.Graphics
             yield return new WaitForSeconds(time);
 
             var fadeEffect = GetComponent<FadeEffect>();
-            fadeEffect?.UnFade(() => Destroy(gameObject));
+            fadeEffect.UnFade(() => Destroy(gameObject));
         }
     }
 }

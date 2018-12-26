@@ -5,7 +5,7 @@ namespace Scripts.Gameplay.Camera
 {
     #pragma warning disable 0109
 
-    // [ExecuteInEditMode]
+    [RequireComponent(typeof(CinemachineVirtualCamera))]
     public class CameraOrthographicSizeController : MonoBehaviour
     {
         [SerializeField]
@@ -23,11 +23,6 @@ namespace Scripts.Gameplay.Camera
 
         private void Update()
         {
-            if (camera == null)
-            {
-                camera = GetComponent<CinemachineVirtualCamera>();
-            }
-
             var height = Mathf.RoundToInt(
                 targetWidth / (float)Screen.width * Screen.height);
             camera.m_Lens.OrthographicSize = height / pixelsToUnits / 2;

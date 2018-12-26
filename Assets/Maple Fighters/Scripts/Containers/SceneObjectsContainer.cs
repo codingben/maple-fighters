@@ -20,13 +20,7 @@ namespace Scripts.Containers
             sceneObjects = new Dictionary<int, ISceneObject>();
 
             // TODO: Remove it; Should be called from SceneLeft event!
-            SceneManager.sceneLoaded += (x, y) => 
-            {
-                if (sceneObjects.ContainsKey(localSceneObject))
-                {
-                    sceneObjects.Remove(localSceneObject);
-                }
-            };
+            SubscribeToSceneLoaded();
         }
 
         protected override void OnDestroying()
@@ -34,6 +28,8 @@ namespace Scripts.Containers
             base.OnDestroying();
 
             sceneObjects.Clear();
+
+            UnsubscribeFromSceneLoaded();
         }
 
         public void SetLocalSceneObject(int id)
@@ -155,6 +151,24 @@ namespace Scripts.Containers
             }
 
             return gameObject;
+        }
+
+        private void SubscribeToSceneLoaded()
+        {
+            SceneManager.sceneLoaded += OnSceneLoaded;
+        }
+
+        private void UnsubscribeFromSceneLoaded()
+        {
+            SceneManager.sceneLoaded -= OnSceneLoaded;
+        }
+
+        private void OnSceneLoaded(Scene scene, LoadSceneMode loadSceneMode)
+        {
+            if (sceneObjects.ContainsKey(localSceneObject))
+            {
+                sceneObjects.Remove(localSceneObject);
+            }
         }
     }
 }

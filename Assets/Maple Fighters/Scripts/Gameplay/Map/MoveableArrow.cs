@@ -5,6 +5,7 @@ namespace Scripts.Gameplay.Map
 {
     using Camera = UnityEngine.Camera;
 
+    [RequireComponent(typeof(SpriteRenderer))]
     public class MoveableArrow : MonoBehaviour
     {
         private const string MiniCameraTag = "Minimap Camera";

@@ -4,22 +4,18 @@ namespace Scripts.Coroutines
 {
     public static class ExtensionMethods
     {
-        public static ExternalCoroutinesExecutor ExecuteExternally(
+        public static void ExecuteExternally(
             this ExternalCoroutinesExecutor executer)
         {
             CoroutinesWrappersUpdater.GetOrCreateInstance()
-                ?.AddCoroutineExecutor(executer);
-
-            return executer;
+                .AddCoroutineExecutor(executer);
         }
 
-        public static ExternalCoroutinesExecutor RemoveFromExternalExecutor(
+        public static void RemoveFromExternalExecutor(
             this ExternalCoroutinesExecutor executer)
         {
             CoroutinesWrappersUpdater.GetOrCreateInstance()
-                ?.RemoveCoroutineExecutor(executer);
-
-            return executer;
+                .RemoveCoroutineExecutor(executer);
         }
     }
 }

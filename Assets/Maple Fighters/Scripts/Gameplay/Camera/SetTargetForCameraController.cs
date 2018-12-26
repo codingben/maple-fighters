@@ -20,8 +20,8 @@ namespace Scripts.Gameplay.Camera
 
         private void SetTargetToCinemachineBrain()
         {
-            var cinemachineBrain = Camera.main.GetComponent<CinemachineBrain>()
-                .AssertNotNull();
+            var cinemachineBrain = 
+                Camera.main.GetComponent<CinemachineBrain>().AssertNotNull();
             cinemachineBrain.ActiveVirtualCamera.Follow = transform;
         }
 
