@@ -279,7 +279,6 @@ GameObject:
   m_Component:
   - component: {fileID: 354198741}
   - component: {fileID: 354198742}
-  - component: {fileID: 354198743}
   m_Layer: 8
   m_Name: Floor
   m_TagString: Ground
@@ -325,18 +324,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.05, y: 0.1}
   m_EdgeRadius: 0
---- !u!114 &354198743
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 354198740}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ef8e2da9101b2514791d21200e979030, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  groundInteraction: 274
 --- !u!1 &492292231
 GameObject:
   m_ObjectHideFlags: 0
@@ -1183,7 +1170,6 @@ GameObject:
   m_Component:
   - component: {fileID: 906561183}
   - component: {fileID: 906561184}
-  - component: {fileID: 906561185}
   m_Layer: 8
   m_Name: Floor
   m_TagString: Ground
@@ -1229,18 +1215,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2.55, y: 0.1}
   m_EdgeRadius: 0
---- !u!114 &906561185
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 906561182}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ef8e2da9101b2514791d21200e979030, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  groundInteraction: 274
 --- !u!1 &1008508058
 GameObject:
   m_ObjectHideFlags: 0
@@ -1304,7 +1278,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1087086927}
   - component: {fileID: 1087086928}
-  - component: {fileID: 1087086929}
   m_Layer: 8
   m_Name: Floor
   m_TagString: Ground
@@ -1350,18 +1323,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.78, y: 0.1}
   m_EdgeRadius: 0
---- !u!114 &1087086929
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1087086926}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ef8e2da9101b2514791d21200e979030, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  groundInteraction: 274
 --- !u!1 &1149497402
 GameObject:
   m_ObjectHideFlags: 0
@@ -2075,7 +2036,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1618292584}
   - component: {fileID: 1618292585}
-  - component: {fileID: 1618292586}
   m_Layer: 8
   m_Name: Floor
   m_TagString: Ground
@@ -2121,18 +2081,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 8.64, y: 0.1}
   m_EdgeRadius: 0
---- !u!114 &1618292586
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1618292583}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ef8e2da9101b2514791d21200e979030, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  groundInteraction: 274
 --- !u!1 &1667245819
 GameObject:
   m_ObjectHideFlags: 0
@@ -2276,7 +2224,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1755863008}
   - component: {fileID: 1755863009}
-  - component: {fileID: 1755863010}
   m_Layer: 8
   m_Name: Floor
   m_TagString: Ground
@@ -2322,18 +2269,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 7.95, y: 0.1}
   m_EdgeRadius: 0
---- !u!114 &1755863010
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1755863007}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ef8e2da9101b2514791d21200e979030, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  groundInteraction: 274
 --- !u!1 &1769178733
 GameObject:
   m_ObjectHideFlags: 0
@@ -2555,7 +2490,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2094996519}
   - component: {fileID: 2094996520}
-  - component: {fileID: 2094996521}
   m_Layer: 8
   m_Name: Floor
   m_TagString: Ground
@@ -2601,18 +2535,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 8.69, y: 0.1}
   m_EdgeRadius: 0
---- !u!114 &2094996521
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2094996518}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ef8e2da9101b2514791d21200e979030, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  groundInteraction: 274
 --- !u!1 &2104474105
 GameObject:
   m_ObjectHideFlags: 0
