@@ -8,16 +8,15 @@ namespace Assets.Scripts
     [RequireComponent(typeof(DummySceneObjectsCreator))]
     public abstract class DummySceneObjectsProviderBase : MonoBehaviour, IDummySceneObjectsProvider
     {
-        private readonly List<DummySceneObject> sceneObjects = new List<DummySceneObject>();
+        public IEnumerable<DummySceneObject> GetSceneObjects() => sceneObjects;
+
+        private List<DummySceneObject> sceneObjects;
 
         private void Awake()
         {
+            sceneObjects = new List<DummySceneObject>();
             sceneObjects.AddRange(GetDummySceneObjects());
         }
-
-        public IEnumerable<DummySceneObject> GetSceneObjects() => sceneObjects;
-
-        protected abstract IEnumerable<DummySceneObject> GetDummySceneObjects();
 
         protected void AddCommonComponents(GameObject gameObject)
         {
@@ -31,5 +30,7 @@ namespace Assets.Scripts
         {
             yield return typeof(InterestArea);
         }
+
+        protected abstract IEnumerable<DummySceneObject> GetDummySceneObjects();
     }
 }
