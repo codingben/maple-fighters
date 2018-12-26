@@ -73,12 +73,14 @@ namespace Scripts.Coroutines
             instance = null;
         }
 
-        public void AddCoroutineExecutor(ExternalCoroutinesExecutor coroutineWrapper)
+        public void AddCoroutineExecutor(
+            ExternalCoroutinesExecutor coroutineWrapper)
         {
             coroutinesWrappers.Add(coroutineWrapper);
         }
 
-        public void RemoveCoroutineExecutor(ExternalCoroutinesExecutor coroutineWrapper)
+        public void RemoveCoroutineExecutor(
+            ExternalCoroutinesExecutor coroutineWrapper)
         {
             coroutinesWrappers.Remove(coroutineWrapper);
         }

@@ -28,11 +28,12 @@ namespace Scripts.Gameplay.Camera
         private void SetTargetToCameraController()
         {
             var minimapCamera =
-                GameObject.FindGameObjectWithTag(MinimapCameraTag)
-                    ?.GetComponent<CameraController>();
-            if (minimapCamera != null)
+                GameObject.FindGameObjectWithTag(MinimapCameraTag);
+            var cameraController =
+                minimapCamera.GetComponent<CameraController>().AssertNotNull();
+            if (cameraController != null)
             {
-                minimapCamera.SetTarget(transform);
+                cameraController.SetTarget(transform);
             }
         }
     }

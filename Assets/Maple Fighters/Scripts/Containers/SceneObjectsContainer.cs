@@ -19,7 +19,6 @@ namespace Scripts.Containers
 
             sceneObjects = new Dictionary<int, ISceneObject>();
 
-            // TODO: Remove it; Should be called from SceneLeft event!
             SubscribeToSceneLoaded();
         }
 
@@ -155,11 +154,13 @@ namespace Scripts.Containers
 
         private void SubscribeToSceneLoaded()
         {
+            // TODO: Remove it; Should be called from SceneLeft event!
             SceneManager.sceneLoaded += OnSceneLoaded;
         }
 
         private void UnsubscribeFromSceneLoaded()
         {
+            // TODO: Remove it; Should be called from SceneLeft event!
             SceneManager.sceneLoaded -= OnSceneLoaded;
         }
 
