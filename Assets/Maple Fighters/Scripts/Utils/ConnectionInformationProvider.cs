@@ -1,16 +1,16 @@
-﻿using CommonCommunicationInterfaces;
-using JetBrains.Annotations;
+﻿using System;
+using CommonCommunicationInterfaces;
 using Scripts.Services;
 
 namespace Scripts.Utils
 {
-    [System.Serializable]
+    [Serializable]
     public class ConnectionInformation
     {
-        [UsedImplicitly] public string Name;
-        [UsedImplicitly] public ServerType ServerType;
-        [UsedImplicitly] public PeerConnectionInformation UdpConnectionDetails;
-        [UsedImplicitly] public PeerConnectionInformation WebSocketConnectionDetails;
-        [UsedImplicitly] public PeerConnectionInformation WebSocketSecureConnectionDetails;
+        public string Name;
+        public ServerType ServerType;
+        public PeerConnectionInformation UdpConnectionDetails;
+        public PeerConnectionInformation WebSocketConnectionDetails;
+        public PeerConnectionInformation WebSocketSecureConnectionDetails;
     }
 }

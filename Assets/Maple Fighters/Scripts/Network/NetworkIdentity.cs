@@ -5,7 +5,7 @@ namespace Scripts.Gameplay
 {
     public class NetworkIdentity : MonoBehaviour, ISceneObject
     {
-        [ReadOnly, SerializeField] private int id;
+        [ViewOnly, SerializeField] private int id;
 
         public int Id
         {

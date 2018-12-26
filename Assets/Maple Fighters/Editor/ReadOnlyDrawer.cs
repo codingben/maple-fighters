@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Scripts.Editor
 {
-    [CustomPropertyDrawer(typeof(ReadOnlyAttribute))]
+    [CustomPropertyDrawer(typeof(ViewOnlyAttribute))]
     public class ReadOnlyDrawer : PropertyDrawer
     {
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label)

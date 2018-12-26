@@ -2,7 +2,7 @@
 
 namespace Scripts.Editor
 {
-    public class ReadOnlyAttribute : PropertyAttribute
+    public class ViewOnlyAttribute : PropertyAttribute
     {
         // Left blank intentionally
     }

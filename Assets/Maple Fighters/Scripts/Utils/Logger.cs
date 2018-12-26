@@ -1,13 +1,17 @@
 ﻿using System;
 using CommonTools.Log;
 using UnityEngine;
-using ILogger = CommonTools.Log.ILogger;
 
 namespace Scripts.Services
 {
+    using ILogger = CommonTools.Log.ILogger;
+
     public class Logger : ILogger
     {
-        public void Log(string message, LogMessageType type = LogMessageType.Log, object context = null)
+        public void Log(
+            string message,
+            LogMessageType type = LogMessageType.Log,
+            object context = null)
         {
             switch (type)
             {
@@ -16,16 +20,19 @@ namespace Scripts.Services
                     Debug.Log(message);
                     break;
                 }
+
                 case LogMessageType.Warning:
                 {
                     Debug.LogWarning(message);
                     break;
                 }
+
                 case LogMessageType.Error:
                 {
                     Debug.LogError(message);
                     break;
                 }
+
                 default:
                 {
                     throw new ArgumentOutOfRangeException(nameof(type), type, null);

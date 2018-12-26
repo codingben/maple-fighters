@@ -68,7 +68,7 @@ namespace Scripts.Gameplay.Actors
         }
 
         [Header("State")]
-        [ReadOnly, SerializeField] private PlayerState playerState = PlayerState.Falling;
+        [ViewOnly, SerializeField] private PlayerState playerState = PlayerState.Falling;
         private PlayerState lastPlayerState;
 
         [Header("Properties")]

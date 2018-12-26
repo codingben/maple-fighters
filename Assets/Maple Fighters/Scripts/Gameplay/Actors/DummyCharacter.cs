@@ -7,7 +7,7 @@ namespace Scripts.Gameplay.Actors
     [System.Serializable]
     public class DummyCharacter
     {
-        [ReadOnly] public int Id = 0;
+        [ViewOnly] public int Id = 0;
         public string Name;
         public CharacterClasses CharacterClass;
         public Vector2 SpawnPosition;
