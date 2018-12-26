@@ -7,15 +7,21 @@ namespace Scripts.Coroutines
         public static void ExecuteExternally(
             this ExternalCoroutinesExecutor executer)
         {
-            CoroutinesWrappersUpdater.GetOrCreateInstance()
-                .AddCoroutineExecutor(executer);
+            var coroutines = CoroutinesWrappersUpdater.GetOrCreateInstance();
+            if (coroutines != null)
+            {
+                coroutines.AddCoroutineExecutor(executer);
+            }
         }
 
         public static void RemoveFromExternalExecutor(
             this ExternalCoroutinesExecutor executer)
         {
-            CoroutinesWrappersUpdater.GetOrCreateInstance()
-                .RemoveCoroutineExecutor(executer);
+            var coroutines = CoroutinesWrappersUpdater.GetOrCreateInstance();
+            if (coroutines != null)
+            {
+                coroutines.RemoveCoroutineExecutor(executer);
+            }
         }
     }
 }

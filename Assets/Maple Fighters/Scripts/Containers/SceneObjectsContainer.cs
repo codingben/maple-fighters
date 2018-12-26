@@ -27,7 +27,7 @@ namespace Scripts.Containers
         {
             base.OnDestroying();
 
-            sceneObjects.Clear();
+            sceneObjects?.Clear();
 
             UnsubscribeFromSceneLoaded();
         }
