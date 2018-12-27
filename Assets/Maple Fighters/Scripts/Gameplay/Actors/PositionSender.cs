@@ -1,6 +1,6 @@
 ﻿using CommonTools.Log;
-using Scripts.Containers;
 using Game.Common;
+using Scripts.Containers;
 using Scripts.Services;
 using UnityEngine;
 
@@ -8,25 +8,30 @@ namespace Scripts.Gameplay.Actors
 {
     public class PositionSender : MonoBehaviour
     {
-        public Transform Character { get; set; }
+        public void SetCharacter(Transform character)
+        {
+            this.character = character;
+        }
 
-        private Vector2 lastPosition;
-        private Directions lastDirection = Directions.None;
+        private Transform character;
+
+        private Vector2 position;
+        private Directions direction = Directions.None;
 
         private void Awake()
         {
-            lastPosition = transform.position;
+            position = transform.position;
         }
 
         private void Update()
         {
-            if (Vector2.Distance(transform.position, lastPosition) > 0.1f)
+            if (Vector2.Distance(transform.position, position) > 0.1f)
             {
                 PositionChanged();
             }
             else
             {
-                if (GetDirection() != lastDirection)
+                if (GetDirection() != direction)
                 {
                     PositionChanged();
                 }
@@ -35,33 +40,42 @@ namespace Scripts.Gameplay.Actors
 
         private void PositionChanged()
         {
-            lastPosition = transform.position;
-            lastDirection = GetDirection();
+            position = transform.position;
+            direction = GetDirection();
 
             UpdatePositionOperation();
         }
 
         private void UpdatePositionOperation()
         {
-            var gameScenePeerLogic = ServiceContainer.GameService.GetPeerLogic<IGameScenePeerLogicAPI>().AssertNotNull();
-            gameScenePeerLogic.UpdatePosition(new UpdatePositionRequestParameters(transform.position.x, transform.position.y, GetDirection()));
+            var gameScenePeerLogic =
+                ServiceContainer.GameService
+                    .GetPeerLogic<IGameScenePeerLogicAPI>().AssertNotNull();
+            gameScenePeerLogic.UpdatePosition(
+                new UpdatePositionRequestParameters(
+                    transform.position.x,
+                    transform.position.y,
+                    GetDirection()));
         }
 
         private Directions GetDirection()
         {
-            if (Character?.localScale.x > 0)
+            var direction = Directions.None;
+
+            if (character != null)
             {
-                return Directions.Left;
+                if (character.localScale.x > 0)
+                {
+                    direction = Directions.Left;
+                }
+
+                if (character.localScale.x < 0)
+                {
+                    direction = Directions.Right;
+                }
             }
 
-            if (Character?.localScale.x < 0)
-            {
-                return Directions.Right;
-            }
-
-            {
-                return Directions.None;
-            }
+            return direction;
         }
     }
 }

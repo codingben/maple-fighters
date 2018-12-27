@@ -9,6 +9,7 @@ using UnityEngine;
 
 namespace Scripts.Gameplay.Actors
 {
+    [RequireComponent(typeof(Collider2D))]
     public class PlayerController : MonoBehaviour
     {
         public event Action<PlayerState> PlayerStateChanged;

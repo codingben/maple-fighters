@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using CommonTools.Log;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace Scripts.Gameplay.Actors
@@ -14,7 +15,8 @@ namespace Scripts.Gameplay.Actors
 
         public void SetSortingOrder(int index)
         {
-            nameText.GetComponent<Canvas>().sortingOrder = index;
+            var canvas = nameText.GetComponent<Canvas>().AssertNotNull();
+            canvas.sortingOrder = index;
         }
     }
 }

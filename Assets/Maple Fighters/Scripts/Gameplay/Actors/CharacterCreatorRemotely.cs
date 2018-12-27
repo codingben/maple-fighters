@@ -5,7 +5,8 @@ namespace Scripts.Gameplay.Actors
 {
     public class CharacterCreatorRemotely : CharacterCreatorBase
     {
-        public override void Create(CharacterSpawnDetailsParameters characterSpawnDetails)
+        public override void Create(
+            CharacterSpawnDetailsParameters characterSpawnDetails)
         {
             base.Create(characterSpawnDetails);
 
@@ -19,25 +20,28 @@ namespace Scripts.Gameplay.Actors
 
         private void InitializeCharacterName(string characterName)
         {
-            var characterNameComponent = characterSprite.GetComponent<CharacterName>();
+            var characterNameComponent = 
+                characterSpriteGameObject.GetComponent<CharacterName>();
             characterNameComponent.SetName(characterName);
-            characterNameComponent.SetSortingOrder(OrderInLayer);
+            characterNameComponent.SetSortingOrder(orderInLayer);
         }
 
         private void InitializeSpriteRenderer()
         {
-            var spriteRenderer = characterSprite.GetComponent<SpriteRenderer>();
-            spriteRenderer.sortingOrder = OrderInLayer;
+            var spriteRenderer = 
+                characterSpriteGameObject.GetComponent<SpriteRenderer>();
+            spriteRenderer.sortingOrder = orderInLayer;
         }
 
         private void DisableCollision()
         {
-            character.GetComponent<Collider2D>().isTrigger = true;
+            characterGameObject.GetComponent<Collider2D>().isTrigger = true;
         }
 
         private void RemoveAllCharacterControllerComponents()
         {
-            var components = character.GetComponents<MonoBehaviour>();
+            var components = 
+                characterGameObject.GetComponents<MonoBehaviour>();
             foreach (var component in components)
             {
                 Destroy(component);
@@ -47,7 +51,8 @@ namespace Scripts.Gameplay.Actors
         private void InitializePlayerStateSetter()
         {
             var playerStateSetter = GetComponent<PlayerStateSetter>();
-            playerStateSetter.Animator = characterSprite.GetComponent<Animator>();
+            playerStateSetter.Animator =
+                characterSpriteGameObject.GetComponent<Animator>();
         }
     }
 }

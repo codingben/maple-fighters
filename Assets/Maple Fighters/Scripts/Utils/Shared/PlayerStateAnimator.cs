@@ -60,7 +60,8 @@ namespace Scripts.Utils.Shared
             UpdatePlayerStateOperation();
         }
 
-        private void OnPlayerStateChanged(PlayerStateChangedEventParameters parameters)
+        private void OnPlayerStateChanged(
+            PlayerStateChangedEventParameters parameters)
         {
             var sceneObject = 
                 SceneObjectsContainer.GetInstance()
@@ -79,7 +80,8 @@ namespace Scripts.Utils.Shared
         /// <param name="parameters">
         /// The parameters.
         /// </param>
-        private void OnSceneObjectsAdded(SceneObjectsAddedEventParameters parameters)
+        private void OnSceneObjectsAdded(
+            SceneObjectsAddedEventParameters parameters)
         {
             UpdatePlayerStateOperation();
         }

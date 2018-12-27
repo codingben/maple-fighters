@@ -1,12 +1,13 @@
-﻿using Scripts.Utils.Shared;
-using Game.Common;
+﻿using Game.Common;
+using Scripts.Utils.Shared;
 using UnityEngine;
 
 namespace Scripts.Gameplay.Actors
 {
     public class CharacterCreatorLocally : CharacterCreatorBase
     {
-        public override void Create(CharacterSpawnDetailsParameters characterSpawnDetails)
+        public override void Create(
+            CharacterSpawnDetailsParameters characterSpawnDetails)
         {
             base.Create(characterSpawnDetails);
 
@@ -16,28 +17,34 @@ namespace Scripts.Gameplay.Actors
 
         private void InitializeCharacterName(string characterName)
         {
-            var characterNameComponent = characterSprite.GetComponent<CharacterName>();
+            var characterNameComponent = 
+                characterSpriteGameObject.GetComponent<CharacterName>();
             characterNameComponent.SetName(characterName);
-            characterNameComponent.SetSortingOrder(OrderInLayer);
+            characterNameComponent.SetSortingOrder(orderInLayer);
         }
 
         private void InitializeSpriteRenderer()
         {
-            var spriteRenderer = characterSprite.GetComponent<SpriteRenderer>();
-            spriteRenderer.sortingOrder = OrderInLayer;
+            var spriteRenderer = 
+                characterSpriteGameObject.GetComponent<SpriteRenderer>();
+            spriteRenderer.sortingOrder = orderInLayer;
         }
 
         private void SetCharacterToPositionSender()
         {
             var positionSender = GetComponent<PositionSender>();
-            positionSender.Character = character.transform;
+            positionSender.SetCharacter(characterGameObject.transform);
         }
 
         private void InitializePlayerController()
         {
-            var playerStateAnimatorNetwork = characterSprite.AddComponent<PlayerStateAnimator>();
-            var playerController = character.GetComponent<PlayerController>();
-            playerController.PlayerStateChanged += playerStateAnimatorNetwork.OnPlayerStateChanged;
+            var playerStateAnimatorNetwork = 
+                characterSpriteGameObject.AddComponent<PlayerStateAnimator>();
+
+            var playerController =
+                characterGameObject.GetComponent<PlayerController>();
+            playerController.PlayerStateChanged +=
+                playerStateAnimatorNetwork.OnPlayerStateChanged;
         }
     }
 }
