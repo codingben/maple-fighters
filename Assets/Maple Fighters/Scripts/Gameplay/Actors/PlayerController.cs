@@ -46,7 +46,9 @@ namespace Scripts.Gameplay.Actors
                     { PlayerState.Moving, new PlayerMovingState(this) },
                     { PlayerState.Jumping, new PlayerJumpingState(this) },
                     { PlayerState.Falling, new PlayerFallingState(this) },
-                    { PlayerState.Attacked, new PlayerAttackedState(this) }
+                    { PlayerState.Attacked, new PlayerAttackedState(this) },
+                    { PlayerState.Rope, new PlayerRopeState(this) },
+                    { PlayerState.Ladder, new PlayerLadderState(this) },
                 };
 
             playerStateBehaviour = playerStateBehaviours[PlayerState.Idle];

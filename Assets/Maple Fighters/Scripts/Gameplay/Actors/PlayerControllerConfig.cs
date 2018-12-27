@@ -8,7 +8,8 @@ namespace Scripts.Gameplay.Actors
     {
         public float Speed;
         public float JumpForce;
-        public float ClimbingSpeed;
+        public float RopeClimbingSpeed;
+        public float LadderClimbingSpeed;
 
         [Header("Keyboard")]
         public KeyCode JumpKey = KeyCode.Space;

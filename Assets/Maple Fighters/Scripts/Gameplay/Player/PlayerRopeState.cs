@@ -3,14 +3,14 @@ using UnityEngine;
 
 namespace Scripts.Gameplay.Actors
 {
-    public class PlayerClimbingState : IPlayerStateBehaviour
+    public class PlayerRopeState : IPlayerStateBehaviour
     {
         private readonly PlayerController playerController;
         private readonly Rigidbody2D rigidbody2D;
 
         private float direction;
 
-        public PlayerClimbingState(PlayerController playerController)
+        public PlayerRopeState(PlayerController playerController)
         {
             this.playerController = playerController;
 
@@ -41,7 +41,7 @@ namespace Scripts.Gameplay.Actors
             rigidbody2D.velocity =
                 new Vector2(
                     rigidbody2D.velocity.x,
-                    direction * playerController.Configuration.ClimbingSpeed);
+                    direction * playerController.Configuration.RopeClimbingSpeed);
         }
 
         public void OnStateExit()
