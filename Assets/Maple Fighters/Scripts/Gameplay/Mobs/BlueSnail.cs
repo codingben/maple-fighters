@@ -10,8 +10,7 @@ namespace Assets.Scripts
 {
     public class BlueSnail : MonoBehaviour
     {
-        [Header("Attack")]
-        [SerializeField]
+        [Header("Attack"), SerializeField]
         private Vector2 hitAmount;
 
         private void Awake()
@@ -63,16 +62,11 @@ namespace Assets.Scripts
 
                             yield return new WaitForSeconds(0.1f);
 
-                            // TODO: Move this piece of code to player's script.
-                            var direction =
-                                (player.transform.position - contactPoint)
-                                .normalized;
-                            var force = new Vector2(
-                                (direction.x > 0 ? 1 : -1) * hitAmount.x,
-                                hitAmount.y);
-
-                            var rigidbody = player.GetComponent<Rigidbody2D>();
-                            rigidbody.AddForce(force, ForceMode2D.Impulse);
+                            playerController.Bounce(
+                                new Vector2(
+                                    x: ((player.transform.position - contactPoint)
+                                        .normalized.x > 0 ? 1 : -1) * hitAmount.x,
+                                    y: hitAmount.y));
                         }
                     }
                 }

@@ -37,6 +37,7 @@ namespace Scripts.Gameplay.Actors
             playerStateBehaviours;
 
         private IPlayerStateBehaviour playerStateBehaviour;
+        private new Rigidbody2D rigidbody2D;
 
         private void Awake()
         {
@@ -104,6 +105,17 @@ namespace Scripts.Gameplay.Actors
                     transform.localScale.y,
                     transform.localScale.z);
             }
+        }
+
+        public void Bounce(Vector2 force)
+        {
+            if (rigidbody2D == null)
+            {
+                var collider = GetComponent<Collider2D>();
+                rigidbody2D = collider.attachedRigidbody;
+            }
+
+            rigidbody2D.AddForce(force, ForceMode2D.Impulse);
         }
 
         public bool IsGrounded()
