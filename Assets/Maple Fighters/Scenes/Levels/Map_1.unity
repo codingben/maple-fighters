@@ -1016,6 +1016,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1388639405}
   - component: {fileID: 1388639406}
+  - component: {fileID: 1388639407}
   m_Layer: 0
   m_Name: Minimap Camera
   m_TagString: Minimap Camera
@@ -1076,6 +1077,24 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
+--- !u!114 &1388639407
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1388639404}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1e80ebe19bc8af45bc9337dce4cb161, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 5
+  minX: 0
+  maxX: 0
+  minY: 0
+  maxY: 0
+  centerX: 0
+  centerY: 15
 --- !u!1 &1415784134
 GameObject:
   m_ObjectHideFlags: 0

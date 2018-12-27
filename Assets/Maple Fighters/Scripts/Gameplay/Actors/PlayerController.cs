@@ -1,110 +1,112 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
-using Scripts.Editor;
 using Game.Common;
+using Scripts.Editor;
 using UnityEngine;
 
 #pragma warning disable 0109
 
 namespace Scripts.Gameplay.Actors
 {
-    [Serializable]
-    public class PlayerControllerConfig
-    {
-        public float Speed;
-        public float JumpForce;
-        public float ClimbingSpeed;
-
-        [Header("Keyboard")]
-        public KeyCode JumpKey = KeyCode.Space;
-    }
-
-    public class PlayerController : StateBehaviors, IPlayerController
+    public class PlayerController : MonoBehaviour
     {
         public event Action<PlayerState> PlayerStateChanged;
-        public event Action<Directions> DirectionChanged;
 
-        public PlayerControllerConfig Config => config;
+        public PlayerControllerConfig Configuration => config;
 
-        public Rigidbody2D Rigidbody
-        {
-            get;
-            private set;
-        }
+        public PlayerState PlayerState => playerState;
 
-        public Directions Direction
-        {
-            set
-            {
-                const float SCALE = 1;
-
-                transform.localScale = value == Directions.Left ? new Vector3(SCALE, transform.localScale.y, transform.localScale.z) 
-                    : new Vector3(-SCALE, transform.localScale.y, transform.localScale.z);
-
-                DirectionChanged?.Invoke(value);
-            }
-        }
-
-        public PlayerState PlayerState
-        {
-            set
-            {
-                playerState = value;
-
-                if (playerState != lastPlayerState)
-                {
-                    GetStateBehaviour(lastPlayerState)?.OnStateExit();
-                    GetStateBehaviour(playerState)?.OnStateEnter(this);
-                }
-
-                lastPlayerState = playerState;
-
-                PlayerStateChanged?.Invoke(playerState != PlayerState.Attacked ? playerState : PlayerState.Falling);
-            }
-            get
-            {
-                return playerState;
-            }
-        }
-
-        [Header("State")]
-        [ViewOnly, SerializeField] private PlayerState playerState = PlayerState.Falling;
-        private PlayerState lastPlayerState;
+        [Header("Debug")]
+        [ViewOnly, SerializeField]
+        private PlayerState playerState = PlayerState.Falling;
 
         [Header("Properties")]
-        [SerializeField] private PlayerControllerConfig config;
+        [SerializeField]
+        private PlayerControllerConfig config;
 
         [Header("Ground")]
-        [SerializeField] private LayerMask groundLayerMask;
-        [SerializeField] private Transform[] groundDetectionPoints;
+        [SerializeField]
+        private LayerMask groundLayerMask;
+
+        [SerializeField]
+        private Transform[] groundDetectionPoints;
+
+        private Dictionary<PlayerState, IPlayerStateBehaviour>
+            playerStateBehaviours;
+
+        private IPlayerStateBehaviour playerStateBehaviour;
 
         private void Awake()
         {
-            Rigidbody = GetComponent<Collider2D>().attachedRigidbody;
+            playerStateBehaviours =
+                new Dictionary<PlayerState, IPlayerStateBehaviour>
+                {
+                    { PlayerState.Idle, new PlayerIdleState(this) },
+                    { PlayerState.Moving, new PlayerMovingState(this) },
+                    { PlayerState.Jumping, new PlayerJumpingState(this) },
+                    { PlayerState.Falling, new PlayerFallingState(this) },
+                    { PlayerState.Attacked, new PlayerAttackedState(this) }
+                };
 
-            CreatePlayerStates();
+            playerStateBehaviour = playerStateBehaviours[PlayerState.Idle];
         }
 
         private void Start()
         {
-            lastPlayerState = playerState;
-
-            GetStateBehaviour(playerState)?.OnStateEnter(this);
+            playerStateBehaviour.OnStateEnter();
         }
 
         private void Update()
         {
-            GetStateBehaviour(playerState)?.OnStateUpdate();
+            playerStateBehaviour.OnStateUpdate();
         }
 
         private void FixedUpdate()
         {
-            GetStateBehaviour(playerState)?.OnStateFixedUpdate();
+            playerStateBehaviour.OnStateFixedUpdate();
         }
 
-        public bool IsOnGround()
+        public void ChangePlayerState(PlayerState newPlayerState)
         {
-            return groundDetectionPoints.Any(ground => Physics2D.OverlapPoint(ground.position, groundLayerMask));
+            if (playerState == newPlayerState)
+            {
+                return;
+            }
+
+            playerStateBehaviour.OnStateExit();
+            playerStateBehaviour = playerStateBehaviours[newPlayerState];
+            playerStateBehaviour.OnStateEnter();
+
+            playerState = newPlayerState;
+
+            PlayerStateChanged?.Invoke(playerState);
+        }
+
+        public void ChangeDirection(Directions direction)
+        {
+            const float Scale = 1;
+            
+            if (direction == Directions.Left)
+            {
+                transform.localScale = new Vector3(
+                    Scale,
+                    transform.localScale.y,
+                    transform.localScale.z);
+            }
+            else
+            {
+                transform.localScale = new Vector3(
+                    -Scale,
+                    transform.localScale.y,
+                    transform.localScale.z);
+            }
+        }
+
+        public bool IsGrounded()
+        {
+            return groundDetectionPoints.Any(
+                x => Physics2D.OverlapPoint(x.position, groundLayerMask));
         }
     }
 }

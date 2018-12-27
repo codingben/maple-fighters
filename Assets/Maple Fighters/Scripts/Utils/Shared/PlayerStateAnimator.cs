@@ -11,7 +11,7 @@ namespace Scripts.Utils.Shared
     public class PlayerStateAnimator : MonoBehaviour
     {
         private Animator animator;
-        private PlayerState lastPlayerState = PlayerState.Idle;
+        private PlayerState playerState = PlayerState.Idle;
 
         private void Awake()
         {
@@ -46,16 +46,18 @@ namespace Scripts.Utils.Shared
             gameScenePeerLogic.PlayerStateChanged.RemoveListener(OnPlayerStateChanged);
         }
 
-        public void OnPlayerStateChanged(PlayerState playerState)
+        public void OnPlayerStateChanged(PlayerState newPlayerState)
         {
-            if (lastPlayerState != playerState)
+            if (playerState == newPlayerState)
             {
-                lastPlayerState = playerState;
-
-                animator.SetState(lastPlayerState);
-
-                UpdatePlayerStateOperation();
+                return;
             }
+
+            animator.ChangePlayerAnimationState(newPlayerState);
+
+            playerState = newPlayerState;
+
+            UpdatePlayerStateOperation();
         }
 
         private void OnPlayerStateChanged(PlayerStateChangedEventParameters parameters)
@@ -88,7 +90,7 @@ namespace Scripts.Utils.Shared
                 ServiceContainer.GameService
                     .GetPeerLogic<IGameScenePeerLogicAPI>().AssertNotNull();
             gameScenePeerLogic.UpdatePlayerState(
-                new UpdatePlayerStateRequestParameters(lastPlayerState));
+                new UpdatePlayerStateRequestParameters(playerState));
         }
     }
 }

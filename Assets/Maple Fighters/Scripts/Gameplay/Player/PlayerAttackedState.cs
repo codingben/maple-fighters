@@ -5,29 +5,34 @@ namespace Scripts.Gameplay.Actors
 {
     public class PlayerAttackedState : IPlayerStateBehaviour
     {
-        private IPlayerController playerController;
+        private readonly PlayerController playerController;
+        private readonly Rigidbody2D rigidbody2D;
+
         private bool isOnGround;
 
-        public void OnStateEnter(IPlayerController playerController)
+        public PlayerAttackedState(PlayerController playerController)
         {
-            if (this.playerController == null)
-            {
-                this.playerController = playerController;
-            }
+            this.playerController = playerController;
 
-            playerController.Rigidbody.velocity = Vector2.zero;
+            var collider = playerController.GetComponent<Collider2D>();
+            rigidbody2D = collider.attachedRigidbody;
+        }
+
+        public void OnStateEnter()
+        {
+            rigidbody2D.velocity = Vector2.zero;
         }
 
         public void OnStateUpdate()
         {
-            if (playerController.IsOnGround() && !isOnGround)
+            if (playerController.IsGrounded() && !isOnGround)
             {
                 return;
             }
 
-            if (playerController.IsOnGround())
+            if (playerController.IsGrounded())
             {
-                playerController.PlayerState = PlayerState.Idle;
+                playerController.ChangePlayerState(PlayerState.Idle);
                 return;
             }
 

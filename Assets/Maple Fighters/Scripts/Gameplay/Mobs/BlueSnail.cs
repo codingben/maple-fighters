@@ -55,26 +55,25 @@ namespace Assets.Scripts
                         characterGameObject.GetComponent<PlayerController>();
                     if (playerController != null)
                     {
-                        if (playerController.PlayerState == PlayerState.Attacked)
+                        if (playerController.PlayerState
+                            != PlayerState.Attacked)
                         {
-                            yield break;
-                        }
+                            playerController.ChangePlayerState(
+                                PlayerState.Attacked);
 
-                        playerController.PlayerState = PlayerState.Attacked;
+                            yield return new WaitForSeconds(0.1f);
 
-                        yield return new WaitForSeconds(0.1f);
-
-                        // TODO: Move this piece of code to player's script.
-                        var direction =
-                            (player.transform.position - contactPoint)
-                            .normalized;
-                        var force = 
-                            new Vector2(
+                            // TODO: Move this piece of code to player's script.
+                            var direction =
+                                (player.transform.position - contactPoint)
+                                .normalized;
+                            var force = new Vector2(
                                 (direction.x > 0 ? 1 : -1) * hitAmount.x,
                                 hitAmount.y);
 
-                        var rigidbody = player.GetComponent<Rigidbody2D>();
-                        rigidbody.AddForce(force, ForceMode2D.Impulse);
+                            var rigidbody = player.GetComponent<Rigidbody2D>();
+                            rigidbody.AddForce(force, ForceMode2D.Impulse);
+                        }
                     }
                 }
             }

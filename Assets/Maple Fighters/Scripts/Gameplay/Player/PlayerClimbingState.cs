@@ -5,33 +5,43 @@ namespace Scripts.Gameplay.Actors
 {
     public class PlayerClimbingState : IPlayerStateBehaviour
     {
-        private IPlayerController playerController;
+        private readonly PlayerController playerController;
+        private readonly Rigidbody2D rigidbody2D;
+
         private float direction;
 
-        public void OnStateEnter(IPlayerController playerController)
+        public PlayerClimbingState(PlayerController playerController)
         {
-            if (this.playerController == null)
-            {
-                this.playerController = playerController;
-            }
+            this.playerController = playerController;
+
+            var collider = playerController.GetComponent<Collider2D>();
+            rigidbody2D = collider.attachedRigidbody;
+        }
+
+        public void OnStateEnter()
+        {
+            // Left blank intentionally
         }
 
         public void OnStateUpdate()
         {
-            if (Input.GetKeyDown(playerController.Config.JumpKey))
+            var jumpKey = playerController.Configuration.JumpKey;
+            if (Input.GetKeyDown(jumpKey))
             {
                 Jump();
                 return;
             }
 
-            var vertical = Input.GetAxisRaw("Vertical");
-            direction = vertical;
+            // TODO: Move to the configuration
+            direction = Input.GetAxisRaw("Vertical");
         }
 
         public void OnStateFixedUpdate()
         {
-            var rigidbody = playerController.Rigidbody;
-            rigidbody.velocity = new Vector2(rigidbody.velocity.x, direction * playerController.Config.ClimbingSpeed);
+            rigidbody2D.velocity =
+                new Vector2(
+                    rigidbody2D.velocity.x,
+                    direction * playerController.Configuration.ClimbingSpeed);
         }
 
         public void OnStateExit()
@@ -41,16 +51,20 @@ namespace Scripts.Gameplay.Actors
 
         private void Jump()
         {
+            // TODO: Move to the configuration
             var horizontal = Input.GetAxisRaw("Horizontal");
             if (Mathf.Abs(horizontal) > 0)
             {
-                playerController.Direction = horizontal < 0 ? Directions.Left : Directions.Right;
+                playerController.ChangeDirection(
+                    horizontal < 0 ? Directions.Left : Directions.Right);
 
-                var forceDirection = new Vector2(horizontal, 1);
-                playerController.Rigidbody.AddForce(forceDirection * (playerController.Config.JumpForce / 2), ForceMode2D.Impulse);
+                var force = new Vector2(horizontal, 1);
+                rigidbody2D.AddForce(
+                    force * (playerController.Configuration.JumpForce / 2),
+                    ForceMode2D.Impulse);
             }
 
-            playerController.PlayerState = PlayerState.Falling;
+            playerController.ChangePlayerState(PlayerState.Falling);
         }
     }
 }

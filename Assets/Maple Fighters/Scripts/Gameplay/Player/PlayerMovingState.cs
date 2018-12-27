@@ -6,53 +6,66 @@ namespace Scripts.Gameplay.Actors
 {
     public class PlayerMovingState : IPlayerStateBehaviour
     {
-        private IPlayerController playerController;
+        private readonly PlayerController playerController;
+        private readonly Rigidbody2D rigidbody2D;
+
         private float direction;
 
-        public void OnStateEnter(IPlayerController playerController)
+        public PlayerMovingState(PlayerController playerController)
         {
-            if (this.playerController == null)
-            {
-                this.playerController = playerController;
-            }
+            this.playerController = playerController;
+
+            var collider = playerController.GetComponent<Collider2D>();
+            rigidbody2D = collider.attachedRigidbody;
+        }
+
+        public void OnStateEnter()
+        {
+            // Left blank intentionally
         }
 
         public void OnStateUpdate()
         {
-            if (!playerController.IsOnGround())
+            if (playerController.IsGrounded())
             {
-                playerController.PlayerState = PlayerState.Falling;
-                return;
-            }
+                if (FocusController.GetInstance().Focusable != Focusable.Game)
+                {
+                    playerController.ChangePlayerState(PlayerState.Idle);
+                    return;
+                }
 
-            if (FocusController.GetInstance().Focusable != Focusable.Game)
+                var jumpKey = playerController.Configuration.JumpKey;
+                if (Input.GetKeyDown(jumpKey))
+                {
+                    playerController.ChangePlayerState(PlayerState.Jumping);
+                    return;
+                }
+
+                // TODO: Move to the configuration
+                var horizontal = Input.GetAxisRaw("Horizontal");
+                if (Mathf.Abs(horizontal) == 0)
+                {
+                    playerController.ChangePlayerState(PlayerState.Idle);
+                    return;
+                }
+
+                direction = horizontal;
+
+                playerController.ChangeDirection(
+                    direction < 0 ? Directions.Left : Directions.Right);
+            }
+            else
             {
-                playerController.PlayerState = PlayerState.Idle;
-                return;
+                playerController.ChangePlayerState(PlayerState.Falling);
             }
-
-            var jumpKey = playerController.Config.JumpKey;
-            if (Input.GetKeyDown(jumpKey))
-            {
-                playerController.PlayerState = PlayerState.Jumping;
-                return;
-            }
-
-            var horizontal = Input.GetAxisRaw("Horizontal");
-            if (Mathf.Abs(horizontal) == 0)
-            {
-                playerController.PlayerState = PlayerState.Idle;
-                return;
-            }
-
-            direction = horizontal;
-            playerController.Direction = direction < 0 ? Directions.Left : Directions.Right;
         }
 
         public void OnStateFixedUpdate()
         {
-            var rigidbody = playerController.Rigidbody;
-            rigidbody.velocity = new Vector2(direction * playerController.Config.Speed, rigidbody.velocity.y);
+            rigidbody2D.velocity = 
+                new Vector2(
+                    direction * playerController.Configuration.Speed,
+                    rigidbody2D.velocity.y);
         }
 
         public void OnStateExit()

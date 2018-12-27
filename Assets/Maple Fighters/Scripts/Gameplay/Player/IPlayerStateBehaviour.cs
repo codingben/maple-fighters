@@ -2,9 +2,12 @@
 {
     public interface IPlayerStateBehaviour
     {
-        void OnStateEnter(IPlayerController playerController);
+        void OnStateEnter();
+
         void OnStateUpdate();
+
         void OnStateFixedUpdate();
+
         void OnStateExit();
     }
 }

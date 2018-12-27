@@ -1,5 +1,5 @@
-﻿using Scripts.Utils.Shared;
-using Game.Common;
+﻿using Game.Common;
+using Scripts.Utils.Shared;
 using UnityEngine;
 
 namespace Scripts.Gameplay.Actors
@@ -10,7 +10,7 @@ namespace Scripts.Gameplay.Actors
 
         public void SetState(PlayerState playerState)
         {
-            Animator.SetState(playerState);
+            Animator.ChangePlayerAnimationState(playerState);
         }
     }
 }

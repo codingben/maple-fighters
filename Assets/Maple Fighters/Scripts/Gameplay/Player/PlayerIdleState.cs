@@ -6,44 +6,51 @@ namespace Scripts.Gameplay.Actors
 {
     public class PlayerIdleState : IPlayerStateBehaviour
     {
-        private IPlayerController playerController;
+        private readonly PlayerController playerController;
+        private readonly Rigidbody2D rigidbody2D;
 
-        public void OnStateEnter(IPlayerController playerController)
+        public PlayerIdleState(PlayerController playerController)
         {
-            if (this.playerController == null)
-            {
-                this.playerController = playerController;
-            }
+            this.playerController = playerController;
+
+            var collider = playerController.GetComponent<Collider2D>();
+            rigidbody2D = collider.attachedRigidbody;
+        }
+
+        public void OnStateEnter()
+        {
+            // Left blank intentionally
         }
 
         public void OnStateUpdate()
         {
-            if (!playerController.IsOnGround())
+            if (playerController.IsGrounded())
             {
-                playerController.PlayerState = PlayerState.Falling;
-                return;
-            }
-
-            if (FocusController.GetInstance().Focusable == Focusable.Game)
-            {
-                var jumpKey = playerController.Config.JumpKey;
-                if (Input.GetKeyDown(jumpKey))
+                if (FocusController.GetInstance().Focusable != Focusable.Game)
                 {
-                    playerController.PlayerState = PlayerState.Jumping;
                     return;
                 }
 
+                var jumpKey = playerController.Configuration.JumpKey;
+                if (Input.GetKeyDown(jumpKey))
+                {
+                    playerController.ChangePlayerState(PlayerState.Jumping);
+                    return;
+                }
+
+                // TODO: Move to the configuration
                 var horizontal = Input.GetAxisRaw("Horizontal");
                 if (Mathf.Abs(horizontal) > 0)
                 {
-                    playerController.PlayerState = PlayerState.Moving;
+                    playerController.ChangePlayerState(PlayerState.Moving);
                     return;
                 }
-            }
 
-            if (playerController.Rigidbody.velocity != Vector2.zero)
+                rigidbody2D.velocity = Vector2.zero;
+            }
+            else
             {
-                playerController.Rigidbody.velocity = Vector2.zero;
+                playerController.ChangePlayerState(PlayerState.Falling);
             }
         }
 

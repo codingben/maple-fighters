@@ -4,21 +4,23 @@ namespace Scripts.Gameplay.Actors
 {
     public class PlayerFallingState : IPlayerStateBehaviour
     {
-        private IPlayerController playerController;
+        private readonly PlayerController playerController;
 
-        public void OnStateEnter(IPlayerController playerController)
+        public PlayerFallingState(PlayerController playerController)
         {
-            if (this.playerController == null)
-            {
-                this.playerController = playerController;
-            }
+            this.playerController = playerController;
+        }
+
+        public void OnStateEnter()
+        {
+            // Left blank intentionally
         }
 
         public void OnStateUpdate()
         {
-            if (playerController.IsOnGround())
+            if (playerController.IsGrounded())
             {
-                playerController.PlayerState = PlayerState.Idle;
+                playerController.ChangePlayerState(PlayerState.Idle);
             }
         }
 

@@ -5,43 +5,52 @@ namespace Scripts.Gameplay.Actors
 {
     public class PlayerJumpingState : IPlayerStateBehaviour
     {
-        private IPlayerController playerController;
+        private readonly PlayerController playerController;
+        private readonly Rigidbody2D rigidbody2D;
+
         private bool isJumping;
 
-        public void OnStateEnter(IPlayerController playerController)
+        public PlayerJumpingState(PlayerController playerController)
         {
-            if (this.playerController == null)
-            {
-                this.playerController = playerController;
-            }
+            this.playerController = playerController;
 
+            var collider = playerController.GetComponent<Collider2D>();
+            rigidbody2D = collider.attachedRigidbody;
+        }
+
+        public void OnStateEnter()
+        {
             Jump();
         }
 
         private void Jump()
         {
-            const float JUMP_DIRECTION_FORCE = 0.075f;
+            // TODO: Move to the configuration
+            const float JumpForce = 0.075f;
 
-            var direction = playerController.Rigidbody.velocity.x;
+            var direction = rigidbody2D.velocity.x;
             if (direction != 0)
             {
-                direction = playerController.Rigidbody.velocity.x > 0 ? JUMP_DIRECTION_FORCE : -JUMP_DIRECTION_FORCE;
+                direction = 
+                    rigidbody2D.velocity.x > 0 ? JumpForce : -JumpForce;
             }
 
-            var forceDirection = new Vector2(direction, 1);
-            playerController.Rigidbody.AddForce(forceDirection * playerController.Config.JumpForce, ForceMode2D.Impulse);
+            var force = new Vector2(direction, 1);
+            rigidbody2D.AddForce(
+                force * playerController.Configuration.JumpForce,
+                ForceMode2D.Impulse);
         }
 
         public void OnStateUpdate()
         {
-            if (playerController.IsOnGround() && !isJumping)
+            if (playerController.IsGrounded() && !isJumping)
             {
                 return;
             }
 
-            if (playerController.IsOnGround())
+            if (playerController.IsGrounded())
             {
-                playerController.PlayerState = PlayerState.Idle;
+                playerController.ChangePlayerState(PlayerState.Idle);
                 return;
             }
 
