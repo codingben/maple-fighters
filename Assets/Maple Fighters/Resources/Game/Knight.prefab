@@ -123,6 +123,7 @@ GameObject:
   - component: {fileID: 61530421461806864}
   - component: {fileID: 114185573003487554}
   - component: {fileID: 114664649952649960}
+  - component: {fileID: 114360169840180610}
   m_Layer: 0
   m_Name: Knight
   m_TagString: Untagged
@@ -327,6 +328,18 @@ MonoBehaviour:
   groundDetectionPoints:
   - {fileID: 4490046392434528}
   - {fileID: 4984186469003754}
+--- !u!114 &114360169840180610
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1795698667356696}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a71b62d82b593ac4292f8c595f385fea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interactionKey: 306
 --- !u!114 &114544842306249022
 MonoBehaviour:
   m_ObjectHideFlags: 1

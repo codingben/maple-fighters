@@ -70,6 +70,7 @@ GameObject:
   - component: {fileID: 61380068822998250}
   - component: {fileID: 114375439334909214}
   - component: {fileID: 114769968751128320}
+  - component: {fileID: 114636025593554634}
   m_Layer: 0
   m_Name: Wizard
   m_TagString: Untagged
@@ -336,6 +337,18 @@ MonoBehaviour:
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 0.5, y: -0.5}
   m_UseGraphicAlpha: 1
+--- !u!114 &114636025593554634
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1210278977448276}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a71b62d82b593ac4292f8c595f385fea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interactionKey: 306
 --- !u!114 &114647352017931820
 MonoBehaviour:
   m_ObjectHideFlags: 1
