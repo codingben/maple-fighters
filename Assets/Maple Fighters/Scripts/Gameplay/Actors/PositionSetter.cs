@@ -21,7 +21,10 @@ namespace Scripts.Gameplay.Actors
             sceneObject = GetComponent<ISceneObject>();
 
             var characterBase = GetComponent<CharacterCreatorBase>();
-            character = characterBase.Character.transform;
+            character = 
+                characterBase != null
+                    ? characterBase.Character.transform
+                    : transform;
         }
 
         private void Start()

@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using CommonTools.Log;
 using UnityEngine;
 
 namespace Scripts.Gameplay.Map
@@ -16,13 +17,17 @@ namespace Scripts.Gameplay.Map
         [SerializeField]
         private float moveSpeed;
 
-        private Camera minimapCamera;
+        private new Camera camera;
         private SpriteRenderer spriteRenderer;
 
         private void Awake()
         {
-            minimapCamera = GameObject.FindGameObjectWithTag(MiniCameraTag)
-                ?.GetComponent<Camera>();
+            var minimapCamera = GameObject.FindGameObjectWithTag(MiniCameraTag);
+            if (minimapCamera != null)
+            {
+                camera = minimapCamera.GetComponent<Camera>().AssertNotNull();
+            }
+
             spriteRenderer = GetComponent<SpriteRenderer>();
         }
 
@@ -35,7 +40,7 @@ namespace Scripts.Gameplay.Map
         {
             spriteRenderer.enabled = Utils.IsInLayerMask(
                 gameObject.layer,
-                minimapCamera.cullingMask);
+                camera.cullingMask);
         }
 
         private IEnumerator MoveableArrowCoroutine()
@@ -44,7 +49,7 @@ namespace Scripts.Gameplay.Map
             {
                 while (Utils.IsInLayerMask(
                     gameObject.layer,
-                    minimapCamera.cullingMask))
+                    camera.cullingMask))
                 {
                     yield return StartCoroutine(MoveArrowUp());
                     yield return StartCoroutine(MoveArrowDown());

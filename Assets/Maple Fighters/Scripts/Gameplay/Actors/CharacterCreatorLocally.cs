@@ -1,9 +1,11 @@
-﻿using Game.Common;
+﻿using CommonTools.Log;
+using Game.Common;
 using Scripts.Utils.Shared;
 using UnityEngine;
 
 namespace Scripts.Gameplay.Actors
 {
+    [RequireComponent(typeof(PositionSender))]
     public class CharacterCreatorLocally : CharacterCreatorBase
     {
         public override void Create(
@@ -18,7 +20,8 @@ namespace Scripts.Gameplay.Actors
         private void InitializeCharacterName(string characterName)
         {
             var characterNameComponent = 
-                characterSpriteGameObject.GetComponent<CharacterName>();
+                characterSpriteGameObject.GetComponent<CharacterName>()
+                    .AssertNotNull();
             characterNameComponent.SetName(characterName);
             characterNameComponent.SetSortingOrder(orderInLayer);
         }
@@ -26,13 +29,14 @@ namespace Scripts.Gameplay.Actors
         private void InitializeSpriteRenderer()
         {
             var spriteRenderer = 
-                characterSpriteGameObject.GetComponent<SpriteRenderer>();
+                characterSpriteGameObject.GetComponent<SpriteRenderer>()
+                    .AssertNotNull();
             spriteRenderer.sortingOrder = orderInLayer;
         }
 
         private void SetCharacterToPositionSender()
         {
-            var positionSender = GetComponent<PositionSender>();
+            var positionSender = GetComponent<PositionSender>().AssertNotNull();
             positionSender.SetCharacter(characterGameObject.transform);
         }
 
@@ -42,7 +46,8 @@ namespace Scripts.Gameplay.Actors
                 characterSpriteGameObject.AddComponent<PlayerStateAnimator>();
 
             var playerController =
-                characterGameObject.GetComponent<PlayerController>();
+                characterGameObject.GetComponent<PlayerController>()
+                    .AssertNotNull();
             playerController.PlayerStateChanged +=
                 playerStateAnimatorNetwork.OnPlayerStateChanged;
         }

@@ -1,4 +1,5 @@
-﻿using Game.Common;
+﻿using CommonTools.Log;
+using Game.Common;
 using UnityEngine;
 
 namespace Scripts.Gameplay.Actors
@@ -21,7 +22,8 @@ namespace Scripts.Gameplay.Actors
         private void InitializeCharacterName(string characterName)
         {
             var characterNameComponent = 
-                characterSpriteGameObject.GetComponent<CharacterName>();
+                characterSpriteGameObject.GetComponent<CharacterName>()
+                    .AssertNotNull();
             characterNameComponent.SetName(characterName);
             characterNameComponent.SetSortingOrder(orderInLayer);
         }
@@ -29,19 +31,23 @@ namespace Scripts.Gameplay.Actors
         private void InitializeSpriteRenderer()
         {
             var spriteRenderer = 
-                characterSpriteGameObject.GetComponent<SpriteRenderer>();
+                characterSpriteGameObject.GetComponent<SpriteRenderer>()
+                    .AssertNotNull();
             spriteRenderer.sortingOrder = orderInLayer;
         }
 
         private void DisableCollision()
         {
-            characterGameObject.GetComponent<Collider2D>().isTrigger = true;
+            var collider = characterGameObject.GetComponent<Collider2D>()
+                .AssertNotNull();
+            collider.isTrigger = true;
         }
 
         private void RemoveAllCharacterControllerComponents()
         {
             var components = 
-                characterGameObject.GetComponents<MonoBehaviour>();
+                characterGameObject.GetComponents<MonoBehaviour>()
+                    .AssertNotNull();
             foreach (var component in components)
             {
                 Destroy(component);
@@ -50,9 +56,12 @@ namespace Scripts.Gameplay.Actors
 
         private void InitializePlayerStateSetter()
         {
-            var playerStateSetter = GetComponent<PlayerStateSetter>();
-            playerStateSetter.Animator =
-                characterSpriteGameObject.GetComponent<Animator>();
+            var animator = 
+                characterSpriteGameObject.GetComponent<Animator>()
+                    .AssertNotNull();
+            var playerStateSetter =
+                GetComponent<PlayerStateSetter>().AssertNotNull();
+            playerStateSetter.Animator = animator;
         }
     }
 }

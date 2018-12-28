@@ -49,7 +49,8 @@ namespace Scripts.Containers
             gameScenePeerLogic.SceneObjectsRemoved.RemoveListener(OnSceneObjectsRemoved);
         }
 
-        private void OnSceneEntered(EnterSceneResponseParameters parameters)
+        private void OnSceneEntered(
+            EnterSceneResponseParameters parameters)
         {
             var sceneObjectsContainer = SceneObjectsContainer.GetInstance();
             if (sceneObjectsContainer != null)
@@ -61,7 +62,8 @@ namespace Scripts.Containers
             }
         }
 
-        private void OnSceneObjectAdded(SceneObjectAddedEventParameters parameters)
+        private void OnSceneObjectAdded(
+            SceneObjectAddedEventParameters parameters)
         {
             var sceneObjectsContainer = SceneObjectsContainer.GetInstance();
             if (sceneObjectsContainer != null)
@@ -71,7 +73,8 @@ namespace Scripts.Containers
             }
         }
 
-        private void OnSceneObjectRemoved(SceneObjectRemovedEventParameters parameters)
+        private void OnSceneObjectRemoved(
+            SceneObjectRemovedEventParameters parameters)
         {
             var sceneObjectsContainer = SceneObjectsContainer.GetInstance();
             if (sceneObjectsContainer != null)
@@ -81,7 +84,8 @@ namespace Scripts.Containers
             }
         }
 
-        private void OnSceneObjectsAdded(SceneObjectsAddedEventParameters parameters)
+        private void OnSceneObjectsAdded(
+            SceneObjectsAddedEventParameters parameters)
         {
             var sceneObjects = parameters.SceneObjects;
             foreach (var sceneObject in sceneObjects)
@@ -94,7 +98,8 @@ namespace Scripts.Containers
             }
         }
 
-        private void OnSceneObjectsRemoved(SceneObjectsRemovedEventParameters parameters)
+        private void OnSceneObjectsRemoved(
+            SceneObjectsRemovedEventParameters parameters)
         {
             var sceneObjects = parameters.SceneObjectsId;
             foreach (var id in sceneObjects)

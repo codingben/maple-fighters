@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace Scripts.World
 {
+    [RequireComponent(typeof(SpriteRenderer))]
     public class FadeEffect : MonoBehaviour
     {
         private enum FadeState

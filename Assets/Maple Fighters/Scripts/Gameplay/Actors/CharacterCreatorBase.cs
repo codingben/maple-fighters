@@ -1,8 +1,10 @@
-﻿using Game.Common;
+﻿using CommonTools.Log;
+using Game.Common;
 using UnityEngine;
 
 namespace Scripts.Gameplay.Actors
 {
+    [RequireComponent(typeof(CharacterInformationProvider))]
     public class CharacterCreatorBase : MonoBehaviour, ICharacterCreator
     {
         public GameObject Character => characterGameObject;
@@ -52,7 +54,8 @@ namespace Scripts.Gameplay.Actors
         private void InitializeCharacterName(string characterName)
         {
             var characterNameComponent =
-                characterSpriteGameObject.GetComponent<CharacterName>();
+                characterSpriteGameObject.GetComponent<CharacterName>()
+                    .AssertNotNull();
             characterNameComponent.SetName(characterName);
             characterNameComponent.SetSortingOrder(orderInLayer);
         }
@@ -60,7 +63,8 @@ namespace Scripts.Gameplay.Actors
         private void InitializeSpriteRenderer()
         {
             var spriteRenderer = 
-                characterSpriteGameObject.GetComponent<SpriteRenderer>();
+                characterSpriteGameObject.GetComponent<SpriteRenderer>()
+                    .AssertNotNull();
             spriteRenderer.sortingOrder = orderInLayer;
         }
 
@@ -68,7 +72,7 @@ namespace Scripts.Gameplay.Actors
             CharacterParameters character)
         {
             var characterInformationProvider = 
-                GetComponent<CharacterInformationProvider>();
+                GetComponent<CharacterInformationProvider>().AssertNotNull();
             characterInformationProvider.SetCharacterInformation(character);
         }
 
