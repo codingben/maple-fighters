@@ -9,8 +9,7 @@ namespace Scripts.Gameplay.Actors
     {
         public GameObject Character => characterGameObject;
 
-        [Header("Sprite")]
-        [SerializeField]
+        [Header("Sprite"), SerializeField]
         protected int orderInLayer;
 
         protected GameObject characterGameObject;

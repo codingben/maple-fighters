@@ -742,7 +742,6 @@ GameObject:
   m_Component:
   - component: {fileID: 859051113}
   - component: {fileID: 859051110}
-  - component: {fileID: 859051111}
   m_Layer: 0
   m_Name: Background
   m_TagString: Untagged
@@ -796,22 +795,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &859051111
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 859051109}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f2a58b3ba2beac4498df0f3d445b9a5e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveSpeed: 0.25
-  minX: -0.1
-  maxX: 0.1
-  minY: 4
-  maxY: 4
 --- !u!4 &859051113
 Transform:
   m_ObjectHideFlags: 0
@@ -1089,12 +1072,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 5
-  minX: 0
-  maxX: 0
-  minY: 0
-  maxY: 0
-  centerX: 0
-  centerY: 15
+  minimum: {x: 0, y: 0}
+  maximum: {x: 0, y: 0}
+  center: {x: 0, y: 15}
 --- !u!1 &1415784134
 GameObject:
   m_ObjectHideFlags: 0

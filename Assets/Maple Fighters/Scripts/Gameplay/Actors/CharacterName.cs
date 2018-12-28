@@ -6,7 +6,8 @@ namespace Scripts.Gameplay.Actors
 {
     public class CharacterName : MonoBehaviour
     {
-        [SerializeField] private Text nameText;
+        [SerializeField]
+        private Text nameText;
 
         public void SetName(string name)
         {

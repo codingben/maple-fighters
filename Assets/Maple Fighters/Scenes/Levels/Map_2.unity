@@ -2614,12 +2614,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 5
-  minX: 0
-  maxX: 0
-  minY: -15
-  maxY: 15
-  centerX: 0
-  centerY: 10
+  minimum: {x: 0, y: -15}
+  maximum: {x: 0, y: 15}
+  center: {x: 0, y: 10}
 --- !u!1 &2134468570
 GameObject:
   m_ObjectHideFlags: 0

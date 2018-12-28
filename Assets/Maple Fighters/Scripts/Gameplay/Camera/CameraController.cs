@@ -5,17 +5,19 @@ namespace Scripts.Gameplay.Camera
     public class CameraController : MonoBehaviour
     {
         [Header("General")]
-        [SerializeField] private float moveSpeed;
+        [SerializeField]
+        private float moveSpeed;
 
         [Header("Boundaries")]
-        [SerializeField] private float minX;
-        [SerializeField] private float maxX;
-        [SerializeField] private float minY;
-        [SerializeField] private float maxY;
+        [SerializeField]
+        private Vector2 minimum;
+
+        [SerializeField]
+        private Vector2 maximum;
 
         [Header("Player Center")]
-        [SerializeField] private float centerX;
-        [SerializeField] private float centerY;
+        [SerializeField]
+        private Vector2 center;
 
         private Transform target;
 
@@ -34,13 +36,14 @@ namespace Scripts.Gameplay.Camera
 
         private void Move()
         {
-            var x = Mathf.Clamp(target.position.x, minX, maxX);
-            var y = Mathf.Clamp(target.position.y, minY, maxY);
+            var x = Mathf.Clamp(target.position.x, minimum.x, maximum.x);
+            var y = Mathf.Clamp(target.position.y, minimum.y, maximum.y);
 
             var newPosition = new Vector3(
-                centerX + x,
-                centerY + y,
+                center.x + x,
+                center.y + y,
                 transform.position.z);
+
             transform.position = Vector3.Lerp(
                 transform.position,
                 newPosition,
