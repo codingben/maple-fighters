@@ -5,9 +5,9 @@ using UnityEngine;
 namespace Scripts.Gameplay.Actors.Interaction
 {
     [RequireComponent(typeof(PlayerController), typeof(Collider2D))]
-    public class RopeInteraction : MonoBehaviour
+    public class LadderInteraction : MonoBehaviour
     {
-        private const string RopeTag = "Rope";
+        private const string LadderTag = "Ladder";
         private const string FloorTag = "Ground";
         private const string FloorLayerName = "Floor";
 
@@ -43,7 +43,7 @@ namespace Scripts.Gameplay.Actors.Interaction
 
         private void OnTriggerEnter2D(Collider2D collider)
         {
-            if (collider.transform.CompareTag(RopeTag))
+            if (collider.transform.CompareTag(LadderTag))
             {
                 collidersInteraction.SetOverlappingCollider(collider);
             }
@@ -51,7 +51,7 @@ namespace Scripts.Gameplay.Actors.Interaction
 
         private void OnTriggerExit2D(Collider2D collider)
         {
-            if (collider.transform.CompareTag(RopeTag))
+            if (collider.transform.CompareTag(LadderTag))
             {
                 if (IsInInteraction())
                 {
@@ -83,9 +83,9 @@ namespace Scripts.Gameplay.Actors.Interaction
                 collidersInteraction.DisableCollisionWithIgnoredCollider();
             }
 
-            ChangePositionToRopeCenter();
+            ChangePositionToLadderCenter();
 
-            playerController.ChangePlayerState(PlayerState.Rope);
+            playerController.ChangePlayerState(PlayerState.Ladder);
         }
 
         private void StopInteraction()
@@ -96,7 +96,7 @@ namespace Scripts.Gameplay.Actors.Interaction
             playerController.ChangePlayerState(PlayerState.Idle);
         }
 
-        private void ChangePositionToRopeCenter()
+        private void ChangePositionToLadderCenter()
         {
             var rigidbody = collidersInteraction.GetAttachedRigidbody();
             rigidbody.velocity = Vector2.zero;
@@ -104,7 +104,7 @@ namespace Scripts.Gameplay.Actors.Interaction
             Vector2 center;
             if (collidersInteraction.HasOverlappingColliderPosition(out center))
             {
-                transform.parent.position = 
+                transform.parent.position =
                     new Vector3(center.x, transform.parent.position.y);
             }
         }
@@ -112,15 +112,15 @@ namespace Scripts.Gameplay.Actors.Interaction
         private bool IsPlayerStateSuitable()
         {
             return playerController.PlayerState == PlayerState.Idle
-                             || playerController.PlayerState
-                             == PlayerState.Jumping
-                             || playerController.PlayerState
-                             == PlayerState.Falling;
+                   || playerController.PlayerState
+                   == PlayerState.Jumping
+                   || playerController.PlayerState
+                   == PlayerState.Falling;
         }
 
         private bool IsInInteraction()
         {
-            return playerController.PlayerState == PlayerState.Rope;
+            return playerController.PlayerState == PlayerState.Ladder;
         }
 
         private Collider2D GetGroundedCollider()
