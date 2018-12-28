@@ -32,45 +32,59 @@ namespace Assets.Scripts
         private void OnPlayerAttacked(PlayerAttackedEventParameters parameters)
         {
             var point = 
-                new Vector2(parameters.ContactPointX, parameters.ContactPointY);
+                new Vector3(parameters.ContactPointX, parameters.ContactPointY);
 
-            StartCoroutine(BounceTheLocalPlayer(point));
+            var character = GetCharacterGameObject();
+            if (character != null)
+            {
+                var direction = new Vector2(
+                    x: ((character.transform.position - point).normalized.x > 0
+                            ? 1
+                            : -1) * hitAmount.x,
+                    y: hitAmount.y);
+
+                StartCoroutine(BounceTheLocalPlayer(character, direction));
+            }
         }
 
-        private IEnumerator BounceTheLocalPlayer(Vector3 contactPoint)
+        private IEnumerator BounceTheLocalPlayer(
+            GameObject character, 
+            Vector3 direction)
         {
-            var player = 
+            var playerController = character.GetComponent<PlayerController>()
+                .AssertNotNull();
+            if (playerController != null)
+            {
+                if (playerController.PlayerState
+                    != PlayerState.Attacked)
+                {
+                    playerController.ChangePlayerState(
+                        PlayerState.Attacked);
+
+                    yield return new WaitForSeconds(0.1f);
+
+                    playerController.Bounce(direction);
+                }
+            }
+        }
+
+        private GameObject GetCharacterGameObject()
+        {
+            GameObject characterGameObject = null;
+
+            var player =
                 SceneObjectsContainer.GetInstance().GetLocalSceneObject()
                     .GameObject;
             if (player != null)
             {
                 const int CharacterIndex = 0;
 
-                var characterGameObject =
-                    player.transform.GetChild(CharacterIndex);
-                if (characterGameObject != null)
-                {
-                    var playerController = 
-                        characterGameObject.GetComponent<PlayerController>();
-                    if (playerController != null)
-                    {
-                        if (playerController.PlayerState
-                            != PlayerState.Attacked)
-                        {
-                            playerController.ChangePlayerState(
-                                PlayerState.Attacked);
-
-                            yield return new WaitForSeconds(0.1f);
-
-                            playerController.Bounce(
-                                new Vector2(
-                                    x: ((player.transform.position - contactPoint)
-                                        .normalized.x > 0 ? 1 : -1) * hitAmount.x,
-                                    y: hitAmount.y));
-                        }
-                    }
-                }
+                var transform = 
+                    player.transform.GetChild(CharacterIndex).AssertNotNull();
+                characterGameObject = transform.gameObject;
             }
+
+            return characterGameObject;
         }
     }
 }
