@@ -315,8 +315,8 @@ MonoBehaviour:
   config:
     Speed: 2.5
     JumpForce: 5
-    RopeClimbingSpeed: 1.5
-    LadderClimbingSpeed: 1
+    RopeClimbingSpeed: 2
+    LadderClimbingSpeed: 1.5
     JumpKey: 32
   groundLayerMask:
     serializedVersion: 2

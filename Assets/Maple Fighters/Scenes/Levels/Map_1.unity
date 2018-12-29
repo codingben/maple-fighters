@@ -1116,7 +1116,7 @@ MonoBehaviour:
   moveSpeed: 5
   minimum: {x: 0, y: 0}
   maximum: {x: 0, y: 0}
-  center: {x: 0, y: 15}
+  center: {x: 0, y: 13.5}
 --- !u!1 &1415784134
 GameObject:
   m_ObjectHideFlags: 0
