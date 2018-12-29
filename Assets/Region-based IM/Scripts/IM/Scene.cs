@@ -25,7 +25,7 @@ namespace InterestManagement.Scripts
         private IRegion[,] regions;
         private readonly HashSet<ISceneObject> sceneObjects = new HashSet<ISceneObject>();
 
-        private void Awake()
+        private void Start()
         {
             StartCoroutine(CreateRegions());
         }
