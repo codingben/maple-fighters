@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using InterestManagement.Scripts;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 namespace Assets.Scripts
@@ -16,19 +14,6 @@ namespace Assets.Scripts
         {
             sceneObjects = new List<DummySceneObject>();
             sceneObjects.AddRange(GetDummySceneObjects());
-        }
-
-        protected void AddCommonComponents(GameObject gameObject)
-        {
-            foreach (var component in GetCommonComponents())
-            {
-                gameObject.AddComponent(component);
-            }
-        }
-
-        private IEnumerable<Type> GetCommonComponents()
-        {
-            yield return typeof(InterestArea);
         }
 
         protected abstract IEnumerable<DummySceneObject> GetDummySceneObjects();

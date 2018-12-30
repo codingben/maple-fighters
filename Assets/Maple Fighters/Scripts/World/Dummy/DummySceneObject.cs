@@ -11,6 +11,6 @@ namespace Assets.Scripts
         public int Id;
         public Vector2 Position;
         public Directions SpawnDirection;
-        public Action<GameObject> AddComponents;
+        public Action<GameObject> AddComponentsAction;
     }
 }

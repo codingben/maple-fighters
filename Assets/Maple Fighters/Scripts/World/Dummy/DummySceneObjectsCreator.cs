@@ -4,9 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using CommonTools.Log;
 using Game.Common;
-using InterestManagement.Scripts;
 using Scripts.Containers;
-using Scripts.Gameplay;
 using Scripts.Gameplay.Actors;
 using Scripts.Services;
 using Scripts.Utils;
@@ -16,40 +14,29 @@ namespace Assets.Scripts
 {
     public class DummySceneObjectsCreator : MonoBehaviour
     {
-        [Header("Interest Area Visual Graphics")]
-        private bool showVisualGraphics;
-
-        private ISceneEvents sceneEvents;
         private IDummySceneObjectsProvider dummySceneObjectsProvider;
 
         private void Awake()
         {
             dummySceneObjectsProvider =
                 GetComponent<IDummySceneObjectsProvider>().AssertNotNull();
+        }
 
-            var sceneGameObject =
-                GameObject.FindGameObjectWithTag(Scene.SCENE_TAG);
-            sceneEvents = sceneGameObject.GetComponent<ISceneEvents>();
-
-            if (sceneEvents != null)
-            {
-                sceneEvents.RegionsCreated += OnRegionsCreated;
-            }
+        private void Start()
+        {
+            StartCoroutine(WaitFrameAndStart());
         }
 
         private void OnDestroy()
         {
-            if (sceneEvents != null)
-            {
-                sceneEvents.RegionsCreated -= OnRegionsCreated;
-            }
-
             SceneObjectsContainer.GetInstance().RemoveAllSceneObjects();
             SavedGameObjects.GetInstance().DestroyAll();
         }
 
-        private void OnRegionsCreated()
+        private IEnumerator WaitFrameAndStart()
         {
+            yield return null;
+
             CreateDummyPlayer();
             CreateDummySceneObjects();
         }
@@ -58,10 +45,6 @@ namespace Assets.Scripts
         {
             int id;
             CreateDummyPlayerSceneObject(out id);
-            CreateCommonComponentsToSceneObject(
-                id,
-                typeof(InterestArea),
-                typeof(PlayerViewController));
         }
 
         private void CreateDummyPlayerSceneObject(out int id)
@@ -104,43 +87,7 @@ namespace Assets.Scripts
                     .GetRemoteSceneObject(id);
                 if (sceneObject != null)
                 {
-                    dummySceneObject.AddComponents?.Invoke(sceneObject.GameObject);
-                }
-            }
-
-            StartCoroutine(DisableNonPlayerEntity());
-        }
-
-        private IEnumerator DisableNonPlayerEntity()
-        {
-            yield return null;
-
-            var localEntity = 
-                SceneObjectsContainer.GetInstance().GetLocalSceneObject()
-                    .GameObject.GetComponent<IInterestArea>().AssertNotNull();
-
-            foreach (var dummySceneObject in dummySceneObjectsProvider.GetSceneObjects())
-            {
-                var id = dummySceneObject.Id;
-                var sceneObject =
-                    SceneObjectsContainer.GetInstance().GetRemoteSceneObject(id)
-                        ?.GameObject;
-                if (sceneObject == null)
-                {
-                    LogUtils.Log(
-                        MessageBuilder.Trace(
-                            $"Could not find a scene object with id ${id}"));
-                    continue;
-                }
-
-                var entity = 
-                    sceneObject.GetComponent<ISceneObject>().AssertNotNull();
-                foreach (var region in localEntity.GetSubscribedPublishers())
-                {
-                    if (!region.HasSubscription(entity))
-                    {
-                        sceneObject.gameObject.SetActive(false);
-                    }
+                    dummySceneObject.AddComponentsAction?.Invoke(sceneObject.GameObject);
                 }
             }
         }
@@ -162,11 +109,6 @@ namespace Assets.Scripts
 
             sceneObject.gameObject.name =
                 $"{sceneObject.gameObject.name} (Id: {id})";
-
-            if (showVisualGraphics)
-            {
-                sceneObject.AddComponent(typeof(InterestAreaVisualGraphics));
-            }
 
             foreach (var component in components)
             {
