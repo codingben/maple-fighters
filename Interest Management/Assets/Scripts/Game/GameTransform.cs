@@ -1,7 +1,6 @@
 ﻿using System;
-using Game.InterestManagement;
 
-namespace Assets.Scripts.Game
+namespace Game.InterestManagement.Simulation
 {
     using Vector2 = Common.MathematicsHelper.Vector2;
 

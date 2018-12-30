@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Assets.Scripts.Camera
+namespace Game.InterestManagement.Simulation.Camera
 {
     public struct CameraBoundaries
     {

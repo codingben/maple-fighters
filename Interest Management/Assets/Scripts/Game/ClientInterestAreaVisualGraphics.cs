@@ -1,7 +1,6 @@
-﻿using Assets.Scripts.Game.Utils;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace Assets.Scripts.Game
+namespace Game.InterestManagement.Simulation
 {
     public class ClientInterestAreaVisualGraphics : MonoBehaviour
     {
@@ -11,8 +10,8 @@ namespace Assets.Scripts.Game
         private void Update()
         {
             GraphicsUtils.DrawRectangle(
-                transform.position,
-                transform.localScale,
+                transform.position, 
+                transform.localScale, 
                 color);
         }
     }

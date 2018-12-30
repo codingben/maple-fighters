@@ -1,6 +1,4 @@
-﻿using Game.InterestManagement;
-
-namespace Assets.Scripts.Game
+﻿namespace Game.InterestManagement.Simulation
 {
     public interface IGameObject : ISceneObject
     {

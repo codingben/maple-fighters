@@ -1,8 +1,7 @@
 ﻿using System.Collections;
-using Game.InterestManagement;
 using UnityEngine;
 
-namespace Assets.Scripts.Game
+namespace Game.InterestManagement.Simulation
 {
     [RequireComponent(typeof(GameScene))]
     public class GameSceneVisualGraphics : MonoBehaviour

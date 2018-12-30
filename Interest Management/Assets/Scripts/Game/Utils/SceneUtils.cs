@@ -1,19 +1,20 @@
 ﻿using UnityEngine;
 
-namespace Assets.Scripts.Game.Utils
+namespace Game.InterestManagement.Simulation
 {
     public static class SceneUtils
     {
         public static GameScene GetSceneGameObject()
         {
-            var scene = GameObject.FindGameObjectWithTag("Scene");
-            if (scene == null)
+            var gameScene =
+                Object.FindObjectOfType(typeof(GameScene)) as GameScene;
+            if (gameScene == null)
             {
-                Debug.LogError("Could not find the scene game object.");
+                Debug.LogError("Could not find the game scene object.");
                 Debug.Break();
             }
 
-            return scene?.GetComponent<GameScene>();
+            return gameScene;
         }
     }
 }

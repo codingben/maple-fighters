@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Assets.Scripts.Game.Utils
+namespace Game.InterestManagement.Simulation
 {
     public static class GraphicsUtils
     {

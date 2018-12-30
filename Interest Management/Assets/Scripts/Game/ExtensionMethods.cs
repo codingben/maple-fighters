@@ -1,4 +1,4 @@
-﻿namespace Assets.Scripts.Game
+﻿namespace Game.InterestManagement.Simulation
 {
     using UnityVector2 = UnityEngine.Vector2;
     using UnityVector3 = UnityEngine.Vector3;

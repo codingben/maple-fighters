@@ -1,8 +1,6 @@
-﻿using Assets.Scripts.Game.Utils;
-using Game.InterestManagement;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace Assets.Scripts.Game
+namespace Game.InterestManagement.Simulation
 {
     [RequireComponent(typeof(SceneObject))]
     public class ClientInterestArea : MonoBehaviour

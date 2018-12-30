@@ -1,9 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using Game.InterestManagement;
 using UnityEngine;
 
-namespace Assets.Scripts.Game
+namespace Game.InterestManagement.Simulation
 {
     [RequireComponent(typeof(ClientInterestArea))]
     public class ClientInterestAreaListener : MonoBehaviour

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Assets.Scripts.Game
+namespace Game.InterestManagement.Simulation
 {
     [RequireComponent(typeof(SceneObject))]
     public class ClientInterestAreaVisualGraphicsCreator : MonoBehaviour

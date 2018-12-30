@@ -1,7 +1,6 @@
-﻿using Game.InterestManagement;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace Assets.Scripts.Game
+namespace Game.InterestManagement.Simulation
 {
     public class GameScene : MonoBehaviour
     {

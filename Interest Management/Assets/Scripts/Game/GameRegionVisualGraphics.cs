@@ -1,9 +1,7 @@
 ﻿using System.Linq;
-using Assets.Scripts.Game.Utils;
-using Game.InterestManagement;
 using UnityEngine;
 
-namespace Assets.Scripts.Game
+namespace Game.InterestManagement.Simulation
 {
     public class GameRegionVisualGraphics : MonoBehaviour
     {
