@@ -125,9 +125,9 @@ namespace Scripts.UI.Windows
 
         private void DeactiveAllSelectedClasses()
         {
-            knightName.fontStyle = FontStyles.SmallCaps;
-            arrowName.fontStyle = FontStyles.SmallCaps;
-            wizardName.fontStyle = FontStyles.SmallCaps;
+            knightName.fontStyle = FontStyles.Normal;
+            arrowName.fontStyle = FontStyles.Normal;
+            wizardName.fontStyle = FontStyles.Normal;
 
             knightSelectedImage.SetActive(false);
             arrowSelectedImage.SetActive(false);
