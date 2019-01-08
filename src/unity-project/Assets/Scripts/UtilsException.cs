@@ -2,9 +2,9 @@
 
 namespace UserInterface
 {
-    public class UiException : Exception
+    public class UtilsException : Exception
     {
-        public UiException(string message)
+        public UtilsException(string message)
             : base(message)
         {
             // Left blank intentionally

@@ -9,7 +9,8 @@ namespace Sample.Scripts
 
         private void Awake()
         {
-            sampleWindow = UiManager.GetInstance().Add<SampleWindow>();
+            sampleWindow =
+                UiElementsCreator.GetInstance().Create<SampleWindow>();
             sampleWindow.Show();
         }
 
@@ -41,8 +42,7 @@ namespace Sample.Scripts
         {
             UnsubscribeFromFadeAnimationEvents();
 
-            UiManager.GetInstance().Remove(sampleWindow);
-
+            Destroy(sampleWindow.gameObject);
             Destroy(gameObject);
         }
     }

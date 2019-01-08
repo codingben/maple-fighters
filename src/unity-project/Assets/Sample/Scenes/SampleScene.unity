@@ -200,7 +200,7 @@ GameObject:
   - component: {fileID: 1011992205}
   - component: {fileID: 1011992206}
   m_Layer: 0
-  m_Name: Sample Window Controller
+  m_Name: SampleWindowController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

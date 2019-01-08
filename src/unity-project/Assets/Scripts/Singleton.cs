@@ -2,14 +2,15 @@
 
 namespace UserInterface
 {
-    public class UiSingleton<TObject> : MonoBehaviour
-        where TObject : UiSingleton<TObject>
+    public class Singleton<TObject> : MonoBehaviour
+        where TObject : Singleton<TObject>
     {
         public static TObject GetInstance()
         {
             if (instance == null)
             {
-                instance = UiUtils.CreateUiElement<TObject>();
+                instance = (new GameObject(typeof(TObject).Name, typeof(TObject)))
+                    .GetComponent<TObject>();
             }
 
             return instance;
