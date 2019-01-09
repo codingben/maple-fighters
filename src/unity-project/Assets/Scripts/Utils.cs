@@ -24,6 +24,7 @@ namespace UserInterface
                     Vector3.zero,
                     Quaternion.identity);
                 gameObject.name = prefab.name.RemoveCloneFromName();
+                gameObject.transform.position = prefab.transform.position;
 
                 return gameObject;
             }
