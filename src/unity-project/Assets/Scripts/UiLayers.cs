@@ -2,20 +2,20 @@
 
 namespace UserInterface
 {
-    public struct UiLayers
+    public struct UILayers
     {
         private readonly Transform background;
         private readonly Transform foreground;
 
-        public UiLayers(Transform background, Transform foreground)
+        public UILayers(Transform background, Transform foreground)
         {
             this.background = background;
             this.foreground = foreground;
         }
 
-        public Transform GetLayer(UiLayer uiLayer)
+        public Transform GetLayer(UILayer uiLayer)
         {
-            return uiLayer == UiLayer.Background ? background : foreground;
+            return uiLayer == UILayer.Background ? background : foreground;
         }
     }
 }

@@ -4,7 +4,7 @@ using UserInterface;
 
 namespace Sample.Scripts
 {
-    public class BackgroundImage : UiElement, IPointerClickHandler
+    public class BackgroundImage : UIElement, IPointerClickHandler
     {
         public event Action<PointerEventData> PointerClicked;
 

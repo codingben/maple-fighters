@@ -1,30 +1,30 @@
 ﻿namespace UserInterface
 {
-    public static class UiUtils
+    public static class UIUtils
     {
         /// <summary>
         /// Creates a new element from resources.
         /// </summary>
-        /// <typeparam name="TUiElement">
+        /// <typeparam name="TUIElement">
         /// </typeparam>
         /// <returns>
-        /// The <see cref="TUiElement"/>.
+        /// The <see cref="TUIElement"/>.
         /// </returns>
-        public static TUiElement LoadAndCreateUiElement<TUiElement>()
-            where TUiElement : UiElement
+        public static TUIElement LoadAndCreateUIElement<TUIElement>()
+            where TUIElement : UIElement
         {
             var uiGameObject =
-                Utils.LoadAndCreateGameObject($"UI/{typeof(TUiElement).Name}");
+                Utils.LoadAndCreateGameObject($"UI/{typeof(TUIElement).Name}");
             if (uiGameObject != null)
             {
                 uiGameObject.name = 
                     uiGameObject.name.MakeSpaceBetweenWords();
 
-                return uiGameObject.GetComponent<TUiElement>();
+                return uiGameObject.GetComponent<TUIElement>();
             }
 
             throw new UtilsException(
-                $"The UI element {typeof(TUiElement).Name} not found.");
+                $"The UI element {typeof(TUIElement).Name} not found.");
         }
     }
 }

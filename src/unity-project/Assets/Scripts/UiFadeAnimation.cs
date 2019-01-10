@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace UserInterface
 {
-    public class UiFadeAnimation : UiCanvasGroup
+    public class UIFadeAnimation : UICanvasGroup
     {
         /// <summary>
         /// The event invoked when the animation completed.

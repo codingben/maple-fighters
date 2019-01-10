@@ -12,10 +12,10 @@ namespace Sample.Scripts
         private void Awake()
         {
             sampleWindow =
-                UiElementsCreator.GetInstance().Create<SampleWindow>();
+                UIElementsCreator.GetInstance().Create<SampleWindow>();
             backgroundImage = 
-                UiElementsCreator.GetInstance()
-                    .Create<BackgroundImage>(UiLayer.Background);
+                UIElementsCreator.GetInstance()
+                    .Create<BackgroundImage>(UILayer.Background);
 
             SubscribeToBackgroundImageEvents();
             SubscribeToFadeAnimationEvents();
@@ -43,14 +43,14 @@ namespace Sample.Scripts
 
         private void SubscribeToFadeAnimationEvents()
         {
-            var uiFadeAnimation = sampleWindow.GetComponent<UiFadeAnimation>();
+            var uiFadeAnimation = sampleWindow.GetComponent<UIFadeAnimation>();
             uiFadeAnimation.FadeInCompleted += OnFadeInCompleted;
             uiFadeAnimation.FadeOutCompleted += OnFadeOutCompleted;
         }
 
         private void UnsubscribeFromFadeAnimationEvents()
         {
-            var uiFadeAnimation = sampleWindow.GetComponent<UiFadeAnimation>();
+            var uiFadeAnimation = sampleWindow.GetComponent<UIFadeAnimation>();
             uiFadeAnimation.FadeInCompleted -= OnFadeInCompleted;
             uiFadeAnimation.FadeOutCompleted -= OnFadeOutCompleted;
         }
@@ -58,7 +58,7 @@ namespace Sample.Scripts
         private void OnFadeInCompleted()
         {
             var sampleMessage =
-                UiElementsCreator.GetInstance().Create<SampleMessage>();
+                UIElementsCreator.GetInstance().Create<SampleMessage>();
             sampleMessage.Show();
         }
 

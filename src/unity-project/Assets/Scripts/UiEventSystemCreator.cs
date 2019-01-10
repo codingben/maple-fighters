@@ -3,7 +3,7 @@ using UnityEngine.EventSystems;
 
 namespace UserInterface
 {
-    public class UiEventSystemCreator : Singleton<UiEventSystemCreator>
+    public class UIEventSystemCreator : Singleton<UIEventSystemCreator>
     {
         private const string Name = "EventSystem";
 

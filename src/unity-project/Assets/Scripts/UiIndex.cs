@@ -1,6 +1,6 @@
 ﻿namespace UserInterface
 {
-    public enum UiIndex
+    public enum UIIndex
     {
         /// <summary>
         /// The start of the local transform list.

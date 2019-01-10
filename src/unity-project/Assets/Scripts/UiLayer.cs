@@ -1,6 +1,6 @@
 ﻿namespace UserInterface
 {
-    public enum UiLayer
+    public enum UILayer
     {
         /// <summary>
         /// The foreground layer.

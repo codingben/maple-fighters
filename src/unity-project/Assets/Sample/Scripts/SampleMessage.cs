@@ -2,7 +2,7 @@
 
 namespace Sample.Scripts
 {
-    public class SampleMessage : UiElement
+    public class SampleMessage : UIElement
     {
         // Left blank intentionally
     }

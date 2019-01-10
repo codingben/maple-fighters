@@ -2,8 +2,8 @@
 
 namespace UserInterface
 {
-    [RequireComponent(typeof(UiElement), typeof(CanvasGroup))]
-    public class UiCanvasGroup : MonoBehaviour
+    [RequireComponent(typeof(UIElement), typeof(CanvasGroup))]
+    public class UICanvasGroup : MonoBehaviour
     {
         protected float Alpha
         {
@@ -18,29 +18,29 @@ namespace UserInterface
             }
         }
 
-        private UiElement uiElement;
+        private UIElement uiElement;
         private CanvasGroup canvasGroup;
 
         private void Awake()
         {
-            uiElement = GetComponent<UiElement>();
+            uiElement = GetComponent<UIElement>();
             canvasGroup = GetComponent<CanvasGroup>();
 
-            SubscribeToUiElementEvents();
+            SubscribeToUIElementEvents();
         }
 
         private void OnDestroy()
         {
-            UnsubscribeFromUiElementEvents();
+            UnsubscribeFromUIElementEvents();
         }
 
-        private void SubscribeToUiElementEvents()
+        private void SubscribeToUIElementEvents()
         {
             uiElement.Shown += OnShown;
             uiElement.Hidden += OnHidden;
         }
 
-        private void UnsubscribeFromUiElementEvents()
+        private void UnsubscribeFromUIElementEvents()
         {
             uiElement.Shown -= OnShown;
             uiElement.Hidden -= OnHidden;

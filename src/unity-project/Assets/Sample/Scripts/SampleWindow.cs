@@ -3,7 +3,7 @@ using UserInterface;
 
 namespace Sample.Scripts
 {
-    public class SampleWindow : UiElement
+    public class SampleWindow : UIElement
     {
         private void Awake()
         {

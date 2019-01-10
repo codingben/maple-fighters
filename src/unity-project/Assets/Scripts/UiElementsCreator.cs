@@ -3,35 +3,35 @@ using UnityEngine.EventSystems;
 
 namespace UserInterface
 {
-    public class UiElementsCreator : Singleton<UiElementsCreator>
+    public class UIElementsCreator : Singleton<UIElementsCreator>
     {
-        private const string UiElementsPath = "Ui/{0}";
-        private const string UiBackground = "Ui Background";
-        private const string UiForeground = "Ui Foreground";
+        private const string UiElementsPath = "UI/{0}";
+        private const string UiBackground = "UI Background";
+        private const string UiForeground = "UI Foreground";
 
-        private UiLayers uiLayers;
+        private UILayers uiLayers;
 
         private void Awake()
         {
-            var background = FindOrCreateUiLayer(UiBackground);
-            var foreground = FindOrCreateUiLayer(UiForeground);
+            var background = FindOrCreateUILayer(UiBackground);
+            var foreground = FindOrCreateUILayer(UiForeground);
 
             uiLayers = 
-                new UiLayers(background.transform, foreground.transform);
+                new UILayers(background.transform, foreground.transform);
             
-            UiEventSystemCreator.GetInstance()
+            UIEventSystemCreator.GetInstance()
                 .Create<EventSystem, StandaloneInputModule>();
         }
 
-        public TUiElement Create<TUiElement>(UiLayer uiLayer = UiLayer.Foreground, UiIndex uiIndex = UiIndex.Start, Transform parent = null)
-            where TUiElement : UiElement
+        public TUIElement Create<TUIElement>(UILayer uiLayer = UILayer.Foreground, UIIndex uiIndex = UIIndex.Start, Transform parent = null)
+            where TUIElement : UIElement
         {
             parent = parent ?? uiLayers.GetLayer(uiLayer);
 
-            var uiElement = UiUtils.LoadAndCreateUiElement<TUiElement>();
+            var uiElement = UIUtils.LoadAndCreateUIElement<TUIElement>();
             uiElement.transform.SetParent(parent, false);
 
-            if (uiIndex == UiIndex.Start)
+            if (uiIndex == UIIndex.Start)
             {
                 uiElement.transform.SetAsFirstSibling();
             }
@@ -43,7 +43,7 @@ namespace UserInterface
             return uiElement;
         }
 
-        private Transform FindOrCreateUiLayer(string uiLayerName)
+        private Transform FindOrCreateUILayer(string uiLayerName)
         {
             var uiLayer = GameObject.Find(uiLayerName);
             if (uiLayer == null)
