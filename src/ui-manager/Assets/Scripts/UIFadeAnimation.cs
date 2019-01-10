@@ -18,26 +18,28 @@ namespace UI.Manager
 
         [SerializeField]
         private float speed = 1;
-        private Coroutine fadeCoroutine;
+
+        private Coroutine fadeInCoroutine;
+        private Coroutine fadeOutCoroutine;
 
         protected override void OnShown()
         {
-            if (fadeCoroutine != null)
-            {
-                StopCoroutine(fadeCoroutine);
-            }
+            StopFadeOutIfNecessary();
 
-            fadeCoroutine = StartCoroutine(FadeIn());
+            if (fadeInCoroutine == null)
+            {
+                fadeInCoroutine = StartCoroutine(FadeIn());
+            }
         }
 
         protected override void OnHidden()
         {
-            if (fadeCoroutine != null)
-            {
-                StopCoroutine(fadeCoroutine);
-            }
+            StopFadeInIfNecessary();
 
-            fadeCoroutine = StartCoroutine(FadeOut());
+            if (fadeOutCoroutine == null)
+            {
+                fadeOutCoroutine = StartCoroutine(FadeOut());
+            }
         }
 
         private IEnumerator FadeIn()
@@ -53,6 +55,8 @@ namespace UI.Manager
             EnableCanvasGroup();
 
             FadeInCompleted?.Invoke();
+
+            fadeInCoroutine = null;
         }
 
         private IEnumerator FadeOut()
@@ -68,6 +72,28 @@ namespace UI.Manager
             DisableCanvasGroup();
 
             FadeOutCompleted?.Invoke();
+
+            fadeOutCoroutine = null;
+        }
+
+        private void StopFadeInIfNecessary()
+        {
+            if (fadeInCoroutine != null)
+            {
+                StopCoroutine(fadeInCoroutine);
+
+                fadeInCoroutine = null;
+            }
+        }
+
+        private void StopFadeOutIfNecessary()
+        {
+            if (fadeOutCoroutine != null)
+            {
+                StopCoroutine(fadeOutCoroutine);
+
+                fadeOutCoroutine = null;
+            }
         }
     }
 }
