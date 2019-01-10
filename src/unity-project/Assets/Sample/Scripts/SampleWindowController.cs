@@ -44,25 +44,25 @@ namespace Sample.Scripts
         private void SubscribeToFadeAnimationEvents()
         {
             var uiFadeAnimation = sampleWindow.GetComponent<UiFadeAnimation>();
-            uiFadeAnimation.FadeInCompeleted += OnFadeInCompeleted;
-            uiFadeAnimation.FadeOutCompeleted += OnFadeOutCompeleted;
+            uiFadeAnimation.FadeInCompleted += OnFadeInCompleted;
+            uiFadeAnimation.FadeOutCompleted += OnFadeOutCompleted;
         }
 
         private void UnsubscribeFromFadeAnimationEvents()
         {
             var uiFadeAnimation = sampleWindow.GetComponent<UiFadeAnimation>();
-            uiFadeAnimation.FadeInCompeleted -= OnFadeInCompeleted;
-            uiFadeAnimation.FadeOutCompeleted -= OnFadeOutCompeleted;
+            uiFadeAnimation.FadeInCompleted -= OnFadeInCompleted;
+            uiFadeAnimation.FadeOutCompleted -= OnFadeOutCompleted;
         }
 
-        private void OnFadeInCompeleted()
+        private void OnFadeInCompleted()
         {
             var sampleMessage =
                 UiElementsCreator.GetInstance().Create<SampleMessage>();
             sampleMessage.Show();
         }
 
-        private void OnFadeOutCompeleted()
+        private void OnFadeOutCompleted()
         {
             UnsubscribeFromFadeAnimationEvents();
             UnsubscribeToBackgroundImageEvents();

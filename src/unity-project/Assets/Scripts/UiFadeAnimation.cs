@@ -9,12 +9,12 @@ namespace UserInterface
         /// <summary>
         /// The event invoked when the animation completed.
         /// </summary>
-        public event Action FadeInCompeleted;
+        public event Action FadeInCompleted;
 
         /// <summary>
         /// The event invoked when the animation completed.
         /// </summary>
-        public event Action FadeOutCompeleted;
+        public event Action FadeOutCompleted;
 
         [SerializeField]
         private float speed = 1;
@@ -52,7 +52,7 @@ namespace UserInterface
 
             EnableCanvasGroup();
 
-            FadeInCompeleted?.Invoke();
+            FadeInCompleted?.Invoke();
         }
 
         private IEnumerator FadeOut()
@@ -67,7 +67,7 @@ namespace UserInterface
 
             DisableCanvasGroup();
 
-            FadeOutCompeleted?.Invoke();
+            FadeOutCompleted?.Invoke();
         }
     }
 }
