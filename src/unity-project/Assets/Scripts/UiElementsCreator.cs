@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace UserInterface
 {
@@ -16,7 +17,10 @@ namespace UserInterface
             var foreground = FindOrCreateUiLayer(UiForeground);
 
             uiLayers = 
-                new UiLayers(background.transform, foreground.transform); 
+                new UiLayers(background.transform, foreground.transform);
+            
+            UiEventSystemCreator.GetInstance()
+                .Create<EventSystem, StandaloneInputModule>();
         }
 
         public TUiElement Create<TUiElement>(UiLayer uiLayer = UiLayer.Foreground, UiIndex uiIndex = UiIndex.Start, Transform parent = null)
