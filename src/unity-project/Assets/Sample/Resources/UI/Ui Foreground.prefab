@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 114549176093897760}
   - component: {fileID: 225570868668714622}
   m_Layer: 5
-  m_Name: Ui Foreground
+  m_Name: UI Foreground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

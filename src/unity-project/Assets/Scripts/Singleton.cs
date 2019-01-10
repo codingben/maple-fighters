@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace UserInterface
+namespace UI.Manager
 {
     public class Singleton<TObject> : MonoBehaviour
         where TObject : Singleton<TObject>

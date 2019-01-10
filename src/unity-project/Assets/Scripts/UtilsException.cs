@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace UserInterface
+namespace UI.Manager
 {
     public class UtilsException : Exception
     {

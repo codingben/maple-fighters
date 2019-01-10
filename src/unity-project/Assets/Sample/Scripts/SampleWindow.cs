@@ -1,5 +1,5 @@
-﻿using UnityEngine;
-using UserInterface;
+﻿using UI.Manager;
+using UnityEngine;
 
 namespace Sample.Scripts
 {

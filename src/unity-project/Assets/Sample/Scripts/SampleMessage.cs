@@ -1,4 +1,4 @@
-﻿using UserInterface;
+﻿using UI.Manager;
 
 namespace Sample.Scripts
 {

@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace UserInterface
+namespace UI.Manager
 {
     public class UIElement : MonoBehaviour
     {

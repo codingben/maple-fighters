@@ -1,6 +1,6 @@
 ﻿using System;
+using UI.Manager;
 using UnityEngine.EventSystems;
-using UserInterface;
 
 namespace Sample.Scripts
 {

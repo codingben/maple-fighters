@@ -1,6 +1,6 @@
-﻿using UnityEngine;
+﻿using UI.Manager;
+using UnityEngine;
 using UnityEngine.EventSystems;
-using UserInterface;
 
 namespace Sample.Scripts
 {

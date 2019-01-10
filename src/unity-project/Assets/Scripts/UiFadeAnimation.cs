@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine;
 
-namespace UserInterface
+namespace UI.Manager
 {
     public class UIFadeAnimation : UICanvasGroup
     {

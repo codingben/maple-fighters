@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace UserInterface
+namespace UI.Manager
 {
     public class UIEventSystemCreator : Singleton<UIEventSystemCreator>
     {

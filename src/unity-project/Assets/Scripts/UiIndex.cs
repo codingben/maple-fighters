@@ -1,4 +1,4 @@
-﻿namespace UserInterface
+﻿namespace UI.Manager
 {
     public enum UIIndex
     {

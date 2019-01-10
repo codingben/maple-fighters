@@ -1,7 +1,7 @@
 ﻿using System.Text.RegularExpressions;
 using UnityEngine;
 
-namespace UserInterface
+namespace UI.Manager
 {
     public static class Utils
     {

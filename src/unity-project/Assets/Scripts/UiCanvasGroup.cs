@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace UserInterface
+namespace UI.Manager
 {
     [RequireComponent(typeof(UIElement), typeof(CanvasGroup))]
     public class UICanvasGroup : MonoBehaviour
