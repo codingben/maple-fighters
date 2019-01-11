@@ -1,11 +1,12 @@
 ﻿using System.Collections;
-using Scripts.UI.Core;
 using TMPro;
+using UI.Manager;
 using UnityEngine;
 
 namespace Scripts.UI
 {
-    public class MapSceneTitleText : UserInterfaceBaseFadeEffect
+    [RequireComponent(typeof(UIFadeAnimation), typeof(TextMeshProUGUI))]
+    public class MapSceneTitleText : UIElement
     {
         public string Text
         {
@@ -16,18 +17,44 @@ namespace Scripts.UI
             }
         }
 
-        [Header("Timer")]
-        [SerializeField] private float time;
+        [Header("Timer"), SerializeField]
+        private float time;
+
+        private UIFadeAnimation uiFadeAnimation;
+
+        private void Awake()
+        {
+            uiFadeAnimation = GetComponent<UIFadeAnimation>();
+            uiFadeAnimation.FadeInCompleted += OnFadeInCompleted;
+            uiFadeAnimation.FadeOutCompleted += OnFadeOutCompleted;
+        }
 
         private void Start()
         {
-            Show(() => StartCoroutine(HideAfterSomeTime()));
+            Show();
+        }
+
+        private void OnDestroy()
+        {
+            uiFadeAnimation.FadeInCompleted -= OnFadeInCompleted;
+            uiFadeAnimation.FadeOutCompleted -= OnFadeOutCompleted;
+        }
+
+        private void OnFadeInCompleted()
+        {
+            StartCoroutine(HideAfterSomeTime());
+        }
+
+        private void OnFadeOutCompleted()
+        {
+            Destroy(gameObject);
         }
 
         private IEnumerator HideAfterSomeTime()
         {
             yield return new WaitForSeconds(time);
-            Hide(() => UserInterfaceContainer.GetInstance().Remove(this));
+
+            Hide();
         }
     }
 }

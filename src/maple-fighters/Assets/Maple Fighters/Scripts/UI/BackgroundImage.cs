@@ -1,12 +1,9 @@
-﻿using Scripts.UI.Core;
+﻿using UI.Manager;
 
 namespace Scripts.UI
 {
-    public class BackgroundImage : UniqueUserInterfaceBase
+    public class BackgroundImage : UIElement
     {
-        public override void Hide()
-        {
-            UserInterfaceContainer.GetInstance()?.Remove(this);
-        }
+        // Left blank intentionally
     }
 }

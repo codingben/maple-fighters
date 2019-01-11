@@ -2,7 +2,7 @@
 
 namespace Scripts.UI
 {
-    public class BackgroundCharacters : UIElement
+    public class ScreenFadeImage : UIElement
     {
         // Left blank intentionally
     }

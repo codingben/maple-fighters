@@ -1,8 +1,8 @@
-﻿using Scripts.UI.Core;
+﻿using UI.Manager;
 
 namespace Scripts.UI
 {
-    public class ChooseFighterText : UserInterfaceBaseFadeEffect
+    public class ChooseFighterText : UIElement
     {
         // Left blank intentionally
     }

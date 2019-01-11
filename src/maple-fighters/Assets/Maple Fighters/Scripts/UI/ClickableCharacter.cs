@@ -1,17 +1,14 @@
 ﻿using System;
-using CommonTools.Log;
 using Game.Common;
-using Scripts.UI.Core;
+using UI.Manager;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 namespace Scripts.UI
 {
-    public class ClickableCharacter : UserInterfaceBaseFadeEffect, IPointerClickHandler
+    [RequireComponent(typeof(Animator))]
+    public class ClickableCharacter : UIElement, IPointerClickHandler
     {
-        public Action PlayIdleAnimationAction;
-        public Action PlayWalkAnimationAction;
-
         public event Action<CharacterParameters, int> CharacterClicked;
 
         private int index;
@@ -19,43 +16,24 @@ namespace Scripts.UI
 
         private Animator animator;
 
-        private void Start()
+        private void Awake()
         {
             animator = GetComponent<Animator>();
+        }
 
-            PlayIdleAnimationAction = PlayIdleAnimation;
-            PlayWalkAnimationAction = PlayWalkAnimation;
-
-            Show();
-
-            SubscribeToMouseDetectionBackgroundEvent();
+        private void Start()
+        {
+            Hidden += OnHidden;
         }
 
         private void OnDestroy()
         {
-            CharacterClicked = null;
-
-            UnsubscribeFromMouseDetectionBackgroundEvent();
+            Hidden -= OnHidden;
         }
 
-        public override void Hide()
+        private void OnHidden()
         {
-            Hide(onFinished: () => Destroy(gameObject));
-        }
-
-        private void SubscribeToMouseDetectionBackgroundEvent()
-        {
-            var screenMouseDetection = UserInterfaceContainer.GetInstance().Get<MouseDetectionBackground>().AssertNotNull();
-            screenMouseDetection.MouseClicked += PlayIdleAnimation;
-        }
-
-        private void UnsubscribeFromMouseDetectionBackgroundEvent()
-        {
-            var screenMouseDetection = UserInterfaceContainer.GetInstance()?.Get<MouseDetectionBackground>().AssertNotNull();
-            if (screenMouseDetection != null)
-            {
-                screenMouseDetection.MouseClicked -= PlayIdleAnimation;
-            }
+            Destroy(gameObject);
         }
 
         public void SetCharacter(int index, CharacterParameters character)
@@ -66,11 +44,6 @@ namespace Scripts.UI
 
         public void OnPointerClick(PointerEventData eventData)
         {
-            if (!CanvasGroup.interactable)
-            {
-                return;
-            }
-
             PlayWalkAnimation();
 
             CharacterClicked?.Invoke(character.GetValueOrDefault(), index);
@@ -78,14 +51,12 @@ namespace Scripts.UI
 
         private void PlayIdleAnimation()
         {
-            const string ANIMATION_NAME = "Walk";
-            animator.SetBool(ANIMATION_NAME, false);
+            animator.SetBool("Walk", false);
         }
 
         private void PlayWalkAnimation()
         {
-            const string ANIMATION_NAME = "Walk";
-            animator.SetBool(ANIMATION_NAME, true);
+            animator.SetBool("Walk", true);
         }
     }
 }
