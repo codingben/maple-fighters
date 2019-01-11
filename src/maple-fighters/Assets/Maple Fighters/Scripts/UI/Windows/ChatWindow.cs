@@ -3,14 +3,14 @@ using CommonTools.Log;
 using Scripts.Containers;
 using Scripts.Gameplay.Actors;
 using Scripts.UI.Controllers;
-using Scripts.UI.Core;
 using TMPro;
+using UI.Manager;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 namespace Scripts.UI.Windows
 {
-    public class ChatWindow : UserInterfaceWindow
+    public class ChatWindow : UIElement
     {
         public event Action<string> MessageAdded;
 

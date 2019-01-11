@@ -1,29 +1,48 @@
 ﻿using System;
-using Scripts.UI.Core;
 using TMPro;
+using UI.Manager;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace Scripts.UI.Windows
 {
-    public class RegistrationWindow : UserInterfaceWindowFadeEffect
+    public class RegistrationWindow : UIElement
     {
-        public event Action<string> ShowNotice;
         public event Action<string, string, string, string> RegisterButtonClicked;
+
         public event Action BackButtonClicked;
 
+        public event Action<string> ShowNotice;
+
         [Header("Configuration")]
-        [SerializeField] private int passwordCharacters;
-        [SerializeField] private int firstLastNameCharacters;
+        [SerializeField]
+        private int passwordCharacters;
+
+        [SerializeField]
+        private int firstLastNameCharacters;
+
         [Header("Input Fields")]
-        [SerializeField] private TMP_InputField emailInputField;
-        [SerializeField] private TMP_InputField passwordInputField;
-        [SerializeField] private TMP_InputField rePasswordInputField;
-        [SerializeField] private TMP_InputField firstNameInputField;
-        [SerializeField] private TMP_InputField lastNameInputField;
+        [SerializeField]
+        private TMP_InputField emailInputField;
+
+        [SerializeField]
+        private TMP_InputField passwordInputField;
+
+        [SerializeField]
+        private TMP_InputField rePasswordInputField;
+
+        [SerializeField]
+        private TMP_InputField firstNameInputField;
+
+        [SerializeField]
+        private TMP_InputField lastNameInputField;
+
         [Header("Buttons")]
-        [SerializeField] private Button backButton;
-        [SerializeField] private Button registerButton;
+        [SerializeField]
+        private Button backButton;
+
+        [SerializeField]
+        private Button registerButton;
 
         private void Start()
         {
@@ -35,8 +54,6 @@ namespace Scripts.UI.Windows
         {
             backButton.onClick.RemoveListener(OnBackButtonClicked);
             registerButton.onClick.RemoveListener(OnRegisterButtonClicked);
-
-            ShowNotice = null;
         }
 
         private void OnBackButtonClicked()
@@ -83,13 +100,14 @@ namespace Scripts.UI.Windows
                 return false;
             }
 
-            if (!emailInputField.text.IsValidEmailAddress())
+            if (!WindowUtils.IsEmailAddressValid(emailInputField.text))
             {
                 ShowNotice?.Invoke("Email address is not valid.");
                 return false;
             }
 
-            if (passwordInputField.text == string.Empty || rePasswordInputField.text == string.Empty)
+            if (passwordInputField.text == string.Empty
+                || rePasswordInputField.text == string.Empty)
             {
                 ShowNotice?.Invoke("Passwords can not be empty.");
                 return false;

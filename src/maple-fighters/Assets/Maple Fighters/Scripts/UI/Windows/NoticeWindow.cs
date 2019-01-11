@@ -1,43 +1,34 @@
 ﻿using System;
-using Scripts.UI.Core;
 using TMPro;
+using UI.Manager;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace Scripts.UI.Windows
 {
-    public class NoticeWindow : UserInterfaceBaseFadeEffect
+    public class NoticeWindow : UIElement
     {
-        public TextMeshProUGUI Message => messageText;
+        public event Action OkButtonClicked;
 
-        public Button OkButton => okButton;
-
-        public Action OkButtonClickedAction;
+        public string Message
+        {
+            set
+            {
+                messageText.text = value;
+            }
+        }
 
         [Header("Images")]
         [SerializeField]
-        private Image blackBackground;
-
-        [Header("Buttons")]
-        [SerializeField]
-        private Button okButton;
+        private Image backgroundImage;
 
         [Header("Texts")]
         [SerializeField]
         private TextMeshProUGUI messageText;
 
-        public void Initialize(string message, Action okButtonClicked, bool background = false)
-        {
-            messageText.text = message;
-            OkButtonClickedAction = okButtonClicked;
-
-            blackBackground.gameObject.SetActive(background);
-        }
-
-        public override void Hide()
-        {
-            Hide(onFinished: () => UserInterfaceContainer.GetInstance()?.Remove(this));
-        }
+        [Header("Buttons")]
+        [SerializeField]
+        private Button okButton;
 
         private void Start()
         {
@@ -53,7 +44,12 @@ namespace Scripts.UI.Windows
         {
             Hide();
 
-            OkButtonClickedAction?.Invoke();
+            OkButtonClicked?.Invoke();
+        }
+
+        public void UseBackground()
+        {
+            backgroundImage.gameObject.SetActive(true);
         }
     }
 }

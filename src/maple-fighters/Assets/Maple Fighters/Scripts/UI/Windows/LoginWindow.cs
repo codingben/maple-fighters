@@ -1,13 +1,19 @@
 ﻿using System;
-using Scripts.UI.Core;
 using TMPro;
+using UI.Manager;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace Scripts.UI.Windows
 {
-    public class LoginWindow : UserInterfaceWindowFadeEffect
+    public class LoginWindow : UIElement
     {
+        public event Action<string, string> LoginButtonClicked;
+
+        public event Action RegisterButtonClicked;
+
+        public event Action<string> ShowNotice;
+
         public string Email
         {
             set
@@ -24,37 +30,23 @@ namespace Scripts.UI.Windows
             }
         }
 
-        public event Action<string> ShowNotice;
-        public event Action<string, string> LoginButtonClicked;
-        public event Action RegisterButtonClicked;
-
         [Header("Configuration")]
-        [SerializeField] private int passwordCharacters;
+        [SerializeField]
+        private int passwordCharacters;
+
         [Header("Input Fields")]
-        [SerializeField] private TMP_InputField emailInputField;
-        [SerializeField] private TMP_InputField passwordInputField;
+        [SerializeField]
+        private TMP_InputField emailInputField;
+
+        [SerializeField]
+        private TMP_InputField passwordInputField;
+
         [Header("Buttons")]
-        [SerializeField] private Button loginButton;
-        [SerializeField] private Button registerButton;
+        [SerializeField]
+        private Button loginButton;
 
-        private bool isInitialized;
-
-        public override void Show()
-        {
-            if (!isInitialized)
-            {
-                isInitialized = true;
-
-                var oldShowSpeed = showSpeed;
-                showSpeed /= 5;
-
-                Show(() => { showSpeed = oldShowSpeed; });
-            }
-            else
-            {
-                base.Show();
-            }
-        }
+        [SerializeField]
+        private Button registerButton;
         
         private void Start()
         {
@@ -66,8 +58,6 @@ namespace Scripts.UI.Windows
         {
             loginButton.onClick.RemoveListener(OnLoginButtonClicked);
             registerButton.onClick.RemoveListener(OnRegisterButtonClicked);
-
-            ShowNotice = null;
         }
 
         private void OnLoginButtonClicked()
@@ -109,7 +99,7 @@ namespace Scripts.UI.Windows
                 return false;
             }
 
-            if (!emailInputField.text.IsValidEmailAddress())
+            if (!WindowUtils.IsEmailAddressValid(emailInputField.text))
             {
                 ShowNotice?.Invoke("Email address is not valid.");
                 return false;

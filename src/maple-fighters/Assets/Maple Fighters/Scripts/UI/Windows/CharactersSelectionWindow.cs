@@ -1,49 +1,84 @@
 ﻿using System;
-using Scripts.UI.Core;
 using TMPro;
+using UI.Manager;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace Scripts.UI.Windows
 {
-    public class CharactersSelectionWindow : UserInterfaceWindowFadeEffect
+    public class CharactersSelectionWindow : UIElement
     {
         public event Action ChoosedClicked;
+
         public event Action CancelClicked;
+
         public event Action KnightSelected;
+
         public event Action ArrowSelected;
+
         public event Action WizardSelected;
-        public event Action Deselected;
 
-        public Action DeactiveAll;
-
-        [SerializeField] private MouseDetectionBackground screenMouseDetection;
         [Header("Buttons")]
-        [SerializeField] private Button cancelButton;
-        [SerializeField] private Button chooseButton;
-        [SerializeField] private Button knightButton;
-        [SerializeField] private Button arrowButton;
-        [SerializeField] private Button wizardButton;
-        [Header("Selected Images")]
-        [SerializeField] private GameObject knightSelectedImage;
-        [SerializeField] private GameObject arrowSelectedImage;
-        [SerializeField] private GameObject wizardSelectedImage;
+        [SerializeField]
+        private Button cancelButton;
+
+        [SerializeField]
+        private Button chooseButton;
+
+        [SerializeField]
+        private Button knightButton;
+
+        [SerializeField]
+        private Button arrowButton;
+
+        [SerializeField]
+        private Button wizardButton;
+
+        [Header("Images")]
+        [SerializeField]
+        private GameObject knightSelectedImage;
+
+        [SerializeField]
+        private GameObject arrowSelectedImage;
+
+        [SerializeField]
+        private GameObject wizardSelectedImage;
+
         [Header("Texts")]
-        [SerializeField] private TextMeshProUGUI knightName;
-        [SerializeField] private TextMeshProUGUI arrowName;
-        [SerializeField] private TextMeshProUGUI wizardName;
+        [SerializeField]
+        private TextMeshProUGUI knightName;
+
+        [SerializeField]
+        private TextMeshProUGUI arrowName;
+
+        [SerializeField]
+        private TextMeshProUGUI wizardName;
+
+        private enum Class
+        {
+            /// <summary>
+            /// The knight.
+            /// </summary>
+            Knight,
+
+            /// <summary>
+            /// The arrow.
+            /// </summary>
+            Arrow,
+
+            /// <summary>
+            /// The wizard.
+            /// </summary>
+            Wizard
+        }
 
         private void Start()
         {
-            DeactiveAll = Deactive;
-
             cancelButton.onClick.AddListener(OnCancelClicked);
             chooseButton.onClick.AddListener(OnChooseClicked);
             knightButton.onClick.AddListener(OnKnightSelected);
             arrowButton.onClick.AddListener(OnArrowSelected);
             wizardButton.onClick.AddListener(OnWizardSelected);
-
-            SubscribeToMouseDetectionBackgroundEvent();
         }
 
         private void OnDestroy()
@@ -53,54 +88,25 @@ namespace Scripts.UI.Windows
             knightButton.onClick.RemoveListener(OnKnightSelected);
             arrowButton.onClick.RemoveListener(OnArrowSelected);
             wizardButton.onClick.RemoveListener(OnWizardSelected);
-
-            UnsubscribeFromMouseDetectionBackgroundEvent();
-        }
-
-        private void SubscribeToMouseDetectionBackgroundEvent()
-        {
-            screenMouseDetection.MouseClicked += DeactiveAllSelectedClasses;
-            screenMouseDetection.MouseClicked += OnDeselected;
-        }
-
-        private void UnsubscribeFromMouseDetectionBackgroundEvent()
-        {
-            screenMouseDetection.MouseClicked -= DeactiveAllSelectedClasses;
-            screenMouseDetection.MouseClicked -= OnDeselected;
         }
 
         private void OnKnightSelected()
         {
-            DeactiveAllSelectedClasses();
-
-            knightSelectedImage.SetActive(true);
-            knightName.fontStyle = FontStyles.Bold;
-
-            chooseButton.interactable = true;
+            SetClassSelection(Class.Knight);
 
             KnightSelected?.Invoke();
         }
 
         private void OnArrowSelected()
         {
-            DeactiveAllSelectedClasses();
-
-            arrowSelectedImage.SetActive(true);
-            arrowName.fontStyle = FontStyles.Bold;
-
-            chooseButton.interactable = true;
+            SetClassSelection(Class.Arrow);
 
             ArrowSelected?.Invoke();
         }
 
         private void OnWizardSelected()
         {
-            DeactiveAllSelectedClasses();
-
-            wizardSelectedImage.SetActive(true);
-            wizardName.fontStyle = FontStyles.Bold;
-
-            chooseButton.interactable = true;
+            SetClassSelection(Class.Wizard);
 
             WizardSelected?.Invoke();
         }
@@ -109,9 +115,7 @@ namespace Scripts.UI.Windows
         {
             Hide();
 
-            chooseButton.interactable = false;
-
-            DeactiveAllSelectedClasses();
+            ResetSelectedClasses();
 
             CancelClicked?.Invoke();
         }
@@ -123,8 +127,41 @@ namespace Scripts.UI.Windows
             ChoosedClicked?.Invoke();
         }
 
-        private void DeactiveAllSelectedClasses()
+        private void SetClassSelection(Class character)
         {
+            ResetSelectedClasses();
+
+            switch (character)
+            {
+                case Class.Knight:
+                {
+                    knightSelectedImage.SetActive(true);
+                    knightName.fontStyle = FontStyles.Bold;
+                    break;
+                }
+
+                case Class.Arrow:
+                {
+                    arrowSelectedImage.SetActive(true);
+                    arrowName.fontStyle = FontStyles.Bold;
+                    break;
+                }
+
+                case Class.Wizard:
+                {
+                    wizardSelectedImage.SetActive(true);
+                    wizardName.fontStyle = FontStyles.Bold;
+                    break;
+                }
+            }
+
+            chooseButton.interactable = true;
+        }
+
+        public void ResetSelectedClasses()
+        {
+            chooseButton.interactable = false;
+
             knightName.fontStyle = FontStyles.Normal;
             arrowName.fontStyle = FontStyles.Normal;
             wizardName.fontStyle = FontStyles.Normal;
@@ -132,20 +169,6 @@ namespace Scripts.UI.Windows
             knightSelectedImage.SetActive(false);
             arrowSelectedImage.SetActive(false);
             wizardSelectedImage.SetActive(false);
-        }
-
-        private void Deactive()
-        {
-            chooseButton.interactable = false;
-
-            DeactiveAllSelectedClasses();
-        }
-
-        private void OnDeselected()
-        {
-            chooseButton.interactable = false;
-
-            Deselected?.Invoke();
         }
     }
 }

@@ -1,22 +1,23 @@
 ﻿using System;
-using Scripts.UI.Core;
+using UI.Manager;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace Scripts.UI.Windows
 {
-    public class MinimapWindow : UserInterfaceWindow
+    public class MinimapWindow : UIElement
     {
         public event Action<int> MarkSelectionChanged;
 
-        [SerializeField] private Dropdown markSelection;
+        [Header("Dropdown"), SerializeField]
+        private Dropdown markSelection;
 
         private void Start()
         {
-            markSelection.onValueChanged.AddListener(OnMarkSelectionDropdownChanged);
+            markSelection.onValueChanged.AddListener(OnMarkSelectionChanged);
         }
 
-        private void OnMarkSelectionDropdownChanged(int selection)
+        private void OnMarkSelectionChanged(int selection)
         {
             MarkSelectionChanged?.Invoke(selection);
         }

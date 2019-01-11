@@ -1,15 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
-using GameServerProvider.Client.Common;
-using Scripts.UI.Core;
+using UI.Manager;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace Scripts.UI.Windows
 {
-    public class GameServerSelectorWindow : UserInterfaceBaseFadeEffect
+    // TODO: Finish code refactoring
+    public class GameServerSelectorWindow : UIElement
     {
-        public GameServerSelectorRefreshImage GameServerSelectorRefreshImage => gameServerSelectorRefreshImage;
+        public GameServerSelectorRefreshImage GameServerSelectorRefreshImage
+        {
+            get
+            {
+                return gameServerSelectorRefreshImage;
+            }
+        }
 
         public event Action JoinButtonClicked;
 
@@ -17,41 +22,41 @@ namespace Scripts.UI.Windows
 
         public event Action<string> GameServerButtonClicked;
 
-        [Header("Buttons")]
-        [SerializeField] private Button joinButton;
-        [SerializeField] private Button refreshButton;
-
         [Header("Parent")]
-        [SerializeField] private Transform gameServerList;
+        [SerializeField]
+        private Transform gameServerList;
+
+        [Header("Buttons")]
+        [SerializeField]
+        private Button joinButton;
+
+        [SerializeField]
+        private Button refreshButton;
 
         [Header("Image")]
-        [SerializeField] private GameServerSelectorRefreshImage gameServerSelectorRefreshImage;
+        [SerializeField]
+        private GameServerSelectorRefreshImage gameServerSelectorRefreshImage;
 
-        private readonly Dictionary<string, ClickableGameServerButton> gameServerButtons = new Dictionary<string, ClickableGameServerButton>();
+        /*private Dictionary<string, ClickableGameServerButton> gameServerButtons;
+
+        private void Awake()
+        {
+            gameServerButtons = new Dictionary<string, ClickableGameServerButton>();
+        }*/
 
         private void Start()
-        {
-            SubscribeToEvents();
-        }
-
-        private void OnDestroy()
-        {
-            UnsubscribeFromEvents();
-        }
-
-        private void SubscribeToEvents()
         {
             joinButton.onClick.AddListener(OnJoinButtonClicked);
             refreshButton.onClick.AddListener(OnRefreshButtonClicked);
         }
 
-        private void UnsubscribeFromEvents()
+        private void OnDestroy()
         {
             joinButton.onClick.RemoveListener(OnJoinButtonClicked);
             refreshButton.onClick.RemoveListener(OnRefreshButtonClicked);
         }
 
-        public void CreateGameServerList(IEnumerable<GameServerInformationParameters> gameServerList)
+        /*public void CreateGameServerList(IEnumerable<GameServerInformationParameters> gameServerList)
         {
             foreach (var gameServer in gameServerList)
             {
@@ -63,15 +68,16 @@ namespace Scripts.UI.Windows
 
                 gameServerButtons.Add(gameServer.Name, gameServerButton);
             }
-        }
+        }*/
 
         public void OnRefreshBegan()
         {
             DisableAllButtons();
-            RemoveGameServerList();
+
+            // RemoveGameServerList();
         }
 
-        private void RemoveGameServerList()
+        /*private void RemoveGameServerList()
         {
             if (gameServerButtons.Count == 0)
             {
@@ -85,19 +91,19 @@ namespace Scripts.UI.Windows
             }
 
             gameServerButtons.Clear();
-        }
+        }*/
 
-        public void DeselectAllGameServerButtons()
+        /*public void DeselectAllGameServerButtons()
         {
             foreach (var gameServerButton in gameServerButtons)
             {
                 gameServerButton.Value.Selected = false;
             }
-        }
+        }*/
 
         private void OnGameServerButtonClicked(string serverName)
         {
-            var gameServerButton = gameServerButtons[serverName];
+            /*var gameServerButton = gameServerButtons[serverName];
             var isSelected = gameServerButton.Selected;
 
             DeselectAllGameServerButtons();
@@ -109,7 +115,8 @@ namespace Scripts.UI.Windows
             }
 
             gameServerButton.Selected = true;
-            joinButton.interactable = gameServerButton.Selected;
+
+            joinButton.interactable = gameServerButton.Selected;*/
 
             GameServerButtonClicked?.Invoke(serverName);
         }
