@@ -6,6 +6,7 @@ using UnityEngine.UI;
 namespace Scripts.UI.Windows
 {
     // TODO: Finish code refactoring
+    [RequireComponent(typeof(UIFadeAnimation))]
     public class GameServerSelectorWindow : UIElement
     {
         public GameServerSelectorRefreshImage GameServerSelectorRefreshImage

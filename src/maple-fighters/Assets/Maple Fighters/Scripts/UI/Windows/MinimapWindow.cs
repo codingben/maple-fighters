@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 namespace Scripts.UI.Windows
 {
+    [RequireComponent(typeof(UICanvasGroup))]
     public class MinimapWindow : UIElement
     {
         public event Action<int> MarkSelectionChanged;

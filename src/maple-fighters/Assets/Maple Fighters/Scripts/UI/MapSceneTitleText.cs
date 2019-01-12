@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Scripts.UI
 {
-    [RequireComponent(typeof(UIFadeAnimation), typeof(TextMeshProUGUI))]
+    [RequireComponent(typeof(TextMeshProUGUI), typeof(UIFadeAnimation))]
     public class MapSceneTitleText : UIElement
     {
         public string Text

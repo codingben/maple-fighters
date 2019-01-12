@@ -10,6 +10,7 @@ using UnityEngine.EventSystems;
 
 namespace Scripts.UI.Windows
 {
+    [RequireComponent(typeof(UICanvasGroup))]
     public class ChatWindow : UIElement
     {
         public event Action<string> MessageAdded;

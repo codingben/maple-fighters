@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 namespace Scripts.UI
 {
-    [RequireComponent(typeof(Button))]
+    [RequireComponent(typeof(Button), typeof(UICanvasGroup))]
     public class ClickableGameServerButton : UIElement
     {
         public event Action ServerButtonClicked;
