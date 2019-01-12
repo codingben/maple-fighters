@@ -1,6 +1,6 @@
 ﻿namespace Scripts.UI.Controllers
 {
-    public enum Focusable
+    public enum FocusState
     {
         /// <summary>
         /// The game.

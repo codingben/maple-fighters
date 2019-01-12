@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using Scripts.Containers;
 using Scripts.Gameplay.Actors;
 using Scripts.Services;
-using Scripts.UI;
 using Scripts.UI.Controllers;
 using Scripts.World;
 using UnityEngine;
@@ -32,7 +31,6 @@ namespace Scripts.Gameplay
         {
             yield return typeof(LogUtilsCreator);
             yield return typeof(GameTimeProviderCreator);
-            yield return typeof(UserInterfaceCreator);
             yield return typeof(CharacterCreator);
 
             if (ServiceContainer.GameService.ServiceConnectionHandler.IsConnected())
@@ -49,7 +47,7 @@ namespace Scripts.Gameplay
 
         private IEnumerable<Type> GetGUIControllersComponents()
         {
-            yield return typeof(FocusController);
+            yield return typeof(FocusStateController);
             yield return typeof(ChatController);
         }
 

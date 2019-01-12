@@ -76,7 +76,7 @@ namespace Scripts.Services
 
         private void ShowConnectionTimeout()
         {
-            FocusController.GetInstance()?.SetState(Focusable.UI);
+            FocusStateController.GetInstance()?.SetState(FocusState.UI);
 
             Utils.ShowNotice("The connection has timed out.", SavedGameObjectsUtils.GetInstance().GoBackToLogin, true, Index.Last);
         }

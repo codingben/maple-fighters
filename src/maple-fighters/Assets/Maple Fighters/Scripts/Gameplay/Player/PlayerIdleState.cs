@@ -26,7 +26,8 @@ namespace Scripts.Gameplay.Actors
         {
             if (playerController.IsGrounded())
             {
-                if (FocusController.GetInstance().Focusable != Focusable.Game)
+                if (FocusStateController.GetInstance().GetFocusState()
+                    != FocusState.Game)
                 {
                     return;
                 }

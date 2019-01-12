@@ -1,8 +1,4 @@
 ﻿using System;
-using CommonTools.Log;
-using Scripts.Containers;
-using Scripts.Gameplay.Actors;
-using Scripts.UI.Controllers;
 using TMPro;
 using UI.Manager;
 using UnityEngine;
@@ -15,6 +11,10 @@ namespace Scripts.UI.Windows
     {
         public event Action<string> MessageAdded;
 
+        public event Action Focused;
+
+        public event Action UnFocused;
+
         private const KeyCode SendMessageKeyCode = KeyCode.Return;
         private const KeyCode SecondarySendMessageKeyCode = KeyCode.KeypadEnter;
         private const KeyCode CloseMessageKeyCode = KeyCode.Escape;
@@ -26,11 +26,16 @@ namespace Scripts.UI.Windows
         private TMP_InputField chatInputField;
 
         private string characterName;
+        private bool isTypingMessage;
+
+        public void SetCharacterName(string name)
+        {
+            characterName = name;
+        }
 
         private void Update()
         {
-            // TODO: Remove this from here
-            if (FocusController.GetInstance().Focusable == Focusable.Chat)
+            if (isTypingMessage)
             {
                 FocusableState();
             }
@@ -55,8 +60,9 @@ namespace Scripts.UI.Windows
                 ActivateOrDeactivateInputField();
                 SelectOrDeselectChatInputField();
 
-                // TODO: Remove this from here
-                FocusController.GetInstance().SetState(Focusable.Game);
+                isTypingMessage = false;
+
+                UnFocused?.Invoke();
             }
         }
 
@@ -64,27 +70,25 @@ namespace Scripts.UI.Windows
         {
             if (IsAnySendKeyPressed())
             {
+                isTypingMessage = true;
+
                 ActivateOrDeactivateInputField();
                 SelectOrDeselectChatInputField();
 
-                // TODO: Remove this from here
-                FocusController.GetInstance().SetState(Focusable.Chat);
+                Focused?.Invoke();
             }
         }
 
         private void SendMessage()
         {
-            if (characterName == null)
-            {
-                characterName = GetCharacterName();
-            }
-
             if (chatInputField != null)
             {
                 var text = chatInputField.text;
+
                 if (!string.IsNullOrWhiteSpace(text))
                 {
                     var message = $"{characterName}: {text}";
+
                     AddMessage(message);
 
                     MessageAdded?.Invoke(message);
@@ -94,14 +98,14 @@ namespace Scripts.UI.Windows
 
         public void AddMessage(string message, ChatMessageColor color = ChatMessageColor.None)
         {
-            if (color != ChatMessageColor.None)
-            {
-                var colorName = color.ToString().ToLower();
-                message = $"<color={colorName}>{message}</color>";
-            }
-
             if (chatText != null)
             {
+                if (color != ChatMessageColor.None)
+                {
+                    var colorName = color.ToString().ToLower();
+                    message = $"<color={colorName}>{message}</color>";
+                }
+
                 var isEmpty = chatText.text.Length == 0;
                 chatText.text += !isEmpty ? $"\n{message}" : $"{message}";
             }
@@ -124,7 +128,11 @@ namespace Scripts.UI.Windows
             {
                 var active = chatInputField.gameObject.activeSelf;
                 var selected = active ? chatInputField.gameObject : null;
-                EventSystem.current.SetSelectedGameObject(selected);
+
+                if (EventSystem.current != null)
+                {
+                    EventSystem.current.SetSelectedGameObject(selected);
+                }
             }
         }
 
@@ -137,19 +145,6 @@ namespace Scripts.UI.Windows
         private bool IsEscapeKeyPressed()
         {
             return Input.GetKeyDown(CloseMessageKeyCode);
-        }
-
-        private string GetCharacterName()
-        {
-            var sceneObject = 
-                SceneObjectsContainer.GetInstance().GetLocalSceneObject()
-                    .AssertNotNull();
-
-            var character = 
-                sceneObject.GameObject
-                    .GetComponent<CharacterInformationProvider>();
-
-            return character.GetCharacterInfo().Name;
         }
     }
 }
