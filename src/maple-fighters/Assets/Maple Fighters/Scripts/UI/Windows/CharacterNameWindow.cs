@@ -30,15 +30,15 @@ namespace Scripts.UI.Windows
 
         private void Start()
         {
-            confirmButton.onClick.AddListener(OnConfirmClicked);
-            backButton.onClick.AddListener(OnBackClicked);
+            confirmButton.onClick.AddListener(OnConfirmButtonClicked);
+            backButton.onClick.AddListener(OnBackButtonClicked);
             nameInputField.onValueChanged.AddListener(OnNameInputFieldChanged);
         }
 
         private void OnDestroy()
         {
-            confirmButton.onClick.RemoveListener(OnConfirmClicked);
-            backButton.onClick.RemoveListener(OnBackClicked);
+            confirmButton.onClick.RemoveListener(OnConfirmButtonClicked);
+            backButton.onClick.RemoveListener(OnBackButtonClicked);
             nameInputField.onValueChanged.RemoveListener(OnNameInputFieldChanged);
         }
 
@@ -47,7 +47,7 @@ namespace Scripts.UI.Windows
             confirmButton.interactable = text.Length >= minCharactersName;
         }
 
-        private void OnConfirmClicked()
+        private void OnConfirmButtonClicked()
         {
             var characterName = nameInputField.text;
             ConfirmButtonClicked?.Invoke(characterName);
@@ -56,7 +56,7 @@ namespace Scripts.UI.Windows
             ResetNameInputField();
         }
 
-        private void OnBackClicked()
+        private void OnBackButtonClicked()
         {
             Hide();
             ResetNameInputField();

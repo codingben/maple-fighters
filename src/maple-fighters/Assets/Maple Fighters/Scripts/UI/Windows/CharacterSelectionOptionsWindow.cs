@@ -25,33 +25,33 @@ namespace Scripts.UI.Windows
 
         private void Start()
         {
-            startButton.onClick.AddListener(OnStartClicked);
-            createCharacterButton.onClick.AddListener(OnCreateCharacterClicked);
-            deleteCharacterButton.onClick.AddListener(OnDeleteCharacterClicked);
+            startButton.onClick.AddListener(OnStartButtonClicked);
+            createCharacterButton.onClick.AddListener(OnCreateCharacterButtonClicked);
+            deleteCharacterButton.onClick.AddListener(OnDeleteCharacterButtonClicked);
         }
 
         private void OnDestroy()
         {
-            startButton.onClick.RemoveListener(OnStartClicked);
-            createCharacterButton.onClick.RemoveListener(OnCreateCharacterClicked);
-            deleteCharacterButton.onClick.RemoveListener(OnDeleteCharacterClicked);
+            startButton.onClick.RemoveListener(OnStartButtonClicked);
+            createCharacterButton.onClick.RemoveListener(OnCreateCharacterButtonClicked);
+            deleteCharacterButton.onClick.RemoveListener(OnDeleteCharacterButtonClicked);
         }
         
-        private void OnStartClicked()
+        private void OnStartButtonClicked()
         {
             Hide();
 
             StartButtonClicked?.Invoke();
         }
 
-        private void OnCreateCharacterClicked()
+        private void OnCreateCharacterButtonClicked()
         {
             Hide();
 
             CreateCharacterButtonClicked?.Invoke();
         }
 
-        private void OnDeleteCharacterClicked()
+        private void OnDeleteCharacterButtonClicked()
         {
             Hide();
 

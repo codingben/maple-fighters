@@ -75,8 +75,8 @@ namespace Scripts.UI.Windows
 
         private void Start()
         {
-            cancelButton.onClick.AddListener(OnCancelClicked);
-            chooseButton.onClick.AddListener(OnChooseClicked);
+            chooseButton.onClick.AddListener(OnChooseButtonClicked);
+            cancelButton.onClick.AddListener(OnCancelButtonClicked);
             knightButton.onClick.AddListener(OnKnightSelected);
             arrowButton.onClick.AddListener(OnArrowSelected);
             wizardButton.onClick.AddListener(OnWizardSelected);
@@ -84,11 +84,27 @@ namespace Scripts.UI.Windows
 
         private void OnDestroy()
         {
-            cancelButton.onClick.RemoveListener(OnCancelClicked);
-            chooseButton.onClick.RemoveListener(OnChooseClicked);
+            chooseButton.onClick.RemoveListener(OnChooseButtonClicked);
+            cancelButton.onClick.RemoveListener(OnCancelButtonClicked);
             knightButton.onClick.RemoveListener(OnKnightSelected);
             arrowButton.onClick.RemoveListener(OnArrowSelected);
             wizardButton.onClick.RemoveListener(OnWizardSelected);
+        }
+
+        private void OnChooseButtonClicked()
+        {
+            Hide();
+
+            ChooseButtonClicked?.Invoke();
+        }
+
+        private void OnCancelButtonClicked()
+        {
+            Hide();
+
+            ResetSelectedClasses();
+
+            CancelButtonClicked?.Invoke();
         }
 
         private void OnKnightSelected()
@@ -110,22 +126,6 @@ namespace Scripts.UI.Windows
             SetClassSelection(Class.Wizard);
 
             WizardSelected?.Invoke();
-        }
-
-        private void OnCancelClicked()
-        {
-            Hide();
-
-            ResetSelectedClasses();
-
-            CancelButtonClicked?.Invoke();
-        }
-
-        private void OnChooseClicked()
-        {
-            Hide();
-
-            ChooseButtonClicked?.Invoke();
         }
 
         private void SetClassSelection(Class character)
