@@ -15,7 +15,11 @@ namespace Scripts.UI.Windows
 
         private void Start()
         {
-            markSelection.onValueChanged.AddListener(OnMarkSelectionChanged);
+            if (markSelection != null)
+            {
+                markSelection.onValueChanged.AddListener(
+                    OnMarkSelectionChanged);
+            }
         }
 
         private void OnMarkSelectionChanged(int selection)

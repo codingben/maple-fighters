@@ -30,35 +30,67 @@ namespace Scripts.UI.Windows
 
         private void Start()
         {
-            confirmButton.onClick.AddListener(OnConfirmButtonClicked);
-            backButton.onClick.AddListener(OnBackButtonClicked);
-            nameInputField.onValueChanged.AddListener(OnNameInputFieldChanged);
+            if (confirmButton != null)
+            {
+                confirmButton.onClick.AddListener(OnConfirmButtonClicked);
+            }
+
+            if (backButton != null)
+            {
+                backButton.onClick.AddListener(OnBackButtonClicked);
+            }
+
+            if (nameInputField != null)
+            {
+                nameInputField.onValueChanged.AddListener(
+                    OnNameInputFieldChanged);
+            }
         }
 
         private void OnDestroy()
         {
-            confirmButton.onClick.RemoveListener(OnConfirmButtonClicked);
-            backButton.onClick.RemoveListener(OnBackButtonClicked);
-            nameInputField.onValueChanged.RemoveListener(OnNameInputFieldChanged);
+            if (confirmButton != null)
+            {
+                confirmButton.onClick.RemoveListener(OnConfirmButtonClicked);
+            }
+
+            if (backButton != null)
+            {
+                backButton.onClick.RemoveListener(OnBackButtonClicked);
+            }
+
+            if (nameInputField != null)
+            {
+                nameInputField.onValueChanged.RemoveListener(
+                    OnNameInputFieldChanged);
+            }
         }
 
         private void OnNameInputFieldChanged(string text)
         {
-            confirmButton.interactable = text.Length >= minCharactersName;
+            if (confirmButton != null)
+            {
+                confirmButton.interactable = text.Length >= minCharactersName;
+            }
         }
 
         private void OnConfirmButtonClicked()
         {
-            var characterName = nameInputField.text;
-            ConfirmButtonClicked?.Invoke(characterName);
+            if (nameInputField != null)
+            {
+                var characterName = nameInputField.text;
+                ConfirmButtonClicked?.Invoke(characterName);
+            }
 
             Hide();
+
             ResetNameInputField();
         }
 
         private void OnBackButtonClicked()
         {
             Hide();
+
             ResetNameInputField();
 
             BackButtonClicked?.Invoke();
@@ -66,7 +98,10 @@ namespace Scripts.UI.Windows
 
         private void ResetNameInputField()
         {
-            nameInputField.text = string.Empty;
+            if (nameInputField != null)
+            {
+                nameInputField.text = string.Empty;
+            }
         }
     }
 }

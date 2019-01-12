@@ -15,30 +15,39 @@ namespace Scripts.UI.Windows
         {
             set
             {
-                messageText.text = value;
+                if (messageText != null)
+                {
+                    messageText.text = value;
+                }
             }
         }
 
-        [Header("Images")]
+        [Header("Image")]
         [SerializeField]
         private Image backgroundImage;
 
-        [Header("Texts")]
+        [Header("Text")]
         [SerializeField]
         private TextMeshProUGUI messageText;
 
-        [Header("Buttons")]
+        [Header("Button")]
         [SerializeField]
         private Button okButton;
 
         private void Start()
         {
-            okButton.onClick.AddListener(OnOkButtonClicked);
+            if (okButton != null)
+            {
+                okButton.onClick.AddListener(OnOkButtonClicked);
+            }
         }
 
         private void OnDestroy()
         {
-            okButton.onClick.RemoveListener(OnOkButtonClicked);
+            if (okButton != null)
+            {
+                okButton.onClick.RemoveListener(OnOkButtonClicked);
+            }
         }
 
         private void OnOkButtonClicked()
@@ -50,7 +59,10 @@ namespace Scripts.UI.Windows
 
         public void UseBackground()
         {
-            backgroundImage.gameObject.SetActive(true);
+            if (backgroundImage != null)
+            {
+                backgroundImage.gameObject.SetActive(true);
+            }
         }
     }
 }

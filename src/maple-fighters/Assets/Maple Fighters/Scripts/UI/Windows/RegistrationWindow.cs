@@ -9,7 +9,7 @@ namespace Scripts.UI.Windows
     [RequireComponent(typeof(UIFadeAnimation))]
     public class RegistrationWindow : UIElement
     {
-        public event Action<string, string, string, string> RegisterButtonClicked;
+        public event Action<UiRegistrationDetails> RegisterButtonClicked;
 
         public event Action BackButtonClicked;
 
@@ -47,14 +47,28 @@ namespace Scripts.UI.Windows
 
         private void Start()
         {
-            backButton.onClick.AddListener(OnBackButtonClicked);
-            registerButton.onClick.AddListener(OnRegisterButtonClicked);
+            if (backButton != null)
+            {
+                backButton.onClick.AddListener(OnBackButtonClicked);
+            }
+
+            if (registerButton != null)
+            {
+                registerButton.onClick.AddListener(OnRegisterButtonClicked);
+            }
         }
 
         private void OnDestroy()
         {
-            backButton.onClick.RemoveListener(OnBackButtonClicked);
-            registerButton.onClick.RemoveListener(OnRegisterButtonClicked);
+            if (backButton != null)
+            {
+                backButton.onClick.RemoveListener(OnBackButtonClicked);
+            }
+
+            if (registerButton != null)
+            {
+                registerButton.onClick.RemoveListener(OnRegisterButtonClicked);
+            }
         }
 
         private void OnBackButtonClicked()
@@ -64,7 +78,7 @@ namespace Scripts.UI.Windows
 
         private void OnRegisterButtonClicked()
         {
-            if (AcceptInputFieldsContent())
+            if (AreInputFieldsValid())
             {
                 Register();
             }
@@ -76,64 +90,115 @@ namespace Scripts.UI.Windows
 
         private void Register()
         {
-            var email = emailInputField.text;
-            var password = passwordInputField.text;
-            var firstName = firstNameInputField.text;
-            var lastName = lastNameInputField.text;
+            if (emailInputField != null && passwordInputField != null 
+                && firstNameInputField != null && lastNameInputField != null)
+            {
+                var email = emailInputField.text;
+                var password = passwordInputField.text;
+                var firstName = firstNameInputField.text;
+                var lastName = lastNameInputField.text;
 
-            RegisterButtonClicked?.Invoke(email, password, firstName, lastName);
+                RegisterButtonClicked?.Invoke(
+                    new UiRegistrationDetails(
+                        email,
+                        password,
+                        firstName,
+                        lastName));
+            }
         }
 
         public void ResetInputFields()
         {
-            emailInputField.text = string.Empty;
-            passwordInputField.text = string.Empty;
-            rePasswordInputField.text = string.Empty;
-            firstNameInputField.text = string.Empty;
-            lastNameInputField.text = string.Empty;
+            if (emailInputField != null)
+            {
+                emailInputField.text = string.Empty;
+            }
+
+            if (passwordInputField != null)
+            {
+                passwordInputField.text = string.Empty;
+            }
+
+            if (rePasswordInputField != null)
+            {
+                rePasswordInputField.text = string.Empty;
+            }
+
+            if (firstNameInputField != null)
+            {
+                firstNameInputField.text = string.Empty;
+            }
+
+            if (lastNameInputField != null)
+            {
+                lastNameInputField.text = string.Empty;
+            }
         }
 
-        private bool AcceptInputFieldsContent()
+        private bool AreInputFieldsValid()
         {
-            if (emailInputField.text == string.Empty)
+            var isValid = true;
+
+            if (emailInputField != null)
             {
-                ShowNotice?.Invoke("Email address can not be empty.");
-                return false;
+                if (string.IsNullOrWhiteSpace(emailInputField.text))
+                {
+                    isValid = false;
+
+                    ShowNotice?.Invoke("Email address can not be empty.");
+                }
+
+                if (!WindowUtils.IsEmailAddressValid(emailInputField.text))
+                {
+                    isValid = false;
+
+                    ShowNotice?.Invoke("Email address is not valid.");
+                }
             }
 
-            if (!WindowUtils.IsEmailAddressValid(emailInputField.text))
+            if (passwordInputField != null && rePasswordInputField != null)
             {
-                ShowNotice?.Invoke("Email address is not valid.");
-                return false;
+                if (string.IsNullOrWhiteSpace(passwordInputField.text)
+                    || string.IsNullOrWhiteSpace(rePasswordInputField.text))
+                {
+                    isValid = false;
+
+                    ShowNotice?.Invoke("Passwords can not be empty.");
+                }
             }
 
-            if (passwordInputField.text == string.Empty
-                || rePasswordInputField.text == string.Empty)
+            if (passwordInputField != null)
             {
-                ShowNotice?.Invoke("Passwords can not be empty.");
-                return false;
+                if (passwordInputField.text.Length <= passwordCharacters)
+                {
+                    isValid = false;
+
+                    ShowNotice?.Invoke("Please enter a longer password.");
+                }
             }
 
-            if (passwordInputField.text.Length <= passwordCharacters)
+            if (passwordInputField != null && rePasswordInputField != null)
             {
-                ShowNotice?.Invoke("Please enter a longer password.");
-                return false;
+                if (passwordInputField.text != rePasswordInputField.text)
+                {
+                    isValid = false;
+
+                    ShowNotice?.Invoke("Passwords are not match.");
+                }
             }
 
-            if (firstNameInputField.text.Length < firstLastNameCharacters ||
-                lastNameInputField.text.Length < firstLastNameCharacters)
+            if (firstNameInputField != null && lastNameInputField != null)
             {
-                ShowNotice?.Invoke("First or last name is too short.");
-                return false;
+                if (firstNameInputField.text.Length < firstLastNameCharacters
+                    || lastNameInputField.text.Length < firstLastNameCharacters)
+                {
+                    isValid = false;
+
+                    ShowNotice?.Invoke("First or last name is too short.");
+                }
             }
 
-            if (passwordInputField.text != rePasswordInputField.text)
-            {
-                ShowNotice?.Invoke("Passwords are not match.");
-                return false;
-            }
-
-            return true;
+            return isValid;
         }
     }
 }

@@ -11,7 +11,10 @@ namespace Scripts.UI.Windows
         {
             set
             {
-                messageText.text = value;
+                if (messageText != null)
+                {
+                    messageText.text = value;
+                }
             }
         }
 

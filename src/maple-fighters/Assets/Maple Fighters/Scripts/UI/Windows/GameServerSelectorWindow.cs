@@ -33,14 +33,28 @@ namespace Scripts.UI.Windows
         
         private void Start()
         {
-            joinButton.onClick.AddListener(OnJoinButtonClicked);
-            refreshButton.onClick.AddListener(OnRefreshButtonClicked);
+            if (joinButton != null)
+            {
+                joinButton.onClick.AddListener(OnJoinButtonClicked);
+            }
+
+            if (refreshButton != null)
+            {
+                refreshButton.onClick.AddListener(OnRefreshButtonClicked);
+            }
         }
 
         private void OnDestroy()
         {
-            joinButton.onClick.RemoveListener(OnJoinButtonClicked);
-            refreshButton.onClick.RemoveListener(OnRefreshButtonClicked);
+            if (joinButton != null)
+            {
+                joinButton.onClick.RemoveListener(OnJoinButtonClicked);
+            }
+
+            if (refreshButton != null)
+            {
+                refreshButton.onClick.RemoveListener(OnRefreshButtonClicked);
+            }
         }
 
         private void OnJoinButtonClicked()
@@ -55,18 +69,31 @@ namespace Scripts.UI.Windows
 
         public void EnableJoinButton()
         {
-            joinButton.interactable = true;
+            if (joinButton != null)
+            {
+                joinButton.interactable = true;
+            }
         }
 
         public void EnableRefreshButton()
         {
-            refreshButton.interactable = true;
+            if (refreshButton != null)
+            {
+                refreshButton.interactable = true;
+            }
         }
 
         public void DisableAllButtons()
         {
-            joinButton.interactable = false;
-            refreshButton.interactable = false;
+            if (joinButton != null)
+            {
+                joinButton.interactable = false;
+            }
+
+            if (refreshButton != null)
+            {
+                refreshButton.interactable = false;
+            }
         }
     }
 }

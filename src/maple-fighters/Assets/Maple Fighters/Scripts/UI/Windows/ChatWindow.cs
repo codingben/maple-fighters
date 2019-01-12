@@ -79,13 +79,16 @@ namespace Scripts.UI.Windows
                 characterName = GetCharacterName();
             }
 
-            var text = chatInputField.text;
-            if (!string.IsNullOrWhiteSpace(text))
+            if (chatInputField != null)
             {
-                var message = $"{characterName}: {text}";
-                AddMessage(message);
+                var text = chatInputField.text;
+                if (!string.IsNullOrWhiteSpace(text))
+                {
+                    var message = $"{characterName}: {text}";
+                    AddMessage(message);
 
-                MessageAdded?.Invoke(message);
+                    MessageAdded?.Invoke(message);
+                }
             }
         }
 
@@ -97,23 +100,32 @@ namespace Scripts.UI.Windows
                 message = $"<color={colorName}>{message}</color>";
             }
 
-            var isEmpty = chatText.text.Length == 0;
-            chatText.text += !isEmpty ? $"\n{message}" : $"{message}";
+            if (chatText != null)
+            {
+                var isEmpty = chatText.text.Length == 0;
+                chatText.text += !isEmpty ? $"\n{message}" : $"{message}";
+            }
         }
 
         private void ActivateOrDeactivateInputField()
         {
-            var active = !chatInputField.gameObject.activeSelf;
+            if (chatInputField != null)
+            {
+                var active = !chatInputField.gameObject.activeSelf;
 
-            chatInputField.text = string.Empty;
-            chatInputField.gameObject.SetActive(active);
+                chatInputField.text = string.Empty;
+                chatInputField.gameObject.SetActive(active);
+            }
         }
 
         private void SelectOrDeselectChatInputField()
         {
-            var active = chatInputField.gameObject.activeSelf;
-            var selected = active ? chatInputField.gameObject : null;
-            EventSystem.current.SetSelectedGameObject(selected);
+            if (chatInputField != null)
+            {
+                var active = chatInputField.gameObject.activeSelf;
+                var selected = active ? chatInputField.gameObject : null;
+                EventSystem.current.SetSelectedGameObject(selected);
+            }
         }
 
         private bool IsAnySendKeyPressed()

@@ -25,16 +25,42 @@ namespace Scripts.UI.Windows
 
         private void Start()
         {
-            startButton.onClick.AddListener(OnStartButtonClicked);
-            createCharacterButton.onClick.AddListener(OnCreateCharacterButtonClicked);
-            deleteCharacterButton.onClick.AddListener(OnDeleteCharacterButtonClicked);
+            if (startButton != null)
+            {
+                startButton.onClick.AddListener(OnStartButtonClicked);
+            }
+
+            if (createCharacterButton != null)
+            {
+                createCharacterButton.onClick.AddListener(
+                    OnCreateCharacterButtonClicked);
+            }
+
+            if (deleteCharacterButton != null)
+            {
+                deleteCharacterButton.onClick.AddListener(
+                    OnDeleteCharacterButtonClicked);
+            }
         }
 
         private void OnDestroy()
         {
-            startButton.onClick.RemoveListener(OnStartButtonClicked);
-            createCharacterButton.onClick.RemoveListener(OnCreateCharacterButtonClicked);
-            deleteCharacterButton.onClick.RemoveListener(OnDeleteCharacterButtonClicked);
+            if (startButton != null)
+            {
+                startButton.onClick.RemoveListener(OnStartButtonClicked);
+            }
+
+            if (createCharacterButton != null)
+            {
+                createCharacterButton.onClick.RemoveListener(
+                    OnCreateCharacterButtonClicked);
+            }
+
+            if (deleteCharacterButton != null)
+            {
+                deleteCharacterButton.onClick.RemoveListener(
+                    OnDeleteCharacterButtonClicked);
+            }
         }
         
         private void OnStartButtonClicked()
@@ -60,17 +86,26 @@ namespace Scripts.UI.Windows
 
         public void StartButtonInteraction(bool interctable)
         {
-            startButton.interactable = interctable;
+            if (startButton != null)
+            {
+                startButton.interactable = interctable;
+            }
         }
 
         public void CreateCharacterButtonInteraction(bool interctable)
         {
-            createCharacterButton.interactable = interctable;
+            if (createCharacterButton != null)
+            {
+                createCharacterButton.interactable = interctable;
+            }
         }
 
         public void DeleteCharacterButtonInteraction(bool interctable)
         {
-            deleteCharacterButton.interactable = interctable;
+            if (deleteCharacterButton != null)
+            {
+                deleteCharacterButton.interactable = interctable;
+            }
         }
     }
 }

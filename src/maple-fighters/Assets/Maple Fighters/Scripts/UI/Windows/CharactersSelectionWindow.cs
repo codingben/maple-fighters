@@ -75,20 +75,58 @@ namespace Scripts.UI.Windows
 
         private void Start()
         {
-            chooseButton.onClick.AddListener(OnChooseButtonClicked);
-            cancelButton.onClick.AddListener(OnCancelButtonClicked);
-            knightButton.onClick.AddListener(OnKnightSelected);
-            arrowButton.onClick.AddListener(OnArrowSelected);
-            wizardButton.onClick.AddListener(OnWizardSelected);
+            if (chooseButton != null)
+            {
+                chooseButton.onClick.AddListener(OnChooseButtonClicked);
+            }
+
+            if (cancelButton != null)
+            {
+                cancelButton.onClick.AddListener(OnCancelButtonClicked);
+            }
+
+            if (knightButton != null)
+            {
+                knightButton.onClick.AddListener(OnKnightSelected);
+            }
+
+            if (arrowButton != null)
+            {
+                arrowButton.onClick.AddListener(OnArrowSelected);
+            }
+
+            if (wizardButton != null)
+            {
+                wizardButton.onClick.AddListener(OnWizardSelected);
+            }
         }
 
         private void OnDestroy()
         {
-            chooseButton.onClick.RemoveListener(OnChooseButtonClicked);
-            cancelButton.onClick.RemoveListener(OnCancelButtonClicked);
-            knightButton.onClick.RemoveListener(OnKnightSelected);
-            arrowButton.onClick.RemoveListener(OnArrowSelected);
-            wizardButton.onClick.RemoveListener(OnWizardSelected);
+            if (chooseButton != null)
+            {
+                chooseButton.onClick.RemoveListener(OnChooseButtonClicked);
+            }
+
+            if (cancelButton != null)
+            {
+                cancelButton.onClick.RemoveListener(OnCancelButtonClicked);
+            }
+
+            if (knightButton != null)
+            {
+                knightButton.onClick.RemoveListener(OnKnightSelected);
+            }
+
+            if (arrowButton != null)
+            {
+                arrowButton.onClick.RemoveListener(OnArrowSelected);
+            }
+
+            if (wizardButton != null)
+            {
+                wizardButton.onClick.RemoveListener(OnWizardSelected);
+            }
         }
 
         private void OnChooseButtonClicked()
@@ -109,26 +147,26 @@ namespace Scripts.UI.Windows
 
         private void OnKnightSelected()
         {
-            SetClassSelection(Class.Knight);
+            SelectClass(Class.Knight);
 
             KnightSelected?.Invoke();
         }
 
         private void OnArrowSelected()
         {
-            SetClassSelection(Class.Arrow);
+            SelectClass(Class.Arrow);
 
             ArrowSelected?.Invoke();
         }
 
         private void OnWizardSelected()
         {
-            SetClassSelection(Class.Wizard);
+            SelectClass(Class.Wizard);
 
             WizardSelected?.Invoke();
         }
 
-        private void SetClassSelection(Class character)
+        private void SelectClass(Class character)
         {
             ResetSelectedClasses();
 
@@ -136,40 +174,92 @@ namespace Scripts.UI.Windows
             {
                 case Class.Knight:
                 {
-                    knightSelectedImage.SetActive(true);
-                    knightName.fontStyle = FontStyles.Bold;
+                    if (knightSelectedImage != null)
+                    {
+                        knightSelectedImage.SetActive(true);
+                    }
+
+                    if (knightName != null)
+                    {
+                        knightName.fontStyle = FontStyles.Bold;
+                    }
+
                     break;
                 }
 
                 case Class.Arrow:
                 {
-                    arrowSelectedImage.SetActive(true);
-                    arrowName.fontStyle = FontStyles.Bold;
+                    if (arrowSelectedImage != null)
+                    {
+                        arrowSelectedImage.SetActive(true);
+                    }
+
+                    if (arrowName != null)
+                    {
+                        arrowName.fontStyle = FontStyles.Bold;
+                    }
+
                     break;
                 }
 
                 case Class.Wizard:
                 {
-                    wizardSelectedImage.SetActive(true);
-                    wizardName.fontStyle = FontStyles.Bold;
+                    if (wizardSelectedImage != null)
+                    {
+                        wizardSelectedImage.SetActive(true);
+                    }
+
+                    if (wizardName != null)
+                    {
+                        wizardName.fontStyle = FontStyles.Bold;
+                    }
+
                     break;
                 }
             }
 
-            chooseButton.interactable = true;
+            if (chooseButton != null)
+            {
+                chooseButton.interactable = true;
+            }
         }
 
         public void ResetSelectedClasses()
         {
-            chooseButton.interactable = false;
+            if (chooseButton != null)
+            {
+                chooseButton.interactable = false;
+            }
 
-            knightName.fontStyle = FontStyles.Normal;
-            arrowName.fontStyle = FontStyles.Normal;
-            wizardName.fontStyle = FontStyles.Normal;
+            if (knightName != null)
+            {
+                knightName.fontStyle = FontStyles.Normal;
+            }
 
-            knightSelectedImage.SetActive(false);
-            arrowSelectedImage.SetActive(false);
-            wizardSelectedImage.SetActive(false);
+            if (arrowName != null)
+            {
+                arrowName.fontStyle = FontStyles.Normal;
+            }
+
+            if (wizardName != null)
+            {
+                wizardName.fontStyle = FontStyles.Normal;
+            }
+
+            if (knightSelectedImage != null)
+            {
+                knightSelectedImage.SetActive(false);
+            }
+
+            if (arrowSelectedImage != null)
+            {
+                arrowSelectedImage.SetActive(false);
+            }
+
+            if (wizardSelectedImage != null)
+            {
+                wizardSelectedImage.SetActive(false);
+            }
         }
     }
 }
