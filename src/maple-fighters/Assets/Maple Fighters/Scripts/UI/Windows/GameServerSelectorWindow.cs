@@ -5,25 +5,18 @@ using UnityEngine.UI;
 
 namespace Scripts.UI.Windows
 {
-    // TODO: Finish code refactoring
     [RequireComponent(typeof(UIFadeAnimation))]
     public class GameServerSelectorWindow : UIElement
     {
-        public GameServerSelectorRefreshImage GameServerSelectorRefreshImage
-        {
-            get
-            {
-                return gameServerSelectorRefreshImage;
-            }
-        }
-
         public event Action JoinButtonClicked;
 
         public event Action RefreshButtonClicked;
 
-        public event Action<string> GameServerButtonClicked;
+        public GameServerSelectorRefreshImage RefreshImage => refreshImage;
 
-        [Header("Parent")]
+        public Transform GameServerList => gameServerList;
+
+        [Header("Transform")]
         [SerializeField]
         private Transform gameServerList;
 
@@ -36,15 +29,8 @@ namespace Scripts.UI.Windows
 
         [Header("Image")]
         [SerializeField]
-        private GameServerSelectorRefreshImage gameServerSelectorRefreshImage;
-
-        /*private Dictionary<string, ClickableGameServerButton> gameServerButtons;
-
-        private void Awake()
-        {
-            gameServerButtons = new Dictionary<string, ClickableGameServerButton>();
-        }*/
-
+        private GameServerSelectorRefreshImage refreshImage;
+        
         private void Start()
         {
             joinButton.onClick.AddListener(OnJoinButtonClicked);
@@ -57,71 +43,6 @@ namespace Scripts.UI.Windows
             refreshButton.onClick.RemoveListener(OnRefreshButtonClicked);
         }
 
-        /*public void CreateGameServerList(IEnumerable<GameServerInformationParameters> gameServerList)
-        {
-            foreach (var gameServer in gameServerList)
-            {
-                var gameServerButton = UserInterfaceContainer.GetInstance().Add<ClickableGameServerButton>(ViewType.Foreground, Index.Last, this.gameServerList);
-                gameServerButton.ServerName = gameServer.Name;
-                gameServerButton.MaxConnections = gameServer.MaxConnections;
-                gameServerButton.Connections = gameServer.Connections;
-                gameServerButton.ServerButtonClicked += () => OnGameServerButtonClicked(gameServer.Name);
-
-                gameServerButtons.Add(gameServer.Name, gameServerButton);
-            }
-        }*/
-
-        public void OnRefreshBegan()
-        {
-            DisableAllButtons();
-
-            // RemoveGameServerList();
-        }
-
-        /*private void RemoveGameServerList()
-        {
-            if (gameServerButtons.Count == 0)
-            {
-                return;
-            }
-
-            foreach (var gameServerButton in gameServerButtons)
-            {
-                var gameServerButtonGameObject = gameServerButton.Value.gameObject;
-                Destroy(gameServerButtonGameObject);
-            }
-
-            gameServerButtons.Clear();
-        }*/
-
-        /*public void DeselectAllGameServerButtons()
-        {
-            foreach (var gameServerButton in gameServerButtons)
-            {
-                gameServerButton.Value.Selected = false;
-            }
-        }*/
-
-        private void OnGameServerButtonClicked(string serverName)
-        {
-            /*var gameServerButton = gameServerButtons[serverName];
-            var isSelected = gameServerButton.Selected;
-
-            DeselectAllGameServerButtons();
-
-            if (isSelected)
-            {
-                joinButton.interactable = false;
-                return;
-            }
-
-            gameServerButton.Selected = true;
-
-            joinButton.interactable = gameServerButton.Selected;*/
-
-            GameServerButtonClicked?.Invoke(serverName);
-        }
-
         private void OnJoinButtonClicked()
         {
             JoinButtonClicked?.Invoke();
@@ -132,16 +53,20 @@ namespace Scripts.UI.Windows
             RefreshButtonClicked?.Invoke();
         }
 
-        private void DisableAllButtons()
+        public void EnableJoinButton()
+        {
+            joinButton.interactable = true;
+        }
+
+        public void EnableRefreshButton()
+        {
+            refreshButton.interactable = true;
+        }
+
+        public void DisableAllButtons()
         {
             joinButton.interactable = false;
             refreshButton.interactable = false;
-        }
-
-        public void EnableAllButtons()
-        {
-            joinButton.interactable = false;
-            refreshButton.interactable = true;
         }
     }
 }
