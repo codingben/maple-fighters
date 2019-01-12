@@ -10,9 +10,15 @@ namespace Scripts.UI
 
         private void Awake()
         {
+            if (string.IsNullOrEmpty(titleText))
+            {
+                titleText = "Map Name";
+            }
+
             var mapSceneTitleText = UIElementsCreator.GetInstance()
                 .Create<MapSceneTitleText>();
             mapSceneTitleText.Text = titleText;
+
 
             Destroy(gameObject);
         }

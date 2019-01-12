@@ -19,6 +19,7 @@ namespace Scripts.UI.Windows
         private const KeyCode SecondarySendMessageKeyCode = KeyCode.KeypadEnter;
         private const KeyCode CloseMessageKeyCode = KeyCode.Escape;
 
+        [Header("Texts")]
         [SerializeField]
         private TextMeshProUGUI chatText;
 

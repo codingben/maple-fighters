@@ -14,6 +14,7 @@ namespace Scripts.UI.Windows
 
         public event Action DeleteCharacterButtonClicked;
 
+        [Header("Buttons")]
         [SerializeField]
         private Button startButton;
 
