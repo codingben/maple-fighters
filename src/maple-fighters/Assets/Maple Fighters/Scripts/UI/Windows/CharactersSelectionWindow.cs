@@ -9,15 +9,15 @@ namespace Scripts.UI.Windows
     [RequireComponent(typeof(UIFadeAnimation))]
     public class CharactersSelectionWindow : UIElement
     {
-        public event Action ChoosedClicked;
-
-        public event Action CancelClicked;
-
         public event Action KnightSelected;
 
         public event Action ArrowSelected;
 
         public event Action WizardSelected;
+
+        public event Action ChooseButtonClicked;
+
+        public event Action CancelButtonClicked;
 
         [Header("Buttons")]
         [SerializeField]
@@ -118,14 +118,14 @@ namespace Scripts.UI.Windows
 
             ResetSelectedClasses();
 
-            CancelClicked?.Invoke();
+            CancelButtonClicked?.Invoke();
         }
 
         private void OnChooseClicked()
         {
             Hide();
 
-            ChoosedClicked?.Invoke();
+            ChooseButtonClicked?.Invoke();
         }
 
         private void SetClassSelection(Class character)

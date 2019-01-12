@@ -88,8 +88,8 @@ namespace Scripts.UI.Controllers
 
         private void SubscribeToCharactersSelectionWindowEvents()
         {
-            charactersSelectionWindow.ChoosedClicked += OnChoosedClass;
-            charactersSelectionWindow.CancelClicked += OnCancelClicked;
+            charactersSelectionWindow.ChooseButtonClicked += OnChooseButtonClicked;
+            charactersSelectionWindow.CancelButtonClicked += OnCancelButtonClicked;
             charactersSelectionWindow.KnightSelected += OnKnightSelected;
             charactersSelectionWindow.ArrowSelected += OnArrowSelected;
             charactersSelectionWindow.WizardSelected += OnWizardSelected;
@@ -98,8 +98,8 @@ namespace Scripts.UI.Controllers
 
         private void UnsubscribeFromCharactersSelectionWindowEvents()
         {
-            charactersSelectionWindow.ChoosedClicked -= OnChoosedClass;
-            charactersSelectionWindow.CancelClicked -= OnCancelClicked;
+            charactersSelectionWindow.ChooseButtonClicked -= OnChooseButtonClicked;
+            charactersSelectionWindow.CancelButtonClicked -= OnCancelButtonClicked;
             charactersSelectionWindow.KnightSelected -= OnKnightSelected;
             charactersSelectionWindow.ArrowSelected -= OnArrowSelected;
             charactersSelectionWindow.WizardSelected -= OnWizardSelected;
@@ -108,14 +108,14 @@ namespace Scripts.UI.Controllers
 
         private void SubscribeToCharacterNameWindow()
         {
-            characterNameWindow.ConfirmClicked += OnConfirmClicked;
-            characterNameWindow.BackClicked += OnBackClicked;
+            characterNameWindow.ConfirmButtonClicked += OnConfirmClicked;
+            characterNameWindow.BackButtonClicked += OnBackButtonClicked;
         }
 
         private void UnsubscribeFromCharacterNameWindow()
         {
-            characterNameWindow.ConfirmClicked -= OnConfirmClicked;
-            characterNameWindow.BackClicked -= OnBackClicked;
+            characterNameWindow.ConfirmButtonClicked -= OnConfirmClicked;
+            characterNameWindow.BackButtonClicked -= OnBackButtonClicked;
         }
 
         private void OnConfirmClicked(string characterName)
@@ -171,17 +171,17 @@ namespace Scripts.UI.Controllers
             }
         }
 
-        private void OnBackClicked()
+        private void OnBackButtonClicked()
         {
             charactersSelectionWindow.Show();
         }
 
-        private void OnChoosedClass()
+        private void OnChooseButtonClicked()
         {
             ShowCharacterNamwWindow();
         }
 
-        private void OnCancelClicked()
+        private void OnCancelButtonClicked()
         {
             clickedCharacter.PlayIdleAnimationAction.Invoke();
         }

@@ -9,9 +9,9 @@ namespace Scripts.UI.Windows
     [RequireComponent(typeof(UIFadeAnimation))]
     public class CharacterNameWindow : UIElement
     {
-        public event Action<string> ConfirmClicked;
+        public event Action<string> ConfirmButtonClicked;
 
-        public event Action BackClicked;
+        public event Action BackButtonClicked;
 
         [Header("Configuration")]
         [SerializeField]
@@ -50,7 +50,7 @@ namespace Scripts.UI.Windows
         private void OnConfirmClicked()
         {
             var characterName = nameInputField.text;
-            ConfirmClicked?.Invoke(characterName);
+            ConfirmButtonClicked?.Invoke(characterName);
 
             Hide();
             ResetNameInputField();
@@ -61,7 +61,7 @@ namespace Scripts.UI.Windows
             Hide();
             ResetNameInputField();
 
-            BackClicked?.Invoke();
+            BackButtonClicked?.Invoke();
         }
 
         private void ResetNameInputField()
