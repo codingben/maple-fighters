@@ -1,8 +1,9 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Scripts.UI.Controllers
 {
-    [System.Serializable]
+    [Serializable]
     public class MarkSelection
     {
         public string Name;

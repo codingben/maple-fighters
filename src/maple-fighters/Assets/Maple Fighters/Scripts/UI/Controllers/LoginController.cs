@@ -1,172 +1,82 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using CommonTools.Coroutines;
-using CommonTools.Log;
-using Login.Common;
-using Scripts.Containers;
-using Scripts.Services;
-using Scripts.UI.Core;
 using Scripts.UI.Windows;
 using Scripts.Utils;
+using UI.Manager;
 using UnityEngine;
 
 namespace Scripts.UI.Controllers
 {
     public class LoginController : MonoSingleton<LoginController>
     {
-        [SerializeField] private int loadSceneIndex;
+        public event Action<string, string> LoginButtonClicked;
+
+        public event Action RegisterButtonClicked;
+
+        [SerializeField]
+        private int loadSceneIndex;
 
         private LoginWindow loginWindow;
-        private ExternalCoroutinesExecutor coroutinesExecutor;
 
         protected override void OnAwake()
         {
             base.OnAwake();
 
-            coroutinesExecutor = new ExternalCoroutinesExecutor();
-        }
-
-        private void Start()
-        {
-            CreateLoginWindow();
-        }
-
-        private void Update()
-        {
-            coroutinesExecutor.Update();
+            loginWindow = UIElementsCreator.GetInstance().Create<LoginWindow>();
+            loginWindow.LoginButtonClicked += OnLoginButtonClicked;
+            loginWindow.RegisterButtonClicked += OnRegisterButtonClicked;
+            // loginWindow.ShowNotice += (message) => Utils.ShowNotice(message, okButtonClicked: () => loginWindow.Show());
+            loginWindow.Show();
         }
 
         protected override void OnDestroying()
         {
             base.OnDestroying();
 
-            coroutinesExecutor.Dispose();
+            if (loginWindow != null)
+            {
+                loginWindow.LoginButtonClicked -= OnLoginButtonClicked;
+                loginWindow.RegisterButtonClicked -= OnRegisterButtonClicked;
 
-            RemoveLoginWindow();
-        }
-
-        private void CreateLoginWindow()
-        {
-            loginWindow = UserInterfaceContainer.GetInstance().Add<LoginWindow>();
-            loginWindow.LoginButtonClicked += OnLoginButtonClicked;
-            loginWindow.RegisterButtonClicked += OnRegisterButtonClicked;
-            loginWindow.ShowNotice += (message) => Utils.ShowNotice(message, okButtonClicked: () => loginWindow.Show());
-            loginWindow.Show();
-        }
-
-        private void RemoveLoginWindow()
-        {
-            loginWindow.LoginButtonClicked -= OnLoginButtonClicked;
-            loginWindow.RegisterButtonClicked -= OnRegisterButtonClicked;
-
-            UserInterfaceContainer.GetInstance()?.Remove(loginWindow);
+                Destroy(loginWindow.gameObject);
+            }
         }
 
         private void OnLoginButtonClicked(string email, string password)
         {
-            loginWindow.Hide(onFinished: () => Login(email, password));
-        }
+            if (loginWindow != null)
+            {
+                loginWindow.Hide();
+            }
 
-        private void Login(string email, string password)
-        {
-            var noticeWindow = Utils.ShowNotice(
+            /*var noticeWindow = Utils.ShowNotice(
                 message: "Logging in... Please wait.", 
                 okButtonClicked: () =>
                 {
                     loginWindow.Show();
                 });
-            noticeWindow.OkButton.interactable = false;
 
-            Action authenticateAction = () =>
-            {
-                var parameters = new AuthenticateRequestParameters(email, password.CreateSha512());
-                coroutinesExecutor.StartTask((yield) => Authenticate(yield, parameters), exception => ServiceConnectionProviderUtils.OnOperationFailed());
-            };
+            noticeWindow.OkButton.interactable = false;*/
 
             if (LoginConnectionProvider.GetInstance().IsConnected())
             {
-                authenticateAction.Invoke();
+                LoginButtonClicked?.Invoke(email, password);
             }
             else
             {
-                LoginConnectionProvider.GetInstance().Connect(onConnected: authenticateAction);
+                LoginConnectionProvider.GetInstance()
+                    .Connect(() => LoginButtonClicked?.Invoke(email, password));
             }
-        }
-
-        private async Task Authenticate(IYield yield, AuthenticateRequestParameters parameters)
-        {
-            var loginPeerLogic = ServiceContainer.LoginService.GetPeerLogic<ILoginPeerLogicAPI>().AssertNotNull();
-            var responseParameters = await loginPeerLogic.Authenticate(yield, parameters);
-            switch (responseParameters.Status)
-            {
-                case LoginStatus.Succeed:
-                {
-                    var noticeWindow = UserInterfaceContainer.GetInstance().Get<NoticeWindow>().AssertNotNull();
-                    noticeWindow.Message.text = "You have logged in successfully!";
-                    break;
-                }
-
-                case LoginStatus.UserNotExist:
-                {
-                    var noticeWindow = UserInterfaceContainer.GetInstance().Get<NoticeWindow>().AssertNotNull();
-                    noticeWindow.Message.text = "The user does not exist. Please check your typed email.";
-                    noticeWindow.OkButton.interactable = true;
-                    break;
-                }
-
-                case LoginStatus.PasswordIncorrect:
-                {
-                    var noticeWindow = UserInterfaceContainer.GetInstance().Get<NoticeWindow>().AssertNotNull();
-                    noticeWindow.Message.text = "The password is incorrect, please type it again.";
-                    noticeWindow.OkButton.interactable = true;
-                    break;
-                }
-
-                case LoginStatus.NonAuthorized:
-                {
-                    var noticeWindow = UserInterfaceContainer.GetInstance().Get<NoticeWindow>().AssertNotNull();
-                    noticeWindow.Message.text = "Authentication with login server failed.";
-                    noticeWindow.OkButton.interactable = true;
-                    break;
-                }
-
-                default:
-                {
-                    var noticeWindow = UserInterfaceContainer.GetInstance().Get<NoticeWindow>().AssertNotNull();
-                    noticeWindow.Message.text = "Something went wrong, please try again.";
-                    noticeWindow.OkButton.interactable = true;
-                    break;
-                }
-            }
-
-            if (responseParameters.Status == LoginStatus.Succeed)
-            {
-                OnLoginSucceed();
-            }
-        }
-
-        private void OnLoginSucceed()
-        {
-            coroutinesExecutor.StartCoroutine(ConnectToMasterServerAfterDelay());
-        }
-
-        private IEnumerator<IYieldInstruction> ConnectToMasterServerAfterDelay()
-        {
-            yield return new CommonTools.Coroutines.WaitForSeconds(0.25f);
-
-            GameServerSelectorConnectionProvider.GetInstance().Connect();
         }
 
         private void OnRegisterButtonClicked()
         {
-            loginWindow.Hide(onFinished: () => 
+            if (loginWindow != null)
             {
+                loginWindow.Hide();
                 loginWindow.ResetInputFields();
+            }
 
-                var registrationWindow = UserInterfaceContainer.GetInstance().Get<RegistrationWindow>().AssertNotNull();
-                registrationWindow.Show();
-            });
+            RegisterButtonClicked?.Invoke();
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using System.Linq;
-using Scripts.UI.Core;
 using Scripts.Utils;
+using UI.Manager;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -8,16 +8,24 @@ namespace Scripts.UI
 {
     public class BackgroundController : MonoSingleton<BackgroundController>
     {
-        [SerializeField] private int[] skipBuildIndexes;
+        [SerializeField]
+        private int[] skipBuildIndexes;
 
         private BackgroundImage backgroundImage;
         private BackgroundCharacters backgroundCharacters;
 
+        protected override void OnAwake()
+        {
+            base.OnAwake();
+
+            backgroundImage = UIElementsCreator.GetInstance()
+                .Create<BackgroundImage>(UILayer.Background);
+            backgroundCharacters = UIElementsCreator.GetInstance()
+                .Create<BackgroundCharacters>(UILayer.Background, UIIndex.End);
+        }
+
         private void Start()
         {
-            backgroundImage = UserInterfaceContainer.GetInstance().Add<BackgroundImage>(ViewType.Background);
-            backgroundCharacters = UserInterfaceContainer.GetInstance().Add<BackgroundCharacters>(ViewType.Background, Index.Last);
-
             SubscribeToSceneLoaded();
         }
 
@@ -40,16 +48,20 @@ namespace Scripts.UI
 
         private void OnSceneLoaded(Scene scene, LoadSceneMode loadSceneMode)
         {
-            var index = scene.buildIndex;
-            if (IsSkippableScene(index))
+            if (IsSkippableScene(scene.buildIndex))
             {
-                return;
+                if (backgroundImage != null)
+                {
+                    Destroy(backgroundImage.gameObject);
+                }
+
+                if (backgroundCharacters != null)
+                {
+                    Destroy(backgroundCharacters.gameObject);
+                }
+
+                Destroy(gameObject);
             }
-
-            UserInterfaceContainer.GetInstance()?.Remove(backgroundImage);
-            UserInterfaceContainer.GetInstance()?.Remove(backgroundCharacters);
-
-            Destroy(gameObject);
         }
 
         private bool IsSkippableScene(int index)

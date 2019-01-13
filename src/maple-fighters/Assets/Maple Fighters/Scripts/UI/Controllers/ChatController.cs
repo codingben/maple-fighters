@@ -1,80 +1,73 @@
-﻿using Chat.Common;
-using CommonTools.Log;
-using Scripts.Containers;
+﻿using System;
 using Scripts.Services;
-using Scripts.UI.Core;
 using Scripts.UI.Windows;
 using Scripts.Utils;
+using UI.Manager;
 
 namespace Scripts.UI.Controllers
 {
     public class ChatController : MonoSingleton<ChatController>
     {
-        private bool isChatWindowExists;
+        public event Action<string> MessageSent; 
+
+        private ChatWindow chatWindow;
+
+        protected override void OnAwake()
+        {
+            base.OnAwake();
+
+            chatWindow = UIElementsCreator.GetInstance().Create<ChatWindow>();
+            chatWindow.MessageAdded += OnMessageAdded;
+        }
 
         private void Start()
         {
-            CreateChatWindow();
-            Connect();
-        }
-
-        private void Connect()
-        {
             ChatConnectionProvider.GetInstance().Connect();
-        }
-
-        private void CreateChatWindow()
-        {
-            var chatWindow = UserInterfaceContainer.GetInstance().Add<ChatWindow>();
-            chatWindow.MessageAdded += OnMessageAdded;
-
-            isChatWindowExists = true;
-        }
-
-        private void RemoveChatWindow()
-        {
-            var chatWindow = UserInterfaceContainer.GetInstance()?.Get<ChatWindow>().AssertNotNull();
-            if (chatWindow != null)
-            {
-                chatWindow.MessageAdded -= OnMessageAdded;
-            }
-
-            UserInterfaceContainer.GetInstance()?.Remove(chatWindow);
-        }
-
-        public void OnNonAuthorized()
-        {
-            var chatWindow = UserInterfaceContainer.GetInstance().Get<ChatWindow>().AssertNotNull();
-            chatWindow.AddMessage("Authorization with chat server failed.", ChatMessageColor.Red);
-        }
-
-        public void OnConnectionClosed()
-        {
-            var chatWindow = UserInterfaceContainer.GetInstance()?.Get<ChatWindow>().AssertNotNull();
-            chatWindow?.AddMessage("A connection with chat server has been closed.", ChatMessageColor.Red);
-        }
-
-        public void OnAuthorized()
-        {
-            var chatWindow = UserInterfaceContainer.GetInstance().Get<ChatWindow>().AssertNotNull();
-            var chatPeerLogic = ServiceContainer.ChatService.GetPeerLogic<IChatPeerLogicAPI>().AssertNotNull();
-            chatPeerLogic.ChatMessageReceived.AddListener(parameters => chatWindow.AddMessage(parameters.Message));
         }
 
         protected override void OnDestroying()
         {
             base.OnDestroying();
 
-            if (isChatWindowExists)
+            if (chatWindow != null)
             {
-                RemoveChatWindow();
+                chatWindow.MessageAdded -= OnMessageAdded;
+
+                Destroy(chatWindow.gameObject);
+            }
+        }
+
+        public void OnNonAuthorized()
+        {
+            if (chatWindow != null)
+            {
+                chatWindow.AddMessage(
+                    "Authorization with chat server failed.",
+                    ChatMessageColor.Red);
+            }
+        }
+
+        public void OnConnectionClosed()
+        {
+            if (chatWindow != null)
+            {
+                chatWindow.AddMessage(
+                    "A connection with chat server has been closed.",
+                    ChatMessageColor.Red);
+            }
+        }
+        
+        public void MessageReceived(string message)
+        {
+            if (chatWindow != null)
+            {
+                chatWindow.AddMessage(message);
             }
         }
 
         private void OnMessageAdded(string message)
         {
-            var chatPeerLogic = ServiceContainer.ChatService.GetPeerLogic<IChatPeerLogicAPI>();
-            chatPeerLogic?.SendChatMessage(new ChatMessageRequestParameters(message));
+            MessageSent?.Invoke(message);
         }
     }
 }

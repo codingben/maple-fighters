@@ -64,5 +64,13 @@ namespace Scripts.UI.Windows
                 backgroundImage.gameObject.SetActive(true);
             }
         }
+
+        public void HideBackground()
+        {
+            if (backgroundImage != null)
+            {
+                backgroundImage.gameObject.SetActive(false);
+            }
+        }
     }
 }

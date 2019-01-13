@@ -1,8 +1,7 @@
 ﻿using System.Collections;
-using CommonTools.Log;
-using Scripts.UI.Core;
 using Scripts.UI.Windows;
 using Scripts.Utils;
+using UI.Manager;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
@@ -13,26 +12,49 @@ namespace Scripts.UI.Controllers
     {
         private const string MiniCameraTag = "Minimap Camera";
 
-        [SerializeField] private MarkSelection[] markSelections;
+        [SerializeField]
+        private MarkSelection[] markSelections;
 
-        private int curMarkLayer;
-        private Camera minimapCamera;
+        private int selectionIndex;
+        private new Camera camera;
+
         private MinimapWindow minimapWindow;
+        
+        protected override void OnAwake()
+        {
+            base.OnAwake();
+
+            var minimapCamera = GameObject.FindGameObjectWithTag(MiniCameraTag);
+            if (minimapCamera != null)
+            {
+                camera = minimapCamera.GetComponent<Camera>();
+            }
+
+            minimapWindow =
+                UIElementsCreator.GetInstance().Create<MinimapWindow>();
+        }
 
         private void Start()
         {
-            minimapCamera = GameObject.FindGameObjectWithTag(MiniCameraTag).GetComponent<Camera>();
-            minimapWindow = UserInterfaceContainer.GetInstance().Add<MinimapWindow>();
-
             SubscribeToEvents();
         }
 
         private void OnSceneLoaded(Scene scene, LoadSceneMode loadSceneMode)
         {
-            if (minimapCamera == null)
+            if (camera == null)
             {
-                minimapCamera = GameObject.FindGameObjectWithTag(MiniCameraTag).GetComponent<Camera>();
-                minimapCamera.cullingMask = markSelections[curMarkLayer].MarkLayerMask;
+                var minimapCamera =
+                    GameObject.FindGameObjectWithTag(MiniCameraTag);
+                if (minimapCamera != null)
+                {
+                    camera = minimapCamera.GetComponent<Camera>();
+
+                    if (camera != null)
+                    {
+                        camera.cullingMask =
+                            markSelections[selectionIndex].MarkLayerMask;
+                    }
+                }
             }
         }
 
@@ -64,29 +86,34 @@ namespace Scripts.UI.Controllers
 
             if (minimapWindow != null)
             {
-                UserInterfaceContainer.GetInstance()?.Remove(minimapWindow);
+                Destroy(minimapWindow.gameObject);
             }
         }
 
-        private void OnMarkSelectionChanged(int selection)
+        private void OnMarkSelectionChanged(int index)
         {
-            if (selection >= markSelections.Length)
+            if (index < markSelections.Length)
             {
-                LogUtils.Log("You have selected a mark which is out of range of a mark selections.", LogMessageType.Error);
-                return;
+                selectionIndex = index;
+
+                if (camera != null)
+                {
+                    camera.cullingMask =
+                        markSelections[index].MarkLayerMask;
+                }
+
+                StartCoroutine(SetSelectedGameObjectToNull());
             }
-
-            curMarkLayer = selection;
-            minimapCamera.cullingMask = markSelections[selection].MarkLayerMask;
-
-            StartCoroutine(SetSelectedGameObjectToNull());
         }
 
         private IEnumerator SetSelectedGameObjectToNull()
         {
             yield return new WaitForEndOfFrame();
 
-            EventSystem.current.SetSelectedGameObject(null);
+            if (EventSystem.current != null)
+            {
+                EventSystem.current.SetSelectedGameObject(null);
+            }
         }
     }
 }
