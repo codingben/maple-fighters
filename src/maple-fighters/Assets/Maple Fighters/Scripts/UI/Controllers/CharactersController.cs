@@ -17,7 +17,7 @@ namespace Scripts.UI.Controllers
 {
     public class CharactersController : MonoSingleton<CharactersController>
     {
-        private readonly ClickableCharacter[] characters = { null, null, null };
+        private readonly ClickableCharacterImage[] characters = { null, null, null };
         private ExternalCoroutinesExecutor coroutinesExecutor;
 
         protected override void OnAwake()
@@ -109,7 +109,7 @@ namespace Scripts.UI.Controllers
         {
             var index = (int)character.Index;
             var characterGameObject = CreateCharacterGameObject(character);
-            var characterComponent = characterGameObject.GetComponent<ClickableCharacter>().AssertNotNull();
+            var characterComponent = characterGameObject.GetComponent<ClickableCharacterImage>().AssertNotNull();
             characterComponent.SetCharacter(index, character);
             characterComponent.CharacterClicked += OnCharacterClicked;
 
@@ -151,7 +151,7 @@ namespace Scripts.UI.Controllers
             PlayWalkCharacterAnimation(characterIndex);
         }
 
-        private void ShowCharacterSelectionOptionsWindow(ClickableCharacter clickableCharacter, CharacterParameters character, int characterIndex)
+        private void ShowCharacterSelectionOptionsWindow(ClickableCharacterImage clickableCharacter, CharacterParameters character, int characterIndex)
         {
             var characterSelectionOptionsWindow = UserInterfaceContainer.GetInstance().Add<CharacterSelectionOptionsWindow>().AssertNotNull();
             characterSelectionOptionsWindow.StartButtonClicked += () => OnStartButtonClicked(characterIndex);
@@ -237,9 +237,9 @@ namespace Scripts.UI.Controllers
             screenFade.Show(onFinished: enterScene);
         }
 
-        private void OnCreateCharacterButtonClicked(ClickableCharacter clickableCharacter, int characterIndex)
+        private void OnCreateCharacterButtonClicked(ClickableCharacterImage clickableCharacter, int characterIndex)
         {
-            CharactersSelectionController.GetInstance().ShowCharactersSelectionWindow(clickableCharacter, characterIndex);
+            CharacterSelectionController.GetInstance().ShowCharacterSelectionWindow(clickableCharacter, characterIndex);
         }
 
         private void OnDeleteCharacterButtonClicked(int characterIndex)

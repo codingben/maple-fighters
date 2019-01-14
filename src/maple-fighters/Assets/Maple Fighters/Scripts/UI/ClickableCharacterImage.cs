@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 namespace Scripts.UI
 {
     [RequireComponent(typeof(Animator), typeof(UIFadeAnimation))]
-    public class ClickableCharacter : UIElement, IPointerClickHandler
+    public class ClickableCharacterImage : UIElement, IPointerClickHandler
     {
         public event Action<CharacterParameters, int> CharacterClicked;
 
@@ -44,19 +44,25 @@ namespace Scripts.UI
 
         public void OnPointerClick(PointerEventData eventData)
         {
-            PlayWalkAnimation();
-
             CharacterClicked?.Invoke(character.GetValueOrDefault(), index);
         }
 
-        private void PlayIdleAnimation()
+        public void PlayAnimation(UiCharacterAnimation characterAnimation)
         {
-            animator.SetBool("Walk", false);
-        }
+            switch (characterAnimation)
+            {
+                case UiCharacterAnimation.Idle:
+                {
+                    animator.SetBool("Walk", false);
+                    break;
+                }
 
-        private void PlayWalkAnimation()
-        {
-            animator.SetBool("Walk", true);
+                case UiCharacterAnimation.Walk:
+                {
+                    animator.SetBool("Walk", true);
+                    break;
+                }
+            }
         }
     }
 }

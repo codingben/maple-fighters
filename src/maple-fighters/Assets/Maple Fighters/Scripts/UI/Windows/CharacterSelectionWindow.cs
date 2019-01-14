@@ -1,4 +1,5 @@
 ﻿using System;
+using Game.Common;
 using TMPro;
 using UI.Manager;
 using UnityEngine;
@@ -7,7 +8,7 @@ using UnityEngine.UI;
 namespace Scripts.UI.Windows
 {
     [RequireComponent(typeof(UIFadeAnimation))]
-    public class CharactersSelectionWindow : UIElement
+    public class CharacterSelectionWindow : UIElement
     {
         public event Action KnightSelected;
 
@@ -54,24 +55,6 @@ namespace Scripts.UI.Windows
 
         [SerializeField]
         private TextMeshProUGUI wizardName;
-
-        private enum Class
-        {
-            /// <summary>
-            /// The knight.
-            /// </summary>
-            Knight,
-
-            /// <summary>
-            /// The arrow.
-            /// </summary>
-            Arrow,
-
-            /// <summary>
-            /// The wizard.
-            /// </summary>
-            Wizard
-        }
 
         private void Start()
         {
@@ -131,6 +114,8 @@ namespace Scripts.UI.Windows
 
         private void OnChooseButtonClicked()
         {
+            DisableChooseButton();
+
             Hide();
 
             ChooseButtonClicked?.Invoke();
@@ -138,41 +123,53 @@ namespace Scripts.UI.Windows
 
         private void OnCancelButtonClicked()
         {
+            DisableChooseButton();
+
             Hide();
 
-            ResetSelectedClasses();
+            ResetSelectedCharacterClass();
 
             CancelButtonClicked?.Invoke();
         }
 
         private void OnKnightSelected()
         {
-            SelectClass(Class.Knight);
+            EnableChooseButton();
+
+            ResetSelectedCharacterClass();
+
+            SelectCharacterClass(CharacterClasses.Knight);
 
             KnightSelected?.Invoke();
         }
 
         private void OnArrowSelected()
         {
-            SelectClass(Class.Arrow);
+            EnableChooseButton();
+
+            ResetSelectedCharacterClass();
+
+            SelectCharacterClass(CharacterClasses.Arrow);
 
             ArrowSelected?.Invoke();
         }
 
         private void OnWizardSelected()
         {
-            SelectClass(Class.Wizard);
+            EnableChooseButton();
+
+            ResetSelectedCharacterClass();
+
+            SelectCharacterClass(CharacterClasses.Wizard);
 
             WizardSelected?.Invoke();
         }
 
-        private void SelectClass(Class character)
+        private void SelectCharacterClass(CharacterClasses character)
         {
-            ResetSelectedClasses();
-
             switch (character)
             {
-                case Class.Knight:
+                case CharacterClasses.Knight:
                 {
                     if (knightSelectedImage != null)
                     {
@@ -187,7 +184,7 @@ namespace Scripts.UI.Windows
                     break;
                 }
 
-                case Class.Arrow:
+                case CharacterClasses.Arrow:
                 {
                     if (arrowSelectedImage != null)
                     {
@@ -202,7 +199,7 @@ namespace Scripts.UI.Windows
                     break;
                 }
 
-                case Class.Wizard:
+                case CharacterClasses.Wizard:
                 {
                     if (wizardSelectedImage != null)
                     {
@@ -217,20 +214,10 @@ namespace Scripts.UI.Windows
                     break;
                 }
             }
-
-            if (chooseButton != null)
-            {
-                chooseButton.interactable = true;
-            }
         }
 
-        public void ResetSelectedClasses()
+        private void ResetSelectedCharacterClass()
         {
-            if (chooseButton != null)
-            {
-                chooseButton.interactable = false;
-            }
-
             if (knightName != null)
             {
                 knightName.fontStyle = FontStyles.Normal;
@@ -259,6 +246,22 @@ namespace Scripts.UI.Windows
             if (wizardSelectedImage != null)
             {
                 wizardSelectedImage.SetActive(false);
+            }
+        }
+
+        private void EnableChooseButton()
+        {
+            if (chooseButton != null)
+            {
+                chooseButton.interactable = true;
+            }
+        }
+
+        private void DisableChooseButton()
+        {
+            if (chooseButton != null)
+            {
+                chooseButton.interactable = false;
             }
         }
     }
