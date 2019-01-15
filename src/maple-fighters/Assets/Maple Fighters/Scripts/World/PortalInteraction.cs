@@ -1,5 +1,4 @@
-﻿using CommonTools.Log;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Scripts.World
 {
@@ -11,21 +10,12 @@ namespace Scripts.World
         {
             if (collider.transform.CompareTag(PortalTag))
             {
-                var portalController = 
-                    collider.transform.GetComponent<PortalTeleportation>()
-                        .AssertNotNull();
-                portalController.StartInteraction();
-            }
-        }
-
-        private void OnTriggerExit2D(Collider2D collider)
-        {
-            if (collider.transform.CompareTag(PortalTag))
-            {
-                var portalController = 
-                    collider.transform.GetComponent<PortalTeleportation>()
-                        .AssertNotNull();
-                portalController.StopInteraction();
+                var portalController =
+                    collider.transform.GetComponent<PortalTeleportation>();
+                if (portalController != null)
+                {
+                    portalController.Teleport();
+                }
             }
         }
     }
