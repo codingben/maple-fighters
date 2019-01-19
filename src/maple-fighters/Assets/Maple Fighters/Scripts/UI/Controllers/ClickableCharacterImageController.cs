@@ -1,23 +1,36 @@
-﻿namespace Scripts.UI.Controllers
+﻿using UnityEngine;
+
+namespace Scripts.UI.Controllers
 {
-    public class ClickableCharacterImageController
+    public class ClickableCharacterImageController : MonoBehaviour
     {
         private ClickableCharacterImage characterImage;
 
-        public void SetCharacterImage(ClickableCharacterImage characterImage)
+        private void Start()
         {
-            this.characterImage = characterImage;
+            CharactersController.GetInstance().CharacterSelected += CharacterSelected;
+            CharacterSelectionController.GetInstance().CharacterChosen += CharacterDeselected;
+            CharacterSelectionController.GetInstance().CharacterCancelled += CharacterDeselected;
         }
 
-        public void CharacterSelected()
+        private void OnDestroy()
         {
+            CharactersController.GetInstance().CharacterSelected -= CharacterSelected;
+            CharacterSelectionController.GetInstance().CharacterChosen -= CharacterDeselected;
+            CharacterSelectionController.GetInstance().CharacterCancelled -= CharacterDeselected;
+        }
+
+        private void CharacterSelected(ClickableCharacterImage characterImage)
+        {
+            this.characterImage = characterImage;
+
             if (characterImage != null)
             {
                 characterImage.PlayAnimation(UiCharacterAnimation.Walk);
             }
         }
 
-        public void CharacterDeselected()
+        private void CharacterDeselected()
         {
             if (characterImage != null)
             {

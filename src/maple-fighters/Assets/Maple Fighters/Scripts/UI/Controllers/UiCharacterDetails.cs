@@ -1,26 +1,31 @@
-﻿using Game.Common;
-
-namespace Scripts.UI.Controllers
+﻿namespace Scripts.UI
 {
     public struct UiCharacterDetails
     {
         private string characterName;
-        private CharacterIndex characterIndex;
-        private CharacterClasses characterClass;
+        private UiCharacterIndex uiCharacterIndex;
+        private UiCharacterClass uiCharacterClass;
+        private UiMapIndex uiMapIndex;
+        private bool hasCharacter;
 
         public void SetCharacterName(string characterName)
         {
             this.characterName = characterName;
         }
 
-        public void SetCharacterIndex(CharacterIndex characterIndex)
+        public void SetCharacterIndex(UiCharacterIndex uiCharacterIndex)
         {
-            this.characterIndex = characterIndex;
+            this.uiCharacterIndex = uiCharacterIndex;
         }
 
-        public void SetCharacterClass(CharacterClasses characterClass)
+        public void SetCharacterClass(UiCharacterClass uiCharacterClass)
         {
-            this.characterClass = characterClass;
+            this.uiCharacterClass = uiCharacterClass;
+        }
+
+        public void SetHasCharacter(bool hasCharacter)
+        {
+            this.hasCharacter = hasCharacter;
         }
 
         public string GetCharacterName()
@@ -28,14 +33,19 @@ namespace Scripts.UI.Controllers
             return characterName;
         }
 
-        public CharacterIndex GetCharacterIndex()
+        public UiCharacterIndex GetCharacterIndex()
         {
-            return characterIndex;
+            return uiCharacterIndex;
         }
 
-        private CharacterClasses GetCharacterClass()
+        public UiCharacterClass GetCharacterClass()
         {
-            return characterClass;
+            return uiCharacterClass;
+        }
+
+        public bool HasCharacter()
+        {
+            return hasCharacter;
         }
     }
 }

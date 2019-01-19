@@ -85,27 +85,27 @@ namespace Scripts.UI.Windows
             DeleteCharacterButtonClicked?.Invoke();
         }
 
-        public void StartButtonInteraction(bool interctable)
+        public void EnableOrDisableStartButton(bool interactable)
         {
             if (startButton != null)
             {
-                startButton.interactable = interctable;
+                startButton.interactable = interactable;
             }
         }
 
-        public void CreateCharacterButtonInteraction(bool interctable)
+        public void EnableOrDisableCreateCharacterButton(bool interactable)
         {
             if (createCharacterButton != null)
             {
-                createCharacterButton.interactable = interctable;
+                createCharacterButton.interactable = interactable;
             }
         }
 
-        public void DeleteCharacterButtonInteraction(bool interctable)
+        public void EnableOrDisableDeleteCharacterButton(bool interactable)
         {
             if (deleteCharacterButton != null)
             {
-                deleteCharacterButton.interactable = interctable;
+                deleteCharacterButton.interactable = interactable;
             }
         }
     }

@@ -24,7 +24,6 @@ namespace Scripts.UI.Controllers
             loginWindow = UIElementsCreator.GetInstance().Create<LoginWindow>();
             loginWindow.LoginButtonClicked += OnLoginButtonClicked;
             loginWindow.RegisterButtonClicked += OnRegisterButtonClicked;
-            // loginWindow.ShowNotice += (message) => Utils.ShowNotice(message, okButtonClicked: () => loginWindow.Show());
             loginWindow.Show();
         }
 
@@ -47,15 +46,6 @@ namespace Scripts.UI.Controllers
             {
                 loginWindow.Hide();
             }
-
-            /*var noticeWindow = Utils.ShowNotice(
-                message: "Logging in... Please wait.", 
-                okButtonClicked: () =>
-                {
-                    loginWindow.Show();
-                });
-
-            noticeWindow.OkButton.interactable = false;*/
 
             if (LoginConnectionProvider.GetInstance().IsConnected())
             {

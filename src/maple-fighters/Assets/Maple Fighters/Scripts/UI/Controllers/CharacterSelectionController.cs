@@ -1,5 +1,4 @@
 ﻿using System;
-using Game.Common;
 using Scripts.UI.Windows;
 using Scripts.Utils;
 using UI.Manager;
@@ -8,19 +7,17 @@ namespace Scripts.UI.Controllers
 {
     public class CharacterSelectionController : MonoSingleton<CharacterSelectionController>
     {
-        public event Action<UiCharacterDetails> CharacterChosen;
+        public event Action CharacterChosen;
 
-        private UiCharacterDetails characterDetails;
+        public event Action CharacterCancelled;
 
+        private UiCharacterDetails uiCharacterDetails;
         private CharacterSelectionWindow characterSelectionWindow;
-        private ClickableCharacterImageController clickableCharacterController;
 
         protected override void OnAwake()
         {
             base.OnAwake();
-
-            clickableCharacterController = new ClickableCharacterImageController();
-
+            
             SubscribeToCharacterNameEvents();
         }
 
@@ -30,11 +27,11 @@ namespace Scripts.UI.Controllers
 
             if (characterSelectionWindow != null)
             {
-                characterSelectionWindow.ChooseButtonClicked += OnChooseButtonClicked;
-                characterSelectionWindow.CancelButtonClicked += OnCancelButtonClicked;
-                characterSelectionWindow.KnightSelected += OnKnightSelected;
-                characterSelectionWindow.ArrowSelected += OnArrowSelected;
-                characterSelectionWindow.WizardSelected += OnWizardSelected;
+                characterSelectionWindow.ChooseButtonClicked -= OnChooseButtonClicked;
+                characterSelectionWindow.CancelButtonClicked -= OnCancelButtonClicked;
+                characterSelectionWindow.KnightSelected -= OnKnightSelected;
+                characterSelectionWindow.ArrowSelected -= OnArrowSelected;
+                characterSelectionWindow.WizardSelected -= OnWizardSelected;
 
                 Destroy(characterSelectionWindow.gameObject);
             }
@@ -58,21 +55,14 @@ namespace Scripts.UI.Controllers
                 OnBackButtonClicked;
         }
 
-        public void SetClickableCharacterDetails(ClickableCharacterImage characterImage, int characterIndex)
+        public void SetCharacterDetails(UiCharacterDetails uiCharacterDetails)
         {
-            clickableCharacterController.SetCharacterImage(characterImage);
-            clickableCharacterController.CharacterSelected();
-
-            characterDetails.SetCharacterIndex((CharacterIndex)characterIndex);
+            this.uiCharacterDetails = uiCharacterDetails;
         }
 
-        public void CreateOrShowCharacterSelectionWindow()
+        public void ShowCharacterSelectionWindow()
         {
-            if (characterSelectionWindow != null)
-            {
-                characterSelectionWindow.Show();
-            }
-            else
+            if (characterSelectionWindow == null)
             {
                 characterSelectionWindow = UIElementsCreator.GetInstance()
                     .Create<CharacterSelectionWindow>();
@@ -81,15 +71,16 @@ namespace Scripts.UI.Controllers
                 characterSelectionWindow.KnightSelected += OnKnightSelected;
                 characterSelectionWindow.ArrowSelected += OnArrowSelected;
                 characterSelectionWindow.WizardSelected += OnWizardSelected;
-                characterSelectionWindow.Show();
             }
+
+            characterSelectionWindow.Show();
         }
 
         private void OnConfirmButtonClicked(string characterName)
         {
-            characterDetails.SetCharacterName(characterName);
+            uiCharacterDetails.SetCharacterName(characterName);
 
-            CharacterChosen?.Invoke(characterDetails);
+            CharacterChosen?.Invoke();
         }
 
         private void OnBackButtonClicked()
@@ -104,27 +95,27 @@ namespace Scripts.UI.Controllers
 
         private void OnCancelButtonClicked()
         {
-            clickableCharacterController.CharacterDeselected();
+            CharacterCancelled?.Invoke();
         }
 
         private void OnKnightSelected()
         {
-            characterDetails.SetCharacterClass(CharacterClasses.Knight);
+            uiCharacterDetails.SetCharacterClass(UiCharacterClass.Knight);
         }
 
         private void OnArrowSelected()
         {
-            characterDetails.SetCharacterClass(CharacterClasses.Arrow);
+            uiCharacterDetails.SetCharacterClass(UiCharacterClass.Arrow);
         }
 
         private void OnWizardSelected()
         {
-            characterDetails.SetCharacterClass(CharacterClasses.Wizard);
+            uiCharacterDetails.SetCharacterClass(UiCharacterClass.Wizard);
         }
 
         public UiCharacterDetails GetCharacterDetails()
         {
-            return characterDetails;
+            return uiCharacterDetails;
         }
     }
 }

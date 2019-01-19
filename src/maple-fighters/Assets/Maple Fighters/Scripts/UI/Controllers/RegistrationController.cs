@@ -21,7 +21,6 @@ namespace Scripts.UI.Controllers
                 .Create<RegistrationWindow>();
             registrationWindow.RegisterButtonClicked += OnRegisterButtonClicked;
             registrationWindow.BackButtonClicked += OnBackButtonClicked;
-            // registrationWindow.ShowNotice += (message) => Utils.ShowNotice(message, okButtonClicked: () => registrationWindow.Show());
         }
         
         protected override void OnDestroying()
@@ -39,15 +38,6 @@ namespace Scripts.UI.Controllers
 
         private void OnRegisterButtonClicked(UiRegistrationDetails uiRegistrationDetails)
         {
-            /*var noticeWindow = Utils.ShowNotice(
-                message: "Registration is in a process.. Please wait.", 
-                okButtonClicked: () =>
-                {
-                    registrationWindow.Show();
-                });
-
-            noticeWindow.OkButton.interactable = false;*/
-
             if (RegistrationConnectionProvider.GetInstance().IsConnected())
             {
                 RegisterButtonClicked?.Invoke(uiRegistrationDetails);

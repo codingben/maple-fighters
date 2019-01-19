@@ -1,5 +1,5 @@
 ﻿using System;
-using Game.Common;
+using TMPro;
 using UI.Manager;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -9,11 +9,12 @@ namespace Scripts.UI
     [RequireComponent(typeof(Animator), typeof(UIFadeAnimation))]
     public class ClickableCharacterImage : UIElement, IPointerClickHandler
     {
-        public event Action<CharacterParameters, int> CharacterClicked;
+        public event Action<UiCharacterDetails> CharacterClicked;
 
-        private int index;
-        private CharacterParameters? character;
+        [Header("Text"), SerializeField]
+        private TextMeshProUGUI characterNameText;
 
+        private UiCharacterDetails uiCharacterDetails;
         private Animator animator;
 
         private void Awake()
@@ -36,15 +37,22 @@ namespace Scripts.UI
             Destroy(gameObject);
         }
 
-        public void SetCharacter(int index, CharacterParameters character)
+        public void SetCharacterDetails(UiCharacterDetails uiCharacterDetails)
         {
-            this.index = index;
-            this.character = character;
+            this.uiCharacterDetails = uiCharacterDetails;
+        }
+
+        public void SetCharacterName(string name)
+        {
+            if (characterNameText != null)
+            {
+                characterNameText.text = name;
+            }
         }
 
         public void OnPointerClick(PointerEventData eventData)
         {
-            CharacterClicked?.Invoke(character.GetValueOrDefault(), index);
+            CharacterClicked?.Invoke(uiCharacterDetails);
         }
 
         public void PlayAnimation(UiCharacterAnimation characterAnimation)
@@ -63,6 +71,11 @@ namespace Scripts.UI
                     break;
                 }
             }
+        }
+
+        public UiCharacterDetails GetCharacterDetails()
+        {
+            return uiCharacterDetails;
         }
     }
 }
