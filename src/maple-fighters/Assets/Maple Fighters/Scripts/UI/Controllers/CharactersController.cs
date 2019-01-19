@@ -2,7 +2,7 @@
 using Scripts.UI.Windows;
 using Scripts.Utils;
 using UI.Manager;
-using UiManagerUtils = UI.Manager.Utils;
+using UIManagerUtils = UI.Manager.Utils;
 
 namespace Scripts.UI.Controllers
 {
@@ -52,8 +52,8 @@ namespace Scripts.UI.Controllers
 
         public void CreateCharacter(UiCharacterDetails uiCharacterDetails)
         {
-            var characterGameObject = 
-                UiManagerUtils.LoadAndCreateGameObject(GetCharacterPath(uiCharacterDetails));
+            var characterGameObject =
+                UIManagerUtils.LoadAndCreateGameObject(GetCharacterPath(uiCharacterDetails));
             var clickableCharacterImage = 
                 characterGameObject.GetComponent<ClickableCharacterImage>();
             if (clickableCharacterImage != null)

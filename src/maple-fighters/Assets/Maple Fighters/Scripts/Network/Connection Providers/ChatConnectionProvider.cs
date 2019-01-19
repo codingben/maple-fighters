@@ -3,12 +3,7 @@ using Authorization.Client.Common;
 using Chat.Common;
 using CommonCommunicationInterfaces;
 using CommonTools.Coroutines;
-using CommonTools.Log;
 using Scripts.Containers;
-using Scripts.UI;
-using Scripts.UI.Controllers;
-using Scripts.UI.Core;
-using Scripts.UI.Windows;
 
 namespace Scripts.Services
 {
@@ -24,14 +19,12 @@ namespace Scripts.Services
 
         protected override void OnPreConnection()
         {
-            var chatWindow = UserInterfaceContainer.GetInstance().Get<ChatWindow>().AssertNotNull();
-            chatWindow.AddMessage("Connecting to a chat server...", ChatMessageColor.Green);
+            // TODO: Add message: "Connecting to a chat server..."
         }
 
         protected override void OnConnectionFailed()
         {
-            var chatWindow = UserInterfaceContainer.GetInstance().Get<ChatWindow>().AssertNotNull();
-            chatWindow.AddMessage("Could not connect to a chat server.", ChatMessageColor.Red);
+            // TODO: Add message: "Could not connect to a chat server."
         }
 
         protected override void OnConnectionEstablished()
@@ -45,13 +38,13 @@ namespace Scripts.Services
 
             if (authorizationStatus == AuthorizationStatus.Succeed)
             {
-                ChatController.GetInstance()?.OnConnectionClosed();
+                // TODO: Add message: "Could not connect to a chat server."
             }
         }
 
         protected override Task<AuthorizeResponseParameters> Authorize(IYield yield, AuthorizeRequestParameters parameters)
         {
-            var authorizationPeerLogic = GetServiceBase().GetPeerLogic<IAuthorizationPeerLogicAPI>().AssertNotNull();
+            var authorizationPeerLogic = GetServiceBase().GetPeerLogic<IAuthorizationPeerLogicAPI>();
             return authorizationPeerLogic.Authorize(yield, parameters);
         }
 
@@ -62,17 +55,14 @@ namespace Scripts.Services
 
         protected override void OnNonAuthorized()
         {
-            ChatController.GetInstance()?.OnNonAuthorized();
+            // TODO: Add message: "Authorization with chat server failed."
         }
 
         protected override void OnAuthorized()
         {
-            var chatWindow = UserInterfaceContainer.GetInstance().Get<ChatWindow>().AssertNotNull();
-            chatWindow.AddMessage("Connected to a chat server successfully.", ChatMessageColor.Green);
-
             authorizationStatus = AuthorizationStatus.Succeed;
 
-            ChatController.GetInstance().OnAuthorized();
+            // TODO: Add message: "Connected to a chat server successfully."
         }
 
         protected override void SetPeerLogicAfterAuthorization()

@@ -36,28 +36,8 @@ namespace Scripts.UI.Controllers
                 Destroy(chatWindow.gameObject);
             }
         }
-
-        public void OnNonAuthorized()
-        {
-            if (chatWindow != null)
-            {
-                chatWindow.AddMessage(
-                    "Authorization with chat server failed.",
-                    ChatMessageColor.Red);
-            }
-        }
-
-        public void OnConnectionClosed()
-        {
-            if (chatWindow != null)
-            {
-                chatWindow.AddMessage(
-                    "A connection with chat server has been closed.",
-                    ChatMessageColor.Red);
-            }
-        }
         
-        public void MessageReceived(string message)
+        public void OnMessageReceived(string message)
         {
             if (chatWindow != null)
             {
