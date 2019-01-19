@@ -3,19 +3,12 @@ using System.Threading.Tasks;
 using Authorization.Client.Common;
 using CommonCommunicationInterfaces;
 using CommonTools.Coroutines;
-using CommonTools.Log;
 using CommunicationHelper;
 using Game.Common;
 using Scripts.Containers;
-using Scripts.UI.Controllers;
-using Scripts.UI.Core;
-using Scripts.UI.Windows;
-using Scripts.Utils;
 
 namespace Scripts.Services
 {
-    using Utils = UI.Utils;
-
     public class GameConnectionProvider : ServiceConnectionProviderBase<GameConnectionProvider>
     {
         private Action onAuthorized;
@@ -33,21 +26,13 @@ namespace Scripts.Services
 
         protected override void OnPreConnection()
         {
-            var noticeWindow = Utils.ShowNotice($"Connecting to the {serverName} server...", null);
-            noticeWindow.OkButton.interactable = false;
+            // TODO: Show notice: "Connecting to the {serverName} server..."
         }
 
         protected override void OnConnectionFailed()
         {
-            Action onButtonClicked = delegate 
-            {
-                GameServerSelectorController.GetInstance().ShowGameServerSelectorUI();
-            };
-
-            var noticeWindow = UserInterfaceContainer.GetInstance().Get<NoticeWindow>().AssertNotNull();
-            noticeWindow.Message.text = $"Could not connect to the {serverName} server.";
-            noticeWindow.OkButton.interactable = true;
-            noticeWindow.OkButtonClickedAction = onButtonClicked;
+            // TODO: Show notice: "Could not connect to the {serverName} server."
+            // TODO: Ok: ShowGameServerSelectorUI()
         }
 
         protected override void OnConnectionEstablished()
@@ -76,14 +61,14 @@ namespace Scripts.Services
 
         private void ShowConnectionTimeout()
         {
-            FocusStateController.GetInstance()?.SetState(FocusState.UI);
-
-            Utils.ShowNotice("The connection has timed out.", SavedGameObjectsUtils.GetInstance().GoBackToLogin, true, Index.Last);
+            // TODO: FocusStateController.GetInstance().SetState(FocusState.UI);
+            // TODO: Show notice: "The connection has timed out."
+            // TODO: Ok: GoBackToLogin()
         }
 
         protected override Task<AuthorizeResponseParameters> Authorize(IYield yield, AuthorizeRequestParameters parameters)
         {
-            var authorizationPeerLogic = GetServiceBase().GetPeerLogic<IAuthorizationPeerLogicAPI>().AssertNotNull();
+            var authorizationPeerLogic = GetServiceBase().GetPeerLogic<IAuthorizationPeerLogicAPI>();
             return authorizationPeerLogic.Authorize(yield, parameters);
         }
 
@@ -94,20 +79,12 @@ namespace Scripts.Services
 
         protected override void OnNonAuthorized()
         {
-            var noticeWindow = UserInterfaceContainer.GetInstance()?.Get<NoticeWindow>();
-            if (noticeWindow != null)
-            {
-                noticeWindow.Message.text = $"Authorization with {serverName} server failed.";
-                noticeWindow.OkButton.interactable = true;
-                noticeWindow.OkButtonClickedAction = SavedGameObjectsUtils.GetInstance().GoBackToLogin;
-            }
+            // TODO: Show notice: $"Authorization with {serverName} server failed."
+            // TODO: Ok: GoBackToLogin()
         }
 
         protected override void OnAuthorized()
         {
-            var noticeWindow = UserInterfaceContainer.GetInstance().Get<NoticeWindow>().AssertNotNull();
-            noticeWindow.Hide();
-
             authorizationStatus = AuthorizationStatus.Succeed;
 
             onAuthorized.Invoke();

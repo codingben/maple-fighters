@@ -2,14 +2,9 @@
 using Authorization.Client.Common;
 using CommonCommunicationInterfaces;
 using CommonTools.Coroutines;
-using CommonTools.Log;
 using CommunicationHelper;
 using GameServerProvider.Client.Common;
 using Scripts.Containers;
-using Scripts.UI.Controllers;
-using Scripts.UI.Core;
-using Scripts.UI.Windows;
-using Scripts.Utils;
 
 namespace Scripts.Services
 {
@@ -25,16 +20,13 @@ namespace Scripts.Services
 
         protected override void OnPreConnection()
         {
-            var noticeWindow = UserInterfaceContainer.GetInstance().Get<NoticeWindow>().AssertNotNull();
-            noticeWindow.Message.text = "Connecting to master server...";
+            // TODO: Show notice: "Connecting to master server..."
         }
 
         protected override void OnConnectionFailed()
         {
-            var noticeWindow = UserInterfaceContainer.GetInstance().Get<NoticeWindow>().AssertNotNull();
-            noticeWindow.Message.text = "Could not connect to master server.";
-            noticeWindow.OkButton.interactable = true;
-            noticeWindow.OkButtonClickedAction = SavedGameObjectsUtils.GetInstance().GoBackToLogin;
+            // TODO: Show notice: "Could not connect to master server."
+            // TODO: Ok: GoBackToLogin()
         }
 
         protected override void OnConnectionEstablished()
@@ -63,12 +55,13 @@ namespace Scripts.Services
 
         private void ShowConnectionTimeout()
         {
-            UI.Utils.ShowNotice("The connection has timed out.", SavedGameObjectsUtils.GetInstance().GoBackToLogin, true, Index.Last);
+            // TODO: Show notice: "The connection has timed out."
+            // TODO: Ok: GoBackToLogin()
         }
 
         protected override Task<AuthorizeResponseParameters> Authorize(IYield yield, AuthorizeRequestParameters parameters)
         {
-            var authorizationPeerLogic = GetServiceBase().GetPeerLogic<IAuthorizationPeerLogicAPI>().AssertNotNull();
+            var authorizationPeerLogic = GetServiceBase().GetPeerLogic<IAuthorizationPeerLogicAPI>();
             return authorizationPeerLogic.Authorize(yield, parameters);
         }
 
@@ -79,20 +72,15 @@ namespace Scripts.Services
 
         protected override void OnNonAuthorized()
         {
-            var noticeWindow = UserInterfaceContainer.GetInstance().Get<NoticeWindow>().AssertNotNull();
-            noticeWindow.Message.text = "Authorization with master server failed.";
-            noticeWindow.OkButton.interactable = true;
-            noticeWindow.OkButtonClickedAction = SavedGameObjectsUtils.GetInstance().GoBackToLogin;
+            // TODO: Show notice: "Authorization with master server failed."
+            // TODO: Ok: GoBackToLogin()
         }
 
         protected override void OnAuthorized()
         {
-            var noticeWindow = UserInterfaceContainer.GetInstance().Get<NoticeWindow>().AssertNotNull();
-            noticeWindow.Hide();
-
             authorizationStatus = AuthorizationStatus.Succeed;
 
-            GameServerSelectorController.GetInstance().ShowGameServerSelectorUI();
+            // GameServerSelectorController.GetInstance().ShowGameServerSelectorUI();
         }
 
         protected override void SetPeerLogicAfterAuthorization()

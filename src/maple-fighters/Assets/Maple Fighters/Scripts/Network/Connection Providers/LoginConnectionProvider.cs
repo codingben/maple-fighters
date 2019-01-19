@@ -2,13 +2,10 @@
 using System.Threading.Tasks;
 using Authorization.Client.Common;
 using CommonTools.Coroutines;
-using CommonTools.Log;
 using CommunicationHelper;
 using Login.Common;
 using Scripts.Containers;
 using Scripts.Services;
-using Scripts.UI.Core;
-using Scripts.UI.Windows;
 
 namespace Scripts.UI.Controllers
 {
@@ -31,9 +28,7 @@ namespace Scripts.UI.Controllers
 
         protected override void OnConnectionFailed()
         {
-            var noticeWindow = UserInterfaceContainer.GetInstance().Get<NoticeWindow>().AssertNotNull();
-            noticeWindow.Message.text = "Could not connect to a login server.";
-            noticeWindow.OkButton.interactable = true;
+            // TODO: Show notice: "Could not connect to a login server."
         }
 
         protected override void OnConnectionEstablished()

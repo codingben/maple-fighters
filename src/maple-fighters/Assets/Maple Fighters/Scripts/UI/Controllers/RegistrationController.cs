@@ -44,8 +44,7 @@ namespace Scripts.UI.Controllers
             }
             else
             {
-                RegistrationConnectionProvider.GetInstance().Connect(
-                    () => RegisterButtonClicked?.Invoke(uiRegistrationDetails));
+                RegistrationConnectionProvider.GetInstance().Connect(() => RegisterButtonClicked?.Invoke(uiRegistrationDetails));
             }
         }
 

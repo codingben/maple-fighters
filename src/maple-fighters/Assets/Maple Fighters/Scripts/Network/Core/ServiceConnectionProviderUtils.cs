@@ -2,15 +2,13 @@
 
 namespace Scripts.Services
 {
-    using Utils = UI.Utils;
-
     public static class ServiceConnectionProviderUtils
     {
         public static void OnOperationFailed()
         {
             Disconnect();
 
-            Utils.ShowExceptionNotice();
+            // TODO: Utils.ShowExceptionNotice();
         }
 
         /// <summary>
