@@ -52,7 +52,7 @@ namespace Scripts.World
             coroutinesExecutor.StartTask(
                 EnterScene,
                 exception =>
-                    ServiceConnectionProviderUtils.OnOperationFailed());
+                    ServiceConnectionProviderUtils.OperationFailed());
         }
 
         private async Task EnterScene(IYield yield)

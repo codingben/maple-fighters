@@ -23,7 +23,7 @@ namespace Scripts.World
                 coroutinesExecutor.StartTask(
                     ChangeScene,
                     onException: exception =>
-                        ServiceConnectionProviderUtils.OnOperationFailed());
+                        ServiceConnectionProviderUtils.OperationFailed());
             }
         }
 

@@ -20,12 +20,9 @@ namespace Scripts.QuickAccess
             var quickLoginConfiguration = QuickLoginConfiguration.GetInstance();
             if (quickLoginConfiguration != null)
             {
-                // TODO: Fix
-                /*var loginWindow = 
-                    UserInterfaceContainer.GetInstance().Get<LoginWindow>()
-                        .AssertNotNull();
+                var loginWindow = FindObjectOfType<LoginWindow>();
                 loginWindow.Email = quickLoginConfiguration.Email;
-                loginWindow.Password = quickLoginConfiguration.Password;*/
+                loginWindow.Password = quickLoginConfiguration.Password;
             }
 
             Destroy(gameObject);

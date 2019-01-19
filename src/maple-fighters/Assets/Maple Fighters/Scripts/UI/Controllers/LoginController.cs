@@ -2,7 +2,6 @@
 using Scripts.UI.Windows;
 using Scripts.Utils;
 using UI.Manager;
-using UnityEngine;
 
 namespace Scripts.UI.Controllers
 {
@@ -11,9 +10,6 @@ namespace Scripts.UI.Controllers
         public event Action<string, string> LoginButtonClicked;
 
         public event Action RegisterButtonClicked;
-
-        [SerializeField]
-        private int loadSceneIndex;
 
         private LoginWindow loginWindow;
 

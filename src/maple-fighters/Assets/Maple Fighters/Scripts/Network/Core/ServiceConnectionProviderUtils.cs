@@ -4,22 +4,21 @@ namespace Scripts.Services
 {
     public static class ServiceConnectionProviderUtils
     {
-        public static void OnOperationFailed()
+        public static void OperationFailed()
         {
-            Disconnect();
+            Dispose();
 
             // TODO: Utils.ShowExceptionNotice();
         }
-
-        /// <summary>
-        /// Disconnecting from all services and removing their services game objects.
-        /// </summary>
-        public static void Disconnect()
+        
+        public static void Dispose()
         {
-            var monoBehaviours = Object.FindObjectsOfType<MonoBehaviour>();
-            foreach (var monoBehaviour in monoBehaviours)
+            foreach (var monoBehaviour in 
+                Object.FindObjectsOfType<MonoBehaviour>())
             {
-                var serviceConnectionProviderBase = monoBehaviour?.GetComponent<IServiceConnectionProviderBase>();
+                var serviceConnectionProviderBase = 
+                    monoBehaviour
+                        .GetComponent<IServiceConnectionProviderBase>();
                 serviceConnectionProviderBase?.Dispose();
             }
         }
