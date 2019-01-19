@@ -6,21 +6,16 @@ namespace Scripts.Services
     {
         public static void OperationFailed()
         {
-            Dispose();
-
-            // TODO: Utils.ShowExceptionNotice();
-        }
-        
-        public static void Dispose()
-        {
-            foreach (var monoBehaviour in 
+            foreach (var monoBehaviour in
                 Object.FindObjectsOfType<MonoBehaviour>())
             {
-                var serviceConnectionProviderBase = 
+                var serviceConnectionProviderBase =
                     monoBehaviour
                         .GetComponent<IServiceConnectionProviderBase>();
                 serviceConnectionProviderBase?.Dispose();
             }
+
+            // TODO: Utils.ShowExceptionNotice();
         }
     }
 }
