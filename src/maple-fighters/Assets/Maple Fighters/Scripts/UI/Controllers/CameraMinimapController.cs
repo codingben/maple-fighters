@@ -32,6 +32,9 @@ namespace Scripts.UI.Controllers
 
             minimapWindow =
                 UIElementsCreator.GetInstance().Create<MinimapWindow>();
+
+            // TODO: Find a better solution, lol...
+            DontDestroyOnLoad(minimapWindow.transform.root);
         }
 
         private void Start()

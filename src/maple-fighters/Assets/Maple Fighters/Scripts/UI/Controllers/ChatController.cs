@@ -18,6 +18,9 @@ namespace Scripts.UI.Controllers
 
             chatWindow = UIElementsCreator.GetInstance().Create<ChatWindow>();
             chatWindow.MessageAdded += OnMessageAdded;
+
+            // TODO: Find a better solution, lol...
+            DontDestroyOnLoad(chatWindow.transform.root);
         }
 
         private void Start()
