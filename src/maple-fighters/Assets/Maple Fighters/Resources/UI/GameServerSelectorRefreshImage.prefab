@@ -38,8 +38,9 @@ GameObject:
   - component: {fileID: 224943839388802750}
   - component: {fileID: 222049846450969200}
   - component: {fileID: 114918377065792012}
-  - component: {fileID: 225989838122897366}
   - component: {fileID: 114847382497978542}
+  - component: {fileID: 225989838122897366}
+  - component: {fileID: 114195838765090478}
   m_Layer: 5
   m_Name: GameServerSelectorRefreshImage
   m_TagString: Untagged
@@ -160,6 +161,18 @@ MonoBehaviour:
   - {fileID: 0}
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &114195838765090478
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1788371385603370}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f651cd5785c56114f8497fa8eaa8fe9e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 1
 --- !u!114 &114847382497978542
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -168,13 +181,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1788371385603370}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fdaa681272163624e8c962ebcdd5e5d2, type: 3}
+  m_Script: {fileID: 11500000, guid: 723d6002482fee643acba21719285d71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IsShowed: 0
-  showSpeed: 5
-  hideSpeed: 5
-  MessageText: {fileID: 114123635752221118}
+  messageText: {fileID: 114123635752221118}
 --- !u!114 &114918377065792012
 MonoBehaviour:
   m_ObjectHideFlags: 1

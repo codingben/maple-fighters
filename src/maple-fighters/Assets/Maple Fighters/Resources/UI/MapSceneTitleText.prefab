@@ -21,8 +21,9 @@ GameObject:
   - component: {fileID: 224573021778804628}
   - component: {fileID: 222314750918284968}
   - component: {fileID: 114501516819882758}
-  - component: {fileID: 225851214307650572}
   - component: {fileID: 114144975503788790}
+  - component: {fileID: 225851214307650572}
+  - component: {fileID: 114192690841895334}
   m_Layer: 5
   m_Name: MapSceneTitleText
   m_TagString: Untagged
@@ -41,10 +42,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d107a9946d36d654a9fef84865f14928, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IsShowed: 0
-  showSpeed: 1
-  hideSpeed: 1
   time: 2.5
+--- !u!114 &114192690841895334
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1669623477113020}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f651cd5785c56114f8497fa8eaa8fe9e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 1
 --- !u!114 &114501516819882758
 MonoBehaviour:
   m_ObjectHideFlags: 1

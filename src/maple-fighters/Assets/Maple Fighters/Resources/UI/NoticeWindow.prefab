@@ -36,8 +36,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 224765853436539274}
-  - component: {fileID: 225155452529642052}
   - component: {fileID: 114741188260690288}
+  - component: {fileID: 225155452529642052}
+  - component: {fileID: 114592008431928770}
   m_Layer: 5
   m_Name: NoticeWindow
   m_TagString: Untagged
@@ -428,6 +429,18 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114592008431928770
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1276585117678282}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f651cd5785c56114f8497fa8eaa8fe9e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 1
 --- !u!114 &114741188260690288
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -439,12 +452,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75d83d61ea10bec4787c2cceec816c58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IsShowed: 0
-  showSpeed: 10
-  hideSpeed: 10
-  blackBackground: {fileID: 114586912464082996}
-  okButton: {fileID: 114826057375844070}
+  backgroundImage: {fileID: 114586912464082996}
   messageText: {fileID: 114831155534536570}
+  okButton: {fileID: 114826057375844070}
 --- !u!114 &114826057375844070
 MonoBehaviour:
   m_ObjectHideFlags: 1

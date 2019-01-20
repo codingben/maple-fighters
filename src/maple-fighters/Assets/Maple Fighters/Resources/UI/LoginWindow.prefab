@@ -19,8 +19,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 224290221407583038}
-  - component: {fileID: 225305996580944786}
   - component: {fileID: 114954333478922902}
+  - component: {fileID: 225305996580944786}
+  - component: {fileID: 114695095798511360}
   m_Layer: 5
   m_Name: LoginWindow
   m_TagString: Untagged
@@ -1564,6 +1565,18 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &114695095798511360
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1009912617689464}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f651cd5785c56114f8497fa8eaa8fe9e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 1
 --- !u!114 &114737678552723880
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1715,9 +1728,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2fc3c5e0d18d6f64e94b736555512cf7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IsShowed: 0
-  showSpeed: 10
-  hideSpeed: 10
   passwordCharacters: 6
   emailInputField: {fileID: 114270702095993966}
   passwordInputField: {fileID: 114237433669106402}

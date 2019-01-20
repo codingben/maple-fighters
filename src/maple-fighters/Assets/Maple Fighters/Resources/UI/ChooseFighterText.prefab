@@ -21,8 +21,9 @@ GameObject:
   - component: {fileID: 224358027575050222}
   - component: {fileID: 222438980742060262}
   - component: {fileID: 114659743465011724}
-  - component: {fileID: 225129571447908788}
   - component: {fileID: 114001037263124650}
+  - component: {fileID: 225129571447908788}
+  - component: {fileID: 114912670585337596}
   m_Layer: 5
   m_Name: ChooseFighterText
   m_TagString: Untagged
@@ -41,9 +42,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f27a6e5b9dd1eb428ce0f2e186850ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IsShowed: 0
-  showSpeed: 1
-  hideSpeed: 5
 --- !u!114 &114659743465011724
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -157,6 +155,18 @@ MonoBehaviour:
   - {fileID: 0}
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &114912670585337596
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1146616730714876}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f651cd5785c56114f8497fa8eaa8fe9e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 1
 --- !u!222 &222438980742060262
 CanvasRenderer:
   m_ObjectHideFlags: 1

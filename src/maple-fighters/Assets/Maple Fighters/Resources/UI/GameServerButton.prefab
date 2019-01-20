@@ -40,10 +40,11 @@ GameObject:
   - component: {fileID: 114659761775615012}
   - component: {fileID: 114376732426004340}
   - component: {fileID: 114072724841250258}
-  - component: {fileID: 225440773923528508}
   - component: {fileID: 114113473918774162}
+  - component: {fileID: 225440773923528508}
+  - component: {fileID: 114096540644895894}
   m_Layer: 5
-  m_Name: ClickableGameServerButton
+  m_Name: GameServerButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -263,6 +264,17 @@ MonoBehaviour:
   m_FlexibleWidth: 1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
+--- !u!114 &114096540644895894
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1176087817546342}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25cf9d80677195041b71dc6ba4bcd44d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114108164038183040
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -298,11 +310,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1176087817546342}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 35607c3860b5ba64188cd7ceb1004e47, type: 3}
+  m_Script: {fileID: 11500000, guid: 408016535c866c844b6e37ddfd8d1b8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameServerText: {fileID: 114048255031673630}
-  playersBarSlider: {fileID: 114538511965378602}
+  gameServerNameText: {fileID: 114048255031673630}
+  connectionsBar: {fileID: 114538511965378602}
   frame: {fileID: 114182329001235806}
 --- !u!114 &114182329001235806
 MonoBehaviour:
