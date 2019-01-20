@@ -1,6 +1,6 @@
 ﻿namespace Scripts.UI
 {
-    public enum UiCharacterClass
+    public enum UICharacterClass
     {
         /// <summary>
         /// The knight.

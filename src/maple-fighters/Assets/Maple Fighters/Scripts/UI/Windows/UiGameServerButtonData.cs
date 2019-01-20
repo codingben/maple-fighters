@@ -1,6 +1,6 @@
 ﻿namespace Scripts.UI
 {
-    public struct UiGameServerButtonData
+    public struct UIGameServerButtonData
     {
         public string ServerName { get; }
 
@@ -8,7 +8,7 @@
 
         public int MaxConnections { get; }
 
-        public UiGameServerButtonData(
+        public UIGameServerButtonData(
             string serverName,
             int connections,
             int maxConnections)

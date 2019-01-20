@@ -9,12 +9,12 @@ namespace Scripts.UI
     [RequireComponent(typeof(Animator), typeof(UIFadeAnimation))]
     public class ClickableCharacterImage : UIElement, IPointerClickHandler
     {
-        public event Action<UiCharacterDetails> CharacterClicked;
+        public event Action<UICharacterDetails> CharacterClicked;
 
         [Header("Text"), SerializeField]
         private TextMeshProUGUI characterNameText;
 
-        private UiCharacterDetails uiCharacterDetails;
+        private UICharacterDetails uiCharacterDetails;
         private Animator animator;
 
         private void Awake()
@@ -37,7 +37,7 @@ namespace Scripts.UI
             Destroy(gameObject);
         }
 
-        public void SetCharacterDetails(UiCharacterDetails uiCharacterDetails)
+        public void SetCharacterDetails(UICharacterDetails uiCharacterDetails)
         {
             this.uiCharacterDetails = uiCharacterDetails;
         }
@@ -55,17 +55,17 @@ namespace Scripts.UI
             CharacterClicked?.Invoke(uiCharacterDetails);
         }
 
-        public void PlayAnimation(UiCharacterAnimation characterAnimation)
+        public void PlayAnimation(UICharacterAnimation characterAnimation)
         {
             switch (characterAnimation)
             {
-                case UiCharacterAnimation.Idle:
+                case UICharacterAnimation.Idle:
                 {
                     animator.SetBool("Walk", false);
                     break;
                 }
 
-                case UiCharacterAnimation.Walk:
+                case UICharacterAnimation.Walk:
                 {
                     animator.SetBool("Walk", true);
                     break;
@@ -73,7 +73,7 @@ namespace Scripts.UI
             }
         }
 
-        public UiCharacterDetails GetCharacterDetails()
+        public UICharacterDetails GetCharacterDetails()
         {
             return uiCharacterDetails;
         }

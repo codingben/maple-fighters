@@ -1,6 +1,6 @@
 ﻿namespace Scripts.UI.Windows
 {
-    public struct UiRegistrationDetails
+    public struct UIRegistrationDetails
     {
         public string Email { get; }
 
@@ -10,7 +10,7 @@
 
         public string Lastname { get; }
 
-        public UiRegistrationDetails(
+        public UIRegistrationDetails(
             string email,
             string password,
             string firstname,

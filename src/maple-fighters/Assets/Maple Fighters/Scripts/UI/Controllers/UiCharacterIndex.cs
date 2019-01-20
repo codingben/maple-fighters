@@ -1,6 +1,6 @@
 ﻿namespace Scripts.UI
 {
-    public enum UiCharacterIndex
+    public enum UICharacterIndex
     {
         /// <summary>
         /// The first.

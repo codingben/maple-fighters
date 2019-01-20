@@ -11,7 +11,7 @@ namespace Scripts.UI.Controllers
 
         public event Action CharacterCancelled;
 
-        private UiCharacterDetails uiCharacterDetails;
+        private UICharacterDetails uiCharacterDetails;
         private CharacterSelectionWindow characterSelectionWindow;
 
         protected override void OnAwake()
@@ -55,7 +55,7 @@ namespace Scripts.UI.Controllers
                 OnBackButtonClicked;
         }
 
-        public void SetCharacterDetails(UiCharacterDetails uiCharacterDetails)
+        public void SetCharacterDetails(UICharacterDetails uiCharacterDetails)
         {
             this.uiCharacterDetails = uiCharacterDetails;
         }
@@ -100,20 +100,20 @@ namespace Scripts.UI.Controllers
 
         private void OnKnightSelected()
         {
-            uiCharacterDetails.SetCharacterClass(UiCharacterClass.Knight);
+            uiCharacterDetails.SetCharacterClass(UICharacterClass.Knight);
         }
 
         private void OnArrowSelected()
         {
-            uiCharacterDetails.SetCharacterClass(UiCharacterClass.Arrow);
+            uiCharacterDetails.SetCharacterClass(UICharacterClass.Arrow);
         }
 
         private void OnWizardSelected()
         {
-            uiCharacterDetails.SetCharacterClass(UiCharacterClass.Wizard);
+            uiCharacterDetails.SetCharacterClass(UICharacterClass.Wizard);
         }
 
-        public UiCharacterDetails GetCharacterDetails()
+        public UICharacterDetails GetCharacterDetails()
         {
             return uiCharacterDetails;
         }

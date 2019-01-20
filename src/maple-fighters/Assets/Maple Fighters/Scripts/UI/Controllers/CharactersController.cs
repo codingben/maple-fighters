@@ -50,7 +50,7 @@ namespace Scripts.UI.Controllers
             }
         }
 
-        public void CreateCharacter(UiCharacterDetails uiCharacterDetails)
+        public void CreateCharacter(UICharacterDetails uiCharacterDetails)
         {
             var characterGameObject =
                 UIManagerUtils.LoadAndCreateGameObject(GetCharacterPath(uiCharacterDetails));
@@ -97,7 +97,7 @@ namespace Scripts.UI.Controllers
             characterSelectionOptionsWindow.Show();
         }
 
-        private void OnCharacterClicked(UiCharacterDetails uiCharacterDetails)
+        private void OnCharacterClicked(UICharacterDetails uiCharacterDetails)
         {
             CharacterSelectionController.GetInstance().SetCharacterDetails(uiCharacterDetails);
 
@@ -128,7 +128,7 @@ namespace Scripts.UI.Controllers
             CharacterRemoved?.Invoke((int)characterDetails.GetCharacterIndex());
         }
 
-        private string GetCharacterPath(UiCharacterDetails uiCharacterDetails)
+        private string GetCharacterPath(UICharacterDetails uiCharacterDetails)
         {
             const string CharactersPath = "Characters/{0}";
 

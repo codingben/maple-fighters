@@ -26,7 +26,7 @@ namespace Scripts.UI.Controllers
 
             if (characterImage != null)
             {
-                characterImage.PlayAnimation(UiCharacterAnimation.Walk);
+                characterImage.PlayAnimation(UICharacterAnimation.Walk);
             }
         }
 
@@ -34,7 +34,7 @@ namespace Scripts.UI.Controllers
         {
             if (characterImage != null)
             {
-                characterImage.PlayAnimation(UiCharacterAnimation.Idle);
+                characterImage.PlayAnimation(UICharacterAnimation.Idle);
             }
         }
     }

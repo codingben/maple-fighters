@@ -1,6 +1,6 @@
 ﻿namespace Scripts.UI
 {
-    public enum UiCharacterAnimation
+    public enum UICharacterAnimation
     {
         /// <summary>
         /// The idle.

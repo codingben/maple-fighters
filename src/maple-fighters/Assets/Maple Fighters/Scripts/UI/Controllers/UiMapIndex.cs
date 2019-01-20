@@ -1,6 +1,6 @@
 ﻿namespace Scripts.UI
 {
-    public enum UiMapIndex
+    public enum UIMapIndex
     {
         /// <summary>
         /// The map_1.

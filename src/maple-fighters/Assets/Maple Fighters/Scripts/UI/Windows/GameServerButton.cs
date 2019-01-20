@@ -23,7 +23,7 @@ namespace Scripts.UI
         [SerializeField]
         private Image frame;
 
-        private UiGameServerButtonData uiGameServerButtonData;
+        private UIGameServerButtonData uiGameServerButtonData;
 
         private void Start()
         {
@@ -44,7 +44,7 @@ namespace Scripts.UI
             ButtonClicked?.Invoke(uiGameServerButtonData.ServerName);
         }
 
-        public void SetUiGameServerButtonData(UiGameServerButtonData data)
+        public void SetUiGameServerButtonData(UIGameServerButtonData data)
         {
             uiGameServerButtonData = data;
 

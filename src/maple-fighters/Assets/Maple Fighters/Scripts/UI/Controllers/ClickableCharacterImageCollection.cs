@@ -6,27 +6,27 @@ namespace Scripts.UI.Controllers
     {
         private ClickableCharacterImage[] clickableCharacterImages;
         
-        public void SetCharacterImage(UiCharacterIndex uiCharacterIndex, ClickableCharacterImage clickableCharacterImage)
+        public void SetCharacterImage(UICharacterIndex uiCharacterIndex, ClickableCharacterImage clickableCharacterImage)
         {
             if (clickableCharacterImages == null)
             {
                 clickableCharacterImages = new ClickableCharacterImage[] { null, null, null };
             }
 
-            if (uiCharacterIndex != UiCharacterIndex.Zero)
+            if (uiCharacterIndex != UICharacterIndex.Zero)
             {
                 clickableCharacterImages[(int)uiCharacterIndex] = clickableCharacterImage;
             }
         }
 
-        public ClickableCharacterImage GetCharacterImage(UiCharacterIndex uiCharacterIndex)
+        public ClickableCharacterImage GetCharacterImage(UICharacterIndex uiCharacterIndex)
         {
             if (clickableCharacterImages == null)
             {
                 clickableCharacterImages = new ClickableCharacterImage[] { null, null, null };
             }
 
-            return uiCharacterIndex == UiCharacterIndex.Zero
+            return uiCharacterIndex == UICharacterIndex.Zero
                        ? null
                        : clickableCharacterImages[(int)uiCharacterIndex];
         }

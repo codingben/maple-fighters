@@ -1,11 +1,11 @@
 ﻿namespace Scripts.UI
 {
-    public struct UiCharacterDetails
+    public struct UICharacterDetails
     {
         private string characterName;
-        private UiCharacterIndex uiCharacterIndex;
-        private UiCharacterClass uiCharacterClass;
-        private UiMapIndex uiMapIndex;
+        private UICharacterIndex uiCharacterIndex;
+        private UICharacterClass uiCharacterClass;
+        private UIMapIndex uiMapIndex;
         private bool hasCharacter;
 
         public void SetCharacterName(string characterName)
@@ -13,12 +13,12 @@
             this.characterName = characterName;
         }
 
-        public void SetCharacterIndex(UiCharacterIndex uiCharacterIndex)
+        public void SetCharacterIndex(UICharacterIndex uiCharacterIndex)
         {
             this.uiCharacterIndex = uiCharacterIndex;
         }
 
-        public void SetCharacterClass(UiCharacterClass uiCharacterClass)
+        public void SetCharacterClass(UICharacterClass uiCharacterClass)
         {
             this.uiCharacterClass = uiCharacterClass;
         }
@@ -33,12 +33,12 @@
             return characterName;
         }
 
-        public UiCharacterIndex GetCharacterIndex()
+        public UICharacterIndex GetCharacterIndex()
         {
             return uiCharacterIndex;
         }
 
-        public UiCharacterClass GetCharacterClass()
+        public UICharacterClass GetCharacterClass()
         {
             return uiCharacterClass;
         }

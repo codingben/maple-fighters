@@ -9,7 +9,7 @@ namespace Scripts.UI.Windows
     [RequireComponent(typeof(UIFadeAnimation))]
     public class RegistrationWindow : UIElement
     {
-        public event Action<UiRegistrationDetails> RegisterButtonClicked;
+        public event Action<UIRegistrationDetails> RegisterButtonClicked;
 
         public event Action BackButtonClicked;
 
@@ -99,7 +99,7 @@ namespace Scripts.UI.Windows
                 var lastName = lastNameInputField.text;
 
                 RegisterButtonClicked?.Invoke(
-                    new UiRegistrationDetails(
+                    new UIRegistrationDetails(
                         email,
                         password,
                         firstName,

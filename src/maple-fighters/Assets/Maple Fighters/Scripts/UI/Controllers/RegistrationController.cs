@@ -7,7 +7,7 @@ namespace Scripts.UI.Controllers
 {
     public class RegistrationController : MonoSingleton<RegistrationController>
     {
-        public event Action<UiRegistrationDetails> RegisterButtonClicked;
+        public event Action<UIRegistrationDetails> RegisterButtonClicked;
 
         public event Action BackButtonClicked;
 
@@ -36,7 +36,7 @@ namespace Scripts.UI.Controllers
             }
         }
 
-        private void OnRegisterButtonClicked(UiRegistrationDetails uiRegistrationDetails)
+        private void OnRegisterButtonClicked(UIRegistrationDetails uiRegistrationDetails)
         {
             if (RegistrationConnectionProvider.GetInstance().IsConnected())
             {

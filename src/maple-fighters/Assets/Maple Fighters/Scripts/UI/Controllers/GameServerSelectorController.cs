@@ -55,7 +55,7 @@ namespace Scripts.UI.Controllers
             }
         }
 
-        public void CreateGameServerButtons(IEnumerable<UiGameServerButtonData> gameServerButtonDatas)
+        public void CreateGameServerButtons(IEnumerable<UIGameServerButtonData> gameServerButtonDatas)
         {
             foreach (var gameServerButtonData in gameServerButtonDatas)
             {
