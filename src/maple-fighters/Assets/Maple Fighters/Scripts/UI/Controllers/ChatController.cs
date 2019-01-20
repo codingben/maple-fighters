@@ -36,7 +36,15 @@ namespace Scripts.UI.Controllers
                 Destroy(chatWindow.gameObject);
             }
         }
-        
+
+        public void SetCharacterName(string name)
+        {
+            if (chatWindow != null)
+            {
+                chatWindow.CharacterName = name;
+            }
+        }
+
         public void OnMessageReceived(string message)
         {
             if (chatWindow != null)

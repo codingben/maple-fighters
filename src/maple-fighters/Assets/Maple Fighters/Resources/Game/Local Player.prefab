@@ -133,4 +133,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0db7b279feeba8a43b1401074af92571, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  orderInLayer: 2
+  orderInLayer: 3

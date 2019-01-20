@@ -53,7 +53,7 @@ namespace Scripts.Gameplay.Actors
         private void InitializeCharacterName(string characterName)
         {
             var characterNameComponent =
-                characterSpriteGameObject.GetComponent<CharacterName>()
+                characterSpriteGameObject.GetComponent<CharacterNameSetter>()
                     .AssertNotNull();
             characterNameComponent.SetName(characterName);
             characterNameComponent.SetSortingOrder(orderInLayer);

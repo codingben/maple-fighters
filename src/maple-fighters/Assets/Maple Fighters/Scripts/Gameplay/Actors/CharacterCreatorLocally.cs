@@ -1,5 +1,6 @@
 ﻿using CommonTools.Log;
 using Game.Common;
+using Scripts.UI.Controllers;
 using Scripts.Utils.Shared;
 using UnityEngine;
 
@@ -15,23 +16,9 @@ namespace Scripts.Gameplay.Actors
 
             SetCharacterToPositionSender();
             InitializePlayerController();
-        }
 
-        private void InitializeCharacterName(string characterName)
-        {
-            var characterNameComponent = 
-                characterSpriteGameObject.GetComponent<CharacterName>()
-                    .AssertNotNull();
-            characterNameComponent.SetName(characterName);
-            characterNameComponent.SetSortingOrder(orderInLayer);
-        }
-
-        private void InitializeSpriteRenderer()
-        {
-            var spriteRenderer = 
-                characterSpriteGameObject.GetComponent<SpriteRenderer>()
-                    .AssertNotNull();
-            spriteRenderer.sortingOrder = orderInLayer;
+            ChatController.GetInstance()
+                .SetCharacterName(characterSpawnDetails.Character.Name);
         }
 
         private void SetCharacterToPositionSender()

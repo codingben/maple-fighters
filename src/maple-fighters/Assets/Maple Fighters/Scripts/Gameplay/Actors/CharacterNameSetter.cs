@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 namespace Scripts.Gameplay.Actors
 {
-    public class CharacterName : MonoBehaviour
+    public class CharacterNameSetter : MonoBehaviour
     {
         [SerializeField]
         private Text nameText;

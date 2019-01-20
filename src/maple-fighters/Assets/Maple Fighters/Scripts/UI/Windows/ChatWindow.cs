@@ -15,6 +15,8 @@ namespace Scripts.UI.Windows
 
         public event Action UnFocused;
 
+        public string CharacterName { get; set; }
+
         private const KeyCode SendMessageKeyCode = KeyCode.Return;
         private const KeyCode SecondarySendMessageKeyCode = KeyCode.KeypadEnter;
         private const KeyCode CloseMessageKeyCode = KeyCode.Escape;
@@ -26,13 +28,7 @@ namespace Scripts.UI.Windows
         [SerializeField]
         private TMP_InputField chatInputField;
 
-        private string characterName;
         private bool isTypingMessage;
-
-        public void SetCharacterName(string name)
-        {
-            characterName = name;
-        }
 
         private void Update()
         {
@@ -88,7 +84,7 @@ namespace Scripts.UI.Windows
 
                 if (!string.IsNullOrWhiteSpace(text))
                 {
-                    var message = $"{characterName}: {text}";
+                    var message = $"{CharacterName}: {text}";
 
                     AddMessage(message);
 
