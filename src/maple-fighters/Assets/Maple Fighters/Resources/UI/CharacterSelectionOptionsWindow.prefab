@@ -53,8 +53,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 224950431566973792}
-  - component: {fileID: 225947016481078284}
   - component: {fileID: 114692078064625924}
+  - component: {fileID: 225947016481078284}
+  - component: {fileID: 114943164007644592}
   m_Layer: 5
   m_Name: CharacterSelectionOptionsWindow
   m_TagString: Untagged
@@ -652,9 +653,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b791de8c938619b4399d9e90a7aa6767, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IsShowed: 0
-  showSpeed: 5
-  hideSpeed: 5
   startButton: {fileID: 114480412888889336}
   createCharacterButton: {fileID: 114544928173412332}
   deleteCharacterButton: {fileID: 114380155219174550}
@@ -884,6 +882,18 @@ MonoBehaviour:
   - {fileID: 0}
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &114943164007644592
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1089561272998840}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f651cd5785c56114f8497fa8eaa8fe9e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 1
 --- !u!114 &114950388876001752
 MonoBehaviour:
   m_ObjectHideFlags: 1

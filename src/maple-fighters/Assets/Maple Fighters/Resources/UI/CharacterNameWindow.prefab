@@ -52,8 +52,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 224330880726840608}
-  - component: {fileID: 225859993953678700}
   - component: {fileID: 114765196647564552}
+  - component: {fileID: 225859993953678700}
+  - component: {fileID: 114557934026984578}
   m_Layer: 5
   m_Name: CharacterNameWindow
   m_TagString: Untagged
@@ -836,6 +837,18 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &114557934026984578
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1259515778005700}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f651cd5785c56114f8497fa8eaa8fe9e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 1
 --- !u!114 &114565268166889628
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1154,9 +1167,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fab89ee127bd6194992c3f33075e1cd1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IsShowed: 0
-  showSpeed: 5
-  hideSpeed: 5
   minCharactersName: 3
   nameInputField: {fileID: 114234094347219726}
   confirmButton: {fileID: 114418946062637632}
