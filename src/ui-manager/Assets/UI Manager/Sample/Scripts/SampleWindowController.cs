@@ -7,17 +7,17 @@ namespace Sample.Scripts
     public class SampleWindowController : MonoBehaviour
     {
         private SampleWindow sampleWindow;
-        private BackgroundImage backgroundImage;
+        private SampleImage sampleImage;
 
         private void Awake()
         {
             sampleWindow =
                 UIElementsCreator.GetInstance().Create<SampleWindow>();
-            backgroundImage = 
+            sampleImage = 
                 UIElementsCreator.GetInstance()
-                    .Create<BackgroundImage>(UILayer.Background);
+                    .Create<SampleImage>(UILayer.Background);
 
-            SubscribeToBackgroundImageEvents();
+            SubscribeToSampleImageEvents();
             SubscribeToFadeAnimationEvents();
         }
 
@@ -26,14 +26,14 @@ namespace Sample.Scripts
             sampleWindow.Show();
         }
 
-        private void SubscribeToBackgroundImageEvents()
+        private void SubscribeToSampleImageEvents()
         {
-            backgroundImage.PointerClicked += OnPointerClicked;
+            sampleImage.PointerClicked += OnPointerClicked;
         }
 
-        private void UnsubscribeToBackgroundImageEvents()
+        private void UnsubscribeToSampleImageEvents()
         {
-            backgroundImage.PointerClicked -= OnPointerClicked;
+            sampleImage.PointerClicked -= OnPointerClicked;
         }
 
         private void OnPointerClicked(PointerEventData eventData)
@@ -65,7 +65,7 @@ namespace Sample.Scripts
         private void OnFadeOutCompleted()
         {
             UnsubscribeFromFadeAnimationEvents();
-            UnsubscribeToBackgroundImageEvents();
+            UnsubscribeToSampleImageEvents();
 
             Destroy(sampleWindow.gameObject);
             Destroy(gameObject);

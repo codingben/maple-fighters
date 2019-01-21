@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 114198783245759838}
   - component: {fileID: 114071247925536076}
   m_Layer: 5
-  m_Name: BackgroundImage
+  m_Name: SampleImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -37,7 +37,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1303440687867742}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2057477a370f72c4db5b1f060a43ad4c, type: 3}
+  m_Script: {fileID: 11500000, guid: 21ef9bf3083317f4793e174e1b1c5ddb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &114198783245759838
