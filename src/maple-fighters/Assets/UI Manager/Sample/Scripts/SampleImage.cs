@@ -4,7 +4,7 @@ using UnityEngine.EventSystems;
 
 namespace Sample.Scripts
 {
-    public class BackgroundImage : UIElement, IPointerClickHandler
+    public class SampleImage : UIElement, IPointerClickHandler
     {
         public event Action<PointerEventData> PointerClicked;
 
