@@ -6,24 +6,30 @@ namespace Scripts.UI.Controllers
     {
         private ClickableCharacterImage[] clickableCharacterImages;
         
-        public void SetCharacterImage(UICharacterIndex uiCharacterIndex, ClickableCharacterImage clickableCharacterImage)
+        public void SetCharacterImage(
+            UICharacterIndex uiCharacterIndex,
+            ClickableCharacterImage clickableCharacterImage)
         {
             if (clickableCharacterImages == null)
             {
-                clickableCharacterImages = new ClickableCharacterImage[] { null, null, null };
+                clickableCharacterImages =
+                    new ClickableCharacterImage[] { null, null, null };
             }
 
             if (uiCharacterIndex != UICharacterIndex.Zero)
             {
-                clickableCharacterImages[(int)uiCharacterIndex] = clickableCharacterImage;
+                clickableCharacterImages[(int)uiCharacterIndex] =
+                    clickableCharacterImage;
             }
         }
 
-        public ClickableCharacterImage GetCharacterImage(UICharacterIndex uiCharacterIndex)
+        public ClickableCharacterImage GetCharacterImage(
+            UICharacterIndex uiCharacterIndex)
         {
             if (clickableCharacterImages == null)
             {
-                clickableCharacterImages = new ClickableCharacterImage[] { null, null, null };
+                clickableCharacterImages =
+                    new ClickableCharacterImage[] { null, null, null };
             }
 
             return uiCharacterIndex == UICharacterIndex.Zero
@@ -35,7 +41,8 @@ namespace Scripts.UI.Controllers
         {
             if (clickableCharacterImages == null)
             {
-                clickableCharacterImages = new ClickableCharacterImage[] { null, null, null };
+                clickableCharacterImages =
+                    new ClickableCharacterImage[] { null, null, null };
             }
 
             foreach (var characterImage in clickableCharacterImages)

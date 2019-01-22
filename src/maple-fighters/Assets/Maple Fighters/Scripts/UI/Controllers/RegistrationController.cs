@@ -36,7 +36,8 @@ namespace Scripts.UI.Controllers
             }
         }
 
-        private void OnRegisterButtonClicked(UIRegistrationDetails uiRegistrationDetails)
+        private void OnRegisterButtonClicked(
+            UIRegistrationDetails uiRegistrationDetails)
         {
             if (RegistrationConnectionProvider.GetInstance().IsConnected())
             {
@@ -44,7 +45,10 @@ namespace Scripts.UI.Controllers
             }
             else
             {
-                RegistrationConnectionProvider.GetInstance().Connect(() => RegisterButtonClicked?.Invoke(uiRegistrationDetails));
+                RegistrationConnectionProvider.GetInstance()
+                    .Connect(
+                        () => RegisterButtonClicked?.Invoke(
+                            uiRegistrationDetails));
             }
         }
 

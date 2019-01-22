@@ -39,8 +39,10 @@ namespace Scripts.UI.Controllers
         {
             gameServerSelectorWindow = UIElementsCreator.GetInstance()
                 .Create<GameServerSelectorWindow>();
-            gameServerSelectorWindow.JoinButtonClicked += OnJoinButtonClicked;
-            gameServerSelectorWindow.RefreshButtonClicked += OnRefreshButtonClicked;
+            gameServerSelectorWindow.JoinButtonClicked +=
+                OnJoinButtonClicked;
+            gameServerSelectorWindow.RefreshButtonClicked +=
+                OnRefreshButtonClicked;
             gameServerSelectorWindow.Show();
         }
 
@@ -48,14 +50,17 @@ namespace Scripts.UI.Controllers
         {
             if (gameServerSelectorWindow != null)
             {
-                gameServerSelectorWindow.JoinButtonClicked -= OnJoinButtonClicked;
-                gameServerSelectorWindow.RefreshButtonClicked -= OnRefreshButtonClicked;
+                gameServerSelectorWindow.JoinButtonClicked -=
+                    OnJoinButtonClicked;
+                gameServerSelectorWindow.RefreshButtonClicked -=
+                    OnRefreshButtonClicked;
 
                 Destroy(gameServerSelectorWindow);
             }
         }
 
-        public void CreateGameServerButtons(IEnumerable<UIGameServerButtonData> gameServerButtonDatas)
+        public void CreateGameServerButtons(
+            IEnumerable<UIGameServerButtonData> gameServerButtonDatas)
         {
             foreach (var gameServerButtonData in gameServerButtonDatas)
             {
@@ -64,10 +69,13 @@ namespace Scripts.UI.Controllers
                         UILayer.Foreground,
                         UIIndex.End,
                         gameServerSelectorWindow.GameServerList);
-                gameServerButton.SetUiGameServerButtonData(gameServerButtonData);
+                gameServerButton
+                    .SetUiGameServerButtonData(gameServerButtonData);
                 gameServerButton.ButtonClicked += OnGameServerButtonClicked;
 
-                gameServerButtons.Add(gameServerButtonData.ServerName, gameServerButton);
+                gameServerButtons.Add(
+                    gameServerButtonData.ServerName,
+                    gameServerButton);
             }
 
             ShowGameServerList();

@@ -21,7 +21,8 @@ namespace Scripts.UI.Controllers
         {
             base.OnAwake();
 
-            clickableCharacterImageCollection = new ClickableCharacterImageCollection();
+            clickableCharacterImageCollection =
+                new ClickableCharacterImageCollection();
         }
 
         protected override void OnDestroying()
@@ -53,13 +54,15 @@ namespace Scripts.UI.Controllers
         public void CreateCharacter(UICharacterDetails uiCharacterDetails)
         {
             var characterGameObject =
-                UIManagerUtils.LoadAndCreateGameObject(GetCharacterPath(uiCharacterDetails));
+                UIManagerUtils.LoadAndCreateGameObject(
+                    GetCharacterPath(uiCharacterDetails));
             var clickableCharacterImage = 
                 characterGameObject.GetComponent<ClickableCharacterImage>();
             if (clickableCharacterImage != null)
             {
                 clickableCharacterImage.SetCharacterDetails(uiCharacterDetails);
-                clickableCharacterImage.SetCharacterName(uiCharacterDetails.GetCharacterName());
+                clickableCharacterImage
+                    .SetCharacterName(uiCharacterDetails.GetCharacterName());
                 clickableCharacterImage.CharacterClicked += OnCharacterClicked;
 
                 clickableCharacterImageCollection.SetCharacterImage(
@@ -85,27 +88,30 @@ namespace Scripts.UI.Controllers
             var uiCharacterDetails = CharacterSelectionController.GetInstance()
                 .GetCharacterDetails();
 
-            characterSelectionOptionsWindow.EnableOrDisableStartButton(
-                uiCharacterDetails.HasCharacter());
+            characterSelectionOptionsWindow
+                .EnableOrDisableStartButton(uiCharacterDetails.HasCharacter());
 
-            characterSelectionOptionsWindow.EnableOrDisableCreateCharacterButton(
-                !uiCharacterDetails.HasCharacter());
+            characterSelectionOptionsWindow
+                .EnableOrDisableCreateCharacterButton(
+                    !uiCharacterDetails.HasCharacter());
 
-            characterSelectionOptionsWindow.EnableOrDisableDeleteCharacterButton(
-                uiCharacterDetails.HasCharacter());
+            characterSelectionOptionsWindow
+                .EnableOrDisableDeleteCharacterButton(
+                    uiCharacterDetails.HasCharacter());
 
             characterSelectionOptionsWindow.Show();
         }
 
         private void OnCharacterClicked(UICharacterDetails uiCharacterDetails)
         {
-            CharacterSelectionController.GetInstance().SetCharacterDetails(uiCharacterDetails);
+            CharacterSelectionController.GetInstance()
+                .SetCharacterDetails(uiCharacterDetails);
 
             ShowCharacterSelectionOptionsWindow();
 
             var clickableCharacter =
-                clickableCharacterImageCollection.GetCharacterImage(
-                    uiCharacterDetails.GetCharacterIndex());
+                clickableCharacterImageCollection
+                    .GetCharacterImage(uiCharacterDetails.GetCharacterIndex());
             CharacterSelected?.Invoke(clickableCharacter);
         }
         
@@ -118,7 +124,8 @@ namespace Scripts.UI.Controllers
 
         private void OnCreateCharacterButtonClicked()
         {
-            CharacterSelectionController.GetInstance().ShowCharacterSelectionWindow();
+            CharacterSelectionController.GetInstance()
+                .ShowCharacterSelectionWindow();
         }
 
         private void OnDeleteCharacterButtonClicked()

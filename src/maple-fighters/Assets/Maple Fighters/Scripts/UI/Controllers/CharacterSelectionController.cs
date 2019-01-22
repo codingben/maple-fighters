@@ -27,8 +27,10 @@ namespace Scripts.UI.Controllers
 
             if (characterSelectionWindow != null)
             {
-                characterSelectionWindow.ChooseButtonClicked -= OnChooseButtonClicked;
-                characterSelectionWindow.CancelButtonClicked -= OnCancelButtonClicked;
+                characterSelectionWindow.ChooseButtonClicked -=
+                    OnChooseButtonClicked;
+                characterSelectionWindow.CancelButtonClicked -=
+                    OnCancelButtonClicked;
                 characterSelectionWindow.KnightSelected -= OnKnightSelected;
                 characterSelectionWindow.ArrowSelected -= OnArrowSelected;
                 characterSelectionWindow.WizardSelected -= OnWizardSelected;
@@ -66,8 +68,10 @@ namespace Scripts.UI.Controllers
             {
                 characterSelectionWindow = UIElementsCreator.GetInstance()
                     .Create<CharacterSelectionWindow>();
-                characterSelectionWindow.ChooseButtonClicked += OnChooseButtonClicked;
-                characterSelectionWindow.CancelButtonClicked += OnCancelButtonClicked;
+                characterSelectionWindow.ChooseButtonClicked +=
+                    OnChooseButtonClicked;
+                characterSelectionWindow.CancelButtonClicked +=
+                    OnCancelButtonClicked;
                 characterSelectionWindow.KnightSelected += OnKnightSelected;
                 characterSelectionWindow.ArrowSelected += OnArrowSelected;
                 characterSelectionWindow.WizardSelected += OnWizardSelected;

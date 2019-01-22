@@ -8,16 +8,22 @@ namespace Scripts.UI.Controllers
 
         private void Start()
         {
-            CharactersController.GetInstance().CharacterSelected += CharacterSelected;
-            CharacterSelectionController.GetInstance().CharacterChosen += CharacterDeselected;
-            CharacterSelectionController.GetInstance().CharacterCancelled += CharacterDeselected;
+            CharactersController.GetInstance().CharacterSelected +=
+                CharacterSelected;
+            CharacterSelectionController.GetInstance().CharacterChosen +=
+                CharacterDeselected;
+            CharacterSelectionController.GetInstance().CharacterCancelled +=
+                CharacterDeselected;
         }
 
         private void OnDestroy()
         {
-            CharactersController.GetInstance().CharacterSelected -= CharacterSelected;
-            CharacterSelectionController.GetInstance().CharacterChosen -= CharacterDeselected;
-            CharacterSelectionController.GetInstance().CharacterCancelled -= CharacterDeselected;
+            CharactersController.GetInstance().CharacterSelected -=
+                CharacterSelected;
+            CharacterSelectionController.GetInstance().CharacterChosen -=
+                CharacterDeselected;
+            CharacterSelectionController.GetInstance().CharacterCancelled -=
+                CharacterDeselected;
         }
 
         private void CharacterSelected(ClickableCharacterImage characterImage)

@@ -23,7 +23,8 @@ namespace Scripts.UI.Controllers
             {
                 characterNameWindow = UIElementsCreator.GetInstance()
                     .Create<CharacterNameWindow>();
-                characterNameWindow.ConfirmButtonClicked += OnConfirmButtonClicked;
+                characterNameWindow.ConfirmButtonClicked +=
+                    OnConfirmButtonClicked;
                 characterNameWindow.BackButtonClicked += OnBackButtonClicked;
                 characterNameWindow.Show();
             }
@@ -35,7 +36,8 @@ namespace Scripts.UI.Controllers
 
             if (characterNameWindow != null)
             {
-                characterNameWindow.ConfirmButtonClicked -= OnConfirmButtonClicked;
+                characterNameWindow.ConfirmButtonClicked -=
+                    OnConfirmButtonClicked;
                 characterNameWindow.BackButtonClicked -= OnBackButtonClicked;
 
                 Destroy(characterNameWindow.gameObject);
