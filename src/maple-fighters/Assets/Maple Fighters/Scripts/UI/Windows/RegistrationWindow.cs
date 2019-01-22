@@ -30,7 +30,7 @@ namespace Scripts.UI.Windows
         private TMP_InputField passwordInputField;
 
         [SerializeField]
-        private TMP_InputField rePasswordInputField;
+        private TMP_InputField confirmPasswordInputField;
 
         [SerializeField]
         private TMP_InputField firstNameInputField;
@@ -78,9 +78,15 @@ namespace Scripts.UI.Windows
 
         private void OnRegisterButtonClicked()
         {
-            if (AreInputFieldsValid())
+            string message;
+
+            if (AreInputFieldsValid(out message))
             {
                 Register();
+            }
+            else
+            {
+                ShowNotice?.Invoke(message);
             }
         }
 
@@ -115,9 +121,9 @@ namespace Scripts.UI.Windows
                 passwordInputField.text = string.Empty;
             }
 
-            if (rePasswordInputField != null)
+            if (confirmPasswordInputField != null)
             {
-                rePasswordInputField.text = string.Empty;
+                confirmPasswordInputField.text = string.Empty;
             }
 
             if (firstNameInputField != null)
@@ -131,35 +137,29 @@ namespace Scripts.UI.Windows
             }
         }
 
-        private bool AreInputFieldsValid()
+        private bool AreInputFieldsValid(out string message)
         {
-            var isValid = true;
+            message = string.Empty;
 
             if (emailInputField != null)
             {
                 if (string.IsNullOrWhiteSpace(emailInputField.text))
                 {
-                    isValid = false;
-
-                    ShowNotice?.Invoke("Email address can not be empty.");
+                    message = "Email address can not be empty.";
                 }
 
                 if (!WindowUtils.IsEmailAddressValid(emailInputField.text))
                 {
-                    isValid = false;
-
-                    ShowNotice?.Invoke("Email address is not valid.");
+                    message = "Email address is not valid.";
                 }
             }
 
-            if (passwordInputField != null && rePasswordInputField != null)
+            if (passwordInputField != null && confirmPasswordInputField != null)
             {
                 if (string.IsNullOrWhiteSpace(passwordInputField.text)
-                    || string.IsNullOrWhiteSpace(rePasswordInputField.text))
+                    || string.IsNullOrWhiteSpace(confirmPasswordInputField.text))
                 {
-                    isValid = false;
-
-                    ShowNotice?.Invoke("Passwords can not be empty.");
+                    message = "Passwords can not be empty.";
                 }
             }
 
@@ -167,19 +167,15 @@ namespace Scripts.UI.Windows
             {
                 if (passwordInputField.text.Length <= passwordCharacters)
                 {
-                    isValid = false;
-
-                    ShowNotice?.Invoke("Please enter a longer password.");
+                    message = "Please enter a longer password.";
                 }
             }
 
-            if (passwordInputField != null && rePasswordInputField != null)
+            if (passwordInputField != null && confirmPasswordInputField != null)
             {
-                if (passwordInputField.text != rePasswordInputField.text)
+                if (passwordInputField.text != confirmPasswordInputField.text)
                 {
-                    isValid = false;
-
-                    ShowNotice?.Invoke("Passwords are not match.");
+                    message = "Passwords are not match.";
                 }
             }
 
@@ -188,13 +184,11 @@ namespace Scripts.UI.Windows
                 if (firstNameInputField.text.Length < firstLastNameCharacters
                     || lastNameInputField.text.Length < firstLastNameCharacters)
                 {
-                    isValid = false;
-
-                    ShowNotice?.Invoke("First or last name is too short.");
+                    message = "First or last name is too short.";
                 }
             }
 
-            return isValid;
+            return message == string.Empty;
         }
     }
 }

@@ -83,9 +83,15 @@ namespace Scripts.UI.Windows
 
         private void OnLoginButtonClicked()
         {
-            if (AreInputFieldsValid())
+            string message;
+
+            if (AreInputFieldsValid(out message))
             {
                 Login();
+            }
+            else
+            {
+                ShowNotice?.Invoke(message);
             }
         }
 
@@ -118,24 +124,20 @@ namespace Scripts.UI.Windows
             }
         }
 
-        private bool AreInputFieldsValid()
+        private bool AreInputFieldsValid(out string message)
         {
-            var isValid = true;
+            message = string.Empty;
 
             if (emailInputField != null)
             {
                 if (string.IsNullOrWhiteSpace(emailInputField.text))
                 {
-                    isValid = false;
-
-                    ShowNotice?.Invoke("Email address can not be empty.");
+                    message = "Email address can not be empty.";
                 }
 
                 if (!WindowUtils.IsEmailAddressValid(emailInputField.text))
                 {
-                    isValid = false;
-
-                    ShowNotice?.Invoke("Email address is not valid.");
+                    message = "Email address is not valid.";
                 }
             }
 
@@ -143,20 +145,16 @@ namespace Scripts.UI.Windows
             {
                 if (string.IsNullOrWhiteSpace(passwordInputField.text))
                 {
-                    isValid = false;
-
-                    ShowNotice?.Invoke("Password can not be empty.");
+                    message = "Password can not be empty.";
                 }
 
                 if (passwordInputField.text.Length <= passwordCharacters)
                 {
-                    isValid = false;
-
-                    ShowNotice?.Invoke("Password is not match.");
+                    message = "Password is not match.";
                 }
             }
 
-            return isValid;
+            return message == string.Empty;
         }
     }
 }
