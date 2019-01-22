@@ -82,10 +82,6 @@ namespace Scripts.UI.Windows
             {
                 Register();
             }
-            else
-            {
-                Hide();
-            }
         }
 
         private void Register()

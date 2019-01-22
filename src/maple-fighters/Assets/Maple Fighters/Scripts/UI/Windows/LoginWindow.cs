@@ -87,10 +87,6 @@ namespace Scripts.UI.Windows
             {
                 Login();
             }
-            else
-            {
-                Hide();
-            }
         }
 
         private void OnRegisterButtonClicked()

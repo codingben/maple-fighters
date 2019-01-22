@@ -7,9 +7,9 @@ namespace Scripts.UI.Controllers
 {
     public class RegistrationController : MonoSingleton<RegistrationController>
     {
-        public event Action<UIRegistrationDetails> RegisterButtonClicked;
+        public event Action<UIRegistrationDetails> Register;
 
-        public event Action BackButtonClicked;
+        public event Action Back;
 
         private RegistrationWindow registrationWindow;
 
@@ -22,13 +22,25 @@ namespace Scripts.UI.Controllers
             registrationWindow.RegisterButtonClicked += OnRegisterButtonClicked;
             registrationWindow.BackButtonClicked += OnBackButtonClicked;
         }
-        
+
+        private void Start()
+        {
+            LoginController.GetInstance().Register += OnRegister;
+        }
+
+        private void OnRegister()
+        {
+            registrationWindow.Show();
+        }
+
         protected override void OnDestroying()
         {
             base.OnDestroying();
 
             if (registrationWindow != null)
             {
+                LoginController.GetInstance().Register -= OnRegister;
+
                 registrationWindow.RegisterButtonClicked -= OnRegisterButtonClicked;
                 registrationWindow.BackButtonClicked -= OnBackButtonClicked;
 
@@ -41,13 +53,13 @@ namespace Scripts.UI.Controllers
         {
             if (RegistrationConnectionProvider.GetInstance().IsConnected())
             {
-                RegisterButtonClicked?.Invoke(uiRegistrationDetails);
+                Register?.Invoke(uiRegistrationDetails);
             }
             else
             {
                 RegistrationConnectionProvider.GetInstance()
                     .Connect(
-                        () => RegisterButtonClicked?.Invoke(
+                        () => Register?.Invoke(
                             uiRegistrationDetails));
             }
         }
@@ -60,7 +72,7 @@ namespace Scripts.UI.Controllers
                 registrationWindow.ResetInputFields();
             }
 
-            BackButtonClicked?.Invoke();
+            Back?.Invoke();
         }
     }
 }

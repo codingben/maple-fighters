@@ -7,9 +7,9 @@ namespace Scripts.UI.Controllers
 {
     public class LoginController : MonoSingleton<LoginController>
     {
-        public event Action<string, string> LoginButtonClicked;
+        public event Action<string, string> Login;
 
-        public event Action RegisterButtonClicked;
+        public event Action Register;
 
         private LoginWindow loginWindow;
 
@@ -23,12 +23,24 @@ namespace Scripts.UI.Controllers
             loginWindow.Show();
         }
 
+        private void Start()
+        {
+            RegistrationController.GetInstance().Back += OnBack;
+        }
+
+        private void OnBack()
+        {
+            loginWindow.Show();
+        }
+
         protected override void OnDestroying()
         {
             base.OnDestroying();
 
             if (loginWindow != null)
             {
+                RegistrationController.GetInstance().Back -= OnBack;
+
                 loginWindow.LoginButtonClicked -= OnLoginButtonClicked;
                 loginWindow.RegisterButtonClicked -= OnRegisterButtonClicked;
 
@@ -45,12 +57,12 @@ namespace Scripts.UI.Controllers
 
             if (LoginConnectionProvider.GetInstance().IsConnected())
             {
-                LoginButtonClicked?.Invoke(email, password);
+                Login?.Invoke(email, password);
             }
             else
             {
                 LoginConnectionProvider.GetInstance()
-                    .Connect(() => LoginButtonClicked?.Invoke(email, password));
+                    .Connect(() => Login?.Invoke(email, password));
             }
         }
 
@@ -62,7 +74,7 @@ namespace Scripts.UI.Controllers
                 loginWindow.ResetInputFields();
             }
 
-            RegisterButtonClicked?.Invoke();
+            Register?.Invoke();
         }
     }
 }
