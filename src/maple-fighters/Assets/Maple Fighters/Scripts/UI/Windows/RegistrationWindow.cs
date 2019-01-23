@@ -80,7 +80,9 @@ namespace Scripts.UI.Windows
         {
             string message;
 
-            if (AreInputFieldsValid(out message))
+            if (IsEmailInputFieldValid(out message)
+                && IsPasswordInputFieldsValid(out message)
+                && IsFirstAndLastNameInputFieldsValid(out message))
             {
                 Register();
             }
@@ -137,7 +139,7 @@ namespace Scripts.UI.Windows
             }
         }
 
-        private bool AreInputFieldsValid(out string message)
+        private bool IsEmailInputFieldValid(out string message)
         {
             message = string.Empty;
 
@@ -146,13 +148,22 @@ namespace Scripts.UI.Windows
                 if (string.IsNullOrWhiteSpace(emailInputField.text))
                 {
                     message = WindowMessages.EmailAddressEmpty;
+                    return false;
                 }
 
                 if (!WindowUtils.IsEmailAddressValid(emailInputField.text))
                 {
                     message = WindowMessages.EmailAddressInvalid;
+                    return false;
                 }
             }
+
+            return true;
+        }
+
+        private bool IsPasswordInputFieldsValid(out string message)
+        {
+            message = string.Empty;
 
             if (passwordInputField != null && confirmPasswordInputField != null)
             {
@@ -160,6 +171,7 @@ namespace Scripts.UI.Windows
                     || string.IsNullOrWhiteSpace(confirmPasswordInputField.text))
                 {
                     message = WindowMessages.PasswordsEmpty;
+                    return false;
                 }
             }
 
@@ -168,6 +180,7 @@ namespace Scripts.UI.Windows
                 if (passwordInputField.text.Length <= passwordCharacters)
                 {
                     message = WindowMessages.ShortPassword;
+                    return false;
                 }
             }
 
@@ -176,8 +189,16 @@ namespace Scripts.UI.Windows
                 if (passwordInputField.text != confirmPasswordInputField.text)
                 {
                     message = WindowMessages.PasswordsNotMatch;
+                    return false;
                 }
             }
+
+            return true;
+        }
+
+        private bool IsFirstAndLastNameInputFieldsValid(out string message)
+        {
+            message = string.Empty;
 
             if (firstNameInputField != null && lastNameInputField != null)
             {
@@ -185,10 +206,11 @@ namespace Scripts.UI.Windows
                     || lastNameInputField.text.Length < firstLastNameCharacters)
                 {
                     message = WindowMessages.ShortFirstOrLastName;
+                    return false;
                 }
             }
 
-            return message == string.Empty;
+            return true;
         }
     }
 }

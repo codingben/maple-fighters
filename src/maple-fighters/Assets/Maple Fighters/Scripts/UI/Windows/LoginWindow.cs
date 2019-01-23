@@ -85,7 +85,8 @@ namespace Scripts.UI.Windows
         {
             string message;
 
-            if (AreInputFieldsValid(out message))
+            if (IsEmailInputFieldValid(out message)
+                && IsPasswordInputFieldValid(out message))
             {
                 Login();
             }
@@ -124,7 +125,7 @@ namespace Scripts.UI.Windows
             }
         }
 
-        private bool AreInputFieldsValid(out string message)
+        private bool IsEmailInputFieldValid(out string message)
         {
             message = string.Empty;
 
@@ -133,28 +134,39 @@ namespace Scripts.UI.Windows
                 if (string.IsNullOrWhiteSpace(emailInputField.text))
                 {
                     message = WindowMessages.EmailAddressEmpty;
+                    return false;
                 }
 
                 if (!WindowUtils.IsEmailAddressValid(emailInputField.text))
                 {
                     message = WindowMessages.EmailAddressInvalid;
+                    return false;
                 }
             }
+
+            return true;
+        }
+
+        private bool IsPasswordInputFieldValid(out string message)
+        {
+            message = string.Empty;
 
             if (passwordInputField != null)
             {
                 if (string.IsNullOrWhiteSpace(passwordInputField.text))
                 {
                     message = WindowMessages.PasswordEmpty;
+                    return false;
                 }
 
                 if (passwordInputField.text.Length <= passwordCharacters)
                 {
                     message = WindowMessages.PasswordNotMatch;
+                    return false;
                 }
             }
 
-            return message == string.Empty;
+            return true;
         }
     }
 }

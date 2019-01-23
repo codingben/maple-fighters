@@ -56,11 +56,6 @@ namespace Scripts.UI.Controllers
 
         private void OnLoginButtonClicked(string email, string password)
         {
-            if (loginWindow != null)
-            {
-                loginWindow.Hide();
-            }
-
             if (LoginConnectionProvider.GetInstance().IsConnected())
             {
                 Login?.Invoke(email, password);

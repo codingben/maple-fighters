@@ -8,6 +8,7 @@ namespace Scripts.UI.Controllers
     public class NoticeController : MonoSingleton<NoticeController>
     {
         private NoticeWindow noticeWindow;
+        private Action onOkButtonClicked;
 
         protected override void OnDestroying()
         {
@@ -19,7 +20,7 @@ namespace Scripts.UI.Controllers
             }
         }
 
-        public void Show(string message, Action onOkClicked = null, bool background = true)
+        public void Show(string message, Action onClicked = null, bool background = true)
         {
             if (noticeWindow == null)
             {
@@ -29,9 +30,14 @@ namespace Scripts.UI.Controllers
                 noticeWindow.Message = message;
                 noticeWindow.OkButtonClicked += Hide;
 
-                if (onOkClicked != null)
+                if (onClicked != null)
                 {
-                    noticeWindow.OkButtonClicked += onOkClicked;
+                    onOkButtonClicked = onClicked;
+                    noticeWindow.OkButtonClicked += onOkButtonClicked;
+                }
+                else
+                {
+                    onOkButtonClicked = null;
                 }
 
                 if (background == false)
@@ -52,6 +58,12 @@ namespace Scripts.UI.Controllers
                 uiFadeAnimation.FadeOutCompleted += OnFadeOutCompleted;
 
                 noticeWindow.OkButtonClicked -= Hide;
+
+                if (onOkButtonClicked != null)
+                {
+                    noticeWindow.OkButtonClicked -= onOkButtonClicked;
+                }
+
                 noticeWindow.Hide();
             }
         }
