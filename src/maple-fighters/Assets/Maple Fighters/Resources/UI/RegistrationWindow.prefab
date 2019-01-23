@@ -1837,7 +1837,7 @@ MonoBehaviour:
   firstLastNameCharacters: 3
   emailInputField: {fileID: 114411245771385382}
   passwordInputField: {fileID: 114723499813800656}
-  rePasswordInputField: {fileID: 114220500530076864}
+  confirmPasswordInputField: {fileID: 114220500530076864}
   firstNameInputField: {fileID: 114964957400673794}
   lastNameInputField: {fileID: 114559428606114106}
   backButton: {fileID: 114149788892941214}
