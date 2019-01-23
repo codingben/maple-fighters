@@ -54,7 +54,7 @@ namespace Scripts.UI.Windows
 
         [SerializeField]
         private Button registerButton;
-        
+
         private void Start()
         {
             if (loginButton != null)
@@ -132,12 +132,12 @@ namespace Scripts.UI.Windows
             {
                 if (string.IsNullOrWhiteSpace(emailInputField.text))
                 {
-                    message = "Email address can not be empty.";
+                    message = WindowMessages.EmailAddressEmpty;
                 }
 
                 if (!WindowUtils.IsEmailAddressValid(emailInputField.text))
                 {
-                    message = "Email address is not valid.";
+                    message = WindowMessages.EmailAddressInvalid;
                 }
             }
 
@@ -145,12 +145,12 @@ namespace Scripts.UI.Windows
             {
                 if (string.IsNullOrWhiteSpace(passwordInputField.text))
                 {
-                    message = "Password can not be empty.";
+                    message = WindowMessages.PasswordEmpty;
                 }
 
                 if (passwordInputField.text.Length <= passwordCharacters)
                 {
-                    message = "Password is not match.";
+                    message = WindowMessages.PasswordNotMatch;
                 }
             }
 

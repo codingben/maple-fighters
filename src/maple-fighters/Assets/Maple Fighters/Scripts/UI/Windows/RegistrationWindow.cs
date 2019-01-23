@@ -145,12 +145,12 @@ namespace Scripts.UI.Windows
             {
                 if (string.IsNullOrWhiteSpace(emailInputField.text))
                 {
-                    message = "Email address can not be empty.";
+                    message = WindowMessages.EmailAddressEmpty;
                 }
 
                 if (!WindowUtils.IsEmailAddressValid(emailInputField.text))
                 {
-                    message = "Email address is not valid.";
+                    message = WindowMessages.EmailAddressInvalid;
                 }
             }
 
@@ -159,7 +159,7 @@ namespace Scripts.UI.Windows
                 if (string.IsNullOrWhiteSpace(passwordInputField.text)
                     || string.IsNullOrWhiteSpace(confirmPasswordInputField.text))
                 {
-                    message = "Passwords can not be empty.";
+                    message = WindowMessages.PasswordsEmpty;
                 }
             }
 
@@ -167,7 +167,7 @@ namespace Scripts.UI.Windows
             {
                 if (passwordInputField.text.Length <= passwordCharacters)
                 {
-                    message = "Please enter a longer password.";
+                    message = WindowMessages.ShortPassword;
                 }
             }
 
@@ -175,7 +175,7 @@ namespace Scripts.UI.Windows
             {
                 if (passwordInputField.text != confirmPasswordInputField.text)
                 {
-                    message = "Passwords are not match.";
+                    message = WindowMessages.PasswordsNotMatch;
                 }
             }
 
@@ -184,7 +184,7 @@ namespace Scripts.UI.Windows
                 if (firstNameInputField.text.Length < firstLastNameCharacters
                     || lastNameInputField.text.Length < firstLastNameCharacters)
                 {
-                    message = "First or last name is too short.";
+                    message = WindowMessages.ShortFirstOrLastName;
                 }
             }
 

@@ -5,6 +5,8 @@ namespace Scripts.UI
 {
     public class MapSceneTitleCreator : MonoBehaviour
     {
+        private const string DefaultTitleText = "Map Name";
+
         [SerializeField]
         private string titleText;
 
@@ -12,7 +14,7 @@ namespace Scripts.UI
         {
             if (string.IsNullOrEmpty(titleText))
             {
-                titleText = "Map Name";
+                titleText = DefaultTitleText;
             }
 
             var mapSceneTitleText = UIElementsCreator.GetInstance()
