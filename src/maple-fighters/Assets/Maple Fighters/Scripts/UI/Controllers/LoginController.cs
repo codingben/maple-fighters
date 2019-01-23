@@ -20,17 +20,13 @@ namespace Scripts.UI.Controllers
             loginWindow = UIElementsCreator.GetInstance().Create<LoginWindow>();
             loginWindow.LoginButtonClicked += OnLoginButtonClicked;
             loginWindow.RegisterButtonClicked += OnRegisterButtonClicked;
+            loginWindow.ShowNotice += OnShowNotice;
             loginWindow.Show();
         }
 
         private void Start()
         {
             RegistrationController.GetInstance().Back += OnBack;
-        }
-
-        private void OnBack()
-        {
-            loginWindow.Show();
         }
 
         protected override void OnDestroying()
@@ -46,6 +42,16 @@ namespace Scripts.UI.Controllers
 
                 Destroy(loginWindow.gameObject);
             }
+        }
+
+        private void OnShowNotice(string message)
+        {
+            NoticeController.GetInstance().Show(message);
+        }
+
+        private void OnBack()
+        {
+            loginWindow.Show();
         }
 
         private void OnLoginButtonClicked(string email, string password)

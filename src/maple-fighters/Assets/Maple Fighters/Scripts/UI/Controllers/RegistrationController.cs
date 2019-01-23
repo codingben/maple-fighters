@@ -21,16 +21,12 @@ namespace Scripts.UI.Controllers
                 .Create<RegistrationWindow>();
             registrationWindow.RegisterButtonClicked += OnRegisterButtonClicked;
             registrationWindow.BackButtonClicked += OnBackButtonClicked;
+            registrationWindow.ShowNotice += OnShowNotice;
         }
 
         private void Start()
         {
             LoginController.GetInstance().Register += OnRegister;
-        }
-
-        private void OnRegister()
-        {
-            registrationWindow.Show();
         }
 
         protected override void OnDestroying()
@@ -46,6 +42,16 @@ namespace Scripts.UI.Controllers
 
                 Destroy(registrationWindow.gameObject);
             }
+        }
+
+        private void OnShowNotice(string message)
+        {
+            NoticeController.GetInstance().Show(message);
+        }
+
+        private void OnRegister()
+        {
+            registrationWindow.Show();
         }
 
         private void OnRegisterButtonClicked(
