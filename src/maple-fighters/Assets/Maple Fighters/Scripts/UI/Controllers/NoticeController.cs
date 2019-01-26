@@ -1,19 +1,17 @@
 ﻿using System;
 using Scripts.UI.Windows;
-using Scripts.Utils;
 using UI.Manager;
+using UnityEngine;
 
 namespace Scripts.UI.Controllers
 {
-    public class NoticeController : MonoSingleton<NoticeController>
+    public class NoticeController : MonoBehaviour
     {
         private NoticeWindow noticeWindow;
         private Action onOkButtonClicked;
 
-        protected override void OnDestroying()
+        private void OnDestroy()
         {
-            base.OnDestroying();
-
             if (noticeWindow != null)
             {
                 Destroy(noticeWindow.gameObject);

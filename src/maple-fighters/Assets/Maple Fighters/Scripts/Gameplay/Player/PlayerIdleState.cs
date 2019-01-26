@@ -7,11 +7,15 @@ namespace Scripts.Gameplay.Actors
     public class PlayerIdleState : IPlayerStateBehaviour
     {
         private readonly PlayerController playerController;
+        private readonly FocusStateController focusStateController;
         private readonly Rigidbody2D rigidbody2D;
 
-        public PlayerIdleState(PlayerController playerController)
+        public PlayerIdleState(
+            PlayerController playerController,
+            FocusStateController focusStateController)
         {
             this.playerController = playerController;
+            this.focusStateController = focusStateController;
 
             var collider = playerController.GetComponent<Collider2D>();
             rigidbody2D = collider.attachedRigidbody;
@@ -26,8 +30,8 @@ namespace Scripts.Gameplay.Actors
         {
             if (playerController.IsGrounded())
             {
-                if (FocusStateController.GetInstance().GetFocusState()
-                    != FocusState.Game)
+                if (focusStateController != null
+                    && focusStateController.GetFocusState() != FocusState.Game)
                 {
                     return;
                 }

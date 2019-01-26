@@ -1,11 +1,11 @@
 ﻿using System;
 using Scripts.UI.Windows;
-using Scripts.Utils;
 using UI.Manager;
+using UnityEngine;
 
 namespace Scripts.UI.Controllers
 {
-    public class CharacterNameController : MonoSingleton<CharacterNameController>
+    public class CharacterNameController : MonoBehaviour
     {
         public event Action<string> ConfirmButtonClicked;
 
@@ -30,10 +30,8 @@ namespace Scripts.UI.Controllers
             }
         }
 
-        protected override void OnDestroying()
+        private void OnDestroy()
         {
-            base.OnDestroying();
-
             if (characterNameWindow != null)
             {
                 characterNameWindow.ConfirmButtonClicked -=

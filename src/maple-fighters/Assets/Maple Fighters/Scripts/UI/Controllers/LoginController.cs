@@ -54,7 +54,12 @@ namespace Scripts.UI.Controllers
 
         private void OnShowNotice(string message)
         {
-            NoticeController.GetInstance().Show(message);
+            // TODO: Use event bus system
+            var noticeController = FindObjectOfType<NoticeController>();
+            if (noticeController != null)
+            {
+                noticeController.Show(message);
+            }
         }
 
         private void OnBack()

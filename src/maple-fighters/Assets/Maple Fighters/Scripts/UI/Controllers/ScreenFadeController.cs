@@ -1,23 +1,19 @@
-﻿using Scripts.Utils;
-using UI.Manager;
+﻿using UI.Manager;
+using UnityEngine;
 
 namespace Scripts.UI.Controllers
 {
-    public class ScreenFadeController : MonoSingleton<ScreenFadeController>
+    public class ScreenFadeController : MonoBehaviour
     {
         private ScreenFadeImage screenFadeImage;
 
-        protected override void OnAwake()
+        private void OnAwake()
         {
-            base.OnAwake();
-
             Hide();
         }
 
-        protected override void OnDestroying()
+        private void OnDestroying()
         {
-            base.OnDestroying();
-
             if (screenFadeImage != null)
             {
                 Destroy(screenFadeImage.gameObject);

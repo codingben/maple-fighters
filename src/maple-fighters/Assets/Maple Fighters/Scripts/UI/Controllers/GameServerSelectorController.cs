@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using Scripts.UI.Windows;
-using Scripts.Utils;
 using UI.Manager;
+using UnityEngine;
 
 namespace Scripts.UI.Controllers
 {
-    // TODO: It shouldn't be MonoSingleton
-    public class GameServerSelectorController : MonoSingleton<GameServerSelectorController>
+    public class GameServerSelectorController : MonoBehaviour
     {
         public event Action JoinGameServer;
 
@@ -20,17 +19,13 @@ namespace Scripts.UI.Controllers
 
         private const string RefreshImageMessage = "Getting server list...";
 
-        protected override void OnAwake()
+        private void Awake()
         {
-            base.OnAwake();
-
             gameServerButtons = new Dictionary<string, GameServerButton>();
         }
 
-        protected override void OnDestroying()
+        private void OnDestroy()
         {
-            base.OnDestroying();
-
             RemoveGameServerButtons();
             RemoveGameServerSelectorWindow();
         }

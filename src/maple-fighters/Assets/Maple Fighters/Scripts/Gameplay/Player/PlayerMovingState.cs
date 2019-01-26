@@ -7,13 +7,17 @@ namespace Scripts.Gameplay.Actors
     public class PlayerMovingState : IPlayerStateBehaviour
     {
         private readonly PlayerController playerController;
+        private readonly FocusStateController focusStateController;
         private readonly Rigidbody2D rigidbody2D;
 
         private float direction;
 
-        public PlayerMovingState(PlayerController playerController)
+        public PlayerMovingState(
+            PlayerController playerController,
+            FocusStateController focusStateController)
         {
             this.playerController = playerController;
+            this.focusStateController = focusStateController;
 
             var collider = playerController.GetComponent<Collider2D>();
             rigidbody2D = collider.attachedRigidbody;
@@ -28,8 +32,8 @@ namespace Scripts.Gameplay.Actors
         {
             if (playerController.IsGrounded())
             {
-                if (FocusStateController.GetInstance().GetFocusState()
-                    != FocusState.Game)
+                if (focusStateController != null
+                    && focusStateController.GetFocusState() != FocusState.Game)
                 {
                     playerController.ChangePlayerState(PlayerState.Idle);
                     return;

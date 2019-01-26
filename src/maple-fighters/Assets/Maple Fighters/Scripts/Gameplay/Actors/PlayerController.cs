@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Game.Common;
 using Scripts.Editor;
+using Scripts.UI.Controllers;
 using UnityEngine;
 
 #pragma warning disable 0109
@@ -41,11 +42,19 @@ namespace Scripts.Gameplay.Actors
 
         private void Awake()
         {
+            var focusStateController = FindObjectOfType<FocusStateController>();
+
             playerStateBehaviours =
                 new Dictionary<PlayerState, IPlayerStateBehaviour>
                 {
-                    { PlayerState.Idle, new PlayerIdleState(this) },
-                    { PlayerState.Moving, new PlayerMovingState(this) },
+                    {
+                        PlayerState.Idle,
+                        new PlayerIdleState(this, focusStateController)
+                    },
+                    {
+                        PlayerState.Moving,
+                        new PlayerMovingState(this, focusStateController)
+                    },
                     { PlayerState.Jumping, new PlayerJumpingState(this) },
                     { PlayerState.Falling, new PlayerFallingState(this) },
                     { PlayerState.Attacked, new PlayerAttackedState(this) },

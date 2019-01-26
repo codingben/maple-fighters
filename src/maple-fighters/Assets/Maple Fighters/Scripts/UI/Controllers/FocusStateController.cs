@@ -1,9 +1,9 @@
 ﻿using System;
-using Scripts.Utils;
+using UnityEngine;
 
 namespace Scripts.UI.Controllers
 {
-    public class FocusStateController : MonoSingleton<FocusStateController>
+    public class FocusStateController : MonoBehaviour
     {
         public event Action<FocusState> FocusStateChanged;
 

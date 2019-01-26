@@ -1,11 +1,11 @@
 ﻿using System;
 using Scripts.UI.Windows;
-using Scripts.Utils;
 using UI.Manager;
+using UnityEngine;
 
 namespace Scripts.UI.Controllers
 {
-    public class CharacterSelectionController : MonoSingleton<CharacterSelectionController>
+    public class CharacterSelectionController : MonoBehaviour
     {
         public event Action CharacterChosen;
 
@@ -14,17 +14,13 @@ namespace Scripts.UI.Controllers
         private UICharacterDetails uiCharacterDetails;
         private CharacterSelectionWindow characterSelectionWindow;
 
-        protected override void OnAwake()
+        private void Awake()
         {
-            base.OnAwake();
-            
             SubscribeToCharacterNameEvents();
         }
 
-        protected override void OnDestroying()
+        private void OnDestroy()
         {
-            base.OnDestroying();
-
             if (characterSelectionWindow != null)
             {
                 characterSelectionWindow.ChooseButtonClicked -=
@@ -43,18 +39,30 @@ namespace Scripts.UI.Controllers
 
         private void SubscribeToCharacterNameEvents()
         {
-            CharacterNameController.GetInstance().ConfirmButtonClicked +=
-                OnConfirmButtonClicked;
-            CharacterNameController.GetInstance().BackButtonClicked +=
-                OnBackButtonClicked;
+            // TODO: Use event bus system
+            var characterNameController =
+                FindObjectOfType<CharacterNameController>();
+            if (characterNameController != null)
+            {
+                characterNameController.ConfirmButtonClicked +=
+                    OnConfirmButtonClicked;
+                characterNameController.BackButtonClicked +=
+                    OnBackButtonClicked;
+            }
         }
 
         private void UnsubscribeToCharacterNameEvents()
         {
-            CharacterNameController.GetInstance().ConfirmButtonClicked -=
-                OnConfirmButtonClicked;
-            CharacterNameController.GetInstance().BackButtonClicked -=
-                OnBackButtonClicked;
+            // TODO: Use event bus system
+            var characterNameController =
+                FindObjectOfType<CharacterNameController>();
+            if (characterNameController != null)
+            {
+                characterNameController.ConfirmButtonClicked -=
+                    OnConfirmButtonClicked;
+                characterNameController.BackButtonClicked -=
+                    OnBackButtonClicked;
+            }
         }
 
         public void SetCharacterDetails(UICharacterDetails uiCharacterDetails)
@@ -94,7 +102,13 @@ namespace Scripts.UI.Controllers
 
         private void OnChooseButtonClicked()
         {
-            CharacterNameController.GetInstance().ShowCharacterNameWindow();
+            // TODO: Use event bus system
+            var characterNameController =
+                FindObjectOfType<CharacterNameController>();
+            if (characterNameController != null)
+            {
+                characterNameController.ShowCharacterNameWindow();
+            }
         }
 
         private void OnCancelButtonClicked()
