@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using Scripts.UI.Windows;
-using Scripts.Utils;
 using UI.Manager;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -8,7 +7,7 @@ using UnityEngine.SceneManagement;
 
 namespace Scripts.UI.Controllers
 {
-    public class CameraMinimapController : MonoSingleton<CameraMinimapController>
+    public class CameraMinimapController : MonoBehaviour
     {
         private const string MiniCameraTag = "Minimap Camera";
 
@@ -20,10 +19,8 @@ namespace Scripts.UI.Controllers
 
         private MinimapWindow minimapWindow;
         
-        protected override void OnAwake()
+        private void Awake()
         {
-            base.OnAwake();
-
             var minimapCamera = GameObject.FindGameObjectWithTag(MiniCameraTag);
             if (minimapCamera != null)
             {
@@ -32,16 +29,11 @@ namespace Scripts.UI.Controllers
 
             minimapWindow =
                 UIElementsCreator.GetInstance().Create<MinimapWindow>();
+            minimapWindow.MarkSelectionChanged += OnMarkSelectionChanged;
 
-            // TODO: Find a better solution, lol...
-            DontDestroyOnLoad(minimapWindow.transform.root);
+            SceneManager.sceneLoaded += OnSceneLoaded;
         }
-
-        private void Start()
-        {
-            SubscribeToEvents();
-        }
-
+        
         private void OnSceneLoaded(Scene scene, LoadSceneMode loadSceneMode)
         {
             if (camera == null)
@@ -61,34 +53,14 @@ namespace Scripts.UI.Controllers
             }
         }
 
-        private void SubscribeToEvents()
-        {
-            if (minimapWindow != null)
-            {
-                minimapWindow.MarkSelectionChanged += OnMarkSelectionChanged;
-            }
-
-            SceneManager.sceneLoaded += OnSceneLoaded;
-        }
-
-        private void UnsubscribeFromEvents()
+        private void OnDestroy()
         {
             if (minimapWindow != null)
             {
                 minimapWindow.MarkSelectionChanged -= OnMarkSelectionChanged;
-            }
 
-            SceneManager.sceneLoaded -= OnSceneLoaded;
-        }
+                SceneManager.sceneLoaded -= OnSceneLoaded;
 
-        protected override void OnDestroying()
-        {
-            base.OnDestroying();
-
-            UnsubscribeFromEvents();
-
-            if (minimapWindow != null)
-            {
                 Destroy(minimapWindow.gameObject);
             }
         }

@@ -17,8 +17,8 @@ namespace Scripts.Gameplay.Actors
             SetCharacterToPositionSender();
             InitializePlayerController();
 
-            ChatController.GetInstance()
-                .SetCharacterName(characterSpawnDetails.Character.Name);
+            var chatController = FindObjectOfType<ChatController>();
+            chatController.SetCharacterName(characterSpawnDetails.Character.Name);
         }
 
         private void SetCharacterToPositionSender()

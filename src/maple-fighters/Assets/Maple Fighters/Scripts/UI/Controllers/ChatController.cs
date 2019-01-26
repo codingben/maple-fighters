@@ -1,26 +1,21 @@
 ﻿using System;
 using Scripts.Services;
 using Scripts.UI.Windows;
-using Scripts.Utils;
 using UI.Manager;
+using UnityEngine;
 
 namespace Scripts.UI.Controllers
 {
-    public class ChatController : MonoSingleton<ChatController>
+    public class ChatController : MonoBehaviour
     {
-        public event Action<string> MessageSent; 
+        public event Action<string> MessageSent;
 
         private ChatWindow chatWindow;
 
-        protected override void OnAwake()
+        private void Awake()
         {
-            base.OnAwake();
-
             chatWindow = UIElementsCreator.GetInstance().Create<ChatWindow>();
             chatWindow.MessageAdded += OnMessageAdded;
-
-            // TODO: Find a better solution, lol...
-            DontDestroyOnLoad(chatWindow.transform.root);
         }
 
         private void Start()
@@ -28,10 +23,8 @@ namespace Scripts.UI.Controllers
             ChatConnectionProvider.GetInstance().Connect();
         }
 
-        protected override void OnDestroying()
+        private void OnDestroy()
         {
-            base.OnDestroying();
-
             if (chatWindow != null)
             {
                 chatWindow.MessageAdded -= OnMessageAdded;
