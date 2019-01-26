@@ -7,12 +7,12 @@ namespace Scripts.UI.Controllers
     {
         private ScreenFadeImage screenFadeImage;
 
-        private void OnAwake()
+        private void Awake()
         {
             Hide();
         }
 
-        private void OnDestroying()
+        private void OnDestroy()
         {
             if (screenFadeImage != null)
             {
