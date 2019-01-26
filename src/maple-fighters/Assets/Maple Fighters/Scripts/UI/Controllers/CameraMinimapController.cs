@@ -3,7 +3,6 @@ using Scripts.UI.Windows;
 using UI.Manager;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.SceneManagement;
 
 namespace Scripts.UI.Controllers
 {
@@ -13,10 +12,7 @@ namespace Scripts.UI.Controllers
 
         [SerializeField]
         private MarkSelection[] markSelections;
-
-        private int selectionIndex;
         private new Camera camera;
-
         private MinimapWindow minimapWindow;
         
         private void Awake()
@@ -30,27 +26,6 @@ namespace Scripts.UI.Controllers
             minimapWindow =
                 UIElementsCreator.GetInstance().Create<MinimapWindow>();
             minimapWindow.MarkSelectionChanged += OnMarkSelectionChanged;
-
-            SceneManager.sceneLoaded += OnSceneLoaded;
-        }
-        
-        private void OnSceneLoaded(Scene scene, LoadSceneMode loadSceneMode)
-        {
-            if (camera == null)
-            {
-                var minimapCamera =
-                    GameObject.FindGameObjectWithTag(MiniCameraTag);
-                if (minimapCamera != null)
-                {
-                    camera = minimapCamera.GetComponent<Camera>();
-
-                    if (camera != null)
-                    {
-                        camera.cullingMask =
-                            markSelections[selectionIndex].MarkLayerMask;
-                    }
-                }
-            }
         }
 
         private void OnDestroy()
@@ -58,8 +33,6 @@ namespace Scripts.UI.Controllers
             if (minimapWindow != null)
             {
                 minimapWindow.MarkSelectionChanged -= OnMarkSelectionChanged;
-
-                SceneManager.sceneLoaded -= OnSceneLoaded;
 
                 Destroy(minimapWindow.gameObject);
             }
@@ -69,8 +42,6 @@ namespace Scripts.UI.Controllers
         {
             if (index < markSelections.Length)
             {
-                selectionIndex = index;
-
                 if (camera != null)
                 {
                     camera.cullingMask =
