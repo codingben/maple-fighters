@@ -6,24 +6,46 @@ namespace Scripts.UI.Controllers
     {
         private ClickableCharacterImage characterImage;
 
-        private void Start()
+        private void Awake()
         {
-            CharactersController.GetInstance().CharacterSelected +=
-                CharacterSelected;
-            CharacterSelectionController.GetInstance().CharacterChosen +=
-                CharacterDeselected;
-            CharacterSelectionController.GetInstance().CharacterCancelled +=
-                CharacterDeselected;
+            // TODO: Use event bus system
+            var characterViewController =
+                FindObjectOfType<CharacterViewController>();
+            if (characterViewController != null)
+            {
+                characterViewController.CharacterSelected += CharacterSelected;
+            }
+
+            var characterSelectionController =
+                FindObjectOfType<CharacterSelectionController>();
+            if (characterSelectionController != null)
+            {
+                characterSelectionController.CharacterChosen +=
+                    CharacterDeselected;
+                characterSelectionController.CharacterCancelled +=
+                    CharacterDeselected;
+            }
         }
 
         private void OnDestroy()
         {
-            CharactersController.GetInstance().CharacterSelected -=
-                CharacterSelected;
-            CharacterSelectionController.GetInstance().CharacterChosen -=
-                CharacterDeselected;
-            CharacterSelectionController.GetInstance().CharacterCancelled -=
-                CharacterDeselected;
+            // TODO: Use event bus system
+            var characterViewController =
+                FindObjectOfType<CharacterViewController>();
+            if (characterViewController != null)
+            {
+                characterViewController.CharacterSelected -= CharacterSelected;
+            }
+
+            var characterSelectionController =
+                FindObjectOfType<CharacterSelectionController>();
+            if (characterSelectionController != null)
+            {
+                characterSelectionController.CharacterChosen -=
+                    CharacterDeselected;
+                characterSelectionController.CharacterCancelled -=
+                    CharacterDeselected;
+            }
         }
 
         private void CharacterSelected(ClickableCharacterImage characterImage)

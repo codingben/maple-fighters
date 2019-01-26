@@ -1,12 +1,12 @@
 ﻿using System;
 using Scripts.UI.Windows;
-using Scripts.Utils;
 using UI.Manager;
+using UnityEngine;
 using UIManagerUtils = UI.Manager.Utils;
 
 namespace Scripts.UI.Controllers
 {
-    public class CharactersController : MonoSingleton<CharactersController>
+    public class CharacterViewController : MonoBehaviour
     {
         public event Action<int> CharacterStarted;
 
@@ -15,20 +15,22 @@ namespace Scripts.UI.Controllers
         public event Action<int> CharacterRemoved;
 
         private ClickableCharacterImageCollection clickableCharacterImageCollection;
+
+        private CharacterView characterView;
         private CharacterSelectionOptionsWindow characterSelectionOptionsWindow;
 
-        protected override void OnAwake()
+        private void Awake()
         {
-            base.OnAwake();
-
             clickableCharacterImageCollection =
                 new ClickableCharacterImageCollection();
+            characterView = 
+                UIElementsCreator.GetInstance().Create<CharacterView>(
+                    UILayer.Background,
+                    UIIndex.End);
         }
 
-        protected override void OnDestroying()
+        private void OnDestroy()
         {
-            base.OnDestroying();
-
             foreach (var characterImage in 
                 clickableCharacterImageCollection.GetCharacterImages())
             {
@@ -38,6 +40,11 @@ namespace Scripts.UI.Controllers
 
                     Destroy(characterImage.gameObject);
                 }
+            }
+
+            if (characterView != null)
+            {
+                Destroy(characterView.gameObject);
             }
 
             if (characterSelectionOptionsWindow != null)
