@@ -1,11 +1,11 @@
 ﻿using System;
 using Scripts.UI.Windows;
-using Scripts.Utils;
 using UI.Manager;
+using UnityEngine;
 
 namespace Scripts.UI.Controllers
 {
-    public class LoginController : MonoSingleton<LoginController>
+    public class LoginController : MonoBehaviour
     {
         public event Action<string, string> Login;
 
@@ -13,10 +13,8 @@ namespace Scripts.UI.Controllers
 
         private LoginWindow loginWindow;
 
-        protected override void OnAwake()
+        private void Awake()
         {
-            base.OnAwake();
-
             loginWindow = UIElementsCreator.GetInstance().Create<LoginWindow>();
             loginWindow.LoginButtonClicked += OnLoginButtonClicked;
             loginWindow.RegisterButtonClicked += OnRegisterButtonClicked;
@@ -26,21 +24,31 @@ namespace Scripts.UI.Controllers
 
         private void Start()
         {
-            RegistrationController.GetInstance().Back += OnBack;
+            // TODO: Use event bus system
+            var registrationController =
+                FindObjectOfType<RegistrationController>();
+            if (registrationController != null)
+            {
+                registrationController.Back += OnBack;
+            }
         }
 
-        protected override void OnDestroying()
+        private void OnDestroy()
         {
-            base.OnDestroying();
-
             if (loginWindow != null)
             {
-                RegistrationController.GetInstance().Back -= OnBack;
-
                 loginWindow.LoginButtonClicked -= OnLoginButtonClicked;
                 loginWindow.RegisterButtonClicked -= OnRegisterButtonClicked;
 
                 Destroy(loginWindow.gameObject);
+            }
+
+            // TODO: Use event bus system
+            var registrationController =
+                FindObjectOfType<RegistrationController>();
+            if (registrationController != null)
+            {
+                registrationController.Back -= OnBack;
             }
         }
 
