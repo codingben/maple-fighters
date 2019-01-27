@@ -1,30 +1,26 @@
-﻿using CommonTools.Log;
-using Game.Common;
+﻿using Game.Common;
 using Scripts.Containers;
 using Scripts.Services;
-using Scripts.Utils;
+using UnityEngine;
 
 namespace Scripts.Gameplay.Actors
 {
-    public class CharacterCreator : MonoSingleton<CharacterCreator>
+    public class CharacterCreator : MonoBehaviour
     {
-        private void Start()
+        private void Awake()
         {
             SubscribeToEvents();
         }
         
-        protected override void OnDestroying()
+        private void OnDestroy()
         {
-            base.OnDestroying();
-
             UnsubscribeFromEvents();
         }
 
         private void SubscribeToEvents()
         {
-            var gameScenePeerLogic = 
-                ServiceContainer.GameService
-                    .GetPeerLogic<IGameScenePeerLogicAPI>().AssertNotNull();
+            var gameScenePeerLogic = ServiceContainer.GameService
+                .GetPeerLogic<IGameScenePeerLogicAPI>();
             gameScenePeerLogic.SceneEntered.AddListener(OnSceneEntered);
             gameScenePeerLogic.CharacterAdded.AddListener(OnCharacterAdded);
             gameScenePeerLogic.CharactersAdded.AddListener(OnCharactersAdded);
@@ -32,9 +28,8 @@ namespace Scripts.Gameplay.Actors
 
         private void UnsubscribeFromEvents()
         {
-            var gameScenePeerLogic = 
-                ServiceContainer.GameService
-                    .GetPeerLogic<IGameScenePeerLogicAPI>().AssertNotNull();
+            var gameScenePeerLogic = ServiceContainer.GameService
+                .GetPeerLogic<IGameScenePeerLogicAPI>();
             gameScenePeerLogic.SceneEntered.RemoveListener(OnSceneEntered);
             gameScenePeerLogic.CharacterAdded.RemoveListener(OnCharacterAdded);
             gameScenePeerLogic.CharactersAdded.RemoveListener(OnCharactersAdded);
@@ -43,21 +38,20 @@ namespace Scripts.Gameplay.Actors
         private void OnSceneEntered(
             EnterSceneResponseParameters parameters)
         {
-            var characterSpawnDetails = parameters.Character;
-            CreateCharacter(characterSpawnDetails);
+            CreateCharacter(parameters.Character);
         }
 
         private void OnCharacterAdded(
             CharacterAddedEventParameters parameters)
         {
-            var characterSpawnDetails = parameters.CharacterSpawnDetails;
-            CreateCharacter(characterSpawnDetails);
+            CreateCharacter(parameters.CharacterSpawnDetails);
         }
 
         private void OnCharactersAdded(
             CharactersAddedEventParameters parameters)
         {
-            foreach (var characterSpawnDetails in parameters.CharactersSpawnDetails)
+            foreach (var characterSpawnDetails in parameters
+                .CharactersSpawnDetails)
             {
                 CreateCharacter(characterSpawnDetails);
             }
@@ -66,13 +60,14 @@ namespace Scripts.Gameplay.Actors
         private void CreateCharacter(
             CharacterSpawnDetailsParameters characterSpawnDetails)
         {
-            var id = characterSpawnDetails.SceneObjectId;
-            var sceneObject = 
-                SceneObjectsContainer.GetInstance().GetRemoteSceneObject(id)
-                    .AssertNotNull();
-            var characterCreator =
-                sceneObject.GameObject.GetComponent<ICharacterCreator>();
-            characterCreator.Create(characterSpawnDetails);
+            var sceneObject = SceneObjectsContainer.GetInstance()
+                .GetRemoteSceneObject(characterSpawnDetails.SceneObjectId);
+            if (sceneObject != null)
+            {
+                var characterCreator = sceneObject.GameObject
+                    .GetComponent<ICharacterCreator>();
+                characterCreator?.Create(characterSpawnDetails);
+            }
         }
     }
 }

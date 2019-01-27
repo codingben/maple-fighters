@@ -11,7 +11,7 @@ namespace Scripts.Containers
     public class SceneObjectsContainer : MonoSingleton<SceneObjectsContainer>
     {
         private Dictionary<int, ISceneObject> sceneObjects;
-        private int localSceneObject;
+        private int localSceneObjectId;
 
         protected override void OnAwake()
         {
@@ -33,7 +33,7 @@ namespace Scripts.Containers
 
         public void SetLocalSceneObject(int id)
         {
-            localSceneObject = id;
+            localSceneObjectId = id;
         }
 
         public void AddSceneObject(SceneObjectParameters parameters)
@@ -91,11 +91,11 @@ namespace Scripts.Containers
         {
             ISceneObject sceneObject;
 
-            if (!sceneObjects.TryGetValue(localSceneObject, out sceneObject))
+            if (!sceneObjects.TryGetValue(localSceneObjectId, out sceneObject))
             {
                 LogUtils.Log(
                     MessageBuilder.Trace(
-                        $"Could not find a local scene object with id #{localSceneObject}"),
+                        $"Could not find a local scene object with id #{localSceneObjectId}"),
                     LogMessageType.Warning);
             }
 
@@ -166,9 +166,9 @@ namespace Scripts.Containers
 
         private void OnSceneLoaded(Scene scene, LoadSceneMode loadSceneMode)
         {
-            if (sceneObjects.ContainsKey(localSceneObject))
+            if (sceneObjects.ContainsKey(localSceneObjectId))
             {
-                sceneObjects.Remove(localSceneObject);
+                sceneObjects.Remove(localSceneObjectId);
             }
         }
     }
