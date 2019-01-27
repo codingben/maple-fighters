@@ -6,6 +6,7 @@ using Scripts.Coroutines;
 using Scripts.Gameplay;
 using Scripts.Services;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Scripts.World
 {
@@ -46,7 +47,7 @@ namespace Scripts.World
                 var map = parameters.Map;
                 if (map != 0)
                 {
-                    GameScenesController.GetInstance().LoadScene(map);
+                    SceneManager.LoadScene(map.ToString());
                 }
                 else
                 {

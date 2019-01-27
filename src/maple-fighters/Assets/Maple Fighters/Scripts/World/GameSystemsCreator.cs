@@ -24,7 +24,7 @@ namespace Scripts.Gameplay
 
         private IEnumerable<Type> GetControllersComponents()
         {
-            yield return typeof(GameScenesController);
+            yield return typeof(NetworkTrafficController);
         }
 
         private IEnumerable<Type> GetCreatorsComponents()
