@@ -9,24 +9,14 @@ namespace Scripts.Gameplay.Actors
     {
         private void Awake()
         {
-            SubscribeToEvents();
-        }
-        
-        private void OnDestroy()
-        {
-            UnsubscribeFromEvents();
-        }
-
-        private void SubscribeToEvents()
-        {
             var gameScenePeerLogic = ServiceContainer.GameService
                 .GetPeerLogic<IGameScenePeerLogicAPI>();
             gameScenePeerLogic.SceneEntered.AddListener(OnSceneEntered);
             gameScenePeerLogic.CharacterAdded.AddListener(OnCharacterAdded);
             gameScenePeerLogic.CharactersAdded.AddListener(OnCharactersAdded);
         }
-
-        private void UnsubscribeFromEvents()
+        
+        private void OnDestroy()
         {
             var gameScenePeerLogic = ServiceContainer.GameService
                 .GetPeerLogic<IGameScenePeerLogicAPI>();
@@ -60,8 +50,9 @@ namespace Scripts.Gameplay.Actors
         private void CreateCharacter(
             CharacterSpawnDetailsParameters characterSpawnDetails)
         {
-            var sceneObject = SceneObjectsContainer.GetInstance()
-                .GetRemoteSceneObject(characterSpawnDetails.SceneObjectId);
+            var sceneObject =
+                SceneObjectsContainer.GetInstance()
+                    .GetRemoteSceneObject(characterSpawnDetails.SceneObjectId);
             if (sceneObject != null)
             {
                 var characterCreator = sceneObject.GameObject

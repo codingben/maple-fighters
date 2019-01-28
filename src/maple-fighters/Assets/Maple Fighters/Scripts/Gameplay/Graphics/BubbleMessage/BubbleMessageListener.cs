@@ -13,7 +13,8 @@ namespace Assets.Scripts.Graphics
             var gameScenePeerLogic = 
                 ServiceContainer.GameService
                     .GetPeerLogic<IGameScenePeerLogicAPI>().AssertNotNull();
-            gameScenePeerLogic.BubbleMessageReceived.AddListener(OnBubbleMessageReceived);
+            gameScenePeerLogic.BubbleMessageReceived.AddListener(
+                OnBubbleMessageReceived);
         }
 
         private void OnDestroy()
@@ -21,10 +22,12 @@ namespace Assets.Scripts.Graphics
             var gameScenePeerLogic = 
                 ServiceContainer.GameService
                     .GetPeerLogic<IGameScenePeerLogicAPI>().AssertNotNull();
-            gameScenePeerLogic.BubbleMessageReceived.RemoveListener(OnBubbleMessageReceived);
+            gameScenePeerLogic.BubbleMessageReceived.RemoveListener(
+                OnBubbleMessageReceived);
         }
 
-        private void OnBubbleMessageReceived(BubbleMessageEventParameters parameters)
+        private void OnBubbleMessageReceived(
+            BubbleMessageEventParameters parameters)
         {
             var id = parameters.RequesterId;
             var sceneObject = SceneObjectsContainer.GetInstance()

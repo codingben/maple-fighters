@@ -1,31 +1,15 @@
-﻿using CommonTools.Log;
-using Game.Common;
+﻿using Game.Common;
 using Scripts.Services;
-using Scripts.Utils;
+using UnityEngine;
 
 namespace Scripts.Containers
 {
-    public class SceneObjectsEventsListener : MonoSingleton<SceneObjectsEventsListener>
+    public class SceneObjectsEventsListener : MonoBehaviour
     {
-        protected override void OnAwake()
+        private void Awake()
         {
-            base.OnAwake();
-
-            SubscribeToEvents();
-        }
-
-        protected override void OnDestroying()
-        {
-            base.OnDestroying();
-
-            UnsubscribeFromEvents();
-        }
-
-        private void SubscribeToEvents()
-        {
-            var gameScenePeerLogic = 
-                ServiceContainer.GameService
-                    .GetPeerLogic<IGameScenePeerLogicAPI>().AssertNotNull();
+            var gameScenePeerLogic = ServiceContainer.GameService
+                .GetPeerLogic<IGameScenePeerLogicAPI>();
 
             // TODO: Add SceneLeft event.
             gameScenePeerLogic.SceneEntered.AddListener(OnSceneEntered);
@@ -35,11 +19,10 @@ namespace Scripts.Containers
             gameScenePeerLogic.SceneObjectsRemoved.AddListener(OnSceneObjectsRemoved);
         }
 
-        private void UnsubscribeFromEvents()
+        private void OnDestroy()
         {
-            var gameScenePeerLogic = 
-                ServiceContainer.GameService
-                    .GetPeerLogic<IGameScenePeerLogicAPI>().AssertNotNull();
+            var gameScenePeerLogic = ServiceContainer.GameService
+                .GetPeerLogic<IGameScenePeerLogicAPI>();
 
             // TODO: Remove SceneLeft event.
             gameScenePeerLogic.SceneEntered.RemoveListener(OnSceneEntered);
@@ -52,63 +35,42 @@ namespace Scripts.Containers
         private void OnSceneEntered(
             EnterSceneResponseParameters parameters)
         {
-            var sceneObjectsContainer = SceneObjectsContainer.GetInstance();
-            if (sceneObjectsContainer != null)
-            {
-                var sceneObject = parameters.SceneObject;
-
-                sceneObjectsContainer.SetLocalSceneObject(sceneObject.Id);
-                sceneObjectsContainer.AddSceneObject(sceneObject);
-            }
+            var localSceneObject = 
+                SceneObjectsContainer.GetInstance()
+                    .AddSceneObject(parameters.SceneObject);
+            SceneObjectsContainer.GetInstance().SetLocalSceneObject(
+                localSceneObject);
         }
 
         private void OnSceneObjectAdded(
             SceneObjectAddedEventParameters parameters)
         {
-            var sceneObjectsContainer = SceneObjectsContainer.GetInstance();
-            if (sceneObjectsContainer != null)
-            {
-                var sceneObject = parameters.SceneObject;
-                sceneObjectsContainer.AddSceneObject(sceneObject);
-            }
+            SceneObjectsContainer.GetInstance().AddSceneObject(
+                parameters.SceneObject);
         }
 
         private void OnSceneObjectRemoved(
             SceneObjectRemovedEventParameters parameters)
         {
-            var sceneObjectsContainer = SceneObjectsContainer.GetInstance();
-            if (sceneObjectsContainer != null)
-            {
-                var sceneObject = parameters.SceneObjectId;
-                sceneObjectsContainer.RemoveSceneObject(sceneObject);
-            }
+            SceneObjectsContainer.GetInstance().RemoveSceneObject(
+                parameters.SceneObjectId);
         }
 
         private void OnSceneObjectsAdded(
             SceneObjectsAddedEventParameters parameters)
         {
-            var sceneObjects = parameters.SceneObjects;
-            foreach (var sceneObject in sceneObjects)
+            foreach (var sceneObject in parameters.SceneObjects)
             {
-                var sceneObjectsContainer = SceneObjectsContainer.GetInstance();
-                if (sceneObjectsContainer != null)
-                {
-                    sceneObjectsContainer.AddSceneObject(sceneObject);
-                }
+                SceneObjectsContainer.GetInstance().AddSceneObject(sceneObject);
             }
         }
 
         private void OnSceneObjectsRemoved(
             SceneObjectsRemovedEventParameters parameters)
         {
-            var sceneObjects = parameters.SceneObjectsId;
-            foreach (var id in sceneObjects)
+            foreach (var id in parameters.SceneObjectsId)
             {
-                var sceneObjectsContainer = SceneObjectsContainer.GetInstance();
-                if (sceneObjectsContainer != null)
-                {
-                    sceneObjectsContainer.RemoveSceneObject(id);
-                }
+                SceneObjectsContainer.GetInstance().RemoveSceneObject(id);
             }
         }
     }

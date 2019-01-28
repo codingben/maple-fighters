@@ -6,13 +6,21 @@ using CommonTools.Coroutines;
 using CommonTools.Log;
 using CommunicationHelper;
 using Scripts.ScriptableObjects;
-using Scripts.Utils;
+using UnityEngine;
 
 namespace Scripts.Services
 {
-    public abstract class ServiceConnectionProviderBase<T> : MonoSingleton<T>, IServiceConnectionProviderBase
+    // TODO: Remove this script
+    public abstract class ServiceConnectionProviderBase<T> : MonoBehaviour, IServiceConnectionProviderBase
         where T : ServiceConnectionProviderBase<T>
     {
+        public static T GetInstance()
+        {
+            return instance;
+        }
+
+        private static T instance;
+
         protected ExternalCoroutinesExecutor CoroutinesExecutor
         {
             get
@@ -31,24 +39,25 @@ namespace Scripts.Services
 
         protected bool IsDestroying { get; private set; }
 
+        private void Awake()
+        {
+            instance = this as T;
+        }
+
         private void Update()
         {
             CoroutinesExecutor?.Update();
         }
 
-        protected override void OnDestroying()
+        private void OnDestroy()
         {
-            base.OnDestroying();
-
             IsDestroying = true;
 
             CoroutinesExecutor?.Dispose();
         }
 
-        protected override void OnApplicationQuitting()
+        private void OnApplicationQuit()
         {
-            base.OnApplicationQuitting();
-
             Dispose();
         }
 

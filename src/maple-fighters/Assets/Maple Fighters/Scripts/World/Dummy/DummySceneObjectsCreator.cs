@@ -29,7 +29,6 @@ namespace Assets.Scripts
 
         private void OnDestroy()
         {
-            SceneObjectsContainer.GetInstance().RemoveAllSceneObjects();
             SavedGameObjects.GetInstance().DestroyAll();
         }
 

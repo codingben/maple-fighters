@@ -1,52 +1,46 @@
 ﻿using System.Collections.Generic;
-using CommonTools.Log;
 using Game.Common;
 using Scripts.Gameplay;
-using Scripts.Utils;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace Scripts.Containers
 {
-    public class SceneObjectsContainer : MonoSingleton<SceneObjectsContainer>
+    public class SceneObjectsContainer : MonoBehaviour
     {
+        public static SceneObjectsContainer GetInstance()
+        {
+            if (instance == null)
+            {
+                instance = FindObjectOfType<SceneObjectsContainer>();
+            }
+
+            return instance;
+        }
+
+        private static SceneObjectsContainer instance;
+
         private Dictionary<int, ISceneObject> sceneObjects;
-        private int localSceneObjectId;
 
-        protected override void OnAwake()
+        private ISceneObject localSceneObject;
+
+        private void Awake()
         {
-            base.OnAwake();
-
             sceneObjects = new Dictionary<int, ISceneObject>();
-
-            SubscribeToSceneLoaded();
         }
 
-        protected override void OnDestroying()
+        private void OnDestroy()
         {
-            base.OnDestroying();
-
-            sceneObjects?.Clear();
-
-            UnsubscribeFromSceneLoaded();
+            sceneObjects.Clear();
         }
 
-        public void SetLocalSceneObject(int id)
-        {
-            localSceneObjectId = id;
-        }
-
-        public void AddSceneObject(SceneObjectParameters parameters)
+        public ISceneObject AddSceneObject(SceneObjectParameters parameters)
         {
             var id = parameters.Id;
             var name = parameters.Name;
 
             if (sceneObjects.ContainsKey(id))
             {
-                LogUtils.Log(
-                    MessageBuilder.Trace(
-                        $"Scene object with id #{id} already exists."),
-                    LogMessageType.Warning);
+                Debug.LogWarning($"Scene object with id #{id} already exists.");
             }
             else
             {
@@ -60,11 +54,11 @@ namespace Scripts.Containers
 
                     sceneObjects.Add(id, sceneObject);
 
-                    LogUtils.Log(
-                        MessageBuilder.Trace(
-                            $"Added a new scene object with id #{id}"));
+                    Debug.Log($"Added a new scene object with id #{id}");
                 }
             }
+
+            return sceneObjects[id];
         }
 
         public void RemoveSceneObject(int id)
@@ -72,34 +66,22 @@ namespace Scripts.Containers
             var sceneObject = GetRemoteSceneObject(id)?.GameObject;
             if (sceneObject != null)
             {
-                Destroy(sceneObject);
-
                 sceneObjects.Remove(id);
 
-                LogUtils.Log(
-                    MessageBuilder.Trace(
-                        $"Removed a scene object with id #{id}"));
+                Destroy(sceneObject);
+
+                Debug.Log($"Removed a scene object with id #{id}");
             }
         }
 
-        public void RemoveAllSceneObjects()
+        public void SetLocalSceneObject(ISceneObject sceneObject)
         {
-            sceneObjects.Clear();
+            localSceneObject = sceneObject;
         }
 
         public ISceneObject GetLocalSceneObject()
         {
-            ISceneObject sceneObject;
-
-            if (!sceneObjects.TryGetValue(localSceneObjectId, out sceneObject))
-            {
-                LogUtils.Log(
-                    MessageBuilder.Trace(
-                        $"Could not find a local scene object with id #{localSceneObjectId}"),
-                    LogMessageType.Warning);
-            }
-
-            return sceneObject;
+            return localSceneObject;
         }
 
         public ISceneObject GetRemoteSceneObject(int id)
@@ -108,10 +90,8 @@ namespace Scripts.Containers
 
             if (!sceneObjects.TryGetValue(id, out sceneObject))
             {
-                LogUtils.Log(
-                    MessageBuilder.Trace(
-                        $"Could not find a scene object with id #{id}"),
-                    LogMessageType.Warning);
+                Debug.LogWarning(
+                    $"Could not find a scene object with id #{id}");
             }
 
             return sceneObject;
@@ -121,55 +101,29 @@ namespace Scripts.Containers
         {
             GameObject gameObject = null;
 
-            var sceneObject = Resources.Load($"Game/{name}")
-                .AssertNotNull($"Could not find {name} scene object.");
+            var sceneObject = Resources.Load($"Game/{name}");
             if (sceneObject != null)
             {
                 gameObject = 
                     Instantiate(sceneObject, position, Quaternion.identity) 
                         as GameObject;
-
                 if (gameObject != null)
                 {
                     gameObject.name = name;
                 }
                 else
                 {
-                    LogUtils.Log(
-                        MessageBuilder.Trace(
-                            $"Could not create a scene object with name {name}"),
-                        LogMessageType.Error);
+                    Debug.LogError(
+                        $"Could not create a scene object with name {name}");
                 }
             }
             else
             {
-                LogUtils.Log(
-                    MessageBuilder.Trace(
-                        $"Could not find a scene object with name {name}"),
-                    LogMessageType.Error);
+                Debug.LogError(
+                    $"Could not find a scene object with name {name}");
             }
 
             return gameObject;
-        }
-
-        private void SubscribeToSceneLoaded()
-        {
-            // TODO: Remove it; Should be called from SceneLeft event!
-            SceneManager.sceneLoaded += OnSceneLoaded;
-        }
-
-        private void UnsubscribeFromSceneLoaded()
-        {
-            // TODO: Remove it; Should be called from SceneLeft event!
-            SceneManager.sceneLoaded -= OnSceneLoaded;
-        }
-
-        private void OnSceneLoaded(Scene scene, LoadSceneMode loadSceneMode)
-        {
-            if (sceneObjects.ContainsKey(localSceneObjectId))
-            {
-                sceneObjects.Remove(localSceneObjectId);
-            }
         }
     }
 }
