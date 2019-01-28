@@ -20,7 +20,6 @@ namespace Scripts.Containers
         private static SceneObjectsContainer instance;
 
         private Dictionary<int, ISceneObject> sceneObjects;
-
         private ISceneObject localSceneObject;
 
         private void Awake()
