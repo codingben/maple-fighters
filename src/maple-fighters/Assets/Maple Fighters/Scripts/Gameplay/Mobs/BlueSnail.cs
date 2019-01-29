@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using CommonTools.Log;
 using Game.Common;
 using Scripts.Containers;
 using Scripts.Gameplay.Actors;
@@ -15,17 +14,15 @@ namespace Assets.Scripts
 
         private void Awake()
         {
-            var gameScenePeerLogic = 
-                ServiceContainer.GameService
-                    .GetPeerLogic<IGameScenePeerLogicAPI>().AssertNotNull();
+            var gameScenePeerLogic = ServiceContainer.GameService
+                .GetPeerLogic<IGameScenePeerLogicAPI>();
             gameScenePeerLogic.PlayerAttacked.AddListener(OnPlayerAttacked);
         }
 
         private void OnDestroy()
         {
-            var gameScenePeerLogic =
-                ServiceContainer.GameService
-                    .GetPeerLogic<IGameScenePeerLogicAPI>().AssertNotNull();
+            var gameScenePeerLogic = ServiceContainer.GameService
+                .GetPeerLogic<IGameScenePeerLogicAPI>();
             gameScenePeerLogic.PlayerAttacked.RemoveListener(OnPlayerAttacked);
         }
 
@@ -51,8 +48,7 @@ namespace Assets.Scripts
             GameObject character, 
             Vector3 direction)
         {
-            var playerController = character.GetComponent<PlayerController>()
-                .AssertNotNull();
+            var playerController = character.GetComponent<PlayerController>();
             if (playerController != null)
             {
                 if (playerController.PlayerState
@@ -79,8 +75,7 @@ namespace Assets.Scripts
             {
                 const int CharacterIndex = 0;
 
-                var transform = 
-                    player.transform.GetChild(CharacterIndex).AssertNotNull();
+                var transform = player.transform.GetChild(CharacterIndex);
                 characterGameObject = transform.gameObject;
             }
 

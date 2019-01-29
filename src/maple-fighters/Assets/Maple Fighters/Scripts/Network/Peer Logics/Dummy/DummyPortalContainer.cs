@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using CommonTools.Log;
 using Game.Common;
 using UnityEngine;
 
@@ -30,7 +29,7 @@ namespace Scripts.Services
         {
             if (portalIdToMapMapper.ContainsKey(id))
             {
-                LogUtils.Log($"A portal with id {id} already exists.");
+                Debug.LogWarning($"A portal with id {id} already exists.");
             }
             else
             {
@@ -46,7 +45,7 @@ namespace Scripts.Services
             }
             else
             {
-                LogUtils.Log($"A portal with id {id} does not exist.");
+                Debug.LogWarning($"A portal with id {id} does not exist.");
             }
         }
 
@@ -56,7 +55,7 @@ namespace Scripts.Services
 
             if (!portalIdToMapMapper.TryGetValue(id, out mapIndex))
             {
-                LogUtils.Log($"A portal with id {id} does not exist.");
+                Debug.LogWarning($"A portal with id {id} does not exist.");
             }
 
             return mapIndex;

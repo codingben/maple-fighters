@@ -1,5 +1,4 @@
-﻿using CommonTools.Log;
-using Game.Common;
+﻿using Game.Common;
 using Scripts.Containers;
 using Scripts.Gameplay.Actors;
 using Scripts.Services;
@@ -30,20 +29,22 @@ namespace Scripts.Utils.Shared
 
         private void SubscribeToGameServiceEvents()
         {
-            var gameScenePeerLogic = 
-                ServiceContainer.GameService
-                    .GetPeerLogic<IGameScenePeerLogicAPI>().AssertNotNull();
-            gameScenePeerLogic.SceneObjectsAdded.AddListener(OnSceneObjectsAdded);
-            gameScenePeerLogic.PlayerStateChanged.AddListener(OnPlayerStateChanged);
+            var gameScenePeerLogic = ServiceContainer.GameService
+                .GetPeerLogic<IGameScenePeerLogicAPI>();
+            gameScenePeerLogic.SceneObjectsAdded.AddListener(
+                OnSceneObjectsAdded);
+            gameScenePeerLogic.PlayerStateChanged.AddListener(
+                OnPlayerStateChanged);
         }
 
         private void UnsubscribeFromGameServiceEvents()
         {
-            var gameScenePeerLogic = 
-                ServiceContainer.GameService
-                    .GetPeerLogic<IGameScenePeerLogicAPI>().AssertNotNull();
-            gameScenePeerLogic.SceneObjectsAdded.RemoveListener(OnSceneObjectsAdded);
-            gameScenePeerLogic.PlayerStateChanged.RemoveListener(OnPlayerStateChanged);
+            var gameScenePeerLogic = ServiceContainer.GameService
+                .GetPeerLogic<IGameScenePeerLogicAPI>();
+            gameScenePeerLogic.SceneObjectsAdded.RemoveListener(
+                OnSceneObjectsAdded);
+            gameScenePeerLogic.PlayerStateChanged.RemoveListener(
+                OnPlayerStateChanged);
         }
 
         public void OnPlayerStateChanged(PlayerState newPlayerState)
@@ -68,9 +69,12 @@ namespace Scripts.Utils.Shared
                     .GetRemoteSceneObject(parameters.SceneObjectId)?.GameObject;
             if (sceneObject != null)
             {
-                var playerStateSetter = sceneObject
-                    .GetComponent<PlayerStateSetter>().AssertNotNull();
-                playerStateSetter.SetState(parameters.PlayerState);
+                var playerStateSetter =
+                    sceneObject.GetComponent<PlayerStateSetter>();
+                if (playerStateSetter != null)
+                {
+                    playerStateSetter.SetState(parameters.PlayerState);
+                }
             }
         }
 
@@ -88,9 +92,8 @@ namespace Scripts.Utils.Shared
 
         private void UpdatePlayerStateOperation()
         {
-            var gameScenePeerLogic = 
-                ServiceContainer.GameService
-                    .GetPeerLogic<IGameScenePeerLogicAPI>().AssertNotNull();
+            var gameScenePeerLogic = ServiceContainer.GameService
+                .GetPeerLogic<IGameScenePeerLogicAPI>();
             gameScenePeerLogic.UpdatePlayerState(
                 new UpdatePlayerStateRequestParameters(playerState));
         }

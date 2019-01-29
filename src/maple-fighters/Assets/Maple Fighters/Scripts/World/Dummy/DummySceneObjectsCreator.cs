@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using CommonTools.Log;
 using Game.Common;
 using Scripts.Containers;
 using Scripts.Gameplay.Actors;
@@ -12,6 +11,7 @@ using UnityEngine;
 
 namespace Assets.Scripts
 {
+    [RequireComponent(typeof(DummyCharacterDetailsProvider))]
     public class DummySceneObjectsCreator : MonoBehaviour
     {
         private IDummySceneObjectsProvider dummySceneObjectsProvider;
@@ -19,7 +19,7 @@ namespace Assets.Scripts
         private void Awake()
         {
             dummySceneObjectsProvider =
-                GetComponent<IDummySceneObjectsProvider>().AssertNotNull();
+                GetComponent<IDummySceneObjectsProvider>();
         }
 
         private void Start()
@@ -49,14 +49,11 @@ namespace Assets.Scripts
         private void CreateDummyPlayerSceneObject(out int id)
         {
             var dummyCharacterDetailsProvider =
-                GetComponent<DummyCharacterDetailsProvider>().AssertNotNull(
-                    "Could not find dummy character details.");
+                GetComponent<DummyCharacterDetailsProvider>();
             var parameters = 
                 dummyCharacterDetailsProvider.GetDummyCharacterParameters();
-
-            var gameScenePeerLogic = 
-                ServiceContainer.GameService
-                    .GetPeerLogic<IGameScenePeerLogicAPI>().AssertNotNull();
+            var gameScenePeerLogic = ServiceContainer.GameService
+                .GetPeerLogic<IGameScenePeerLogicAPI>();
             gameScenePeerLogic.SceneEntered?.Invoke(parameters);
 
             id = parameters.SceneObject.Id;
@@ -66,9 +63,8 @@ namespace Assets.Scripts
         {
             foreach (var dummyParameters in GetDummySceneObjectsParameters())
             {
-                var gameScenePeerLogic = 
-                    ServiceContainer.GameService
-                        .GetPeerLogic<IGameScenePeerLogicAPI>().AssertNotNull();
+                var gameScenePeerLogic = ServiceContainer.GameService
+                    .GetPeerLogic<IGameScenePeerLogicAPI>();
                 gameScenePeerLogic.SceneObjectAdded?.Invoke(dummyParameters);
             }
 
@@ -77,7 +73,8 @@ namespace Assets.Scripts
 
         private void InitializeDummySceneObjects()
         {
-            foreach (var dummySceneObject in dummySceneObjectsProvider.GetSceneObjects())
+            foreach (var dummySceneObject in dummySceneObjectsProvider
+                .GetSceneObjects())
             {
                 var id = dummySceneObject.Id;
                 CreateCommonComponentsToSceneObject(id);
@@ -100,9 +97,7 @@ namespace Assets.Scripts
                     ?.GameObject;
             if (sceneObject == null)
             {
-                LogUtils.Log(
-                    MessageBuilder.Trace(
-                        $"Could not find a scene object with id {id}"));
+                Debug.LogWarning($"Could not find a scene object with id {id}");
                 return;
             }
 

@@ -1,6 +1,5 @@
 ﻿using System;
 using CommonCommunicationInterfaces;
-using CommonTools.Log;
 using ExitGames.Client.Photon;
 using Scripts.Utils;
 using UnityEngine;
@@ -26,7 +25,7 @@ namespace Scripts.ScriptableObjects
 
             if (ConnectionProtocol == ConnectionProtocol.Tcp)
             {
-                LogUtils.Log(
+                Debug.LogWarning(
                     "TCP is not supported. TCP is only for communication between servers.");
             }
 
