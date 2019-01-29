@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using CommonTools.Log;
 using UnityEngine;
 
 namespace Scripts.Gameplay.Map
@@ -25,7 +24,7 @@ namespace Scripts.Gameplay.Map
             var minimapCamera = GameObject.FindGameObjectWithTag(MiniCameraTag);
             if (minimapCamera != null)
             {
-                camera = minimapCamera.GetComponent<Camera>().AssertNotNull();
+                camera = minimapCamera.GetComponent<Camera>();
             }
 
             spriteRenderer = GetComponent<SpriteRenderer>();

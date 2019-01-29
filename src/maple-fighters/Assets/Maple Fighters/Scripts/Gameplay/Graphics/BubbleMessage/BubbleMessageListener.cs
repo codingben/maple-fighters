@@ -1,5 +1,4 @@
-﻿using CommonTools.Log;
-using Game.Common;
+﻿using Game.Common;
 using Scripts.Containers;
 using Scripts.Services;
 using UnityEngine;
@@ -10,18 +9,16 @@ namespace Assets.Scripts.Graphics
     {
         private void Awake()
         {
-            var gameScenePeerLogic = 
-                ServiceContainer.GameService
-                    .GetPeerLogic<IGameScenePeerLogicAPI>().AssertNotNull();
+            var gameScenePeerLogic = ServiceContainer.GameService
+                .GetPeerLogic<IGameScenePeerLogicAPI>();
             gameScenePeerLogic.BubbleMessageReceived.AddListener(
                 OnBubbleMessageReceived);
         }
 
         private void OnDestroy()
         {
-            var gameScenePeerLogic = 
-                ServiceContainer.GameService
-                    .GetPeerLogic<IGameScenePeerLogicAPI>().AssertNotNull();
+            var gameScenePeerLogic = ServiceContainer.GameService
+                .GetPeerLogic<IGameScenePeerLogicAPI>();
             gameScenePeerLogic.BubbleMessageReceived.RemoveListener(
                 OnBubbleMessageReceived);
         }

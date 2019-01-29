@@ -1,5 +1,4 @@
-﻿using CommonTools.Log;
-using Game.Common;
+﻿using Game.Common;
 using UnityEngine;
 
 namespace Assets.Scripts.Gameplay.Utils
@@ -13,13 +12,6 @@ namespace Assets.Scripts.Gameplay.Utils
 
         private void Awake()
         {
-            if (parent == null)
-            {
-                LogUtils.Log(
-                    MessageBuilder.Trace("Parent is null."),
-                    LogMessageType.Warning);
-            }
-
             scale = transform.localScale.x;
         }
 

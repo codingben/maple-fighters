@@ -1,5 +1,4 @@
-﻿using CommonTools.Log;
-using Game.Common;
+﻿using Game.Common;
 using UnityEngine;
 
 namespace Scripts.Gameplay.Actors
@@ -27,15 +26,18 @@ namespace Scripts.Gameplay.Actors
 
             var characterName = characterSpawnDetails.Character.Name;
             var characterClass = characterSpawnDetails.Character.CharacterType;
-
             var gameObject = 
                 Resources.Load<GameObject>(
                     string.Format(GameObjectsPath, characterClass));
+
             characterGameObject = 
                 Instantiate(gameObject, Vector3.zero, Quaternion.identity, transform);
+
             characterGameObject.transform.localPosition =
                 gameObject.transform.localPosition;
+
             characterGameObject.transform.SetAsFirstSibling();
+
             characterGameObject.name = 
                 characterGameObject.name.RemoveCloneFromName();
 
@@ -52,27 +54,34 @@ namespace Scripts.Gameplay.Actors
 
         private void InitializeCharacterName(string characterName)
         {
-            var characterNameComponent =
-                characterSpriteGameObject.GetComponent<CharacterNameSetter>()
-                    .AssertNotNull();
-            characterNameComponent.SetName(characterName);
-            characterNameComponent.SetSortingOrder(orderInLayer);
+            var characterNameSetter = characterSpriteGameObject
+                .GetComponent<CharacterNameSetter>();
+            if (characterNameSetter != null)
+            {
+                characterNameSetter.SetName(characterName);
+                characterNameSetter.SetSortingOrder(orderInLayer);
+            }
         }
 
         private void InitializeSpriteRenderer()
         {
-            var spriteRenderer = 
-                characterSpriteGameObject.GetComponent<SpriteRenderer>()
-                    .AssertNotNull();
-            spriteRenderer.sortingOrder = orderInLayer;
+            var spriteRenderer =
+                characterSpriteGameObject.GetComponent<SpriteRenderer>();
+            if (spriteRenderer != null)
+            {
+                spriteRenderer.sortingOrder = orderInLayer;
+            }
         }
 
         private void InitializeCharacterInformationProvider(
             CharacterParameters character)
         {
-            var characterInformationProvider = 
-                GetComponent<CharacterInformationProvider>().AssertNotNull();
-            characterInformationProvider.SetCharacterInformation(character);
+            var characterInformationProvider =
+                GetComponent<CharacterInformationProvider>();
+            if (characterInformationProvider != null)
+            {
+                characterInformationProvider.SetCharacterInformation(character);
+            }
         }
 
         private void ChangeCharacterDirection()

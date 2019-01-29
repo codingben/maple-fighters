@@ -1,5 +1,4 @@
-﻿using CommonTools.Log;
-using Game.Common;
+﻿using Game.Common;
 using Scripts.UI.Controllers;
 using Scripts.Utils.Shared;
 using UnityEngine;
@@ -24,20 +23,24 @@ namespace Scripts.Gameplay.Actors
 
         private void SetCharacterToPositionSender()
         {
-            var positionSender = GetComponent<PositionSender>().AssertNotNull();
+            var positionSender = GetComponent<PositionSender>();
             positionSender.SetCharacter(characterGameObject.transform);
         }
 
         private void InitializePlayerController()
         {
-            var playerStateAnimatorNetwork = 
+            var playerStateAnimator = 
                 characterSpriteGameObject.AddComponent<PlayerStateAnimator>();
-
-            var playerController =
-                characterGameObject.GetComponent<PlayerController>()
-                    .AssertNotNull();
-            playerController.PlayerStateChanged +=
-                playerStateAnimatorNetwork.OnPlayerStateChanged;
+            if (playerStateAnimator != null)
+            {
+                var playerController =
+                    characterGameObject.GetComponent<PlayerController>();
+                if (playerController != null)
+                {
+                    playerController.PlayerStateChanged +=
+                        playerStateAnimator.OnPlayerStateChanged;
+                }
+            }
         }
     }
 }

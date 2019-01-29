@@ -1,5 +1,4 @@
 ﻿using Cinemachine;
-using CommonTools.Log;
 using UnityEngine;
 
 namespace Scripts.Gameplay.Camera
@@ -20,20 +19,25 @@ namespace Scripts.Gameplay.Camera
 
         private void SetTargetToCinemachineBrain()
         {
-            var cinemachineBrain = 
-                Camera.main.GetComponent<CinemachineBrain>().AssertNotNull();
-            cinemachineBrain.ActiveVirtualCamera.Follow = transform;
+            var cinemachineBrain = Camera.main.GetComponent<CinemachineBrain>();
+            if (cinemachineBrain != null)
+            {
+                cinemachineBrain.ActiveVirtualCamera.Follow = transform;
+            }
         }
 
         private void SetTargetToCameraController()
         {
             var minimapCamera =
                 GameObject.FindGameObjectWithTag(MinimapCameraTag);
-            var cameraController =
-                minimapCamera.GetComponent<CameraController>().AssertNotNull();
-            if (cameraController != null)
+            if (minimapCamera != null)
             {
-                cameraController.SetTarget(transform);
+                var cameraController =
+                    minimapCamera.GetComponent<CameraController>();
+                if (cameraController != null)
+                {
+                    cameraController.SetTarget(transform);
+                }
             }
         }
     }
