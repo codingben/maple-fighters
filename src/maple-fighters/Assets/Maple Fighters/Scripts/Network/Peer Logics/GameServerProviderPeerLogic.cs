@@ -14,7 +14,7 @@ namespace Scripts.Services
                 await ServerPeerHandler
                     .SendOperation<EmptyParameters, GameServersProviderResponseParameters>(
                         yield,
-                        GameServerProviderOperations.ProvideGameServers,
+                        (byte)GameServerProviderOperations.ProvideGameServers,
                         new EmptyParameters(),
                         MessageSendOptions.DefaultReliable());
         }

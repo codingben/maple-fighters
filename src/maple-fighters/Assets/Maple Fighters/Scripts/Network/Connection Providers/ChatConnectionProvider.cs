@@ -16,7 +16,6 @@ namespace Scripts.Services
         {
             var serverConnectionInformation =
                 GetServerConnectionInformation(ServerType.Chat);
-
             CoroutinesExecutor.StartTask(
                 (yield) => Connect(yield, serverConnectionInformation));
         }

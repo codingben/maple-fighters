@@ -15,7 +15,7 @@ namespace Scripts.Services
                 await ServerPeerHandler
                     .SendOperation<RegisterRequestParameters, RegisterResponseParameters>(
                         yield,
-                        RegistrationOperations.Register,
+                        (byte)RegistrationOperations.Register,
                         parameters,
                         MessageSendOptions.DefaultReliable());
         }

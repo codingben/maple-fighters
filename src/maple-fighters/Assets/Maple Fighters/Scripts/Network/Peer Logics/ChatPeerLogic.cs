@@ -17,21 +17,21 @@ namespace Scripts.Services
             base.OnAwake();
 
             ServerPeerHandler
-                .SetEventHandler(ChatEvents.ChatMessage, ChatMessageReceived);
+                .SetEventHandler((byte)ChatEvents.ChatMessage, ChatMessageReceived);
         }
 
         protected override void OnDestroy()
         {
             base.OnDestroy();
 
-            ServerPeerHandler.RemoveEventHandler(ChatEvents.ChatMessage);
+            ServerPeerHandler.RemoveEventHandler((byte)ChatEvents.ChatMessage);
         }
 
         public void SendChatMessage(ChatMessageRequestParameters parameters)
         {
             ServerPeerHandler
                 .SendOperation(
-                    ChatOperations.ChatMessage,
+                    (byte)ChatOperations.ChatMessage,
                     parameters,
                     MessageSendOptions.DefaultReliable());
         }

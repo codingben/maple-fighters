@@ -14,8 +14,8 @@ namespace Scripts.Services
             return 
                 await ServerPeerHandler
                     .SendOperation<EmptyParameters, GetCharactersResponseParameters>(
-                        yield, 
-                        CharacterOperations.GetCharacters, 
+                        yield,
+                        (byte)CharacterOperations.GetCharacters, 
                         new EmptyParameters(), 
                         MessageSendOptions.DefaultReliable());
         }
@@ -27,8 +27,8 @@ namespace Scripts.Services
             return 
                 await ServerPeerHandler
                     .SendOperation<CreateCharacterRequestParameters, CreateCharacterResponseParameters>(
-                        yield, 
-                        CharacterOperations.CreateCharacter, 
+                        yield,
+                        (byte)CharacterOperations.CreateCharacter, 
                         parameters, 
                         MessageSendOptions.DefaultReliable());
         }
@@ -40,8 +40,8 @@ namespace Scripts.Services
             return 
                 await ServerPeerHandler
                     .SendOperation<RemoveCharacterRequestParameters, RemoveCharacterResponseParameters>(
-                        yield, 
-                        CharacterOperations.RemoveCharacter, 
+                        yield,
+                        (byte)CharacterOperations.RemoveCharacter, 
                         parameters, 
                         MessageSendOptions.DefaultReliable());
         }
@@ -54,7 +54,7 @@ namespace Scripts.Services
                 await ServerPeerHandler
                     .SendOperation<ValidateCharacterRequestParameters, ValidateCharacterResponseParameters>(
                         yield,
-                        CharacterOperations.ValidateCharacter,
+                        (byte)CharacterOperations.ValidateCharacter,
                         parameters,
                         MessageSendOptions.DefaultReliable());
 

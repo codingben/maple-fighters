@@ -15,7 +15,7 @@ namespace Scripts.Services
                 await ServerPeerHandler
                     .SendOperation<AuthorizeRequestParameters, AuthorizeResponseParameters>(
                         yield,
-                        AuthorizationOperations.Authorize,
+                        (byte)AuthorizationOperations.Authorize,
                         parameters,
                         MessageSendOptions.DefaultReliable());
         }

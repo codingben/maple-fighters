@@ -11,14 +11,14 @@
             OnAwake();
         }
 
-        public void Dispose()
-        {
-            OnDestroy();
-        }
-
         protected virtual void OnAwake()
         {
             // Left blank intentionally
+        }
+
+        public void Dispose()
+        {
+            OnDestroy();
         }
 
         protected virtual void OnDestroy()
