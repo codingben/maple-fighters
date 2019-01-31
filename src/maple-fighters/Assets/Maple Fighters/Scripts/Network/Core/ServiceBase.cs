@@ -8,7 +8,7 @@ namespace Scripts.Services
         public IServiceConnectionHandler ServiceConnectionHandler { get; }
 
         private IPeerLogicBase peerLogicBase;
-        private IServerPeerHandler serverPeerHandler;
+        private IDisposable serverPeerHandler;
 
         public ServiceBase()
         {

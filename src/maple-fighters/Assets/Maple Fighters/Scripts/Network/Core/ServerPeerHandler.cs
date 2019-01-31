@@ -8,7 +8,7 @@ using Scripts.ScriptableObjects;
 
 namespace Scripts.Services
 {
-    public class ServerPeerHandler<TOperationCode, TEventCode> : IServerPeerHandler
+    public class ServerPeerHandler<TOperationCode, TEventCode> : IDisposable
         where TOperationCode : IComparable, IFormattable, IConvertible
         where TEventCode : IComparable, IFormattable, IConvertible
     {
@@ -22,10 +22,22 @@ namespace Scripts.Services
             serverPeer = peer;
 
             var networkConfiguration = NetworkConfiguration.GetInstance();
-            operationRequestSender = new OperationRequestSender<TOperationCode>(serverPeer.OperationRequestSender, networkConfiguration.LogOperationsRequest);
-            subscriptionProvider = new OperationResponseSubscriptionProvider<TOperationCode>(serverPeer.OperationResponseNotifier, OnOperationRequestFailed,
-                networkConfiguration.LogOperationsResponse);
-            eventHandlerRegister = new EventHandlerRegister<TEventCode>(serverPeer.EventNotifier, networkConfiguration.LogEvents);
+
+            operationRequestSender = 
+                new OperationRequestSender<TOperationCode>(
+                    serverPeer.OperationRequestSender,
+                    networkConfiguration.LogOperationsRequest);
+
+            subscriptionProvider =
+                new OperationResponseSubscriptionProvider<TOperationCode>(
+                    serverPeer.OperationResponseNotifier,
+                    OnOperationRequestFailed,
+                    networkConfiguration.LogOperationsResponse);
+
+            eventHandlerRegister = 
+                new EventHandlerRegister<TEventCode>(
+                    serverPeer.EventNotifier,
+                    networkConfiguration.LogEvents);
         }
 
         public void Dispose()
@@ -34,50 +46,68 @@ namespace Scripts.Services
             subscriptionProvider?.Dispose();
         }
 
-        public void SendOperation<TParams>(byte operationCode, TParams parameters, MessageSendOptions messageSendOptions)
-            where TParams : struct, IParameters
+        public void SendOperation<TParameters>(
+            TOperationCode operationCode,
+            TParameters parameters,
+            MessageSendOptions messageSendOptions)
+            where TParameters : struct, IParameters
+        {
+            if (IsConnected())
+            {
+                operationRequestSender.Send(
+                    operationCode,
+                    parameters,
+                    messageSendOptions);
+            }
+        }
+
+        public async Task<TResponseParameters>
+            SendOperation<TRequestParameters, TResponseParameters>(
+                IYield yield,
+                TOperationCode operationCode,
+                TRequestParameters parameters,
+                MessageSendOptions messageSendOptions)
+            where TRequestParameters : struct, IParameters
+            where TResponseParameters : struct, IParameters
         {
             if (!IsConnected())
             {
-                return;
+                return default(TResponseParameters);
             }
 
-            var code = (TOperationCode)Enum.ToObject(typeof(TOperationCode), operationCode);
-            operationRequestSender.Send(code, parameters, messageSendOptions);
+            var requestId = operationRequestSender.Send(
+                operationCode,
+                parameters,
+                messageSendOptions);
+
+            return 
+                await subscriptionProvider
+                       .ProvideSubscription<TResponseParameters>(yield, requestId);
         }
 
-        public async Task<TResponseParams> SendOperation<TRequestParams, TResponseParams>(IYield yield, byte operationCode, TRequestParams parameters, MessageSendOptions messageSendOptions)
-            where TRequestParams : struct, IParameters
-            where TResponseParams : struct, IParameters
+        public void SetEventHandler<TParameters>(
+            TEventCode eventCode,
+            UnityEvent<TParameters> action)
+            where TParameters : struct, IParameters
         {
-            if (!IsConnected())
-            {
-                return default(TResponseParams);
-            }
+            var eventHandler =
+                new EventHandler<TParameters>(
+                    (x) => action?.Invoke(x.Parameters));
 
-            var code = (TOperationCode)Enum.ToObject(typeof(TOperationCode), operationCode);
-            var requestId = operationRequestSender.Send(code, parameters, messageSendOptions);
-            var responseParameters = await subscriptionProvider.ProvideSubscription<TResponseParams>(yield, requestId);
-            return responseParameters;
+            eventHandlerRegister.SetHandler(eventCode, eventHandler);
         }
 
-        public void SetEventHandler<TParams>(byte eventCode, UnityEvent<TParams> action)
-            where TParams : struct, IParameters
+        public void RemoveEventHandler(TEventCode eventCode)
         {
-            var eventHandler = new EventHandler<TParams>((x) => action?.Invoke(x.Parameters));
-            var code = (TEventCode)Enum.ToObject(typeof(TEventCode), eventCode);
-            eventHandlerRegister.SetHandler(code, eventHandler);
+            eventHandlerRegister.RemoveHandler(eventCode);
         }
 
-        public void RemoveEventHandler(byte eventCode)
+        private void OnOperationRequestFailed(
+            RawMessageResponseData data,
+            short requestId)
         {
-            var code = (TEventCode)Enum.ToObject(typeof(TEventCode), eventCode);
-            eventHandlerRegister.RemoveHandler(code);
-        }
-
-        private void OnOperationRequestFailed(RawMessageResponseData data, short requestId)
-        {
-            LogUtils.Log($"Sending an operaiton has been failed. Operation Code: {data.Code}");
+            LogUtils.Log(
+                $"Sending an operaiton has been failed. Operation Code: {data.Code}");
         }
 
         private bool IsConnected()

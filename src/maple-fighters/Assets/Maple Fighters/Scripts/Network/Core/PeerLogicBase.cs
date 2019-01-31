@@ -2,7 +2,7 @@
 {
     public class PeerLogicBase : IPeerLogicBase
     {
-        protected IServerPeerHandler ServerPeerHandler;
+        protected IServerPeerHandler ServerPeerHandler { get; private set; }
 
         public void Awake(IServerPeerHandler serverPeerHandler)
         {
@@ -11,14 +11,14 @@
             OnAwake();
         }
 
-        protected virtual void OnAwake()
-        {
-            // Left blank intentionally
-        }
-
         public void Dispose()
         {
             OnDestroy();
+        }
+
+        protected virtual void OnAwake()
+        {
+            // Left blank intentionally
         }
 
         protected virtual void OnDestroy()
