@@ -17,8 +17,13 @@ namespace Scripts.UI.Controllers
         {
             this.onConnected = onConnected;
 
-            var serverConnectionInformation = GetServerConnectionInformation(ServerType.Registration);
-            CoroutinesExecutor.StartTask((yield) => Connect(yield, serverConnectionInformation, authorize: false));
+            var serverConnectionInformation =
+                GetServerConnectionInformation(ServerType.Registration);
+            CoroutinesExecutor.StartTask(
+                (yield) => Connect(
+                    yield,
+                    serverConnectionInformation,
+                    authorize: false));
         }
 
         protected override void OnPreConnection()
@@ -36,7 +41,9 @@ namespace Scripts.UI.Controllers
             onConnected.Invoke();
         }
 
-        protected override Task<AuthorizeResponseParameters> Authorize(IYield yield, AuthorizeRequestParameters parameters)
+        protected override Task<AuthorizeResponseParameters> Authorize(
+            IYield yield,
+            AuthorizeRequestParameters parameters)
         {
             throw new NotImplementedException();
         }
@@ -58,7 +65,8 @@ namespace Scripts.UI.Controllers
 
         protected override void SetPeerLogicAfterAuthorization()
         {
-            GetServiceBase().SetPeerLogic<RegistrationPeerLogic, RegistrationOperations, EmptyEventCode>();
+            GetServiceBase()
+                .SetPeerLogic<RegistrationPeerLogic, RegistrationOperations, EmptyEventCode>();
         }
 
         protected override IServiceBase GetServiceBase()

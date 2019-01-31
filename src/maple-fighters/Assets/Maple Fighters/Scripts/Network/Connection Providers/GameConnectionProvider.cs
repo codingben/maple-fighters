@@ -12,16 +12,25 @@ namespace Scripts.Services
     public class GameConnectionProvider : ServiceConnectionProviderBase<GameConnectionProvider>
     {
         private Action onAuthorized;
-        private AuthorizationStatus authorizationStatus = AuthorizationStatus.Failed;
+
+        private AuthorizationStatus authorizationStatus =
+            AuthorizationStatus.Failed;
+
         private string serverName;
 
-        public void Connect(string serverName, Action onAuthorized, PeerConnectionInformation peerConnectionInformation)
+        public void Connect(
+            string serverName,
+            Action onAuthorized,
+            PeerConnectionInformation peerConnectionInformation)
         {
             this.serverName = serverName;
             this.onAuthorized = onAuthorized;
 
-            var serverConnectionInformation = GetServerConnectionInformation(ServerType.Game, peerConnectionInformation);
-            CoroutinesExecutor.StartTask((yield) => Connect(yield, serverConnectionInformation));
+            var serverConnectionInformation = GetServerConnectionInformation(
+                ServerType.Game,
+                peerConnectionInformation);
+            CoroutinesExecutor.StartTask(
+                (yield) => Connect(yield, serverConnectionInformation));
         }
 
         protected override void OnPreConnection()
@@ -40,7 +49,9 @@ namespace Scripts.Services
             CoroutinesExecutor.StartTask(Authorize);
         }
 
-        protected override void OnDisconnected(DisconnectReason reason, string details)
+        protected override void OnDisconnected(
+            DisconnectReason reason,
+            string details)
         {
             base.OnDisconnected(reason, details);
 
@@ -66,9 +77,12 @@ namespace Scripts.Services
             // TODO: Ok: GoBackToLogin()
         }
 
-        protected override Task<AuthorizeResponseParameters> Authorize(IYield yield, AuthorizeRequestParameters parameters)
+        protected override Task<AuthorizeResponseParameters> Authorize(
+            IYield yield,
+            AuthorizeRequestParameters parameters)
         {
-            var authorizationPeerLogic = GetServiceBase().GetPeerLogic<IAuthorizationPeerLogicAPI>();
+            var authorizationPeerLogic = GetServiceBase()
+                .GetPeerLogic<IAuthorizationPeerLogicAPI>();
             return authorizationPeerLogic.Authorize(yield, parameters);
         }
 
@@ -92,7 +106,8 @@ namespace Scripts.Services
 
         protected override void SetPeerLogicAfterAuthorization()
         {
-            GetServiceBase().SetPeerLogic<CharacterPeerLogic, CharacterOperations, EmptyEventCode>();
+            GetServiceBase()
+                .SetPeerLogic<CharacterPeerLogic, CharacterOperations, EmptyEventCode>();
         }
 
         protected override IServiceBase GetServiceBase()

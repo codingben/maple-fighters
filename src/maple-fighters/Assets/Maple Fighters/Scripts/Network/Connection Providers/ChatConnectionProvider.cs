@@ -9,12 +9,16 @@ namespace Scripts.Services
 {
     public class ChatConnectionProvider : ServiceConnectionProviderBase<ChatConnectionProvider>
     {
-        private AuthorizationStatus authorizationStatus = AuthorizationStatus.Failed;
+        private AuthorizationStatus authorizationStatus =
+            AuthorizationStatus.Failed;
 
         public void Connect()
         {
-            var serverConnectionInformation = GetServerConnectionInformation(ServerType.Chat);
-            CoroutinesExecutor.StartTask((yield) => Connect(yield, serverConnectionInformation));
+            var serverConnectionInformation =
+                GetServerConnectionInformation(ServerType.Chat);
+
+            CoroutinesExecutor.StartTask(
+                (yield) => Connect(yield, serverConnectionInformation));
         }
 
         protected override void OnPreConnection()
@@ -32,7 +36,9 @@ namespace Scripts.Services
             CoroutinesExecutor.StartTask(Authorize);
         }
 
-        protected override void OnDisconnected(DisconnectReason reason, string details)
+        protected override void OnDisconnected(
+            DisconnectReason reason,
+            string details)
         {
             base.OnDisconnected(reason, details);
 
@@ -42,9 +48,12 @@ namespace Scripts.Services
             }
         }
 
-        protected override Task<AuthorizeResponseParameters> Authorize(IYield yield, AuthorizeRequestParameters parameters)
+        protected override Task<AuthorizeResponseParameters> Authorize(
+            IYield yield,
+            AuthorizeRequestParameters parameters)
         {
-            var authorizationPeerLogic = GetServiceBase().GetPeerLogic<IAuthorizationPeerLogicAPI>();
+            var authorizationPeerLogic = GetServiceBase()
+                .GetPeerLogic<IAuthorizationPeerLogicAPI>();
             return authorizationPeerLogic.Authorize(yield, parameters);
         }
 
@@ -67,7 +76,8 @@ namespace Scripts.Services
 
         protected override void SetPeerLogicAfterAuthorization()
         {
-            GetServiceBase().SetPeerLogic<ChatPeerLogic, ChatOperations, ChatEvents>();
+            GetServiceBase()
+                .SetPeerLogic<ChatPeerLogic, ChatOperations, ChatEvents>();
         }
 
         protected override IServiceBase GetServiceBase()
