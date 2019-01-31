@@ -11,15 +11,17 @@ using UnityEngine;
 namespace Scripts.Services
 {
     // TODO: Remove this script
-    public abstract class ServiceConnectionProviderBase<T> : MonoBehaviour, IServiceConnectionProviderBase
-        where T : ServiceConnectionProviderBase<T>
+    public abstract class
+        ServiceConnectionProviderBase<TProvider> : MonoBehaviour,
+                                                   IServiceConnectionProviderBase
+        where TProvider : ServiceConnectionProviderBase<TProvider>
     {
-        public static T GetInstance()
+        public static TProvider GetInstance()
         {
             return instance;
         }
 
-        private static T instance;
+        private static TProvider instance;
 
         protected ExternalCoroutinesExecutor CoroutinesExecutor
         {
@@ -39,7 +41,7 @@ namespace Scripts.Services
 
         private void Awake()
         {
-            instance = this as T;
+            instance = this as TProvider;
         }
 
         private void Update()
@@ -89,7 +91,8 @@ namespace Scripts.Services
 
             if (authorize)
             {
-                serviceBase.SetPeerLogic<AuthorizationPeerLogic, AuthorizationOperations, EmptyEventCode>();
+                serviceBase
+                    .SetPeerLogic<AuthorizationPeerLogic, AuthorizationOperations, EmptyEventCode>();
             }
             else
             {
