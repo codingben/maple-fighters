@@ -7,7 +7,9 @@ namespace Scripts.Services
         public ServerType ServerType;
         public PeerConnectionInformation PeerConnectionInformation;
 
-        public ServerConnectionInformation(ServerType serverType, PeerConnectionInformation peerConnectionInformation)
+        public ServerConnectionInformation(
+            ServerType serverType,
+            PeerConnectionInformation peerConnectionInformation)
         {
             ServerType = serverType;
             PeerConnectionInformation = peerConnectionInformation;
