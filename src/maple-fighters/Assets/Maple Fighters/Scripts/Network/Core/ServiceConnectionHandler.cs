@@ -10,31 +10,52 @@ namespace Scripts.Services
     internal class ServiceConnectionHandler : IServiceConnectionHandler
     {
         public IServiceConnectionNotifier ConnectionNotifier => serviceConnectionNotifier;
+
         public IServerPeer ServerPeer { get; private set; }
 
         private ServerConnectionInformation ConnectionInformation { get; set; }
-        private readonly ServiceConnectionNotifier serviceConnectionNotifier = new ServiceConnectionNotifier();
 
-        public async Task<ConnectionStatus> Connect(IYield yield, ICoroutinesExecutor coroutinesExecutor, ServerConnectionInformation serverConnectionInformation)
+        private readonly ServiceConnectionNotifier serviceConnectionNotifier;
+
+        public ServiceConnectionHandler()
+        {
+            serviceConnectionNotifier = new ServiceConnectionNotifier();
+        }
+
+        public async Task<ConnectionStatus> Connect(
+            IYield yield,
+            ICoroutinesExecutor coroutinesExecutor,
+            ServerConnectionInformation serverConnectionInformation)
         {
             var serverType = serverConnectionInformation.ServerType;
 
             if (IsConnected())
             {
-                throw new ServerConnectionFailed($"A connection already exists with a {serverType} server.");
+                throw new ServerConnectionFailed(
+                    $"A connection already exists with a {serverType} server.");
             }
 
             ConnectionInformation = serverConnectionInformation;
 
             var ip = ConnectionInformation.PeerConnectionInformation.Ip;
             var port = ConnectionInformation.PeerConnectionInformation.Port;
-            LogUtils.Log($"Connecting to a {serverType} server. IP: {ip} Port: {port}");
 
-            var serverConnector = new PhotonServerConnector(() => coroutinesExecutor);
-            var networkConfiguration = NetworkConfiguration.GetInstance();
-            var connectionDetails = new ConnectionDetails(networkConfiguration.ConnectionProtocol, networkConfiguration.DebugLevel);
+            LogUtils.Log(
+                $"Connecting to a {serverType} server. IP: {ip} Port: {port}");
 
-            ServerPeer = await serverConnector.ConnectAsync(yield, ConnectionInformation.PeerConnectionInformation, connectionDetails);
+            var serverConnector =
+                new PhotonServerConnector(() => coroutinesExecutor);
+            var connectionDetails = 
+                new ConnectionDetails(
+                    NetworkConfiguration.GetInstance().ConnectionProtocol,
+                    NetworkConfiguration.GetInstance().DebugLevel);
+
+            ServerPeer = 
+                await serverConnector.ConnectAsync(
+                    yield,
+                    ConnectionInformation.PeerConnectionInformation,
+                    connectionDetails);
+
             if (ServerPeer == null)
             {
                 return ConnectionStatus.Failed;
@@ -42,9 +63,11 @@ namespace Scripts.Services
 
             SubscribeToDisconnectionNotifier();
             
-            LogUtils.Log($"A {serverType} server has been connected: {ip}:{port}");
+            LogUtils.Log(
+                $"A {serverType} server has been connected: {ip}:{port}");
 
             serviceConnectionNotifier.Connection();
+
             return ConnectionStatus.Succeed;
         }
 
@@ -86,7 +109,9 @@ namespace Scripts.Services
 
             var ip = ConnectionInformation.PeerConnectionInformation.Ip;
             var port = ConnectionInformation.PeerConnectionInformation.Port;
-            LogUtils.Log($"The connection has been closed with {ip}:{port}. Reason: {reason}");
+
+            LogUtils.Log(
+                $"The connection has been closed with {ip}:{port}. Reason: {reason}");
 
             serviceConnectionNotifier.Disconnection(reason, details);
         }

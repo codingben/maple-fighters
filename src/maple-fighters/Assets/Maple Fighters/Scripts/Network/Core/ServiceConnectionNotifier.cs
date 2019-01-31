@@ -6,6 +6,7 @@ namespace Scripts.Services
     internal class ServiceConnectionNotifier : IServiceConnectionNotifier
     {
         public event Action Connected;
+
         public event Action<DisconnectReason, string> Disconnected;
 
         public void Connection()

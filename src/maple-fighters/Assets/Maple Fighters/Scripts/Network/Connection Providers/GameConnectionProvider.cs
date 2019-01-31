@@ -49,11 +49,11 @@ namespace Scripts.Services
 
         private void GoBackToLogin()
         {
-            if (authorizationStatus == AuthorizationStatus.Succeed && !IsDestroying)
+            if (authorizationStatus == AuthorizationStatus.Succeed)
             {
                 ShowConnectionTimeout();
             }
-            else if (!IsDestroying)
+            else
             {
                 OnNonAuthorized();
             }

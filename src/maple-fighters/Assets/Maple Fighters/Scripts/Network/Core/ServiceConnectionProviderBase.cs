@@ -37,8 +37,6 @@ namespace Scripts.Services
         private ExternalCoroutinesExecutor coroutinesExecutor;
         private IServiceBase serviceBase;
 
-        protected bool IsDestroying { get; private set; }
-
         private void Awake()
         {
             instance = this as T;
@@ -51,8 +49,6 @@ namespace Scripts.Services
 
         private void OnDestroy()
         {
-            IsDestroying = true;
-
             CoroutinesExecutor?.Dispose();
         }
 
@@ -61,7 +57,10 @@ namespace Scripts.Services
             Dispose();
         }
 
-        protected async Task Connect(IYield yield, ServerConnectionInformation serverConnectionInformation, bool authorize = true)
+        protected async Task Connect(
+            IYield yield,
+            ServerConnectionInformation serverConnectionInformation,
+            bool authorize = true)
         {
             serviceBase = GetServiceBase();
 
@@ -71,7 +70,11 @@ namespace Scripts.Services
 
             try
             {
-                connectionStatus = await serviceBase.ServiceConnectionHandler.Connect(yield, CoroutinesExecutor, serverConnectionInformation);
+                connectionStatus = 
+                    await serviceBase.ServiceConnectionHandler.Connect(
+                        yield,
+                        CoroutinesExecutor,
+                        serverConnectionInformation);
             }
             catch (ServerConnectionFailed exception)
             {
@@ -103,7 +106,9 @@ namespace Scripts.Services
 
         protected abstract void OnConnectionEstablished();
 
-        protected virtual void OnDisconnected(DisconnectReason reason, string details)
+        protected virtual void OnDisconnected(
+            DisconnectReason reason,
+            string details)
         {
             UnsubscribeFromDisconnectionNotifier();
             Dispose();
@@ -111,12 +116,14 @@ namespace Scripts.Services
 
         private void SubscribeToDisconnectionNotifier()
         {
-            serviceBase.ServiceConnectionHandler.ConnectionNotifier.Disconnected += OnDisconnected;
+            serviceBase.ServiceConnectionHandler.ConnectionNotifier.Disconnected
+                += OnDisconnected;
         }
 
         private void UnsubscribeFromDisconnectionNotifier()
         {
-            serviceBase.ServiceConnectionHandler.ConnectionNotifier.Disconnected -= OnDisconnected;
+            serviceBase.ServiceConnectionHandler.ConnectionNotifier.Disconnected
+                -= OnDisconnected;
         }
 
         protected async Task Authorize(IYield yield)
@@ -127,9 +134,13 @@ namespace Scripts.Services
 
             try
             {
-                var parameters = new AuthorizeRequestParameters(AccessTokenProvider.AccessToken);
-                var responseParameters = await Authorize(yield, parameters);
-                authorizationStatus = responseParameters.Status;
+                var parameters = 
+                    await Authorize(
+                        yield,
+                        new AuthorizeRequestParameters(
+                            AccessTokenProvider.AccessToken));
+
+                authorizationStatus = parameters.Status;
             }
             catch (Exception)
             {
@@ -139,14 +150,17 @@ namespace Scripts.Services
             if (authorizationStatus == AuthorizationStatus.Failed)
             {
                 OnNonAuthorized();
-                return;
             }
-
-            SetPeerLogicAfterAuthorization();
-            OnAuthorized();
+            else
+            {
+                SetPeerLogicAfterAuthorization();
+                OnAuthorized();
+            }
         }
 
-        protected abstract Task<AuthorizeResponseParameters> Authorize(IYield yield, AuthorizeRequestParameters parameters);
+        protected abstract Task<AuthorizeResponseParameters> Authorize(
+            IYield yield,
+            AuthorizeRequestParameters parameters);
 
         protected abstract void OnPreAuthorization();
 
@@ -169,19 +183,33 @@ namespace Scripts.Services
 
         public bool IsConnected()
         {
-            return serviceBase != null && serviceBase.ServiceConnectionHandler.IsConnected();
+            return serviceBase != null
+                   && serviceBase.ServiceConnectionHandler.IsConnected();
         }
 
-        protected ServerConnectionInformation GetServerConnectionInformation(ServerType serverType)
+        protected ServerConnectionInformation GetServerConnectionInformation(
+            ServerType serverType)
         {
-            var connectionInformation = ServicesConfiguration.GetInstance().GetConnectionInformation(serverType);
-            var peerConnectionInformation = NetworkConfiguration.GetInstance().GetPeerConnectionInformation(connectionInformation);
-            return new ServerConnectionInformation(serverType, peerConnectionInformation);
+            var connectionInformation = 
+                ServicesConfiguration.GetInstance()
+                    .GetConnectionInformation(serverType);
+
+            var peerConnectionInformation =
+                NetworkConfiguration.GetInstance()
+                    .GetPeerConnectionInformation(connectionInformation);
+
+            return new ServerConnectionInformation(
+                serverType,
+                peerConnectionInformation);
         }
 
-        protected ServerConnectionInformation GetServerConnectionInformation(ServerType serverType, PeerConnectionInformation peerConnectionInformation)
+        protected ServerConnectionInformation GetServerConnectionInformation(
+            ServerType serverType,
+            PeerConnectionInformation peerConnectionInformation)
         {
-            return new ServerConnectionInformation(serverType, peerConnectionInformation);
+            return new ServerConnectionInformation(
+                serverType,
+                peerConnectionInformation);
         }
     }
 }
