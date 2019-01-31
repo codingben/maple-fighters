@@ -7,14 +7,24 @@ namespace Scripts.Services
 {
     public sealed class LoginPeerLogic : PeerLogicBase, ILoginPeerLogicAPI
     {
-        public async Task<AuthenticateResponseParameters> Authenticate(IYield yield, AuthenticateRequestParameters parameters)
+        public async Task<AuthenticateResponseParameters> Authenticate(
+            IYield yield,
+            AuthenticateRequestParameters parameters)
         {
-            var responseParameters = await ServerPeerHandler.SendOperation<AuthenticateRequestParameters, AuthenticateResponseParameters>
-                (yield, (byte)LoginOperations.Authenticate, parameters, MessageSendOptions.DefaultReliable());
+            var responseParameters = 
+                await ServerPeerHandler
+                    .SendOperation<AuthenticateRequestParameters, AuthenticateResponseParameters>(
+                        yield,
+                        LoginOperations.Authenticate,
+                        parameters,
+                        MessageSendOptions.DefaultReliable());
+
             if (responseParameters.HasAccessToken)
             {
-                AccessTokenProvider.AccessToken = responseParameters.AccessToken;
+                AccessTokenProvider.AccessToken =
+                    responseParameters.AccessToken;
             }
+
             return new AuthenticateResponseParameters(responseParameters.Status);
         }
     }

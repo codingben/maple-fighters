@@ -7,11 +7,16 @@ namespace Scripts.Services
 {
     public sealed class GameServerProviderPeerLogic : PeerLogicBase, IGameServerProviderPeerLogicAPI
     {
-        public async Task<GameServersProviderResponseParameters> ProvideGameServers(IYield yield)
+        public async Task<GameServersProviderResponseParameters>
+            ProvideGameServers(IYield yield)
         {
-            var responseParameters = await ServerPeerHandler.SendOperation<EmptyParameters, GameServersProviderResponseParameters>
-                (yield, (byte)GameServerProviderOperations.ProvideGameServers, new EmptyParameters(), MessageSendOptions.DefaultReliable());
-            return responseParameters;
+            return 
+                await ServerPeerHandler
+                    .SendOperation<EmptyParameters, GameServersProviderResponseParameters>(
+                        yield,
+                        GameServerProviderOperations.ProvideGameServers,
+                        new EmptyParameters(),
+                        MessageSendOptions.DefaultReliable());
         }
     }
 }

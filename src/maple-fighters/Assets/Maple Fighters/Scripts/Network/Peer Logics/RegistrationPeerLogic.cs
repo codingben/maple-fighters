@@ -7,10 +7,17 @@ namespace Scripts.Services
 {
     public sealed class RegistrationPeerLogic : PeerLogicBase, IRegistrationPeerLogicAPI
     {
-        public async Task<RegisterResponseParameters> Register(IYield yield, RegisterRequestParameters parameters)
+        public async Task<RegisterResponseParameters> Register(
+            IYield yield,
+            RegisterRequestParameters parameters)
         {
-            return await ServerPeerHandler.SendOperation<RegisterRequestParameters, RegisterResponseParameters>
-                (yield, (byte)RegistrationOperations.Register, parameters, MessageSendOptions.DefaultReliable());
+            return
+                await ServerPeerHandler
+                    .SendOperation<RegisterRequestParameters, RegisterResponseParameters>(
+                        yield,
+                        RegistrationOperations.Register,
+                        parameters,
+                        MessageSendOptions.DefaultReliable());
         }
     }
 }
