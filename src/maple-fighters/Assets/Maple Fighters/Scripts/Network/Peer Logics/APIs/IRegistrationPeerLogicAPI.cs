@@ -6,6 +6,8 @@ namespace Scripts.Services
 {
     public interface IRegistrationPeerLogicAPI : IPeerLogicBase
     {
-        Task<RegisterResponseParameters> Register(IYield yield, RegisterRequestParameters parameters);
+        Task<RegisterResponseParameters> Register(
+            IYield yield,
+            RegisterRequestParameters parameters);
     }
 }

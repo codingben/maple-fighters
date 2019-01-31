@@ -6,6 +6,8 @@ namespace Scripts.Services
 {
     public interface ILoginPeerLogicAPI : IPeerLogicBase
     {
-        Task<AuthenticateResponseParameters> Authenticate(IYield yield, AuthenticateRequestParameters parameters);
+        Task<AuthenticateResponseParameters> Authenticate(
+            IYield yield,
+            AuthenticateRequestParameters parameters);
     }
 }

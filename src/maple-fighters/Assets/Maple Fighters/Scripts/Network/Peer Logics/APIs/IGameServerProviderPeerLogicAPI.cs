@@ -6,6 +6,7 @@ namespace Scripts.Services
 {
     public interface IGameServerProviderPeerLogicAPI : IPeerLogicBase
     {
-        Task<GameServersProviderResponseParameters> ProvideGameServers(IYield yield);
+        Task<GameServersProviderResponseParameters> ProvideGameServers(
+            IYield yield);
     }
 }

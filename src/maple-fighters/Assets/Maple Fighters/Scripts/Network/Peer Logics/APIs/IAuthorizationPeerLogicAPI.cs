@@ -6,6 +6,8 @@ namespace Scripts.Services
 {
     public interface IAuthorizationPeerLogicAPI : IPeerLogicBase
     {
-        Task<AuthorizeResponseParameters> Authorize(IYield yield, AuthorizeRequestParameters parameters);
+        Task<AuthorizeResponseParameters> Authorize(
+            IYield yield,
+            AuthorizeRequestParameters parameters);
     }
 }
