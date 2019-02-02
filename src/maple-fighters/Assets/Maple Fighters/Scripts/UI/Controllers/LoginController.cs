@@ -69,15 +69,7 @@ namespace Scripts.UI.Controllers
 
         private void OnLoginButtonClicked(string email, string password)
         {
-            if (LoginConnectionProvider.GetInstance().IsConnected())
-            {
-                Login?.Invoke(email, password);
-            }
-            else
-            {
-                LoginConnectionProvider.GetInstance()
-                    .Connect(() => Login?.Invoke(email, password));
-            }
+            Login?.Invoke(email, password);
         }
 
         private void OnRegisterButtonClicked()

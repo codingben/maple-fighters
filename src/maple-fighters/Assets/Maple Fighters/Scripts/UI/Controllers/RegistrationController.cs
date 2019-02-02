@@ -68,17 +68,7 @@ namespace Scripts.UI.Controllers
         private void OnRegisterButtonClicked(
             UIRegistrationDetails uiRegistrationDetails)
         {
-            if (RegistrationConnectionProvider.GetInstance().IsConnected())
-            {
-                Register?.Invoke(uiRegistrationDetails);
-            }
-            else
-            {
-                RegistrationConnectionProvider.GetInstance()
-                    .Connect(
-                        () => Register?.Invoke(
-                            uiRegistrationDetails));
-            }
+            Register?.Invoke(uiRegistrationDetails);
         }
 
         private void OnBackButtonClicked()

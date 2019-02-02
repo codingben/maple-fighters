@@ -16,7 +16,6 @@ namespace Scripts.Gameplay
             CreateGameSystems(GetCreatorsComponents());
             CreateGameSystems(GetContainersComponents());
             CreateGameSystems(GetGUIControllersComponents());
-            CreateGameSystems(GetConnectionProviderComponents());
             CreateGameSystems(GetControllersComponents());
 
             Destroy(gameObject);
@@ -49,11 +48,6 @@ namespace Scripts.Gameplay
         {
             yield return typeof(FocusStateController);
             yield return typeof(ChatController);
-        }
-
-        private IEnumerable<Type> GetConnectionProviderComponents()
-        {
-            yield return typeof(ChatConnectionProvider);
         }
 
         private void CreateGameSystems(IEnumerable<Type> components)

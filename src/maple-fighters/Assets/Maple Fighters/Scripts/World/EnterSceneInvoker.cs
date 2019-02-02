@@ -21,7 +21,10 @@ namespace Scripts.World
             coroutinesExecutor.StartTask(
                 EnterScene,
                 exception =>
-                    ServiceConnectionProviderUtils.OperationFailed());
+                {
+                    Debug.LogError(
+                        "EnterSceneInvoker::Start() -> An exception occurred during the operation. The connection with the server has been lost.");
+                });
         }
 
         private void OnDestroy()

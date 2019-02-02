@@ -1,5 +1,4 @@
 ﻿using System;
-using Scripts.Services;
 using Scripts.UI.Windows;
 using UI.Manager;
 using UnityEngine;
@@ -16,11 +15,6 @@ namespace Scripts.UI.Controllers
         {
             chatWindow = UIElementsCreator.GetInstance().Create<ChatWindow>();
             chatWindow.MessageAdded += OnMessageAdded;
-        }
-
-        private void Start()
-        {
-            ChatConnectionProvider.GetInstance().Connect();
         }
 
         private void OnDestroy()

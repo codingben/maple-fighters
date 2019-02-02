@@ -23,8 +23,11 @@ namespace Scripts.World
                 coroutinesExecutor.ExecuteExternally();
                 coroutinesExecutor.StartTask(
                     ChangeScene,
-                    onException: exception =>
-                        ServiceConnectionProviderUtils.OperationFailed());
+                    exception =>
+                    {
+                        Debug.LogError(
+                            "PortalTeleportation::Teleport() -> An exception occurred during the operation. The connection with the server has been lost.");
+                    });
             }
         }
 
