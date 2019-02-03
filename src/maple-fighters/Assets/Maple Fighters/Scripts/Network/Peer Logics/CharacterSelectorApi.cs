@@ -1,60 +1,60 @@
 ﻿using System.Threading.Tasks;
 using CommonCommunicationInterfaces;
 using CommonTools.Coroutines;
+using CommunicationHelper;
 using Game.Common;
 using Scripts.Containers;
 
 namespace Scripts.Services
 {
-    public sealed class CharacterPeerLogic : PeerLogicBase, ICharacterPeerLogicAPI
+    public class CharacterSelectorApi : ICharacterSelectorApi
     {
-        public async Task<GetCharactersResponseParameters> GetCharacters(
-            IYield yield)
+        public ServerPeerHandler<CharacterOperations, EmptyEventCode> ServerPeer
         {
-            return 
-                await ServerPeerHandler
-                    .SendOperation<EmptyParameters, GetCharactersResponseParameters>(
-                        yield,
-                        (byte)CharacterOperations.GetCharacters, 
-                        new EmptyParameters(), 
-                        MessageSendOptions.DefaultReliable());
+            get;
         }
 
-        public async Task<CreateCharacterResponseParameters> CreateCharacter(
+        public CharacterSelectorApi()
+        {
+            ServerPeer =
+                new ServerPeerHandler<CharacterOperations, EmptyEventCode>();
+        }
+
+        public async Task<CreateCharacterResponseParameters> CreateCharacterAsync(
             IYield yield,
             CreateCharacterRequestParameters parameters)
         {
             return 
-                await ServerPeerHandler
+                await ServerPeer
                     .SendOperation<CreateCharacterRequestParameters, CreateCharacterResponseParameters>(
                         yield,
-                        (byte)CharacterOperations.CreateCharacter, 
+                        CharacterOperations.CreateCharacter, 
                         parameters, 
                         MessageSendOptions.DefaultReliable());
         }
 
-        public async Task<RemoveCharacterResponseParameters> RemoveCharacter(
+        public async Task<RemoveCharacterResponseParameters> RemoveCharacterAsync(
             IYield yield,
             RemoveCharacterRequestParameters parameters)
         {
             return 
-                await ServerPeerHandler
+                await ServerPeer
                     .SendOperation<RemoveCharacterRequestParameters, RemoveCharacterResponseParameters>(
                         yield,
-                        (byte)CharacterOperations.RemoveCharacter, 
+                        CharacterOperations.RemoveCharacter, 
                         parameters, 
                         MessageSendOptions.DefaultReliable());
         }
 
-        public async Task<ValidateCharacterResponseParameters> ValidateCharacter(
+        public async Task<ValidateCharacterResponseParameters> ValidateCharacterAsync(
             IYield yield, 
             ValidateCharacterRequestParameters parameters)
         {
             var responseParameters = 
-                await ServerPeerHandler
+                await ServerPeer
                     .SendOperation<ValidateCharacterRequestParameters, ValidateCharacterResponseParameters>(
                         yield,
-                        (byte)CharacterOperations.ValidateCharacter,
+                        CharacterOperations.ValidateCharacter,
                         parameters,
                         MessageSendOptions.DefaultReliable());
 
@@ -65,6 +65,18 @@ namespace Scripts.Services
             }
 
             return responseParameters;
+        }
+
+        public async Task<GetCharactersResponseParameters> GetCharactersAsync(
+            IYield yield)
+        {
+            return
+                await ServerPeer
+                    .SendOperation<EmptyParameters, GetCharactersResponseParameters>(
+                        yield,
+                        CharacterOperations.GetCharacters,
+                        new EmptyParameters(),
+                        MessageSendOptions.DefaultReliable());
         }
     }
 }

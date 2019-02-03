@@ -5,8 +5,13 @@ using Game.Common;
 
 namespace Scripts.Services
 {
-    public sealed class GameScenePeerLogic : PeerLogicBase, IGameScenePeerLogicAPI
+    public sealed class GameSceneApi : IGameSceneApi
     {
+        public ServerPeerHandler<GameOperations, GameEvents> ServerPeer
+        {
+            get;
+        }
+
         public UnityEvent<EnterSceneResponseParameters> SceneEntered { get; }
 
         public UnityEvent<SceneObjectAddedEventParameters> SceneObjectAdded { get; }
@@ -29,124 +34,117 @@ namespace Scripts.Services
 
         public UnityEvent<BubbleMessageEventParameters> BubbleMessageReceived { get; }
 
-        public GameScenePeerLogic()
+        public GameSceneApi()
         {
-            BubbleMessageReceived = new UnityEvent<BubbleMessageEventParameters>();
-            CharactersAdded = new UnityEvent<CharactersAddedEventParameters>();
-            CharacterAdded = new UnityEvent<CharacterAddedEventParameters>();
-            PlayerAttacked = new UnityEvent<PlayerAttackedEventParameters>();
-            PlayerStateChanged = new UnityEvent<PlayerStateChangedEventParameters>();
-            PositionChanged = new UnityEvent<SceneObjectPositionChangedEventParameters>();
-            SceneObjectsRemoved = new UnityEvent<SceneObjectsRemovedEventParameters>();
-            SceneObjectsAdded = new UnityEvent<SceneObjectsAddedEventParameters>();
-            SceneObjectRemoved = new UnityEvent<SceneObjectRemovedEventParameters>();
-            SceneObjectAdded = new UnityEvent<SceneObjectAddedEventParameters>();
+            ServerPeer =
+                new ServerPeerHandler<GameOperations, GameEvents>();
+
             SceneEntered = new UnityEvent<EnterSceneResponseParameters>();
+            SceneObjectAdded = new UnityEvent<SceneObjectAddedEventParameters>();
+            SceneObjectRemoved = new UnityEvent<SceneObjectRemovedEventParameters>();
+            SceneObjectsAdded = new UnityEvent<SceneObjectsAddedEventParameters>();
+            SceneObjectsRemoved = new UnityEvent<SceneObjectsRemovedEventParameters>();
+            PositionChanged = new UnityEvent<SceneObjectPositionChangedEventParameters>();
+            PlayerStateChanged = new UnityEvent<PlayerStateChangedEventParameters>();
+            PlayerAttacked = new UnityEvent<PlayerAttackedEventParameters>();
+            CharacterAdded = new UnityEvent<CharacterAddedEventParameters>();
+            CharactersAdded = new UnityEvent<CharactersAddedEventParameters>();
+            BubbleMessageReceived = new UnityEvent<BubbleMessageEventParameters>();
         }
 
-        protected override void OnAwake()
+        private void SetEventHandlers()
         {
-            base.OnAwake();
-
-            SetEventsHandlers();
+            ServerPeer
+                .SetEventHandler(GameEvents.SceneObjectAdded, SceneObjectAdded);
+            ServerPeer
+                .SetEventHandler(GameEvents.SceneObjectRemoved, SceneObjectRemoved);
+            ServerPeer
+                .SetEventHandler(GameEvents.SceneObjectsAdded, SceneObjectsAdded);
+            ServerPeer
+                .SetEventHandler(GameEvents.SceneObjectsRemoved, SceneObjectsRemoved);
+            ServerPeer
+                .SetEventHandler(GameEvents.PositionChanged, PositionChanged);
+            ServerPeer
+                .SetEventHandler(GameEvents.PlayerStateChanged, PlayerStateChanged);
+            ServerPeer
+                .SetEventHandler(GameEvents.PlayerAttacked, PlayerAttacked);
+            ServerPeer
+                .SetEventHandler(GameEvents.CharacterAdded, CharacterAdded);
+            ServerPeer
+                .SetEventHandler(GameEvents.CharactersAdded, CharactersAdded);
+            ServerPeer
+                .SetEventHandler(GameEvents.BubbleMessage, BubbleMessageReceived);
         }
 
-        protected override void OnDestroy()
+        private void RemoveEventHandlers()
         {
-            base.OnDestroy();
-
-            RemoveEventsHandlers();
+            ServerPeer
+                .RemoveEventHandler(GameEvents.SceneObjectAdded);
+            ServerPeer
+                .RemoveEventHandler(GameEvents.SceneObjectRemoved);
+            ServerPeer
+                .RemoveEventHandler(GameEvents.SceneObjectsAdded);
+            ServerPeer
+                .RemoveEventHandler(GameEvents.SceneObjectsRemoved);
+            ServerPeer
+                .RemoveEventHandler(GameEvents.PositionChanged);
+            ServerPeer
+                .RemoveEventHandler(GameEvents.PlayerStateChanged);
+            ServerPeer
+                .RemoveEventHandler(GameEvents.PlayerAttacked);
+            ServerPeer
+                .RemoveEventHandler(GameEvents.CharacterAdded);
+            ServerPeer
+                .RemoveEventHandler(GameEvents.CharactersAdded);
+            ServerPeer
+                .RemoveEventHandler(GameEvents.BubbleMessage);
         }
 
-        private void SetEventsHandlers()
-        {
-            ServerPeerHandler
-                .SetEventHandler((byte)GameEvents.SceneObjectAdded, SceneObjectAdded);
-            ServerPeerHandler
-                .SetEventHandler((byte)GameEvents.SceneObjectRemoved, SceneObjectRemoved);
-            ServerPeerHandler
-                .SetEventHandler((byte)GameEvents.SceneObjectsAdded, SceneObjectsAdded);
-            ServerPeerHandler
-                .SetEventHandler((byte)GameEvents.SceneObjectsRemoved, SceneObjectsRemoved);
-            ServerPeerHandler
-                .SetEventHandler((byte)GameEvents.PositionChanged, PositionChanged);
-            ServerPeerHandler
-                .SetEventHandler((byte)GameEvents.PlayerStateChanged, PlayerStateChanged);
-            ServerPeerHandler
-                .SetEventHandler((byte)GameEvents.PlayerAttacked, PlayerAttacked);
-            ServerPeerHandler
-                .SetEventHandler((byte)GameEvents.CharacterAdded, CharacterAdded);
-            ServerPeerHandler
-                .SetEventHandler((byte)GameEvents.CharactersAdded, CharactersAdded);
-            ServerPeerHandler
-                .SetEventHandler((byte)GameEvents.BubbleMessage, BubbleMessageReceived);
-        }
-
-        private void RemoveEventsHandlers()
-        {
-            ServerPeerHandler
-                .RemoveEventHandler((byte)GameEvents.SceneObjectAdded);
-            ServerPeerHandler
-                .RemoveEventHandler((byte)GameEvents.SceneObjectRemoved);
-            ServerPeerHandler
-                .RemoveEventHandler((byte)GameEvents.SceneObjectsAdded);
-            ServerPeerHandler
-                .RemoveEventHandler((byte)GameEvents.SceneObjectsRemoved);
-            ServerPeerHandler
-                .RemoveEventHandler((byte)GameEvents.PositionChanged);
-            ServerPeerHandler
-                .RemoveEventHandler((byte)GameEvents.PlayerStateChanged);
-            ServerPeerHandler
-                .RemoveEventHandler((byte)GameEvents.PlayerAttacked);
-            ServerPeerHandler
-                .RemoveEventHandler((byte)GameEvents.CharacterAdded);
-            ServerPeerHandler
-                .RemoveEventHandler((byte)GameEvents.CharactersAdded);
-            ServerPeerHandler
-                .RemoveEventHandler((byte)GameEvents.BubbleMessage);
-        }
-
-        public async Task EnterScene(IYield yield)
+        public async Task EnterSceneAsync(IYield yield)
         {
             var responseParameters =
-                await ServerPeerHandler
+                await ServerPeer
                     .SendOperation<EmptyParameters, EnterSceneResponseParameters>(
                         yield,
-                        (byte)GameOperations.EnterScene,
+                        GameOperations.EnterScene,
                         new EmptyParameters(),
                         MessageSendOptions.DefaultReliable());
 
             SceneEntered?.Invoke(responseParameters);
         }
 
-        public async Task<ChangeSceneResponseParameters> ChangeScene(
+        public async Task<ChangeSceneResponseParameters> ChangeSceneAsync(
             IYield yield,
             ChangeSceneRequestParameters parameters)
         {
             return
-                await ServerPeerHandler
+                await ServerPeer
                     .SendOperation<ChangeSceneRequestParameters, ChangeSceneResponseParameters>(
                         yield,
-                        (byte)GameOperations.ChangeScene,
+                        GameOperations.ChangeScene,
                         parameters,
                         MessageSendOptions.DefaultReliable());
         }
 
-        public void UpdatePosition(UpdatePositionRequestParameters parameters)
+        public Task UpdatePosition(UpdatePositionRequestParameters parameters)
         {
-            ServerPeerHandler.SendOperation(
-                (byte)GameOperations.PositionChanged,
+            ServerPeer.SendOperation(
+                GameOperations.PositionChanged,
                 parameters,
                 MessageSendOptions.DefaultUnreliable((byte)GameDataChannels.Position));
+
+            return Task.CompletedTask;
         }
 
-        public void UpdatePlayerState(
+        public Task UpdatePlayerState(
             UpdatePlayerStateRequestParameters parameters)
         {
-            ServerPeerHandler.SendOperation(
-                (byte)GameOperations.PlayerStateChanged,
+            ServerPeer.SendOperation(
+                GameOperations.PlayerStateChanged,
                 parameters,
                 MessageSendOptions.DefaultUnreliable((byte)GameDataChannels.Animations));
+
+            return Task.CompletedTask;
         }
     }
 }

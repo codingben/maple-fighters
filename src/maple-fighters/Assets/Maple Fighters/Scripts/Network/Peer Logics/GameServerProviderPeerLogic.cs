@@ -1,20 +1,32 @@
 ﻿using System.Threading.Tasks;
 using CommonCommunicationInterfaces;
 using CommonTools.Coroutines;
+using CommunicationHelper;
 using GameServerProvider.Client.Common;
 
 namespace Scripts.Services
 {
-    public sealed class GameServerProviderPeerLogic : PeerLogicBase, IGameServerProviderPeerLogicAPI
+    public class GameServerProviderApi : IGameServerProviderApi
     {
+        public ServerPeerHandler<GameServerProviderOperations, EmptyEventCode> ServerPeer
+        {
+            get;
+        }
+
+        public GameServerProviderApi()
+        {
+            ServerPeer =
+                new ServerPeerHandler<GameServerProviderOperations, EmptyEventCode>();
+        }
+
         public async Task<GameServersProviderResponseParameters>
-            ProvideGameServers(IYield yield)
+            ProvideGameServersAsync(IYield yield)
         {
             return 
-                await ServerPeerHandler
+                await ServerPeer
                     .SendOperation<EmptyParameters, GameServersProviderResponseParameters>(
                         yield,
-                        (byte)GameServerProviderOperations.ProvideGameServers,
+                        GameServerProviderOperations.ProvideGameServers,
                         new EmptyParameters(),
                         MessageSendOptions.DefaultReliable());
         }

@@ -44,17 +44,15 @@ namespace Scripts.Services
         }
 
         public void SendOperation<TParameters>(
-            byte operationCode,
+            TOperationCode operationCode,
             TParameters parameters,
             MessageSendOptions messageSendOptions)
             where TParameters : struct, IParameters
         {
             if (IsConnected())
             {
-                var code = 
-                    (TOperationCode)Enum.ToObject(typeof(TOperationCode), operationCode);
                 operationRequestSender.Send(
-                    code,
+                    operationCode,
                     parameters,
                     messageSendOptions);
             }
@@ -63,7 +61,7 @@ namespace Scripts.Services
         public async Task<TResponseParameters>
             SendOperation<TRequestParameters, TResponseParameters>(
                 IYield yield,
-                byte operationCode,
+                TOperationCode operationCode,
                 TRequestParameters parameters,
                 MessageSendOptions messageSendOptions)
             where TRequestParameters : struct, IParameters
@@ -71,10 +69,8 @@ namespace Scripts.Services
         {
             if (IsConnected())
             {
-                var code =
-                    (TOperationCode)Enum.ToObject(typeof(TOperationCode), operationCode);
                 var requestId = operationRequestSender.Send(
-                    code,
+                    operationCode,
                     parameters,
                     messageSendOptions);
 
@@ -87,24 +83,19 @@ namespace Scripts.Services
         }
 
         public void SetEventHandler<TParameters>(
-            byte eventCode,
+            TEventCode eventCode,
             UnityEvent<TParameters> action)
             where TParameters : struct, IParameters
         {
-            var code =
-                (TEventCode)Enum.ToObject(typeof(TEventCode), eventCode);
-            var eventHandler =
+            eventHandlerRegister.SetHandler(
+                eventCode,
                 new EventHandler<TParameters>(
-                    (x) => action?.Invoke(x.Parameters));
-
-            eventHandlerRegister.SetHandler(code, eventHandler);
+                    (x) => action?.Invoke(x.Parameters)));
         }
 
-        public void RemoveEventHandler(byte eventCode)
+        public void RemoveEventHandler(TEventCode eventCode)
         {
-            var code =
-                (TEventCode)Enum.ToObject(typeof(TEventCode), eventCode);
-            eventHandlerRegister.RemoveHandler(code);
+            eventHandlerRegister.RemoveHandler(eventCode);
         }
 
         private void OnOperationRequestFailed(
