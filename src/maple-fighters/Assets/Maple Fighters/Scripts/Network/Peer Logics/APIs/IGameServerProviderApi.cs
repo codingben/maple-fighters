@@ -4,9 +4,9 @@ using GameServerProvider.Client.Common;
 
 namespace Scripts.Services
 {
-    public interface IGameServerProviderPeerLogicAPI : IPeerLogicBase
+    public interface IGameServerProviderApi
     {
-        Task<GameServersProviderResponseParameters> ProvideGameServers(
+        Task<GameServersProviderResponseParameters> ProvideGameServersAsync(
             IYield yield);
     }
 }

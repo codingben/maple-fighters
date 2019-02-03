@@ -4,17 +4,20 @@ using Game.Common;
 
 namespace Scripts.Services
 {
-    public interface IGameScenePeerLogicAPI : IPeerLogicBase
+    public interface IGameSceneApi
     {
-        Task EnterScene(IYield yield);
+        Task EnterSceneAsync(
+            IYield yield);
 
-        Task<ChangeSceneResponseParameters> ChangeScene(
+        Task<ChangeSceneResponseParameters> ChangeSceneAsync(
             IYield yield,
             ChangeSceneRequestParameters parameters);
 
-        void UpdatePosition(UpdatePositionRequestParameters parameters);
+        Task UpdatePosition(
+            UpdatePositionRequestParameters parameters);
 
-        void UpdatePlayerState(UpdatePlayerStateRequestParameters parameters);
+        Task UpdatePlayerState(
+            UpdatePlayerStateRequestParameters parameters);
 
         UnityEvent<EnterSceneResponseParameters> SceneEntered { get; }
 

@@ -4,21 +4,21 @@ using Game.Common;
 
 namespace Scripts.Services
 {
-    public interface ICharacterPeerLogicAPI : IPeerLogicBase
+    public interface ICharacterSelectorApi
     {
-        Task<GetCharactersResponseParameters> GetCharacters(
-            IYield yield);
-
-        Task<CreateCharacterResponseParameters> CreateCharacter(
+        Task<CreateCharacterResponseParameters> CreateCharacterAsync(
             IYield yield,
             CreateCharacterRequestParameters parameters);
 
-        Task<RemoveCharacterResponseParameters> RemoveCharacter(
+        Task<RemoveCharacterResponseParameters> RemoveCharacterAsync(
             IYield yield,
             RemoveCharacterRequestParameters parameters);
 
-        Task<ValidateCharacterResponseParameters> ValidateCharacter(
+        Task<ValidateCharacterResponseParameters> ValidateCharacterAsync(
             IYield yield,
             ValidateCharacterRequestParameters parameters);
+
+        Task<GetCharactersResponseParameters> GetCharactersAsync(
+            IYield yield);
     }
 }

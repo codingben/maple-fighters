@@ -4,9 +4,9 @@ using CommonTools.Coroutines;
 
 namespace Scripts.Services
 {
-    public interface IAuthorizationPeerLogicAPI : IPeerLogicBase
+    public interface IAuthorizerApi
     {
-        Task<AuthorizeResponseParameters> Authorize(
+        Task<AuthorizeResponseParameters> AuthorizeAsync(
             IYield yield,
             AuthorizeRequestParameters parameters);
     }

@@ -1,6 +1,6 @@
 ﻿namespace Scripts.Services
 {
-    public interface IDummyGameScenePeerLogicAPI : IPeerLogicBase
+    public interface IDummyGameSceneApi
     {
         // Left blank intentionally
     }
