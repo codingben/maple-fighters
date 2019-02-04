@@ -20,25 +20,14 @@ namespace Scripts.Services
         Register
     }
 
-    public class AuthenticatorApi : IAuthenticatorApi
+    public class AuthenticatorApi : ApiBase<AuthenticatorOperations, EmptyEventCode>, IAuthenticatorApi
     {
-        public ServerPeerHandler<AuthenticatorOperations, EmptyEventCode> ServerPeer
-        {
-            get;
-        }
-
-        public AuthenticatorApi()
-        {
-            ServerPeer =
-                new ServerPeerHandler<AuthenticatorOperations, EmptyEventCode>();
-        }
-
         public async Task<AuthenticateResponseParameters> AuthenticateAsync(
             IYield yield,
             AuthenticateRequestParameters parameters)
         {
             var responseParameters = 
-                await ServerPeer
+                await ServerPeerHandler
                     .SendOperation<AuthenticateRequestParameters, AuthenticateResponseParameters>(
                         yield,
                         AuthenticatorOperations.Authenticate,
@@ -59,7 +48,7 @@ namespace Scripts.Services
             RegisterRequestParameters parameters)
         {
             return
-                await ServerPeer
+                await ServerPeerHandler
                     .SendOperation<RegisterRequestParameters, RegisterResponseParameters>(
                         yield,
                         AuthenticatorOperations.Register,

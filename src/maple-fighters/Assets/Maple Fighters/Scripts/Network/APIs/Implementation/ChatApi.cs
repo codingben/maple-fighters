@@ -4,37 +4,29 @@ using CommonCommunicationInterfaces;
 
 namespace Scripts.Services
 {
-    public class ChatApi : IChatApi
+    public class ChatApi : ApiBase<ChatOperations, ChatEvents>, IChatApi
     {
-        public ServerPeerHandler<ChatOperations, ChatEvents> ServerPeer
-        {
-            get;
-        }
-
         public UnityEvent<ChatMessageEventParameters> ChatMessageReceived { get; }
 
         public ChatApi()
         {
-            ServerPeer =
-                new ServerPeerHandler<ChatOperations, ChatEvents>();
-
             ChatMessageReceived = new UnityEvent<ChatMessageEventParameters>();
         }
 
         private void SetEventHandlers()
         {
-            ServerPeer
+            ServerPeerHandler
                 .SetEventHandler(ChatEvents.ChatMessage, ChatMessageReceived);
         }
 
         private void RemoveEventHandlers()
         {
-            ServerPeer.RemoveEventHandler(ChatEvents.ChatMessage);
+            ServerPeerHandler.RemoveEventHandler(ChatEvents.ChatMessage);
         }
 
         public Task SendChatMessage(ChatMessageRequestParameters parameters)
         {
-            ServerPeer
+            ServerPeerHandler
                 .SendOperation(
                     ChatOperations.ChatMessage,
                     parameters,

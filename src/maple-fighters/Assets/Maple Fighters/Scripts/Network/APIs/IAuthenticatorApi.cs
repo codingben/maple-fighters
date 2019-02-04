@@ -5,7 +5,7 @@ using Registration.Common;
 
 namespace Scripts.Services
 {
-    public interface IAuthenticatorApi
+    public interface IAuthenticatorApi : IApiBase
     {
         Task<AuthenticateResponseParameters> AuthenticateAsync(
             IYield yield,
