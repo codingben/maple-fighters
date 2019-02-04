@@ -8,7 +8,7 @@ using Scripts.ScriptableObjects;
 
 namespace Scripts.Services
 {
-    public class ServerPeerHandler<TOperationCode, TEventCode>
+    public class ServerPeerHandler<TOperationCode, TEventCode> : IDisposable
         where TOperationCode : IComparable, IFormattable, IConvertible
         where TEventCode : IComparable, IFormattable, IConvertible
     {

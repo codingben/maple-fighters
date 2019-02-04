@@ -6,7 +6,7 @@ using CommunicationHelper;
 
 namespace Scripts.Services
 {
-    public sealed class AuthorizerApi : IAuthorizerApi
+    public class AuthorizerApi : IAuthorizerApi
     {
         public ServerPeerHandler<AuthorizationOperations, EmptyEventCode> ServerPeer
         {

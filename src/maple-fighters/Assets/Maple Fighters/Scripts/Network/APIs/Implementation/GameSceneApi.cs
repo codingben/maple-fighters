@@ -5,7 +5,7 @@ using Game.Common;
 
 namespace Scripts.Services
 {
-    public sealed class GameSceneApi : IGameSceneApi
+    public class GameSceneApi : IGameSceneApi
     {
         public ServerPeerHandler<GameOperations, GameEvents> ServerPeer
         {
