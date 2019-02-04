@@ -3,7 +3,6 @@ using CommonCommunicationInterfaces;
 using CommonTools.Coroutines;
 using CommunicationHelper;
 using Game.Common;
-using Scripts.Containers;
 
 namespace Scripts.Services
 {
@@ -50,21 +49,13 @@ namespace Scripts.Services
             IYield yield, 
             ValidateCharacterRequestParameters parameters)
         {
-            var responseParameters = 
+            return
                 await ServerPeer
                     .SendOperation<ValidateCharacterRequestParameters, ValidateCharacterResponseParameters>(
                         yield,
                         CharacterOperations.ValidateCharacter,
                         parameters,
                         MessageSendOptions.DefaultReliable());
-
-            if (responseParameters.Status == CharacterValidationStatus.Ok)
-            {
-                ServiceContainer.GameService
-                    .SetPeerLogic<GameScenePeerLogic, GameOperations, GameEvents>();
-            }
-
-            return responseParameters;
         }
 
         public async Task<GetCharactersResponseParameters> GetCharactersAsync(
