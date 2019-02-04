@@ -6,25 +6,14 @@ using Game.Common;
 
 namespace Scripts.Services
 {
-    public class CharacterSelectorApi : ICharacterSelectorApi
+    public class CharacterSelectorApi : ApiBase<CharacterOperations, EmptyEventCode>, ICharacterSelectorApi
     {
-        public ServerPeerHandler<CharacterOperations, EmptyEventCode> ServerPeer
-        {
-            get;
-        }
-
-        public CharacterSelectorApi()
-        {
-            ServerPeer =
-                new ServerPeerHandler<CharacterOperations, EmptyEventCode>();
-        }
-
         public async Task<CreateCharacterResponseParameters> CreateCharacterAsync(
             IYield yield,
             CreateCharacterRequestParameters parameters)
         {
             return 
-                await ServerPeer
+                await ServerPeerHandler
                     .SendOperation<CreateCharacterRequestParameters, CreateCharacterResponseParameters>(
                         yield,
                         CharacterOperations.CreateCharacter, 
@@ -37,7 +26,7 @@ namespace Scripts.Services
             RemoveCharacterRequestParameters parameters)
         {
             return 
-                await ServerPeer
+                await ServerPeerHandler
                     .SendOperation<RemoveCharacterRequestParameters, RemoveCharacterResponseParameters>(
                         yield,
                         CharacterOperations.RemoveCharacter, 
@@ -50,7 +39,7 @@ namespace Scripts.Services
             ValidateCharacterRequestParameters parameters)
         {
             return
-                await ServerPeer
+                await ServerPeerHandler
                     .SendOperation<ValidateCharacterRequestParameters, ValidateCharacterResponseParameters>(
                         yield,
                         CharacterOperations.ValidateCharacter,
@@ -62,7 +51,7 @@ namespace Scripts.Services
             IYield yield)
         {
             return
-                await ServerPeer
+                await ServerPeerHandler
                     .SendOperation<EmptyParameters, GetCharactersResponseParameters>(
                         yield,
                         CharacterOperations.GetCharacters,

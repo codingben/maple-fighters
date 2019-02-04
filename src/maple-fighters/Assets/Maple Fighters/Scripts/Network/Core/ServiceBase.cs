@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Scripts.Services
 {
-    public class ServiceBase : MonoBehaviour
+    public class ServiceBase : MonoBehaviour, IServiceBase
     {
         private IServerPeer serverPeer;
         private ExternalCoroutinesExecutor coroutinesExecutor;
@@ -29,27 +29,10 @@ namespace Scripts.Services
             Disconnect();
         }
 
-        public async Task<ConnectionStatus> Connect(
-            IYield yield,
-            ServerConnectionInformation serverConnectionInformation)
+        public void Connect(ConnectionInformation connectionInformation)
         {
-            var serverConnector =
-                new PhotonServerConnector(() => coroutinesExecutor);
-            var connectionDetails =
-                new ConnectionDetails(
-                    NetworkConfiguration.GetInstance().ConnectionProtocol,
-                    NetworkConfiguration.GetInstance().DebugLevel);
-
-            serverPeer =
-                await serverConnector.ConnectAsync(
-                    yield,
-                    serverConnectionInformation.PeerConnectionInformation,
-                    connectionDetails);
-
-            return 
-                serverPeer == null
-                       ? ConnectionStatus.Failed
-                       : ConnectionStatus.Succeed;
+            coroutinesExecutor.StartTask(
+                (yield) => ConnectAsync(yield, connectionInformation));
         }
 
         public void SetNetworkTrafficState(NetworkTrafficState state)
@@ -60,18 +43,63 @@ namespace Scripts.Services
             }
         }
 
-        private void Disconnect()
+        public void Disconnect()
         {
             if (IsConnected())
             {
                 serverPeer.Disconnect();
                 serverPeer = null;
+
+                OnDisconnected();
             }
         }
 
-        private bool IsConnected()
+        public bool IsConnected()
         {
             return serverPeer != null && serverPeer.IsConnected;
+        }
+
+        public IServerPeer GetServerPeer()
+        {
+            return serverPeer;
+        }
+
+        private async Task<ConnectionStatus> ConnectAsync(
+            IYield yield,
+            ConnectionInformation serverConnectionInformation)
+        {
+            var serverConnector =
+                new PhotonServerConnector(() => coroutinesExecutor);
+            var connectionDetails =
+                new ConnectionDetails(
+                    NetworkConfiguration.GetInstance().ConnectionProtocol,
+                    NetworkConfiguration.GetInstance().DebugLevel);
+
+            serverPeer = 
+                await serverConnector.ConnectAsync(
+                    yield,
+                    serverConnectionInformation.PeerConnectionInformation,
+                    connectionDetails);
+
+            if (IsConnected())
+            {
+                OnConnected();
+            }
+
+            return 
+                IsConnected()
+                    ? ConnectionStatus.Failed
+                    : ConnectionStatus.Succeed;
+        }
+
+        protected virtual void OnConnected()
+        {
+            // Left blank intentionally
+        }
+
+        protected virtual void OnDisconnected()
+        {
+            // Left blank intentionally
         }
     }
 }

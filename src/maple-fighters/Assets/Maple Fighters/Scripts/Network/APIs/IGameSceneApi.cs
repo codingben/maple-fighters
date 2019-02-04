@@ -4,7 +4,7 @@ using Game.Common;
 
 namespace Scripts.Services
 {
-    public interface IGameSceneApi
+    public interface IGameSceneApi : IApiBase
     {
         Task EnterSceneAsync(
             IYield yield);

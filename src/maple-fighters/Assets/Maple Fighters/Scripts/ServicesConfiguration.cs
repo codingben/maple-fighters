@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using Scripts.Services;
-using Scripts.Utils;
 using UnityEngine;
 
 namespace Scripts.ScriptableObjects

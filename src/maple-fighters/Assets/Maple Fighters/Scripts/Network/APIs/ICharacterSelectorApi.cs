@@ -4,7 +4,7 @@ using Game.Common;
 
 namespace Scripts.Services
 {
-    public interface ICharacterSelectorApi
+    public interface ICharacterSelectorApi : IApiBase
     {
         Task<CreateCharacterResponseParameters> CreateCharacterAsync(
             IYield yield,

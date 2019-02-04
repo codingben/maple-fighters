@@ -2,12 +2,12 @@
 
 namespace Scripts.Services
 {
-    public struct ServerConnectionInformation
+    public struct ConnectionInformation
     {
         public ServerType ServerType;
         public PeerConnectionInformation PeerConnectionInformation;
 
-        public ServerConnectionInformation(
+        public ConnectionInformation(
             ServerType serverType,
             PeerConnectionInformation peerConnectionInformation)
         {

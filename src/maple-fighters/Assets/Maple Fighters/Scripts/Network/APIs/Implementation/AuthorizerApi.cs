@@ -6,25 +6,14 @@ using CommunicationHelper;
 
 namespace Scripts.Services
 {
-    public class AuthorizerApi : IAuthorizerApi
+    public class AuthorizerApi : ApiBase<AuthorizationOperations, EmptyEventCode>, IAuthorizerApi
     {
-        public ServerPeerHandler<AuthorizationOperations, EmptyEventCode> ServerPeer
-        {
-            get;
-        }
-
-        public AuthorizerApi()
-        {
-            ServerPeer =
-                new ServerPeerHandler<AuthorizationOperations, EmptyEventCode>();
-        }
-
         public async Task<AuthorizeResponseParameters> AuthorizeAsync(
             IYield yield,
             AuthorizeRequestParameters parameters)
         {
             return 
-                await ServerPeer
+                await ServerPeerHandler
                     .SendOperation<AuthorizeRequestParameters, AuthorizeResponseParameters>(
                         yield,
                         AuthorizationOperations.Authorize,
