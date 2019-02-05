@@ -7,7 +7,7 @@ namespace Scripts.Services
         where TOperationCode : IComparable, IFormattable, IConvertible
         where TEventCode : IComparable, IFormattable, IConvertible
     {
-        public ServerPeerHandler<TOperationCode, TEventCode> ServerPeerHandler
+        protected ServerPeerHandler<TOperationCode, TEventCode> ServerPeerHandler
         {
             get;
         }

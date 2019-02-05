@@ -43,7 +43,7 @@ namespace Scripts.Services
             subscriptionProvider?.Dispose();
         }
 
-        public void SendOperation<TParameters>(
+        public Task SendOperation<TParameters>(
             TOperationCode operationCode,
             TParameters parameters,
             MessageSendOptions messageSendOptions)
@@ -56,10 +56,12 @@ namespace Scripts.Services
                     parameters,
                     messageSendOptions);
             }
+
+            return Task.CompletedTask;
         }
 
         public async Task<TResponseParameters>
-            SendOperation<TRequestParameters, TResponseParameters>(
+            SendOperationAsync<TRequestParameters, TResponseParameters>(
                 IYield yield,
                 TOperationCode operationCode,
                 TRequestParameters parameters,

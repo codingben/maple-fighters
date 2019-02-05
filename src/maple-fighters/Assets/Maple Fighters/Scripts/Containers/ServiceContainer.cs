@@ -1,106 +1,72 @@
 ﻿using Scripts.Services;
+using UnityEngine;
 
 namespace Scripts.Containers
 {
     public static class ServiceContainer
     {
-        public static IServiceBase AuthorizationService
+        public static IAuthenticatorService AuthenticatorService
         {
             get
             {
-                if (authorizationService == null)
+                if (authenticatorService == null)
                 {
-                    authorizationService = new ServiceBase();
+                    var gameObject = new GameObject("Authenticator Service");
+                    authenticatorService = 
+                        gameObject.AddComponent<AuthenticatorService>();
                 }
 
-                return authorizationService;
+                return authenticatorService;
             }
         }
 
-        public static IServiceBase GameServerProviderService
+        public static IGameServerProviderService GameServerProviderService
         {
             get
             {
                 if (gameServerProviderService == null)
                 {
-                    gameServerProviderService = new ServiceBase();
+                    var gameObject = 
+                        new GameObject("Game Server Provider Service");
+                    gameServerProviderService = 
+                        gameObject.AddComponent<GameServerProviderService>();
                 }
 
                 return gameServerProviderService;
             }
         }
 
-        public static IServiceBase GameService
+        public static IGameService GameService
         {
             get
             {
                 if (gameService == null)
                 {
-                    gameService = new ServiceBase();
+                    var gameObject = new GameObject("Game Service");
+                    gameService = gameObject.AddComponent<GameService>();
                 }
 
                 return gameService;
             }
         }
-
-        public static IServiceBase CharacterService
-        {
-            get
-            {
-                if (characterService == null)
-                {
-                    characterService = new ServiceBase();
-                }
-
-                return characterService;
-            }
-        }
-
-        public static IServiceBase ChatService
+        
+        public static IChatService ChatService
         {
             get
             {
                 if (chatService == null)
                 {
-                    chatService = new ServiceBase();
+                    var gameObject = new GameObject("Chat Service");
+                    chatService = gameObject.AddComponent<ChatService>();
                 }
 
                 return chatService;
             }
         }
 
-        public static IServiceBase LoginService
-        {
-            get
-            {
-                if (loginService == null)
-                {
-                    loginService = new ServiceBase();
-                }
-
-                return loginService;
-            }
-        }
-
-        public static IServiceBase RegistrationService
-        {
-            get
-            {
-                if (registrationService == null)
-                {
-                    registrationService = new ServiceBase();
-                }
-
-                return registrationService;
-            }
-        }
-
-        private static IServiceBase authorizationService;
-        private static IServiceBase gameServerProviderService;
-        private static IServiceBase gameService;
-        private static IServiceBase characterService;
-        private static IServiceBase chatService;
-        private static IServiceBase loginService;
-        private static IServiceBase registrationService;
+        private static IAuthenticatorService authenticatorService;
+        private static IGameServerProviderService gameServerProviderService;
+        private static IGameService gameService;
+        private static IChatService chatService;
     }
 }
