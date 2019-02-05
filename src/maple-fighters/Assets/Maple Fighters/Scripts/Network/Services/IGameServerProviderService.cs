@@ -2,8 +2,8 @@
 {
     public interface IGameServerProviderService : IServiceBase
     {
-        IAuthorizerApi AuthorizerApi { get; }
+        IAuthorizerApi GetAuthorizerApi();
 
-        IGameServerProviderApi GameServerProviderApi { get; }
+        IGameServerProviderApi GetGameServerProviderApi();
     }
 }

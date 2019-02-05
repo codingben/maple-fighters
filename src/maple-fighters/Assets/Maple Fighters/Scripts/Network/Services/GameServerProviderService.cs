@@ -4,9 +4,9 @@ namespace Scripts.Services
 {
     public class GameServerProviderService : ServiceBase, IGameServerProviderService
     {
-        public IAuthorizerApi AuthorizerApi => authorizerApi;
+        public IAuthorizerApi GetAuthorizerApi() => authorizerApi;
 
-        public IGameServerProviderApi GameServerProviderApi => gameServerProviderApi;
+        public IGameServerProviderApi GetGameServerProviderApi() => gameServerProviderApi;
 
         private AuthorizerApi authorizerApi;
         private GameServerProviderApi gameServerProviderApi;

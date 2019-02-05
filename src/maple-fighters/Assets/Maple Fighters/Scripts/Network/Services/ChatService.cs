@@ -4,9 +4,9 @@ namespace Scripts.Services
 {
     public class ChatService : ServiceBase, IChatService
     {
-        public IAuthorizerApi AuthorizerApi => authorizerApi;
+        public IAuthorizerApi GetAuthorizerApi() => authorizerApi;
 
-        public IChatApi ChatApi => chatApi;
+        public IChatApi GetChatApi() => chatApi;
 
         private AuthorizerApi authorizerApi;
         private ChatApi chatApi;

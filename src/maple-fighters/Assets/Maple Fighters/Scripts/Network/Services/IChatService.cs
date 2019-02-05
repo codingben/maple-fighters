@@ -2,8 +2,8 @@
 {
     public interface IChatService : IServiceBase
     {
-        IAuthorizerApi AuthorizerApi { get; }
+        IAuthorizerApi GetAuthorizerApi();
 
-        IChatApi ChatApi { get; }
+        IChatApi GetChatApi();
     }
 }

@@ -4,7 +4,7 @@ namespace Scripts.Services
 {
     public class AuthenticatorService : ServiceBase, IAuthenticatorService
     {
-        public IAuthenticatorApi AuthenticatorApi => authenticatorApi;
+        public IAuthenticatorApi GetAuthenticatorApi() => authenticatorApi;
 
         private AuthenticatorApi authenticatorApi;
 
