@@ -1,6 +1,5 @@
 ﻿using Game.Common;
 using Scripts.Containers;
-using Scripts.Services;
 using UnityEngine;
 
 namespace Assets.Scripts.Graphics
@@ -9,18 +8,22 @@ namespace Assets.Scripts.Graphics
     {
         private void Awake()
         {
-            var gameScenePeerLogic = ServiceContainer.GameService
-                .GetPeerLogic<IGameScenePeerLogicAPI>();
-            gameScenePeerLogic.BubbleMessageReceived.AddListener(
-                OnBubbleMessageReceived);
+            var gameSceneApi = ServiceContainer.GameService.GetGameSceneApi();
+            if (gameSceneApi != null)
+            {
+                gameSceneApi.BubbleMessageReceived.AddListener(
+                    OnBubbleMessageReceived);
+            }
         }
 
         private void OnDestroy()
         {
-            var gameScenePeerLogic = ServiceContainer.GameService
-                .GetPeerLogic<IGameScenePeerLogicAPI>();
-            gameScenePeerLogic.BubbleMessageReceived.RemoveListener(
-                OnBubbleMessageReceived);
+            var gameSceneApi = ServiceContainer.GameService.GetGameSceneApi();
+            if (gameSceneApi != null)
+            {
+                gameSceneApi.BubbleMessageReceived.RemoveListener(
+                    OnBubbleMessageReceived);
+            }
         }
 
         private void OnBubbleMessageReceived(

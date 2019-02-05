@@ -2,7 +2,6 @@
 using Game.Common;
 using Scripts.Containers;
 using Scripts.Gameplay.Actors;
-using Scripts.Services;
 using UnityEngine;
 
 namespace Assets.Scripts
@@ -14,16 +13,20 @@ namespace Assets.Scripts
 
         private void Awake()
         {
-            var gameScenePeerLogic = ServiceContainer.GameService
-                .GetPeerLogic<IGameScenePeerLogicAPI>();
-            gameScenePeerLogic.PlayerAttacked.AddListener(OnPlayerAttacked);
+            var gameSceneApi = ServiceContainer.GameService.GetGameSceneApi();
+            if (gameSceneApi != null)
+            {
+                gameSceneApi.PlayerAttacked.AddListener(OnPlayerAttacked);
+            }
         }
 
         private void OnDestroy()
         {
-            var gameScenePeerLogic = ServiceContainer.GameService
-                .GetPeerLogic<IGameScenePeerLogicAPI>();
-            gameScenePeerLogic.PlayerAttacked.RemoveListener(OnPlayerAttacked);
+            var gameSceneApi = ServiceContainer.GameService.GetGameSceneApi();
+            if (gameSceneApi != null)
+            {
+                gameSceneApi.PlayerAttacked.RemoveListener(OnPlayerAttacked);
+            }
         }
 
         private void OnPlayerAttacked(PlayerAttackedEventParameters parameters)
