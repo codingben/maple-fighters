@@ -6,18 +6,15 @@ namespace Scripts.Services
 {
     public interface IGameSceneApi : IApiBase
     {
-        Task EnterSceneAsync(
-            IYield yield);
+        Task EnterSceneAsync(IYield yield);
 
         Task<ChangeSceneResponseParameters> ChangeSceneAsync(
             IYield yield,
             ChangeSceneRequestParameters parameters);
 
-        Task UpdatePosition(
-            UpdatePositionRequestParameters parameters);
+        Task UpdatePosition(UpdatePositionRequestParameters parameters);
 
-        Task UpdatePlayerState(
-            UpdatePlayerStateRequestParameters parameters);
+        Task UpdatePlayerState(UpdatePlayerStateRequestParameters parameters);
 
         UnityEvent<EnterSceneResponseParameters> SceneEntered { get; }
 
