@@ -1,6 +1,5 @@
 ﻿using Game.Common;
 using Scripts.Containers;
-using Scripts.Services;
 using UnityEngine;
 
 namespace Scripts.Gameplay.Actors
@@ -28,16 +27,20 @@ namespace Scripts.Gameplay.Actors
 
         private void Start()
         {
-            var gameScenePeerLogic = ServiceContainer.GameService
-                .GetPeerLogic<IGameScenePeerLogicAPI>();
-            gameScenePeerLogic.PositionChanged.AddListener(OnPositionChanged);
+            var gameSceneApi = ServiceContainer.GameService.GetGameSceneApi();
+            if (gameSceneApi != null)
+            {
+                gameSceneApi.PositionChanged.AddListener(OnPositionChanged);
+            }
         }
 
         private void OnDestroy()
         {
-            var gameScenePeerLogic = ServiceContainer.GameService
-                .GetPeerLogic<IGameScenePeerLogicAPI>();
-            gameScenePeerLogic.PositionChanged.RemoveListener(OnPositionChanged);
+            var gameSceneApi = ServiceContainer.GameService.GetGameSceneApi();
+            if (gameSceneApi != null)
+            {
+                gameSceneApi.PositionChanged.RemoveListener(OnPositionChanged);
+            }
         }
 
         private void OnPositionChanged(

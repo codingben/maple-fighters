@@ -8,14 +8,14 @@ namespace Scripts.World
     {
         private void Awake()
         {
-            ServiceContainer.GameService.ServiceConnectionHandler
-                .SetNetworkTrafficState(NetworkTrafficState.Flowing);
+            ServiceContainer.GameService.SetNetworkTrafficState(
+                NetworkTrafficState.Flowing);
         }
 
         private void OnDestroy()
         {
-            ServiceContainer.GameService.ServiceConnectionHandler
-                .SetNetworkTrafficState(NetworkTrafficState.Paused);
+            ServiceContainer.GameService.SetNetworkTrafficState(
+                NetworkTrafficState.Paused);
         }
     }
 }

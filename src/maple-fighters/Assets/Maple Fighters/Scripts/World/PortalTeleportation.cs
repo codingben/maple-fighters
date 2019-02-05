@@ -4,7 +4,6 @@ using Game.Common;
 using Scripts.Containers;
 using Scripts.Coroutines;
 using Scripts.Gameplay;
-using Scripts.Services;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -38,13 +37,12 @@ namespace Scripts.World
 
         private async Task ChangeScene(IYield yield)
         {
-            var gameScenePeerLogic = ServiceContainer.GameService
-                .GetPeerLogic<IGameScenePeerLogicAPI>();
-            if (gameScenePeerLogic != null)
+            var gameSceneApi = ServiceContainer.GameService.GetGameSceneApi();
+            if (gameSceneApi != null)
             {
                 var sceneObject = GetComponent<ISceneObject>();
                 var parameters = 
-                    await gameScenePeerLogic.ChangeScene(
+                    await gameSceneApi.ChangeSceneAsync(
                         yield,
                         new ChangeSceneRequestParameters(sceneObject.Id));
                 var map = parameters.Map;

@@ -1,5 +1,4 @@
 ﻿using Game.Common;
-using Scripts.Services;
 using UnityEngine;
 
 namespace Scripts.Containers
@@ -8,28 +7,40 @@ namespace Scripts.Containers
     {
         private void Awake()
         {
-            var gameScenePeerLogic = ServiceContainer.GameService
-                .GetPeerLogic<IGameScenePeerLogicAPI>();
-
-            // TODO: Add SceneLeft event.
-            gameScenePeerLogic.SceneEntered.AddListener(OnSceneEntered);
-            gameScenePeerLogic.SceneObjectAdded.AddListener(OnSceneObjectAdded);
-            gameScenePeerLogic.SceneObjectRemoved.AddListener(OnSceneObjectRemoved);
-            gameScenePeerLogic.SceneObjectsAdded.AddListener(OnSceneObjectsAdded);
-            gameScenePeerLogic.SceneObjectsRemoved.AddListener(OnSceneObjectsRemoved);
+            var gameSceneApi = ServiceContainer.GameService.GetGameSceneApi();
+            if (gameSceneApi != null)
+            {
+                // TODO: Add SceneLeft event.
+                gameSceneApi.SceneEntered.AddListener(
+                    OnSceneEntered);
+                gameSceneApi.SceneObjectAdded.AddListener(
+                    OnSceneObjectAdded);
+                gameSceneApi.SceneObjectRemoved.AddListener(
+                    OnSceneObjectRemoved);
+                gameSceneApi.SceneObjectsAdded.AddListener(
+                    OnSceneObjectsAdded);
+                gameSceneApi.SceneObjectsRemoved.AddListener(
+                    OnSceneObjectsRemoved);
+            }
         }
 
         private void OnDestroy()
         {
-            var gameScenePeerLogic = ServiceContainer.GameService
-                .GetPeerLogic<IGameScenePeerLogicAPI>();
-
-            // TODO: Remove SceneLeft event.
-            gameScenePeerLogic.SceneEntered.RemoveListener(OnSceneEntered);
-            gameScenePeerLogic.SceneObjectAdded.RemoveListener(OnSceneObjectAdded);
-            gameScenePeerLogic.SceneObjectRemoved.RemoveListener(OnSceneObjectRemoved);
-            gameScenePeerLogic.SceneObjectsAdded.RemoveListener(OnSceneObjectsAdded);
-            gameScenePeerLogic.SceneObjectsRemoved.RemoveListener(OnSceneObjectsRemoved);
+            var gameSceneApi = ServiceContainer.GameService.GetGameSceneApi();
+            if (gameSceneApi != null)
+            {
+                // TODO: Remove SceneLeft event.
+                gameSceneApi.SceneEntered.RemoveListener(
+                    OnSceneEntered);
+                gameSceneApi.SceneObjectAdded.RemoveListener(
+                    OnSceneObjectAdded);
+                gameSceneApi.SceneObjectRemoved.RemoveListener(
+                    OnSceneObjectRemoved);
+                gameSceneApi.SceneObjectsAdded.RemoveListener(
+                    OnSceneObjectsAdded);
+                gameSceneApi.SceneObjectsRemoved.RemoveListener(
+                    OnSceneObjectsRemoved);
+            }
         }
 
         private void OnSceneEntered(

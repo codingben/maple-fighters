@@ -31,11 +31,7 @@ namespace Scripts.Gameplay
             yield return typeof(LogUtilsCreator);
             yield return typeof(GameTimeProviderCreator);
             yield return typeof(CharacterCreator);
-
-            if (ServiceContainer.GameService.ServiceConnectionHandler.IsConnected())
-            {
-                yield return typeof(EnterSceneInvoker);
-            }
+            yield return typeof(EnterSceneInvoker);
         }
 
         private IEnumerable<Type> GetContainersComponents()

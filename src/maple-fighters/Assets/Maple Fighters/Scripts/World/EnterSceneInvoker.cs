@@ -1,8 +1,6 @@
 ﻿using System.Threading.Tasks;
 using CommonTools.Coroutines;
 using Scripts.Containers;
-using Scripts.Coroutines;
-using Scripts.Services;
 using UnityEngine;
 
 namespace Scripts.World
@@ -18,18 +16,25 @@ namespace Scripts.World
 
         private void Start()
         {
-            coroutinesExecutor.StartTask(
-                EnterScene,
-                exception =>
-                {
-                    Debug.LogError(
-                        "EnterSceneInvoker::Start() -> An exception occurred during the operation. The connection with the server has been lost.");
-                });
+            if (ServiceContainer.GameService.IsConnected())
+            {
+                coroutinesExecutor.StartTask(
+                    EnterSceneAsync,
+                    exception =>
+                    {
+                        Debug.LogError(
+                            "EnterSceneInvoker::Start() -> An exception occurred during the operation. The connection with the server has been lost.");
+                    });
+            }
+            else
+            {
+                Debug.LogWarning(
+                    "EnterSceneInvoker::Start() -> There is no connection with the game server.");
+            }
         }
 
         private void OnDestroy()
         {
-            coroutinesExecutor.RemoveFromExternalExecutor();
             coroutinesExecutor.Dispose();
         }
 
@@ -38,11 +43,15 @@ namespace Scripts.World
             coroutinesExecutor.Update();
         }
 
-        private async Task EnterScene(IYield yield)
+        private async Task EnterSceneAsync(IYield yield)
         {
-            var gameScenePeerLogic = ServiceContainer.GameService
-                .GetPeerLogic<IGameScenePeerLogicAPI>();
-            await gameScenePeerLogic.EnterScene(yield);
+            var gameSceneApi = ServiceContainer.GameService.GetGameSceneApi();
+            if (gameSceneApi == null)
+            {
+                return;
+            }
+
+            await gameSceneApi.EnterSceneAsync(yield);
         }
     }
 }

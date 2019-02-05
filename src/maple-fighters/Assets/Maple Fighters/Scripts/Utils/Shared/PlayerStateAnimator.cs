@@ -1,7 +1,6 @@
 ﻿using Game.Common;
 using Scripts.Containers;
 using Scripts.Gameplay.Actors;
-using Scripts.Services;
 using UnityEngine;
 
 namespace Scripts.Utils.Shared
@@ -29,22 +28,26 @@ namespace Scripts.Utils.Shared
 
         private void SubscribeToGameServiceEvents()
         {
-            var gameScenePeerLogic = ServiceContainer.GameService
-                .GetPeerLogic<IGameScenePeerLogicAPI>();
-            gameScenePeerLogic.SceneObjectsAdded.AddListener(
-                OnSceneObjectsAdded);
-            gameScenePeerLogic.PlayerStateChanged.AddListener(
-                OnPlayerStateChanged);
+            var gameSceneApi = ServiceContainer.GameService.GetGameSceneApi();
+            if (gameSceneApi != null)
+            {
+                gameSceneApi.SceneObjectsAdded.AddListener(
+                    OnSceneObjectsAdded);
+                gameSceneApi.PlayerStateChanged.AddListener(
+                    OnPlayerStateChanged);
+            }
         }
 
         private void UnsubscribeFromGameServiceEvents()
         {
-            var gameScenePeerLogic = ServiceContainer.GameService
-                .GetPeerLogic<IGameScenePeerLogicAPI>();
-            gameScenePeerLogic.SceneObjectsAdded.RemoveListener(
-                OnSceneObjectsAdded);
-            gameScenePeerLogic.PlayerStateChanged.RemoveListener(
-                OnPlayerStateChanged);
+            var gameSceneApi = ServiceContainer.GameService.GetGameSceneApi();
+            if (gameSceneApi != null)
+            {
+                gameSceneApi.SceneObjectsAdded.RemoveListener(
+                    OnSceneObjectsAdded);
+                gameSceneApi.PlayerStateChanged.RemoveListener(
+                    OnPlayerStateChanged);
+            }
         }
 
         public void OnPlayerStateChanged(PlayerState newPlayerState)
@@ -92,10 +95,12 @@ namespace Scripts.Utils.Shared
 
         private void UpdatePlayerStateOperation()
         {
-            var gameScenePeerLogic = ServiceContainer.GameService
-                .GetPeerLogic<IGameScenePeerLogicAPI>();
-            gameScenePeerLogic.UpdatePlayerState(
-                new UpdatePlayerStateRequestParameters(playerState));
+            var gameSceneApi = ServiceContainer.GameService.GetGameSceneApi();
+            if (gameSceneApi != null)
+            {
+                gameSceneApi.UpdatePlayerState(
+                    new UpdatePlayerStateRequestParameters(playerState));
+            }
         }
     }
 }
