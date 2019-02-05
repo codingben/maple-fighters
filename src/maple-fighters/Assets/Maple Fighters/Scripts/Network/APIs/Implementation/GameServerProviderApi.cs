@@ -13,7 +13,7 @@ namespace Scripts.Services
         {
             return 
                 await ServerPeerHandler
-                    .SendOperation<EmptyParameters, GameServersProviderResponseParameters>(
+                    .SendOperationAsync<EmptyParameters, GameServersProviderResponseParameters>(
                         yield,
                         GameServerProviderOperations.ProvideGameServers,
                         new EmptyParameters(),

@@ -96,7 +96,7 @@ namespace Scripts.Services
         {
             var responseParameters =
                 await ServerPeerHandler
-                    .SendOperation<EmptyParameters, EnterSceneResponseParameters>(
+                    .SendOperationAsync<EmptyParameters, EnterSceneResponseParameters>(
                         yield,
                         GameOperations.EnterScene,
                         new EmptyParameters(),
@@ -117,23 +117,19 @@ namespace Scripts.Services
 
         public Task UpdatePosition(UpdatePositionRequestParameters parameters)
         {
-            ServerPeerHandler.SendOperation(
+            return ServerPeerHandler.SendOperation(
                 GameOperations.PositionChanged,
                 parameters,
                 MessageSendOptions.DefaultUnreliable((byte)GameDataChannels.Position));
-
-            return Task.CompletedTask;
         }
 
         public Task UpdatePlayerState(
             UpdatePlayerStateRequestParameters parameters)
         {
-            ServerPeerHandler.SendOperation(
+            return ServerPeerHandler.SendOperation(
                 GameOperations.PlayerStateChanged,
                 parameters,
                 MessageSendOptions.DefaultUnreliable((byte)GameDataChannels.Animations));
-
-            return Task.CompletedTask;
         }
     }
 }

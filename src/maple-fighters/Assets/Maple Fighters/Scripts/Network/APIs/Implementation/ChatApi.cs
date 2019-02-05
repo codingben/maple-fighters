@@ -26,13 +26,10 @@ namespace Scripts.Services
 
         public Task SendChatMessage(ChatMessageRequestParameters parameters)
         {
-            ServerPeerHandler
-                .SendOperation(
-                    ChatOperations.ChatMessage,
-                    parameters,
-                    MessageSendOptions.DefaultReliable());
-
-            return Task.CompletedTask;
+            return ServerPeerHandler.SendOperation(
+                ChatOperations.ChatMessage,
+                parameters,
+                MessageSendOptions.DefaultReliable());
         }
     }
 }

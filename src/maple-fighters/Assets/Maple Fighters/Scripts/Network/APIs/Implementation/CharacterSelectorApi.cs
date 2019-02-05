@@ -14,7 +14,7 @@ namespace Scripts.Services
         {
             return 
                 await ServerPeerHandler
-                    .SendOperation<CreateCharacterRequestParameters, CreateCharacterResponseParameters>(
+                    .SendOperationAsync<CreateCharacterRequestParameters, CreateCharacterResponseParameters>(
                         yield,
                         CharacterOperations.CreateCharacter, 
                         parameters, 
@@ -27,7 +27,7 @@ namespace Scripts.Services
         {
             return 
                 await ServerPeerHandler
-                    .SendOperation<RemoveCharacterRequestParameters, RemoveCharacterResponseParameters>(
+                    .SendOperationAsync<RemoveCharacterRequestParameters, RemoveCharacterResponseParameters>(
                         yield,
                         CharacterOperations.RemoveCharacter, 
                         parameters, 
@@ -40,7 +40,7 @@ namespace Scripts.Services
         {
             return
                 await ServerPeerHandler
-                    .SendOperation<ValidateCharacterRequestParameters, ValidateCharacterResponseParameters>(
+                    .SendOperationAsync<ValidateCharacterRequestParameters, ValidateCharacterResponseParameters>(
                         yield,
                         CharacterOperations.ValidateCharacter,
                         parameters,
@@ -52,7 +52,7 @@ namespace Scripts.Services
         {
             return
                 await ServerPeerHandler
-                    .SendOperation<EmptyParameters, GetCharactersResponseParameters>(
+                    .SendOperationAsync<EmptyParameters, GetCharactersResponseParameters>(
                         yield,
                         CharacterOperations.GetCharacters,
                         new EmptyParameters(),

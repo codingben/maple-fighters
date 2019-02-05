@@ -14,7 +14,7 @@ namespace Scripts.Services
         {
             return 
                 await ServerPeerHandler
-                    .SendOperation<AuthorizeRequestParameters, AuthorizeResponseParameters>(
+                    .SendOperationAsync<AuthorizeRequestParameters, AuthorizeResponseParameters>(
                         yield,
                         AuthorizationOperations.Authorize,
                         parameters,

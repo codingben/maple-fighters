@@ -28,7 +28,7 @@ namespace Scripts.Services
         {
             var responseParameters = 
                 await ServerPeerHandler
-                    .SendOperation<AuthenticateRequestParameters, AuthenticateResponseParameters>(
+                    .SendOperationAsync<AuthenticateRequestParameters, AuthenticateResponseParameters>(
                         yield,
                         AuthenticatorOperations.Authenticate,
                         parameters,
@@ -49,7 +49,7 @@ namespace Scripts.Services
         {
             return
                 await ServerPeerHandler
-                    .SendOperation<RegisterRequestParameters, RegisterResponseParameters>(
+                    .SendOperationAsync<RegisterRequestParameters, RegisterResponseParameters>(
                         yield,
                         AuthenticatorOperations.Register,
                         parameters,
