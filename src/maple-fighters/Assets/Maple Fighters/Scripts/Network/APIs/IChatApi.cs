@@ -3,7 +3,7 @@ using Chat.Common;
 
 namespace Scripts.Services
 {
-    public interface IChatApi : IApiBase
+    public interface IChatApi
     {
         Task SendChatMessage(ChatMessageRequestParameters parameters);
 

@@ -1,29 +1,44 @@
-﻿namespace Scripts.Services
+﻿using UnityEngine;
+
+namespace Scripts.Services
 {
     public class GameService : ServiceBase, IGameService
     {
-        public IAuthorizerApi AuthorizerApi { get; } = new AuthorizerApi();
+        public IAuthorizerApi AuthorizerApi => authorizerApi;
 
-        public ICharacterSelectorApi CharacterSelectorApi { get; } = new CharacterSelectorApi();
+        public ICharacterSelectorApi CharacterSelectorApi => characterSelectorApi;
 
-        public IGameSceneApi GameSceneApi { get; } = new GameSceneApi();
+        public IGameSceneApi GameSceneApi => gameSceneApi;
+
+        private AuthorizerApi authorizerApi;
+        private CharacterSelectorApi characterSelectorApi;
+        private GameSceneApi gameSceneApi;
 
         protected override void OnConnected()
         {
             base.OnConnected();
 
-            AuthorizerApi.SetServerPeer(GetServerPeer());
-            CharacterSelectorApi.SetServerPeer(GetServerPeer());
-            GameSceneApi.SetServerPeer(GetServerPeer());
+            authorizerApi = new AuthorizerApi();
+            authorizerApi.SetServerPeer(GetServerPeer());
+
+            characterSelectorApi = new CharacterSelectorApi();
+            characterSelectorApi.SetServerPeer(GetServerPeer());
+
+            gameSceneApi = new GameSceneApi();
+            gameSceneApi.SetServerPeer(GetServerPeer());
+
+            Debug.Log("Connected to the game server.");
         }
 
         protected override void OnDisconnected()
         {
             base.OnDisconnected();
 
-            AuthorizerApi.Dispose();
-            CharacterSelectorApi.Dispose();
-            GameSceneApi.Dispose();
+            authorizerApi.Dispose();
+            characterSelectorApi.Dispose();
+            gameSceneApi.Dispose();
+
+            Debug.Log("Disconnected from the game server.");
         }
     }
 }

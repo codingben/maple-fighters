@@ -4,7 +4,7 @@ using CommonTools.Coroutines;
 
 namespace Scripts.Services
 {
-    public interface IAuthorizerApi : IApiBase
+    public interface IAuthorizerApi
     {
         Task<AuthorizeResponseParameters> AuthorizeAsync(
             IYield yield,

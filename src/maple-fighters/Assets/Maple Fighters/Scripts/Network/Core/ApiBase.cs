@@ -3,7 +3,7 @@ using CommonCommunicationInterfaces;
 
 namespace Scripts.Services
 {
-    public class ApiBase<TOperationCode, TEventCode> : IApiBase
+    public class ApiBase<TOperationCode, TEventCode> : IDisposable
         where TOperationCode : IComparable, IFormattable, IConvertible
         where TEventCode : IComparable, IFormattable, IConvertible
     {
