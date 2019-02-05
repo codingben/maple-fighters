@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using Game.Common;
 using Scripts.Containers;
-using Scripts.Services;
 using UnityEngine;
 
 namespace Scripts.Gameplay.Actors
@@ -10,20 +9,24 @@ namespace Scripts.Gameplay.Actors
     {
         private void Awake()
         {
-            var gameScenePeerLogic = ServiceContainer.GameService
-                .GetPeerLogic<IGameScenePeerLogicAPI>();
-            gameScenePeerLogic.SceneEntered.AddListener(OnSceneEntered);
-            gameScenePeerLogic.CharacterAdded.AddListener(OnCharacterAdded);
-            gameScenePeerLogic.CharactersAdded.AddListener(OnCharactersAdded);
+            var gameSceneApi = ServiceContainer.GameService.GetGameSceneApi();
+            if (gameSceneApi != null)
+            {
+                gameSceneApi.SceneEntered.AddListener(OnSceneEntered);
+                gameSceneApi.CharacterAdded.AddListener(OnCharacterAdded);
+                gameSceneApi.CharactersAdded.AddListener(OnCharactersAdded);
+            }
         }
         
         private void OnDestroy()
         {
-            var gameScenePeerLogic = ServiceContainer.GameService
-                .GetPeerLogic<IGameScenePeerLogicAPI>();
-            gameScenePeerLogic.SceneEntered.RemoveListener(OnSceneEntered);
-            gameScenePeerLogic.CharacterAdded.RemoveListener(OnCharacterAdded);
-            gameScenePeerLogic.CharactersAdded.RemoveListener(OnCharactersAdded);
+            var gameSceneApi = ServiceContainer.GameService.GetGameSceneApi();
+            if (gameSceneApi != null)
+            {
+                gameSceneApi.SceneEntered.RemoveListener(OnSceneEntered);
+                gameSceneApi.CharacterAdded.RemoveListener(OnCharacterAdded);
+                gameSceneApi.CharactersAdded.RemoveListener(OnCharactersAdded);
+            }
         }
 
         private void OnSceneEntered(

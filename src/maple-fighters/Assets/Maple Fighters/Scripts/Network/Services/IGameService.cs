@@ -2,10 +2,10 @@
 {
     public interface IGameService : IServiceBase
     {
-        IAuthorizerApi AuthorizerApi { get; }
+        IAuthorizerApi GetAuthorizerApi();
 
-        ICharacterSelectorApi CharacterSelectorApi { get; }
+        ICharacterSelectorApi GetCharacterSelectorApi();
 
-        IGameSceneApi GameSceneApi { get; }
+        IGameSceneApi GetGameSceneApi();
     }
 }

@@ -4,11 +4,11 @@ namespace Scripts.Services
 {
     public class GameService : ServiceBase, IGameService
     {
-        public IAuthorizerApi AuthorizerApi => authorizerApi;
+        public IAuthorizerApi GetAuthorizerApi() => authorizerApi;
 
-        public ICharacterSelectorApi CharacterSelectorApi => characterSelectorApi;
+        public ICharacterSelectorApi GetCharacterSelectorApi() => characterSelectorApi;
 
-        public IGameSceneApi GameSceneApi => gameSceneApi;
+        public IGameSceneApi GetGameSceneApi() => gameSceneApi;
 
         private AuthorizerApi authorizerApi;
         private CharacterSelectorApi characterSelectorApi;
