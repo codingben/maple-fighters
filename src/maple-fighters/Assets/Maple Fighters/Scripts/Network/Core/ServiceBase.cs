@@ -5,7 +5,7 @@ using PhotonClientImplementation;
 using Scripts.ScriptableObjects;
 using UnityEngine;
 
-namespace Scripts.Network
+namespace Scripts.Network.Core
 {
     public class ServiceBase : MonoBehaviour, IServiceBase
     {

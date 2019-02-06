@@ -1,7 +1,7 @@
 ﻿using System;
 using CommonCommunicationInterfaces;
 
-namespace Scripts.Network
+namespace Scripts.Network.Core
 {
     public class ApiBase<TOperationCode, TEventCode> : IApiBase
         where TOperationCode : IComparable, IFormattable, IConvertible
