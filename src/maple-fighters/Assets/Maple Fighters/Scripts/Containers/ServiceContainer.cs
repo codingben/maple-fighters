@@ -1,4 +1,4 @@
-﻿using Scripts.Network;
+﻿using Scripts.Network.Services;
 using UnityEngine;
 
 namespace Scripts.Containers
