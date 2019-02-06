@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using Scripts.Services;
+using Scripts.Network;
 using UnityEngine;
 
 namespace Scripts.ScriptableObjects

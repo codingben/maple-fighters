@@ -1,6 +1,6 @@
 ﻿using Game.Common;
 using Scripts.Gameplay;
-using Scripts.Services;
+using Scripts.Network;
 using UnityEngine;
 
 namespace Scripts.World

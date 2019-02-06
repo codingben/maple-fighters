@@ -1,4 +1,4 @@
-﻿namespace Scripts.Services
+﻿namespace Scripts.Network
 {
     // TODO: Remove this script
     public static class AccessTokenProvider

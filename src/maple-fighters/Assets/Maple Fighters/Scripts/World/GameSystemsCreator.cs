@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Scripts.Containers;
 using Scripts.Gameplay.Actors;
-using Scripts.Services;
+using Scripts.Network;
 using Scripts.UI.Controllers;
 using Scripts.World;
 using UnityEngine;

@@ -1,6 +1,6 @@
 ﻿using System;
 using CommonCommunicationInterfaces;
-using Scripts.Services;
+using Scripts.Network;
 
 namespace Scripts.Utils
 {
