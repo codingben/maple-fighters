@@ -4,6 +4,7 @@ using CommonTools.Coroutines;
 using CommunicationHelper;
 using Login.Common;
 using Registration.Common;
+using Scripts.Network.Core;
 
 namespace Scripts.Network.APIs
 {

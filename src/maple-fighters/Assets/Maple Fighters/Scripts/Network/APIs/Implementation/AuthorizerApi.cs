@@ -3,6 +3,7 @@ using Authorization.Client.Common;
 using CommonCommunicationInterfaces;
 using CommonTools.Coroutines;
 using CommunicationHelper;
+using Scripts.Network.Core;
 
 namespace Scripts.Network.APIs
 {
