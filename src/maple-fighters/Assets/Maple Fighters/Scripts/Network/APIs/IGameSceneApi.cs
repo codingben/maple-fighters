@@ -2,7 +2,7 @@
 using CommonTools.Coroutines;
 using Game.Common;
 
-namespace Scripts.Network
+namespace Scripts.Network.APIs
 {
     public interface IGameSceneApi : IApiBase
     {

@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Chat.Common;
 
-namespace Scripts.Network
+namespace Scripts.Network.APIs
 {
     public interface IChatApi : IApiBase
     {

@@ -4,7 +4,7 @@ using CommonTools.Coroutines;
 using CommunicationHelper;
 using GameServerProvider.Client.Common;
 
-namespace Scripts.Network
+namespace Scripts.Network.APIs
 {
     public class GameServerProviderApi : ApiBase<GameServerProviderOperations, EmptyEventCode>, IGameServerProviderApi
     {

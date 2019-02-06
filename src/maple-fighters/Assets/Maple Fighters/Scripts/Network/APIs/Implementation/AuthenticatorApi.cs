@@ -5,7 +5,7 @@ using CommunicationHelper;
 using Login.Common;
 using Registration.Common;
 
-namespace Scripts.Network
+namespace Scripts.Network.APIs
 {
     public enum AuthenticatorOperations
     {

@@ -4,7 +4,7 @@ using CommonCommunicationInterfaces;
 using CommonTools.Coroutines;
 using CommunicationHelper;
 
-namespace Scripts.Network
+namespace Scripts.Network.APIs
 {
     public class AuthorizerApi : ApiBase<AuthorizationOperations, EmptyEventCode>, IAuthorizerApi
     {

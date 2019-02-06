@@ -3,7 +3,7 @@ using CommonTools.Coroutines;
 using Login.Common;
 using Registration.Common;
 
-namespace Scripts.Network
+namespace Scripts.Network.APIs
 {
     public interface IAuthenticatorApi : IApiBase
     {
