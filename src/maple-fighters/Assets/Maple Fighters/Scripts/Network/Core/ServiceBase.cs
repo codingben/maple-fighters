@@ -11,6 +11,7 @@ namespace Scripts.Services
     {
         private IServerConnector serverConnector;
         private IServerPeer serverPeer;
+
         private ExternalCoroutinesExecutor coroutinesExecutor;
 
         private void Awake()

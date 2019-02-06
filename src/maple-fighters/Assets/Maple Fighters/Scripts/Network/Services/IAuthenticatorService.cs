@@ -1,6 +1,6 @@
 ﻿namespace Scripts.Services
 {
-    public interface IAuthenticatorService
+    public interface IAuthenticatorService : IServiceBase
     {
         IAuthenticatorApi GetAuthenticatorApi();
     }

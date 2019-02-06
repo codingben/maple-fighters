@@ -22,15 +22,18 @@ namespace Scripts.Services
             this.serverPeer = serverPeer;
 
             var networkConfiguration = NetworkConfiguration.GetInstance();
+
             operationRequestSender = 
                 new OperationRequestSender<TOperationCode>(
                     serverPeer.OperationRequestSender,
                     networkConfiguration.LogOperationsRequest);
+
             subscriptionProvider =
                 new OperationResponseSubscriptionProvider<TOperationCode>(
                     serverPeer.OperationResponseNotifier,
                     OnOperationRequestFailed,
                     networkConfiguration.LogOperationsResponse);
+
             eventHandlerRegister = 
                 new EventHandlerRegister<TEventCode>(
                     serverPeer.EventNotifier,
@@ -92,7 +95,7 @@ namespace Scripts.Services
             eventHandlerRegister.SetHandler(
                 eventCode,
                 new EventHandler<TParameters>(
-                    (x) => action?.Invoke(x.Parameters)));
+                    (messageData) => action?.Invoke(messageData.Parameters)));
         }
 
         public void RemoveEventHandler(TEventCode eventCode)
@@ -105,7 +108,7 @@ namespace Scripts.Services
             short requestId)
         {
             LogUtils.Log(
-                $"Sending an operaiton has been failed. Operation Code: {data.Code}");
+                $"Sending an operation has been failed. Operation Code: {data.Code}");
         }
 
         private bool IsConnected()
