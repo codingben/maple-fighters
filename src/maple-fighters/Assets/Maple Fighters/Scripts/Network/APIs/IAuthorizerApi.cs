@@ -2,7 +2,7 @@
 using Authorization.Client.Common;
 using CommonTools.Coroutines;
 
-namespace Scripts.Services
+namespace Scripts.Network
 {
     public interface IAuthorizerApi : IApiBase
     {

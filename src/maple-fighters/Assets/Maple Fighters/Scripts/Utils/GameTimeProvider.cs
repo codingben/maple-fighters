@@ -1,7 +1,7 @@
 ﻿using CommonTools.Coroutines;
 using UnityEngine;
 
-namespace Scripts.Services
+namespace Scripts.Network
 {
     public class GameTimeProvider : ITimeProvider
     {

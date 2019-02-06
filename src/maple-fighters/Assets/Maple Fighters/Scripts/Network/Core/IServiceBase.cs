@@ -1,6 +1,6 @@
 ﻿using CommonCommunicationInterfaces;
 
-namespace Scripts.Services
+namespace Scripts.Network
 {
     public interface IServiceBase
     {

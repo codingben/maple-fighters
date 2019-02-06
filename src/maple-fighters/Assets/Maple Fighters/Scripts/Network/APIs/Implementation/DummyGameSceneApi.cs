@@ -2,7 +2,7 @@
 using CommonTools.Coroutines;
 using Game.Common;
 
-namespace Scripts.Services
+namespace Scripts.Network
 {
     public class DummyGameSceneApi : ApiBase<GameOperations, GameEvents>, IGameSceneApi
     {

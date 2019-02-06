@@ -2,7 +2,7 @@
 using Chat.Common;
 using CommonCommunicationInterfaces;
 
-namespace Scripts.Services
+namespace Scripts.Network
 {
     public class ChatApi : ApiBase<ChatOperations, ChatEvents>, IChatApi
     {

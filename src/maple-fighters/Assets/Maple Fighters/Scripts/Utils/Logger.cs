@@ -2,7 +2,7 @@
 using CommonTools.Log;
 using UnityEngine;
 
-namespace Scripts.Services
+namespace Scripts.Network
 {
     using ILogger = CommonTools.Log.ILogger;
 

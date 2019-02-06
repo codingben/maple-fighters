@@ -1,4 +1,4 @@
-﻿namespace Scripts.Services
+﻿namespace Scripts.Network
 {
     public class UnityEvent<T> : UnityEngine.Events.UnityEvent<T>
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Scripts.Services
+namespace Scripts.Network
 {
     public class ServerConnectionFailed : Exception
     {

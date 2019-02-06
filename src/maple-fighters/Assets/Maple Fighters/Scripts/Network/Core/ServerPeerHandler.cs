@@ -6,7 +6,7 @@ using CommonTools.Log;
 using CommunicationHelper;
 using Scripts.ScriptableObjects;
 
-namespace Scripts.Services
+namespace Scripts.Network
 {
     public class ServerPeerHandler<TOperationCode, TEventCode> : IDisposable
         where TOperationCode : IComparable, IFormattable, IConvertible

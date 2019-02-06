@@ -3,7 +3,7 @@ using CommonCommunicationInterfaces;
 using CommonTools.Coroutines;
 using Game.Common;
 
-namespace Scripts.Services
+namespace Scripts.Network
 {
     public class GameSceneApi : ApiBase<GameOperations, GameEvents>, IGameSceneApi
     {

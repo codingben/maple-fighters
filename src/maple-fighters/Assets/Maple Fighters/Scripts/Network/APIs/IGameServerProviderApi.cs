@@ -2,7 +2,7 @@
 using CommonTools.Coroutines;
 using GameServerProvider.Client.Common;
 
-namespace Scripts.Services
+namespace Scripts.Network
 {
     public interface IGameServerProviderApi : IApiBase
     {

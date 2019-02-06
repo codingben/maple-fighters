@@ -2,7 +2,7 @@ using System;
 using CommonCommunicationInterfaces;
 using CommunicationHelper;
 
-namespace Scripts.Services
+namespace Scripts.Network
 {
     public class EventHandler<TParameters> : IEventHandler<TParameters>
         where TParameters : struct, IParameters

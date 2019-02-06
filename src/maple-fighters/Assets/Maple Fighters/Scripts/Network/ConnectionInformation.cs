@@ -1,7 +1,7 @@
 ﻿using System;
 using CommonCommunicationInterfaces;
 
-namespace Scripts.Services
+namespace Scripts.Network
 {
     [Serializable]
     public struct ConnectionInformation

@@ -4,7 +4,7 @@ using CommonTools.Coroutines;
 using CommunicationHelper;
 using Game.Common;
 
-namespace Scripts.Services
+namespace Scripts.Network
 {
     public class CharacterSelectorApi : ApiBase<CharacterOperations, EmptyEventCode>, ICharacterSelectorApi
     {

@@ -1,4 +1,4 @@
-﻿namespace Scripts.Services
+﻿namespace Scripts.Network
 {
     public interface IGameServerProviderService : IServiceBase
     {
