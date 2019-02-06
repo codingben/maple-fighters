@@ -3,7 +3,7 @@ using Scripts.Network.Core;
 using Scripts.ScriptableObjects;
 using UnityEngine;
 
-namespace Scripts.Network
+namespace Scripts.Network.Services
 {
     public class GameServerProviderService : ServiceBase, IGameServerProviderService
     {
