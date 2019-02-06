@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Chat.Common;
 using CommonCommunicationInterfaces;
+using Scripts.Network.Core;
 
 namespace Scripts.Network.APIs
 {

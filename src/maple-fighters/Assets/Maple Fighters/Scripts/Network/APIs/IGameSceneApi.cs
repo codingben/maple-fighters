@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using CommonTools.Coroutines;
 using Game.Common;
+using Scripts.Network.Core;
 
 namespace Scripts.Network.APIs
 {

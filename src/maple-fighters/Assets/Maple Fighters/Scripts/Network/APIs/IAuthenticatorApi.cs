@@ -2,6 +2,7 @@
 using CommonTools.Coroutines;
 using Login.Common;
 using Registration.Common;
+using Scripts.Network.Core;
 
 namespace Scripts.Network.APIs
 {
