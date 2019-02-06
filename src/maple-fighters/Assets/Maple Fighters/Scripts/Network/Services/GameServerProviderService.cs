@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Scripts.ScriptableObjects;
+using UnityEngine;
 
 namespace Scripts.Services
 {
@@ -8,8 +9,26 @@ namespace Scripts.Services
 
         public IGameServerProviderApi GetGameServerProviderApi() => gameServerProviderApi;
 
-        private AuthorizerApi authorizerApi;
-        private GameServerProviderApi gameServerProviderApi;
+        private IAuthorizerApi authorizerApi;
+        private IGameServerProviderApi gameServerProviderApi;
+
+        protected override void OnAwake()
+        {
+            base.OnAwake();
+
+            var connectionInformation =
+                ServerConfiguration.GetInstance()
+                    .GetConnectionInformation(ServerType.GameServerProvider);
+
+            Connect(connectionInformation);
+        }
+
+        protected override void OnDestroying()
+        {
+            base.OnDestroying();
+
+            Disconnect();
+        }
 
         protected override void OnConnected()
         {

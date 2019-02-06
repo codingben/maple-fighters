@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Scripts.ScriptableObjects;
+using UnityEngine;
 
 namespace Scripts.Services
 {
@@ -6,7 +7,25 @@ namespace Scripts.Services
     {
         public IAuthenticatorApi GetAuthenticatorApi() => authenticatorApi;
 
-        private AuthenticatorApi authenticatorApi;
+        private IAuthenticatorApi authenticatorApi;
+
+        protected override void OnAwake()
+        {
+            base.OnAwake();
+
+            var connectionInformation =
+                ServerConfiguration.GetInstance()
+                    .GetConnectionInformation(ServerType.Authenticator);
+
+            Connect(connectionInformation);
+        }
+
+        protected override void OnDestroying()
+        {
+            base.OnDestroying();
+
+            Disconnect();
+        }
 
         protected override void OnConnected()
         {

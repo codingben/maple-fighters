@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Scripts.ScriptableObjects;
+using UnityEngine;
 
 namespace Scripts.Services
 {
@@ -8,8 +9,26 @@ namespace Scripts.Services
 
         public IChatApi GetChatApi() => chatApi;
 
-        private AuthorizerApi authorizerApi;
-        private ChatApi chatApi;
+        private IAuthorizerApi authorizerApi;
+        private IChatApi chatApi;
+
+        protected override void OnAwake()
+        {
+            base.OnAwake();
+
+            var connectionInformation =
+                ServerConfiguration.GetInstance()
+                    .GetConnectionInformation(ServerType.Chat);
+
+            Connect(connectionInformation);
+        }
+
+        protected override void OnDestroying()
+        {
+            base.OnDestroying();
+
+            Disconnect();
+        }
 
         protected override void OnConnected()
         {

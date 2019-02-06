@@ -11,8 +11,8 @@ namespace Scripts.Services
 
         public IGameSceneApi GetGameSceneApi() => gameSceneApi;
 
-        private AuthorizerApi authorizerApi;
-        private CharacterSelectorApi characterSelectorApi;
+        private IAuthorizerApi authorizerApi;
+        private ICharacterSelectorApi characterSelectorApi;
         private IGameSceneApi gameSceneApi;
 
         protected override void OnAwake()
