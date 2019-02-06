@@ -33,14 +33,14 @@ namespace Scripts.World
             }
         }
 
-        private void OnDestroy()
-        {
-            coroutinesExecutor.Dispose();
-        }
-
         private void Update()
         {
             coroutinesExecutor.Update();
+        }
+
+        private void OnDestroy()
+        {
+            coroutinesExecutor.Dispose();
         }
 
         private async Task EnterSceneAsync(IYield yield)

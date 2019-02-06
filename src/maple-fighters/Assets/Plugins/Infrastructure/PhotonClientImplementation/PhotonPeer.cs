@@ -149,14 +149,17 @@ namespace PhotonClientImplementation
 
         public void Disconnect()
         {
-            if (RawPeer.PeerState == PeerStateValue.Disconnected ||
-                RawPeer.PeerState == PeerStateValue.Disconnecting)
+            if (RawPeer != null)
             {
-                return;
-            }
+                if (RawPeer.PeerState == PeerStateValue.Disconnected
+                    || RawPeer.PeerState == PeerStateValue.Disconnecting)
+                {
+                    return;
+                }
 
-            RawPeer.Disconnect();
-            RawPeer.StopThread();
+                RawPeer.Disconnect();
+                RawPeer.StopThread();
+            }
 
             Disconnected?.Invoke(DisconnectReason.ClientDisconnect, null);
         }

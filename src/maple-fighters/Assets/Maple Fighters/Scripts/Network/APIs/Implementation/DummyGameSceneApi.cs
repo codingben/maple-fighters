@@ -1,5 +1,4 @@
 ﻿using System.Threading.Tasks;
-using CommonCommunicationInterfaces;
 using CommonTools.Coroutines;
 using Game.Common;
 
@@ -94,42 +93,28 @@ namespace Scripts.Services
 
         public async Task EnterSceneAsync(IYield yield)
         {
-            var responseParameters =
-                await ServerPeerHandler
-                    .SendOperationAsync<EmptyParameters, EnterSceneResponseParameters>(
-                        yield,
-                        GameOperations.EnterScene,
-                        new EmptyParameters(),
-                        MessageSendOptions.DefaultReliable());
-
-            SceneEntered?.Invoke(responseParameters);
+            await Task.Delay(1);
         }
 
         public Task<ChangeSceneResponseParameters> ChangeSceneAsync(
             IYield yield,
             ChangeSceneRequestParameters parameters)
         {
-            var id = parameters.PortalId;
-            var map = DummyPortalContainer.GetInstance().GetMap(id);
+            var map = 
+                DummyPortalContainer.GetInstance().GetMap(parameters.PortalId);
 
             return Task.FromResult(new ChangeSceneResponseParameters(map));
         }
 
         public Task UpdatePosition(UpdatePositionRequestParameters parameters)
         {
-            return ServerPeerHandler.SendOperation(
-                GameOperations.PositionChanged,
-                parameters,
-                MessageSendOptions.DefaultUnreliable((byte)GameDataChannels.Position));
+            return Task.CompletedTask;
         }
 
         public Task UpdatePlayerState(
             UpdatePlayerStateRequestParameters parameters)
         {
-            return ServerPeerHandler.SendOperation(
-                GameOperations.PlayerStateChanged,
-                parameters,
-                MessageSendOptions.DefaultUnreliable((byte)GameDataChannels.Animations));
+            return Task.CompletedTask;
         }
     }
 }

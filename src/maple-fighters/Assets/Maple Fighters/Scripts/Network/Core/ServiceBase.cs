@@ -13,6 +13,13 @@ namespace Scripts.Services
         private IServerPeer serverPeer;
         private ExternalCoroutinesExecutor coroutinesExecutor;
 
+        private void Awake()
+        {
+            coroutinesExecutor = new ExternalCoroutinesExecutor();
+
+            OnAwake();
+        }
+
         private void Update()
         {
             coroutinesExecutor?.Update();
@@ -20,18 +27,13 @@ namespace Scripts.Services
 
         private void OnDestroy()
         {
-            Disconnect();
-
             coroutinesExecutor?.Dispose();
+
+            OnDestroying();
         }
 
         public void Connect(ConnectionInformation connectionInformation)
         {
-            if (coroutinesExecutor == null)
-            {
-                coroutinesExecutor = new ExternalCoroutinesExecutor();
-            }
-
             if (serverConnector == null)
             {
                 if (GameConfiguration.GetInstance().Environment
@@ -60,13 +62,9 @@ namespace Scripts.Services
 
         public void Disconnect()
         {
-            if (serverPeer != null)
+            if (IsConnected())
             {
-                if (IsConnected())
-                {
-                    serverPeer.Disconnect();
-                }
-
+                serverPeer.Disconnect();
                 serverPeer = null;
 
                 OnDisconnected();
@@ -75,7 +73,7 @@ namespace Scripts.Services
 
         public bool IsConnected()
         {
-            return serverPeer != null && serverPeer.IsConnected;
+            return serverPeer != null;
         }
 
         public IServerPeer GetServerPeer()
@@ -98,15 +96,25 @@ namespace Scripts.Services
                     connectionInformation.PeerConnectionInformation,
                     connectionDetails);
 
-            if (serverPeer != null)
+            if (IsConnected())
             {
                 OnConnected();
             }
 
             return
-                serverPeer != null
+                IsConnected()
                     ? ConnectionStatus.Failed
                     : ConnectionStatus.Succeed;
+        }
+
+        protected virtual void OnAwake()
+        {
+            // Left blank intentionally
+        }
+
+        protected virtual void OnDestroying()
+        {
+            // Left blank intentionally
         }
 
         protected virtual void OnConnected()
