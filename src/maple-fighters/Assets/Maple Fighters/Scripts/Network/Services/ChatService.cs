@@ -16,6 +16,8 @@ namespace Scripts.Services
         {
             base.OnAwake();
 
+            DontDestroyOnLoad(gameObject);
+
             var connectionInformation =
                 ServerConfiguration.GetInstance()
                     .GetConnectionInformation(ServerType.Chat);

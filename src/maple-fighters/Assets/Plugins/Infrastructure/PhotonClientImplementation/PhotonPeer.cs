@@ -80,7 +80,18 @@ namespace PhotonClientImplementation
 
         public PhotonPeer()
         {
-            // Left blank intentionally
+            RawPeer =
+                new ExitGames.Client.Photon.PhotonPeer(
+                    this,
+                    ConnectionProtocol.Udp)
+                    {
+                        ChannelCount = 4,
+                        DebugOut = DebugLevel.OFF
+                    };
+
+            eventsBuffer = new Queue<RawMessageData>(10);
+            operationResponsesBuffer = new Queue<Tuple<RawMessageResponseData, short>>(10);
+            optionsBuffer = new Queue<BufferOption>(10);
         }
 
         public PhotonPeer(PeerConnectionInformation serverConnectionInformation,

@@ -53,11 +53,11 @@ namespace Scripts.Services
                 (yield) => ConnectAsync(yield, connectionInformation));
         }
 
-        public void SetNetworkTrafficState(NetworkTrafficState state)
+        public void SetNetworkTrafficState(NetworkTrafficState networkTrafficState)
         {
             if (IsConnected())
             {
-                serverPeer.NetworkTrafficState = state;
+                serverPeer.NetworkTrafficState = networkTrafficState;
             }
         }
 
