@@ -9,14 +9,26 @@ namespace Scripts.Services
 {
     public class ServiceBase : MonoBehaviour, IServiceBase
     {
+        private IServerConnector serverConnector;
         private IServerPeer serverPeer;
         private ExternalCoroutinesExecutor coroutinesExecutor;
 
         private void Awake()
         {
             coroutinesExecutor = new ExternalCoroutinesExecutor();
-        }
 
+            if (GameConfiguration.GetInstance().Environment
+                == Environment.Production)
+            {
+                serverConnector =
+                    new PhotonServerConnector(() => coroutinesExecutor);
+            }
+            else
+            {
+                serverConnector = new DummyPhotonServerConnector();
+            }
+        }
+        
         private void Update()
         {
             coroutinesExecutor.Update();
@@ -24,9 +36,9 @@ namespace Scripts.Services
 
         private void OnDestroy()
         {
-            coroutinesExecutor.Dispose();
-
             Disconnect();
+
+            coroutinesExecutor.Dispose();
         }
 
         public void Connect(ConnectionInformation connectionInformation)
@@ -45,7 +57,7 @@ namespace Scripts.Services
 
         public void Disconnect()
         {
-            if (IsConnected())
+            if (serverPeer != null)
             {
                 serverPeer.Disconnect();
                 serverPeer = null;
@@ -68,8 +80,6 @@ namespace Scripts.Services
             IYield yield,
             ConnectionInformation serverConnectionInformation)
         {
-            var serverConnector =
-                new PhotonServerConnector(() => coroutinesExecutor);
             var connectionDetails =
                 new ConnectionDetails(
                     NetworkConfiguration.GetInstance().ConnectionProtocol,

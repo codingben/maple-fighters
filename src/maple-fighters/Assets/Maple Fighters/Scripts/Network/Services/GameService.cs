@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Scripts.ScriptableObjects;
+using UnityEngine;
 
 namespace Scripts.Services
 {
@@ -12,7 +13,7 @@ namespace Scripts.Services
 
         private AuthorizerApi authorizerApi;
         private CharacterSelectorApi characterSelectorApi;
-        private GameSceneApi gameSceneApi;
+        private IGameSceneApi gameSceneApi;
 
         protected override void OnConnected()
         {
@@ -24,7 +25,16 @@ namespace Scripts.Services
             characterSelectorApi = new CharacterSelectorApi();
             characterSelectorApi.SetServerPeer(GetServerPeer());
 
-            gameSceneApi = new GameSceneApi();
+            if (GameConfiguration.GetInstance().Environment
+                == Environment.Production)
+            {
+                gameSceneApi = new GameSceneApi();
+            }
+            else
+            {
+                gameSceneApi = new DummyGameSceneApi();
+            }
+
             gameSceneApi.SetServerPeer(GetServerPeer());
 
             Debug.Log("Connected to the game server.");

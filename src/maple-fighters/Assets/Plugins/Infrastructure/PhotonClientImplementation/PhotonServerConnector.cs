@@ -7,8 +7,27 @@ using ExitGames.Client.Photon;
 
 namespace PhotonClientImplementation
 {
-	// @author amit115532 (Amit Ozalvo)
-    public class PhotonServerConnector
+    public interface IServerConnector
+    {
+        Task<IServerPeer> ConnectAsync(
+            IYield yield,
+            PeerConnectionInformation connectionInformation,
+            ConnectionDetails connectionDetails);
+    }
+
+    public class DummyPhotonServerConnector : IServerConnector
+    {
+        public async Task<IServerPeer> ConnectAsync(
+            IYield yield,
+            PeerConnectionInformation connectionInformation,
+            ConnectionDetails connectionDetails)
+        {
+            return new PhotonPeer();
+        }
+    }
+
+    // @author amit115532 (Amit Ozalvo)
+    public class PhotonServerConnector : IServerConnector
     {
         private readonly Func<ICoroutinesExecutor> coroutinesExecuterProvider;
 
