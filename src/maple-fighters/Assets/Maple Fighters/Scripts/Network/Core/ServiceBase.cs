@@ -13,36 +13,39 @@ namespace Scripts.Services
         private IServerPeer serverPeer;
         private ExternalCoroutinesExecutor coroutinesExecutor;
 
-        private void Awake()
-        {
-            coroutinesExecutor = new ExternalCoroutinesExecutor();
-
-            if (GameConfiguration.GetInstance().Environment
-                == Environment.Production)
-            {
-                serverConnector =
-                    new PhotonServerConnector(() => coroutinesExecutor);
-            }
-            else
-            {
-                serverConnector = new DummyPhotonServerConnector();
-            }
-        }
-        
         private void Update()
         {
-            coroutinesExecutor.Update();
+            coroutinesExecutor?.Update();
         }
 
         private void OnDestroy()
         {
             Disconnect();
 
-            coroutinesExecutor.Dispose();
+            coroutinesExecutor?.Dispose();
         }
 
         public void Connect(ConnectionInformation connectionInformation)
         {
+            if (coroutinesExecutor == null)
+            {
+                coroutinesExecutor = new ExternalCoroutinesExecutor();
+            }
+
+            if (serverConnector == null)
+            {
+                if (GameConfiguration.GetInstance().Environment
+                    == Environment.Production)
+                {
+                    serverConnector =
+                        new PhotonServerConnector(() => coroutinesExecutor);
+                }
+                else
+                {
+                    serverConnector = new DummyPhotonServerConnector();
+                }
+            }
+
             coroutinesExecutor.StartTask(
                 (yield) => ConnectAsync(yield, connectionInformation));
         }
@@ -59,7 +62,11 @@ namespace Scripts.Services
         {
             if (serverPeer != null)
             {
-                serverPeer.Disconnect();
+                if (IsConnected())
+                {
+                    serverPeer.Disconnect();
+                }
+
                 serverPeer = null;
 
                 OnDisconnected();
@@ -78,9 +85,9 @@ namespace Scripts.Services
 
         private async Task<ConnectionStatus> ConnectAsync(
             IYield yield,
-            ConnectionInformation serverConnectionInformation)
+            ConnectionInformation connectionInformation)
         {
-            var connectionDetails =
+            var connectionDetails = 
                 new ConnectionDetails(
                     NetworkConfiguration.GetInstance().ConnectionProtocol,
                     NetworkConfiguration.GetInstance().DebugLevel);
@@ -88,16 +95,16 @@ namespace Scripts.Services
             serverPeer = 
                 await serverConnector.ConnectAsync(
                     yield,
-                    serverConnectionInformation.PeerConnectionInformation,
+                    connectionInformation.PeerConnectionInformation,
                     connectionDetails);
 
-            if (IsConnected())
+            if (serverPeer != null)
             {
                 OnConnected();
             }
 
-            return 
-                IsConnected()
+            return
+                serverPeer != null
                     ? ConnectionStatus.Failed
                     : ConnectionStatus.Succeed;
         }

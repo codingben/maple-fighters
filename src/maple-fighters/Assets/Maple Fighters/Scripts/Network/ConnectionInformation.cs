@@ -1,7 +1,9 @@
-﻿using CommonCommunicationInterfaces;
+﻿using System;
+using CommonCommunicationInterfaces;
 
 namespace Scripts.Services
 {
+    [Serializable]
     public struct ConnectionInformation
     {
         public ServerType ServerType;

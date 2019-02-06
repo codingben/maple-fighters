@@ -15,6 +15,15 @@ namespace Scripts.Services
         private CharacterSelectorApi characterSelectorApi;
         private IGameSceneApi gameSceneApi;
 
+        private void Awake()
+        {
+            var connectionInformation = 
+                ServerConfiguration.GetInstance()
+                    .GetConnectionInformation(ServerType.Game);
+
+            Connect(connectionInformation);
+        }
+
         protected override void OnConnected()
         {
             base.OnConnected();
