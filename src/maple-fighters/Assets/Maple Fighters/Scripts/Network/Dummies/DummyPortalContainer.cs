@@ -2,7 +2,7 @@
 using Game.Common;
 using UnityEngine;
 
-namespace Scripts.Network
+namespace Scripts.Network.Dummies
 {
     public class DummyPortalContainer : MonoBehaviour
     {
