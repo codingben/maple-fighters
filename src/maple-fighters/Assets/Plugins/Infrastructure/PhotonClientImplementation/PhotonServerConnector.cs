@@ -17,12 +17,12 @@ namespace PhotonClientImplementation
 
     public class DummyPhotonServerConnector : IServerConnector
     {
-        public async Task<IServerPeer> ConnectAsync(
+        public Task<IServerPeer> ConnectAsync(
             IYield yield,
             PeerConnectionInformation connectionInformation,
             ConnectionDetails connectionDetails)
         {
-            return new PhotonPeer();
+            return Task.FromResult<IServerPeer>(new PhotonPeer());
         }
     }
 

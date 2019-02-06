@@ -3,6 +3,16 @@
     public enum ServerType
     {
         /// <summary>
+        /// The authenticator.
+        /// </summary>
+        Authenticator,
+
+        /// <summary>
+        /// The game server provider.
+        /// </summary>
+        GameServerProvider,
+
+        /// <summary>
         /// The game.
         /// </summary>
         Game,
@@ -10,21 +20,6 @@
         /// <summary>
         /// The chat.
         /// </summary>
-        Chat,
-
-        /// <summary>
-        /// The login.
-        /// </summary>
-        Login,
-
-        /// <summary>
-        /// The registration.
-        /// </summary>
-        Registration,
-
-        /// <summary>
-        /// The game server provider.
-        /// </summary>
-        GameServerProvider
+        Chat
     }
 }

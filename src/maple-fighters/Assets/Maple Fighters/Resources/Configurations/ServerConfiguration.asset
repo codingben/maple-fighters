@@ -12,23 +12,23 @@ MonoBehaviour:
   m_Name: ServerConfiguration
   m_EditorClassIdentifier: 
   ConnectionInformations:
-  - ServerType: 0
+  - Name: Authenticator
+    ServerType: 0
     PeerConnectionInformation:
       Ip: 
       Port: 0
-  - ServerType: 1
+  - Name: Game Server Provider
+    ServerType: 1
     PeerConnectionInformation:
       Ip: 
       Port: 0
-  - ServerType: 2
+  - Name: Game
+    ServerType: 2
     PeerConnectionInformation:
       Ip: 
       Port: 0
-  - ServerType: 3
-    PeerConnectionInformation:
-      Ip: 
-      Port: 0
-  - ServerType: 4
+  - Name: Chat
+    ServerType: 3
     PeerConnectionInformation:
       Ip: 
       Port: 0

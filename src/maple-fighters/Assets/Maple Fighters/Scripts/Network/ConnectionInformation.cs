@@ -6,6 +6,7 @@ namespace Scripts.Services
     [Serializable]
     public struct ConnectionInformation
     {
+        public string Name;
         public ServerType ServerType;
         public PeerConnectionInformation PeerConnectionInformation;
 
@@ -13,6 +14,7 @@ namespace Scripts.Services
             ServerType serverType,
             PeerConnectionInformation peerConnectionInformation)
         {
+            Name = string.Empty;
             ServerType = serverType;
             PeerConnectionInformation = peerConnectionInformation;
         }
