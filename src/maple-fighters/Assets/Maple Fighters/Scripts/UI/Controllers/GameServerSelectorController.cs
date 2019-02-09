@@ -90,15 +90,21 @@ namespace Scripts.UI.Controllers
 
         private void OnGameServerButtonClicked(string serverName)
         {
-            gameServerSelectorWindow.EnableJoinButton();
+            if (gameServerSelectorWindow != null)
+            {
+                gameServerSelectorWindow.EnableJoinButton();
+            }
 
             GameServerSelected?.Invoke(serverName);
         }
 
         private void OnJoinButtonClicked()
         {
-            gameServerSelectorWindow.DisableAllButtons();
-            gameServerSelectorWindow.Hide();
+            if (gameServerSelectorWindow != null)
+            {
+                gameServerSelectorWindow.DisableAllButtons();
+                gameServerSelectorWindow.Hide();
+            }
 
             JoinGameServer?.Invoke();
         }
@@ -112,16 +118,31 @@ namespace Scripts.UI.Controllers
         
         private void ShowGameServerList()
         {
-            gameServerSelectorWindow.RefreshImage.Hide();
-            gameServerSelectorWindow.DisableAllButtons();
-            gameServerSelectorWindow.EnableRefreshButton();
+            if (gameServerSelectorWindow != null)
+            {
+                if (gameServerSelectorWindow.RefreshImage != null)
+                {
+                    gameServerSelectorWindow.RefreshImage.Hide();
+                }
+
+                gameServerSelectorWindow.DisableAllButtons();
+                gameServerSelectorWindow.EnableRefreshButton();
+            }
         }
 
         private void ShowRefreshingGameServerList()
         {
-            gameServerSelectorWindow.DisableAllButtons();
-            gameServerSelectorWindow.RefreshImage.Message = RefreshImageMessage;
-            gameServerSelectorWindow.RefreshImage.Show();
+            if (gameServerSelectorWindow != null)
+            {
+                gameServerSelectorWindow.DisableAllButtons();
+
+                if (gameServerSelectorWindow.RefreshImage != null)
+                {
+                    gameServerSelectorWindow.RefreshImage.Message =
+                        RefreshImageMessage;
+                    gameServerSelectorWindow.RefreshImage.Show();
+                }
+            }
         }
     }
 }

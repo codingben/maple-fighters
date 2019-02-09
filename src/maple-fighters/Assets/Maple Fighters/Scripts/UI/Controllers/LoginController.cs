@@ -64,7 +64,10 @@ namespace Scripts.UI.Controllers
 
         private void OnBack()
         {
-            loginWindow.Show();
+            if (loginWindow != null)
+            {
+                loginWindow.Show();
+            }
         }
 
         private void OnLoginButtonClicked(string email, string password)

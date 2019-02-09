@@ -68,11 +68,14 @@ namespace Scripts.UI.Controllers
 
         private void OnFadeOutCompleted()
         {
-            var uiFadeAnimation =
-                noticeWindow.GetComponent<UIFadeAnimation>();
-            uiFadeAnimation.FadeOutCompleted -= OnFadeOutCompleted;
+            if (noticeWindow != null)
+            {
+                var uiFadeAnimation =
+                    noticeWindow.GetComponent<UIFadeAnimation>();
+                uiFadeAnimation.FadeOutCompleted -= OnFadeOutCompleted;
 
-            Destroy(noticeWindow.gameObject);
+                Destroy(noticeWindow.gameObject);
+            }
         }
     }
 }

@@ -50,11 +50,14 @@ namespace Scripts.UI.Controllers
 
         private void OnFadeOutCompleted()
         {
-            var uiFadeAnimation =
-                screenFadeImage.GetComponent<UIFadeAnimation>();
-            uiFadeAnimation.FadeOutCompleted -= OnFadeOutCompleted;
+            if (screenFadeImage != null)
+            {
+                var uiFadeAnimation =
+                    screenFadeImage.GetComponent<UIFadeAnimation>();
+                uiFadeAnimation.FadeOutCompleted -= OnFadeOutCompleted;
 
-            Destroy(screenFadeImage.gameObject);
+                Destroy(screenFadeImage.gameObject);
+            }
         }
     }
 }

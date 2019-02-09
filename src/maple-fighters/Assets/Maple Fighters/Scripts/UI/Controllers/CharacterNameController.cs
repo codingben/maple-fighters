@@ -49,7 +49,10 @@ namespace Scripts.UI.Controllers
 
         private void OnBackButtonClicked()
         {
-            characterNameWindow.Hide();
+            if (characterNameWindow != null)
+            {
+                characterNameWindow.Hide();
+            }
 
             BackButtonClicked?.Invoke();
         }

@@ -14,6 +14,29 @@ namespace Scripts.UI.Controllers
         private UICharacterDetails uiCharacterDetails;
         private CharacterSelectionWindow characterSelectionWindow;
 
+        public void SetCharacterDetails(UICharacterDetails uiCharacterDetails)
+        {
+            this.uiCharacterDetails = uiCharacterDetails;
+        }
+
+        public void ShowCharacterSelectionWindow()
+        {
+            if (characterSelectionWindow == null)
+            {
+                characterSelectionWindow = UIElementsCreator.GetInstance()
+                    .Create<CharacterSelectionWindow>();
+                characterSelectionWindow.ChooseButtonClicked +=
+                    OnChooseButtonClicked;
+                characterSelectionWindow.CancelButtonClicked +=
+                    OnCancelButtonClicked;
+                characterSelectionWindow.KnightSelected += OnKnightSelected;
+                characterSelectionWindow.ArrowSelected += OnArrowSelected;
+                characterSelectionWindow.WizardSelected += OnWizardSelected;
+            }
+
+            characterSelectionWindow.Show();
+        }
+
         private void Awake()
         {
             SubscribeToCharacterNameEvents();
@@ -65,29 +88,6 @@ namespace Scripts.UI.Controllers
             }
         }
 
-        public void SetCharacterDetails(UICharacterDetails uiCharacterDetails)
-        {
-            this.uiCharacterDetails = uiCharacterDetails;
-        }
-
-        public void ShowCharacterSelectionWindow()
-        {
-            if (characterSelectionWindow == null)
-            {
-                characterSelectionWindow = UIElementsCreator.GetInstance()
-                    .Create<CharacterSelectionWindow>();
-                characterSelectionWindow.ChooseButtonClicked +=
-                    OnChooseButtonClicked;
-                characterSelectionWindow.CancelButtonClicked +=
-                    OnCancelButtonClicked;
-                characterSelectionWindow.KnightSelected += OnKnightSelected;
-                characterSelectionWindow.ArrowSelected += OnArrowSelected;
-                characterSelectionWindow.WizardSelected += OnWizardSelected;
-            }
-
-            characterSelectionWindow.Show();
-        }
-
         private void OnConfirmButtonClicked(string characterName)
         {
             uiCharacterDetails.SetCharacterName(characterName);
@@ -97,7 +97,10 @@ namespace Scripts.UI.Controllers
 
         private void OnBackButtonClicked()
         {
-            characterSelectionWindow.Show();
+            if (characterSelectionWindow != null)
+            {
+                characterSelectionWindow.Show();
+            }
         }
 
         private void OnChooseButtonClicked()

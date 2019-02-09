@@ -62,7 +62,10 @@ namespace Scripts.UI.Controllers
 
         private void OnRegister()
         {
-            registrationWindow.Show();
+            if (registrationWindow != null)
+            {
+                registrationWindow.Show();
+            }
         }
 
         private void OnRegisterButtonClicked(
