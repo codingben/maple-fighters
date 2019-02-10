@@ -1,5 +1,8 @@
 ﻿using System;
 using CommonCommunicationInterfaces;
+using CommonTools.Log;
+using CommunicationHelper;
+using Scripts.ScriptableObjects;
 
 namespace Scripts.Network.Core
 {
@@ -7,25 +10,56 @@ namespace Scripts.Network.Core
         where TOperationCode : IComparable, IFormattable, IConvertible
         where TEventCode : IComparable, IFormattable, IConvertible
     {
-        protected ServerPeerHandler<TOperationCode, TEventCode> ServerPeerHandler
+        protected IOperationRequestSender<TOperationCode> OperationRequestSender
         {
             get;
+            private set;
         }
 
-        public ApiBase()
+        protected IEventHandlerRegister<TEventCode> EventHandlerRegister
         {
-            ServerPeerHandler =
-                new ServerPeerHandler<TOperationCode, TEventCode>();
+            get;
+            private set;
+        }
+
+        protected IOperationResponseSubscriptionProvider SubscriptionProvider
+        {
+            get;
+            private set;
         }
 
         public void SetServerPeer(IServerPeer serverPeer)
         {
-            ServerPeerHandler.Initialize(serverPeer);
+            var networkConfiguration = NetworkConfiguration.GetInstance();
+
+            OperationRequestSender =
+                new OperationRequestSender<TOperationCode>(
+                    serverPeer.OperationRequestSender,
+                    networkConfiguration.LogOperationsRequest);
+
+            SubscriptionProvider =
+                new OperationResponseSubscriptionProvider<TOperationCode>(
+                    serverPeer.OperationResponseNotifier,
+                    OnOperationRequestFailed,
+                    networkConfiguration.LogOperationsResponse);
+
+            EventHandlerRegister =
+                new EventHandlerRegister<TEventCode>(
+                    serverPeer.EventNotifier,
+                    networkConfiguration.LogEvents);
         }
 
         public void Dispose()
         {
-            ServerPeerHandler.Dispose();
+            EventHandlerRegister?.Dispose();
+            SubscriptionProvider?.Dispose();
+        }
+
+        private void OnOperationRequestFailed(
+            RawMessageResponseData data,
+            short requestId)
+        {
+            LogUtils.Log($"Sending an operation has been failed. Operation Code: {data.Code}");
         }
     }
 }

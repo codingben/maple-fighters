@@ -27,13 +27,17 @@ namespace Scripts.Network.APIs
             IYield yield,
             AuthenticateRequestParameters parameters)
         {
-            var responseParameters = 
-                await ServerPeerHandler
-                    .SendOperationAsync<AuthenticateRequestParameters, AuthenticateResponseParameters>(
+            var id = 
+                OperationRequestSender.Send(
+                    AuthenticatorOperations.Authenticate,
+                    parameters,
+                    MessageSendOptions.DefaultReliable());
+
+            var responseParameters =
+                await SubscriptionProvider
+                    .ProvideSubscription<AuthenticateResponseParameters>(
                         yield,
-                        AuthenticatorOperations.Authenticate,
-                        parameters,
-                        MessageSendOptions.DefaultReliable());
+                        id);
 
             if (responseParameters.HasAccessToken)
             {
@@ -41,20 +45,25 @@ namespace Scripts.Network.APIs
                     responseParameters.AccessToken;
             }
 
-            return new AuthenticateResponseParameters(responseParameters.Status);
+            return new AuthenticateResponseParameters(
+                responseParameters.Status);
         }
 
         public async Task<RegisterResponseParameters> RegisterAsync(
             IYield yield,
             RegisterRequestParameters parameters)
         {
-            return
-                await ServerPeerHandler
-                    .SendOperationAsync<RegisterRequestParameters, RegisterResponseParameters>(
+            var id =
+                OperationRequestSender.Send(
+                    AuthenticatorOperations.Register,
+                    parameters,
+                    MessageSendOptions.DefaultReliable());
+
+            return 
+                await SubscriptionProvider
+                    .ProvideSubscription<RegisterResponseParameters>(
                         yield,
-                        AuthenticatorOperations.Register,
-                        parameters,
-                        MessageSendOptions.DefaultReliable());
+                        id);
         }
     }
 }

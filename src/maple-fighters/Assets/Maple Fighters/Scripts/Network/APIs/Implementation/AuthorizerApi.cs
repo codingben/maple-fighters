@@ -13,13 +13,17 @@ namespace Scripts.Network.APIs
             IYield yield,
             AuthorizeRequestParameters parameters)
         {
-            return 
-                await ServerPeerHandler
-                    .SendOperationAsync<AuthorizeRequestParameters, AuthorizeResponseParameters>(
+            var id =
+                OperationRequestSender.Send(
+                    AuthorizationOperations.Authorize,
+                    parameters,
+                    MessageSendOptions.DefaultReliable());
+
+            return
+                await SubscriptionProvider
+                    .ProvideSubscription<AuthorizeResponseParameters>(
                         yield,
-                        AuthorizationOperations.Authorize,
-                        parameters,
-                        MessageSendOptions.DefaultReliable());
+                        id);
         }
     }
 }

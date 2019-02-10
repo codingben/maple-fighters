@@ -12,13 +12,17 @@ namespace Scripts.Network.APIs
         public async Task<GameServersProviderResponseParameters>
             ProvideGameServersAsync(IYield yield)
         {
-            return 
-                await ServerPeerHandler
-                    .SendOperationAsync<EmptyParameters, GameServersProviderResponseParameters>(
+            var id =
+                OperationRequestSender.Send(
+                    GameServerProviderOperations.ProvideGameServers,
+                    new EmptyParameters(),
+                    MessageSendOptions.DefaultReliable());
+
+            return
+                await SubscriptionProvider
+                    .ProvideSubscription<GameServersProviderResponseParameters>(
                         yield,
-                        GameServerProviderOperations.ProvideGameServers,
-                        new EmptyParameters(),
-                        MessageSendOptions.DefaultReliable());
+                        id);
         }
     }
 }

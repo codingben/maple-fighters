@@ -16,21 +16,23 @@ namespace Scripts.Network.APIs
 
         private void SetEventHandlers()
         {
-            ServerPeerHandler
-                .SetEventHandler(ChatEvents.ChatMessage, ChatMessageReceived);
+            EventHandlerRegister
+                .SetHandler(ChatEvents.ChatMessage, ChatMessageReceived.ToHandler());
         }
 
         private void RemoveEventHandlers()
         {
-            ServerPeerHandler.RemoveEventHandler(ChatEvents.ChatMessage);
+            EventHandlerRegister.RemoveHandler(ChatEvents.ChatMessage);
         }
 
         public Task SendChatMessage(ChatMessageRequestParameters parameters)
         {
-            return ServerPeerHandler.SendOperation(
+            OperationRequestSender.Send(
                 ChatOperations.ChatMessage,
                 parameters,
                 MessageSendOptions.DefaultReliable());
+
+            return Task.CompletedTask;
         }
     }
 }

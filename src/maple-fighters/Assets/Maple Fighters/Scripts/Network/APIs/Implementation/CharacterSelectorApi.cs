@@ -13,51 +13,67 @@ namespace Scripts.Network.APIs
             IYield yield,
             CreateCharacterRequestParameters parameters)
         {
-            return 
-                await ServerPeerHandler
-                    .SendOperationAsync<CreateCharacterRequestParameters, CreateCharacterResponseParameters>(
+            var id =
+                OperationRequestSender.Send(
+                    CharacterOperations.CreateCharacter,
+                    parameters,
+                    MessageSendOptions.DefaultReliable());
+
+            return
+                await SubscriptionProvider
+                    .ProvideSubscription<CreateCharacterResponseParameters>(
                         yield,
-                        CharacterOperations.CreateCharacter, 
-                        parameters, 
-                        MessageSendOptions.DefaultReliable());
+                        id);
         }
 
         public async Task<RemoveCharacterResponseParameters> RemoveCharacterAsync(
             IYield yield,
             RemoveCharacterRequestParameters parameters)
         {
-            return 
-                await ServerPeerHandler
-                    .SendOperationAsync<RemoveCharacterRequestParameters, RemoveCharacterResponseParameters>(
+            var id =
+                OperationRequestSender.Send(
+                    CharacterOperations.RemoveCharacter,
+                    parameters,
+                    MessageSendOptions.DefaultReliable());
+
+            return
+                await SubscriptionProvider
+                    .ProvideSubscription<RemoveCharacterResponseParameters>(
                         yield,
-                        CharacterOperations.RemoveCharacter, 
-                        parameters, 
-                        MessageSendOptions.DefaultReliable());
+                        id);
         }
 
         public async Task<ValidateCharacterResponseParameters> ValidateCharacterAsync(
             IYield yield, 
             ValidateCharacterRequestParameters parameters)
         {
+            var id =
+                OperationRequestSender.Send(
+                    CharacterOperations.ValidateCharacter,
+                    parameters,
+                    MessageSendOptions.DefaultReliable());
+
             return
-                await ServerPeerHandler
-                    .SendOperationAsync<ValidateCharacterRequestParameters, ValidateCharacterResponseParameters>(
+                await SubscriptionProvider
+                    .ProvideSubscription<ValidateCharacterResponseParameters>(
                         yield,
-                        CharacterOperations.ValidateCharacter,
-                        parameters,
-                        MessageSendOptions.DefaultReliable());
+                        id);
         }
 
         public async Task<GetCharactersResponseParameters> GetCharactersAsync(
             IYield yield)
         {
+            var id =
+                OperationRequestSender.Send(
+                    CharacterOperations.GetCharacters,
+                    new EmptyParameters(), 
+                    MessageSendOptions.DefaultReliable());
+
             return
-                await ServerPeerHandler
-                    .SendOperationAsync<EmptyParameters, GetCharactersResponseParameters>(
+                await SubscriptionProvider
+                    .ProvideSubscription<GetCharactersResponseParameters>(
                         yield,
-                        CharacterOperations.GetCharacters,
-                        new EmptyParameters(),
-                        MessageSendOptions.DefaultReliable());
+                        id);
         }
     }
 }
