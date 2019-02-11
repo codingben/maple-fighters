@@ -14,13 +14,27 @@ namespace Scripts.Network.APIs
             ChatMessageReceived = new UnityEvent<ChatMessageEventParameters>();
         }
 
-        private void SetEventHandlers()
+        protected override void OnSetServerPeer()
+        {
+            base.OnSetServerPeer();
+
+            SetHandlers();
+        }
+
+        protected override void OnUnsetServerPeer()
+        {
+            base.OnUnsetServerPeer();
+
+            RemoveHandlers();
+        }
+
+        private void SetHandlers()
         {
             EventHandlerRegister
                 .SetHandler(ChatEvents.ChatMessage, ChatMessageReceived.ToHandler());
         }
 
-        private void RemoveEventHandlers()
+        private void RemoveHandlers()
         {
             EventHandlerRegister.RemoveHandler(ChatEvents.ChatMessage);
         }

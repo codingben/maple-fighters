@@ -46,7 +46,21 @@ namespace Scripts.Network.APIs
             BubbleMessageReceived = new UnityEvent<BubbleMessageEventParameters>();
         }
 
-        private void SetEventHandlers()
+        protected override void OnSetServerPeer()
+        {
+            base.OnSetServerPeer();
+
+            SetHandlers();
+        }
+
+        protected override void OnUnsetServerPeer()
+        {
+            base.OnUnsetServerPeer();
+
+            RemoveHandlers();
+        }
+
+        private void SetHandlers()
         {
             EventHandlerRegister
                 .SetHandler(GameEvents.SceneObjectAdded, SceneObjectAdded.ToHandler());
@@ -70,7 +84,7 @@ namespace Scripts.Network.APIs
                 .SetHandler(GameEvents.BubbleMessage, BubbleMessageReceived.ToHandler());
         }
 
-        private void RemoveEventHandlers()
+        private void RemoveHandlers()
         {
             EventHandlerRegister.RemoveHandler(GameEvents.SceneObjectAdded);
             EventHandlerRegister.RemoveHandler(GameEvents.SceneObjectRemoved);

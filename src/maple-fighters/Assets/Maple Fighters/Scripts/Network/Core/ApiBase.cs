@@ -47,12 +47,16 @@ namespace Scripts.Network.Core
                 new EventHandlerRegister<TEventCode>(
                     serverPeer.EventNotifier,
                     networkConfiguration.LogEvents);
+
+            OnSetServerPeer();
         }
 
         public void Dispose()
         {
             EventHandlerRegister?.Dispose();
             SubscriptionProvider?.Dispose();
+
+            OnUnsetServerPeer();
         }
 
         private void OnOperationRequestFailed(
@@ -60,6 +64,16 @@ namespace Scripts.Network.Core
             short requestId)
         {
             LogUtils.Log($"Sending an operation has been failed. Operation Code: {data.Code}");
+        }
+
+        protected virtual void OnSetServerPeer()
+        {
+            // Left blank intentionally
+        }
+
+        protected virtual void OnUnsetServerPeer()
+        {
+            // Left blank intentionally
         }
     }
 }
