@@ -17,7 +17,7 @@ namespace Scripts.UI.Controllers
         {
             loginWindow = UIElementsCreator.GetInstance().Create<LoginWindow>();
             loginWindow.LoginButtonClicked += OnLoginButtonClicked;
-            loginWindow.RegisterButtonClicked += OnRegisterButtonClicked;
+            loginWindow.CreateAccountButtonClicked += OnCreateAccountButtonClicked;
             loginWindow.ShowNotice += OnShowNotice;
             loginWindow.Show();
         }
@@ -38,7 +38,7 @@ namespace Scripts.UI.Controllers
             if (loginWindow != null)
             {
                 loginWindow.LoginButtonClicked -= OnLoginButtonClicked;
-                loginWindow.RegisterButtonClicked -= OnRegisterButtonClicked;
+                loginWindow.CreateAccountButtonClicked -= OnCreateAccountButtonClicked;
 
                 Destroy(loginWindow.gameObject);
             }
@@ -75,7 +75,7 @@ namespace Scripts.UI.Controllers
             Login?.Invoke(email, password);
         }
 
-        private void OnRegisterButtonClicked()
+        private void OnCreateAccountButtonClicked()
         {
             if (loginWindow != null)
             {

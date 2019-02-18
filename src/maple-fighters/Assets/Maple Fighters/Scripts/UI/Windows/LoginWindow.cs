@@ -11,7 +11,7 @@ namespace Scripts.UI.Windows
     {
         public event Action<string, string> LoginButtonClicked;
 
-        public event Action RegisterButtonClicked;
+        public event Action CreateAccountButtonClicked;
 
         public event Action<string> ShowNotice;
 
@@ -53,7 +53,7 @@ namespace Scripts.UI.Windows
         private Button loginButton;
 
         [SerializeField]
-        private Button registerButton;
+        private Button createAccountButton;
 
         private void Start()
         {
@@ -62,9 +62,10 @@ namespace Scripts.UI.Windows
                 loginButton.onClick.AddListener(OnLoginButtonClicked);
             }
 
-            if (registerButton != null)
+            if (createAccountButton != null)
             {
-                registerButton.onClick.AddListener(OnRegisterButtonClicked);
+                createAccountButton.onClick.AddListener(
+                    OnCreateAccountButtonClicked);
             }
         }
 
@@ -75,9 +76,10 @@ namespace Scripts.UI.Windows
                 loginButton.onClick.RemoveListener(OnLoginButtonClicked);
             }
 
-            if (registerButton != null)
+            if (createAccountButton != null)
             {
-                registerButton.onClick.RemoveListener(OnRegisterButtonClicked);
+                createAccountButton.onClick.RemoveListener(
+                    OnCreateAccountButtonClicked);
             }
         }
 
@@ -96,9 +98,9 @@ namespace Scripts.UI.Windows
             }
         }
 
-        private void OnRegisterButtonClicked()
+        private void OnCreateAccountButtonClicked()
         {
-            RegisterButtonClicked?.Invoke();
+            CreateAccountButtonClicked?.Invoke();
         }
 
         private void Login()
