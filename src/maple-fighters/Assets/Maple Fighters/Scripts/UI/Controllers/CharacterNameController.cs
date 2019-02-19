@@ -11,6 +11,10 @@ namespace Scripts.UI.Controllers
 
         public event Action BackButtonClicked;
 
+        [Header("Configuration")]
+        [SerializeField]
+        private int minCharactersLength;
+
         private CharacterNameWindow characterNameWindow;
 
         public void ShowCharacterNameWindow()
@@ -26,6 +30,8 @@ namespace Scripts.UI.Controllers
                 characterNameWindow.ConfirmButtonClicked +=
                     OnConfirmButtonClicked;
                 characterNameWindow.BackButtonClicked += OnBackButtonClicked;
+                characterNameWindow.NameInputFieldChanged +=
+                    OnNameInputFieldChanged;
                 characterNameWindow.Show();
             }
         }
@@ -37,6 +43,8 @@ namespace Scripts.UI.Controllers
                 characterNameWindow.ConfirmButtonClicked -=
                     OnConfirmButtonClicked;
                 characterNameWindow.BackButtonClicked -= OnBackButtonClicked;
+                characterNameWindow.NameInputFieldChanged -=
+                    OnNameInputFieldChanged;
 
                 Destroy(characterNameWindow.gameObject);
             }
@@ -55,6 +63,24 @@ namespace Scripts.UI.Controllers
             }
 
             BackButtonClicked?.Invoke();
+        }
+
+        private void OnNameInputFieldChanged(string characterName)
+        {
+            if (characterName.Length >= minCharactersLength)
+            {
+                if (characterNameWindow != null)
+                {
+                    characterNameWindow.EnableConfirmButton();
+                }
+            }
+            else
+            {
+                if (characterNameWindow != null)
+                {
+                    characterNameWindow.DisableConfirmButton();
+                }
+            }
         }
     }
 }

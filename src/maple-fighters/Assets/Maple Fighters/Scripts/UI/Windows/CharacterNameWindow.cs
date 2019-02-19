@@ -13,9 +13,7 @@ namespace Scripts.UI.Windows
 
         public event Action BackButtonClicked;
 
-        [Header("Configuration")]
-        [SerializeField]
-        private int minCharactersName;
+        public event Action<string> NameInputFieldChanged;
 
         [Header("Input Field")]
         [SerializeField]
@@ -66,12 +64,25 @@ namespace Scripts.UI.Windows
             }
         }
 
-        private void OnNameInputFieldChanged(string text)
+        public void EnableConfirmButton()
         {
             if (confirmButton != null)
             {
-                confirmButton.interactable = text.Length >= minCharactersName;
+                confirmButton.interactable = true;
             }
+        }
+
+        public void DisableConfirmButton()
+        {
+            if (confirmButton != null)
+            {
+                confirmButton.interactable = false;
+            }
+        }
+
+        private void OnNameInputFieldChanged(string characterName)
+        {
+            NameInputFieldChanged?.Invoke(characterName);
         }
 
         private void OnConfirmButtonClicked()
