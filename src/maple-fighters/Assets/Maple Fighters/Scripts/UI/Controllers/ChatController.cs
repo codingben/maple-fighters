@@ -31,7 +31,7 @@ namespace Scripts.UI.Controllers
         {
             if (chatWindow != null)
             {
-                chatWindow.CharacterName = name;
+                chatWindow.SetCharacterName(name);
             }
         }
 
@@ -45,6 +45,11 @@ namespace Scripts.UI.Controllers
 
         private void OnMessageAdded(string message)
         {
+            if (chatWindow != null)
+            {
+                chatWindow.AddMessage(message);
+            }
+
             MessageSent?.Invoke(message);
         }
     }

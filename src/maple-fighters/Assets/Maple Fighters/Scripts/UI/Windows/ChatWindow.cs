@@ -11,12 +11,6 @@ namespace Scripts.UI.Windows
     {
         public event Action<string> MessageAdded;
 
-        public event Action Focused;
-
-        public event Action UnFocused;
-
-        public string CharacterName { get; set; }
-
         private const KeyCode SendMessageKeyCode = KeyCode.Return;
         private const KeyCode SecondarySendMessageKeyCode = KeyCode.KeypadEnter;
         private const KeyCode CloseMessageKeyCode = KeyCode.Escape;
@@ -29,6 +23,27 @@ namespace Scripts.UI.Windows
         private TMP_InputField chatInputField;
 
         private bool isTypingMessage;
+        private string characterName;
+
+        public void SetCharacterName(string characterName)
+        {
+            this.characterName = characterName;
+        }
+
+        public void AddMessage(string message, ChatMessageColor color = ChatMessageColor.None)
+        {
+            if (chatText != null)
+            {
+                if (color != ChatMessageColor.None)
+                {
+                    var colorName = color.ToString().ToLower();
+                    message = $"<color={colorName}>{message}</color>";
+                }
+
+                var isEmpty = chatText.text.Length == 0;
+                chatText.text += !isEmpty ? $"\n{message}" : $"{message}";
+            }
+        }
 
         private void Update()
         {
@@ -58,8 +73,6 @@ namespace Scripts.UI.Windows
                 SelectOrDeselectChatInputField();
 
                 isTypingMessage = false;
-
-                UnFocused?.Invoke();
             }
         }
 
@@ -71,8 +84,6 @@ namespace Scripts.UI.Windows
 
                 ActivateOrDeactivateInputField();
                 SelectOrDeselectChatInputField();
-
-                Focused?.Invoke();
             }
         }
 
@@ -81,30 +92,11 @@ namespace Scripts.UI.Windows
             if (chatInputField != null)
             {
                 var text = chatInputField.text;
-
                 if (!string.IsNullOrWhiteSpace(text))
                 {
-                    var message = $"{CharacterName}: {text}";
-
-                    AddMessage(message);
-
+                    var message = $"{characterName}: {text}";
                     MessageAdded?.Invoke(message);
                 }
-            }
-        }
-
-        public void AddMessage(string message, ChatMessageColor color = ChatMessageColor.None)
-        {
-            if (chatText != null)
-            {
-                if (color != ChatMessageColor.None)
-                {
-                    var colorName = color.ToString().ToLower();
-                    message = $"<color={colorName}>{message}</color>";
-                }
-
-                var isEmpty = chatText.text.Length == 0;
-                chatText.text += !isEmpty ? $"\n{message}" : $"{message}";
             }
         }
 
@@ -112,10 +104,8 @@ namespace Scripts.UI.Windows
         {
             if (chatInputField != null)
             {
-                var active = !chatInputField.gameObject.activeSelf;
-
                 chatInputField.text = string.Empty;
-                chatInputField.gameObject.SetActive(active);
+                chatInputField.gameObject.SetActive(!chatInputField.gameObject.activeSelf);
             }
         }
 
