@@ -39,7 +39,7 @@ namespace Scripts.UI.Windows
 
         [Header("Configuration")]
         [SerializeField]
-        private int passwordCharacters;
+        private int passwordCharactersLength;
 
         [Header("Input Fields")]
         [SerializeField]
@@ -87,14 +87,16 @@ namespace Scripts.UI.Windows
         {
             string message;
 
-            if (IsEmailInputFieldValid(out message)
-                && IsPasswordInputFieldValid(out message))
+            if (IsEmptyEmailAddress(out message)
+                || IsInvalidEmailAddress(out message)
+                || IsEmptyPassword(out message)
+                || IsPasswordTooShort(out message))
             {
-                Login();
+                ShowNotice?.Invoke(message);
             }
             else
             {
-                ShowNotice?.Invoke(message);
+                Login();
             }
         }
 
@@ -114,61 +116,72 @@ namespace Scripts.UI.Windows
             }
         }
 
-        public void ResetInputFields()
+        private bool IsEmptyEmailAddress(out string message)
         {
-            if (emailInputField != null)
-            {
-                emailInputField.text = string.Empty;
-            }
-
-            if (passwordInputField != null)
-            {
-                passwordInputField.text = string.Empty;
-            }
-        }
-
-        private bool IsEmailInputFieldValid(out string message)
-        {
-            message = string.Empty;
+            message = WindowMessages.EmptyEmailAddress;
 
             if (emailInputField != null)
             {
-                if (string.IsNullOrWhiteSpace(emailInputField.text))
-                {
-                    message = WindowMessages.EmailAddressEmpty;
-                    return false;
-                }
+                var email = emailInputField.text;
 
-                if (!WindowUtils.IsEmailAddressValid(emailInputField.text))
+                if (string.IsNullOrWhiteSpace(email))
                 {
-                    message = WindowMessages.EmailAddressInvalid;
-                    return false;
+                    return true;
                 }
             }
 
-            return true;
+            return false;
         }
 
-        private bool IsPasswordInputFieldValid(out string message)
+        private bool IsInvalidEmailAddress(out string message)
         {
-            message = string.Empty;
+            message = WindowMessages.InvalidEmailAddress;
+
+            if (emailInputField != null)
+            {
+                var email = emailInputField.text;
+
+                if (WindowUtils.IsEmailAddressValid(email) == false)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private bool IsEmptyPassword(out string message)
+        {
+            message = WindowMessages.EmptyPassword;
 
             if (passwordInputField != null)
             {
-                if (string.IsNullOrWhiteSpace(passwordInputField.text))
-                {
-                    message = WindowMessages.PasswordEmpty;
-                    return false;
-                }
+                var password = passwordInputField.text;
 
-                if (passwordInputField.text.Length <= passwordCharacters)
+                if (string.IsNullOrWhiteSpace(password))
                 {
-                    message = WindowMessages.PasswordNotMatch;
-                    return false;
+                    return true;
                 }
             }
 
-            return true;
+            return false;
+        }
+
+        private bool IsPasswordTooShort(out string message)
+        {
+            message = WindowMessages.ShortPassword;
+
+            if (passwordInputField != null)
+            {
+                var password = passwordInputField.text;
+
+                if (password.Length <= passwordCharactersLength)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 }

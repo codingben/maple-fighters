@@ -15,12 +15,70 @@ namespace Scripts.UI.Windows
 
         public event Action<string> ShowNotice;
 
+        public string Email
+        {
+            set
+            {
+                if (emailInputField != null)
+                {
+                    emailInputField.text = value;
+                }
+            }
+        }
+
+        public string Password
+        {
+            set
+            {
+                if (passwordInputField != null)
+                {
+                    passwordInputField.text = value;
+                }
+            }
+        }
+
+        public string ConfirmPassword
+        {
+            set
+            {
+                if (confirmPasswordInputField != null)
+                {
+                    confirmPasswordInputField.text = value;
+                }
+            }
+        }
+
+        public string FirstName
+        {
+            set
+            {
+                if (firstNameInputField != null)
+                {
+                    firstNameInputField.text = value;
+                }
+            }
+        }
+
+        public string LastName
+        {
+            set
+            {
+                if (lastNameInputField != null)
+                {
+                    lastNameInputField.text = value;
+                }
+            }
+        }
+
         [Header("Configuration")]
         [SerializeField]
-        private int passwordCharacters;
+        private int passwordCharactersLength;
 
         [SerializeField]
-        private int firstLastNameCharacters;
+        private int firstNameCharactersLength;
+
+        [SerializeField]
+        private int lastNameCharactersLength;
 
         [Header("Input Fields")]
         [SerializeField]
@@ -80,15 +138,23 @@ namespace Scripts.UI.Windows
         {
             string message;
 
-            if (IsEmailInputFieldValid(out message)
-                && IsPasswordInputFieldsValid(out message)
-                && IsFirstAndLastNameInputFieldsValid(out message))
+            if (IsEmptyEmailAddress(out message)
+                || IsInvalidEmailAddress(out message)
+                || IsEmptyPassword(out message)
+                || IsEmptyConfirmPassword(out message)
+                || IsPasswordTooShort(out message)
+                || IsConfirmPasswordTooShort(out message)
+                || ArePasswordsDoNotMatch(out message)
+                || IsFirstNameEmpty(out message)
+                || IsLastNameEmpty(out message)
+                || IsFirstNameTooShort(out message)
+                || IsLastNameTooShort(out message))
             {
-                Register();
+                ShowNotice?.Invoke(message);
             }
             else
             {
-                ShowNotice?.Invoke(message);
+                Register();
             }
         }
 
@@ -111,106 +177,192 @@ namespace Scripts.UI.Windows
             }
         }
 
-        public void ResetInputFields()
+        private bool IsEmptyEmailAddress(out string message)
         {
+            message = WindowMessages.EmptyEmailAddress;
+
             if (emailInputField != null)
             {
-                emailInputField.text = string.Empty;
+                var email = emailInputField.text;
+
+                if (string.IsNullOrWhiteSpace(email))
+                {
+                    return true;
+                }
             }
+
+            return false;
+        }
+
+        private bool IsInvalidEmailAddress(out string message)
+        {
+            message = WindowMessages.InvalidEmailAddress;
+
+            if (emailInputField != null)
+            {
+                var email = emailInputField.text;
+
+                if (WindowUtils.IsEmailAddressValid(email) == false)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private bool IsEmptyPassword(out string message)
+        {
+            message = WindowMessages.EmptyPassword;
 
             if (passwordInputField != null)
             {
-                passwordInputField.text = string.Empty;
+                var password = passwordInputField.text;
+
+                if (string.IsNullOrWhiteSpace(password))
+                {
+                    return true;
+                }
             }
+
+            return false;
+        }
+
+        private bool IsEmptyConfirmPassword(out string message)
+        {
+            message = WindowMessages.EmptyConfirmPassword;
 
             if (confirmPasswordInputField != null)
             {
-                confirmPasswordInputField.text = string.Empty;
+                var confirmPassword = confirmPasswordInputField.text;
+
+                if (string.IsNullOrWhiteSpace(confirmPassword))
+                {
+                    return true;
+                }
             }
 
-            if (firstNameInputField != null)
-            {
-                firstNameInputField.text = string.Empty;
-            }
-
-            if (lastNameInputField != null)
-            {
-                lastNameInputField.text = string.Empty;
-            }
+            return false;
         }
 
-        private bool IsEmailInputFieldValid(out string message)
+        private bool IsPasswordTooShort(out string message)
         {
-            message = string.Empty;
-
-            if (emailInputField != null)
-            {
-                if (string.IsNullOrWhiteSpace(emailInputField.text))
-                {
-                    message = WindowMessages.EmailAddressEmpty;
-                    return false;
-                }
-
-                if (!WindowUtils.IsEmailAddressValid(emailInputField.text))
-                {
-                    message = WindowMessages.EmailAddressInvalid;
-                    return false;
-                }
-            }
-
-            return true;
-        }
-
-        private bool IsPasswordInputFieldsValid(out string message)
-        {
-            message = string.Empty;
-
-            if (passwordInputField != null && confirmPasswordInputField != null)
-            {
-                if (string.IsNullOrWhiteSpace(passwordInputField.text)
-                    || string.IsNullOrWhiteSpace(confirmPasswordInputField.text))
-                {
-                    message = WindowMessages.PasswordsEmpty;
-                    return false;
-                }
-            }
+            message = WindowMessages.ShortPassword;
 
             if (passwordInputField != null)
             {
-                if (passwordInputField.text.Length <= passwordCharacters)
+                var password = passwordInputField.text;
+
+                if (password.Length <= passwordCharactersLength)
                 {
-                    message = WindowMessages.ShortPassword;
-                    return false;
+                    return true;
                 }
             }
+
+            return false;
+        }
+
+        private bool IsConfirmPasswordTooShort(out string message)
+        {
+            message = WindowMessages.ShortPassword;
+
+            if (confirmPasswordInputField != null)
+            {
+                var confirmPassword = confirmPasswordInputField.text;
+
+                if (confirmPassword.Length <= passwordCharactersLength)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private bool ArePasswordsDoNotMatch(out string message)
+        {
+            message = WindowMessages.PasswordsDoNotMatch;
 
             if (passwordInputField != null && confirmPasswordInputField != null)
             {
-                if (passwordInputField.text != confirmPasswordInputField.text)
+                var password = passwordInputField.text;
+                var confirmPassword = confirmPasswordInputField.text;
+
+                if (password != confirmPassword)
                 {
-                    message = WindowMessages.PasswordsNotMatch;
-                    return false;
+                    return true;
                 }
             }
 
-            return true;
+            return false;
         }
 
-        private bool IsFirstAndLastNameInputFieldsValid(out string message)
+        private bool IsFirstNameEmpty(out string message)
         {
-            message = string.Empty;
+            message = WindowMessages.EmptyFirstName;
 
-            if (firstNameInputField != null && lastNameInputField != null)
+            if (firstNameInputField != null)
             {
-                if (firstNameInputField.text.Length < firstLastNameCharacters
-                    || lastNameInputField.text.Length < firstLastNameCharacters)
+                var firstName = firstNameInputField.text;
+
+                if (string.IsNullOrWhiteSpace(firstName))
                 {
-                    message = WindowMessages.ShortFirstOrLastName;
-                    return false;
+                    return true;
                 }
             }
 
-            return true;
+            return false;
+        }
+
+        private bool IsLastNameEmpty(out string message)
+        {
+            message = WindowMessages.EmptyLastName;
+
+            if (lastNameInputField != null)
+            {
+                var lastName = lastNameInputField.text;
+
+                if (string.IsNullOrWhiteSpace(lastName))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private bool IsFirstNameTooShort(out string message)
+        {
+            message = WindowMessages.ShortFirstName;
+
+            if (firstNameInputField != null)
+            {
+                var firstName = firstNameInputField.text;
+
+                if (firstName.Length < firstNameCharactersLength)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private bool IsLastNameTooShort(out string message)
+        {
+            message = WindowMessages.ShortLastName;
+
+            if (lastNameInputField != null)
+            {
+                var lastName = lastNameInputField.text;
+
+                if (lastName.Length < lastNameCharactersLength)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 }

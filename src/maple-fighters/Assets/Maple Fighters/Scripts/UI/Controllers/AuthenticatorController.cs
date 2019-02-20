@@ -37,7 +37,8 @@ namespace Scripts.UI.Controllers
 
             if (registrationWindow != null)
             {
-                registrationWindow.RegisterButtonClicked -= OnRegisterButtonClicked;
+                registrationWindow.RegisterButtonClicked -=
+                    OnRegisterButtonClicked;
                 registrationWindow.BackButtonClicked -= OnBackButtonClicked;
 
                 Destroy(registrationWindow.gameObject);
@@ -63,8 +64,9 @@ namespace Scripts.UI.Controllers
         {
             if (loginWindow != null)
             {
+                loginWindow.Email = string.Empty;
+                loginWindow.Password = string.Empty;
                 loginWindow.Hide();
-                loginWindow.ResetInputFields();
             }
 
             if (registrationWindow == null)
@@ -93,8 +95,12 @@ namespace Scripts.UI.Controllers
         {
             if (registrationWindow != null)
             {
+                registrationWindow.Email = string.Empty;
+                registrationWindow.Password = string.Empty;
+                registrationWindow.ConfirmPassword = string.Empty;
+                registrationWindow.FirstName = string.Empty;
+                registrationWindow.LastName = string.Empty;
                 registrationWindow.Hide();
-                registrationWindow.ResetInputFields();
             }
 
             if (loginWindow != null)

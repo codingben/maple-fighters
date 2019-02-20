@@ -1728,7 +1728,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2fc3c5e0d18d6f64e94b736555512cf7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  passwordCharacters: 6
+  passwordCharactersLength: 12
   emailInputField: {fileID: 114270702095993966}
   passwordInputField: {fileID: 114237433669106402}
   loginButton: {fileID: 114604747071764252}

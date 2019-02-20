@@ -1833,8 +1833,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae35ab9d70cc0c6419735d17bf277a3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  passwordCharacters: 6
-  firstLastNameCharacters: 3
+  passwordCharactersLength: 12
+  firstNameCharactersLength: 3
+  lastNameCharactersLength: 3
   emailInputField: {fileID: 114411245771385382}
   passwordInputField: {fileID: 114723499813800656}
   confirmPasswordInputField: {fileID: 114220500530076864}
