@@ -23,20 +23,38 @@ namespace Scripts.UI.Controllers
             {
                 characterNameWindow.Show();
             }
-            else
+        }
+
+        public void HideCharacterNameWindow()
+        {
+            if (characterNameWindow != null)
             {
-                characterNameWindow = UIElementsCreator.GetInstance()
-                    .Create<CharacterNameWindow>();
-                characterNameWindow.ConfirmButtonClicked +=
-                    OnConfirmButtonClicked;
-                characterNameWindow.BackButtonClicked += OnBackButtonClicked;
-                characterNameWindow.NameInputFieldChanged +=
-                    OnNameInputFieldChanged;
-                characterNameWindow.Show();
+                characterNameWindow.Hide();
             }
         }
 
+        private void Awake()
+        {
+            CreateCharacterNameWindow();
+        }
+
+        private void CreateCharacterNameWindow()
+        {
+            characterNameWindow = UIElementsCreator.GetInstance()
+                .Create<CharacterNameWindow>();
+            characterNameWindow.ConfirmButtonClicked +=
+                OnConfirmButtonClicked;
+            characterNameWindow.BackButtonClicked += OnBackButtonClicked;
+            characterNameWindow.NameInputFieldChanged +=
+                OnNameInputFieldChanged;
+        }
+
         private void OnDestroy()
+        {
+            DestroyCharacterNameWindow();
+        }
+
+        private void DestroyCharacterNameWindow()
         {
             if (characterNameWindow != null)
             {
@@ -57,10 +75,7 @@ namespace Scripts.UI.Controllers
 
         private void OnBackButtonClicked()
         {
-            if (characterNameWindow != null)
-            {
-                characterNameWindow.Hide();
-            }
+            HideCharacterNameWindow();
 
             BackButtonClicked?.Invoke();
         }

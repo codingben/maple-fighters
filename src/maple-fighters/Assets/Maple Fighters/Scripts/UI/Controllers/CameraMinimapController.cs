@@ -12,6 +12,7 @@ namespace Scripts.UI.Controllers
 
         [SerializeField]
         private MarkSelection[] markSelections;
+
         private new Camera camera;
         private MinimapWindow minimapWindow;
         
