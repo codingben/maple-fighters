@@ -9,7 +9,7 @@ namespace Scripts.UI.Windows
     [RequireComponent(typeof(UIFadeAnimation))]
     public class LoginWindow : UIElement
     {
-        public event Action<string, string> LoginButtonClicked;
+        public event Action<UIAuthenticationDetails> LoginButtonClicked;
 
         public event Action CreateAccountButtonClicked;
 
@@ -112,7 +112,8 @@ namespace Scripts.UI.Windows
                 var email = emailInputField.text;
                 var password = passwordInputField.text;
 
-                LoginButtonClicked?.Invoke(email, password);
+                LoginButtonClicked?.Invoke(
+                    new UIAuthenticationDetails(email, password));
             }
         }
 

@@ -7,7 +7,7 @@ namespace Scripts.UI.Controllers
 {
     public class AuthenticatorController : MonoBehaviour
     {
-        public event Action<string, string> Login;
+        public event Action<UIAuthenticationDetails> Login;
 
         public event Action<UIRegistrationDetails> Register;
 
@@ -16,25 +16,54 @@ namespace Scripts.UI.Controllers
 
         private void Awake()
         {
+            CreateLoginWindow();
+            CreateRegistrationWindow();
+        }
+
+        private void Start()
+        {
+            ShowLoginWindow();
+        }
+
+        private void CreateLoginWindow()
+        {
             loginWindow = UIElementsCreator.GetInstance().Create<LoginWindow>();
             loginWindow.LoginButtonClicked += OnLoginButtonClicked;
             loginWindow.CreateAccountButtonClicked +=
                 OnCreateAccountButtonClicked;
             loginWindow.ShowNotice += OnShowNotice;
-            loginWindow.Show();
+        }
+
+        private void CreateRegistrationWindow()
+        {
+            registrationWindow = UIElementsCreator.GetInstance()
+                .Create<RegistrationWindow>();
+            registrationWindow.RegisterButtonClicked +=
+                OnRegisterButtonClicked;
+            registrationWindow.BackButtonClicked += OnBackButtonClicked;
+            registrationWindow.ShowNotice += OnShowNotice;
         }
 
         private void OnDestroy()
         {
+            DestroyLoginWindow();
+            DestroyRegistrationWindow();
+        }
+
+        private void DestroyLoginWindow()
+        {
             if (loginWindow != null)
             {
                 loginWindow.LoginButtonClicked -= OnLoginButtonClicked;
-                loginWindow.CreateAccountButtonClicked -= 
+                loginWindow.CreateAccountButtonClicked -=
                     OnCreateAccountButtonClicked;
 
                 Destroy(loginWindow.gameObject);
             }
+        }
 
+        private void DestroyRegistrationWindow()
+        {
             if (registrationWindow != null)
             {
                 registrationWindow.RegisterButtonClicked -=
@@ -55,34 +84,16 @@ namespace Scripts.UI.Controllers
             }
         }
 
-        private void OnLoginButtonClicked(string email, string password)
+        private void OnLoginButtonClicked(
+            UIAuthenticationDetails authenticationDetails)
         {
-            Login?.Invoke(email, password);
+            Login?.Invoke(authenticationDetails);
         }
 
         private void OnCreateAccountButtonClicked()
         {
-            if (loginWindow != null)
-            {
-                loginWindow.Email = string.Empty;
-                loginWindow.Password = string.Empty;
-                loginWindow.Hide();
-            }
-
-            if (registrationWindow == null)
-            {
-                registrationWindow = UIElementsCreator.GetInstance()
-                    .Create<RegistrationWindow>();
-                registrationWindow.RegisterButtonClicked +=
-                    OnRegisterButtonClicked;
-                registrationWindow.BackButtonClicked += OnBackButtonClicked;
-                registrationWindow.ShowNotice += OnShowNotice;
-                registrationWindow.Show();
-            }
-            else
-            {
-                registrationWindow.Show();
-            }
+            HideLoginWindow();
+            ShowRegistrationWindow();
         }
 
         private void OnRegisterButtonClicked(
@@ -93,6 +104,38 @@ namespace Scripts.UI.Controllers
 
         private void OnBackButtonClicked()
         {
+            HideRegistrationWindow();
+            ShowLoginWindow();
+        }
+
+        private void ShowLoginWindow()
+        {
+            if (loginWindow != null)
+            {
+                loginWindow.Show();
+            }
+        }
+
+        private void HideLoginWindow()
+        {
+            if (loginWindow != null)
+            {
+                loginWindow.Email = string.Empty;
+                loginWindow.Password = string.Empty;
+                loginWindow.Hide();
+            }
+        }
+
+        private void ShowRegistrationWindow()
+        {
+            if (registrationWindow != null)
+            {
+                registrationWindow.Show();
+            }
+        }
+
+        private void HideRegistrationWindow()
+        {
             if (registrationWindow != null)
             {
                 registrationWindow.Email = string.Empty;
@@ -101,11 +144,6 @@ namespace Scripts.UI.Controllers
                 registrationWindow.FirstName = string.Empty;
                 registrationWindow.LastName = string.Empty;
                 registrationWindow.Hide();
-            }
-
-            if (loginWindow != null)
-            {
-                loginWindow.Show();
             }
         }
     }
