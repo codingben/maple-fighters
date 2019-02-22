@@ -13,7 +13,7 @@ namespace Scripts.UI.Controllers
 
         [Header("Configuration")]
         [SerializeField]
-        private int minCharactersLength;
+        private int nameCharactersLength;
 
         private CharacterNameWindow characterNameWindow;
 
@@ -67,7 +67,7 @@ namespace Scripts.UI.Controllers
 
         private void OnNameInputFieldChanged(string characterName)
         {
-            if (characterName.Length >= minCharactersLength)
+            if (characterName.Length >= nameCharactersLength)
             {
                 if (characterNameWindow != null)
                 {

@@ -13,8 +13,6 @@ namespace Scripts.UI.Windows
 
         public event Action CreateAccountButtonClicked;
 
-        public event Action<string> ShowNotice;
-
         public string Email
         {
             set
@@ -36,10 +34,6 @@ namespace Scripts.UI.Windows
                 }
             }
         }
-
-        [Header("Configuration")]
-        [SerializeField]
-        private int passwordCharactersLength;
 
         [Header("Input Fields")]
         [SerializeField]
@@ -85,104 +79,16 @@ namespace Scripts.UI.Windows
 
         private void OnLoginButtonClicked()
         {
-            string message;
+            var email = emailInputField?.text;
+            var password = passwordInputField?.text;
 
-            if (IsEmptyEmailAddress(out message)
-                || IsInvalidEmailAddress(out message)
-                || IsEmptyPassword(out message)
-                || IsPasswordTooShort(out message))
-            {
-                ShowNotice?.Invoke(message);
-            }
-            else
-            {
-                Login();
-            }
+            LoginButtonClicked?.Invoke(
+                new UIAuthenticationDetails(email, password));
         }
 
         private void OnCreateAccountButtonClicked()
         {
             CreateAccountButtonClicked?.Invoke();
-        }
-
-        private void Login()
-        {
-            if (emailInputField != null && passwordInputField != null)
-            {
-                var email = emailInputField.text;
-                var password = passwordInputField.text;
-
-                LoginButtonClicked?.Invoke(
-                    new UIAuthenticationDetails(email, password));
-            }
-        }
-
-        private bool IsEmptyEmailAddress(out string message)
-        {
-            message = WindowMessages.EmptyEmailAddress;
-
-            if (emailInputField != null)
-            {
-                var email = emailInputField.text;
-
-                if (string.IsNullOrWhiteSpace(email))
-                {
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-        private bool IsInvalidEmailAddress(out string message)
-        {
-            message = WindowMessages.InvalidEmailAddress;
-
-            if (emailInputField != null)
-            {
-                var email = emailInputField.text;
-
-                if (WindowUtils.IsEmailAddressValid(email) == false)
-                {
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-        private bool IsEmptyPassword(out string message)
-        {
-            message = WindowMessages.EmptyPassword;
-
-            if (passwordInputField != null)
-            {
-                var password = passwordInputField.text;
-
-                if (string.IsNullOrWhiteSpace(password))
-                {
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-        private bool IsPasswordTooShort(out string message)
-        {
-            message = WindowMessages.ShortPassword;
-
-            if (passwordInputField != null)
-            {
-                var password = passwordInputField.text;
-
-                if (password.Length <= passwordCharactersLength)
-                {
-                    return true;
-                }
-            }
-
-            return false;
         }
     }
 }

@@ -23,12 +23,22 @@ namespace Scripts.UI.Controllers
                 camera = minimapCamera.GetComponent<Camera>();
             }
 
+            CreateMinimapWindow();
+        }
+
+        private void CreateMinimapWindow()
+        {
             minimapWindow =
                 UIElementsCreator.GetInstance().Create<MinimapWindow>();
             minimapWindow.MarkSelectionChanged += OnMarkSelectionChanged;
         }
 
         private void OnDestroy()
+        {
+            DestroyMinimapWindow();
+        }
+
+        private void DestroyMinimapWindow()
         {
             if (minimapWindow != null)
             {

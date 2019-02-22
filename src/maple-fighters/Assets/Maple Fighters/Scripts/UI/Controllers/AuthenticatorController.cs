@@ -11,6 +11,16 @@ namespace Scripts.UI.Controllers
 
         public event Action<UIRegistrationDetails> Register;
 
+        [Header("Configuration")]
+        [SerializeField]
+        private int passwordCharactersLength;
+
+        [SerializeField]
+        private int firstNameCharactersLength;
+
+        [SerializeField]
+        private int lastNameCharactersLength;
+
         private LoginWindow loginWindow;
         private RegistrationWindow registrationWindow;
 
@@ -31,7 +41,6 @@ namespace Scripts.UI.Controllers
             loginWindow.LoginButtonClicked += OnLoginButtonClicked;
             loginWindow.CreateAccountButtonClicked +=
                 OnCreateAccountButtonClicked;
-            loginWindow.ShowNotice += OnShowNotice;
         }
 
         private void CreateRegistrationWindow()
@@ -41,7 +50,6 @@ namespace Scripts.UI.Controllers
             registrationWindow.RegisterButtonClicked +=
                 OnRegisterButtonClicked;
             registrationWindow.BackButtonClicked += OnBackButtonClicked;
-            registrationWindow.ShowNotice += OnShowNotice;
         }
 
         private void OnDestroy()
@@ -74,20 +82,25 @@ namespace Scripts.UI.Controllers
             }
         }
 
-        private void OnShowNotice(string message)
-        {
-            // TODO: Use event bus system
-            var noticeController = FindObjectOfType<NoticeController>();
-            if (noticeController != null)
-            {
-                noticeController.Show(message);
-            }
-        }
-
         private void OnLoginButtonClicked(
             UIAuthenticationDetails authenticationDetails)
         {
-            Login?.Invoke(authenticationDetails);
+            string message;
+
+            var email = authenticationDetails.Email;
+            var password = authenticationDetails.Password;
+
+            if (IsEmptyEmailAddress(email, out message)
+                || IsInvalidEmailAddress(email, out message)
+                || IsEmptyPassword(password, out message)
+                || IsPasswordTooShort(password, out message))
+            {
+                ShowNotice(message);
+            }
+            else
+            {
+                Login?.Invoke(authenticationDetails);
+            }
         }
 
         private void OnCreateAccountButtonClicked()
@@ -99,13 +112,48 @@ namespace Scripts.UI.Controllers
         private void OnRegisterButtonClicked(
             UIRegistrationDetails uiRegistrationDetails)
         {
-            Register?.Invoke(uiRegistrationDetails);
+            string message;
+
+            var email = uiRegistrationDetails.Email;
+            var password = uiRegistrationDetails.Password;
+            var confirmPassword = uiRegistrationDetails.ConfirmPassword;
+            var firstName = uiRegistrationDetails.Firstname;
+            var lastName = uiRegistrationDetails.Lastname;
+
+            if (IsEmptyEmailAddress(email, out message)
+                || IsInvalidEmailAddress(email, out message)
+                || IsEmptyPassword(password, out message)
+                || IsEmptyConfirmPassword(password, out message)
+                || IsPasswordTooShort(password, out message)
+                || IsConfirmPasswordTooShort(password, out message)
+                || ArePasswordsDoNotMatch(password, confirmPassword, out message)
+                || IsFirstNameEmpty(firstName, out message)
+                || IsLastNameEmpty(lastName, out message)
+                || IsFirstNameTooShort(firstName, out message)
+                || IsLastNameTooShort(lastName, out message))
+            {
+                ShowNotice(message);
+            }
+            else
+            {
+                Register?.Invoke(uiRegistrationDetails);
+            }
         }
 
         private void OnBackButtonClicked()
         {
             HideRegistrationWindow();
             ShowLoginWindow();
+        }
+
+        private void ShowNotice(string message)
+        {
+            // TODO: Use event bus system
+            var noticeController = FindObjectOfType<NoticeController>();
+            if (noticeController != null)
+            {
+                noticeController.Show(message);
+            }
         }
 
         private void ShowLoginWindow()
@@ -145,6 +193,83 @@ namespace Scripts.UI.Controllers
                 registrationWindow.LastName = string.Empty;
                 registrationWindow.Hide();
             }
+        }
+
+        private bool IsEmptyEmailAddress(string value, out string message)
+        {
+            message = WindowMessages.EmptyEmailAddress;
+
+            return string.IsNullOrWhiteSpace(value);
+        }
+
+        private bool IsInvalidEmailAddress(string value, out string message)
+        {
+            message = WindowMessages.InvalidEmailAddress;
+            
+            return WindowUtils.IsEmailAddressValid(value) == false;
+        }
+
+        private bool IsEmptyPassword(string value, out string message)
+        {
+            message = WindowMessages.EmptyPassword;
+            
+            return string.IsNullOrWhiteSpace(value);
+        }
+
+        private bool IsPasswordTooShort(string value, out string message)
+        {
+            message = WindowMessages.ShortPassword;
+            
+            return value.Length <= passwordCharactersLength;
+        }
+
+        private bool IsEmptyConfirmPassword(string value, out string message)
+        {
+            message = WindowMessages.EmptyConfirmPassword;
+            
+            return string.IsNullOrWhiteSpace(value);
+        }
+
+        private bool IsConfirmPasswordTooShort(string value, out string message)
+        {
+            message = WindowMessages.ShortPassword;
+
+            return value.Length <= passwordCharactersLength;
+        }
+
+        private bool ArePasswordsDoNotMatch(string a, string b, out string message)
+        {
+            message = WindowMessages.PasswordsDoNotMatch;
+            
+            return a != b;
+        }
+
+        private bool IsFirstNameEmpty(string value, out string message)
+        {
+            message = WindowMessages.EmptyFirstName;
+
+            return string.IsNullOrWhiteSpace(value);
+        }
+
+        private bool IsLastNameEmpty(string value, out string message)
+        {
+            message = WindowMessages.EmptyLastName;
+
+            return string.IsNullOrWhiteSpace(value);
+        }
+
+        private bool IsFirstNameTooShort(string value, out string message)
+        {
+            message = WindowMessages.ShortFirstName;
+            
+            return value.Length < firstNameCharactersLength;
+        }
+
+        private bool IsLastNameTooShort(string value, out string message)
+        {
+            message = WindowMessages.ShortLastName;
+            
+            return value.Length < lastNameCharactersLength;
         }
     }
 }

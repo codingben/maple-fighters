@@ -414,6 +414,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e09d8e1fe6f1d184a9420d91eef85e9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  passwordCharactersLength: 12
+  firstNameCharactersLength: 3
+  lastNameCharactersLength: 3
 --- !u!4 &1523300069
 Transform:
   m_ObjectHideFlags: 0
