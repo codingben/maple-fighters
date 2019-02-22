@@ -13,13 +13,13 @@ namespace Scripts.UI.Controllers
 
         [Header("Configuration")]
         [SerializeField]
-        private int passwordCharactersLength;
+        private int passwordLength;
 
         [SerializeField]
-        private int firstNameCharactersLength;
+        private int firstNameLength;
 
         [SerializeField]
-        private int lastNameCharactersLength;
+        private int lastNameLength;
 
         private LoginWindow loginWindow;
         private RegistrationWindow registrationWindow;
@@ -220,7 +220,7 @@ namespace Scripts.UI.Controllers
         {
             message = WindowMessages.ShortPassword;
             
-            return value.Length <= passwordCharactersLength;
+            return value.Length <= passwordLength;
         }
 
         private bool IsEmptyConfirmPassword(string value, out string message)
@@ -234,7 +234,7 @@ namespace Scripts.UI.Controllers
         {
             message = WindowMessages.ShortPassword;
 
-            return value.Length <= passwordCharactersLength;
+            return value.Length <= passwordLength;
         }
 
         private bool ArePasswordsDoNotMatch(string a, string b, out string message)
@@ -262,14 +262,14 @@ namespace Scripts.UI.Controllers
         {
             message = WindowMessages.ShortFirstName;
             
-            return value.Length < firstNameCharactersLength;
+            return value.Length < firstNameLength;
         }
 
         private bool IsLastNameTooShort(string value, out string message)
         {
             message = WindowMessages.ShortLastName;
             
-            return value.Length < lastNameCharactersLength;
+            return value.Length < lastNameLength;
         }
     }
 }
