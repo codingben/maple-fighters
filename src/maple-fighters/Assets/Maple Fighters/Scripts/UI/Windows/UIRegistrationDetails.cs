@@ -8,9 +8,9 @@
 
         public string ConfirmPassword { get; }
 
-        public string Firstname { get; }
+        public string FirstName { get; }
 
-        public string Lastname { get; }
+        public string LastName { get; }
 
         public UIRegistrationDetails(
             string email,
@@ -22,8 +22,8 @@
             Email = email;
             Password = password;
             ConfirmPassword = confirmPassword;
-            Firstname = firstname;
-            Lastname = lastname;
+            FirstName = firstname;
+            LastName = lastname;
         }
     }
 }

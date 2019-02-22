@@ -117,8 +117,8 @@ namespace Scripts.UI.Controllers
             var email = uiRegistrationDetails.Email;
             var password = uiRegistrationDetails.Password;
             var confirmPassword = uiRegistrationDetails.ConfirmPassword;
-            var firstName = uiRegistrationDetails.Firstname;
-            var lastName = uiRegistrationDetails.Lastname;
+            var firstName = uiRegistrationDetails.FirstName;
+            var lastName = uiRegistrationDetails.LastName;
 
             if (IsEmptyEmailAddress(email, out message)
                 || IsInvalidEmailAddress(email, out message)
