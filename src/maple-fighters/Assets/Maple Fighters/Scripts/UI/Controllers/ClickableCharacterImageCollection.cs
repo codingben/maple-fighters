@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Scripts.UI.Controllers
+﻿namespace Scripts.UI.Controllers
 {
     public struct ClickableCharacterImageCollection
     {
@@ -10,15 +8,9 @@ namespace Scripts.UI.Controllers
             UICharacterIndex uiCharacterIndex,
             ClickableCharacterImage clickableCharacterImage)
         {
-            if (clickableCharacterImages == null)
-            {
-                clickableCharacterImages =
-                    new ClickableCharacterImage[] { null, null, null };
-            }
-
             if (uiCharacterIndex != UICharacterIndex.Zero)
             {
-                clickableCharacterImages[(int)uiCharacterIndex] =
+                GetClickableCharacterImages()[(int)uiCharacterIndex] =
                     clickableCharacterImage;
             }
         }
@@ -26,18 +18,12 @@ namespace Scripts.UI.Controllers
         public ClickableCharacterImage GetCharacterImage(
             UICharacterIndex uiCharacterIndex)
         {
-            if (clickableCharacterImages == null)
-            {
-                clickableCharacterImages =
-                    new ClickableCharacterImage[] { null, null, null };
-            }
-
             return uiCharacterIndex == UICharacterIndex.Zero
                        ? null
-                       : clickableCharacterImages[(int)uiCharacterIndex];
+                       : GetClickableCharacterImages()[(int)uiCharacterIndex];
         }
-
-        public IEnumerable<ClickableCharacterImage> GetCharacterImages()
+        
+        public ClickableCharacterImage[] GetClickableCharacterImages()
         {
             if (clickableCharacterImages == null)
             {
@@ -45,10 +31,7 @@ namespace Scripts.UI.Controllers
                     new ClickableCharacterImage[] { null, null, null };
             }
 
-            foreach (var characterImage in clickableCharacterImages)
-            {
-                yield return characterImage;
-            }
+            return clickableCharacterImages;
         }
     }
 }
