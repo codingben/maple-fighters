@@ -5,20 +5,29 @@ namespace Scripts.UI.Controllers
 {
     public class MenuBackgroundController : MonoBehaviour
     {
-        private MenuBackgroundImage menuBackgroundImage;
+        private MenuBackgroundImage backgroundImage;
 
         private void Awake()
         {
-            menuBackgroundImage = 
-                UIElementsCreator.GetInstance()
-                    .Create<MenuBackgroundImage>(UILayer.Background);
+            CreateMenuBackgroundImage();
+        }
+
+        private void CreateMenuBackgroundImage()
+        {
+            backgroundImage = UIElementsCreator.GetInstance()
+                .Create<MenuBackgroundImage>(UILayer.Background);
         }
 
         private void OnDestroy()
         {
-            if (menuBackgroundImage != null)
+            DestroyMenuBackgroundImage();
+        }
+
+        private void DestroyMenuBackgroundImage()
+        {
+            if (backgroundImage != null)
             {
-                Destroy(menuBackgroundImage.gameObject);
+                Destroy(backgroundImage.gameObject);
             }
         }
     }

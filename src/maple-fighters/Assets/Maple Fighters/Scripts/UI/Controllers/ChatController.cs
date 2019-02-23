@@ -13,11 +13,21 @@ namespace Scripts.UI.Controllers
 
         private void Awake()
         {
+            CreateChatWindow();
+        }
+
+        private void CreateChatWindow()
+        {
             chatWindow = UIElementsCreator.GetInstance().Create<ChatWindow>();
             chatWindow.MessageAdded += OnMessageAdded;
         }
 
         private void OnDestroy()
+        {
+            DestroyChatWindow();
+        }
+
+        private void DestroyChatWindow()
         {
             if (chatWindow != null)
             {

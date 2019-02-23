@@ -17,20 +17,20 @@ namespace Scripts.UI.Controllers
         private GameServerSelectorWindow gameServerSelectorWindow;
         private Dictionary<string, GameServerButton> gameServerButtons;
 
-        private const string RefreshImageMessage = "Getting server list...";
-
         private void Awake()
         {
             gameServerButtons = new Dictionary<string, GameServerButton>();
+
+            CreateGameServerSelectorWindow();
         }
 
         private void OnDestroy()
         {
-            RemoveGameServerButtons();
-            RemoveGameServerSelectorWindow();
+            DestroyGameServerButtons();
+            DestroyGameServerSelectorWindow();
         }
 
-        public void CreateGameServerSelectorWindow()
+        private void CreateGameServerSelectorWindow()
         {
             gameServerSelectorWindow = UIElementsCreator.GetInstance()
                 .Create<GameServerSelectorWindow>();
@@ -38,10 +38,9 @@ namespace Scripts.UI.Controllers
                 OnJoinButtonClicked;
             gameServerSelectorWindow.RefreshButtonClicked +=
                 OnRefreshButtonClicked;
-            gameServerSelectorWindow.Show();
         }
 
-        public void RemoveGameServerSelectorWindow()
+        private void DestroyGameServerSelectorWindow()
         {
             if (gameServerSelectorWindow != null)
             {
@@ -76,13 +75,18 @@ namespace Scripts.UI.Controllers
             ShowGameServerList();
         }
 
-        public void RemoveGameServerButtons()
+        private void DestroyGameServerButtons()
         {
-            foreach (var gameServerButton in gameServerButtons.Values)
-            {
-                gameServerButton.ButtonClicked -= OnGameServerButtonClicked;
+            var gameServerButtonDatas = gameServerButtons.Values;
 
-                Destroy(gameServerButton.gameObject);
+            foreach (var gameServerButton in gameServerButtonDatas)
+            {
+                if (gameServerButton != null)
+                {
+                    gameServerButton.ButtonClicked -= OnGameServerButtonClicked;
+
+                    Destroy(gameServerButton.gameObject);
+                }
             }
 
             gameServerButtons.Clear();
@@ -139,7 +143,7 @@ namespace Scripts.UI.Controllers
                 if (gameServerSelectorWindow.RefreshImage != null)
                 {
                     gameServerSelectorWindow.RefreshImage.Message =
-                        RefreshImageMessage;
+                        WindowMessages.RefreshImage;
                     gameServerSelectorWindow.RefreshImage.Show();
                 }
             }

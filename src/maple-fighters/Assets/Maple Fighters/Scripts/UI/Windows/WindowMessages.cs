@@ -13,5 +13,6 @@
         public const string EmptyLastName = "The last name is empty.";
         public const string ShortFirstName = "The first name is too short.";
         public const string ShortLastName = "The last name is too short.";
+        public const string RefreshImage = "Getting server list...";
     }
 }

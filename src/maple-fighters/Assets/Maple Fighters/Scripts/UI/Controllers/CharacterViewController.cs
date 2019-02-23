@@ -35,17 +35,14 @@ namespace Scripts.UI.Controllers
 
         private void CreateCharacterView()
         {
-            characterView = 
-                UIElementsCreator.GetInstance().Create<CharacterView>(
-                    UILayer.Background,
-                    UIIndex.End);
+            characterView = UIElementsCreator.GetInstance()
+                .Create<CharacterView>(UILayer.Background, UIIndex.End);
         }
 
         private void CreateCharacterSelectionOptionsWindow()
         {
-            characterSelectionOptionsWindow = 
-                UIElementsCreator.GetInstance()
-                    .Create<CharacterSelectionOptionsWindow>();
+            characterSelectionOptionsWindow = UIElementsCreator.GetInstance()
+                .Create<CharacterSelectionOptionsWindow>();
             characterSelectionOptionsWindow.StartButtonClicked +=
                 OnStartButtonClicked;
             characterSelectionOptionsWindow.CreateCharacterButtonClicked +=
