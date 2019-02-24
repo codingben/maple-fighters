@@ -1,4 +1,5 @@
 ﻿using System;
+using Scripts.UI.Models;
 using Scripts.UI.Windows;
 using UI.Manager;
 using UnityEngine;
@@ -11,24 +12,11 @@ namespace Scripts.UI.Controllers
 
         public event Action CharacterCancelled;
 
-        [Header("Configuration")]
-        [SerializeField]
+        [Header("Configuration"), SerializeField]
         private int characterNameLength;
-
-        private UICharacterDetails uiCharacterDetails;
 
         private CharacterSelectionWindow characterSelectionWindow;
         private CharacterNameWindow characterNameWindow;
-
-        public void SetCharacterDetails(UICharacterDetails uiCharacterDetails)
-        {
-            this.uiCharacterDetails = uiCharacterDetails;
-        }
-
-        public UICharacterDetails GetCharacterDetails()
-        {
-            return uiCharacterDetails;
-        }
 
         private void Awake()
         {
@@ -44,9 +32,8 @@ namespace Scripts.UI.Controllers
                 OnChooseButtonClicked;
             characterSelectionWindow.CancelButtonClicked +=
                 OnCancelButtonClicked;
-            characterSelectionWindow.KnightSelected += OnKnightSelected;
-            characterSelectionWindow.ArrowSelected += OnArrowSelected;
-            characterSelectionWindow.WizardSelected += OnWizardSelected;
+            characterSelectionWindow.CharacterSelected += 
+                OnCharacterSelected;
         }
 
         private void CreateCharacterNameWindow()
@@ -55,7 +42,8 @@ namespace Scripts.UI.Controllers
                 .Create<CharacterNameWindow>();
             characterNameWindow.ConfirmButtonClicked +=
                 OnConfirmButtonClicked;
-            characterNameWindow.BackButtonClicked += OnBackButtonClicked;
+            characterNameWindow.BackButtonClicked += 
+                OnBackButtonClicked;
             characterNameWindow.NameInputFieldChanged +=
                 OnNameInputFieldChanged;
         }
@@ -74,9 +62,8 @@ namespace Scripts.UI.Controllers
                     OnChooseButtonClicked;
                 characterSelectionWindow.CancelButtonClicked -=
                     OnCancelButtonClicked;
-                characterSelectionWindow.KnightSelected -= OnKnightSelected;
-                characterSelectionWindow.ArrowSelected -= OnArrowSelected;
-                characterSelectionWindow.WizardSelected -= OnWizardSelected;
+                characterSelectionWindow.CharacterSelected -=
+                    OnCharacterSelected;
 
                 Destroy(characterSelectionWindow.gameObject);
             }
@@ -88,7 +75,8 @@ namespace Scripts.UI.Controllers
             {
                 characterNameWindow.ConfirmButtonClicked -=
                     OnConfirmButtonClicked;
-                characterNameWindow.BackButtonClicked -= OnBackButtonClicked;
+                characterNameWindow.BackButtonClicked -= 
+                    OnBackButtonClicked;
                 characterNameWindow.NameInputFieldChanged -=
                     OnNameInputFieldChanged;
 
@@ -118,7 +106,8 @@ namespace Scripts.UI.Controllers
         {
             HideCharacterNameWindow();
 
-            uiCharacterDetails.SetCharacterName(characterName);
+            CharacterDetails.GetInstance()
+                .SetCharacterName(characterName);
 
             CharacterChosen?.Invoke();
         }
@@ -142,19 +131,10 @@ namespace Scripts.UI.Controllers
             CharacterCancelled?.Invoke();
         }
 
-        private void OnKnightSelected()
+        private void OnCharacterSelected(UICharacterClass uiCharacterClass)
         {
-            uiCharacterDetails.SetCharacterClass(UICharacterClass.Knight);
-        }
-
-        private void OnArrowSelected()
-        {
-            uiCharacterDetails.SetCharacterClass(UICharacterClass.Arrow);
-        }
-
-        private void OnWizardSelected()
-        {
-            uiCharacterDetails.SetCharacterClass(UICharacterClass.Wizard);
+            CharacterDetails.GetInstance()
+                .SetCharacterClass(uiCharacterClass);
         }
 
         private void ShowCharacterNameWindow()

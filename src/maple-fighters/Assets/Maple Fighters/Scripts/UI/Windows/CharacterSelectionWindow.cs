@@ -1,5 +1,4 @@
 ﻿using System;
-using Game.Common;
 using TMPro;
 using UI.Manager;
 using UnityEngine;
@@ -10,11 +9,7 @@ namespace Scripts.UI.Windows
     [RequireComponent(typeof(UIFadeAnimation))]
     public class CharacterSelectionWindow : UIElement
     {
-        public event Action KnightSelected;
-
-        public event Action ArrowSelected;
-
-        public event Action WizardSelected;
+        public event Action<UICharacterClass> CharacterSelected;
 
         public event Action ChooseButtonClicked;
 
@@ -138,9 +133,9 @@ namespace Scripts.UI.Windows
 
             ResetSelectedCharacterClass();
 
-            SelectCharacterClass(CharacterClasses.Knight);
+            SelectCharacterClass(UICharacterClass.Knight);
 
-            KnightSelected?.Invoke();
+            CharacterSelected?.Invoke(UICharacterClass.Knight);
         }
 
         private void OnArrowSelected()
@@ -149,9 +144,9 @@ namespace Scripts.UI.Windows
 
             ResetSelectedCharacterClass();
 
-            SelectCharacterClass(CharacterClasses.Arrow);
+            SelectCharacterClass(UICharacterClass.Arrow);
 
-            ArrowSelected?.Invoke();
+            CharacterSelected?.Invoke(UICharacterClass.Arrow);
         }
 
         private void OnWizardSelected()
@@ -160,16 +155,16 @@ namespace Scripts.UI.Windows
 
             ResetSelectedCharacterClass();
 
-            SelectCharacterClass(CharacterClasses.Wizard);
+            SelectCharacterClass(UICharacterClass.Wizard);
 
-            WizardSelected?.Invoke();
+            CharacterSelected?.Invoke(UICharacterClass.Wizard);
         }
 
-        private void SelectCharacterClass(CharacterClasses character)
+        private void SelectCharacterClass(UICharacterClass uiCharacterClass)
         {
-            switch (character)
+            switch (uiCharacterClass)
             {
-                case CharacterClasses.Knight:
+                case UICharacterClass.Knight:
                 {
                     if (knightSelectedImage != null)
                     {
@@ -184,7 +179,7 @@ namespace Scripts.UI.Windows
                     break;
                 }
 
-                case CharacterClasses.Arrow:
+                case UICharacterClass.Arrow:
                 {
                     if (arrowSelectedImage != null)
                     {
@@ -199,7 +194,7 @@ namespace Scripts.UI.Windows
                     break;
                 }
 
-                case CharacterClasses.Wizard:
+                case UICharacterClass.Wizard:
                 {
                     if (wizardSelectedImage != null)
                     {

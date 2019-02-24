@@ -9,12 +9,31 @@ namespace Scripts.UI
     [RequireComponent(typeof(Animator), typeof(UIFadeAnimation))]
     public class ClickableCharacterImage : UIElement, IPointerClickHandler
     {
-        public event Action<UICharacterDetails> CharacterClicked;
+        public event Action<UICharacterClass> CharacterClicked;
+
+        public UICharacterClass CharacterClass
+        {
+            set
+            {
+                characterClass = value;
+            }
+        }
+
+        public string CharacterName
+        {
+            set
+            {
+                if (characterNameText != null)
+                {
+                    characterNameText.text = value;
+                }
+            }
+        }
 
         [Header("Text"), SerializeField]
         private TextMeshProUGUI characterNameText;
 
-        private UICharacterDetails uiCharacterDetails;
+        private UICharacterClass characterClass;
         private Animator animator;
 
         private void Awake()
@@ -36,23 +55,10 @@ namespace Scripts.UI
         {
             Destroy(gameObject);
         }
-
-        public void SetCharacterDetails(UICharacterDetails uiCharacterDetails)
-        {
-            this.uiCharacterDetails = uiCharacterDetails;
-        }
-
-        public void SetCharacterName(string name)
-        {
-            if (characterNameText != null)
-            {
-                characterNameText.text = name;
-            }
-        }
-
+        
         public void OnPointerClick(PointerEventData eventData)
         {
-            CharacterClicked?.Invoke(uiCharacterDetails);
+            CharacterClicked?.Invoke(characterClass);
         }
 
         public void PlayAnimation(UICharacterAnimation characterAnimation)
@@ -71,11 +77,6 @@ namespace Scripts.UI
                     break;
                 }
             }
-        }
-
-        public UICharacterDetails GetCharacterDetails()
-        {
-            return uiCharacterDetails;
         }
     }
 }

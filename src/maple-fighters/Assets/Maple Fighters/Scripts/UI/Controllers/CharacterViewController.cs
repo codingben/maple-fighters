@@ -1,4 +1,5 @@
 ﻿using System;
+using Scripts.UI.Models;
 using Scripts.UI.Windows;
 using UI.Manager;
 using UnityEngine;
@@ -19,15 +20,9 @@ namespace Scripts.UI.Controllers
         private CharacterView characterView;
         private CharacterSelectionOptionsWindow characterSelectionOptionsWindow;
 
-        private CharacterSelectionController characterSelectionController;
-
         private void Awake()
         {
             characterImageCollection = new ClickableCharacterImageCollection();
-
-            // TODO: Use event bus system
-            characterSelectionController =
-                FindObjectOfType<CharacterSelectionController>();
 
             CreateCharacterView();
             CreateCharacterSelectionOptionsWindow();
@@ -96,22 +91,24 @@ namespace Scripts.UI.Controllers
             }
         }
 
-        public void CreateCharacter(UICharacterDetails uiCharacterDetails)
+        public void CreateCharacter()
         {
-            var path = GetCharacterPath(uiCharacterDetails);
             var characterGameObject = 
-                UIManagerUtils.LoadAndCreateGameObject(path);
+                UIManagerUtils.LoadAndCreateGameObject(GetCharacterPath());
             var characterImage = 
                 characterGameObject.GetComponent<ClickableCharacterImage>();
             if (characterImage != null)
             {
-                var characterName = uiCharacterDetails.GetCharacterName();
+                var characterName = 
+                    CharacterDetails.GetInstance().GetCharacterName();
 
-                characterImage.SetCharacterDetails(uiCharacterDetails);
-                characterImage.SetCharacterName(characterName);
+                // TODO: Set Character Id
+                // characterImage.SetCharacterDetails(uiCharacterDetails);
+                characterImage.CharacterName = characterName;
                 characterImage.CharacterClicked += OnCharacterClicked;
 
-                var characterIndex = uiCharacterDetails.GetCharacterIndex();
+                var characterIndex =
+                    CharacterDetails.GetInstance().GetCharacterIndex();
                 characterImageCollection
                     .SetCharacterImage(characterIndex, characterImage);
             }
@@ -121,28 +118,30 @@ namespace Scripts.UI.Controllers
         {
             if (characterSelectionOptionsWindow != null)
             {
-                var uiCharacterDetails =
-                    characterSelectionController.GetCharacterDetails();
-                var hasCharacter = uiCharacterDetails.HasCharacter();
+                var hasCharacter =
+                    CharacterDetails.GetInstance().HasCharacter();
 
                 characterSelectionOptionsWindow
                     .EnableOrDisableStartButton(hasCharacter);
+
                 characterSelectionOptionsWindow
                     .EnableOrDisableCreateCharacterButton(!hasCharacter);
+
                 characterSelectionOptionsWindow
                     .EnableOrDisableDeleteCharacterButton(hasCharacter);
+
                 characterSelectionOptionsWindow.Show();
             }
         }
 
-        private void OnCharacterClicked(UICharacterDetails characterDetails)
+        private void OnCharacterClicked(UICharacterClass uiCharacterClass)
         {
-            characterSelectionController.SetCharacterDetails(
-                characterDetails);
+            CharacterDetails.GetInstance().SetCharacterClass(uiCharacterClass);
 
             ShowCharacterSelectionOptionsWindow();
 
-            var characterIndex = characterDetails.GetCharacterIndex();
+            var characterIndex =
+                CharacterDetails.GetInstance().GetCharacterIndex();
             var characterImage =
                 characterImageCollection.GetCharacterImage(characterIndex);
 
@@ -151,37 +150,44 @@ namespace Scripts.UI.Controllers
         
         private void OnStartButtonClicked()
         {
-            var characterDetails =
-                characterSelectionController.GetCharacterDetails();
-            var characterIndex = (int)characterDetails.GetCharacterIndex();
+            var characterIndex =
+                CharacterDetails.GetInstance().GetCharacterIndex();
 
-            CharacterStarted?.Invoke(characterIndex);
+            CharacterStarted?.Invoke((int)characterIndex);
         }
 
         private void OnCreateCharacterButtonClicked()
         {
-            characterSelectionController.ShowCharacterSelectionWindow();
+            // TODO: Find a better way to do so
+            var characterSelectionController =
+                FindObjectOfType<CharacterSelectionController>();
+            if (characterSelectionController != null)
+            {
+                characterSelectionController.ShowCharacterSelectionWindow();
+            }
         }
 
         private void OnDeleteCharacterButtonClicked()
         {
-            var characterDetails =
-                characterSelectionController.GetCharacterDetails();
-            var characterIndex = (int)characterDetails.GetCharacterIndex();
+            var characterIndex =
+                CharacterDetails.GetInstance().GetCharacterIndex();
 
-            CharacterRemoved?.Invoke(characterIndex);
+            CharacterRemoved?.Invoke((int)characterIndex);
         }
 
-        private string GetCharacterPath(UICharacterDetails uiCharacterDetails)
+        private string GetCharacterPath()
         {
             const string CharactersPath = "Characters/{0}";
 
-            var characterIndex = (int)uiCharacterDetails.GetCharacterIndex();
-            var characterClass = uiCharacterDetails.GetCharacterClass();
-            var hasCharacter = uiCharacterDetails.HasCharacter();
+            var characterIndex =
+                CharacterDetails.GetInstance().GetCharacterIndex();
+            var characterClass =
+                CharacterDetails.GetInstance().GetCharacterClass();
+            var hasCharacter = 
+                CharacterDetails.GetInstance().HasCharacter();
             var name = 
                 hasCharacter
-                    ? $"{characterClass} {characterIndex}"
+                    ? $"{characterClass} {(int)characterIndex}"
                     : $"Sample {characterIndex}";
 
             return string.Format(CharactersPath, name);

@@ -1,6 +1,8 @@
-﻿namespace Scripts.UI
+﻿using UI.Manager;
+
+namespace Scripts.UI.Models
 {
-    public struct UICharacterDetails
+    public class CharacterDetails : Singleton<CharacterDetails>
     {
         private string characterName;
         private UICharacterIndex uiCharacterIndex;
@@ -23,6 +25,11 @@
             this.uiCharacterClass = uiCharacterClass;
         }
 
+        public void SetMapIndex(UIMapIndex uiMapIndex)
+        {
+            this.uiMapIndex = uiMapIndex;
+        }
+
         public void SetHasCharacter(bool hasCharacter)
         {
             this.hasCharacter = hasCharacter;
@@ -41,6 +48,11 @@
         public UICharacterClass GetCharacterClass()
         {
             return uiCharacterClass;
+        }
+
+        public UIMapIndex GetMapIndex()
+        {
+            return uiMapIndex;
         }
 
         public bool HasCharacter()
