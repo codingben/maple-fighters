@@ -171,8 +171,6 @@ namespace Scripts.UI.Controllers
             {
                 if (gameServerSelectorWindow.RefreshImage != null)
                 {
-                    gameServerSelectorWindow.RefreshImage.Message =
-                        WindowMessages.RefreshImage;
                     gameServerSelectorWindow.RefreshImage.Show();
                 }
             }
