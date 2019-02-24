@@ -24,10 +24,12 @@ namespace Scripts.UI.Controllers
             CreateGameServerSelectorWindow();
         }
 
-        private void OnDestroy()
+        public void ShowGameServerSelectorWindow()
         {
-            DestroyGameServerButtons();
-            DestroyGameServerSelectorWindow();
+            if (gameServerSelectorWindow != null)
+            {
+                gameServerSelectorWindow.Show();
+            }
         }
 
         private void CreateGameServerSelectorWindow()
@@ -38,6 +40,12 @@ namespace Scripts.UI.Controllers
                 OnJoinButtonClicked;
             gameServerSelectorWindow.RefreshButtonClicked +=
                 OnRefreshButtonClicked;
+        }
+
+        private void OnDestroy()
+        {
+            DestroyGameServerButtons();
+            DestroyGameServerSelectorWindow();
         }
 
         private void DestroyGameServerSelectorWindow()
@@ -104,13 +112,18 @@ namespace Scripts.UI.Controllers
 
         private void OnJoinButtonClicked()
         {
+            HideGameServerSelectorWindow();
+
+            JoinGameServer?.Invoke();
+        }
+
+        private void HideGameServerSelectorWindow()
+        {
             if (gameServerSelectorWindow != null)
             {
                 gameServerSelectorWindow.DisableAllButtons();
                 gameServerSelectorWindow.Hide();
             }
-
-            JoinGameServer?.Invoke();
         }
 
         private void OnRefreshButtonClicked()
@@ -122,24 +135,40 @@ namespace Scripts.UI.Controllers
         
         private void ShowGameServerList()
         {
+            HideRefreshImage();
+
+            if (gameServerSelectorWindow != null)
+            {
+                gameServerSelectorWindow.DisableAllButtons();
+                gameServerSelectorWindow.EnableRefreshButton();
+            }
+        }
+
+        private void HideRefreshImage()
+        {
             if (gameServerSelectorWindow != null)
             {
                 if (gameServerSelectorWindow.RefreshImage != null)
                 {
                     gameServerSelectorWindow.RefreshImage.Hide();
                 }
-
-                gameServerSelectorWindow.DisableAllButtons();
-                gameServerSelectorWindow.EnableRefreshButton();
             }
         }
 
         private void ShowRefreshingGameServerList()
         {
+            ShowRefreshImage();
+
             if (gameServerSelectorWindow != null)
             {
                 gameServerSelectorWindow.DisableAllButtons();
+            }
+        }
 
+        private void ShowRefreshImage()
+        {
+            if (gameServerSelectorWindow != null)
+            {
                 if (gameServerSelectorWindow.RefreshImage != null)
                 {
                     gameServerSelectorWindow.RefreshImage.Message =
