@@ -10,27 +10,17 @@ namespace Scripts.UI.Controllers
         private NoticeWindow noticeWindow;
         private Action onOkButtonClicked;
 
-        private void OnDestroy()
-        {
-            if (noticeWindow != null)
-            {
-                Destroy(noticeWindow.gameObject);
-            }
-        }
-
         public void Show(string message, Action onClicked = null, bool background = true)
         {
-            if (noticeWindow == null)
+            var noticeWindow = CreateAndShowNoticeWindow();
+            if (noticeWindow != null)
             {
-                noticeWindow = UIElementsCreator.GetInstance()
-                    .Create<NoticeWindow>(UILayer.Foreground, UIIndex.End);
-
                 noticeWindow.Message = message;
-                noticeWindow.OkButtonClicked += Hide;
 
                 if (onClicked != null)
                 {
                     onOkButtonClicked = onClicked;
+
                     noticeWindow.OkButtonClicked += onOkButtonClicked;
                 }
                 else
@@ -42,19 +32,32 @@ namespace Scripts.UI.Controllers
                 {
                     noticeWindow.HideBackground();
                 }
+            }
+        }
 
+        private NoticeWindow CreateAndShowNoticeWindow()
+        {
+            if (noticeWindow == null)
+            {
+                noticeWindow = UIElementsCreator.GetInstance()
+                    .Create<NoticeWindow>(UILayer.Foreground, UIIndex.End);
+                noticeWindow.OkButtonClicked += Hide;
                 noticeWindow.Show();
             }
+
+            return null;
         }
 
         public void Hide()
         {
+            SubscribeToUIFadeAnimation();
+            HideNoticeWindow();
+        }
+
+        private void HideNoticeWindow()
+        {
             if (noticeWindow != null)
             {
-                var uiFadeAnimation =
-                    noticeWindow.GetComponent<UIFadeAnimation>();
-                uiFadeAnimation.FadeOutCompleted += OnFadeOutCompleted;
-
                 noticeWindow.OkButtonClicked -= Hide;
 
                 if (onOkButtonClicked != null)
@@ -66,16 +69,43 @@ namespace Scripts.UI.Controllers
             }
         }
 
-        private void OnFadeOutCompleted()
+        private void SubscribeToUIFadeAnimation()
+        {
+            if (noticeWindow != null)
+            {
+                var uiFadeAnimation =
+                    noticeWindow.GetComponent<UIFadeAnimation>();
+                uiFadeAnimation.FadeOutCompleted += OnFadeOutCompleted;
+            }
+        }
+
+        private void UnsubscribeFromUIFadeAnimation()
         {
             if (noticeWindow != null)
             {
                 var uiFadeAnimation =
                     noticeWindow.GetComponent<UIFadeAnimation>();
                 uiFadeAnimation.FadeOutCompleted -= OnFadeOutCompleted;
+            }
+        }
 
+        private void OnDestroy()
+        {
+            DestroyNoticeWindow();
+        }
+
+        private void DestroyNoticeWindow()
+        {
+            if (noticeWindow != null)
+            {
                 Destroy(noticeWindow.gameObject);
             }
+        }
+
+        private void OnFadeOutCompleted()
+        {
+            UnsubscribeFromUIFadeAnimation();
+            DestroyNoticeWindow();
         }
     }
 }

@@ -14,6 +14,11 @@ namespace Scripts.UI.Controllers
 
         private void OnDestroy()
         {
+            DestroyScreenFadeImage();
+        }
+
+        private void DestroyScreenFadeImage()
+        {
             if (screenFadeImage != null)
             {
                 Destroy(screenFadeImage.gameObject);
@@ -26,6 +31,10 @@ namespace Scripts.UI.Controllers
             {
                 screenFadeImage = UIElementsCreator.GetInstance()
                     .Create<ScreenFadeImage>(UILayer.Foreground, UIIndex.End);
+            }
+
+            if (screenFadeImage != null)
+            {
                 screenFadeImage.Show();
             }
         }
@@ -36,28 +45,40 @@ namespace Scripts.UI.Controllers
             {
                 screenFadeImage = UIElementsCreator.GetInstance()
                     .Create<ScreenFadeImage>(UILayer.Foreground, UIIndex.End);
-                screenFadeImage.Hide();
             }
-            else
+
+            SubscribeToUIFadeAnimation();
+
+            if (screenFadeImage != null)
             {
                 screenFadeImage.Hide();
             }
-
-            var uiFadeAnimation =
-                screenFadeImage.GetComponent<UIFadeAnimation>();
-            uiFadeAnimation.FadeOutCompleted += OnFadeOutCompleted;
         }
 
-        private void OnFadeOutCompleted()
+        private void SubscribeToUIFadeAnimation()
+        {
+            if (screenFadeImage != null)
+            {
+                var uiFadeAnimation =
+                    screenFadeImage.GetComponent<UIFadeAnimation>();
+                uiFadeAnimation.FadeOutCompleted += OnFadeOutCompleted;
+            }
+        }
+
+        private void UnsubscribeFromUIFadeAnimation()
         {
             if (screenFadeImage != null)
             {
                 var uiFadeAnimation =
                     screenFadeImage.GetComponent<UIFadeAnimation>();
                 uiFadeAnimation.FadeOutCompleted -= OnFadeOutCompleted;
-
-                Destroy(screenFadeImage.gameObject);
             }
+        }
+
+        private void OnFadeOutCompleted()
+        {
+            UnsubscribeFromUIFadeAnimation();
+            DestroyScreenFadeImage();
         }
     }
 }
