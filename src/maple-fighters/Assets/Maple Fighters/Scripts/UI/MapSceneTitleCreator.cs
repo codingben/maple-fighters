@@ -21,7 +21,6 @@ namespace Scripts.UI
                 .Create<MapSceneTitleText>();
             mapSceneTitleText.Text = titleText;
 
-
             Destroy(gameObject);
         }
     }
