@@ -43,6 +43,11 @@ namespace Scripts.Gameplay.Actors
         private void Awake()
         {
             var focusStateController = FindObjectOfType<FocusStateController>();
+            if (focusStateController == null)
+            {
+                Debug.LogError(
+                    "PlayerController::Awake() -> Could not find FocusStateController!");
+            }
 
             playerStateBehaviours =
                 new Dictionary<PlayerState, IPlayerStateBehaviour>

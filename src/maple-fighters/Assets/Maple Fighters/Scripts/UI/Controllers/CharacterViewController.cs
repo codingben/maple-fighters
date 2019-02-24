@@ -158,7 +158,7 @@ namespace Scripts.UI.Controllers
 
         private void OnCreateCharacterButtonClicked()
         {
-            // TODO: Find a better way to do so
+            // TODO: Use event bus system
             var characterSelectionController =
                 FindObjectOfType<CharacterSelectionController>();
             if (characterSelectionController != null)

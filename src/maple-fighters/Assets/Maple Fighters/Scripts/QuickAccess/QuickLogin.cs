@@ -21,8 +21,11 @@ namespace Scripts.QuickAccess
             if (quickLoginConfiguration != null)
             {
                 var loginWindow = FindObjectOfType<LoginWindow>();
-                loginWindow.Email = quickLoginConfiguration.Email;
-                loginWindow.Password = quickLoginConfiguration.Password;
+                if (loginWindow != null)
+                {
+                    loginWindow.Email = quickLoginConfiguration.Email;
+                    loginWindow.Password = quickLoginConfiguration.Password;
+                }
             }
 
             Destroy(gameObject);
