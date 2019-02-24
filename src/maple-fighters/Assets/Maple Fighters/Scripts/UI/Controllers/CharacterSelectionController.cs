@@ -106,8 +106,7 @@ namespace Scripts.UI.Controllers
         {
             HideCharacterNameWindow();
 
-            CharacterDetails.GetInstance()
-                .SetCharacterName(characterName);
+            CharacterDetails.GetInstance().SetCharacterName(characterName);
 
             CharacterChosen?.Invoke();
         }
@@ -133,8 +132,7 @@ namespace Scripts.UI.Controllers
 
         private void OnCharacterSelected(UICharacterClass uiCharacterClass)
         {
-            CharacterDetails.GetInstance()
-                .SetCharacterClass(uiCharacterClass);
+            CharacterDetails.GetInstance().SetCharacterClass(uiCharacterClass);
         }
 
         private void ShowCharacterNameWindow()

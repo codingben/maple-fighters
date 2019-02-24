@@ -101,9 +101,10 @@ namespace Scripts.UI.Controllers
             {
                 var characterName = 
                     CharacterDetails.GetInstance().GetCharacterName();
+                var characterClass =
+                    CharacterDetails.GetInstance().GetCharacterClass();
 
-                // TODO: Set Character Id
-                // characterImage.SetCharacterDetails(uiCharacterDetails);
+                characterImage.CharacterClass = characterClass;
                 characterImage.CharacterName = characterName;
                 characterImage.CharacterClicked += OnCharacterClicked;
 
