@@ -6,7 +6,7 @@ using UnityEngine.UI;
 namespace Scripts.UI.Windows
 {
     [RequireComponent(typeof(UIFadeAnimation))]
-    public class CharacterSelectionOptionsWindow : UIElement
+    public class CharacterSelectionOptionsWindow : UIElement, ICharacterSelectionOptionsView
     {
         public event Action StartButtonClicked;
 

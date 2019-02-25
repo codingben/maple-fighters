@@ -17,8 +17,9 @@ namespace Scripts.UI.Controllers
 
         private ClickableCharacterImageCollection characterImageCollection;
 
-        private CharacterView characterView;
-        private CharacterSelectionOptionsWindow characterSelectionOptionsWindow;
+        // TODO: Use character view
+        private ICharacterView characterView;
+        private ICharacterSelectionOptionsView characterSelectionOptionsView;
 
         private void Awake()
         {
@@ -30,19 +31,20 @@ namespace Scripts.UI.Controllers
 
         private void CreateCharacterView()
         {
+            // TODO: Use character view
             characterView = UIElementsCreator.GetInstance()
                 .Create<CharacterView>(UILayer.Background, UIIndex.End);
         }
 
         private void CreateCharacterSelectionOptionsWindow()
         {
-            characterSelectionOptionsWindow = UIElementsCreator.GetInstance()
+            characterSelectionOptionsView = UIElementsCreator.GetInstance()
                 .Create<CharacterSelectionOptionsWindow>();
-            characterSelectionOptionsWindow.StartButtonClicked +=
+            characterSelectionOptionsView.StartButtonClicked +=
                 OnStartButtonClicked;
-            characterSelectionOptionsWindow.CreateCharacterButtonClicked +=
+            characterSelectionOptionsView.CreateCharacterButtonClicked +=
                 OnCreateCharacterButtonClicked;
-            characterSelectionOptionsWindow.DeleteCharacterButtonClicked +=
+            characterSelectionOptionsView.DeleteCharacterButtonClicked +=
                 OnDeleteCharacterButtonClicked;
         }
 
@@ -70,24 +72,19 @@ namespace Scripts.UI.Controllers
 
         private void DestroyCharacterView()
         {
-            if (characterView != null)
-            {
-                Destroy(characterView.gameObject);
-            }
+            // TODO: Implement
         }
 
         private void DestroyCharacterSelectionOptionsWindow()
         {
-            if (characterSelectionOptionsWindow != null)
+            if (characterSelectionOptionsView != null)
             {
-                characterSelectionOptionsWindow.StartButtonClicked -=
+                characterSelectionOptionsView.StartButtonClicked -=
                     OnStartButtonClicked;
-                characterSelectionOptionsWindow.CreateCharacterButtonClicked -=
+                characterSelectionOptionsView.CreateCharacterButtonClicked -=
                     OnCreateCharacterButtonClicked;
-                characterSelectionOptionsWindow.DeleteCharacterButtonClicked -=
+                characterSelectionOptionsView.DeleteCharacterButtonClicked -=
                     OnDeleteCharacterButtonClicked;
-
-                Destroy(characterSelectionOptionsWindow.gameObject);
             }
         }
 
@@ -117,21 +114,21 @@ namespace Scripts.UI.Controllers
 
         private void ShowCharacterSelectionOptionsWindow()
         {
-            if (characterSelectionOptionsWindow != null)
+            if (characterSelectionOptionsView != null)
             {
                 var hasCharacter =
                     CharacterDetails.GetInstance().HasCharacter();
 
-                characterSelectionOptionsWindow
+                characterSelectionOptionsView
                     .EnableOrDisableStartButton(hasCharacter);
 
-                characterSelectionOptionsWindow
+                characterSelectionOptionsView
                     .EnableOrDisableCreateCharacterButton(!hasCharacter);
 
-                characterSelectionOptionsWindow
+                characterSelectionOptionsView
                     .EnableOrDisableDeleteCharacterButton(hasCharacter);
 
-                characterSelectionOptionsWindow.Show();
+                characterSelectionOptionsView.Show();
             }
         }
 
