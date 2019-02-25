@@ -9,7 +9,7 @@ namespace Scripts.UI.Controllers
     {
         public event Action<string> MessageSent;
 
-        private ChatWindow chatWindow;
+        private IChatView chatView;
 
         private void Awake()
         {
@@ -18,8 +18,8 @@ namespace Scripts.UI.Controllers
 
         private void CreateChatWindow()
         {
-            chatWindow = UIElementsCreator.GetInstance().Create<ChatWindow>();
-            chatWindow.MessageAdded += OnMessageAdded;
+            chatView = UIElementsCreator.GetInstance().Create<ChatWindow>();
+            chatView.MessageAdded += OnMessageAdded;
         }
 
         private void OnDestroy()
@@ -29,35 +29,33 @@ namespace Scripts.UI.Controllers
 
         private void DestroyChatWindow()
         {
-            if (chatWindow != null)
+            if (chatView != null)
             {
-                chatWindow.MessageAdded -= OnMessageAdded;
-
-                Destroy(chatWindow.gameObject);
+                chatView.MessageAdded -= OnMessageAdded;
             }
         }
 
         public void SetCharacterName(string name)
         {
-            if (chatWindow != null)
+            if (chatView != null)
             {
-                chatWindow.SetCharacterName(name);
+                chatView.CharacterName = name;
             }
         }
 
         public void OnMessageReceived(string message)
         {
-            if (chatWindow != null)
+            if (chatView != null)
             {
-                chatWindow.AddMessage(message);
+                chatView.AddMessage(message);
             }
         }
 
         private void OnMessageAdded(string message)
         {
-            if (chatWindow != null)
+            if (chatView != null)
             {
-                chatWindow.AddMessage(message);
+                chatView.AddMessage(message);
             }
 
             MessageSent?.Invoke(message);

@@ -7,9 +7,17 @@ using UnityEngine.EventSystems;
 namespace Scripts.UI.Windows
 {
     [RequireComponent(typeof(UICanvasGroup))]
-    public class ChatWindow : UIElement
+    public class ChatWindow : UIElement, IChatView
     {
         public event Action<string> MessageAdded;
+
+        public string CharacterName
+        {
+            set
+            {
+                characterName = value;
+            }
+        }
 
         private const KeyCode SendMessageKeyCode = KeyCode.Return;
         private const KeyCode SecondarySendMessageKeyCode = KeyCode.KeypadEnter;
@@ -24,11 +32,6 @@ namespace Scripts.UI.Windows
 
         private bool isTypingMessage;
         private string characterName;
-
-        public void SetCharacterName(string characterName)
-        {
-            this.characterName = characterName;
-        }
 
         public void AddMessage(string message, ChatMessageColor color = ChatMessageColor.None)
         {
