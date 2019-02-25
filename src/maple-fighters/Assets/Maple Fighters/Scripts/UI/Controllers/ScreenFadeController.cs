@@ -5,7 +5,7 @@ namespace Scripts.UI.Controllers
 {
     public class ScreenFadeController : MonoBehaviour
     {
-        private ScreenFadeImage screenFadeImage;
+        private IScreenFadeView screenFadeView;
 
         private void Awake()
         {
@@ -19,59 +19,52 @@ namespace Scripts.UI.Controllers
 
         private void DestroyScreenFadeImage()
         {
-            if (screenFadeImage != null)
-            {
-                Destroy(screenFadeImage.gameObject);
-            }
+            // TODO: Implement
         }
 
         public void Show()
         {
-            if (screenFadeImage == null)
+            if (screenFadeView == null)
             {
-                screenFadeImage = UIElementsCreator.GetInstance()
+                screenFadeView = UIElementsCreator.GetInstance()
                     .Create<ScreenFadeImage>(UILayer.Foreground, UIIndex.End);
             }
 
-            if (screenFadeImage != null)
+            if (screenFadeView != null)
             {
-                screenFadeImage.Show();
+                screenFadeView.Show();
             }
         }
 
         public void Hide()
         {
-            if (screenFadeImage == null)
+            if (screenFadeView == null)
             {
-                screenFadeImage = UIElementsCreator.GetInstance()
+                screenFadeView = UIElementsCreator.GetInstance()
                     .Create<ScreenFadeImage>(UILayer.Foreground, UIIndex.End);
             }
 
             SubscribeToUIFadeAnimation();
 
-            if (screenFadeImage != null)
+            if (screenFadeView != null)
             {
-                screenFadeImage.Hide();
+                screenFadeView.Hide();
             }
         }
 
         private void SubscribeToUIFadeAnimation()
         {
-            if (screenFadeImage != null)
+            if (screenFadeView != null)
             {
-                var uiFadeAnimation =
-                    screenFadeImage.GetComponent<UIFadeAnimation>();
-                uiFadeAnimation.FadeOutCompleted += OnFadeOutCompleted;
+                screenFadeView.FadeOutCompleted += OnFadeOutCompleted;
             }
         }
 
         private void UnsubscribeFromUIFadeAnimation()
         {
-            if (screenFadeImage != null)
+            if (screenFadeView != null)
             {
-                var uiFadeAnimation =
-                    screenFadeImage.GetComponent<UIFadeAnimation>();
-                uiFadeAnimation.FadeOutCompleted -= OnFadeOutCompleted;
+                screenFadeView.FadeOutCompleted -= OnFadeOutCompleted;
             }
         }
 
