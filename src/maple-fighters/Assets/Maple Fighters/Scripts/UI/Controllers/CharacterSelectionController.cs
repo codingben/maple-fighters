@@ -15,7 +15,7 @@ namespace Scripts.UI.Controllers
         [Header("Configuration"), SerializeField]
         private int characterNameLength;
 
-        private CharacterSelectionWindow characterSelectionWindow;
+        private ICharacterSelectionView characterSelectionView;
         private CharacterNameWindow characterNameWindow;
 
         private void Awake()
@@ -26,13 +26,13 @@ namespace Scripts.UI.Controllers
 
         private void CreateCharacterSelectionWindow()
         {
-            characterSelectionWindow = UIElementsCreator.GetInstance()
+            characterSelectionView = UIElementsCreator.GetInstance()
                 .Create<CharacterSelectionWindow>();
-            characterSelectionWindow.ChooseButtonClicked +=
+            characterSelectionView.ChooseButtonClicked +=
                 OnChooseButtonClicked;
-            characterSelectionWindow.CancelButtonClicked +=
+            characterSelectionView.CancelButtonClicked +=
                 OnCancelButtonClicked;
-            characterSelectionWindow.CharacterSelected += 
+            characterSelectionView.CharacterSelected += 
                 OnCharacterSelected;
         }
 
@@ -56,16 +56,14 @@ namespace Scripts.UI.Controllers
 
         private void DestroyCharacterSelectionWindow()
         {
-            if (characterSelectionWindow != null)
+            if (characterSelectionView != null)
             {
-                characterSelectionWindow.ChooseButtonClicked -=
+                characterSelectionView.ChooseButtonClicked -=
                     OnChooseButtonClicked;
-                characterSelectionWindow.CancelButtonClicked -=
+                characterSelectionView.CancelButtonClicked -=
                     OnCancelButtonClicked;
-                characterSelectionWindow.CharacterSelected -=
+                characterSelectionView.CharacterSelected -=
                     OnCharacterSelected;
-
-                Destroy(characterSelectionWindow.gameObject);
             }
         }
 
@@ -153,17 +151,17 @@ namespace Scripts.UI.Controllers
 
         public void ShowCharacterSelectionWindow()
         {
-            if (characterSelectionWindow != null)
+            if (characterSelectionView != null)
             {
-                characterSelectionWindow.Show();
+                characterSelectionView.Show();
             }
         }
 
         private void HideCharacterSelectionWindow()
         {
-            if (characterSelectionWindow != null)
+            if (characterSelectionView != null)
             {
-                characterSelectionWindow.Hide();
+                characterSelectionView.Hide();
             }
         }
     }
