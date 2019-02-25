@@ -21,8 +21,8 @@ namespace Scripts.UI.Controllers
         [SerializeField]
         private int lastNameLength;
 
-        private LoginWindow loginWindow;
-        private RegistrationWindow registrationWindow;
+        private ILoginView loginView;
+        private IRegistrationView registrationView;
 
         private void Awake()
         {
@@ -37,20 +37,21 @@ namespace Scripts.UI.Controllers
 
         private void CreateLoginWindow()
         {
-            loginWindow = UIElementsCreator.GetInstance().Create<LoginWindow>();
-            loginWindow.LoginButtonClicked +=
+            loginView = UIElementsCreator.GetInstance()
+                .Create<LoginWindow>();
+            loginView.LoginButtonClicked +=
                 OnLoginButtonClicked;
-            loginWindow.CreateAccountButtonClicked +=
+            loginView.CreateAccountButtonClicked +=
                 OnCreateAccountButtonClicked;
         }
 
         private void CreateRegistrationWindow()
         {
-            registrationWindow = UIElementsCreator.GetInstance()
+            registrationView = UIElementsCreator.GetInstance()
                 .Create<RegistrationWindow>();
-            registrationWindow.RegisterButtonClicked +=
+            registrationView.RegisterButtonClicked +=
                 OnRegisterButtonClicked;
-            registrationWindow.BackButtonClicked += 
+            registrationView.BackButtonClicked += 
                 OnBackButtonClicked;
         }
 
@@ -62,27 +63,23 @@ namespace Scripts.UI.Controllers
 
         private void DestroyLoginWindow()
         {
-            if (loginWindow != null)
+            if (loginView != null)
             {
-                loginWindow.LoginButtonClicked -= 
+                loginView.LoginButtonClicked -= 
                     OnLoginButtonClicked;
-                loginWindow.CreateAccountButtonClicked -=
+                loginView.CreateAccountButtonClicked -=
                     OnCreateAccountButtonClicked;
-
-                Destroy(loginWindow.gameObject);
             }
         }
 
         private void DestroyRegistrationWindow()
         {
-            if (registrationWindow != null)
+            if (registrationView != null)
             {
-                registrationWindow.RegisterButtonClicked -=
+                registrationView.RegisterButtonClicked -=
                     OnRegisterButtonClicked;
-                registrationWindow.BackButtonClicked -= 
+                registrationView.BackButtonClicked -= 
                     OnBackButtonClicked;
-
-                Destroy(registrationWindow.gameObject);
             }
         }
 
@@ -162,40 +159,40 @@ namespace Scripts.UI.Controllers
 
         private void ShowLoginWindow()
         {
-            if (loginWindow != null)
+            if (loginView != null)
             {
-                loginWindow.Show();
+                loginView.Show();
             }
         }
 
         private void HideLoginWindow()
         {
-            if (loginWindow != null)
+            if (loginView != null)
             {
-                loginWindow.Email = string.Empty;
-                loginWindow.Password = string.Empty;
-                loginWindow.Hide();
+                loginView.Email = string.Empty;
+                loginView.Password = string.Empty;
+                loginView.Hide();
             }
         }
 
         private void ShowRegistrationWindow()
         {
-            if (registrationWindow != null)
+            if (registrationView != null)
             {
-                registrationWindow.Show();
+                registrationView.Show();
             }
         }
 
         private void HideRegistrationWindow()
         {
-            if (registrationWindow != null)
+            if (registrationView != null)
             {
-                registrationWindow.Email = string.Empty;
-                registrationWindow.Password = string.Empty;
-                registrationWindow.ConfirmPassword = string.Empty;
-                registrationWindow.FirstName = string.Empty;
-                registrationWindow.LastName = string.Empty;
-                registrationWindow.Hide();
+                registrationView.Email = string.Empty;
+                registrationView.Password = string.Empty;
+                registrationView.ConfirmPassword = string.Empty;
+                registrationView.FirstName = string.Empty;
+                registrationView.LastName = string.Empty;
+                registrationView.Hide();
             }
         }
 

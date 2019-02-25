@@ -7,7 +7,7 @@ using UnityEngine.UI;
 namespace Scripts.UI.Windows
 {
     [RequireComponent(typeof(UIFadeAnimation))]
-    public class RegistrationWindow : UIElement
+    public class RegistrationWindow : UIElement, IRegistrationView
     {
         public event Action<UIRegistrationDetails> RegisterButtonClicked;
 

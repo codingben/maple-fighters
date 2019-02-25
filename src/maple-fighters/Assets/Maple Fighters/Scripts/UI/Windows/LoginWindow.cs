@@ -7,7 +7,7 @@ using UnityEngine.UI;
 namespace Scripts.UI.Windows
 {
     [RequireComponent(typeof(UIFadeAnimation))]
-    public class LoginWindow : UIElement
+    public class LoginWindow : UIElement, ILoginView
     {
         public event Action<UIAuthenticationDetails> LoginButtonClicked;
 
