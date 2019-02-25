@@ -38,7 +38,8 @@ namespace Scripts.UI.Controllers
         private void CreateLoginWindow()
         {
             loginWindow = UIElementsCreator.GetInstance().Create<LoginWindow>();
-            loginWindow.LoginButtonClicked += OnLoginButtonClicked;
+            loginWindow.LoginButtonClicked +=
+                OnLoginButtonClicked;
             loginWindow.CreateAccountButtonClicked +=
                 OnCreateAccountButtonClicked;
         }
@@ -49,7 +50,8 @@ namespace Scripts.UI.Controllers
                 .Create<RegistrationWindow>();
             registrationWindow.RegisterButtonClicked +=
                 OnRegisterButtonClicked;
-            registrationWindow.BackButtonClicked += OnBackButtonClicked;
+            registrationWindow.BackButtonClicked += 
+                OnBackButtonClicked;
         }
 
         private void OnDestroy()
@@ -62,7 +64,8 @@ namespace Scripts.UI.Controllers
         {
             if (loginWindow != null)
             {
-                loginWindow.LoginButtonClicked -= OnLoginButtonClicked;
+                loginWindow.LoginButtonClicked -= 
+                    OnLoginButtonClicked;
                 loginWindow.CreateAccountButtonClicked -=
                     OnCreateAccountButtonClicked;
 
@@ -76,7 +79,8 @@ namespace Scripts.UI.Controllers
             {
                 registrationWindow.RegisterButtonClicked -=
                     OnRegisterButtonClicked;
-                registrationWindow.BackButtonClicked -= OnBackButtonClicked;
+                registrationWindow.BackButtonClicked -= 
+                    OnBackButtonClicked;
 
                 Destroy(registrationWindow.gameObject);
             }

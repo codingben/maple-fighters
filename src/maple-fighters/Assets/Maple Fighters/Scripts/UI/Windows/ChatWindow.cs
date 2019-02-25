@@ -104,8 +104,10 @@ namespace Scripts.UI.Windows
         {
             if (chatInputField != null)
             {
+                var isActive = chatInputField.gameObject.activeSelf;
+
                 chatInputField.text = string.Empty;
-                chatInputField.gameObject.SetActive(!chatInputField.gameObject.activeSelf);
+                chatInputField.gameObject.SetActive(!isActive);
             }
         }
 
