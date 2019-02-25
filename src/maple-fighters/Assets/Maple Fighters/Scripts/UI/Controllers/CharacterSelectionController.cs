@@ -16,7 +16,7 @@ namespace Scripts.UI.Controllers
         private int characterNameLength;
 
         private ICharacterSelectionView characterSelectionView;
-        private CharacterNameWindow characterNameWindow;
+        private ICharacterNameView characterNameView;
 
         private void Awake()
         {
@@ -38,13 +38,13 @@ namespace Scripts.UI.Controllers
 
         private void CreateCharacterNameWindow()
         {
-            characterNameWindow = UIElementsCreator.GetInstance()
+            characterNameView = UIElementsCreator.GetInstance()
                 .Create<CharacterNameWindow>();
-            characterNameWindow.ConfirmButtonClicked +=
+            characterNameView.ConfirmButtonClicked +=
                 OnConfirmButtonClicked;
-            characterNameWindow.BackButtonClicked += 
+            characterNameView.BackButtonClicked += 
                 OnBackButtonClicked;
-            characterNameWindow.NameInputFieldChanged +=
+            characterNameView.NameInputFieldChanged +=
                 OnNameInputFieldChanged;
         }
 
@@ -69,16 +69,14 @@ namespace Scripts.UI.Controllers
 
         private void DestroyCharacterNameWindow()
         {
-            if (characterNameWindow != null)
+            if (characterNameView != null)
             {
-                characterNameWindow.ConfirmButtonClicked -=
+                characterNameView.ConfirmButtonClicked -=
                     OnConfirmButtonClicked;
-                characterNameWindow.BackButtonClicked -= 
+                characterNameView.BackButtonClicked -= 
                     OnBackButtonClicked;
-                characterNameWindow.NameInputFieldChanged -=
+                characterNameView.NameInputFieldChanged -=
                     OnNameInputFieldChanged;
-
-                Destroy(characterNameWindow.gameObject);
             }
         }
 
@@ -86,16 +84,16 @@ namespace Scripts.UI.Controllers
         {
             if (characterName.Length >= characterNameLength)
             {
-                if (characterNameWindow != null)
+                if (characterNameView != null)
                 {
-                    characterNameWindow.EnableConfirmButton();
+                    characterNameView.EnableConfirmButton();
                 }
             }
             else
             {
-                if (characterNameWindow != null)
+                if (characterNameView != null)
                 {
-                    characterNameWindow.DisableConfirmButton();
+                    characterNameView.DisableConfirmButton();
                 }
             }
         }
@@ -135,17 +133,17 @@ namespace Scripts.UI.Controllers
 
         private void ShowCharacterNameWindow()
         {
-            if (characterNameWindow != null)
+            if (characterNameView != null)
             {
-                characterNameWindow.Show();
+                characterNameView.Show();
             }
         }
 
         private void HideCharacterNameWindow()
         {
-            if (characterNameWindow != null)
+            if (characterNameView != null)
             {
-                characterNameWindow.Hide();
+                characterNameView.Hide();
             }
         }
 

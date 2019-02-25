@@ -7,7 +7,7 @@ using UnityEngine.UI;
 namespace Scripts.UI.Windows
 {
     [RequireComponent(typeof(UIFadeAnimation))]
-    public class CharacterNameWindow : UIElement
+    public class CharacterNameWindow : UIElement, ICharacterNameView
     {
         public event Action<string> ConfirmButtonClicked;
 
