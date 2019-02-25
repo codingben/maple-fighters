@@ -14,8 +14,9 @@ namespace Scripts.UI.Controllers
 
         public event Action<string> GameServerSelected;
 
-        private GameServerSelectorWindow gameServerSelectorWindow;
         private Dictionary<string, GameServerButton> gameServerButtons;
+
+        private IGameServerSelectorView gameServerSelectorView;
 
         private void Awake()
         {
@@ -26,19 +27,19 @@ namespace Scripts.UI.Controllers
 
         public void ShowGameServerSelectorWindow()
         {
-            if (gameServerSelectorWindow != null)
+            if (gameServerSelectorView != null)
             {
-                gameServerSelectorWindow.Show();
+                gameServerSelectorView.Show();
             }
         }
 
         private void CreateGameServerSelectorWindow()
         {
-            gameServerSelectorWindow = UIElementsCreator.GetInstance()
+            gameServerSelectorView = UIElementsCreator.GetInstance()
                 .Create<GameServerSelectorWindow>();
-            gameServerSelectorWindow.JoinButtonClicked +=
+            gameServerSelectorView.JoinButtonClicked +=
                 OnJoinButtonClicked;
-            gameServerSelectorWindow.RefreshButtonClicked +=
+            gameServerSelectorView.RefreshButtonClicked +=
                 OnRefreshButtonClicked;
         }
 
@@ -50,14 +51,12 @@ namespace Scripts.UI.Controllers
 
         private void DestroyGameServerSelectorWindow()
         {
-            if (gameServerSelectorWindow != null)
+            if (gameServerSelectorView != null)
             {
-                gameServerSelectorWindow.JoinButtonClicked -=
+                gameServerSelectorView.JoinButtonClicked -=
                     OnJoinButtonClicked;
-                gameServerSelectorWindow.RefreshButtonClicked -=
+                gameServerSelectorView.RefreshButtonClicked -=
                     OnRefreshButtonClicked;
-
-                Destroy(gameServerSelectorWindow);
             }
         }
 
@@ -70,7 +69,7 @@ namespace Scripts.UI.Controllers
                     .Create<GameServerButton>(
                         UILayer.Foreground,
                         UIIndex.End,
-                        gameServerSelectorWindow.GameServerList);
+                        gameServerSelectorView.GameServerList);
                 gameServerButton
                     .SetUiGameServerButtonData(gameServerButtonData);
                 gameServerButton.ButtonClicked += OnGameServerButtonClicked;
@@ -102,9 +101,9 @@ namespace Scripts.UI.Controllers
 
         private void OnGameServerButtonClicked(string serverName)
         {
-            if (gameServerSelectorWindow != null)
+            if (gameServerSelectorView != null)
             {
-                gameServerSelectorWindow.EnableJoinButton();
+                gameServerSelectorView.EnableJoinButton();
             }
 
             GameServerSelected?.Invoke(serverName);
@@ -119,10 +118,10 @@ namespace Scripts.UI.Controllers
 
         private void HideGameServerSelectorWindow()
         {
-            if (gameServerSelectorWindow != null)
+            if (gameServerSelectorView != null)
             {
-                gameServerSelectorWindow.DisableAllButtons();
-                gameServerSelectorWindow.Hide();
+                gameServerSelectorView.DisableAllButtons();
+                gameServerSelectorView.Hide();
             }
         }
 
@@ -137,20 +136,20 @@ namespace Scripts.UI.Controllers
         {
             HideRefreshImage();
 
-            if (gameServerSelectorWindow != null)
+            if (gameServerSelectorView != null)
             {
-                gameServerSelectorWindow.DisableAllButtons();
-                gameServerSelectorWindow.EnableRefreshButton();
+                gameServerSelectorView.DisableAllButtons();
+                gameServerSelectorView.EnableRefreshButton();
             }
         }
 
         private void HideRefreshImage()
         {
-            if (gameServerSelectorWindow != null)
+            if (gameServerSelectorView != null)
             {
-                if (gameServerSelectorWindow.RefreshImage != null)
+                if (gameServerSelectorView.RefreshImage != null)
                 {
-                    gameServerSelectorWindow.RefreshImage.Hide();
+                    gameServerSelectorView.RefreshImage.Hide();
                 }
             }
         }
@@ -159,19 +158,19 @@ namespace Scripts.UI.Controllers
         {
             ShowRefreshImage();
 
-            if (gameServerSelectorWindow != null)
+            if (gameServerSelectorView != null)
             {
-                gameServerSelectorWindow.DisableAllButtons();
+                gameServerSelectorView.DisableAllButtons();
             }
         }
 
         private void ShowRefreshImage()
         {
-            if (gameServerSelectorWindow != null)
+            if (gameServerSelectorView != null)
             {
-                if (gameServerSelectorWindow.RefreshImage != null)
+                if (gameServerSelectorView.RefreshImage != null)
                 {
-                    gameServerSelectorWindow.RefreshImage.Show();
+                    gameServerSelectorView.RefreshImage.Show();
                 }
             }
         }

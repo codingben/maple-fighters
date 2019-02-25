@@ -6,7 +6,7 @@ using UnityEngine.UI;
 namespace Scripts.UI.Windows
 {
     [RequireComponent(typeof(UIFadeAnimation))]
-    public class GameServerSelectorWindow : UIElement
+    public class GameServerSelectorWindow : UIElement, IGameServerSelectorView
     {
         public event Action JoinButtonClicked;
 
