@@ -2,7 +2,7 @@
 
 namespace Scripts.UI
 {
-    public class MenuBackgroundImage : UIElement
+    public class MenuBackgroundImage : UIElement, IMenuBackgroundView
     {
         // Left blank intentionally
     }

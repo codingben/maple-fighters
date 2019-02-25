@@ -5,7 +5,7 @@ namespace Scripts.UI.Controllers
 {
     public class MenuBackgroundController : MonoBehaviour
     {
-        private MenuBackgroundImage backgroundImage;
+        private IMenuBackgroundView backgroundView;
 
         private void Awake()
         {
@@ -14,7 +14,7 @@ namespace Scripts.UI.Controllers
 
         private void CreateMenuBackgroundImage()
         {
-            backgroundImage = UIElementsCreator.GetInstance()
+            backgroundView = UIElementsCreator.GetInstance()
                 .Create<MenuBackgroundImage>(UILayer.Background);
         }
 
@@ -25,10 +25,7 @@ namespace Scripts.UI.Controllers
 
         private void DestroyMenuBackgroundImage()
         {
-            if (backgroundImage != null)
-            {
-                Destroy(backgroundImage.gameObject);
-            }
+            // TODO: Implement
         }
     }
 }
