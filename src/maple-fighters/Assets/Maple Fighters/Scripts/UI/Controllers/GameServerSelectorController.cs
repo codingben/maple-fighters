@@ -15,7 +15,6 @@ namespace Scripts.UI.Controllers
         public event Action<string> GameServerSelected;
 
         private Dictionary<string, GameServerButton> gameServerButtons;
-
         private IGameServerSelectorView gameServerSelectorView;
 
         private void Awake()
