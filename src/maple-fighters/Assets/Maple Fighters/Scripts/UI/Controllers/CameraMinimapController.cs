@@ -14,7 +14,7 @@ namespace Scripts.UI.Controllers
         private MarkSelection[] markSelections;
 
         private new Camera camera;
-        private MinimapWindow minimapWindow;
+        private IMinimapView minimapView;
         
         private void Awake()
         {
@@ -29,9 +29,9 @@ namespace Scripts.UI.Controllers
 
         private void CreateMinimapWindow()
         {
-            minimapWindow =
+            minimapView =
                 UIElementsCreator.GetInstance().Create<MinimapWindow>();
-            minimapWindow.MarkSelectionChanged += OnMarkSelectionChanged;
+            minimapView.MarkSelectionChanged += OnMarkSelectionChanged;
         }
 
         private void OnDestroy()
@@ -41,11 +41,9 @@ namespace Scripts.UI.Controllers
 
         private void DestroyMinimapWindow()
         {
-            if (minimapWindow != null)
+            if (minimapView != null)
             {
-                minimapWindow.MarkSelectionChanged -= OnMarkSelectionChanged;
-
-                Destroy(minimapWindow.gameObject);
+                minimapView.MarkSelectionChanged -= OnMarkSelectionChanged;
             }
         }
 
