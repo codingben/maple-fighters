@@ -7,12 +7,12 @@ namespace Scripts.UI.Controllers
 {
     public class NoticeController : MonoBehaviour
     {
-        private NoticeWindow noticeWindow;
+        private INoticeView noticeView;
         private Action onOkButtonClicked;
 
         public void Show(string message, Action onClicked = null, bool background = true)
         {
-            var noticeWindow = CreateAndShowNoticeWindow();
+            var noticeWindow = CreateAndShowNoticeView();
             if (noticeWindow != null)
             {
                 noticeWindow.Message = message;
@@ -35,14 +35,14 @@ namespace Scripts.UI.Controllers
             }
         }
 
-        private NoticeWindow CreateAndShowNoticeWindow()
+        private INoticeView CreateAndShowNoticeView()
         {
-            if (noticeWindow == null)
+            if (noticeView == null)
             {
-                noticeWindow = UIElementsCreator.GetInstance()
+                noticeView = UIElementsCreator.GetInstance()
                     .Create<NoticeWindow>(UILayer.Foreground, UIIndex.End);
-                noticeWindow.OkButtonClicked += Hide;
-                noticeWindow.Show();
+                noticeView.OkButtonClicked += Hide;
+                noticeView.Show();
             }
 
             return null;
@@ -56,36 +56,32 @@ namespace Scripts.UI.Controllers
 
         private void HideNoticeWindow()
         {
-            if (noticeWindow != null)
+            if (noticeView != null)
             {
-                noticeWindow.OkButtonClicked -= Hide;
+                noticeView.OkButtonClicked -= Hide;
 
                 if (onOkButtonClicked != null)
                 {
-                    noticeWindow.OkButtonClicked -= onOkButtonClicked;
+                    noticeView.OkButtonClicked -= onOkButtonClicked;
                 }
 
-                noticeWindow.Hide();
+                noticeView.Hide();
             }
         }
 
         private void SubscribeToUIFadeAnimation()
         {
-            if (noticeWindow != null)
+            if (noticeView != null)
             {
-                var uiFadeAnimation =
-                    noticeWindow.GetComponent<UIFadeAnimation>();
-                uiFadeAnimation.FadeOutCompleted += OnFadeOutCompleted;
+                noticeView.FadeOutCompleted += OnFadeOutCompleted;
             }
         }
 
         private void UnsubscribeFromUIFadeAnimation()
         {
-            if (noticeWindow != null)
+            if (noticeView != null)
             {
-                var uiFadeAnimation =
-                    noticeWindow.GetComponent<UIFadeAnimation>();
-                uiFadeAnimation.FadeOutCompleted -= OnFadeOutCompleted;
+                noticeView.FadeOutCompleted -= OnFadeOutCompleted;
             }
         }
 
@@ -96,10 +92,7 @@ namespace Scripts.UI.Controllers
 
         private void DestroyNoticeWindow()
         {
-            if (noticeWindow != null)
-            {
-                Destroy(noticeWindow.gameObject);
-            }
+            // TODO: Implement
         }
 
         private void OnFadeOutCompleted()

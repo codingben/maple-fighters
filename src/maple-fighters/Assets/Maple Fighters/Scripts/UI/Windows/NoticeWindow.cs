@@ -7,8 +7,10 @@ using UnityEngine.UI;
 namespace Scripts.UI.Windows
 {
     [RequireComponent(typeof(UIFadeAnimation))]
-    public class NoticeWindow : UIElement
+    public class NoticeWindow : UIElement, INoticeView
     {
+        public event Action FadeOutCompleted;
+
         public event Action OkButtonClicked;
 
         public string Message
@@ -40,6 +42,14 @@ namespace Scripts.UI.Windows
             {
                 okButton.onClick.AddListener(OnOkButtonClicked);
             }
+
+            SubscribeToUIFadeAnimation();
+        }
+
+        private void SubscribeToUIFadeAnimation()
+        {
+            var uiFadeAnimation = GetComponent<UIFadeAnimation>();
+            uiFadeAnimation.FadeOutCompleted += OnFadeOutCompleted;
         }
 
         private void OnDestroy()
@@ -48,6 +58,19 @@ namespace Scripts.UI.Windows
             {
                 okButton.onClick.RemoveListener(OnOkButtonClicked);
             }
+
+            UnsubscribeFromUIFadeAnimation();
+        }
+
+        private void UnsubscribeFromUIFadeAnimation()
+        {
+            var uiFadeAnimation = GetComponent<UIFadeAnimation>();
+            uiFadeAnimation.FadeOutCompleted -= OnFadeOutCompleted;
+        }
+
+        private void OnFadeOutCompleted()
+        {
+            FadeOutCompleted?.Invoke();
         }
 
         private void OnOkButtonClicked()
@@ -57,7 +80,7 @@ namespace Scripts.UI.Windows
             OkButtonClicked?.Invoke();
         }
 
-        public void UseBackground()
+        public void ShowBackground()
         {
             if (backgroundImage != null)
             {
