@@ -85,20 +85,9 @@ namespace Scripts.UI.Controllers
             }
         }
 
-        private void OnDestroy()
-        {
-            DestroyNoticeWindow();
-        }
-
-        private void DestroyNoticeWindow()
-        {
-            // TODO: Implement
-        }
-
         private void OnFadeOutCompleted()
         {
             UnsubscribeFromUIFadeAnimation();
-            DestroyNoticeWindow();
         }
     }
 }

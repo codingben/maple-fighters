@@ -12,16 +12,6 @@ namespace Scripts.UI.Controllers
             Hide();
         }
 
-        private void OnDestroy()
-        {
-            DestroyScreenFadeImage();
-        }
-
-        private void DestroyScreenFadeImage()
-        {
-            // TODO: Implement
-        }
-
         public void Show()
         {
             if (screenFadeView == null)
@@ -71,7 +61,6 @@ namespace Scripts.UI.Controllers
         private void OnFadeOutCompleted()
         {
             UnsubscribeFromUIFadeAnimation();
-            DestroyScreenFadeImage();
         }
     }
 }
