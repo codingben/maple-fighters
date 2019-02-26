@@ -7,7 +7,7 @@ using UnityEngine.UI;
 namespace Scripts.UI
 {
     [RequireComponent(typeof(Button), typeof(UICanvasGroup))]
-    public class GameServerButton : UIElement
+    public class GameServerButton : UIElement, IGameServerView
     {
         public event Action<string> ButtonClicked;
 
@@ -44,7 +44,7 @@ namespace Scripts.UI
             ButtonClicked?.Invoke(uiGameServerButtonData.ServerName);
         }
 
-        public void SetUiGameServerButtonData(UIGameServerButtonData data)
+        public void SetGameServerButtonData(UIGameServerButtonData data)
         {
             uiGameServerButtonData = data;
 

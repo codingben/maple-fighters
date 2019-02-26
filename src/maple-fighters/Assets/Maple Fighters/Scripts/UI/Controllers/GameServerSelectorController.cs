@@ -14,12 +14,12 @@ namespace Scripts.UI.Controllers
 
         public event Action<string> GameServerSelected;
 
-        private Dictionary<string, GameServerButton> gameServerButtons;
+        private Dictionary<string, IGameServerView> gameServerViews;
         private IGameServerSelectorView gameServerSelectorView;
 
         private void Awake()
         {
-            gameServerButtons = new Dictionary<string, GameServerButton>();
+            gameServerViews = new Dictionary<string, IGameServerView>();
 
             CreateAndSubscribeToGameServerSelectorWindow();
         }
@@ -44,8 +44,14 @@ namespace Scripts.UI.Controllers
 
         private void OnDestroy()
         {
-            DestroyGameServerButtons();
+            if (gameServerViews.Count != 0)
+            {
+                UnsubscribeFromGameServerViews();
+            }
+
             UnsubscribeFromGameServerSelectorWindow();
+
+            gameServerViews.Clear();
         }
 
         private void UnsubscribeFromGameServerSelectorWindow()
@@ -59,8 +65,7 @@ namespace Scripts.UI.Controllers
             }
         }
 
-        public void CreateGameServerButtons(
-            IEnumerable<UIGameServerButtonData> gameServerButtonDatas)
+        public void CreateGameServerViews(IEnumerable<UIGameServerButtonData> gameServerButtonDatas)
         {
             foreach (var gameServerButtonData in gameServerButtonDatas)
             {
@@ -70,32 +75,25 @@ namespace Scripts.UI.Controllers
                         UIIndex.End,
                         gameServerSelectorView.GameServerList);
                 gameServerButton
-                    .SetUiGameServerButtonData(gameServerButtonData);
+                    .SetGameServerButtonData(gameServerButtonData);
                 gameServerButton.ButtonClicked += OnGameServerButtonClicked;
 
-                gameServerButtons.Add(
-                    gameServerButtonData.ServerName,
-                    gameServerButton);
+                gameServerViews.Add(gameServerButtonData.ServerName, gameServerButton);
             }
 
             ShowGameServerList();
         }
 
-        private void DestroyGameServerButtons()
+        private void UnsubscribeFromGameServerViews()
         {
-            var gameServerButtonDatas = gameServerButtons.Values;
-
-            foreach (var gameServerButton in gameServerButtonDatas)
+            var gameServerViewes = gameServerViews.Values;
+            foreach (var gameServerView in gameServerViewes)
             {
-                if (gameServerButton != null)
+                if (gameServerView != null)
                 {
-                    gameServerButton.ButtonClicked -= OnGameServerButtonClicked;
-
-                    Destroy(gameServerButton.gameObject);
+                    gameServerView.ButtonClicked -= OnGameServerButtonClicked;
                 }
             }
-
-            gameServerButtons.Clear();
         }
 
         private void OnGameServerButtonClicked(string serverName)
