@@ -17,9 +17,9 @@ namespace Scripts.UI
                 titleText = DefaultTitleText;
             }
 
-            var mapSceneTitleText = UIElementsCreator.GetInstance()
-                .Create<MapSceneTitleText>();
-            mapSceneTitleText.Text = titleText;
+            IMapSceneTitleView mapSceneTitleView = UIElementsCreator
+                .GetInstance().Create<MapSceneTitleText>();
+            mapSceneTitleView.Text = titleText;
 
             Destroy(gameObject);
         }
