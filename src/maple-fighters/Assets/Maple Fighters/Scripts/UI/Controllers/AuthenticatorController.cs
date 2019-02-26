@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Scripts.UI.Controllers
 {
-    public class AuthenticatorController : MonoBehaviour
+    public class AuthenticatorController : MonoBehaviour, IAuthenticatorListener
     {
         public event Action<UIAuthenticationDetails> Login;
 
@@ -165,7 +165,7 @@ namespace Scripts.UI.Controllers
             }
         }
 
-        private void HideLoginWindow()
+        public void HideLoginWindow()
         {
             if (loginView != null)
             {
@@ -183,7 +183,7 @@ namespace Scripts.UI.Controllers
             }
         }
 
-        private void HideRegistrationWindow()
+        public void HideRegistrationWindow()
         {
             if (registrationView != null)
             {

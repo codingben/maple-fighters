@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Scripts.UI.Controllers
 {
-    public class CharacterSelectionController : MonoBehaviour
+    public class CharacterSelectionController : MonoBehaviour, ICharacterSelectionListener
     {
         public event Action CharacterChosen;
 
@@ -100,8 +100,6 @@ namespace Scripts.UI.Controllers
 
         private void OnConfirmButtonClicked(string characterName)
         {
-            HideCharacterNameWindow();
-
             CharacterDetails.GetInstance().SetCharacterName(characterName);
 
             CharacterChosen?.Invoke();
@@ -139,7 +137,7 @@ namespace Scripts.UI.Controllers
             }
         }
 
-        private void HideCharacterNameWindow()
+        public void HideCharacterNameWindow()
         {
             if (characterNameView != null)
             {
