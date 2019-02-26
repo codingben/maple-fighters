@@ -100,7 +100,7 @@ namespace Scripts.UI.Controllers
 
         private void OnConfirmButtonClicked(string characterName)
         {
-            CharacterDetails.GetInstance().SetCharacterName(characterName);
+            CharacterSelectionDetails.GetInstance().SetCharacterName(characterName);
 
             CharacterChosen?.Invoke();
         }
@@ -126,7 +126,7 @@ namespace Scripts.UI.Controllers
 
         private void OnCharacterSelected(UICharacterClass uiCharacterClass)
         {
-            CharacterDetails.GetInstance().SetCharacterClass(uiCharacterClass);
+            CharacterSelectionDetails.GetInstance().SetCharacterClass(uiCharacterClass);
         }
 
         private void ShowCharacterNameWindow()

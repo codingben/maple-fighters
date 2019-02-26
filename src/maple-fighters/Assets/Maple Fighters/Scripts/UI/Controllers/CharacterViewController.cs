@@ -7,7 +7,7 @@ using UIManagerUtils = UI.Manager.Utils;
 
 namespace Scripts.UI.Controllers
 {
-    public class CharacterViewController : MonoBehaviour
+    public class CharacterViewController : MonoBehaviour, ICharacterViewListener
     {
         public event Action<int> CharacterStarted;
 
@@ -87,7 +87,7 @@ namespace Scripts.UI.Controllers
                 var clickableCharacterView =
                     GetClickableCharacterView(characterGameObject);
                 var characterIndex =
-                    CharacterDetails.GetInstance().GetCharacterIndex();
+                    CharacterSelectionDetails.GetInstance().GetCharacterIndex();
 
                 characterImageCollection
                     .SetCharacterView(characterIndex, clickableCharacterView);
@@ -102,9 +102,9 @@ namespace Scripts.UI.Controllers
             var characterImage =
                 characterGameObject.GetComponent<ClickableCharacterImage>();
             var characterName =
-                CharacterDetails.GetInstance().GetCharacterName();
+                CharacterSelectionDetails.GetInstance().GetCharacterName();
             var characterClass =
-                CharacterDetails.GetInstance().GetCharacterClass();
+                CharacterSelectionDetails.GetInstance().GetCharacterClass();
 
             characterImage.CharacterClass = characterClass;
             characterImage.CharacterName = characterName;
@@ -128,7 +128,7 @@ namespace Scripts.UI.Controllers
             if (characterSelectionOptionsView != null)
             {
                 var hasCharacter =
-                    CharacterDetails.GetInstance().HasCharacter();
+                    CharacterSelectionDetails.GetInstance().HasCharacter();
 
                 characterSelectionOptionsView
                     .EnableOrDisableStartButton(hasCharacter);
@@ -145,12 +145,12 @@ namespace Scripts.UI.Controllers
 
         private void OnCharacterClicked(UICharacterClass uiCharacterClass)
         {
-            CharacterDetails.GetInstance().SetCharacterClass(uiCharacterClass);
+            CharacterSelectionDetails.GetInstance().SetCharacterClass(uiCharacterClass);
 
             ShowCharacterSelectionOptionsWindow();
 
             var characterIndex =
-                CharacterDetails.GetInstance().GetCharacterIndex();
+                CharacterSelectionDetails.GetInstance().GetCharacterIndex();
             var characterImage =
                 characterImageCollection.GetCharacterView(characterIndex);
 
@@ -160,7 +160,7 @@ namespace Scripts.UI.Controllers
         private void OnStartButtonClicked()
         {
             var characterIndex =
-                CharacterDetails.GetInstance().GetCharacterIndex();
+                CharacterSelectionDetails.GetInstance().GetCharacterIndex();
 
             CharacterStarted?.Invoke((int)characterIndex);
         }
@@ -179,7 +179,7 @@ namespace Scripts.UI.Controllers
         private void OnDeleteCharacterButtonClicked()
         {
             var characterIndex =
-                CharacterDetails.GetInstance().GetCharacterIndex();
+                CharacterSelectionDetails.GetInstance().GetCharacterIndex();
 
             CharacterRemoved?.Invoke((int)characterIndex);
         }
@@ -189,11 +189,11 @@ namespace Scripts.UI.Controllers
             const string CharactersPath = "Characters/{0}";
 
             var characterIndex =
-                CharacterDetails.GetInstance().GetCharacterIndex();
+                CharacterSelectionDetails.GetInstance().GetCharacterIndex();
             var characterClass =
-                CharacterDetails.GetInstance().GetCharacterClass();
+                CharacterSelectionDetails.GetInstance().GetCharacterClass();
             var hasCharacter = 
-                CharacterDetails.GetInstance().HasCharacter();
+                CharacterSelectionDetails.GetInstance().HasCharacter();
             var name = 
                 hasCharacter
                     ? $"{characterClass} {(int)characterIndex}"

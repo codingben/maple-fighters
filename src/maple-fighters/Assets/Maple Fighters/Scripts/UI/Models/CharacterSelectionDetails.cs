@@ -2,7 +2,7 @@
 
 namespace Scripts.UI.Models
 {
-    public class CharacterDetails : Singleton<CharacterDetails>
+    public class CharacterSelectionDetails : Singleton<CharacterSelectionDetails>
     {
         private string characterName;
         private UICharacterIndex uiCharacterIndex;
