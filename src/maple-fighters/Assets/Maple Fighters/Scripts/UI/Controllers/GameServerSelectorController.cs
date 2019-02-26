@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Scripts.UI.Controllers
 {
-    public class GameServerSelectorController : MonoBehaviour
+    public class GameServerSelectorController : MonoBehaviour, IGameServerSelectorListener
     {
         public event Action JoinGameServer;
 
@@ -65,9 +65,9 @@ namespace Scripts.UI.Controllers
             }
         }
 
-        public void CreateGameServerViews(IEnumerable<UIGameServerButtonData> gameServerButtonDatas)
+        public void CreateGameServerViews(IEnumerable<UIGameServerButtonData> datas)
         {
-            foreach (var gameServerButtonData in gameServerButtonDatas)
+            foreach (var gameServerButtonData in datas)
             {
                 var gameServerButton = UIElementsCreator.GetInstance()
                     .Create<GameServerButton>(
