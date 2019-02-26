@@ -1,7 +1,9 @@
-﻿namespace Scripts.UI
+﻿using UnityEngine;
+
+namespace Scripts.UI
 {
     public interface ICharacterView
     {
-        // Left blank intentionally
+        Transform Transform { get; }
     }
 }

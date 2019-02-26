@@ -1,9 +1,10 @@
 ﻿using UI.Manager;
+using UnityEngine;
 
 namespace Scripts.UI
 {
     public class CharacterView : UIElement, ICharacterView
     {
-        // Left blank intentionally
+        public Transform Transform => transform;
     }
 }

@@ -16,8 +16,7 @@ namespace Scripts.UI.Controllers
         public event Action<int> CharacterRemoved;
 
         private ClickableCharacterImageCollection characterImageCollection;
-
-        // TODO: Use character view
+        
         private ICharacterView characterView;
         private ICharacterSelectionOptionsView characterSelectionOptionsView;
 
@@ -31,7 +30,6 @@ namespace Scripts.UI.Controllers
 
         private void CreateCharacterView()
         {
-            // TODO: Use character view
             characterView = UIElementsCreator.GetInstance()
                 .Create<CharacterView>(UILayer.Background, UIIndex.End);
         }
@@ -90,23 +88,44 @@ namespace Scripts.UI.Controllers
         {
             var characterGameObject = 
                 UIManagerUtils.LoadAndCreateGameObject(GetCharacterPath());
-            var characterImage = 
-                characterGameObject.GetComponent<ClickableCharacterImage>();
-            if (characterImage != null)
+            if (characterGameObject != null)
             {
-                var characterName = 
-                    CharacterDetails.GetInstance().GetCharacterName();
-                var characterClass =
-                    CharacterDetails.GetInstance().GetCharacterClass();
-
-                characterImage.CharacterClass = characterClass;
-                characterImage.CharacterName = characterName;
-                characterImage.CharacterClicked += OnCharacterClicked;
-
+                var clickableCharacterView =
+                    GetClickableCharacterView(characterGameObject);
                 var characterIndex =
                     CharacterDetails.GetInstance().GetCharacterIndex();
+
                 characterImageCollection
-                    .SetCharacterView(characterIndex, characterImage);
+                    .SetCharacterView(characterIndex, clickableCharacterView);
+
+                AttachCharacterToView(characterGameObject);
+            }
+        }
+
+        private IClickableCharacterView GetClickableCharacterView(
+            GameObject characterGameObject)
+        {
+            var characterImage =
+                characterGameObject.GetComponent<ClickableCharacterImage>();
+            var characterName =
+                CharacterDetails.GetInstance().GetCharacterName();
+            var characterClass =
+                CharacterDetails.GetInstance().GetCharacterClass();
+
+            characterImage.CharacterClass = characterClass;
+            characterImage.CharacterName = characterName;
+            characterImage.CharacterClicked += OnCharacterClicked;
+
+            return characterImage;
+        }
+
+        private void AttachCharacterToView(GameObject characterGameObject)
+        {
+            if (characterView != null)
+            {
+                characterGameObject.transform.SetParent(
+                    characterView.Transform);
+                characterGameObject.transform.SetAsFirstSibling();
             }
         }
 
