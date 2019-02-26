@@ -25,7 +25,7 @@ namespace Scripts.UI.Controllers
             characterImageCollection = new ClickableCharacterImageCollection();
 
             CreateCharacterView();
-            CreateCharacterSelectionOptionsWindow();
+            CreateAndSubscribeToCharacterSelectionOptionsWindow();
         }
 
         private void CreateCharacterView()
@@ -34,7 +34,7 @@ namespace Scripts.UI.Controllers
                 .Create<CharacterView>(UILayer.Background, UIIndex.End);
         }
 
-        private void CreateCharacterSelectionOptionsWindow()
+        private void CreateAndSubscribeToCharacterSelectionOptionsWindow()
         {
             characterSelectionOptionsView = UIElementsCreator.GetInstance()
                 .Create<CharacterSelectionOptionsWindow>();
@@ -48,12 +48,11 @@ namespace Scripts.UI.Controllers
 
         private void OnDestroy()
         {
-            DestroyCharacterImages();
-            DestroyCharacterView();
-            DestroyCharacterSelectionOptionsWindow();
+            UnsubscribeFromCharacterImages();
+            UnsubscribeFromCharacterSelectionOptionsWindow();
         }
 
-        private void DestroyCharacterImages()
+        private void UnsubscribeFromCharacterImages()
         {
             var characterImages =
                 characterImageCollection.GetClickableCharacterViews();
@@ -66,12 +65,7 @@ namespace Scripts.UI.Controllers
             }
         }
 
-        private void DestroyCharacterView()
-        {
-            // TODO: Implement
-        }
-
-        private void DestroyCharacterSelectionOptionsWindow()
+        private void UnsubscribeFromCharacterSelectionOptionsWindow()
         {
             if (characterSelectionOptionsView != null)
             {

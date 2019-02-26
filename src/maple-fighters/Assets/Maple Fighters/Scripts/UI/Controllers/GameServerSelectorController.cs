@@ -21,7 +21,7 @@ namespace Scripts.UI.Controllers
         {
             gameServerButtons = new Dictionary<string, GameServerButton>();
 
-            CreateGameServerSelectorWindow();
+            CreateAndSubscribeToGameServerSelectorWindow();
         }
 
         public void ShowGameServerSelectorWindow()
@@ -32,7 +32,7 @@ namespace Scripts.UI.Controllers
             }
         }
 
-        private void CreateGameServerSelectorWindow()
+        private void CreateAndSubscribeToGameServerSelectorWindow()
         {
             gameServerSelectorView = UIElementsCreator.GetInstance()
                 .Create<GameServerSelectorWindow>();
@@ -45,10 +45,10 @@ namespace Scripts.UI.Controllers
         private void OnDestroy()
         {
             DestroyGameServerButtons();
-            DestroyGameServerSelectorWindow();
+            UnsubscribeFromGameServerSelectorWindow();
         }
 
-        private void DestroyGameServerSelectorWindow()
+        private void UnsubscribeFromGameServerSelectorWindow()
         {
             if (gameServerSelectorView != null)
             {

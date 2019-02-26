@@ -26,8 +26,8 @@ namespace Scripts.UI.Controllers
 
         private void Awake()
         {
-            CreateLoginWindow();
-            CreateRegistrationWindow();
+            CreateAndSubscribeToLoginWindow();
+            CreateAndSubscribeToRegistrationWindow();
         }
 
         private void Start()
@@ -35,7 +35,7 @@ namespace Scripts.UI.Controllers
             ShowLoginWindow();
         }
 
-        private void CreateLoginWindow()
+        private void CreateAndSubscribeToLoginWindow()
         {
             loginView = UIElementsCreator.GetInstance()
                 .Create<LoginWindow>();
@@ -45,7 +45,7 @@ namespace Scripts.UI.Controllers
                 OnCreateAccountButtonClicked;
         }
 
-        private void CreateRegistrationWindow()
+        private void CreateAndSubscribeToRegistrationWindow()
         {
             registrationView = UIElementsCreator.GetInstance()
                 .Create<RegistrationWindow>();
@@ -57,11 +57,11 @@ namespace Scripts.UI.Controllers
 
         private void OnDestroy()
         {
-            DestroyLoginWindow();
-            DestroyRegistrationWindow();
+            UnsubscribeFromLoginWindow();
+            UnsubscribeFromRegistrationWindow();
         }
 
-        private void DestroyLoginWindow()
+        private void UnsubscribeFromLoginWindow()
         {
             if (loginView != null)
             {
@@ -72,7 +72,7 @@ namespace Scripts.UI.Controllers
             }
         }
 
-        private void DestroyRegistrationWindow()
+        private void UnsubscribeFromRegistrationWindow()
         {
             if (registrationView != null)
             {
@@ -238,11 +238,11 @@ namespace Scripts.UI.Controllers
             return value.Length <= passwordLength;
         }
 
-        private bool ArePasswordsDoNotMatch(string a, string b, out string message)
+        private bool ArePasswordsDoNotMatch(string value1, string value2, out string message)
         {
             message = WindowMessages.PasswordsDoNotMatch;
             
-            return a != b;
+            return value1 != value2;
         }
 
         private bool IsFirstNameEmpty(string value, out string message)

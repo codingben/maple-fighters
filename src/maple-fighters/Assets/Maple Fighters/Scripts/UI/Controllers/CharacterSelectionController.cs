@@ -20,11 +20,11 @@ namespace Scripts.UI.Controllers
 
         private void Awake()
         {
-            CreateCharacterSelectionWindow();
-            CreateCharacterNameWindow();
+            CreateAndSubscribeToCharacterSelectionWindow();
+            CreateAndSubscribeToCharacterNameWindow();
         }
 
-        private void CreateCharacterSelectionWindow()
+        private void CreateAndSubscribeToCharacterSelectionWindow()
         {
             characterSelectionView = UIElementsCreator.GetInstance()
                 .Create<CharacterSelectionWindow>();
@@ -36,7 +36,7 @@ namespace Scripts.UI.Controllers
                 OnCharacterSelected;
         }
 
-        private void CreateCharacterNameWindow()
+        private void CreateAndSubscribeToCharacterNameWindow()
         {
             characterNameView = UIElementsCreator.GetInstance()
                 .Create<CharacterNameWindow>();
@@ -50,11 +50,11 @@ namespace Scripts.UI.Controllers
 
         private void OnDestroy()
         {
-            DestroyCharacterSelectionWindow();
-            DestroyCharacterNameWindow();
+            UnsubscribeFromCharacterSelectionWindow();
+            UnsubscribeFromCharacterNameWindow();
         }
 
-        private void DestroyCharacterSelectionWindow()
+        private void UnsubscribeFromCharacterSelectionWindow()
         {
             if (characterSelectionView != null)
             {
@@ -67,7 +67,7 @@ namespace Scripts.UI.Controllers
             }
         }
 
-        private void DestroyCharacterNameWindow()
+        private void UnsubscribeFromCharacterNameWindow()
         {
             if (characterNameView != null)
             {

@@ -13,10 +13,10 @@ namespace Scripts.UI.Controllers
 
         private void Awake()
         {
-            CreateChatWindow();
+            CreateAndSubscribeToChatWindow();
         }
 
-        private void CreateChatWindow()
+        private void CreateAndSubscribeToChatWindow()
         {
             chatView = UIElementsCreator.GetInstance().Create<ChatWindow>();
             chatView.MessageAdded += OnMessageAdded;
@@ -24,10 +24,10 @@ namespace Scripts.UI.Controllers
 
         private void OnDestroy()
         {
-            DestroyChatWindow();
+            UnsubscribeFromChatWindow();
         }
 
-        private void DestroyChatWindow()
+        private void UnsubscribeFromChatWindow()
         {
             if (chatView != null)
             {

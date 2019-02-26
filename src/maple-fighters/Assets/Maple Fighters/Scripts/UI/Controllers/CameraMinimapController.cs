@@ -24,10 +24,10 @@ namespace Scripts.UI.Controllers
                 camera = minimapCamera.GetComponent<Camera>();
             }
 
-            CreateMinimapWindow();
+            CreateAndSubscribeToMinimapWindow();
         }
 
-        private void CreateMinimapWindow()
+        private void CreateAndSubscribeToMinimapWindow()
         {
             minimapView =
                 UIElementsCreator.GetInstance().Create<MinimapWindow>();
@@ -36,10 +36,10 @@ namespace Scripts.UI.Controllers
 
         private void OnDestroy()
         {
-            DestroyMinimapWindow();
+            UnsubscribeFromMinimapWindow();
         }
 
-        private void DestroyMinimapWindow()
+        private void UnsubscribeFromMinimapWindow()
         {
             if (minimapView != null)
             {
