@@ -2,36 +2,36 @@
 {
     public struct ClickableCharacterImageCollection
     {
-        private ClickableCharacterImage[] clickableCharacterImages;
+        private IClickableCharacterView[] clickableCharacterViews;
         
-        public void SetCharacterImage(
+        public void SetCharacterView(
             UICharacterIndex uiCharacterIndex,
-            ClickableCharacterImage clickableCharacterImage)
+            IClickableCharacterView clickableCharacterImage)
         {
             if (uiCharacterIndex != UICharacterIndex.Zero)
             {
-                GetClickableCharacterImages()[(int)uiCharacterIndex] =
+                GetClickableCharacterViews()[(int)uiCharacterIndex] =
                     clickableCharacterImage;
             }
         }
 
-        public ClickableCharacterImage GetCharacterImage(
+        public IClickableCharacterView GetCharacterView(
             UICharacterIndex uiCharacterIndex)
         {
             return uiCharacterIndex == UICharacterIndex.Zero
                        ? null
-                       : GetClickableCharacterImages()[(int)uiCharacterIndex];
+                       : GetClickableCharacterViews()[(int)uiCharacterIndex];
         }
         
-        public ClickableCharacterImage[] GetClickableCharacterImages()
+        public IClickableCharacterView[] GetClickableCharacterViews()
         {
-            if (clickableCharacterImages == null)
+            if (clickableCharacterViews == null)
             {
-                clickableCharacterImages =
-                    new ClickableCharacterImage[] { null, null, null };
+                clickableCharacterViews =
+                    new IClickableCharacterView[] { null, null, null };
             }
 
-            return clickableCharacterImages;
+            return clickableCharacterViews;
         }
     }
 }

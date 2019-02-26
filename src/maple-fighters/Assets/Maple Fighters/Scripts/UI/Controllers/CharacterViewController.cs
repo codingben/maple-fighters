@@ -11,7 +11,7 @@ namespace Scripts.UI.Controllers
     {
         public event Action<int> CharacterStarted;
 
-        public event Action<ClickableCharacterImage> CharacterSelected;
+        public event Action<IClickableCharacterView> CharacterSelected;
 
         public event Action<int> CharacterRemoved;
 
@@ -58,14 +58,12 @@ namespace Scripts.UI.Controllers
         private void DestroyCharacterImages()
         {
             var characterImages =
-                characterImageCollection.GetClickableCharacterImages();
+                characterImageCollection.GetClickableCharacterViews();
             foreach (var characterImage in characterImages)
             {
                 if (characterImage != null)
                 {
                     characterImage.CharacterClicked -= OnCharacterClicked;
-
-                    Destroy(characterImage.gameObject);
                 }
             }
         }
@@ -108,7 +106,7 @@ namespace Scripts.UI.Controllers
                 var characterIndex =
                     CharacterDetails.GetInstance().GetCharacterIndex();
                 characterImageCollection
-                    .SetCharacterImage(characterIndex, characterImage);
+                    .SetCharacterView(characterIndex, characterImage);
             }
         }
 
@@ -141,7 +139,7 @@ namespace Scripts.UI.Controllers
             var characterIndex =
                 CharacterDetails.GetInstance().GetCharacterIndex();
             var characterImage =
-                characterImageCollection.GetCharacterImage(characterIndex);
+                characterImageCollection.GetCharacterView(characterIndex);
 
             CharacterSelected?.Invoke(characterImage);
         }

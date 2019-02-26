@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 namespace Scripts.UI
 {
     [RequireComponent(typeof(Animator), typeof(UIFadeAnimation))]
-    public class ClickableCharacterImage : UIElement, IPointerClickHandler
+    public class ClickableCharacterImage : UIElement, IPointerClickHandler, IClickableCharacterView
     {
         public event Action<UICharacterClass> CharacterClicked;
 
