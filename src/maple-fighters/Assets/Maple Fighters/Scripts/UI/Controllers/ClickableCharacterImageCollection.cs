@@ -6,12 +6,12 @@
         
         public void SetCharacterView(
             UICharacterIndex uiCharacterIndex,
-            IClickableCharacterView clickableCharacterImage)
+            IClickableCharacterView clickableCharacterView)
         {
             if (uiCharacterIndex != UICharacterIndex.Zero)
             {
                 GetClickableCharacterViews()[(int)uiCharacterIndex] =
-                    clickableCharacterImage;
+                    clickableCharacterView;
             }
         }
 

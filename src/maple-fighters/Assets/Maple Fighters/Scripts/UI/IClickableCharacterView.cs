@@ -4,9 +4,9 @@ namespace Scripts.UI
 {
     public interface IClickableCharacterView
     {
-        event Action<UICharacterClass> CharacterClicked;
+        event Action<UICharacterIndex, bool> CharacterClicked;
 
-        UICharacterClass CharacterClass { set; }
+        UICharacterIndex CharacterIndex { set; }
 
         string CharacterName { set; }
 

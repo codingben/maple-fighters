@@ -9,13 +9,21 @@ namespace Scripts.UI
     [RequireComponent(typeof(Animator), typeof(UIFadeAnimation))]
     public class ClickableCharacterImage : UIElement, IPointerClickHandler, IClickableCharacterView
     {
-        public event Action<UICharacterClass> CharacterClicked;
+        public event Action<UICharacterIndex, bool> CharacterClicked;
 
-        public UICharacterClass CharacterClass
+        public UICharacterIndex CharacterIndex
         {
             set
             {
-                characterClass = value;
+                characterIndex = value;
+            }
+        }
+
+        public bool HasCharacter
+        {
+            set
+            {
+                hasCharacter = value;
             }
         }
 
@@ -33,7 +41,9 @@ namespace Scripts.UI
         [Header("Text"), SerializeField]
         private TextMeshProUGUI characterNameText;
 
-        private UICharacterClass characterClass;
+        private UICharacterIndex characterIndex;
+        private bool hasCharacter;
+
         private Animator animator;
 
         private void Awake()
@@ -58,7 +68,7 @@ namespace Scripts.UI
         
         public void OnPointerClick(PointerEventData eventData)
         {
-            CharacterClicked?.Invoke(characterClass);
+            CharacterClicked?.Invoke(characterIndex, hasCharacter);
         }
 
         public void PlayAnimation(UICharacterAnimation characterAnimation)

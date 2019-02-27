@@ -1,7 +1,9 @@
-﻿namespace Scripts.UI.Controllers
+﻿using Scripts.UI.Models;
+
+namespace Scripts.UI.Controllers
 {
     public interface ICharacterViewListener
     {
-        void CreateCharacter();
+        void CreateCharacter(CharacterDetails characterDetails);
     }
 }
