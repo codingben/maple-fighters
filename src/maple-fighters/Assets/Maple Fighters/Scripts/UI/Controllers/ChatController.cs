@@ -1,5 +1,4 @@
-﻿using System;
-using Scripts.UI.Windows;
+﻿using Scripts.UI.Windows;
 using UI.Manager;
 using UnityEngine;
 
@@ -7,8 +6,6 @@ namespace Scripts.UI.Controllers
 {
     public class ChatController : MonoBehaviour
     {
-        public event Action<string> MessageSent;
-
         private IChatView chatView;
 
         private void Awake()
@@ -45,20 +42,14 @@ namespace Scripts.UI.Controllers
 
         public void OnMessageReceived(string message)
         {
-            if (chatView != null)
-            {
-                chatView.AddMessage(message);
-            }
+            chatView?.AddMessage(message);
         }
 
         private void OnMessageAdded(string message)
         {
-            if (chatView != null)
-            {
-                chatView.AddMessage(message);
-            }
+            chatView?.AddMessage(message);
 
-            MessageSent?.Invoke(message);
+            // TODO: MessageSent
         }
     }
 }
