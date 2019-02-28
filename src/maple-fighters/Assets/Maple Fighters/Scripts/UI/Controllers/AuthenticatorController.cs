@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Scripts.UI.Controllers
 {
-    public class AuthenticatorController : MonoBehaviour, IAuthenticatorListener
+    public class AuthenticatorController : MonoBehaviour
     {
         public event Action<UIAuthenticationDetails> Login;
 

@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Scripts.UI.Controllers
 {
-    public class CharacterSelectionController : MonoBehaviour, ICharacterSelectionListener
+    public class CharacterSelectionController : MonoBehaviour
     {
         public event Action CharacterChosen;
 

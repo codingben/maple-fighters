@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Scripts.UI.Controllers
 {
-    public class GameServerSelectorController : MonoBehaviour, IGameServerSelectorListener
+    public class GameServerSelectorController : MonoBehaviour
     {
         public event Action JoinGameServer;
 

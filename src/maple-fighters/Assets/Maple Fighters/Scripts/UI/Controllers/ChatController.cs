@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Scripts.UI.Controllers
 {
-    public class ChatController : MonoBehaviour, IChatListener
+    public class ChatController : MonoBehaviour
     {
         public event Action<string> MessageSent;
 

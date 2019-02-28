@@ -7,7 +7,7 @@ using UIManagerUtils = UI.Manager.Utils;
 
 namespace Scripts.UI.Controllers
 {
-    public class CharacterViewController : MonoBehaviour, ICharacterViewListener
+    public class CharacterViewController : MonoBehaviour
     {
         public event Action<int> CharacterStarted;
 
