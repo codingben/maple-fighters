@@ -1,5 +1,4 @@
-﻿using System;
-using Scripts.UI.Windows;
+﻿using Scripts.UI.Windows;
 using UI.Manager;
 using UnityEngine;
 
@@ -7,10 +6,6 @@ namespace Scripts.UI.Controllers
 {
     public class AuthenticatorController : MonoBehaviour
     {
-        public event Action<UIAuthenticationDetails> Login;
-
-        public event Action<UIRegistrationDetails> Register;
-
         [Header("Configuration")]
         [SerializeField]
         private int passwordLength;
@@ -100,7 +95,7 @@ namespace Scripts.UI.Controllers
             }
             else
             {
-                Login?.Invoke(authenticationDetails);
+                // TODO: Login
             }
         }
 
@@ -137,7 +132,7 @@ namespace Scripts.UI.Controllers
             }
             else
             {
-                Register?.Invoke(uiRegistrationDetails);
+                // TODO: Register
             }
         }
 
@@ -159,13 +154,10 @@ namespace Scripts.UI.Controllers
 
         private void ShowLoginWindow()
         {
-            if (loginView != null)
-            {
-                loginView.Show();
-            }
+            loginView?.Show();
         }
 
-        public void HideLoginWindow()
+        private void HideLoginWindow()
         {
             if (loginView != null)
             {
@@ -177,13 +169,10 @@ namespace Scripts.UI.Controllers
 
         private void ShowRegistrationWindow()
         {
-            if (registrationView != null)
-            {
-                registrationView.Show();
-            }
+            registrationView?.Show();
         }
 
-        public void HideRegistrationWindow()
+        private void HideRegistrationWindow()
         {
             if (registrationView != null)
             {
