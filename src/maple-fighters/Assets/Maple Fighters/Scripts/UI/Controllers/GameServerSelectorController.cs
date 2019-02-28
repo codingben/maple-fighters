@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Scripts.UI.Windows;
 using UI.Manager;
 using UnityEngine;
@@ -8,12 +7,6 @@ namespace Scripts.UI.Controllers
 {
     public class GameServerSelectorController : MonoBehaviour
     {
-        public event Action JoinGameServer;
-
-        public event Action RefreshGameServerList;
-
-        public event Action<string> GameServerSelected;
-
         private Dictionary<string, IGameServerView> gameServerViews;
         private IGameServerSelectorView gameServerSelectorView;
 
@@ -26,10 +19,7 @@ namespace Scripts.UI.Controllers
 
         public void ShowGameServerSelectorWindow()
         {
-            if (gameServerSelectorView != null)
-            {
-                gameServerSelectorView.Show();
-            }
+            gameServerSelectorView?.Show();
         }
 
         private void CreateAndSubscribeToGameServerSelectorWindow()
@@ -98,19 +88,16 @@ namespace Scripts.UI.Controllers
 
         private void OnGameServerButtonClicked(string serverName)
         {
-            if (gameServerSelectorView != null)
-            {
-                gameServerSelectorView.EnableJoinButton();
-            }
+            gameServerSelectorView?.EnableJoinButton();
 
-            GameServerSelected?.Invoke(serverName);
+            // TODO: GameServerSelected(serverName)
         }
 
         private void OnJoinButtonClicked()
         {
             HideGameServerSelectorWindow();
 
-            JoinGameServer?.Invoke();
+            // TODO: JoinGameServer()
         }
 
         private void HideGameServerSelectorWindow()
@@ -126,7 +113,7 @@ namespace Scripts.UI.Controllers
         {
             ShowRefreshingGameServerList();
 
-            RefreshGameServerList?.Invoke();
+            // TODO: RefreshGameServerList()
         }
         
         private void ShowGameServerList()
@@ -142,34 +129,19 @@ namespace Scripts.UI.Controllers
 
         private void HideRefreshImage()
         {
-            if (gameServerSelectorView != null)
-            {
-                if (gameServerSelectorView.RefreshImage != null)
-                {
-                    gameServerSelectorView.RefreshImage.Hide();
-                }
-            }
+            gameServerSelectorView?.RefreshImage?.Hide();
         }
 
         private void ShowRefreshingGameServerList()
         {
             ShowRefreshImage();
 
-            if (gameServerSelectorView != null)
-            {
-                gameServerSelectorView.DisableAllButtons();
-            }
+            gameServerSelectorView?.DisableAllButtons();
         }
 
         private void ShowRefreshImage()
         {
-            if (gameServerSelectorView != null)
-            {
-                if (gameServerSelectorView.RefreshImage != null)
-                {
-                    gameServerSelectorView.RefreshImage.Show();
-                }
-            }
+            gameServerSelectorView?.RefreshImage?.Show();
         }
     }
 }
