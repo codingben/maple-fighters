@@ -1,5 +1,4 @@
-﻿using System;
-using Scripts.UI.Models;
+﻿using Scripts.UI.Models;
 using Scripts.UI.Windows;
 using UI.Manager;
 using UnityEngine;
@@ -8,10 +7,6 @@ namespace Scripts.UI.Controllers
 {
     public class CharacterSelectionController : MonoBehaviour
     {
-        public event Action CharacterChosen;
-
-        public event Action CharacterCancelled;
-
         [Header("Configuration"), SerializeField]
         private int characterNameLength;
 
@@ -84,17 +79,11 @@ namespace Scripts.UI.Controllers
         {
             if (characterName.Length >= characterNameLength)
             {
-                if (characterNameView != null)
-                {
-                    characterNameView.EnableConfirmButton();
-                }
+                characterNameView?.EnableConfirmButton();
             }
             else
             {
-                if (characterNameView != null)
-                {
-                    characterNameView.DisableConfirmButton();
-                }
+                characterNameView?.DisableConfirmButton();
             }
         }
 
@@ -103,7 +92,7 @@ namespace Scripts.UI.Controllers
             CharacterSelectionDetails.GetInstance().GetCharacterDetails()
                 .SetCharacterName(characterName);
 
-            CharacterChosen?.Invoke();
+            // TODO: CharacterChosen
         }
 
         private void OnBackButtonClicked()
@@ -122,7 +111,7 @@ namespace Scripts.UI.Controllers
         {
             HideCharacterSelectionWindow();
 
-            CharacterCancelled?.Invoke();
+            // TODO: CharacterCancelled
         }
 
         private void OnCharacterSelected(UICharacterClass uiCharacterClass)
@@ -133,34 +122,22 @@ namespace Scripts.UI.Controllers
 
         private void ShowCharacterNameWindow()
         {
-            if (characterNameView != null)
-            {
-                characterNameView.Show();
-            }
+            characterNameView?.Show();
         }
 
-        public void HideCharacterNameWindow()
+        private void HideCharacterNameWindow()
         {
-            if (characterNameView != null)
-            {
-                characterNameView.Hide();
-            }
+            characterNameView?.Hide();
         }
 
         public void ShowCharacterSelectionWindow()
         {
-            if (characterSelectionView != null)
-            {
-                characterSelectionView.Show();
-            }
+            characterSelectionView?.Show();
         }
 
         private void HideCharacterSelectionWindow()
         {
-            if (characterSelectionView != null)
-            {
-                characterSelectionView.Hide();
-            }
+            characterSelectionView?.Hide();
         }
     }
 }
