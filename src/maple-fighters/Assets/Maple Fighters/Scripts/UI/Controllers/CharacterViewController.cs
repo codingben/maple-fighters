@@ -13,7 +13,7 @@ namespace Scripts.UI.Controllers
         private ICharacterView characterView;
         private ICharacterSelectionOptionsView characterSelectionOptionsView;
 
-        private UICharacterIndex uiCharacterIndex;
+        // private UICharacterIndex uiCharacterIndex;
 
         private void Awake()
         {
@@ -131,13 +131,13 @@ namespace Scripts.UI.Controllers
             UICharacterIndex uiCharacterIndex,
             bool hasCharacter)
         {
-            this.uiCharacterIndex = uiCharacterIndex;
+            // this.uiCharacterIndex = uiCharacterIndex;
 
             ShowCharacterSelectionOptionsWindow();
             EnableOrDisableCharacterSelectionOptionsViewButtons(hasCharacter);
             
-            var characterImage =
-                characterImageCollection.GetCharacterView(uiCharacterIndex);
+            /*var characterImage =
+                characterImageCollection.GetCharacterView(uiCharacterIndex);*/
 
             // TODO: CharacterSelected(characterImage)
         }
