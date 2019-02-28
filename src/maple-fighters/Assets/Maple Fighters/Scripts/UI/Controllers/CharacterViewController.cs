@@ -1,5 +1,4 @@
-﻿using System;
-using Scripts.UI.Models;
+﻿using Scripts.UI.Models;
 using Scripts.UI.Windows;
 using UI.Manager;
 using UnityEngine;
@@ -9,12 +8,6 @@ namespace Scripts.UI.Controllers
 {
     public class CharacterViewController : MonoBehaviour
     {
-        public event Action<int> CharacterStarted;
-
-        public event Action<IClickableCharacterView> CharacterSelected;
-
-        public event Action<int> CharacterRemoved;
-
         private ClickableCharacterImageCollection characterImageCollection;
         
         private ICharacterView characterView;
@@ -115,10 +108,7 @@ namespace Scripts.UI.Controllers
 
         private void ShowCharacterSelectionOptionsWindow()
         {
-            if (characterSelectionOptionsView != null)
-            {
-                characterSelectionOptionsView.Show();
-            }
+            characterSelectionOptionsView?.Show();
         }
 
         private void EnableOrDisableCharacterSelectionOptionsViewButtons(
@@ -149,12 +139,12 @@ namespace Scripts.UI.Controllers
             var characterImage =
                 characterImageCollection.GetCharacterView(uiCharacterIndex);
 
-            CharacterSelected?.Invoke(characterImage);
+            // TODO: CharacterSelected(characterImage)
         }
 
         private void OnStartButtonClicked()
         {
-            CharacterStarted?.Invoke((int)uiCharacterIndex);
+            // TODO: CharacterStarted((int)uiCharacterIndex)
         }
 
         private void OnCreateCharacterButtonClicked()
@@ -170,7 +160,7 @@ namespace Scripts.UI.Controllers
 
         private void OnDeleteCharacterButtonClicked()
         {
-            CharacterRemoved?.Invoke((int)uiCharacterIndex);
+            // TODO: CharacterRemoved((int)uiCharacterIndex)
         }
 
         private string GetCharacterPath(CharacterDetails characterDetails)
