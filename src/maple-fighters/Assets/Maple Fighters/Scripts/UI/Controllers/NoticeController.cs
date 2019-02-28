@@ -12,7 +12,7 @@ namespace Scripts.UI.Controllers
 
         public void Show(string message, Action onClicked = null, bool background = true)
         {
-            var noticeWindow = CreateAndShowNoticeView();
+            var noticeWindow = CreateOrShowNoticeView();
             if (noticeWindow != null)
             {
                 noticeWindow.Message = message;
@@ -35,22 +35,14 @@ namespace Scripts.UI.Controllers
             }
         }
 
-        private INoticeView CreateAndShowNoticeView()
-        {
-            if (noticeView == null)
-            {
-                noticeView = UIElementsCreator.GetInstance()
-                    .Create<NoticeWindow>(UILayer.Foreground, UIIndex.End);
-                noticeView.OkButtonClicked += Hide;
-                noticeView.Show();
-            }
-
-            return null;
-        }
-
         public void Hide()
         {
             SubscribeToUIFadeAnimation();
+            HideNoticeWindow();
+        }
+
+        private void OnDestroy()
+        {
             HideNoticeWindow();
         }
 
@@ -88,6 +80,20 @@ namespace Scripts.UI.Controllers
         private void OnFadeOutCompleted()
         {
             UnsubscribeFromUIFadeAnimation();
+        }
+
+        private INoticeView CreateOrShowNoticeView()
+        {
+            if (noticeView == null)
+            {
+                noticeView = UIElementsCreator.GetInstance()
+                    .Create<NoticeWindow>(UILayer.Foreground, UIIndex.End);
+                noticeView.OkButtonClicked += Hide;
+            }
+
+            noticeView.Show();
+
+            return noticeView;
         }
     }
 }
