@@ -20,10 +20,7 @@ namespace Scripts.UI.Controllers
                     .Create<ScreenFadeImage>(UILayer.Foreground, UIIndex.End);
             }
 
-            if (screenFadeView != null)
-            {
-                screenFadeView.Show();
-            }
+            screenFadeView?.Show();
         }
 
         public void Hide()
@@ -36,10 +33,7 @@ namespace Scripts.UI.Controllers
 
             SubscribeToUIFadeAnimation();
 
-            if (screenFadeView != null)
-            {
-                screenFadeView.Hide();
-            }
+            screenFadeView?.Hide();
         }
 
         private void SubscribeToUIFadeAnimation()
