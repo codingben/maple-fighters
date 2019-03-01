@@ -22,11 +22,6 @@ namespace Scripts.UI.Controllers
             CreateAndSubscribeToGameServerSelectorWindow();
         }
 
-        public void ShowGameServerSelectorWindow()
-        {
-            gameServerSelectorView?.Show();
-        }
-
         private void CreateAndSubscribeToGameServerSelectorWindow()
         {
             gameServerSelectorView = UIElementsCreator.GetInstance()
@@ -59,27 +54,52 @@ namespace Scripts.UI.Controllers
                     OnRefreshButtonClicked;
             }
         }
-        
+
+        public void ShowGameServerSelectorWindow()
+        {
+            gameServerSelectorView?.Show();
+        }
+
         public void OnGameServerReceived(IEnumerable<UIGameServerButtonData> datas)
         {
-            gameServerViews.Clear();
+            DestroyGameServerViews();
 
             foreach (var gameServerButtonData in datas)
             {
-                var gameServerButton = UIElementsCreator.GetInstance()
-                    .Create<GameServerButton>(
-                        UILayer.Foreground,
-                        UIIndex.End,
-                        gameServerSelectorView.GameServerList);
+                var gameServerButton = CreateAndSubscribeToGameServerButton();
                 gameServerButton.SetGameServerButtonData(
                     gameServerButtonData);
-                gameServerButton.ButtonClicked += OnGameServerButtonClicked;
 
                 var serverName = gameServerButtonData.ServerName;
                 gameServerViews.Add(serverName, gameServerButton);
             }
 
             ShowGameServerList();
+        }
+
+        private GameServerButton CreateAndSubscribeToGameServerButton()
+        {
+            var gameServerButton = UIElementsCreator.GetInstance()
+                .Create<GameServerButton>(
+                    UILayer.Foreground,
+                    UIIndex.End,
+                    gameServerSelectorView.GameServerList);
+            gameServerButton.ButtonClicked += OnGameServerButtonClicked;
+
+            return gameServerButton;
+        }
+
+        private void DestroyGameServerViews()
+        {
+            UnsubscribeFromGameServerViews();
+
+            var gameServerViewes = gameServerViews.Values;
+            foreach (var gameServerView in gameServerViewes)
+            {
+                Destroy(gameServerView.GameObject);
+            }
+
+            gameServerViews.Clear();
         }
 
         private void UnsubscribeFromGameServerViews()

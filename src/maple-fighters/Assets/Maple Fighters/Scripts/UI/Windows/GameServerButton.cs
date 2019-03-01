@@ -11,6 +11,8 @@ namespace Scripts.UI
     {
         public event Action<string> ButtonClicked;
 
+        public GameObject GameObject => gameObject;
+
         [Header("Text")]
         [SerializeField]
         private TextMeshProUGUI gameServerNameText;
@@ -55,8 +57,8 @@ namespace Scripts.UI
 
             if (connectionsBar != null)
             {
-                connectionsBar.value = data.Connections;
                 connectionsBar.maxValue = data.MaxConnections;
+                connectionsBar.value = data.Connections;
             }
         }
 
