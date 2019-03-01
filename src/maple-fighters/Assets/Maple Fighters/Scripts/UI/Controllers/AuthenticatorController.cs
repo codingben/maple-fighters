@@ -4,16 +4,19 @@ using UnityEngine;
 
 namespace Scripts.UI.Controllers
 {
-    public class AuthenticatorController : MonoBehaviour
+    [RequireComponent(typeof(AuthenticatorInteractor))]
+    public class AuthenticatorController : MonoBehaviour, IOnLoginFinishedListener, IOnRegistrationFinishedListener
     {
         private ILoginView loginView;
         private IRegistrationView registrationView;
 
         private AuthenticationValidator authenticationValidator;
+        private AuthenticatorInteractor authenticatorInteractor;
 
         private void Awake()
         {
             authenticationValidator = new AuthenticationValidator();
+            authenticatorInteractor = GetComponent<AuthenticatorInteractor>();
 
             CreateAndSubscribeToLoginWindow();
             CreateAndSubscribeToRegistrationWindow();
@@ -73,12 +76,12 @@ namespace Scripts.UI.Controllers
         }
 
         private void OnLoginButtonClicked(
-            UIAuthenticationDetails authenticationDetails)
+            UIAuthenticationDetails uiAuthenticationDetails)
         {
             string message;
 
-            var email = authenticationDetails.Email;
-            var password = authenticationDetails.Password;
+            var email = uiAuthenticationDetails.Email;
+            var password = uiAuthenticationDetails.Password;
 
             if (authenticationValidator.IsEmptyEmailAddress(email, out message)
                 || authenticationValidator.IsInvalidEmailAddress(email, out message)
@@ -89,7 +92,7 @@ namespace Scripts.UI.Controllers
             }
             else
             {
-                // TODO: Login
+                authenticatorInteractor.Login(uiAuthenticationDetails);
             }
         }
 
@@ -126,7 +129,7 @@ namespace Scripts.UI.Controllers
             }
             else
             {
-                // TODO: Register
+                authenticatorInteractor.Register(uiRegistrationDetails);
             }
         }
 
@@ -177,6 +180,34 @@ namespace Scripts.UI.Controllers
                 registrationView.LastName = string.Empty;
                 registrationView.Hide();
             }
+        }
+
+        public void OnLoginSucceed()
+        {
+            HideLoginWindow();
+        }
+
+        public void OnInvalidEmailError()
+        {
+            var message = WindowMessages.WrongEmailAddress;
+            ShowNotice(message);
+        }
+
+        public void OnInvalidPasswordError()
+        {
+            var message = WindowMessages.WrongPassword;
+            ShowNotice(message);
+        }
+
+        public void OnRegistrationSucceed()
+        {
+            HideRegistrationWindow();
+        }
+
+        public void OnEmailExistsError()
+        {
+            var message = WindowMessages.EmailAddressExists;
+            ShowNotice(message);
         }
     }
 }
