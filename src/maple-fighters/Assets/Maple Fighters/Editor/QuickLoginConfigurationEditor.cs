@@ -31,7 +31,7 @@ namespace Scripts.Editor
         {
             EditorGUILayout.BeginHorizontal();
             GUILayout.Label("Password:");
-            quickLoginConfiguration.Password = GUILayout.PasswordField(quickLoginConfiguration.Password, "•"[0], GUILayout.MinWidth(EditorGUIUtility.fieldWidth));
+            quickLoginConfiguration.Password = GUILayout.PasswordField(quickLoginConfiguration.Password, "*"[0], GUILayout.MinWidth(EditorGUIUtility.fieldWidth));
             EditorGUILayout.EndHorizontal();
         }
     }
