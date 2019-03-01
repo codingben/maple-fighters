@@ -27,7 +27,6 @@ namespace Scripts.UI.Controllers
             onLoginFinishedListener = GetComponent<IOnLoginFinishedListener>();
             onRegistrationFinishedListener =
                 GetComponent<IOnRegistrationFinishedListener>();
-
             coroutinesExecutor = new ExternalCoroutinesExecutor();
         }
 

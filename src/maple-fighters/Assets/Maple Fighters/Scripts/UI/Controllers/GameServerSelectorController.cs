@@ -5,14 +5,19 @@ using UnityEngine;
 
 namespace Scripts.UI.Controllers
 {
-    public class GameServerSelectorController : MonoBehaviour
+    [RequireComponent(typeof(GameServerSelectorInteractor))]
+    public class GameServerSelectorController : MonoBehaviour, IOnGameServerReceivedListener
     {
         private Dictionary<string, IGameServerView> gameServerViews;
         private IGameServerSelectorView gameServerSelectorView;
 
+        private GameServerSelectorInteractor gameServerSelectorInteractor;
+
         private void Awake()
         {
             gameServerViews = new Dictionary<string, IGameServerView>();
+            gameServerSelectorInteractor =
+                GetComponent<GameServerSelectorInteractor>();
 
             CreateAndSubscribeToGameServerSelectorWindow();
         }
@@ -54,9 +59,11 @@ namespace Scripts.UI.Controllers
                     OnRefreshButtonClicked;
             }
         }
-
-        public void CreateGameServerViews(IEnumerable<UIGameServerButtonData> datas)
+        
+        public void OnGameServerReceived(IEnumerable<UIGameServerButtonData> datas)
         {
+            gameServerViews.Clear();
+
             foreach (var gameServerButtonData in datas)
             {
                 var gameServerButton = UIElementsCreator.GetInstance()
@@ -64,11 +71,12 @@ namespace Scripts.UI.Controllers
                         UILayer.Foreground,
                         UIIndex.End,
                         gameServerSelectorView.GameServerList);
-                gameServerButton
-                    .SetGameServerButtonData(gameServerButtonData);
+                gameServerButton.SetGameServerButtonData(
+                    gameServerButtonData);
                 gameServerButton.ButtonClicked += OnGameServerButtonClicked;
 
-                gameServerViews.Add(gameServerButtonData.ServerName, gameServerButton);
+                var serverName = gameServerButtonData.ServerName;
+                gameServerViews.Add(serverName, gameServerButton);
             }
 
             ShowGameServerList();
@@ -113,7 +121,7 @@ namespace Scripts.UI.Controllers
         {
             ShowRefreshingGameServerList();
 
-            // TODO: RefreshGameServerList()
+            gameServerSelectorInteractor.ProvideGameServers();
         }
         
         private void ShowGameServerList()

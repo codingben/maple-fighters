@@ -39,7 +39,16 @@ namespace Scripts.Network.Services
             authorizerApi = new AuthorizerApi();
             authorizerApi.SetServerPeer(GetServerPeer());
 
-            gameServerProviderApi = new GameServerProviderApi();
+            if (GameConfiguration.GetInstance().Environment
+                == Environment.Production)
+            {
+                gameServerProviderApi = new GameServerProviderApi();
+            }
+            else
+            {
+                gameServerProviderApi = new DummyGameServerProviderApi();
+            }
+
             gameServerProviderApi.SetServerPeer(GetServerPeer());
 
             Debug.Log("Connected to the game server provider.");
