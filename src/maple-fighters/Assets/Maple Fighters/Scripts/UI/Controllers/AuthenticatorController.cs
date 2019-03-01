@@ -185,6 +185,7 @@ namespace Scripts.UI.Controllers
         public void OnLoginSucceed()
         {
             HideLoginWindow();
+            ShowGameServerSelectorView();
         }
 
         public void OnInvalidEmailError()
@@ -202,12 +203,24 @@ namespace Scripts.UI.Controllers
         public void OnRegistrationSucceed()
         {
             HideRegistrationWindow();
+            ShowGameServerSelectorView();
         }
 
         public void OnEmailExistsError()
         {
             var message = WindowMessages.EmailAddressExists;
             ShowNotice(message);
+        }
+
+        private void ShowGameServerSelectorView()
+        {
+            // TODO: Use event bus system
+            var gameServerSelectorController =
+                FindObjectOfType<GameServerSelectorController>();
+            if (gameServerSelectorController != null)
+            {
+                gameServerSelectorController.ShowGameServerSelectorWindow();
+            }
         }
     }
 }

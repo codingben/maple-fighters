@@ -33,7 +33,16 @@ namespace Scripts.Network.Services
         {
             base.OnConnected();
 
-            authenticatorApi = new AuthenticatorApi();
+            if (GameConfiguration.GetInstance().Environment
+                == Environment.Production)
+            {
+                authenticatorApi = new AuthenticatorApi();
+            }
+            else
+            {
+                authenticatorApi = new DummyAuthenticatorApi();
+            }
+
             authenticatorApi.SetServerPeer(GetServerPeer());
 
             Debug.Log("Connected to the authenticator server.");

@@ -33,12 +33,12 @@ namespace Scripts.UI.Controllers
 
         private void Update()
         {
-            coroutinesExecutor.Update();
+            coroutinesExecutor?.Update();
         }
 
         private void OnDestroy()
         {
-            coroutinesExecutor.Dispose();
+            coroutinesExecutor?.Dispose();
         }
 
         public void Login(UIAuthenticationDetails uiAuthenticationDetails)
