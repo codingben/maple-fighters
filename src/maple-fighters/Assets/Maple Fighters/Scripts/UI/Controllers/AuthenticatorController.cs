@@ -6,21 +6,15 @@ namespace Scripts.UI.Controllers
 {
     public class AuthenticatorController : MonoBehaviour
     {
-        [Header("Configuration")]
-        [SerializeField]
-        private int passwordLength;
-
-        [SerializeField]
-        private int firstNameLength;
-
-        [SerializeField]
-        private int lastNameLength;
-
         private ILoginView loginView;
         private IRegistrationView registrationView;
 
+        private AuthenticationValidator authenticationValidator;
+
         private void Awake()
         {
+            authenticationValidator = new AuthenticationValidator();
+
             CreateAndSubscribeToLoginWindow();
             CreateAndSubscribeToRegistrationWindow();
         }
@@ -86,10 +80,10 @@ namespace Scripts.UI.Controllers
             var email = authenticationDetails.Email;
             var password = authenticationDetails.Password;
 
-            if (IsEmptyEmailAddress(email, out message)
-                || IsInvalidEmailAddress(email, out message)
-                || IsEmptyPassword(password, out message)
-                || IsPasswordTooShort(password, out message))
+            if (authenticationValidator.IsEmptyEmailAddress(email, out message)
+                || authenticationValidator.IsInvalidEmailAddress(email, out message)
+                || authenticationValidator.IsEmptyPassword(password, out message)
+                || authenticationValidator.IsPasswordTooShort(password, out message))
             {
                 ShowNotice(message);
             }
@@ -116,17 +110,17 @@ namespace Scripts.UI.Controllers
             var firstName = uiRegistrationDetails.FirstName;
             var lastName = uiRegistrationDetails.LastName;
 
-            if (IsEmptyEmailAddress(email, out message)
-                || IsInvalidEmailAddress(email, out message)
-                || IsEmptyPassword(password, out message)
-                || IsEmptyConfirmPassword(confirmPassword, out message)
-                || IsPasswordTooShort(password, out message)
-                || IsConfirmPasswordTooShort(confirmPassword, out message)
-                || ArePasswordsDoNotMatch(password, confirmPassword, out message)
-                || IsFirstNameEmpty(firstName, out message)
-                || IsLastNameEmpty(lastName, out message)
-                || IsFirstNameTooShort(firstName, out message)
-                || IsLastNameTooShort(lastName, out message))
+            if (authenticationValidator.IsEmptyEmailAddress(email, out message)
+                || authenticationValidator.IsInvalidEmailAddress(email, out message)
+                || authenticationValidator.IsEmptyPassword(password, out message)
+                || authenticationValidator.IsEmptyConfirmPassword(confirmPassword, out message)
+                || authenticationValidator.IsPasswordTooShort(password, out message)
+                || authenticationValidator.IsConfirmPasswordTooShort(confirmPassword, out message)
+                || authenticationValidator.ArePasswordsDoNotMatch(password, confirmPassword, out message)
+                || authenticationValidator.IsFirstNameEmpty(firstName, out message)
+                || authenticationValidator.IsLastNameEmpty(lastName, out message)
+                || authenticationValidator.IsFirstNameTooShort(firstName, out message)
+                || authenticationValidator.IsLastNameTooShort(lastName, out message))
             {
                 ShowNotice(message);
             }
@@ -183,83 +177,6 @@ namespace Scripts.UI.Controllers
                 registrationView.LastName = string.Empty;
                 registrationView.Hide();
             }
-        }
-
-        private bool IsEmptyEmailAddress(string value, out string message)
-        {
-            message = WindowMessages.EmptyEmailAddress;
-
-            return string.IsNullOrWhiteSpace(value);
-        }
-
-        private bool IsInvalidEmailAddress(string value, out string message)
-        {
-            message = WindowMessages.InvalidEmailAddress;
-            
-            return WindowUtils.IsEmailAddressValid(value) == false;
-        }
-
-        private bool IsEmptyPassword(string value, out string message)
-        {
-            message = WindowMessages.EmptyPassword;
-            
-            return string.IsNullOrWhiteSpace(value);
-        }
-
-        private bool IsPasswordTooShort(string value, out string message)
-        {
-            message = WindowMessages.ShortPassword;
-            
-            return value.Length <= passwordLength;
-        }
-
-        private bool IsEmptyConfirmPassword(string value, out string message)
-        {
-            message = WindowMessages.EmptyConfirmPassword;
-            
-            return string.IsNullOrWhiteSpace(value);
-        }
-
-        private bool IsConfirmPasswordTooShort(string value, out string message)
-        {
-            message = WindowMessages.ShortPassword;
-
-            return value.Length <= passwordLength;
-        }
-
-        private bool ArePasswordsDoNotMatch(string value1, string value2, out string message)
-        {
-            message = WindowMessages.PasswordsDoNotMatch;
-            
-            return value1 != value2;
-        }
-
-        private bool IsFirstNameEmpty(string value, out string message)
-        {
-            message = WindowMessages.EmptyFirstName;
-
-            return string.IsNullOrWhiteSpace(value);
-        }
-
-        private bool IsLastNameEmpty(string value, out string message)
-        {
-            message = WindowMessages.EmptyLastName;
-
-            return string.IsNullOrWhiteSpace(value);
-        }
-
-        private bool IsFirstNameTooShort(string value, out string message)
-        {
-            message = WindowMessages.ShortFirstName;
-            
-            return value.Length < firstNameLength;
-        }
-
-        private bool IsLastNameTooShort(string value, out string message)
-        {
-            message = WindowMessages.ShortLastName;
-            
-            return value.Length < lastNameLength;
         }
     }
 }
