@@ -848,7 +848,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f651cd5785c56114f8497fa8eaa8fe9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 1
+  speed: 5
 --- !u!114 &114565268166889628
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1167,7 +1167,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fab89ee127bd6194992c3f33075e1cd1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minCharactersName: 3
   nameInputField: {fileID: 114234094347219726}
   confirmButton: {fileID: 114418946062637632}
   backButton: {fileID: 114442381226086008}
