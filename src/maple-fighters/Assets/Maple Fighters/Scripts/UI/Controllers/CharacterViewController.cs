@@ -19,8 +19,16 @@ namespace Scripts.UI.Controllers
         {
             characterImageCollection = new ClickableCharacterImageCollection();
 
+            CreateChooseFighterView();
             CreateCharacterView();
             CreateAndSubscribeToCharacterSelectionOptionsWindow();
+        }
+
+        private void CreateChooseFighterView()
+        {
+            IChooseFighterView chooseFighterView = UIElementsCreator
+                .GetInstance().Create<ChooseFighterText>();
+            chooseFighterView.Show();
         }
 
         private void CreateCharacterView()
