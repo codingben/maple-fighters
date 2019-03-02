@@ -2,12 +2,16 @@
 using Scripts.UI.Windows;
 using UI.Manager;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Scripts.UI.Controllers
 {
     [RequireComponent(typeof(GameServerSelectorInteractor))]
     public class GameServerSelectorController : MonoBehaviour, IOnGameServerReceivedListener
     {
+        [SerializeField]
+        private string sceneName;
+
         private Dictionary<string, IGameServerView> gameServerViews;
         private IGameServerSelectorView gameServerSelectorView;
 
@@ -124,6 +128,9 @@ namespace Scripts.UI.Controllers
         private void OnJoinButtonClicked()
         {
             HideGameServerSelectorWindow();
+
+            // TODO: Remove this from here
+            SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
 
             // TODO: JoinGameServer()
         }

@@ -6,10 +6,10 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Maple Fighters/Scenes/Menu/Login.unity
+    path: Assets/Maple Fighters/Scenes/Menu/Main.unity
     guid: 9df1aac550fe58b41a73c8be33536790
   - enabled: 1
-    path: Assets/Maple Fighters/Scenes/Menu/Game Initializer.unity
+    path: Assets/Maple Fighters/Scenes/Menu/Game.unity
     guid: ffedadea82dcf174a8268be270fb3a70
   - enabled: 1
     path: Assets/Maple Fighters/Scenes/Levels/Map_1.unity
@@ -17,3 +17,4 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Maple Fighters/Scenes/Levels/Map_2.unity
     guid: 43ac6926fd8646742a88298525a69286
+  m_configObjects: {}
