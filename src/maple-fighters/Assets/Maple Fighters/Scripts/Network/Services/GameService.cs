@@ -44,7 +44,16 @@ namespace Scripts.Network.Services
             authorizerApi = new AuthorizerApi();
             authorizerApi.SetServerPeer(GetServerPeer());
 
-            characterSelectorApi = new CharacterSelectorApi();
+            if (GameConfiguration.GetInstance().Environment
+                == Environment.Production)
+            {
+                characterSelectorApi = new CharacterSelectorApi();
+            }
+            else
+            {
+                characterSelectorApi = new DummyCharacterSelectorApi();
+            }
+
             characterSelectorApi.SetServerPeer(GetServerPeer());
 
             if (GameConfiguration.GetInstance().Environment

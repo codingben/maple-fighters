@@ -6,22 +6,31 @@ using UIManagerUtils = UI.Manager.Utils;
 
 namespace Scripts.UI.Controllers
 {
-    public class CharacterViewController : MonoBehaviour
+    [RequireComponent(typeof(CharacterViewInteractor))]
+    public class CharacterViewController : MonoBehaviour, IOnCharacterReceivedListener
     {
         private ClickableCharacterImageCollection characterImageCollection;
         
         private ICharacterView characterView;
         private ICharacterSelectionOptionsView characterSelectionOptionsView;
 
+        private CharacterViewInteractor characterViewInteractor;
+
         // private UICharacterIndex uiCharacterIndex;
 
         private void Awake()
         {
             characterImageCollection = new ClickableCharacterImageCollection();
+            characterViewInteractor = GetComponent<CharacterViewInteractor>();
 
             CreateChooseFighterView();
             CreateCharacterView();
             CreateAndSubscribeToCharacterSelectionOptionsWindow();
+        }
+
+        private void Start()
+        {
+            characterViewInteractor.GetCharacters();
         }
 
         private void CreateChooseFighterView()
@@ -81,7 +90,7 @@ namespace Scripts.UI.Controllers
             }
         }
 
-        public void CreateCharacter(CharacterDetails characterDetails)
+        public void OnCharacterReceived(CharacterDetails characterDetails)
         {
             var path = GetCharacterPath(characterDetails);
             var characterIndex = characterDetails.GetCharacterIndex();

@@ -5,7 +5,22 @@
         private string characterName;
         private UICharacterIndex uiCharacterIndex;
         private UICharacterClass uiCharacterClass;
+        private UIMapIndex uiMapIndex;
         private bool hasCharacter;
+
+        public CharacterDetails(
+            string characterName,
+            UICharacterIndex uiCharacterIndex,
+            UICharacterClass uiCharacterClass,
+            UIMapIndex uiMapIndex,
+            bool hasCharacter)
+        {
+            this.characterName = characterName;
+            this.uiCharacterIndex = uiCharacterIndex;
+            this.uiCharacterClass = uiCharacterClass;
+            this.uiMapIndex = uiMapIndex;
+            this.hasCharacter = hasCharacter;
+        }
 
         public void SetCharacterName(string characterName)
         {
@@ -27,6 +42,11 @@
             this.hasCharacter = hasCharacter;
         }
 
+        public void SetMapIndex(UIMapIndex uiMapIndex)
+        {
+            this.uiMapIndex = uiMapIndex;
+        }
+
         public string GetCharacterName()
         {
             return characterName;
@@ -40,6 +60,11 @@
         public UICharacterClass GetCharacterClass()
         {
             return uiCharacterClass;
+        }
+
+        public UIMapIndex GetMapIndex()
+        {
+            return uiMapIndex;
         }
 
         public bool HasCharacter()
