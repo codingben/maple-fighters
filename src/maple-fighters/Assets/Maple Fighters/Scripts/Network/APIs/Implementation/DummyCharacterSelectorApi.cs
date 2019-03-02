@@ -34,12 +34,22 @@ namespace Scripts.Network.APIs
         {
             var characters = new[]
             {
-                new CharacterParameters(
-                    name: "benzuk",
-                    characterType: CharacterClasses.Arrow,
-                    characterIndex: CharacterIndex.Second,
-                    lastMap: Maps.Map_1)
+                new CharacterParameters(),
+                new CharacterParameters(),
+                new CharacterParameters()
             };
+
+            characters[0].Name = "Dummy";
+            characters[0].HasCharacter = false;
+            characters[0].Index = CharacterIndex.First;
+
+            characters[1].Name = "Dummy";
+            characters[1].HasCharacter = false;
+            characters[1].Index = CharacterIndex.Second;
+
+            characters[2].Name = "Dummy";
+            characters[2].HasCharacter = false;
+            characters[2].Index = CharacterIndex.Third;
 
             return Task.FromResult(
                 new GetCharactersResponseParameters(characters));

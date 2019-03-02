@@ -23,9 +23,9 @@ namespace Scripts.UI.Controllers
             characterImageCollection = new ClickableCharacterImageCollection();
             characterViewInteractor = GetComponent<CharacterViewInteractor>();
 
-            CreateChooseFighterView();
             CreateCharacterView();
             CreateAndSubscribeToCharacterSelectionOptionsWindow();
+            CreateChooseFighterView();
         }
 
         private void Start()
@@ -93,32 +93,47 @@ namespace Scripts.UI.Controllers
         public void OnCharacterReceived(CharacterDetails characterDetails)
         {
             var path = GetCharacterPath(characterDetails);
-            var characterIndex = characterDetails.GetCharacterIndex();
-            var characterName = characterDetails.GetCharacterName();
-            var hasCharacter = characterDetails.HasCharacter();
+            var clickableCharacterView =
+                CreateAndShowClickableCharacterView(path);
+            if (clickableCharacterView != null)
+            {
+                var characterIndex = characterDetails.GetCharacterIndex();
+                var characterName = characterDetails.GetCharacterName();
+                var hasCharacter = characterDetails.HasCharacter();
+
+                clickableCharacterView.CharacterIndex = characterIndex;
+                clickableCharacterView.CharacterName = characterName;
+                clickableCharacterView.HasCharacter = hasCharacter;
+
+                characterImageCollection
+                    .SetCharacterView(characterIndex, clickableCharacterView);
+            }
+        }
+
+        private IClickableCharacterView CreateAndShowClickableCharacterView(
+            string path)
+        {
+            IClickableCharacterView clickableCharacterView = null;
+
             var characterGameObject = UIManagerUtils.LoadAndCreateGameObject(path);
             if (characterGameObject != null)
             {
-                var characterImage = 
-                    characterGameObject.GetComponent<ClickableCharacterImage>();
-
-                characterImage.CharacterIndex = characterIndex;
-                characterImage.CharacterName = characterName;
-                characterImage.HasCharacter = hasCharacter;
-                characterImage.CharacterClicked += OnCharacterClicked;
-
-                characterImageCollection
-                    .SetCharacterView(characterIndex, characterImage);
+                clickableCharacterView = characterGameObject
+                    .GetComponent<ClickableCharacterImage>();
+                clickableCharacterView.CharacterClicked += OnCharacterClicked;
+                clickableCharacterView.Show();
 
                 AttachCharacterToView(characterGameObject);
             }
+
+            return clickableCharacterView;
         }
 
         private void AttachCharacterToView(GameObject characterGameObject)
         {
             if (characterView != null)
             {
-                characterGameObject.transform.SetParent(characterView.Transform);
+                characterGameObject.transform.SetParent(characterView.Transform, false);
                 characterGameObject.transform.SetAsFirstSibling();
             }
         }
@@ -188,7 +203,7 @@ namespace Scripts.UI.Controllers
             var name = 
                 hasCharacter
                     ? $"{characterClass} {(int)characterIndex}"
-                    : $"Sample {characterIndex}";
+                    : $"Sample {(int)characterIndex}";
 
             return $"Characters/{name}";
         }
