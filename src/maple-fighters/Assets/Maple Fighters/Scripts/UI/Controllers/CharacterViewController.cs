@@ -13,6 +13,7 @@ namespace Scripts.UI.Controllers
         
         private ICharacterView characterView;
         private ICharacterSelectionOptionsView characterSelectionOptionsView;
+        private IChooseFighterView chooseFighterView;
 
         private CharacterViewInteractor characterViewInteractor;
 
@@ -25,7 +26,7 @@ namespace Scripts.UI.Controllers
 
             CreateCharacterView();
             CreateAndSubscribeToCharacterSelectionOptionsWindow();
-            CreateChooseFighterView();
+            CreateAndShowChooseFighterView();
         }
 
         private void Start()
@@ -33,13 +34,13 @@ namespace Scripts.UI.Controllers
             characterViewInteractor.GetCharacters();
         }
 
-        private void CreateChooseFighterView()
+        private void CreateAndShowChooseFighterView()
         {
-            IChooseFighterView chooseFighterView = UIElementsCreator
-                .GetInstance().Create<ChooseFighterText>();
+            chooseFighterView = UIElementsCreator.GetInstance()
+                .Create<ChooseFighterText>(UILayer.Background, UIIndex.End);
             chooseFighterView.Show();
         }
-
+        
         private void CreateCharacterView()
         {
             characterView = UIElementsCreator.GetInstance()
@@ -110,25 +111,6 @@ namespace Scripts.UI.Controllers
             }
         }
 
-        private IClickableCharacterView CreateAndShowClickableCharacterView(
-            string path)
-        {
-            IClickableCharacterView clickableCharacterView = null;
-
-            var characterGameObject = UIManagerUtils.LoadAndCreateGameObject(path);
-            if (characterGameObject != null)
-            {
-                clickableCharacterView = characterGameObject
-                    .GetComponent<ClickableCharacterImage>();
-                clickableCharacterView.CharacterClicked += OnCharacterClicked;
-                clickableCharacterView.Show();
-
-                AttachCharacterToView(characterGameObject);
-            }
-
-            return clickableCharacterView;
-        }
-
         private void AttachCharacterToView(GameObject characterGameObject)
         {
             if (characterView != null)
@@ -193,6 +175,25 @@ namespace Scripts.UI.Controllers
         private void OnDeleteCharacterButtonClicked()
         {
             // TODO: CharacterRemoved((int)uiCharacterIndex)
+        }
+
+        private IClickableCharacterView CreateAndShowClickableCharacterView(
+            string path)
+        {
+            IClickableCharacterView clickableCharacterView = null;
+
+            var characterGameObject = UIManagerUtils.LoadAndCreateGameObject(path);
+            if (characterGameObject != null)
+            {
+                clickableCharacterView = characterGameObject
+                    .GetComponent<ClickableCharacterImage>();
+                clickableCharacterView.CharacterClicked += OnCharacterClicked;
+                clickableCharacterView.Show();
+
+                AttachCharacterToView(characterGameObject);
+            }
+
+            return clickableCharacterView;
         }
 
         private string GetCharacterPath(CharacterDetails characterDetails)

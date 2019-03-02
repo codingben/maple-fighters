@@ -113,6 +113,8 @@ namespace Scripts.UI.Windows
 
             Hide();
 
+            DeselectAllCharacterClasses();
+
             ChooseButtonClicked?.Invoke();
         }
 
