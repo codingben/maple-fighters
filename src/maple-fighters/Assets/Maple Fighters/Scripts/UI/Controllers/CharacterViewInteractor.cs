@@ -112,7 +112,7 @@ namespace Scripts.UI.Controllers
             var parameters =
                 new RemoveCharacterRequestParameters(characterIndex);
 
-            coroutinesExecutor.StartTask(
+            coroutinesExecutor?.StartTask(
                 (yield) => RemoveCharacterAsync(yield, parameters));
         }
 

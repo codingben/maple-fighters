@@ -5,7 +5,9 @@ using UnityEngine;
 namespace Scripts.UI.Controllers
 {
     [RequireComponent(typeof(AuthenticatorInteractor))]
-    public class AuthenticatorController : MonoBehaviour, IOnLoginFinishedListener, IOnRegistrationFinishedListener
+    public class AuthenticatorController : MonoBehaviour,
+                                           IOnLoginFinishedListener,
+                                           IOnRegistrationFinishedListener
     {
         private ILoginView loginView;
         private IRegistrationView registrationView;

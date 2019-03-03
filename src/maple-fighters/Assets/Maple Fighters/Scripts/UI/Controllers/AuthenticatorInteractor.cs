@@ -47,7 +47,7 @@ namespace Scripts.UI.Controllers
                 uiAuthenticationDetails.Password);
 
             // TODO: Handle exception situation
-            coroutinesExecutor.StartTask(
+            coroutinesExecutor?.StartTask(
                 (yield) => LoginAsync(yield, parameters));
         }
 
@@ -93,7 +93,7 @@ namespace Scripts.UI.Controllers
                 uiRegistrationDetails.FirstName,
                 uiRegistrationDetails.LastName);
 
-            coroutinesExecutor.StartTask(
+            coroutinesExecutor?.StartTask(
                 (yield) => RegisterAsync(yield, parameters));
         }
 

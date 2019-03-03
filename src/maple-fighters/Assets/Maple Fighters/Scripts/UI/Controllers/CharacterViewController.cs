@@ -8,7 +8,10 @@ using UIManagerUtils = UI.Manager.Utils;
 namespace Scripts.UI.Controllers
 {
     [RequireComponent(typeof(CharacterViewInteractor))]
-    public class CharacterViewController : MonoBehaviour, IOnCharacterReceivedListener, IOnCharacterValidatedListener, IOnCharacterRemovedListener
+    public class CharacterViewController : MonoBehaviour,
+                                           IOnCharacterReceivedListener,
+                                           IOnCharacterValidatedListener,
+                                           IOnCharacterRemovedListener
     {
         private int characterIndex;
         private ClickableCharacterImageCollection characterImageCollection;
