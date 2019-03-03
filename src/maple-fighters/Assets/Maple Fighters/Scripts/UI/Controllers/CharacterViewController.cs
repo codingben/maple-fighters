@@ -8,7 +8,7 @@ using UIManagerUtils = UI.Manager.Utils;
 namespace Scripts.UI.Controllers
 {
     [RequireComponent(typeof(CharacterViewInteractor))]
-    public class CharacterViewController : MonoBehaviour, IOnCharacterReceivedListener, IOnCharacterValidatedListener
+    public class CharacterViewController : MonoBehaviour, IOnCharacterReceivedListener, IOnCharacterValidatedListener, IOnCharacterRemovedListener
     {
         private int characterIndex;
         private ClickableCharacterImageCollection characterImageCollection;
@@ -117,6 +117,11 @@ namespace Scripts.UI.Controllers
             SceneManager.LoadScene((int)uiMapIndex);
         }
 
+        public void OnCharacterRemoved()
+        {
+            characterViewInteractor.GetCharacters();
+        }
+
         private void AttachCharacterToView(GameObject characterGameObject)
         {
             if (characterView != null)
@@ -180,7 +185,7 @@ namespace Scripts.UI.Controllers
 
         private void OnDeleteCharacterButtonClicked()
         {
-            // TODO: CharacterRemoved((int)uiCharacterIndex)
+            characterViewInteractor.RemoveCharacter(characterIndex);
         }
 
         private IClickableCharacterView CreateAndShowClickableCharacterView(

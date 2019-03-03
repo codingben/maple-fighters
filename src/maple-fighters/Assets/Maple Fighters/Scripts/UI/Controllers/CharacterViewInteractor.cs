@@ -10,12 +10,14 @@ namespace Scripts.UI.Controllers
 {
     [RequireComponent(
         typeof(IOnCharacterReceivedListener),
-        typeof(IOnCharacterValidatedListener))]
+        typeof(IOnCharacterValidatedListener),
+        typeof(IOnCharacterRemovedListener))]
     public class CharacterViewInteractor : MonoBehaviour
     {
         private ICharacterSelectorApi characterSelectorApi;
         private IOnCharacterReceivedListener onCharacterReceivedListener;
         private IOnCharacterValidatedListener onCharacterValidatedListener;
+        private IOnCharacterRemovedListener onCharacterRemovedListener;
 
         private ExternalCoroutinesExecutor coroutinesExecutor;
 
@@ -27,6 +29,8 @@ namespace Scripts.UI.Controllers
                 GetComponent<IOnCharacterReceivedListener>();
             onCharacterValidatedListener =
                 GetComponent<IOnCharacterValidatedListener>();
+            onCharacterRemovedListener =
+                GetComponent<IOnCharacterRemovedListener>();
             coroutinesExecutor = new ExternalCoroutinesExecutor();
         }
 
@@ -65,9 +69,10 @@ namespace Scripts.UI.Controllers
             }
         }
 
-        public void ValidateCharacter(int index)
+        public void ValidateCharacter(int characterIndex)
         {
-            var parameters = new ValidateCharacterRequestParameters(index);
+            var parameters =
+                new ValidateCharacterRequestParameters(characterIndex);
 
             coroutinesExecutor.StartTask(
                 (yield) => ValidateCharacterAsync(yield, parameters));
@@ -95,6 +100,41 @@ namespace Scripts.UI.Controllers
                 }
 
                 case CharacterValidationStatus.Wrong:
+                {
+                    // TODO: Implement
+                    break;
+                }
+            }
+        }
+
+        public void RemoveCharacter(int characterIndex)
+        {
+            var parameters =
+                new RemoveCharacterRequestParameters(characterIndex);
+
+            coroutinesExecutor.StartTask(
+                (yield) => RemoveCharacterAsync(yield, parameters));
+        }
+
+        private async Task RemoveCharacterAsync(
+            IYield yield,
+            RemoveCharacterRequestParameters parameters)
+        {
+            var responseParameters =
+                await characterSelectorApi.RemoveCharacterAsync(
+                    yield,
+                    parameters);
+
+            var status = responseParameters.Status;
+            switch (status)
+            {
+                case RemoveCharacterStatus.Succeed:
+                {
+                    onCharacterRemovedListener.OnCharacterRemoved();
+                    break;
+                }
+
+                case RemoveCharacterStatus.Failed:
                 {
                     break;
                 }
