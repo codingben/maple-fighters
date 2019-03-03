@@ -2,13 +2,15 @@
 using Scripts.UI.Windows;
 using UI.Manager;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UIManagerUtils = UI.Manager.Utils;
 
 namespace Scripts.UI.Controllers
 {
     [RequireComponent(typeof(CharacterViewInteractor))]
-    public class CharacterViewController : MonoBehaviour, IOnCharacterReceivedListener
+    public class CharacterViewController : MonoBehaviour, IOnCharacterReceivedListener, IOnCharacterValidatedListener
     {
+        private int characterIndex;
         private ClickableCharacterImageCollection characterImageCollection;
         
         private ICharacterView characterView;
@@ -16,8 +18,6 @@ namespace Scripts.UI.Controllers
         private IChooseFighterView chooseFighterView;
 
         private CharacterViewInteractor characterViewInteractor;
-
-        // private UICharacterIndex uiCharacterIndex;
 
         private void Awake()
         {
@@ -111,6 +111,12 @@ namespace Scripts.UI.Controllers
             }
         }
 
+        public void OnCharacterValidated(UIMapIndex uiMapIndex)
+        {
+            // TODO: Remove this from here
+            SceneManager.LoadScene((int)uiMapIndex);
+        }
+
         private void AttachCharacterToView(GameObject characterGameObject)
         {
             if (characterView != null)
@@ -145,7 +151,7 @@ namespace Scripts.UI.Controllers
             UICharacterIndex uiCharacterIndex,
             bool hasCharacter)
         {
-            // this.uiCharacterIndex = uiCharacterIndex;
+            characterIndex = (int)uiCharacterIndex;
 
             ShowCharacterSelectionOptionsWindow();
             EnableOrDisableCharacterSelectionOptionsViewButtons(hasCharacter);
@@ -158,7 +164,7 @@ namespace Scripts.UI.Controllers
 
         private void OnStartButtonClicked()
         {
-            // TODO: CharacterStarted((int)uiCharacterIndex)
+            characterViewInteractor.ValidateCharacter(characterIndex);
         }
 
         private void OnCreateCharacterButtonClicked()
