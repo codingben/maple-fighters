@@ -1,29 +1,25 @@
 ﻿namespace Scripts.UI.Controllers
 {
-    public struct ClickableCharacterImageCollection
+    public struct ClickableCharacterImageCollection : ICharacterImageCollection
     {
         private IClickableCharacterView[] clickableCharacterViews;
         
-        public void SetCharacterView(
-            UICharacterIndex uiCharacterIndex,
-            IClickableCharacterView clickableCharacterView)
+        public void Set(UICharacterIndex uiCharacterIndex, IClickableCharacterView clickableCharacterView)
         {
             if (uiCharacterIndex != UICharacterIndex.Zero)
             {
-                GetClickableCharacterViews()[(int)uiCharacterIndex] =
-                    clickableCharacterView;
+                GetAll()[(int)uiCharacterIndex] = clickableCharacterView;
             }
         }
 
-        public IClickableCharacterView GetCharacterView(
-            UICharacterIndex uiCharacterIndex)
+        public IClickableCharacterView Get(UICharacterIndex uiCharacterIndex)
         {
             return uiCharacterIndex == UICharacterIndex.Zero
                        ? null
-                       : GetClickableCharacterViews()[(int)uiCharacterIndex];
+                       : GetAll()[(int)uiCharacterIndex];
         }
         
-        public IClickableCharacterView[] GetClickableCharacterViews()
+        public IClickableCharacterView[] GetAll()
         {
             if (clickableCharacterViews == null)
             {

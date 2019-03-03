@@ -14,7 +14,7 @@ namespace Scripts.UI.Controllers
                                            IOnCharacterRemovedListener
     {
         private int characterIndex;
-        private ClickableCharacterImageCollection characterImageCollection;
+        private ICharacterImageCollection characterImageCollection;
         
         private ICharacterView characterView;
         private ICharacterSelectionOptionsView characterSelectionOptionsView;
@@ -70,8 +70,7 @@ namespace Scripts.UI.Controllers
 
         private void UnsubscribeFromCharacterImages()
         {
-            var characterImages =
-                characterImageCollection.GetClickableCharacterViews();
+            var characterImages = characterImageCollection.GetAll();
             foreach (var characterImage in characterImages)
             {
                 if (characterImage != null)
@@ -97,20 +96,18 @@ namespace Scripts.UI.Controllers
         public void OnCharacterReceived(CharacterDetails characterDetails)
         {
             var path = GetCharacterPath(characterDetails);
-            var clickableCharacterView =
-                CreateAndShowClickableCharacterView(path);
-            if (clickableCharacterView != null)
+            var characterView = CreateAndShowCharacterView(path);
+            if (characterView != null)
             {
                 var characterIndex = characterDetails.GetCharacterIndex();
                 var characterName = characterDetails.GetCharacterName();
                 var hasCharacter = characterDetails.HasCharacter();
 
-                clickableCharacterView.CharacterIndex = characterIndex;
-                clickableCharacterView.CharacterName = characterName;
-                clickableCharacterView.HasCharacter = hasCharacter;
+                characterView.CharacterIndex = characterIndex;
+                characterView.CharacterName = characterName;
+                characterView.HasCharacter = hasCharacter;
 
-                characterImageCollection
-                    .SetCharacterView(characterIndex, clickableCharacterView);
+                characterImageCollection.Set(characterIndex, characterView);
             }
         }
 
@@ -144,14 +141,9 @@ namespace Scripts.UI.Controllers
         {
             if (characterSelectionOptionsView != null)
             {
-                characterSelectionOptionsView
-                    .EnableOrDisableStartButton(hasCharacter);
-
-                characterSelectionOptionsView
-                    .EnableOrDisableCreateCharacterButton(!hasCharacter);
-
-                characterSelectionOptionsView
-                    .EnableOrDisableDeleteCharacterButton(hasCharacter);
+                characterSelectionOptionsView.EnableOrDisableStartButton(hasCharacter);
+                characterSelectionOptionsView.EnableOrDisableCreateCharacterButton(!hasCharacter);
+                characterSelectionOptionsView.EnableOrDisableDeleteCharacterButton(hasCharacter);
             }
         }
 
@@ -163,11 +155,6 @@ namespace Scripts.UI.Controllers
 
             ShowCharacterSelectionOptionsWindow();
             EnableOrDisableCharacterSelectionOptionsViewButtons(hasCharacter);
-            
-            /*var characterImage =
-                characterImageCollection.GetCharacterView(uiCharacterIndex);*/
-
-            // TODO: CharacterSelected(characterImage)
         }
 
         private void OnStartButtonClicked()
@@ -191,7 +178,7 @@ namespace Scripts.UI.Controllers
             characterViewInteractor.RemoveCharacter(characterIndex);
         }
 
-        private IClickableCharacterView CreateAndShowClickableCharacterView(
+        private IClickableCharacterView CreateAndShowCharacterView(
             string path)
         {
             IClickableCharacterView clickableCharacterView = null;
@@ -199,8 +186,7 @@ namespace Scripts.UI.Controllers
             var characterGameObject = UIManagerUtils.LoadAndCreateGameObject(path);
             if (characterGameObject != null)
             {
-                clickableCharacterView = characterGameObject
-                    .GetComponent<ClickableCharacterImage>();
+                clickableCharacterView = characterGameObject.GetComponent<ClickableCharacterImage>();
                 clickableCharacterView.CharacterClicked += OnCharacterClicked;
                 clickableCharacterView.Show();
 
