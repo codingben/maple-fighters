@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEngine;
 
 namespace Scripts.UI
 {
@@ -11,6 +12,8 @@ namespace Scripts.UI
         string CharacterName { set; }
 
         bool HasCharacter { set; }
+
+        GameObject GameObject { get; }
 
         void PlayAnimation(UICharacterAnimation characterAnimation);
     }

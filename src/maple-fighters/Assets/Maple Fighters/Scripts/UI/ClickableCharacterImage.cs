@@ -38,6 +38,14 @@ namespace Scripts.UI
             }
         }
 
+        public GameObject GameObject
+        {
+            get
+            {
+                return gameObject;
+            }
+        }
+
         [Header("Text"), SerializeField]
         private TextMeshProUGUI characterNameText;
 

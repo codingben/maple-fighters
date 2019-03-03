@@ -93,6 +93,12 @@ namespace Scripts.UI.Controllers
             }
         }
 
+        // TODO: Hack
+        public void OnCharactersReceived()
+        {
+            DestroyAllCharacterImages();
+        }
+
         public void OnCharacterReceived(CharacterDetails characterDetails)
         {
             var path = GetCharacterPath(characterDetails);
@@ -120,6 +126,20 @@ namespace Scripts.UI.Controllers
         public void OnCharacterRemoved()
         {
             characterViewInteractor.GetCharacters();
+        }
+
+        private void DestroyAllCharacterImages()
+        {
+            var characterImages = characterImageCollection.GetAll();
+            foreach (var characterImage in characterImages)
+            {
+                if (characterImage != null)
+                {
+                    print(characterImage.GameObject.name);
+
+                    Destroy(characterImage.GameObject);
+                }
+            }
         }
 
         private void AttachCharacterToView(GameObject characterGameObject)
@@ -181,19 +201,19 @@ namespace Scripts.UI.Controllers
         private IClickableCharacterView CreateAndShowCharacterView(
             string path)
         {
-            IClickableCharacterView clickableCharacterView = null;
+            IClickableCharacterView characterView = null;
 
             var characterGameObject = UIManagerUtils.LoadAndCreateGameObject(path);
             if (characterGameObject != null)
             {
-                clickableCharacterView = characterGameObject.GetComponent<ClickableCharacterImage>();
-                clickableCharacterView.CharacterClicked += OnCharacterClicked;
-                clickableCharacterView.Show();
+                characterView = characterGameObject.GetComponent<ClickableCharacterImage>();
+                characterView.CharacterClicked += OnCharacterClicked;
+                characterView.Show();
 
                 AttachCharacterToView(characterGameObject);
             }
 
-            return clickableCharacterView;
+            return characterView;
         }
 
         private string GetCharacterPath(CharacterDetails characterDetails)

@@ -54,6 +54,9 @@ namespace Scripts.UI.Controllers
             var parameters =
                 await characterSelectorApi.GetCharactersAsync(yield);
 
+            // TODO: Hack
+            onCharacterReceivedListener.OnCharactersReceived();
+
             var characters = parameters.Characters;
             foreach (var character in characters)
             {
