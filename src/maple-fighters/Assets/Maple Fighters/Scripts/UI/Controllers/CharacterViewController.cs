@@ -158,13 +158,8 @@ namespace Scripts.UI.Controllers
                     OnNameInputFieldChanged;
             }
         }
-
-        public void OnBeforeCharacterReceived()
-        {
-            DestroyAllCharacterImages();
-        }
-
-        public void OnAfterCharacterReceived(CharacterDetails characterDetails)
+        
+        public void OnCharacterReceived(CharacterDetails characterDetails)
         {
             var characterView =
                 CreateAndShowCharacterView(GetCharacterPath(characterDetails));
@@ -193,6 +188,8 @@ namespace Scripts.UI.Controllers
 
         public void OnCharacterDeletionSucceed()
         {
+            DestroyAllCharacterImages();
+
             characterViewInteractor.GetCharacters();
         }
 
@@ -204,6 +201,8 @@ namespace Scripts.UI.Controllers
 
         public void OnCharacterCreated()
         {
+            DestroyAllCharacterImages();
+
             characterViewInteractor.GetCharacters();
         }
 

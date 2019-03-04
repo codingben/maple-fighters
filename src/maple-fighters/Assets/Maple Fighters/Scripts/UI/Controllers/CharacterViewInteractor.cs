@@ -56,8 +56,6 @@ namespace Scripts.UI.Controllers
 
         private async Task GetCharactersAsync(IYield yield)
         {
-            onCharacterReceivedListener.OnBeforeCharacterReceived();
-
             var parameters =
                 await characterSelectorApi.GetCharactersAsync(yield);
 
@@ -71,7 +69,7 @@ namespace Scripts.UI.Controllers
                     character.LastMap.ToUiMapIndex(),
                     character.HasCharacter);
 
-                onCharacterReceivedListener.OnAfterCharacterReceived(
+                onCharacterReceivedListener.OnCharacterReceived(
                     characterDetails);
             }
         }
