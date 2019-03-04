@@ -10,15 +10,15 @@ namespace Scripts.UI.Controllers
 {
     [RequireComponent(typeof(IOnCharacterReceivedListener))]
     [RequireComponent(typeof(IOnCharacterValidationFinishedListener))]
-    [RequireComponent(typeof(IOnCharacterRemovedListener))]
     [RequireComponent(typeof(IOnCharacterCreationFinishedListener))]
+    [RequireComponent(typeof(IOnCharacterDeletionFinishedListener))]
     public class CharacterViewInteractor : MonoBehaviour
     {
         private ICharacterSelectorApi characterSelectorApi;
         private IOnCharacterReceivedListener onCharacterReceivedListener;
         private IOnCharacterValidationFinishedListener onCharacterValidationFinishedListener;
-        private IOnCharacterRemovedListener onCharacterRemovedListener;
         private IOnCharacterCreationFinishedListener onCharacterCreationFinishedListener;
+        private IOnCharacterDeletionFinishedListener onCharacterDeletionFinishedListener;
 
         private ExternalCoroutinesExecutor coroutinesExecutor;
 
@@ -31,10 +31,10 @@ namespace Scripts.UI.Controllers
                 GetComponent<IOnCharacterReceivedListener>();
             onCharacterValidationFinishedListener =
                 GetComponent<IOnCharacterValidationFinishedListener>();
-            onCharacterRemovedListener =
-                GetComponent<IOnCharacterRemovedListener>();
             onCharacterCreationFinishedListener =
                 GetComponent<IOnCharacterCreationFinishedListener>();
+            onCharacterDeletionFinishedListener =
+                GetComponent<IOnCharacterDeletionFinishedListener>();
 
             coroutinesExecutor = new ExternalCoroutinesExecutor();
         }
@@ -137,13 +137,13 @@ namespace Scripts.UI.Controllers
             {
                 case RemoveCharacterStatus.Succeed:
                 {
-                    onCharacterRemovedListener.OnCharacterRemoved();
+                    onCharacterDeletionFinishedListener.OnCharacterDeletionSucceed();
                     break;
                 }
 
                 case RemoveCharacterStatus.Failed:
                 {
-                    // TODO: Implement
+                    onCharacterDeletionFinishedListener.OnCharacterDeletionFailed();
                     break;
                 }
             }
