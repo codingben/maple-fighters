@@ -93,13 +93,12 @@ namespace Scripts.UI.Controllers
             }
         }
 
-        // TODO: Hack
-        public void OnCharactersReceived()
+        public void OnBeforeCharacterReceived()
         {
             DestroyAllCharacterImages();
         }
 
-        public void OnCharacterReceived(CharacterDetails characterDetails)
+        public void OnAfterCharacterReceived(CharacterDetails characterDetails)
         {
             var path = GetCharacterPath(characterDetails);
             var characterView = CreateAndShowCharacterView(path);

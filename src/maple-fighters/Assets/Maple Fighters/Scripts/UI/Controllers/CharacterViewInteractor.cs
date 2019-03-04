@@ -51,11 +51,10 @@ namespace Scripts.UI.Controllers
 
         private async Task GetCharactersAsync(IYield yield)
         {
+            onCharacterReceivedListener.OnBeforeCharacterReceived();
+
             var parameters =
                 await characterSelectorApi.GetCharactersAsync(yield);
-
-            // TODO: Hack
-            onCharacterReceivedListener.OnCharactersReceived();
 
             var characters = parameters.Characters;
             foreach (var character in characters)
@@ -67,7 +66,7 @@ namespace Scripts.UI.Controllers
                     character.LastMap.ConvertToUiMapIndex(),
                     character.HasCharacter);
 
-                onCharacterReceivedListener.OnCharacterReceived(
+                onCharacterReceivedListener.OnAfterCharacterReceived(
                     characterDetails);
             }
         }

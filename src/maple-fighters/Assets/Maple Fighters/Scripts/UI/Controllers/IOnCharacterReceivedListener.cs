@@ -4,8 +4,8 @@ namespace Scripts.UI.Controllers
 {
     public interface IOnCharacterReceivedListener
     {
-        void OnCharactersReceived();
+        void OnBeforeCharacterReceived();
 
-        void OnCharacterReceived(CharacterDetails characterDetails);
+        void OnAfterCharacterReceived(CharacterDetails characterDetails);
     }
 }
