@@ -9,14 +9,14 @@ using UnityEngine;
 namespace Scripts.UI.Controllers
 {
     [RequireComponent(typeof(IOnCharacterReceivedListener))]
-    [RequireComponent(typeof(IOnCharacterValidatedListener))]
+    [RequireComponent(typeof(IOnCharacterValidationFinishedListener))]
     [RequireComponent(typeof(IOnCharacterRemovedListener))]
     [RequireComponent(typeof(IOnCharacterCreationFinishedListener))]
     public class CharacterViewInteractor : MonoBehaviour
     {
         private ICharacterSelectorApi characterSelectorApi;
         private IOnCharacterReceivedListener onCharacterReceivedListener;
-        private IOnCharacterValidatedListener onCharacterValidatedListener;
+        private IOnCharacterValidationFinishedListener onCharacterValidationFinishedListener;
         private IOnCharacterRemovedListener onCharacterRemovedListener;
         private IOnCharacterCreationFinishedListener onCharacterCreationFinishedListener;
 
@@ -29,8 +29,8 @@ namespace Scripts.UI.Controllers
 
             onCharacterReceivedListener =
                 GetComponent<IOnCharacterReceivedListener>();
-            onCharacterValidatedListener =
-                GetComponent<IOnCharacterValidatedListener>();
+            onCharacterValidationFinishedListener =
+                GetComponent<IOnCharacterValidationFinishedListener>();
             onCharacterRemovedListener =
                 GetComponent<IOnCharacterRemovedListener>();
             onCharacterCreationFinishedListener =
@@ -101,14 +101,14 @@ namespace Scripts.UI.Controllers
             {
                 case CharacterValidationStatus.Ok:
                 {
-                    onCharacterValidatedListener.OnCharacterValidated(
+                    onCharacterValidationFinishedListener.OnCharacterValidated(
                         map.ToUiMapIndex());
                     break;
                 }
 
                 case CharacterValidationStatus.Wrong:
                 {
-                    // TODO: Implement
+                    onCharacterValidationFinishedListener.OnCharacterUnvalidated();
                     break;
                 }
             }

@@ -1,7 +1,9 @@
 ﻿namespace Scripts.UI.Controllers
 {
-    public interface IOnCharacterValidatedListener
+    public interface IOnCharacterValidationFinishedListener
     {
         void OnCharacterValidated(UIMapIndex uiMapIndex);
+
+        void OnCharacterUnvalidated();
     }
 }

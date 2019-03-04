@@ -10,7 +10,7 @@ namespace Scripts.UI.Controllers
     [RequireComponent(typeof(CharacterViewInteractor))]
     public class CharacterViewController : MonoBehaviour,
                                            IOnCharacterReceivedListener,
-                                           IOnCharacterValidatedListener,
+                                           IOnCharacterValidationFinishedListener,
                                            IOnCharacterRemovedListener,
                                            IOnCharacterCreationFinishedListener
     {
@@ -183,6 +183,12 @@ namespace Scripts.UI.Controllers
         {
             // TODO: Remove this from here
             SceneManager.LoadScene((int)uiMapIndex);
+        }
+
+        public void OnCharacterUnvalidated()
+        {
+            var message = WindowMessages.CharacterValidationFailed;
+            NoticeUtils.ShowNotice(message);
         }
 
         public void OnCharacterRemoved()
