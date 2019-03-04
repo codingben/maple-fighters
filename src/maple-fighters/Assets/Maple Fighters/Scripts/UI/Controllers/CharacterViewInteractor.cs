@@ -143,6 +143,7 @@ namespace Scripts.UI.Controllers
 
                 case RemoveCharacterStatus.Failed:
                 {
+                    // TODO: Implement
                     break;
                 }
             }

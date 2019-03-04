@@ -197,7 +197,22 @@ namespace Scripts.UI.Controllers
 
         public void OnCreateCharacterFailed(CharacterCreationFailed reason)
         {
-            // TODO: Show Notice
+            switch (reason)
+            {
+                case CharacterCreationFailed.Unknown:
+                {
+                    var message = WindowMessages.CharacterCreationFailed;
+                    NoticeUtils.ShowNotice(message);
+                    break;
+                }
+
+                case CharacterCreationFailed.NameAlreadyInUse:
+                {
+                    var message = WindowMessages.NameAlreadyInUse;
+                    NoticeUtils.ShowNotice(message);
+                    break;
+                }
+            }
         }
 
         private void DestroyAllCharacterImages()

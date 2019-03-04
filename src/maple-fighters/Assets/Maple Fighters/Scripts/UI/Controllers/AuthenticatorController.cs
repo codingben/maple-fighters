@@ -90,7 +90,7 @@ namespace Scripts.UI.Controllers
                 || authenticationValidator.IsEmptyPassword(password, out message)
                 || authenticationValidator.IsPasswordTooShort(password, out message))
             {
-                ShowNotice(message);
+                NoticeUtils.ShowNotice(message);
             }
             else
             {
@@ -127,7 +127,7 @@ namespace Scripts.UI.Controllers
                 || authenticationValidator.IsFirstNameTooShort(firstName, out message)
                 || authenticationValidator.IsLastNameTooShort(lastName, out message))
             {
-                ShowNotice(message);
+                NoticeUtils.ShowNotice(message);
             }
             else
             {
@@ -139,16 +139,6 @@ namespace Scripts.UI.Controllers
         {
             HideRegistrationWindow();
             ShowLoginWindow();
-        }
-
-        private void ShowNotice(string message)
-        {
-            // TODO: Use event bus system
-            var noticeController = FindObjectOfType<NoticeController>();
-            if (noticeController != null)
-            {
-                noticeController.Show(message);
-            }
         }
 
         private void ShowLoginWindow()
@@ -193,13 +183,13 @@ namespace Scripts.UI.Controllers
         public void OnInvalidEmailError()
         {
             var message = WindowMessages.WrongEmailAddress;
-            ShowNotice(message);
+            NoticeUtils.ShowNotice(message);
         }
 
         public void OnInvalidPasswordError()
         {
             var message = WindowMessages.WrongPassword;
-            ShowNotice(message);
+            NoticeUtils.ShowNotice(message);
         }
 
         public void OnRegistrationSucceed()
@@ -211,7 +201,7 @@ namespace Scripts.UI.Controllers
         public void OnEmailExistsError()
         {
             var message = WindowMessages.EmailAddressExists;
-            ShowNotice(message);
+            NoticeUtils.ShowNotice(message);
         }
 
         private void ShowGameServerSelectorView()

@@ -16,5 +16,7 @@
         public const string EmptyLastName = "The last name is empty.";
         public const string ShortFirstName = "The first name is too short.";
         public const string ShortLastName = "The last name is too short.";
+        public const string CharacterCreationFailed = "The character creation failed.";
+        public const string NameAlreadyInUse = "Your character name is already taken.";
     }
 }
