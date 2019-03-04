@@ -11,7 +11,8 @@ namespace Scripts.UI.Controllers
     public class CharacterViewController : MonoBehaviour,
                                            IOnCharacterReceivedListener,
                                            IOnCharacterValidatedListener,
-                                           IOnCharacterRemovedListener
+                                           IOnCharacterRemovedListener,
+                                           IOnCharacterCreationFinishedListener
     {
         [SerializeField]
         private int characterNameLength;
@@ -187,6 +188,16 @@ namespace Scripts.UI.Controllers
         public void OnCharacterRemoved()
         {
             characterViewInteractor.GetCharacters();
+        }
+
+        public void OnCharacterCreated()
+        {
+            characterViewInteractor.GetCharacters();
+        }
+
+        public void OnCreateCharacterFailed(CharacterCreationFailed reason)
+        {
+            // TODO: Show Notice
         }
 
         private void DestroyAllCharacterImages()

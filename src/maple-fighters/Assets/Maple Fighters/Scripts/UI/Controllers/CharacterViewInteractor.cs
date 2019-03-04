@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using CommonTools.Coroutines;
 using Game.Common;
 using Scripts.Containers;
@@ -9,16 +8,17 @@ using UnityEngine;
 
 namespace Scripts.UI.Controllers
 {
-    [RequireComponent(
-        typeof(IOnCharacterReceivedListener),
-        typeof(IOnCharacterValidatedListener),
-        typeof(IOnCharacterRemovedListener))]
+    [RequireComponent(typeof(IOnCharacterReceivedListener))]
+    [RequireComponent(typeof(IOnCharacterValidatedListener))]
+    [RequireComponent(typeof(IOnCharacterRemovedListener))]
+    [RequireComponent(typeof(IOnCharacterCreationFinishedListener))]
     public class CharacterViewInteractor : MonoBehaviour
     {
         private ICharacterSelectorApi characterSelectorApi;
         private IOnCharacterReceivedListener onCharacterReceivedListener;
         private IOnCharacterValidatedListener onCharacterValidatedListener;
         private IOnCharacterRemovedListener onCharacterRemovedListener;
+        private IOnCharacterCreationFinishedListener onCharacterCreationFinishedListener;
 
         private ExternalCoroutinesExecutor coroutinesExecutor;
 
@@ -26,12 +26,16 @@ namespace Scripts.UI.Controllers
         {
             characterSelectorApi =
                 ServiceContainer.GameService.GetCharacterSelectorApi();
+
             onCharacterReceivedListener =
                 GetComponent<IOnCharacterReceivedListener>();
             onCharacterValidatedListener =
                 GetComponent<IOnCharacterValidatedListener>();
             onCharacterRemovedListener =
                 GetComponent<IOnCharacterRemovedListener>();
+            onCharacterCreationFinishedListener =
+                GetComponent<IOnCharacterCreationFinishedListener>();
+
             coroutinesExecutor = new ExternalCoroutinesExecutor();
         }
 
@@ -169,16 +173,21 @@ namespace Scripts.UI.Controllers
             {
                 case CharacterCreationStatus.Succeed:
                 {
+                    onCharacterCreationFinishedListener.OnCharacterCreated();
                     break;
                 }
 
                 case CharacterCreationStatus.Failed:
                 {
+                    onCharacterCreationFinishedListener.OnCreateCharacterFailed(
+                        CharacterCreationFailed.Unknown);
                     break;
                 }
 
                 case CharacterCreationStatus.NameUsed:
                 {
+                    onCharacterCreationFinishedListener.OnCreateCharacterFailed(
+                        CharacterCreationFailed.NameAlreadyInUse);
                     break;
                 }
             }
