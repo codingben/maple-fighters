@@ -9,9 +9,8 @@ using UnityEngine;
 
 namespace Scripts.UI.Controllers
 {
-    [RequireComponent(
-        typeof(IOnLoginFinishedListener),
-        typeof(IOnRegistrationFinishedListener))]
+    [RequireComponent(typeof(IOnLoginFinishedListener))]
+    [RequireComponent(typeof(IOnRegistrationFinishedListener))]
     public class AuthenticatorInteractor : MonoBehaviour
     {
         private IAuthenticatorApi authenticatorApi;
@@ -24,9 +23,11 @@ namespace Scripts.UI.Controllers
         {
             authenticatorApi = ServiceContainer.AuthenticatorService
                 .GetAuthenticatorApi();
+
             onLoginFinishedListener = GetComponent<IOnLoginFinishedListener>();
             onRegistrationFinishedListener =
                 GetComponent<IOnRegistrationFinishedListener>();
+
             coroutinesExecutor = new ExternalCoroutinesExecutor();
         }
 

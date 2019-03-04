@@ -19,8 +19,10 @@ namespace Scripts.UI.Controllers
         {
             gameServerProviderApi = ServiceContainer.GameServerProviderService
                 .GetGameServerProviderApi();
+
             onGameServerReceivedListener =
                 GetComponent<IOnGameServerReceivedListener>();
+
             coroutinesExecutor = new ExternalCoroutinesExecutor();
         }
 
@@ -36,7 +38,7 @@ namespace Scripts.UI.Controllers
 
         public void ProvideGameServers()
         {
-            coroutinesExecutor.StartTask(ProvideGameServersAsync);
+            coroutinesExecutor?.StartTask(ProvideGameServersAsync);
         }
 
         private async Task ProvideGameServersAsync(IYield yield)

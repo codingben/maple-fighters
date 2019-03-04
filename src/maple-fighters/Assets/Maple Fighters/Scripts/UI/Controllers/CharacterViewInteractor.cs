@@ -81,7 +81,7 @@ namespace Scripts.UI.Controllers
             var parameters =
                 new ValidateCharacterRequestParameters(characterIndex);
 
-            coroutinesExecutor.StartTask(
+            coroutinesExecutor?.StartTask(
                 (yield) => ValidateCharacterAsync(yield, parameters));
         }
 
@@ -156,7 +156,7 @@ namespace Scripts.UI.Controllers
                 characterDetails.GetCharacterName(),
                 characterDetails.GetCharacterIndex().FromUiCharacterIndex());
 
-            coroutinesExecutor.StartTask(
+            coroutinesExecutor?.StartTask(
                 (yield) => CreateCharacterAsync(yield, parameters));
         }
 
