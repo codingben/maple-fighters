@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using CommonTools.Coroutines;
 using Game.Common;
 using Scripts.Containers;
@@ -61,9 +62,9 @@ namespace Scripts.UI.Controllers
             {
                 var characterDetails = new CharacterDetails(
                     character.Name,
-                    character.Index.ConvertToUiCharacterIndex(),
-                    character.CharacterType.ConvertToUiCharacterClass(),
-                    character.LastMap.ConvertToUiMapIndex(),
+                    character.Index.ToUiCharacterIndex(),
+                    character.CharacterType.ToUiCharacterClass(),
+                    character.LastMap.ToUiMapIndex(),
                     character.HasCharacter);
 
                 onCharacterReceivedListener.OnAfterCharacterReceived(
@@ -97,7 +98,7 @@ namespace Scripts.UI.Controllers
                 case CharacterValidationStatus.Ok:
                 {
                     onCharacterValidatedListener.OnCharacterValidated(
-                        map.ConvertToUiMapIndex());
+                        map.ToUiMapIndex());
                     break;
                 }
 
@@ -137,6 +138,46 @@ namespace Scripts.UI.Controllers
                 }
 
                 case RemoveCharacterStatus.Failed:
+                {
+                    break;
+                }
+            }
+        }
+
+        public void CreateCharacter(CharacterDetails characterDetails)
+        {
+            var parameters = new CreateCharacterRequestParameters(
+                characterDetails.GetCharacterClass().FromUiCharacterClass(),
+                characterDetails.GetCharacterName(),
+                characterDetails.GetCharacterIndex().FromUiCharacterIndex());
+
+            coroutinesExecutor.StartTask(
+                (yield) => CreateCharacterAsync(yield, parameters));
+        }
+
+        private async Task CreateCharacterAsync(
+            IYield yield,
+            CreateCharacterRequestParameters parameters)
+        {
+            var responseParameters =
+                await characterSelectorApi.CreateCharacterAsync(
+                    yield,
+                    parameters);
+
+            var status = responseParameters.Status;
+            switch (status)
+            {
+                case CharacterCreationStatus.Succeed:
+                {
+                    break;
+                }
+
+                case CharacterCreationStatus.Failed:
+                {
+                    break;
+                }
+
+                case CharacterCreationStatus.NameUsed:
                 {
                     break;
                 }

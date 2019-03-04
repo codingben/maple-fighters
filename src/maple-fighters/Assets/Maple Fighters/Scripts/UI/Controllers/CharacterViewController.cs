@@ -13,23 +13,36 @@ namespace Scripts.UI.Controllers
                                            IOnCharacterValidatedListener,
                                            IOnCharacterRemovedListener
     {
-        private int characterIndex;
-        private ICharacterImageCollection characterImageCollection;
-        
+        [SerializeField]
+        private int characterNameLength;
+
         private ICharacterView characterView;
         private ICharacterSelectionOptionsView characterSelectionOptionsView;
         private IChooseFighterView chooseFighterView;
+        private ICharacterSelectionView characterSelectionView;
+        private ICharacterNameView characterNameView;
+
+        private CharacterDetails characterDetails;
+        private ClickableCharacterImageCollection characterImageCollection;
 
         private CharacterViewInteractor characterViewInteractor;
 
         private void Awake()
         {
-            characterImageCollection = new ClickableCharacterImageCollection();
+            var characterViews =
+                new IClickableCharacterView[] { null, null, null };
+
+            characterDetails = new CharacterDetails();
+            characterImageCollection =
+                new ClickableCharacterImageCollection(characterViews);
+
             characterViewInteractor = GetComponent<CharacterViewInteractor>();
 
             CreateCharacterView();
             CreateAndSubscribeToCharacterSelectionOptionsWindow();
             CreateAndShowChooseFighterView();
+            CreateAndSubscribeToCharacterSelectionWindow();
+            CreateAndSubscribeToCharacterNameWindow();
         }
 
         private void Start()
@@ -62,10 +75,36 @@ namespace Scripts.UI.Controllers
                 OnDeleteCharacterButtonClicked;
         }
 
+        private void CreateAndSubscribeToCharacterSelectionWindow()
+        {
+            characterSelectionView = UIElementsCreator.GetInstance()
+                .Create<CharacterSelectionWindow>();
+            characterSelectionView.ChooseButtonClicked +=
+                OnChooseButtonClicked;
+            characterSelectionView.CancelButtonClicked +=
+                OnCancelButtonClicked;
+            characterSelectionView.CharacterSelected +=
+                OnCharacterSelected;
+        }
+
+        private void CreateAndSubscribeToCharacterNameWindow()
+        {
+            characterNameView = UIElementsCreator.GetInstance()
+                .Create<CharacterNameWindow>();
+            characterNameView.ConfirmButtonClicked +=
+                OnConfirmButtonClicked;
+            characterNameView.BackButtonClicked +=
+                OnBackButtonClicked;
+            characterNameView.NameInputFieldChanged +=
+                OnNameInputFieldChanged;
+        }
+
         private void OnDestroy()
         {
             UnsubscribeFromCharacterImages();
             UnsubscribeFromCharacterSelectionOptionsWindow();
+            UnsubscribeFromCharacterSelectionWindow();
+            UnsubscribeFromCharacterNameWindow();
         }
 
         private void UnsubscribeFromCharacterImages()
@@ -93,6 +132,32 @@ namespace Scripts.UI.Controllers
             }
         }
 
+        private void UnsubscribeFromCharacterSelectionWindow()
+        {
+            if (characterSelectionView != null)
+            {
+                characterSelectionView.ChooseButtonClicked -=
+                    OnChooseButtonClicked;
+                characterSelectionView.CancelButtonClicked -=
+                    OnCancelButtonClicked;
+                characterSelectionView.CharacterSelected -=
+                    OnCharacterSelected;
+            }
+        }
+
+        private void UnsubscribeFromCharacterNameWindow()
+        {
+            if (characterNameView != null)
+            {
+                characterNameView.ConfirmButtonClicked -=
+                    OnConfirmButtonClicked;
+                characterNameView.BackButtonClicked -=
+                    OnBackButtonClicked;
+                characterNameView.NameInputFieldChanged -=
+                    OnNameInputFieldChanged;
+            }
+        }
+
         public void OnBeforeCharacterReceived()
         {
             DestroyAllCharacterImages();
@@ -100,18 +165,15 @@ namespace Scripts.UI.Controllers
 
         public void OnAfterCharacterReceived(CharacterDetails characterDetails)
         {
-            var path = GetCharacterPath(characterDetails);
-            var characterView = CreateAndShowCharacterView(path);
+            var characterView =
+                CreateAndShowCharacterView(GetCharacterPath(characterDetails));
             if (characterView != null)
             {
+                characterView.CharacterIndex = characterDetails.GetCharacterIndex();
+                characterView.CharacterName = characterDetails.GetCharacterName();
+                characterView.HasCharacter = characterDetails.HasCharacter();
+
                 var characterIndex = characterDetails.GetCharacterIndex();
-                var characterName = characterDetails.GetCharacterName();
-                var hasCharacter = characterDetails.HasCharacter();
-
-                characterView.CharacterIndex = characterIndex;
-                characterView.CharacterName = characterName;
-                characterView.HasCharacter = hasCharacter;
-
                 characterImageCollection.Set(characterIndex, characterView);
             }
         }
@@ -134,8 +196,6 @@ namespace Scripts.UI.Controllers
             {
                 if (characterImage != null)
                 {
-                    print(characterImage.GameObject.name);
-
                     Destroy(characterImage.GameObject);
                 }
             }
@@ -146,7 +206,7 @@ namespace Scripts.UI.Controllers
             if (characterView != null)
             {
                 characterGameObject.transform.SetParent(characterView.Transform, false);
-                characterGameObject.transform.SetAsFirstSibling();
+                characterGameObject.transform.SetAsLastSibling();
             }
         }
 
@@ -155,8 +215,7 @@ namespace Scripts.UI.Controllers
             characterSelectionOptionsView?.Show();
         }
 
-        private void EnableOrDisableCharacterSelectionOptionsViewButtons(
-            bool hasCharacter)
+        private void EnableOrDisableCharacterSelectionOptionsViewButtons(bool hasCharacter)
         {
             if (characterSelectionOptionsView != null)
             {
@@ -166,11 +225,9 @@ namespace Scripts.UI.Controllers
             }
         }
 
-        private void OnCharacterClicked(
-            UICharacterIndex uiCharacterIndex,
-            bool hasCharacter)
+        private void OnCharacterClicked(UICharacterIndex uiCharacterIndex, bool hasCharacter)
         {
-            characterIndex = (int)uiCharacterIndex;
+            characterDetails.SetCharacterIndex(uiCharacterIndex);
 
             ShowCharacterSelectionOptionsWindow();
             EnableOrDisableCharacterSelectionOptionsViewButtons(hasCharacter);
@@ -178,27 +235,82 @@ namespace Scripts.UI.Controllers
 
         private void OnStartButtonClicked()
         {
+            var characterIndex = (int)characterDetails.GetCharacterIndex();
             characterViewInteractor.ValidateCharacter(characterIndex);
         }
 
         private void OnCreateCharacterButtonClicked()
         {
-            // TODO: Use event bus system
-            var characterSelectionController =
-                FindObjectOfType<CharacterSelectionController>();
-            if (characterSelectionController != null)
-            {
-                characterSelectionController.ShowCharacterSelectionWindow();
-            }
+            ShowCharacterSelectionWindow();
         }
 
         private void OnDeleteCharacterButtonClicked()
         {
+            var characterIndex = (int)characterDetails.GetCharacterIndex();
             characterViewInteractor.RemoveCharacter(characterIndex);
         }
 
-        private IClickableCharacterView CreateAndShowCharacterView(
-            string path)
+        private void OnNameInputFieldChanged(string characterName)
+        {
+            if (characterName.Length >= characterNameLength)
+            {
+                characterNameView?.EnableConfirmButton();
+            }
+            else
+            {
+                characterNameView?.DisableConfirmButton();
+            }
+        }
+
+        private void OnConfirmButtonClicked(string characterName)
+        {
+            characterDetails.SetCharacterName(characterName);
+            characterViewInteractor.CreateCharacter(characterDetails);
+        }
+
+        private void OnBackButtonClicked()
+        {
+            HideCharacterNameWindow();
+            ShowCharacterSelectionWindow();
+        }
+
+        private void OnChooseButtonClicked()
+        {
+            HideCharacterSelectionWindow();
+            ShowCharacterNameWindow();
+        }
+
+        private void OnCancelButtonClicked()
+        {
+            HideCharacterSelectionWindow();
+        }
+
+        private void OnCharacterSelected(UICharacterClass uiCharacterClass)
+        {
+            characterDetails.SetCharacterClass(uiCharacterClass);
+        }
+
+        private void ShowCharacterNameWindow()
+        {
+            characterNameView?.Show();
+        }
+
+        private void HideCharacterNameWindow()
+        {
+            characterNameView?.Hide();
+        }
+
+        private void ShowCharacterSelectionWindow()
+        {
+            characterSelectionView?.Show();
+        }
+
+        private void HideCharacterSelectionWindow()
+        {
+            characterSelectionView?.Hide();
+        }
+
+        private IClickableCharacterView CreateAndShowCharacterView(string path)
         {
             IClickableCharacterView characterView = null;
 

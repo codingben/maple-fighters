@@ -1,9 +1,14 @@
 ﻿namespace Scripts.UI.Controllers
 {
-    public struct ClickableCharacterImageCollection : ICharacterImageCollection
+    public struct ClickableCharacterImageCollection
     {
         private IClickableCharacterView[] clickableCharacterViews;
-        
+
+        public ClickableCharacterImageCollection(IClickableCharacterView[] clickableCharacterViews)
+        {
+            this.clickableCharacterViews = clickableCharacterViews;
+        }
+
         public void Set(UICharacterIndex uiCharacterIndex, IClickableCharacterView clickableCharacterView)
         {
             if (uiCharacterIndex != UICharacterIndex.Zero)
@@ -21,12 +26,6 @@
         
         public IClickableCharacterView[] GetAll()
         {
-            if (clickableCharacterViews == null)
-            {
-                clickableCharacterViews =
-                    new IClickableCharacterView[] { null, null, null };
-            }
-
             return clickableCharacterViews;
         }
     }

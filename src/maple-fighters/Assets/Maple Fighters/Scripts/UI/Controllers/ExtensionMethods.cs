@@ -4,7 +4,7 @@ namespace Scripts.UI.Controllers
 {
     public static class ExtensionMethods
     {
-        public static UICharacterIndex ConvertToUiCharacterIndex(
+        public static UICharacterIndex ToUiCharacterIndex(
             this CharacterIndex characterIndex)
         {
             var uiCharacterIndex = UICharacterIndex.Zero;
@@ -39,7 +39,42 @@ namespace Scripts.UI.Controllers
             return uiCharacterIndex;
         }
 
-        public static UICharacterClass ConvertToUiCharacterClass(
+        public static CharacterIndex FromUiCharacterIndex(
+            this UICharacterIndex uiCharacterIndex)
+        {
+            var characterIndex = CharacterIndex.Zero;
+
+            switch (uiCharacterIndex)
+            {
+                case UICharacterIndex.Zero:
+                {
+                    characterIndex = CharacterIndex.Zero;
+                    break;
+                }
+
+                case UICharacterIndex.First:
+                {
+                    characterIndex = CharacterIndex.First;
+                    break;
+                }
+
+                case UICharacterIndex.Second:
+                {
+                    characterIndex = CharacterIndex.Second;
+                    break;
+                }
+
+                case UICharacterIndex.Third:
+                {
+                    characterIndex = CharacterIndex.Third;
+                    break;
+                }
+            }
+
+            return characterIndex;
+        }
+
+        public static UICharacterClass ToUiCharacterClass(
             this CharacterClasses characterClasses)
         {
             var uiCharacterClass = UICharacterClass.Knight;
@@ -68,7 +103,36 @@ namespace Scripts.UI.Controllers
             return uiCharacterClass;
         }
 
-        public static UIMapIndex ConvertToUiMapIndex(this Maps map)
+        public static CharacterClasses FromUiCharacterClass(
+            this UICharacterClass uiCharacterClass)
+        {
+            var characterClass = CharacterClasses.Knight;
+
+            switch (uiCharacterClass)
+            {
+                case UICharacterClass.Knight:
+                {
+                    characterClass = CharacterClasses.Knight;
+                    break;
+                }
+
+                case UICharacterClass.Arrow:
+                {
+                    characterClass = CharacterClasses.Arrow;
+                    break;
+                }
+
+                case UICharacterClass.Wizard:
+                {
+                    characterClass = CharacterClasses.Wizard;
+                    break;
+                }
+            }
+
+            return characterClass;
+        }
+
+        public static UIMapIndex ToUiMapIndex(this Maps map)
         {
             var uiMapIndex = UIMapIndex.Map_1;
 
