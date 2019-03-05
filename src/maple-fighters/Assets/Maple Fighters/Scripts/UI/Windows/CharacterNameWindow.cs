@@ -93,15 +93,11 @@ namespace Scripts.UI.Windows
                 ConfirmButtonClicked?.Invoke(characterName);
             }
 
-            Hide();
-
             ResetNameInputField();
         }
 
         private void OnBackButtonClicked()
         {
-            Hide();
-
             ResetNameInputField();
 
             BackButtonClicked?.Invoke();

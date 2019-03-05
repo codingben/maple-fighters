@@ -316,11 +316,14 @@ namespace Scripts.UI.Controllers
 
         private void OnCreateCharacterButtonClicked()
         {
+            HideCharacterSelectionOptionsWindow();
             ShowCharacterSelectionWindow();
         }
 
         private void OnDeleteCharacterButtonClicked()
         {
+            HideCharacterSelectionOptionsWindow();
+
             var characterIndex = (int)characterDetails.GetCharacterIndex();
             characterViewInteractor.RemoveCharacter(characterIndex);
         }
@@ -339,6 +342,8 @@ namespace Scripts.UI.Controllers
 
         private void OnConfirmButtonClicked(string characterName)
         {
+            HideCharacterNameWindow();
+
             characterDetails.SetCharacterName(characterName);
             characterViewInteractor.CreateCharacter(characterDetails);
         }

@@ -111,8 +111,6 @@ namespace Scripts.UI.Windows
         {
             DisableChooseButton();
 
-            Hide();
-
             DeselectAllCharacterClasses();
 
             ChooseButtonClicked?.Invoke();
@@ -121,8 +119,6 @@ namespace Scripts.UI.Windows
         private void OnCancelButtonClicked()
         {
             DisableChooseButton();
-
-            Hide();
 
             DeselectAllCharacterClasses();
 
