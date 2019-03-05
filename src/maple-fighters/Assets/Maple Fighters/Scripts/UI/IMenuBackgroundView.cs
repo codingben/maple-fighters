@@ -1,7 +1,9 @@
-﻿namespace Scripts.UI
+﻿using System;
+
+namespace Scripts.UI
 {
     public interface IMenuBackgroundView
     {
-        // Left blank intentionally
+        event Action PointerClicked;
     }
 }
