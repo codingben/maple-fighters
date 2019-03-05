@@ -15,13 +15,23 @@ namespace UI.Manager
         /// </summary>
         public event Action Hidden;
 
+        public bool IsShown
+        {
+            get;
+            private set;
+        }
+
         public void Show()
         {
+            IsShown = true;
+
             Shown?.Invoke();
         }
 
         public void Hide()
         {
+            IsShown = false;
+
             Hidden?.Invoke();
         }
     }
