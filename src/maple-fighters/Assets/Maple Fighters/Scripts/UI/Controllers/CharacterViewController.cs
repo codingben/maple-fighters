@@ -40,10 +40,12 @@ namespace Scripts.UI.Controllers
             characterViewInteractor = GetComponent<CharacterViewInteractor>();
 
             CreateCharacterView();
-            CreateAndSubscribeToCharacterSelectionOptionsWindow();
             CreateAndShowChooseFighterView();
+            CreateAndSubscribeToCharacterSelectionOptionsWindow();
             CreateAndSubscribeToCharacterSelectionWindow();
             CreateAndSubscribeToCharacterNameWindow();
+
+            SubscribeToBackgroundClicked();
         }
 
         private void Start()
@@ -67,7 +69,9 @@ namespace Scripts.UI.Controllers
         private void CreateAndSubscribeToCharacterSelectionOptionsWindow()
         {
             characterSelectionOptionsView = UIElementsCreator.GetInstance()
-                .Create<CharacterSelectionOptionsWindow>();
+                .Create<CharacterSelectionOptionsWindow>(
+                    UILayer.Foreground,
+                    UIIndex.End);
             characterSelectionOptionsView.StartButtonClicked +=
                 OnStartButtonClicked;
             characterSelectionOptionsView.CreateCharacterButtonClicked +=
@@ -79,7 +83,9 @@ namespace Scripts.UI.Controllers
         private void CreateAndSubscribeToCharacterSelectionWindow()
         {
             characterSelectionView = UIElementsCreator.GetInstance()
-                .Create<CharacterSelectionWindow>();
+                .Create<CharacterSelectionWindow>(
+                    UILayer.Foreground,
+                    UIIndex.End);
             characterSelectionView.ChooseButtonClicked +=
                 OnChooseButtonClicked;
             characterSelectionView.CancelButtonClicked +=
@@ -91,7 +97,7 @@ namespace Scripts.UI.Controllers
         private void CreateAndSubscribeToCharacterNameWindow()
         {
             characterNameView = UIElementsCreator.GetInstance()
-                .Create<CharacterNameWindow>();
+                .Create<CharacterNameWindow>(UILayer.Foreground, UIIndex.End);
             characterNameView.ConfirmButtonClicked +=
                 OnConfirmButtonClicked;
             characterNameView.BackButtonClicked +=
@@ -100,12 +106,35 @@ namespace Scripts.UI.Controllers
                 OnNameInputFieldChanged;
         }
 
+        private void SubscribeToBackgroundClicked()
+        {
+            // TODO: Use event bus system
+            var backgroundController =
+                FindObjectOfType<MenuBackgroundController>();
+            if (backgroundController != null)
+            {
+                backgroundController.BackgroundClicked += OnBackgroundClicked;
+            }
+        }
+
+        private void UnsubscribeFromBackgroundClicked()
+        {
+            // TODO: Use event bus system
+            var backgroundController =
+                FindObjectOfType<MenuBackgroundController>();
+            if (backgroundController != null)
+            {
+                backgroundController.BackgroundClicked -= OnBackgroundClicked;
+            }
+        }
+
         private void OnDestroy()
         {
             UnsubscribeFromCharacterImages();
             UnsubscribeFromCharacterSelectionOptionsWindow();
             UnsubscribeFromCharacterSelectionWindow();
             UnsubscribeFromCharacterNameWindow();
+            UnsubscribeFromBackgroundClicked();
         }
 
         private void UnsubscribeFromCharacterImages()
@@ -252,6 +281,11 @@ namespace Scripts.UI.Controllers
             characterSelectionOptionsView?.Show();
         }
 
+        private void HideCharacterSelectionOptionsWindow()
+        {
+            characterSelectionOptionsView?.Hide();
+        }
+
         private void EnableOrDisableCharacterSelectionOptionsViewButtons(bool hasCharacter)
         {
             if (characterSelectionOptionsView != null)
@@ -325,6 +359,11 @@ namespace Scripts.UI.Controllers
         private void OnCharacterSelected(UICharacterClass uiCharacterClass)
         {
             characterDetails.SetCharacterClass(uiCharacterClass);
+        }
+
+        private void OnBackgroundClicked()
+        {
+            HideCharacterSelectionOptionsWindow();
         }
 
         private void ShowCharacterNameWindow()

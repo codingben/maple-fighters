@@ -66,22 +66,16 @@ namespace Scripts.UI.Windows
         
         private void OnStartButtonClicked()
         {
-            Hide();
-
             StartButtonClicked?.Invoke();
         }
 
         private void OnCreateCharacterButtonClicked()
         {
-            Hide();
-
             CreateCharacterButtonClicked?.Invoke();
         }
 
         private void OnDeleteCharacterButtonClicked()
         {
-            Hide();
-
             DeleteCharacterButtonClicked?.Invoke();
         }
 
