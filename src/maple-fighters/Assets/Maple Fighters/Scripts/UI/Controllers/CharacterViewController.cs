@@ -283,7 +283,11 @@ namespace Scripts.UI.Controllers
 
         private void HideCharacterSelectionOptionsWindow()
         {
-            characterSelectionOptionsView?.Hide();
+            if (characterSelectionOptionsView != null
+                && characterSelectionOptionsView.IsShown)
+            {
+                characterSelectionOptionsView.Hide();
+            }
         }
 
         private void EnableOrDisableCharacterSelectionOptionsViewButtons(bool hasCharacter)
