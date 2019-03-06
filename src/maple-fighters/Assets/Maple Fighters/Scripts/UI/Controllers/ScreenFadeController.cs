@@ -9,28 +9,27 @@ namespace Scripts.UI.Controllers
 
         private void Awake()
         {
+            CreateScreenFadeImage();
+        }
+
+        private void Start()
+        {
             Hide();
         }
 
-        public void Show()
+        private void OnDestroy()
         {
-            if (screenFadeView == null)
-            {
-                screenFadeView = UIElementsCreator.GetInstance()
-                    .Create<ScreenFadeImage>(UILayer.Foreground, UIIndex.End);
-            }
-
-            screenFadeView?.Show();
+            UnsubscribeFromUIFadeAnimation();
         }
 
-        public void Hide()
+        private void CreateScreenFadeImage()
         {
-            if (screenFadeView == null)
-            {
-                screenFadeView = UIElementsCreator.GetInstance()
-                    .Create<ScreenFadeImage>(UILayer.Foreground, UIIndex.End);
-            }
+            screenFadeView = UIElementsCreator.GetInstance()
+                .Create<ScreenFadeImage>(UILayer.Foreground, UIIndex.End);
+        }
 
+        private void Hide()
+        {
             SubscribeToUIFadeAnimation();
 
             screenFadeView?.Hide();
