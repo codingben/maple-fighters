@@ -75,8 +75,6 @@ namespace Scripts.UI.Windows
 
         private void OnOkButtonClicked()
         {
-            Hide();
-
             OkButtonClicked?.Invoke();
         }
 

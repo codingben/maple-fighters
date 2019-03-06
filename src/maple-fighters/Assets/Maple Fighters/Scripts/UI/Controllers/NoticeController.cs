@@ -10,6 +10,21 @@ namespace Scripts.UI.Controllers
         private INoticeView noticeView;
         private Action onOkButtonClicked;
 
+        private void CreateAndSubscribeToNoticeWindow()
+        {
+            noticeView = UIElementsCreator.GetInstance()
+                .Create<NoticeWindow>(UILayer.Foreground, UIIndex.End);
+            noticeView.OkButtonClicked += Hide;
+        }
+
+        private void UnsubscribeFromNoticeWindow()
+        {
+            if (noticeView != null)
+            {
+                noticeView.OkButtonClicked += Hide;
+            }
+        }
+
         public void Show(string message, Action onClicked = null, bool background = true)
         {
             var noticeWindow = CreateOrShowNoticeView();
@@ -35,23 +50,22 @@ namespace Scripts.UI.Controllers
             }
         }
 
-        public void Hide()
+        private void Hide()
         {
             SubscribeToUIFadeAnimation();
+
             HideNoticeWindow();
         }
 
         private void OnDestroy()
         {
-            HideNoticeWindow();
+            UnsubscribeFromNoticeWindow();
         }
 
         private void HideNoticeWindow()
         {
             if (noticeView != null)
             {
-                noticeView.OkButtonClicked -= Hide;
-
                 if (onOkButtonClicked != null)
                 {
                     noticeView.OkButtonClicked -= onOkButtonClicked;
@@ -86,9 +100,7 @@ namespace Scripts.UI.Controllers
         {
             if (noticeView == null)
             {
-                noticeView = UIElementsCreator.GetInstance()
-                    .Create<NoticeWindow>(UILayer.Foreground, UIIndex.End);
-                noticeView.OkButtonClicked += Hide;
+                CreateAndSubscribeToNoticeWindow();
             }
 
             noticeView.Show();
