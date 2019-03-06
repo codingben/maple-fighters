@@ -1,4 +1,5 @@
-﻿using Scripts.UI.Windows;
+﻿using System;
+using Scripts.UI.Windows;
 using UI.Manager;
 using UnityEngine;
 
@@ -9,6 +10,10 @@ namespace Scripts.UI.Controllers
                                            IOnLoginFinishedListener,
                                            IOnRegistrationFinishedListener
     {
+        public event Action LoginSucceed;
+
+        public event Action RegistrationSucceed;
+
         private ILoginView loginView;
         private IRegistrationView registrationView;
 
@@ -177,7 +182,8 @@ namespace Scripts.UI.Controllers
         public void OnLoginSucceed()
         {
             HideLoginWindow();
-            ShowGameServerSelectorView();
+
+            LoginSucceed?.Invoke();
         }
 
         public void OnInvalidEmailError()
@@ -195,24 +201,14 @@ namespace Scripts.UI.Controllers
         public void OnRegistrationSucceed()
         {
             HideRegistrationWindow();
-            ShowGameServerSelectorView();
+
+            RegistrationSucceed?.Invoke();
         }
 
         public void OnEmailExistsError()
         {
             var message = WindowMessages.EmailAddressExists;
             NoticeUtils.ShowNotice(message);
-        }
-
-        private void ShowGameServerSelectorView()
-        {
-            // TODO: Use event bus system
-            var gameServerSelectorController =
-                FindObjectOfType<GameServerSelectorController>();
-            if (gameServerSelectorController != null)
-            {
-                gameServerSelectorController.ShowGameServerSelectorWindow();
-            }
         }
     }
 }

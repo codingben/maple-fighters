@@ -25,6 +25,7 @@ namespace Scripts.UI.Controllers
                 GetComponent<GameServerSelectorInteractor>();
 
             CreateAndSubscribeToGameServerSelectorWindow();
+            SubscribeToAuthenticatorControllerEvents();
         }
 
         private void CreateAndSubscribeToGameServerSelectorWindow()
@@ -37,6 +38,20 @@ namespace Scripts.UI.Controllers
                 OnRefreshButtonClicked;
         }
 
+        private void SubscribeToAuthenticatorControllerEvents()
+        {
+            // TODO: Use event bus system
+            var authenticatorController =
+                FindObjectOfType<AuthenticatorController>();
+            if (authenticatorController != null)
+            {
+                authenticatorController.LoginSucceed +=
+                    ShowGameServerSelectorWindow;
+                authenticatorController.RegistrationSucceed +=
+                    ShowGameServerSelectorWindow;
+            }
+        }
+
         private void OnDestroy()
         {
             if (gameServerViews.Count != 0)
@@ -45,6 +60,7 @@ namespace Scripts.UI.Controllers
             }
 
             UnsubscribeFromGameServerSelectorWindow();
+            UnsubscribeFromAuthenticatorControllerEvents();
 
             gameServerViews.Clear();
         }
@@ -60,7 +76,21 @@ namespace Scripts.UI.Controllers
             }
         }
 
-        public void ShowGameServerSelectorWindow()
+        private void UnsubscribeFromAuthenticatorControllerEvents()
+        {
+            // TODO: Use event bus system
+            var authenticatorController =
+                FindObjectOfType<AuthenticatorController>();
+            if (authenticatorController != null)
+            {
+                authenticatorController.LoginSucceed -=
+                    ShowGameServerSelectorWindow;
+                authenticatorController.RegistrationSucceed -=
+                    ShowGameServerSelectorWindow;
+            }
+        }
+
+        private void ShowGameServerSelectorWindow()
         {
             gameServerSelectorView?.Show();
         }
