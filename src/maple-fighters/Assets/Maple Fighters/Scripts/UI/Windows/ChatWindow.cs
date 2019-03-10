@@ -9,6 +9,8 @@ namespace Scripts.UI.Windows
     [RequireComponent(typeof(UICanvasGroup))]
     public class ChatWindow : UIElement, IChatView
     {
+        public event Action<bool> FocusChanged;
+
         public event Action<string> MessageAdded;
 
         public string CharacterName
@@ -29,6 +31,16 @@ namespace Scripts.UI.Windows
 
         [SerializeField]
         private TMP_InputField chatInputField;
+
+        private bool IsTypingMessage
+        {
+            set
+            {
+                isTypingMessage = value;
+
+                FocusChanged?.Invoke(isTypingMessage);
+            }
+        }
 
         private bool isTypingMessage;
         private string characterName;
@@ -75,7 +87,7 @@ namespace Scripts.UI.Windows
                 ActivateOrDeactivateInputField();
                 SelectOrDeselectChatInputField();
 
-                isTypingMessage = false;
+                IsTypingMessage = false;
             }
         }
 
@@ -83,7 +95,7 @@ namespace Scripts.UI.Windows
         {
             if (IsAnySendKeyPressed())
             {
-                isTypingMessage = true;
+                IsTypingMessage = true;
 
                 ActivateOrDeactivateInputField();
                 SelectOrDeselectChatInputField();
@@ -95,9 +107,11 @@ namespace Scripts.UI.Windows
             if (chatInputField != null)
             {
                 var text = chatInputField.text;
+
                 if (!string.IsNullOrWhiteSpace(text))
                 {
                     var message = $"{characterName}: {text}";
+
                     MessageAdded?.Invoke(message);
                 }
             }

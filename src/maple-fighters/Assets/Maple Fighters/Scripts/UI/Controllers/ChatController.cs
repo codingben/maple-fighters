@@ -8,14 +8,20 @@ namespace Scripts.UI.Controllers
     {
         private IChatView chatView;
 
+        private FocusStateController focusStateController;
+
         private void Awake()
         {
+            // TODO: Use event bus system
+            focusStateController = FindObjectOfType<FocusStateController>();
+
             CreateAndSubscribeToChatWindow();
         }
 
         private void CreateAndSubscribeToChatWindow()
         {
             chatView = UIElementsCreator.GetInstance().Create<ChatWindow>();
+            chatView.FocusChanged += OnFocusChanged;
             chatView.MessageAdded += OnMessageAdded;
         }
 
@@ -28,6 +34,7 @@ namespace Scripts.UI.Controllers
         {
             if (chatView != null)
             {
+                chatView.FocusChanged -= OnFocusChanged;
                 chatView.MessageAdded -= OnMessageAdded;
             }
         }
@@ -50,6 +57,18 @@ namespace Scripts.UI.Controllers
             chatView?.AddMessage(message);
 
             // TODO: MessageSent
+        }
+
+        private void OnFocusChanged(bool isFocused)
+        {
+            if (focusStateController != null)
+            {
+                // TODO: Shouldn't be Game state always
+                var focusState =
+                    isFocused ? FocusState.Chat : FocusState.Game;
+
+                focusStateController.ChangeFocusState(focusState);
+            }
         }
     }
 }
