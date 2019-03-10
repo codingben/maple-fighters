@@ -23,7 +23,7 @@ namespace Scripts.Gameplay.Actors
 
         public void OnStateEnter()
         {
-            // Left blank intentionally
+            rigidbody2D.velocity = Vector2.zero;
         }
 
         public void OnStateUpdate()
