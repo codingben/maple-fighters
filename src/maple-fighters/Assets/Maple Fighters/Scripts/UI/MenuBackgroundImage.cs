@@ -4,7 +4,9 @@ using UnityEngine.EventSystems;
 
 namespace Scripts.UI
 {
-    public class MenuBackgroundImage : UIElement, IPointerClickHandler, IMenuBackgroundView
+    public class MenuBackgroundImage : UIElement,
+                                       IPointerClickHandler,
+                                       IMenuBackgroundView
     {
         public event Action PointerClicked;
 

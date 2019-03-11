@@ -4,7 +4,8 @@ using UnityEngine;
 namespace Scripts.UI.Windows
 {
     [RequireComponent(typeof(UIFadeAnimation))]
-    public class GameServerBrowserRefreshImage : UIElement, IGameServerBrowserRefreshView
+    public class GameServerBrowserRefreshImage : UIElement,
+                                                 IGameServerBrowserRefreshView
     {
         // Left blank intentionally
     }
