@@ -182,7 +182,7 @@ GameObject:
   - component: {fileID: 225893267498260622}
   - component: {fileID: 114725116052178736}
   m_Layer: 5
-  m_Name: Game Server Selector Refresh Image
+  m_Name: Game Server Browser Refresh Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -414,7 +414,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1579499864167712}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 723d6002482fee643acba21719285d71, type: 3}
+  m_Script: {fileID: 11500000, guid: 8fba6001aeb8f9c4eba5157d0960f4eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &114291137867067084

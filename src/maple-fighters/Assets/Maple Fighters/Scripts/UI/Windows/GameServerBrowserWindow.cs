@@ -29,7 +29,7 @@ namespace Scripts.UI.Windows
 
         [Header("Image")]
         [SerializeField]
-        private GameServerSelectorRefreshImage refreshImage;
+        private GameServerBrowserRefreshImage refreshImage;
         
         private void Start()
         {
