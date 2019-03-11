@@ -182,7 +182,7 @@ GameObject:
   - component: {fileID: 225893267498260622}
   - component: {fileID: 114725116052178736}
   m_Layer: 5
-  m_Name: GameServerSelectorRefreshImage
+  m_Name: Game Server Selector Refresh Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
