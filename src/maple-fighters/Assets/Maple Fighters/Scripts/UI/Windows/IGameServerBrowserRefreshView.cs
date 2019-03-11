@@ -1,6 +1,6 @@
 ﻿namespace Scripts.UI.Windows
 {
-    public interface IGameServerSelectorRefreshView : IView
+    public interface IGameServerBrowserRefreshView : IView
     {
         // Left blank intentionally
     }

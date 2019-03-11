@@ -12,7 +12,7 @@ namespace Scripts.UI.Windows
 
         public event Action RefreshButtonClicked;
 
-        public IGameServerSelectorRefreshView RefreshImage => refreshImage;
+        public IGameServerBrowserRefreshView RefreshImage => refreshImage;
 
         public Transform GameServerList => gameServerList;
 
