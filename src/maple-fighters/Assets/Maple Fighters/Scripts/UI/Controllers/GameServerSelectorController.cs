@@ -31,7 +31,7 @@ namespace Scripts.UI.Controllers
         private void CreateAndSubscribeToGameServerSelectorWindow()
         {
             gameServerSelectorView = UIElementsCreator.GetInstance()
-                .Create<GameServerSelectorWindow>();
+                .Create<GameServerBrowserWindow>();
             gameServerSelectorView.JoinButtonClicked +=
                 OnJoinButtonClicked;
             gameServerSelectorView.RefreshButtonClicked +=

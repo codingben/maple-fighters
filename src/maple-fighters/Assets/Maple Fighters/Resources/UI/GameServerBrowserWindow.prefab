@@ -111,7 +111,7 @@ GameObject:
   - component: {fileID: 225756934479252268}
   - component: {fileID: 114634272192583016}
   m_Layer: 5
-  m_Name: GameServerSelectorWindow
+  m_Name: GameServerBrowserWindow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -286,7 +286,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1319053500329498}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: daacaeae7829ec94fb05fc5bdc5906b2, type: 3}
+  m_Script: {fileID: 11500000, guid: c1a04b98a88e6024ca0e4a7c8dba8c7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   gameServerList: {fileID: 224133246790740444}
