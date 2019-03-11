@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 namespace Scripts.UI.Controllers
 {
-    [RequireComponent(typeof(GameServerSelectorInteractor))]
+    [RequireComponent(typeof(GameServerBrowserInteractor))]
     public class GameServerBrowserController : MonoBehaviour,
                                                IOnGameServerReceivedListener
     {
@@ -16,13 +16,13 @@ namespace Scripts.UI.Controllers
         private Dictionary<string, IGameServerView> gameServerViews;
         private IGameServerBrowserView gameServerSelectorView;
 
-        private GameServerSelectorInteractor gameServerSelectorInteractor;
+        private GameServerBrowserInteractor gameServerSelectorInteractor;
 
         private void Awake()
         {
             gameServerViews = new Dictionary<string, IGameServerView>();
             gameServerSelectorInteractor =
-                GetComponent<GameServerSelectorInteractor>();
+                GetComponent<GameServerBrowserInteractor>();
 
             CreateAndSubscribeToGameServerSelectorWindow();
             SubscribeToAuthenticatorControllerEvents();

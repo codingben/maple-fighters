@@ -8,7 +8,7 @@ using UnityEngine;
 namespace Scripts.UI.Controllers
 {
     [RequireComponent(typeof(IOnGameServerReceivedListener))]
-    public class GameServerSelectorInteractor : MonoBehaviour
+    public class GameServerBrowserInteractor : MonoBehaviour
     {
         private IGameServerProviderApi gameServerProviderApi;
         private IOnGameServerReceivedListener onGameServerReceivedListener;
