@@ -7,8 +7,8 @@ using UnityEngine.SceneManagement;
 namespace Scripts.UI.Controllers
 {
     [RequireComponent(typeof(GameServerSelectorInteractor))]
-    public class GameServerSelectorController : MonoBehaviour,
-                                                IOnGameServerReceivedListener
+    public class GameServerBrowserController : MonoBehaviour,
+                                               IOnGameServerReceivedListener
     {
         [SerializeField]
         private string sceneName;
