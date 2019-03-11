@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Scripts.UI.Windows
 {
-    public interface IGameServerSelectorView : IView
+    public interface IGameServerBrowserView : IView
     {
         event Action JoinButtonClicked;
 

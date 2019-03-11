@@ -14,7 +14,7 @@ namespace Scripts.UI.Controllers
         private string sceneName;
 
         private Dictionary<string, IGameServerView> gameServerViews;
-        private IGameServerSelectorView gameServerSelectorView;
+        private IGameServerBrowserView gameServerSelectorView;
 
         private GameServerSelectorInteractor gameServerSelectorInteractor;
 
