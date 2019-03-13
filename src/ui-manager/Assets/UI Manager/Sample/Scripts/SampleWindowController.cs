@@ -7,52 +7,66 @@ namespace Sample.Scripts
     public class SampleWindowController : MonoBehaviour
     {
         private SampleWindow sampleWindow;
-        private SampleImage sampleImage;
 
         private void Awake()
         {
+            CreateAndSubscribeToSampleWindow();
+            SubscribeToFadeAnimationEvents();
+        }
+
+        private void CreateAndSubscribeToSampleWindow()
+        {
             sampleWindow =
                 UIElementsCreator.GetInstance().Create<SampleWindow>();
-            sampleImage = 
-                UIElementsCreator.GetInstance()
-                    .Create<SampleImage>(UILayer.Background);
-
-            SubscribeToSampleImageEvents();
-            SubscribeToFadeAnimationEvents();
+            sampleWindow.PointerClicked += OnPointerClicked;
         }
 
         private void Start()
         {
-            sampleWindow.Show();
-        }
-
-        private void SubscribeToSampleImageEvents()
-        {
-            sampleImage.PointerClicked += OnPointerClicked;
-        }
-
-        private void UnsubscribeToSampleImageEvents()
-        {
-            sampleImage.PointerClicked -= OnPointerClicked;
+            ShowSampleWindow();
         }
 
         private void OnPointerClicked(PointerEventData eventData)
         {
-            sampleWindow.Hide();
+            HideSampleWindow();
+        }
+
+        private void ShowSampleWindow()
+        {
+            if (sampleWindow != null)
+            {
+                sampleWindow.Show();
+            }
+        }
+
+        private void HideSampleWindow()
+        {
+            if (sampleWindow != null)
+            {
+                sampleWindow.Hide();
+            }
         }
 
         private void SubscribeToFadeAnimationEvents()
         {
-            var uiFadeAnimation = sampleWindow.GetComponent<UIFadeAnimation>();
-            uiFadeAnimation.FadeInCompleted += OnFadeInCompleted;
-            uiFadeAnimation.FadeOutCompleted += OnFadeOutCompleted;
+            if (sampleWindow != null)
+            {
+                var uiFadeAnimation =
+                    sampleWindow.GetComponent<UIFadeAnimation>();
+                uiFadeAnimation.FadeInCompleted += OnFadeInCompleted;
+                uiFadeAnimation.FadeOutCompleted += OnFadeOutCompleted;
+            }
         }
 
         private void UnsubscribeFromFadeAnimationEvents()
         {
-            var uiFadeAnimation = sampleWindow.GetComponent<UIFadeAnimation>();
-            uiFadeAnimation.FadeInCompleted -= OnFadeInCompleted;
-            uiFadeAnimation.FadeOutCompleted -= OnFadeOutCompleted;
+            if (sampleWindow != null)
+            {
+                var uiFadeAnimation =
+                    sampleWindow.GetComponent<UIFadeAnimation>();
+                uiFadeAnimation.FadeInCompleted -= OnFadeInCompleted;
+                uiFadeAnimation.FadeOutCompleted -= OnFadeOutCompleted;
+            }
         }
 
         private void OnFadeInCompleted()
@@ -65,10 +79,15 @@ namespace Sample.Scripts
         private void OnFadeOutCompleted()
         {
             UnsubscribeFromFadeAnimationEvents();
-            UnsubscribeToSampleImageEvents();
+            UnsubscribeFromSampleWindow();
+        }
 
-            Destroy(sampleWindow.gameObject);
-            Destroy(gameObject);
+        private void UnsubscribeFromSampleWindow()
+        {
+            if (sampleWindow != null)
+            {
+                sampleWindow.PointerClicked -= OnPointerClicked;
+            }
         }
     }
 }
