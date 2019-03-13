@@ -8,7 +8,8 @@ namespace Sample.Scripts
         private void Awake()
         {
             var sampleMessage =
-                UIElementsCreator.GetInstance().Create<SampleMessage>();
+                UIElementsCreator.GetInstance()
+                    .Create<SampleMessage>(UILayer.Background);
             sampleMessage.Show();
         }
     }
