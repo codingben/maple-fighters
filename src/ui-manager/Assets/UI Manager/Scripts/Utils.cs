@@ -17,20 +17,20 @@ namespace UI.Manager
         public static GameObject LoadAndCreateGameObject(string path)
         {
             var prefab = Resources.Load(path) as GameObject;
-            if (prefab != null)
+            if (prefab == null)
             {
-                var gameObject = Object.Instantiate(
-                    prefab,
-                    Vector3.zero,
-                    Quaternion.identity);
-                gameObject.name = prefab.name.RemoveCloneFromName();
-                gameObject.transform.position = prefab.transform.position;
-
-                return gameObject;
+                throw new UtilsException(
+                    $"The prefab in the path {path} not found.");
             }
 
-            throw new UtilsException(
-                $"The prefab in the path {path} not found.");
+            var gameObject = Object.Instantiate(
+                prefab,
+                Vector3.zero,
+                Quaternion.identity);
+            gameObject.name = prefab.name.RemoveCloneFromName();
+            gameObject.transform.position = prefab.transform.position;
+
+            return gameObject;
         }
 
         /// <summary>

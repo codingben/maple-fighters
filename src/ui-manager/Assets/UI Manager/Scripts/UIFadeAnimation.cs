@@ -42,40 +42,6 @@ namespace UI.Manager
             }
         }
 
-        private IEnumerator FadeIn()
-        {
-            DisableCanvasGroup();
-
-            while (Alpha < 0.99f)
-            {
-                Alpha += 1 * speed * Time.deltaTime;
-                yield return null;
-            }
-
-            EnableCanvasGroup();
-
-            FadeInCompleted?.Invoke();
-
-            fadeInCoroutine = null;
-        }
-
-        private IEnumerator FadeOut()
-        {
-            EnableCanvasGroup();
-
-            while (Alpha > 0.01f)
-            {
-                Alpha -= 1 * speed * Time.deltaTime;
-                yield return null;
-            }
-
-            DisableCanvasGroup();
-
-            FadeOutCompleted?.Invoke();
-
-            fadeOutCoroutine = null;
-        }
-
         private void StopFadeInIfNecessary()
         {
             if (fadeInCoroutine != null)
@@ -94,6 +60,60 @@ namespace UI.Manager
 
                 fadeOutCoroutine = null;
             }
+        }
+
+        private IEnumerator FadeIn()
+        {
+            OnBeforeFadeIn();
+
+            while (Alpha < 0.99f)
+            {
+                Alpha += 1 * speed * Time.deltaTime;
+                yield return null;
+            }
+
+            OnAfterFadeIn();
+        }
+
+        private void OnBeforeFadeIn()
+        {
+            DisableCanvasGroup();
+        }
+
+        private void OnAfterFadeIn()
+        {
+            EnableCanvasGroup();
+
+            FadeInCompleted?.Invoke();
+
+            fadeInCoroutine = null;
+        }
+
+        private IEnumerator FadeOut()
+        {
+            OnBeforeFadeOut();
+
+            while (Alpha > 0.01f)
+            {
+                Alpha -= 1 * speed * Time.deltaTime;
+                yield return null;
+            }
+
+            OnAfterFadeOut();
+        }
+
+        private void OnBeforeFadeOut()
+        {
+            EnableCanvasGroup();
+        }
+
+        private void OnAfterFadeOut()
+        {
+            DisableCanvasGroup();
+
+            FadeOutCompleted?.Invoke();
+
+            fadeOutCoroutine = null;
         }
     }
 }
