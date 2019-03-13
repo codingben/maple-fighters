@@ -19,8 +19,7 @@ namespace UI.Manager
             uiLayers = 
                 new UILayers(background.transform, foreground.transform);
             
-            UIEventSystemCreator.GetInstance()
-                .Create<EventSystem, StandaloneInputModule>();
+            UIUtils.CreateEventSystem<EventSystem, StandaloneInputModule>();
         }
 
         public TUIElement Create<TUIElement>(UILayer uiLayer = UILayer.Foreground, UIIndex uiIndex = UIIndex.Start, Transform parent = null)
