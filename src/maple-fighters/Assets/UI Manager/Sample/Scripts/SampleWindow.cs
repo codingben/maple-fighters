@@ -1,10 +1,14 @@
-﻿using UI.Manager;
+﻿using System;
+using UI.Manager;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace Sample.Scripts
 {
-    public class SampleWindow : UIElement
+    public class SampleWindow : UIElement, IPointerClickHandler
     {
+        public event Action<PointerEventData> PointerClicked;
+
         private void Awake()
         {
             Shown += OnShown;
@@ -25,6 +29,11 @@ namespace Sample.Scripts
         private void OnHidden()
         {
             Debug.Log("SampleWindow::OnHidden()");
+        }
+
+        public void OnPointerClick(PointerEventData eventData)
+        {
+            PointerClicked?.Invoke(eventData);
         }
     }
 }

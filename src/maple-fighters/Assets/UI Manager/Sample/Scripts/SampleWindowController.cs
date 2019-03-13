@@ -7,68 +7,56 @@ namespace Sample.Scripts
     public class SampleWindowController : MonoBehaviour
     {
         private SampleWindow sampleWindow;
-        private SampleImage sampleImage;
 
         private void Awake()
         {
-            sampleWindow =
-                UIElementsCreator.GetInstance().Create<SampleWindow>();
-            sampleImage = 
-                UIElementsCreator.GetInstance()
-                    .Create<SampleImage>(UILayer.Background);
-
-            SubscribeToSampleImageEvents();
-            SubscribeToFadeAnimationEvents();
+            CreateAndSubscribeToSampleWindow();
         }
 
         private void Start()
         {
-            sampleWindow.Show();
+            ShowSampleWindow();
         }
 
-        private void SubscribeToSampleImageEvents()
+        private void OnDestroy()
         {
-            sampleImage.PointerClicked += OnPointerClicked;
+            UnsubscribeFromSampleWindow();
         }
 
-        private void UnsubscribeToSampleImageEvents()
+        private void CreateAndSubscribeToSampleWindow()
         {
-            sampleImage.PointerClicked -= OnPointerClicked;
+            sampleWindow =
+                UIElementsCreator.GetInstance().Create<SampleWindow>();
+            sampleWindow.PointerClicked += OnPointerClicked;
+        }
+
+        private void UnsubscribeFromSampleWindow()
+        {
+            if (sampleWindow != null)
+            {
+                sampleWindow.PointerClicked -= OnPointerClicked;
+            }
         }
 
         private void OnPointerClicked(PointerEventData eventData)
         {
-            sampleWindow.Hide();
+            HideSampleWindow();
         }
 
-        private void SubscribeToFadeAnimationEvents()
+        private void ShowSampleWindow()
         {
-            var uiFadeAnimation = sampleWindow.GetComponent<UIFadeAnimation>();
-            uiFadeAnimation.FadeInCompleted += OnFadeInCompleted;
-            uiFadeAnimation.FadeOutCompleted += OnFadeOutCompleted;
+            if (sampleWindow != null)
+            {
+                sampleWindow.Show();
+            }
         }
 
-        private void UnsubscribeFromFadeAnimationEvents()
+        private void HideSampleWindow()
         {
-            var uiFadeAnimation = sampleWindow.GetComponent<UIFadeAnimation>();
-            uiFadeAnimation.FadeInCompleted -= OnFadeInCompleted;
-            uiFadeAnimation.FadeOutCompleted -= OnFadeOutCompleted;
-        }
-
-        private void OnFadeInCompleted()
-        {
-            var sampleMessage =
-                UIElementsCreator.GetInstance().Create<SampleMessage>();
-            sampleMessage.Show();
-        }
-
-        private void OnFadeOutCompleted()
-        {
-            UnsubscribeFromFadeAnimationEvents();
-            UnsubscribeToSampleImageEvents();
-
-            Destroy(sampleWindow.gameObject);
-            Destroy(gameObject);
+            if (sampleWindow != null)
+            {
+                sampleWindow.Hide();
+            }
         }
     }
 }
