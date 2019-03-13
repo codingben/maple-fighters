@@ -26,6 +26,12 @@ namespace Sample.Scripts
             ShowSampleWindow();
         }
 
+        private void OnDestroy()
+        {
+            UnsubscribeFromSampleWindow();
+            UnsubscribeFromFadeAnimationEvents();
+        }
+
         private void OnPointerClicked(PointerEventData eventData)
         {
             HideSampleWindow();
