@@ -24,18 +24,15 @@ namespace Scripts.UI.Controllers
         private ICharacterNameView characterNameView;
 
         private CharacterDetails characterDetails;
-        private ClickableCharacterImageCollection characterImageCollection;
+        private CharacterViewCollection characterViewCollection;
 
         private CharacterViewInteractor characterViewInteractor;
 
         private void Awake()
         {
-            var characterViews =
-                new IClickableCharacterView[] { null, null, null };
-
             characterDetails = new CharacterDetails();
-            characterImageCollection =
-                new ClickableCharacterImageCollection(characterViews);
+            characterViewCollection = new CharacterViewCollection(
+                new IClickableCharacterView[] { null, null, null });
 
             characterViewInteractor = GetComponent<CharacterViewInteractor>();
 
@@ -59,7 +56,7 @@ namespace Scripts.UI.Controllers
                 .Create<ChooseFighterText>(UILayer.Background, UIIndex.End);
             chooseFighterView.Show();
         }
-        
+
         private void CreateCharacterView()
         {
             characterView = UIElementsCreator.GetInstance()
@@ -139,7 +136,7 @@ namespace Scripts.UI.Controllers
 
         private void UnsubscribeFromCharacterImages()
         {
-            var characterImages = characterImageCollection.GetAll();
+            var characterImages = characterViewCollection.GetAll();
             foreach (var characterImage in characterImages)
             {
                 if (characterImage != null)
@@ -187,7 +184,7 @@ namespace Scripts.UI.Controllers
                     OnNameInputFieldChanged;
             }
         }
-        
+
         public void OnCharacterReceived(CharacterDetails characterDetails)
         {
             var characterView =
@@ -199,7 +196,11 @@ namespace Scripts.UI.Controllers
                 characterView.HasCharacter = characterDetails.HasCharacter();
 
                 var characterIndex = characterDetails.GetCharacterIndex();
-                characterImageCollection.Set(characterIndex, characterView);
+                if (characterIndex != UICharacterIndex.Zero)
+                {
+                    var index = (int)characterIndex;
+                    characterViewCollection.Set(index, characterView);
+                }
             }
         }
 
@@ -240,24 +241,24 @@ namespace Scripts.UI.Controllers
             switch (reason)
             {
                 case CharacterCreationFailed.Unknown:
-                {
-                    var message = WindowMessages.CharacterCreationFailed;
-                    NoticeUtils.ShowNotice(message);
-                    break;
-                }
+                    {
+                        var message = WindowMessages.CharacterCreationFailed;
+                        NoticeUtils.ShowNotice(message);
+                        break;
+                    }
 
                 case CharacterCreationFailed.NameAlreadyInUse:
-                {
-                    var message = WindowMessages.NameAlreadyInUse;
-                    NoticeUtils.ShowNotice(message);
-                    break;
-                }
+                    {
+                        var message = WindowMessages.NameAlreadyInUse;
+                        NoticeUtils.ShowNotice(message);
+                        break;
+                    }
             }
         }
 
         private void DestroyAllCharacterImages()
         {
-            var characterImages = characterImageCollection.GetAll();
+            var characterImages = characterViewCollection.GetAll();
             foreach (var characterImage in characterImages)
             {
                 if (characterImage != null)
@@ -417,7 +418,7 @@ namespace Scripts.UI.Controllers
             var characterIndex = characterDetails.GetCharacterIndex();
             var characterClass = characterDetails.GetCharacterClass();
             var hasCharacter = characterDetails.HasCharacter();
-            var name = 
+            var name =
                 hasCharacter
                     ? $"{characterClass} {(int)characterIndex}"
                     : $"Sample {(int)characterIndex}";
