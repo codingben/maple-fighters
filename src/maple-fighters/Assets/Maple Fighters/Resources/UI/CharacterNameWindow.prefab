@@ -699,7 +699,7 @@ GameObject:
   - component: {fileID: 114955974361439742}
   - component: {fileID: 114234094347219726}
   m_Layer: 5
-  m_Name: TextMeshPro - InputField
+  m_Name: Name InputField
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
