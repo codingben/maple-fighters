@@ -30,22 +30,18 @@ namespace Scripts.Gameplay.Actors
         {
             if (playerController.IsGrounded())
             {
-                if (focusStateController != null
-                    && focusStateController.GetFocusState() != FocusState.Game)
+                if (IsUnFocused())
                 {
                     return;
                 }
 
-                var jumpKey = playerController.Configuration.JumpKey;
-                if (Input.GetKeyDown(jumpKey))
+                if (IsJumpKeyClicked())
                 {
                     playerController.ChangePlayerState(PlayerState.Jumping);
                     return;
                 }
 
-                // TODO: Move to the configuration
-                var horizontal = Input.GetAxisRaw("Horizontal");
-                if (Mathf.Abs(horizontal) > 0)
+                if (IsMove())
                 {
                     playerController.ChangePlayerState(PlayerState.Moving);
                     return;
@@ -67,6 +63,40 @@ namespace Scripts.Gameplay.Actors
         public void OnStateExit()
         {
             // Left blank intentionally
+        }
+
+        private bool IsUnFocused()
+        {
+            if (focusStateController != null 
+                && focusStateController.GetFocusState() != FocusState.Game)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        private bool IsJumpKeyClicked()
+        {
+            var jumpKey = playerController.Configuration.JumpKey;
+            if (Input.GetKeyDown(jumpKey))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        private bool IsMove()
+        {
+            // TODO: Move to the configuration
+            var horizontal = Input.GetAxisRaw("Horizontal");
+            if (Mathf.Abs(horizontal) > 0)
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }
