@@ -8,8 +8,6 @@ namespace Scripts.Gameplay.Actors
         private readonly PlayerController playerController;
         private readonly Rigidbody2D rigidbody2D;
 
-        private bool isOnGround;
-
         public PlayerAttackedState(PlayerController playerController)
         {
             this.playerController = playerController;
@@ -20,25 +18,15 @@ namespace Scripts.Gameplay.Actors
 
         public void OnStateEnter()
         {
+            // TODO: Make sure it won't cause a bug
             rigidbody2D.velocity = Vector2.zero;
         }
 
         public void OnStateUpdate()
         {
-            if (playerController.IsGrounded() && !isOnGround)
-            {
-                return;
-            }
-
             if (playerController.IsGrounded())
             {
                 playerController.ChangePlayerState(PlayerState.Idle);
-                return;
-            }
-
-            if (!isOnGround)
-            {
-                isOnGround = true;
             }
         }
 
@@ -49,7 +37,7 @@ namespace Scripts.Gameplay.Actors
 
         public void OnStateExit()
         {
-            isOnGround = false;
+            // Left blank intentionally
         }
     }
 }
