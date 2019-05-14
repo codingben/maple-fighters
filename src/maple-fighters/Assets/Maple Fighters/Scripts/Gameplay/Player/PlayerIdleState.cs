@@ -8,6 +8,7 @@ namespace Scripts.Gameplay.Actors
     {
         private readonly PlayerController playerController;
         private readonly FocusStateController focusStateController;
+        private readonly Rigidbody2D rigidbody2D;
  
         public PlayerIdleState(
             PlayerController playerController,
@@ -15,11 +16,14 @@ namespace Scripts.Gameplay.Actors
         {
             this.playerController = playerController;
             this.focusStateController = focusStateController;
+
+            var collider = playerController.GetComponent<Collider2D>();
+            rigidbody2D = collider.attachedRigidbody;
         }
 
         public void OnStateEnter()
         {
-            // Left blank intentionally
+            rigidbody2D.Sleep();
         }
 
         public void OnStateUpdate()
