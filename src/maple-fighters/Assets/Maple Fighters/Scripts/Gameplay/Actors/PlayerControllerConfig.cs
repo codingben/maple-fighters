@@ -7,6 +7,7 @@ namespace Scripts.Gameplay.Actors
     public class PlayerControllerConfig
     {
         public float Speed;
+        public float JumpHeight;
         public float JumpForce;
         public float RopeClimbingSpeed;
         public float LadderClimbingSpeed;

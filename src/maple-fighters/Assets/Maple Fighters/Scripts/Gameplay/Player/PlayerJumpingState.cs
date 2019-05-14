@@ -26,12 +26,10 @@ namespace Scripts.Gameplay.Actors
         private void Jump()
         {
             // TODO: Move to the configuration
-            const float JumpForce = 0.075f;
-
-            // TODO: Move to the configuration
-            var horizontal = Input.GetAxis("Horizontal");
+            var horizontal = Input.GetAxisRaw("Horizontal");
             var jumpForce = playerController.Configuration.JumpForce;
-            var direction = new Vector2(horizontal, 1) * jumpForce;
+            var jumpHeight = playerController.Configuration.JumpHeight;
+            var direction = new Vector2(horizontal * jumpForce, jumpHeight);
 
             rigidbody2D.velocity = direction;
         }
