@@ -28,27 +28,23 @@ namespace Scripts.Gameplay.Actors
             // TODO: Move to the configuration
             const float JumpForce = 0.075f;
 
-            var direction = rigidbody2D.velocity.x;
-            if (direction != 0)
-            {
-                direction = 
-                    rigidbody2D.velocity.x > 0 ? JumpForce : -JumpForce;
-            }
-
+            // TODO: Move to the configuration
+            var horizontal = Input.GetAxis("Horizontal");
             var jumpForce = playerController.Configuration.JumpForce;
-            var force = new Vector2(direction, 1) * jumpForce;
-            rigidbody2D.AddForce(force, ForceMode2D.Impulse);
+            var direction = new Vector2(horizontal, 1) * jumpForce;
+
+            rigidbody2D.velocity = direction;
         }
 
         public void OnStateUpdate()
         {
-            if (isJumping && playerController.IsGrounded())
+            if (isJumping && IsGrounded())
             {
                 playerController.ChangePlayerState(PlayerState.Idle);
             }
             else
             {
-                if (playerController.IsGrounded() == false)
+                if (IsGrounded() == false)
                 {
                     isJumping = true;
                 }
@@ -63,6 +59,11 @@ namespace Scripts.Gameplay.Actors
         public void OnStateExit()
         {
             isJumping = false;
+        }
+
+        private bool IsGrounded()
+        {
+            return playerController.IsGrounded();
         }
     }
 }
