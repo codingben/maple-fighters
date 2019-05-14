@@ -10,7 +10,7 @@ namespace Scripts.Gameplay.Actors
         private readonly FocusStateController focusStateController;
         private readonly Rigidbody2D rigidbody2D;
 
-        private float direction;
+        private Directions direction;
 
         public PlayerMovingState(
             PlayerController playerController,
@@ -30,34 +30,31 @@ namespace Scripts.Gameplay.Actors
 
         public void OnStateUpdate()
         {
-            if (playerController.IsGrounded())
+            if (IsGrounded())
             {
-                if (focusStateController != null
-                    && focusStateController.GetFocusState() != FocusState.Game)
+                if (IsUnFocused())
                 {
                     playerController.ChangePlayerState(PlayerState.Idle);
-                    return;
                 }
 
-                var jumpKey = playerController.Configuration.JumpKey;
-                if (Input.GetKeyDown(jumpKey))
+                if (IsMoveStopped())
+                {
+                    playerController.ChangePlayerState(PlayerState.Idle);
+                }
+
+                if (IsJumpKeyClicked())
                 {
                     playerController.ChangePlayerState(PlayerState.Jumping);
-                    return;
                 }
 
                 // TODO: Move to the configuration
                 var horizontal = Input.GetAxisRaw("Horizontal");
-                if (Mathf.Abs(horizontal) == 0)
+                if (horizontal != 0)
                 {
-                    playerController.ChangePlayerState(PlayerState.Idle);
-                    return;
+                    direction = horizontal < 0 ? Directions.Left : Directions.Right;
                 }
-
-                direction = horizontal;
-
-                playerController.ChangeDirection(
-                    direction < 0 ? Directions.Left : Directions.Right);
+                
+                playerController.ChangeDirection(direction);
             }
             else
             {
@@ -67,15 +64,41 @@ namespace Scripts.Gameplay.Actors
 
         public void OnStateFixedUpdate()
         {
-            rigidbody2D.velocity = 
-                new Vector2(
-                    direction * playerController.Configuration.Speed,
-                    rigidbody2D.velocity.y);
+            // TODO: Move to the configuration
+            var horizontal = Input.GetAxisRaw("Horizontal");
+            var speed = playerController.Configuration.Speed;
+            var direction = new Vector3(horizontal, 0, 0).normalized * speed * Time.deltaTime;
+            var position = rigidbody2D.transform.position;
+
+            rigidbody2D.MovePosition(position + direction);
         }
 
         public void OnStateExit()
         {
-            direction = 0;
+            // Left blank intentionally
+        }
+
+        private bool IsGrounded()
+        {
+            return playerController.IsGrounded();
+        }
+
+        private bool IsUnFocused()
+        {
+            return focusStateController?.GetFocusState() != FocusState.Game;
+        }
+
+        private bool IsJumpKeyClicked()
+        {
+            var jumpKey = playerController.Configuration.JumpKey;
+            return Input.GetKeyDown(jumpKey);
+        }
+
+        private bool IsMoveStopped()
+        {
+            // TODO: Move to the configuration
+            var horizontal = Input.GetAxisRaw("Horizontal");
+            return Mathf.Abs(horizontal) == 0;
         }
     }
 }
