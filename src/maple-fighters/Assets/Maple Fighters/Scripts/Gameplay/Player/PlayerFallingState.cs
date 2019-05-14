@@ -18,7 +18,7 @@ namespace Scripts.Gameplay.Actors
 
         public void OnStateUpdate()
         {
-            if (playerController.IsGrounded())
+            if (IsGrounded())
             {
                 playerController.ChangePlayerState(PlayerState.Idle);
             }
@@ -32,6 +32,11 @@ namespace Scripts.Gameplay.Actors
         public void OnStateExit()
         {
             // Left blank intentionally
+        }
+
+        private bool IsGrounded()
+        {
+            return playerController.IsGrounded();
         }
     }
 }
