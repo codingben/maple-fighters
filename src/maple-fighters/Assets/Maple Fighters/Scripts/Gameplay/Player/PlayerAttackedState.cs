@@ -18,8 +18,7 @@ namespace Scripts.Gameplay.Actors
 
         public void OnStateEnter()
         {
-            // TODO: Make sure it won't cause a bug
-            rigidbody2D.velocity = Vector2.zero;
+            rigidbody2D.Sleep();
         }
 
         public void OnStateUpdate()
