@@ -8,17 +8,13 @@ namespace Scripts.Gameplay.Actors
     {
         private readonly PlayerController playerController;
         private readonly FocusStateController focusStateController;
-        private readonly Rigidbody2D rigidbody2D;
-
+ 
         public PlayerIdleState(
             PlayerController playerController,
             FocusStateController focusStateController)
         {
             this.playerController = playerController;
             this.focusStateController = focusStateController;
-
-            var collider = playerController.GetComponent<Collider2D>();
-            rigidbody2D = collider.attachedRigidbody;
         }
 
         public void OnStateEnter()
@@ -28,26 +24,20 @@ namespace Scripts.Gameplay.Actors
 
         public void OnStateUpdate()
         {
-            if (playerController.IsGrounded())
+            if (IsGrounded())
             {
-                if (IsUnFocused())
+                if (IsGameFocused())
                 {
-                    return;
-                }
+                    if (IsMoved())
+                    {
+                        playerController.ChangePlayerState(PlayerState.Moving);
+                    }
 
-                if (IsJumpKeyClicked())
-                {
-                    playerController.ChangePlayerState(PlayerState.Jumping);
-                    return;
+                    if (IsJumpKeyClicked())
+                    {
+                        playerController.ChangePlayerState(PlayerState.Jumping);
+                    }
                 }
-
-                if (IsMove())
-                {
-                    playerController.ChangePlayerState(PlayerState.Moving);
-                    return;
-                }
-
-                rigidbody2D.velocity = Vector2.zero;
             }
             else
             {
@@ -65,38 +55,27 @@ namespace Scripts.Gameplay.Actors
             // Left blank intentionally
         }
 
-        private bool IsUnFocused()
+        private bool IsGrounded()
         {
-            if (focusStateController != null 
-                && focusStateController.GetFocusState() != FocusState.Game)
-            {
-                return true;
-            }
+            return playerController.IsGrounded();
+        }
 
-            return false;
+        private bool IsGameFocused()
+        {
+            return focusStateController?.GetFocusState() == FocusState.Game;
+        }
+
+        private bool IsMoved()
+        {
+            // TODO: Move to the configuration
+            var horizontal = Input.GetAxisRaw("Horizontal");
+            return Mathf.Abs(horizontal) > 0;
         }
 
         private bool IsJumpKeyClicked()
         {
             var jumpKey = playerController.Configuration.JumpKey;
-            if (Input.GetKeyDown(jumpKey))
-            {
-                return true;
-            }
-
-            return false;
-        }
-
-        private bool IsMove()
-        {
-            // TODO: Move to the configuration
-            var horizontal = Input.GetAxisRaw("Horizontal");
-            if (Mathf.Abs(horizontal) > 0)
-            {
-                return true;
-            }
-
-            return false;
+            return Input.GetKeyDown(jumpKey);
         }
     }
 }
