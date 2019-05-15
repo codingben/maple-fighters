@@ -84,7 +84,11 @@ namespace Scripts.Gameplay.Actors.Interaction
             }
 
             ChangePositionToRopeCenter();
+            ChangePlayerStateToRope();
+        }
 
+        private void ChangePlayerStateToRope()
+        {
             playerController.ChangePlayerState(PlayerState.Rope);
         }
 
@@ -93,7 +97,19 @@ namespace Scripts.Gameplay.Actors.Interaction
             collidersInteraction.EnableCollisionWithIgnoredCollider();
             collidersInteraction.SetIgnoredCollider(null);
 
-            playerController.ChangePlayerState(PlayerState.Idle);
+            ChangePlayerStateFromRope();
+        }
+
+        private void ChangePlayerStateFromRope()
+        {
+            if (playerController.IsGrounded())
+            {
+                playerController.ChangePlayerState(PlayerState.Idle);
+            }
+            else
+            {
+                playerController.ChangePlayerState(PlayerState.Falling);
+            }
         }
 
         private void ChangePositionToRopeCenter()
