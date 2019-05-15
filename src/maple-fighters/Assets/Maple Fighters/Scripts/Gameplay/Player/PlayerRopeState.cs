@@ -25,23 +25,24 @@ namespace Scripts.Gameplay.Actors
 
         public void OnStateUpdate()
         {
-            var jumpKey = playerController.Configuration.JumpKey;
-            if (Input.GetKeyDown(jumpKey))
+            if (IsJumpKeyClicked())
             {
                 Jump();
-                return;
-            }
 
-            // TODO: Move to the configuration
-            direction = Input.GetAxisRaw("Vertical");
+                playerController.ChangePlayerState(PlayerState.Falling);
+            }
+            else
+            {
+                // TODO: Move to the configuration
+                direction = Input.GetAxisRaw("Vertical");
+            }
         }
 
         public void OnStateFixedUpdate()
         {
-            rigidbody2D.velocity =
-                new Vector2(
-                    rigidbody2D.velocity.x,
-                    direction * playerController.Configuration.RopeClimbingSpeed);
+            var speed = playerController.Configuration.RopeClimbingSpeed;
+            rigidbody2D.velocity = 
+                new Vector2(rigidbody2D.velocity.x, direction * speed);
         }
 
         public void OnStateExit()
@@ -55,16 +56,20 @@ namespace Scripts.Gameplay.Actors
             var horizontal = Input.GetAxisRaw("Horizontal");
             if (Mathf.Abs(horizontal) > 0)
             {
-                playerController.ChangeDirection(
-                    horizontal < 0 ? Directions.Left : Directions.Right);
+                var direction = 
+                    horizontal < 0 ? Directions.Left : Directions.Right;
+                playerController.ChangeDirection(direction);
 
-                var force = new Vector2(horizontal, 1);
-                rigidbody2D.AddForce(
-                    force * (playerController.Configuration.JumpForce / 2),
-                    ForceMode2D.Impulse);
+                var jumpForce = playerController.Configuration.JumpForce;
+                var force = new Vector2(horizontal, 1) * (jumpForce / 2);
+                rigidbody2D.AddForce(force, ForceMode2D.Impulse);
             }
+        }
 
-            playerController.ChangePlayerState(PlayerState.Falling);
+        private bool IsJumpKeyClicked()
+        {
+            var jumpKey = playerController.Configuration.JumpKey;
+            return Input.GetKeyDown(jumpKey);
         }
     }
 }
