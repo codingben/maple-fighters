@@ -51,7 +51,8 @@ namespace Scripts.Gameplay.Actors
                 var horizontal = Input.GetAxisRaw("Horizontal");
                 if (horizontal != 0)
                 {
-                    direction = horizontal < 0 ? Directions.Left : Directions.Right;
+                    direction = 
+                        horizontal < 0 ? Directions.Left : Directions.Right;
                 }
                 
                 playerController.ChangeDirection(direction);
@@ -67,10 +68,11 @@ namespace Scripts.Gameplay.Actors
             // TODO: Move to the configuration
             var horizontal = Input.GetAxisRaw("Horizontal");
             var speed = playerController.Configuration.Speed;
-            var direction = new Vector3(horizontal, 0, 0).normalized * speed * Time.deltaTime;
             var position = rigidbody2D.transform.position;
-
-            rigidbody2D.MovePosition(position + direction);
+            var direction = new Vector3(horizontal, 0, 0).normalized;
+            var newPosition = position + (direction * speed * Time.deltaTime);
+            
+            rigidbody2D.MovePosition(newPosition);
         }
 
         public void OnStateExit()
