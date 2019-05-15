@@ -84,7 +84,11 @@ namespace Scripts.Gameplay.Actors.Interaction
             }
 
             ChangePositionToLadderCenter();
+            ChangePlayerStateToLadder();
+        }
 
+        private void ChangePlayerStateToLadder()
+        {
             playerController.ChangePlayerState(PlayerState.Ladder);
         }
 
@@ -93,7 +97,19 @@ namespace Scripts.Gameplay.Actors.Interaction
             collidersInteraction.EnableCollisionWithIgnoredCollider();
             collidersInteraction.SetIgnoredCollider(null);
 
-            playerController.ChangePlayerState(PlayerState.Idle);
+            ChangePlayerStateFromLadder();
+        }
+
+        private void ChangePlayerStateFromLadder()
+        {
+            if (playerController.IsGrounded())
+            {
+                playerController.ChangePlayerState(PlayerState.Idle);
+            }
+            else
+            {
+                playerController.ChangePlayerState(PlayerState.Falling);
+            }
         }
 
         private void ChangePositionToLadderCenter()
