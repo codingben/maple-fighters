@@ -32,7 +32,7 @@ namespace Scripts.Gameplay.Actors
         private LayerMask groundLayerMask;
 
         [SerializeField]
-        private Transform[] groundDetectionPoints;
+        private Transform groundTransform;
 
         private Dictionary<PlayerState, IPlayerStateBehaviour>
             playerStateBehaviours;
@@ -134,8 +134,7 @@ namespace Scripts.Gameplay.Actors
 
         public bool IsGrounded()
         {
-            return groundDetectionPoints.Any(
-                x => Physics2D.OverlapPoint(x.position, groundLayerMask));
+            return Physics2D.OverlapCircle(groundTransform.position, 0.5f, groundLayerMask);
         }
     }
 }
