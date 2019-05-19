@@ -121,11 +121,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4110249083257066}
-  - component: {fileID: 61380068822998250}
+  - component: {fileID: 5060370459275834762}
   - component: {fileID: 114375439334909214}
-  - component: {fileID: 114769968751128320}
   - component: {fileID: 114636025593554634}
   - component: {fileID: 114615997679115346}
+  - component: {fileID: 114769968751128320}
   m_Layer: 0
   m_Name: Wizard
   m_TagString: Untagged
@@ -149,8 +149,8 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!61 &61380068822998250
-BoxCollider2D:
+--- !u!70 &5060370459275834762
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -162,19 +162,9 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.23668027}
-  m_SpriteTilingProperty:
-    border: {x: 0.049999997, y: 0.049999997, z: 0.049999997, w: 0.049999997}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.16, y: 0.16}
-    newSize: {x: 0.16, y: 0.16}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 0.31645054, y: 1.0766394}
-  m_EdgeRadius: 0
+  m_Offset: {x: 0, y: -0.175}
+  m_Size: {x: 0.5, y: 1.15}
+  m_Direction: 0
 --- !u!114 &114375439334909214
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -199,18 +189,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   groundTransform: {fileID: 4083987963539232}
---- !u!114 &114769968751128320
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1210278977448276}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 921d5f9d6785c7446b73460f8de36302, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114636025593554634
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -237,6 +215,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interactionKey: 306
+--- !u!114 &114769968751128320
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1210278977448276}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 921d5f9d6785c7446b73460f8de36302, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1276592372013812
 GameObject:
   m_ObjectHideFlags: 0
