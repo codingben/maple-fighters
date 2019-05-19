@@ -29,9 +29,12 @@ namespace Scripts.Gameplay.Actors
             var horizontal = Input.GetAxisRaw("Horizontal");
             var jumpForce = playerController.Configuration.JumpForce;
             var jumpHeight = playerController.Configuration.JumpHeight;
-            var direction = new Vector2(horizontal * jumpForce, jumpHeight);
 
-            rigidbody2D.velocity = direction;
+            rigidbody2D.velocity = 
+                new Vector2(horizontal * jumpForce, jumpHeight);
+
+            var direction = horizontal < 0 ? Directions.Left : Directions.Right;
+            playerController.ChangeDirection(direction);
         }
 
         public void OnStateUpdate()
