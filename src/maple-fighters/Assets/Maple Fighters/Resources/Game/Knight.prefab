@@ -397,11 +397,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4596613497347352}
-  - component: {fileID: 61530421461806864}
+  - component: {fileID: 166837539815534721}
   - component: {fileID: 114185573003487554}
-  - component: {fileID: 114664649952649960}
   - component: {fileID: 114360169840180610}
   - component: {fileID: 114086648407061294}
+  - component: {fileID: 114664649952649960}
   m_Layer: 0
   m_Name: Knight
   m_TagString: Untagged
@@ -416,7 +416,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1795698667356696}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -425,8 +425,8 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!61 &61530421461806864
-BoxCollider2D:
+--- !u!70 &166837539815534721
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -438,19 +438,9 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.23959452}
-  m_SpriteTilingProperty:
-    border: {x: 0.049999997, y: 0.049999997, z: 0.049999997, w: 0.049999997}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.16, y: 0.16}
-    newSize: {x: 0.16, y: 0.16}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 0.3624894, y: 1.0708109}
-  m_EdgeRadius: 0
+  m_Offset: {x: 0, y: -0.175}
+  m_Size: {x: 0.5, y: 1.15}
+  m_Direction: 0
 --- !u!114 &114185573003487554
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -475,18 +465,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   groundTransform: {fileID: 4609200429523440}
---- !u!114 &114664649952649960
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1795698667356696}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 921d5f9d6785c7446b73460f8de36302, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114360169840180610
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -513,3 +491,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interactionKey: 306
+--- !u!114 &114664649952649960
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1795698667356696}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 921d5f9d6785c7446b73460f8de36302, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
