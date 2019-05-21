@@ -78,7 +78,7 @@ namespace Scripts.Gameplay.Actors
 
         private bool IsJumpKeyClicked()
         {
-            var jumpKey = playerController.Configuration.JumpKey;
+            var jumpKey = playerController.Properties.JumpKey;
             return Input.GetKeyDown(jumpKey);
         }
     }

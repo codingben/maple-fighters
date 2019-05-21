@@ -27,8 +27,8 @@ namespace Scripts.Gameplay.Actors
         {
             // TODO: Move to the configuration
             var horizontal = Input.GetAxisRaw("Horizontal");
-            var jumpForce = playerController.Configuration.JumpForce;
-            var jumpHeight = playerController.Configuration.JumpHeight;
+            var jumpForce = playerController.Properties.JumpForce;
+            var jumpHeight = playerController.Properties.JumpHeight;
 
             rigidbody2D.velocity = 
                 new Vector2(horizontal * jumpForce, jumpHeight);

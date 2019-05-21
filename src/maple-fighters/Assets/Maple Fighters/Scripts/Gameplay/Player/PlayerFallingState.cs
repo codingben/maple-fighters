@@ -25,7 +25,7 @@ namespace Scripts.Gameplay.Actors
         {
             // TODO: Move to the configuration
             var horizontal = Input.GetAxis("Horizontal");
-            var speed = playerController.Configuration.Speed;
+            var speed = playerController.Properties.Speed;
             var direction = 
                 new Vector2(horizontal * speed, rigidbody2D.velocity.y);
 

@@ -40,7 +40,7 @@ namespace Scripts.Gameplay.Actors
 
         public void OnStateFixedUpdate()
         {
-            var speed = playerController.Configuration.RopeClimbingSpeed;
+            var speed = playerController.Properties.RopeClimbingSpeed;
             rigidbody2D.velocity = 
                 new Vector2(rigidbody2D.velocity.x, direction * speed);
         }
@@ -60,7 +60,7 @@ namespace Scripts.Gameplay.Actors
                     horizontal < 0 ? Directions.Left : Directions.Right;
                 playerController.ChangeDirection(direction);
 
-                var jumpForce = playerController.Configuration.JumpForce;
+                var jumpForce = playerController.Properties.JumpForce;
                 var force = new Vector2(horizontal, 1) * (jumpForce / 2);
                 rigidbody2D.AddForce(force, ForceMode2D.Impulse);
             }
@@ -68,7 +68,7 @@ namespace Scripts.Gameplay.Actors
 
         private bool IsJumpKeyClicked()
         {
-            var jumpKey = playerController.Configuration.JumpKey;
+            var jumpKey = playerController.Properties.JumpKey;
             return Input.GetKeyDown(jumpKey);
         }
     }

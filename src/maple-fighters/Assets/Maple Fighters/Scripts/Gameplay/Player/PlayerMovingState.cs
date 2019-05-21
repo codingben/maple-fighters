@@ -67,7 +67,7 @@ namespace Scripts.Gameplay.Actors
         {
             // TODO: Move to the configuration
             var horizontal = Input.GetAxisRaw("Horizontal");
-            var speed = playerController.Configuration.Speed;
+            var speed = playerController.Properties.Speed;
             var position = rigidbody2D.transform.position;
             var direction = new Vector3(horizontal, 0, 0).normalized;
             var newPosition = position + (direction * speed * Time.deltaTime);
@@ -92,7 +92,7 @@ namespace Scripts.Gameplay.Actors
 
         private bool IsJumpKeyClicked()
         {
-            var jumpKey = playerController.Configuration.JumpKey;
+            var jumpKey = playerController.Properties.JumpKey;
             return Input.GetKeyDown(jumpKey);
         }
 
