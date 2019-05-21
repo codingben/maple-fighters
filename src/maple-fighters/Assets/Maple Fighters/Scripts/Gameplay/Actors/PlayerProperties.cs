@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Scripts.Gameplay.Actors
 {
     [Serializable]
-    public class PlayerControllerConfig
+    public class PlayerProperties
     {
         public float Speed;
         public float JumpHeight;

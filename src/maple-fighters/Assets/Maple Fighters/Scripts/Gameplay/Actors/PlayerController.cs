@@ -15,7 +15,7 @@ namespace Scripts.Gameplay.Actors
     {
         public event Action<PlayerState> PlayerStateChanged;
 
-        public PlayerControllerConfig Configuration => config;
+        public PlayerProperties Properties => properties;
 
         public PlayerState PlayerState => playerState;
 
@@ -23,16 +23,21 @@ namespace Scripts.Gameplay.Actors
         [ViewOnly, SerializeField]
         private PlayerState playerState = PlayerState.Falling;
 
-        [Header("Properties")]
+        [Header("Configuration")]
         [SerializeField]
-        private PlayerControllerConfig config;
+        private PlayerProperties properties;
 
-        [Header("Ground")]
+        [Header("Floor")]
+        [SerializeField]
+        private float circleRadius;
+
         [SerializeField]
         private LayerMask groundLayerMask;
 
         [SerializeField]
         private Transform groundTransform;
+
+        private Vector2 localScale;
 
         private Dictionary<PlayerState, IPlayerStateBehaviour>
             playerStateBehaviours;
@@ -42,11 +47,14 @@ namespace Scripts.Gameplay.Actors
 
         private void Awake()
         {
-            var focusStateController = FindObjectOfType<FocusStateController>();
+            localScale = transform.localScale;
+
+            var focusStateController = 
+                FindObjectOfType<FocusStateController>();
             if (focusStateController == null)
             {
-                Debug.LogError(
-                    "PlayerController::Awake() -> Could not find FocusStateController!");
+                Debug.LogError("Could not find FocusStateController!");
+                Debug.Break();
             }
 
             playerStateBehaviours =
@@ -60,62 +68,79 @@ namespace Scripts.Gameplay.Actors
                         PlayerState.Moving,
                         new PlayerMovingState(this, focusStateController)
                     },
-                    { PlayerState.Jumping, new PlayerJumpingState(this) },
-                    { PlayerState.Falling, new PlayerFallingState(this) },
-                    { PlayerState.Attacked, new PlayerAttackedState(this) },
-                    { PlayerState.Rope, new PlayerRopeState(this) },
-                    { PlayerState.Ladder, new PlayerLadderState(this) },
+                    {
+                        PlayerState.Jumping,
+                        new PlayerJumpingState(this)
+                    },
+                    {
+                        PlayerState.Falling,
+                        new PlayerFallingState(this)
+                    },
+                    {
+                        PlayerState.Attacked,
+                        new PlayerAttackedState(this)
+                    },
+                    {
+                        PlayerState.Rope,
+                        new PlayerRopeState(this)
+                    },
+                    { 
+                        PlayerState.Ladder,
+                        new PlayerLadderState(this)
+                    }
                 };
 
-            playerStateBehaviour = playerStateBehaviours[PlayerState.Idle];
+            playerStateBehaviour = playerStateBehaviours[playerState];
         }
 
         private void Start()
         {
-            playerStateBehaviour.OnStateEnter();
+            playerStateBehaviour?.OnStateEnter();
         }
 
         private void Update()
         {
-            playerStateBehaviour.OnStateUpdate();
+            playerStateBehaviour?.OnStateUpdate();
         }
 
         private void FixedUpdate()
         {
-            playerStateBehaviour.OnStateFixedUpdate();
+            playerStateBehaviour?.OnStateFixedUpdate();
         }
 
         public void ChangePlayerState(PlayerState newPlayerState)
         {
-            if (playerState == newPlayerState)
+            if (playerState != newPlayerState)
             {
-                return;
+                playerStateBehaviour?.OnStateExit();
+
+                if (playerStateBehaviour != null)
+                {
+                    playerStateBehaviour = 
+                        playerStateBehaviours[newPlayerState];
+                }
+
+                playerStateBehaviour?.OnStateEnter();
+
+                playerState = newPlayerState;
+
+                PlayerStateChanged?.Invoke(playerState);
             }
-
-            playerStateBehaviour.OnStateExit();
-            playerStateBehaviour = playerStateBehaviours[newPlayerState];
-            playerStateBehaviour.OnStateEnter();
-
-            playerState = newPlayerState;
-
-            PlayerStateChanged?.Invoke(playerState);
         }
 
         public void ChangeDirection(Directions direction)
         {
-            const float Scale = 1;
-            
             if (direction == Directions.Left)
             {
                 transform.localScale = new Vector3(
-                    Scale,
+                    localScale.x,
                     transform.localScale.y,
                     transform.localScale.z);
             }
             else
             {
                 transform.localScale = new Vector3(
-                    -Scale,
+                    -localScale.x,
                     transform.localScale.y,
                     transform.localScale.z);
             }
@@ -134,8 +159,10 @@ namespace Scripts.Gameplay.Actors
 
         public bool IsGrounded()
         {
-            // TODO: Make the radius a variable.
-            return Physics2D.OverlapCircle(groundTransform.position, 0.175f, groundLayerMask);
+            return Physics2D.OverlapCircle(
+                point: groundTransform.position, 
+                radius: circleRadius, 
+                layerMask: groundLayerMask);
         }
     }
 }
