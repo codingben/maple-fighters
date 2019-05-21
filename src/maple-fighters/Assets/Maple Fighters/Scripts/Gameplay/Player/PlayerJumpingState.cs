@@ -33,7 +33,8 @@ namespace Scripts.Gameplay.Actors
             rigidbody2D.velocity = 
                 new Vector2(horizontal * jumpForce, jumpHeight);
 
-            var direction = horizontal < 0 ? Directions.Left : Directions.Right;
+            var direction = 
+                horizontal < 0 ? Directions.Left : Directions.Right;
             playerController.ChangeDirection(direction);
         }
 
