@@ -178,13 +178,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerState: 3
-  config:
+  properties:
     Speed: 3.5
     JumpHeight: 5
     JumpForce: 3
     RopeClimbingSpeed: 2
     LadderClimbingSpeed: 1.5
     JumpKey: 32
+  overlapCircleRadius: 0.175
   groundLayerMask:
     serializedVersion: 2
     m_Bits: 256
