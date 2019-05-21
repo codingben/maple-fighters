@@ -29,7 +29,7 @@ namespace Scripts.Gameplay.Actors
 
         [Header("Floor")]
         [SerializeField]
-        private float circleRadius;
+        private float overlapCircleRadius;
 
         [SerializeField]
         private LayerMask groundLayerMask;
@@ -161,7 +161,7 @@ namespace Scripts.Gameplay.Actors
         {
             return Physics2D.OverlapCircle(
                 point: groundTransform.position, 
-                radius: circleRadius, 
+                radius: overlapCircleRadius, 
                 layerMask: groundLayerMask);
         }
     }
