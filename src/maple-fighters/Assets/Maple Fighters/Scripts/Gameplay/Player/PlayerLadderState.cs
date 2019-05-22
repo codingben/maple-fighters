@@ -24,8 +24,7 @@ namespace Scripts.Gameplay.Actors
 
         public void OnStateUpdate()
         {
-            // TODO: Move to the configuration
-            direction = Input.GetAxisRaw("Vertical");
+            direction = playerController.GetVerticalRaw();
         }
 
         public void OnStateFixedUpdate()
