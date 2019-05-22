@@ -23,8 +23,7 @@ namespace Scripts.Gameplay.Actors
 
         private void FallDownWithDirection()
         {
-            // TODO: Move to the configuration
-            var horizontal = Input.GetAxis("Horizontal");
+            var horizontal = playerController.GetHorizontal();
             var speed = playerController.Properties.Speed;
             var direction = 
                 new Vector2(horizontal * speed, rigidbody2D.velocity.y);
