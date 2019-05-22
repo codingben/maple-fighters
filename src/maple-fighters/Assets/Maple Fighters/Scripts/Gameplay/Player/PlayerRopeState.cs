@@ -33,8 +33,7 @@ namespace Scripts.Gameplay.Actors
             }
             else
             {
-                // TODO: Move to the configuration
-                direction = Input.GetAxisRaw("Vertical");
+                direction = playerController.GetVerticalRaw();
             }
         }
 
@@ -52,8 +51,7 @@ namespace Scripts.Gameplay.Actors
 
         private void Jump()
         {
-            // TODO: Move to the configuration
-            var horizontal = Input.GetAxisRaw("Horizontal");
+            var horizontal = playerController.GetHorizontalRaw();
             if (Mathf.Abs(horizontal) > 0)
             {
                 var direction = 
