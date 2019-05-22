@@ -47,8 +47,7 @@ namespace Scripts.Gameplay.Actors
                     playerController.ChangePlayerState(PlayerState.Jumping);
                 }
 
-                // TODO: Move to the configuration
-                var horizontal = Input.GetAxisRaw("Horizontal");
+                var horizontal = playerController.GetHorizontalRaw();
                 if (horizontal != 0)
                 {
                     direction = 
@@ -65,8 +64,7 @@ namespace Scripts.Gameplay.Actors
 
         public void OnStateFixedUpdate()
         {
-            // TODO: Move to the configuration
-            var horizontal = Input.GetAxisRaw("Horizontal");
+            var horizontal = playerController.GetHorizontalRaw();
             var speed = playerController.Properties.Speed;
             var position = rigidbody2D.transform.position;
             var direction = new Vector3(horizontal, 0, 0).normalized;
@@ -98,8 +96,7 @@ namespace Scripts.Gameplay.Actors
 
         private bool IsMoveStopped()
         {
-            // TODO: Move to the configuration
-            var horizontal = Input.GetAxisRaw("Horizontal");
+            var horizontal = playerController.GetHorizontalRaw();
             return Mathf.Abs(horizontal) == 0;
         }
     }
