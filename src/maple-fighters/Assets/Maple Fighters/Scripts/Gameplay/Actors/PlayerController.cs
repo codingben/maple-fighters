@@ -164,5 +164,25 @@ namespace Scripts.Gameplay.Actors
                 radius: overlapCircleRadius, 
                 layerMask: groundLayerMask);
         }
+
+        public float GetVertical()
+        {
+            return Input.GetAxis("Vertical");
+        }
+
+        public float GetVerticalRaw()
+        {
+            return Input.GetAxisRaw("Vertical");
+        }
+
+        public float GetHorizontal()
+        {
+            return Input.GetAxis("Horizontal");
+        }
+
+        public float GetHorizontalRaw()
+        {
+            return Input.GetAxisRaw("Horizontal");
+        }
     }
 }
