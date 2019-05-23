@@ -41,8 +41,7 @@ namespace Scripts.Network.APIs
 
             if (responseParameters.HasAccessToken)
             {
-                AccessTokenProvider.AccessToken =
-                    responseParameters.AccessToken;
+                // TODO: Use the access token
             }
 
             return new AuthenticateResponseParameters(
