@@ -82,10 +82,7 @@ namespace Scripts.Utils.Shared
                     var animator = playerAnimatorProvider.Provide();
                     if (animator != null)
                     {
-                        animator.SetBool("WalkName", playerState == PlayerState.Moving);
-                        animator.SetBool("JumpName", playerState == PlayerState.Jumping || playerState == PlayerState.Falling);
-                        animator.SetBool("RopeName", playerState == PlayerState.Rope);
-                        animator.SetBool("LadderName", playerState == PlayerState.Ladder);
+                        SetPlayerAnimationState(animator, playerState);
                     }
                 }
             }
@@ -114,6 +111,13 @@ namespace Scripts.Utils.Shared
         }
 
         private void UpdatePlayerAnimationState()
+        {
+            SetPlayerAnimationState(animator, playerState);
+        }
+
+        private void SetPlayerAnimationState(
+            Animator animator,
+            PlayerState playerState)
         {
             animator.SetBool("WalkName", playerState == PlayerState.Moving);
             animator.SetBool("JumpName", playerState == PlayerState.Jumping || playerState == PlayerState.Falling);
