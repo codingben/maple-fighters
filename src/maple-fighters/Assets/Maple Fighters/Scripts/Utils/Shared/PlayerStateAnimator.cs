@@ -114,10 +114,10 @@ namespace Scripts.Utils.Shared
             Animator animator,
             PlayerState playerState)
         {
-            animator.SetBool("WalkName", playerState == PlayerState.Moving);
-            animator.SetBool("JumpName", playerState == PlayerState.Jumping || playerState == PlayerState.Falling);
-            animator.SetBool("RopeName", playerState == PlayerState.Rope);
-            animator.SetBool("LadderName", playerState == PlayerState.Ladder);
+            animator.SetBool("Walking", playerState == PlayerState.Moving);
+            animator.SetBool("Jump", playerState == PlayerState.Jumping || playerState == PlayerState.Falling);
+            animator.SetBool("Rope", playerState == PlayerState.Rope);
+            animator.SetBool("Ladder", playerState == PlayerState.Ladder);
         }
     }
 }
