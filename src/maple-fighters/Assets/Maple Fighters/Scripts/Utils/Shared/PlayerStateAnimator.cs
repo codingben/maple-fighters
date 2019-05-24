@@ -52,16 +52,19 @@ namespace Scripts.Utils.Shared
 
         public void OnPlayerStateChanged(PlayerState newPlayerState)
         {
-            if (playerState == newPlayerState)
+            if (playerState != newPlayerState)
             {
-                return;
+                // TODO: Hack
+                if (newPlayerState == PlayerState.Attacked)
+                {
+                    newPlayerState = PlayerState.Falling;
+                }
+
+                playerState = newPlayerState;
+
+                UpdatePlayerAnimationState();
+                UpdatePlayerStateOperation();
             }
-
-            animator.ChangePlayerAnimationState(newPlayerState);
-
-            playerState = newPlayerState;
-
-            UpdatePlayerStateOperation();
         }
 
         private void OnPlayerStateChanged(
@@ -72,11 +75,18 @@ namespace Scripts.Utils.Shared
                     .GetRemoteSceneObject(parameters.SceneObjectId)?.GameObject;
             if (sceneObject != null)
             {
-                var playerStateSetter =
-                    sceneObject.GetComponent<PlayerStateSetter>();
-                if (playerStateSetter != null)
+                var playerAnimatorProvider = 
+                    sceneObject.GetComponent<PlayerAnimatorProvider>();
+                if (playerAnimatorProvider != null)
                 {
-                    playerStateSetter.SetState(parameters.PlayerState);
+                    var animator = playerAnimatorProvider.Provide();
+                    if (animator != null)
+                    {
+                        animator.SetBool("WalkName", playerState == PlayerState.Moving);
+                        animator.SetBool("JumpName", playerState == PlayerState.Jumping || playerState == PlayerState.Falling);
+                        animator.SetBool("RopeName", playerState == PlayerState.Rope);
+                        animator.SetBool("LadderName", playerState == PlayerState.Ladder);
+                    }
                 }
             }
         }
@@ -101,6 +111,14 @@ namespace Scripts.Utils.Shared
                 gameSceneApi.UpdatePlayerState(
                     new UpdatePlayerStateRequestParameters(playerState));
             }
+        }
+
+        private void UpdatePlayerAnimationState()
+        {
+            animator.SetBool("WalkName", playerState == PlayerState.Moving);
+            animator.SetBool("JumpName", playerState == PlayerState.Jumping || playerState == PlayerState.Falling);
+            animator.SetBool("RopeName", playerState == PlayerState.Rope);
+            animator.SetBool("LadderName", playerState == PlayerState.Ladder);
         }
     }
 }
