@@ -8,7 +8,7 @@ namespace Scripts.Gameplay.Actors
     {
         private Animator animator;
 
-        public void Set(Animator animator)
+        public void Initialize(Animator animator)
         {
             this.animator = animator;
         }

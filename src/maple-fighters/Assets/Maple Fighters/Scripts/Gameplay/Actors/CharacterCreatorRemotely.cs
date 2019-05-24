@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Scripts.Gameplay.Actors
 {
-    [RequireComponent(typeof(PlayerStateSetter))]
+    [RequireComponent(typeof(PlayerAnimatorProvider))]
     public class CharacterCreatorRemotely : CharacterCreatorBase
     {
         public override void Create(
@@ -14,7 +14,7 @@ namespace Scripts.Gameplay.Actors
             DisableCollision();
             RemoveAllCharacterControllerComponents();
 
-            InitializePlayerStateSetter();
+            InitializePlayerAnimatorProvider();
             InitializeSpriteRenderer();
             InitializeCharacterName(characterSpawnDetails.Character.Name);
         }
@@ -51,20 +51,22 @@ namespace Scripts.Gameplay.Actors
 
         private void RemoveAllCharacterControllerComponents()
         {
-            var components = characterGameObject.GetComponents<MonoBehaviour>();
+            var components = 
+                characterGameObject.GetComponents<MonoBehaviour>();
             foreach (var component in components)
             {
                 Destroy(component);
             }
         }
 
-        private void InitializePlayerStateSetter()
+        private void InitializePlayerAnimatorProvider()
         {
             var animator = characterSpriteGameObject.GetComponent<Animator>();
             if (animator != null)
             {
-                var playerStateSetter = GetComponent<PlayerStateSetter>();
-                playerStateSetter.Animator = animator;
+                var playerAnimatorProvider = 
+                    GetComponent<PlayerAnimatorProvider>();
+                playerAnimatorProvider.Initialize(animator);
             }
         }
     }
