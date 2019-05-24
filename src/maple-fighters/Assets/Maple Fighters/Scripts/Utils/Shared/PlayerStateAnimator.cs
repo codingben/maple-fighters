@@ -62,7 +62,7 @@ namespace Scripts.Utils.Shared
 
                 playerState = newPlayerState;
 
-                UpdatePlayerAnimationState();
+                UpdatePlayerAnimationState(animator, playerState);
                 UpdatePlayerStateOperation();
             }
         }
@@ -82,7 +82,7 @@ namespace Scripts.Utils.Shared
                     var animator = playerAnimatorProvider.Provide();
                     if (animator != null)
                     {
-                        SetPlayerAnimationState(animator, playerState);
+                        UpdatePlayerAnimationState(animator, playerState);
                     }
                 }
             }
@@ -110,12 +110,7 @@ namespace Scripts.Utils.Shared
             }
         }
 
-        private void UpdatePlayerAnimationState()
-        {
-            SetPlayerAnimationState(animator, playerState);
-        }
-
-        private void SetPlayerAnimationState(
+        private void UpdatePlayerAnimationState(
             Animator animator,
             PlayerState playerState)
         {
