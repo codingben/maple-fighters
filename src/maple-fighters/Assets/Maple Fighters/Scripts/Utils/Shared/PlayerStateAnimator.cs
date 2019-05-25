@@ -8,6 +8,19 @@ namespace Scripts.Utils.Shared
     [RequireComponent(typeof(Animator))]
     public class PlayerStateAnimator : MonoBehaviour
     {
+        [Header("Animations")]
+        [SerializeField]
+        private string walkName = "Walking";
+
+        [SerializeField]
+        private string jumpName = "Jump";
+
+        [SerializeField]
+        private string ropeName = "Rope";
+
+        [SerializeField]
+        private string ladderName = "Ladder";
+
         private Animator animator;
         private PlayerState playerState = PlayerState.Idle;
 
@@ -114,10 +127,10 @@ namespace Scripts.Utils.Shared
             Animator animator,
             PlayerState playerState)
         {
-            animator.SetBool("Walking", playerState == PlayerState.Moving);
-            animator.SetBool("Jump", playerState == PlayerState.Jumping || playerState == PlayerState.Falling);
-            animator.SetBool("Rope", playerState == PlayerState.Rope);
-            animator.SetBool("Ladder", playerState == PlayerState.Ladder);
+            animator.SetBool(walkName, playerState == PlayerState.Moving);
+            animator.SetBool(jumpName, playerState == PlayerState.Jumping || playerState == PlayerState.Falling);
+            animator.SetBool(ropeName, playerState == PlayerState.Rope);
+            animator.SetBool(ladderName, playerState == PlayerState.Ladder);
         }
     }
 }
