@@ -8,7 +8,6 @@ namespace Scripts.UI.Controllers
     {
         public static void ShowNotice(string message, Action onClicked = null, bool background = true)
         {
-            // TODO: Use event bus system
             var noticeController = Object.FindObjectOfType<NoticeController>();
             if (noticeController != null)
             {

@@ -12,7 +12,6 @@ namespace Scripts.UI.Controllers
 
         private void Awake()
         {
-            // TODO: Use event bus system
             focusStateController = FindObjectOfType<FocusStateController>();
 
             CreateAndSubscribeToChatWindow();

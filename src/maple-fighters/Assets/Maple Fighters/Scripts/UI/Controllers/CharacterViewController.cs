@@ -105,7 +105,6 @@ namespace Scripts.UI.Controllers
 
         private void SubscribeToBackgroundClicked()
         {
-            // TODO: Use event bus system
             var backgroundController =
                 FindObjectOfType<MenuBackgroundController>();
             if (backgroundController != null)
@@ -116,7 +115,6 @@ namespace Scripts.UI.Controllers
 
         private void UnsubscribeFromBackgroundClicked()
         {
-            // TODO: Use event bus system
             var backgroundController =
                 FindObjectOfType<MenuBackgroundController>();
             if (backgroundController != null)

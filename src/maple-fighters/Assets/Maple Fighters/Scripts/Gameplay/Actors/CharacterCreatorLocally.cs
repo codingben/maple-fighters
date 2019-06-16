@@ -16,7 +16,6 @@ namespace Scripts.Gameplay.Actors
             SetCharacterToPositionSender();
             InitializePlayerController();
 
-            // TODO: Use event bus system
             var chatController = FindObjectOfType<ChatController>();
             if (chatController != null)
             {

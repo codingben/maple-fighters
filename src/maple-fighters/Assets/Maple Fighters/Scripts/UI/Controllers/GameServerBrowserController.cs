@@ -40,7 +40,6 @@ namespace Scripts.UI.Controllers
 
         private void SubscribeToAuthenticatorControllerEvents()
         {
-            // TODO: Use event bus system
             var authenticatorController =
                 FindObjectOfType<AuthenticatorController>();
             if (authenticatorController != null)
@@ -78,7 +77,6 @@ namespace Scripts.UI.Controllers
 
         private void UnsubscribeFromAuthenticatorControllerEvents()
         {
-            // TODO: Use event bus system
             var authenticatorController =
                 FindObjectOfType<AuthenticatorController>();
             if (authenticatorController != null)
