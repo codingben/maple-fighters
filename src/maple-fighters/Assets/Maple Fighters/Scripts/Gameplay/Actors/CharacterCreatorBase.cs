@@ -6,15 +6,15 @@ namespace Scripts.Gameplay.Actors
     [RequireComponent(typeof(CharacterInformationProvider))]
     public class CharacterCreatorBase : MonoBehaviour, ICharacterCreator
     {
-        public GameObject Character => characterGameObject;
+        public GameObject Character => CharacterGameObject;
 
         [Header("Sprite"), SerializeField]
         protected int orderInLayer;
 
-        protected GameObject characterGameObject;
-        protected GameObject characterSpriteGameObject;
+        protected GameObject CharacterGameObject;
+        protected GameObject CharacterSpriteGameObject;
 
-        protected Directions Direction { get; private set; }
+        private Directions direction;
 
         public virtual void Create(
             CharacterSpawnDetailsParameters characterSpawnDetails)
@@ -22,7 +22,7 @@ namespace Scripts.Gameplay.Actors
             const string GameObjectsPath = "Game/{0}";
             const int CharacterIndex = 0;
 
-            Direction = characterSpawnDetails.Direction;
+            direction = characterSpawnDetails.Direction;
 
             var characterName = characterSpawnDetails.Character.Name;
             var characterClass = characterSpawnDetails.Character.CharacterType;
@@ -30,20 +30,20 @@ namespace Scripts.Gameplay.Actors
                 Resources.Load<GameObject>(
                     string.Format(GameObjectsPath, characterClass));
 
-            characterGameObject = 
+            CharacterGameObject = 
                 Instantiate(gameObject, Vector3.zero, Quaternion.identity, transform);
 
-            characterGameObject.transform.localPosition =
+            CharacterGameObject.transform.localPosition =
                 gameObject.transform.localPosition;
 
-            characterGameObject.transform.SetAsFirstSibling();
+            CharacterGameObject.transform.SetAsFirstSibling();
 
-            characterGameObject.name = 
-                characterGameObject.name.RemoveCloneFromName();
+            CharacterGameObject.name = 
+                CharacterGameObject.name.RemoveCloneFromName();
 
             var character =
-                characterGameObject.transform.GetChild(CharacterIndex);
-            characterSpriteGameObject = character.gameObject;
+                CharacterGameObject.transform.GetChild(CharacterIndex);
+            CharacterSpriteGameObject = character.gameObject;
 
             InitializeCharacterName(characterName);
             InitializeSpriteRenderer();
@@ -54,7 +54,7 @@ namespace Scripts.Gameplay.Actors
 
         private void InitializeCharacterName(string characterName)
         {
-            var characterNameSetter = characterSpriteGameObject
+            var characterNameSetter = CharacterSpriteGameObject
                 .GetComponent<CharacterNameSetter>();
             if (characterNameSetter != null)
             {
@@ -66,7 +66,7 @@ namespace Scripts.Gameplay.Actors
         private void InitializeSpriteRenderer()
         {
             var spriteRenderer =
-                characterSpriteGameObject.GetComponent<SpriteRenderer>();
+                CharacterSpriteGameObject.GetComponent<SpriteRenderer>();
             if (spriteRenderer != null)
             {
                 spriteRenderer.sortingOrder = orderInLayer;
@@ -88,9 +88,9 @@ namespace Scripts.Gameplay.Actors
         {
             const float Scale = 1;
 
-            var transform = characterGameObject.transform;
+            var transform = CharacterGameObject.transform;
 
-            switch (Direction)
+            switch (direction)
             {
                 case Directions.Left:
                 {
