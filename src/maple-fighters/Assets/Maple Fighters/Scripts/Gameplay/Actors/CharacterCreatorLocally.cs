@@ -27,17 +27,17 @@ namespace Scripts.Gameplay.Actors
         private void SetCharacterToPositionSender()
         {
             var positionSender = GetComponent<PositionSender>();
-            positionSender.SetCharacter(characterGameObject.transform);
+            positionSender.SetCharacter(CharacterGameObject.transform);
         }
 
         private void InitializePlayerController()
         {
             var playerStateAnimator = 
-                characterSpriteGameObject.AddComponent<PlayerStateAnimator>();
+                CharacterSpriteGameObject.AddComponent<PlayerStateAnimator>();
             if (playerStateAnimator != null)
             {
                 var playerController =
-                    characterGameObject.GetComponent<PlayerController>();
+                    CharacterGameObject.GetComponent<PlayerController>();
                 if (playerController != null)
                 {
                     playerController.PlayerStateChanged +=

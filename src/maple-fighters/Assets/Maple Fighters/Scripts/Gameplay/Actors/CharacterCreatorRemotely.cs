@@ -21,7 +21,7 @@ namespace Scripts.Gameplay.Actors
 
         private void InitializeCharacterName(string characterName)
         {
-            var characterNameSetter = characterSpriteGameObject
+            var characterNameSetter = CharacterSpriteGameObject
                 .GetComponent<CharacterNameSetter>();
             if (characterNameSetter != null)
             {
@@ -33,7 +33,7 @@ namespace Scripts.Gameplay.Actors
         private void InitializeSpriteRenderer()
         {
             var spriteRenderer =
-                characterSpriteGameObject.GetComponent<SpriteRenderer>();
+                CharacterSpriteGameObject.GetComponent<SpriteRenderer>();
             if (spriteRenderer != null)
             {
                 spriteRenderer.sortingOrder = orderInLayer;
@@ -42,7 +42,7 @@ namespace Scripts.Gameplay.Actors
 
         private void DisableCollision()
         {
-            var collider = characterGameObject.GetComponent<Collider2D>();
+            var collider = CharacterGameObject.GetComponent<Collider2D>();
             if (collider != null)
             {
                 collider.isTrigger = true;
@@ -52,7 +52,7 @@ namespace Scripts.Gameplay.Actors
         private void RemoveAllCharacterControllerComponents()
         {
             var components = 
-                characterGameObject.GetComponents<MonoBehaviour>();
+                CharacterGameObject.GetComponents<MonoBehaviour>();
             foreach (var component in components)
             {
                 Destroy(component);
@@ -61,7 +61,7 @@ namespace Scripts.Gameplay.Actors
 
         private void InitializePlayerAnimatorProvider()
         {
-            var animator = characterSpriteGameObject.GetComponent<Animator>();
+            var animator = CharacterSpriteGameObject.GetComponent<Animator>();
             if (animator != null)
             {
                 var playerAnimatorProvider = 
