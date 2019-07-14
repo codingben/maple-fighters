@@ -17,38 +17,17 @@ namespace Scripts.Gameplay.Actors
         public virtual void Create(
             CharacterSpawnDetailsParameters characterSpawnDetails)
         {
-            // The path
-            const string GameObjectsPath = "Game/{0}";
-            const int CharacterIndex = 0;
-
             // Variables initialization
             direction = characterSpawnDetails.Direction;
 
             var characterName = characterSpawnDetails.Character.Name;
             var characterClass = characterSpawnDetails.Character.CharacterType;
-            var gameObject = 
-                Resources.Load<GameObject>(
-                    string.Format(GameObjectsPath, characterClass));
 
-            // Creating the character
-            characterGameObject = 
-                Instantiate(gameObject, Vector3.zero, Quaternion.identity, transform);
-
-            // Sets the position
-            characterGameObject.transform.localPosition =
-                gameObject.transform.localPosition;
-
-            characterGameObject.transform.SetAsFirstSibling();
-
-            // The character name game object
-            characterGameObject.name = 
-                characterGameObject.name.RemoveCloneFromName();
+            // The character creation
+            characterGameObject = CreateCharacter(characterClass);
 
             // The character sprite game object
-            var character =
-                characterGameObject.transform.GetChild(CharacterIndex);
-
-            characterSpriteGameObject = character.gameObject;
+            characterSpriteGameObject = GetCharacterSpriteChild();
 
             // Calling other methods
             InitializeCharacterName(characterName);
@@ -56,6 +35,40 @@ namespace Scripts.Gameplay.Actors
             InitializeCharacterInformationProvider(characterSpawnDetails.Character);
 
             ChangeCharacterDirection();
+        }
+
+        private GameObject CreateCharacter(CharacterClasses characterClass)
+        {
+            // The path
+            const string GameObjectsPath = "Game/{0}";
+
+            var gameObject =
+                Resources.Load<GameObject>(
+                    string.Format(GameObjectsPath, characterClass));
+
+            // Creating the character
+            var character =
+                Instantiate(gameObject, Vector3.zero, Quaternion.identity, transform);
+
+            // Sets the position
+            character.transform.localPosition = gameObject.transform.localPosition;
+            character.transform.SetAsFirstSibling();
+
+            // The character name game object
+            character.name =
+                characterGameObject.name.RemoveCloneFromName();
+
+            return character;
+        }
+
+        private GameObject GetCharacterSpriteChild()
+        {
+            const int CharacterIndex = 0;
+
+            var transform =
+                characterGameObject.transform.GetChild(CharacterIndex);
+
+            return transform.gameObject;
         }
 
         private void InitializeCharacterName(string characterName)
