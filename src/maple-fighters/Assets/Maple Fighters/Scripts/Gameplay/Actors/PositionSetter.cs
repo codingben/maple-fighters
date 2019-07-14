@@ -21,7 +21,7 @@ namespace Scripts.Gameplay.Actors
             var characterBase = GetComponent<CharacterCreatorBase>();
             character = 
                 characterBase != null
-                    ? characterBase.Character.transform
+                    ? characterBase.GetCharacterGameObject().transform
                     : transform;
         }
 

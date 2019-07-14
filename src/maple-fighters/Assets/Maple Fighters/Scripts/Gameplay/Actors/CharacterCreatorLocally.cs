@@ -14,35 +14,39 @@ namespace Scripts.Gameplay.Actors
             base.Create(characterSpawnDetails);
 
             SetCharacterToPositionSender();
-            InitializePlayerController();
 
-            var chatController = FindObjectOfType<ChatController>();
-            if (chatController != null)
-            {
-                chatController.SetCharacterName(
-                    characterSpawnDetails.Character.Name);
-            }
+            InitializePlayerController();
+            InitializeChatController(characterSpawnDetails.Character.Name);
         }
 
         private void SetCharacterToPositionSender()
         {
             var positionSender = GetComponent<PositionSender>();
-            positionSender.SetCharacter(CharacterGameObject.transform);
+            positionSender.SetCharacter(GetCharacterGameObject().transform);
         }
 
         private void InitializePlayerController()
         {
             var playerStateAnimator = 
-                CharacterSpriteGameObject.AddComponent<PlayerStateAnimator>();
+                GetCharacterSpriteGameObject().AddComponent<PlayerStateAnimator>();
             if (playerStateAnimator != null)
             {
                 var playerController =
-                    CharacterGameObject.GetComponent<PlayerController>();
+                    GetCharacterGameObject().GetComponent<PlayerController>();
                 if (playerController != null)
                 {
                     playerController.PlayerStateChanged +=
                         playerStateAnimator.OnPlayerStateChanged;
                 }
+            }
+        }
+
+        private void InitializeChatController(string characterName)
+        {
+            var chatController = FindObjectOfType<ChatController>();
+            if (chatController != null)
+            {
+                chatController.SetCharacterName(characterName);
             }
         }
     }

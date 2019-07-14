@@ -4,24 +4,24 @@ using UnityEngine;
 namespace Scripts.Gameplay.Actors
 {
     [RequireComponent(typeof(CharacterInformationProvider))]
-    public class CharacterCreatorBase : MonoBehaviour, ICharacterCreator
+    public abstract class CharacterCreatorBase : MonoBehaviour, ICharacterCreator
     {
-        public GameObject Character => CharacterGameObject;
-
         [Header("Sprite"), SerializeField]
-        protected int orderInLayer;
+        private int orderInLayer;
 
-        protected GameObject CharacterGameObject;
-        protected GameObject CharacterSpriteGameObject;
+        private GameObject characterGameObject;
+        private GameObject characterSpriteGameObject;
 
         private Directions direction;
 
         public virtual void Create(
             CharacterSpawnDetailsParameters characterSpawnDetails)
         {
+            // The path
             const string GameObjectsPath = "Game/{0}";
             const int CharacterIndex = 0;
 
+            // Variables initialization
             direction = characterSpawnDetails.Direction;
 
             var characterName = characterSpawnDetails.Character.Name;
@@ -30,21 +30,27 @@ namespace Scripts.Gameplay.Actors
                 Resources.Load<GameObject>(
                     string.Format(GameObjectsPath, characterClass));
 
-            CharacterGameObject = 
+            // Creating the character
+            characterGameObject = 
                 Instantiate(gameObject, Vector3.zero, Quaternion.identity, transform);
 
-            CharacterGameObject.transform.localPosition =
+            // Sets the position
+            characterGameObject.transform.localPosition =
                 gameObject.transform.localPosition;
 
-            CharacterGameObject.transform.SetAsFirstSibling();
+            characterGameObject.transform.SetAsFirstSibling();
 
-            CharacterGameObject.name = 
-                CharacterGameObject.name.RemoveCloneFromName();
+            // The character name game object
+            characterGameObject.name = 
+                characterGameObject.name.RemoveCloneFromName();
 
+            // The character sprite game object
             var character =
-                CharacterGameObject.transform.GetChild(CharacterIndex);
-            CharacterSpriteGameObject = character.gameObject;
+                characterGameObject.transform.GetChild(CharacterIndex);
 
+            characterSpriteGameObject = character.gameObject;
+
+            // Calling other methods
             InitializeCharacterName(characterName);
             InitializeSpriteRenderer();
             InitializeCharacterInformationProvider(characterSpawnDetails.Character);
@@ -54,7 +60,7 @@ namespace Scripts.Gameplay.Actors
 
         private void InitializeCharacterName(string characterName)
         {
-            var characterNameSetter = CharacterSpriteGameObject
+            var characterNameSetter = characterSpriteGameObject
                 .GetComponent<CharacterNameSetter>();
             if (characterNameSetter != null)
             {
@@ -66,7 +72,7 @@ namespace Scripts.Gameplay.Actors
         private void InitializeSpriteRenderer()
         {
             var spriteRenderer =
-                CharacterSpriteGameObject.GetComponent<SpriteRenderer>();
+                characterSpriteGameObject.GetComponent<SpriteRenderer>();
             if (spriteRenderer != null)
             {
                 spriteRenderer.sortingOrder = orderInLayer;
@@ -88,7 +94,7 @@ namespace Scripts.Gameplay.Actors
         {
             const float Scale = 1;
 
-            var transform = CharacterGameObject.transform;
+            var transform = characterGameObject.transform;
 
             switch (direction)
             {
@@ -110,6 +116,16 @@ namespace Scripts.Gameplay.Actors
                     break;
                 }
             }
+        }
+
+        public GameObject GetCharacterGameObject()
+        {
+            return characterGameObject;
+        }
+
+        protected GameObject GetCharacterSpriteGameObject()
+        {
+            return characterSpriteGameObject;
         }
     }
 }
