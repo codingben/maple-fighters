@@ -13,10 +13,12 @@ namespace Scripts.Gameplay.Actors
         {
             base.Create(characterSpawnDetails);
 
+            var characterName = characterSpawnDetails.Character.Name;
+
             SetCharacterToPositionSender();
 
             InitializePlayerController();
-            InitializeChatController(characterSpawnDetails.Character.Name);
+            InitializeChatController(characterName);
         }
 
         private void SetCharacterToPositionSender()
