@@ -5,7 +5,12 @@ using UnityEngine;
 
 namespace Scripts.Gameplay.Actors
 {
-    public class CharacterCreator : MonoBehaviour
+    public interface ICharacterCreator
+    {
+        event Action<CharacterSpawnDetailsParameters> CreateCharacter;
+    }
+
+    public class CharacterCreator : MonoBehaviour, ICharacterCreator
     {
         public event Action<CharacterSpawnDetailsParameters> CreateCharacter;
 
