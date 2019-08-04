@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Scripts.Gameplay.Actors
 {
     [RequireComponent(typeof(CharacterInformationProvider))]
-    public abstract class CharacterCreatorBase : MonoBehaviour, ICharacterCreator
+    public abstract class CharacterCreatorBase : MonoBehaviour
     {
         [Header("Sprite"), SerializeField]
         private int orderInLayer;
