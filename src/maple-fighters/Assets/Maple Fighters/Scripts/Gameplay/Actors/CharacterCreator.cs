@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿using System;
 using Game.Common;
 using Scripts.Containers;
 using UnityEngine;
@@ -7,6 +7,8 @@ namespace Scripts.Gameplay.Actors
 {
     public class CharacterCreator : MonoBehaviour
     {
+        public event Action<CharacterSpawnDetailsParameters> CreateCharacter;
+
         private void Awake()
         {
             var gameSceneApi = ServiceContainer.GameService.GetGameSceneApi();
@@ -32,13 +34,13 @@ namespace Scripts.Gameplay.Actors
         private void OnSceneEntered(
             EnterSceneResponseParameters parameters)
         {
-            CreateCharacter(parameters.Character);
+            CreateCharacter?.Invoke(parameters.Character);
         }
 
         private void OnCharacterAdded(
             CharacterAddedEventParameters parameters)
         {
-            CreateCharacter(parameters.CharacterSpawnDetails);
+            CreateCharacter?.Invoke(parameters.CharacterSpawnDetails);
         }
 
         private void OnCharactersAdded(
@@ -47,30 +49,7 @@ namespace Scripts.Gameplay.Actors
             foreach (var characterSpawnDetails in parameters
                 .CharactersSpawnDetails)
             {
-                CreateCharacter(characterSpawnDetails);
-            }
-        }
-
-        private void CreateCharacter(
-            CharacterSpawnDetailsParameters characterSpawnDetails)
-        {
-            StartCoroutine(WaitFrameAndCreateCharacter(characterSpawnDetails));
-        }
-
-        // TODO: Hack
-        private IEnumerator WaitFrameAndCreateCharacter(
-            CharacterSpawnDetailsParameters characterSpawnDetails)
-        {
-            yield return null;
-
-            var sceneObject =
-                SceneObjectsContainer.GetInstance()
-                    .GetRemoteSceneObject(characterSpawnDetails.SceneObjectId);
-            if (sceneObject != null)
-            {
-                var characterCreator = sceneObject.GameObject
-                    .GetComponent<ICharacterCreator>();
-                characterCreator?.Create(characterSpawnDetails);
+                CreateCharacter?.Invoke(characterSpawnDetails);
             }
         }
     }
