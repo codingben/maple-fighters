@@ -1,134 +1,91 @@
-﻿using Game.Common;
+﻿using System;
+using Game.Common;
 using UnityEngine;
 
 namespace Scripts.Gameplay.Actors
 {
-    [RequireComponent(typeof(CharacterInformationProvider))]
-    public abstract class CharacterCreatorBase : MonoBehaviour
+    public interface ICharacterDetailsProvider
     {
-        [Header("Sprite"), SerializeField]
-        private int orderInLayer;
+        CharacterSpawnDetailsParameters GetCharacterDetails();
+    }
 
-        private GameObject characterGameObject;
-        private GameObject characterSpriteGameObject;
+    public class CharacterDetails : MonoBehaviour, ICharacterDetailsProvider
+    {
+        private CharacterSpawnDetailsParameters characterSpawnDetails;
 
-        private Directions direction;
-
-        public virtual void Create(
-            CharacterSpawnDetailsParameters characterSpawnDetails)
+        public void SetCharacterSpawnDetails(CharacterSpawnDetailsParameters characterSpawnDetails)
         {
-            // Variables initialization
-            direction = characterSpawnDetails.Direction;
-
-            var characterName = characterSpawnDetails.Character.Name;
-            var characterClass = characterSpawnDetails.Character.CharacterType;
-
-            // The character creation
-            characterGameObject = CreateCharacter(characterClass);
-
-            // The character sprite game object
-            characterSpriteGameObject = GetCharacterSpriteChild();
-
-            // Calling other methods
-            InitializeCharacterName(characterName);
-            InitializeSpriteRenderer();
-            InitializeCharacterInformationProvider(characterSpawnDetails.Character);
-
-            ChangeCharacterDirection();
+            this.characterSpawnDetails = characterSpawnDetails;
         }
 
-        private GameObject CreateCharacter(CharacterClasses characterClass)
+        public CharacterSpawnDetailsParameters GetCharacterDetails()
         {
-            // The path
-            const string GameObjectsPath = "Game/{0}";
+            return characterSpawnDetails;
+        }
+    }
 
-            var gameObject =
-                Resources.Load<GameObject>(
-                    string.Format(GameObjectsPath, characterClass));
+    public interface ICharacterGameObjectProvider
+    {
+        GameObject GetCharacterGameObject();
+
+        GameObject GetCharacterSpriteGameObject();
+    }
+
+    public interface ICharacterGameObjectCreator
+    {
+        GameObject CreateCharacter(Transform parent, CharacterClasses characterClass);
+    }
+
+    public class CharacterGameObjectCreator : MonoBehaviour, ICharacterGameObjectCreator
+    {
+        private const string GameObjectsPath = "Game/{0}";
+
+        public GameObject CreateCharacter(Transform parent, CharacterClasses characterClass)
+        {
+            // Loading the character
+            var path = string.Format(GameObjectsPath, characterClass);
+            var characterObject = Resources.Load<GameObject>(path);
 
             // Creating the character
-            var character =
-                Instantiate(gameObject, Vector3.zero, Quaternion.identity, transform);
+            var characterGameObject = 
+                Instantiate(characterObject, Vector3.zero, Quaternion.identity, parent);
 
             // Sets the position
-            character.transform.localPosition = gameObject.transform.localPosition;
-            character.transform.SetAsFirstSibling();
+            characterGameObject.transform.localPosition = characterObject.transform.localPosition;
+            characterGameObject.transform.SetAsFirstSibling();
 
-            // The character name game object
-            character.name =
-                characterGameObject.name.RemoveCloneFromName();
+            // Sets the character name
+            characterGameObject.name = characterGameObject.name.RemoveCloneFromName();
 
-            return character;
+            return characterGameObject;
+        }
+    }
+
+    public class CharacterGameObject : MonoBehaviour, ICharacterGameObjectProvider
+    {
+        public event Action<ICharacterGameObjectProvider> CharacterCreated;
+
+        private GameObject characterGameObject;
+
+        private ICharacterGameObjectCreator characterCreator;
+        private ICharacterDetailsProvider characterDetailsProvider;
+
+        private void Awake()
+        {
+            characterCreator = GetComponent<ICharacterGameObjectCreator>();
+            characterDetailsProvider =
+                GetComponent<ICharacterDetailsProvider>();
         }
 
-        private GameObject GetCharacterSpriteChild()
+        public void CreateCharacter()
         {
-            const int CharacterIndex = 0;
+            var characterDetails = characterDetailsProvider.GetCharacterDetails();
+            var characterClass = characterDetails.Character.CharacterType;
 
-            var transform =
-                characterGameObject.transform.GetChild(CharacterIndex);
+            characterGameObject = 
+                characterCreator.CreateCharacter(parent: transform, characterClass);
 
-            return transform.gameObject;
-        }
-
-        private void InitializeCharacterName(string characterName)
-        {
-            var characterNameSetter = characterSpriteGameObject
-                .GetComponent<CharacterNameSetter>();
-            if (characterNameSetter != null)
-            {
-                characterNameSetter.SetName(characterName);
-                characterNameSetter.SetSortingOrder(orderInLayer);
-            }
-        }
-
-        private void InitializeSpriteRenderer()
-        {
-            var spriteRenderer =
-                characterSpriteGameObject.GetComponent<SpriteRenderer>();
-            if (spriteRenderer != null)
-            {
-                spriteRenderer.sortingOrder = orderInLayer;
-            }
-        }
-
-        private void InitializeCharacterInformationProvider(
-            CharacterParameters character)
-        {
-            var characterInformationProvider =
-                GetComponent<CharacterInformationProvider>();
-            if (characterInformationProvider != null)
-            {
-                characterInformationProvider.SetCharacterInformation(character);
-            }
-        }
-
-        private void ChangeCharacterDirection()
-        {
-            const float Scale = 1;
-
-            var transform = characterGameObject.transform;
-
-            switch (direction)
-            {
-                case Directions.Left:
-                {
-                    transform.localScale = new Vector3(
-                        Scale,
-                        transform.localScale.y,
-                        transform.localScale.z);
-                    break;
-                }
-
-                case Directions.Right:
-                {
-                    transform.localScale = new Vector3(
-                        -Scale,
-                        transform.localScale.y,
-                        transform.localScale.z);
-                    break;
-                }
-            }
+            CharacterCreated?.Invoke(this);
         }
 
         public GameObject GetCharacterGameObject()
@@ -136,9 +93,185 @@ namespace Scripts.Gameplay.Actors
             return characterGameObject;
         }
 
-        protected GameObject GetCharacterSpriteGameObject()
+        public GameObject GetCharacterSpriteGameObject()
         {
-            return characterSpriteGameObject;
+            const int CharacterIndex = 0;
+
+            var characterSprite =
+                characterGameObject?.transform.GetChild(CharacterIndex);
+
+            return characterSprite?.gameObject;
+        }
+    }
+
+    [RequireComponent(typeof(CharacterGameObject), typeof(CharacterDetails))]
+    public class CharacterNameInitializer : MonoBehaviour
+    {
+        [SerializeField]
+        private int sortingOrderIndex;
+
+        private CharacterGameObject characterGameObject;
+
+        private void Awake()
+        {
+            characterGameObject = GetComponent<CharacterGameObject>();
+        }
+
+        private void Start()
+        {
+            characterGameObject.CharacterCreated += OnCharacterCreated;
+        }
+
+        private void OnDestroy()
+        {
+            characterGameObject.CharacterCreated -= OnCharacterCreated;
+        }
+
+        private void OnCharacterCreated(ICharacterGameObjectProvider characterGameObjectProvider)
+        {
+            var characterNameSetter = characterGameObjectProvider
+                .GetCharacterSpriteGameObject()
+                .GetComponent<CharacterNameSetter>();
+            if (characterNameSetter != null)
+            {
+                var characterDetailsProvider = GetComponent<ICharacterDetailsProvider>();
+                var characterDetails = characterDetailsProvider.GetCharacterDetails();
+                var characterName = characterDetails.Character.Name;
+
+                characterNameSetter.SetName(characterName);
+                characterNameSetter.SetSortingOrder(sortingOrderIndex);
+            }
+        }
+    }
+
+    [RequireComponent(typeof(CharacterGameObject))]
+    public class SpriteRendererInitializer : MonoBehaviour
+    {
+        [SerializeField]
+        private int sortingOrderIndex;
+
+        private CharacterGameObject characterGameObject;
+
+        private void Awake()
+        {
+            characterGameObject = GetComponent<CharacterGameObject>();
+        }
+
+        private void Start()
+        {
+            characterGameObject.CharacterCreated += OnCharacterCreated;
+        }
+
+        private void OnDestroy()
+        {
+            characterGameObject.CharacterCreated -= OnCharacterCreated;
+        }
+
+        private void OnCharacterCreated(ICharacterGameObjectProvider characterGameObjectProvider)
+        {
+            var spriteRenderer = characterGameObjectProvider
+                .GetCharacterSpriteGameObject()
+                .GetComponent<SpriteRenderer>();
+            if (spriteRenderer != null)
+            {
+                spriteRenderer.sortingOrder = sortingOrderIndex;
+            }
+        }
+    }
+
+    [RequireComponent(
+        typeof(CharacterGameObject), 
+        typeof(CharacterInformationProvider), 
+        typeof(CharacterDetails))]
+    public class CharacterInformationInitializer : MonoBehaviour
+    {
+        private CharacterGameObject characterGameObject;
+
+        private void Awake()
+        {
+            characterGameObject = GetComponent<CharacterGameObject>();
+        }
+
+        private void Start()
+        {
+            characterGameObject.CharacterCreated += OnCharacterCreated;
+        }
+
+        private void OnDestroy()
+        {
+            characterGameObject.CharacterCreated -= OnCharacterCreated;
+        }
+
+        private void OnCharacterCreated(ICharacterGameObjectProvider characterGameObjectProvider)
+        {
+            var characterInfoProvider = GetComponent<CharacterInformationProvider>();
+            if (characterInfoProvider != null)
+            {
+                var characterDetailsProvider = GetComponent<ICharacterDetailsProvider>();
+                var characterDetails = characterDetailsProvider.GetCharacterDetails();
+                var character = characterDetails.Character;
+
+                characterInfoProvider.SetCharacterInformation(character);
+            }
+        }
+    }
+
+    [RequireComponent(typeof(CharacterGameObject), typeof(CharacterDetails))]
+    public class CharacterDirectionSetter : MonoBehaviour
+    {
+        private CharacterGameObject characterGameObject;
+
+        private void Awake()
+        {
+            characterGameObject = GetComponent<CharacterGameObject>();
+        }
+
+        private void Start()
+        {
+            characterGameObject.CharacterCreated += OnCharacterCreated;
+        }
+
+        private void OnDestroy()
+        {
+            characterGameObject.CharacterCreated -= OnCharacterCreated;
+        }
+
+        private void OnCharacterCreated(ICharacterGameObjectProvider characterGameObjectProvider)
+        {
+            var characterInfoProvider = GetComponent<CharacterInformationProvider>();
+            if (characterInfoProvider != null)
+            {
+                var characterDetailsProvider = GetComponent<ICharacterDetailsProvider>();
+                var characterDetails = characterDetailsProvider.GetCharacterDetails();
+                var direction = characterDetails.Direction;
+
+                const float Scale = 1;
+
+                var transform = 
+                    characterGameObjectProvider
+                        .GetCharacterGameObject().transform;
+
+                switch (direction)
+                {
+                    case Directions.Left:
+                    {
+                        transform.localScale = new Vector3(
+                            Scale,
+                            transform.localScale.y,
+                            transform.localScale.z);
+                        break;
+                    }
+
+                    case Directions.Right:
+                    {
+                        transform.localScale = new Vector3(
+                            -Scale,
+                            transform.localScale.y,
+                            transform.localScale.z);
+                        break;
+                    }
+                }
+            }
         }
     }
 }
