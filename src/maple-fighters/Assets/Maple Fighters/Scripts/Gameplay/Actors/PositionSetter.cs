@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Scripts.Gameplay.Actors
 {
-    [RequireComponent(typeof(CharacterCreatorBase))]
+    [RequireComponent(typeof(CharacterGameObject))]
     public class PositionSetter : MonoBehaviour
     {
         private const float Speed = 15;
@@ -18,10 +18,10 @@ namespace Scripts.Gameplay.Actors
         {
             sceneObject = GetComponent<ISceneObject>();
 
-            var characterBase = GetComponent<CharacterCreatorBase>();
-            character = 
-                characterBase != null
-                    ? characterBase.GetCharacterGameObject().transform
+            var characterGameObject = GetComponent<CharacterGameObject>();
+            character =
+                characterGameObject != null
+                    ? characterGameObject.GetCharacterGameObject().transform
                     : transform;
         }
 

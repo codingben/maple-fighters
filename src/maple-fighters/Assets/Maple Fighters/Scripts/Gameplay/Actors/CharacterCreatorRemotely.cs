@@ -24,7 +24,7 @@ namespace Scripts.Gameplay.Actors
 
         private void OnCharacterCreated(ICharacterGameObjectProvider characterGameObjectProvider)
         {
-            var collider = characterGameObject.GetCharacterGameObject()
+            var collider = characterGameObjectProvider.GetCharacterGameObject()
                 .GetComponent<Collider2D>();
             if (collider != null)
             {
@@ -55,8 +55,8 @@ namespace Scripts.Gameplay.Actors
 
         private void OnCharacterCreated(ICharacterGameObjectProvider characterGameObjectProvider)
         {
-            var components = characterGameObject.GetCharacterGameObject()
-                .GetComponents<MonoBehaviour>();
+            var components = characterGameObjectProvider
+                .GetCharacterGameObject().GetComponents<MonoBehaviour>();
             foreach (var component in components)
             {
                 Destroy(component);
@@ -86,8 +86,8 @@ namespace Scripts.Gameplay.Actors
 
         private void OnCharacterCreated(ICharacterGameObjectProvider characterGameObjectProvider)
         {
-            var animator = characterGameObject.GetCharacterSpriteGameObject()
-                .GetComponent<Animator>();
+            var animator = characterGameObjectProvider
+                .GetCharacterSpriteGameObject().GetComponent<Animator>();
             if (animator != null)
             {
                 var playerAnimatorProvider =

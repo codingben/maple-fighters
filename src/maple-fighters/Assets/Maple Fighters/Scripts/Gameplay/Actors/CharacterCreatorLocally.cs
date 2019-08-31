@@ -1,53 +1,105 @@
-﻿using Game.Common;
-using Scripts.UI.Controllers;
+﻿using Scripts.UI.Controllers;
 using Scripts.Utils.Shared;
 using UnityEngine;
 
 namespace Scripts.Gameplay.Actors
 {
-    [RequireComponent(typeof(PositionSender))]
-    public class CharacterCreatorLocally : CharacterCreatorBase
+    [RequireComponent(typeof(CharacterGameObject), typeof(PositionSender))]
+    public class PositionSenderInitializer : MonoBehaviour
     {
-        public override void Create(
-            CharacterSpawnDetailsParameters characterSpawnDetails)
+        private CharacterGameObject characterGameObject;
+
+        private void Awake()
         {
-            base.Create(characterSpawnDetails);
-
-            var characterName = characterSpawnDetails.Character.Name;
-
-            SetCharacterToPositionSender();
-
-            InitializePlayerController();
-            InitializeChatController(characterName);
+            characterGameObject = GetComponent<CharacterGameObject>();
         }
 
-        private void SetCharacterToPositionSender()
+        private void Start()
         {
+            characterGameObject.CharacterCreated += OnCharacterCreated;
+        }
+
+        private void OnDestroy()
+        {
+            characterGameObject.CharacterCreated -= OnCharacterCreated;
+        }
+
+        private void OnCharacterCreated(ICharacterGameObjectProvider characterGameObjectProvider)
+        {
+            var character = characterGameObjectProvider.GetCharacterGameObject();
             var positionSender = GetComponent<PositionSender>();
-            positionSender.SetCharacter(GetCharacterGameObject().transform);
+            positionSender.SetCharacter(character.transform);
+        }
+    }
+
+    [RequireComponent(typeof(CharacterGameObject))]
+    public class PlayerControllerInitializer : MonoBehaviour
+    {
+        private CharacterGameObject characterGameObject;
+
+        private void Awake()
+        {
+            characterGameObject = GetComponent<CharacterGameObject>();
         }
 
-        private void InitializePlayerController()
+        private void Start()
         {
-            var playerStateAnimator = 
-                GetCharacterSpriteGameObject().AddComponent<PlayerStateAnimator>();
+            characterGameObject.CharacterCreated += OnCharacterCreated;
+        }
+
+        private void OnDestroy()
+        {
+            characterGameObject.CharacterCreated -= OnCharacterCreated;
+        }
+
+        private void OnCharacterCreated(ICharacterGameObjectProvider characterGameObjectProvider)
+        {
+            var playerStateAnimator = characterGameObjectProvider
+                .GetCharacterSpriteGameObject()
+                .AddComponent<PlayerStateAnimator>();
             if (playerStateAnimator != null)
             {
-                var playerController =
-                    GetCharacterGameObject().GetComponent<PlayerController>();
+                var playerController = characterGameObjectProvider
+                    .GetCharacterGameObject().GetComponent<PlayerController>();
                 if (playerController != null)
                 {
+                    // TODO: Wtf? Who will unsubscribe from there?
                     playerController.PlayerStateChanged +=
                         playerStateAnimator.OnPlayerStateChanged;
                 }
             }
         }
+    }
 
-        private void InitializeChatController(string characterName)
+    [RequireComponent(typeof(CharacterGameObject), typeof(CharacterDetails))]
+    public class ChatControllerInitializer : MonoBehaviour
+    {
+        private CharacterGameObject characterGameObject;
+
+        private void Awake()
+        {
+            characterGameObject = GetComponent<CharacterGameObject>();
+        }
+
+        private void Start()
+        {
+            characterGameObject.CharacterCreated += OnCharacterCreated;
+        }
+
+        private void OnDestroy()
+        {
+            characterGameObject.CharacterCreated -= OnCharacterCreated;
+        }
+
+        private void OnCharacterCreated(ICharacterGameObjectProvider characterGameObjectProvider)
         {
             var chatController = FindObjectOfType<ChatController>();
             if (chatController != null)
             {
+                var characterDetailsProvider = GetComponent<ICharacterDetailsProvider>();
+                var characterDetails = characterDetailsProvider.GetCharacterDetails();
+                var characterName = characterDetails.Character.Name;
+
                 chatController.SetCharacterName(characterName);
             }
         }

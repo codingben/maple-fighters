@@ -9,6 +9,7 @@ namespace Scripts.Gameplay.Actors
         CharacterSpawnDetailsParameters GetCharacterDetails();
     }
 
+    // TODO: Conflicts with CharacterInformationProvider
     public class CharacterDetails : MonoBehaviour, ICharacterDetailsProvider
     {
         private CharacterSpawnDetailsParameters characterSpawnDetails;
