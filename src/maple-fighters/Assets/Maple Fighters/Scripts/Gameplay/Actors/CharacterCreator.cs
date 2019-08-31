@@ -1,60 +1,44 @@
-﻿using System;
-using Game.Common;
+﻿using Game.Common;
 using Scripts.Containers;
 using UnityEngine;
 
 namespace Scripts.Gameplay.Actors
 {
-    public interface ICharacterCreator
+    [RequireComponent(typeof(CharacterCreationNotifier))]
+    public class CharacterCreator : MonoBehaviour
     {
-        event Action<CharacterSpawnDetailsParameters> CreateCharacter;
-    }
-
-    public class CharacterCreator : MonoBehaviour, ICharacterCreator
-    {
-        public event Action<CharacterSpawnDetailsParameters> CreateCharacter;
+        private CharacterCreationNotifier characterCreationNotifier;
 
         private void Awake()
         {
-            var gameSceneApi = ServiceContainer.GameService.GetGameSceneApi();
-            if (gameSceneApi != null)
+            characterCreationNotifier =
+                GetComponent<CharacterCreationNotifier>();
+        }
+
+        private void Start()
+        {
+            if (characterCreationNotifier != null)
             {
-                gameSceneApi.SceneEntered.AddListener(OnSceneEntered);
-                gameSceneApi.CharacterAdded.AddListener(OnCharacterAdded);
-                gameSceneApi.CharactersAdded.AddListener(OnCharactersAdded);
+                characterCreationNotifier.CreateCharacter += OnCreateCharacter;
             }
         }
-        
+
         private void OnDestroy()
         {
-            var gameSceneApi = ServiceContainer.GameService.GetGameSceneApi();
-            if (gameSceneApi != null)
+            if (characterCreationNotifier != null)
             {
-                gameSceneApi.SceneEntered.RemoveListener(OnSceneEntered);
-                gameSceneApi.CharacterAdded.RemoveListener(OnCharacterAdded);
-                gameSceneApi.CharactersAdded.RemoveListener(OnCharactersAdded);
+                characterCreationNotifier.CreateCharacter -= OnCreateCharacter;
             }
         }
 
-        private void OnSceneEntered(
-            EnterSceneResponseParameters parameters)
+        private void OnCreateCharacter(
+            CharacterSpawnDetailsParameters characterSpawnDetails)
         {
-            CreateCharacter?.Invoke(parameters.Character);
-        }
-
-        private void OnCharacterAdded(
-            CharacterAddedEventParameters parameters)
-        {
-            CreateCharacter?.Invoke(parameters.CharacterSpawnDetails);
-        }
-
-        private void OnCharactersAdded(
-            CharactersAddedEventParameters parameters)
-        {
-            foreach (var characterSpawnDetails in parameters
-                .CharactersSpawnDetails)
+            var id = characterSpawnDetails.SceneObjectId;
+            var sceneObject = SceneObjectsContainer.GetInstance().GetRemoteSceneObject(id);
+            if (sceneObject != null)
             {
-                CreateCharacter?.Invoke(characterSpawnDetails);
+                // TODO: Implement
             }
         }
     }
