@@ -64,6 +64,7 @@ namespace Scripts.Gameplay.Actors
         GameObject GetCharacterSpriteGameObject();
     }
 
+    // TODO: Another name needed
     public class CharacterGameObject : MonoBehaviour, ICharacterGameObject
     {
         public event Action CharacterCreated;
