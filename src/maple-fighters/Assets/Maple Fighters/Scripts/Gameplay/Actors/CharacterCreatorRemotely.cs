@@ -1,49 +1,96 @@
-﻿using Game.Common;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Scripts.Gameplay.Actors
 {
-    [RequireComponent(typeof(PlayerAnimatorProvider))]
-    public class CharacterCreatorRemotely : CharacterCreatorBase
+    [RequireComponent(typeof(CharacterGameObject))]
+    public class CharacterCollisionDisabler : MonoBehaviour
     {
-        public override void Create(
-            CharacterSpawnDetailsParameters characterSpawnDetails)
+        private CharacterGameObject characterGameObject;
+
+        private void Awake()
         {
-            base.Create(characterSpawnDetails);
-
-            DisableCollision();
-            RemoveAllCharacterControllerComponents();
-
-            InitializePlayerAnimatorProvider();
+            characterGameObject = GetComponent<CharacterGameObject>();
         }
 
-        private void DisableCollision()
+        private void Start()
         {
-            var collider = 
-                GetCharacterGameObject().GetComponent<Collider2D>();
+            characterGameObject.CharacterCreated += OnCharacterCreated;
+        }
+
+        private void OnDestroy()
+        {
+            characterGameObject.CharacterCreated -= OnCharacterCreated;
+        }
+
+        private void OnCharacterCreated(ICharacterGameObjectProvider characterGameObjectProvider)
+        {
+            var collider = characterGameObject.GetCharacterGameObject()
+                .GetComponent<Collider2D>();
             if (collider != null)
             {
                 collider.isTrigger = true;
             }
         }
+    }
 
-        private void RemoveAllCharacterControllerComponents()
+    [RequireComponent(typeof(CharacterGameObject))]
+    public class PlayerControllerDestroyer : MonoBehaviour
+    {
+        private CharacterGameObject characterGameObject;
+
+        private void Awake()
         {
-            var components = 
-                GetCharacterGameObject().GetComponents<MonoBehaviour>();
+            characterGameObject = GetComponent<CharacterGameObject>();
+        }
+
+        private void Start()
+        {
+            characterGameObject.CharacterCreated += OnCharacterCreated;
+        }
+
+        private void OnDestroy()
+        {
+            characterGameObject.CharacterCreated -= OnCharacterCreated;
+        }
+
+        private void OnCharacterCreated(ICharacterGameObjectProvider characterGameObjectProvider)
+        {
+            var components = characterGameObject.GetCharacterGameObject()
+                .GetComponents<MonoBehaviour>();
             foreach (var component in components)
             {
                 Destroy(component);
             }
         }
+    }
 
-        private void InitializePlayerAnimatorProvider()
+    [RequireComponent(typeof(CharacterGameObject))]
+    public class PlayerAnimatorProvideInitializer : MonoBehaviour
+    {
+        private CharacterGameObject characterGameObject;
+
+        private void Awake()
         {
-            var animator = 
-                GetCharacterSpriteGameObject().GetComponent<Animator>();
+            characterGameObject = GetComponent<CharacterGameObject>();
+        }
+
+        private void Start()
+        {
+            characterGameObject.CharacterCreated += OnCharacterCreated;
+        }
+
+        private void OnDestroy()
+        {
+            characterGameObject.CharacterCreated -= OnCharacterCreated;
+        }
+
+        private void OnCharacterCreated(ICharacterGameObjectProvider characterGameObjectProvider)
+        {
+            var animator = characterGameObject.GetCharacterSpriteGameObject()
+                .GetComponent<Animator>();
             if (animator != null)
             {
-                var playerAnimatorProvider = 
+                var playerAnimatorProvider =
                     GetComponent<PlayerAnimatorProvider>();
                 playerAnimatorProvider.Initialize(animator);
             }
