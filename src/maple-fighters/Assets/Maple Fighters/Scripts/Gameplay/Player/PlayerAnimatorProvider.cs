@@ -1,6 +1,4 @@
-﻿using Game.Common;
-using Scripts.Utils.Shared;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Scripts.Gameplay.Actors
 {
