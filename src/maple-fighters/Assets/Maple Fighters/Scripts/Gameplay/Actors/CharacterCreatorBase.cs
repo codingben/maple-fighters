@@ -25,13 +25,6 @@ namespace Scripts.Gameplay.Actors
         }
     }
 
-    public interface ICharacterGameObjectProvider
-    {
-        GameObject GetCharacterGameObject();
-
-        GameObject GetCharacterSpriteGameObject();
-    }
-
     public interface ICharacterGameObjectCreator
     {
         GameObject CreateCharacter(Transform parent, CharacterClasses characterClass);
@@ -62,9 +55,18 @@ namespace Scripts.Gameplay.Actors
         }
     }
 
-    public class CharacterGameObject : MonoBehaviour, ICharacterGameObjectProvider
+    public interface ICharacterGameObject
     {
-        public event Action<ICharacterGameObjectProvider> CharacterCreated;
+        event Action CharacterCreated;
+
+        GameObject GetCharacterGameObject();
+
+        GameObject GetCharacterSpriteGameObject();
+    }
+
+    public class CharacterGameObject : MonoBehaviour, ICharacterGameObject
+    {
+        public event Action CharacterCreated;
 
         private GameObject characterGameObject;
 
@@ -86,7 +88,7 @@ namespace Scripts.Gameplay.Actors
             characterGameObject = 
                 characterCreator.CreateCharacter(parent: transform, characterClass);
 
-            CharacterCreated?.Invoke(this);
+            CharacterCreated?.Invoke();
         }
 
         public GameObject GetCharacterGameObject()
@@ -111,11 +113,11 @@ namespace Scripts.Gameplay.Actors
         [SerializeField]
         private int sortingOrderIndex;
 
-        private CharacterGameObject characterGameObject;
+        private ICharacterGameObject characterGameObject;
 
         private void Awake()
         {
-            characterGameObject = GetComponent<CharacterGameObject>();
+            characterGameObject = GetComponent<ICharacterGameObject>();
         }
 
         private void Start()
@@ -128,9 +130,9 @@ namespace Scripts.Gameplay.Actors
             characterGameObject.CharacterCreated -= OnCharacterCreated;
         }
 
-        private void OnCharacterCreated(ICharacterGameObjectProvider characterGameObjectProvider)
+        private void OnCharacterCreated()
         {
-            var characterNameSetter = characterGameObjectProvider
+            var characterNameSetter = characterGameObject
                 .GetCharacterSpriteGameObject()
                 .GetComponent<CharacterNameSetter>();
             if (characterNameSetter != null)
@@ -151,11 +153,11 @@ namespace Scripts.Gameplay.Actors
         [SerializeField]
         private int sortingOrderIndex;
 
-        private CharacterGameObject characterGameObject;
+        private ICharacterGameObject characterGameObject;
 
         private void Awake()
         {
-            characterGameObject = GetComponent<CharacterGameObject>();
+            characterGameObject = GetComponent<ICharacterGameObject>();
         }
 
         private void Start()
@@ -168,9 +170,9 @@ namespace Scripts.Gameplay.Actors
             characterGameObject.CharacterCreated -= OnCharacterCreated;
         }
 
-        private void OnCharacterCreated(ICharacterGameObjectProvider characterGameObjectProvider)
+        private void OnCharacterCreated()
         {
-            var spriteRenderer = characterGameObjectProvider
+            var spriteRenderer = characterGameObject
                 .GetCharacterSpriteGameObject()
                 .GetComponent<SpriteRenderer>();
             if (spriteRenderer != null)
@@ -186,11 +188,11 @@ namespace Scripts.Gameplay.Actors
         typeof(CharacterDetails))]
     public class CharacterInformationInitializer : MonoBehaviour
     {
-        private CharacterGameObject characterGameObject;
+        private ICharacterGameObject characterGameObject;
 
         private void Awake()
         {
-            characterGameObject = GetComponent<CharacterGameObject>();
+            characterGameObject = GetComponent<ICharacterGameObject>();
         }
 
         private void Start()
@@ -203,7 +205,7 @@ namespace Scripts.Gameplay.Actors
             characterGameObject.CharacterCreated -= OnCharacterCreated;
         }
 
-        private void OnCharacterCreated(ICharacterGameObjectProvider characterGameObjectProvider)
+        private void OnCharacterCreated()
         {
             var characterInfoProvider = GetComponent<CharacterInformationProvider>();
             if (characterInfoProvider != null)
@@ -220,11 +222,11 @@ namespace Scripts.Gameplay.Actors
     [RequireComponent(typeof(CharacterGameObject), typeof(CharacterDetails))]
     public class CharacterDirectionSetter : MonoBehaviour
     {
-        private CharacterGameObject characterGameObject;
+        private ICharacterGameObject characterGameObject;
 
         private void Awake()
         {
-            characterGameObject = GetComponent<CharacterGameObject>();
+            characterGameObject = GetComponent<ICharacterGameObject>();
         }
 
         private void Start()
@@ -237,7 +239,7 @@ namespace Scripts.Gameplay.Actors
             characterGameObject.CharacterCreated -= OnCharacterCreated;
         }
 
-        private void OnCharacterCreated(ICharacterGameObjectProvider characterGameObjectProvider)
+        private void OnCharacterCreated()
         {
             var characterInfoProvider = GetComponent<CharacterInformationProvider>();
             if (characterInfoProvider != null)
@@ -249,8 +251,7 @@ namespace Scripts.Gameplay.Actors
                 const float Scale = 1;
 
                 var transform = 
-                    characterGameObjectProvider
-                        .GetCharacterGameObject().transform;
+                    characterGameObject.GetCharacterGameObject().transform;
 
                 switch (direction)
                 {

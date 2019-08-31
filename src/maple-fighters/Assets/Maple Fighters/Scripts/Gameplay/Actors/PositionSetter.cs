@@ -18,11 +18,11 @@ namespace Scripts.Gameplay.Actors
         {
             sceneObject = GetComponent<ISceneObject>();
 
-            var characterGameObject = GetComponent<CharacterGameObject>();
-            character =
-                characterGameObject != null
-                    ? characterGameObject.GetCharacterGameObject().transform
-                    : transform;
+            var characterGameObject = GetComponent<ICharacterGameObject>();
+            var transform =
+                characterGameObject.GetCharacterGameObject().transform;
+
+            character = transform;
         }
 
         private void Start()
