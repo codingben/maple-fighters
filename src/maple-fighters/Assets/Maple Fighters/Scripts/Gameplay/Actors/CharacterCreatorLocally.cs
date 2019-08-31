@@ -7,11 +7,11 @@ namespace Scripts.Gameplay.Actors
     [RequireComponent(typeof(CharacterGameObject), typeof(PositionSender))]
     public class PositionSenderInitializer : MonoBehaviour
     {
-        private CharacterGameObject characterGameObject;
+        private ICharacterGameObject characterGameObject;
 
         private void Awake()
         {
-            characterGameObject = GetComponent<CharacterGameObject>();
+            characterGameObject = GetComponent<ICharacterGameObject>();
         }
 
         private void Start()
@@ -24,9 +24,9 @@ namespace Scripts.Gameplay.Actors
             characterGameObject.CharacterCreated -= OnCharacterCreated;
         }
 
-        private void OnCharacterCreated(ICharacterGameObjectProvider characterGameObjectProvider)
+        private void OnCharacterCreated()
         {
-            var character = characterGameObjectProvider.GetCharacterGameObject();
+            var character = characterGameObject.GetCharacterGameObject();
             var positionSender = GetComponent<PositionSender>();
             positionSender.SetCharacter(character.transform);
         }
@@ -35,11 +35,11 @@ namespace Scripts.Gameplay.Actors
     [RequireComponent(typeof(CharacterGameObject))]
     public class PlayerControllerInitializer : MonoBehaviour
     {
-        private CharacterGameObject characterGameObject;
+        private ICharacterGameObject characterGameObject;
 
         private void Awake()
         {
-            characterGameObject = GetComponent<CharacterGameObject>();
+            characterGameObject = GetComponent<ICharacterGameObject>();
         }
 
         private void Start()
@@ -52,14 +52,14 @@ namespace Scripts.Gameplay.Actors
             characterGameObject.CharacterCreated -= OnCharacterCreated;
         }
 
-        private void OnCharacterCreated(ICharacterGameObjectProvider characterGameObjectProvider)
+        private void OnCharacterCreated()
         {
-            var playerStateAnimator = characterGameObjectProvider
+            var playerStateAnimator = characterGameObject
                 .GetCharacterSpriteGameObject()
                 .AddComponent<PlayerStateAnimator>();
             if (playerStateAnimator != null)
             {
-                var playerController = characterGameObjectProvider
+                var playerController = characterGameObject
                     .GetCharacterGameObject().GetComponent<PlayerController>();
                 if (playerController != null)
                 {
@@ -74,11 +74,11 @@ namespace Scripts.Gameplay.Actors
     [RequireComponent(typeof(CharacterGameObject), typeof(CharacterDetails))]
     public class ChatControllerInitializer : MonoBehaviour
     {
-        private CharacterGameObject characterGameObject;
+        private ICharacterGameObject characterGameObject;
 
         private void Awake()
         {
-            characterGameObject = GetComponent<CharacterGameObject>();
+            characterGameObject = GetComponent<ICharacterGameObject>();
         }
 
         private void Start()
@@ -91,7 +91,7 @@ namespace Scripts.Gameplay.Actors
             characterGameObject.CharacterCreated -= OnCharacterCreated;
         }
 
-        private void OnCharacterCreated(ICharacterGameObjectProvider characterGameObjectProvider)
+        private void OnCharacterCreated()
         {
             var chatController = FindObjectOfType<ChatController>();
             if (chatController != null)
