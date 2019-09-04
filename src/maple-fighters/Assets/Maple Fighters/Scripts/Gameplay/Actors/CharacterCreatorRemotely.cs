@@ -14,15 +14,15 @@ namespace Scripts.Gameplay.Actors
 
         private void Start()
         {
-            spawnedCharacter.CharacterSpawned += OnCharacterCreated;
+            spawnedCharacter.CharacterSpawned += OnCharacterSpawned;
         }
 
         private void OnDestroy()
         {
-            spawnedCharacter.CharacterSpawned -= OnCharacterCreated;
+            spawnedCharacter.CharacterSpawned -= OnCharacterSpawned;
         }
 
-        private void OnCharacterCreated()
+        private void OnCharacterSpawned()
         {
             var collider = spawnedCharacter
                 .GetCharacterGameObject()
@@ -46,15 +46,15 @@ namespace Scripts.Gameplay.Actors
 
         private void Start()
         {
-            spawnedCharacter.CharacterSpawned += OnCharacterCreated;
+            spawnedCharacter.CharacterSpawned += OnCharacterSpawned;
         }
 
         private void OnDestroy()
         {
-            spawnedCharacter.CharacterSpawned -= OnCharacterCreated;
+            spawnedCharacter.CharacterSpawned -= OnCharacterSpawned;
         }
 
-        private void OnCharacterCreated()
+        private void OnCharacterSpawned()
         {
             var components = spawnedCharacter
                 .GetCharacterGameObject()
@@ -78,15 +78,15 @@ namespace Scripts.Gameplay.Actors
 
         private void Start()
         {
-            spawnedCharacter.CharacterSpawned += OnCharacterCreated;
+            spawnedCharacter.CharacterSpawned += OnCharacterSpawned;
         }
 
         private void OnDestroy()
         {
-            spawnedCharacter.CharacterSpawned -= OnCharacterCreated;
+            spawnedCharacter.CharacterSpawned -= OnCharacterSpawned;
         }
 
-        private void OnCharacterCreated()
+        private void OnCharacterSpawned()
         {
             var animator = spawnedCharacter
                 .GetCharacterSpriteGameObject()
