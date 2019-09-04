@@ -55,19 +55,18 @@ namespace Scripts.Gameplay.Actors
         }
     }
 
-    public interface ICharacterGameObject
+    public interface ISpawnedCharacter
     {
-        event Action CharacterCreated;
+        event Action CharacterSpawned;
 
         GameObject GetCharacterGameObject();
 
         GameObject GetCharacterSpriteGameObject();
     }
 
-    // TODO: Another name needed
-    public class SpawnCharacter : MonoBehaviour, ICharacterGameObject
+    public class SpawnCharacter : MonoBehaviour, ISpawnedCharacter
     {
-        public event Action CharacterCreated;
+        public event Action CharacterSpawned;
 
         private GameObject characterGameObject;
 
@@ -81,7 +80,7 @@ namespace Scripts.Gameplay.Actors
                 GetComponent<ICharacterDetailsProvider>();
         }
 
-        public void CreateCharacter()
+        public void Spawn()
         {
             var characterDetails = characterDetailsProvider.GetCharacterDetails();
             var characterClass = characterDetails.Character.CharacterType;
@@ -89,7 +88,7 @@ namespace Scripts.Gameplay.Actors
             characterGameObject = 
                 characterCreator.CreateCharacter(parent: transform, characterClass);
 
-            CharacterCreated?.Invoke();
+            CharacterSpawned?.Invoke();
         }
 
         public GameObject GetCharacterGameObject()
@@ -114,26 +113,26 @@ namespace Scripts.Gameplay.Actors
         [SerializeField]
         private int sortingOrderIndex;
 
-        private ICharacterGameObject characterGameObject;
+        private ISpawnedCharacter spawnedCharacter;
 
         private void Awake()
         {
-            characterGameObject = GetComponent<ICharacterGameObject>();
+            spawnedCharacter = GetComponent<ISpawnedCharacter>();
         }
 
         private void Start()
         {
-            characterGameObject.CharacterCreated += OnCharacterCreated;
+            spawnedCharacter.CharacterSpawned += OnCharacterCreated;
         }
 
         private void OnDestroy()
         {
-            characterGameObject.CharacterCreated -= OnCharacterCreated;
+            spawnedCharacter.CharacterSpawned -= OnCharacterCreated;
         }
 
         private void OnCharacterCreated()
         {
-            var characterNameSetter = characterGameObject
+            var characterNameSetter = spawnedCharacter
                 .GetCharacterSpriteGameObject()
                 .GetComponent<CharacterNameSetter>();
             if (characterNameSetter != null)
@@ -154,26 +153,26 @@ namespace Scripts.Gameplay.Actors
         [SerializeField]
         private int sortingOrderIndex;
 
-        private ICharacterGameObject characterGameObject;
+        private ISpawnedCharacter spawnedCharacter;
 
         private void Awake()
         {
-            characterGameObject = GetComponent<ICharacterGameObject>();
+            spawnedCharacter = GetComponent<ISpawnedCharacter>();
         }
 
         private void Start()
         {
-            characterGameObject.CharacterCreated += OnCharacterCreated;
+            spawnedCharacter.CharacterSpawned += OnCharacterCreated;
         }
 
         private void OnDestroy()
         {
-            characterGameObject.CharacterCreated -= OnCharacterCreated;
+            spawnedCharacter.CharacterSpawned -= OnCharacterCreated;
         }
 
         private void OnCharacterCreated()
         {
-            var spriteRenderer = characterGameObject
+            var spriteRenderer = spawnedCharacter
                 .GetCharacterSpriteGameObject()
                 .GetComponent<SpriteRenderer>();
             if (spriteRenderer != null)
@@ -189,21 +188,21 @@ namespace Scripts.Gameplay.Actors
         typeof(CharacterDetails))]
     public class CharacterInformationInitializer : MonoBehaviour
     {
-        private ICharacterGameObject characterGameObject;
+        private ISpawnedCharacter spawnedCharacter;
 
         private void Awake()
         {
-            characterGameObject = GetComponent<ICharacterGameObject>();
+            spawnedCharacter = GetComponent<ISpawnedCharacter>();
         }
 
         private void Start()
         {
-            characterGameObject.CharacterCreated += OnCharacterCreated;
+            spawnedCharacter.CharacterSpawned += OnCharacterCreated;
         }
 
         private void OnDestroy()
         {
-            characterGameObject.CharacterCreated -= OnCharacterCreated;
+            spawnedCharacter.CharacterSpawned -= OnCharacterCreated;
         }
 
         private void OnCharacterCreated()
@@ -223,21 +222,21 @@ namespace Scripts.Gameplay.Actors
     [RequireComponent(typeof(SpawnCharacter), typeof(CharacterDetails))]
     public class CharacterDirectionSetter : MonoBehaviour
     {
-        private ICharacterGameObject characterGameObject;
+        private ISpawnedCharacter spawnedCharacter;
 
         private void Awake()
         {
-            characterGameObject = GetComponent<ICharacterGameObject>();
+            spawnedCharacter = GetComponent<ISpawnedCharacter>();
         }
 
         private void Start()
         {
-            characterGameObject.CharacterCreated += OnCharacterCreated;
+            spawnedCharacter.CharacterSpawned += OnCharacterCreated;
         }
 
         private void OnDestroy()
         {
-            characterGameObject.CharacterCreated -= OnCharacterCreated;
+            spawnedCharacter.CharacterSpawned -= OnCharacterCreated;
         }
 
         private void OnCharacterCreated()
@@ -252,7 +251,7 @@ namespace Scripts.Gameplay.Actors
                 const float Scale = 1;
 
                 var transform = 
-                    characterGameObject.GetCharacterGameObject().transform;
+                    spawnedCharacter.GetCharacterGameObject().transform;
 
                 switch (direction)
                 {
