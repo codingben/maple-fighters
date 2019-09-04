@@ -206,11 +206,10 @@ namespace Scripts.Gameplay.Actors
 
         private void OnCharacterSpawned()
         {
-            var characterInfoProvider = GetComponent<CharacterInformationProvider>();
-            if (characterInfoProvider != null)
+            var spawnedCharacterDetails = GetComponent<ISpawnedCharacterDetails>();
+            if (spawnedCharacterDetails != null)
             {
-                var characterDetailsProvider = GetComponent<ISpawnedCharacterDetails>();
-                var characterDetails = characterDetailsProvider.GetCharacterDetails();
+                var characterDetails = spawnedCharacterDetails.GetCharacterDetails();
                 var direction = characterDetails.Direction;
 
                 const float Scale = 1;
