@@ -5,26 +5,26 @@ namespace Scripts.Gameplay.Actors
     [RequireComponent(typeof(SpawnCharacter))]
     public class CharacterCollisionDisabler : MonoBehaviour
     {
-        private ICharacterGameObject characterGameObject;
+        private ISpawnedCharacter spawnedCharacter;
 
         private void Awake()
         {
-            characterGameObject = GetComponent<ICharacterGameObject>();
+            spawnedCharacter = GetComponent<ISpawnedCharacter>();
         }
 
         private void Start()
         {
-            characterGameObject.CharacterCreated += OnCharacterCreated;
+            spawnedCharacter.CharacterSpawned += OnCharacterCreated;
         }
 
         private void OnDestroy()
         {
-            characterGameObject.CharacterCreated -= OnCharacterCreated;
+            spawnedCharacter.CharacterSpawned -= OnCharacterCreated;
         }
 
         private void OnCharacterCreated()
         {
-            var collider = characterGameObject
+            var collider = spawnedCharacter
                 .GetCharacterGameObject()
                 .GetComponent<Collider2D>();
             if (collider != null)
@@ -37,26 +37,26 @@ namespace Scripts.Gameplay.Actors
     [RequireComponent(typeof(SpawnCharacter))]
     public class PlayerControllerDestroyer : MonoBehaviour
     {
-        private ICharacterGameObject characterGameObject;
+        private ISpawnedCharacter spawnedCharacter;
 
         private void Awake()
         {
-            characterGameObject = GetComponent<ICharacterGameObject>();
+            spawnedCharacter = GetComponent<ISpawnedCharacter>();
         }
 
         private void Start()
         {
-            characterGameObject.CharacterCreated += OnCharacterCreated;
+            spawnedCharacter.CharacterSpawned += OnCharacterCreated;
         }
 
         private void OnDestroy()
         {
-            characterGameObject.CharacterCreated -= OnCharacterCreated;
+            spawnedCharacter.CharacterSpawned -= OnCharacterCreated;
         }
 
         private void OnCharacterCreated()
         {
-            var components = characterGameObject
+            var components = spawnedCharacter
                 .GetCharacterGameObject()
                 .GetComponents<MonoBehaviour>();
             foreach (var component in components)
@@ -69,26 +69,26 @@ namespace Scripts.Gameplay.Actors
     [RequireComponent(typeof(SpawnCharacter))]
     public class PlayerAnimatorProvideInitializer : MonoBehaviour
     {
-        private ICharacterGameObject characterGameObject;
+        private ISpawnedCharacter spawnedCharacter;
 
         private void Awake()
         {
-            characterGameObject = GetComponent<ICharacterGameObject>();
+            spawnedCharacter = GetComponent<ISpawnedCharacter>();
         }
 
         private void Start()
         {
-            characterGameObject.CharacterCreated += OnCharacterCreated;
+            spawnedCharacter.CharacterSpawned += OnCharacterCreated;
         }
 
         private void OnDestroy()
         {
-            characterGameObject.CharacterCreated -= OnCharacterCreated;
+            spawnedCharacter.CharacterSpawned -= OnCharacterCreated;
         }
 
         private void OnCharacterCreated()
         {
-            var animator = characterGameObject
+            var animator = spawnedCharacter
                 .GetCharacterSpriteGameObject()
                 .GetComponent<Animator>();
             if (animator != null)
