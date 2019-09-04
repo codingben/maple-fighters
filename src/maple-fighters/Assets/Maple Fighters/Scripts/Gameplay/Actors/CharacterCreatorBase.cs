@@ -24,12 +24,12 @@ namespace Scripts.Gameplay.Actors
         }
     }
 
-    public interface ICharacterGameObjectCreator
+    public interface ISpawnedCharacterCreator
     {
         GameObject Create(Transform parent, CharacterClasses characterClass);
     }
 
-    public class CharacterGameObjectCreator : MonoBehaviour, ICharacterGameObjectCreator
+    public class SpawnedCharacterCreator : MonoBehaviour, ISpawnedCharacterCreator
     {
         private const string GameObjectsPath = "Game/{0}";
 
@@ -63,19 +63,19 @@ namespace Scripts.Gameplay.Actors
         GameObject GetCharacterSpriteGameObject();
     }
 
-    [RequireComponent(typeof(CharacterGameObjectCreator))]
+    [RequireComponent(typeof(SpawnedCharacterCreator))]
     public class SpawnCharacter : MonoBehaviour, ISpawnedCharacter
     {
         public event Action CharacterSpawned;
 
         private GameObject spawnedCharacter;
 
-        private ICharacterGameObjectCreator characterCreator;
+        private ISpawnedCharacterCreator spawnedCharacterCreator;
         private ISpawnedCharacterDetails spawnedCharacterDetails;
 
         private void Awake()
         {
-            characterCreator = GetComponent<ICharacterGameObjectCreator>();
+            spawnedCharacterCreator = GetComponent<ISpawnedCharacterCreator>();
             spawnedCharacterDetails = GetComponent<ISpawnedCharacterDetails>();
         }
 
@@ -85,8 +85,8 @@ namespace Scripts.Gameplay.Actors
                 spawnedCharacterDetails.GetCharacterDetails();
             var characterClass = characterDetails.Character.CharacterType;
 
-            spawnedCharacter = 
-                characterCreator.Create(parent: transform, characterClass);
+            spawnedCharacter =
+                spawnedCharacterCreator.Create(parent: transform, characterClass);
 
             CharacterSpawned?.Invoke();
         }
