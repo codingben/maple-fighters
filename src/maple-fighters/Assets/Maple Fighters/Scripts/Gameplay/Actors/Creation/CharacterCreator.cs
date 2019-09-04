@@ -1,4 +1,5 @@
-﻿using Game.Common;
+﻿using System.Collections;
+using Game.Common;
 using Scripts.Containers;
 using UnityEngine;
 
@@ -34,6 +35,14 @@ namespace Scripts.Gameplay.Actors
         private void OnCreateCharacter(
             CharacterSpawnDetailsParameters characterSpawnDetails)
         {
+            StartCoroutine(WaitFrameAndSpawn(characterSpawnDetails));
+        }
+
+        // TODO: Hack
+        private IEnumerator WaitFrameAndSpawn(CharacterSpawnDetailsParameters characterSpawnDetails)
+        {
+            yield return null;
+
             var id = characterSpawnDetails.SceneObjectId;
             var sceneObject = 
                 SceneObjectsContainer.GetInstance().GetRemoteSceneObject(id);

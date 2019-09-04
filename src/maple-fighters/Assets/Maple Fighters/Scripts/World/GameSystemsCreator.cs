@@ -30,7 +30,6 @@ namespace Scripts.Gameplay
         {
             yield return typeof(LogUtilsCreator);
             yield return typeof(GameTimeProviderCreator);
-            yield return typeof(CharacterCreationNotifier);
             yield return typeof(CharacterCreator);
             yield return typeof(EnterSceneInvoker);
         }
