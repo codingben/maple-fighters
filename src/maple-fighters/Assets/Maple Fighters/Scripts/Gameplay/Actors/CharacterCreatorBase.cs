@@ -27,14 +27,14 @@ namespace Scripts.Gameplay.Actors
 
     public interface ICharacterGameObjectCreator
     {
-        GameObject CreateCharacter(Transform parent, CharacterClasses characterClass);
+        GameObject Create(Transform parent, CharacterClasses characterClass);
     }
 
     public class CharacterGameObjectCreator : MonoBehaviour, ICharacterGameObjectCreator
     {
         private const string GameObjectsPath = "Game/{0}";
 
-        public GameObject CreateCharacter(Transform parent, CharacterClasses characterClass)
+        public GameObject Create(Transform parent, CharacterClasses characterClass)
         {
             // Loading the character
             var path = string.Format(GameObjectsPath, characterClass);
@@ -64,6 +64,7 @@ namespace Scripts.Gameplay.Actors
         GameObject GetCharacterSpriteGameObject();
     }
 
+    [RequireComponent(typeof(CharacterGameObjectCreator))]
     public class SpawnCharacter : MonoBehaviour, ISpawnedCharacter
     {
         public event Action CharacterSpawned;
@@ -86,7 +87,7 @@ namespace Scripts.Gameplay.Actors
             var characterClass = characterDetails.Character.CharacterType;
 
             spawnedCharacter = 
-                characterCreator.CreateCharacter(parent: transform, characterClass);
+                characterCreator.Create(parent: transform, characterClass);
 
             CharacterSpawned?.Invoke();
         }
