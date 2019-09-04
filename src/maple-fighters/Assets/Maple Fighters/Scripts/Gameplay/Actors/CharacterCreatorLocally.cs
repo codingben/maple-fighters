@@ -71,7 +71,7 @@ namespace Scripts.Gameplay.Actors
         }
     }
 
-    [RequireComponent(typeof(SpawnCharacter), typeof(CharacterDetails))]
+    [RequireComponent(typeof(SpawnCharacter), typeof(SpawnedCharacterDetails))]
     public class ChatControllerInitializer : MonoBehaviour
     {
         private ISpawnedCharacter spawnedCharacter;
@@ -96,7 +96,7 @@ namespace Scripts.Gameplay.Actors
             var chatController = FindObjectOfType<ChatController>();
             if (chatController != null)
             {
-                var characterDetailsProvider = GetComponent<ICharacterDetailsProvider>();
+                var characterDetailsProvider = GetComponent<ISpawnedCharacterDetails>();
                 var characterDetails = characterDetailsProvider.GetCharacterDetails();
                 var characterName = characterDetails.Character.Name;
 

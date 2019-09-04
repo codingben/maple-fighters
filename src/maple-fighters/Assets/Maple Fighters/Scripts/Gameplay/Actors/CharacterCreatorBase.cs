@@ -4,17 +4,16 @@ using UnityEngine;
 
 namespace Scripts.Gameplay.Actors
 {
-    public interface ICharacterDetailsProvider
+    public interface ISpawnedCharacterDetails
     {
         CharacterSpawnDetailsParameters GetCharacterDetails();
     }
 
-    // TODO: Conflicts with CharacterInformationProvider
-    public class CharacterDetails : MonoBehaviour, ICharacterDetailsProvider
+    public class SpawnedCharacterDetails : MonoBehaviour, ISpawnedCharacterDetails
     {
         private CharacterSpawnDetailsParameters characterSpawnDetails;
 
-        public void SetCharacterSpawnDetails(CharacterSpawnDetailsParameters characterSpawnDetails)
+        public void SetCharacterDetails(CharacterSpawnDetailsParameters characterSpawnDetails)
         {
             this.characterSpawnDetails = characterSpawnDetails;
         }
@@ -72,18 +71,18 @@ namespace Scripts.Gameplay.Actors
         private GameObject spawnedCharacter;
 
         private ICharacterGameObjectCreator characterCreator;
-        private ICharacterDetailsProvider characterDetailsProvider;
+        private ISpawnedCharacterDetails spawnedCharacterDetails;
 
         private void Awake()
         {
             characterCreator = GetComponent<ICharacterGameObjectCreator>();
-            characterDetailsProvider =
-                GetComponent<ICharacterDetailsProvider>();
+            spawnedCharacterDetails = GetComponent<ISpawnedCharacterDetails>();
         }
 
         public void Spawn()
         {
-            var characterDetails = characterDetailsProvider.GetCharacterDetails();
+            var characterDetails =
+                spawnedCharacterDetails.GetCharacterDetails();
             var characterClass = characterDetails.Character.CharacterType;
 
             spawnedCharacter = 
@@ -108,7 +107,7 @@ namespace Scripts.Gameplay.Actors
         }
     }
 
-    [RequireComponent(typeof(SpawnCharacter), typeof(CharacterDetails))]
+    [RequireComponent(typeof(SpawnCharacter), typeof(SpawnedCharacterDetails))]
     public class CharacterNameInitializer : MonoBehaviour
     {
         [SerializeField]
@@ -138,7 +137,7 @@ namespace Scripts.Gameplay.Actors
                 .GetComponent<CharacterNameSetter>();
             if (characterNameSetter != null)
             {
-                var characterDetailsProvider = GetComponent<ICharacterDetailsProvider>();
+                var characterDetailsProvider = GetComponent<ISpawnedCharacterDetails>();
                 var characterDetails = characterDetailsProvider.GetCharacterDetails();
                 var characterName = characterDetails.Character.Name;
 
@@ -186,7 +185,7 @@ namespace Scripts.Gameplay.Actors
     [RequireComponent(
         typeof(SpawnCharacter), 
         typeof(CharacterInformationProvider), 
-        typeof(CharacterDetails))]
+        typeof(SpawnedCharacterDetails))]
     public class CharacterInformationInitializer : MonoBehaviour
     {
         private ISpawnedCharacter spawnedCharacter;
@@ -211,7 +210,7 @@ namespace Scripts.Gameplay.Actors
             var characterInfoProvider = GetComponent<CharacterInformationProvider>();
             if (characterInfoProvider != null)
             {
-                var characterDetailsProvider = GetComponent<ICharacterDetailsProvider>();
+                var characterDetailsProvider = GetComponent<ISpawnedCharacterDetails>();
                 var characterDetails = characterDetailsProvider.GetCharacterDetails();
                 var character = characterDetails.Character;
 
@@ -220,7 +219,7 @@ namespace Scripts.Gameplay.Actors
         }
     }
 
-    [RequireComponent(typeof(SpawnCharacter), typeof(CharacterDetails))]
+    [RequireComponent(typeof(SpawnCharacter), typeof(SpawnedCharacterDetails))]
     public class CharacterDirectionSetter : MonoBehaviour
     {
         private ISpawnedCharacter spawnedCharacter;
@@ -245,7 +244,7 @@ namespace Scripts.Gameplay.Actors
             var characterInfoProvider = GetComponent<CharacterInformationProvider>();
             if (characterInfoProvider != null)
             {
-                var characterDetailsProvider = GetComponent<ICharacterDetailsProvider>();
+                var characterDetailsProvider = GetComponent<ISpawnedCharacterDetails>();
                 var characterDetails = characterDetailsProvider.GetCharacterDetails();
                 var direction = characterDetails.Direction;
 
