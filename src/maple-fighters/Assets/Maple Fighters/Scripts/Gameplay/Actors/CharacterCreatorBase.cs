@@ -216,7 +216,7 @@ namespace Scripts.Gameplay.Actors
                 var characterDetails = characterDetailsProvider.GetCharacterDetails();
                 var character = characterDetails.Character;
 
-                characterInfoProvider.SetCharacterInformation(character);
+                characterInfoProvider.SetCharacterInfo(character);
             }
         }
     }
