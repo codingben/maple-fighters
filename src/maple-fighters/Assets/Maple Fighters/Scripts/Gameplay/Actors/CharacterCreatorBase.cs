@@ -122,15 +122,15 @@ namespace Scripts.Gameplay.Actors
 
         private void Start()
         {
-            spawnedCharacter.CharacterSpawned += OnCharacterCreated;
+            spawnedCharacter.CharacterSpawned += OnCharacterSpawned;
         }
 
         private void OnDestroy()
         {
-            spawnedCharacter.CharacterSpawned -= OnCharacterCreated;
+            spawnedCharacter.CharacterSpawned -= OnCharacterSpawned;
         }
 
-        private void OnCharacterCreated()
+        private void OnCharacterSpawned()
         {
             var characterNameSetter = spawnedCharacter
                 .GetCharacterSpriteGameObject()
@@ -162,15 +162,15 @@ namespace Scripts.Gameplay.Actors
 
         private void Start()
         {
-            spawnedCharacter.CharacterSpawned += OnCharacterCreated;
+            spawnedCharacter.CharacterSpawned += OnCharacterSpawned;
         }
 
         private void OnDestroy()
         {
-            spawnedCharacter.CharacterSpawned -= OnCharacterCreated;
+            spawnedCharacter.CharacterSpawned -= OnCharacterSpawned;
         }
 
-        private void OnCharacterCreated()
+        private void OnCharacterSpawned()
         {
             var spriteRenderer = spawnedCharacter
                 .GetCharacterSpriteGameObject()
@@ -197,15 +197,15 @@ namespace Scripts.Gameplay.Actors
 
         private void Start()
         {
-            spawnedCharacter.CharacterSpawned += OnCharacterCreated;
+            spawnedCharacter.CharacterSpawned += OnCharacterSpawned;
         }
 
         private void OnDestroy()
         {
-            spawnedCharacter.CharacterSpawned -= OnCharacterCreated;
+            spawnedCharacter.CharacterSpawned -= OnCharacterSpawned;
         }
 
-        private void OnCharacterCreated()
+        private void OnCharacterSpawned()
         {
             var characterInfoProvider = GetComponent<CharacterInformationProvider>();
             if (characterInfoProvider != null)
@@ -231,15 +231,15 @@ namespace Scripts.Gameplay.Actors
 
         private void Start()
         {
-            spawnedCharacter.CharacterSpawned += OnCharacterCreated;
+            spawnedCharacter.CharacterSpawned += OnCharacterSpawned;
         }
 
         private void OnDestroy()
         {
-            spawnedCharacter.CharacterSpawned -= OnCharacterCreated;
+            spawnedCharacter.CharacterSpawned -= OnCharacterSpawned;
         }
 
-        private void OnCharacterCreated()
+        private void OnCharacterSpawned()
         {
             var characterInfoProvider = GetComponent<CharacterInformationProvider>();
             if (characterInfoProvider != null)
