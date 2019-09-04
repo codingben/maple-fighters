@@ -2,7 +2,7 @@
 
 namespace Scripts.Gameplay.Actors
 {
-    [RequireComponent(typeof(CharacterGameObject))]
+    [RequireComponent(typeof(SpawnCharacter))]
     public class CharacterCollisionDisabler : MonoBehaviour
     {
         private ICharacterGameObject characterGameObject;
@@ -34,7 +34,7 @@ namespace Scripts.Gameplay.Actors
         }
     }
 
-    [RequireComponent(typeof(CharacterGameObject))]
+    [RequireComponent(typeof(SpawnCharacter))]
     public class PlayerControllerDestroyer : MonoBehaviour
     {
         private ICharacterGameObject characterGameObject;
@@ -66,7 +66,7 @@ namespace Scripts.Gameplay.Actors
         }
     }
 
-    [RequireComponent(typeof(CharacterGameObject))]
+    [RequireComponent(typeof(SpawnCharacter))]
     public class PlayerAnimatorProvideInitializer : MonoBehaviour
     {
         private ICharacterGameObject characterGameObject;

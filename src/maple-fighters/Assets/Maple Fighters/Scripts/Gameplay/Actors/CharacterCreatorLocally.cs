@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Scripts.Gameplay.Actors
 {
-    [RequireComponent(typeof(CharacterGameObject), typeof(PositionSender))]
+    [RequireComponent(typeof(SpawnCharacter), typeof(PositionSender))]
     public class PositionSenderInitializer : MonoBehaviour
     {
         private ICharacterGameObject characterGameObject;
@@ -32,7 +32,7 @@ namespace Scripts.Gameplay.Actors
         }
     }
 
-    [RequireComponent(typeof(CharacterGameObject))]
+    [RequireComponent(typeof(SpawnCharacter))]
     public class PlayerControllerInitializer : MonoBehaviour
     {
         private ICharacterGameObject characterGameObject;
@@ -71,7 +71,7 @@ namespace Scripts.Gameplay.Actors
         }
     }
 
-    [RequireComponent(typeof(CharacterGameObject), typeof(CharacterDetails))]
+    [RequireComponent(typeof(SpawnCharacter), typeof(CharacterDetails))]
     public class ChatControllerInitializer : MonoBehaviour
     {
         private ICharacterGameObject characterGameObject;

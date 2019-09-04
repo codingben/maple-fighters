@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Scripts.Gameplay.Actors
 {
-    [RequireComponent(typeof(CharacterGameObject))]
+    [RequireComponent(typeof(SpawnCharacter))]
     public class PositionSetter : MonoBehaviour
     {
         private const float Speed = 15;

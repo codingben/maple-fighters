@@ -65,7 +65,7 @@ namespace Scripts.Gameplay.Actors
     }
 
     // TODO: Another name needed
-    public class CharacterGameObject : MonoBehaviour, ICharacterGameObject
+    public class SpawnCharacter : MonoBehaviour, ICharacterGameObject
     {
         public event Action CharacterCreated;
 
@@ -108,7 +108,7 @@ namespace Scripts.Gameplay.Actors
         }
     }
 
-    [RequireComponent(typeof(CharacterGameObject), typeof(CharacterDetails))]
+    [RequireComponent(typeof(SpawnCharacter), typeof(CharacterDetails))]
     public class CharacterNameInitializer : MonoBehaviour
     {
         [SerializeField]
@@ -148,7 +148,7 @@ namespace Scripts.Gameplay.Actors
         }
     }
 
-    [RequireComponent(typeof(CharacterGameObject))]
+    [RequireComponent(typeof(SpawnCharacter))]
     public class SpriteRendererInitializer : MonoBehaviour
     {
         [SerializeField]
@@ -184,7 +184,7 @@ namespace Scripts.Gameplay.Actors
     }
 
     [RequireComponent(
-        typeof(CharacterGameObject), 
+        typeof(SpawnCharacter), 
         typeof(CharacterInformationProvider), 
         typeof(CharacterDetails))]
     public class CharacterInformationInitializer : MonoBehaviour
@@ -220,7 +220,7 @@ namespace Scripts.Gameplay.Actors
         }
     }
 
-    [RequireComponent(typeof(CharacterGameObject), typeof(CharacterDetails))]
+    [RequireComponent(typeof(SpawnCharacter), typeof(CharacterDetails))]
     public class CharacterDirectionSetter : MonoBehaviour
     {
         private ICharacterGameObject characterGameObject;
