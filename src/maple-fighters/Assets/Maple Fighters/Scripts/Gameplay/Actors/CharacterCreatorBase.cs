@@ -41,17 +41,17 @@ namespace Scripts.Gameplay.Actors
             var characterObject = Resources.Load<GameObject>(path);
 
             // Creating the character
-            var characterGameObject = 
+            var spawnedCharacter = 
                 Instantiate(characterObject, Vector3.zero, Quaternion.identity, parent);
 
             // Sets the position
-            characterGameObject.transform.localPosition = characterObject.transform.localPosition;
-            characterGameObject.transform.SetAsFirstSibling();
+            spawnedCharacter.transform.localPosition = characterObject.transform.localPosition;
+            spawnedCharacter.transform.SetAsFirstSibling();
 
             // Sets the character name
-            characterGameObject.name = characterGameObject.name.RemoveCloneFromName();
+            spawnedCharacter.name = spawnedCharacter.name.RemoveCloneFromName();
 
-            return characterGameObject;
+            return spawnedCharacter;
         }
     }
 
@@ -68,7 +68,7 @@ namespace Scripts.Gameplay.Actors
     {
         public event Action CharacterSpawned;
 
-        private GameObject characterGameObject;
+        private GameObject spawnedCharacter;
 
         private ICharacterGameObjectCreator characterCreator;
         private ICharacterDetailsProvider characterDetailsProvider;
@@ -85,7 +85,7 @@ namespace Scripts.Gameplay.Actors
             var characterDetails = characterDetailsProvider.GetCharacterDetails();
             var characterClass = characterDetails.Character.CharacterType;
 
-            characterGameObject = 
+            spawnedCharacter = 
                 characterCreator.CreateCharacter(parent: transform, characterClass);
 
             CharacterSpawned?.Invoke();
@@ -93,7 +93,7 @@ namespace Scripts.Gameplay.Actors
 
         public GameObject GetCharacterGameObject()
         {
-            return characterGameObject;
+            return spawnedCharacter;
         }
 
         public GameObject GetCharacterSpriteGameObject()
@@ -101,7 +101,7 @@ namespace Scripts.Gameplay.Actors
             const int CharacterIndex = 0;
 
             var characterSprite =
-                characterGameObject?.transform.GetChild(CharacterIndex);
+                spawnedCharacter?.transform.GetChild(CharacterIndex);
 
             return characterSprite?.gameObject;
         }

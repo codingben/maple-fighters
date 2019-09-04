@@ -18,9 +18,9 @@ namespace Scripts.Gameplay.Actors
         {
             sceneObject = GetComponent<ISceneObject>();
 
-            var characterGameObject = GetComponent<ICharacterGameObject>();
+            var spawnedCharacter = GetComponent<ISpawnedCharacter>();
             var transform =
-                characterGameObject.GetCharacterGameObject().transform;
+                spawnedCharacter.GetCharacterGameObject().transform;
 
             character = transform;
         }

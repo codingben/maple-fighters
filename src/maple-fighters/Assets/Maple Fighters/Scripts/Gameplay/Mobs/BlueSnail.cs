@@ -34,16 +34,16 @@ namespace Assets.Scripts
             var point = 
                 new Vector3(parameters.ContactPointX, parameters.ContactPointY);
 
-            var character = GetCharacterGameObject();
-            if (character != null)
+            var spawnedCharacter = GetSpawnedCharacter();
+            if (spawnedCharacter != null)
             {
                 var direction = new Vector2(
-                    x: ((character.transform.position - point).normalized.x > 0
+                    x: ((spawnedCharacter.transform.position - point).normalized.x > 0
                             ? 1
                             : -1) * hitAmount.x,
                     y: hitAmount.y);
 
-                StartCoroutine(BounceTheLocalPlayer(character, direction));
+                StartCoroutine(BounceTheLocalPlayer(spawnedCharacter, direction));
             }
         }
 
@@ -67,9 +67,9 @@ namespace Assets.Scripts
             }
         }
 
-        private GameObject GetCharacterGameObject()
+        private GameObject GetSpawnedCharacter()
         {
-            GameObject characterGameObject = null;
+            GameObject spawnedCharacter = null;
 
             var player =
                 SceneObjectsContainer.GetInstance().GetLocalSceneObject()
@@ -79,10 +79,10 @@ namespace Assets.Scripts
                 const int CharacterIndex = 0;
 
                 var transform = player.transform.GetChild(CharacterIndex);
-                characterGameObject = transform.gameObject;
+                spawnedCharacter = transform.gameObject;
             }
 
-            return characterGameObject;
+            return spawnedCharacter;
         }
     }
 }
