@@ -11,16 +11,16 @@ namespace Scripts.Gameplay.Actors
 
     public class SpawnedCharacterDetails : MonoBehaviour, ISpawnedCharacterDetails
     {
-        private CharacterSpawnDetailsParameters characterSpawnDetails;
+        private CharacterSpawnDetailsParameters characterDetails;
 
-        public void SetCharacterDetails(CharacterSpawnDetailsParameters characterSpawnDetails)
+        public void SetCharacterDetails(CharacterSpawnDetailsParameters characterDetails)
         {
-            this.characterSpawnDetails = characterSpawnDetails;
+            this.characterDetails = characterDetails;
         }
 
         public CharacterSpawnDetailsParameters GetCharacterDetails()
         {
-            return characterSpawnDetails;
+            return characterDetails;
         }
     }
 
@@ -63,7 +63,9 @@ namespace Scripts.Gameplay.Actors
         GameObject GetCharacterSpriteGameObject();
     }
 
-    [RequireComponent(typeof(SpawnedCharacterCreator))]
+    [RequireComponent(
+        typeof(SpawnedCharacterCreator),
+        typeof(SpawnedCharacterDetails))]
     public class SpawnCharacter : MonoBehaviour, ISpawnedCharacter
     {
         public event Action CharacterSpawned;
