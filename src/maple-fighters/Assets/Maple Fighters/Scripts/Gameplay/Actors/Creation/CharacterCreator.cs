@@ -35,10 +35,16 @@ namespace Scripts.Gameplay.Actors
             CharacterSpawnDetailsParameters characterSpawnDetails)
         {
             var id = characterSpawnDetails.SceneObjectId;
-            var sceneObject = SceneObjectsContainer.GetInstance().GetRemoteSceneObject(id);
+            var sceneObject = 
+                SceneObjectsContainer.GetInstance().GetRemoteSceneObject(id);
             if (sceneObject != null)
             {
-                // TODO: Implement
+                var spawnedCharacterDetails = 
+                    sceneObject.GameObject.GetComponent<SpawnedCharacterDetails>();
+                var spawnedCharacter = 
+                    sceneObject.GameObject.GetComponent<SpawnCharacter>();
+                spawnedCharacterDetails.SetCharacterDetails(characterSpawnDetails);
+                spawnedCharacter.Spawn();
             }
         }
     }
