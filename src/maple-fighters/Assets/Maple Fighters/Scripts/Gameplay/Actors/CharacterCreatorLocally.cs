@@ -16,15 +16,15 @@ namespace Scripts.Gameplay.Actors
 
         private void Start()
         {
-            spawnedCharacter.CharacterSpawned += OnCharacterCreated;
+            spawnedCharacter.CharacterSpawned += OnCharacterSpawned;
         }
 
         private void OnDestroy()
         {
-            spawnedCharacter.CharacterSpawned -= OnCharacterCreated;
+            spawnedCharacter.CharacterSpawned -= OnCharacterSpawned;
         }
 
-        private void OnCharacterCreated()
+        private void OnCharacterSpawned()
         {
             var character = spawnedCharacter.GetCharacterGameObject();
             var positionSender = GetComponent<PositionSender>();
@@ -44,15 +44,15 @@ namespace Scripts.Gameplay.Actors
 
         private void Start()
         {
-            spawnedCharacter.CharacterSpawned += OnCharacterCreated;
+            spawnedCharacter.CharacterSpawned += OnCharacterSpawned;
         }
 
         private void OnDestroy()
         {
-            spawnedCharacter.CharacterSpawned -= OnCharacterCreated;
+            spawnedCharacter.CharacterSpawned -= OnCharacterSpawned;
         }
 
-        private void OnCharacterCreated()
+        private void OnCharacterSpawned()
         {
             var playerStateAnimator = spawnedCharacter
                 .GetCharacterSpriteGameObject()
@@ -83,15 +83,15 @@ namespace Scripts.Gameplay.Actors
 
         private void Start()
         {
-            spawnedCharacter.CharacterSpawned += OnCharacterCreated;
+            spawnedCharacter.CharacterSpawned += OnCharacterSpawned;
         }
 
         private void OnDestroy()
         {
-            spawnedCharacter.CharacterSpawned -= OnCharacterCreated;
+            spawnedCharacter.CharacterSpawned -= OnCharacterSpawned;
         }
 
-        private void OnCharacterCreated()
+        private void OnCharacterSpawned()
         {
             var chatController = FindObjectOfType<ChatController>();
             if (chatController != null)
