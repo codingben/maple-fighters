@@ -184,43 +184,6 @@ namespace Scripts.Gameplay.Actors
         }
     }
 
-    [RequireComponent(
-        typeof(SpawnCharacter), 
-        typeof(CharacterInformationProvider), 
-        typeof(SpawnedCharacterDetails))]
-    public class CharacterInformationInitializer : MonoBehaviour
-    {
-        private ISpawnedCharacter spawnedCharacter;
-
-        private void Awake()
-        {
-            spawnedCharacter = GetComponent<ISpawnedCharacter>();
-        }
-
-        private void Start()
-        {
-            spawnedCharacter.CharacterSpawned += OnCharacterSpawned;
-        }
-
-        private void OnDestroy()
-        {
-            spawnedCharacter.CharacterSpawned -= OnCharacterSpawned;
-        }
-
-        private void OnCharacterSpawned()
-        {
-            var characterInfoProvider = GetComponent<CharacterInformationProvider>();
-            if (characterInfoProvider != null)
-            {
-                var characterDetailsProvider = GetComponent<ISpawnedCharacterDetails>();
-                var characterDetails = characterDetailsProvider.GetCharacterDetails();
-                var character = characterDetails.Character;
-
-                characterInfoProvider.SetCharacterInfo(character);
-            }
-        }
-    }
-
     [RequireComponent(typeof(SpawnCharacter), typeof(SpawnedCharacterDetails))]
     public class CharacterDirectionSetter : MonoBehaviour
     {
