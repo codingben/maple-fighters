@@ -3,11 +3,11 @@ using UnityEngine;
 
 namespace Scripts.Gameplay.Actors
 {
-    public class SpawnedCharacterCreator : MonoBehaviour, ISpawnedCharacterCreator
+    public class SpawnCharacterUtils
     {
         private const string GameObjectsPath = "Game/{0}";
 
-        public GameObject Create(Transform parent, CharacterClasses characterClass)
+        public static GameObject Create(Transform parent, CharacterClasses characterClass)
         {
             // Loading the character
             var path = string.Format(GameObjectsPath, characterClass);
@@ -15,7 +15,7 @@ namespace Scripts.Gameplay.Actors
 
             // Creating the character
             var spawnedCharacter = 
-                Instantiate(characterObject, Vector3.zero, Quaternion.identity, parent);
+                Object.Instantiate(characterObject, Vector3.zero, Quaternion.identity, parent);
 
             // Sets the position
             spawnedCharacter.transform.localPosition = characterObject.transform.localPosition;
