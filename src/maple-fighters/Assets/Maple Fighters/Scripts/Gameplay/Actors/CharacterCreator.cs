@@ -4,7 +4,6 @@ using UnityEngine;
 
 namespace Scripts.Gameplay.Actors
 {
-    // TODO: Another name
     [RequireComponent(typeof(CharacterCreationNotifier))]
     public class CharacterCreator : MonoBehaviour
     {
