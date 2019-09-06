@@ -4,13 +4,9 @@ using UnityEngine;
 
 namespace Scripts.Gameplay.Actors
 {
+    [RequireComponent(typeof(SpawnCharacter))]
     public class PositionSender : MonoBehaviour
     {
-        public void SetCharacter(Transform character)
-        {
-            this.character = character;
-        }
-
         private Transform character;
 
         private Vector2 position;
@@ -18,6 +14,10 @@ namespace Scripts.Gameplay.Actors
 
         private void Awake()
         {
+            var spawnedCharacter = GetComponent<ISpawnedCharacter>();
+            character =
+                spawnedCharacter.GetCharacterGameObject().transform;
+
             position = transform.position;
         }
 
