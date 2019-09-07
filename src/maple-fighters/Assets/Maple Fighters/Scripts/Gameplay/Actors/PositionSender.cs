@@ -7,17 +7,11 @@ namespace Scripts.Gameplay.Actors
     [RequireComponent(typeof(SpawnCharacter))]
     public class PositionSender : MonoBehaviour
     {
-        private Transform character;
-
         private Vector2 position;
         private Directions direction = Directions.None;
 
         private void Awake()
         {
-            var spawnedCharacter = GetComponent<ISpawnedCharacter>();
-            character =
-                spawnedCharacter.GetCharacterGameObject().transform;
-
             position = transform.position;
         }
 
@@ -49,32 +43,8 @@ namespace Scripts.Gameplay.Actors
             var gameSceneApi = ServiceContainer.GameService.GetGameSceneApi();
             if (gameSceneApi != null)
             {
-                gameSceneApi.UpdatePosition(
-                    new UpdatePositionRequestParameters(
-                        transform.position.x,
-                        transform.position.y,
-                        GetDirection()));
+                gameSceneApi.UpdatePosition(new UpdatePositionRequestParameters(transform.position.x, transform.position.y, GetDirection()));
             }
-        }
-
-        private Directions GetDirection()
-        {
-            var direction = Directions.None;
-
-            if (character != null)
-            {
-                if (character.localScale.x > 0)
-                {
-                    direction = Directions.Left;
-                }
-
-                if (character.localScale.x < 0)
-                {
-                    direction = Directions.Right;
-                }
-            }
-
-            return direction;
         }
     }
 }

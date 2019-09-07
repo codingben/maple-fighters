@@ -21,25 +21,12 @@ namespace Scripts.Gameplay.Actors
         [SerializeField]
         private float greaterDistance;
 
-        private Transform character;
-        private ISceneObject sceneObject;
-
         private Vector3 newPosition;
+        private ISceneObject sceneObject;
 
         private void Awake()
         {
             sceneObject = GetComponent<ISceneObject>();
-
-            var spawnedCharacter = GetComponent<ISpawnedCharacter>();
-            if (spawnedCharacter != null)
-            {
-                character = 
-                    spawnedCharacter.GetCharacterGameObject().transform;
-            }
-            else
-            {
-                character = transform;
-            }
         }
 
         private void Start()
@@ -66,28 +53,8 @@ namespace Scripts.Gameplay.Actors
             {
                 newPosition = new Vector2(parameters.X, parameters.Y);
 
-                var x = Mathf.Abs(character.localScale.x);
-
-                switch (parameters.Direction)
-                {
-                    case Directions.Left:
-                    {
-                        character.localScale = new Vector3(
-                            x,
-                            character.localScale.y,
-                            character.localScale.z);
-                        break;
-                    }
-
-                    case Directions.Right:
-                    {
-                        character.localScale = new Vector3(
-                            -x,
-                            character.localScale.y,
-                            character.localScale.z);
-                        break;
-                    }
-                }
+                // TODO: parameters.Direction
+                // TODO: Set a new direction
             }
         }
 
