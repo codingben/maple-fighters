@@ -8,7 +8,6 @@ namespace Scripts.Gameplay.Actors
     public class PositionSender : MonoBehaviour
     {
         private Vector2 position;
-        private Directions direction = Directions.None;
 
         private void Awake()
         {
@@ -19,31 +18,13 @@ namespace Scripts.Gameplay.Actors
         {
             if (Vector2.Distance(transform.position, position) > 0.1f)
             {
-                PositionChanged();
-            }
-            else
-            {
-                if (GetDirection() != direction)
+                position = transform.position;
+
+                var gameSceneApi = ServiceContainer.GameService.GetGameSceneApi();
+                if (gameSceneApi != null)
                 {
-                    PositionChanged();
+                    gameSceneApi.UpdatePosition(new UpdatePositionRequestParameters(transform.position.x, transform.position.y, GetDirection()));
                 }
-            }
-        }
-
-        private void PositionChanged()
-        {
-            position = transform.position;
-            direction = GetDirection();
-
-            UpdatePositionOperation();
-        }
-
-        private void UpdatePositionOperation()
-        {
-            var gameSceneApi = ServiceContainer.GameService.GetGameSceneApi();
-            if (gameSceneApi != null)
-            {
-                gameSceneApi.UpdatePosition(new UpdatePositionRequestParameters(transform.position.x, transform.position.y, GetDirection()));
             }
         }
     }
