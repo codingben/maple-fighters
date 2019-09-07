@@ -4,26 +4,36 @@ using UnityEngine;
 
 namespace Scripts.Gameplay.Actors
 {
-    [RequireComponent(typeof(SpawnCharacter))]
     public class PositionSender : MonoBehaviour
     {
+        private const float GreaterDistance = 0.1f;
         private Vector2 position;
+
+        private ICharacterOrientation characterOrientation;
 
         private void Awake()
         {
             position = transform.position;
+            characterOrientation = GetComponent<ICharacterOrientation>();
         }
 
         private void Update()
         {
-            if (Vector2.Distance(transform.position, position) > 0.1f)
+            var distance = Vector2.Distance(transform.position, position);
+            if (distance > GreaterDistance)
             {
                 position = transform.position;
 
                 var gameSceneApi = ServiceContainer.GameService.GetGameSceneApi();
                 if (gameSceneApi != null)
                 {
-                    gameSceneApi.UpdatePosition(new UpdatePositionRequestParameters(transform.position.x, transform.position.y, GetDirection()));
+                    var direction = characterOrientation?.GetDirection();
+
+                    gameSceneApi.UpdatePosition(
+                        new UpdatePositionRequestParameters(
+                            transform.position.x,
+                            transform.position.y,
+                            direction ?? Directions.None));
                 }
             }
         }

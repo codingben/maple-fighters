@@ -22,6 +22,29 @@ namespace Scripts.Gameplay.Actors
             }
         }
 
+        private void Start()
+        {
+            var positionSetter = GetComponent<PositionSetter>();
+            if (positionSetter != null)
+            {
+                positionSetter.DirectionChanged += OnDirectionChanged;
+            }
+        }
+
+        private void OnDestroy()
+        {
+            var positionSetter = GetComponent<PositionSetter>();
+            if (positionSetter != null)
+            {
+                positionSetter.DirectionChanged -= OnDirectionChanged;
+            }
+        }
+
+        private void OnDirectionChanged(Directions direction)
+        {
+            SetDirection(direction);
+        }
+
         public void SetDirection(Directions direction)
         {
             var x = Mathf.Abs(character.localScale.x);

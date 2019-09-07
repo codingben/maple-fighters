@@ -1,4 +1,5 @@
-﻿using Game.Common;
+﻿using System;
+using Game.Common;
 using Scripts.Containers;
 using UnityEngine;
 
@@ -7,6 +8,8 @@ namespace Scripts.Gameplay.Actors
     [RequireComponent(typeof(NetworkIdentity))]
     public class PositionSetter : MonoBehaviour
     {
+        public event Action<Directions> DirectionChanged;
+
         [Header("Synchronization")]
         [SerializeField]
         private InterpolateOption interpolateOption;
@@ -53,8 +56,7 @@ namespace Scripts.Gameplay.Actors
             {
                 newPosition = new Vector2(parameters.X, parameters.Y);
 
-                // TODO: parameters.Direction
-                // TODO: Set a new direction
+                DirectionChanged?.Invoke(parameters.Direction);
             }
         }
 
