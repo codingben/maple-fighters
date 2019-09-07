@@ -6,8 +6,13 @@ namespace Scripts.Gameplay.Actors
 {
     public class PositionSetter : MonoBehaviour
     {
-        private const float Speed = 15;
-        
+        [Header("Synchronization")]
+        [SerializeField]
+        private InterpolateOption interpolateOption;
+
+        [SerializeField]
+        private float speed;
+
         private Transform character;
         private ISceneObject sceneObject;
 
@@ -20,7 +25,7 @@ namespace Scripts.Gameplay.Actors
             var spawnedCharacter = GetComponent<ISpawnedCharacter>();
             if (spawnedCharacter != null)
             {
-                character =
+                character = 
                     spawnedCharacter.GetCharacterGameObject().transform;
             }
             else
@@ -47,56 +52,56 @@ namespace Scripts.Gameplay.Actors
             }
         }
 
-        private void OnPositionChanged(
-            SceneObjectPositionChangedEventParameters parameters)
+        private void OnPositionChanged(SceneObjectPositionChangedEventParameters parameters)
         {
             if (sceneObject.Id == parameters.SceneObjectId)
             {
-                UpdatePosition(
-                    new Vector2(parameters.X, parameters.Y),
-                    parameters.Direction);
+                position = new Vector2(parameters.X, parameters.Y);
+
+                const float Scale = 1;
+
+                switch (parameters.Direction)
+                {
+                    case Directions.Left:
+                    {
+                        character.localScale = new Vector3(
+                            Scale,
+                            character.localScale.y,
+                            character.localScale.z);
+                        break;
+                    }
+
+                    case Directions.Right:
+                    {
+                        character.localScale = new Vector3(
+                            -Scale,
+                            character.localScale.y,
+                            character.localScale.z);
+                        break;
+                    }
+                }
             }
         }
 
         private void Update()
         {
-            if (position != Vector3.zero)
+            if (position == Vector3.zero)
             {
-                transform.position = Vector3.Lerp(
-                    transform.position,
-                    position,
-                    Speed * Time.deltaTime);
+                return;
             }
-        }
 
-        public void UpdatePosition(Vector2 newPosition, Directions direction)
-        {
-            position = newPosition;
-
-            FlipByDirection(direction);
-        }
-
-        private void FlipByDirection(Directions direction)
-        {
-            const float Scale = 1;
-
-            switch (direction)
+            switch (interpolateOption)
             {
-                case Directions.Left:
+                case InterpolateOption.Disabled:
                 {
-                    character.localScale = new Vector3(
-                        Scale,
-                        character.localScale.y,
-                        character.localScale.z);
+                    transform.position = position;
                     break;
                 }
 
-                case Directions.Right:
+                case InterpolateOption.Lerp:
                 {
-                    character.localScale = new Vector3(
-                        -Scale,
-                        character.localScale.y,
-                        character.localScale.z);
+                    transform.position = 
+                        Vector3.Lerp(transform.position, position, speed * Time.deltaTime);
                     break;
                 }
             }
