@@ -13,6 +13,13 @@ namespace Scripts.Gameplay.Actors
         [SerializeField]
         private float speed;
 
+        [Header("Teleportation")]
+        [SerializeField]
+        private bool canTeleport;
+
+        [SerializeField]
+        private float greaterDistance;
+
         private Transform character;
         private ISceneObject sceneObject;
 
@@ -100,8 +107,20 @@ namespace Scripts.Gameplay.Actors
 
                 case InterpolateOption.Lerp:
                 {
-                    transform.position = 
-                        Vector3.Lerp(transform.position, position, speed * Time.deltaTime);
+                    var distance = Vector2.Distance(transform.position, position);
+                    if (distance > greaterDistance)
+                    {
+                        if (canTeleport)
+                        {
+                            transform.position = position;
+                        }
+                    }
+                    else
+                    {
+                        transform.position = 
+                            Vector3.Lerp(transform.position, position, speed * Time.deltaTime);
+                    }
+
                     break;
                 }
             }
