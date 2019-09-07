@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace Scripts.Gameplay.Actors
 {
+    [RequireComponent(typeof(NetworkIdentity))]
     public class PositionSetter : MonoBehaviour
     {
         [Header("Synchronization")]
@@ -23,7 +24,7 @@ namespace Scripts.Gameplay.Actors
         private Transform character;
         private ISceneObject sceneObject;
 
-        private Vector3 position;
+        private Vector3 newPosition;
 
         private void Awake()
         {
@@ -63,7 +64,7 @@ namespace Scripts.Gameplay.Actors
         {
             if (sceneObject.Id == parameters.SceneObjectId)
             {
-                position = new Vector2(parameters.X, parameters.Y);
+                newPosition = new Vector2(parameters.X, parameters.Y);
 
                 var x = Mathf.Abs(character.localScale.x);
 
@@ -92,7 +93,7 @@ namespace Scripts.Gameplay.Actors
 
         private void Update()
         {
-            if (position == Vector3.zero)
+            if (newPosition == Vector3.zero)
             {
                 return;
             }
@@ -101,24 +102,24 @@ namespace Scripts.Gameplay.Actors
             {
                 case InterpolateOption.Disabled:
                 {
-                    transform.position = position;
+                    transform.position = newPosition;
                     break;
                 }
 
                 case InterpolateOption.Lerp:
                 {
-                    var distance = Vector2.Distance(transform.position, position);
+                    var distance = Vector2.Distance(transform.position, newPosition);
                     if (distance > greaterDistance)
                     {
                         if (canTeleport)
                         {
-                            transform.position = position;
+                            transform.position = newPosition;
                         }
                     }
                     else
                     {
                         transform.position = 
-                            Vector3.Lerp(transform.position, position, speed * Time.deltaTime);
+                            Vector3.Lerp(transform.position, newPosition, speed * Time.deltaTime);
                     }
 
                     break;
