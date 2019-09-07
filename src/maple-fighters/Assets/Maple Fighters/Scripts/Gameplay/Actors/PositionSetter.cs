@@ -58,14 +58,14 @@ namespace Scripts.Gameplay.Actors
             {
                 position = new Vector2(parameters.X, parameters.Y);
 
-                const float Scale = 1;
+                var x = Mathf.Abs(character.localScale.x);
 
                 switch (parameters.Direction)
                 {
                     case Directions.Left:
                     {
                         character.localScale = new Vector3(
-                            Scale,
+                            x,
                             character.localScale.y,
                             character.localScale.z);
                         break;
@@ -74,7 +74,7 @@ namespace Scripts.Gameplay.Actors
                     case Directions.Right:
                     {
                         character.localScale = new Vector3(
-                            -Scale,
+                            -x,
                             character.localScale.y,
                             character.localScale.z);
                         break;
