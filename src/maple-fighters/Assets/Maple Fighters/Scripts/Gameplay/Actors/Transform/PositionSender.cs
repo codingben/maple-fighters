@@ -9,12 +9,9 @@ namespace Scripts.Gameplay.Actors
         private const float GreaterDistance = 0.1f;
         private Vector2 position;
 
-        private ICharacterOrientation characterOrientation;
-
         private void Awake()
         {
             position = transform.position;
-            characterOrientation = GetComponent<ICharacterOrientation>();
         }
 
         private void Update()
@@ -27,13 +24,14 @@ namespace Scripts.Gameplay.Actors
                 var gameSceneApi = ServiceContainer.GameService.GetGameSceneApi();
                 if (gameSceneApi != null)
                 {
-                    var direction = characterOrientation?.GetDirection();
+                    // TODO: A way to change the direction
+                    var direction = Directions.None;
 
                     gameSceneApi.UpdatePosition(
                         new UpdatePositionRequestParameters(
                             transform.position.x,
                             transform.position.y,
-                            direction ?? Directions.None));
+                            direction));
                 }
             }
         }
