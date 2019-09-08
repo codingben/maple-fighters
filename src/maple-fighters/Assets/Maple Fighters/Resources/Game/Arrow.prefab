@@ -142,6 +142,7 @@ GameObject:
   - component: {fileID: 4745549069549146}
   - component: {fileID: 212620141725422096}
   - component: {fileID: 95919946666178214}
+  - component: {fileID: 6440017819882073463}
   m_Layer: 9
   m_Name: Arrow Sprite
   m_TagString: Untagged
@@ -232,6 +233,19 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &6440017819882073463
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1229620062354838}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3974815ef9b879745b59ca6885d90c5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nameText: {fileID: 114257676697761238}
 --- !u!1 &1238605613363138
 GameObject:
   m_ObjectHideFlags: 0
