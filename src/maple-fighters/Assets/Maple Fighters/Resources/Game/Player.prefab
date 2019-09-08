@@ -10,15 +10,16 @@ GameObject:
   m_Component:
   - component: {fileID: 4969331399217378}
   - component: {fileID: 114521439374865204}
-  - component: {fileID: 3031022350814572630}
   - component: {fileID: 2360564930486661005}
   - component: {fileID: 904353855391667485}
+  - component: {fileID: 3031022350814572630}
   - component: {fileID: -2331632238297601545}
   - component: {fileID: 783909611466806982}
   - component: {fileID: 6182644270239776233}
   - component: {fileID: 3789524035353007431}
   - component: {fileID: 7669587666009118487}
   - component: {fileID: 585372851503896885}
+  - component: {fileID: 3411899510600749524}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -53,18 +54,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 0
---- !u!114 &3031022350814572630
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1366194909670352}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e40a222d179bde346b81eb9a5d61da74, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &2360564930486661005
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -87,6 +76,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d4c4a8a6f22e702468d8ae6b86affcfd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3031022350814572630
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1366194909670352}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e40a222d179bde346b81eb9a5d61da74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &-2331632238297601545
@@ -163,3 +164,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fba542347185a58448813b8bec43f2bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &3411899510600749524
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1366194909670352}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01db79b260e51aa498b60695dc4a4fb0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interpolateOption: 1
+  speed: 15
+  canTeleport: 1
+  greaterDistance: 5
