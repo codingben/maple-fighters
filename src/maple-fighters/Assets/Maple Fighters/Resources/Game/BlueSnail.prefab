@@ -371,6 +371,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4638261158712662}
   - component: {fileID: 114455167538858636}
+  - component: {fileID: -2474806018124127712}
   - component: {fileID: 114634214393531378}
   m_Layer: 9
   m_Name: BlueSnail
@@ -408,6 +409,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 0
+--- !u!114 &-2474806018124127712
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1935325154392280}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01db79b260e51aa498b60695dc4a4fb0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interpolateOption: 1
+  speed: 15
+  canTeleport: 1
+  greaterDistance: 5
 --- !u!114 &114634214393531378
 MonoBehaviour:
   m_ObjectHideFlags: 0
