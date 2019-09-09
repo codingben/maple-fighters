@@ -7,16 +7,13 @@ namespace Scripts.Gameplay.Actors
     public class CharacterOrientation : MonoBehaviour, ICharacterOrientation
     {
         private Transform character;
+        private ISpawnedCharacter spawnedCharacter;
 
         private void Awake()
         {
-            var spawnedCharacter = GetComponent<ISpawnedCharacter>();
-            if (spawnedCharacter != null)
-            {
-                character =
-                    spawnedCharacter.GetCharacterGameObject().transform;
-            }
-            else
+            spawnedCharacter = GetComponent<ISpawnedCharacter>();
+
+            if (spawnedCharacter == null)
             {
                 character = transform;
             }
@@ -24,6 +21,11 @@ namespace Scripts.Gameplay.Actors
 
         private void Start()
         {
+            if (spawnedCharacter != null)
+            {
+                spawnedCharacter.CharacterSpawned += OnCharacterSpawned;
+            }
+
             var positionSetter = GetComponent<PositionSetter>();
             if (positionSetter != null)
             {
@@ -33,11 +35,21 @@ namespace Scripts.Gameplay.Actors
 
         private void OnDestroy()
         {
+            if (spawnedCharacter != null)
+            {
+                spawnedCharacter.CharacterSpawned -= OnCharacterSpawned;
+            }
+
             var positionSetter = GetComponent<PositionSetter>();
             if (positionSetter != null)
             {
                 positionSetter.DirectionChanged -= OnDirectionChanged;
             }
+        }
+
+        private void OnCharacterSpawned()
+        {
+            character = spawnedCharacter.GetCharacterGameObject().transform;
         }
 
         private void OnDirectionChanged(Directions direction)
