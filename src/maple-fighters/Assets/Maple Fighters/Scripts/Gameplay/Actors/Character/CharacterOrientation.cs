@@ -57,7 +57,7 @@ namespace Scripts.Gameplay.Actors
             SetDirection(direction);
         }
 
-        public void SetDirection(Directions direction)
+        private void SetDirection(Directions direction)
         {
             var x = Mathf.Abs(character.localScale.x);
 
@@ -85,17 +85,8 @@ namespace Scripts.Gameplay.Actors
 
         public Directions GetDirection()
         {
-            var direction = Directions.None;
-
-            if (character.localScale.x > 0)
-            {
-                direction = Directions.Left;
-            }
-
-            if (character.localScale.x < 0)
-            {
-                direction = Directions.Right;
-            }
+            var direction = 
+                character.localScale.x > 0 ? Directions.Left : Directions.Right;
 
             return direction;
         }
