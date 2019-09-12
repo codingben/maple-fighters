@@ -19,11 +19,11 @@ namespace Assets.Scripts.Gameplay.Utils
         {
             if (parent != null)
             {
-                ChangeDirection();
+                SetDirection();
             }
         }
 
-        private void ChangeDirection()
+        private void SetDirection()
         {
             switch (GetDirection())
             {
@@ -51,20 +51,8 @@ namespace Assets.Scripts.Gameplay.Utils
 
         private Directions GetDirection()
         {
-            var direction = Directions.None;
-
-            if (parent != null)
-            {
-                if (parent.localScale.x > 0)
-                {
-                    direction = Directions.Left;
-                }
-
-                if (parent.localScale.x < 0)
-                {
-                    direction = Directions.Right;
-                }
-            }
+            var direction = 
+                parent?.localScale.x > 0 ? Directions.Left : Directions.Right;
 
             return direction;
         }
