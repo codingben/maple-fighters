@@ -1,3 +1,4 @@
+using System;
 using Game.Common;
 using Scripts.UI.Controllers;
 using UnityEngine;
@@ -48,7 +49,7 @@ namespace Scripts.Gameplay.Actors
                 }
 
                 var horizontal = playerController.GetHorizontalRaw();
-                if (horizontal != 0)
+                if (Math.Abs(horizontal) > 0)
                 {
                     direction = 
                         horizontal < 0 ? Directions.Left : Directions.Right;

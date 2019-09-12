@@ -14,7 +14,7 @@ namespace Assets.Scripts
                 Id = 1,
                 Name = "Guardian",
                 Position = new Vector2(-14.24f, -1.95f),
-                SpawnDirection = Directions.Right,
+                SpawnDirection = Directions.Right
             };
 
             yield return new DummySceneObject
