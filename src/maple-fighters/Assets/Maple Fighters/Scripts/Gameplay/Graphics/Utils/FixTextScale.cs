@@ -8,53 +8,45 @@ namespace Assets.Scripts.Gameplay.Utils
     {
         [SerializeField]
         private Transform parent;
-        private float scale;
+        private float x;
 
         private void Awake()
         {
-            scale = transform.localScale.x;
+            x = transform.localScale.x;
         }
 
         private void Update()
         {
             if (parent != null)
             {
-                SetDirection();
-            }
-        }
+                var direction = 
+                    parent.localScale.x > 0
+                        ? Directions.Left
+                        : Directions.Right;
 
-        private void SetDirection()
-        {
-            switch (GetDirection())
-            {
-                case Directions.Left:
+                switch (direction)
                 {
-                    transform.localScale = 
-                        new Vector3(
-                            scale,
-                            transform.localScale.y,
-                            transform.localScale.z);
-                    break;
-                }
+                    case Directions.Left:
+                    {
+                        transform.localScale = 
+                            new Vector3(
+                                x,
+                                transform.localScale.y,
+                                transform.localScale.z);
+                        break;
+                    }
 
-                case Directions.Right:
-                {
-                    transform.localScale = 
-                        new Vector3(
-                            -scale,
-                            transform.localScale.y,
-                            transform.localScale.z);
-                    break;
+                    case Directions.Right:
+                    {
+                        transform.localScale = 
+                            new Vector3(
+                                -x,
+                                transform.localScale.y,
+                                transform.localScale.z);
+                        break;
+                    }
                 }
             }
-        }
-
-        private Directions GetDirection()
-        {
-            var direction = 
-                parent?.localScale.x > 0 ? Directions.Left : Directions.Right;
-
-            return direction;
         }
     }
 }
