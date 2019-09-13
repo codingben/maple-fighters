@@ -31,7 +31,8 @@ namespace Scripts.Gameplay.Actors
             if (playerStateAnimator != null)
             {
                 var playerController = spawnedCharacter
-                    .GetCharacterGameObject().GetComponent<PlayerController>();
+                    .GetCharacterGameObject()
+                    .GetComponent<PlayerController>();
                 if (playerController != null)
                 {
                     // TODO: Wtf? Who will unsubscribe from there?
