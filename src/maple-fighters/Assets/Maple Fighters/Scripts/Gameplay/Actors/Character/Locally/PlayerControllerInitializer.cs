@@ -35,9 +35,7 @@ namespace Scripts.Gameplay.Actors
                     .GetComponent<PlayerController>();
                 if (playerController != null)
                 {
-                    // TODO: Wtf? Who will unsubscribe from there?
-                    playerController.PlayerStateChanged +=
-                        playerStateAnimator.OnPlayerStateChanged;
+                    playerController.SetPlayerStateAnimator(playerStateAnimator);
                 }
             }
         }

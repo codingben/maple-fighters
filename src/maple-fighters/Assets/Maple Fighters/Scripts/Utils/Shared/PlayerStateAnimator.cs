@@ -5,8 +5,13 @@ using UnityEngine;
 
 namespace Scripts.Utils.Shared
 {
+    public interface IPlayerStateAnimator
+    {
+        void ChangePlayerState(PlayerState newPlayerState);
+    }
+
     [RequireComponent(typeof(Animator))]
-    public class PlayerStateAnimator : MonoBehaviour
+    public class PlayerStateAnimator : MonoBehaviour, IPlayerStateAnimator
     {
         [Header("Animations")]
         [SerializeField]
@@ -63,7 +68,7 @@ namespace Scripts.Utils.Shared
             }
         }
 
-        public void OnPlayerStateChanged(PlayerState newPlayerState)
+        public void ChangePlayerState(PlayerState newPlayerState)
         {
             if (playerState != newPlayerState)
             {

@@ -1,8 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Game.Common;
 using Scripts.Editor;
 using Scripts.UI.Controllers;
+using Scripts.Utils.Shared;
 using UnityEngine;
 
 #pragma warning disable 0109
@@ -12,8 +12,6 @@ namespace Scripts.Gameplay.Actors
     [RequireComponent(typeof(Collider2D))]
     public class PlayerController : MonoBehaviour
     {
-        public event Action<PlayerState> PlayerStateChanged;
-
         public PlayerProperties Properties => properties;
 
         public PlayerState PlayerState => playerState;
@@ -41,7 +39,9 @@ namespace Scripts.Gameplay.Actors
         private Dictionary<PlayerState, IPlayerStateBehaviour>
             playerStateBehaviours;
 
+        private IPlayerStateAnimator playerStateAnimator;
         private IPlayerStateBehaviour playerStateBehaviour;
+
         private new Rigidbody2D rigidbody2D;
 
         private void Awake()
@@ -107,6 +107,12 @@ namespace Scripts.Gameplay.Actors
             playerStateBehaviour?.OnStateFixedUpdate();
         }
 
+        public void SetPlayerStateAnimator(
+            IPlayerStateAnimator playerStateAnimator)
+        {
+            this.playerStateAnimator = playerStateAnimator;
+        }
+
         public void ChangePlayerState(PlayerState newPlayerState)
         {
             if (playerState != newPlayerState)
@@ -123,7 +129,7 @@ namespace Scripts.Gameplay.Actors
 
                 playerState = newPlayerState;
 
-                PlayerStateChanged?.Invoke(playerState);
+                playerStateAnimator?.ChangePlayerState(playerState);
             }
         }
 
