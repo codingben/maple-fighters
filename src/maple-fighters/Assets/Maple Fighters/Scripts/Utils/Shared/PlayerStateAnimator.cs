@@ -5,11 +5,6 @@ using UnityEngine;
 
 namespace Scripts.Utils.Shared
 {
-    public interface IPlayerStateAnimator
-    {
-        void ChangePlayerState(PlayerState newPlayerState);
-    }
-
     [RequireComponent(typeof(Animator))]
     public class PlayerStateAnimator : MonoBehaviour, IPlayerStateAnimator
     {
@@ -36,16 +31,6 @@ namespace Scripts.Utils.Shared
 
         private void Start()
         {
-            SubscribeToGameServiceEvents();
-        }
-
-        private void OnDestroy()
-        {
-            UnsubscribeFromGameServiceEvents();
-        }
-
-        private void SubscribeToGameServiceEvents()
-        {
             var gameSceneApi = ServiceContainer.GameService.GetGameSceneApi();
             if (gameSceneApi != null)
             {
@@ -56,7 +41,7 @@ namespace Scripts.Utils.Shared
             }
         }
 
-        private void UnsubscribeFromGameServiceEvents()
+        private void OnDestroy()
         {
             var gameSceneApi = ServiceContainer.GameService.GetGameSceneApi();
             if (gameSceneApi != null)
@@ -81,12 +66,11 @@ namespace Scripts.Utils.Shared
                 playerState = newPlayerState;
 
                 UpdatePlayerAnimationState(animator, playerState);
-                UpdatePlayerStateOperation();
+                SendUpdatePlayerStateOperation();
             }
         }
 
-        private void OnPlayerStateChanged(
-            PlayerStateChangedEventParameters parameters)
+        private void OnPlayerStateChanged(PlayerStateChangedEventParameters parameters)
         {
             var sceneObject = 
                 SceneObjectsContainer.GetInstance()
@@ -107,18 +91,14 @@ namespace Scripts.Utils.Shared
         }
 
         /// <summary>
-        /// When a new game objects added, so send them the last current state.
+        /// When a new game objects added, will send them the last current state
         /// </summary>
-        /// <param name="parameters">
-        /// The parameters.
-        /// </param>
-        private void OnSceneObjectsAdded(
-            SceneObjectsAddedEventParameters parameters)
+        private void OnSceneObjectsAdded(SceneObjectsAddedEventParameters parameters)
         {
-            UpdatePlayerStateOperation();
+            SendUpdatePlayerStateOperation();
         }
 
-        private void UpdatePlayerStateOperation()
+        private void SendUpdatePlayerStateOperation()
         {
             var gameSceneApi = ServiceContainer.GameService.GetGameSceneApi();
             if (gameSceneApi != null)
