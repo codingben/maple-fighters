@@ -186,6 +186,12 @@ namespace Scripts.UI.Controllers
             LoginSucceed?.Invoke();
         }
 
+        public void OnLoginFailed()
+        {
+            var message = WindowMessages.UnknownError;
+            NoticeUtils.ShowNotice(message);
+        }
+
         public void OnInvalidEmailError()
         {
             var message = WindowMessages.WrongEmailAddress;
@@ -203,6 +209,12 @@ namespace Scripts.UI.Controllers
             HideRegistrationWindow();
 
             RegistrationSucceed?.Invoke();
+        }
+
+        public void OnRegistrationFailed()
+        {
+            var message = WindowMessages.UnknownError;
+            NoticeUtils.ShowNotice(message);
         }
 
         public void OnEmailExistsError()

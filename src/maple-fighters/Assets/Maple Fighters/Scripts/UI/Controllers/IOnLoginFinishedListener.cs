@@ -4,6 +4,8 @@
     {
         void OnLoginSucceed();
 
+        void OnLoginFailed();
+
         void OnInvalidEmailError();
 
         void OnInvalidPasswordError();
