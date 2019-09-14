@@ -5,15 +5,6 @@ using UnityEngine;
 
 namespace Scripts.Containers
 {
-    public interface ISceneObjectsContainer
-    {
-        void SetLocalSceneObject(ISceneObject sceneObject);
-
-        ISceneObject AddSceneObject(SceneObjectParameters parameters);
-
-        void RemoveSceneObject(int id);
-    }
-
     public class SceneObjectsContainer : MonoBehaviour, ISceneObjectsContainer
     {
         public static SceneObjectsContainer GetInstance()
