@@ -23,7 +23,7 @@ namespace Scripts.Gameplay.Actors
 
         private void FallDownWithDirection()
         {
-            var horizontal = playerController.GetAxis(Axes.Horizontal);
+            var horizontal = Utils.GetAxis(Axes.Horizontal);
             var speed = playerController.Properties.Speed;
             var direction = 
                 new Vector2(horizontal * speed, rigidbody2D.velocity.y);
