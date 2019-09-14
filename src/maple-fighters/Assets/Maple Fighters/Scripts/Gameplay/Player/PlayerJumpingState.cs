@@ -25,8 +25,7 @@ namespace Scripts.Gameplay.Actors
 
         private void Jump()
         {
-            var horizontal = 
-                playerController.GetAxis(Axes.Horizontal, isRaw: true);
+            var horizontal = Utils.GetAxis(Axes.Horizontal, isRaw: true);
             var jumpForce = playerController.Properties.JumpForce;
             var jumpHeight = playerController.Properties.JumpHeight;
 
