@@ -80,7 +80,7 @@ namespace Scripts.UI.Controllers
                 new ValidateCharacterRequestParameters(characterIndex);
 
             coroutinesExecutor?.StartTask(
-                (yield) => ValidateCharacterAsync(yield, parameters));
+                (y) => ValidateCharacterAsync(y, parameters));
         }
 
         private async Task ValidateCharacterAsync(
@@ -118,7 +118,7 @@ namespace Scripts.UI.Controllers
                 new RemoveCharacterRequestParameters(characterIndex);
 
             coroutinesExecutor?.StartTask(
-                (yield) => RemoveCharacterAsync(yield, parameters));
+                (y) => RemoveCharacterAsync(y, parameters));
         }
 
         private async Task RemoveCharacterAsync(
@@ -155,7 +155,7 @@ namespace Scripts.UI.Controllers
                 characterDetails.GetCharacterIndex().FromUiCharacterIndex());
 
             coroutinesExecutor?.StartTask(
-                (yield) => CreateCharacterAsync(yield, parameters));
+                (y) => CreateCharacterAsync(y, parameters));
         }
 
         private async Task CreateCharacterAsync(
