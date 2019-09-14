@@ -47,9 +47,9 @@ namespace Scripts.UI.Controllers
                 uiAuthenticationDetails.Email,
                 uiAuthenticationDetails.Password);
 
-            // TODO: Handle exception situation
             coroutinesExecutor?.StartTask(
-                (yield) => LoginAsync(yield, parameters));
+                method: (y) => LoginAsync(y, parameters),
+                onException: (e) => onLoginFinishedListener.OnLoginFailed());
         }
 
         private async Task LoginAsync(
@@ -94,9 +94,10 @@ namespace Scripts.UI.Controllers
                 uiRegistrationDetails.FirstName,
                 uiRegistrationDetails.LastName);
 
-            // TODO: Handle exception situation
             coroutinesExecutor?.StartTask(
-                (yield) => RegisterAsync(yield, parameters));
+                method: (y) => RegisterAsync(y, parameters),
+                onException: (e) =>
+                    onRegistrationFinishedListener.OnRegistrationFailed());
         }
 
         private async Task RegisterAsync(
