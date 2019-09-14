@@ -71,7 +71,9 @@ namespace Scripts.Gameplay.Actors
 
         private bool IsMoved()
         {
-            var horizontal = playerController.GetHorizontalRaw();
+            var horizontal = 
+                playerController.GetAxis(Axes.Horizontal, isRaw: true);
+
             return Mathf.Abs(horizontal) > 0;
         }
 
