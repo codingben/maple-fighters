@@ -5,7 +5,16 @@ using UnityEngine;
 
 namespace Scripts.Containers
 {
-    public class SceneObjectsContainer : MonoBehaviour
+    public interface ISceneObjectsContainer
+    {
+        void SetLocalSceneObject(ISceneObject sceneObject);
+
+        ISceneObject AddSceneObject(SceneObjectParameters parameters);
+
+        void RemoveSceneObject(int id);
+    }
+
+    public class SceneObjectsContainer : MonoBehaviour, ISceneObjectsContainer
     {
         public static SceneObjectsContainer GetInstance()
         {
@@ -19,8 +28,13 @@ namespace Scripts.Containers
 
         private static SceneObjectsContainer instance;
 
-        private Dictionary<int, ISceneObject> sceneObjects;
         private ISceneObject localSceneObject;
+        private Dictionary<int, ISceneObject> sceneObjects;
+
+        public void SetLocalSceneObject(ISceneObject sceneObject)
+        {
+            localSceneObject = sceneObject;
+        }
 
         private void Awake()
         {
@@ -71,11 +85,6 @@ namespace Scripts.Containers
 
                 Debug.Log($"Removed a scene object with id #{id}");
             }
-        }
-
-        public void SetLocalSceneObject(ISceneObject sceneObject)
-        {
-            localSceneObject = sceneObject;
         }
 
         public ISceneObject GetLocalSceneObject()
