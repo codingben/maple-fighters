@@ -94,6 +94,7 @@ namespace Scripts.UI.Controllers
                 uiRegistrationDetails.FirstName,
                 uiRegistrationDetails.LastName);
 
+            // TODO: Handle exception situation
             coroutinesExecutor?.StartTask(
                 (yield) => RegisterAsync(yield, parameters));
         }
