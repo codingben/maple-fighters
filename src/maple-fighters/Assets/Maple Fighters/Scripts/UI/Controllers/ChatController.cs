@@ -6,9 +6,8 @@ namespace Scripts.UI.Controllers
 {
     public class ChatController : MonoBehaviour
     {
-        private IChatView chatView;
-
         private FocusStateController focusStateController;
+        private IChatView chatView;
 
         private void Awake()
         {

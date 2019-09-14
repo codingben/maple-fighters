@@ -10,7 +10,7 @@ namespace Scripts.Containers
             var gameSceneApi = ServiceContainer.GameService.GetGameSceneApi();
             if (gameSceneApi != null)
             {
-                // TODO: Add SceneLeft event.
+                // TODO: Add SceneLeft event
                 gameSceneApi.SceneEntered.AddListener(
                     OnSceneEntered);
                 gameSceneApi.SceneObjectAdded.AddListener(
@@ -29,7 +29,7 @@ namespace Scripts.Containers
             var gameSceneApi = ServiceContainer.GameService.GetGameSceneApi();
             if (gameSceneApi != null)
             {
-                // TODO: Remove SceneLeft event.
+                // TODO: Remove SceneLeft event
                 gameSceneApi.SceneEntered.RemoveListener(
                     OnSceneEntered);
                 gameSceneApi.SceneObjectAdded.RemoveListener(
