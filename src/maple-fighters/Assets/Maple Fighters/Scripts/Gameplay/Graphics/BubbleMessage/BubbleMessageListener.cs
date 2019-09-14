@@ -6,7 +6,7 @@ namespace Assets.Scripts.Graphics
 {
     public class BubbleMessageListener : MonoBehaviour
     {
-        private void Awake()
+        private void Start()
         {
             var gameSceneApi = ServiceContainer.GameService.GetGameSceneApi();
             if (gameSceneApi != null)
