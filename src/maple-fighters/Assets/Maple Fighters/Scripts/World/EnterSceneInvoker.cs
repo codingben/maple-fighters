@@ -19,12 +19,9 @@ namespace Scripts.World
             if (ServiceContainer.GameService.IsConnected())
             {
                 coroutinesExecutor.StartTask(
-                    EnterSceneAsync,
-                    exception =>
-                    {
-                        Debug.LogError(
-                            "EnterSceneInvoker::Start() -> An exception occurred during the operation. The connection with the server has been lost.");
-                    });
+                    method: EnterSceneAsync,
+                    onException: (e) =>
+                        Debug.LogError("EnterSceneInvoker::Start() -> An exception occurred during the operation. The connection with the server has been lost."));
             }
             else
             {
@@ -46,12 +43,10 @@ namespace Scripts.World
         private async Task EnterSceneAsync(IYield yield)
         {
             var gameSceneApi = ServiceContainer.GameService.GetGameSceneApi();
-            if (gameSceneApi == null)
+            if (gameSceneApi != null)
             {
-                return;
+                await gameSceneApi.EnterSceneAsync(yield);
             }
-
-            await gameSceneApi.EnterSceneAsync(yield);
         }
     }
 }
