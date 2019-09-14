@@ -50,7 +50,7 @@ namespace Scripts.Network.Core
             }
 
             coroutinesExecutor.StartTask(
-                (yield) => ConnectAsync(yield, connectionInformation));
+                (y) => ConnectAsync(y, connectionInformation));
         }
 
         public void SetNetworkTrafficState(NetworkTrafficState networkTrafficState)
