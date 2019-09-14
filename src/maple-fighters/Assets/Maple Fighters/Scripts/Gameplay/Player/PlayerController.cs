@@ -163,10 +163,17 @@ namespace Scripts.Gameplay.Actors
 
         public bool IsGrounded()
         {
-            return Physics2D.OverlapCircle(
-                point: groundTransform.position, 
-                radius: overlapCircleRadius, 
-                layerMask: groundLayerMask);
+            var isGrounded = false;
+
+            if (groundTransform != null)
+            {
+                isGrounded = Physics2D.OverlapCircle(
+                    groundTransform.position,
+                    overlapCircleRadius,
+                    groundLayerMask);
+            }
+
+            return isGrounded;
         }
     }
 }
