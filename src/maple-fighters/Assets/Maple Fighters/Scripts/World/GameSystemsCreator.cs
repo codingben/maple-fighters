@@ -13,10 +13,10 @@ namespace Scripts.Gameplay
     {
         private void Awake()
         {
-            CreateGameSystems(GetCreatorsComponents());
-            CreateGameSystems(GetContainersComponents());
-            CreateGameSystems(GetGUIControllersComponents());
-            CreateGameSystems(GetControllersComponents());
+            CreateGameComponents(GetCreatorsComponents());
+            CreateGameComponents(GetContainersComponents());
+            CreateGameComponents(GetGUIControllersComponents());
+            CreateGameComponents(GetControllersComponents());
 
             Destroy(gameObject);
         }
@@ -46,7 +46,7 @@ namespace Scripts.Gameplay
             yield return typeof(ChatController);
         }
 
-        private void CreateGameSystems(IEnumerable<Type> components)
+        private void CreateGameComponents(IEnumerable<Type> components)
         {
             foreach (var component in components)
             {
