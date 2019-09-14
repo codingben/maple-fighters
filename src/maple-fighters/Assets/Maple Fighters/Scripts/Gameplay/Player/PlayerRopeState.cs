@@ -33,8 +33,7 @@ namespace Scripts.Gameplay.Actors
             }
             else
             {
-                direction =
-                    playerController.GetAxis(Axes.Vertical, isRaw: true);
+                direction = Utils.GetAxis(Axes.Vertical, isRaw: true);
             }
         }
 
@@ -52,9 +51,7 @@ namespace Scripts.Gameplay.Actors
 
         private void Jump()
         {
-            var horizontal = 
-                playerController.GetAxis(Axes.Horizontal, isRaw: true);
-
+            var horizontal = Utils.GetAxis(Axes.Horizontal, isRaw: true);
             if (Mathf.Abs(horizontal) > 0)
             {
                 var direction = 
