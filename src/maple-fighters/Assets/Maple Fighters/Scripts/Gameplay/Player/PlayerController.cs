@@ -107,8 +107,7 @@ namespace Scripts.Gameplay.Actors
             playerStateBehaviour?.OnStateFixedUpdate();
         }
 
-        public void SetPlayerStateAnimator(
-            IPlayerStateAnimator playerStateAnimator)
+        public void SetPlayerStateAnimator(IPlayerStateAnimator playerStateAnimator)
         {
             this.playerStateAnimator = playerStateAnimator;
         }
@@ -170,24 +169,47 @@ namespace Scripts.Gameplay.Actors
                 layerMask: groundLayerMask);
         }
 
-        public float GetVertical()
+        public float GetAxis(Axes axis, bool isRaw = false)
         {
-            return Input.GetAxis("Vertical");
-        }
+            var result = default(float);
 
-        public float GetVerticalRaw()
-        {
-            return Input.GetAxisRaw("Vertical");
-        }
+            switch (axis)
+            {
+                case Axes.Vertical:
+                {
+                    result =
+                        isRaw
+                            ? Input.GetAxisRaw("Vertical")
+                            : Input.GetAxis("Vertical");
 
-        public float GetHorizontal()
-        {
-            return Input.GetAxis("Horizontal");
-        }
+                    break;
+                }
 
-        public float GetHorizontalRaw()
-        {
-            return Input.GetAxisRaw("Horizontal");
+                case Axes.Horizontal:
+                {
+                    result = 
+                        isRaw
+                            ? Input.GetAxisRaw("Horizontal")
+                            : Input.GetAxis("Horizontal");
+
+                    break;
+                }
+            }
+
+            return result;
         }
+    }
+
+    public enum Axes
+    {
+        /// <summary>
+        /// The vertical.
+        /// </summary>
+        Vertical,
+
+        /// <summary>
+        /// The horizontal.
+        /// </summary>
+        Horizontal
     }
 }
