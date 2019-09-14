@@ -24,7 +24,7 @@ namespace Scripts.Gameplay.Actors
 
         public void OnStateUpdate()
         {
-            direction = playerController.GetAxis(Axes.Vertical, isRaw: true);
+            direction = Utils.GetAxis(Axes.Vertical, isRaw: true);
         }
 
         public void OnStateFixedUpdate()
