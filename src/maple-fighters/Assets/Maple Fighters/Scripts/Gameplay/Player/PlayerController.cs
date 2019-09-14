@@ -173,14 +173,17 @@ namespace Scripts.Gameplay.Actors
         {
             var result = default(float);
 
+            var verticalName = "Vertical";
+            var horizontalName = "Horizontal";
+
             switch (axis)
             {
                 case Axes.Vertical:
                 {
                     result =
                         isRaw
-                            ? Input.GetAxisRaw("Vertical")
-                            : Input.GetAxis("Vertical");
+                            ? Input.GetAxisRaw(verticalName)
+                            : Input.GetAxis(verticalName);
 
                     break;
                 }
@@ -189,8 +192,8 @@ namespace Scripts.Gameplay.Actors
                 {
                     result = 
                         isRaw
-                            ? Input.GetAxisRaw("Horizontal")
-                            : Input.GetAxis("Horizontal");
+                            ? Input.GetAxisRaw(horizontalName)
+                            : Input.GetAxis(horizontalName);
 
                     break;
                 }
