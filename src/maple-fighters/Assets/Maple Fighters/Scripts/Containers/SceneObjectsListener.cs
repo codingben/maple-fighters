@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Scripts.Containers
 {
-    public class SceneObjectsEventsListener : MonoBehaviour
+    public class SceneObjectsListener : MonoBehaviour
     {
         private ISceneObjectsContainer sceneObjectsContainer;
 

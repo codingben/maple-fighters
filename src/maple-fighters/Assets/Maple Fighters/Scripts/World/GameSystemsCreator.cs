@@ -37,7 +37,7 @@ namespace Scripts.Gameplay
         private IEnumerable<Type> GetContainersComponents()
         {
             yield return typeof(SceneObjectsContainer);
-            yield return typeof(SceneObjectsEventsListener);
+            yield return typeof(SceneObjectsListener);
         }
 
         private IEnumerable<Type> GetGUIControllersComponents()
