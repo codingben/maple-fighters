@@ -36,8 +36,7 @@ namespace Scripts.Gameplay.Actors
 
         private Vector2 localScale;
 
-        private Dictionary<PlayerState, IPlayerStateBehaviour>
-            playerStateBehaviours;
+        private Dictionary<PlayerState, IPlayerStateBehaviour> playerStateBehaviours;
 
         private IPlayerStateAnimator playerStateAnimator;
         private IPlayerStateBehaviour playerStateBehaviour;
