@@ -43,26 +43,26 @@ namespace Scripts.Containers
         private void OnSceneEntered(EnterSceneResponseParameters parameters)
         {
             var sceneObject = 
-                sceneObjectsContainer.AddSceneObject(parameters.SceneObject);
+                sceneObjectsContainer?.AddSceneObject(parameters.SceneObject);
 
-            sceneObjectsContainer.SetLocalSceneObject(sceneObject);
+            sceneObjectsContainer?.SetLocalSceneObject(sceneObject);
         }
 
         private void OnSceneObjectAdded(SceneObjectAddedEventParameters parameters)
         {
-            sceneObjectsContainer.AddSceneObject(parameters.SceneObject);
+            sceneObjectsContainer?.AddSceneObject(parameters.SceneObject);
         }
 
         private void OnSceneObjectRemoved(SceneObjectRemovedEventParameters parameters)
         {
-            sceneObjectsContainer.RemoveSceneObject(parameters.SceneObjectId);
+            sceneObjectsContainer?.RemoveSceneObject(parameters.SceneObjectId);
         }
 
         private void OnSceneObjectsAdded(SceneObjectsAddedEventParameters parameters)
         {
             foreach (var sceneObject in parameters.SceneObjects)
             {
-                sceneObjectsContainer.AddSceneObject(sceneObject);
+                sceneObjectsContainer?.AddSceneObject(sceneObject);
             }
         }
 
@@ -70,7 +70,7 @@ namespace Scripts.Containers
         {
             foreach (var id in parameters.SceneObjectsId)
             {
-                sceneObjectsContainer.RemoveSceneObject(id);
+                sceneObjectsContainer?.RemoveSceneObject(id);
             }
         }
     }
