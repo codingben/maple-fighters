@@ -1,4 +1,4 @@
-﻿namespace Scripts.Gameplay.Actors
+﻿namespace Scripts.Gameplay.Player
 {
     public enum Axes
     {
