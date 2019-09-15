@@ -1,4 +1,5 @@
 ﻿using Game.Common;
+using Scripts.Gameplay.Map;
 using UnityEngine;
 
 namespace Scripts.Gameplay.Actors
