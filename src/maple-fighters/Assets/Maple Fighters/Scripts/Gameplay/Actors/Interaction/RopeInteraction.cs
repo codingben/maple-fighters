@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using Game.Common;
+using Scripts.Gameplay.Player;
 using UnityEngine;
 
 namespace Scripts.Gameplay.Actors
