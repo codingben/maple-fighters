@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace Scripts.World
+namespace Scripts.World.Dummy
 {
     [RequireComponent(typeof(DummySceneObjectsCreator))]
     public abstract class DummySceneObjectsProviderBase : MonoBehaviour, IDummySceneObjectsProvider
