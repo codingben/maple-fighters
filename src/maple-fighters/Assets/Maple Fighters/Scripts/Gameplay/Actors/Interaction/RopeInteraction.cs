@@ -2,7 +2,7 @@
 using Game.Common;
 using UnityEngine;
 
-namespace Scripts.Gameplay.Actors.Interaction
+namespace Scripts.Gameplay.Actors
 {
     [RequireComponent(typeof(PlayerController), typeof(Collider2D))]
     public class RopeInteraction : MonoBehaviour
