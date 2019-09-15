@@ -4,7 +4,7 @@ using Scripts.Containers;
 using Scripts.Gameplay.Actors;
 using UnityEngine;
 
-namespace Assets.Scripts
+namespace Scripts.Gameplay.Mobs
 {
     public class BlueSnail : MonoBehaviour
     {
