@@ -8,7 +8,7 @@ using Scripts.Gameplay.Actors;
 using Scripts.Utils;
 using UnityEngine;
 
-namespace Assets.Scripts
+namespace Scripts.World
 {
     [RequireComponent(typeof(DummyCharacterDetailsProvider))]
     public class DummySceneObjectsCreator : MonoBehaviour
