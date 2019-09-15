@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Scripts.World
+namespace Scripts.World.Dummy
 {
     public interface IDummySceneObjectsProvider
     {
