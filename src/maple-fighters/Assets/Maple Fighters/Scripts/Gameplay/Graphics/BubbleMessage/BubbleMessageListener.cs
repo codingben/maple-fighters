@@ -2,7 +2,7 @@
 using Scripts.Containers;
 using UnityEngine;
 
-namespace Assets.Scripts.Graphics
+namespace Scripts.Gameplay.Graphics
 {
     public class BubbleMessageListener : MonoBehaviour
     {
