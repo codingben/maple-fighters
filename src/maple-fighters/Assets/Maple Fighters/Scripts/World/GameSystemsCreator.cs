@@ -5,10 +5,9 @@ using Scripts.Gameplay.Actors;
 using Scripts.Gameplay.Map;
 using Scripts.UI.Controllers;
 using Scripts.Utils;
-using Scripts.World;
 using UnityEngine;
 
-namespace Scripts.Gameplay
+namespace Scripts.World
 {
     public class GameSystemsCreator : MonoBehaviour
     {
