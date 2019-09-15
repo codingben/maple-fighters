@@ -1,9 +1,8 @@
 ﻿using Game.Common;
 using Scripts.Containers;
-using Scripts.Gameplay.Player;
 using UnityEngine;
 
-namespace Scripts.Utils.Shared
+namespace Scripts.Gameplay.Player
 {
     [RequireComponent(typeof(Animator))]
     public class PlayerStateAnimator : MonoBehaviour, IPlayerStateAnimator
