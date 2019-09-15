@@ -2,7 +2,7 @@
 using Game.Common;
 using UnityEngine;
 
-namespace Scripts.World
+namespace Scripts.World.Dummy
 {
     public class Map2SceneObjectsProvider : DummySceneObjectsProviderBase
     {
