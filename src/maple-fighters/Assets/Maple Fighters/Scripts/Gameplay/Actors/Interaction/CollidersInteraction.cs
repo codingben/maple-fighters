@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Scripts.Gameplay.Actors.Interaction
+namespace Scripts.Gameplay.Actors
 {
     public class CollidersInteraction
     {
