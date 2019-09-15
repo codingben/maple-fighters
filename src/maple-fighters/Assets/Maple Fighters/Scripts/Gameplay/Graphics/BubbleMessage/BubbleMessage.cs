@@ -3,7 +3,7 @@ using Scripts.World;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Assets.Scripts.Graphics
+namespace Scripts.Gameplay.Graphics
 {
     [RequireComponent(typeof(FadeEffect))]
     public class BubbleMessage : MonoBehaviour
