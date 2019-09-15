@@ -1,7 +1,7 @@
 ﻿using Game.Common;
 using UnityEngine;
 
-namespace Assets.Scripts.Gameplay.Utils
+namespace Scripts.Gameplay.Graphics
 {
     [ExecuteInEditMode]
     public class FixTextScale : MonoBehaviour
