@@ -1,6 +1,6 @@
 ﻿using Game.Common;
 
-namespace Scripts.Utils.Shared
+namespace Scripts.Gameplay.Player
 {
     public interface IPlayerStateAnimator
     {
