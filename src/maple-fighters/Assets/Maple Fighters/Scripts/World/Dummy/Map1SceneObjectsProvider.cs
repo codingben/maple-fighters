@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
 using Game.Common;
-using Scripts.World;
 using UnityEngine;
 
-namespace Assets.Scripts
+namespace Scripts.World
 {
     public class Map1SceneObjectsProvider : DummySceneObjectsProviderBase
     {
