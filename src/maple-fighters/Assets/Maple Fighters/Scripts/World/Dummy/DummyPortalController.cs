@@ -3,7 +3,7 @@ using Scripts.Gameplay;
 using Scripts.Network.Dummies;
 using UnityEngine;
 
-namespace Scripts.World
+namespace Scripts.World.Dummy
 {
     [RequireComponent(typeof(ISceneObject))]
     public class DummyPortalController : MonoBehaviour
