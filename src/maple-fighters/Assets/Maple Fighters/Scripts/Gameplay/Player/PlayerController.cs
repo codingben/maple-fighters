@@ -7,7 +7,7 @@ using UnityEngine;
 
 #pragma warning disable 0109
 
-namespace Scripts.Gameplay.Actors
+namespace Scripts.Gameplay.Player
 {
     [RequireComponent(typeof(Collider2D))]
     public class PlayerController : MonoBehaviour
