@@ -1,4 +1,5 @@
-﻿using Scripts.Utils;
+﻿using Scripts.Gameplay.Map;
+using Scripts.Utils;
 using UnityEngine;
 
 namespace Scripts.Gameplay.Graphics
