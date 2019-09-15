@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using CommonTools.Coroutines;
-using Scripts.Gameplay;
+using Scripts.Gameplay.Map;
 using UnityEngine;
 
 namespace Scripts.Coroutines
