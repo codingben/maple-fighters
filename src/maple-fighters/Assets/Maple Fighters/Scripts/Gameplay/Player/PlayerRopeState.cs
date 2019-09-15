@@ -1,7 +1,7 @@
 using Game.Common;
 using UnityEngine;
 
-namespace Scripts.Gameplay.Actors
+namespace Scripts.Gameplay.Player
 {
     public class PlayerRopeState : IPlayerStateBehaviour
     {
