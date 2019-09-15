@@ -1,7 +1,7 @@
 ﻿using CommonTools.Log;
 using UnityEngine;
 
-namespace Scripts.Network
+namespace Scripts.Utils
 {
     public class LogUtilsCreator : MonoBehaviour
     {
