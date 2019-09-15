@@ -2,7 +2,7 @@
 using Game.Common;
 using UnityEngine;
 
-namespace Assets.Scripts
+namespace Scripts.World
 {
     [Serializable]
     public class DummySceneObject
