@@ -1,8 +1,7 @@
-﻿using Scripts.Gameplay;
-using Scripts.Utils;
+﻿using Scripts.Utils;
 using UnityEngine;
 
-namespace Assets.Scripts.Graphics
+namespace Scripts.Gameplay.Graphics
 {
     public class BubbleMessageCreator : Singleton<BubbleMessageCreator>
     {
