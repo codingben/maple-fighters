@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Scripts.Gameplay.Player;
+using UnityEngine;
 
 namespace Scripts.Gameplay.Actors
 {
