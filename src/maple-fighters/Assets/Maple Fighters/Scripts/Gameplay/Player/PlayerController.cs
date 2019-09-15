@@ -2,7 +2,6 @@
 using Game.Common;
 using Scripts.Editor;
 using Scripts.UI.Controllers;
-using Scripts.Utils.Shared;
 using UnityEngine;
 
 #pragma warning disable 0109
