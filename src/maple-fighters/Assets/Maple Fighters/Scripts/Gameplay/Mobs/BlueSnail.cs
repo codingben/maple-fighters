@@ -46,7 +46,8 @@ namespace Scripts.Gameplay.Mobs
                             : -1) * hitAmount.x,
                     y: hitAmount.y);
 
-                // TODO: Implement action
+                var attackPlayer = player.GetComponent<IAttackPlayer>();
+                attackPlayer.OnPlayerAttacked(direction);
             }
         }
     }
