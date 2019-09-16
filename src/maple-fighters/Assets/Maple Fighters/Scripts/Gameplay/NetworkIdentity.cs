@@ -9,15 +9,9 @@ namespace Scripts.Gameplay
 
         public int Id
         {
-            get
-            {
-                return id;
-            }
+            get => id;
 
-            set
-            {
-                id = value;
-            }
+            set => id = value;
         }
 
         public GameObject GameObject => gameObject;
