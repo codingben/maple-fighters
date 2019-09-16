@@ -1,6 +1,6 @@
-﻿using System.Collections;
-using Game.Common;
+﻿using Game.Common;
 using Scripts.Containers;
+using Scripts.Gameplay.Actors;
 using Scripts.Gameplay.Player;
 using UnityEngine;
 
@@ -31,58 +31,23 @@ namespace Scripts.Gameplay.Mobs
 
         private void OnPlayerAttacked(PlayerAttackedEventParameters parameters)
         {
-            var point = 
-                new Vector3(parameters.ContactPointX, parameters.ContactPointY);
-
-            var spawnedCharacter = GetSpawnedCharacter();
-            if (spawnedCharacter != null)
-            {
-                var direction = new Vector2(
-                    x: ((spawnedCharacter.transform.position - point).normalized.x > 0
-                            ? 1
-                            : -1) * hitAmount.x,
-                    y: hitAmount.y);
-
-                StartCoroutine(BounceTheLocalPlayer(spawnedCharacter, direction));
-            }
-        }
-
-        private IEnumerator BounceTheLocalPlayer(
-            GameObject character, 
-            Vector3 direction)
-        {
-            var playerController = character.GetComponent<PlayerController>();
-            if (playerController != null)
-            {
-                if (playerController.PlayerState
-                    != PlayerState.Attacked)
-                {
-                    playerController.ChangePlayerState(
-                        PlayerState.Attacked);
-
-                    yield return new WaitForSeconds(0.1f);
-
-                    playerController.Bounce(direction);
-                }
-            }
-        }
-
-        private GameObject GetSpawnedCharacter()
-        {
-            GameObject spawnedCharacter = null;
-
             var player =
                 SceneObjectsContainer.GetInstance().GetLocalSceneObject()
                     .GameObject;
             if (player != null)
             {
-                const int CharacterIndex = 0;
+                var spawnedCharacter = player.GetComponent<ISpawnedCharacter>();
+                var character = spawnedCharacter.GetCharacterGameObject();
+                var point = 
+                    new Vector3(parameters.ContactPointX, parameters.ContactPointY);
+                var direction = new Vector2(
+                    x: ((character.transform.position - point).normalized.x > 0
+                            ? 1
+                            : -1) * hitAmount.x,
+                    y: hitAmount.y);
 
-                var transform = player.transform.GetChild(CharacterIndex);
-                spawnedCharacter = transform.gameObject;
+                // TODO: Implement action
             }
-
-            return spawnedCharacter;
         }
     }
 }
