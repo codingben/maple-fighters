@@ -11,7 +11,7 @@ namespace Scripts.Gameplay.Mobs
         [Header("Attack"), SerializeField]
         private Vector2 hitAmount;
 
-        private void Awake()
+        private void Start()
         {
             var gameSceneApi = ServiceContainer.GameService.GetGameSceneApi();
             if (gameSceneApi != null)
