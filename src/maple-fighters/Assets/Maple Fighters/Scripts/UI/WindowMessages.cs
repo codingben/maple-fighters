@@ -1,4 +1,4 @@
-﻿namespace Scripts.UI.Windows
+﻿namespace Scripts.UI
 {
     public static class WindowMessages
     {
