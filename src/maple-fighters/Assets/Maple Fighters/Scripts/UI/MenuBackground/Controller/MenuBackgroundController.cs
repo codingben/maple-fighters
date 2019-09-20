@@ -2,7 +2,7 @@
 using UI.Manager;
 using UnityEngine;
 
-namespace Scripts.UI.Controllers
+namespace Scripts.UI.MenuBackground
 {
     public class MenuBackgroundController : MonoBehaviour
     {
