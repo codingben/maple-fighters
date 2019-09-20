@@ -1,4 +1,6 @@
-﻿namespace Scripts.UI.Authenticator
+﻿using Scripts.UI.Utils;
+
+namespace Scripts.UI.Authenticator
 {
     public class AuthenticationValidator
     {
