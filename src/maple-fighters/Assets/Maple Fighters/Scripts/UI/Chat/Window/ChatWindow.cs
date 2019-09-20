@@ -15,10 +15,7 @@ namespace Scripts.UI.Chat
 
         public string CharacterName
         {
-            set
-            {
-                characterName = value;
-            }
+            set => characterName = value;
         }
 
         private const KeyCode SendMessageKeyCode = KeyCode.Return;
