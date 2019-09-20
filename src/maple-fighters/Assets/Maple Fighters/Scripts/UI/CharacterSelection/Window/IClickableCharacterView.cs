@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Scripts.UI
+namespace Scripts.UI.CharacterSelection
 {
     public interface IClickableCharacterView : IView
     {
