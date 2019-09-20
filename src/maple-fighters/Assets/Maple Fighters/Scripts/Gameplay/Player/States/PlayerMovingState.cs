@@ -1,6 +1,6 @@
 using System;
 using Game.Common;
-using Scripts.UI.Controllers;
+using Scripts.UI.Focus;
 using UnityEngine;
 
 namespace Scripts.Gameplay.Player
