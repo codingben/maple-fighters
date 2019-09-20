@@ -1,4 +1,4 @@
-﻿namespace Scripts.UI.Controllers
+﻿namespace Scripts.UI.CharacterSelection
 {
     public interface IOnCharacterCreationFinishedListener
     {
