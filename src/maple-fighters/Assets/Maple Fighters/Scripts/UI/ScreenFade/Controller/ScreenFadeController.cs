@@ -1,7 +1,7 @@
 ﻿using UI.Manager;
 using UnityEngine;
 
-namespace Scripts.UI.Controllers
+namespace Scripts.UI.ScreenFade
 {
     public class ScreenFadeController : MonoBehaviour
     {
