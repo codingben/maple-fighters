@@ -5,7 +5,7 @@ using Scripts.Containers;
 using Scripts.Network.APIs;
 using UnityEngine;
 
-namespace Scripts.UI.Controllers
+namespace Scripts.UI.GameServerBrowser
 {
     [RequireComponent(typeof(IOnGameServerReceivedListener))]
     public class GameServerBrowserInteractor : MonoBehaviour
