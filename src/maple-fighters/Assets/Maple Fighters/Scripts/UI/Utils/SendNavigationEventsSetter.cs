@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace Scripts.UI
+namespace Scripts.UI.Utils
 {
     public class SendNavigationEventsSetter : MonoBehaviour
     {
