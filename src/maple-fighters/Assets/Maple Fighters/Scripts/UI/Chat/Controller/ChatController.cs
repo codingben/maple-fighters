@@ -1,8 +1,7 @@
-﻿using Scripts.UI.Windows;
-using UI.Manager;
+﻿using UI.Manager;
 using UnityEngine;
 
-namespace Scripts.UI.Controllers
+namespace Scripts.UI.Chat
 {
     public class ChatController : MonoBehaviour
     {
