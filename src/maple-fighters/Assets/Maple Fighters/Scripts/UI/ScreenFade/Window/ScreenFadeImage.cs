@@ -2,7 +2,7 @@
 using UI.Manager;
 using UnityEngine;
 
-namespace Scripts.UI
+namespace Scripts.UI.ScreenFade
 {
     [RequireComponent(typeof(UIFadeAnimation))]
     public class ScreenFadeImage : UIElement, IScreenFadeView
