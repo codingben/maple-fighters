@@ -1,4 +1,4 @@
-﻿namespace Scripts.UI.Windows
+﻿namespace Scripts.UI.Authenticator
 {
     public struct UIRegistrationDetails
     {
