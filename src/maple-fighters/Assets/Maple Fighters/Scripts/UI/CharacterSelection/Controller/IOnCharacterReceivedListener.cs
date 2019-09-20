@@ -1,6 +1,4 @@
-﻿using Scripts.UI.Models;
-
-namespace Scripts.UI.Controllers
+﻿namespace Scripts.UI.CharacterSelection
 {
     public interface IOnCharacterReceivedListener
     {
