@@ -1,8 +1,8 @@
-﻿namespace Scripts.UI.Controllers
+﻿namespace Scripts.UI.CharacterSelection
 {
     public struct CharacterViewCollection
     {
-        private IClickableCharacterView[] collection;
+        private readonly IClickableCharacterView[] collection;
 
         public CharacterViewCollection(IClickableCharacterView[] collection)
         {
