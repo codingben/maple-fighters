@@ -1,4 +1,5 @@
 ﻿using System;
+using Scripts.UI.Notice;
 using UI.Manager;
 using UnityEngine;
 
