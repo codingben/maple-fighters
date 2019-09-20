@@ -1,9 +1,8 @@
 ﻿using System;
-using Scripts.UI.Windows;
 using UI.Manager;
 using UnityEngine;
 
-namespace Scripts.UI.Controllers
+namespace Scripts.UI.Notice
 {
     public class NoticeController : MonoBehaviour
     {
