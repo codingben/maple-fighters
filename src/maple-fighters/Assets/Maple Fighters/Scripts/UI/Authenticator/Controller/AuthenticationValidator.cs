@@ -1,6 +1,4 @@
-﻿using Scripts.UI.Windows;
-
-namespace Scripts.UI.Controllers
+﻿namespace Scripts.UI.Authenticator
 {
     public class AuthenticationValidator
     {
