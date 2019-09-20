@@ -4,7 +4,7 @@ using UI.Manager;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace Scripts.UI
+namespace Scripts.UI.CharacterSelection
 {
     [RequireComponent(typeof(Animator), typeof(UIFadeAnimation))]
     public class ClickableCharacterImage : UIElement,
