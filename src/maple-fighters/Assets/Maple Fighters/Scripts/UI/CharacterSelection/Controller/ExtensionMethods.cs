@@ -1,6 +1,6 @@
 ﻿using Game.Common;
 
-namespace Scripts.UI.Controllers
+namespace Scripts.UI.CharacterSelection
 {
     public static class ExtensionMethods
     {
