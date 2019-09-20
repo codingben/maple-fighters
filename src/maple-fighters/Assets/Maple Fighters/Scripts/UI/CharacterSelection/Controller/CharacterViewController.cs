@@ -1,11 +1,9 @@
-﻿using Scripts.UI.Models;
-using Scripts.UI.Windows;
-using UI.Manager;
+﻿using UI.Manager;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UIManagerUtils = UI.Manager.Utils;
 
-namespace Scripts.UI.Controllers
+namespace Scripts.UI.CharacterSelection
 {
     [RequireComponent(typeof(CharacterViewInteractor))]
     public class CharacterViewController : MonoBehaviour,
