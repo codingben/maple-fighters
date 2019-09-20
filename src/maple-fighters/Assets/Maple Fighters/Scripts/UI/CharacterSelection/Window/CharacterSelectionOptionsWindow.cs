@@ -3,7 +3,7 @@ using UI.Manager;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Scripts.UI.Windows
+namespace Scripts.UI.CharacterSelection
 {
     [RequireComponent(typeof(UIFadeAnimation))]
     public class CharacterSelectionOptionsWindow : UIElement,
