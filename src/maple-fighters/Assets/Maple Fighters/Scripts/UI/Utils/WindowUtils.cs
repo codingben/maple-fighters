@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text.RegularExpressions;
 
-namespace Scripts.UI
+namespace Scripts.UI.Utils
 {
     public class WindowUtils
     {
