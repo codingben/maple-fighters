@@ -1,10 +1,9 @@
 ﻿using System.Collections;
-using Scripts.UI.Windows;
 using UI.Manager;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace Scripts.UI.Controllers
+namespace Scripts.UI.Minimap
 {
     public class CameraMinimapController : MonoBehaviour
     {
