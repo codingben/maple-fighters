@@ -4,10 +4,9 @@ using Login.Common;
 using Registration.Common;
 using Scripts.Containers;
 using Scripts.Network.APIs;
-using Scripts.UI.Windows;
 using UnityEngine;
 
-namespace Scripts.UI.Controllers
+namespace Scripts.UI.Authenticator
 {
     [RequireComponent(typeof(IOnLoginFinishedListener))]
     [RequireComponent(typeof(IOnRegistrationFinishedListener))]
