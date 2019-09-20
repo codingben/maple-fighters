@@ -1,4 +1,4 @@
-﻿namespace Scripts.UI.Windows
+﻿namespace Scripts.UI.GameServerBrowser
 {
     public interface IGameServerBrowserRefreshView : IView
     {
