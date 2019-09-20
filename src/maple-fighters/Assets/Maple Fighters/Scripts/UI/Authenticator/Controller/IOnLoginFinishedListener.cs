@@ -1,4 +1,4 @@
-﻿namespace Scripts.UI.Controllers
+﻿namespace Scripts.UI.Authenticator
 {
     public interface IOnLoginFinishedListener
     {
