@@ -1,4 +1,4 @@
-﻿using Scripts.UI.Controllers;
+﻿using Scripts.UI.Chat;
 using UnityEngine;
 
 namespace Scripts.Gameplay.Actors
