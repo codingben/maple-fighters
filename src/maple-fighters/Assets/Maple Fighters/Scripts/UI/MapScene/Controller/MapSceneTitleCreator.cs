@@ -1,7 +1,7 @@
 ﻿using UI.Manager;
 using UnityEngine;
 
-namespace Scripts.UI
+namespace Scripts.UI.MapScene
 {
     public class MapSceneTitleCreator : MonoBehaviour
     {
