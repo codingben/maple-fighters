@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Scripts.UI.Controllers
+namespace Scripts.UI.Notice
 {
     using Object = UnityEngine.Object;
 
