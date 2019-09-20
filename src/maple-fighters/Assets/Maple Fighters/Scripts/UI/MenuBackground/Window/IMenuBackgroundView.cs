@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Scripts.UI
+namespace Scripts.UI.MenuBackground
 {
     public interface IMenuBackgroundView
     {
