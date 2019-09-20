@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Scripts.UI.Authenticator;
 using UI.Manager;
 using UnityEngine;
 using UnityEngine.SceneManagement;
