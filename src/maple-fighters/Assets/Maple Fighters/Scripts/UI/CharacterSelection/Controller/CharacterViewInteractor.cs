@@ -3,10 +3,9 @@ using CommonTools.Coroutines;
 using Game.Common;
 using Scripts.Containers;
 using Scripts.Network.APIs;
-using Scripts.UI.Models;
 using UnityEngine;
 
-namespace Scripts.UI.Controllers
+namespace Scripts.UI.CharacterSelection
 {
     [RequireComponent(typeof(IOnCharacterReceivedListener))]
     [RequireComponent(typeof(IOnCharacterValidationFinishedListener))]
