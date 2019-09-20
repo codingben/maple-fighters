@@ -4,7 +4,7 @@ using UI.Manager;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace Scripts.UI.Windows
+namespace Scripts.UI.Chat
 {
     [RequireComponent(typeof(UICanvasGroup))]
     public class ChatWindow : UIElement, IChatView
