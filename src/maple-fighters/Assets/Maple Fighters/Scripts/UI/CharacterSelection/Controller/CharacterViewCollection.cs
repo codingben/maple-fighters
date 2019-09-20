@@ -1,4 +1,6 @@
-﻿namespace Scripts.UI.CharacterSelection
+﻿using System.Collections.Generic;
+
+namespace Scripts.UI.CharacterSelection
 {
     public struct CharacterViewCollection
     {
@@ -14,7 +16,7 @@
             collection[index] = characterView;
         }
         
-        public IClickableCharacterView[] GetAll()
+        public IEnumerable<IClickableCharacterView> GetAll()
         {
             return collection;
         }
