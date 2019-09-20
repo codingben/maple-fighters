@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using Scripts.Containers;
 using Scripts.Gameplay.Actors;
 using Scripts.Gameplay.Map;
-using Scripts.UI.Controllers;
+using Scripts.UI.Chat;
+using Scripts.UI.Focus;
 using Scripts.Utils;
 using UnityEngine;
 
