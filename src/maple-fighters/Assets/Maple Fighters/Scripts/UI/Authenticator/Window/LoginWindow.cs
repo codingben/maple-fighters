@@ -4,7 +4,7 @@ using UI.Manager;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Scripts.UI.Windows
+namespace Scripts.UI.Authenticator
 {
     [RequireComponent(typeof(UIFadeAnimation))]
     public class LoginWindow : UIElement, ILoginView
