@@ -1,4 +1,4 @@
-﻿namespace Scripts.UI
+﻿namespace Scripts.UI.Chat
 {
     public enum ChatMessageColor
     {
