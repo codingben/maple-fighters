@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Scripts.UI.Controllers
+namespace Scripts.UI.GameServerBrowser
 {
     public interface IOnGameServerReceivedListener
     {
