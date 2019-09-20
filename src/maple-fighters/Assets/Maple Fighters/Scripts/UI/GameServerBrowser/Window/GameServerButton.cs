@@ -4,7 +4,7 @@ using UI.Manager;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Scripts.UI
+namespace Scripts.UI.GameServerBrowser
 {
     [RequireComponent(typeof(Button), typeof(UICanvasGroup))]
     public class GameServerButton : UIElement, IGameServerView
