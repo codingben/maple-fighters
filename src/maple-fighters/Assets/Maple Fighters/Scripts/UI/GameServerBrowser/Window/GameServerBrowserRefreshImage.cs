@@ -1,7 +1,7 @@
 ﻿using UI.Manager;
 using UnityEngine;
 
-namespace Scripts.UI.Windows
+namespace Scripts.UI.GameServerBrowser
 {
     [RequireComponent(typeof(UIFadeAnimation))]
     public class GameServerBrowserRefreshImage : UIElement,
