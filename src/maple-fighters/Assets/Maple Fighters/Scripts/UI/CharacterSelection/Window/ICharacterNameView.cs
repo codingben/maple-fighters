@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Scripts.UI.Windows
+namespace Scripts.UI.CharacterSelection
 {
     public interface ICharacterNameView : IView
     {
