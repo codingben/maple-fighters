@@ -1,5 +1,6 @@
 ﻿using System;
 using Scripts.UI.Notice;
+using Scripts.UI.Utils;
 using UI.Manager;
 using UnityEngine;
 
