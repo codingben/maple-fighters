@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Scripts.UI.Windows
+namespace Scripts.UI.GameServerBrowser
 {
     public interface IGameServerBrowserView : IView
     {
