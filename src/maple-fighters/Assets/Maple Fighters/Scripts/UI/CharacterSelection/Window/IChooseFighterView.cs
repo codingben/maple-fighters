@@ -1,4 +1,4 @@
-﻿namespace Scripts.UI
+﻿namespace Scripts.UI.CharacterSelection
 {
     public interface IChooseFighterView : IView
     {
