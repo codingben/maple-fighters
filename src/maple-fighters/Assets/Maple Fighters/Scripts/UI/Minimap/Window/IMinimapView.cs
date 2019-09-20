@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Scripts.UI.Windows
+namespace Scripts.UI.Minimap
 {
     public interface IMinimapView
     {
