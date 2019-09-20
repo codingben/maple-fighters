@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Game.Common;
 using Scripts.Editor;
-using Scripts.UI.Controllers;
+using Scripts.UI.Focus;
 using UnityEngine;
 
 #pragma warning disable 0109
