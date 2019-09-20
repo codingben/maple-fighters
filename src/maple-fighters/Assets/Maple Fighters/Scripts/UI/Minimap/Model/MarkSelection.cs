@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Scripts.UI.Controllers
+namespace Scripts.UI.Minimap
 {
     [Serializable]
     public class MarkSelection
