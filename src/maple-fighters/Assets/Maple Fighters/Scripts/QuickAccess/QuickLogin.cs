@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 using Scripts.ScriptableObjects;
-using Scripts.UI.Windows;
+using Scripts.UI.Authenticator;
 using UnityEngine;
 
 namespace Scripts.QuickAccess
