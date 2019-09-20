@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Scripts.UI.Controllers
+namespace Scripts.UI.Focus
 {
     public class FocusStateController : MonoBehaviour
     {
