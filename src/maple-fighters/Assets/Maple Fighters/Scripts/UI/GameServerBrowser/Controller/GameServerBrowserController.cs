@@ -1,10 +1,9 @@
 ﻿using System.Collections.Generic;
-using Scripts.UI.Windows;
 using UI.Manager;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace Scripts.UI.Controllers
+namespace Scripts.UI.GameServerBrowser
 {
     [RequireComponent(typeof(GameServerBrowserInteractor))]
     public class GameServerBrowserController : MonoBehaviour,
