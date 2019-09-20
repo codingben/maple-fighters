@@ -1,7 +1,7 @@
 ﻿using UI.Manager;
 using UnityEngine;
 
-namespace Scripts.UI
+namespace Scripts.UI.CharacterSelection
 {
     [RequireComponent(typeof(UIFadeAnimation))]
     public class ChooseFighterText : UIElement, IChooseFighterView
