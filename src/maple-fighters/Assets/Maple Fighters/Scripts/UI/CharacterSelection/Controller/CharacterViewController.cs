@@ -1,4 +1,6 @@
-﻿using UI.Manager;
+﻿using Scripts.UI.MenuBackground;
+using Scripts.UI.Notice;
+using UI.Manager;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UIManagerUtils = UI.Manager.Utils;
