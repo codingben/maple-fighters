@@ -2,7 +2,7 @@
 using UI.Manager;
 using UnityEngine.EventSystems;
 
-namespace Scripts.UI
+namespace Scripts.UI.MenuBackground
 {
     public class MenuBackgroundImage : UIElement,
                                        IPointerClickHandler,
