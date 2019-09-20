@@ -1,4 +1,4 @@
-﻿namespace Scripts.UI.Models
+﻿namespace Scripts.UI.CharacterSelection
 {
     public struct CharacterDetails
     {
