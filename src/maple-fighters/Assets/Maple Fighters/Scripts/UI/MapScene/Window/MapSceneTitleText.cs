@@ -3,7 +3,7 @@ using TMPro;
 using UI.Manager;
 using UnityEngine;
 
-namespace Scripts.UI
+namespace Scripts.UI.MapScene
 {
     [RequireComponent(typeof(TextMeshProUGUI), typeof(UIFadeAnimation))]
     public class MapSceneTitleText : UIElement, IMapSceneTitleView
