@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Scripts.UI.Windows
+namespace Scripts.UI.Chat
 {
     public interface IChatView
     {
