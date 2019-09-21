@@ -15,8 +15,8 @@ namespace Scripts.ScriptableObjects
         public ConnectionInformation GetConnectionInformation(
             ServerType serverType)
         {
-            return ConnectionInformations
-                .FirstOrDefault(x => x.ServerType == serverType);
+            return ConnectionInformations.FirstOrDefault(
+                x => x.ServerType == serverType);
         }
     }
 }
