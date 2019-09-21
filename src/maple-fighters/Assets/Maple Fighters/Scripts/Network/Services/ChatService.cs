@@ -20,11 +20,7 @@ namespace Scripts.Network.Services
 
             DontDestroyOnLoad(gameObject);
 
-            var connectionInformation =
-                ServerConfiguration.GetInstance()
-                    .GetConnectionInformation(ServerType.Chat);
-
-            Connect(connectionInformation);
+            Connect();
         }
 
         protected override void OnDestroying()
