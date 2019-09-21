@@ -24,7 +24,8 @@ namespace Scripts.World.Dummy
                 SpawnDirection = Directions.Left,
                 AddComponentsAction = (gameObject) =>
                 {
-                    var portalController = gameObject.AddComponent<DummyPortalController>();
+                    var portalController =
+                        gameObject.AddComponent<DummyPortalController>();
                     portalController.CreateTeleportation(Maps.Map_1);
                 }
             };
