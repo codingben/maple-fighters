@@ -4,11 +4,11 @@ namespace Scripts.Network.Core
 {
     public interface IServiceBase
     {
-        void Connect(ConnectionInformation connectionInformation);
-
-        void SetNetworkTrafficState(NetworkTrafficState state);
+        void Connect();
 
         void Disconnect();
+
+        void SetNetworkTrafficState(NetworkTrafficState state);
 
         bool IsConnected();
     }
