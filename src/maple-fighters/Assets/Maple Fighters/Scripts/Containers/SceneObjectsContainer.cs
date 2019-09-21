@@ -20,21 +20,21 @@ namespace Scripts.Containers
         private static SceneObjectsContainer instance;
 
         private ISceneObject localSceneObject;
-        private Dictionary<int, ISceneObject> sceneObjects;
-
-        public void SetLocalSceneObject(ISceneObject sceneObject)
-        {
-            localSceneObject = sceneObject;
-        }
+        private Dictionary<int, ISceneObject> collection;
 
         private void Awake()
         {
-            sceneObjects = new Dictionary<int, ISceneObject>();
+            collection = new Dictionary<int, ISceneObject>();
         }
 
         private void OnDestroy()
         {
-            sceneObjects.Clear();
+            collection.Clear();
+        }
+
+        public void SetLocalSceneObject(ISceneObject sceneObject)
+        {
+            localSceneObject = sceneObject;
         }
 
         public ISceneObject AddSceneObject(SceneObjectParameters parameters)
@@ -42,7 +42,7 @@ namespace Scripts.Containers
             var id = parameters.Id;
             var name = parameters.Name;
 
-            if (sceneObjects.ContainsKey(id))
+            if (collection.ContainsKey(id))
             {
                 Debug.LogWarning($"Scene object with id #{id} already exists.");
             }
@@ -56,13 +56,13 @@ namespace Scripts.Containers
                     var sceneObject = gameObject.GetComponent<ISceneObject>();
                     sceneObject.Id = id;
 
-                    sceneObjects.Add(id, sceneObject);
+                    collection.Add(id, sceneObject);
 
                     Debug.Log($"Added a new scene object with id #{id}");
                 }
             }
 
-            return sceneObjects[id];
+            return collection[id];
         }
 
         public void RemoveSceneObject(int id)
@@ -70,7 +70,7 @@ namespace Scripts.Containers
             var sceneObject = GetRemoteSceneObject(id)?.GameObject;
             if (sceneObject != null)
             {
-                sceneObjects.Remove(id);
+                collection.Remove(id);
 
                 Destroy(sceneObject);
 
@@ -85,7 +85,7 @@ namespace Scripts.Containers
 
         public ISceneObject GetRemoteSceneObject(int id)
         {
-            if (!sceneObjects.TryGetValue(id, out var sceneObject))
+            if (!collection.TryGetValue(id, out var sceneObject))
             {
                 Debug.LogWarning(
                     $"Could not find a scene object with id #{id}");
@@ -98,26 +98,22 @@ namespace Scripts.Containers
         {
             GameObject gameObject = null;
 
-            var sceneObject = Resources.Load($"Game/{name}");
-            if (sceneObject != null)
+            var _object = Resources.Load($"Game/{name}");
+            if (_object != null)
             {
                 gameObject = 
-                    Instantiate(sceneObject, position, Quaternion.identity) 
+                    Instantiate(_object, position, Quaternion.identity) 
                         as GameObject;
+
                 if (gameObject != null)
                 {
                     gameObject.name = name;
-                }
-                else
-                {
-                    Debug.LogError(
-                        $"Could not create a scene object with name {name}");
                 }
             }
             else
             {
                 Debug.LogError(
-                    $"Could not find a scene object with name {name}");
+                    $"Could not find an object with name {name}");
             }
 
             return gameObject;
