@@ -85,9 +85,7 @@ namespace Scripts.Containers
 
         public ISceneObject GetRemoteSceneObject(int id)
         {
-            ISceneObject sceneObject;
-
-            if (!sceneObjects.TryGetValue(id, out sceneObject))
+            if (!sceneObjects.TryGetValue(id, out var sceneObject))
             {
                 Debug.LogWarning(
                     $"Could not find a scene object with id #{id}");
