@@ -15,11 +15,7 @@ namespace Scripts.Network.Services
         {
             base.OnAwake();
 
-            var connectionInformation =
-                ServerConfiguration.GetInstance()
-                    .GetConnectionInformation(ServerType.Authenticator);
-
-            Connect(connectionInformation);
+            Connect();
         }
 
         protected override void OnDestroying()
