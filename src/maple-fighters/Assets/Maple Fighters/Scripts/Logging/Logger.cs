@@ -2,16 +2,13 @@
 using CommonTools.Log;
 using UnityEngine;
 
-namespace Scripts.Utils
+namespace Scripts.Logging
 {
     using ILogger = CommonTools.Log.ILogger;
 
     public class Logger : ILogger
     {
-        public void Log(
-            string message,
-            LogMessageType type = LogMessageType.Log,
-            object context = null)
+        public void Log(string message, LogMessageType type = LogMessageType.Log, object context = null)
         {
             switch (type)
             {
