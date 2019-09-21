@@ -13,10 +13,12 @@ namespace Scripts.Network.Core
         private IServerPeer serverPeer;
 
         private ExternalCoroutinesExecutor coroutinesExecutor;
+        private NetworkConfiguration networkConfiguration;
 
         private void Awake()
         {
             coroutinesExecutor = new ExternalCoroutinesExecutor();
+            networkConfiguration = NetworkConfiguration.GetInstance();
 
             OnAwake();
         }
@@ -33,7 +35,7 @@ namespace Scripts.Network.Core
             OnDestroying();
         }
 
-        public void Connect(ConnectionInformation connectionInformation)
+        public void Connect()
         {
             if (serverConnector == null)
             {
@@ -49,8 +51,7 @@ namespace Scripts.Network.Core
                 }
             }
 
-            coroutinesExecutor.StartTask(
-                (y) => ConnectAsync(y, connectionInformation));
+            coroutinesExecutor.StartTask(ConnectAsync);
         }
 
         public void SetNetworkTrafficState(NetworkTrafficState networkTrafficState)
@@ -82,19 +83,19 @@ namespace Scripts.Network.Core
             return serverPeer;
         }
 
-        private async Task<ConnectionStatus> ConnectAsync(
-            IYield yield,
-            ConnectionInformation connectionInformation)
+        private async Task<ConnectionStatus> ConnectAsync(IYield yield)
         {
+            // TODO: Implement the IP:Port
+            var peerConnectionInformation = new PeerConnectionInformation();
             var connectionDetails = 
                 new ConnectionDetails(
-                    NetworkConfiguration.GetInstance().ConnectionProtocol,
-                    NetworkConfiguration.GetInstance().DebugLevel);
+                    networkConfiguration.ConnectionProtocol,
+                    networkConfiguration.DebugLevel);
 
             serverPeer = 
                 await serverConnector.ConnectAsync(
                     yield,
-                    connectionInformation.PeerConnectionInformation,
+                    peerConnectionInformation,
                     connectionDetails);
 
             if (IsConnected())
