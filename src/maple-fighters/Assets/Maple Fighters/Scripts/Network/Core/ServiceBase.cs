@@ -77,7 +77,7 @@ namespace Scripts.Network.Core
             return serverPeer != null;
         }
 
-        public IServerPeer GetServerPeer()
+        protected IServerPeer GetServerPeer()
         {
             return serverPeer;
         }
