@@ -23,11 +23,7 @@ namespace Scripts.Network.Services
 
             DontDestroyOnLoad(gameObject);
 
-            var connectionInformation = 
-                ServerConfiguration.GetInstance()
-                    .GetConnectionInformation(ServerType.Game);
-
-            Connect(connectionInformation);
+            Connect();
         }
 
         protected override void OnDestroying()
