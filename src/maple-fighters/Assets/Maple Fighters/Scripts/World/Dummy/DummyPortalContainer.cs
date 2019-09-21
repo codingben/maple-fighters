@@ -51,9 +51,7 @@ namespace Scripts.World.Dummy
 
         public Maps GetMap(int id)
         {
-            Maps mapIndex;
-
-            if (!portalIdToMapMapper.TryGetValue(id, out mapIndex))
+            if (!portalIdToMapMapper.TryGetValue(id, out var mapIndex))
             {
                 Debug.LogWarning($"A portal with id {id} does not exist.");
             }
