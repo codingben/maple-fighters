@@ -5,14 +5,15 @@ namespace Scripts.ScriptableObjects
     public class ScriptableSingleton<TObject> : ScriptableObject
         where TObject : ScriptableObject
     {
-        private const string NetworkConfigurationPath = "Configurations/{0}";
+        private const string ConfigPath = "Configurations/{0}";
 
         public static TObject GetInstance()
         {
             if (instance == null)
             {
-                instance = Resources.Load<TObject>(
-                    string.Format(NetworkConfigurationPath, typeof(TObject).Name));
+                var name = typeof(TObject).Name;
+                var path = string.Format(ConfigPath, name);
+                instance = Resources.Load<TObject>(path);
             }
 
             return instance;
