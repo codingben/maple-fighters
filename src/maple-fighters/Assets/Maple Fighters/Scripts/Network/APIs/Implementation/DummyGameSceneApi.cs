@@ -2,7 +2,7 @@
 using CommonTools.Coroutines;
 using Game.Common;
 using Scripts.Network.Core;
-using Scripts.Network.Dummies;
+using Scripts.World.Dummy;
 
 namespace Scripts.Network.APIs
 {
