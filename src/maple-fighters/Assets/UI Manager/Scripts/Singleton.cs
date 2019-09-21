@@ -9,10 +9,8 @@ namespace UI.Manager
         {
             if (instance == null)
             {
-                var name = typeof(TObject).Name;
-                var component = typeof(TObject);
-                instance =
-                    new GameObject(name, component).GetComponent<TObject>();
+                instance = (new GameObject(typeof(TObject).Name, typeof(TObject)))
+                    .GetComponent<TObject>();
             }
 
             return instance;
