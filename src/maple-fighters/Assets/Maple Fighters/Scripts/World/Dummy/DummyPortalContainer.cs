@@ -8,40 +8,44 @@ namespace Scripts.World.Dummy
     {
         public static DummyPortalContainer GetInstance()
         {
+            if (instance == null)
+            {
+                instance = FindObjectOfType<DummyPortalContainer>();
+            }
+
             return instance;
         }
 
         private static DummyPortalContainer instance;
-        private Dictionary<int, Maps> portalIdToMapMapper;
+        private Dictionary<int, Maps> collection;
 
         private void Awake()
         {
-            instance = this;
-            portalIdToMapMapper = new Dictionary<int, Maps>();
+            collection = new Dictionary<int, Maps>();
         }
 
         private void OnDestroy()
         {
-            portalIdToMapMapper.Clear();
+            collection.Clear();
         }
 
         public void Add(int id, Maps map)
         {
-            if (portalIdToMapMapper.ContainsKey(id))
+            if (collection.ContainsKey(id))
             {
                 Debug.LogWarning($"A portal with id {id} already exists.");
             }
             else
             {
-                portalIdToMapMapper.Add(id, map);
+                collection.Add(id, map);
             }
         }
 
         public void Remove(int id)
         {
-            if (portalIdToMapMapper.ContainsKey(id))
+            if (collection.ContainsKey(id))
             {
-                portalIdToMapMapper.Remove(id);
+                collection.Remove(id);
             }
             else
             {
@@ -51,7 +55,7 @@ namespace Scripts.World.Dummy
 
         public Maps GetMap(int id)
         {
-            if (!portalIdToMapMapper.TryGetValue(id, out var mapIndex))
+            if (!collection.TryGetValue(id, out var mapIndex))
             {
                 Debug.LogWarning($"A portal with id {id} does not exist.");
             }
