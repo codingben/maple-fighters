@@ -35,14 +35,8 @@ namespace Scripts.World.Dummy
         {
             yield return null;
 
-            CreateDummyPlayer();
+            CreateDummyPlayerSceneObject(out _);
             CreateDummySceneObjects();
-        }
-
-        private void CreateDummyPlayer()
-        {
-            int id;
-            CreateDummyPlayerSceneObject(out id);
         }
 
         private void CreateDummyPlayerSceneObject(out int id)
