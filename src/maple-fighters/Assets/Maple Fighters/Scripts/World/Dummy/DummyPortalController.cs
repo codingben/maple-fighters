@@ -1,6 +1,5 @@
 ﻿using Game.Common;
 using Scripts.Gameplay;
-using Scripts.Network.Dummies;
 using UnityEngine;
 
 namespace Scripts.World.Dummy
