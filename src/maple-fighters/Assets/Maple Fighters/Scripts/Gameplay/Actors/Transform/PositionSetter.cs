@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Scripts.Gameplay.Actors
 {
-    [RequireComponent(typeof(NetworkIdentity))]
+    [RequireComponent(typeof(Entity))]
     public class PositionSetter : MonoBehaviour
     {
         public event Action<Directions> DirectionChanged;
