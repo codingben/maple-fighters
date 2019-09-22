@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Scripts.Gameplay
 {
-    public class NetworkIdentity : MonoBehaviour, ISceneObject
+    public class Entity : MonoBehaviour, ISceneObject
     {
         [ViewOnly, SerializeField] private int id;
 
