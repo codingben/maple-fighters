@@ -25,49 +25,50 @@ namespace Scripts.Containers
         {
             var id = parameters.Id;
             var name = parameters.Name;
+            var position = new Vector3(parameters.X, parameters.Y);
 
             if (collection.ContainsKey(id))
             {
-                Debug.LogWarning($"Scene object with id #{id} already exists.");
+                Debug.LogWarning($"The entity with id #{id} already exists.");
             }
             else
             {
-                var gameObject = CreateGameObject(
-                    name,
-                    new Vector3(parameters.X, parameters.Y));
+                var gameObject = Utils.CreateGameObject(name, position);
                 if (gameObject != null)
                 {
                     var entity = gameObject.GetComponent<IEntity>();
-                    entity.Id = id;
+                    if (entity != null)
+                    {
+                        entity.Id = id;
 
-                    collection.Add(id, entity);
+                        collection.Add(id, entity);
 
-                    Debug.Log($"Added a new scene object with id #{id}");
+                        Debug.Log($"Added a new entity with id #{id}");
+                    }
                 }
             }
 
-            return collection[id];
+            return TryGet(id);
         }
 
         public void Remove(int id)
         {
-            var entity = GetEntity(id);
+            var entity = TryGet(id);
             if (entity != null)
             {
                 Object.Destroy(entity.GameObject);
 
                 collection.Remove(id);
 
-                Debug.Log($"Removed a scene object with id #{id}");
+                Debug.Log($"Removed an entity with id #{id}");
             }
         }
 
-        public IEntity GetEntity(int id)
+        public IEntity TryGet(int id)
         {
             if (!collection.TryGetValue(id, out var entity))
             {
-                Debug.LogWarning(
-                    $"Could not find a scene object with id #{id}");
+                Debug.LogWarning($"Could not find an entity with id #{id}");
             }
 
             return entity;
