@@ -5,26 +5,26 @@ using UnityEngine;
 
 namespace Scripts.Containers
 {
-    public class SceneObjectsContainer : MonoBehaviour, ISceneObjectsContainer
+    public class EntitiesContainer : MonoBehaviour, IEntitiesContainer
     {
-        public static SceneObjectsContainer GetInstance()
+        public static EntitiesContainer GetInstance()
         {
             if (instance == null)
             {
-                instance = FindObjectOfType<SceneObjectsContainer>();
+                instance = FindObjectOfType<EntitiesContainer>();
             }
 
             return instance;
         }
 
-        private static SceneObjectsContainer instance;
+        private static EntitiesContainer instance;
 
-        private ISceneObject localSceneObject;
-        private Dictionary<int, ISceneObject> collection;
+        private IEntity localEntity;
+        private Dictionary<int, IEntity> collection;
 
         private void Awake()
         {
-            collection = new Dictionary<int, ISceneObject>();
+            collection = new Dictionary<int, IEntity>();
         }
 
         private void OnDestroy()
@@ -32,12 +32,12 @@ namespace Scripts.Containers
             collection.Clear();
         }
 
-        public void SetLocalSceneObject(ISceneObject sceneObject)
+        public void SetLocalEntity(IEntity entity)
         {
-            localSceneObject = sceneObject;
+            localEntity = entity;
         }
 
-        public ISceneObject AddSceneObject(SceneObjectParameters parameters)
+        public IEntity AddEntity(SceneObjectParameters parameters)
         {
             var id = parameters.Id;
             var name = parameters.Name;
@@ -53,10 +53,10 @@ namespace Scripts.Containers
                     new Vector3(parameters.X, parameters.Y));
                 if (gameObject != null)
                 {
-                    var sceneObject = gameObject.GetComponent<ISceneObject>();
-                    sceneObject.Id = id;
+                    var entity = gameObject.GetComponent<IEntity>();
+                    entity.Id = id;
 
-                    collection.Add(id, sceneObject);
+                    collection.Add(id, entity);
 
                     Debug.Log($"Added a new scene object with id #{id}");
                 }
@@ -65,44 +65,44 @@ namespace Scripts.Containers
             return collection[id];
         }
 
-        public void RemoveSceneObject(int id)
+        public void RemoveEntity(int id)
         {
-            var sceneObject = GetRemoteSceneObject(id)?.GameObject;
-            if (sceneObject != null)
+            var entity = GetRemoteEntity(id)?.GameObject;
+            if (entity != null)
             {
                 collection.Remove(id);
 
-                Destroy(sceneObject);
+                Destroy(entity);
 
                 Debug.Log($"Removed a scene object with id #{id}");
             }
         }
 
-        public ISceneObject GetLocalSceneObject()
+        public IEntity GetLocalEntity()
         {
-            return localSceneObject;
+            return localEntity;
         }
 
-        public ISceneObject GetRemoteSceneObject(int id)
+        public IEntity GetRemoteEntity(int id)
         {
-            if (!collection.TryGetValue(id, out var sceneObject))
+            if (!collection.TryGetValue(id, out var entity))
             {
                 Debug.LogWarning(
                     $"Could not find a scene object with id #{id}");
             }
 
-            return sceneObject;
+            return entity;
         }
 
         private GameObject CreateGameObject(string name, Vector3 position)
         {
             GameObject gameObject = null;
 
-            var _object = Resources.Load($"Game/{name}");
-            if (_object != null)
+            var entity = Resources.Load($"Game/{name}");
+            if (entity != null)
             {
                 gameObject = 
-                    Instantiate(_object, position, Quaternion.identity) 
+                    Instantiate(entity, position, Quaternion.identity) 
                         as GameObject;
 
                 if (gameObject != null)
