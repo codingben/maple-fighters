@@ -3,7 +3,7 @@ using Scripts.Gameplay;
 
 namespace Scripts.Containers
 {
-    public interface IEntitiesContainer
+    public interface IEntityContainer
     {
         void SetLocalEntity(IEntity entity);
 
