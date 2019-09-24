@@ -71,13 +71,13 @@ namespace Scripts.Gameplay.Player
 
         private void OnPlayerStateChanged(PlayerStateChangedEventParameters parameters)
         {
-            var sceneObject = 
-                SceneObjectsContainer.GetInstance()
-                    .GetRemoteSceneObject(parameters.SceneObjectId)?.GameObject;
-            if (sceneObject != null)
+            var entity = 
+                EntityContainer.GetInstance()
+                    .GetRemoteEntity(parameters.SceneObjectId);
+            if (entity != null)
             {
                 var playerAnimatorProvider = 
-                    sceneObject.GetComponent<PlayerAnimatorProvider>();
+                    entity.GameObject.GetComponent<PlayerAnimatorProvider>();
                 if (playerAnimatorProvider != null)
                 {
                     var animator = playerAnimatorProvider.Provide();
