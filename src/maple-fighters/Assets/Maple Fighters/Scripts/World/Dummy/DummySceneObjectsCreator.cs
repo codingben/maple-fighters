@@ -78,11 +78,11 @@ namespace Scripts.World.Dummy
                 var id = dummySceneObject.Id;
                 CreateCommonComponentsToSceneObject(id);
 
-                var sceneObject = SceneObjectsContainer.GetInstance()
-                    .GetRemoteSceneObject(id);
-                if (sceneObject != null)
+                var entity = EntityContainer.GetInstance().GetRemoteEntity(id);
+                if (entity != null)
                 {
-                    dummySceneObject.AddComponentsAction?.Invoke(sceneObject.GameObject);
+                    dummySceneObject.AddComponentsAction?.Invoke(
+                        entity.GameObject);
                 }
             }
         }
@@ -92,7 +92,7 @@ namespace Scripts.World.Dummy
             params Type[] components)
         {
             var sceneObject = 
-                SceneObjectsContainer.GetInstance().GetRemoteSceneObject(id)
+                EntityContainer.GetInstance().GetRemoteEntity(id)
                     ?.GameObject;
             if (sceneObject == null)
             {
