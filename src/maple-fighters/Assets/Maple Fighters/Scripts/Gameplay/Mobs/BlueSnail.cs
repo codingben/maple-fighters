@@ -31,12 +31,11 @@ namespace Scripts.Gameplay.Mobs
 
         private void OnPlayerAttacked(PlayerAttackedEventParameters parameters)
         {
-            var player =
-                SceneObjectsContainer.GetInstance().GetLocalSceneObject()
-                    .GameObject;
-            if (player != null)
+            var entity = EntityContainer.GetInstance().GetLocalEntity();
+            if (entity != null)
             {
-                var spawnedCharacter = player.GetComponent<ISpawnedCharacter>();
+                var spawnedCharacter =
+                    entity.GameObject.GetComponent<ISpawnedCharacter>();
                 var character = spawnedCharacter.GetCharacterGameObject();
                 if (character != null)
                 {
