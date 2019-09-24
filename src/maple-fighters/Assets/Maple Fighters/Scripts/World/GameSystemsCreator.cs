@@ -38,8 +38,7 @@ namespace Scripts.World
 
         private IEnumerable<Type> GetContainersComponents()
         {
-            yield return typeof(SceneObjectsContainer);
-            yield return typeof(SceneObjectsListener);
+            yield return typeof(EntityContainer);
         }
 
         private IEnumerable<Type> GetGUIControllersComponents()
