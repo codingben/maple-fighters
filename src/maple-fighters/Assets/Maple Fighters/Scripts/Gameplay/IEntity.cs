@@ -2,7 +2,7 @@
 
 namespace Scripts.Gameplay
 {
-    public interface ISceneObject
+    public interface IEntity
     {
         int Id { get; set; }
 
