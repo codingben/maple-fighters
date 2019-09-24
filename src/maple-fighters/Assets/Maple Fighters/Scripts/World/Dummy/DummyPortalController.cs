@@ -4,15 +4,15 @@ using UnityEngine;
 
 namespace Scripts.World.Dummy
 {
-    [RequireComponent(typeof(ISceneObject))]
+    [RequireComponent(typeof(IEntity))]
     public class DummyPortalController : MonoBehaviour
     {
         public void CreateTeleportation(Maps map)
         {
-            var sceneObject = GetComponent<ISceneObject>();
-            if (sceneObject != null)
+            var entity = GetComponent<IEntity>();
+            if (entity != null)
             {
-                DummyPortalContainer.GetInstance().Add(sceneObject.Id, map);
+                DummyPortalContainer.GetInstance().Add(entity.Id, map);
             }
         }
     }
