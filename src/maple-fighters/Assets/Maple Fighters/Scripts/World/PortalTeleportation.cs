@@ -9,7 +9,7 @@ using UnityEngine.SceneManagement;
 
 namespace Scripts.World
 {
-    [RequireComponent(typeof(ISceneObject))]
+    [RequireComponent(typeof(IEntity))]
     public class PortalTeleportation : MonoBehaviour
     {
         private ExternalCoroutinesExecutor coroutinesExecutor;
@@ -40,11 +40,11 @@ namespace Scripts.World
             var gameSceneApi = ServiceContainer.GameService.GetGameSceneApi();
             if (gameSceneApi != null)
             {
-                var sceneObject = GetComponent<ISceneObject>();
+                var entity = GetComponent<IEntity>();
                 var parameters = 
                     await gameSceneApi.ChangeSceneAsync(
                         yield,
-                        new ChangeSceneRequestParameters(sceneObject.Id));
+                        new ChangeSceneRequestParameters(entity.Id));
                 var map = parameters.Map;
                 if (map != 0)
                 {
