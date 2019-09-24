@@ -30,11 +30,10 @@ namespace Scripts.Gameplay.Graphics
             BubbleMessageEventParameters parameters)
         {
             var id = parameters.RequesterId;
-            var sceneObject = SceneObjectsContainer.GetInstance()
-                .GetRemoteSceneObject(id);
-            if (sceneObject != null)
+            var entity = EntityContainer.GetInstance().GetRemoteEntity(id);
+            if (entity != null)
             {
-                var owner = sceneObject.GameObject.transform;
+                var owner = entity.GameObject.transform;
                 var message = parameters.Message;
                 var time = parameters.Time;
                 BubbleMessageCreator.GetInstance().Create(owner, message, time);
