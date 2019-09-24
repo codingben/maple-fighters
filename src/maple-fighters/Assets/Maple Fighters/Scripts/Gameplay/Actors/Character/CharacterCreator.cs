@@ -44,14 +44,13 @@ namespace Scripts.Gameplay.Actors
             yield return null;
 
             var id = characterSpawnDetails.SceneObjectId;
-            var sceneObject = 
-                SceneObjectsContainer.GetInstance().GetRemoteSceneObject(id);
-            if (sceneObject != null)
+            var entity = EntityContainer.GetInstance().GetRemoteEntity(id);
+            if (entity != null)
             {
                 var spawnedCharacterDetails = 
-                    sceneObject.GameObject.GetComponent<SpawnedCharacterDetails>();
+                    entity.GameObject.GetComponent<SpawnedCharacterDetails>();
                 var spawnedCharacter = 
-                    sceneObject.GameObject.GetComponent<SpawnCharacter>();
+                    entity.GameObject.GetComponent<SpawnCharacter>();
                 spawnedCharacterDetails.SetCharacterDetails(characterSpawnDetails);
                 spawnedCharacter.Spawn();
             }
