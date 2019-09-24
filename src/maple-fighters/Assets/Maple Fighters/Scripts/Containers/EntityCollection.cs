@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Game.Common;
 using Scripts.Gameplay;
 using UnityEngine;
@@ -7,18 +6,13 @@ using Object = UnityEngine.Object;
 
 namespace Scripts.Containers
 {
-    public class EntityCollection : IDisposable
+    public class EntityCollection : IEntityCollection
     {
         private readonly Dictionary<int, IEntity> collection;
 
         public EntityCollection()
         {
             collection = new Dictionary<int, IEntity>();
-        }
-
-        public void Dispose()
-        {
-            collection.Clear();
         }
 
         public IEntity Add(SceneObjectParameters parameters)
