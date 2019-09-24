@@ -24,12 +24,13 @@ namespace Scripts.Gameplay.Actors
         [SerializeField]
         private float greaterDistance;
 
+        private int entityId;
         private Vector3 newPosition;
-        private ISceneObject sceneObject;
 
         private void Awake()
         {
-            sceneObject = GetComponent<ISceneObject>();
+            var entity = GetComponent<IEntity>();
+            entityId = entity.Id;
         }
 
         private void Start()
@@ -52,7 +53,7 @@ namespace Scripts.Gameplay.Actors
 
         private void OnPositionChanged(SceneObjectPositionChangedEventParameters parameters)
         {
-            if (sceneObject.Id == parameters.SceneObjectId)
+            if (entityId == parameters.SceneObjectId)
             {
                 newPosition = new Vector2(parameters.X, parameters.Y);
 
