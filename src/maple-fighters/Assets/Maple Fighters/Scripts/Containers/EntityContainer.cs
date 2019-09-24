@@ -5,19 +5,19 @@ using UnityEngine;
 
 namespace Scripts.Containers
 {
-    public class EntitiesContainer : MonoBehaviour, IEntitiesContainer
+    public class EntityContainer : MonoBehaviour, IEntityContainer
     {
-        public static EntitiesContainer GetInstance()
+        public static EntityContainer GetInstance()
         {
             if (instance == null)
             {
-                instance = FindObjectOfType<EntitiesContainer>();
+                instance = FindObjectOfType<EntityContainer>();
             }
 
             return instance;
         }
 
-        private static EntitiesContainer instance;
+        private static EntityContainer instance;
 
         private IEntity localEntity;
         private Dictionary<int, IEntity> collection;
