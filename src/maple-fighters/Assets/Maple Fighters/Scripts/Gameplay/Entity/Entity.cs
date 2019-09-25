@@ -1,7 +1,7 @@
 ﻿using Scripts.Editor;
 using UnityEngine;
 
-namespace Scripts.Gameplay
+namespace Scripts.Gameplay.Entity
 {
     public class Entity : MonoBehaviour, IEntity
     {
