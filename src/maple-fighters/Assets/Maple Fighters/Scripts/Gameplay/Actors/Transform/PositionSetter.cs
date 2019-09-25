@@ -1,11 +1,12 @@
 ﻿using System;
 using Game.Common;
+using Scripts.Gameplay.Entity;
 using Scripts.Network.Services;
 using UnityEngine;
 
 namespace Scripts.Gameplay.Actors
 {
-    [RequireComponent(typeof(Entity))]
+    [RequireComponent(typeof(IEntity))]
     public class PositionSetter : MonoBehaviour
     {
         public event Action<Directions> DirectionChanged;
