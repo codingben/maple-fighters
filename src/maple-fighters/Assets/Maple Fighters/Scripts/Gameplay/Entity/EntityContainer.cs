@@ -3,7 +3,7 @@ using Scripts.Gameplay;
 using Scripts.Network.Services;
 using UnityEngine;
 
-namespace Scripts.Containers
+namespace Scripts.Gameplay.Entity
 {
     public class EntityContainer : MonoBehaviour
     {
