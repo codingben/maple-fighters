@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Game.Common;
 using Scripts.Gameplay;
 using UnityEngine;
 using Object = UnityEngine.Object;
@@ -15,12 +14,8 @@ namespace Scripts.Containers
             collection = new Dictionary<int, IEntity>();
         }
 
-        public IEntity Add(SceneObjectParameters parameters)
+        public IEntity Add(int id, string name, Vector2 position)
         {
-            var id = parameters.Id;
-            var name = parameters.Name;
-            var position = new Vector3(parameters.X, parameters.Y);
-
             if (collection.ContainsKey(id))
             {
                 Debug.LogWarning($"The entity with id #{id} already exists.");
