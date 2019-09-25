@@ -1,6 +1,6 @@
 ﻿using CommonCommunicationInterfaces;
-using Scripts.Containers;
 using Scripts.Network.Core;
+using Scripts.Network.Services;
 using UnityEngine;
 
 namespace Scripts.World
@@ -9,7 +9,7 @@ namespace Scripts.World
     {
         private void Awake()
         {
-            if (ServiceContainer.GameService is IServiceBase service)
+            if (ServiceProvider.GameService is IServiceBase service)
             {
                 service.SetNetworkTrafficState(NetworkTrafficState.Flowing);
             }
@@ -17,7 +17,7 @@ namespace Scripts.World
 
         private void OnDestroy()
         {
-            if (ServiceContainer.GameService is IServiceBase service)
+            if (ServiceProvider.GameService is IServiceBase service)
             {
                 service.SetNetworkTrafficState(NetworkTrafficState.Paused);
             }
