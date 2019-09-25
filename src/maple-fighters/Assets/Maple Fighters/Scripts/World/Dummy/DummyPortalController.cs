@@ -1,5 +1,5 @@
 ﻿using Game.Common;
-using Scripts.Gameplay;
+using Scripts.Gameplay.Entity;
 using UnityEngine;
 
 namespace Scripts.World.Dummy
