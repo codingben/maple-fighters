@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Scripts.Gameplay
+namespace Scripts.Gameplay.Entity
 {
     public interface IEntity
     {
