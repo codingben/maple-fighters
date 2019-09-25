@@ -1,5 +1,6 @@
 ﻿using Game.Common;
 using Scripts.Gameplay;
+using Scripts.Network.Services;
 using UnityEngine;
 
 namespace Scripts.Containers
@@ -28,7 +29,7 @@ namespace Scripts.Containers
 
         private void Start()
         {
-            var gameSceneApi = ServiceContainer.GameService.GetGameSceneApi();
+            var gameSceneApi = ServiceProvider.GameService.GetGameSceneApi();
             if (gameSceneApi != null)
             {
                 // TODO: Add SceneLeft event
@@ -42,7 +43,7 @@ namespace Scripts.Containers
 
         private void OnDestroy()
         {
-            var gameSceneApi = ServiceContainer.GameService.GetGameSceneApi();
+            var gameSceneApi = ServiceProvider.GameService.GetGameSceneApi();
             if (gameSceneApi != null)
             {
                 // TODO: Remove SceneLeft event
