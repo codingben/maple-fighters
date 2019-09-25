@@ -16,18 +16,10 @@ namespace Scripts.World
 
         private void Start()
         {
-            if (ServiceContainer.GameService.IsConnected())
-            {
-                coroutinesExecutor.StartTask(
-                    method: EnterSceneAsync,
-                    onException: (e) =>
-                        Debug.LogError("EnterSceneInvoker::Start() -> An exception occurred during the operation. The connection with the server has been lost."));
-            }
-            else
-            {
-                Debug.LogWarning(
-                    "EnterSceneInvoker::Start() -> There is no connection with the game server.");
-            }
+            coroutinesExecutor.StartTask(
+                method: EnterSceneAsync,
+                onException: (e) =>
+                    Debug.LogError("Failed to send enter scene operation."));
         }
 
         private void Update()
