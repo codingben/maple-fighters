@@ -1,7 +1,6 @@
-﻿using Scripts.Network.Services;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace Scripts.Containers
+namespace Scripts.Network.Services
 {
     public static class ServiceProvider
     {
