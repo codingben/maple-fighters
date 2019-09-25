@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Scripts.Containers
 {
-    public static class ServiceContainer
+    public static class ServiceProvider
     {
         public static IAuthenticatorService AuthenticatorService
         {
