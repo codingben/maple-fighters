@@ -1,6 +1,6 @@
 ﻿using System;
 using Game.Common;
-using Scripts.Containers;
+using Scripts.Network.Services;
 using UnityEngine;
 
 namespace Scripts.Gameplay.Actors
@@ -35,20 +35,14 @@ namespace Scripts.Gameplay.Actors
 
         private void Start()
         {
-            var gameSceneApi = ServiceContainer.GameService.GetGameSceneApi();
-            if (gameSceneApi != null)
-            {
-                gameSceneApi.PositionChanged.AddListener(OnPositionChanged);
-            }
+            var gameSceneApi = ServiceProvider.GameService.GetGameSceneApi();
+            gameSceneApi?.PositionChanged.AddListener(OnPositionChanged);
         }
 
         private void OnDestroy()
         {
-            var gameSceneApi = ServiceContainer.GameService.GetGameSceneApi();
-            if (gameSceneApi != null)
-            {
-                gameSceneApi.PositionChanged.RemoveListener(OnPositionChanged);
-            }
+            var gameSceneApi = ServiceProvider.GameService.GetGameSceneApi();
+            gameSceneApi?.PositionChanged.RemoveListener(OnPositionChanged);
         }
 
         private void OnPositionChanged(SceneObjectPositionChangedEventParameters parameters)
