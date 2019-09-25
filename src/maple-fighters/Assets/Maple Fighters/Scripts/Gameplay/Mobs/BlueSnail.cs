@@ -2,6 +2,7 @@
 using Scripts.Containers;
 using Scripts.Gameplay.Actors;
 using Scripts.Gameplay.Player;
+using Scripts.Network.Services;
 using UnityEngine;
 
 namespace Scripts.Gameplay.Mobs
@@ -13,20 +14,14 @@ namespace Scripts.Gameplay.Mobs
 
         private void Start()
         {
-            var gameSceneApi = ServiceContainer.GameService.GetGameSceneApi();
-            if (gameSceneApi != null)
-            {
-                gameSceneApi.PlayerAttacked.AddListener(OnPlayerAttacked);
-            }
+            var gameSceneApi = ServiceProvider.GameService.GetGameSceneApi();
+            gameSceneApi?.PlayerAttacked.AddListener(OnPlayerAttacked);
         }
 
         private void OnDestroy()
         {
-            var gameSceneApi = ServiceContainer.GameService.GetGameSceneApi();
-            if (gameSceneApi != null)
-            {
-                gameSceneApi.PlayerAttacked.RemoveListener(OnPlayerAttacked);
-            }
+            var gameSceneApi = ServiceProvider.GameService.GetGameSceneApi();
+            gameSceneApi?.PlayerAttacked.RemoveListener(OnPlayerAttacked);
         }
 
         private void OnPlayerAttacked(PlayerAttackedEventParameters parameters)
