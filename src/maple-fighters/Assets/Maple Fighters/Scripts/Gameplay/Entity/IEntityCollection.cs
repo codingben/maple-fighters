@@ -1,5 +1,4 @@
-﻿using Scripts.Gameplay;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Scripts.Gameplay.Entity
 {
