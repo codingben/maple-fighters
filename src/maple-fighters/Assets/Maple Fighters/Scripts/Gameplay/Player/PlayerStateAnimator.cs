@@ -1,5 +1,6 @@
 ﻿using Game.Common;
 using Scripts.Containers;
+using Scripts.Network.Services;
 using UnityEngine;
 
 namespace Scripts.Gameplay.Player
@@ -30,7 +31,7 @@ namespace Scripts.Gameplay.Player
 
         private void Start()
         {
-            var gameSceneApi = ServiceContainer.GameService.GetGameSceneApi();
+            var gameSceneApi = ServiceProvider.GameService.GetGameSceneApi();
             if (gameSceneApi != null)
             {
                 gameSceneApi.SceneObjectsAdded.AddListener(
@@ -42,7 +43,7 @@ namespace Scripts.Gameplay.Player
 
         private void OnDestroy()
         {
-            var gameSceneApi = ServiceContainer.GameService.GetGameSceneApi();
+            var gameSceneApi = ServiceProvider.GameService.GetGameSceneApi();
             if (gameSceneApi != null)
             {
                 gameSceneApi.SceneObjectsAdded.RemoveListener(
@@ -99,12 +100,9 @@ namespace Scripts.Gameplay.Player
 
         private void SendUpdatePlayerStateOperation()
         {
-            var gameSceneApi = ServiceContainer.GameService.GetGameSceneApi();
-            if (gameSceneApi != null)
-            {
-                gameSceneApi.UpdatePlayerState(
-                    new UpdatePlayerStateRequestParameters(playerState));
-            }
+            var gameSceneApi = ServiceProvider.GameService.GetGameSceneApi();
+            gameSceneApi?.UpdatePlayerState(
+                new UpdatePlayerStateRequestParameters(playerState));
         }
 
         private void UpdatePlayerAnimationState(
