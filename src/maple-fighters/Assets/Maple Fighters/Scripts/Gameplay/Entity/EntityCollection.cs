@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
-using Scripts.Gameplay;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-namespace Scripts.Containers
+namespace Scripts.Gameplay.Entity
 {
     public class EntityCollection : IEntityCollection
     {
