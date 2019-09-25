@@ -1,5 +1,6 @@
 ﻿using Game.Common;
 using Scripts.Containers;
+using Scripts.Network.Services;
 using UnityEngine;
 
 namespace Scripts.Gameplay.Graphics
@@ -8,22 +9,16 @@ namespace Scripts.Gameplay.Graphics
     {
         private void Start()
         {
-            var gameSceneApi = ServiceContainer.GameService.GetGameSceneApi();
-            if (gameSceneApi != null)
-            {
-                gameSceneApi.BubbleMessageReceived.AddListener(
-                    OnBubbleMessageReceived);
-            }
+            var gameSceneApi = ServiceProvider.GameService.GetGameSceneApi();
+            gameSceneApi?.BubbleMessageReceived.AddListener(
+                OnBubbleMessageReceived);
         }
 
         private void OnDestroy()
         {
-            var gameSceneApi = ServiceContainer.GameService.GetGameSceneApi();
-            if (gameSceneApi != null)
-            {
-                gameSceneApi.BubbleMessageReceived.RemoveListener(
-                    OnBubbleMessageReceived);
-            }
+            var gameSceneApi = ServiceProvider.GameService.GetGameSceneApi();
+            gameSceneApi?.BubbleMessageReceived.RemoveListener(
+                OnBubbleMessageReceived);
         }
 
         private void OnBubbleMessageReceived(
