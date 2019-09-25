@@ -1,11 +1,11 @@
-﻿using Game.Common;
-using Scripts.Gameplay;
+﻿using Scripts.Gameplay;
+using UnityEngine;
 
 namespace Scripts.Containers
 {
     public interface IEntityCollection
     {
-        IEntity Add(SceneObjectParameters parameters);
+        IEntity Add(int id, string name, Vector2 position);
 
         void Remove(int id);
 
