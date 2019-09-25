@@ -1,5 +1,5 @@
 ﻿using Game.Common;
-using Scripts.Containers;
+using Scripts.Network.Services;
 using UnityEngine;
 
 namespace Scripts.Gameplay.Actors
@@ -21,7 +21,8 @@ namespace Scripts.Gameplay.Actors
             {
                 lastPosition = transform.position;
 
-                var gameSceneApi = ServiceContainer.GameService.GetGameSceneApi();
+                var gameSceneApi =
+                    ServiceProvider.GameService.GetGameSceneApi();
                 if (gameSceneApi != null)
                 {
                     var z = GetDirection();
