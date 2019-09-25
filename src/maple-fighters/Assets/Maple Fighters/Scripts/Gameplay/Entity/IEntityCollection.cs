@@ -1,7 +1,7 @@
 ﻿using Scripts.Gameplay;
 using UnityEngine;
 
-namespace Scripts.Containers
+namespace Scripts.Gameplay.Entity
 {
     public interface IEntityCollection
     {
