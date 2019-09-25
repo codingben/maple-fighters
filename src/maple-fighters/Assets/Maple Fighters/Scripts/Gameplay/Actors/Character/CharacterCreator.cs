@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 using Game.Common;
-using Scripts.Containers;
+using Scripts.Gameplay.Entity;
 using UnityEngine;
 
 namespace Scripts.Gameplay.Actors
