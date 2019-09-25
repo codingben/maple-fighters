@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 using CommonTools.Coroutines;
-using Scripts.Containers;
+using Scripts.Network.Services;
 using UnityEngine;
 
 namespace Scripts.World
@@ -34,7 +34,7 @@ namespace Scripts.World
 
         private async Task EnterSceneAsync(IYield yield)
         {
-            var gameSceneApi = ServiceContainer.GameService.GetGameSceneApi();
+            var gameSceneApi = ServiceProvider.GameService.GetGameSceneApi();
             if (gameSceneApi != null)
             {
                 await gameSceneApi.EnterSceneAsync(yield);
