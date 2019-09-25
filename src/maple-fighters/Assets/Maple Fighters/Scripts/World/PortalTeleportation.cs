@@ -1,9 +1,9 @@
 ﻿using System.Threading.Tasks;
 using CommonTools.Coroutines;
 using Game.Common;
-using Scripts.Containers;
 using Scripts.Coroutines;
 using Scripts.Gameplay;
+using Scripts.Network.Services;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -21,12 +21,9 @@ namespace Scripts.World
                 coroutinesExecutor = new ExternalCoroutinesExecutor();
                 coroutinesExecutor.ExecuteExternally();
                 coroutinesExecutor.StartTask(
-                    ChangeScene,
-                    exception =>
-                    {
-                        Debug.LogError(
-                            "PortalTeleportation::Teleport() -> An exception occurred during the operation. The connection with the server has been lost.");
-                    });
+                    method: ChangeScene,
+                    onException: (e) => 
+                        Debug.LogError("Failed to send change scene operation."));
             }
         }
 
@@ -37,7 +34,7 @@ namespace Scripts.World
 
         private async Task ChangeScene(IYield yield)
         {
-            var gameSceneApi = ServiceContainer.GameService.GetGameSceneApi();
+            var gameSceneApi = ServiceProvider.GameService.GetGameSceneApi();
             if (gameSceneApi != null)
             {
                 var entity = GetComponent<IEntity>();
