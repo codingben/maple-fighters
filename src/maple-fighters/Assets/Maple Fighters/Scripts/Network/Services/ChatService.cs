@@ -1,6 +1,5 @@
 ﻿using Scripts.Network.APIs;
 using Scripts.Network.Core;
-using Scripts.ScriptableObjects;
 using UnityEngine;
 
 namespace Scripts.Network.Services
