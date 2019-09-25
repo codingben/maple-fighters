@@ -56,12 +56,22 @@ namespace Scripts.Containers
 
         private void OnEntityEntered(EnterSceneResponseParameters parameters)
         {
-            localEntity = collection.Add(parameters.SceneObject);
+            var id = parameters.SceneObject.Id;
+            var name = parameters.SceneObject.Name;
+            var position = 
+                new Vector2(parameters.SceneObject.X, parameters.SceneObject.Y);
+
+            localEntity = collection.Add(id, name, position);
         }
 
         private void OnEntityAdded(SceneObjectAddedEventParameters parameters)
         {
-            collection.Add(parameters.SceneObject);
+            var id = parameters.SceneObject.Id;
+            var name = parameters.SceneObject.Name;
+            var position =
+                new Vector2(parameters.SceneObject.X, parameters.SceneObject.Y);
+
+            collection.Add(id, name, position);
         }
 
         private void OnEntityRemoved(SceneObjectRemovedEventParameters parameters)
@@ -73,7 +83,11 @@ namespace Scripts.Containers
         {
             foreach (var sceneObject in parameters.SceneObjects)
             {
-                collection.Add(sceneObject);
+                var id = sceneObject.Id;
+                var name = sceneObject.Name;
+                var position = new Vector2(sceneObject.X, sceneObject.Y);
+
+                collection.Add(id, name, position);
             }
         }
 
