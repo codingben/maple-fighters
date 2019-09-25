@@ -1,6 +1,6 @@
 ﻿using System;
 using Game.Common;
-using Scripts.Containers;
+using Scripts.Network.Services;
 using UnityEngine;
 
 namespace Scripts.Gameplay.Actors
@@ -11,7 +11,7 @@ namespace Scripts.Gameplay.Actors
 
         private void Awake()
         {
-            var gameSceneApi = ServiceContainer.GameService.GetGameSceneApi();
+            var gameSceneApi = ServiceProvider.GameService.GetGameSceneApi();
             if (gameSceneApi != null)
             {
                 gameSceneApi.SceneEntered.AddListener(OnSceneEntered);
@@ -22,7 +22,7 @@ namespace Scripts.Gameplay.Actors
         
         private void OnDestroy()
         {
-            var gameSceneApi = ServiceContainer.GameService.GetGameSceneApi();
+            var gameSceneApi = ServiceProvider.GameService.GetGameSceneApi();
             if (gameSceneApi != null)
             {
                 gameSceneApi.SceneEntered.RemoveListener(OnSceneEntered);
