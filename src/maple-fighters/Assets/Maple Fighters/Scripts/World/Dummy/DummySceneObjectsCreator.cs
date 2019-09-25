@@ -5,6 +5,7 @@ using System.Linq;
 using Game.Common;
 using Scripts.Containers;
 using Scripts.Gameplay.Actors;
+using Scripts.Network.Services;
 using Scripts.Utils;
 using UnityEngine;
 
@@ -46,11 +47,8 @@ namespace Scripts.World.Dummy
             var parameters = 
                 dummyCharacterDetailsProvider.GetDummyCharacterParameters();
 
-            var gameSceneApi = ServiceContainer.GameService.GetGameSceneApi();
-            if (gameSceneApi != null)
-            {
-                gameSceneApi.SceneEntered.Invoke(parameters);
-            }
+            var gameSceneApi = ServiceProvider.GameService.GetGameSceneApi();
+            gameSceneApi?.SceneEntered.Invoke(parameters);
 
             id = parameters.SceneObject.Id;
         }
@@ -60,11 +58,8 @@ namespace Scripts.World.Dummy
             foreach (var dummyParameters in GetDummySceneObjectsParameters())
             {
                 var gameSceneApi =
-                    ServiceContainer.GameService.GetGameSceneApi();
-                if (gameSceneApi != null)
-                {
-                    gameSceneApi.SceneObjectAdded.Invoke(dummyParameters);
-                }
+                    ServiceProvider.GameService.GetGameSceneApi();
+                gameSceneApi?.SceneObjectAdded.Invoke(dummyParameters);
             }
 
             InitializeDummySceneObjects();
