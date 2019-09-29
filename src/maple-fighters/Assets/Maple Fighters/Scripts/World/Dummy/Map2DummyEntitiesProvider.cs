@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Scripts.World.Dummy
 {
-    public class Map2SceneObjectsProvider : DummySceneObjectsProviderBase
+    public class Map2DummyEntitiesProvider : DummySceneObjectsProviderBase
     {
         protected override IEnumerable<DummySceneObject> GetDummySceneObjects()
         {
