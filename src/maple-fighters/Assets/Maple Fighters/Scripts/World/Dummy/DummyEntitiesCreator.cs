@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using Game.Common;
 using Scripts.Gameplay.Actors;
-using Scripts.Gameplay.Entity;
 using Scripts.Network.Services;
 using Scripts.Utils;
 using UnityEngine;
@@ -34,7 +33,7 @@ namespace Scripts.World.Dummy
             yield return null;
 
             CreateLocalDummyEntity();
-            StartCoroutine(CreateDummyEntities());
+            CreateDummyEntities();
         }
 
         private void CreateLocalDummyEntity()
@@ -47,12 +46,11 @@ namespace Scripts.World.Dummy
             gameSceneApi?.SceneEntered.Invoke(parameters);
         }
 
-        private IEnumerator CreateDummyEntities()
+        private void CreateDummyEntities()
         {
             var dummyEntities = dummyEntitiesProvider.GetEntities();
             foreach (var dummyEntity in dummyEntities)
             {
-                // Create the entity
                 var dummyParameters = new SceneObjectAddedEventParameters(
                     new SceneObjectParameters(
                         dummyEntity.Id,
@@ -63,21 +61,6 @@ namespace Scripts.World.Dummy
                 var gameSceneApi =
                     ServiceProvider.GameService.GetGameSceneApi();
                 gameSceneApi?.SceneObjectAdded.Invoke(dummyParameters);
-
-                // Wait a frame
-                yield return null;
-
-                // Get the entity
-                var id = dummyEntity.Id;
-                var entity = EntityContainer.GetInstance().GetRemoteEntity(id);
-                if (entity != null)
-                {
-                    entity.GameObject.name =
-                        $"{entity.GameObject.name} (Id: {id})";
-
-                    // TODO: Refactor this shit
-                    dummyEntity.AddComponentsAction?.Invoke(entity.GameObject);
-                }
             }
         }
     }
