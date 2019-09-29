@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using Game.Common;
 using Scripts.Network.Services;
-using Scripts.Utils;
 using UnityEngine;
 
 namespace Scripts.World.Dummy
@@ -19,12 +18,6 @@ namespace Scripts.World.Dummy
         private void Start()
         {
             StartCoroutine(WaitFrameAndStart());
-        }
-
-        private void OnDestroy()
-        {
-            // TODO: WTF?
-            SavedGameObjects.GetInstance().DestroyAll();
         }
 
         private IEnumerator WaitFrameAndStart()
