@@ -22,12 +22,6 @@ namespace Scripts.World.Dummy
                 Name = "Portal",
                 Position = new Vector2(-17.125f, -1.5f),
                 SpawnDirection = Directions.Left,
-                AddComponentsAction = (gameObject) =>
-                {
-                    var portalController =
-                        gameObject.AddComponent<DummyPortalController>();
-                    portalController.CreateTeleportation(Maps.Map_2);
-                }
             };
         }
     }
