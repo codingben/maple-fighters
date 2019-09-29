@@ -1,13 +1,12 @@
 ﻿using System.Collections;
 using Game.Common;
-using Scripts.Gameplay.Actors;
 using Scripts.Network.Services;
 using Scripts.Utils;
 using UnityEngine;
 
 namespace Scripts.World.Dummy
 {
-    [RequireComponent(typeof(DummyCharacterDetailsProvider))]
+    [RequireComponent(typeof(IDummyEntitiesProvider))]
     public class DummyEntitiesCreator : MonoBehaviour
     {
         private IDummyEntitiesProvider dummyEntitiesProvider;
@@ -32,18 +31,7 @@ namespace Scripts.World.Dummy
         {
             yield return null;
 
-            CreateLocalDummyEntity();
             CreateDummyEntities();
-        }
-
-        private void CreateLocalDummyEntity()
-        {
-            var dummyCharacterDetailsProvider =
-                GetComponent<DummyCharacterDetailsProvider>();
-            var parameters = 
-                dummyCharacterDetailsProvider.GetDummyCharacterParameters();
-            var gameSceneApi = ServiceProvider.GameService.GetGameSceneApi();
-            gameSceneApi?.SceneEntered.Invoke(parameters);
         }
 
         private void CreateDummyEntities()
