@@ -4,11 +4,11 @@ using UnityEngine;
 
 namespace Scripts.World.Dummy
 {
-    public class Map1SceneObjectsProvider : DummySceneObjectsProviderBase
+    public class Map1SceneObjectsProvider : MonoBehaviour, IDummyEntitiesProvider
     {
-        protected override IEnumerable<DummySceneObject> GetDummySceneObjects()
+        public IEnumerable<DummyEntity> GetEntities()
         {
-            yield return new DummySceneObject
+            yield return new DummyEntity
             {
                 Id = 1,
                 Name = "Guardian",
@@ -16,13 +16,13 @@ namespace Scripts.World.Dummy
                 SpawnDirection = Directions.Right
             };
 
-            yield return new DummySceneObject
+            yield return new DummyEntity
             {
                 Id = 2,
                 Name = "Portal",
                 Position = new Vector2(-17.125f, -1.5f),
                 SpawnDirection = Directions.Left,
-                AddComponentsAction = (gameObject) => 
+                AddComponentsAction = (gameObject) =>
                 {
                     var portalController =
                         gameObject.AddComponent<DummyPortalController>();
