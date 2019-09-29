@@ -9,35 +9,34 @@ namespace Scripts.Gameplay.Actors
     public class DummyCharacter
     {
         [ViewOnly]
-        public int Id = 0;
+        public int Id;
         public string Name;
         public CharacterClasses CharacterClass;
-        public Vector2 SpawnPosition;
-        public Directions SpawnDirection;
+        public Vector2 Position;
+        public Directions Direction;
 
         public static EnterSceneResponseParameters CreateDummyCharacter(
             int id,
             string name,
             CharacterClasses characterClass,
-            Vector2 spawnPosition,
-            Directions spawnDirection)
+            Vector2 position,
+            Directions direction)
         {
-            const string PlayerObject = "Local Player";
-
             var sceneObject = new SceneObjectParameters(
                 id,
-                PlayerObject,
-                spawnPosition.x,
-                spawnPosition.y,
-                spawnDirection);
-            var characterFromDatabase = new CharacterParameters(
-                name,
-                characterClass,
-                CharacterIndex.Zero);
+                "Local Player",
+                position.x,
+                position.y,
+                direction);
+
             var character = new CharacterSpawnDetailsParameters(
-                sceneObject.Id,
-                characterFromDatabase,
-                spawnDirection);
+                id,
+                new CharacterParameters(
+                    name,
+                    characterClass,
+                    CharacterIndex.Zero),
+                direction);
+
             return new EnterSceneResponseParameters(sceneObject, character);
         }
     }
