@@ -14,8 +14,8 @@ namespace Scripts.Gameplay.Actors
                 dummyCharacter.Id,
                 dummyCharacter.Name,
                 dummyCharacter.CharacterClass,
-                dummyCharacter.SpawnPosition,
-                dummyCharacter.SpawnDirection);
+                dummyCharacter.Position,
+                dummyCharacter.Direction);
         }
     }
 }
