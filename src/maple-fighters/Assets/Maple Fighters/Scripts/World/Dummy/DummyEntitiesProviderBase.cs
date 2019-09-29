@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Scripts.World.Dummy
 {
     [RequireComponent(typeof(DummySceneObjectsCreator))]
-    public abstract class DummySceneObjectsProviderBase : MonoBehaviour, IDummySceneObjectsProvider
+    public abstract class DummyEntitiesProviderBase : MonoBehaviour, IDummySceneObjectsProvider
     {
         public IEnumerable<DummySceneObject> GetSceneObjects() => sceneObjects;
 
