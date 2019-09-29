@@ -2,7 +2,7 @@
 
 namespace Scripts.World.Dummy
 {
-    public interface IDummySceneObjectsProvider
+    public interface IDummyEntitiesProvider
     {
         IEnumerable<DummySceneObject> GetSceneObjects();
     }
