@@ -12,7 +12,7 @@ using UnityEngine;
 namespace Scripts.World.Dummy
 {
     [RequireComponent(typeof(DummyCharacterDetailsProvider))]
-    public class DummySceneObjectsCreator : MonoBehaviour
+    public class DummyEntitiesCreator : MonoBehaviour
     {
         private IDummySceneObjectsProvider dummySceneObjectsProvider;
 
