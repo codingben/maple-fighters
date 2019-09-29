@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Scripts.World.Dummy
 {
     [Serializable]
-    public class DummySceneObject
+    public class DummyEntity
     {
         public string Name;
         public int Id;
