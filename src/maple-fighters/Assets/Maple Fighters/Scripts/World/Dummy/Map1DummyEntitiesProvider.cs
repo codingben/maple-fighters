@@ -13,7 +13,7 @@ namespace Scripts.World.Dummy
                 Id = 1,
                 Name = "Guardian",
                 Position = new Vector2(-14.24f, -1.95f),
-                SpawnDirection = Directions.Right
+                Direction = Directions.Right
             };
 
             yield return new DummyEntity
@@ -21,7 +21,7 @@ namespace Scripts.World.Dummy
                 Id = 2,
                 Name = "Portal",
                 Position = new Vector2(-17.125f, -1.5f),
-                SpawnDirection = Directions.Left,
+                Direction = Directions.Left,
             };
         }
     }
