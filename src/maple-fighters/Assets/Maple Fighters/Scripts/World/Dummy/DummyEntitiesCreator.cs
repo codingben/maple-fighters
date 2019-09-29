@@ -59,7 +59,7 @@ namespace Scripts.World.Dummy
                         dummyEntity.Name,
                         dummyEntity.Position.x,
                         dummyEntity.Position.y,
-                        dummyEntity.SpawnDirection));
+                        dummyEntity.Direction));
                 var gameSceneApi =
                     ServiceProvider.GameService.GetGameSceneApi();
                 gameSceneApi?.SceneObjectAdded.Invoke(dummyParameters);
