@@ -4,6 +4,6 @@ namespace Scripts.World.Dummy
 {
     public interface IDummyEntitiesProvider
     {
-        IEnumerable<DummySceneObject> GetSceneObjects();
+        IEnumerable<DummyEntity> GetEntities();
     }
 }
