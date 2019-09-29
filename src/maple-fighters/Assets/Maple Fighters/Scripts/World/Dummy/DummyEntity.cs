@@ -11,6 +11,5 @@ namespace Scripts.World.Dummy
         public int Id;
         public Vector2 Position;
         public Directions SpawnDirection;
-        public Action<GameObject> AddComponentsAction;
     }
 }
