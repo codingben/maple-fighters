@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections;
 using Game.Common;
 using Scripts.Gameplay.Actors;
 using Scripts.Gameplay.Entity;
@@ -36,7 +34,7 @@ namespace Scripts.World.Dummy
             yield return null;
 
             CreateLocalDummyEntity();
-            CreateDummyEntities();
+            StartCoroutine(CreateDummyEntities());
         }
 
         private void CreateLocalDummyEntity()
@@ -45,73 +43,42 @@ namespace Scripts.World.Dummy
                 GetComponent<DummyCharacterDetailsProvider>();
             var parameters = 
                 dummyCharacterDetailsProvider.GetDummyCharacterParameters();
-
             var gameSceneApi = ServiceProvider.GameService.GetGameSceneApi();
             gameSceneApi?.SceneEntered.Invoke(parameters);
         }
 
-        private void CreateDummyEntities()
+        private IEnumerator CreateDummyEntities()
         {
-            foreach (var dummyParameters in GetDummyEntitiesParameters())
+            var dummyEntities = dummyEntitiesProvider.GetEntities();
+            foreach (var dummyEntity in dummyEntities)
             {
+                // Create the entity
+                var dummyParameters = new SceneObjectAddedEventParameters(
+                    new SceneObjectParameters(
+                        dummyEntity.Id,
+                        dummyEntity.Name,
+                        dummyEntity.Position.x,
+                        dummyEntity.Position.y,
+                        dummyEntity.SpawnDirection));
                 var gameSceneApi =
                     ServiceProvider.GameService.GetGameSceneApi();
                 gameSceneApi?.SceneObjectAdded.Invoke(dummyParameters);
-            }
 
-            InitializeDummyEntities();
-        }
+                // Wait a frame
+                yield return null;
 
-        private void InitializeDummyEntities()
-        {
-            foreach (var dummyEntity in dummySceneObjectsProvider
-                .GetSceneObjects())
-            {
+                // Get the entity
                 var id = dummyEntity.Id;
-                CreateCommonComponentsToEntity(id);
-
                 var entity = EntityContainer.GetInstance().GetRemoteEntity(id);
                 if (entity != null)
                 {
+                    entity.GameObject.name =
+                        $"{entity.GameObject.name} (Id: {id})";
+
+                    // TODO: Refactor this shit
                     dummyEntity.AddComponentsAction?.Invoke(entity.GameObject);
                 }
             }
-        }
-
-        private void CreateCommonComponentsToEntity(
-            int id,
-            params Type[] components)
-        {
-            var entity = 
-                EntityContainer.GetInstance().GetRemoteEntity(id)
-                    ?.GameObject;
-            if (entity == null)
-            {
-                Debug.LogWarning($"Could not find a scene object with id {id}");
-                return;
-            }
-
-            entity.gameObject.name = $"{entity.gameObject.name} (Id: {id})";
-
-            foreach (var component in components)
-            {
-                entity.AddComponent(component);
-            }
-        }
-
-        private IEnumerable<SceneObjectAddedEventParameters> GetDummyEntitiesParameters()
-        {
-            return dummySceneObjectsProvider.GetSceneObjects()
-                .Select(
-                    dummySceneObject => new SceneObjectParameters(
-                        dummySceneObject.Id,
-                        dummySceneObject.Name,
-                        dummySceneObject.Position.x,
-                        dummySceneObject.Position.y,
-                        dummySceneObject.SpawnDirection))
-                .Select(
-                    parameters =>
-                        new SceneObjectAddedEventParameters(parameters));
         }
     }
 }
