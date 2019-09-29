@@ -4,11 +4,11 @@ using UnityEngine;
 
 namespace Scripts.World.Dummy
 {
-    public class Map2DummyEntitiesProvider : DummySceneObjectsProviderBase
+    public class Map2DummyEntitiesProvider : MonoBehaviour, IDummyEntitiesProvider
     {
-        protected override IEnumerable<DummySceneObject> GetDummySceneObjects()
+        public IEnumerable<DummyEntity> GetEntities()
         {
-            yield return new DummySceneObject
+            yield return new DummyEntity
             {
                 Id = 1,
                 Name = "BlueSnail",
@@ -16,7 +16,7 @@ namespace Scripts.World.Dummy
                 SpawnDirection = Directions.Left,
             };
 
-            yield return new DummySceneObject
+            yield return new DummyEntity
             {
                 Id = 2,
                 Name = "Portal",
