@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Scripts.World.Dummy
 {
-    public class Map1SceneObjectsProvider : MonoBehaviour, IDummyEntitiesProvider
+    public class Map1DummyEntitiesProvider : MonoBehaviour, IDummyEntitiesProvider
     {
         public IEnumerable<DummyEntity> GetEntities()
         {
