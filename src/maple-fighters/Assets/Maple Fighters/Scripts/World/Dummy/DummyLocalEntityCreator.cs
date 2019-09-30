@@ -10,6 +10,9 @@ namespace Scripts.World.Dummy
         [SerializeField]
         private DummyEntity dummyEntity;
 
+        [SerializeField]
+        private CharacterClasses characterClass;
+
         private void Start()
         {
             StartCoroutine(WaitFrameAndStart());
@@ -35,7 +38,7 @@ namespace Scripts.World.Dummy
                 dummyEntity.Id,
                 new CharacterParameters(
                     dummyEntity.Name,
-                    dummyEntity.CharacterClass,
+                    characterClass,
                     CharacterIndex.Zero),
                 dummyEntity.Direction);
 
