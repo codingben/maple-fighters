@@ -7,6 +7,7 @@ namespace Scripts.Gameplay.Player
     [RequireComponent(typeof(PlayerController), typeof(Collider2D))]
     public class RopeInteraction : MonoBehaviour
     {
+        // TODO: Get this data from another source
         private const string RopeTag = "Rope";
         private const string FloorTag = "Ground";
         private const string FloorLayerName = "Floor";
