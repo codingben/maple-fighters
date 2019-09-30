@@ -1,19 +1,10 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using Game.Common;
 using Scripts.Network.Services;
 using UnityEngine;
 
 namespace Scripts.World.Dummy
 {
-    [Serializable]
-    public class DummyCharacter
-    {
-        public DummyEntity DummyEntity;
-        public CharacterClasses CharacterClass;
-        public CharacterIndex CharacterIndex = CharacterIndex.Zero;
-    }
-
     public class DummyLocalEntityCreator : MonoBehaviour
     {
         [SerializeField]
