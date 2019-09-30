@@ -11,7 +11,7 @@ namespace Scripts.World.Dummy
     {
         public DummyEntity DummyEntity;
         public CharacterClasses CharacterClass;
-        public CharacterIndex CharacterIndex;
+        public CharacterIndex CharacterIndex = CharacterIndex.Zero;
     }
 
     public class DummyLocalEntityCreator : MonoBehaviour
