@@ -25,11 +25,13 @@ namespace Scripts.Gameplay.Actors
                     ServiceProvider.GameService.GetGameSceneApi();
                 if (gameSceneApi != null)
                 {
+                    var x = transform.position.x;
+                    var y = transform.position.y;
                     var z = GetDirection();
 
-                    gameSceneApi.UpdatePosition(
-                        new UpdatePositionRequestParameters(
-                            transform.position.x, transform.position.y, z));
+                    var parameters =
+                        new UpdatePositionRequestParameters(x, y, z);
+                    gameSceneApi.UpdatePosition(parameters);
                 }
             }
         }
