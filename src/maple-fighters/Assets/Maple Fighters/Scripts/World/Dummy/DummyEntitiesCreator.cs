@@ -5,15 +5,9 @@ using UnityEngine;
 
 namespace Scripts.World.Dummy
 {
-    [RequireComponent(typeof(IDummyEntitiesProvider))]
     public class DummyEntitiesCreator : MonoBehaviour
     {
-        private IDummyEntitiesProvider dummyEntitiesProvider;
-
-        private void Awake()
-        {
-            dummyEntitiesProvider = GetComponent<IDummyEntitiesProvider>();
-        }
+        private DummyEntity[] dummyEntities;
 
         private void Start()
         {
@@ -29,19 +23,19 @@ namespace Scripts.World.Dummy
 
         private void CreateDummyEntities()
         {
-            var dummyEntities = dummyEntitiesProvider.GetEntities();
             foreach (var dummyEntity in dummyEntities)
             {
-                var dummyParameters = new SceneObjectAddedEventParameters(
+                var parameters = new SceneObjectAddedEventParameters(
                     new SceneObjectParameters(
                         dummyEntity.Id,
                         dummyEntity.Name,
                         dummyEntity.Position.x,
                         dummyEntity.Position.y,
                         dummyEntity.Direction));
+
                 var gameSceneApi =
                     ServiceProvider.GameService.GetGameSceneApi();
-                gameSceneApi?.SceneObjectAdded.Invoke(dummyParameters);
+                gameSceneApi?.SceneObjectAdded.Invoke(parameters);
             }
         }
     }
