@@ -221,7 +221,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 298437733}
-  - component: {fileID: 298437735}
   - component: {fileID: 298437732}
   m_Layer: 0
   m_Name: Dummy Local Entity
@@ -242,6 +241,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1e10109dafe04243a1d7d65b6c67231, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dummyCharacter:
+    DummyEntity:
+      Id: 0
+      Name: Local Player
+      Position: {x: -12.8, y: -12.8}
+      Direction: 2
+    CharacterClass: 1
+    CharacterIndex: 4
 --- !u!4 &298437733
 Transform:
   m_ObjectHideFlags: 0
@@ -256,24 +263,6 @@ Transform:
   m_Father: {fileID: 1724481667}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &298437735
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 298437731}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d2381ff4e1199de4fa49d2dea6a8ad4a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dummyCharacter:
-    Id: 0
-    Name: Dummy
-    CharacterClass: 1
-    SpawnPosition: {x: -12.8, y: -12.8}
-    SpawnDirection: 2
 --- !u!1 &354198740
 GameObject:
   m_ObjectHideFlags: 0
@@ -340,7 +329,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 459885844}
-  - component: {fileID: 459885846}
   - component: {fileID: 459885845}
   m_Layer: 0
   m_Name: Dummy Entities
@@ -375,18 +363,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a20dda69034d6f4183f4d5f2c9a41ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &459885846
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 459885843}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 851920230a38ed3489ec813702b6b7c5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  dummyEntities:
+  - Id: 1
+    Name: BlueSnail
+    Position: {x: -2, y: -8.1}
+    Direction: 1
+  - Id: 2
+    Name: Portal
+    Position: {x: 12.5, y: -1.125}
+    Direction: 1
 --- !u!1 &492292231
 GameObject:
   m_ObjectHideFlags: 0
