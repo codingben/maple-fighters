@@ -1,11 +1,10 @@
 ﻿using Game.Common;
-using Scripts.Gameplay.Actors;
 using Scripts.Gameplay.Entity;
 using Scripts.Gameplay.Player;
 using Scripts.Network.Services;
 using UnityEngine;
 
-namespace Scripts.Gameplay.Mobs
+namespace Scripts.Gameplay.Actors
 {
     public class BlueSnail : MonoBehaviour
     {
