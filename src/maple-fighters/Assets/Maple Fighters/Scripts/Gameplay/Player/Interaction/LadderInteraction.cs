@@ -1,9 +1,8 @@
 ﻿using System.Linq;
 using Game.Common;
-using Scripts.Gameplay.Player;
 using UnityEngine;
 
-namespace Scripts.Gameplay.Actors
+namespace Scripts.Gameplay.Player
 {
     [RequireComponent(typeof(PlayerController), typeof(Collider2D))]
     public class LadderInteraction : MonoBehaviour
