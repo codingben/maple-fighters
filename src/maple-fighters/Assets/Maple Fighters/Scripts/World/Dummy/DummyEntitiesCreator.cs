@@ -7,6 +7,7 @@ namespace Scripts.World.Dummy
 {
     public class DummyEntitiesCreator : MonoBehaviour
     {
+        [SerializeField]
         private DummyEntity[] dummyEntities;
 
         private void Start()
