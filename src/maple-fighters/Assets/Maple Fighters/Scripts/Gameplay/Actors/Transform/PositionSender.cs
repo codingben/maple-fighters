@@ -6,7 +6,8 @@ namespace Scripts.Gameplay.Actors
 {
     public class PositionSender : MonoBehaviour
     {
-        private const float GreaterDistance = 0.1f;
+        [SerializeField]
+        private float greaterDistance = 0.1f;
         private Vector2 lastPosition;
 
         private void Awake()
@@ -17,7 +18,7 @@ namespace Scripts.Gameplay.Actors
         private void Update()
         {
             var distance = Vector2.Distance(transform.position, lastPosition);
-            if (distance > GreaterDistance)
+            if (distance > greaterDistance)
             {
                 lastPosition = transform.position;
 
