@@ -1,17 +1,23 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using Game.Common;
 using Scripts.Network.Services;
 using UnityEngine;
 
 namespace Scripts.World.Dummy
 {
+    [Serializable]
+    public class DummyCharacter
+    {
+        public DummyEntity DummyEntity;
+        public CharacterClasses CharacterClass;
+        public CharacterIndex CharacterIndex;
+    }
+
     public class DummyLocalEntityCreator : MonoBehaviour
     {
         [SerializeField]
-        private DummyEntity dummyEntity;
-
-        [SerializeField]
-        private CharacterClasses characterClass;
+        private DummyCharacter dummyCharacter;
 
         private void Start()
         {
@@ -28,21 +34,21 @@ namespace Scripts.World.Dummy
         private void CreateLocalDummyEntity()
         {
             var sceneObject = new SceneObjectParameters(
-                dummyEntity.Id,
-                dummyEntity.Name,
-                dummyEntity.Position.x,
-                dummyEntity.Position.y,
-                dummyEntity.Direction);
+                dummyCharacter.DummyEntity.Id,
+                dummyCharacter.DummyEntity.Name,
+                dummyCharacter.DummyEntity.Position.x,
+                dummyCharacter.DummyEntity.Position.y,
+                dummyCharacter.DummyEntity.Direction);
 
             var character = new CharacterParameters(
-                dummyEntity.Name,
-                characterClass,
-                CharacterIndex.Zero);
+                dummyCharacter.DummyEntity.Name,
+                dummyCharacter.CharacterClass,
+                dummyCharacter.CharacterIndex);
 
             var characterSpawnDetails = new CharacterSpawnDetailsParameters(
-                dummyEntity.Id,
+                dummyCharacter.DummyEntity.Id,
                 character,
-                dummyEntity.Direction);
+                dummyCharacter.DummyEntity.Direction);
 
             var parameters =
                 new EnterSceneResponseParameters(
