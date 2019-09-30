@@ -29,21 +29,25 @@ namespace Scripts.World.Dummy
         {
             var sceneObject = new SceneObjectParameters(
                 dummyEntity.Id,
-                "Local Player",
+                dummyEntity.Name,
                 dummyEntity.Position.x,
                 dummyEntity.Position.y,
                 dummyEntity.Direction);
 
-            var character = new CharacterSpawnDetailsParameters(
+            var character = new CharacterParameters(
+                dummyEntity.Name,
+                characterClass,
+                CharacterIndex.Zero);
+
+            var characterSpawnDetails = new CharacterSpawnDetailsParameters(
                 dummyEntity.Id,
-                new CharacterParameters(
-                    dummyEntity.Name,
-                    characterClass,
-                    CharacterIndex.Zero),
+                character,
                 dummyEntity.Direction);
 
             var parameters =
-                new EnterSceneResponseParameters(sceneObject, character);
+                new EnterSceneResponseParameters(
+                    sceneObject,
+                    characterSpawnDetails);
 
             var gameSceneApi = ServiceProvider.GameService.GetGameSceneApi();
             gameSceneApi?.SceneEntered.Invoke(parameters);
