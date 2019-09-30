@@ -1,13 +1,15 @@
 ﻿using System.Collections;
-using Scripts.Gameplay.Actors;
+using Game.Common;
 using Scripts.Network.Services;
 using UnityEngine;
 
 namespace Scripts.World.Dummy
 {
-    [RequireComponent(typeof(DummyCharacterDetailsProvider))]
     public class DummyLocalEntityCreator : MonoBehaviour
     {
+        [SerializeField]
+        private DummyEntity dummyEntity;
+
         private void Start()
         {
             StartCoroutine(WaitFrameAndStart());
@@ -22,10 +24,24 @@ namespace Scripts.World.Dummy
 
         private void CreateLocalDummyEntity()
         {
-            var dummyCharacterDetailsProvider =
-                GetComponent<DummyCharacterDetailsProvider>();
+            var sceneObject = new SceneObjectParameters(
+                dummyEntity.Id,
+                "Local Player",
+                dummyEntity.Position.x,
+                dummyEntity.Position.y,
+                dummyEntity.Direction);
+
+            var character = new CharacterSpawnDetailsParameters(
+                dummyEntity.Id,
+                new CharacterParameters(
+                    dummyEntity.Name,
+                    dummyEntity.CharacterClass,
+                    CharacterIndex.Zero),
+                dummyEntity.Direction);
+
             var parameters =
-                dummyCharacterDetailsProvider.GetDummyCharacterParameters();
+                new EnterSceneResponseParameters(sceneObject, character);
+
             var gameSceneApi = ServiceProvider.GameService.GetGameSceneApi();
             gameSceneApi?.SceneEntered.Invoke(parameters);
         }
