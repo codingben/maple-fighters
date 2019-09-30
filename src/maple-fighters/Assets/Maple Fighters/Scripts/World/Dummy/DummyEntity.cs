@@ -10,7 +10,6 @@ namespace Scripts.World.Dummy
         public int Id;
         public string Name;
         public Vector2 Position;
-        public CharacterClasses CharacterClass;
         public Directions Direction;
     }
 }
