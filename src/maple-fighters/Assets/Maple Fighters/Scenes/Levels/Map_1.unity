@@ -290,7 +290,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 254094657}
-  - component: {fileID: 254094659}
   - component: {fileID: 254094658}
   m_Layer: 0
   m_Name: Dummy Entities
@@ -325,18 +324,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a20dda69034d6f4183f4d5f2c9a41ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &254094659
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 254094656}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4a2981f248604ed46ac5772d7a7442b0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  dummyEntities:
+  - Id: 1
+    Name: Guardian
+    Position: {x: -14.24, y: -1.95}
+    Direction: 2
+  - Id: 2
+    Name: Portal
+    Position: {x: -17.125, y: -1.5}
+    Direction: 1
 --- !u!1 &438923631
 GameObject:
   m_ObjectHideFlags: 0
@@ -1126,7 +1122,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1094532426}
-  - component: {fileID: 1094532429}
   - component: {fileID: 1094532427}
   m_Layer: 0
   m_Name: Dummy Local Entity
@@ -1161,24 +1156,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1e10109dafe04243a1d7d65b6c67231, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1094532429
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1094532425}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d2381ff4e1199de4fa49d2dea6a8ad4a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
   dummyCharacter:
-    Id: 0
-    Name: Dummy
+    DummyEntity:
+      Id: 0
+      Name: Local Player
+      Position: {x: 18, y: -1.815}
+      Direction: 1
     CharacterClass: 0
-    SpawnPosition: {x: 18, y: -1.815}
-    SpawnDirection: 1
+    CharacterIndex: 4
 --- !u!1001 &1361644824
 PrefabInstance:
   m_ObjectHideFlags: 0
