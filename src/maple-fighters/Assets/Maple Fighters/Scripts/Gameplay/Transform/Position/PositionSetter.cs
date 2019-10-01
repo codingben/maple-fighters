@@ -4,7 +4,7 @@ using Scripts.Gameplay.GameEntity;
 using Scripts.Network.Services;
 using UnityEngine;
 
-namespace Scripts.Gameplay.Transform
+namespace Scripts.Gameplay.EntityTransform
 {
     [RequireComponent(typeof(Entity))]
     public class PositionSetter : MonoBehaviour
