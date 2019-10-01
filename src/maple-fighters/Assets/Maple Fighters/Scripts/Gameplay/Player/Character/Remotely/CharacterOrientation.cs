@@ -2,7 +2,7 @@
 using Scripts.Gameplay.EntityTransform;
 using UnityEngine;
 
-namespace Scripts.Gameplay.Actors
+namespace Scripts.Gameplay.PlayerCharacter
 {
     [RequireComponent(typeof(SpawnCharacter))]
     public class CharacterOrientation : MonoBehaviour, ICharacterOrientation
