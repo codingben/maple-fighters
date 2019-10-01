@@ -1,7 +1,7 @@
 ﻿using CommonTools.Coroutines;
 using UnityEngine;
 
-namespace Scripts.Utils
+namespace Scripts.Coroutines
 {
     public class GameTimeProviderCreator : MonoBehaviour
     {
