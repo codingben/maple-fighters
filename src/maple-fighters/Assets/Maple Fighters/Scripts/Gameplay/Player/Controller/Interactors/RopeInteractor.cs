@@ -16,14 +16,14 @@ namespace Scripts.Gameplay.Player
         private KeyCode interactionKey = KeyCode.LeftControl;
 
         private PlayerController playerController;
-        private CollidersInteraction collidersInteraction;
+        private ColliderInteraction colliderInteraction;
 
         private void Awake()
         {
             playerController = GetComponent<PlayerController>();
 
             var collider = GetComponent<Collider2D>();
-            collidersInteraction = new CollidersInteraction(collider);
+            colliderInteraction = new ColliderInteraction(collider);
         }
 
         private void Update()
@@ -35,7 +35,7 @@ namespace Scripts.Gameplay.Player
 
             if (Input.GetKeyDown(interactionKey) && IsPlayerStateSuitable())
             {
-                if (collidersInteraction.HasOverlappingCollider())
+                if (colliderInteraction.HasOverlappingCollider())
                 {
                     StartInteraction();
                 }
@@ -46,7 +46,7 @@ namespace Scripts.Gameplay.Player
         {
             if (collider.transform.CompareTag(RopeTag))
             {
-                collidersInteraction.SetOverlappingCollider(collider);
+                colliderInteraction.SetOverlappingCollider(collider);
             }
         }
 
@@ -56,13 +56,13 @@ namespace Scripts.Gameplay.Player
             {
                 if (IsInInteraction())
                 {
-                    collidersInteraction.EnableCollisionWithIgnoredCollider();
-                    collidersInteraction.SetIgnoredCollider(null);
+                    colliderInteraction.EnableCollisionWithIgnoredCollider();
+                    colliderInteraction.SetIgnoredCollider(null);
 
                     StopInteraction();
                 }
 
-                collidersInteraction.SetOverlappingCollider(null);
+                colliderInteraction.SetOverlappingCollider(null);
             }
         }
 
@@ -70,8 +70,8 @@ namespace Scripts.Gameplay.Player
         {
             if (IsInInteraction() && collision.transform.CompareTag(FloorTag))
             {
-                collidersInteraction.SetIgnoredCollider(collision.collider);
-                collidersInteraction.DisableCollisionWithIgnoredCollider();
+                colliderInteraction.SetIgnoredCollider(collision.collider);
+                colliderInteraction.DisableCollisionWithIgnoredCollider();
             }
         }
 
@@ -80,8 +80,8 @@ namespace Scripts.Gameplay.Player
             var ground = GetGroundedCollider();
             if (ground != null)
             {
-                collidersInteraction.SetIgnoredCollider(ground);
-                collidersInteraction.DisableCollisionWithIgnoredCollider();
+                colliderInteraction.SetIgnoredCollider(ground);
+                colliderInteraction.DisableCollisionWithIgnoredCollider();
             }
 
             ChangePositionToRopeCenter();
@@ -95,8 +95,8 @@ namespace Scripts.Gameplay.Player
 
         private void StopInteraction()
         {
-            collidersInteraction.EnableCollisionWithIgnoredCollider();
-            collidersInteraction.SetIgnoredCollider(null);
+            colliderInteraction.EnableCollisionWithIgnoredCollider();
+            colliderInteraction.SetIgnoredCollider(null);
 
             ChangePlayerStateFromRope();
         }
@@ -115,11 +115,11 @@ namespace Scripts.Gameplay.Player
 
         private void ChangePositionToRopeCenter()
         {
-            var rigidbody = collidersInteraction.GetAttachedRigidbody();
+            var rigidbody = colliderInteraction.GetAttachedRigidbody();
             rigidbody.velocity = Vector2.zero;
 
             Vector2 center;
-            if (collidersInteraction.HasOverlappingColliderPosition(out center))
+            if (colliderInteraction.HasOverlappingColliderPosition(out center))
             {
                 transform.parent.position = 
                     new Vector3(center.x, transform.parent.position.y);
