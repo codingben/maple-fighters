@@ -33,7 +33,7 @@ namespace Scripts.World
             yield return typeof(LogUtilsCreator);
             yield return typeof(GameTimeProviderCreator);
             yield return typeof(CharacterCreator);
-            yield return typeof(EnterSceneInvoker);
+            yield return typeof(EnterSceneOperationSender);
         }
 
         private IEnumerable<Type> GetContainersComponents()
