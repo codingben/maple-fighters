@@ -2,7 +2,7 @@
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-namespace Scripts.Gameplay.Entity
+namespace Scripts.Gameplay.GameEntity
 {
     public class EntityCollection : IEntityCollection
     {
