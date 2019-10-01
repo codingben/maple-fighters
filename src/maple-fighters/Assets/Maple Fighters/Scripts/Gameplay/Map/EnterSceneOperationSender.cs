@@ -3,9 +3,9 @@ using CommonTools.Coroutines;
 using Scripts.Network.Services;
 using UnityEngine;
 
-namespace Scripts.World
+namespace Scripts.Gameplay.Map
 {
-    public class EnterSceneInvoker : MonoBehaviour
+    public class EnterSceneOperationSender : MonoBehaviour
     {
         private ExternalCoroutinesExecutor coroutinesExecutor;
 
