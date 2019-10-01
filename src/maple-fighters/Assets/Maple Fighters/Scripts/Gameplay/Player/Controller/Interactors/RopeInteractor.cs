@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Scripts.Gameplay.Player
 {
     [RequireComponent(typeof(PlayerController), typeof(Collider2D))]
-    public class RopeInteraction : MonoBehaviour
+    public class RopeInteractor : MonoBehaviour
     {
         // TODO: Get this data from another source
         private const string RopeTag = "Rope";
