@@ -3,10 +3,9 @@ using UnityEngine;
 
 namespace Scripts.Gameplay.GameEntity
 {
+    [DisallowMultipleComponent]
     public class Entity : MonoBehaviour, IEntity
     {
-        [ViewOnly, SerializeField] private int id;
-
         public int Id
         {
             get => id;
@@ -15,5 +14,8 @@ namespace Scripts.Gameplay.GameEntity
         }
 
         public GameObject GameObject => gameObject;
+
+        [ViewOnly, SerializeField]
+        private int id;
     }
 }
