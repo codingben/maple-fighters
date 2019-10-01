@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Scripts.Gameplay.PlayerCharacter
 {
     [RequireComponent(typeof(SpawnCharacter))]
-    public class CharacterOrientation : MonoBehaviour, ICharacterOrientation
+    public class CharacterOrientation : MonoBehaviour
     {
         private Transform character;
         private ISpawnedCharacter spawnedCharacter;
