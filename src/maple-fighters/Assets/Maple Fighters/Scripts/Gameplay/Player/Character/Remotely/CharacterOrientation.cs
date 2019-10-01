@@ -1,4 +1,5 @@
 ﻿using Game.Common;
+using Scripts.Gameplay.EntityTransform;
 using UnityEngine;
 
 namespace Scripts.Gameplay.Actors
