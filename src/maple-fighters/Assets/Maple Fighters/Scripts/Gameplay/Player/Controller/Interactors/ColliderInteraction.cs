@@ -2,14 +2,14 @@
 
 namespace Scripts.Gameplay.Player
 {
-    public class CollidersInteraction
+    public class ColliderInteraction
     {
         private readonly Collider2D baseCollider;
 
         private Collider2D overlappingCollider;
         private Collider2D ignoredCollider;
 
-        public CollidersInteraction(Collider2D collider)
+        public ColliderInteraction(Collider2D collider)
         {
             baseCollider = collider;
         }
