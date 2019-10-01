@@ -2,7 +2,7 @@
 using Scripts.Network.Services;
 using UnityEngine;
 
-namespace Scripts.Gameplay.Transform
+namespace Scripts.Gameplay.EntityTransform
 {
     public class PositionSender : MonoBehaviour
     {
