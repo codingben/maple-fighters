@@ -1,5 +1,5 @@
 ﻿using Game.Common;
-using Scripts.Gameplay.Entity;
+using Scripts.Gameplay.GameEntity;
 using Scripts.Network.Services;
 using UnityEngine;
 
