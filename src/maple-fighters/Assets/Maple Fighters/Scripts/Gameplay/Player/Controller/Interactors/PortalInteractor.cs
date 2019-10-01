@@ -1,4 +1,4 @@
-﻿using Scripts.World;
+﻿using Scripts.World.Objects;
 using UnityEngine;
 
 namespace Scripts.Gameplay.Player
