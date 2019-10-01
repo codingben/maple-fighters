@@ -74,11 +74,11 @@ namespace Scripts.Gameplay.Player
         {
             var entity = 
                 EntityContainer.GetInstance()
-                    .GetRemoteEntity(parameters.SceneObjectId);
+                    .GetRemoteEntity(parameters.SceneObjectId)?.GameObject;
             if (entity != null)
             {
-                var playerAnimatorProvider = 
-                    entity.GameObject.GetComponent<PlayerAnimatorProvider>();
+                var playerAnimatorProvider =
+                    entity.GetComponent<PlayerAnimatorProvider>();
                 if (playerAnimatorProvider != null)
                 {
                     var animator = playerAnimatorProvider.Provide();
