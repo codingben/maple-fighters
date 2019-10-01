@@ -7,7 +7,7 @@ using Scripts.Network.Services;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace Scripts.World
+namespace Scripts.World.Objects
 {
     [RequireComponent(typeof(Entity))]
     public class PortalTeleportation : MonoBehaviour
