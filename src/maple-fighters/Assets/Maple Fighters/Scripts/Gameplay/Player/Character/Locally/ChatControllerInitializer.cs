@@ -1,7 +1,7 @@
 ﻿using Scripts.UI.Chat;
 using UnityEngine;
 
-namespace Scripts.Gameplay.Actors
+namespace Scripts.Gameplay.PlayerCharacter
 {
     [RequireComponent(typeof(SpawnCharacter), typeof(SpawnedCharacterDetails))]
     public class ChatControllerInitializer : MonoBehaviour
