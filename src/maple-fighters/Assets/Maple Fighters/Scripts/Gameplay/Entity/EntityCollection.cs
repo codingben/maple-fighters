@@ -41,10 +41,10 @@ namespace Scripts.Gameplay.GameEntity
 
         public void Remove(int id)
         {
-            var entity = TryGet(id);
+            var entity = TryGet(id)?.GameObject;
             if (entity != null)
             {
-                Object.Destroy(entity.GameObject);
+                Object.Destroy(entity);
 
                 collection.Remove(id);
 
