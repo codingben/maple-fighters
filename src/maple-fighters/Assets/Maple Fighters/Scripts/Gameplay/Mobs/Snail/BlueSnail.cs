@@ -1,7 +1,7 @@
 ﻿using Game.Common;
-using Scripts.Gameplay.Actors;
 using Scripts.Gameplay.GameEntity;
 using Scripts.Gameplay.Player;
+using Scripts.Gameplay.PlayerCharacter;
 using Scripts.Network.Services;
 using UnityEngine;
 
@@ -26,11 +26,11 @@ namespace Scripts.Gameplay.Mobs
 
         private void OnPlayerAttacked(PlayerAttackedEventParameters parameters)
         {
-            var entity = EntityContainer.GetInstance().GetLocalEntity();
+            var entity = EntityContainer.GetInstance().GetLocalEntity()
+                ?.GameObject;
             if (entity != null)
             {
-                var spawnedCharacter =
-                    entity.GameObject.GetComponent<ISpawnedCharacter>();
+                var spawnedCharacter = entity.GetComponent<ISpawnedCharacter>();
                 var character = spawnedCharacter.GetCharacterGameObject();
                 if (character != null)
                 {
