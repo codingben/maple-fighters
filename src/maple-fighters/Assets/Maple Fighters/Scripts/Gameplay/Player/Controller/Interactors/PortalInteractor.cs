@@ -1,8 +1,9 @@
-﻿using UnityEngine;
+﻿using Scripts.World;
+using UnityEngine;
 
-namespace Scripts.World
+namespace Scripts.Gameplay.Player
 {
-    public class PortalInteraction : MonoBehaviour
+    public class PortalInteractor : MonoBehaviour
     {
         private const string PortalTag = "Portal";
 
