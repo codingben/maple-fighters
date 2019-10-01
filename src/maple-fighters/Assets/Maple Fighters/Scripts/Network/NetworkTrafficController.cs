@@ -3,7 +3,7 @@ using Scripts.Network.Core;
 using Scripts.Network.Services;
 using UnityEngine;
 
-namespace Scripts.World
+namespace Scripts.Network
 {
     public class NetworkTrafficController : MonoBehaviour
     {
