@@ -5,9 +5,9 @@ using Scripts.Gameplay.GameEntity;
 using Scripts.Gameplay.Map;
 using Scripts.Gameplay.PlayerCharacter;
 using Scripts.Logging;
+using Scripts.Network;
 using Scripts.UI.Chat;
 using Scripts.UI.Focus;
-using Scripts.World;
 using UnityEngine;
 
 namespace Scripts.Gameplay.Creator
