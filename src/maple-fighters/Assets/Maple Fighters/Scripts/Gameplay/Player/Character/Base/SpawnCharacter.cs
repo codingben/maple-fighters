@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Scripts.Gameplay.Actors
+namespace Scripts.Gameplay.PlayerCharacter
 {
     [RequireComponent(typeof(SpawnedCharacterDetails))]
     public class SpawnCharacter : MonoBehaviour, ISpawnedCharacter
