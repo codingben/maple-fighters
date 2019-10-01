@@ -1,7 +1,7 @@
 ﻿using Scripts.ScriptableObjects;
 using UnityEngine;
 
-namespace Scripts.World
+namespace Scripts.World.Dummy
 {
     public class DummySceneController : MonoBehaviour
     {
