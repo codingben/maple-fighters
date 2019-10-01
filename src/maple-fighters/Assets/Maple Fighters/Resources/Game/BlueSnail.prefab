@@ -418,10 +418,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1935325154392280}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 06481751d888ff640a0861cfb6d01c93, type: 3}
+  m_Script: {fileID: 11500000, guid: aadeb51f8dfeace4592bf30670d5a528, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitAmount: {x: 3, y: 3}
+  hitAmount: {x: 5, y: 5}
 --- !u!114 &-2474806018124127712
 MonoBehaviour:
   m_ObjectHideFlags: 0
