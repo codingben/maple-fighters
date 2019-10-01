@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine;
 
-namespace Scripts.World
+namespace Scripts.World.Effects
 {
     [RequireComponent(typeof(SpriteRenderer))]
     public class FadeEffect : MonoBehaviour
