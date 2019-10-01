@@ -10,7 +10,7 @@ using Scripts.UI.Focus;
 using Scripts.World;
 using UnityEngine;
 
-namespace Scripts.Gameplay
+namespace Scripts.Gameplay.Creator
 {
     public class GameSystemsCreator : MonoBehaviour
     {
