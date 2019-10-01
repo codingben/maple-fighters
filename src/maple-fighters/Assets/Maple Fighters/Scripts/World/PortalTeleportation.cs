@@ -2,14 +2,14 @@
 using CommonTools.Coroutines;
 using Game.Common;
 using Scripts.Coroutines;
-using Scripts.Gameplay.Entity;
+using Scripts.Gameplay.GameEntity;
 using Scripts.Network.Services;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace Scripts.World
 {
-    [RequireComponent(typeof(IEntity))]
+    [RequireComponent(typeof(Entity))]
     public class PortalTeleportation : MonoBehaviour
     {
         private ExternalCoroutinesExecutor coroutinesExecutor;
