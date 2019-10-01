@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using Scripts.Gameplay.Actors;
 using Scripts.Gameplay.GameEntity;
 using Scripts.Gameplay.Map;
+using Scripts.Gameplay.PlayerCharacter;
 using Scripts.Logging;
 using Scripts.UI.Chat;
 using Scripts.UI.Focus;
