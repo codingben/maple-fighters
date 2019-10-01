@@ -7,9 +7,10 @@ using Scripts.Gameplay.PlayerCharacter;
 using Scripts.Logging;
 using Scripts.UI.Chat;
 using Scripts.UI.Focus;
+using Scripts.World;
 using UnityEngine;
 
-namespace Scripts.World
+namespace Scripts.Gameplay
 {
     public class GameSystemsCreator : MonoBehaviour
     {
