@@ -1,4 +1,4 @@
-﻿namespace Scripts.Gameplay.Actors
+﻿namespace Scripts.Gameplay.Transform
 {
     public enum InterpolateOption
     {
