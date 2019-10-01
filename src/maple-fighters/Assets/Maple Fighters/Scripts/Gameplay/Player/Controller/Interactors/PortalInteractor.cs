@@ -7,6 +7,11 @@ namespace Scripts.Gameplay.Player
     {
         private const string PortalTag = "Portal";
 
+        private void Update()
+        {
+            // TODO: Implement
+        }
+
         private void OnTriggerEnter2D(Collider2D collider)
         {
             if (collider.transform.CompareTag(PortalTag))
