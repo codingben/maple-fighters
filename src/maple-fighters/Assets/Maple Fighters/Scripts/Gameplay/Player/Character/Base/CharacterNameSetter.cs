@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-namespace Scripts.Gameplay.Actors
+namespace Scripts.Gameplay.PlayerCharacter
 {
     public class CharacterNameSetter : MonoBehaviour
     {
