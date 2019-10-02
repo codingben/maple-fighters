@@ -1,4 +1,4 @@
-﻿namespace Scripts.UI.Utils
+﻿namespace Scripts.Constants
 {
     public static class NoticeMessages
     {
