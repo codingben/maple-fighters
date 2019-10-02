@@ -2,6 +2,12 @@
 {
     public static class GameTags
     {
-        // TODO: Implement
+        public const string DummySceneTag = "Scene";
+        public const string MinimapCameraTag = "Minimap Camera";
+        public const string PortalTag = "Portal";
+        public const string RopeTag = "Rope";
+        public const string LadderTag = "Ladder";
+        public const string FloorTag = "Ground";
+        public const string FloorLayerName = "Floor";
     }
 }
