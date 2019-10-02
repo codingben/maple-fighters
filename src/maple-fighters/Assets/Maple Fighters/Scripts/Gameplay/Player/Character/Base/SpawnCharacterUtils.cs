@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Scripts.Gameplay.PlayerCharacter
 {
-    public class SpawnCharacterUtils
+    public static class SpawnCharacterUtils
     {
         public static GameObject Create(Transform parent, CharacterClasses characterClass)
         {
