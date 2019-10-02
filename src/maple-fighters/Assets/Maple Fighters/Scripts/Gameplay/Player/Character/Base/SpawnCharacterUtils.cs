@@ -1,4 +1,5 @@
 ﻿using Game.Common;
+using Scripts.Constants;
 using Scripts.Gameplay.Map;
 using UnityEngine;
 
@@ -6,12 +7,11 @@ namespace Scripts.Gameplay.PlayerCharacter
 {
     public class SpawnCharacterUtils
     {
-        private const string GameObjectsPath = "Game/{0}";
-
         public static GameObject Create(Transform parent, CharacterClasses characterClass)
         {
             // Loading the character
-            var path = string.Format(GameObjectsPath, characterClass);
+            var path = 
+                string.Format(Paths.Resources.GameObjectsPath, characterClass);
             var characterObject = Resources.Load<GameObject>(path);
 
             // Creating the character
