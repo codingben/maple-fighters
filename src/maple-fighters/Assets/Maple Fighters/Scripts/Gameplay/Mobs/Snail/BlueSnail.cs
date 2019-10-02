@@ -31,7 +31,7 @@ namespace Scripts.Gameplay.Mobs
             if (entity != null)
             {
                 var spawnedCharacter = entity.GetComponent<ISpawnedCharacter>();
-                var character = spawnedCharacter.GetCharacterGameObject();
+                var character = spawnedCharacter?.GetCharacterGameObject();
                 if (character != null)
                 {
                     var point = 
@@ -44,7 +44,7 @@ namespace Scripts.Gameplay.Mobs
                         y: hitAmount.y);
 
                     var attackPlayer = character.GetComponent<IAttackPlayer>();
-                    attackPlayer.OnPlayerAttacked(direction);
+                    attackPlayer?.OnPlayerAttacked(direction);
                 }
             }
         }
