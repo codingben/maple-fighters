@@ -4,8 +4,6 @@ using UnityEngine;
 
 namespace Scripts.Gameplay.Camera
 {
-    using Camera = UnityEngine.Camera;
-
     public class SetTargetForCameraController : MonoBehaviour
     {
         private void Awake()
@@ -18,7 +16,8 @@ namespace Scripts.Gameplay.Camera
 
         private void SetTargetToCinemachineBrain()
         {
-            var cinemachineBrain = Camera.main.GetComponent<CinemachineBrain>();
+            var cinemachineBrain =
+                UnityEngine.Camera.main.GetComponent<CinemachineBrain>();
             if (cinemachineBrain != null)
             {
                 cinemachineBrain.ActiveVirtualCamera.Follow = transform;
