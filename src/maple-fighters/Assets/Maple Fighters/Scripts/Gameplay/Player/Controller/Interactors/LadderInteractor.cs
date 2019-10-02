@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using Game.Common;
+﻿using Game.Common;
 using Scripts.Constants;
 using UnityEngine;
 
@@ -74,7 +73,7 @@ namespace Scripts.Gameplay.Player
 
         private void StartInteraction()
         {
-            var ground = GetGroundedCollider();
+            var ground = Utils.GetGroundedCollider(transform.parent.position);
             if (ground != null)
             {
                 colliderInteraction.SetIgnoredCollider(ground);
@@ -100,14 +99,12 @@ namespace Scripts.Gameplay.Player
 
         private void ChangePlayerStateFromLadder()
         {
-            if (playerController.IsGrounded())
-            {
-                playerController.ChangePlayerState(PlayerState.Idle);
-            }
-            else
-            {
-                playerController.ChangePlayerState(PlayerState.Falling);
-            }
+            var isGrounded =
+                playerController.IsGrounded()
+                    ? PlayerState.Idle
+                    : PlayerState.Falling;
+
+            playerController.ChangePlayerState(isGrounded);
         }
 
         private void ChangePositionToLadderCenter()
@@ -115,8 +112,7 @@ namespace Scripts.Gameplay.Player
             var rigidbody = colliderInteraction.GetAttachedRigidbody();
             rigidbody.velocity = Vector2.zero;
 
-            Vector2 center;
-            if (colliderInteraction.HasOverlappingColliderPosition(out center))
+            if (colliderInteraction.HasOverlappingColliderPosition(out var center))
             {
                 transform.parent.position =
                     new Vector3(center.x, transform.parent.position.y);
@@ -135,24 +131,6 @@ namespace Scripts.Gameplay.Player
         private bool IsInInteraction()
         {
             return playerController.PlayerState == PlayerState.Ladder;
-        }
-
-        private Collider2D GetGroundedCollider()
-        {
-            var hit = Physics2D.RaycastAll(
-                transform.parent.position,
-                Vector2.down,
-                1,
-                1 << LayerMask.NameToLayer(GameLayers.FloorLayer));
-
-            Collider2D collider = null;
-
-            if (hit.Any())
-            {
-                collider = hit.First().collider;
-            }
-
-            return collider;
         }
     }
 }
