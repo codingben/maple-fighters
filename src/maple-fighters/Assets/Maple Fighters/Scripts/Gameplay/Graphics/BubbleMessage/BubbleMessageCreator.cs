@@ -1,34 +1,26 @@
-﻿using Scripts.Gameplay.Map;
-using Scripts.Utils;
+﻿using Scripts.Constants;
 using UnityEngine;
 
 namespace Scripts.Gameplay.Graphics
 {
-    public class BubbleMessageCreator : Singleton<BubbleMessageCreator>
+    public class BubbleMessageCreator
     {
-        private const string ResourcePath = "Game/Graphics/BubbleMessage";
-
-        public void Create(Transform parent, string message, int time)
+        public static void Create(Transform parent, string message, int time)
         {
-            var bubbleMessageGameObject = CreateBubbleGameObject(parent);
-            var bubbleMessage =
-                bubbleMessageGameObject.GetComponent<BubbleMessage>();
-            bubbleMessage.SetMessage(message);
-            bubbleMessage.WaitAndDestroy(time);
-        }
-
-        private GameObject CreateBubbleGameObject(Transform parent)
-        {
-            var bubbleMessageObject = Resources.Load<GameObject>(ResourcePath);
+            var bubbleMessageObject = 
+                Resources.Load<GameObject>(Paths.Resources.BubbleMessagePath);
             var bubbleMessageGameObject = Object.Instantiate(
                 bubbleMessageObject,
                 parent.position,
                 Quaternion.identity,
                 parent);
-            bubbleMessageGameObject.name =
-                bubbleMessageGameObject.name.RemoveCloneFromName();
-
-            return bubbleMessageGameObject;
+            if (bubbleMessageGameObject != null)
+            {
+                var bubbleMessage =
+                    bubbleMessageGameObject.GetComponent<BubbleMessage>();
+                bubbleMessage.SetMessage(message);
+                bubbleMessage.WaitAndDestroy(time);
+            }
         }
     }
 }
