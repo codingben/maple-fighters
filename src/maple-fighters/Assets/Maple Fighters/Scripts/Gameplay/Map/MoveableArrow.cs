@@ -4,8 +4,6 @@ using UnityEngine;
 
 namespace Scripts.Gameplay.Map
 {
-    using Camera = UnityEngine.Camera;
-
     [RequireComponent(typeof(SpriteRenderer))]
     public class MoveableArrow : MonoBehaviour
     {
@@ -15,7 +13,7 @@ namespace Scripts.Gameplay.Map
         [SerializeField]
         private float moveSpeed;
 
-        private new Camera camera;
+        private new UnityEngine.Camera camera;
         private SpriteRenderer spriteRenderer;
 
         private void Awake()
@@ -24,7 +22,7 @@ namespace Scripts.Gameplay.Map
                 GameObject.FindGameObjectWithTag(GameTags.MinimapCameraTag);
             if (minimapCamera != null)
             {
-                camera = minimapCamera.GetComponent<Camera>();
+                camera = minimapCamera.GetComponent<UnityEngine.Camera>();
             }
 
             spriteRenderer = GetComponent<SpriteRenderer>();
