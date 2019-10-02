@@ -12,7 +12,14 @@ namespace Scripts.World.Objects
     [RequireComponent(typeof(Entity))]
     public class PortalTeleportation : MonoBehaviour
     {
+        private int entityId;
         private ExternalCoroutinesExecutor coroutinesExecutor;
+
+        private void Awake()
+        {
+            var entity = GetComponent<IEntity>();
+            entityId = entity.Id;
+        }
 
         public void Teleport()
         {
@@ -37,11 +44,11 @@ namespace Scripts.World.Objects
             var gameSceneApi = ServiceProvider.GameService.GetGameSceneApi();
             if (gameSceneApi != null)
             {
-                var entity = GetComponent<IEntity>();
                 var parameters = 
                     await gameSceneApi.ChangeSceneAsync(
                         yield,
-                        new ChangeSceneRequestParameters(entity.Id));
+                        new ChangeSceneRequestParameters(entityId));
+
                 var map = parameters.Map;
                 if (map != 0)
                 {
