@@ -18,8 +18,11 @@ namespace Scripts.Gameplay.Graphics
             {
                 var bubbleMessage =
                     bubbleMessageGameObject.GetComponent<BubbleMessage>();
-                bubbleMessage.SetMessage(message);
-                bubbleMessage.WaitAndDestroy(time);
+                if (bubbleMessage != null)
+                {
+                    bubbleMessage.SetMessage(message);
+                    bubbleMessage.WaitAndDestroy(time);
+                }
             }
         }
     }
