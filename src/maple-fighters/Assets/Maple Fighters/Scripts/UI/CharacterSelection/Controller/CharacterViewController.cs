@@ -211,7 +211,8 @@ namespace Scripts.UI.CharacterSelection
 
         public void OnCharacterUnvalidated()
         {
-            var message = WindowMessages.CharacterValidationFailed;
+            var message = 
+                NoticeMessages.CharacterView.CharacterValidationFailed;
             NoticeUtils.ShowNotice(message);
         }
 
@@ -224,7 +225,8 @@ namespace Scripts.UI.CharacterSelection
 
         public void OnCharacterDeletionFailed()
         {
-            var message = WindowMessages.CharacterDeletionFailed;
+            var message = 
+                NoticeMessages.CharacterView.CharacterDeletionFailed;
             NoticeUtils.ShowNotice(message);
         }
 
@@ -241,14 +243,16 @@ namespace Scripts.UI.CharacterSelection
             {
                 case CharacterCreationFailed.Unknown:
                     {
-                        var message = WindowMessages.CharacterCreationFailed;
+                        var message = 
+                            NoticeMessages.CharacterView.CharacterCreationFailed;
                         NoticeUtils.ShowNotice(message);
                         break;
                     }
 
                 case CharacterCreationFailed.NameAlreadyInUse:
                     {
-                        var message = WindowMessages.NameAlreadyInUse;
+                        var message = 
+                            NoticeMessages.CharacterView.NameAlreadyInUse;
                         NoticeUtils.ShowNotice(message);
                         break;
                     }
