@@ -153,10 +153,10 @@ namespace Scripts.Gameplay.Player
             if (rigidbody2D == null)
             {
                 var collider = GetComponent<Collider2D>();
-                rigidbody2D = collider.attachedRigidbody;
+                rigidbody2D = collider?.attachedRigidbody;
             }
 
-            rigidbody2D.AddForce(force, ForceMode2D.Impulse);
+            rigidbody2D?.AddForce(force, ForceMode2D.Impulse);
         }
 
         public bool IsGrounded()
