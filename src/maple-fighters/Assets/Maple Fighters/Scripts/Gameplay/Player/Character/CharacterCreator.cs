@@ -11,23 +11,17 @@ namespace Scripts.Gameplay.PlayerCharacter
         private void Awake()
         {
             var gameSceneApi = ServiceProvider.GameService.GetGameSceneApi();
-            if (gameSceneApi != null)
-            {
-                gameSceneApi.SceneEntered.AddListener(OnSceneEntered);
-                gameSceneApi.CharacterAdded.AddListener(OnCharacterAdded);
-                gameSceneApi.CharactersAdded.AddListener(OnCharactersAdded);
-            }
+            gameSceneApi?.SceneEntered.AddListener(OnSceneEntered);
+            gameSceneApi?.CharacterAdded.AddListener(OnCharacterAdded);
+            gameSceneApi?.CharactersAdded.AddListener(OnCharactersAdded);
         }
 
         private void OnDestroy()
         {
             var gameSceneApi = ServiceProvider.GameService.GetGameSceneApi();
-            if (gameSceneApi != null)
-            {
-                gameSceneApi.SceneEntered.RemoveListener(OnSceneEntered);
-                gameSceneApi.CharacterAdded.RemoveListener(OnCharacterAdded);
-                gameSceneApi.CharactersAdded.RemoveListener(OnCharactersAdded);
-            }
+            gameSceneApi?.SceneEntered.RemoveListener(OnSceneEntered);
+            gameSceneApi?.CharacterAdded.RemoveListener(OnCharacterAdded);
+            gameSceneApi?.CharactersAdded.RemoveListener(OnCharactersAdded);
         }
 
         private void OnSceneEntered(EnterSceneResponseParameters parameters)
