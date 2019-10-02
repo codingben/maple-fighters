@@ -1,4 +1,5 @@
 ﻿using Cinemachine;
+using Scripts.Constants;
 using UnityEngine;
 
 namespace Scripts.Gameplay.Camera
@@ -7,8 +8,6 @@ namespace Scripts.Gameplay.Camera
 
     public class SetTargetForCameraController : MonoBehaviour
     {
-        private const string MinimapCameraTag = "Minimap Camera";
-
         private void Awake()
         {
             SetTargetToCinemachineBrain();
@@ -29,7 +28,7 @@ namespace Scripts.Gameplay.Camera
         private void SetTargetToCameraController()
         {
             var minimapCamera =
-                GameObject.FindGameObjectWithTag(MinimapCameraTag);
+                GameObject.FindGameObjectWithTag(GameTags.MinimapCameraTag);
             if (minimapCamera != null)
             {
                 var cameraController =
