@@ -15,18 +15,12 @@ namespace Scripts.UI.CharacterSelection
 
         public UICharacterIndex CharacterIndex
         {
-            set
-            {
-                characterIndex = value;
-            }
+            set => characterIndex = value;
         }
 
         public bool HasCharacter
         {
-            set
-            {
-                hasCharacter = value;
-            }
+            set => hasCharacter = value;
         }
 
         public string CharacterName
@@ -40,13 +34,7 @@ namespace Scripts.UI.CharacterSelection
             }
         }
 
-        public GameObject GameObject
-        {
-            get
-            {
-                return gameObject;
-            }
-        }
+        public GameObject GameObject => gameObject;
 
         [Header("Text"), SerializeField]
         private TextMeshProUGUI characterNameText;
