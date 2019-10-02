@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using Scripts.Constants;
 using UI.Manager;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -7,8 +8,6 @@ namespace Scripts.UI.Minimap
 {
     public class CameraMinimapController : MonoBehaviour
     {
-        private const string MiniCameraTag = "Minimap Camera";
-
         [SerializeField]
         private MarkSelection[] markSelections;
 
@@ -17,7 +16,8 @@ namespace Scripts.UI.Minimap
         
         private void Awake()
         {
-            var minimapCamera = GameObject.FindGameObjectWithTag(MiniCameraTag);
+            var minimapCamera =
+                GameObject.FindGameObjectWithTag(GameTags.MinimapCameraTag);
             if (minimapCamera != null)
             {
                 camera = minimapCamera.GetComponent<Camera>();
