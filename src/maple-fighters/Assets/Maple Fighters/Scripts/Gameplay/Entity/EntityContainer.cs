@@ -28,30 +28,24 @@ namespace Scripts.Gameplay.GameEntity
 
         private void Start()
         {
+            // TODO: Add SceneLeft event
             var gameSceneApi = ServiceProvider.GameService.GetGameSceneApi();
-            if (gameSceneApi != null)
-            {
-                // TODO: Add SceneLeft event
-                gameSceneApi.SceneEntered.AddListener(OnEntityEntered);
-                gameSceneApi.SceneObjectAdded.AddListener(OnEntityAdded);
-                gameSceneApi.SceneObjectRemoved.AddListener(OnEntityRemoved);
-                gameSceneApi.SceneObjectsAdded.AddListener(OnEntitiesAdded);
-                gameSceneApi.SceneObjectsRemoved.AddListener(OnEntitiesRemoved);
-            }
+            gameSceneApi?.SceneEntered.AddListener(OnEntityEntered);
+            gameSceneApi?.SceneObjectAdded.AddListener(OnEntityAdded);
+            gameSceneApi?.SceneObjectRemoved.AddListener(OnEntityRemoved);
+            gameSceneApi?.SceneObjectsAdded.AddListener(OnEntitiesAdded);
+            gameSceneApi?.SceneObjectsRemoved.AddListener(OnEntitiesRemoved);
         }
 
         private void OnDestroy()
         {
+            // TODO: Remove SceneLeft event
             var gameSceneApi = ServiceProvider.GameService.GetGameSceneApi();
-            if (gameSceneApi != null)
-            {
-                // TODO: Remove SceneLeft event
-                gameSceneApi.SceneEntered.RemoveListener(OnEntityEntered);
-                gameSceneApi.SceneObjectAdded.RemoveListener(OnEntityAdded);
-                gameSceneApi.SceneObjectRemoved.RemoveListener(OnEntityRemoved);
-                gameSceneApi.SceneObjectsAdded.RemoveListener(OnEntitiesAdded);
-                gameSceneApi.SceneObjectsRemoved.RemoveListener(OnEntitiesRemoved);
-            }
+            gameSceneApi?.SceneEntered.RemoveListener(OnEntityEntered);
+            gameSceneApi?.SceneObjectAdded.RemoveListener(OnEntityAdded);
+            gameSceneApi?.SceneObjectRemoved.RemoveListener(OnEntityRemoved);
+            gameSceneApi?.SceneObjectsAdded.RemoveListener(OnEntitiesAdded);
+            gameSceneApi?.SceneObjectsRemoved.RemoveListener(OnEntitiesRemoved);
         }
 
         private void OnEntityEntered(EnterSceneResponseParameters parameters)
