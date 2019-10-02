@@ -1,4 +1,5 @@
 ﻿using Game.Common;
+using Scripts.Constants;
 using Scripts.Gameplay.GameEntity;
 using Scripts.Network.Services;
 using UnityEngine;
@@ -8,21 +9,8 @@ namespace Scripts.Gameplay.Player
     [RequireComponent(typeof(Animator))]
     public class PlayerStateAnimator : MonoBehaviour, IPlayerStateAnimator
     {
-        [Header("Animations")]
-        [SerializeField]
-        private string walkName = "Walking";
-
-        [SerializeField]
-        private string jumpName = "Jump";
-
-        [SerializeField]
-        private string ropeName = "Rope";
-
-        [SerializeField]
-        private string ladderName = "Ladder";
-
-        private Animator animator;
         private PlayerState playerState = PlayerState.Idle;
+        private Animator animator;
 
         private void Awake()
         {
@@ -32,25 +20,15 @@ namespace Scripts.Gameplay.Player
         private void Start()
         {
             var gameSceneApi = ServiceProvider.GameService.GetGameSceneApi();
-            if (gameSceneApi != null)
-            {
-                gameSceneApi.SceneObjectsAdded.AddListener(
-                    OnSceneObjectsAdded);
-                gameSceneApi.PlayerStateChanged.AddListener(
-                    OnPlayerStateChanged);
-            }
+            gameSceneApi?.SceneObjectsAdded.AddListener(OnSceneObjectsAdded);
+            gameSceneApi?.PlayerStateChanged.AddListener(OnPlayerStateChanged);
         }
 
         private void OnDestroy()
         {
             var gameSceneApi = ServiceProvider.GameService.GetGameSceneApi();
-            if (gameSceneApi != null)
-            {
-                gameSceneApi.SceneObjectsAdded.RemoveListener(
-                    OnSceneObjectsAdded);
-                gameSceneApi.PlayerStateChanged.RemoveListener(
-                    OnPlayerStateChanged);
-            }
+            gameSceneApi?.SceneObjectsAdded.RemoveListener(OnSceneObjectsAdded);
+            gameSceneApi?.PlayerStateChanged.RemoveListener(OnPlayerStateChanged);
         }
 
         public void ChangePlayerState(PlayerState newPlayerState)
@@ -65,9 +43,16 @@ namespace Scripts.Gameplay.Player
 
                 playerState = newPlayerState;
 
-                UpdatePlayerAnimationState(animator, playerState);
+                SetPlayerAnimationState(animator, playerState);
+
                 SendUpdatePlayerStateOperation();
             }
+        }
+
+        private void OnSceneObjectsAdded(SceneObjectsAddedEventParameters parameters)
+        {
+            // When a new game objects added, will send them the last current state
+            SendUpdatePlayerStateOperation();
         }
 
         private void OnPlayerStateChanged(PlayerStateChangedEventParameters parameters)
@@ -84,35 +69,30 @@ namespace Scripts.Gameplay.Player
                     var animator = playerAnimatorProvider.Provide();
                     if (animator != null)
                     {
-                        UpdatePlayerAnimationState(animator, playerState);
+                        SetPlayerAnimationState(animator, playerState);
                     }
                 }
             }
         }
 
-        /// <summary>
-        /// When a new game objects added, will send them the last current state
-        /// </summary>
-        private void OnSceneObjectsAdded(SceneObjectsAddedEventParameters parameters)
-        {
-            SendUpdatePlayerStateOperation();
-        }
-
         private void SendUpdatePlayerStateOperation()
         {
             var gameSceneApi = ServiceProvider.GameService.GetGameSceneApi();
-            gameSceneApi?.UpdatePlayerState(
-                new UpdatePlayerStateRequestParameters(playerState));
+            gameSceneApi?.UpdatePlayerState(new UpdatePlayerStateRequestParameters(playerState));
         }
 
-        private void UpdatePlayerAnimationState(
-            Animator animator,
-            PlayerState playerState)
+        private void SetPlayerAnimationState(Animator animator, PlayerState playerState)
         {
-            animator.SetBool(walkName, playerState == PlayerState.Moving);
-            animator.SetBool(jumpName, playerState == PlayerState.Jumping || playerState == PlayerState.Falling);
-            animator.SetBool(ropeName, playerState == PlayerState.Rope);
-            animator.SetBool(ladderName, playerState == PlayerState.Ladder);
+            var isMoving = playerState == PlayerState.Moving;
+            var isJumping = playerState == PlayerState.Jumping;
+            var isFalling = playerState == PlayerState.Falling;
+            var isRope = playerState == PlayerState.Rope;
+            var isLadder = playerState == PlayerState.Ladder;
+
+            animator.SetBool(AnimationNames.Player.Walk, isMoving);
+            animator.SetBool(AnimationNames.Player.Jump, isJumping || isFalling);
+            animator.SetBool(AnimationNames.Player.Rope, isRope);
+            animator.SetBool(AnimationNames.Player.Ladder, isLadder);
         }
     }
 }
