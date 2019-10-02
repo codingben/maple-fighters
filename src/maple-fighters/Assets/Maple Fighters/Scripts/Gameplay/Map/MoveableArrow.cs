@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using Scripts.Constants;
 using UnityEngine;
 
 namespace Scripts.Gameplay.Map
@@ -8,8 +9,6 @@ namespace Scripts.Gameplay.Map
     [RequireComponent(typeof(SpriteRenderer))]
     public class MoveableArrow : MonoBehaviour
     {
-        private const string MiniCameraTag = "Minimap Camera";
-
         [SerializeField]
         private float moveTime;
 
@@ -21,7 +20,8 @@ namespace Scripts.Gameplay.Map
 
         private void Awake()
         {
-            var minimapCamera = GameObject.FindGameObjectWithTag(MiniCameraTag);
+            var minimapCamera =
+                GameObject.FindGameObjectWithTag(GameTags.MinimapCameraTag);
             if (minimapCamera != null)
             {
                 camera = minimapCamera.GetComponent<Camera>();
@@ -37,18 +37,17 @@ namespace Scripts.Gameplay.Map
 
         private void Update()
         {
-            spriteRenderer.enabled = Utils.IsInLayerMask(
-                gameObject.layer,
-                camera.cullingMask);
+            var isInLayerMask = 
+                Utils.IsInLayerMask(gameObject.layer, camera.cullingMask);
+
+            spriteRenderer.enabled = isInLayerMask;
         }
 
         private IEnumerator MoveableArrowCoroutine()
         {
             while (true)
             {
-                while (Utils.IsInLayerMask(
-                    gameObject.layer,
-                    camera.cullingMask))
+                while (Utils.IsInLayerMask(gameObject.layer, camera.cullingMask))
                 {
                     yield return StartCoroutine(MoveArrowUp());
                     yield return StartCoroutine(MoveArrowDown());
