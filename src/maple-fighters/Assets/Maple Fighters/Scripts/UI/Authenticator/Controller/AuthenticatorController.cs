@@ -189,19 +189,19 @@ namespace Scripts.UI.Authenticator
 
         public void OnLoginFailed()
         {
-            var message = WindowMessages.UnknownError;
+            var message = NoticeMessages.AuthView.UnknownError;
             NoticeUtils.ShowNotice(message);
         }
 
         public void OnInvalidEmailError()
         {
-            var message = WindowMessages.WrongEmailAddress;
+            var message = NoticeMessages.AuthView.WrongEmailAddress;
             NoticeUtils.ShowNotice(message);
         }
 
         public void OnInvalidPasswordError()
         {
-            var message = WindowMessages.WrongPassword;
+            var message = NoticeMessages.AuthView.WrongPassword;
             NoticeUtils.ShowNotice(message);
         }
 
@@ -214,13 +214,13 @@ namespace Scripts.UI.Authenticator
 
         public void OnRegistrationFailed()
         {
-            var message = WindowMessages.UnknownError;
+            var message = NoticeMessages.AuthView.UnknownError;
             NoticeUtils.ShowNotice(message);
         }
 
         public void OnEmailExistsError()
         {
-            var message = WindowMessages.EmailAddressExists;
+            var message = NoticeMessages.AuthView.EmailAddressExists;
             NoticeUtils.ShowNotice(message);
         }
     }
