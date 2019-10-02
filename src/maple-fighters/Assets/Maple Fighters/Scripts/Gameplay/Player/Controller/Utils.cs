@@ -10,17 +10,14 @@ namespace Scripts.Gameplay.Player
         {
             var result = default(float);
 
-            const string VerticalName = "Vertical";
-            const string HorizontalName = "Horizontal";
-
             switch (axis)
             {
                 case Axes.Vertical:
                 {
                     result =
                         isRaw
-                            ? Input.GetAxisRaw(VerticalName)
-                            : Input.GetAxis(VerticalName);
+                            ? Input.GetAxisRaw(KeyboardNames.Axes.Vertical)
+                            : Input.GetAxis(KeyboardNames.Axes.Vertical);
 
                     break;
                 }
@@ -29,8 +26,8 @@ namespace Scripts.Gameplay.Player
                 {
                     result = 
                         isRaw
-                            ? Input.GetAxisRaw(HorizontalName)
-                            : Input.GetAxis(HorizontalName);
+                            ? Input.GetAxisRaw(KeyboardNames.Axes.Horizontal)
+                            : Input.GetAxis(KeyboardNames.Axes.Horizontal);
 
                     break;
                 }
