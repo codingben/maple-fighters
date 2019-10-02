@@ -1,4 +1,5 @@
-﻿using Scripts.ScriptableObjects;
+﻿using Scripts.Constants;
+using Scripts.ScriptableObjects;
 using UnityEngine;
 
 namespace Scripts.World.Dummy
@@ -6,8 +7,6 @@ namespace Scripts.World.Dummy
     public class DummySceneController : MonoBehaviour
     {
         #if UNITY_EDITOR
-        private const string DummySceneTag = "Scene";
-
         private void Awake()
         {
             var gameConfiguration = GameConfiguration.GetInstance();
@@ -16,7 +15,7 @@ namespace Scripts.World.Dummy
                 if (gameConfiguration.Environment != Environment.Development)
                 {
                     var dummyScene =
-                        GameObject.FindGameObjectWithTag(DummySceneTag);
+                        GameObject.FindGameObjectWithTag(GameTags.DummySceneTag);
                     if (dummyScene != null)
                     {
                         Destroy(dummyScene);
