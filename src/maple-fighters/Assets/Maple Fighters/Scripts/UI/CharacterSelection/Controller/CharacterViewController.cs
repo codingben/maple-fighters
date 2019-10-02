@@ -407,8 +407,12 @@ namespace Scripts.UI.CharacterSelection
             if (characterGameObject != null)
             {
                 characterView = characterGameObject.GetComponent<ClickableCharacterImage>();
-                characterView.CharacterClicked += OnCharacterClicked;
-                characterView.Show();
+
+                if (characterView != null)
+                {
+                    characterView.CharacterClicked += OnCharacterClicked;
+                    characterView.Show();
+                }
 
                 AttachCharacterToView(characterGameObject);
             }
