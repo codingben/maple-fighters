@@ -2,7 +2,7 @@
 
 namespace Scripts.Gameplay.GameEntity
 {
-    public class Utils
+    public static class Utils
     {
         public static GameObject CreateGameObject(string name, Vector3 position)
         {
