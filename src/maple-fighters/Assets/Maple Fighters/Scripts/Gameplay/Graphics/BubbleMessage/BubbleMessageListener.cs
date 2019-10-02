@@ -32,7 +32,7 @@ namespace Scripts.Gameplay.Graphics
                 var owner = entity.transform;
                 var message = parameters.Message;
                 var time = parameters.Time;
-                BubbleMessageCreator.GetInstance().Create(owner, message, time);
+                BubbleMessageCreator.Create(owner, message, time);
             }
         }
     }
