@@ -35,20 +35,24 @@ namespace Scripts.Gameplay.Map
 
         private void Update()
         {
-            var isInLayerMask = 
-                Utils.IsInLayerMask(gameObject.layer, camera.cullingMask);
-
-            spriteRenderer.enabled = isInLayerMask;
+            if (camera != null)
+            {
+                spriteRenderer.enabled = 
+                    Utils.IsInLayerMask(gameObject.layer, camera.cullingMask);
+            }
         }
 
         private IEnumerator MoveableArrowCoroutine()
         {
             while (true)
             {
-                while (Utils.IsInLayerMask(gameObject.layer, camera.cullingMask))
+                if (camera != null)
                 {
-                    yield return StartCoroutine(MoveArrowUp());
-                    yield return StartCoroutine(MoveArrowDown());
+                    while (Utils.IsInLayerMask(gameObject.layer, camera.cullingMask))
+                    {
+                        yield return StartCoroutine(MoveArrowUp());
+                        yield return StartCoroutine(MoveArrowDown());
+                    }
                 }
 
                 yield return null;
