@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using Game.Common;
+using Scripts.Constants;
 using UnityEngine;
 
 namespace Scripts.Gameplay.Player
@@ -7,11 +8,6 @@ namespace Scripts.Gameplay.Player
     [RequireComponent(typeof(PlayerController), typeof(Collider2D))]
     public class RopeInteractor : MonoBehaviour
     {
-        // TODO: Get this data from another source
-        private const string RopeTag = "Rope";
-        private const string FloorTag = "Ground";
-        private const string FloorLayerName = "Floor";
-
         [SerializeField]
         private KeyCode interactionKey = KeyCode.LeftControl;
 
@@ -44,7 +40,7 @@ namespace Scripts.Gameplay.Player
 
         private void OnTriggerEnter2D(Collider2D collider)
         {
-            if (collider.transform.CompareTag(RopeTag))
+            if (collider.transform.CompareTag(GameTags.RopeTag))
             {
                 colliderInteraction.SetOverlappingCollider(collider);
             }
@@ -52,7 +48,7 @@ namespace Scripts.Gameplay.Player
 
         private void OnTriggerExit2D(Collider2D collider)
         {
-            if (collider.transform.CompareTag(RopeTag))
+            if (collider.transform.CompareTag(GameTags.RopeTag))
             {
                 if (IsInInteraction())
                 {
@@ -68,7 +64,8 @@ namespace Scripts.Gameplay.Player
 
         private void OnCollisionEnter2D(Collision2D collision)
         {
-            if (IsInInteraction() && collision.transform.CompareTag(FloorTag))
+            if (IsInInteraction()
+                && collision.transform.CompareTag(GameTags.FloorTag))
             {
                 colliderInteraction.SetIgnoredCollider(collision.collider);
                 colliderInteraction.DisableCollisionWithIgnoredCollider();
@@ -146,7 +143,7 @@ namespace Scripts.Gameplay.Player
                 transform.parent.position,
                 Vector2.down,
                 1,
-                1 << LayerMask.NameToLayer(FloorLayerName));
+                1 << LayerMask.NameToLayer(GameLayers.FloorLayer));
 
             Collider2D collider = null;
 
