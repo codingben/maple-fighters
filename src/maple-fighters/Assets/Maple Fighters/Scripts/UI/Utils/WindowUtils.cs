@@ -3,7 +3,7 @@ using System.Text.RegularExpressions;
 
 namespace Scripts.UI.Utils
 {
-    public class WindowUtils
+    public static class WindowUtils
     {
         public static bool IsEmailAddressValid(string emailAddress)
         {
