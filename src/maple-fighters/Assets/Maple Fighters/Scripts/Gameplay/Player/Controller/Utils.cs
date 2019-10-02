@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Linq;
+using Scripts.Constants;
+using UnityEngine;
 
 namespace Scripts.Gameplay.Player
 {
@@ -35,6 +37,24 @@ namespace Scripts.Gameplay.Player
             }
 
             return result;
+        }
+
+        public static Collider2D GetGroundedCollider(Vector2 position)
+        {
+            var hit = Physics2D.RaycastAll(
+                position,
+                Vector2.down,
+                1,
+                1 << LayerMask.NameToLayer(GameLayers.FloorLayer));
+
+            Collider2D collider = null;
+
+            if (hit.Any())
+            {
+                collider = hit.First().collider;
+            }
+
+            return collider;
         }
     }
 }
