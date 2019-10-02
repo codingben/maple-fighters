@@ -1,6 +1,6 @@
-﻿using Scripts.UI.MenuBackground;
+﻿using Scripts.Constants;
+using Scripts.UI.MenuBackground;
 using Scripts.UI.Notice;
-using Scripts.UI.Utils;
 using UI.Manager;
 using UnityEngine;
 using UnityEngine.SceneManagement;
