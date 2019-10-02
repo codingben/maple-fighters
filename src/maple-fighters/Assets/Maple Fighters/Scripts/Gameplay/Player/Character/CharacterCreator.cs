@@ -57,10 +57,10 @@ namespace Scripts.Gameplay.PlayerCharacter
             {
                 var spawnedCharacterDetails =
                     entity.GetComponent<SpawnedCharacterDetails>();
-                spawnedCharacterDetails.SetCharacterDetails(characterSpawnDetails);
+                spawnedCharacterDetails?.SetCharacterDetails(characterSpawnDetails);
 
                 var spawnedCharacter = entity.GetComponent<SpawnCharacter>();
-                spawnedCharacter.Spawn();
+                spawnedCharacter?.Spawn();
             }
         }
     }
