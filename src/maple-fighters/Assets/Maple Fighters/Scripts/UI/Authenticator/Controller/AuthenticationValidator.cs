@@ -1,4 +1,5 @@
-﻿using Scripts.UI.Utils;
+﻿using Scripts.Constants;
+using Scripts.UI.Utils;
 
 namespace Scripts.UI.Authenticator
 {
