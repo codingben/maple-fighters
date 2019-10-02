@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Scripts.Gameplay.Player
 {
-    public class Utils
+    public static class Utils
     {
         public static float GetAxis(Axes axis, bool isRaw = false)
         {
