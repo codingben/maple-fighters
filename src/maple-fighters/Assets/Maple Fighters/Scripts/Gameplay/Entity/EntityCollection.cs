@@ -21,17 +21,14 @@ namespace Scripts.Gameplay.GameEntity
             else
             {
                 var gameObject = Utils.CreateGameObject(name, position);
-                if (gameObject != null)
+                var entity = gameObject?.GetComponent<IEntity>();
+                if (entity != null)
                 {
-                    var entity = gameObject.GetComponent<IEntity>();
-                    if (entity != null)
-                    {
-                        entity.Id = id;
+                    entity.Id = id;
 
-                        collection.Add(id, entity);
+                    collection.Add(id, entity);
 
-                        Debug.Log($"Added a new entity with id #{id}");
-                    }
+                    Debug.Log($"Added a new entity with id #{id}");
                 }
             }
 
