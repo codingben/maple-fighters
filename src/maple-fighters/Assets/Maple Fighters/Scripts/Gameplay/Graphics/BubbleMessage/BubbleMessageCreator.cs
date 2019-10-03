@@ -14,16 +14,10 @@ namespace Scripts.Gameplay.Graphics
                 parent.position,
                 Quaternion.identity,
                 parent);
-            if (bubbleMessageGameObject != null)
-            {
-                var bubbleMessage =
-                    bubbleMessageGameObject.GetComponent<BubbleMessage>();
-                if (bubbleMessage != null)
-                {
-                    bubbleMessage.SetMessage(message);
-                    bubbleMessage.WaitAndDestroy(time);
-                }
-            }
+            var bubbleMessage =
+                bubbleMessageGameObject?.GetComponent<BubbleMessage>();
+            bubbleMessage?.SetMessage(message);
+            bubbleMessage?.WaitAndDestroy(time);
         }
     }
 }
