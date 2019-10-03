@@ -28,15 +28,10 @@ namespace Scripts.Gameplay.Camera
         {
             var minimapCamera =
                 GameObject.FindGameObjectWithTag(GameTags.MinimapCameraTag);
-            if (minimapCamera != null)
-            {
-                var cameraController =
-                    minimapCamera.GetComponent<CameraController>();
-                if (cameraController != null)
-                {
-                    cameraController.SetTarget(transform);
-                }
-            }
+            var cameraController =
+                minimapCamera?.GetComponent<CameraController>();
+
+            cameraController?.SetTarget(transform);
         }
     }
 }
