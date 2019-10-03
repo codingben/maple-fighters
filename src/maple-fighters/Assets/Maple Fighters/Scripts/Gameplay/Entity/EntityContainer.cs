@@ -30,7 +30,7 @@ namespace Scripts.Gameplay.GameEntity
         {
             // TODO: Add SceneLeft event
             var gameSceneApi = ServiceProvider.GameService.GetGameSceneApi();
-            gameSceneApi?.SceneEntered.AddListener(OnEntityEntered);
+            gameSceneApi?.SceneEntered.AddListener(OnLocalEntityEntered);
             gameSceneApi?.SceneObjectAdded.AddListener(OnEntityAdded);
             gameSceneApi?.SceneObjectRemoved.AddListener(OnEntityRemoved);
             gameSceneApi?.SceneObjectsAdded.AddListener(OnEntitiesAdded);
@@ -41,14 +41,14 @@ namespace Scripts.Gameplay.GameEntity
         {
             // TODO: Remove SceneLeft event
             var gameSceneApi = ServiceProvider.GameService.GetGameSceneApi();
-            gameSceneApi?.SceneEntered.RemoveListener(OnEntityEntered);
+            gameSceneApi?.SceneEntered.RemoveListener(OnLocalEntityEntered);
             gameSceneApi?.SceneObjectAdded.RemoveListener(OnEntityAdded);
             gameSceneApi?.SceneObjectRemoved.RemoveListener(OnEntityRemoved);
             gameSceneApi?.SceneObjectsAdded.RemoveListener(OnEntitiesAdded);
             gameSceneApi?.SceneObjectsRemoved.RemoveListener(OnEntitiesRemoved);
         }
 
-        private void OnEntityEntered(EnterSceneResponseParameters parameters)
+        private void OnLocalEntityEntered(EnterSceneResponseParameters parameters)
         {
             var id = parameters.SceneObject.Id;
             var name = parameters.SceneObject.Name;
