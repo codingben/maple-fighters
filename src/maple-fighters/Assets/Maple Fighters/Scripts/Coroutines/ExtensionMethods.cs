@@ -8,20 +8,14 @@ namespace Scripts.Coroutines
             this ExternalCoroutinesExecutor executer)
         {
             var coroutines = CoroutinesWrappersUpdater.GetOrCreateInstance();
-            if (coroutines != null)
-            {
-                coroutines.AddCoroutineExecutor(executer);
-            }
+            coroutines?.AddCoroutineExecutor(executer);
         }
 
         public static void RemoveFromExternalExecutor(
             this ExternalCoroutinesExecutor executer)
         {
             var coroutines = CoroutinesWrappersUpdater.GetOrCreateInstance();
-            if (coroutines != null)
-            {
-                coroutines.RemoveCoroutineExecutor(executer);
-            }
+            coroutines?.RemoveCoroutineExecutor(executer);
         }
     }
 }
