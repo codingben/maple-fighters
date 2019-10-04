@@ -32,7 +32,7 @@ namespace Scripts.Gameplay.PlayerCharacter
             {
                 var playerAnimatorProvider =
                     GetComponent<PlayerAnimatorProvider>();
-                playerAnimatorProvider.Initialize(animator);
+                playerAnimatorProvider?.Initialize(animator);
             }
         }
     }
