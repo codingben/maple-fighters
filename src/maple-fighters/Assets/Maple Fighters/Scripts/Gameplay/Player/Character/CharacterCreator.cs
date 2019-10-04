@@ -53,15 +53,12 @@ namespace Scripts.Gameplay.PlayerCharacter
             var id = characterSpawnDetails.SceneObjectId;
             var entity = EntityContainer.GetInstance().GetRemoteEntity(id)
                 ?.GameObject;
-            if (entity != null)
-            {
-                var spawnedCharacterDetails =
-                    entity.GetComponent<SpawnedCharacterDetails>();
-                spawnedCharacterDetails?.SetCharacterDetails(characterSpawnDetails);
+            var spawnedCharacterDetails =
+                entity?.GetComponent<SpawnedCharacterDetails>();
+            spawnedCharacterDetails?.SetCharacterDetails(characterSpawnDetails);
 
-                var spawnedCharacter = entity.GetComponent<SpawnCharacter>();
-                spawnedCharacter?.Spawn();
-            }
+            var spawnedCharacter = entity?.GetComponent<SpawnCharacter>();
+            spawnedCharacter?.Spawn();
         }
     }
 }
