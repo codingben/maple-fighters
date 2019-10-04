@@ -15,10 +15,7 @@ namespace Scripts.Gameplay.Player
         {
             if (Input.GetKeyDown(interactionKey))
             {
-                if (portalTeleportation != null)
-                {
-                    portalTeleportation.Teleport();
-                }
+                portalTeleportation?.Teleport();
             }
         }
 
