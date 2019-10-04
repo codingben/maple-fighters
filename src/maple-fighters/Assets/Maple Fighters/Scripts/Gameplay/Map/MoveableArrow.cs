@@ -20,11 +20,8 @@ namespace Scripts.Gameplay.Map
         {
             var minimapCamera =
                 GameObject.FindGameObjectWithTag(GameTags.MinimapCameraTag);
-            if (minimapCamera != null)
-            {
-                camera = minimapCamera.GetComponent<UnityEngine.Camera>();
-            }
-
+            camera = minimapCamera?.GetComponent<UnityEngine.Camera>();
+            
             spriteRenderer = GetComponent<SpriteRenderer>();
         }
 
