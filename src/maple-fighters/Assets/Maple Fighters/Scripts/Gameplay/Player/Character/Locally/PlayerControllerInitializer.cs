@@ -33,10 +33,7 @@ namespace Scripts.Gameplay.PlayerCharacter
                 var playerController = spawnedCharacter
                     .GetCharacterGameObject()
                     .GetComponent<PlayerController>();
-                if (playerController != null)
-                {
-                    playerController.SetPlayerStateAnimator(playerStateAnimator);
-                }
+                playerController?.SetPlayerStateAnimator(playerStateAnimator);
             }
         }
     }
