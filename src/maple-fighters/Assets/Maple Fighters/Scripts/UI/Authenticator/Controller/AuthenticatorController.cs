@@ -86,12 +86,10 @@ namespace Scripts.UI.Authenticator
         private void OnLoginButtonClicked(
             UIAuthenticationDetails uiAuthenticationDetails)
         {
-            string message;
-
             var email = uiAuthenticationDetails.Email;
             var password = uiAuthenticationDetails.Password;
 
-            if (authenticationValidator.IsEmptyEmailAddress(email, out message)
+            if (authenticationValidator.IsEmptyEmailAddress(email, out var message)
                 || authenticationValidator.IsInvalidEmailAddress(email, out message)
                 || authenticationValidator.IsEmptyPassword(password, out message)
                 || authenticationValidator.IsPasswordTooShort(password, out message))
@@ -113,15 +111,13 @@ namespace Scripts.UI.Authenticator
         private void OnRegisterButtonClicked(
             UIRegistrationDetails uiRegistrationDetails)
         {
-            string message;
-
             var email = uiRegistrationDetails.Email;
             var password = uiRegistrationDetails.Password;
             var confirmPassword = uiRegistrationDetails.ConfirmPassword;
             var firstName = uiRegistrationDetails.FirstName;
             var lastName = uiRegistrationDetails.LastName;
 
-            if (authenticationValidator.IsEmptyEmailAddress(email, out message)
+            if (authenticationValidator.IsEmptyEmailAddress(email, out var message)
                 || authenticationValidator.IsInvalidEmailAddress(email, out message)
                 || authenticationValidator.IsEmptyPassword(password, out message)
                 || authenticationValidator.IsEmptyConfirmPassword(confirmPassword, out message)
