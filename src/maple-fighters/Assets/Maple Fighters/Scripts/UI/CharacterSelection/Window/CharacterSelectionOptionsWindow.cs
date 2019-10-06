@@ -27,42 +27,16 @@ namespace Scripts.UI.CharacterSelection
 
         private void Start()
         {
-            if (startButton != null)
-            {
-                startButton.onClick.AddListener(OnStartButtonClicked);
-            }
-
-            if (createCharacterButton != null)
-            {
-                createCharacterButton.onClick.AddListener(
-                    OnCreateCharacterButtonClicked);
-            }
-
-            if (deleteCharacterButton != null)
-            {
-                deleteCharacterButton.onClick.AddListener(
-                    OnDeleteCharacterButtonClicked);
-            }
+            startButton?.onClick.AddListener(OnStartButtonClicked);
+            createCharacterButton?.onClick.AddListener(OnCreateCharacterButtonClicked);
+            deleteCharacterButton?.onClick.AddListener(OnDeleteCharacterButtonClicked);
         }
 
         private void OnDestroy()
         {
-            if (startButton != null)
-            {
-                startButton.onClick.RemoveListener(OnStartButtonClicked);
-            }
-
-            if (createCharacterButton != null)
-            {
-                createCharacterButton.onClick.RemoveListener(
-                    OnCreateCharacterButtonClicked);
-            }
-
-            if (deleteCharacterButton != null)
-            {
-                deleteCharacterButton.onClick.RemoveListener(
-                    OnDeleteCharacterButtonClicked);
-            }
+            startButton?.onClick.RemoveListener(OnStartButtonClicked);
+            createCharacterButton?.onClick.RemoveListener(OnCreateCharacterButtonClicked);
+            deleteCharacterButton?.onClick.RemoveListener(OnDeleteCharacterButtonClicked);
         }
         
         private void OnStartButtonClicked()
