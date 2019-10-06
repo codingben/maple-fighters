@@ -28,40 +28,16 @@ namespace Scripts.UI.CharacterSelection
 
         private void Start()
         {
-            if (confirmButton != null)
-            {
-                confirmButton.onClick.AddListener(OnConfirmButtonClicked);
-            }
-
-            if (backButton != null)
-            {
-                backButton.onClick.AddListener(OnBackButtonClicked);
-            }
-
-            if (nameInputField != null)
-            {
-                nameInputField.onValueChanged.AddListener(
-                    OnNameInputFieldChanged);
-            }
+            confirmButton?.onClick.AddListener(OnConfirmButtonClicked);
+            backButton?.onClick.AddListener(OnBackButtonClicked);
+            nameInputField?.onValueChanged.AddListener(OnNameInputFieldChanged);
         }
 
         private void OnDestroy()
         {
-            if (confirmButton != null)
-            {
-                confirmButton.onClick.RemoveListener(OnConfirmButtonClicked);
-            }
-
-            if (backButton != null)
-            {
-                backButton.onClick.RemoveListener(OnBackButtonClicked);
-            }
-
-            if (nameInputField != null)
-            {
-                nameInputField.onValueChanged.RemoveListener(
-                    OnNameInputFieldChanged);
-            }
+            confirmButton?.onClick.RemoveListener(OnConfirmButtonClicked);
+            backButton?.onClick.RemoveListener(OnBackButtonClicked);
+            nameInputField?.onValueChanged.RemoveListener(OnNameInputFieldChanged);
         }
 
         public void EnableConfirmButton()
