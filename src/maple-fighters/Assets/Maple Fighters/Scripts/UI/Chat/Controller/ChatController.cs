@@ -59,14 +59,11 @@ namespace Scripts.UI.Chat
 
         private void OnFocusChanged(bool isFocused)
         {
-            if (focusStateController != null)
-            {
-                // TODO: Shouldn't be Game state always
-                var focusState =
-                    isFocused ? FocusState.Chat : FocusState.Game;
+            // TODO: Shouldn't be Game state always
+            var focusState =
+                isFocused ? FocusState.Chat : FocusState.Game;
 
-                focusStateController.ChangeFocusState(focusState);
-            }
+            focusStateController?.ChangeFocusState(focusState);
         }
     }
 }
