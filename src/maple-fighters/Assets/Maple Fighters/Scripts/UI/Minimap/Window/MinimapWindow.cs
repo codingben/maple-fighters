@@ -15,16 +15,17 @@ namespace Scripts.UI.Minimap
 
         private void Start()
         {
-            if (markSelection != null)
-            {
-                markSelection.onValueChanged.AddListener(
-                    OnMarkSelectionChanged);
-            }
+            markSelection?.onValueChanged.AddListener(OnMarkSelectionChanged);
         }
 
-        private void OnMarkSelectionChanged(int selection)
+        private void OnDestroy()
         {
-            MarkSelectionChanged?.Invoke(selection);
+            markSelection?.onValueChanged.RemoveListener(OnMarkSelectionChanged);
+        }
+
+        private void OnMarkSelectionChanged(int index)
+        {
+            MarkSelectionChanged?.Invoke(index);
         }
     }
 }
