@@ -93,28 +93,14 @@ namespace Scripts.UI.Authenticator
 
         private void Start()
         {
-            if (backButton != null)
-            {
-                backButton.onClick.AddListener(OnBackButtonClicked);
-            }
-
-            if (registerButton != null)
-            {
-                registerButton.onClick.AddListener(OnRegisterButtonClicked);
-            }
+            backButton?.onClick.AddListener(OnBackButtonClicked);
+            registerButton?.onClick.AddListener(OnRegisterButtonClicked);
         }
 
         private void OnDestroy()
         {
-            if (backButton != null)
-            {
-                backButton.onClick.RemoveListener(OnBackButtonClicked);
-            }
-
-            if (registerButton != null)
-            {
-                registerButton.onClick.RemoveListener(OnRegisterButtonClicked);
-            }
+            backButton?.onClick.RemoveListener(OnBackButtonClicked);
+            registerButton?.onClick.RemoveListener(OnRegisterButtonClicked);
         }
 
         private void OnBackButtonClicked()
@@ -129,14 +115,14 @@ namespace Scripts.UI.Authenticator
             var confirmPassword = confirmPasswordInputField?.text;
             var firstName = firstNameInputField?.text;
             var lastName = lastNameInputField?.text;
+            var registrationDetails = new UIRegistrationDetails(
+                email,
+                password,
+                confirmPassword,
+                firstName,
+                lastName);
 
-            RegisterButtonClicked?.Invoke(
-                new UIRegistrationDetails(
-                    email,
-                    password,
-                    confirmPassword,
-                    firstName,
-                    lastName));
+            RegisterButtonClicked?.Invoke(registrationDetails);
         }
     }
 }
