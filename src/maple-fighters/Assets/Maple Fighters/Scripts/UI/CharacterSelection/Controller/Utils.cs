@@ -2,7 +2,7 @@
 {
     public static class Utils
     {
-        private static string GetCharacterPath(CharacterDetails characterDetails)
+        public static string GetCharacterPath(CharacterDetails characterDetails)
         {
             var characterIndex = characterDetails.GetCharacterIndex();
             var characterClass = characterDetails.GetCharacterClass();
