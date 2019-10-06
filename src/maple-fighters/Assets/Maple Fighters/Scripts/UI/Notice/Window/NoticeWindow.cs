@@ -38,11 +38,8 @@ namespace Scripts.UI.Notice
 
         private void Start()
         {
-            if (okButton != null)
-            {
-                okButton.onClick.AddListener(OnOkButtonClicked);
-            }
-
+            okButton?.onClick.AddListener(OnOkButtonClicked);
+            
             SubscribeToUIFadeAnimation();
         }
 
@@ -54,11 +51,8 @@ namespace Scripts.UI.Notice
 
         private void OnDestroy()
         {
-            if (okButton != null)
-            {
-                okButton.onClick.RemoveListener(OnOkButtonClicked);
-            }
-
+            okButton?.onClick.RemoveListener(OnOkButtonClicked);
+            
             UnsubscribeFromUIFadeAnimation();
         }
 
@@ -80,18 +74,12 @@ namespace Scripts.UI.Notice
 
         public void ShowBackground()
         {
-            if (backgroundImage != null)
-            {
-                backgroundImage.gameObject.SetActive(true);
-            }
+            backgroundImage?.gameObject.SetActive(true);
         }
 
         public void HideBackground()
         {
-            if (backgroundImage != null)
-            {
-                backgroundImage.gameObject.SetActive(false);
-            }
+            backgroundImage?.gameObject.SetActive(false);
         }
     }
 }
