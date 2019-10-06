@@ -166,11 +166,8 @@ namespace Scripts.UI.GameServerBrowser
 
         private void HideGameServerBrowserWindow()
         {
-            if (gameServerBrowserView != null)
-            {
-                gameServerBrowserView.DisableAllButtons();
-                gameServerBrowserView.Hide();
-            }
+            gameServerBrowserView?.DisableAllButtons();
+            gameServerBrowserView?.Hide();
         }
 
         private void OnRefreshButtonClicked()
@@ -184,11 +181,8 @@ namespace Scripts.UI.GameServerBrowser
         {
             HideRefreshImage();
 
-            if (gameServerBrowserView != null)
-            {
-                gameServerBrowserView.DisableAllButtons();
-                gameServerBrowserView.EnableRefreshButton();
-            }
+            gameServerBrowserView?.DisableAllButtons();
+            gameServerBrowserView?.EnableRefreshButton();
         }
 
         private void HideRefreshImage()
