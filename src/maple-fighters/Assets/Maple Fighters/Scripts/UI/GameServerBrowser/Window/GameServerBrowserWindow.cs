@@ -33,28 +33,14 @@ namespace Scripts.UI.GameServerBrowser
         
         private void Start()
         {
-            if (joinButton != null)
-            {
-                joinButton.onClick.AddListener(OnJoinButtonClicked);
-            }
-
-            if (refreshButton != null)
-            {
-                refreshButton.onClick.AddListener(OnRefreshButtonClicked);
-            }
+            joinButton?.onClick.AddListener(OnJoinButtonClicked);
+            refreshButton?.onClick.AddListener(OnRefreshButtonClicked);
         }
 
         private void OnDestroy()
         {
-            if (joinButton != null)
-            {
-                joinButton.onClick.RemoveListener(OnJoinButtonClicked);
-            }
-
-            if (refreshButton != null)
-            {
-                refreshButton.onClick.RemoveListener(OnRefreshButtonClicked);
-            }
+            joinButton?.onClick.RemoveListener(OnJoinButtonClicked);
+            refreshButton?.onClick.RemoveListener(OnRefreshButtonClicked);
         }
 
         private void OnJoinButtonClicked()
