@@ -64,18 +64,12 @@ namespace Scripts.UI.GameServerBrowser
 
         public void SelectButton()
         {
-            if (frame != null)
-            {
-                frame.gameObject.SetActive(true);
-            }
+            frame?.gameObject.SetActive(true);
         }
 
         public void DeselectButton()
         {
-            if (frame != null)
-            {
-                frame.gameObject.SetActive(false);
-            }
+            frame?.gameObject.SetActive(false);
         }
 
         public bool IsButtonSelected()
