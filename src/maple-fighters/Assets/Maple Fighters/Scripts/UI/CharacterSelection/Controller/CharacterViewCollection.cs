@@ -4,20 +4,25 @@ namespace Scripts.UI.CharacterSelection
 {
     public struct CharacterViewCollection
     {
-        private readonly IClickableCharacterView[] collection;
-
-        public CharacterViewCollection(IClickableCharacterView[] collection)
-        {
-            this.collection = collection;
-        }
+        private IClickableCharacterView[] collection;
 
         public void Set(int index, IClickableCharacterView characterView)
         {
+            if (collection == null)
+            {
+                collection = new IClickableCharacterView[] { null, null, null };
+            }
+
             collection[index] = characterView;
         }
         
         public IEnumerable<IClickableCharacterView> GetAll()
         {
+            if (collection == null)
+            {
+                collection = new IClickableCharacterView[] { null, null, null };
+            }
+
             return collection;
         }
     }
