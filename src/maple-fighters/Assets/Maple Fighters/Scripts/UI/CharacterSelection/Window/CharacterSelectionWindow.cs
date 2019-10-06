@@ -53,58 +53,20 @@ namespace Scripts.UI.CharacterSelection
 
         private void Start()
         {
-            if (chooseButton != null)
-            {
-                chooseButton.onClick.AddListener(OnChooseButtonClicked);
-            }
-
-            if (cancelButton != null)
-            {
-                cancelButton.onClick.AddListener(OnCancelButtonClicked);
-            }
-
-            if (knightButton != null)
-            {
-                knightButton.onClick.AddListener(OnKnightSelected);
-            }
-
-            if (arrowButton != null)
-            {
-                arrowButton.onClick.AddListener(OnArrowSelected);
-            }
-
-            if (wizardButton != null)
-            {
-                wizardButton.onClick.AddListener(OnWizardSelected);
-            }
+            chooseButton?.onClick.AddListener(OnChooseButtonClicked);
+            cancelButton?.onClick.AddListener(OnCancelButtonClicked);
+            knightButton?.onClick.AddListener(OnKnightSelected);
+            arrowButton?.onClick.AddListener(OnArrowSelected);
+            wizardButton?.onClick.AddListener(OnWizardSelected);
         }
 
         private void OnDestroy()
         {
-            if (chooseButton != null)
-            {
-                chooseButton.onClick.RemoveListener(OnChooseButtonClicked);
-            }
-
-            if (cancelButton != null)
-            {
-                cancelButton.onClick.RemoveListener(OnCancelButtonClicked);
-            }
-
-            if (knightButton != null)
-            {
-                knightButton.onClick.RemoveListener(OnKnightSelected);
-            }
-
-            if (arrowButton != null)
-            {
-                arrowButton.onClick.RemoveListener(OnArrowSelected);
-            }
-
-            if (wizardButton != null)
-            {
-                wizardButton.onClick.RemoveListener(OnWizardSelected);
-            }
+            chooseButton?.onClick.RemoveListener(OnChooseButtonClicked);
+            cancelButton?.onClick.RemoveListener(OnCancelButtonClicked);
+            knightButton?.onClick.RemoveListener(OnKnightSelected);
+            arrowButton?.onClick.RemoveListener(OnArrowSelected);
+            wizardButton?.onClick.RemoveListener(OnWizardSelected);
         }
 
         private void OnChooseButtonClicked()
@@ -205,10 +167,7 @@ namespace Scripts.UI.CharacterSelection
                 knightName.fontStyle = FontStyles.Bold;
             }
 
-            if (knightSelectedImage != null)
-            {
-                knightSelectedImage.SetActive(true);
-            }
+            knightSelectedImage?.SetActive(true);
         }
 
         private void DeselectKnightClass()
@@ -218,10 +177,7 @@ namespace Scripts.UI.CharacterSelection
                 knightName.fontStyle = FontStyles.Normal;
             }
 
-            if (knightSelectedImage != null)
-            {
-                knightSelectedImage.SetActive(false);
-            }
+            knightSelectedImage?.SetActive(false);
         }
 
         private void SelectArrowClass()
@@ -231,10 +187,7 @@ namespace Scripts.UI.CharacterSelection
                 arrowName.fontStyle = FontStyles.Bold;
             }
 
-            if (arrowSelectedImage != null)
-            {
-                arrowSelectedImage.SetActive(true);
-            }
+            arrowSelectedImage?.SetActive(true);
         }
 
         private void DeselectArrowClass()
@@ -244,10 +197,7 @@ namespace Scripts.UI.CharacterSelection
                 arrowName.fontStyle = FontStyles.Normal;
             }
 
-            if (arrowSelectedImage != null)
-            {
-                arrowSelectedImage.SetActive(false);
-            }
+            arrowSelectedImage?.SetActive(false);
         }
 
         private void SelectWizardClass()
@@ -257,10 +207,7 @@ namespace Scripts.UI.CharacterSelection
                 wizardName.fontStyle = FontStyles.Bold;
             }
 
-            if (wizardSelectedImage != null)
-            {
-                wizardSelectedImage.SetActive(true);
-            }
+            wizardSelectedImage?.SetActive(true);
         }
 
         private void DeselectWizardClass()
@@ -270,10 +217,7 @@ namespace Scripts.UI.CharacterSelection
                 wizardName.fontStyle = FontStyles.Normal;
             }
 
-            if (wizardSelectedImage != null)
-            {
-                wizardSelectedImage.SetActive(false);
-            }
+            wizardSelectedImage?.SetActive(false);
         }
     }
 }
