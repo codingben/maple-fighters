@@ -184,8 +184,8 @@ namespace Scripts.UI.CharacterSelection
 
         public void OnCharacterReceived(CharacterDetails characterDetails)
         {
-            var characterView =
-                CreateAndShowCharacterView(GetCharacterPath(characterDetails));
+            var path = Utils.GetCharacterPath(characterDetails);
+            var characterView = CreateAndShowCharacterView(path);
             if (characterView != null)
             {
                 characterView.CharacterIndex = characterDetails.GetCharacterIndex();
@@ -413,20 +413,6 @@ namespace Scripts.UI.CharacterSelection
             }
 
             return characterView;
-        }
-
-        // TODO: Move to the Utils script
-        private string GetCharacterPath(CharacterDetails characterDetails)
-        {
-            var characterIndex = characterDetails.GetCharacterIndex();
-            var characterClass = characterDetails.GetCharacterClass();
-            var hasCharacter = characterDetails.HasCharacter();
-            var name =
-                hasCharacter
-                    ? $"{characterClass} {(int)characterIndex}"
-                    : $"Sample {(int)characterIndex}";
-
-            return $"Characters/{name}";
         }
     }
 }
