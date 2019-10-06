@@ -101,16 +101,11 @@ namespace Scripts.UI.Chat
 
         private void SendMessage()
         {
-            if (chatInputField != null)
+            var text = chatInputField?.text;
+
+            if (!string.IsNullOrWhiteSpace(text))
             {
-                var text = chatInputField.text;
-
-                if (!string.IsNullOrWhiteSpace(text))
-                {
-                    var message = $"{characterName}: {text}";
-
-                    MessageAdded?.Invoke(message);
-                }
+                MessageAdded?.Invoke($"{characterName}: {text}");
             }
         }
 
