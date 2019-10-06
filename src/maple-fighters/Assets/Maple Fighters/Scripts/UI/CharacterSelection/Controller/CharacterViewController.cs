@@ -32,9 +32,7 @@ namespace Scripts.UI.CharacterSelection
         private void Awake()
         {
             characterDetails = new CharacterDetails();
-            characterViewCollection = new CharacterViewCollection(
-                new IClickableCharacterView[] { null, null, null });
-
+            characterViewCollection = new CharacterViewCollection();
             characterViewInteractor = GetComponent<CharacterViewInteractor>();
 
             CreateCharacterView();
