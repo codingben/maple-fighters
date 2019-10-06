@@ -51,39 +51,24 @@ namespace Scripts.UI.Authenticator
 
         private void Start()
         {
-            if (loginButton != null)
-            {
-                loginButton.onClick.AddListener(OnLoginButtonClicked);
-            }
-
-            if (createAccountButton != null)
-            {
-                createAccountButton.onClick.AddListener(
-                    OnCreateAccountButtonClicked);
-            }
+            loginButton?.onClick.AddListener(OnLoginButtonClicked);
+            createAccountButton?.onClick.AddListener(OnCreateAccountButtonClicked);
         }
 
         private void OnDestroy()
         {
-            if (loginButton != null)
-            {
-                loginButton.onClick.RemoveListener(OnLoginButtonClicked);
-            }
-
-            if (createAccountButton != null)
-            {
-                createAccountButton.onClick.RemoveListener(
-                    OnCreateAccountButtonClicked);
-            }
+            loginButton?.onClick.RemoveListener(OnLoginButtonClicked);
+            createAccountButton?.onClick.RemoveListener(OnCreateAccountButtonClicked);
         }
 
         private void OnLoginButtonClicked()
         {
             var email = emailInputField?.text;
             var password = passwordInputField?.text;
+            var authenticationDetails =
+                new UIAuthenticationDetails(email, password);
 
-            LoginButtonClicked?.Invoke(
-                new UIAuthenticationDetails(email, password));
+            LoginButtonClicked?.Invoke(authenticationDetails);
         }
 
         private void OnCreateAccountButtonClicked()
