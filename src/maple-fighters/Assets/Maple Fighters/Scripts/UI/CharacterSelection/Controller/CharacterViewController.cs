@@ -296,12 +296,9 @@ namespace Scripts.UI.CharacterSelection
 
         private void EnableOrDisableCharacterSelectionOptionsViewButtons(bool hasCharacter)
         {
-            if (characterSelectionOptionsView != null)
-            {
-                characterSelectionOptionsView.EnableOrDisableStartButton(hasCharacter);
-                characterSelectionOptionsView.EnableOrDisableCreateCharacterButton(!hasCharacter);
-                characterSelectionOptionsView.EnableOrDisableDeleteCharacterButton(hasCharacter);
-            }
+            characterSelectionOptionsView?.EnableOrDisableStartButton(hasCharacter);
+            characterSelectionOptionsView?.EnableOrDisableCreateCharacterButton(!hasCharacter);
+            characterSelectionOptionsView?.EnableOrDisableDeleteCharacterButton(hasCharacter);
         }
 
         private void OnCharacterClicked(UICharacterIndex uiCharacterIndex, bool hasCharacter)
@@ -420,6 +417,7 @@ namespace Scripts.UI.CharacterSelection
             return characterView;
         }
 
+        // TODO: Move to the Utils script
         private string GetCharacterPath(CharacterDetails characterDetails)
         {
             var characterIndex = characterDetails.GetCharacterIndex();
