@@ -7,7 +7,7 @@ namespace Scripts.Coroutines
 {
     public sealed class CoroutineWrapperUpdater : MonoBehaviour
     {
-        public static CoroutinesWrappersUpdater GetOrCreateInstance()
+        public static CoroutineWrapperUpdater GetOrCreateInstance()
         {
             if (isDestroying)
             {
@@ -16,17 +16,17 @@ namespace Scripts.Coroutines
 
             if (instance == null)
             {
-                var type = typeof(CoroutinesWrappersUpdater);
+                var type = typeof(CoroutineWrapperUpdater);
                 var name = type.Name.MakeSpaceBetweenWords();
 
                 instance = new GameObject(name, type)
-                    .GetComponent<CoroutinesWrappersUpdater>();
+                    .GetComponent<CoroutineWrapperUpdater>();
             }
 
             return instance;
         }
 
-        private static CoroutinesWrappersUpdater instance;
+        private static CoroutineWrapperUpdater instance;
         private static bool isDestroying;
 
         private List<ExternalCoroutinesExecutor> coroutines;
