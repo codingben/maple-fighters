@@ -16,9 +16,8 @@ namespace Scripts.Coroutines
 
             if (instance == null)
             {
-                var name = typeof(CoroutinesWrappersUpdater).Name
-                    .MakeSpaceBetweenWords();
                 var type = typeof(CoroutinesWrappersUpdater);
+                var name = type.Name.MakeSpaceBetweenWords();
 
                 instance = new GameObject(name, type)
                     .GetComponent<CoroutinesWrappersUpdater>();
@@ -30,22 +29,18 @@ namespace Scripts.Coroutines
         private static CoroutinesWrappersUpdater instance;
         private static bool isDestroying;
 
-        private List<ExternalCoroutinesExecutor> coroutinesWrappers;
+        private List<ExternalCoroutinesExecutor> coroutines;
 
         private void Awake()
         {
-            coroutinesWrappers = new List<ExternalCoroutinesExecutor>();
+            coroutines = new List<ExternalCoroutinesExecutor>();
         }
 
         private void Update()
         {
-            var coroutines = coroutinesWrappers.ToArray();
-            if (coroutines.Length != 0)
+            foreach (var coroutine in coroutines)
             {
-                foreach (var coroutine in coroutines)
-                {
-                    coroutine?.Update();
-                }
+                coroutine?.Update();
             }
         }
 
@@ -65,24 +60,19 @@ namespace Scripts.Coroutines
 
         private void Dispose()
         {
-            if (coroutinesWrappers.Count != 0)
-            {
-                coroutinesWrappers.ForEach(x => x.Dispose());
-            }
-
             instance = null;
+
+            coroutines.ForEach(x => x.Dispose());
         }
 
-        public void AddCoroutineExecutor(
-            ExternalCoroutinesExecutor coroutineWrapper)
+        public void AddCoroutineExecutor(ExternalCoroutinesExecutor coroutine)
         {
-            coroutinesWrappers.Add(coroutineWrapper);
+            coroutines.Add(coroutine);
         }
 
-        public void RemoveCoroutineExecutor(
-            ExternalCoroutinesExecutor coroutineWrapper)
+        public void RemoveCoroutineExecutor(ExternalCoroutinesExecutor coroutine)
         {
-            coroutinesWrappers.Remove(coroutineWrapper);
+            coroutines.Remove(coroutine);
         }
     }
 }
