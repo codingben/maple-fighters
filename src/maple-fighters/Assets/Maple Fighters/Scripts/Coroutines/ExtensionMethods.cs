@@ -4,19 +4,19 @@ namespace Scripts.Coroutines
 {
     public static class ExtensionMethods
     {
-        public static CoroutinesWrappersUpdater CoroutinesWrappersUpdater =>
-            CoroutinesWrappersUpdater.GetOrCreateInstance();
+        public static CoroutineWrapperUpdater CoroutineWrapperUpdater =>
+            CoroutineWrapperUpdater.GetOrCreateInstance();
 
         public static void ExecuteExternally(
             this ExternalCoroutinesExecutor executer)
         {
-            CoroutinesWrappersUpdater?.AddCoroutineExecutor(executer);
+            CoroutineWrapperUpdater?.AddCoroutineExecutor(executer);
         }
 
         public static void RemoveFromExternalExecutor(
             this ExternalCoroutinesExecutor executer)
         {
-            CoroutinesWrappersUpdater?.RemoveCoroutineExecutor(executer);
+            CoroutineWrapperUpdater?.RemoveCoroutineExecutor(executer);
         }
     }
 }
