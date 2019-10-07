@@ -45,18 +45,12 @@ namespace Sample.Scripts
 
         private void ShowSampleWindow()
         {
-            if (sampleWindow != null)
-            {
-                sampleWindow.Show();
-            }
+            sampleWindow?.Show();
         }
 
         private void HideSampleWindow()
         {
-            if (sampleWindow != null)
-            {
-                sampleWindow.Hide();
-            }
+            sampleWindow?.Hide();
         }
     }
 }
