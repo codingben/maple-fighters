@@ -7,15 +7,9 @@ namespace UI.Manager
     {
         protected float Alpha
         {
-            get
-            {
-                return canvasGroup.alpha;
-            }
+            get => canvasGroup.alpha;
 
-            set
-            {
-                canvasGroup.alpha = value;
-            }
+            set => canvasGroup.alpha = value;
         }
 
         private UIElement uiElement;

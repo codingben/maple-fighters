@@ -47,8 +47,9 @@ namespace UI.Manager
             var uiLayer = GameObject.Find(uiLayerName);
             if (uiLayer == null)
             {
-                uiLayer = Utils.LoadAndCreateGameObject(
-                    string.Format(UiElementsPath, uiLayerName));
+                var path = string.Format(UiElementsPath, uiLayerName);
+
+                uiLayer = Utils.LoadAndCreateGameObject(path);
             }
 
             return uiLayer.transform;
