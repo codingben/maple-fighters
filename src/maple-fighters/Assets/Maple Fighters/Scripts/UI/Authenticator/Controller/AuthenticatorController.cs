@@ -203,7 +203,8 @@ namespace Scripts.UI.Authenticator
 
         public void OnNonAuthorizedError()
         {
-            // TODO: Implement
+            var message = NoticeMessages.AuthView.NonAuthorized;
+            NoticeUtils.ShowNotice(message);
         }
 
         public void OnRegistrationSucceed()
