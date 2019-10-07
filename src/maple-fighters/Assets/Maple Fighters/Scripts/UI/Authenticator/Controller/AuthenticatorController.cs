@@ -201,6 +201,11 @@ namespace Scripts.UI.Authenticator
             NoticeUtils.ShowNotice(message);
         }
 
+        public void OnNonAuthorizedError()
+        {
+            // TODO: Implement
+        }
+
         public void OnRegistrationSucceed()
         {
             HideRegistrationWindow();
