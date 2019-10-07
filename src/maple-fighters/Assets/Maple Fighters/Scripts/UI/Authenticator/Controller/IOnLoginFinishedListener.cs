@@ -9,5 +9,7 @@
         void OnInvalidEmailError();
 
         void OnInvalidPasswordError();
+
+        void OnNonAuthorizedError();
     }
 }
