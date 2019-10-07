@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Scripts.Coroutines
 {
-    public sealed class CoroutinesWrappersUpdater : MonoBehaviour
+    public sealed class CoroutineWrapperUpdater : MonoBehaviour
     {
         public static CoroutinesWrappersUpdater GetOrCreateInstance()
         {
