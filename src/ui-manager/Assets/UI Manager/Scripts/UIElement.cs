@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace UI.Manager
 {
-    public class UIElement : MonoBehaviour
+    public class UIElement : MonoBehaviour, IView
     {
         /// <summary>
         /// The event invoked when <see cref="Show"/> called.
