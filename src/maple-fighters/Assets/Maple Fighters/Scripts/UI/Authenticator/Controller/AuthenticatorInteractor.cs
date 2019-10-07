@@ -80,6 +80,7 @@ namespace Scripts.UI.Authenticator
 
                 case LoginStatus.NonAuthorized:
                 {
+                    onLoginFinishedListener.OnNonAuthorizedError();
                     break;
                 }
             }
