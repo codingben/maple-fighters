@@ -1,10 +1,11 @@
-﻿using UI.Manager;
+﻿using System;
+using UI.Manager;
 using UnityEngine.EventSystems;
 
 namespace Sample.Scripts
 {
-    public interface ISampleWindow : IView, IPointerClickHandler
+    public interface ISampleWindow : IView
     {
-        // Left blank intentionally
+        event Action<PointerEventData> PointerClicked;
     }
 }
