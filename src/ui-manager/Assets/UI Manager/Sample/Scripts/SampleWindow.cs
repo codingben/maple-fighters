@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 
 namespace Sample.Scripts
 {
-    public class SampleWindow : UIElement, IPointerClickHandler
+    public class SampleWindow : UIElement, ISampleWindow, IPointerClickHandler
     {
         public event Action<PointerEventData> PointerClicked;
 
