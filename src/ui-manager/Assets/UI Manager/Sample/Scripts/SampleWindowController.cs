@@ -6,7 +6,7 @@ namespace Sample.Scripts
 {
     public class SampleWindowController : MonoBehaviour
     {
-        private SampleWindow sampleWindow;
+        private ISampleWindow sampleWindow;
 
         private void Awake()
         {
