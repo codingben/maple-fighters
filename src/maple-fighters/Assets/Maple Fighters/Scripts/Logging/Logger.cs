@@ -4,9 +4,7 @@ using UnityEngine;
 
 namespace Scripts.Logging
 {
-    using ILogger = CommonTools.Log.ILogger;
-
-    public class Logger : ILogger
+    public class Logger : CommonTools.Log.ILogger
     {
         public void Log(string message, LogMessageType type = LogMessageType.Log, object context = null)
         {
