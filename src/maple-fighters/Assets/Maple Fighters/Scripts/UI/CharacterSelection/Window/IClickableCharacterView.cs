@@ -1,4 +1,5 @@
 ﻿using System;
+using UI.Manager;
 using UnityEngine;
 
 namespace Scripts.UI.CharacterSelection
