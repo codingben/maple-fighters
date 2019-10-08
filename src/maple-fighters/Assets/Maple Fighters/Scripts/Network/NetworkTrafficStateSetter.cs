@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Scripts.Network
 {
-    public class NetworkTrafficController : MonoBehaviour
+    public class NetworkTrafficStateSetter : MonoBehaviour
     {
         private void Awake()
         {
