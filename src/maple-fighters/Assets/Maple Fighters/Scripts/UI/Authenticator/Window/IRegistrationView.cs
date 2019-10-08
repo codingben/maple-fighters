@@ -1,4 +1,5 @@
 ﻿using System;
+using UI.Manager;
 
 namespace Scripts.UI.Authenticator
 {
