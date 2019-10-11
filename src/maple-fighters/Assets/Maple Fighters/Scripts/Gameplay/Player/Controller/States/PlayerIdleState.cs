@@ -1,5 +1,4 @@
 ﻿using Game.Common;
-using Scripts.UI.Focus;
 using UnityEngine;
 
 namespace Scripts.Gameplay.Player
@@ -7,15 +6,11 @@ namespace Scripts.Gameplay.Player
     public class PlayerIdleState : IPlayerStateBehaviour
     {
         private readonly PlayerController playerController;
-        private readonly FocusStateController focusStateController;
         private readonly Rigidbody2D rigidbody2D;
  
-        public PlayerIdleState(
-            PlayerController playerController,
-            FocusStateController focusStateController)
+        public PlayerIdleState(PlayerController playerController)
         {
             this.playerController = playerController;
-            this.focusStateController = focusStateController;
 
             var collider = playerController.GetComponent<Collider2D>();
             rigidbody2D = collider.attachedRigidbody;
@@ -30,17 +25,14 @@ namespace Scripts.Gameplay.Player
         {
             if (IsGrounded())
             {
-                if (IsGameFocused())
+                if (IsMoved())
                 {
-                    if (IsMoved())
-                    {
-                        playerController.ChangePlayerState(PlayerState.Moving);
-                    }
+                    playerController.ChangePlayerState(PlayerState.Moving);
+                }
 
-                    if (IsJumpKeyClicked())
-                    {
-                        playerController.ChangePlayerState(PlayerState.Jumping);
-                    }
+                if (IsJumpKeyClicked())
+                {
+                    playerController.ChangePlayerState(PlayerState.Jumping);
                 }
             }
             else
@@ -62,11 +54,6 @@ namespace Scripts.Gameplay.Player
         private bool IsGrounded()
         {
             return playerController.IsGrounded();
-        }
-
-        private bool IsGameFocused()
-        {
-            return focusStateController?.GetFocusState() == FocusState.Game;
         }
 
         private bool IsMoved()
