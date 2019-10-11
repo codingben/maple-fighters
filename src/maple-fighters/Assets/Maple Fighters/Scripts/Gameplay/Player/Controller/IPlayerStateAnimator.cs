@@ -4,6 +4,6 @@ namespace Scripts.Gameplay.Player
 {
     public interface IPlayerStateAnimator
     {
-        void ChangePlayerState(PlayerState newPlayerState);
+        void SetPlayerState(PlayerState playerState);
     }
 }
