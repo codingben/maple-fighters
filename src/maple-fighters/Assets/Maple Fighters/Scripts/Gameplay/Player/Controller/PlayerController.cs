@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using Game.Common;
 using Scripts.Editor;
-using Scripts.UI.Focus;
 using UnityEngine;
 
 #pragma warning disable 0109
@@ -37,8 +36,8 @@ namespace Scripts.Gameplay.Player
 
         private Dictionary<PlayerState, IPlayerStateBehaviour> playerStateBehaviours;
 
-        private IPlayerStateAnimator playerStateAnimator;
         private IPlayerStateBehaviour playerStateBehaviour;
+        private IPlayerStateAnimator playerStateAnimator;
 
         private new Rigidbody2D rigidbody2D;
 
@@ -46,24 +45,16 @@ namespace Scripts.Gameplay.Player
         {
             localScale = transform.localScale;
 
-            var focusStateController = 
-                FindObjectOfType<FocusStateController>();
-            if (focusStateController == null)
-            {
-                Debug.LogError("Could not find FocusStateController!");
-                Debug.Break();
-            }
-
             playerStateBehaviours =
                 new Dictionary<PlayerState, IPlayerStateBehaviour>
                 {
                     {
                         PlayerState.Idle,
-                        new PlayerIdleState(this, focusStateController)
+                        new PlayerIdleState(this)
                     },
                     {
                         PlayerState.Moving,
-                        new PlayerMovingState(this, focusStateController)
+                        new PlayerMovingState(this)
                     },
                     {
                         PlayerState.Jumping,
@@ -153,7 +144,7 @@ namespace Scripts.Gameplay.Player
             if (rigidbody2D == null)
             {
                 var collider = GetComponent<Collider2D>();
-                rigidbody2D = collider?.attachedRigidbody;
+                rigidbody2D = collider.attachedRigidbody;
             }
 
             rigidbody2D?.AddForce(force, ForceMode2D.Impulse);
