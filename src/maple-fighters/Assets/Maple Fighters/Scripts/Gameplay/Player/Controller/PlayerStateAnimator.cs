@@ -32,17 +32,17 @@ namespace Scripts.Gameplay.Player
             gameService?.GameSceneApi.PlayerStateChanged.RemoveListener(OnPlayerStateChanged);
         }
 
-        public void SetPlayerState(PlayerState newPlayerState)
+        public void SetPlayerState(PlayerState playerState)
         {
             // TODO: Hack
-            if (newPlayerState == PlayerState.Attacked)
+            if (playerState == PlayerState.Attacked)
             {
-                newPlayerState = PlayerState.Falling;
+                playerState = PlayerState.Falling;
             }
 
-            playerState = newPlayerState;
+            this.playerState = playerState;
 
-            SetPlayerAnimationState(animator, newPlayerState);
+            SetPlayerAnimationState(animator, playerState);
             SendUpdatePlayerStateOperation();
         }
 
