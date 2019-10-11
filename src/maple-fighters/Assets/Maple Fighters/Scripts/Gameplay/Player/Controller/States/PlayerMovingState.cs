@@ -1,6 +1,5 @@
 using System;
 using Game.Common;
-using Scripts.UI.Focus;
 using UnityEngine;
 
 namespace Scripts.Gameplay.Player
@@ -8,17 +7,13 @@ namespace Scripts.Gameplay.Player
     public class PlayerMovingState : IPlayerStateBehaviour
     {
         private readonly PlayerController playerController;
-        private readonly FocusStateController focusStateController;
         private readonly Rigidbody2D rigidbody2D;
 
         private Directions direction;
 
-        public PlayerMovingState(
-            PlayerController playerController,
-            FocusStateController focusStateController)
+        public PlayerMovingState(PlayerController playerController)
         {
             this.playerController = playerController;
-            this.focusStateController = focusStateController;
 
             var collider = playerController.GetComponent<Collider2D>();
             rigidbody2D = collider.attachedRigidbody;
@@ -33,11 +28,6 @@ namespace Scripts.Gameplay.Player
         {
             if (IsGrounded())
             {
-                if (IsUnFocused())
-                {
-                    playerController.ChangePlayerState(PlayerState.Idle);
-                }
-
                 if (IsMoveStopped())
                 {
                     playerController.ChangePlayerState(PlayerState.Idle);
@@ -82,11 +72,6 @@ namespace Scripts.Gameplay.Player
         private bool IsGrounded()
         {
             return playerController.IsGrounded();
-        }
-
-        private bool IsUnFocused()
-        {
-            return focusStateController?.GetFocusState() != FocusState.Game;
         }
 
         private bool IsJumpKeyClicked()
