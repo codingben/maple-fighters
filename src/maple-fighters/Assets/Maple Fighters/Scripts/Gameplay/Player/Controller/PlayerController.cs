@@ -82,17 +82,17 @@ namespace Scripts.Gameplay.Player
 
         private void Start()
         {
-            playerStateBehaviour?.OnStateEnter();
+            playerStateBehaviour.OnStateEnter();
         }
 
         private void Update()
         {
-            playerStateBehaviour?.OnStateUpdate();
+            playerStateBehaviour.OnStateUpdate();
         }
 
         private void FixedUpdate()
         {
-            playerStateBehaviour?.OnStateFixedUpdate();
+            playerStateBehaviour.OnStateFixedUpdate();
         }
 
         public void SetPlayerStateAnimator(IPlayerStateAnimator playerStateAnimator)
@@ -104,19 +104,12 @@ namespace Scripts.Gameplay.Player
         {
             if (playerState != newPlayerState)
             {
-                playerStateBehaviour?.OnStateExit();
+                playerStateBehaviour.OnStateExit();
+                playerStateBehaviour = playerStateBehaviours[newPlayerState];
+                playerStateBehaviour.OnStateEnter();
 
-                if (playerStateBehaviour != null)
-                {
-                    playerStateBehaviour = 
-                        playerStateBehaviours[newPlayerState];
-                }
-
-                playerStateBehaviour?.OnStateEnter();
-
+                playerStateAnimator?.ChangePlayerState(newPlayerState);
                 playerState = newPlayerState;
-
-                playerStateAnimator?.ChangePlayerState(playerState);
             }
         }
 
@@ -155,11 +148,12 @@ namespace Scripts.Gameplay.Player
 
             if (groundTransform != null)
             {
-                var point = groundTransform.position;
+                var position = groundTransform.position;
                 var radius = overlapCircleRadius;
                 var layerMask = groundLayerMask;
 
-                isGrounded = Physics2D.OverlapCircle(point, radius, layerMask);
+                isGrounded = 
+                    Physics2D.OverlapCircle(position, radius, layerMask);
             }
 
             return isGrounded;
