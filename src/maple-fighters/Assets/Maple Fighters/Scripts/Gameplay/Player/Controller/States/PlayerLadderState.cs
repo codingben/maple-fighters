@@ -29,7 +29,7 @@ namespace Scripts.Gameplay.Player
 
         public void OnStateFixedUpdate()
         {
-            var speed = playerController.Properties.LadderClimbingSpeed;
+            var speed = playerController.Properties.LadderSpeed;
             rigidbody2D.velocity =
                 new Vector2(rigidbody2D.velocity.x, direction * speed);
         }
