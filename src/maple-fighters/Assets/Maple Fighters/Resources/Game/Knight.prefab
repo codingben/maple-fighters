@@ -459,8 +459,8 @@ MonoBehaviour:
     Speed: 3.5
     JumpHeight: 5
     JumpForce: 3
-    RopeClimbingSpeed: 2
-    LadderClimbingSpeed: 1.5
+    RopeSpeed: 2
+    LadderSpeed: 2
     JumpKey: 32
   overlapCircleRadius: 0.175
   groundLayerMask:
@@ -517,3 +517,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d66ae6c5fb3e4b24088b30a2e397bc38, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactionKey: 306
