@@ -6,11 +6,14 @@ namespace Scripts.Gameplay.Player
     [Serializable]
     public class PlayerProperties
     {
+        [Header("Move")]
         public float Speed;
         public float JumpHeight;
         public float JumpForce;
-        public float RopeClimbingSpeed;
-        public float LadderClimbingSpeed;
+
+        [Header("Climbing")]
+        public float RopeSpeed;
+        public float LadderSpeed;
 
         [Header("Keyboard")]
         public KeyCode JumpKey = KeyCode.Space;
