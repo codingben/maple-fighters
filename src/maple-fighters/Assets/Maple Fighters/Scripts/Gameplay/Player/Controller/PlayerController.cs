@@ -22,7 +22,7 @@ namespace Scripts.Gameplay.Player
         [SerializeField]
         private PlayerProperties properties;
 
-        [Header("Floor")]
+        [Header("Ground")]
         [SerializeField]
         private float overlapCircleRadius;
 
@@ -32,13 +32,12 @@ namespace Scripts.Gameplay.Player
         [SerializeField]
         private Transform groundTransform;
 
-        private Vector2 localScale;
-
         private Dictionary<PlayerState, IPlayerStateBehaviour> playerStateBehaviours;
 
         private IPlayerStateBehaviour playerStateBehaviour;
         private IPlayerStateAnimator playerStateAnimator;
 
+        private Vector2 localScale;
         private new Rigidbody2D rigidbody2D;
 
         private void Awake()
@@ -147,7 +146,7 @@ namespace Scripts.Gameplay.Player
                 rigidbody2D = collider.attachedRigidbody;
             }
 
-            rigidbody2D?.AddForce(force, ForceMode2D.Impulse);
+            rigidbody2D.AddForce(force, ForceMode2D.Impulse);
         }
 
         public bool IsGrounded()
@@ -156,10 +155,11 @@ namespace Scripts.Gameplay.Player
 
             if (groundTransform != null)
             {
-                isGrounded = Physics2D.OverlapCircle(
-                    groundTransform.position,
-                    overlapCircleRadius,
-                    groundLayerMask);
+                var point = groundTransform.position;
+                var radius = overlapCircleRadius;
+                var layerMask = groundLayerMask;
+
+                isGrounded = Physics2D.OverlapCircle(point, radius, layerMask);
             }
 
             return isGrounded;
