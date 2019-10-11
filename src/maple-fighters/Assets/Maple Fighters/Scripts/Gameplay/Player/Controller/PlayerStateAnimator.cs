@@ -32,22 +32,18 @@ namespace Scripts.Gameplay.Player
             gameService?.GameSceneApi.PlayerStateChanged.RemoveListener(OnPlayerStateChanged);
         }
 
-        public void ChangePlayerState(PlayerState newPlayerState)
+        public void SetPlayerState(PlayerState newPlayerState)
         {
-            if (playerState != newPlayerState)
+            // TODO: Hack
+            if (newPlayerState == PlayerState.Attacked)
             {
-                // TODO: Hack
-                if (newPlayerState == PlayerState.Attacked)
-                {
-                    newPlayerState = PlayerState.Falling;
-                }
-
-                playerState = newPlayerState;
-
-                SetPlayerAnimationState(animator, playerState);
-
-                SendUpdatePlayerStateOperation();
+                newPlayerState = PlayerState.Falling;
             }
+
+            playerState = newPlayerState;
+
+            SetPlayerAnimationState(animator, newPlayerState);
+            SendUpdatePlayerStateOperation();
         }
 
         private void OnSceneObjectsAdded(SceneObjectsAddedEventParameters parameters)
@@ -66,6 +62,7 @@ namespace Scripts.Gameplay.Player
             var animator = playerAnimatorProvider?.Provide();
             if (animator != null)
             {
+                var playerState = parameters.PlayerState;
                 SetPlayerAnimationState(animator, playerState);
             }
         }
