@@ -180,7 +180,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerState: 3
   properties:
-    Speed: 3.5
+    Speed: 4
     JumpHeight: 5
     JumpForce: 3
     RopeSpeed: 2
