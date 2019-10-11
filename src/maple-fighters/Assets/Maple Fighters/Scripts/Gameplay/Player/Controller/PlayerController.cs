@@ -108,7 +108,7 @@ namespace Scripts.Gameplay.Player
                 playerStateBehaviour = playerStateBehaviours[newPlayerState];
                 playerStateBehaviour.OnStateEnter();
 
-                playerStateAnimator?.ChangePlayerState(newPlayerState);
+                playerStateAnimator?.SetPlayerState(newPlayerState);
                 playerState = newPlayerState;
             }
         }
