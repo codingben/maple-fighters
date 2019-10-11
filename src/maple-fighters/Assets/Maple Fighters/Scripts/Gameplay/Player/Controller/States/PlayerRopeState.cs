@@ -39,7 +39,7 @@ namespace Scripts.Gameplay.Player
 
         public void OnStateFixedUpdate()
         {
-            var speed = playerController.Properties.RopeClimbingSpeed;
+            var speed = playerController.Properties.RopeSpeed;
             rigidbody2D.velocity = 
                 new Vector2(rigidbody2D.velocity.x, direction * speed);
         }
