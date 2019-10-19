@@ -3,7 +3,6 @@ using CommonTools.Coroutines;
 using Game.Common;
 using Scripts.Gameplay.GameEntity;
 using Scripts.Services.Game;
-
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -17,9 +16,7 @@ namespace Scripts.World.Objects
 
         private void Awake()
         {
-            var entity = GetComponent<IEntity>();
-            entityId = entity.Id;
-
+            entityId = GetComponent<IEntity>().Id;
             coroutinesExecutor = new ExternalCoroutinesExecutor();
         }
 
@@ -35,13 +32,10 @@ namespace Scripts.World.Objects
 
         public void Teleport()
         {
-            if (coroutinesExecutor == null)
-            {
-                coroutinesExecutor.StartTask(
-                    method: ChangeScene,
-                    onException: (e) => 
-                        Debug.LogError("Failed to send change scene operation."));
-            }
+            coroutinesExecutor.StartTask(
+                method: ChangeScene,
+                onException: (e) => 
+                    Debug.LogError("Failed to send change scene operation."));
         }
 
         private async Task ChangeScene(IYield yield)
