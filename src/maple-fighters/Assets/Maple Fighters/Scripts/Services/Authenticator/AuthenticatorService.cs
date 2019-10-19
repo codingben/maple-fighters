@@ -51,7 +51,11 @@ namespace Scripts.Services.Authenticator
             var connectionInfo = new PeerConnectionInformation();
             var connectionProtocol = ConnectionProtocol.Tcp;
 
-            serverPeer = await serverConnector.Connect(yield, connectionInfo, connectionProtocol);
+            serverPeer = 
+                await serverConnector.Connect(
+                    yield,
+                    connectionInfo,
+                    connectionProtocol);
         }
     }
 }
