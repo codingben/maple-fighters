@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using Chat.Common;
+﻿using Chat.Common;
 using Network.Scripts;
 
 namespace Scripts.Services.Chat
@@ -8,6 +7,6 @@ namespace Scripts.Services.Chat
     {
         UnityEvent<ChatMessageEventParameters> ChatMessageReceived { get; }
 
-        Task SendChatMessage(ChatMessageRequestParameters parameters);
+        void SendChatMessage(ChatMessageRequestParameters parameters);
     }
 }
