@@ -33,8 +33,8 @@ namespace Scripts.Services.Game
 
         Task<ChangeSceneResponseParameters> ChangeSceneAsync(IYield yield, ChangeSceneRequestParameters parameters);
 
-        Task UpdatePosition(UpdatePositionRequestParameters parameters);
+        void UpdatePosition(UpdatePositionRequestParameters parameters);
 
-        Task UpdatePlayerState(UpdatePlayerStateRequestParameters parameters);
+        void UpdatePlayerState(UpdatePlayerStateRequestParameters parameters);
     }
 }
