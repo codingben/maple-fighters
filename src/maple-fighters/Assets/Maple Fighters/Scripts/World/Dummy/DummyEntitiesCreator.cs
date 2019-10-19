@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 using Game.Common;
-using Scripts.Network.Services;
+using Scripts.Services.Game;
 using UnityEngine;
 
 namespace Scripts.World.Dummy
@@ -34,9 +34,8 @@ namespace Scripts.World.Dummy
                         dummyEntity.Position.y,
                         dummyEntity.Direction));
 
-                var gameSceneApi =
-                    ServiceProvider.GameService.GetGameSceneApi();
-                gameSceneApi?.SceneObjectAdded.Invoke(parameters);
+                var gameService = GameService.GetInstance();
+                gameService?.GameSceneApi.SceneObjectAdded.Invoke(parameters);
             }
         }
     }
