@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using Scripts.Coroutines;
+using Network.Utils;
 using Scripts.Gameplay.GameEntity;
 using Scripts.Gameplay.Map;
 using Scripts.Gameplay.PlayerCharacter;
-using Scripts.Logging;
-using Scripts.Network;
+using Scripts.Services.Utils;
 using Scripts.UI.Chat;
 using Scripts.UI.Focus;
 using UnityEngine;
@@ -26,13 +25,13 @@ namespace Scripts.Gameplay.Creator
 
         private IEnumerable<Type> GetControllersComponents()
         {
-            yield return typeof(NetworkTrafficStateSetter);
+            yield return typeof(GameNetworkTrafficStateSetter);
         }
 
         private IEnumerable<Type> GetCreatorsComponents()
         {
-            yield return typeof(LogUtilsCreator);
-            yield return typeof(GameTimeProviderCreator);
+            yield return typeof(LoggerSetter);
+            yield return typeof(DefaultTimeProviderSetter);
             yield return typeof(CharacterCreator);
             yield return typeof(EnterSceneOperationSender);
         }
