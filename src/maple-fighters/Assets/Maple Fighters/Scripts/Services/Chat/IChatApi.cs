@@ -1,18 +1,13 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using System.Threading.Tasks;
+using Chat.Common;
+using Network.Scripts;
 
-public class IChatApi : MonoBehaviour
+namespace Scripts.Services.Chat
 {
-    // Start is called before the first frame update
-    void Start()
+    public interface IChatApi
     {
-        
-    }
+        UnityEvent<ChatMessageEventParameters> ChatMessageReceived { get; }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        Task SendChatMessage(ChatMessageRequestParameters parameters);
     }
 }
