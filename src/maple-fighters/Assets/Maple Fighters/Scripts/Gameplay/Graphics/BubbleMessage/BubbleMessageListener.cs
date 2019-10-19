@@ -7,22 +7,21 @@ namespace Scripts.Gameplay.Graphics
 {
     public class BubbleMessageListener : MonoBehaviour
     {
+        private IGameService gameService;
+
         private void Start()
         {
-            var gameService = GameService.GetInstance();
-            gameService?.GameSceneApi.BubbleMessageReceived.AddListener(
-                OnBubbleMessageReceived);
+            gameService = GameService.GetInstance();
+            gameService?.GameSceneApi.BubbleMessageReceived.AddListener(OnBubbleMessageReceived);
         }
 
         private void OnDestroy()
         {
-            var gameService = GameService.GetInstance();
-            gameService?.GameSceneApi.BubbleMessageReceived.RemoveListener(
-                OnBubbleMessageReceived);
+            gameService = GameService.GetInstance();
+            gameService?.GameSceneApi.BubbleMessageReceived.RemoveListener(OnBubbleMessageReceived);
         }
 
-        private void OnBubbleMessageReceived(
-            BubbleMessageEventParameters parameters)
+        private void OnBubbleMessageReceived(BubbleMessageEventParameters parameters)
         {
             var id = parameters.RequesterId;
             var entity = EntityContainer.GetInstance().GetRemoteEntity(id)
