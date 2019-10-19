@@ -2,8 +2,7 @@
 using CommonTools.Coroutines;
 using Login.Common;
 using Registration.Common;
-using Scripts.Network.APIs;
-using Scripts.Network.Services;
+using Scripts.Services.Authenticator;
 using UnityEngine;
 
 namespace Scripts.UI.Authenticator
@@ -20,8 +19,8 @@ namespace Scripts.UI.Authenticator
 
         private void Awake()
         {
-            authenticatorApi = ServiceProvider.AuthenticatorService
-                .GetAuthenticatorApi();
+            authenticatorApi =
+                AuthenticatorService.GetInstance().AuthenticatorApi;
 
             onLoginFinishedListener = GetComponent<IOnLoginFinishedListener>();
             onRegistrationFinishedListener =
