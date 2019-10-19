@@ -1,8 +1,7 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using CommonTools.Coroutines;
-using Scripts.Network.APIs;
-using Scripts.Network.Services;
+using Scripts.Services.GameServerProvider;
 using UnityEngine;
 
 namespace Scripts.UI.GameServerBrowser
@@ -17,8 +16,8 @@ namespace Scripts.UI.GameServerBrowser
 
         private void Awake()
         {
-            gameServerProviderApi = ServiceProvider.GameServerProviderService
-                .GetGameServerProviderApi();
+            gameServerProviderApi = GameServerProviderService.GetInstance()
+                .GameServerProviderApi;
 
             onGameServerReceivedListener =
                 GetComponent<IOnGameServerReceivedListener>();
