@@ -1,18 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using Scripts.Services.Authorizer;
 
-public class IChatService : MonoBehaviour
+namespace Scripts.Services.Chat
 {
-    // Start is called before the first frame update
-    void Start()
+    public interface IChatService
     {
-        
-    }
+        IAuthorizerApi AuthorizerApi { get; }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        IChatApi ChatApi { get; }
     }
 }
