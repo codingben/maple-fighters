@@ -11,7 +11,7 @@ namespace Scripts.Services.Utils
         private void Awake()
         {
             gameService = GameService.GetInstance();
-            gameService.SetNetworkTrafficState(NetworkTrafficState.Flowing);
+            gameService?.SetNetworkTrafficState(NetworkTrafficState.Flowing);
         }
 
         private void OnDestroy()
