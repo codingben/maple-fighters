@@ -1,5 +1,6 @@
 ﻿namespace Scripts.Services.Authenticator
 {
+    // TODO: Move to the commons
     internal enum AuthenticatorOperations
     {
         /// <summary>
