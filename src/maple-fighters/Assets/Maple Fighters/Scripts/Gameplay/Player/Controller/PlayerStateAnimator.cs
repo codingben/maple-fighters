@@ -72,7 +72,6 @@ namespace Scripts.Gameplay.Player
 
         private void SendUpdatePlayerStateOperation()
         {
-            gameService = GameService.GetInstance();
             gameService?.GameSceneApi.UpdatePlayerState(new UpdatePlayerStateRequestParameters(playerState));
         }
 
