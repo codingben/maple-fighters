@@ -1,18 +1,13 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using Scripts.Services.Authorizer;
 
-public class IGameService : MonoBehaviour
+namespace Scripts.Services.Game
 {
-    // Start is called before the first frame update
-    void Start()
+    public interface IGameService
     {
-        
-    }
+        IAuthorizerApi AuthorizerApi { get; }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        ICharacterSelectorApi CharacterSelectorApi { get; }
+
+        IGameSceneApi GameSceneApi { get; }
     }
 }
