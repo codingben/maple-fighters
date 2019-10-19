@@ -1,18 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class IAuthenticatorService : MonoBehaviour
+﻿namespace Scripts.Services.Authenticator
 {
-    // Start is called before the first frame update
-    void Start()
+    public interface IAuthenticatorService
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        IAuthenticatorApi GetAuthenticatorApi();
     }
 }
