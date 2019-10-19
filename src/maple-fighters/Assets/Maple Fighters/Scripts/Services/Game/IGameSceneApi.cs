@@ -1,18 +1,40 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using System.Threading.Tasks;
+using CommonTools.Coroutines;
+using Game.Common;
+using Network.Scripts;
 
-public class IGameSceneApi : MonoBehaviour
+namespace Scripts.Services.Game
 {
-    // Start is called before the first frame update
-    void Start()
+    public interface IGameSceneApi
     {
-        
-    }
+        UnityEvent<EnterSceneResponseParameters> SceneEntered { get; }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        UnityEvent<SceneObjectAddedEventParameters> SceneObjectAdded { get; }
+
+        UnityEvent<SceneObjectRemovedEventParameters> SceneObjectRemoved { get; }
+
+        UnityEvent<SceneObjectsAddedEventParameters> SceneObjectsAdded { get; }
+
+        UnityEvent<SceneObjectsRemovedEventParameters> SceneObjectsRemoved { get; }
+
+        UnityEvent<SceneObjectPositionChangedEventParameters> PositionChanged { get; }
+
+        UnityEvent<PlayerStateChangedEventParameters> PlayerStateChanged { get; }
+
+        UnityEvent<PlayerAttackedEventParameters> PlayerAttacked { get; }
+
+        UnityEvent<CharacterAddedEventParameters> CharacterAdded { get; }
+
+        UnityEvent<CharactersAddedEventParameters> CharactersAdded { get; }
+
+        UnityEvent<BubbleMessageEventParameters> BubbleMessageReceived { get; }
+
+        Task EnterSceneAsync(IYield yield);
+
+        Task<ChangeSceneResponseParameters> ChangeSceneAsync(IYield yield, ChangeSceneRequestParameters parameters);
+
+        Task UpdatePosition(UpdatePositionRequestParameters parameters);
+
+        Task UpdatePlayerState(UpdatePlayerStateRequestParameters parameters);
     }
 }
