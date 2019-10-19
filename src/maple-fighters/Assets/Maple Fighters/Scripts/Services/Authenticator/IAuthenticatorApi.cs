@@ -1,18 +1,14 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using System.Threading.Tasks;
+using CommonTools.Coroutines;
+using Login.Common;
+using Registration.Common;
 
-public class IAuthenticatorApi : MonoBehaviour
+namespace Scripts.Services.Authenticator
 {
-    // Start is called before the first frame update
-    void Start()
+    public interface IAuthenticatorApi
     {
-        
-    }
+        Task<AuthenticateResponseParameters> AuthenticateAsync(IYield yield, AuthenticateRequestParameters parameters);
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        Task<RegisterResponseParameters> RegisterAsync(IYield yield, RegisterRequestParameters parameters);
     }
 }
