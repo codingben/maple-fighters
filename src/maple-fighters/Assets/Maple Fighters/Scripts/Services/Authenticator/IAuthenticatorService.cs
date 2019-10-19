@@ -2,6 +2,6 @@
 {
     public interface IAuthenticatorService
     {
-        IAuthenticatorApi GetAuthenticatorApi();
+        IAuthenticatorApi AuthenticatorApi { get; }
     }
 }
