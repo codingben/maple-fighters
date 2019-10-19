@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 using CommonTools.Coroutines;
-using Scripts.Network.Services;
+using Scripts.Services.Game;
 using UnityEngine;
 
 namespace Scripts.Gameplay.Map
@@ -24,20 +24,20 @@ namespace Scripts.Gameplay.Map
 
         private void Update()
         {
-            coroutinesExecutor.Update();
+            coroutinesExecutor?.Update();
         }
 
         private void OnDestroy()
         {
-            coroutinesExecutor.Dispose();
+            coroutinesExecutor?.Dispose();
         }
 
         private async Task EnterSceneAsync(IYield yield)
         {
-            var gameSceneApi = ServiceProvider.GameService.GetGameSceneApi();
-            if (gameSceneApi != null)
+            var gameService = GameService.GetInstance();
+            if (gameService != null)
             {
-                await gameSceneApi.EnterSceneAsync(yield);
+                await gameService.GameSceneApi.EnterSceneAsync(yield);
             }
         }
     }
