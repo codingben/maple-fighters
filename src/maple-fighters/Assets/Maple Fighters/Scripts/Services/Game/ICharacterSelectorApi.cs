@@ -1,18 +1,17 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using System.Threading.Tasks;
+using CommonTools.Coroutines;
+using Game.Common;
 
-public class ICharacterSelectorApi : MonoBehaviour
+namespace Scripts.Services.Game
 {
-    // Start is called before the first frame update
-    void Start()
+    public interface ICharacterSelectorApi
     {
-        
-    }
+        Task<CreateCharacterResponseParameters> CreateCharacterAsync(IYield yield, CreateCharacterRequestParameters parameters);
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        Task<RemoveCharacterResponseParameters> RemoveCharacterAsync(IYield yield, RemoveCharacterRequestParameters parameters);
+
+        Task<ValidateCharacterResponseParameters> ValidateCharacterAsync(IYield yield, ValidateCharacterRequestParameters parameters);
+
+        Task<GetCharactersResponseParameters> GetCharactersAsync(IYield yield);
     }
 }
