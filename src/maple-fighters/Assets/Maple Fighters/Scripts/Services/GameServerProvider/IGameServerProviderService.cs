@@ -1,18 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using Scripts.Services.Authorizer;
 
-public class IGameServerProviderService : MonoBehaviour
+namespace Scripts.Services.GameServerProvider
 {
-    // Start is called before the first frame update
-    void Start()
+    public interface IGameServerProviderService
     {
-        
-    }
+        IAuthorizerApi AuthorizerApi { get; }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        IGameServerProviderApi GameServerProviderApi { get; }
     }
 }
