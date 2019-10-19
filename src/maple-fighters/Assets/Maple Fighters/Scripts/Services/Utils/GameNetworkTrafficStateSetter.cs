@@ -1,18 +1,22 @@
 ﻿using CommonCommunicationInterfaces;
+using Scripts.Services.Game;
 using UnityEngine;
 
 namespace Scripts.Services.Utils
 {
     public class GameNetworkTrafficStateSetter : MonoBehaviour
     {
+        private IGameService gameService;
+
         private void Awake()
         {
-            // TODO: Implement
+            gameService = GameService.GetInstance();
+            gameService.SetNetworkTrafficState(NetworkTrafficState.Flowing);
         }
 
         private void OnDestroy()
         {
-            // TODO: Implement
+            gameService.SetNetworkTrafficState(NetworkTrafficState.Paused);
         }
     }
 }
