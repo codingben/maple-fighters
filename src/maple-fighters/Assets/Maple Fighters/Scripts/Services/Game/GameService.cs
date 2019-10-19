@@ -62,6 +62,8 @@ namespace Scripts.Services.Game
         {
             coroutinesExecutor = new ExternalCoroutinesExecutor();
             coroutinesExecutor.StartTask(ConnectAsync);
+
+            DontDestroyOnLoad(gameObject);
         }
 
         private void Update()
@@ -88,6 +90,15 @@ namespace Scripts.Services.Game
                     yield,
                     connectionInfo,
                     connectionProtocol);
+        }
+
+        public void SetNetworkTrafficState(
+            NetworkTrafficState networkTrafficState)
+        {
+            if (serverPeer != null)
+            {
+                serverPeer.NetworkTrafficState = networkTrafficState;
+            }
         }
     }
 }
