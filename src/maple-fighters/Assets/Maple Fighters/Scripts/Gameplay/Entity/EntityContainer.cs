@@ -21,6 +21,8 @@ namespace Scripts.Gameplay.GameEntity
         private IEntity localEntity;
         private IEntityCollection collection;
 
+        private IGameService gameService;
+
         private void Awake()
         {
             collection = new EntityCollection();
@@ -28,7 +30,7 @@ namespace Scripts.Gameplay.GameEntity
 
         private void Start()
         {
-            var gameService = GameService.GetInstance();
+            gameService = GameService.GetInstance();
             gameService?.GameSceneApi.SceneEntered.AddListener(OnLocalEntityEntered);
             gameService?.GameSceneApi.SceneObjectAdded.AddListener(OnEntityAdded);
             gameService?.GameSceneApi.SceneObjectRemoved.AddListener(OnEntityRemoved);
@@ -39,7 +41,6 @@ namespace Scripts.Gameplay.GameEntity
         private void OnDestroy()
         {
             // TODO: Remove SceneLeft event
-            var gameService = GameService.GetInstance();
             gameService?.GameSceneApi.SceneEntered.RemoveListener(OnLocalEntityEntered);
             gameService?.GameSceneApi.SceneObjectAdded.RemoveListener(OnEntityAdded);
             gameService?.GameSceneApi.SceneObjectRemoved.RemoveListener(OnEntityRemoved);
