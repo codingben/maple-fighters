@@ -12,23 +12,11 @@ namespace Scripts.Services.Chat
             : base(serverPeer, log)
         {
             ChatMessageReceived = new UnityEvent<ChatMessageEventParameters>();
-
-            EventHandlerRegister.SetHandler(ChatEvents.ChatMessage, ChatMessageReceived.ToEventHandler());
-        }
-
-        public new void Dispose()
-        {
-            base.Dispose();
-
-            EventHandlerRegister.RemoveHandler(ChatEvents.ChatMessage);
         }
 
         public void SendChatMessage(ChatMessageRequestParameters parameters)
         {
-            OperationRequestSender.Send(
-                ChatOperations.ChatMessage,
-                parameters,
-                MessageSendOptions.DefaultReliable());
+            // Left blank intentionally
         }
     }
 }
