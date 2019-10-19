@@ -1,5 +1,5 @@
 ﻿using Game.Common;
-using Scripts.Network.Services;
+using Scripts.Services.Game;
 using UnityEngine;
 
 namespace Scripts.Gameplay.EntityTransform
@@ -22,9 +22,8 @@ namespace Scripts.Gameplay.EntityTransform
             {
                 lastPosition = transform.position;
 
-                var gameSceneApi =
-                    ServiceProvider.GameService.GetGameSceneApi();
-                if (gameSceneApi != null)
+                var gameService = GameService.GetInstance();
+                if (gameService != null)
                 {
                     var x = transform.position.x;
                     var y = transform.position.y;
@@ -32,7 +31,7 @@ namespace Scripts.Gameplay.EntityTransform
 
                     var parameters =
                         new UpdatePositionRequestParameters(x, y, z);
-                    gameSceneApi.UpdatePosition(parameters);
+                    gameService.GameSceneApi.UpdatePosition(parameters);
                 }
             }
         }
