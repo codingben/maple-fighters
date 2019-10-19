@@ -1,18 +1,34 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using System.Threading.Tasks;
+using CommonCommunicationInterfaces;
+using CommonTools.Coroutines;
+using CommunicationHelper;
+using GameServerProvider.Client.Common;
+using Network.Scripts;
 
-public class GameServerProviderApi : MonoBehaviour
+namespace Scripts.Services.GameServerProvider
 {
-    // Start is called before the first frame update
-    void Start()
+    internal class GameServerProviderApi : NetworkApi<GameServerProviderOperations, EmptyEventCode>, IGameServerProviderApi
     {
-        
-    }
+        internal GameServerProviderApi(IServerPeer serverPeer, bool log = false)
+            : base(serverPeer, log)
+        {
+            // Left blank intentionally
+        }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        public async Task<GameServersProviderResponseParameters> ProvideGameServersAsync(
+            IYield yield)
+        {
+            var id =
+                OperationRequestSender.Send(
+                    GameServerProviderOperations.ProvideGameServers,
+                    new EmptyParameters(),
+                    MessageSendOptions.DefaultReliable());
+
+            return
+                await SubscriptionProvider
+                    .ProvideSubscription<GameServersProviderResponseParameters>(
+                        yield,
+                        id);
+        }
     }
 }
