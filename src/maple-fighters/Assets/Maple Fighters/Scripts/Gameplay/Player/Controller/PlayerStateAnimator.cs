@@ -1,7 +1,7 @@
 ﻿using Game.Common;
 using Scripts.Constants;
 using Scripts.Gameplay.GameEntity;
-using Scripts.Network.Services;
+using Scripts.Services.Game;
 using UnityEngine;
 
 namespace Scripts.Gameplay.Player
@@ -19,16 +19,16 @@ namespace Scripts.Gameplay.Player
 
         private void Start()
         {
-            var gameSceneApi = ServiceProvider.GameService.GetGameSceneApi();
-            gameSceneApi?.SceneObjectsAdded.AddListener(OnSceneObjectsAdded);
-            gameSceneApi?.PlayerStateChanged.AddListener(OnPlayerStateChanged);
+            var gameService = GameService.GetInstance();
+            gameService?.GameSceneApi.SceneObjectsAdded.AddListener(OnSceneObjectsAdded);
+            gameService?.GameSceneApi.PlayerStateChanged.AddListener(OnPlayerStateChanged);
         }
 
         private void OnDestroy()
         {
-            var gameSceneApi = ServiceProvider.GameService.GetGameSceneApi();
-            gameSceneApi?.SceneObjectsAdded.RemoveListener(OnSceneObjectsAdded);
-            gameSceneApi?.PlayerStateChanged.RemoveListener(OnPlayerStateChanged);
+            var gameService = GameService.GetInstance();
+            gameService?.GameSceneApi.SceneObjectsAdded.RemoveListener(OnSceneObjectsAdded);
+            gameService?.GameSceneApi.PlayerStateChanged.RemoveListener(OnPlayerStateChanged);
         }
 
         public void ChangePlayerState(PlayerState newPlayerState)
@@ -71,8 +71,9 @@ namespace Scripts.Gameplay.Player
 
         private void SendUpdatePlayerStateOperation()
         {
-            var gameSceneApi = ServiceProvider.GameService.GetGameSceneApi();
-            gameSceneApi?.UpdatePlayerState(new UpdatePlayerStateRequestParameters(playerState));
+            var gameService = GameService.GetInstance();
+            gameService?.GameSceneApi.UpdatePlayerState(
+                new UpdatePlayerStateRequestParameters(playerState));
         }
 
         private void SetPlayerAnimationState(Animator animator, PlayerState playerState)
