@@ -1,9 +1,15 @@
-﻿using UnityEngine;
+﻿using CommonCommunicationInterfaces;
+using CommunicationHelper;
+using Network.Scripts;
 
 namespace Scripts.Services.Authenticator
 {
-    public class AuthenticatorApi : MonoBehaviour
+    public class AuthenticatorApi : NetworkApi<AuthenticatorOperations, EmptyEventCode>
     {
-        // TODO: Implement
+        protected AuthenticatorApi(IServerPeer serverPeer, bool log = false)
+            : base(serverPeer, log)
+        {
+            // Left blank intentionally
+        }
     }
 }
