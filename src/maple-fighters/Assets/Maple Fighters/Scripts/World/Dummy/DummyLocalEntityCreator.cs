@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using Game.Common;
-using Scripts.Network.Services;
+
+using Scripts.Services.Game;
+
 using UnityEngine;
 
 namespace Scripts.World.Dummy
@@ -46,8 +48,8 @@ namespace Scripts.World.Dummy
                     sceneObject,
                     characterSpawnDetails);
 
-            var gameSceneApi = ServiceProvider.GameService.GetGameSceneApi();
-            gameSceneApi?.SceneEntered.Invoke(parameters);
+            var gameService = GameService.GetInstance();
+            gameService?.GameSceneApi.SceneEntered.Invoke(parameters);
         }
     }
 }
