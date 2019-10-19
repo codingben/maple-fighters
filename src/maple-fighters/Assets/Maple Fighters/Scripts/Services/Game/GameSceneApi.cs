@@ -108,24 +108,20 @@ namespace Scripts.Services.Game
                         id);
         }
 
-        public Task UpdatePosition(UpdatePositionRequestParameters parameters)
+        public void UpdatePosition(UpdatePositionRequestParameters parameters)
         {
             OperationRequestSender.Send(
                 GameOperations.PositionChanged,
                 parameters,
                 MessageSendOptions.DefaultUnreliable((byte)GameDataChannels.Position));
-
-            return Task.CompletedTask;
         }
 
-        public Task UpdatePlayerState(UpdatePlayerStateRequestParameters parameters)
+        public void UpdatePlayerState(UpdatePlayerStateRequestParameters parameters)
         {
             OperationRequestSender.Send(
                 GameOperations.PlayerStateChanged,
                 parameters,
                 MessageSendOptions.DefaultUnreliable((byte)GameDataChannels.Animations));
-
-            return Task.CompletedTask;
         }
     }
 }
