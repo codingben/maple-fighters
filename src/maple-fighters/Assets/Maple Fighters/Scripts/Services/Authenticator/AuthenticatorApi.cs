@@ -32,13 +32,10 @@ namespace Scripts.Services.Authenticator
                         yield,
                         id);
 
-            if (responseParameters.HasAccessToken)
-            {
-                // TODO: Use the access token
-            }
-
-            return new AuthenticateResponseParameters(
-                responseParameters.Status);
+            return 
+                new AuthenticateResponseParameters(
+                    responseParameters.Status,
+                    responseParameters.AccessToken);
         }
 
         public async Task<RegisterResponseParameters> RegisterAsync(
