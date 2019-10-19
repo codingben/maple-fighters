@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using Chat.Common;
+﻿using Chat.Common;
 using CommonCommunicationInterfaces;
 using Network.Scripts;
 
@@ -27,14 +26,12 @@ namespace Scripts.Services.Chat
             EventHandlerRegister.RemoveHandler(ChatEvents.ChatMessage);
         }
 
-        public Task SendChatMessage(ChatMessageRequestParameters parameters)
+        public void SendChatMessage(ChatMessageRequestParameters parameters)
         {
             OperationRequestSender.Send(
                 ChatOperations.ChatMessage,
                 parameters,
                 MessageSendOptions.DefaultReliable());
-
-            return Task.CompletedTask;
         }
     }
 }
