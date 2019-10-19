@@ -8,9 +8,11 @@ namespace Scripts.Gameplay.PlayerCharacter
 {
     public class CharacterCreator : MonoBehaviour
     {
+        private IGameService gameService;
+
         private void Awake()
         {
-            var gameService = GameService.GetInstance();
+            gameService = GameService.GetInstance();
             gameService?.GameSceneApi.SceneEntered.AddListener(OnSceneEntered);
             gameService?.GameSceneApi.CharacterAdded.AddListener(OnCharacterAdded);
             gameService?.GameSceneApi.CharactersAdded.AddListener(OnCharactersAdded);
@@ -18,7 +20,6 @@ namespace Scripts.Gameplay.PlayerCharacter
 
         private void OnDestroy()
         {
-            var gameService = GameService.GetInstance();
             gameService?.GameSceneApi.SceneEntered.RemoveListener(OnSceneEntered);
             gameService?.GameSceneApi.CharacterAdded.RemoveListener(OnCharacterAdded);
             gameService?.GameSceneApi.CharactersAdded.RemoveListener(OnCharactersAdded);
