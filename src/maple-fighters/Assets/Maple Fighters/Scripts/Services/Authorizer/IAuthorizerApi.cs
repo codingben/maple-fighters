@@ -1,18 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using System.Threading.Tasks;
+using Authorization.Client.Common;
+using CommonTools.Coroutines;
 
-public class IAuthorizerApi : MonoBehaviour
+namespace Scripts.Services.Authorizer
 {
-    // Start is called before the first frame update
-    void Start()
+    public interface IAuthorizerApi
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        Task<AuthorizeResponseParameters> AuthorizeAsync(IYield yield, AuthorizeRequestParameters parameters);
     }
 }
