@@ -1,18 +1,37 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using System.Threading.Tasks;
+using CommonCommunicationInterfaces;
+using CommonTools.Coroutines;
+using CommunicationHelper;
+using Login.Common;
+using Network.Scripts;
+using Registration.Common;
 
-public class DummyAuthenticatorApi : MonoBehaviour
+namespace Scripts.Services.Authenticator
 {
-    // Start is called before the first frame update
-    void Start()
+    internal class DummyAuthenticatorApi : NetworkApi<AuthenticatorOperations, EmptyEventCode>, IAuthenticatorApi
     {
-        
-    }
+        protected DummyAuthenticatorApi(IServerPeer serverPeer, bool log = false)
+            : base(serverPeer, log)
+        {
+            // Left blank intentionally
+        }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        public async Task<AuthenticateResponseParameters> AuthenticateAsync(
+            IYield yield,
+            AuthenticateRequestParameters parameters)
+        {
+            return 
+                await Task.FromResult(
+                    new AuthenticateResponseParameters(LoginStatus.Succeed));
+        }
+
+        public async Task<RegisterResponseParameters> RegisterAsync(
+            IYield yield,
+            RegisterRequestParameters parameters)
+        {
+            return 
+                await Task.FromResult(
+                    new RegisterResponseParameters(RegisterStatus.Succeed));
+        }
     }
 }
