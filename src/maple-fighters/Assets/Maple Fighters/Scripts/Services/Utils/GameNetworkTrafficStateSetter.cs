@@ -16,7 +16,7 @@ namespace Scripts.Services.Utils
 
         private void OnDestroy()
         {
-            gameService.SetNetworkTrafficState(NetworkTrafficState.Paused);
+            gameService?.SetNetworkTrafficState(NetworkTrafficState.Paused);
         }
     }
 }
