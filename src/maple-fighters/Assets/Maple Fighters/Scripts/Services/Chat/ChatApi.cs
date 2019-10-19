@@ -1,18 +1,40 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using System.Threading.Tasks;
+using Chat.Common;
+using CommonCommunicationInterfaces;
+using Network.Scripts;
 
-public class ChatApi : MonoBehaviour
+namespace Scripts.Services.Chat
 {
-    // Start is called before the first frame update
-    void Start()
+    internal class ChatApi : NetworkApi<ChatOperations, ChatEvents>, IChatApi
     {
-        
-    }
+        public UnityEvent<ChatMessageEventParameters> ChatMessageReceived
+        {
+            get;
+        }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        internal ChatApi(IServerPeer serverPeer, bool log = false)
+            : base(serverPeer, log)
+        {
+            ChatMessageReceived = new UnityEvent<ChatMessageEventParameters>();
+
+            EventHandlerRegister.SetHandler(ChatEvents.ChatMessage, ChatMessageReceived.ToEventHandler());
+        }
+
+        public new void Dispose()
+        {
+            base.Dispose();
+
+            EventHandlerRegister.RemoveHandler(ChatEvents.ChatMessage);
+        }
+
+        public Task SendChatMessage(ChatMessageRequestParameters parameters)
+        {
+            OperationRequestSender.Send(
+                ChatOperations.ChatMessage,
+                parameters,
+                MessageSendOptions.DefaultReliable());
+
+            return Task.CompletedTask;
+        }
     }
 }
