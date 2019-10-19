@@ -12,6 +12,8 @@ namespace Scripts.Gameplay.Player
         private PlayerState playerState = PlayerState.Idle;
         private Animator animator;
 
+        private IGameService gameService;
+
         private void Awake()
         {
             animator = GetComponent<Animator>();
@@ -19,14 +21,13 @@ namespace Scripts.Gameplay.Player
 
         private void Start()
         {
-            var gameService = GameService.GetInstance();
+            gameService = GameService.GetInstance();
             gameService?.GameSceneApi.SceneObjectsAdded.AddListener(OnSceneObjectsAdded);
             gameService?.GameSceneApi.PlayerStateChanged.AddListener(OnPlayerStateChanged);
         }
 
         private void OnDestroy()
         {
-            var gameService = GameService.GetInstance();
             gameService?.GameSceneApi.SceneObjectsAdded.RemoveListener(OnSceneObjectsAdded);
             gameService?.GameSceneApi.PlayerStateChanged.RemoveListener(OnPlayerStateChanged);
         }
@@ -72,8 +73,7 @@ namespace Scripts.Gameplay.Player
         private void SendUpdatePlayerStateOperation()
         {
             var gameService = GameService.GetInstance();
-            gameService?.GameSceneApi.UpdatePlayerState(
-                new UpdatePlayerStateRequestParameters(playerState));
+            gameService?.GameSceneApi.UpdatePlayerState(new UpdatePlayerStateRequestParameters(playerState));
         }
 
         private void SetPlayerAnimationState(Animator animator, PlayerState playerState)
