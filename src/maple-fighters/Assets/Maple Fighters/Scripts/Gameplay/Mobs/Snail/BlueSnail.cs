@@ -12,18 +12,17 @@ namespace Scripts.Gameplay.Mobs
         [Header("Attack"), SerializeField]
         private Vector2 hitAmount;
 
+        private IGameService gameService;
+
         private void Start()
         {
-            var gameService = GameService.GetInstance();
-            gameService?.GameSceneApi.PlayerAttacked.AddListener(
-                OnPlayerAttacked);
+            gameService = GameService.GetInstance();
+            gameService?.GameSceneApi.PlayerAttacked.AddListener(OnPlayerAttacked);
         }
 
         private void OnDestroy()
         {
-            var gameService = GameService.GetInstance();
-            gameService?.GameSceneApi.PlayerAttacked.RemoveListener(
-                OnPlayerAttacked);
+            gameService?.GameSceneApi.PlayerAttacked.RemoveListener(OnPlayerAttacked);
         }
 
         private void OnPlayerAttacked(PlayerAttackedEventParameters parameters)
