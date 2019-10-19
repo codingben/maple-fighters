@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using Game.Common;
 using Scripts.Gameplay.GameEntity;
-using Scripts.Network.Services;
+using Scripts.Services.Game;
 using UnityEngine;
 
 namespace Scripts.Gameplay.PlayerCharacter
@@ -10,18 +10,18 @@ namespace Scripts.Gameplay.PlayerCharacter
     {
         private void Awake()
         {
-            var gameSceneApi = ServiceProvider.GameService.GetGameSceneApi();
-            gameSceneApi?.SceneEntered.AddListener(OnSceneEntered);
-            gameSceneApi?.CharacterAdded.AddListener(OnCharacterAdded);
-            gameSceneApi?.CharactersAdded.AddListener(OnCharactersAdded);
+            var gameService = GameService.GetInstance();
+            gameService?.GameSceneApi.SceneEntered.AddListener(OnSceneEntered);
+            gameService?.GameSceneApi.CharacterAdded.AddListener(OnCharacterAdded);
+            gameService?.GameSceneApi.CharactersAdded.AddListener(OnCharactersAdded);
         }
 
         private void OnDestroy()
         {
-            var gameSceneApi = ServiceProvider.GameService.GetGameSceneApi();
-            gameSceneApi?.SceneEntered.RemoveListener(OnSceneEntered);
-            gameSceneApi?.CharacterAdded.RemoveListener(OnCharacterAdded);
-            gameSceneApi?.CharactersAdded.RemoveListener(OnCharactersAdded);
+            var gameService = GameService.GetInstance();
+            gameService?.GameSceneApi.SceneEntered.RemoveListener(OnSceneEntered);
+            gameService?.GameSceneApi.CharacterAdded.RemoveListener(OnCharacterAdded);
+            gameService?.GameSceneApi.CharactersAdded.RemoveListener(OnCharactersAdded);
         }
 
         private void OnSceneEntered(EnterSceneResponseParameters parameters)
