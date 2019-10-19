@@ -17,7 +17,6 @@ namespace Scripts.Gameplay.Graphics
 
         private void OnDestroy()
         {
-            gameService = GameService.GetInstance();
             gameService?.GameSceneApi.BubbleMessageReceived.RemoveListener(OnBubbleMessageReceived);
         }
 
