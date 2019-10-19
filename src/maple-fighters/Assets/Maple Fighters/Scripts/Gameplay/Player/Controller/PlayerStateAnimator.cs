@@ -72,7 +72,7 @@ namespace Scripts.Gameplay.Player
 
         private void SendUpdatePlayerStateOperation()
         {
-            var gameService = GameService.GetInstance();
+            gameService = GameService.GetInstance();
             gameService?.GameSceneApi.UpdatePlayerState(new UpdatePlayerStateRequestParameters(playerState));
         }
 
