@@ -1,8 +1,7 @@
 ﻿using System.Threading.Tasks;
 using CommonTools.Coroutines;
 using Game.Common;
-using Scripts.Network.APIs;
-using Scripts.Network.Services;
+using Scripts.Services.Game;
 using UnityEngine;
 
 namespace Scripts.UI.CharacterSelection
@@ -24,7 +23,7 @@ namespace Scripts.UI.CharacterSelection
         private void Awake()
         {
             characterSelectorApi =
-                ServiceProvider.GameService.GetCharacterSelectorApi();
+                GameService.GetInstance().CharacterSelectorApi;
 
             onCharacterReceivedListener =
                 GetComponent<IOnCharacterReceivedListener>();
