@@ -1,8 +1,6 @@
 ﻿using System.Collections;
 using Game.Common;
-
 using Scripts.Services.Game;
-
 using UnityEngine;
 
 namespace Scripts.World.Dummy
