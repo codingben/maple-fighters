@@ -6,10 +6,7 @@ namespace Scripts.Services.Chat
 {
     internal class DummyChatApi : NetworkApi<ChatOperations, ChatEvents>, IChatApi
     {
-        public UnityEvent<ChatMessageEventParameters> ChatMessageReceived
-        {
-            get;
-        }
+        public UnityEvent<ChatMessageEventParameters> ChatMessageReceived { get; }
 
         internal DummyChatApi(IServerPeer serverPeer, bool log = false)
             : base(serverPeer, log)
