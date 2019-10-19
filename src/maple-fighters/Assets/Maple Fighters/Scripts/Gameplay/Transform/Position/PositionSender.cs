@@ -10,9 +10,16 @@ namespace Scripts.Gameplay.EntityTransform
         private float greaterDistance = 0.1f;
         private Vector2 lastPosition;
 
+        private IGameService gameService;
+
         private void Awake()
         {
             lastPosition = transform.position;
+        }
+
+        private void Start()
+        {
+            gameService = GameService.GetInstance();
         }
 
         private void Update()
@@ -22,7 +29,6 @@ namespace Scripts.Gameplay.EntityTransform
             {
                 lastPosition = transform.position;
 
-                var gameService = GameService.GetInstance();
                 if (gameService != null)
                 {
                     var x = transform.position.x;
