@@ -1,7 +1,7 @@
 ﻿using System;
 using Game.Common;
 using Scripts.Gameplay.GameEntity;
-using Scripts.Network.Services;
+using Scripts.Services.Game;
 using UnityEngine;
 
 namespace Scripts.Gameplay.EntityTransform
@@ -36,17 +36,20 @@ namespace Scripts.Gameplay.EntityTransform
 
         private void Start()
         {
-            var gameSceneApi = ServiceProvider.GameService.GetGameSceneApi();
-            gameSceneApi?.PositionChanged.AddListener(OnPositionChanged);
+            var gameService = GameService.GetInstance();
+            gameService?.GameSceneApi.PositionChanged.AddListener(
+                OnPositionChanged);
         }
 
         private void OnDestroy()
         {
-            var gameSceneApi = ServiceProvider.GameService.GetGameSceneApi();
-            gameSceneApi?.PositionChanged.RemoveListener(OnPositionChanged);
+            var gameService = GameService.GetInstance();
+            gameService?.GameSceneApi.PositionChanged.RemoveListener(
+                OnPositionChanged);
         }
 
-        private void OnPositionChanged(SceneObjectPositionChangedEventParameters parameters)
+        private void OnPositionChanged(
+            SceneObjectPositionChangedEventParameters parameters)
         {
             if (entityId == parameters.SceneObjectId)
             {
@@ -73,7 +76,8 @@ namespace Scripts.Gameplay.EntityTransform
 
                 case InterpolateOption.Lerp:
                 {
-                    var distance = Vector2.Distance(transform.position, newPosition);
+                    var distance = 
+                        Vector2.Distance(transform.position, newPosition);
                     if (distance > greaterDistance)
                     {
                         if (canTeleport)
@@ -84,7 +88,10 @@ namespace Scripts.Gameplay.EntityTransform
                     else
                     {
                         transform.position = 
-                            Vector3.Lerp(transform.position, newPosition, speed * Time.deltaTime);
+                            Vector3.Lerp(
+                                transform.position,
+                                newPosition,
+                                speed * Time.deltaTime);
                     }
 
                     break;
