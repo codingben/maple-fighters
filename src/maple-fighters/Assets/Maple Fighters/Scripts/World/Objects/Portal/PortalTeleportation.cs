@@ -1,9 +1,9 @@
 ﻿using System.Threading.Tasks;
 using CommonTools.Coroutines;
 using Game.Common;
-using Scripts.Coroutines;
 using Scripts.Gameplay.GameEntity;
-using Scripts.Network.Services;
+using Scripts.Services.Game;
+
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -19,14 +19,24 @@ namespace Scripts.World.Objects
         {
             var entity = GetComponent<IEntity>();
             entityId = entity.Id;
+
+            coroutinesExecutor = new ExternalCoroutinesExecutor();
+        }
+
+        private void Update()
+        {
+            coroutinesExecutor?.Update();
+        }
+
+        private void OnDestroy()
+        {
+            coroutinesExecutor?.Dispose();
         }
 
         public void Teleport()
         {
             if (coroutinesExecutor == null)
             {
-                coroutinesExecutor = new ExternalCoroutinesExecutor();
-                coroutinesExecutor.ExecuteExternally();
                 coroutinesExecutor.StartTask(
                     method: ChangeScene,
                     onException: (e) => 
@@ -34,18 +44,13 @@ namespace Scripts.World.Objects
             }
         }
 
-        private void OnDestroy()
-        {
-            coroutinesExecutor?.RemoveFromExternalExecutor();
-        }
-
         private async Task ChangeScene(IYield yield)
         {
-            var gameSceneApi = ServiceProvider.GameService.GetGameSceneApi();
-            if (gameSceneApi != null)
+            var gameService = GameService.GetInstance();
+            if (gameService != null)
             {
                 var parameters = 
-                    await gameSceneApi.ChangeSceneAsync(
+                    await gameService.GameSceneApi.ChangeSceneAsync(
                         yield,
                         new ChangeSceneRequestParameters(entityId));
 
