@@ -1,6 +1,6 @@
 ﻿namespace Scripts.Services.Authenticator
 {
-    public enum AuthenticatorOperations
+    internal enum AuthenticatorOperations
     {
         /// <summary>
         /// The authenticate.
