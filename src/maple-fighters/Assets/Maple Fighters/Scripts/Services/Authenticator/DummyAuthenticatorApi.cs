@@ -10,7 +10,7 @@ namespace Scripts.Services.Authenticator
 {
     internal class DummyAuthenticatorApi : NetworkApi<AuthenticatorOperations, EmptyEventCode>, IAuthenticatorApi
     {
-        protected DummyAuthenticatorApi(IServerPeer serverPeer, bool log = false)
+        internal DummyAuthenticatorApi(IServerPeer serverPeer, bool log = false)
             : base(serverPeer, log)
         {
             // Left blank intentionally
