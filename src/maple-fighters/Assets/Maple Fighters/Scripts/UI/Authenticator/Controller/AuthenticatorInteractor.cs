@@ -11,7 +11,7 @@ namespace Scripts.UI.Authenticator
     [RequireComponent(typeof(IOnRegistrationFinishedListener))]
     public class AuthenticatorInteractor : MonoBehaviour
     {
-        private IAuthenticatorApi authenticatorApi;
+        private IAuthenticatorService authenticatorService;
         private IOnLoginFinishedListener onLoginFinishedListener;
         private IOnRegistrationFinishedListener onRegistrationFinishedListener;
 
@@ -19,8 +19,7 @@ namespace Scripts.UI.Authenticator
 
         private void Awake()
         {
-            authenticatorApi =
-                AuthenticatorService.GetInstance().AuthenticatorApi;
+            authenticatorService = AuthenticatorService.GetInstance();
 
             onLoginFinishedListener = GetComponent<IOnLoginFinishedListener>();
             onRegistrationFinishedListener =
@@ -54,33 +53,38 @@ namespace Scripts.UI.Authenticator
             IYield yield,
             AuthenticateRequestParameters parameters)
         {
-            var responseParameters =
-                await authenticatorApi.AuthenticateAsync(yield, parameters);
-
-            switch (responseParameters.Status)
+            var api = authenticatorService?.AuthenticatorApi;
+            if (api != null)
             {
-                case LoginStatus.Succeed:
-                {
-                    onLoginFinishedListener.OnLoginSucceed();
-                    break;
-                }
+                var responseParameters =
+                    await api.AuthenticateAsync(yield, parameters);
+                var status = responseParameters.Status;
 
-                case LoginStatus.UserNotExist:
+                switch (status)
                 {
-                    onLoginFinishedListener.OnInvalidEmailError();
-                    break;
-                }
+                    case LoginStatus.Succeed:
+                    {
+                        onLoginFinishedListener.OnLoginSucceed();
+                        break;
+                    }
 
-                case LoginStatus.PasswordIncorrect:
-                {
-                    onLoginFinishedListener.OnInvalidPasswordError();
-                    break;
-                }
+                    case LoginStatus.UserNotExist:
+                    {
+                        onLoginFinishedListener.OnInvalidEmailError();
+                        break;
+                    }
 
-                case LoginStatus.NonAuthorized:
-                {
-                    onLoginFinishedListener.OnNonAuthorizedError();
-                    break;
+                    case LoginStatus.PasswordIncorrect:
+                    {
+                        onLoginFinishedListener.OnInvalidPasswordError();
+                        break;
+                    }
+
+                    case LoginStatus.NonAuthorized:
+                    {
+                        onLoginFinishedListener.OnNonAuthorizedError();
+                        break;
+                    }
                 }
             }
         }
@@ -103,21 +107,26 @@ namespace Scripts.UI.Authenticator
             IYield yield,
             RegisterRequestParameters parameters)
         {
-            var responseParameters =
-                await authenticatorApi.RegisterAsync(yield, parameters);
-
-            switch (responseParameters.Status)
+            var api = authenticatorService?.AuthenticatorApi;
+            if (api != null)
             {
-                case RegisterStatus.Succeed:
-                {
-                    onRegistrationFinishedListener.OnRegistrationSucceed();
-                    break;
-                }
+                var responseParameters =
+                    await api.RegisterAsync(yield, parameters);
+                var status = responseParameters.Status;
 
-                case RegisterStatus.EmailExists:
+                switch (status)
                 {
-                    onRegistrationFinishedListener.OnEmailExistsError();
-                    break;
+                    case RegisterStatus.Succeed:
+                    {
+                        onRegistrationFinishedListener.OnRegistrationSucceed();
+                        break;
+                    }
+
+                    case RegisterStatus.EmailExists:
+                    {
+                        onRegistrationFinishedListener.OnEmailExistsError();
+                        break;
+                    }
                 }
             }
         }

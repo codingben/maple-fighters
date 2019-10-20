@@ -8,7 +8,7 @@ using Network.Utils;
 
 namespace Scripts.Services.Authenticator
 {
-    public class AuthenticatorService : Singleton<AuthenticatorService>
+    public class AuthenticatorService : Singleton<AuthenticatorService>, IAuthenticatorService
     {
         public IAuthenticatorApi AuthenticatorApi
         {
