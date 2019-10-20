@@ -12,7 +12,7 @@ namespace Scripts.UI.CharacterSelection
     [RequireComponent(typeof(IOnCharacterDeletionFinishedListener))]
     public class CharacterViewInteractor : MonoBehaviour
     {
-        private ICharacterSelectorApi characterSelectorApi;
+        private IGameService gameService;
         private IOnCharacterReceivedListener onCharacterReceivedListener;
         private IOnCharacterValidationFinishedListener onCharacterValidationFinishedListener;
         private IOnCharacterCreationFinishedListener onCharacterCreationFinishedListener;
@@ -22,8 +22,7 @@ namespace Scripts.UI.CharacterSelection
 
         private void Awake()
         {
-            characterSelectorApi =
-                GameService.GetInstance().CharacterSelectorApi;
+            gameService = GameService.GetInstance();
 
             onCharacterReceivedListener =
                 GetComponent<IOnCharacterReceivedListener>();
@@ -54,21 +53,24 @@ namespace Scripts.UI.CharacterSelection
 
         private async Task GetCharactersAsync(IYield yield)
         {
-            var parameters =
-                await characterSelectorApi.GetCharactersAsync(yield);
-
-            var characters = parameters.Characters;
-            foreach (var character in characters)
+            var api = gameService?.CharacterSelectorApi;
+            if (api != null)
             {
-                var characterDetails = new CharacterDetails(
-                    character.Name,
-                    character.Index.ToUiCharacterIndex(),
-                    character.CharacterType.ToUiCharacterClass(),
-                    character.LastMap.ToUiMapIndex(),
-                    character.HasCharacter);
+                var parameters = await api.GetCharactersAsync(yield);
+                var characters = parameters.Characters;
 
-                onCharacterReceivedListener.OnCharacterReceived(
-                    characterDetails);
+                foreach (var character in characters)
+                {
+                    var characterDetails = new CharacterDetails(
+                        character.Name,
+                        character.Index.ToUiCharacterIndex(),
+                        character.CharacterType.ToUiCharacterClass(),
+                        character.LastMap.ToUiMapIndex(),
+                        character.HasCharacter);
+
+                    onCharacterReceivedListener.OnCharacterReceived(
+                        characterDetails);
+                }
             }
         }
 
@@ -85,27 +87,29 @@ namespace Scripts.UI.CharacterSelection
             IYield yield,
             ValidateCharacterRequestParameters parameters)
         {
-            var responseParameters =
-                await characterSelectorApi.ValidateCharacterAsync(
-                    yield,
-                    parameters);
-
-            var map = responseParameters.Map;
-            var status = responseParameters.Status;
-
-            switch (status)
+            var api = gameService?.CharacterSelectorApi;
+            if (api != null)
             {
-                case CharacterValidationStatus.Ok:
-                {
-                    onCharacterValidationFinishedListener.OnCharacterValidated(
-                        map.ToUiMapIndex());
-                    break;
-                }
+                var responseParameters =
+                    await api.ValidateCharacterAsync(yield, parameters);
+                var map = responseParameters.Map;
+                var status = responseParameters.Status;
 
-                case CharacterValidationStatus.Wrong:
+                switch (status)
                 {
-                    onCharacterValidationFinishedListener.OnCharacterUnvalidated();
-                    break;
+                    case CharacterValidationStatus.Ok:
+                    {
+                        onCharacterValidationFinishedListener
+                            .OnCharacterValidated(map.ToUiMapIndex());
+                        break;
+                    }
+
+                    case CharacterValidationStatus.Wrong:
+                    {
+                        onCharacterValidationFinishedListener
+                            .OnCharacterUnvalidated();
+                        break;
+                    }
                 }
             }
         }
@@ -123,24 +127,28 @@ namespace Scripts.UI.CharacterSelection
             IYield yield,
             RemoveCharacterRequestParameters parameters)
         {
-            var responseParameters =
-                await characterSelectorApi.RemoveCharacterAsync(
-                    yield,
-                    parameters);
-
-            var status = responseParameters.Status;
-            switch (status)
+            var api = gameService?.CharacterSelectorApi;
+            if (api != null)
             {
-                case RemoveCharacterStatus.Succeed:
-                {
-                    onCharacterDeletionFinishedListener.OnCharacterDeletionSucceed();
-                    break;
-                }
+                var responseParameters =
+                    await api.RemoveCharacterAsync(yield, parameters);
+                var status = responseParameters.Status;
 
-                case RemoveCharacterStatus.Failed:
+                switch (status)
                 {
-                    onCharacterDeletionFinishedListener.OnCharacterDeletionFailed();
-                    break;
+                    case RemoveCharacterStatus.Succeed:
+                    {
+                        onCharacterDeletionFinishedListener
+                            .OnCharacterDeletionSucceed();
+                        break;
+                    }
+
+                    case RemoveCharacterStatus.Failed:
+                    {
+                        onCharacterDeletionFinishedListener
+                            .OnCharacterDeletionFailed();
+                        break;
+                    }
                 }
             }
         }
@@ -160,32 +168,37 @@ namespace Scripts.UI.CharacterSelection
             IYield yield,
             CreateCharacterRequestParameters parameters)
         {
-            var responseParameters =
-                await characterSelectorApi.CreateCharacterAsync(
-                    yield,
-                    parameters);
-
-            var status = responseParameters.Status;
-            switch (status)
+            var api = gameService?.CharacterSelectorApi;
+            if (api != null)
             {
-                case CharacterCreationStatus.Succeed:
-                {
-                    onCharacterCreationFinishedListener.OnCharacterCreated();
-                    break;
-                }
+                var responseParameters =
+                    await api.CreateCharacterAsync(yield, parameters);
+                var status = responseParameters.Status;
 
-                case CharacterCreationStatus.Failed:
+                switch (status)
                 {
-                    onCharacterCreationFinishedListener.OnCreateCharacterFailed(
-                        CharacterCreationFailed.Unknown);
-                    break;
-                }
+                    case CharacterCreationStatus.Succeed:
+                    {
+                        onCharacterCreationFinishedListener
+                            .OnCharacterCreated();
+                        break;
+                    }
 
-                case CharacterCreationStatus.NameUsed:
-                {
-                    onCharacterCreationFinishedListener.OnCreateCharacterFailed(
-                        CharacterCreationFailed.NameAlreadyInUse);
-                    break;
+                    case CharacterCreationStatus.Failed:
+                    {
+                        onCharacterCreationFinishedListener
+                            .OnCreateCharacterFailed(
+                                CharacterCreationFailed.Unknown);
+                        break;
+                    }
+
+                    case CharacterCreationStatus.NameUsed:
+                    {
+                        onCharacterCreationFinishedListener
+                            .OnCreateCharacterFailed(
+                                CharacterCreationFailed.NameAlreadyInUse);
+                        break;
+                    }
                 }
             }
         }
