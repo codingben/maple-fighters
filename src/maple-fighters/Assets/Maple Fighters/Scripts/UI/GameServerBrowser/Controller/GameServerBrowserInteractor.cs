@@ -9,15 +9,14 @@ namespace Scripts.UI.GameServerBrowser
     [RequireComponent(typeof(IOnGameServerReceivedListener))]
     public class GameServerBrowserInteractor : MonoBehaviour
     {
-        private IGameServerProviderApi gameServerProviderApi;
+        private IGameServerProviderService gameServerProviderService;
         private IOnGameServerReceivedListener onGameServerReceivedListener;
 
         private ExternalCoroutinesExecutor coroutinesExecutor;
 
         private void Awake()
         {
-            gameServerProviderApi = GameServerProviderService.GetInstance()
-                .GameServerProviderApi;
+            gameServerProviderService = GameServerProviderService.GetInstance();
 
             onGameServerReceivedListener =
                 GetComponent<IOnGameServerReceivedListener>();
@@ -42,18 +41,22 @@ namespace Scripts.UI.GameServerBrowser
 
         private async Task ProvideGameServersAsync(IYield yield)
         {
-            var responseParameters =
-                await gameServerProviderApi.ProvideGameServersAsync(yield);
+            var api = gameServerProviderService?.GameServerProviderApi;
+            if (api != null)
+            {
+                var responseParameters =
+                    await api.ProvideGameServersAsync(yield);
+                var gameServers =
+                    responseParameters.GameServerInformations.Select(
+                        (x) => new UIGameServerButtonData(
+                            x.IP,
+                            x.Name,
+                            x.Port,
+                            x.Connections,
+                            x.MaxConnections));
 
-            var gameServers = responseParameters.GameServerInformations;
-            onGameServerReceivedListener.OnGameServerReceived(
-                gameServers.Select(
-                    x => new UIGameServerButtonData(
-                        x.IP,
-                        x.Name,
-                        x.Port,
-                        x.Connections,
-                        x.MaxConnections)));
+                onGameServerReceivedListener.OnGameServerReceived(gameServers);
+            }
         }
     }
 }
