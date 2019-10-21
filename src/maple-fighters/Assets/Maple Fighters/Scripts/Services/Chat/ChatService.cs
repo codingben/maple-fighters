@@ -21,16 +21,16 @@ namespace Scripts.Services.Chat
                 {
                     var dummyPeer = new DummyPeer();
 
-                    AuthorizerApi = new AuthorizerApi(dummyPeer);
-                    ChatApi = new ChatApi(dummyPeer);
+                    AuthorizerApi = new DummyAuthorizerApi(dummyPeer);
+                    ChatApi = new DummyChatApi(dummyPeer);
                 }
             }
         }
 
         private void OnDestroy()
         {
-            ((IDisposable)AuthorizerApi)?.Dispose();
-            ((IDisposable)ChatApi)?.Dispose();
+            (AuthorizerApi as IDisposable)?.Dispose();
+            (ChatApi as IDisposable)?.Dispose();
         }
     }
 }
