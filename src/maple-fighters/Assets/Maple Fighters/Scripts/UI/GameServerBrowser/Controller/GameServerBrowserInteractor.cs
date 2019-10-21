@@ -41,11 +41,12 @@ namespace Scripts.UI.GameServerBrowser
 
         private async Task ProvideGameServersAsync(IYield yield)
         {
-            var api = gameServerProviderService?.GameServerProviderApi;
-            if (api != null)
+            var gameServerProviderApi =
+                gameServerProviderService?.GameServerProviderApi;
+            if (gameServerProviderApi != null)
             {
                 var responseParameters =
-                    await api.ProvideGameServersAsync(yield);
+                    await gameServerProviderApi.ProvideGameServersAsync(yield);
                 var gameServers =
                     responseParameters.GameServerInformations.Select(
                         (x) => new UIGameServerButtonData(
