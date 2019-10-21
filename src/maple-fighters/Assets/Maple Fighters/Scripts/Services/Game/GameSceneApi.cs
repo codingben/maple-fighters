@@ -58,7 +58,7 @@ namespace Scripts.Services.Game
             EventHandlerRegister.SetHandler(GameEvents.BubbleMessage, BubbleMessageReceived.ToEventHandler());
         }
 
-        public new void Dispose()
+        public override void Dispose()
         {
             base.Dispose();
 
