@@ -1,104 +1,40 @@
 ﻿using System;
-using System.Threading.Tasks;
-using CommonCommunicationInterfaces;
-using CommonTools.Coroutines;
-using ExitGames.Client.Photon;
 using Network.Scripts;
 using Network.Utils;
+using Scripts.ScriptableObjects;
 using Scripts.Services.Authorizer;
 
 namespace Scripts.Services.Game
 {
     public class GameService : Singleton<GameService>, IGameService
     {
-        public IAuthorizerApi AuthorizerApi
-        {
-            get
-            {
-                if (authorizerApi == null)
-                {
-                    authorizerApi = new DummyAuthorizerApi(serverPeer);
-                }
+        public IAuthorizerApi AuthorizerApi { get; set; }
 
-                return authorizerApi;
-            }
-        }
+        public ICharacterSelectorApi CharacterSelectorApi { get; set; }
 
-        public ICharacterSelectorApi CharacterSelectorApi
-        {
-            get
-            {
-                if (characterSelectorApi == null)
-                {
-                    characterSelectorApi =
-                        new DummyCharacterSelectorApi(serverPeer);
-                }
-
-                return characterSelectorApi;
-            }
-        }
-
-        public IGameSceneApi GameSceneApi
-        {
-            get
-            {
-                if (gameSceneApi == null)
-                {
-                    gameSceneApi = new DummyGameSceneApi(serverPeer);
-                }
-
-                return gameSceneApi;
-            }
-        }
-
-        private IAuthorizerApi authorizerApi;
-        private ICharacterSelectorApi characterSelectorApi;
-        private IGameSceneApi gameSceneApi;
-        private IServerPeer serverPeer;
-
-        private ExternalCoroutinesExecutor coroutinesExecutor;
+        public IGameSceneApi GameSceneApi { get; set; }
 
         private void Awake()
         {
-            coroutinesExecutor = new ExternalCoroutinesExecutor();
-            coroutinesExecutor.StartTask(ConnectAsync);
+            var gameConfiguration = GameConfiguration.GetInstance();
+            if (gameConfiguration != null)
+            {
+                if (gameConfiguration.Environment == HostingEnvironment.Development)
+                {
+                    var dummyPeer = new DummyPeer();
 
-            DontDestroyOnLoad(gameObject);
-        }
-
-        private void Update()
-        {
-            coroutinesExecutor?.Update();
+                    AuthorizerApi = new DummyAuthorizerApi(dummyPeer);
+                    CharacterSelectorApi = new DummyCharacterSelectorApi(dummyPeer);
+                    GameSceneApi = new DummyGameSceneApi(dummyPeer);
+                }
+            }
         }
 
         private void OnDestroy()
         {
-            ((IDisposable)authorizerApi)?.Dispose();
-            ((IDisposable)characterSelectorApi)?.Dispose();
-            ((IDisposable)gameSceneApi)?.Dispose();
-            coroutinesExecutor?.Dispose();
-        }
-
-        private async Task ConnectAsync(IYield yield)
-        {
-            var serverConnector = new DummyServerConnector();
-            var connectionInfo = new PeerConnectionInformation();
-            var connectionProtocol = ConnectionProtocol.Tcp;
-
-            serverPeer =
-                await serverConnector.Connect(
-                    yield,
-                    connectionInfo,
-                    connectionProtocol);
-        }
-
-        public void SetNetworkTrafficState(
-            NetworkTrafficState networkTrafficState)
-        {
-            if (serverPeer != null)
-            {
-                serverPeer.NetworkTrafficState = networkTrafficState;
-            }
+            (AuthorizerApi as IDisposable)?.Dispose();
+            (CharacterSelectorApi as IDisposable)?.Dispose();
+            (GameSceneApi as IDisposable)?.Dispose();
         }
     }
 }

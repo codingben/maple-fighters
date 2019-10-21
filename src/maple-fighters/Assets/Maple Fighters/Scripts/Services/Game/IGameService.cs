@@ -1,5 +1,4 @@
-﻿using CommonCommunicationInterfaces;
-using Scripts.Services.Authorizer;
+﻿using Scripts.Services.Authorizer;
 
 namespace Scripts.Services.Game
 {
@@ -10,7 +9,5 @@ namespace Scripts.Services.Game
         ICharacterSelectorApi CharacterSelectorApi { get; }
 
         IGameSceneApi GameSceneApi { get; }
-
-        void SetNetworkTrafficState(NetworkTrafficState networkTrafficState);
     }
 }
