@@ -28,6 +28,8 @@ namespace Scripts.Services.Game
                     GameSceneApi = new DummyGameSceneApi(dummyPeer);
                 }
             }
+
+            DontDestroyOnLoad(gameObject);
         }
 
         private void OnDestroy()
