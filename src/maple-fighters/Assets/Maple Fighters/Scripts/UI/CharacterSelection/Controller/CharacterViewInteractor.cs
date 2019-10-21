@@ -53,10 +53,11 @@ namespace Scripts.UI.CharacterSelection
 
         private async Task GetCharactersAsync(IYield yield)
         {
-            var api = gameService?.CharacterSelectorApi;
-            if (api != null)
+            var characterSelectorApi = gameService?.CharacterSelectorApi;
+            if (characterSelectorApi != null)
             {
-                var parameters = await api.GetCharactersAsync(yield);
+                var parameters =
+                    await characterSelectorApi.GetCharactersAsync(yield);
                 var characters = parameters.Characters;
 
                 foreach (var character in characters)
@@ -87,13 +88,13 @@ namespace Scripts.UI.CharacterSelection
             IYield yield,
             ValidateCharacterRequestParameters parameters)
         {
-            var api = gameService?.CharacterSelectorApi;
-            if (api != null)
+            var characterSelectorApi = gameService?.CharacterSelectorApi;
+            if (characterSelectorApi != null)
             {
-                var responseParameters =
-                    await api.ValidateCharacterAsync(yield, parameters);
-                var map = responseParameters.Map;
+                var responseParameters = 
+                    await characterSelectorApi.ValidateCharacterAsync(yield, parameters);
                 var status = responseParameters.Status;
+                var map = responseParameters.Map;
 
                 switch (status)
                 {
@@ -127,11 +128,11 @@ namespace Scripts.UI.CharacterSelection
             IYield yield,
             RemoveCharacterRequestParameters parameters)
         {
-            var api = gameService?.CharacterSelectorApi;
-            if (api != null)
+            var characterSelectorApi = gameService?.CharacterSelectorApi;
+            if (characterSelectorApi != null)
             {
                 var responseParameters =
-                    await api.RemoveCharacterAsync(yield, parameters);
+                    await characterSelectorApi.RemoveCharacterAsync(yield, parameters);
                 var status = responseParameters.Status;
 
                 switch (status)
@@ -168,11 +169,11 @@ namespace Scripts.UI.CharacterSelection
             IYield yield,
             CreateCharacterRequestParameters parameters)
         {
-            var api = gameService?.CharacterSelectorApi;
-            if (api != null)
+            var characterSelectorApi = gameService?.CharacterSelectorApi;
+            if (characterSelectorApi != null)
             {
                 var responseParameters =
-                    await api.CreateCharacterAsync(yield, parameters);
+                    await characterSelectorApi.CreateCharacterAsync(yield, parameters);
                 var status = responseParameters.Status;
 
                 switch (status)
