@@ -12,7 +12,7 @@ namespace Scripts.World.Dummy
             var gameConfiguration = GameConfiguration.GetInstance();
             if (gameConfiguration != null)
             {
-                if (gameConfiguration.Environment != Environment.Development)
+                if (gameConfiguration.Environment != HostingEnvironment.Development)
                 {
                     var dummyScene =
                         GameObject.FindGameObjectWithTag(GameTags.DummySceneTag);
