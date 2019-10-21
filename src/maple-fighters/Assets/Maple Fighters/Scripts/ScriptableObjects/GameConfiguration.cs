@@ -8,6 +8,6 @@ namespace Scripts.ScriptableObjects
         order = 3)]
     public class GameConfiguration : ScriptableSingleton<GameConfiguration>
     {
-        public Environment Environment;
+        public HostingEnvironment Environment;
     }
 }

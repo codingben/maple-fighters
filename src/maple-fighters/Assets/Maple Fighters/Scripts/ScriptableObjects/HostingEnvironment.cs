@@ -1,6 +1,6 @@
 ﻿namespace Scripts.ScriptableObjects
 {
-    public enum Environment
+    public enum HostingEnvironment
     {
         /// <summary>
         /// The production.
