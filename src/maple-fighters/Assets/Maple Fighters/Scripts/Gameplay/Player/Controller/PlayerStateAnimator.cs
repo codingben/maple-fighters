@@ -69,7 +69,10 @@ namespace Scripts.Gameplay.Player
 
         private void SendUpdatePlayerStateOperation()
         {
-            gameService?.GameSceneApi.UpdatePlayerState(new UpdatePlayerStateRequestParameters(playerState));
+            var parameters =
+                new UpdatePlayerStateRequestParameters(playerState);
+
+            gameService?.GameSceneApi.UpdatePlayerState(parameters);
         }
 
         private void SetPlayerAnimationState(Animator animator, PlayerState playerState)
