@@ -4,7 +4,6 @@ using Network.Utils;
 using Scripts.Gameplay.GameEntity;
 using Scripts.Gameplay.Map;
 using Scripts.Gameplay.PlayerCharacter;
-using Scripts.Services.Utils;
 using Scripts.UI.Chat;
 using Scripts.UI.Focus;
 using UnityEngine;
@@ -18,14 +17,8 @@ namespace Scripts.Gameplay.Creator
             CreateGameComponents(GetCreatorsComponents());
             CreateGameComponents(GetContainersComponents());
             CreateGameComponents(GetGUIControllersComponents());
-            CreateGameComponents(GetControllersComponents());
 
             Destroy(gameObject);
-        }
-
-        private IEnumerable<Type> GetControllersComponents()
-        {
-            yield return typeof(GameNetworkTrafficStateSetter);
         }
 
         private IEnumerable<Type> GetCreatorsComponents()
