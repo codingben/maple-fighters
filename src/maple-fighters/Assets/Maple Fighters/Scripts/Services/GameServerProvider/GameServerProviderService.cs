@@ -1,77 +1,36 @@
 ﻿using System;
-using System.Threading.Tasks;
-using CommonCommunicationInterfaces;
-using CommonTools.Coroutines;
-using ExitGames.Client.Photon;
 using Network.Scripts;
 using Network.Utils;
+using Scripts.ScriptableObjects;
 using Scripts.Services.Authorizer;
 
 namespace Scripts.Services.GameServerProvider
 {
     public class GameServerProviderService : Singleton<GameServerProviderService>, IGameServerProviderService
     {
-        public IAuthorizerApi AuthorizerApi
-        {
-            get
-            {
-                if (authorizerApi == null)
-                {
-                    authorizerApi = new DummyAuthorizerApi(serverPeer);
-                }
+        public IAuthorizerApi AuthorizerApi { get; set; }
 
-                return authorizerApi;
-            }
-        }
-
-        public IGameServerProviderApi GameServerProviderApi
-        {
-            get
-            {
-                if (gameServerProviderApi == null)
-                {
-                    gameServerProviderApi = new DummyGameServerProviderApi(serverPeer);
-                }
-
-                return gameServerProviderApi;
-            }
-        }
-
-        private IAuthorizerApi authorizerApi;
-        private IGameServerProviderApi gameServerProviderApi;
-        private IServerPeer serverPeer;
-
-        private ExternalCoroutinesExecutor coroutinesExecutor;
+        public IGameServerProviderApi GameServerProviderApi { get; set; }
 
         private void Awake()
         {
-            coroutinesExecutor = new ExternalCoroutinesExecutor();
-            coroutinesExecutor.StartTask(ConnectAsync);
-        }
+            var gameConfiguration = GameConfiguration.GetInstance();
+            if (gameConfiguration != null)
+            {
+                if (gameConfiguration.Environment == HostingEnvironment.Development)
+                {
+                    var dummyPeer = new DummyPeer();
 
-        private void Update()
-        {
-            coroutinesExecutor?.Update();
+                    AuthorizerApi = new DummyAuthorizerApi(dummyPeer);
+                    GameServerProviderApi = new DummyGameServerProviderApi(dummyPeer);
+                }
+            }
         }
 
         private void OnDestroy()
         {
-            ((IDisposable)authorizerApi)?.Dispose();
-            ((IDisposable)gameServerProviderApi)?.Dispose();
-            coroutinesExecutor?.Dispose();
-        }
-
-        private async Task ConnectAsync(IYield yield)
-        {
-            var serverConnector = new DummyServerConnector();
-            var connectionInfo = new PeerConnectionInformation();
-            var connectionProtocol = ConnectionProtocol.Tcp;
-
-            serverPeer =
-                await serverConnector.Connect(
-                    yield,
-                    connectionInfo,
-                    connectionProtocol);
+            (AuthorizerApi as IDisposable)?.Dispose();
+            (GameServerProviderApi as IDisposable)?.Dispose();
         }
     }
 }
