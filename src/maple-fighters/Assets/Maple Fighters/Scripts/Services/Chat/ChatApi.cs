@@ -16,7 +16,7 @@ namespace Scripts.Services.Chat
             EventHandlerRegister.SetHandler(ChatEvents.ChatMessage, ChatMessageReceived.ToEventHandler());
         }
 
-        public new void Dispose()
+        public override void Dispose()
         {
             base.Dispose();
 
