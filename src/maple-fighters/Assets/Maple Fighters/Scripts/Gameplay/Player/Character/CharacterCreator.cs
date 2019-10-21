@@ -10,7 +10,7 @@ namespace Scripts.Gameplay.PlayerCharacter
     {
         private IGameService gameService;
 
-        private void Awake()
+        private void Start()
         {
             gameService = GameService.GetInstance();
             gameService?.GameSceneApi.SceneEntered.AddListener(OnSceneEntered);
