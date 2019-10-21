@@ -41,7 +41,7 @@ namespace Network.Scripts
                     log);
         }
 
-        public void Dispose()
+        public virtual void Dispose()
         {
             EventHandlerRegister?.Dispose();
             SubscriptionProvider?.Dispose();
