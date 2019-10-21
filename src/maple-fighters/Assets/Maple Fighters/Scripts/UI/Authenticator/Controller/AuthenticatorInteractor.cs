@@ -53,11 +53,11 @@ namespace Scripts.UI.Authenticator
             IYield yield,
             AuthenticateRequestParameters parameters)
         {
-            var api = authenticatorService?.AuthenticatorApi;
-            if (api != null)
+            var authenticatorApi = authenticatorService?.AuthenticatorApi;
+            if (authenticatorApi != null)
             {
                 var responseParameters =
-                    await api.AuthenticateAsync(yield, parameters);
+                    await authenticatorApi.AuthenticateAsync(yield, parameters);
                 var status = responseParameters.Status;
 
                 switch (status)
@@ -107,11 +107,11 @@ namespace Scripts.UI.Authenticator
             IYield yield,
             RegisterRequestParameters parameters)
         {
-            var api = authenticatorService?.AuthenticatorApi;
-            if (api != null)
+            var authenticatorApi = authenticatorService?.AuthenticatorApi;
+            if (authenticatorApi != null)
             {
                 var responseParameters =
-                    await api.RegisterAsync(yield, parameters);
+                    await authenticatorApi.RegisterAsync(yield, parameters);
                 var status = responseParameters.Status;
 
                 switch (status)
