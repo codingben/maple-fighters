@@ -1,76 +1,36 @@
 ﻿using System;
-using System.Threading.Tasks;
-using CommonCommunicationInterfaces;
-using CommonTools.Coroutines;
-using ExitGames.Client.Photon;
 using Network.Scripts;
 using Network.Utils;
+using Scripts.ScriptableObjects;
 using Scripts.Services.Authorizer;
 
 namespace Scripts.Services.Chat
 {
     public class ChatService : Singleton<ChatService>, IChatService
     {
-        public IAuthorizerApi AuthorizerApi
-        {
-            get
-            {
-                if (authorizerApi == null)
-                {
-                    authorizerApi = new DummyAuthorizerApi(serverPeer);
-                }
+        public IAuthorizerApi AuthorizerApi { get; set; }
 
-                return authorizerApi;
-            }
-        }
-
-        public IChatApi ChatApi
-        {
-            get
-            {
-                if (chatApi == null)
-                {
-                    chatApi = new DummyChatApi(serverPeer);
-                }
-
-                return chatApi;
-            }
-        }
-
-        private IAuthorizerApi authorizerApi;
-        private IChatApi chatApi;
-        private IServerPeer serverPeer;
-
-        private ExternalCoroutinesExecutor coroutinesExecutor;
+        public IChatApi ChatApi { get; set; }
 
         private void Awake()
         {
-            coroutinesExecutor = new ExternalCoroutinesExecutor();
-            coroutinesExecutor.StartTask(ConnectAsync);
-        }
+            var gameConfiguration = GameConfiguration.GetInstance();
+            if (gameConfiguration != null)
+            {
+                if (gameConfiguration.Environment == HostingEnvironment.Development)
+                {
+                    var dummyPeer = new DummyPeer();
 
-        private void Update()
-        {
-            coroutinesExecutor?.Update();
+                    AuthorizerApi = new AuthorizerApi(dummyPeer);
+                    ChatApi = new ChatApi(dummyPeer);
+                }
+            }
         }
 
         private void OnDestroy()
         {
-            ((IDisposable)chatApi)?.Dispose();
-            coroutinesExecutor?.Dispose();
-        }
-
-        private async Task ConnectAsync(IYield yield)
-        {
-            var serverConnector = new DummyServerConnector();
-            var connectionInfo = new PeerConnectionInformation();
-            var connectionProtocol = ConnectionProtocol.Tcp;
-
-            serverPeer =
-                await serverConnector.Connect(
-                    yield,
-                    connectionInfo,
-                    connectionProtocol);
+            ((IDisposable)AuthorizerApi)?.Dispose();
+            ((IDisposable)ChatApi)?.Dispose();
         }
     }
 }
