@@ -37,6 +37,7 @@ namespace Scripts.Gameplay.EntityTransform
 
                     var parameters =
                         new UpdatePositionRequestParameters(x, y, z);
+
                     gameService.GameSceneApi.UpdatePosition(parameters);
                 }
             }
