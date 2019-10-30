@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Scripts.UI.Chat
 {
     [RequireComponent(typeof(ChatInteractor))]
-    public class ChatController : MonoBehaviour
+    public class ChatController : MonoBehaviour, IOnChatMessageReceived
     {
         private ChatInteractor chatInteractor;
         private FocusStateController focusStateController;

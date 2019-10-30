@@ -5,17 +5,25 @@ using UnityEngine;
 
 namespace Scripts.UI.Chat
 {
+    [RequireComponent(typeof(IOnChatMessageReceived))]
     public class ChatInteractor : MonoBehaviour
     {
         private IChatService chatService;
+        private IOnChatMessageReceived onChatMessageReceived;
 
         private ExternalCoroutinesExecutor coroutinesExecutor;
 
         private void Awake()
         {
             chatService = ChatService.GetInstance();
+            onChatMessageReceived = GetComponent<IOnChatMessageReceived>();
 
             coroutinesExecutor = new ExternalCoroutinesExecutor();
+        }
+
+        private void Start()
+        {
+            chatService.ChatApi.ChatMessageReceived.AddListener(OnChatMessageReceived);
         }
 
         private void Update()
@@ -26,6 +34,8 @@ namespace Scripts.UI.Chat
         private void OnDestroy()
         {
             coroutinesExecutor?.Dispose();
+
+            chatService.ChatApi.ChatMessageReceived.RemoveListener(OnChatMessageReceived);
         }
 
         public void SendChatMessage(string message)
@@ -37,6 +47,13 @@ namespace Scripts.UI.Chat
 
                 chatApi.SendChatMessage(parameters);
             }
+        }
+
+        private void OnChatMessageReceived(ChatMessageEventParameters parameters)
+        {
+            var message = parameters.Message;
+
+            onChatMessageReceived.OnMessageReceived(message);
         }
     }
 }
