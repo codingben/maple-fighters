@@ -4,13 +4,17 @@ using UnityEngine;
 
 namespace Scripts.UI.Chat
 {
+    [RequireComponent(typeof(ChatInteractor))]
     public class ChatController : MonoBehaviour
     {
+        private ChatInteractor chatInteractor;
         private FocusStateController focusStateController;
+
         private IChatView chatView;
 
         private void Awake()
         {
+            chatInteractor = GetComponent<ChatInteractor>();
             focusStateController = FindObjectOfType<FocusStateController>();
 
             CreateAndSubscribeToChatWindow();
@@ -54,7 +58,7 @@ namespace Scripts.UI.Chat
         {
             chatView?.AddMessage(message);
 
-            // TODO: MessageSent
+            chatInteractor.SendChatMessage(message);
         }
 
         private void OnFocusChanged(bool isFocused)
