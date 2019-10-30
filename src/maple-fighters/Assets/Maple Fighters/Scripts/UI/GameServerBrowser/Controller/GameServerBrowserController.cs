@@ -13,14 +13,15 @@ namespace Scripts.UI.GameServerBrowser
         [SerializeField]
         private string sceneName;
 
-        private Dictionary<string, IGameServerView> gameServerViews;
+        private GameServerBrowserInteractor gameServerBrowserInteractor;
         private IGameServerBrowserView gameServerBrowserView;
 
-        private GameServerBrowserInteractor gameServerBrowserInteractor;
+        private Dictionary<string, IGameServerView> gameServerViews;
 
         private void Awake()
         {
             gameServerViews = new Dictionary<string, IGameServerView>();
+
             gameServerBrowserInteractor =
                 GetComponent<GameServerBrowserInteractor>();
 
