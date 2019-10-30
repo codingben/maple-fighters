@@ -23,7 +23,7 @@ namespace Scripts.UI.Chat
 
         private void Start()
         {
-            chatService.ChatApi.ChatMessageReceived.AddListener(OnChatMessageReceived);
+            SubscribeToChatApiEvents();
         }
 
         private void Update()
@@ -35,6 +35,16 @@ namespace Scripts.UI.Chat
         {
             coroutinesExecutor?.Dispose();
 
+            UnsubscribeFromChatApiEvents();
+        }
+
+        private void SubscribeToChatApiEvents()
+        {
+            chatService.ChatApi.ChatMessageReceived.AddListener(OnChatMessageReceived);
+        }
+
+        private void UnsubscribeFromChatApiEvents()
+        {
             chatService.ChatApi.ChatMessageReceived.RemoveListener(OnChatMessageReceived);
         }
 
