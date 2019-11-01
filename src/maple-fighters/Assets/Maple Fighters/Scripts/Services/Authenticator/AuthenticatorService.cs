@@ -14,10 +14,19 @@ namespace Scripts.Services.Authenticator
             var gameConfiguration = GameConfiguration.GetInstance();
             if (gameConfiguration != null)
             {
-                if (gameConfiguration.Environment == HostingEnvironment.Development)
+                switch (gameConfiguration.Environment)
                 {
-                    AuthenticatorApi =
-                        new DummyAuthenticatorApi(new DummyPeer());
+                    case HostingEnvironment.Production:
+                    {
+                        break;
+                    }
+
+                    case HostingEnvironment.Development:
+                    {
+                        AuthenticatorApi =
+                            new DummyAuthenticatorApi(new DummyPeer());
+                        break;
+                    }
                 }
             }
         }
