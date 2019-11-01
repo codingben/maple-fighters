@@ -17,12 +17,21 @@ namespace Scripts.Services.Chat
             var gameConfiguration = GameConfiguration.GetInstance();
             if (gameConfiguration != null)
             {
-                if (gameConfiguration.Environment == HostingEnvironment.Development)
+                switch (gameConfiguration.Environment)
                 {
-                    var dummyPeer = new DummyPeer();
+                    case HostingEnvironment.Production:
+                    {
+                        break;
+                    }
 
-                    AuthorizerApi = new DummyAuthorizerApi(dummyPeer);
-                    ChatApi = new DummyChatApi(dummyPeer);
+                    case HostingEnvironment.Development:
+                    {
+                        var dummyPeer = new DummyPeer();
+
+                        AuthorizerApi = new DummyAuthorizerApi(dummyPeer);
+                        ChatApi = new DummyChatApi(dummyPeer);
+                        break;
+                    }
                 }
             }
         }
