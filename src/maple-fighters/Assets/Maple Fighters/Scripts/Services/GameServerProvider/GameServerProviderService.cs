@@ -17,12 +17,21 @@ namespace Scripts.Services.GameServerProvider
             var gameConfiguration = GameConfiguration.GetInstance();
             if (gameConfiguration != null)
             {
-                if (gameConfiguration.Environment == HostingEnvironment.Development)
+                switch (gameConfiguration.Environment)
                 {
-                    var dummyPeer = new DummyPeer();
+                    case HostingEnvironment.Production:
+                    {
+                        break;
+                    }
 
-                    AuthorizerApi = new DummyAuthorizerApi(dummyPeer);
-                    GameServerProviderApi = new DummyGameServerProviderApi(dummyPeer);
+                    case HostingEnvironment.Development:
+                    {
+                        var dummyPeer = new DummyPeer();
+
+                        AuthorizerApi = new DummyAuthorizerApi(dummyPeer);
+                        GameServerProviderApi = new DummyGameServerProviderApi(dummyPeer);
+                        break;
+                    }
                 }
             }
         }
