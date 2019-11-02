@@ -9,5 +9,15 @@ namespace Scripts.ScriptableObjects
     public class GameConfiguration : ScriptableSingleton<GameConfiguration>
     {
         public HostingEnvironment Environment;
+
+        public bool IsProduction()
+        {
+            return Environment == HostingEnvironment.Production;
+        }
+
+        public bool IsDevelopment()
+        {
+            return Environment == HostingEnvironment.Development;
+        }
     }
 }
