@@ -3,8 +3,8 @@
 namespace Scripts.ScriptableObjects
 {
     [CreateAssetMenu(
-        fileName = "GameConfiguration",
-        menuName = "Scriptable Objects/GameConfiguration",
+        fileName = "NetworkConfiguration",
+        menuName = "Scriptable Objects/NetworkConfiguration",
         order = 3)]
     public class NetworkConfiguration : ScriptableSingleton<NetworkConfiguration>
     {
