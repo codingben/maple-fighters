@@ -1,6 +1,8 @@
-﻿namespace Scripts.ScriptableObjects
+﻿using System;
+
+namespace Scripts.ScriptableObjects
 {
-    [System.Serializable]
+    [Serializable]
     public class ServerInfo
     {
         public string Name;
