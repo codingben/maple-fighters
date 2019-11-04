@@ -29,4 +29,4 @@ MonoBehaviour:
     ServerType: 3
     IpAdress: 127.0.0.1
     Port: 8003
-  Environment: 0
+  Environment: 1
