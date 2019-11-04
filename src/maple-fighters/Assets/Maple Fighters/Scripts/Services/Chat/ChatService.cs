@@ -14,10 +14,10 @@ namespace Scripts.Services.Chat
 
         private void Awake()
         {
-            var gameConfiguration = GameConfiguration.GetInstance();
-            if (gameConfiguration != null)
+            var networkConfiguration = NetworkConfiguration.GetInstance();
+            if (networkConfiguration != null)
             {
-                switch (gameConfiguration.Environment)
+                switch (networkConfiguration.Environment)
                 {
                     case HostingEnvironment.Production:
                     {
