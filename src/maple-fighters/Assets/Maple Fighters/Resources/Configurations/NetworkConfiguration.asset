@@ -12,4 +12,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05c8ccb8a03f08646b2ec0522b88a75b, type: 3}
   m_Name: NetworkConfiguration
   m_EditorClassIdentifier: 
+  ServerInfos:
+  - Name: Authenticator
+    ServerType: 0
+    IpAdress: 127.0.0.1
+    Port: 8000
+  - Name: GameServerProvider
+    ServerType: 1
+    IpAdress: 127.0.0.1
+    Port: 8001
+  - Name: Game
+    ServerType: 2
+    IpAdress: 127.0.0.1
+    Port: 8002
+  - Name: Chat
+    ServerType: 3
+    IpAdress: 127.0.0.1
+    Port: 8003
   Environment: 0
