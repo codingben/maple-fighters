@@ -9,10 +9,10 @@ namespace Scripts.World.Dummy
         #if UNITY_EDITOR
         private void Awake()
         {
-            var gameConfiguration = GameConfiguration.GetInstance();
-            if (gameConfiguration != null)
+            var networkConfiguration = NetworkConfiguration.GetInstance();
+            if (networkConfiguration != null)
             {
-                if (gameConfiguration.Environment != HostingEnvironment.Development)
+                if (networkConfiguration.Environment != HostingEnvironment.Development)
                 {
                     var dummyScene =
                         GameObject.FindGameObjectWithTag(GameTags.DummySceneTag);
