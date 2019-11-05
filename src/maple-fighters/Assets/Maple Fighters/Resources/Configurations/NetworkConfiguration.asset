@@ -15,18 +15,22 @@ MonoBehaviour:
   ServerInfos:
   - Name: Authenticator
     ServerType: 0
-    IpAdress: 127.0.0.1
+    IpAddress: 127.0.0.1
     Port: 8000
+    Protocol: 0
   - Name: GameServerProvider
     ServerType: 1
-    IpAdress: 127.0.0.1
+    IpAddress: 127.0.0.1
     Port: 8001
+    Protocol: 0
   - Name: Game
     ServerType: 2
-    IpAdress: 127.0.0.1
+    IpAddress: 127.0.0.1
     Port: 8002
+    Protocol: 0
   - Name: Chat
     ServerType: 3
-    IpAdress: 127.0.0.1
+    IpAddress: 127.0.0.1
     Port: 8003
+    Protocol: 0
   Environment: 1
