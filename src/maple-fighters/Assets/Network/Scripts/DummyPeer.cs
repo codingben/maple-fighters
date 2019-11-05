@@ -25,7 +25,7 @@ namespace Network.Scripts
 
         public void Disconnect()
         {
-            // Left blank intentionally
+            Disconnected?.Invoke(DisconnectReason.ClientDisconnect, string.Empty);
         }
 
         public short Send<TParam>(MessageData<TParam> data, MessageSendOptions sendOptions)
