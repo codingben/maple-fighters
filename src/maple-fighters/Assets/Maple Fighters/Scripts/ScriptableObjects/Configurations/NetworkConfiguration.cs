@@ -1,7 +1,8 @@
 ﻿using System.Linq;
+using ScriptableObjects.Utils;
 using UnityEngine;
 
-namespace Scripts.ScriptableObjects
+namespace ScriptableObjects.Configurations
 {
     [CreateAssetMenu(
         fileName = "NetworkConfiguration",

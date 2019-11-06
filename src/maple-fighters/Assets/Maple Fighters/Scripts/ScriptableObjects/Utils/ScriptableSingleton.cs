@@ -1,7 +1,7 @@
 ﻿using Scripts.Constants;
 using UnityEngine;
 
-namespace Scripts.ScriptableObjects
+namespace ScriptableObjects.Utils
 {
     public class ScriptableSingleton<TObject> : ScriptableObject
         where TObject : ScriptableObject

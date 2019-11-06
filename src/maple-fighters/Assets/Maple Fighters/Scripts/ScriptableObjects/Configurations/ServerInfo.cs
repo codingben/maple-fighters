@@ -1,7 +1,7 @@
 ﻿using System;
 using ExitGames.Client.Photon;
 
-namespace Scripts.ScriptableObjects
+namespace ScriptableObjects.Configurations
 {
     [Serializable]
     public class ServerInfo

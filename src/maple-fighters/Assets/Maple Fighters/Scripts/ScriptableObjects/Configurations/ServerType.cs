@@ -1,4 +1,4 @@
-﻿namespace Scripts.ScriptableObjects
+﻿namespace ScriptableObjects.Configurations
 {
     public enum ServerType
     {
