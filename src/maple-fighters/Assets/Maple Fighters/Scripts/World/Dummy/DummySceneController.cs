@@ -1,5 +1,5 @@
-﻿using Scripts.Constants;
-using Scripts.ScriptableObjects;
+﻿using ScriptableObjects.Configurations;
+using Scripts.Constants;
 using UnityEngine;
 
 namespace Scripts.World.Dummy
