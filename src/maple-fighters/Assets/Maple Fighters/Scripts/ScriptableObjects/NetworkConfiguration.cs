@@ -6,7 +6,7 @@ namespace Scripts.ScriptableObjects
     [CreateAssetMenu(
         fileName = "NetworkConfiguration",
         menuName = "Scriptable Objects/NetworkConfiguration",
-        order = 3)]
+        order = 0)]
     public class NetworkConfiguration : ScriptableSingleton<NetworkConfiguration>
     {
         public ServerInfo[] ServerInfos;
