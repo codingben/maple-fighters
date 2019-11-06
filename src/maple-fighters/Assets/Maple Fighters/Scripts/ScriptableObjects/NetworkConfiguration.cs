@@ -5,7 +5,7 @@ namespace Scripts.ScriptableObjects
 {
     [CreateAssetMenu(
         fileName = "NetworkConfiguration",
-        menuName = "Scriptable Objects/NetworkConfiguration",
+        menuName = "Configurations/NetworkConfiguration",
         order = 0)]
     public class NetworkConfiguration : ScriptableSingleton<NetworkConfiguration>
     {

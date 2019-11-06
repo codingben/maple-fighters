@@ -4,7 +4,7 @@ namespace Scripts.ScriptableObjects
 {
     [CreateAssetMenu(
         fileName = "QuickLoginConfiguration",
-        menuName = "Scriptable Objects/QuickLoginConfiguration",
+        menuName = "Configurations/QuickLoginConfiguration",
         order = 1)]
     public class QuickLoginConfiguration : ScriptableSingleton<QuickLoginConfiguration>
     {
