@@ -1,13 +1,11 @@
-﻿using Scripts.ScriptableObjects;
+﻿using ScriptableObjects.Configurations;
 using UnityEditor;
 using UnityEngine;
 
 namespace Scripts.Editor
 {
-    using Editor = UnityEditor.Editor;
-
     [CustomEditor(typeof(QuickLoginConfiguration))]
-    public class QuickLoginConfigurationEditor : Editor
+    public class QuickLoginConfigurationEditor : UnityEditor.Editor
     {
         public override void OnInspectorGUI()
         {
