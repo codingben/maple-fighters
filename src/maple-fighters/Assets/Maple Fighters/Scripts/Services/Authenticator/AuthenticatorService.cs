@@ -1,7 +1,7 @@
 ﻿using System;
 using Network.Scripts;
 using Network.Utils;
-using Scripts.ScriptableObjects;
+using ScriptableObjects.Configurations;
 
 namespace Scripts.Services.Authenticator
 {
