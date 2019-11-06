@@ -1,5 +1,5 @@
 ﻿using System.Collections;
-using Scripts.ScriptableObjects;
+using ScriptableObjects.Configurations;
 using Scripts.UI.Authenticator;
 using UnityEngine;
 
