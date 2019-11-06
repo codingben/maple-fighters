@@ -22,10 +22,5 @@ namespace Scripts.ScriptableObjects
         {
             return Environment == HostingEnvironment.Production;
         }
-
-        public bool IsDevelopment()
-        {
-            return Environment == HostingEnvironment.Development;
-        }
     }
 }
