@@ -1,7 +1,7 @@
 ﻿using System;
 using Network.Scripts;
 using Network.Utils;
-using Scripts.ScriptableObjects;
+using ScriptableObjects.Configurations;
 using Scripts.Services.Authorizer;
 
 namespace Scripts.Services.Chat
