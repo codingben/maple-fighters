@@ -31,14 +31,14 @@ namespace Scripts.Services.Authenticator
 
         protected override void OnConnected(IServerPeer serverPeer)
         {
-            var isDummy = NetworkConfiguration.GetInstance().IsProduction();
-            if (!isDummy)
+            var isDummy = NetworkConfiguration.GetInstance().IsDevelop();
+            if (isDummy)
             {
-                AuthenticatorApi = new AuthenticatorApi(serverPeer);
+                AuthenticatorApi = new DummyAuthenticatorApi(serverPeer);
             }
             else
             {
-                AuthenticatorApi = new DummyAuthenticatorApi(serverPeer);
+                AuthenticatorApi = new AuthenticatorApi(serverPeer);
             }
         }
 
@@ -46,8 +46,8 @@ namespace Scripts.Services.Authenticator
         {
             IServerConnector serverConnector;
 
-            var isDummy = NetworkConfiguration.GetInstance().IsProduction();
-            if (!isDummy)
+            var isDummy = NetworkConfiguration.GetInstance().IsDevelop();
+            if (isDummy)
             {
                 serverConnector = new DummyServerConnector();
             }
