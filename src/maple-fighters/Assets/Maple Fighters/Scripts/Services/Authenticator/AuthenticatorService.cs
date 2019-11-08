@@ -1,39 +1,80 @@
-﻿using System;
+﻿using ClientCommunicationInterfaces;
+using CommonCommunicationInterfaces;
+using CommonTools.Coroutines;
+using ExitGames.Client.Photon;
 using Network.Scripts;
-using Network.Utils;
+using PhotonClientImplementation;
 using ScriptableObjects.Configurations;
 
 namespace Scripts.Services.Authenticator
 {
-    public class AuthenticatorService : Singleton<AuthenticatorService>, IAuthenticatorService
+    public class AuthenticatorService : NetworkService
     {
         public IAuthenticatorApi AuthenticatorApi { get; set; }
 
+        private ExternalCoroutinesExecutor coroutinesExecutor;
+
         private void Awake()
         {
-            var networkConfiguration = NetworkConfiguration.GetInstance();
-            if (networkConfiguration != null)
-            {
-                switch (networkConfiguration.Environment)
-                {
-                    case HostingEnvironment.Production:
-                    {
-                        break;
-                    }
+            coroutinesExecutor = new ExternalCoroutinesExecutor();
+        }
 
-                    case HostingEnvironment.Development:
-                    {
-                        AuthenticatorApi =
-                            new DummyAuthenticatorApi(new DummyPeer());
-                        break;
-                    }
-                }
-            }
+        private void Update()
+        {
+            coroutinesExecutor?.Update();
         }
 
         private void OnDestroy()
         {
-            (AuthenticatorApi as IDisposable)?.Dispose();
+            coroutinesExecutor?.Dispose();
+        }
+
+        protected override void OnConnected(IServerPeer serverPeer)
+        {
+            var isDummy = NetworkConfiguration.GetInstance().IsProduction();
+            if (!isDummy)
+            {
+                AuthenticatorApi = new AuthenticatorApi(serverPeer);
+            }
+            else
+            {
+                AuthenticatorApi = new DummyAuthenticatorApi(serverPeer);
+            }
+        }
+
+        protected override IServerConnector GetServerConnector()
+        {
+            IServerConnector serverConnector;
+
+            var isDummy = NetworkConfiguration.GetInstance().IsProduction();
+            if (!isDummy)
+            {
+                serverConnector = new DummyServerConnector();
+            }
+            else
+            {
+                serverConnector =
+                    new PhotonServerConnector(() => coroutinesExecutor);
+            }
+
+            return serverConnector;
+        }
+
+        protected override PeerConnectionInformation GetConnectionInfo()
+        {
+            var serverInfo = NetworkConfiguration.GetInstance().GetServerInfo(ServerType.Authenticator);
+            var ip = serverInfo.IpAddress;
+            var port = serverInfo.Port;
+
+            return new PeerConnectionInformation(ip, port);
+        }
+
+        protected override ConnectionProtocol GetConnectionProtocol()
+        {
+            var serverInfo = NetworkConfiguration.GetInstance().GetServerInfo(ServerType.Authenticator);
+            var protocol = serverInfo.Protocol;
+
+            return protocol;
         }
     }
 }
