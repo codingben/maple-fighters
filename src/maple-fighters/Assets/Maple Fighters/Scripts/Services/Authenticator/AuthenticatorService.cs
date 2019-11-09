@@ -1,4 +1,5 @@
-﻿using ClientCommunicationInterfaces;
+﻿using System;
+using ClientCommunicationInterfaces;
 using CommonCommunicationInterfaces;
 using CommonTools.Coroutines;
 using ExitGames.Client.Photon;
@@ -12,6 +13,8 @@ namespace Scripts.Services.Authenticator
     {
         public IAuthenticatorApi AuthenticatorApi { get; set; }
 
+        private IServerPeer authenticatorPeer;
+
         private ExternalCoroutinesExecutor coroutinesExecutor;
 
         private void Awake()
@@ -24,13 +27,22 @@ namespace Scripts.Services.Authenticator
             coroutinesExecutor?.Update();
         }
 
+        private void OnDisable()
+        {
+            authenticatorPeer?.Disconnect();
+        }
+
         private void OnDestroy()
         {
+            ((IDisposable)AuthenticatorApi).Dispose();
+
             coroutinesExecutor?.Dispose();
         }
 
         protected override void OnConnected(IServerPeer serverPeer)
         {
+            authenticatorPeer = serverPeer;
+
             var isDummy = NetworkConfiguration.GetInstance().IsDevelop();
             if (isDummy)
             {
