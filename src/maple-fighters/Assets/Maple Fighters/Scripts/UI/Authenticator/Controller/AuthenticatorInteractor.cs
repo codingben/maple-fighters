@@ -11,7 +11,8 @@ namespace Scripts.UI.Authenticator
     [RequireComponent(typeof(IOnRegistrationFinishedListener))]
     public class AuthenticatorInteractor : MonoBehaviour
     {
-        private IAuthenticatorService authenticatorService;
+        private AuthenticatorService authenticatorService;
+
         private IOnLoginFinishedListener onLoginFinishedListener;
         private IOnRegistrationFinishedListener onRegistrationFinishedListener;
 
@@ -19,7 +20,7 @@ namespace Scripts.UI.Authenticator
 
         private void Awake()
         {
-            authenticatorService = AuthenticatorService.GetInstance();
+            authenticatorService = FindObjectOfType<AuthenticatorService>();
 
             onLoginFinishedListener = GetComponent<IOnLoginFinishedListener>();
             onRegistrationFinishedListener =
