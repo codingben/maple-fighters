@@ -40,7 +40,7 @@ namespace Scripts.World.Objects
 
         private async Task ChangeScene(IYield yield)
         {
-            var gameService = GameService.GetInstance();
+            var gameService = FindObjectOfType<GameService>();
             if (gameService != null)
             {
                 var parameters = 
