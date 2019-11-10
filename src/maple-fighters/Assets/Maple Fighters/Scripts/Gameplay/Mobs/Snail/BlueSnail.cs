@@ -20,7 +20,7 @@ namespace Scripts.Gameplay.Mobs
             gameService?.GameSceneApi.PlayerAttacked.AddListener(OnPlayerAttacked);
         }
 
-        private void OnDestroy()
+        private void OnDisable()
         {
             gameService?.GameSceneApi.PlayerAttacked.RemoveListener(OnPlayerAttacked);
         }
