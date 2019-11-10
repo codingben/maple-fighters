@@ -11,7 +11,7 @@ namespace Scripts.Services.Authenticator
 {
     public class AuthenticatorService : NetworkService
     {
-        public IAuthenticatorApi AuthenticatorApi { get; set; }
+        public IAuthenticatorApi AuthenticatorApi { get; private set; }
 
         private IServerPeer authenticatorPeer;
 
