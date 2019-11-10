@@ -12,11 +12,11 @@ namespace Scripts.Gameplay.Mobs
         [Header("Attack"), SerializeField]
         private Vector2 hitAmount;
 
-        private IGameService gameService;
+        private GameService gameService;
 
         private void Start()
         {
-            gameService = GameService.GetInstance();
+            gameService = FindObjectOfType<GameService>();
             gameService?.GameSceneApi.PlayerAttacked.AddListener(OnPlayerAttacked);
         }
 
