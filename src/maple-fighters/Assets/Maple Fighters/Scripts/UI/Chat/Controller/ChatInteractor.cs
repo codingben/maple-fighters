@@ -8,14 +8,16 @@ namespace Scripts.UI.Chat
     [RequireComponent(typeof(IOnChatMessageReceived))]
     public class ChatInteractor : MonoBehaviour
     {
-        private IChatService chatService;
+        private ChatService chatService;
+
         private IOnChatMessageReceived onChatMessageReceived;
 
         private ExternalCoroutinesExecutor coroutinesExecutor;
 
         private void Awake()
         {
-            chatService = ChatService.GetInstance();
+            chatService = FindObjectOfType<ChatService>();
+
             onChatMessageReceived = GetComponent<IOnChatMessageReceived>();
 
             coroutinesExecutor = new ExternalCoroutinesExecutor();
