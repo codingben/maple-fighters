@@ -15,7 +15,7 @@ namespace Scripts.Gameplay.Graphics
             gameService?.GameSceneApi.BubbleMessageReceived.AddListener(OnBubbleMessageReceived);
         }
 
-        private void OnDestroy()
+        private void OnDisable()
         {
             gameService?.GameSceneApi.BubbleMessageReceived.RemoveListener(OnBubbleMessageReceived);
         }
