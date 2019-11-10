@@ -12,9 +12,9 @@ namespace Scripts.Services.GameServerProvider
 {
     public class GameServerProviderService : NetworkService
     {
-        public IAuthorizerApi AuthorizerApi { get; set; }
+        public IAuthorizerApi AuthorizerApi { get; private set; }
 
-        public IGameServerProviderApi GameServerProviderApi { get; set; }
+        public IGameServerProviderApi GameServerProviderApi { get; private set; }
 
         private IServerPeer gameServerProviderPeer;
 
