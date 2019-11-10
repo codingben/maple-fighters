@@ -32,7 +32,7 @@ namespace Scripts.World.Objects
 
         public void Teleport()
         {
-            coroutinesExecutor.StartTask(
+            coroutinesExecutor?.StartTask(
                 method: ChangeScene,
                 onException: (e) => 
                     Debug.LogError("Failed to send change scene operation."));
