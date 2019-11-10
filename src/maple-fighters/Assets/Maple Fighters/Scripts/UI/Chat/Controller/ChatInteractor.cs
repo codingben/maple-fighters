@@ -33,11 +33,14 @@ namespace Scripts.UI.Chat
             coroutinesExecutor?.Update();
         }
 
+        private void OnDisable()
+        {
+            UnsubscribeFromChatApiEvents();
+        }
+
         private void OnDestroy()
         {
             coroutinesExecutor?.Dispose();
-
-            UnsubscribeFromChatApiEvents();
         }
 
         private void SubscribeToChatApiEvents()
