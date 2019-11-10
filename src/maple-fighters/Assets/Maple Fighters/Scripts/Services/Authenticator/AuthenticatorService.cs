@@ -34,7 +34,7 @@ namespace Scripts.Services.Authenticator
 
         private void OnDestroy()
         {
-            ((IDisposable)AuthenticatorApi).Dispose();
+            ((IDisposable)AuthenticatorApi)?.Dispose();
 
             coroutinesExecutor?.Dispose();
         }
