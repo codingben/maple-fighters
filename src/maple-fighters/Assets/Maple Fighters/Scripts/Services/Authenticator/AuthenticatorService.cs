@@ -43,7 +43,7 @@ namespace Scripts.Services.Authenticator
         {
             authenticatorPeer = serverPeer;
 
-            var isDummy = NetworkConfiguration.GetInstance().IsDevelop();
+            var isDummy = NetworkConfiguration.GetInstance().IsDummy();
             if (isDummy)
             {
                 AuthenticatorApi = new DummyAuthenticatorApi(serverPeer);
@@ -58,7 +58,7 @@ namespace Scripts.Services.Authenticator
         {
             IServerConnector serverConnector;
 
-            var isDummy = NetworkConfiguration.GetInstance().IsDevelop();
+            var isDummy = NetworkConfiguration.GetInstance().IsDummy();
             if (isDummy)
             {
                 serverConnector = new DummyServerConnector();
