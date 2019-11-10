@@ -8,11 +8,11 @@ namespace Scripts.Gameplay.PlayerCharacter
 {
     public class CharacterCreator : MonoBehaviour
     {
-        private IGameService gameService;
+        private GameService gameService;
 
         private void Start()
         {
-            gameService = GameService.GetInstance();
+            gameService = FindObjectOfType<GameService>();
             gameService?.GameSceneApi.SceneEntered.AddListener(OnSceneEntered);
             gameService?.GameSceneApi.CharacterAdded.AddListener(OnCharacterAdded);
             gameService?.GameSceneApi.CharactersAdded.AddListener(OnCharactersAdded);
