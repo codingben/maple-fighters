@@ -10,7 +10,7 @@ namespace Scripts.Gameplay.EntityTransform
         private float greaterDistance = 0.1f;
         private Vector2 lastPosition;
 
-        private IGameService gameService;
+        private GameService gameService;
 
         private void Awake()
         {
@@ -19,7 +19,7 @@ namespace Scripts.Gameplay.EntityTransform
 
         private void Start()
         {
-            gameService = GameService.GetInstance();
+            gameService = FindObjectOfType<GameService>();
         }
 
         private void Update()
