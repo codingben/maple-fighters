@@ -12,7 +12,8 @@ namespace Scripts.UI.CharacterSelection
     [RequireComponent(typeof(IOnCharacterDeletionFinishedListener))]
     public class CharacterViewInteractor : MonoBehaviour
     {
-        private IGameService gameService;
+        private GameService gameService;
+
         private IOnCharacterReceivedListener onCharacterReceivedListener;
         private IOnCharacterValidationFinishedListener onCharacterValidationFinishedListener;
         private IOnCharacterCreationFinishedListener onCharacterCreationFinishedListener;
@@ -22,7 +23,7 @@ namespace Scripts.UI.CharacterSelection
 
         private void Awake()
         {
-            gameService = GameService.GetInstance();
+            gameService = FindObjectOfType<GameService>();
 
             onCharacterReceivedListener =
                 GetComponent<IOnCharacterReceivedListener>();
