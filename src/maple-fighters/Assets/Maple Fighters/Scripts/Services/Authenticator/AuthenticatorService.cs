@@ -20,6 +20,9 @@ namespace Scripts.Services.Authenticator
         private void Awake()
         {
             coroutinesExecutor = new ExternalCoroutinesExecutor();
+
+            // TODO: Remove
+            coroutinesExecutor.StartTask(ConnectAsync);
         }
 
         private void Update()
