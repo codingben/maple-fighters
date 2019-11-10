@@ -12,11 +12,11 @@ namespace Scripts.Services.Game
 {
     public class GameService : NetworkService
     {
-        public IAuthorizerApi AuthorizerApi { get; set; }
+        public IAuthorizerApi AuthorizerApi { get; private set; }
 
-        public ICharacterSelectorApi CharacterSelectorApi { get; set; }
+        public ICharacterSelectorApi CharacterSelectorApi { get; private set; }
 
-        public IGameSceneApi GameSceneApi { get; set; }
+        public IGameSceneApi GameSceneApi { get; private set; }
 
         private IServerPeer gamePeer;
 
