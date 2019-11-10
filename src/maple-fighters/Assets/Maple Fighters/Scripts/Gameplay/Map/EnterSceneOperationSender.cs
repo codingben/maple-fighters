@@ -34,7 +34,7 @@ namespace Scripts.Gameplay.Map
 
         private async Task EnterSceneAsync(IYield yield)
         {
-            var gameService = GameService.GetInstance();
+            var gameService = FindObjectOfType<GameService>();
             if (gameService != null)
             {
                 await gameService.GameSceneApi.EnterSceneAsync(yield);
