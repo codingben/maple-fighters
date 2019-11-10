@@ -26,7 +26,7 @@ namespace Scripts.Gameplay.Player
             gameService?.GameSceneApi.PlayerStateChanged.AddListener(OnPlayerStateChanged);
         }
 
-        private void OnDestroy()
+        private void OnDisable()
         {
             gameService?.GameSceneApi.SceneObjectsAdded.RemoveListener(OnSceneObjectsAdded);
             gameService?.GameSceneApi.PlayerStateChanged.RemoveListener(OnPlayerStateChanged);
