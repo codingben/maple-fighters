@@ -28,6 +28,8 @@ namespace Scripts.Services.Game
 
             // TODO: Remove
             coroutinesExecutor.StartTask(ConnectAsync);
+
+            DontDestroyOnLoad(gameObject);
         }
 
         private void Update()
