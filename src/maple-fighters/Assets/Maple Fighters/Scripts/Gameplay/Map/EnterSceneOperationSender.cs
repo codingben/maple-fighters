@@ -9,13 +9,9 @@ namespace Scripts.Gameplay.Map
     {
         private ExternalCoroutinesExecutor coroutinesExecutor;
 
-        private void Awake()
-        {
-            coroutinesExecutor = new ExternalCoroutinesExecutor();
-        }
-
         private void Start()
         {
+            coroutinesExecutor = new ExternalCoroutinesExecutor();
             coroutinesExecutor.StartTask(
                 method: EnterSceneAsync,
                 onException: (e) =>
