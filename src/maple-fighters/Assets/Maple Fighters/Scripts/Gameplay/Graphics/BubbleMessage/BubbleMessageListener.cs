@@ -7,11 +7,11 @@ namespace Scripts.Gameplay.Graphics
 {
     public class BubbleMessageListener : MonoBehaviour
     {
-        private IGameService gameService;
+        private GameService gameService;
 
         private void Start()
         {
-            gameService = GameService.GetInstance();
+            gameService = FindObjectOfType<GameService>();
             gameService?.GameSceneApi.BubbleMessageReceived.AddListener(OnBubbleMessageReceived);
         }
 
