@@ -42,12 +42,12 @@ namespace Scripts.UI.Chat
 
         private void SubscribeToChatApiEvents()
         {
-            chatService.ChatApi.ChatMessageReceived.AddListener(OnChatMessageReceived);
+            chatService?.ChatApi.ChatMessageReceived.AddListener(OnChatMessageReceived);
         }
 
         private void UnsubscribeFromChatApiEvents()
         {
-            chatService.ChatApi.ChatMessageReceived.RemoveListener(OnChatMessageReceived);
+            chatService?.ChatApi.ChatMessageReceived.RemoveListener(OnChatMessageReceived);
         }
 
         public void SendChatMessage(string message)
