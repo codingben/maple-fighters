@@ -1,45 +1,101 @@
 ﻿using System;
+using ClientCommunicationInterfaces;
+using CommonCommunicationInterfaces;
+using CommonTools.Coroutines;
+using ExitGames.Client.Photon;
 using Network.Scripts;
-using Network.Utils;
+using PhotonClientImplementation;
 using ScriptableObjects.Configurations;
 using Scripts.Services.Authorizer;
 
 namespace Scripts.Services.Chat
 {
-    public class ChatService : Singleton<ChatService>, IChatService
+    public class ChatService : NetworkService
     {
-        public IAuthorizerApi AuthorizerApi { get; set; }
+        public IAuthorizerApi AuthorizerApi { get; private set; }
 
-        public IChatApi ChatApi { get; set; }
+        public IChatApi ChatApi { get; private set; }
+
+        private IServerPeer chatPeer;
+
+        private ExternalCoroutinesExecutor coroutinesExecutor;
 
         private void Awake()
         {
-            var networkConfiguration = NetworkConfiguration.GetInstance();
-            if (networkConfiguration != null)
-            {
-                switch (networkConfiguration.Environment)
-                {
-                    case HostingEnvironment.Production:
-                    {
-                        break;
-                    }
+            coroutinesExecutor = new ExternalCoroutinesExecutor();
 
-                    case HostingEnvironment.Development:
-                    {
-                        var dummyPeer = new DummyPeer();
+            // TODO: Remove
+            coroutinesExecutor.StartTask(ConnectAsync);
+        }
 
-                        AuthorizerApi = new DummyAuthorizerApi(dummyPeer);
-                        ChatApi = new DummyChatApi(dummyPeer);
-                        break;
-                    }
-                }
-            }
+        private void Update()
+        {
+            coroutinesExecutor?.Update();
+        }
+
+        private void OnDisable()
+        {
+            chatPeer?.Disconnect();
         }
 
         private void OnDestroy()
         {
-            (AuthorizerApi as IDisposable)?.Dispose();
-            (ChatApi as IDisposable)?.Dispose();
+            ((IDisposable)AuthorizerApi)?.Dispose();
+            ((IDisposable)ChatApi)?.Dispose();
+
+            coroutinesExecutor?.Dispose();
+        }
+
+        protected override void OnConnected(IServerPeer serverPeer)
+        {
+            chatPeer = serverPeer;
+
+            var isDummy = NetworkConfiguration.GetInstance().IsDummy();
+            if (isDummy)
+            {
+                AuthorizerApi = new DummyAuthorizerApi(serverPeer);
+                ChatApi = new DummyChatApi(serverPeer);
+            }
+            else
+            {
+                AuthorizerApi = new AuthorizerApi(serverPeer);
+                ChatApi = new ChatApi(serverPeer);
+            }
+        }
+
+        protected override IServerConnector GetServerConnector()
+        {
+            IServerConnector serverConnector;
+
+            var isDummy = NetworkConfiguration.GetInstance().IsDummy();
+            if (isDummy)
+            {
+                serverConnector = new DummyServerConnector();
+            }
+            else
+            {
+                serverConnector =
+                    new PhotonServerConnector(() => coroutinesExecutor);
+            }
+
+            return serverConnector;
+        }
+
+        protected override PeerConnectionInformation GetConnectionInfo()
+        {
+            var serverInfo = NetworkConfiguration.GetInstance().GetServerInfo(ServerType.Chat);
+            var ip = serverInfo.IpAddress;
+            var port = serverInfo.Port;
+
+            return new PeerConnectionInformation(ip, port);
+        }
+
+        protected override ConnectionProtocol GetConnectionProtocol()
+        {
+            var serverInfo = NetworkConfiguration.GetInstance().GetServerInfo(ServerType.Chat);
+            var protocol = serverInfo.Protocol;
+
+            return protocol;
         }
     }
 }
