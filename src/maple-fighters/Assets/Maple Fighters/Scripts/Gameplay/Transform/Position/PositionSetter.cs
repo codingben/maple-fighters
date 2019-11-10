@@ -42,7 +42,7 @@ namespace Scripts.Gameplay.EntityTransform
             gameService?.GameSceneApi.PositionChanged.AddListener(OnPositionChanged);
         }
 
-        private void OnDestroy()
+        private void OnDisable()
         {
             gameService?.GameSceneApi.PositionChanged.RemoveListener(OnPositionChanged);
         }
