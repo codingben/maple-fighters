@@ -34,7 +34,7 @@ namespace Scripts.World.Dummy
                         dummyEntity.Position.y,
                         dummyEntity.Direction));
 
-                var gameService = GameService.GetInstance();
+                var gameService = FindObjectOfType<GameService>();
                 gameService?.GameSceneApi.SceneObjectAdded.Invoke(parameters);
             }
         }
