@@ -18,7 +18,7 @@ namespace Scripts.Gameplay.PlayerCharacter
             gameService?.GameSceneApi.CharactersAdded.AddListener(OnCharactersAdded);
         }
 
-        private void OnDestroy()
+        private void OnDisable()
         {
             gameService?.GameSceneApi.SceneEntered.RemoveListener(OnSceneEntered);
             gameService?.GameSceneApi.CharacterAdded.RemoveListener(OnCharacterAdded);
