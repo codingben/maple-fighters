@@ -19,7 +19,7 @@ namespace ScriptableObjects.Configurations
             return ServerInfos.FirstOrDefault((x) => x.ServerType == serverType);
         }
 
-        public bool IsDevelop()
+        public bool IsDummy()
         {
             return Environment == HostingEnvironment.Development;
         }
