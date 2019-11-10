@@ -12,7 +12,7 @@ namespace Scripts.Gameplay.Player
         private PlayerState playerState = PlayerState.Idle;
         private Animator animator;
 
-        private IGameService gameService;
+        private GameService gameService;
 
         private void Awake()
         {
@@ -21,7 +21,7 @@ namespace Scripts.Gameplay.Player
 
         private void Start()
         {
-            gameService = GameService.GetInstance();
+            gameService = FindObjectOfType<GameService>();
             gameService?.GameSceneApi.SceneObjectsAdded.AddListener(OnSceneObjectsAdded);
             gameService?.GameSceneApi.PlayerStateChanged.AddListener(OnPlayerStateChanged);
         }
