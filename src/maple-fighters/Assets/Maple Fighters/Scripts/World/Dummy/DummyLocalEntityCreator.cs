@@ -46,7 +46,7 @@ namespace Scripts.World.Dummy
                     sceneObject,
                     characterSpawnDetails);
 
-            var gameService = GameService.GetInstance();
+            var gameService = FindObjectOfType<GameService>();
             gameService?.GameSceneApi.SceneEntered.Invoke(parameters);
         }
     }
