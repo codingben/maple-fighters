@@ -21,7 +21,7 @@ namespace Scripts.Gameplay.GameEntity
         private IEntity localEntity;
         private IEntityCollection collection;
 
-        private IGameService gameService;
+        private GameService gameService;
 
         private void Awake()
         {
@@ -30,7 +30,7 @@ namespace Scripts.Gameplay.GameEntity
 
         private void Start()
         {
-            gameService = GameService.GetInstance();
+            gameService = FindObjectOfType<GameService>();
             gameService?.GameSceneApi.SceneEntered.AddListener(OnLocalEntityEntered);
             gameService?.GameSceneApi.SceneObjectAdded.AddListener(OnEntityAdded);
             gameService?.GameSceneApi.SceneObjectRemoved.AddListener(OnEntityRemoved);
