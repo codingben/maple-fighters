@@ -28,7 +28,7 @@ namespace Scripts.Gameplay.EntityTransform
         private int entityId;
         private Vector3 newPosition;
 
-        private IGameService gameService;
+        private GameService gameService;
 
         private void Awake()
         {
@@ -38,7 +38,7 @@ namespace Scripts.Gameplay.EntityTransform
 
         private void Start()
         {
-            gameService = GameService.GetInstance();
+            gameService = FindObjectOfType<GameService>();
             gameService?.GameSceneApi.PositionChanged.AddListener(OnPositionChanged);
         }
 
