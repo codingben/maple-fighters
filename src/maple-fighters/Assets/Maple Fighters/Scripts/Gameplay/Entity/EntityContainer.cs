@@ -38,7 +38,7 @@ namespace Scripts.Gameplay.GameEntity
             gameService?.GameSceneApi.SceneObjectsRemoved.AddListener(OnEntitiesRemoved);
         }
 
-        private void OnDestroy()
+        private void OnDisable()
         {
             // TODO: Remove SceneLeft event
             gameService?.GameSceneApi.SceneEntered.RemoveListener(OnLocalEntityEntered);
