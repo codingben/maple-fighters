@@ -9,14 +9,16 @@ namespace Scripts.UI.GameServerBrowser
     [RequireComponent(typeof(IOnGameServerReceivedListener))]
     public class GameServerBrowserInteractor : MonoBehaviour
     {
-        private IGameServerProviderService gameServerProviderService;
+        private GameServerProviderService gameServerProviderService;
+
         private IOnGameServerReceivedListener onGameServerReceivedListener;
 
         private ExternalCoroutinesExecutor coroutinesExecutor;
 
         private void Awake()
         {
-            gameServerProviderService = GameServerProviderService.GetInstance();
+            gameServerProviderService =
+                FindObjectOfType<GameServerProviderService>();
 
             onGameServerReceivedListener =
                 GetComponent<IOnGameServerReceivedListener>();
