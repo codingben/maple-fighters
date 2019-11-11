@@ -25,14 +25,13 @@ namespace Scripts.UI.CharacterSelection
         private ICharacterNameView characterNameView;
 
         private CharacterDetails characterDetails;
-        private CharacterViewCollection characterViewCollection;
+        private CharacterViewCollection? characterViewCollection;
 
         private CharacterViewInteractor characterViewInteractor;
 
         private void Awake()
         {
             characterDetails = new CharacterDetails();
-            characterViewCollection = new CharacterViewCollection();
             characterViewInteractor = GetComponent<CharacterViewInteractor>();
 
             CreateCharacterView();
@@ -133,12 +132,15 @@ namespace Scripts.UI.CharacterSelection
 
         private void UnsubscribeFromCharacterImages()
         {
-            var characterImages = characterViewCollection.GetAll();
-            foreach (var characterImage in characterImages)
+            var characterImages = characterViewCollection?.GetAll();
+            if (characterImages != null)
             {
-                if (characterImage != null)
+                foreach (var characterImage in characterImages)
                 {
-                    characterImage.CharacterClicked -= OnCharacterClicked;
+                    if (characterImage != null)
+                    {
+                        characterImage.CharacterClicked -= OnCharacterClicked;
+                    }
                 }
             }
         }
@@ -184,6 +186,12 @@ namespace Scripts.UI.CharacterSelection
 
         public void OnCharacterReceived(CharacterDetails characterDetails)
         {
+            if (characterViewCollection == null)
+            {
+                var views = new IClickableCharacterView[] { null, null, null };
+                characterViewCollection = new CharacterViewCollection(views);
+            }
+
             var path = Utils.GetCharacterPath(characterDetails);
             var characterView = CreateAndShowCharacterView(path);
             if (characterView != null)
@@ -196,7 +204,7 @@ namespace Scripts.UI.CharacterSelection
                 if (characterIndex != UICharacterIndex.Zero)
                 {
                     var index = (int)characterIndex;
-                    characterViewCollection.Set(index, characterView);
+                    characterViewCollection?.Set(index, characterView);
                 }
             }
         }
@@ -259,12 +267,15 @@ namespace Scripts.UI.CharacterSelection
 
         private void DestroyAllCharacterImages()
         {
-            var characterImages = characterViewCollection.GetAll();
-            foreach (var characterImage in characterImages)
+            var characterImages = characterViewCollection?.GetAll();
+            if (characterImages != null)
             {
-                if (characterImage != null)
+                foreach (var characterImage in characterImages)
                 {
-                    Destroy(characterImage.GameObject);
+                    if (characterImage != null)
+                    {
+                        Destroy(characterImage.GameObject);
+                    }
                 }
             }
         }

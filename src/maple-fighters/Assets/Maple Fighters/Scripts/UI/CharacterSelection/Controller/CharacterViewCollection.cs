@@ -6,14 +6,9 @@ namespace Scripts.UI.CharacterSelection
     {
         private readonly IClickableCharacterView[] collection;
 
-        public CharacterViewCollection(IClickableCharacterView[] view = null)
+        public CharacterViewCollection(IClickableCharacterView[] views)
         {
-            if (view == null)
-            {
-                collection = new IClickableCharacterView[] { null, null, null };
-            }
-
-            collection = view;
+            collection = views;
         }
 
         public void Set(int index, IClickableCharacterView characterView)
