@@ -2,6 +2,7 @@
 using Scripts.UI.Notice;
 using UI.Manager;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Scripts.UI.Authenticator
 {
@@ -10,6 +11,9 @@ namespace Scripts.UI.Authenticator
                                            IOnLoginFinishedListener,
                                            IOnRegistrationFinishedListener
     {
+        [SerializeField]
+        private string sceneName;
+
         private ILoginView loginView;
         private IRegistrationView registrationView;
 
@@ -174,6 +178,9 @@ namespace Scripts.UI.Authenticator
         public void OnLoginSucceed()
         {
             HideLoginWindow();
+
+            // TODO: Remove this from here
+            SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
         }
 
         public void OnLoginFailed()
