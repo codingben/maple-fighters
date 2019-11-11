@@ -5,11 +5,11 @@
         /// <summary>
         /// The map_1.
         /// </summary>
-        Map_1 = 2,
+        Map_1 = 3,
 
         /// <summary>
         /// The map_2.
         /// </summary>
-        Map_2 = 3,
+        Map_2 = 4,
     }
 }
