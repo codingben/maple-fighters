@@ -10,6 +10,6 @@
         /// <summary>
         /// The map_2.
         /// </summary>
-        Map_2 = 4,
+        Map_2 = 4
     }
 }
