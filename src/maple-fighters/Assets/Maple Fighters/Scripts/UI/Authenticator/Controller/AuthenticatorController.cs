@@ -177,7 +177,7 @@ namespace Scripts.UI.Authenticator
 
         public void OnLoginSucceed()
         {
-            HideLoginWindow();
+            // HideLoginWindow();
 
             // TODO: Remove this from here
             SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
