@@ -7,7 +7,10 @@ namespace Network.Utils
     {
         private void Awake()
         {
-            LogUtils.Logger = new Logger();
+            if (LogUtils.Logger == null)
+            {
+                LogUtils.Logger = new Logger();
+            }
 
             Destroy(gameObject);
         }

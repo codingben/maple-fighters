@@ -7,7 +7,10 @@ namespace Network.Utils
     {
         private void Awake()
         {
-            TimeProviders.DefaultTimeProvider = new GameTimeProvider();
+            if (TimeProviders.DefaultTimeProvider == null)
+            {
+                TimeProviders.DefaultTimeProvider = new GameTimeProvider();
+            }
 
             Destroy(gameObject);
         }
