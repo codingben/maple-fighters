@@ -1,5 +1,4 @@
-﻿using System;
-using Scripts.Constants;
+﻿using Scripts.Constants;
 using Scripts.UI.Notice;
 using UI.Manager;
 using UnityEngine;
@@ -11,10 +10,6 @@ namespace Scripts.UI.Authenticator
                                            IOnLoginFinishedListener,
                                            IOnRegistrationFinishedListener
     {
-        public event Action LoginSucceed;
-
-        public event Action RegistrationSucceed;
-
         private ILoginView loginView;
         private IRegistrationView registrationView;
 
@@ -179,8 +174,6 @@ namespace Scripts.UI.Authenticator
         public void OnLoginSucceed()
         {
             HideLoginWindow();
-
-            LoginSucceed?.Invoke();
         }
 
         public void OnLoginFailed()
@@ -210,8 +203,6 @@ namespace Scripts.UI.Authenticator
         public void OnRegistrationSucceed()
         {
             HideRegistrationWindow();
-
-            RegistrationSucceed?.Invoke();
         }
 
         public void OnRegistrationFailed()
