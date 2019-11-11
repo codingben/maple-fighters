@@ -1,10 +1,31 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using UI.Manager;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace Scripts.UI.GameServerBrowser
 {
+    public struct GameServerViewCollection
+    {
+        private readonly IGameServerView[] collection;
+
+        public GameServerViewCollection(int length)
+        {
+            collection = new IGameServerView[length];
+        }
+
+        public void Set(int index, IGameServerView gameServerView)
+        {
+            collection[index] = gameServerView;
+        }
+
+        public IEnumerable<IGameServerView> GetAll()
+        {
+            return collection;
+        }
+    }
+
     [RequireComponent(typeof(GameServerBrowserInteractor))]
     public class GameServerBrowserController : MonoBehaviour,
                                                IOnGameServerReceivedListener
@@ -15,12 +36,10 @@ namespace Scripts.UI.GameServerBrowser
         private GameServerBrowserInteractor gameServerBrowserInteractor;
         private IGameServerBrowserView gameServerBrowserView;
 
-        private Dictionary<string, IGameServerView> gameServerViews;
+        private GameServerViewCollection? gameServerViewCollection;
 
         private void Awake()
         {
-            gameServerViews = new Dictionary<string, IGameServerView>();
-
             gameServerBrowserInteractor =
                 GetComponent<GameServerBrowserInteractor>();
 
@@ -44,14 +63,8 @@ namespace Scripts.UI.GameServerBrowser
 
         private void OnDestroy()
         {
-            if (gameServerViews.Count != 0)
-            {
-                UnsubscribeFromGameServerViews();
-            }
-
+            UnsubscribeFromGameServerViews();
             UnsubscribeFromGameServerBrowserWindow();
-
-            gameServerViews.Clear();
         }
 
         private void UnsubscribeFromGameServerBrowserWindow()
@@ -72,16 +85,22 @@ namespace Scripts.UI.GameServerBrowser
 
         public void OnGameServerReceived(IEnumerable<UIGameServerButtonData> datas)
         {
+            UnsubscribeFromGameServerViews();
             DestroyGameServerViews();
 
-            foreach (var gameServerButtonData in datas)
-            {
-                var gameServerButton = CreateAndSubscribeToGameServerButton();
-                gameServerButton.SetGameServerButtonData(
-                    gameServerButtonData);
+            var index = 0;
+            var array = datas.ToArray();
 
-                var serverName = gameServerButtonData.ServerName;
-                gameServerViews.Add(serverName, gameServerButton);
+            gameServerViewCollection = new GameServerViewCollection(array.Length);
+
+            foreach (var data in array)
+            {
+                var gameServerView = CreateAndSubscribeToGameServerButton();
+                gameServerView.SetGameServerButtonData(data);
+
+                gameServerViewCollection?.Set(index, gameServerView);
+
+                index++;
             }
 
             ShowGameServerList();
@@ -101,25 +120,28 @@ namespace Scripts.UI.GameServerBrowser
 
         private void DestroyGameServerViews()
         {
-            UnsubscribeFromGameServerViews();
-
-            var gameServerViewes = gameServerViews.Values;
-            foreach (var gameServerView in gameServerViewes)
+            var gameServerViewes = gameServerViewCollection?.GetAll();
+            if (gameServerViewes != null)
             {
-                Destroy(gameServerView.GameObject);
+                foreach (var gameServerView in gameServerViewes)
+                {
+                    Destroy(gameServerView.GameObject);
+                }
             }
-
-            gameServerViews.Clear();
         }
 
         private void UnsubscribeFromGameServerViews()
         {
-            var gameServerViewes = gameServerViews.Values;
-            foreach (var gameServerView in gameServerViewes)
+            var gameServerViewes = gameServerViewCollection?.GetAll();
+            if (gameServerViewes != null)
             {
-                if (gameServerView != null)
+                foreach (var gameServerView in gameServerViewes)
                 {
-                    gameServerView.ButtonClicked -= OnGameServerButtonClicked;
+                    if (gameServerView != null)
+                    {
+                        gameServerView.ButtonClicked -=
+                            OnGameServerButtonClicked;
+                    }
                 }
             }
         }
