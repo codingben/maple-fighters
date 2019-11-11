@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Scripts.UI.Authenticator;
 using UI.Manager;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -26,7 +25,11 @@ namespace Scripts.UI.GameServerBrowser
                 GetComponent<GameServerBrowserInteractor>();
 
             CreateAndSubscribeToGameServerBrowserWindow();
-            SubscribeToAuthenticatorControllerEvents();
+        }
+
+        private void Start()
+        {
+            ShowGameServerBrowserWindow();
         }
 
         private void CreateAndSubscribeToGameServerBrowserWindow()
@@ -39,19 +42,6 @@ namespace Scripts.UI.GameServerBrowser
                 OnRefreshButtonClicked;
         }
 
-        private void SubscribeToAuthenticatorControllerEvents()
-        {
-            var authenticatorController =
-                FindObjectOfType<AuthenticatorController>();
-            if (authenticatorController != null)
-            {
-                authenticatorController.LoginSucceed +=
-                    ShowGameServerBrowserWindow;
-                authenticatorController.RegistrationSucceed +=
-                    ShowGameServerBrowserWindow;
-            }
-        }
-
         private void OnDestroy()
         {
             if (gameServerViews.Count != 0)
@@ -60,7 +50,6 @@ namespace Scripts.UI.GameServerBrowser
             }
 
             UnsubscribeFromGameServerBrowserWindow();
-            UnsubscribeFromAuthenticatorControllerEvents();
 
             gameServerViews.Clear();
         }
@@ -73,19 +62,6 @@ namespace Scripts.UI.GameServerBrowser
                     OnJoinButtonClicked;
                 gameServerBrowserView.RefreshButtonClicked -=
                     OnRefreshButtonClicked;
-            }
-        }
-
-        private void UnsubscribeFromAuthenticatorControllerEvents()
-        {
-            var authenticatorController =
-                FindObjectOfType<AuthenticatorController>();
-            if (authenticatorController != null)
-            {
-                authenticatorController.LoginSucceed -=
-                    ShowGameServerBrowserWindow;
-                authenticatorController.RegistrationSucceed -=
-                    ShowGameServerBrowserWindow;
             }
         }
 
