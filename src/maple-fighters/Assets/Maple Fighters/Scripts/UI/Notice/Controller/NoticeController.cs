@@ -9,21 +9,6 @@ namespace Scripts.UI.Notice
         private INoticeView noticeView;
         private Action onOkButtonClicked;
 
-        private void CreateAndSubscribeToNoticeWindow()
-        {
-            noticeView = UIElementsCreator.GetInstance()
-                .Create<NoticeWindow>(UILayer.Foreground, UIIndex.End);
-            noticeView.OkButtonClicked += Hide;
-        }
-
-        private void UnsubscribeFromNoticeWindow()
-        {
-            if (noticeView != null)
-            {
-                noticeView.OkButtonClicked += Hide;
-            }
-        }
-
         public void Show(string message, Action onClicked = null, bool background = true)
         {
             var noticeWindow = CreateOrShowNoticeView();
@@ -56,11 +41,6 @@ namespace Scripts.UI.Notice
             HideNoticeWindow();
         }
 
-        private void OnDestroy()
-        {
-            UnsubscribeFromNoticeWindow();
-        }
-
         private void HideNoticeWindow()
         {
             if (noticeView != null)
@@ -71,6 +51,19 @@ namespace Scripts.UI.Notice
                 }
 
                 noticeView.Hide();
+            }
+        }
+
+        private void OnDestroy()
+        {
+            UnsubscribeFromNoticeWindow();
+        }
+
+        private void UnsubscribeFromNoticeWindow()
+        {
+            if (noticeView != null)
+            {
+                noticeView.OkButtonClicked -= Hide;
             }
         }
 
@@ -105,6 +98,13 @@ namespace Scripts.UI.Notice
             noticeView.Show();
 
             return noticeView;
+        }
+
+        private void CreateAndSubscribeToNoticeWindow()
+        {
+            noticeView = UIElementsCreator.GetInstance()
+                .Create<NoticeWindow>(UILayer.Foreground, UIIndex.End);
+            noticeView.OkButtonClicked += Hide;
         }
     }
 }
