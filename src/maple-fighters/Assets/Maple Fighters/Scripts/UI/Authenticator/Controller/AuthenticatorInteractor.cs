@@ -1,18 +1,21 @@
 ﻿using System.Threading.Tasks;
 using CommonTools.Coroutines;
 using Login.Common;
+using Network.Scripts;
 using Registration.Common;
 using Scripts.Services.Authenticator;
 using UnityEngine;
 
 namespace Scripts.UI.Authenticator
 {
+    [RequireComponent(typeof(IOnConnectionFinishedListener))]
     [RequireComponent(typeof(IOnLoginFinishedListener))]
     [RequireComponent(typeof(IOnRegistrationFinishedListener))]
     public class AuthenticatorInteractor : MonoBehaviour
     {
         private AuthenticatorService authenticatorService;
 
+        private IOnConnectionFinishedListener onConnectionFinishedListener;
         private IOnLoginFinishedListener onLoginFinishedListener;
         private IOnRegistrationFinishedListener onRegistrationFinishedListener;
 
@@ -22,7 +25,10 @@ namespace Scripts.UI.Authenticator
         {
             authenticatorService = FindObjectOfType<AuthenticatorService>();
 
-            onLoginFinishedListener = GetComponent<IOnLoginFinishedListener>();
+            onConnectionFinishedListener =
+                GetComponent<IOnConnectionFinishedListener>();
+            onLoginFinishedListener = 
+                GetComponent<IOnLoginFinishedListener>();
             onRegistrationFinishedListener =
                 GetComponent<IOnRegistrationFinishedListener>();
 
@@ -37,6 +43,25 @@ namespace Scripts.UI.Authenticator
         private void OnDestroy()
         {
             coroutinesExecutor?.Dispose();
+        }
+
+        public void ConnectToAuthenticator()
+        {
+            coroutinesExecutor?.StartTask(ConnectToAuthenticatorAsync);
+        }
+
+        private async Task ConnectToAuthenticatorAsync(IYield yield)
+        {
+            var connectionStatus =
+                await authenticatorService.ConnectAsync(yield);
+            if (connectionStatus == ConnectionStatus.Succeed)
+            {
+                onConnectionFinishedListener.OnConnectionSucceed();
+            }
+            else
+            {
+                onConnectionFinishedListener.OnConnectionFailed();
+            }
         }
 
         public void Login(UIAuthenticationDetails uiAuthenticationDetails)
