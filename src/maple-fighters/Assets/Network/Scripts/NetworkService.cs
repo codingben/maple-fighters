@@ -9,8 +9,10 @@ namespace Network.Scripts
 {
     public abstract class NetworkService : MonoBehaviour
     {
-        public async Task ConnectAsync(IYield yield)
+        public async Task<ConnectionStatus> ConnectAsync(IYield yield)
         {
+            var connectionStatus = ConnectionStatus.Failed;
+
             try
             {
                 var connector = GetServerConnector();
@@ -19,6 +21,8 @@ namespace Network.Scripts
                 var serverPeer = await connector.Connect(yield, info, protocol);
 
                 OnConnected(serverPeer);
+
+                connectionStatus = ConnectionStatus.Succeed;
             }
             catch (CouldNotConnectToPeerException exception)
             {
@@ -28,6 +32,8 @@ namespace Network.Scripts
 
                 Debug.Log($"Could not connect to {server}. Reason: {reason}");
             }
+
+            return connectionStatus;
         }
 
         protected abstract void OnConnected(IServerPeer serverPeer);
