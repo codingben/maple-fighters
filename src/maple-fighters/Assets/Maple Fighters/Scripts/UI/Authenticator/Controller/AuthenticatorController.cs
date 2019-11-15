@@ -98,7 +98,7 @@ namespace Scripts.UI.Authenticator
             }
             else
             {
-                loginView?.EnableOrDisableInteraction();
+                loginView?.DisableInteraction();
                 authenticatorInteractor.Login(uiAuthenticationDetails);
             }
         }
@@ -134,7 +134,7 @@ namespace Scripts.UI.Authenticator
             }
             else
             {
-                registrationView?.EnableOrDisableInteraction();
+                registrationView?.DisableInteraction();
                 authenticatorInteractor.Register(uiRegistrationDetails);
             }
         }
@@ -180,7 +180,8 @@ namespace Scripts.UI.Authenticator
 
         public void OnConnectionFailed()
         {
-            loginView?.EnableOrDisableInteraction();
+            loginView?.EnableInteraction();
+            registrationView?.EnableInteraction();
 
             var message = NoticeMessages.AuthView.CouldNotConnect;
             NoticeUtils.ShowNotice(message);
@@ -194,7 +195,7 @@ namespace Scripts.UI.Authenticator
 
         public void OnLoginFailed()
         {
-            loginView?.EnableOrDisableInteraction();
+            loginView?.EnableInteraction();
 
             var message = NoticeMessages.AuthView.UnknownError;
             NoticeUtils.ShowNotice(message);
@@ -202,7 +203,7 @@ namespace Scripts.UI.Authenticator
 
         public void OnInvalidEmailError()
         {
-            loginView?.EnableOrDisableInteraction();
+            loginView?.EnableInteraction();
 
             var message = NoticeMessages.AuthView.WrongEmailAddress;
             NoticeUtils.ShowNotice(message);
@@ -210,7 +211,7 @@ namespace Scripts.UI.Authenticator
 
         public void OnInvalidPasswordError()
         {
-            loginView?.EnableOrDisableInteraction();
+            loginView?.EnableInteraction();
 
             var message = NoticeMessages.AuthView.WrongPassword;
             NoticeUtils.ShowNotice(message);
@@ -218,7 +219,7 @@ namespace Scripts.UI.Authenticator
 
         public void OnNonAuthorizedError()
         {
-            loginView?.EnableOrDisableInteraction();
+            loginView?.EnableInteraction();
 
             var message = NoticeMessages.AuthView.NonAuthorized;
             NoticeUtils.ShowNotice(message);
@@ -226,7 +227,7 @@ namespace Scripts.UI.Authenticator
 
         public void OnRegistrationSucceed()
         {
-            registrationView?.EnableOrDisableInteraction();
+            registrationView?.EnableInteraction();
 
             HideRegistrationWindow();
             ShowLoginWindow();
@@ -237,7 +238,7 @@ namespace Scripts.UI.Authenticator
 
         public void OnRegistrationFailed()
         {
-            registrationView?.EnableOrDisableInteraction();
+            registrationView?.EnableInteraction();
 
             var message = NoticeMessages.AuthView.UnknownError;
             NoticeUtils.ShowNotice(message);
@@ -245,7 +246,7 @@ namespace Scripts.UI.Authenticator
 
         public void OnEmailExistsError()
         {
-            registrationView?.EnableOrDisableInteraction();
+            registrationView?.EnableInteraction();
 
             var message = NoticeMessages.AuthView.EmailAddressExists;
             NoticeUtils.ShowNotice(message);
