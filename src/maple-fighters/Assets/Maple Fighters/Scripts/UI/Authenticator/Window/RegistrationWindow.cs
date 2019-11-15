@@ -103,41 +103,79 @@ namespace Scripts.UI.Authenticator
             registerButton?.onClick.RemoveListener(OnRegisterButtonClicked);
         }
 
-        public void EnableOrDisableInteraction()
+        public void EnableInteraction()
         {
             if (emailInputField != null)
             {
-                emailInputField.interactable = !emailInputField.interactable;
+                emailInputField.interactable = true;
             }
 
             if (passwordInputField != null)
             {
-                passwordInputField.interactable = !passwordInputField.interactable;
+                passwordInputField.interactable = true;
             }
 
             if (confirmPasswordInputField != null)
             {
-                confirmPasswordInputField.interactable = !confirmPasswordInputField.interactable;
+                confirmPasswordInputField.interactable = true;
             }
 
             if (firstNameInputField != null)
             {
-                firstNameInputField.interactable = !firstNameInputField.interactable;
+                firstNameInputField.interactable = true;
             }
 
             if (lastNameInputField != null)
             {
-                lastNameInputField.interactable = !lastNameInputField.interactable;
+                lastNameInputField.interactable = true;
             }
 
             if (backButton != null)
             {
-                backButton.interactable = !backButton.interactable;
+                backButton.interactable = true;
             }
 
             if (registerButton != null)
             {
-                registerButton.interactable = !registerButton.interactable;
+                registerButton.interactable = true;
+            }
+        }
+
+        public void DisableInteraction()
+        {
+            if (emailInputField != null)
+            {
+                emailInputField.interactable = false;
+            }
+
+            if (passwordInputField != null)
+            {
+                passwordInputField.interactable = false;
+            }
+
+            if (confirmPasswordInputField != null)
+            {
+                confirmPasswordInputField.interactable = false;
+            }
+
+            if (firstNameInputField != null)
+            {
+                firstNameInputField.interactable = false;
+            }
+
+            if (lastNameInputField != null)
+            {
+                lastNameInputField.interactable = false;
+            }
+
+            if (backButton != null)
+            {
+                backButton.interactable = false;
+            }
+
+            if (registerButton != null)
+            {
+                registerButton.interactable = false;
             }
         }
 
