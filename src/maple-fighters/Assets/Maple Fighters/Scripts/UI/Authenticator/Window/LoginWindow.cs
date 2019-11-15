@@ -61,26 +61,49 @@ namespace Scripts.UI.Authenticator
             createAccountButton?.onClick.RemoveListener(OnCreateAccountButtonClicked);
         }
 
-        public void EnableOrDisableInteraction()
+        public void EnableInteraction()
         {
             if (emailInputField != null)
             {
-                emailInputField.interactable = !emailInputField.interactable;
+                emailInputField.interactable = true;
             }
 
             if (passwordInputField != null)
             {
-                passwordInputField.interactable = !passwordInputField.interactable;
+                passwordInputField.interactable = true;
             }
 
             if (loginButton != null)
             {
-                loginButton.interactable = !loginButton.interactable;
+                loginButton.interactable = true;
             }
 
             if (createAccountButton != null)
             {
-                createAccountButton.interactable = !createAccountButton.interactable;
+                createAccountButton.interactable = true;
+            }
+        }
+
+        public void DisableInteraction()
+        {
+            if (emailInputField != null)
+            {
+                emailInputField.interactable = false;
+            }
+
+            if (passwordInputField != null)
+            {
+                passwordInputField.interactable = false;
+            }
+
+            if (loginButton != null)
+            {
+                loginButton.interactable = false;
+            }
+
+            if (createAccountButton != null)
+            {
+                createAccountButton.interactable = false;
             }
         }
 
