@@ -12,5 +12,7 @@ namespace Scripts.UI.Authenticator
         string Email { set; }
 
         string Password { set; }
+
+        void EnableOrDisableInteraction();
     }
 }
