@@ -45,25 +45,6 @@ namespace Scripts.UI.Authenticator
             coroutinesExecutor?.Dispose();
         }
 
-        public void ConnectToAuthenticator()
-        {
-            coroutinesExecutor?.StartTask(ConnectToAuthenticatorAsync);
-        }
-
-        private async Task ConnectToAuthenticatorAsync(IYield yield)
-        {
-            var connectionStatus =
-                await authenticatorService.ConnectAsync(yield);
-            if (connectionStatus == ConnectionStatus.Succeed)
-            {
-                onConnectionFinishedListener.OnConnectionSucceed();
-            }
-            else
-            {
-                onConnectionFinishedListener.OnConnectionFailed();
-            }
-        }
-
         public void Login(UIAuthenticationDetails uiAuthenticationDetails)
         {
             var parameters = new AuthenticateRequestParameters(
@@ -79,6 +60,8 @@ namespace Scripts.UI.Authenticator
             IYield yield,
             AuthenticateRequestParameters parameters)
         {
+            await ConnectIfNotConnectedAsync(yield);
+
             var authenticatorApi = authenticatorService?.AuthenticatorApi;
             if (authenticatorApi != null)
             {
@@ -133,6 +116,8 @@ namespace Scripts.UI.Authenticator
             IYield yield,
             RegisterRequestParameters parameters)
         {
+            await ConnectIfNotConnectedAsync(yield);
+
             var authenticatorApi = authenticatorService?.AuthenticatorApi;
             if (authenticatorApi != null)
             {
@@ -153,6 +138,19 @@ namespace Scripts.UI.Authenticator
                         onRegistrationFinishedListener.OnEmailExistsError();
                         break;
                     }
+                }
+            }
+        }
+
+        private async Task ConnectIfNotConnectedAsync(IYield yield)
+        {
+            if (authenticatorService != null && !authenticatorService.IsConnected)
+            {
+                var connectionStatus =
+                    await authenticatorService.ConnectAsync(yield);
+                if (connectionStatus == ConnectionStatus.Failed)
+                {
+                    onConnectionFinishedListener.OnConnectionFailed();
                 }
             }
         }
