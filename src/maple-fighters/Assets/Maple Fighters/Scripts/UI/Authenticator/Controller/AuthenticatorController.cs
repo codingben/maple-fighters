@@ -134,6 +134,7 @@ namespace Scripts.UI.Authenticator
             }
             else
             {
+                registrationView?.EnableOrDisableInteraction();
                 authenticatorInteractor.Register(uiRegistrationDetails);
             }
         }
@@ -225,17 +226,24 @@ namespace Scripts.UI.Authenticator
 
         public void OnRegistrationSucceed()
         {
+            registrationView?.EnableOrDisableInteraction();
+
             HideRegistrationWindow();
+            ShowLoginWindow();
         }
 
         public void OnRegistrationFailed()
         {
+            registrationView?.EnableOrDisableInteraction();
+
             var message = NoticeMessages.AuthView.UnknownError;
             NoticeUtils.ShowNotice(message);
         }
 
         public void OnEmailExistsError()
         {
+            registrationView?.EnableOrDisableInteraction();
+
             var message = NoticeMessages.AuthView.EmailAddressExists;
             NoticeUtils.ShowNotice(message);
         }
