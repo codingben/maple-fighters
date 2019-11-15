@@ -13,6 +13,8 @@ namespace Scripts.Services.Authenticator
     {
         public IAuthenticatorApi AuthenticatorApi { get; private set; }
 
+        public bool IsConnected => authenticatorPeer != null && authenticatorPeer.IsConnected;
+
         private IServerPeer authenticatorPeer;
 
         private ExternalCoroutinesExecutor coroutinesExecutor;
@@ -20,9 +22,6 @@ namespace Scripts.Services.Authenticator
         private void Awake()
         {
             coroutinesExecutor = new ExternalCoroutinesExecutor();
-
-            // TODO: Remove
-            coroutinesExecutor.StartTask(ConnectAsync);
         }
 
         private void Update()
