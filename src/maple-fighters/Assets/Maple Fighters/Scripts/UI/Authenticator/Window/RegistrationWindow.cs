@@ -103,6 +103,44 @@ namespace Scripts.UI.Authenticator
             registerButton?.onClick.RemoveListener(OnRegisterButtonClicked);
         }
 
+        public void EnableOrDisableInteraction()
+        {
+            if (emailInputField != null)
+            {
+                emailInputField.interactable = !emailInputField.interactable;
+            }
+
+            if (passwordInputField != null)
+            {
+                passwordInputField.interactable = !passwordInputField.interactable;
+            }
+
+            if (confirmPasswordInputField != null)
+            {
+                confirmPasswordInputField.interactable = !confirmPasswordInputField.interactable;
+            }
+
+            if (firstNameInputField != null)
+            {
+                firstNameInputField.interactable = !firstNameInputField.interactable;
+            }
+
+            if (lastNameInputField != null)
+            {
+                lastNameInputField.interactable = !lastNameInputField.interactable;
+            }
+
+            if (backButton != null)
+            {
+                backButton.interactable = !backButton.interactable;
+            }
+
+            if (registerButton != null)
+            {
+                registerButton.interactable = !registerButton.interactable;
+            }
+        }
+
         private void OnBackButtonClicked()
         {
             BackButtonClicked?.Invoke();
