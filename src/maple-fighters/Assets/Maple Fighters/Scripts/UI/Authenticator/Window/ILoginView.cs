@@ -13,6 +13,8 @@ namespace Scripts.UI.Authenticator
 
         string Password { set; }
 
-        void EnableOrDisableInteraction();
+        void EnableInteraction();
+
+        void DisableInteraction();
     }
 }
