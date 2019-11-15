@@ -20,6 +20,7 @@
             public const string EmailAddressExists = "The email address is already in use.";
             public const string NonAuthorized = "The user is not authorized to log in.";
             public const string CouldNotConnect = "Failed to connect to authenticator server.";
+            public const string RegistrationSucceed = "Registration completed successfully!";
         }
 
         public static class CharacterView
