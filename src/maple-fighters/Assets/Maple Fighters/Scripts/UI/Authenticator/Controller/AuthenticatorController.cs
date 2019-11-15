@@ -98,6 +98,7 @@ namespace Scripts.UI.Authenticator
             }
             else
             {
+                loginView?.EnableOrDisableInteraction();
                 authenticatorInteractor.Login(uiAuthenticationDetails);
             }
         }
@@ -178,38 +179,46 @@ namespace Scripts.UI.Authenticator
 
         public void OnConnectionFailed()
         {
+            loginView?.EnableOrDisableInteraction();
+
             var message = NoticeMessages.AuthView.CouldNotConnect;
             NoticeUtils.ShowNotice(message);
         }
 
         public void OnLoginSucceed()
         {
-            // HideLoginWindow();
-
             // TODO: Remove this from here
             SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
         }
 
         public void OnLoginFailed()
         {
+            loginView?.EnableOrDisableInteraction();
+
             var message = NoticeMessages.AuthView.UnknownError;
             NoticeUtils.ShowNotice(message);
         }
 
         public void OnInvalidEmailError()
         {
+            loginView?.EnableOrDisableInteraction();
+
             var message = NoticeMessages.AuthView.WrongEmailAddress;
             NoticeUtils.ShowNotice(message);
         }
 
         public void OnInvalidPasswordError()
         {
+            loginView?.EnableOrDisableInteraction();
+
             var message = NoticeMessages.AuthView.WrongPassword;
             NoticeUtils.ShowNotice(message);
         }
 
         public void OnNonAuthorizedError()
         {
+            loginView?.EnableOrDisableInteraction();
+
             var message = NoticeMessages.AuthView.NonAuthorized;
             NoticeUtils.ShowNotice(message);
         }
