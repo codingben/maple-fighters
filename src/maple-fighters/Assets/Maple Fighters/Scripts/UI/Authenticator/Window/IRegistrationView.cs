@@ -19,6 +19,8 @@ namespace Scripts.UI.Authenticator
 
         string LastName { set; }
 
-        void EnableOrDisableInteraction();
+        void EnableInteraction();
+
+        void DisableInteraction();
     }
 }
