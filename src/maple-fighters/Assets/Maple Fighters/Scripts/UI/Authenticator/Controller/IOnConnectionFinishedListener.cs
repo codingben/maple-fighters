@@ -2,8 +2,6 @@
 {
     public interface IOnConnectionFinishedListener
     {
-        void OnConnectionSucceed();
-
         void OnConnectionFailed();
     }
 }
