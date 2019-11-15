@@ -61,6 +61,29 @@ namespace Scripts.UI.Authenticator
             createAccountButton?.onClick.RemoveListener(OnCreateAccountButtonClicked);
         }
 
+        public void EnableOrDisableInteraction()
+        {
+            if (emailInputField != null)
+            {
+                emailInputField.interactable = !emailInputField.interactable;
+            }
+
+            if (passwordInputField != null)
+            {
+                passwordInputField.interactable = !passwordInputField.interactable;
+            }
+
+            if (loginButton != null)
+            {
+                loginButton.interactable = !loginButton.interactable;
+            }
+
+            if (createAccountButton != null)
+            {
+                createAccountButton.interactable = !createAccountButton.interactable;
+            }
+        }
+
         private void OnLoginButtonClicked()
         {
             var email = emailInputField?.text;
