@@ -176,14 +176,10 @@ namespace Scripts.UI.Authenticator
             }
         }
 
-        public void OnConnectionSucceed()
-        {
-            // TODO: Implement
-        }
-
         public void OnConnectionFailed()
         {
-            // TODO: Notice: "Could not connect to the authenticator server."
+            var message = NoticeMessages.AuthView.CouldNotConnect;
+            NoticeUtils.ShowNotice(message);
         }
 
         public void OnLoginSucceed()
