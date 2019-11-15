@@ -230,6 +230,9 @@ namespace Scripts.UI.Authenticator
 
             HideRegistrationWindow();
             ShowLoginWindow();
+
+            var message = NoticeMessages.AuthView.RegistrationSucceed;
+            NoticeUtils.ShowNotice(message);
         }
 
         public void OnRegistrationFailed()
