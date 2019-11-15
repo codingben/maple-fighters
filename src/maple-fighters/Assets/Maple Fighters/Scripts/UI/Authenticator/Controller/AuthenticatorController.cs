@@ -8,6 +8,7 @@ namespace Scripts.UI.Authenticator
 {
     [RequireComponent(typeof(AuthenticatorInteractor))]
     public class AuthenticatorController : MonoBehaviour,
+                                           IOnConnectionFinishedListener,
                                            IOnLoginFinishedListener,
                                            IOnRegistrationFinishedListener
     {
@@ -173,6 +174,16 @@ namespace Scripts.UI.Authenticator
                 registrationView.LastName = string.Empty;
                 registrationView.Hide();
             }
+        }
+
+        public void OnConnectionSucceed()
+        {
+            // TODO: Implement
+        }
+
+        public void OnConnectionFailed()
+        {
+            // TODO: Notice: "Could not connect to the authenticator server."
         }
 
         public void OnLoginSucceed()
