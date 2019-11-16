@@ -9,7 +9,7 @@ namespace Scripts.UI.GameServerBrowser
     [RequireComponent(typeof(Button), typeof(UICanvasGroup))]
     public class GameServerButton : UIElement, IGameServerView
     {
-        public event Action<string> ButtonClicked;
+        public event Action<int> ButtonClicked;
 
         public GameObject GameObject => gameObject;
 
@@ -25,7 +25,7 @@ namespace Scripts.UI.GameServerBrowser
         [SerializeField]
         private Image frame;
 
-        private UIGameServerButtonData uiGameServerButtonData;
+        private int index;
 
         private void Start()
         {
@@ -43,12 +43,12 @@ namespace Scripts.UI.GameServerBrowser
         {
             SelectButton();
 
-            ButtonClicked?.Invoke(uiGameServerButtonData.ServerName);
+            ButtonClicked?.Invoke(index);
         }
 
-        public void SetGameServerButtonData(UIGameServerButtonData data)
+        public void SetGameServerButtonData(int index, UIGameServerButtonData data)
         {
-            uiGameServerButtonData = data;
+            this.index = index;
 
             if (gameServerNameText != null)
             {
