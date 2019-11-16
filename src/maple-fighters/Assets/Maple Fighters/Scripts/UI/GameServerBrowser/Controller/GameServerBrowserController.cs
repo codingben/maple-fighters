@@ -83,8 +83,9 @@ namespace Scripts.UI.GameServerBrowser
             foreach (var data in array)
             {
                 IGameServerView view = CreateAndSubscribeToGameServerButton();
-                view.SetIndex(index);
-                view.SetGameServerButtonData(data);
+                view.SetGameServerData(data);
+                view.SetGameServerName(data.ServerName);
+                view.SetGameServerConnections(data.Connections, data.MaxConnections);
 
                 gameServerViewCollection?.Set(index, view);
 
@@ -134,11 +135,12 @@ namespace Scripts.UI.GameServerBrowser
             }
         }
 
-        private void OnGameServerButtonClicked(int index)
+        private void OnGameServerButtonClicked(UIGameServerButtonData gameServerData)
         {
+            var ip = gameServerData.IP;
+            var port = gameServerData.Port;
+            gameServerBrowserInteractor.SetGameServerInfo(ip, port);
             gameServerBrowserView?.EnableJoinButton();
-
-            // TODO: GameServerSelected(serverName)
         }
 
         private void OnJoinButtonClicked()
@@ -149,8 +151,6 @@ namespace Scripts.UI.GameServerBrowser
 
             // TODO: Remove this from here
             SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
-
-            // TODO: JoinGameServer()
         }
 
         private void OnRefreshButtonClicked()
