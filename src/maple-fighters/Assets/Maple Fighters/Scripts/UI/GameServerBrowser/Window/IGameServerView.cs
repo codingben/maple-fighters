@@ -9,14 +9,18 @@ namespace Scripts.UI.GameServerBrowser
 
         GameObject GameObject { get; }
 
-        void SetIndex(int index);
+        void SetGameServerData(UIGameServerButtonData data);
 
-        void SetGameServerButtonData(UIGameServerButtonData data);
+        void SetGameServerName(string name);
+
+        void SetGameServerConnections(int min, int max);
 
         void SelectButton();
 
         void DeselectButton();
 
         bool IsButtonSelected();
+
+        UIGameServerButtonData GetGameServerData();
     }
 }
