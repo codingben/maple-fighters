@@ -23,6 +23,11 @@
             public const string RegistrationSucceed = "Registration completed successfully!";
         }
 
+        public static class GameServerBrowserView
+        {
+            public const string CouldNotConnect = "Failed to connect to game server provider.";
+        }
+
         public static class CharacterView
         {
             public const string CharacterCreationFailed = "The character creation failed.";
