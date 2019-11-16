@@ -71,7 +71,7 @@ namespace Scripts.UI.GameServerBrowser
 
         private async Task ConnectIfNotConnectedAsync(IYield yield)
         {
-            if (gameServerProviderService != null)
+            if (gameServerProviderService != null && !gameServerProviderService.IsConnected)
             {
                 var connectionStatus =
                     await gameServerProviderService.ConnectAsync(yield);
