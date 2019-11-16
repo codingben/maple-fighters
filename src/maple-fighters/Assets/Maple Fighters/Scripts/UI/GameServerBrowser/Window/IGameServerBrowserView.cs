@@ -16,8 +16,10 @@ namespace Scripts.UI.GameServerBrowser
 
         void EnableJoinButton();
 
+        void DisableJoinButton();
+
         void EnableRefreshButton();
 
-        void DisableAllButtons();
+        void DisableRefreshButton();
     }
 }
