@@ -9,7 +9,7 @@ namespace Scripts.UI.GameServerBrowser
     [RequireComponent(typeof(Button), typeof(UICanvasGroup))]
     public class GameServerButton : UIElement, IGameServerView
     {
-        public event Action<int> ButtonClicked;
+        public event Action<UIGameServerButtonData> ButtonClicked;
 
         public GameObject GameObject => gameObject;
 
@@ -43,7 +43,7 @@ namespace Scripts.UI.GameServerBrowser
         {
             SelectButton();
 
-            ButtonClicked?.Invoke(index);
+            ButtonClicked?.Invoke(gameServerData);
         }
 
         public void SetGameServerData(UIGameServerButtonData gameServerData)
