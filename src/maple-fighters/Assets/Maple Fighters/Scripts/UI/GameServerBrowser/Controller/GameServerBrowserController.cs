@@ -80,10 +80,11 @@ namespace Scripts.UI.GameServerBrowser
 
             foreach (var data in array)
             {
-                var gameServerView = CreateAndSubscribeToGameServerButton();
-                gameServerView.SetGameServerButtonData(data);
+                IGameServerView view = CreateAndSubscribeToGameServerButton();
+                view.SetIndex(index);
+                view.SetGameServerButtonData(data);
 
-                gameServerViewCollection?.Set(index, gameServerView);
+                gameServerViewCollection?.Set(index, view);
 
                 index++;
             }
@@ -131,7 +132,7 @@ namespace Scripts.UI.GameServerBrowser
             }
         }
 
-        private void OnGameServerButtonClicked(string serverName)
+        private void OnGameServerButtonClicked(int index)
         {
             gameServerBrowserView?.EnableJoinButton();
 
