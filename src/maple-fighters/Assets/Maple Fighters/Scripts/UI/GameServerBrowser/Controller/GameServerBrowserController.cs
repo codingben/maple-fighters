@@ -8,6 +8,7 @@ namespace Scripts.UI.GameServerBrowser
 {
     [RequireComponent(typeof(GameServerBrowserInteractor))]
     public class GameServerBrowserController : MonoBehaviour,
+                                               IOnConnectionFinishedListener,
                                                IOnGameServerReceivedListener
     {
         [SerializeField]
@@ -15,7 +16,6 @@ namespace Scripts.UI.GameServerBrowser
 
         private GameServerBrowserInteractor gameServerBrowserInteractor;
         private IGameServerBrowserView gameServerBrowserView;
-
         private GameServerViewCollection? gameServerViewCollection;
 
         private void Awake()
@@ -61,6 +61,11 @@ namespace Scripts.UI.GameServerBrowser
         private void ShowGameServerBrowserWindow()
         {
             gameServerBrowserView?.Show();
+        }
+
+        public void OnConnectionFailed()
+        {
+            // TODO: Show notice
         }
 
         public void OnGameServerReceived(IEnumerable<UIGameServerButtonData> datas)
@@ -145,7 +150,8 @@ namespace Scripts.UI.GameServerBrowser
 
         private void HideGameServerBrowserWindow()
         {
-            gameServerBrowserView?.DisableAllButtons();
+            gameServerBrowserView?.DisableJoinButton();
+            gameServerBrowserView?.DisableRefreshButton();
             gameServerBrowserView?.Hide();
         }
 
@@ -160,7 +166,7 @@ namespace Scripts.UI.GameServerBrowser
         {
             HideRefreshImage();
 
-            gameServerBrowserView?.DisableAllButtons();
+            gameServerBrowserView?.DisableJoinButton();
             gameServerBrowserView?.EnableRefreshButton();
         }
 
@@ -173,7 +179,8 @@ namespace Scripts.UI.GameServerBrowser
         {
             ShowRefreshImage();
 
-            gameServerBrowserView?.DisableAllButtons();
+            gameServerBrowserView?.DisableJoinButton();
+            gameServerBrowserView?.DisableRefreshButton();
         }
 
         private void ShowRefreshImage()
