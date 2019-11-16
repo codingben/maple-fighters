@@ -16,6 +16,11 @@ namespace Scripts.UI.GameServerBrowser
             collection[index] = gameServerView;
         }
 
+        public IGameServerView Get(int index)
+        {
+            return collection[index];
+        }
+
         public IEnumerable<IGameServerView> GetAll()
         {
             return collection;
