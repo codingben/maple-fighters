@@ -18,6 +18,7 @@ namespace Scripts.UI.GameServerBrowser
 
         private GameServerBrowserInteractor gameServerBrowserInteractor;
         private IGameServerBrowserView gameServerBrowserView;
+
         private GameServerViewCollection? gameServerViewCollection;
 
         private void Awake()
@@ -76,7 +77,8 @@ namespace Scripts.UI.GameServerBrowser
             var index = 0;
             var array = datas.ToArray();
 
-            gameServerViewCollection = new GameServerViewCollection(array.Length);
+            gameServerViewCollection = 
+                new GameServerViewCollection(array.Length);
 
             foreach (var data in array)
             {
