@@ -46,10 +46,13 @@ namespace Scripts.UI.GameServerBrowser
             ButtonClicked?.Invoke(index);
         }
 
-        public void SetGameServerButtonData(int index, UIGameServerButtonData data)
+        public void SetIndex(int index)
         {
             this.index = index;
+        }
 
+        public void SetGameServerButtonData(UIGameServerButtonData data)
+        {
             if (gameServerNameText != null)
             {
                 gameServerNameText.text = data.ServerName;
