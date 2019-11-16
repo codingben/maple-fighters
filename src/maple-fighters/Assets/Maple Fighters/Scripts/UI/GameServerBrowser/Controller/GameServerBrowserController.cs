@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Scripts.Constants;
+using Scripts.UI.Notice;
 using UI.Manager;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -28,7 +30,7 @@ namespace Scripts.UI.GameServerBrowser
 
         private void Start()
         {
-            ShowGameServerBrowserWindow();
+            gameServerBrowserView?.Show();
         }
 
         private void CreateAndSubscribeToGameServerBrowserWindow()
@@ -58,14 +60,12 @@ namespace Scripts.UI.GameServerBrowser
             }
         }
 
-        private void ShowGameServerBrowserWindow()
-        {
-            gameServerBrowserView?.Show();
-        }
-
         public void OnConnectionFailed()
         {
-            // TODO: Show notice
+            HideRefreshImage();
+
+            var message = NoticeMessages.GameServerBrowserView.CouldNotConnect;
+            NoticeUtils.ShowNotice(message);
         }
 
         public void OnGameServerReceived(IEnumerable<UIGameServerButtonData> datas)
@@ -88,7 +88,7 @@ namespace Scripts.UI.GameServerBrowser
                 index++;
             }
 
-            ShowGameServerList();
+            HideRefreshImage();
         }
 
         private GameServerButton CreateAndSubscribeToGameServerButton()
@@ -140,7 +140,9 @@ namespace Scripts.UI.GameServerBrowser
 
         private void OnJoinButtonClicked()
         {
-            HideGameServerBrowserWindow();
+            gameServerBrowserView?.DisableJoinButton();
+            gameServerBrowserView?.DisableRefreshButton();
+            gameServerBrowserView?.Hide();
 
             // TODO: Remove this from here
             SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
@@ -148,44 +150,25 @@ namespace Scripts.UI.GameServerBrowser
             // TODO: JoinGameServer()
         }
 
-        private void HideGameServerBrowserWindow()
-        {
-            gameServerBrowserView?.DisableJoinButton();
-            gameServerBrowserView?.DisableRefreshButton();
-            gameServerBrowserView?.Hide();
-        }
-
         private void OnRefreshButtonClicked()
         {
-            ShowRefreshingGameServerList();
+            ShowRefreshImage();
 
             gameServerBrowserInteractor.ProvideGameServers();
         }
         
-        private void ShowGameServerList()
+        private void ShowRefreshImage()
         {
-            HideRefreshImage();
-
             gameServerBrowserView?.DisableJoinButton();
-            gameServerBrowserView?.EnableRefreshButton();
+            gameServerBrowserView?.DisableRefreshButton();
+            gameServerBrowserView?.RefreshImage?.Show();
         }
 
         private void HideRefreshImage()
         {
-            gameServerBrowserView?.RefreshImage?.Hide();
-        }
-
-        private void ShowRefreshingGameServerList()
-        {
-            ShowRefreshImage();
-
             gameServerBrowserView?.DisableJoinButton();
-            gameServerBrowserView?.DisableRefreshButton();
-        }
-
-        private void ShowRefreshImage()
-        {
-            gameServerBrowserView?.RefreshImage?.Show();
+            gameServerBrowserView?.EnableRefreshButton();
+            gameServerBrowserView?.RefreshImage?.Hide();
         }
     }
 }
