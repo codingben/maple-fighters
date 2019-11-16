@@ -5,11 +5,11 @@ namespace Scripts.UI.GameServerBrowser
 {
     public interface IGameServerView
     {
-        event Action<int> ButtonClicked;
+        event Action<UIGameServerButtonData> ButtonClicked;
 
         GameObject GameObject { get; }
 
-        void SetGameServerData(UIGameServerButtonData data);
+        void SetGameServerData(UIGameServerButtonData gameServerData);
 
         void SetGameServerName(string name);
 
