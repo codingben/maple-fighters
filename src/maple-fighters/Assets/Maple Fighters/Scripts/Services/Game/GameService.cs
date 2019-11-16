@@ -21,13 +21,12 @@ namespace Scripts.Services.Game
         private IServerPeer gamePeer;
 
         private ExternalCoroutinesExecutor coroutinesExecutor;
+        private GameServerInfoProvider gameServerInfoProvider;
 
         private void Awake()
         {
             coroutinesExecutor = new ExternalCoroutinesExecutor();
-
-            // TODO: Remove
-            coroutinesExecutor.StartTask(ConnectAsync);
+            gameServerInfoProvider = FindObjectOfType<GameServerInfoProvider>();
 
             DontDestroyOnLoad(gameObject);
         }
@@ -90,11 +89,7 @@ namespace Scripts.Services.Game
 
         protected override PeerConnectionInformation GetConnectionInfo()
         {
-            var serverInfo = NetworkConfiguration.GetInstance().GetServerInfo(ServerType.Game);
-            var ip = serverInfo.IpAddress;
-            var port = serverInfo.Port;
-
-            return new PeerConnectionInformation(ip, port);
+            return gameServerInfoProvider.GetConnectionInfo();
         }
 
         protected override ConnectionProtocol GetConnectionProtocol()
