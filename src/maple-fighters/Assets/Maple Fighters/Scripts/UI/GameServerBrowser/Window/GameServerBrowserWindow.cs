@@ -61,6 +61,14 @@ namespace Scripts.UI.GameServerBrowser
             }
         }
 
+        public void DisableJoinButton()
+        {
+            if (joinButton != null)
+            {
+                joinButton.interactable = false;
+            }
+        }
+
         public void EnableRefreshButton()
         {
             if (refreshButton != null)
@@ -69,13 +77,8 @@ namespace Scripts.UI.GameServerBrowser
             }
         }
 
-        public void DisableAllButtons()
+        public void DisableRefreshButton()
         {
-            if (joinButton != null)
-            {
-                joinButton.interactable = false;
-            }
-
             if (refreshButton != null)
             {
                 refreshButton.interactable = false;
