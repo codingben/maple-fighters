@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using CommonTools.Coroutines;
 using Network.Scripts;
+using Scripts.Services.Game;
 using Scripts.Services.GameServerProvider;
 using UnityEngine;
 
@@ -12,6 +13,7 @@ namespace Scripts.UI.GameServerBrowser
     public class GameServerBrowserInteractor : MonoBehaviour
     {
         private GameServerProviderService gameServerProviderService;
+        private GameServerInfoProvider gameServerInfoProvider;
 
         private IOnConnectionFinishedListener onConnectionFinishedListener;
         private IOnGameServerReceivedListener onGameServerReceivedListener;
@@ -22,6 +24,8 @@ namespace Scripts.UI.GameServerBrowser
         {
             gameServerProviderService =
                 FindObjectOfType<GameServerProviderService>();
+            gameServerInfoProvider = 
+                FindObjectOfType<GameServerInfoProvider>();
 
             onConnectionFinishedListener =
                 GetComponent<IOnConnectionFinishedListener>();
@@ -39,6 +43,11 @@ namespace Scripts.UI.GameServerBrowser
         private void OnDestroy()
         {
             coroutinesExecutor?.Dispose();
+        }
+
+        public void SetGameServerInfo(string ip, int port)
+        {
+            gameServerInfoProvider?.SetConnectionInfo(ip, port);
         }
 
         public void ProvideGameServers()
