@@ -25,7 +25,7 @@ namespace Scripts.UI.GameServerBrowser
         [SerializeField]
         private Image frame;
 
-        private int index;
+        private UIGameServerButtonData gameServerData;
 
         private void Start()
         {
@@ -46,22 +46,25 @@ namespace Scripts.UI.GameServerBrowser
             ButtonClicked?.Invoke(index);
         }
 
-        public void SetIndex(int index)
+        public void SetGameServerData(UIGameServerButtonData gameServerData)
         {
-            this.index = index;
+            this.gameServerData = gameServerData;
         }
 
-        public void SetGameServerButtonData(UIGameServerButtonData data)
+        public void SetGameServerName(string name)
         {
             if (gameServerNameText != null)
             {
-                gameServerNameText.text = data.ServerName;
+                gameServerNameText.text = name;
             }
+        }
 
+        public void SetGameServerConnections(int min, int max)
+        {
             if (connectionsBar != null)
             {
-                connectionsBar.maxValue = data.MaxConnections;
-                connectionsBar.value = data.Connections;
+                connectionsBar.maxValue = max;
+                connectionsBar.value = min;
             }
         }
 
@@ -78,6 +81,11 @@ namespace Scripts.UI.GameServerBrowser
         public bool IsButtonSelected()
         {
             return frame != null && frame.gameObject.activeSelf;
+        }
+
+        public UIGameServerButtonData GetGameServerData()
+        {
+            return gameServerData;
         }
     }
 }
