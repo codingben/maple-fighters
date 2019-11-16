@@ -16,6 +16,8 @@ namespace Scripts.Services.GameServerProvider
 
         public IGameServerProviderApi GameServerProviderApi { get; private set; }
 
+        public bool IsConnected => gameServerProviderPeer != null && gameServerProviderPeer.IsConnected;
+
         private IServerPeer gameServerProviderPeer;
 
         private ExternalCoroutinesExecutor coroutinesExecutor;
@@ -23,9 +25,6 @@ namespace Scripts.Services.GameServerProvider
         private void Awake()
         {
             coroutinesExecutor = new ExternalCoroutinesExecutor();
-
-            // TODO: Remove
-            coroutinesExecutor.StartTask(ConnectAsync);
         }
 
         private void Update()
