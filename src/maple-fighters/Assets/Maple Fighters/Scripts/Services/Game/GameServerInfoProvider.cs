@@ -1,9 +1,9 @@
 ﻿using CommonCommunicationInterfaces;
-using Network.Utils;
+using UnityEngine;
 
 namespace Scripts.Services.Game
 {
-    public class GameServerInfoProvider : Singleton<GameServerInfoProvider>
+    public class GameServerInfoProvider : MonoBehaviour
     {
         private PeerConnectionInformation connectionInformation;
 
