@@ -16,10 +16,9 @@ namespace Scripts.UI.GameServerBrowser
         [SerializeField]
         private string sceneName;
 
-        private GameServerBrowserInteractor gameServerBrowserInteractor;
         private IGameServerBrowserView gameServerBrowserView;
-
         private GameServerViewCollection? gameServerViewCollection;
+        private GameServerBrowserInteractor gameServerBrowserInteractor;
 
         private void Awake()
         {
