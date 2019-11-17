@@ -114,7 +114,14 @@ namespace Scripts.UI.GameServerBrowser
             {
                 foreach (var gameServerView in gameServerViewes)
                 {
-                    Destroy(gameServerView.GameObject);
+                    if (gameServerView != null)
+                    {
+                        var view = gameServerView.GameObject;
+                        if (view != null)
+                        {
+                            Destroy(view);
+                        }
+                    }
                 }
             }
         }
