@@ -145,6 +145,7 @@ namespace Scripts.UI.GameServerBrowser
         {
             var ip = gameServerData.IP;
             var port = gameServerData.Port;
+
             gameServerBrowserInteractor.SetGameServerInfo(ip, port);
             gameServerBrowserView?.EnableJoinButton();
         }
