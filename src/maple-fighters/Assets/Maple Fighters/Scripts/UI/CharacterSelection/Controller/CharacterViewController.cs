@@ -248,20 +248,20 @@ namespace Scripts.UI.CharacterSelection
             switch (reason)
             {
                 case CharacterCreationFailed.Unknown:
-                    {
-                        var message = 
-                            NoticeMessages.CharacterView.CharacterCreationFailed;
-                        NoticeUtils.ShowNotice(message);
-                        break;
-                    }
+                {
+                    var message = 
+                        NoticeMessages.CharacterView.CharacterCreationFailed;
+                    NoticeUtils.ShowNotice(message);
+                    break;
+                }
 
                 case CharacterCreationFailed.NameAlreadyInUse:
-                    {
-                        var message = 
-                            NoticeMessages.CharacterView.NameAlreadyInUse;
-                        NoticeUtils.ShowNotice(message);
-                        break;
-                    }
+                {
+                    var message = 
+                        NoticeMessages.CharacterView.NameAlreadyInUse;
+                    NoticeUtils.ShowNotice(message);
+                    break;
+                }
             }
         }
 
@@ -274,7 +274,11 @@ namespace Scripts.UI.CharacterSelection
                 {
                     if (characterImage != null)
                     {
-                        Destroy(characterImage.GameObject);
+                        var image = characterImage.GameObject;
+                        if (image != null)
+                        {
+                            Destroy(image);
+                        }
                     }
                 }
             }
