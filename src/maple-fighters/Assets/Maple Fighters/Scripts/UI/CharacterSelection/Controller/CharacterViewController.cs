@@ -413,10 +413,12 @@ namespace Scripts.UI.CharacterSelection
         {
             IClickableCharacterView characterView = null;
 
-            var characterGameObject = UIManagerUtils.LoadAndCreateGameObject(path);
+            var characterGameObject =
+                UIManagerUtils.LoadAndCreateGameObject(path);
             if (characterGameObject != null)
             {
-                characterView = characterGameObject.GetComponent<ClickableCharacterImage>();
+                characterView = 
+                    characterGameObject.GetComponent<ClickableCharacterImage>();
 
                 if (characterView != null)
                 {
