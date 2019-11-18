@@ -1,30 +1,51 @@
 ﻿using CommonCommunicationInterfaces;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Scripts.Services.Game
 {
+    [RequireComponent(typeof(GameService))]
     public class GameServerDisconnectionHandler : MonoBehaviour
     {
+        [SerializeField]
+        private string sceneName;
+
         private GameService gameService;
 
         private void Awake()
         {
-            gameService = FindObjectOfType<GameService>();
+            gameService = GetComponent<GameService>();
         }
 
         private void Start()
         {
-            SubscribeToDisconnectionNotifier();
+            SubscribeToGameServiceEvents();
         }
 
         private void OnDestroy()
         {
+            UnubscribeFromGameServiceEvents();
             UnsubscribeFromDisconnectionNotifier();
+        }
+
+        private void SubscribeToGameServiceEvents()
+        {
+            gameService.Connected += OnConnected;
+        }
+
+        private void UnubscribeFromGameServiceEvents()
+        {
+            gameService.Connected -= OnConnected;
+        }
+
+        private void OnConnected()
+        {
+            SubscribeToDisconnectionNotifier();
         }
 
         private void SubscribeToDisconnectionNotifier()
         {
-            if (gameService != null)
+            if (gameService.DisconnectionNotifier != null)
             {
                 gameService.DisconnectionNotifier.Disconnected +=
                     OnDisconnected;
@@ -33,7 +54,7 @@ namespace Scripts.Services.Game
 
         private void UnsubscribeFromDisconnectionNotifier()
         {
-            if (gameService != null)
+            if (gameService.DisconnectionNotifier != null)
             {
                 gameService.DisconnectionNotifier.Disconnected -=
                     OnDisconnected;
@@ -42,7 +63,10 @@ namespace Scripts.Services.Game
 
         private void OnDisconnected(DisconnectReason reason, string details)
         {
-            // TODO: Implement
+            UnsubscribeFromDisconnectionNotifier();
+
+            // TODO: Remove this from here
+            SceneManager.LoadScene(sceneName);
         }
     }
 }
