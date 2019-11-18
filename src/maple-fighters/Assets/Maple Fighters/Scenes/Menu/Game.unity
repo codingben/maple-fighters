@@ -302,6 +302,7 @@ GameObject:
   m_Component:
   - component: {fileID: 780642908}
   - component: {fileID: 780642909}
+  - component: {fileID: 780642910}
   m_Layer: 0
   m_Name: Game Service
   m_TagString: Untagged
@@ -335,6 +336,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ba515a7f49509f44ae677b9d1ede212, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &780642910
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 780642907}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4500cc8c4f7298246b36b205107e42f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneName: Main
 --- !u!1 &1512247817
 GameObject:
   m_ObjectHideFlags: 0
