@@ -18,6 +18,8 @@ namespace Scripts.Services.Game
 
         public IGameSceneApi GameSceneApi { get; private set; }
 
+        public bool IsConnected => gamePeer != null && gamePeer.IsConnected;
+
         private IServerPeer gamePeer;
 
         private ExternalCoroutinesExecutor coroutinesExecutor;
