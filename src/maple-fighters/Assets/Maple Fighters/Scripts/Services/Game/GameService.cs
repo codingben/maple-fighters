@@ -22,6 +22,8 @@ namespace Scripts.Services.Game
 
         public bool IsConnected => gamePeer != null && gamePeer.IsConnected;
 
+        public event Action Connected;
+
         private IServerPeer gamePeer;
 
         private ExternalCoroutinesExecutor coroutinesExecutor;
@@ -74,6 +76,8 @@ namespace Scripts.Services.Game
                 CharacterSelectorApi = new CharacterSelectorApi(serverPeer);
                 GameSceneApi = new GameSceneApi(serverPeer);
             }
+
+            Connected?.Invoke();
         }
 
         protected override IServerConnector GetServerConnector()
