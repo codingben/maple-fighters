@@ -284,15 +284,6 @@ namespace Scripts.UI.CharacterSelection
             }
         }
 
-        private void AttachCharacterToView(GameObject characterGameObject)
-        {
-            if (characterView != null)
-            {
-                characterGameObject.transform.SetParent(characterView.Transform, false);
-                characterGameObject.transform.SetAsLastSibling();
-            }
-        }
-
         private void ShowCharacterSelectionOptionsWindow()
         {
             characterSelectionOptionsView?.Show();
@@ -413,23 +404,31 @@ namespace Scripts.UI.CharacterSelection
         {
             IClickableCharacterView characterView = null;
 
-            var characterGameObject =
-                UIManagerUtils.LoadAndCreateGameObject(path);
-            if (characterGameObject != null)
+            var character = CreateCharacterView(path);
+            if (character != null)
             {
-                characterView = 
-                    characterGameObject.GetComponent<ClickableCharacterImage>();
+                characterView = character.GetComponent<ClickableCharacterImage>();
 
                 if (characterView != null)
                 {
                     characterView.CharacterClicked += OnCharacterClicked;
                     characterView.Show();
                 }
-
-                AttachCharacterToView(characterGameObject);
             }
 
             return characterView;
+        }
+
+        private GameObject CreateCharacterView(string path)
+        {
+            var character = UIManagerUtils.LoadAndCreateGameObject(path);
+            if (character != null)
+            {
+                character.transform.SetParent(characterView.Transform, false);
+                character.transform.SetAsLastSibling();
+            }
+
+            return character;
         }
     }
 }
