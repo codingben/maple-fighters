@@ -25,28 +25,37 @@ namespace Scripts.UI.GameServerBrowser
             gameServerBrowserInteractor =
                 GetComponent<GameServerBrowserInteractor>();
 
-            CreateAndSubscribeToGameServerBrowserWindow();
+            CreateAndShowGameServerBrowserWindow();
+            SubscribeToGameServerBrowserWindow();
         }
 
         private void Start()
         {
-            gameServerBrowserView?.Show();
-        }
-
-        private void CreateAndSubscribeToGameServerBrowserWindow()
-        {
-            gameServerBrowserView = UIElementsCreator.GetInstance()
-                .Create<GameServerBrowserWindow>();
-            gameServerBrowserView.JoinButtonClicked +=
-                OnJoinButtonClicked;
-            gameServerBrowserView.RefreshButtonClicked +=
-                OnRefreshButtonClicked;
+            RefreshGameServers();
         }
 
         private void OnDestroy()
         {
             UnsubscribeFromGameServerViews();
             UnsubscribeFromGameServerBrowserWindow();
+        }
+
+        private void CreateAndShowGameServerBrowserWindow()
+        {
+            gameServerBrowserView = UIElementsCreator.GetInstance()
+                .Create<GameServerBrowserWindow>();
+            gameServerBrowserView.Show();
+        }
+
+        private void SubscribeToGameServerBrowserWindow()
+        {
+            if (gameServerBrowserView != null)
+            {
+                gameServerBrowserView.JoinButtonClicked += 
+                    OnJoinButtonClicked;
+                gameServerBrowserView.RefreshButtonClicked +=
+                    OnRefreshButtonClicked;
+            }
         }
 
         private void UnsubscribeFromGameServerBrowserWindow()
@@ -162,11 +171,16 @@ namespace Scripts.UI.GameServerBrowser
 
         private void OnRefreshButtonClicked()
         {
+            RefreshGameServers();
+        }
+
+        private void RefreshGameServers()
+        {
             ShowRefreshImage();
 
             gameServerBrowserInteractor.ProvideGameServers();
         }
-        
+
         private void ShowRefreshImage()
         {
             gameServerBrowserView?.DisableJoinButton();
