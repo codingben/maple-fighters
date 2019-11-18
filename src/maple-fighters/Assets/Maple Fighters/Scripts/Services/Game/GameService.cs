@@ -92,7 +92,15 @@ namespace Scripts.Services.Game
 
         protected override PeerConnectionInformation GetConnectionInfo()
         {
-            return gameServerInfoProvider.GetConnectionInfo();
+            var connectionInformation = new PeerConnectionInformation();
+
+            if (gameServerInfoProvider != null)
+            {
+                connectionInformation =
+                    gameServerInfoProvider.GetConnectionInfo();
+            }
+
+            return connectionInformation;
         }
 
         protected override ConnectionProtocol GetConnectionProtocol()
