@@ -13,9 +13,6 @@ namespace Scripts.UI.GameServerBrowser
                                                IOnConnectionFinishedListener,
                                                IOnGameServerReceivedListener
     {
-        [SerializeField]
-        private string sceneName;
-
         private IGameServerBrowserView gameServerBrowserView;
         private GameServerViewCollection? gameServerViewCollection;
         private GameServerBrowserInteractor gameServerBrowserInteractor;
@@ -166,6 +163,7 @@ namespace Scripts.UI.GameServerBrowser
             gameServerBrowserView?.Hide();
 
             // TODO: Remove this from here
+            var sceneName = SceneNames.Game;
             SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
         }
 
