@@ -101,15 +101,13 @@ namespace Scripts.UI.CharacterSelection
                 {
                     case CharacterValidationStatus.Ok:
                     {
-                        onCharacterValidationFinishedListener
-                            .OnCharacterValidated(map.ToUiMapIndex());
+                        onCharacterValidationFinishedListener.OnCharacterValidated(map.ToUiMapIndex());
                         break;
                     }
 
                     case CharacterValidationStatus.Wrong:
                     {
-                        onCharacterValidationFinishedListener
-                            .OnCharacterUnvalidated();
+                        onCharacterValidationFinishedListener.OnCharacterUnvalidated();
                         break;
                     }
                 }
@@ -140,15 +138,13 @@ namespace Scripts.UI.CharacterSelection
                 {
                     case RemoveCharacterStatus.Succeed:
                     {
-                        onCharacterDeletionFinishedListener
-                            .OnCharacterDeletionSucceed();
+                        onCharacterDeletionFinishedListener.OnCharacterDeletionSucceed();
                         break;
                     }
 
                     case RemoveCharacterStatus.Failed:
                     {
-                        onCharacterDeletionFinishedListener
-                            .OnCharacterDeletionFailed();
+                        onCharacterDeletionFinishedListener.OnCharacterDeletionFailed();
                         break;
                     }
                 }
@@ -189,16 +185,14 @@ namespace Scripts.UI.CharacterSelection
                     case CharacterCreationStatus.Failed:
                     {
                         onCharacterCreationFinishedListener
-                            .OnCreateCharacterFailed(
-                                CharacterCreationFailed.Unknown);
+                            .OnCreateCharacterFailed(CharacterCreationFailed.Unknown);
                         break;
                     }
 
                     case CharacterCreationStatus.NameUsed:
                     {
                         onCharacterCreationFinishedListener
-                            .OnCreateCharacterFailed(
-                                CharacterCreationFailed.NameAlreadyInUse);
+                            .OnCreateCharacterFailed(CharacterCreationFailed.NameAlreadyInUse);
                         break;
                     }
                 }
