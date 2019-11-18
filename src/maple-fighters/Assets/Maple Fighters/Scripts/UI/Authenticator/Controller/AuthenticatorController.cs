@@ -12,9 +12,6 @@ namespace Scripts.UI.Authenticator
                                            IOnLoginFinishedListener,
                                            IOnRegistrationFinishedListener
     {
-        [SerializeField]
-        private string sceneName;
-
         private ILoginView loginView;
         private IRegistrationView registrationView;
 
@@ -189,7 +186,7 @@ namespace Scripts.UI.Authenticator
 
         public void OnLoginSucceed()
         {
-            // TODO: Remove this from here
+            var sceneName = SceneNames.Main;
             SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
         }
 
