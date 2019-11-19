@@ -315,16 +315,7 @@ namespace Scripts.UI.CharacterSelection
 
         private void HideLoadingView()
         {
-            if (loadingView != null)
-            {
-                loadingView.Hide();
-
-                /*var view = loadingView.GameObject;
-                if (view != null)
-                {
-                    Destroy(view);
-                }*/
-            }
+            loadingView?.Hide();
         }
 
         private void ShowCharacterSelectionOptionsWindow()
