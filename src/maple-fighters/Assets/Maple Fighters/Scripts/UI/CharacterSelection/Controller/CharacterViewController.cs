@@ -1,4 +1,6 @@
-﻿using Scripts.Constants;
+﻿using System;
+
+using Scripts.Constants;
 using Scripts.UI.MenuBackground;
 using Scripts.UI.Notice;
 using UI.Manager;
@@ -34,18 +36,20 @@ namespace Scripts.UI.CharacterSelection
         {
             characterDetails = new CharacterDetails();
             characterViewInteractor = GetComponent<CharacterViewInteractor>();
-
-            CreateCharacterView();
-            CreateAndSubscribeToCharacterSelectionOptionsWindow();
-            CreateAndSubscribeToCharacterSelectionWindow();
-            CreateAndSubscribeToCharacterNameWindow();
-
-            SubscribeToBackgroundClicked();
         }
 
         private void Start()
         {
-            characterViewInteractor.GetCharacters();
+            characterViewInteractor.ConnectToGameServer();
+        }
+
+        private void OnDestroy()
+        {
+            UnsubscribeFromCharacterImages();
+            UnsubscribeFromCharacterSelectionOptionsWindow();
+            UnsubscribeFromCharacterSelectionWindow();
+            UnsubscribeFromCharacterNameWindow();
+            UnsubscribeFromBackgroundClicked();
         }
 
         private void CreateAndShowChooseFighterView()
@@ -121,15 +125,6 @@ namespace Scripts.UI.CharacterSelection
             }
         }
 
-        private void OnDestroy()
-        {
-            UnsubscribeFromCharacterImages();
-            UnsubscribeFromCharacterSelectionOptionsWindow();
-            UnsubscribeFromCharacterSelectionWindow();
-            UnsubscribeFromCharacterNameWindow();
-            UnsubscribeFromBackgroundClicked();
-        }
-
         private void UnsubscribeFromCharacterImages()
         {
             var characterImages = characterViewCollection?.GetAll();
@@ -186,12 +181,25 @@ namespace Scripts.UI.CharacterSelection
 
         public void OnConnectionSucceed()
         {
-            // TODO: Implement
+            CreateCharacterView();
+            CreateAndShowChooseFighterView();
+            CreateAndSubscribeToCharacterSelectionOptionsWindow();
+            CreateAndSubscribeToCharacterSelectionWindow();
+            CreateAndSubscribeToCharacterNameWindow();
+            SubscribeToBackgroundClicked();
+
+            characterViewInteractor.GetCharacters();
         }
 
         public void OnConnectionFailed()
         {
-            // TODO: Implement
+            void OnOkButtonClicked()
+            {
+                var sceneName = SceneNames.Main;
+                SceneManager.LoadScene(sceneName);
+            }
+
+            NoticeUtils.ShowNotice("The game server is not available.", OnOkButtonClicked);
         }
 
         public void OnCharacterReceived(CharacterDetails characterDetails)
