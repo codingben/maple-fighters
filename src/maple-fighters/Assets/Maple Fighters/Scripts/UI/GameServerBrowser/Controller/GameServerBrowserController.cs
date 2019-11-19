@@ -70,7 +70,7 @@ namespace Scripts.UI.GameServerBrowser
         {
             HideRefreshImage();
 
-            var message = NoticeMessages.GameServerBrowserView.CouldNotConnect;
+            var message = NoticeMessages.GameServerBrowserView.ConnectionFailed;
             NoticeUtils.ShowNotice(message);
         }
 

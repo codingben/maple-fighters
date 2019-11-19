@@ -217,7 +217,7 @@ namespace Scripts.UI.CharacterSelection
 
         public void OnConnectionFailed()
         {
-            var message = NoticeMessages.CharacterView.CouldNotConnect;
+            var message = NoticeMessages.CharacterView.ConnectionFailed;
             var sceneName = SceneNames.Main;
 
             // TODO: Remove LoadScene() from here

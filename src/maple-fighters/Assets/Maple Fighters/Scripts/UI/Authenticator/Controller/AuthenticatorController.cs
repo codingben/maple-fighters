@@ -180,7 +180,7 @@ namespace Scripts.UI.Authenticator
             loginView?.EnableInteraction();
             registrationView?.EnableInteraction();
 
-            var message = NoticeMessages.AuthView.CouldNotConnect;
+            var message = NoticeMessages.AuthView.ConnectionFailed;
             NoticeUtils.ShowNotice(message);
         }
 
