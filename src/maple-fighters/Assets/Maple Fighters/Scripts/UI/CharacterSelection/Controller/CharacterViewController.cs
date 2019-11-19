@@ -1,6 +1,4 @@
-﻿using System;
-
-using Scripts.Constants;
+﻿using Scripts.Constants;
 using Scripts.UI.MenuBackground;
 using Scripts.UI.Notice;
 using UI.Manager;
@@ -21,9 +19,10 @@ namespace Scripts.UI.CharacterSelection
         [SerializeField]
         private int characterNameLength;
 
+        private ILoadingView loadingView;
+        private IChooseFighterView chooseFighterView;
         private ICharacterView characterView;
         private ICharacterSelectionOptionsView characterSelectionOptionsView;
-        private IChooseFighterView chooseFighterView;
         private ICharacterSelectionView characterSelectionView;
         private ICharacterNameView characterNameView;
 
@@ -40,6 +39,8 @@ namespace Scripts.UI.CharacterSelection
 
         private void Start()
         {
+            CreateAndShowLoadingView();
+
             characterViewInteractor.ConnectToGameServer();
         }
 
@@ -57,6 +58,13 @@ namespace Scripts.UI.CharacterSelection
             chooseFighterView = UIElementsCreator.GetInstance()
                 .Create<ChooseFighterText>(UILayer.Background, UIIndex.End);
             chooseFighterView.Show();
+        }
+
+        private void CreateAndShowLoadingView()
+        {
+            loadingView = UIElementsCreator.GetInstance()
+                .Create<LoadingText>(UILayer.Background, UIIndex.End);
+            loadingView.Show();
         }
 
         private void CreateCharacterView()
@@ -181,6 +189,8 @@ namespace Scripts.UI.CharacterSelection
 
         public void OnConnectionSucceed()
         {
+            HideLoadingView();
+
             CreateCharacterView();
             CreateAndShowChooseFighterView();
             CreateAndSubscribeToCharacterSelectionOptionsWindow();
@@ -300,6 +310,20 @@ namespace Scripts.UI.CharacterSelection
                         }
                     }
                 }
+            }
+        }
+
+        private void HideLoadingView()
+        {
+            if (loadingView != null)
+            {
+                loadingView.Hide();
+
+                /*var view = loadingView.GameObject;
+                if (view != null)
+                {
+                    Destroy(view);
+                }*/
             }
         }
 

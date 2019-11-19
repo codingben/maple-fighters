@@ -1,6 +1,8 @@
-﻿namespace Scripts.UI.CharacterSelection
+﻿using UI.Manager;
+
+namespace Scripts.UI.CharacterSelection
 {
-    public interface ILoadingView
+    public interface ILoadingView : IView
     {
         // Left blank intentionally
     }
