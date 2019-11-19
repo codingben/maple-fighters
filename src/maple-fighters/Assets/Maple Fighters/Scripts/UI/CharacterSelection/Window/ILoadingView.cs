@@ -4,6 +4,6 @@ namespace Scripts.UI.CharacterSelection
 {
     public interface ILoadingView : IView
     {
-        // Left blank intentionally
+        ILoadingAnimation LoadingAnimation { get; }
     }
 }
