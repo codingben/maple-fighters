@@ -217,14 +217,10 @@ namespace Scripts.UI.CharacterSelection
 
         public void OnConnectionFailed()
         {
-            void OnOkButtonClicked()
-            {
-                var sceneName = SceneNames.Main;
-                SceneManager.LoadScene(sceneName);
-            }
-
             var message = NoticeMessages.CharacterView.CouldNotConnect;
-            NoticeUtils.ShowNotice(message, OnOkButtonClicked);
+            var sceneName = SceneNames.Main;
+
+            NoticeUtils.ShowNotice(message, () => SceneManager.LoadScene(sceneName));
         }
 
         public void OnCharacterReceived(CharacterDetails characterDetails)
