@@ -121,7 +121,9 @@ namespace Scripts.UI.CharacterSelection
             if (characterSelectorApi != null)
             {
                 var responseParameters = 
-                    await characterSelectorApi.ValidateCharacterAsync(yield, parameters);
+                    await characterSelectorApi.ValidateCharacterAsync(
+                        yield,
+                        parameters);
                 var status = responseParameters.Status;
                 var map = responseParameters.Map;
 
@@ -129,13 +131,15 @@ namespace Scripts.UI.CharacterSelection
                 {
                     case CharacterValidationStatus.Ok:
                     {
-                        onCharacterValidationFinishedListener.OnCharacterValidated(map.ToUiMapIndex());
+                        onCharacterValidationFinishedListener
+                            .OnCharacterValidated(map.ToUiMapIndex());
                         break;
                     }
 
                     case CharacterValidationStatus.Wrong:
                     {
-                        onCharacterValidationFinishedListener.OnCharacterUnvalidated();
+                        onCharacterValidationFinishedListener
+                            .OnCharacterUnvalidated();
                         break;
                     }
                 }
@@ -159,20 +163,24 @@ namespace Scripts.UI.CharacterSelection
             if (characterSelectorApi != null)
             {
                 var responseParameters =
-                    await characterSelectorApi.RemoveCharacterAsync(yield, parameters);
+                    await characterSelectorApi.RemoveCharacterAsync(
+                        yield,
+                        parameters);
                 var status = responseParameters.Status;
 
                 switch (status)
                 {
                     case RemoveCharacterStatus.Succeed:
                     {
-                        onCharacterDeletionFinishedListener.OnCharacterDeletionSucceed();
+                        onCharacterDeletionFinishedListener
+                            .OnCharacterDeletionSucceed();
                         break;
                     }
 
                     case RemoveCharacterStatus.Failed:
                     {
-                        onCharacterDeletionFinishedListener.OnCharacterDeletionFailed();
+                        onCharacterDeletionFinishedListener
+                            .OnCharacterDeletionFailed();
                         break;
                     }
                 }
@@ -198,7 +206,9 @@ namespace Scripts.UI.CharacterSelection
             if (characterSelectorApi != null)
             {
                 var responseParameters =
-                    await characterSelectorApi.CreateCharacterAsync(yield, parameters);
+                    await characterSelectorApi.CreateCharacterAsync(
+                        yield,
+                        parameters);
                 var status = responseParameters.Status;
 
                 switch (status)
