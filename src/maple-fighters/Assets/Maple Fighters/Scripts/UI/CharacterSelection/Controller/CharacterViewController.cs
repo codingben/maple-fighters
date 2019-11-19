@@ -39,9 +39,9 @@ namespace Scripts.UI.CharacterSelection
 
         private void Start()
         {
-            CreateAndShowLoadingView();
-
-            characterViewInteractor.ConnectToGameServer();
+            CreateLoadingView();
+            ShowLoadingView();
+            SubscribeToLoadingView();
         }
 
         private void OnDestroy()
@@ -53,18 +53,16 @@ namespace Scripts.UI.CharacterSelection
             UnsubscribeFromBackgroundClicked();
         }
 
-        private void CreateAndShowChooseFighterView()
+        private void CreateChooseFighterView()
         {
             chooseFighterView = UIElementsCreator.GetInstance()
                 .Create<ChooseFighterText>(UILayer.Background, UIIndex.End);
-            chooseFighterView.Show();
         }
 
-        private void CreateAndShowLoadingView()
+        private void CreateLoadingView()
         {
             loadingView = UIElementsCreator.GetInstance()
                 .Create<LoadingText>(UILayer.Background, UIIndex.End);
-            loadingView.Show();
         }
 
         private void CreateCharacterView()
@@ -111,6 +109,15 @@ namespace Scripts.UI.CharacterSelection
                 OnBackButtonClicked;
             characterNameView.NameInputFieldChanged +=
                 OnNameInputFieldChanged;
+        }
+
+        private void SubscribeToLoadingView()
+        {
+            if (loadingView != null)
+            {
+                loadingView.LoadingAnimation.Finished +=
+                    OnLoadingAnimationFinished;
+            }
         }
 
         private void SubscribeToBackgroundClicked()
@@ -187,18 +194,25 @@ namespace Scripts.UI.CharacterSelection
             }
         }
 
+        private void UnsubscribeFromLoadingView()
+        {
+            if (loadingView != null)
+            {
+                loadingView.LoadingAnimation.Finished -=
+                    OnLoadingAnimationFinished;
+            }
+        }
+
         public void OnConnectionSucceed()
         {
-            HideLoadingView();
-
+            CreateChooseFighterView();
             CreateCharacterView();
-            CreateAndShowChooseFighterView();
             CreateAndSubscribeToCharacterSelectionOptionsWindow();
             CreateAndSubscribeToCharacterSelectionWindow();
             CreateAndSubscribeToCharacterNameWindow();
             SubscribeToBackgroundClicked();
 
-            characterViewInteractor.GetCharacters();
+            RemoveAndShowAllCharacterImages();
         }
 
         public void OnConnectionFailed()
@@ -253,9 +267,10 @@ namespace Scripts.UI.CharacterSelection
 
         public void OnCharacterDeletionSucceed()
         {
-            DestroyAllCharacterImages();
+            HideChooseFighterView();
+            ShowLoadingView();
 
-            characterViewInteractor.GetCharacters();
+            RemoveAndShowAllCharacterImages();
         }
 
         public void OnCharacterDeletionFailed()
@@ -267,9 +282,10 @@ namespace Scripts.UI.CharacterSelection
 
         public void OnCharacterCreated()
         {
-            DestroyAllCharacterImages();
+            HideChooseFighterView();
+            ShowLoadingView();
 
-            characterViewInteractor.GetCharacters();
+            RemoveAndShowAllCharacterImages();
         }
 
         public void OnCreateCharacterFailed(CharacterCreationFailed reason)
@@ -294,7 +310,21 @@ namespace Scripts.UI.CharacterSelection
             }
         }
 
-        private void DestroyAllCharacterImages()
+        private void OnLoadingAnimationFinished()
+        {
+            UnsubscribeFromLoadingView();
+
+            characterViewInteractor.ConnectToGameServer();
+        }
+
+        private void RemoveAndShowAllCharacterImages()
+        {
+            RemoveAllCharacterImages();
+
+            characterViewInteractor.GetCharacters();
+        }
+
+        private void RemoveAllCharacterImages()
         {
             var characterImages = characterViewCollection?.GetAll();
             if (characterImages != null)
@@ -311,6 +341,21 @@ namespace Scripts.UI.CharacterSelection
                     }
                 }
             }
+        }
+
+        private void ShowChooseFighterView()
+        {
+            chooseFighterView?.Show();
+        }
+
+        private void ShowLoadingView()
+        {
+            loadingView?.Show();
+        }
+
+        private void HideChooseFighterView()
+        {
+            chooseFighterView?.Hide();
         }
 
         private void HideLoadingView()
@@ -458,8 +503,13 @@ namespace Scripts.UI.CharacterSelection
             var character = UIManagerUtils.LoadAndCreateGameObject(path);
             if (character != null)
             {
-                character.transform.SetParent(characterView.Transform, false);
-                character.transform.SetAsLastSibling();
+                if (characterView != null)
+                {
+                    var view = characterView.Transform;
+
+                    character.transform.SetParent(view, false);
+                    character.transform.SetAsLastSibling();
+                }
             }
 
             return character;
