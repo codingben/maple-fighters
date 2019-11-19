@@ -220,6 +220,7 @@ namespace Scripts.UI.CharacterSelection
             var message = NoticeMessages.CharacterView.CouldNotConnect;
             var sceneName = SceneNames.Main;
 
+            // TODO: Remove LoadScene() from here
             NoticeUtils.ShowNotice(message, () => SceneManager.LoadScene(sceneName));
         }
 
