@@ -9,7 +9,8 @@ using UIManagerUtils = UI.Manager.Utils;
 namespace Scripts.UI.CharacterSelection
 {
     [RequireComponent(typeof(CharacterViewInteractor))]
-    public class CharacterViewController : MonoBehaviour,
+    public class CharacterViewController : MonoBehaviour, 
+                                           IOnConnectionFinishedListener,
                                            IOnCharacterReceivedListener,
                                            IOnCharacterValidationFinishedListener,
                                            IOnCharacterDeletionFinishedListener,
@@ -35,7 +36,6 @@ namespace Scripts.UI.CharacterSelection
             characterViewInteractor = GetComponent<CharacterViewInteractor>();
 
             CreateCharacterView();
-            CreateAndShowChooseFighterView();
             CreateAndSubscribeToCharacterSelectionOptionsWindow();
             CreateAndSubscribeToCharacterSelectionWindow();
             CreateAndSubscribeToCharacterNameWindow();
@@ -184,14 +184,18 @@ namespace Scripts.UI.CharacterSelection
             }
         }
 
+        public void OnConnectionSucceed()
+        {
+            // TODO: Implement
+        }
+
+        public void OnConnectionFailed()
+        {
+            // TODO: Implement
+        }
+
         public void OnCharacterReceived(CharacterDetails characterDetails)
         {
-            if (characterViewCollection == null)
-            {
-                var views = new IClickableCharacterView[] { null, null, null };
-                characterViewCollection = new CharacterViewCollection(views);
-            }
-
             var path = Utils.GetCharacterPath(characterDetails);
             var characterView = CreateAndShowCharacterView(path);
             if (characterView != null)
@@ -203,6 +207,12 @@ namespace Scripts.UI.CharacterSelection
                 var characterIndex = characterDetails.GetCharacterIndex();
                 if (characterIndex != UICharacterIndex.Zero)
                 {
+                    if (characterViewCollection == null)
+                    {
+                        var views = new IClickableCharacterView[] { null, null, null };
+                        characterViewCollection = new CharacterViewCollection(views);
+                    }
+
                     var index = (int)characterIndex;
                     characterViewCollection?.Set(index, characterView);
                 }
