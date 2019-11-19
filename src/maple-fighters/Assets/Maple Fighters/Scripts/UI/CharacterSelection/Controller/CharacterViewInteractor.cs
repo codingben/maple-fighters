@@ -1,11 +1,13 @@
 ﻿using System.Threading.Tasks;
 using CommonTools.Coroutines;
 using Game.Common;
+using Network.Scripts;
 using Scripts.Services.Game;
 using UnityEngine;
 
 namespace Scripts.UI.CharacterSelection
 {
+    [RequireComponent(typeof(IOnConnectionFinishedListener))]
     [RequireComponent(typeof(IOnCharacterReceivedListener))]
     [RequireComponent(typeof(IOnCharacterValidationFinishedListener))]
     [RequireComponent(typeof(IOnCharacterCreationFinishedListener))]
@@ -14,6 +16,7 @@ namespace Scripts.UI.CharacterSelection
     {
         private GameService gameService;
 
+        private IOnConnectionFinishedListener onConnectionFinishedListener;
         private IOnCharacterReceivedListener onCharacterReceivedListener;
         private IOnCharacterValidationFinishedListener onCharacterValidationFinishedListener;
         private IOnCharacterCreationFinishedListener onCharacterCreationFinishedListener;
@@ -25,6 +28,8 @@ namespace Scripts.UI.CharacterSelection
         {
             gameService = FindObjectOfType<GameService>();
 
+            onConnectionFinishedListener = 
+                GetComponent<IOnConnectionFinishedListener>();
             onCharacterReceivedListener =
                 GetComponent<IOnCharacterReceivedListener>();
             onCharacterValidationFinishedListener =
@@ -45,6 +50,27 @@ namespace Scripts.UI.CharacterSelection
         private void OnDestroy()
         {
             coroutinesExecutor?.Dispose();
+        }
+
+        public void ConnectToGameServer()
+        {
+            coroutinesExecutor?.StartTask(ConnectToGameServerAsync);
+        }
+
+        private async Task ConnectToGameServerAsync(IYield yield)
+        {
+            if (gameService != null && !gameService.IsConnected)
+            {
+                var connectionStatus = await gameService.ConnectAsync(yield);
+                if (connectionStatus == ConnectionStatus.Succeed)
+                {
+                    onConnectionFinishedListener.OnConnectionSucceed();
+                }
+                else
+                {
+                    onConnectionFinishedListener.OnConnectionFailed();
+                }
+            }
         }
 
         public void GetCharacters()
