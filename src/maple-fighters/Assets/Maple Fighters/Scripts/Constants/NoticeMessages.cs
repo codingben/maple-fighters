@@ -34,6 +34,7 @@
             public const string NameAlreadyInUse = "Your character name is already taken.";
             public const string CharacterValidationFailed = "The character validation failed.";
             public const string CharacterDeletionFailed = "The character deletion failed.";
+            public const string CouldNotConnect = "Failed to connect to game server.";
         }
     }
 }
