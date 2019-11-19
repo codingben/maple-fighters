@@ -99,6 +99,8 @@ namespace Scripts.UI.CharacterSelection
                     onCharacterReceivedListener.OnCharacterReceived(
                         characterDetails);
                 }
+
+                onCharacterReceivedListener.OnAfterCharacterReceived();
             }
         }
 
