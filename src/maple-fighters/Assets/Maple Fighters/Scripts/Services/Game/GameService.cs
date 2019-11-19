@@ -34,9 +34,6 @@ namespace Scripts.Services.Game
             coroutinesExecutor = new ExternalCoroutinesExecutor();
             gameServerInfoProvider = FindObjectOfType<GameServerInfoProvider>();
 
-            // TODO: Remove
-            coroutinesExecutor.StartTask(ConnectAsync);
-
             DontDestroyOnLoad(gameObject);
         }
 
