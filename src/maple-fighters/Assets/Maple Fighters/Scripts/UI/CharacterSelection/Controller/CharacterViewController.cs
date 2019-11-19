@@ -199,7 +199,8 @@ namespace Scripts.UI.CharacterSelection
                 SceneManager.LoadScene(sceneName);
             }
 
-            NoticeUtils.ShowNotice("The game server is not available.", OnOkButtonClicked);
+            var message = NoticeMessages.CharacterView.CouldNotConnect;
+            NoticeUtils.ShowNotice(message, OnOkButtonClicked);
         }
 
         public void OnCharacterReceived(CharacterDetails characterDetails)
