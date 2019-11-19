@@ -252,6 +252,12 @@ namespace Scripts.UI.CharacterSelection
             }
         }
 
+        public void OnAfterCharacterReceived()
+        {
+            HideLoadingView();
+            ShowChooseFighterView();
+        }
+
         public void OnCharacterValidated(UIMapIndex uiMapIndex)
         {
             // TODO: Remove this from here
