@@ -3,5 +3,7 @@
     public interface IOnCharacterReceivedListener
     {
         void OnCharacterReceived(CharacterDetails characterDetails);
+
+        void OnAfterCharacterReceived();
     }
 }
