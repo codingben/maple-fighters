@@ -23,6 +23,7 @@ namespace Scripts.Services.Chat
         private void Awake()
         {
             coroutinesExecutor = new ExternalCoroutinesExecutor();
+            coroutinesExecutor.StartTask(ConnectAsync);
         }
 
         private void Update()
