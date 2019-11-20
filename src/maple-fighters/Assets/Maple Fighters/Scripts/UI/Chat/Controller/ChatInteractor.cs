@@ -9,7 +9,6 @@ namespace Scripts.UI.Chat
     public class ChatInteractor : MonoBehaviour
     {
         private ChatService chatService;
-
         private IOnChatMessageReceived onChatMessageReceived;
 
         private ExternalCoroutinesExecutor coroutinesExecutor;
@@ -17,7 +16,6 @@ namespace Scripts.UI.Chat
         private void Awake()
         {
             chatService = FindObjectOfType<ChatService>();
-
             onChatMessageReceived = GetComponent<IOnChatMessageReceived>();
 
             coroutinesExecutor = new ExternalCoroutinesExecutor();
@@ -59,7 +57,6 @@ namespace Scripts.UI.Chat
             if (chatApi != null)
             {
                 var parameters = new ChatMessageRequestParameters(message);
-
                 chatApi.SendChatMessage(parameters);
             }
         }
@@ -67,7 +64,6 @@ namespace Scripts.UI.Chat
         private void OnChatMessageReceived(ChatMessageEventParameters parameters)
         {
             var message = parameters.Message;
-
             onChatMessageReceived.OnMessageReceived(message);
         }
     }
