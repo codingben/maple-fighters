@@ -23,9 +23,6 @@ namespace Scripts.Services.Chat
         private void Awake()
         {
             coroutinesExecutor = new ExternalCoroutinesExecutor();
-
-            // TODO: Remove
-            coroutinesExecutor.StartTask(ConnectAsync);
         }
 
         private void Update()
