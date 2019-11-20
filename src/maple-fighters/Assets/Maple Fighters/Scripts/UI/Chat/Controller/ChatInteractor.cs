@@ -1,5 +1,4 @@
 ﻿using Chat.Common;
-using CommonTools.Coroutines;
 using Scripts.Services.Chat;
 using UnityEngine;
 
@@ -11,14 +10,10 @@ namespace Scripts.UI.Chat
         private ChatService chatService;
         private IOnChatMessageReceived onChatMessageReceived;
 
-        private ExternalCoroutinesExecutor coroutinesExecutor;
-
         private void Awake()
         {
             chatService = FindObjectOfType<ChatService>();
             onChatMessageReceived = GetComponent<IOnChatMessageReceived>();
-
-            coroutinesExecutor = new ExternalCoroutinesExecutor();
         }
 
         private void Start()
@@ -26,19 +21,9 @@ namespace Scripts.UI.Chat
             SubscribeToChatApiEvents();
         }
 
-        private void Update()
-        {
-            coroutinesExecutor?.Update();
-        }
-
         private void OnDisable()
         {
             UnsubscribeFromChatApiEvents();
-        }
-
-        private void OnDestroy()
-        {
-            coroutinesExecutor?.Dispose();
         }
 
         private void SubscribeToChatApiEvents()
@@ -53,11 +38,14 @@ namespace Scripts.UI.Chat
 
         public void SendChatMessage(string message)
         {
-            var chatApi = chatService?.ChatApi;
-            if (chatApi != null)
+            if (chatService != null)
             {
-                var parameters = new ChatMessageRequestParameters(message);
-                chatApi.SendChatMessage(parameters);
+                var chatApi = chatService.ChatApi;
+                if (chatApi != null)
+                {
+                    var parameters = new ChatMessageRequestParameters(message);
+                    chatApi.SendChatMessage(parameters);
+                }
             }
         }
 
