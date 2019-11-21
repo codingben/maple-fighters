@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Game.Common;
 using Scripts.Editor;
+using Scripts.UI.Focus;
 using UnityEngine;
 
 #pragma warning disable 0109
@@ -40,10 +41,10 @@ namespace Scripts.Gameplay.Player
         private Vector2 localScale;
         private new Rigidbody2D rigidbody2D;
 
+        private FocusStateController focusStateController;
+
         private void Awake()
         {
-            localScale = transform.localScale;
-
             playerStateBehaviours =
                 new Dictionary<PlayerState, IPlayerStateBehaviour>
                 {
@@ -78,6 +79,8 @@ namespace Scripts.Gameplay.Player
                 };
 
             playerStateBehaviour = playerStateBehaviours[playerState];
+            localScale = transform.localScale;
+            focusStateController = FindObjectOfType<FocusStateController>();
         }
 
         private void Start()
@@ -140,6 +143,24 @@ namespace Scripts.Gameplay.Player
             }
 
             rigidbody2D.AddForce(force, ForceMode2D.Impulse);
+        }
+
+        public bool IsMoving()
+        {
+            var isMoving = false;
+
+            if (focusStateController?.GetFocusState() == FocusState.Game)
+            {
+                var horizontal = Utils.GetAxis(Axes.Horizontal, isRaw: true);
+                isMoving = Mathf.Abs(horizontal) > 0;
+            }
+
+            return isMoving;
+        }
+
+        public bool CanJump()
+        {
+            return focusStateController?.GetFocusState() == FocusState.Game;
         }
 
         public bool IsGrounded()

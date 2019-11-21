@@ -25,12 +25,12 @@ namespace Scripts.Gameplay.Player
         {
             if (IsGrounded())
             {
-                if (IsMoved())
+                if (IsMoving())
                 {
                     playerController.ChangePlayerState(PlayerState.Moving);
                 }
 
-                if (IsJumpKeyClicked())
+                if (IsJumpKeyClicked() && CanJump())
                 {
                     playerController.ChangePlayerState(PlayerState.Jumping);
                 }
@@ -56,10 +56,14 @@ namespace Scripts.Gameplay.Player
             return playerController.IsGrounded();
         }
 
-        private bool IsMoved()
+        private bool IsMoving()
         {
-            var horizontal = Utils.GetAxis(Axes.Horizontal, isRaw: true);
-            return Mathf.Abs(horizontal) > 0;
+            return playerController.IsMoving();
+        }
+
+        private bool CanJump()
+        {
+            return playerController.CanJump();
         }
 
         private bool IsJumpKeyClicked()

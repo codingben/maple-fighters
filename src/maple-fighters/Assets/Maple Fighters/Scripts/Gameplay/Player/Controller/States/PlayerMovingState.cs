@@ -33,7 +33,7 @@ namespace Scripts.Gameplay.Player
                     playerController.ChangePlayerState(PlayerState.Idle);
                 }
 
-                if (IsJumpKeyClicked())
+                if (IsJumpKeyClicked() && CanJump())
                 {
                     playerController.ChangePlayerState(PlayerState.Jumping);
                 }
@@ -82,8 +82,12 @@ namespace Scripts.Gameplay.Player
 
         private bool IsMoveStopped()
         {
-            var horizontal = Utils.GetAxis(Axes.Horizontal, isRaw: true);
-            return Mathf.Abs(horizontal) == 0;
+            return playerController.IsMoving() == false;
+        }
+
+        private bool CanJump()
+        {
+            return playerController.CanJump();
         }
     }
 }
