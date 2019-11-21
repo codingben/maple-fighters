@@ -31,6 +31,8 @@ namespace Scripts.UI.Chat
 
         private bool IsTypingMessage
         {
+            get => isTypingMessage;
+
             set
             {
                 isTypingMessage = value;
@@ -42,24 +44,9 @@ namespace Scripts.UI.Chat
         private bool isTypingMessage;
         private string characterName;
 
-        public void AddMessage(string message, ChatMessageColor color = ChatMessageColor.None)
-        {
-            if (chatText != null)
-            {
-                if (color != ChatMessageColor.None)
-                {
-                    var colorName = color.ToString().ToLower();
-                    message = $"<color={colorName}>{message}</color>";
-                }
-
-                var isEmpty = chatText.text.Length == 0;
-                chatText.text += !isEmpty ? $"\n{message}" : $"{message}";
-            }
-        }
-
         private void Update()
         {
-            if (isTypingMessage)
+            if (IsTypingMessage)
             {
                 FocusableState();
             }
@@ -71,12 +58,9 @@ namespace Scripts.UI.Chat
 
         private void FocusableState()
         {
-            var isAnySendKeyPressed = IsAnySendKeyPressed();
-            var isEscapeKeyPressed = IsEscapeKeyPressed();
-
-            if (isAnySendKeyPressed || isEscapeKeyPressed)
+            if (IsAnySendKeyPressed() || IsEscapeKeyPressed())
             {
-                if (isAnySendKeyPressed)
+                if (IsAnySendKeyPressed())
                 {
                     SendMessage();
                 }
@@ -96,6 +80,21 @@ namespace Scripts.UI.Chat
 
                 ActivateOrDeactivateInputField();
                 SelectOrDeselectChatInputField();
+            }
+        }
+
+        public void AddMessage(string message, ChatMessageColor color = ChatMessageColor.None)
+        {
+            if (chatText != null)
+            {
+                if (color != ChatMessageColor.None)
+                {
+                    var colorName = color.ToString().ToLower();
+                    message = $"<color={colorName}>{message}</color>";
+                }
+
+                var isEmpty = chatText.text.Length == 0;
+                chatText.text += !isEmpty ? $"\n{message}" : $"{message}";
             }
         }
 
