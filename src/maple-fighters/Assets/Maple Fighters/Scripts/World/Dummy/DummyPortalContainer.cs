@@ -21,36 +21,17 @@ namespace Scripts.World.Dummy
 
         private void Awake()
         {
-            collection = new Dictionary<int, Maps>();
+            // TODO: Refactor this
+            collection = new Dictionary<int, Maps>
+            {
+                { 2, Maps.Map_2 },
+                { 3, Maps.Map_1 }
+            };
         }
 
         private void OnDestroy()
         {
-            collection.Clear();
-        }
-
-        public void Add(int id, Maps map)
-        {
-            if (collection.ContainsKey(id))
-            {
-                Debug.LogWarning($"A portal with id {id} already exists.");
-            }
-            else
-            {
-                collection.Add(id, map);
-            }
-        }
-
-        public void Remove(int id)
-        {
-            if (collection.ContainsKey(id))
-            {
-                collection.Remove(id);
-            }
-            else
-            {
-                Debug.LogWarning($"A portal with id {id} does not exist.");
-            }
+            collection?.Clear();
         }
 
         public Maps GetMap(int id)
