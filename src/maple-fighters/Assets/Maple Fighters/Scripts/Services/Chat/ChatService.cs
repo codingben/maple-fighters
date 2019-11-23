@@ -24,6 +24,8 @@ namespace Scripts.Services.Chat
         {
             coroutinesExecutor = new ExternalCoroutinesExecutor();
             coroutinesExecutor.StartTask(ConnectAsync);
+
+            DontDestroyOnLoad(gameObject);
         }
 
         private void Update()
