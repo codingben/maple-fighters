@@ -8,6 +8,7 @@ using Scripts.Services.Chat;
 using Scripts.Services.Game;
 using Scripts.UI.Chat;
 using Scripts.UI.Focus;
+using Scripts.World.Dummy;
 using UnityEngine;
 
 namespace Scripts.Gameplay.Creator
@@ -34,6 +35,7 @@ namespace Scripts.Gameplay.Creator
         private IEnumerable<Type> GetContainersComponents()
         {
             yield return typeof(EntityContainer);
+            yield return typeof(DummyPortalContainer);
         }
 
         private IEnumerable<Type> GetGUIControllersComponents()
