@@ -27,8 +27,6 @@ namespace Scripts.Gameplay.Creator
 
         private IEnumerable<Type> GetCreatorsComponents()
         {
-            yield return typeof(LoggerSetter);
-            yield return typeof(DefaultTimeProviderSetter);
             yield return typeof(CharacterCreator);
             yield return typeof(EnterSceneOperationSender);
         }
