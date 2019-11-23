@@ -51,7 +51,8 @@ namespace Scripts.World.Objects
                 var map = parameters.Map;
                 if (map != 0)
                 {
-                    SceneManager.LoadScene(map.ToString());
+                    // TODO: Hack
+                    SceneManager.LoadScene((int)map);
                 }
                 else
                 {
