@@ -14,7 +14,7 @@ namespace Scripts.World.Objects
         private int entityId;
         private ExternalCoroutinesExecutor coroutinesExecutor;
 
-        private void Awake()
+        private void Start()
         {
             entityId = GetComponent<IEntity>().Id;
             coroutinesExecutor = new ExternalCoroutinesExecutor();
