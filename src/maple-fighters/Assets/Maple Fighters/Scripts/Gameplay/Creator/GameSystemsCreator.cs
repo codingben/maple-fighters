@@ -4,6 +4,8 @@ using Network.Utils;
 using Scripts.Gameplay.GameEntity;
 using Scripts.Gameplay.Map;
 using Scripts.Gameplay.PlayerCharacter;
+using Scripts.Services.Chat;
+using Scripts.Services.Game;
 using Scripts.UI.Chat;
 using Scripts.UI.Focus;
 using UnityEngine;
@@ -17,6 +19,8 @@ namespace Scripts.Gameplay.Creator
             CreateGameComponents(GetCreatorsComponents());
             CreateGameComponents(GetContainersComponents());
             CreateGameComponents(GetGUIControllersComponents());
+            CreateGameComponents(GetSetterComponents());
+            CreateGameComponents(GetServicesComponents());
 
             Destroy(gameObject);
         }
@@ -38,6 +42,22 @@ namespace Scripts.Gameplay.Creator
         {
             yield return typeof(FocusStateController);
             yield return typeof(ChatController);
+        }
+
+        private IEnumerable<Type> GetSetterComponents()
+        {
+            yield return typeof(LoggerSetter);
+            yield return typeof(DefaultTimeProviderSetter);
+        }
+
+        private IEnumerable<Type> GetServicesComponents()
+        {
+            if (FindObjectOfType<GameService>() == null)
+            {
+                yield return typeof(GameService);
+            }
+
+            yield return typeof(ChatService);
         }
 
         private void CreateGameComponents(IEnumerable<Type> components)
