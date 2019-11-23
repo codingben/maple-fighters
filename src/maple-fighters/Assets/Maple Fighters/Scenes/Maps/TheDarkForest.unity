@@ -368,7 +368,7 @@ MonoBehaviour:
     Name: BlueSnail
     Position: {x: -2, y: -8.1}
     Direction: 1
-  - Id: 2
+  - Id: 3
     Name: Portal
     Position: {x: 12.5, y: -1.125}
     Direction: 1
