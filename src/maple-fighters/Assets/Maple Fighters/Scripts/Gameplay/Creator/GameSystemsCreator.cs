@@ -55,6 +55,7 @@ namespace Scripts.Gameplay.Creator
             if (FindObjectOfType<GameService>() == null)
             {
                 yield return typeof(GameService);
+                yield return typeof(DummyGameServiceConnector);
             }
 
             yield return typeof(ChatService);
