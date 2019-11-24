@@ -4,8 +4,8 @@
     {
         public static class Maps
         {
-            public const string Lobby = "Lobby";
-            public const string TheDarkForest = "TheDarkForest";
+            public const string Lobby = "Map_1";
+            public const string TheDarkForest = "Map_2";
         }
 
         public const string Login = "Login";
