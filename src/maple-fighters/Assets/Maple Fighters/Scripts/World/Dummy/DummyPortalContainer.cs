@@ -24,9 +24,8 @@ namespace Scripts.World.Dummy
             // TODO: Refactor this
             collection = new Dictionary<int, Maps>
             {
-                // TODO: Hack
-                { 2, Maps.Map_2 + 1 },
-                { 3, Maps.Map_1 + 1 }
+                { 2, Maps.Map_2 },
+                { 3, Maps.Map_1 }
             };
         }
 
