@@ -187,7 +187,7 @@ namespace Scripts.UI.Authenticator
         public void OnLoginSucceed()
         {
             var sceneName = SceneNames.Main;
-            SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
+            SceneManager.LoadScene(sceneName);
         }
 
         public void OnLoginFailed()

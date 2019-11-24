@@ -164,7 +164,7 @@ namespace Scripts.UI.GameServerBrowser
 
             // TODO: Remove this from here
             var sceneName = SceneNames.Game;
-            SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
+            SceneManager.LoadScene(sceneName);
         }
 
         private void OnRefreshButtonClicked()
