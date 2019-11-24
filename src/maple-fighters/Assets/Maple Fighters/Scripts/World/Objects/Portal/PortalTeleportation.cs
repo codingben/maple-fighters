@@ -51,8 +51,12 @@ namespace Scripts.World.Objects
                 var map = parameters.Map;
                 if (map != 0)
                 {
-                    // TODO: Hack
-                    SceneManager.LoadScene((int)map);
+                    var mapName = map.ToString();
+
+                    Debug.Log(
+                        $"PortalTeleportation::ChangeScene() -> Scene change to: {mapName}");
+
+                    SceneManager.LoadScene(mapName);
                 }
                 else
                 {
