@@ -15,9 +15,9 @@ EditorBuildSettings:
     path: Assets/Maple Fighters/Scenes/Menu/Game.unity
     guid: ffedadea82dcf174a8268be270fb3a70
   - enabled: 1
-    path: Assets/Maple Fighters/Scenes/Maps/Lobby.unity
+    path: Assets/Maple Fighters/Scenes/Maps/Map_1.unity
     guid: 650692c6966b4bc4890c1c9221c9c67f
   - enabled: 1
-    path: Assets/Maple Fighters/Scenes/Maps/TheDarkForest.unity
+    path: Assets/Maple Fighters/Scenes/Maps/Map_2.unity
     guid: 43ac6926fd8646742a88298525a69286
   m_configObjects: {}
