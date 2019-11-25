@@ -119,10 +119,8 @@ namespace Scripts.Gameplay.Player
         private bool IsPlayerStateSuitable()
         {
             return playerController.PlayerState == PlayerState.Idle
-                   || playerController.PlayerState
-                   == PlayerState.Jumping
-                   || playerController.PlayerState
-                   == PlayerState.Falling;
+                   || playerController.PlayerState == PlayerState.Jumping
+                   || playerController.PlayerState == PlayerState.Falling;
         }
 
         private bool IsInInteraction()
