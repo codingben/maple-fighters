@@ -5,10 +5,10 @@ using UnityEngine;
 namespace Scripts.Gameplay.Player
 {
     [RequireComponent(typeof(PlayerController), typeof(Collider2D))]
-    public class RopeInteractor : MonoBehaviour
+    public class RopeInteractor : ClimbInteractor
     {
         [SerializeField]
-        private KeyCode interactionKey = KeyCode.LeftControl;
+        private KeyCode key = KeyCode.LeftControl;
 
         private PlayerController playerController;
         private ColliderInteraction colliderInteraction;
@@ -21,80 +21,12 @@ namespace Scripts.Gameplay.Player
             colliderInteraction = new ColliderInteraction(collider);
         }
 
-        private void Update()
+        protected override void SetPlayerToClimbState()
         {
-            if (IsInInteraction())
-            {
-                return;
-            }
-
-            if (Input.GetKeyDown(interactionKey) && IsPlayerStateSuitable())
-            {
-                if (colliderInteraction.HasOverlappingCollider())
-                {
-                    StartInteraction();
-                }
-            }
+            playerController.ChangePlayerState(GetClimbState());
         }
 
-        private void OnTriggerEnter2D(Collider2D collider)
-        {
-            if (collider.transform.CompareTag(GameTags.RopeTag))
-            {
-                colliderInteraction.SetOverlappingCollider(collider);
-            }
-        }
-
-        private void OnTriggerExit2D(Collider2D collider)
-        {
-            if (collider.transform.CompareTag(GameTags.RopeTag))
-            {
-                if (IsInInteraction())
-                {
-                    StopInteraction();
-                }
-
-                colliderInteraction.SetOverlappingCollider(null);
-            }
-        }
-
-        private void OnCollisionEnter2D(Collision2D collision)
-        {
-            if (IsInInteraction()
-                && collision.transform.CompareTag(GameTags.FloorTag))
-            {
-                colliderInteraction.SetIgnoredCollider(collision.collider);
-                colliderInteraction.DisableCollisionWithIgnoredCollider();
-            }
-        }
-
-        private void StartInteraction()
-        {
-            var ground = Utils.GetGroundedCollider(transform.parent.position);
-            if (ground != null)
-            {
-                colliderInteraction.SetIgnoredCollider(ground);
-                colliderInteraction.DisableCollisionWithIgnoredCollider();
-            }
-
-            ChangePositionToRopeCenter();
-            ChangePlayerStateToRope();
-        }
-
-        private void ChangePlayerStateToRope()
-        {
-            playerController.ChangePlayerState(PlayerState.Rope);
-        }
-
-        private void StopInteraction()
-        {
-            colliderInteraction.EnableCollisionWithIgnoredCollider();
-            colliderInteraction.SetIgnoredCollider(null);
-
-            ChangePlayerStateFromRope();
-        }
-
-        private void ChangePlayerStateFromRope()
+        protected override void UnsetPlayerFromClimbState()
         {
             var isGrounded =
                 playerController.IsGrounded()
@@ -104,28 +36,29 @@ namespace Scripts.Gameplay.Player
             playerController.ChangePlayerState(isGrounded);
         }
 
-        private void ChangePositionToRopeCenter()
+        protected override PlayerState GetPlayerState()
         {
-            var rigidbody = colliderInteraction.GetAttachedRigidbody();
-            rigidbody.velocity = Vector2.zero;
-
-            if (colliderInteraction.HasOverlappingColliderPosition(out var center))
-            {
-                transform.parent.position = 
-                    new Vector3(center.x, transform.parent.position.y);
-            }
+            return playerController.PlayerState;
         }
 
-        private bool IsPlayerStateSuitable()
+        protected override KeyCode GetKey()
         {
-            return playerController.PlayerState == PlayerState.Idle
-                   || playerController.PlayerState == PlayerState.Jumping
-                   || playerController.PlayerState == PlayerState.Falling;
+            return key;
         }
 
-        private bool IsInInteraction()
+        protected override ColliderInteraction GetColliderInteraction()
         {
-            return playerController.PlayerState == PlayerState.Rope;
+            return colliderInteraction;
+        }
+
+        protected override string GetTagName()
+        {
+            return GameTags.RopeTag;
+        }
+
+        protected override PlayerState GetClimbState()
+        {
+            return PlayerState.Rope;
         }
     }
 }
