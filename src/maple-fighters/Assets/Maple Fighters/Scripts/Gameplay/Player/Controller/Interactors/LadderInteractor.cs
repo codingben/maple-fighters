@@ -28,12 +28,7 @@ namespace Scripts.Gameplay.Player
 
         protected override void UnsetPlayerFromClimbState()
         {
-            var isGrounded =
-                playerController.IsGrounded()
-                    ? PlayerState.Idle
-                    : PlayerState.Falling;
-
-            playerController.ChangePlayerState(isGrounded);
+            playerController.ChangePlayerStateToIdleOrFalling();
         }
 
         protected override PlayerState GetPlayerState()
