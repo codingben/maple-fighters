@@ -51,9 +51,6 @@ namespace Scripts.Gameplay.Player
             {
                 if (IsInInteraction())
                 {
-                    colliderInteraction.EnableCollisionWithIgnoredCollider();
-                    colliderInteraction.SetIgnoredCollider(null);
-
                     StopInteraction();
                 }
 
