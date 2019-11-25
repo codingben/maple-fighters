@@ -109,8 +109,7 @@ namespace Scripts.Gameplay.Player
             var rigidbody = colliderInteraction.GetAttachedRigidbody();
             rigidbody.velocity = Vector2.zero;
 
-            if (colliderInteraction.HasOverlappingColliderPosition(
-                out var center))
+            if (colliderInteraction.HasOverlappingColliderPosition(out var center))
             {
                 transform.parent.position = 
                     new Vector3(center.x, transform.parent.position.y);
@@ -120,10 +119,8 @@ namespace Scripts.Gameplay.Player
         private bool IsPlayerStateSuitable()
         {
             return playerController.PlayerState == PlayerState.Idle
-                             || playerController.PlayerState
-                             == PlayerState.Jumping
-                             || playerController.PlayerState
-                             == PlayerState.Falling;
+                   || playerController.PlayerState == PlayerState.Jumping
+                   || playerController.PlayerState == PlayerState.Falling;
         }
 
         private bool IsInInteraction()
