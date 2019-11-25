@@ -25,10 +25,13 @@ namespace Scripts.Gameplay.Player
         {
             var horizontal = Utils.GetAxis(Axes.Horizontal);
             var speed = playerController.Properties.Speed;
-            var direction = 
+
+            rigidbody2D.velocity = 
                 new Vector2(horizontal * speed, rigidbody2D.velocity.y);
 
-            rigidbody2D.velocity = direction;
+            var direction = 
+                horizontal > 0 ? Directions.Right : Directions.Left;
+            playerController.ChangeDirection(direction);
         }
 
         public void OnStateUpdate()
