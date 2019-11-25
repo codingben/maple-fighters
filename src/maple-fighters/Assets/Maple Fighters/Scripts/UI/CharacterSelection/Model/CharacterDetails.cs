@@ -5,20 +5,20 @@
         private string characterName;
         private UICharacterIndex uiCharacterIndex;
         private UICharacterClass uiCharacterClass;
-        private UIMapIndex uiMapIndex;
+        private string mapName;
         private bool hasCharacter;
 
         public CharacterDetails(
             string characterName,
             UICharacterIndex uiCharacterIndex,
             UICharacterClass uiCharacterClass,
-            UIMapIndex uiMapIndex,
+            string mapName,
             bool hasCharacter)
         {
             this.characterName = characterName;
             this.uiCharacterIndex = uiCharacterIndex;
             this.uiCharacterClass = uiCharacterClass;
-            this.uiMapIndex = uiMapIndex;
+            this.mapName = mapName;
             this.hasCharacter = hasCharacter;
         }
 
@@ -42,9 +42,9 @@
             this.hasCharacter = hasCharacter;
         }
 
-        public void SetMapIndex(UIMapIndex uiMapIndex)
+        public void SetMapName(string mapName)
         {
-            this.uiMapIndex = uiMapIndex;
+            this.mapName = mapName;
         }
 
         public string GetCharacterName()
@@ -62,9 +62,9 @@
             return uiCharacterClass;
         }
 
-        public UIMapIndex GetMapIndex()
+        public string GetMapName()
         {
-            return uiMapIndex;
+            return mapName;
         }
 
         public bool HasCharacter()
