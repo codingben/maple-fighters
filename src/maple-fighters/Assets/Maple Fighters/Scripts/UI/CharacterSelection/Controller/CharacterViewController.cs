@@ -218,10 +218,10 @@ namespace Scripts.UI.CharacterSelection
         public void OnConnectionFailed()
         {
             var message = NoticeMessages.CharacterView.ConnectionFailed;
-            var sceneName = SceneNames.Main;
 
-            // TODO: Remove LoadScene() from here
-            NoticeUtils.ShowNotice(message, () => SceneManager.LoadScene(sceneName));
+            NoticeUtils.ShowNotice(
+                message, 
+                () => SceneManager.LoadScene(SceneNames.Main));
         }
 
         public void OnCharacterReceived(CharacterDetails characterDetails)
@@ -239,7 +239,8 @@ namespace Scripts.UI.CharacterSelection
                 {
                     if (characterViewCollection == null)
                     {
-                        var views = new IClickableCharacterView[] { null, null, null };
+                        var views =
+                            new IClickableCharacterView[] { null, null, null };
                         characterViewCollection = new CharacterViewCollection(views);
                     }
 
