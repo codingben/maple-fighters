@@ -5,10 +5,10 @@ using UnityEngine;
 namespace Scripts.Gameplay.Player
 {
     [RequireComponent(typeof(PlayerController), typeof(Collider2D))]
-    public class LadderInteractor : MonoBehaviour
+    public class LadderInteractor : ClimbInteractor
     {
         [SerializeField]
-        private KeyCode interactionKey = KeyCode.LeftControl;
+        private KeyCode key = KeyCode.LeftControl;
 
         private PlayerController playerController;
         private ColliderInteraction colliderInteraction;
@@ -21,80 +21,12 @@ namespace Scripts.Gameplay.Player
             colliderInteraction = new ColliderInteraction(collider);
         }
 
-        private void Update()
+        protected override void SetPlayerToClimbState()
         {
-            if (IsInInteraction())
-            {
-                return;
-            }
-
-            if (Input.GetKeyDown(interactionKey) && IsPlayerStateSuitable())
-            {
-                if (colliderInteraction.HasOverlappingCollider())
-                {
-                    StartInteraction();
-                }
-            }
+            playerController.ChangePlayerState(GetClimbState());
         }
 
-        private void OnTriggerEnter2D(Collider2D collider)
-        {
-            if (collider.transform.CompareTag(GameTags.LadderTag))
-            {
-                colliderInteraction.SetOverlappingCollider(collider);
-            }
-        }
-
-        private void OnTriggerExit2D(Collider2D collider)
-        {
-            if (collider.transform.CompareTag(GameTags.LadderTag))
-            {
-                if (IsInInteraction())
-                {
-                    StopInteraction();
-                }
-
-                colliderInteraction.SetOverlappingCollider(null);
-            }
-        }
-
-        private void OnCollisionEnter2D(Collision2D collision)
-        {
-            if (IsInInteraction()
-                && collision.transform.CompareTag(GameTags.FloorTag))
-            {
-                colliderInteraction.SetIgnoredCollider(collision.collider);
-                colliderInteraction.DisableCollisionWithIgnoredCollider();
-            }
-        }
-
-        private void StartInteraction()
-        {
-            var ground = Utils.GetGroundedCollider(transform.parent.position);
-            if (ground != null)
-            {
-                colliderInteraction.SetIgnoredCollider(ground);
-                colliderInteraction.DisableCollisionWithIgnoredCollider();
-            }
-
-            ChangePositionToLadderCenter();
-            ChangePlayerStateToLadder();
-        }
-
-        private void ChangePlayerStateToLadder()
-        {
-            playerController.ChangePlayerState(PlayerState.Ladder);
-        }
-
-        private void StopInteraction()
-        {
-            colliderInteraction.EnableCollisionWithIgnoredCollider();
-            colliderInteraction.SetIgnoredCollider(null);
-
-            ChangePlayerStateFromLadder();
-        }
-
-        private void ChangePlayerStateFromLadder()
+        protected override void UnsetPlayerFromClimbState()
         {
             var isGrounded =
                 playerController.IsGrounded()
@@ -104,28 +36,29 @@ namespace Scripts.Gameplay.Player
             playerController.ChangePlayerState(isGrounded);
         }
 
-        private void ChangePositionToLadderCenter()
+        protected override PlayerState GetPlayerState()
         {
-            var rigidbody = colliderInteraction.GetAttachedRigidbody();
-            rigidbody.velocity = Vector2.zero;
-
-            if (colliderInteraction.HasOverlappingColliderPosition(out var center))
-            {
-                transform.parent.position =
-                    new Vector3(center.x, transform.parent.position.y);
-            }
+            return playerController.PlayerState;
         }
 
-        private bool IsPlayerStateSuitable()
+        protected override KeyCode GetKey()
         {
-            return playerController.PlayerState == PlayerState.Idle
-                   || playerController.PlayerState == PlayerState.Jumping
-                   || playerController.PlayerState == PlayerState.Falling;
+            return key;
         }
 
-        private bool IsInInteraction()
+        protected override ColliderInteraction GetColliderInteraction()
         {
-            return playerController.PlayerState == PlayerState.Ladder;
+            return colliderInteraction;
+        }
+
+        protected override string GetTagName()
+        {
+            return GameTags.LadderTag;
+        }
+
+        protected override PlayerState GetClimbState()
+        {
+            return PlayerState.Ladder;
         }
     }
 }
