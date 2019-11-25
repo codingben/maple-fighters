@@ -56,7 +56,6 @@ namespace Scripts.World.Objects
                     Debug.Log(
                         $"PortalTeleportation::ChangeScene() -> Scene change to: {mapName}");
 
-                    // TODO: Remove this from here
                     SceneManager.LoadScene(mapName);
                 }
                 else
