@@ -93,7 +93,7 @@ namespace Scripts.UI.CharacterSelection
                         character.Name,
                         character.Index.ToUiCharacterIndex(),
                         character.CharacterType.ToUiCharacterClass(),
-                        character.LastMap.ToUiMapIndex(),
+                        character.LastMap.ToString(),
                         character.HasCharacter);
 
                     onCharacterReceivedListener.OnCharacterReceived(
