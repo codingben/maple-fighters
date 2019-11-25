@@ -27,9 +27,11 @@ namespace Scripts.Gameplay.Player
         {
             if (IsJumpKeyClicked())
             {
-                Jump();
+                // TODO: Deprecated due to collider issues
 
-                playerController.ChangePlayerState(PlayerState.Falling);
+                // Jump();
+
+                // playerController.ChangePlayerState(PlayerState.Falling);
             }
             else
             {
