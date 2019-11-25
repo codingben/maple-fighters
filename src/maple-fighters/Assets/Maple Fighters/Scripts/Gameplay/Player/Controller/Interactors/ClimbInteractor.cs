@@ -5,18 +5,11 @@ namespace Scripts.Gameplay.Player
 {
     public abstract class ClimbInteractor : MonoBehaviour
     {
-        private ColliderInteraction colliderInteraction;
-
-        private void Awake()
-        {
-            colliderInteraction = GetColliderInteraction();
-        }
-
         private void Update()
         {
-            if (Input.GetKeyDown(GetInteractionKey()) && IsPlayerStateSuitable() && !IsClimbing())
+            if (Input.GetKeyDown(GetKey()) && IsPlayerStateSuitable() && !IsClimbing())
             {
-                if (colliderInteraction.HasOverlappingCollider())
+                if (GetColliderInteraction().HasOverlappingCollider())
                 {
                     StartClimbing();
                 }
@@ -27,7 +20,7 @@ namespace Scripts.Gameplay.Player
         {
             if (collider.transform.CompareTag(GetTagName()))
             {
-                colliderInteraction.SetOverlappingCollider(collider);
+                GetColliderInteraction().SetOverlappingCollider(collider);
             }
         }
 
@@ -40,7 +33,7 @@ namespace Scripts.Gameplay.Player
                     StopClimbing();
                 }
 
-                colliderInteraction.SetOverlappingCollider(null);
+                GetColliderInteraction().SetOverlappingCollider(null);
             }
         }
 
@@ -50,8 +43,8 @@ namespace Scripts.Gameplay.Player
             {
                 if (IsClimbing())
                 {
-                    colliderInteraction.SetIgnoredCollider(collision.collider);
-                    colliderInteraction.DisableCollisionWithIgnoredCollider();
+                    GetColliderInteraction().SetIgnoredCollider(collision.collider);
+                    GetColliderInteraction().DisableCollisionWithIgnoredCollider();
                 }
             }
         }
@@ -61,8 +54,8 @@ namespace Scripts.Gameplay.Player
             var ground = Utils.GetGroundedCollider(transform.parent.position);
             if (ground != null)
             {
-                colliderInteraction.SetIgnoredCollider(ground);
-                colliderInteraction.DisableCollisionWithIgnoredCollider();
+                GetColliderInteraction().SetIgnoredCollider(ground);
+                GetColliderInteraction().DisableCollisionWithIgnoredCollider();
             }
 
             ChangePositionToCenter();
@@ -76,18 +69,18 @@ namespace Scripts.Gameplay.Player
 
         private void StopClimbing()
         {
-            colliderInteraction.EnableCollisionWithIgnoredCollider();
-            colliderInteraction.SetIgnoredCollider(null);
+            GetColliderInteraction().EnableCollisionWithIgnoredCollider();
+            GetColliderInteraction().SetIgnoredCollider(null);
 
             UnsetPlayerFromClimbState();
         }
 
         private void ChangePositionToCenter()
         {
-            var rigidbody = colliderInteraction.GetAttachedRigidbody();
+            var rigidbody = GetColliderInteraction().GetAttachedRigidbody();
             rigidbody.velocity = Vector2.zero;
 
-            if (colliderInteraction.HasOverlappingColliderPosition(out var center))
+            if (GetColliderInteraction().HasOverlappingColliderPosition(out var center))
             {
                 transform.parent.position = 
                     new Vector3(center.x, transform.parent.position.y);
@@ -112,7 +105,7 @@ namespace Scripts.Gameplay.Player
 
         protected abstract PlayerState GetPlayerState();
 
-        protected abstract KeyCode GetInteractionKey();
+        protected abstract KeyCode GetKey();
 
         protected abstract ColliderInteraction GetColliderInteraction();
 
