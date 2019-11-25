@@ -126,13 +126,14 @@ namespace Scripts.UI.CharacterSelection
                         parameters);
                 var status = responseParameters.Status;
                 var map = responseParameters.Map;
+                var mapName = map.ToString();
 
                 switch (status)
                 {
                     case CharacterValidationStatus.Ok:
                     {
                         onCharacterValidationFinishedListener
-                            .OnCharacterValidated(map.ToUiMapIndex());
+                            .OnCharacterValidated(mapName);
                         break;
                     }
 
