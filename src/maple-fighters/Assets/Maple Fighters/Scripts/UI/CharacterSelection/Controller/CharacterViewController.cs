@@ -256,10 +256,9 @@ namespace Scripts.UI.CharacterSelection
             ShowChooseFighterView();
         }
 
-        public void OnCharacterValidated(UIMapIndex uiMapIndex)
+        public void OnCharacterValidated(string mapName)
         {
-            // TODO: Remove this from here
-            SceneManager.LoadScene((int)uiMapIndex);
+            SceneManager.LoadScene(mapName);
         }
 
         public void OnCharacterUnvalidated()
