@@ -1,7 +1,5 @@
 ﻿using Game.Common;
-
 using Scripts.Constants;
-
 using UnityEngine;
 
 namespace Scripts.Gameplay.Player
