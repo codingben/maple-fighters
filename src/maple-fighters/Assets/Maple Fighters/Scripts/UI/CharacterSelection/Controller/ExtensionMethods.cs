@@ -131,27 +131,5 @@ namespace Scripts.UI.CharacterSelection
 
             return characterClass;
         }
-
-        public static UIMapIndex ToUiMapIndex(this Maps map)
-        {
-            var uiMapIndex = UIMapIndex.Map_1;
-
-            switch (map)
-            {
-                case Maps.Map_1:
-                {
-                    uiMapIndex = UIMapIndex.Map_1;
-                    break;
-                }
-
-                case Maps.Map_2:
-                {
-                    uiMapIndex = UIMapIndex.Map_2;
-                    break;
-                }
-            }
-
-            return uiMapIndex;
-        }
     }
 }
