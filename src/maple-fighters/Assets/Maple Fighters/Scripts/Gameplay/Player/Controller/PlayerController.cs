@@ -116,6 +116,13 @@ namespace Scripts.Gameplay.Player
             }
         }
 
+        public void ChangePlayerStateToIdleOrFalling()
+        {
+            var playerState =
+                IsGrounded() ? PlayerState.Idle : PlayerState.Falling;
+            ChangePlayerState(playerState);
+        }
+
         public void ChangeDirection(Directions direction)
         {
             if (direction == Directions.Left)
