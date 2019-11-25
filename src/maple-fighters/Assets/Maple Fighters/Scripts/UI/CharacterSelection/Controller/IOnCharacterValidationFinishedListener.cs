@@ -2,7 +2,7 @@
 {
     public interface IOnCharacterValidationFinishedListener
     {
-        void OnCharacterValidated(UIMapIndex uiMapIndex);
+        void OnCharacterValidated(string mapName);
 
         void OnCharacterUnvalidated();
     }
