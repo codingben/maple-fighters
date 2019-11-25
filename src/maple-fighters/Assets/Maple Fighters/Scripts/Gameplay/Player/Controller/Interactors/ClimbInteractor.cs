@@ -1,4 +1,7 @@
 ﻿using Game.Common;
+
+using Scripts.Constants;
+
 using UnityEngine;
 
 namespace Scripts.Gameplay.Player
@@ -39,7 +42,7 @@ namespace Scripts.Gameplay.Player
 
         private void OnCollisionEnter2D(Collision2D collision)
         {
-            if (collision.transform.CompareTag(GetTagName()))
+            if (collision.transform.CompareTag(GameTags.FloorTag))
             {
                 if (IsClimbing())
                 {
