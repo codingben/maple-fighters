@@ -7,13 +7,13 @@ namespace Scripts.Gameplay.Player
     public class PortalInteractor : MonoBehaviour
     {
         [SerializeField]
-        private KeyCode interactionKey = KeyCode.LeftControl;
+        private KeyCode key = KeyCode.LeftControl;
 
         private PortalTeleportation portalTeleportation;
 
         private void Update()
         {
-            if (Input.GetKeyDown(interactionKey))
+            if (Input.GetKeyDown(key))
             {
                 portalTeleportation?.Teleport();
             }
@@ -21,8 +21,7 @@ namespace Scripts.Gameplay.Player
 
         private void OnTriggerEnter2D(Collider2D collider)
         {
-            var transform = collider.transform;
-            if (transform.CompareTag(GameTags.PortalTag))
+            if (collider.transform.CompareTag(GameTags.PortalTag))
             {
                 portalTeleportation =
                     transform.GetComponent<PortalTeleportation>();
@@ -31,8 +30,7 @@ namespace Scripts.Gameplay.Player
 
         private void OnTriggerExit2D(Collider2D collider)
         {
-            var transform = collider.transform;
-            if (transform.CompareTag(GameTags.PortalTag))
+            if (collider.transform.CompareTag(GameTags.PortalTag))
             {
                 portalTeleportation = null;
             }
