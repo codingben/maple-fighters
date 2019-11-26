@@ -29,9 +29,12 @@ namespace Scripts.Gameplay.Player
             rigidbody2D.velocity = 
                 new Vector2(horizontal * speed, rigidbody2D.velocity.y);
 
-            var direction = 
-                horizontal > 0 ? Directions.Right : Directions.Left;
-            playerController.ChangeDirection(direction);
+            if (horizontal != 0)
+            {
+                var direction =
+                    horizontal > 0 ? Directions.Right : Directions.Left;
+                playerController.ChangeDirection(direction);
+            }
         }
 
         public void OnStateUpdate()
