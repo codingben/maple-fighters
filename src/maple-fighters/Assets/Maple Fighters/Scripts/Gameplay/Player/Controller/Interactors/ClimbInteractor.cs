@@ -52,15 +52,20 @@ namespace Scripts.Gameplay.Player
 
         private void StartClimbing()
         {
+            IgnoreGroundIfNeeded();
+
+            ChangePositionToCenter();
+            ChangePlayerStateToClimbState();
+        }
+
+        private void IgnoreGroundIfNeeded()
+        {
             var ground = Utils.GetGroundedCollider(transform.parent.position);
             if (ground != null)
             {
                 GetColliderInteraction().SetIgnoredCollider(ground);
                 GetColliderInteraction().DisableCollisionWithIgnoredCollider();
             }
-
-            ChangePositionToCenter();
-            ChangePlayerStateToClimbState();
         }
 
         private void ChangePlayerStateToClimbState()
@@ -78,13 +83,22 @@ namespace Scripts.Gameplay.Player
 
         private void ChangePositionToCenter()
         {
-            var rigidbody = GetColliderInteraction().GetAttachedRigidbody();
-            rigidbody.velocity = Vector2.zero;
-
             if (GetColliderInteraction().HasOverlappingColliderPosition(out var center))
             {
+                ChangeVelocityToZero();
+
                 transform.parent.position = 
                     new Vector3(center.x, transform.parent.position.y);
+            }
+        }
+
+        private void ChangeVelocityToZero()
+        {
+            var rigidbody =
+                GetColliderInteraction().GetAttachedRigidbody();
+            if (rigidbody != null)
+            {
+                rigidbody.velocity = Vector2.zero;
             }
         }
 
