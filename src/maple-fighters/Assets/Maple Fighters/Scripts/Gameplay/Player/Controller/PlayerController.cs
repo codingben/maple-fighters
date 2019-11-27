@@ -116,10 +116,11 @@ namespace Scripts.Gameplay.Player
             }
         }
 
-        public void ChangePlayerStateToIdleOrFalling()
+        public void ResetPlayerState()
         {
-            var playerState =
-                IsGrounded() ? PlayerState.Idle : PlayerState.Falling;
+            var inTheAir = IsGrounded();
+            var playerState = inTheAir ? PlayerState.Idle : PlayerState.Falling;
+
             ChangePlayerState(playerState);
         }
 
