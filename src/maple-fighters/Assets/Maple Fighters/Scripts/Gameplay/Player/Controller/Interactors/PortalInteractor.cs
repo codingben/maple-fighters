@@ -24,7 +24,7 @@ namespace Scripts.Gameplay.Player
             if (collider.transform.CompareTag(GameTags.PortalTag))
             {
                 portalTeleportation =
-                    transform.GetComponent<PortalTeleportation>();
+                    collider.transform.GetComponent<PortalTeleportation>();
             }
         }
 
