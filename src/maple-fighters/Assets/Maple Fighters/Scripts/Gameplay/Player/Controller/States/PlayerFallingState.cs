@@ -39,15 +39,15 @@ namespace Scripts.Gameplay.Player
 
         public void OnStateUpdate()
         {
-            if (IsGrounded())
-            {
-                playerController.ChangePlayerState(PlayerState.Idle);
-            }
+            // Left blank intentionally
         }
 
         public void OnStateFixedUpdate()
         {
-            // Left blank intentionally
+            if (IsGrounded())
+            {
+                playerController.ChangePlayerState(PlayerState.Idle);
+            }
         }
 
         public void OnStateExit()
