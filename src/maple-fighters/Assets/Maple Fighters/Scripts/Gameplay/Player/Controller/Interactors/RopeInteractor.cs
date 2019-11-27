@@ -28,7 +28,7 @@ namespace Scripts.Gameplay.Player
 
         protected override void UnsetPlayerFromClimbState()
         {
-            playerController.ChangePlayerStateToIdleOrFalling();
+            playerController.ResetPlayerState();
         }
 
         protected override PlayerState GetPlayerState()
