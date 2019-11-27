@@ -52,10 +52,6 @@ namespace Scripts.World.Objects
                 if (map != 0)
                 {
                     var mapName = map.ToString();
-
-                    Debug.Log(
-                        $"PortalTeleportation::ChangeScene() -> Scene change to: {mapName}");
-
                     SceneManager.LoadScene(mapName);
                 }
                 else
