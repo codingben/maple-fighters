@@ -221,7 +221,7 @@ namespace Scripts.UI.CharacterSelection
 
             NoticeUtils.ShowNotice(
                 message, 
-                () => SceneManager.LoadScene(SceneNames.Main));
+                () => SceneManager.LoadScene(sceneName: SceneNames.Main));
         }
 
         public void OnCharacterReceived(CharacterDetails characterDetails)
@@ -258,7 +258,7 @@ namespace Scripts.UI.CharacterSelection
 
         public void OnCharacterValidated(string mapName)
         {
-            SceneManager.LoadScene(mapName);
+            SceneManager.LoadScene(sceneName: mapName);
         }
 
         public void OnCharacterUnvalidated()
