@@ -162,7 +162,7 @@ namespace Scripts.UI.GameServerBrowser
             gameServerBrowserView?.DisableRefreshButton();
             gameServerBrowserView?.Hide();
 
-            SceneManager.LoadScene(SceneNames.Game);
+            SceneManager.LoadScene(sceneName: SceneNames.Game);
         }
 
         private void OnRefreshButtonClicked()
