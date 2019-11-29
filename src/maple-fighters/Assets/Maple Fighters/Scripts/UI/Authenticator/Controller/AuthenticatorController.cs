@@ -96,6 +96,7 @@ namespace Scripts.UI.Authenticator
             else
             {
                 loginView?.DisableInteraction();
+
                 authenticatorInteractor.Login(uiAuthenticationDetails);
             }
         }
@@ -132,6 +133,7 @@ namespace Scripts.UI.Authenticator
             else
             {
                 registrationView?.DisableInteraction();
+
                 authenticatorInteractor.Register(uiRegistrationDetails);
             }
         }
@@ -180,45 +182,40 @@ namespace Scripts.UI.Authenticator
             loginView?.EnableInteraction();
             registrationView?.EnableInteraction();
 
-            var message = NoticeMessages.AuthView.ConnectionFailed;
-            NoticeUtils.ShowNotice(message);
+            NoticeUtils.ShowNotice(message: NoticeMessages.AuthView.ConnectionFailed);
         }
 
         public void OnLoginSucceed()
         {
-            SceneManager.LoadScene(SceneNames.Main);
+            SceneManager.LoadScene(sceneName: SceneNames.Main);
         }
 
         public void OnLoginFailed()
         {
             loginView?.EnableInteraction();
 
-            var message = NoticeMessages.AuthView.UnknownError;
-            NoticeUtils.ShowNotice(message);
+            NoticeUtils.ShowNotice(message: NoticeMessages.AuthView.UnknownError);
         }
 
         public void OnInvalidEmailError()
         {
             loginView?.EnableInteraction();
 
-            var message = NoticeMessages.AuthView.WrongEmailAddress;
-            NoticeUtils.ShowNotice(message);
+            NoticeUtils.ShowNotice(message: NoticeMessages.AuthView.WrongEmailAddress);
         }
 
         public void OnInvalidPasswordError()
         {
             loginView?.EnableInteraction();
 
-            var message = NoticeMessages.AuthView.WrongPassword;
-            NoticeUtils.ShowNotice(message);
+            NoticeUtils.ShowNotice(message: NoticeMessages.AuthView.WrongPassword);
         }
 
         public void OnNonAuthorizedError()
         {
             loginView?.EnableInteraction();
 
-            var message = NoticeMessages.AuthView.NonAuthorized;
-            NoticeUtils.ShowNotice(message);
+            NoticeUtils.ShowNotice(message: NoticeMessages.AuthView.NonAuthorized);
         }
 
         public void OnRegistrationSucceed()
@@ -228,24 +225,21 @@ namespace Scripts.UI.Authenticator
             HideRegistrationWindow();
             ShowLoginWindow();
 
-            var message = NoticeMessages.AuthView.RegistrationSucceed;
-            NoticeUtils.ShowNotice(message);
+            NoticeUtils.ShowNotice(message: NoticeMessages.AuthView.RegistrationSucceed);
         }
 
         public void OnRegistrationFailed()
         {
             registrationView?.EnableInteraction();
 
-            var message = NoticeMessages.AuthView.UnknownError;
-            NoticeUtils.ShowNotice(message);
+            NoticeUtils.ShowNotice(message: NoticeMessages.AuthView.UnknownError);
         }
 
         public void OnEmailExistsError()
         {
             registrationView?.EnableInteraction();
 
-            var message = NoticeMessages.AuthView.EmailAddressExists;
-            NoticeUtils.ShowNotice(message);
+            NoticeUtils.ShowNotice(message: NoticeMessages.AuthView.EmailAddressExists);
         }
     }
 }
