@@ -96,7 +96,6 @@ namespace Scripts.UI.Authenticator
             else
             {
                 loginView?.DisableInteraction();
-
                 authenticatorInteractor.Login(uiAuthenticationDetails);
             }
         }
@@ -133,7 +132,6 @@ namespace Scripts.UI.Authenticator
             else
             {
                 registrationView?.DisableInteraction();
-
                 authenticatorInteractor.Register(uiRegistrationDetails);
             }
         }
