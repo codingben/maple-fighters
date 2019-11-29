@@ -217,10 +217,8 @@ namespace Scripts.UI.CharacterSelection
 
         public void OnConnectionFailed()
         {
-            var message = NoticeMessages.CharacterView.ConnectionFailed;
-
             NoticeUtils.ShowNotice(
-                message, 
+                message: NoticeMessages.CharacterView.ConnectionFailed, 
                 () => SceneManager.LoadScene(sceneName: SceneNames.Main));
         }
 
@@ -263,9 +261,7 @@ namespace Scripts.UI.CharacterSelection
 
         public void OnCharacterUnvalidated()
         {
-            var message = 
-                NoticeMessages.CharacterView.CharacterValidationFailed;
-            NoticeUtils.ShowNotice(message);
+            NoticeUtils.ShowNotice(message: NoticeMessages.CharacterView.CharacterValidationFailed);
         }
 
         public void OnCharacterDeletionSucceed()
@@ -278,9 +274,7 @@ namespace Scripts.UI.CharacterSelection
 
         public void OnCharacterDeletionFailed()
         {
-            var message = 
-                NoticeMessages.CharacterView.CharacterDeletionFailed;
-            NoticeUtils.ShowNotice(message);
+            NoticeUtils.ShowNotice(message: NoticeMessages.CharacterView.CharacterDeletionFailed);
         }
 
         public void OnCharacterCreated()
@@ -297,17 +291,13 @@ namespace Scripts.UI.CharacterSelection
             {
                 case CharacterCreationFailed.Unknown:
                 {
-                    var message = 
-                        NoticeMessages.CharacterView.CharacterCreationFailed;
-                    NoticeUtils.ShowNotice(message);
+                    NoticeUtils.ShowNotice(message: NoticeMessages.CharacterView.CharacterCreationFailed);
                     break;
                 }
 
                 case CharacterCreationFailed.NameAlreadyInUse:
                 {
-                    var message = 
-                        NoticeMessages.CharacterView.NameAlreadyInUse;
-                    NoticeUtils.ShowNotice(message);
+                    NoticeUtils.ShowNotice(message: NoticeMessages.CharacterView.NameAlreadyInUse);
                     break;
                 }
             }
