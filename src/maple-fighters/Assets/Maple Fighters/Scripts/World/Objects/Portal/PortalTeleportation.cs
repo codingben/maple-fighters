@@ -52,7 +52,7 @@ namespace Scripts.World.Objects
                 if (map != 0)
                 {
                     var mapName = map.ToString();
-                    SceneManager.LoadScene(mapName);
+                    SceneManager.LoadScene(sceneName: mapName);
                 }
                 else
                 {
