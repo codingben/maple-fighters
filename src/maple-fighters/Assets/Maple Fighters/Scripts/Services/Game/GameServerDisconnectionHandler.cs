@@ -63,7 +63,7 @@ namespace Scripts.Services.Game
         {
             UnsubscribeFromDisconnectionNotifier();
 
-            SceneManager.LoadScene(SceneNames.Main);
+            SceneManager.LoadScene(sceneName: SceneNames.Main);
         }
     }
 }
