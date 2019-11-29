@@ -70,8 +70,7 @@ namespace Scripts.UI.GameServerBrowser
         {
             HideRefreshImage();
 
-            var message = NoticeMessages.GameServerBrowserView.ConnectionFailed;
-            NoticeUtils.ShowNotice(message);
+            NoticeUtils.ShowNotice(message: NoticeMessages.GameServerBrowserView.ConnectionFailed);
         }
 
         public void OnGameServerReceived(IEnumerable<UIGameServerButtonData> datas)
