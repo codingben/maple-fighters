@@ -6,14 +6,11 @@ using ExitGames.Client.Photon;
 using Network.Scripts;
 using PhotonClientImplementation;
 using ScriptableObjects.Configurations;
-using Scripts.Services.Authorizer;
 
 namespace Scripts.Services.Game
 {
     public class GameService : NetworkService
     {
-        public IAuthorizerApi AuthorizerApi { get; private set; }
-
         public ICharacterSelectorApi CharacterSelectorApi { get; private set; }
 
         public IGameSceneApi GameSceneApi { get; private set; }
@@ -49,7 +46,6 @@ namespace Scripts.Services.Game
 
         private void OnDestroy()
         {
-            ((IDisposable)AuthorizerApi)?.Dispose();
             ((IDisposable)CharacterSelectorApi)?.Dispose();
             ((IDisposable)GameSceneApi)?.Dispose();
 
@@ -63,13 +59,11 @@ namespace Scripts.Services.Game
             var isDummy = NetworkConfiguration.GetInstance().IsDummy();
             if (isDummy)
             {
-                AuthorizerApi = new DummyAuthorizerApi(serverPeer);
                 CharacterSelectorApi = new DummyCharacterSelectorApi(serverPeer);
                 GameSceneApi = new DummyGameSceneApi(serverPeer);
             }
             else
             {
-                AuthorizerApi = new AuthorizerApi(serverPeer);
                 CharacterSelectorApi = new CharacterSelectorApi(serverPeer);
                 GameSceneApi = new GameSceneApi(serverPeer);
             }
