@@ -8,6 +8,11 @@
         Authenticator,
 
         /// <summary>
+        /// The authorizer.
+        /// </summary>
+        Authorizer,
+
+        /// <summary>
         /// The game server provider.
         /// </summary>
         GameServerProvider,
