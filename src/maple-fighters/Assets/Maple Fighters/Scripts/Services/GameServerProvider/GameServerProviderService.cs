@@ -6,14 +6,11 @@ using ExitGames.Client.Photon;
 using Network.Scripts;
 using PhotonClientImplementation;
 using ScriptableObjects.Configurations;
-using Scripts.Services.Authorizer;
 
 namespace Scripts.Services.GameServerProvider
 {
     public class GameServerProviderService : NetworkService
     {
-        public IAuthorizerApi AuthorizerApi { get; private set; }
-
         public IGameServerProviderApi GameServerProviderApi { get; private set; }
 
         public bool IsConnected => gameServerProviderPeer != null && gameServerProviderPeer.IsConnected;
@@ -39,7 +36,6 @@ namespace Scripts.Services.GameServerProvider
 
         private void OnDestroy()
         {
-            ((IDisposable)AuthorizerApi)?.Dispose();
             ((IDisposable)GameServerProviderApi)?.Dispose();
 
             coroutinesExecutor?.Dispose();
@@ -52,12 +48,10 @@ namespace Scripts.Services.GameServerProvider
             var isDummy = NetworkConfiguration.GetInstance().IsDummy();
             if (isDummy)
             {
-                AuthorizerApi = new DummyAuthorizerApi(serverPeer);
                 GameServerProviderApi = new DummyGameServerProviderApi(serverPeer);
             }
             else
             {
-                AuthorizerApi = new AuthorizerApi(serverPeer);
                 GameServerProviderApi = new GameServerProviderApi(serverPeer);
             }
         }
