@@ -6,14 +6,11 @@ using ExitGames.Client.Photon;
 using Network.Scripts;
 using PhotonClientImplementation;
 using ScriptableObjects.Configurations;
-using Scripts.Services.Authorizer;
 
 namespace Scripts.Services.Chat
 {
     public class ChatService : NetworkService
     {
-        public IAuthorizerApi AuthorizerApi { get; private set; }
-
         public IChatApi ChatApi { get; private set; }
 
         private IServerPeer chatPeer;
@@ -40,7 +37,6 @@ namespace Scripts.Services.Chat
 
         private void OnDestroy()
         {
-            ((IDisposable)AuthorizerApi)?.Dispose();
             ((IDisposable)ChatApi)?.Dispose();
 
             coroutinesExecutor?.Dispose();
@@ -53,12 +49,10 @@ namespace Scripts.Services.Chat
             var isDummy = NetworkConfiguration.GetInstance().IsDummy();
             if (isDummy)
             {
-                AuthorizerApi = new DummyAuthorizerApi(serverPeer);
                 ChatApi = new DummyChatApi(serverPeer);
             }
             else
             {
-                AuthorizerApi = new AuthorizerApi(serverPeer);
                 ChatApi = new ChatApi(serverPeer);
             }
         }
