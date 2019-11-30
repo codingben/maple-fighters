@@ -18,19 +18,24 @@ MonoBehaviour:
     IpAddress: 127.0.0.1
     Port: 8000
     Protocol: 0
-  - Name: GameServerProvider
+  - Name: Authorizer
     ServerType: 1
     IpAddress: 127.0.0.1
     Port: 8001
     Protocol: 0
-  - Name: Game
+  - Name: GameServerProvider
     ServerType: 2
     IpAddress: 127.0.0.1
     Port: 8002
     Protocol: 0
-  - Name: Chat
+  - Name: Game
     ServerType: 3
     IpAddress: 127.0.0.1
     Port: 8003
+    Protocol: 0
+  - Name: Chat
+    ServerType: 4
+    IpAddress: 127.0.0.1
+    Port: 8004
     Protocol: 0
   Environment: 1
