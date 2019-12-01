@@ -76,7 +76,9 @@ namespace Scripts.Services.Chat
 
         protected override PeerConnectionInformation GetConnectionInfo()
         {
-            var serverInfo = NetworkConfiguration.GetInstance().GetServerInfo(ServerType.Chat);
+            var serverInfo = 
+                NetworkConfiguration.GetInstance()
+                    .GetServerInfo(ServerType.Chat);
             var ip = serverInfo.IpAddress;
             var port = serverInfo.Port;
 
@@ -85,7 +87,9 @@ namespace Scripts.Services.Chat
 
         protected override ConnectionProtocol GetConnectionProtocol()
         {
-            var serverInfo = NetworkConfiguration.GetInstance().GetServerInfo(ServerType.Chat);
+            var serverInfo = 
+                NetworkConfiguration.GetInstance()
+                    .GetServerInfo(ServerType.Chat);
             var protocol = serverInfo.Protocol;
 
             return protocol;
