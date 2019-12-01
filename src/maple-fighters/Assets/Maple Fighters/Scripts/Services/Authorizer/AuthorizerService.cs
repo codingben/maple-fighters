@@ -73,7 +73,9 @@ namespace Scripts.Services.Authorizer
 
         protected override PeerConnectionInformation GetConnectionInfo()
         {
-            var serverInfo = NetworkConfiguration.GetInstance().GetServerInfo(ServerType.Authorizer);
+            var serverInfo = 
+                NetworkConfiguration.GetInstance()
+                    .GetServerInfo(ServerType.Authorizer);
             var ip = serverInfo.IpAddress;
             var port = serverInfo.Port;
 
@@ -82,7 +84,9 @@ namespace Scripts.Services.Authorizer
 
         protected override ConnectionProtocol GetConnectionProtocol()
         {
-            var serverInfo = NetworkConfiguration.GetInstance().GetServerInfo(ServerType.Authorizer);
+            var serverInfo = 
+                NetworkConfiguration.GetInstance()
+                    .GetServerInfo(ServerType.Authorizer);
             var protocol = serverInfo.Protocol;
 
             return protocol;
