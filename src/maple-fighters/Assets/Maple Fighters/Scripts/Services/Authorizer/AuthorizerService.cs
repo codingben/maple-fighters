@@ -13,10 +13,7 @@ namespace Scripts.Services.Authorizer
     {
         public IAuthorizerApi AuthorizerApi { get; private set; }
 
-        public bool IsConnected => authorizerPeer != null && authorizerPeer.IsConnected;
-
         private IServerPeer authorizerPeer;
-
         private ExternalCoroutinesExecutor coroutinesExecutor;
 
         private void Awake()
