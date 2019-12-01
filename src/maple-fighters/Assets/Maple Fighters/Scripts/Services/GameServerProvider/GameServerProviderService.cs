@@ -11,9 +11,15 @@ namespace Scripts.Services.GameServerProvider
 {
     public class GameServerProviderService : NetworkService
     {
-        public IGameServerProviderApi GameServerProviderApi { get; private set; }
+        public IGameServerProviderApi GameServerProviderApi
+        {
+            get;
+            private set;
+        }
 
-        public bool IsConnected => gameServerProviderPeer != null && gameServerProviderPeer.IsConnected;
+        public bool IsConnected =>
+            gameServerProviderPeer != null
+            && gameServerProviderPeer.IsConnected;
 
         private IServerPeer gameServerProviderPeer;
         private ExternalCoroutinesExecutor coroutinesExecutor;
@@ -47,7 +53,8 @@ namespace Scripts.Services.GameServerProvider
             var isDummy = NetworkConfiguration.GetInstance().IsDummy();
             if (isDummy)
             {
-                GameServerProviderApi = new DummyGameServerProviderApi(serverPeer);
+                GameServerProviderApi =
+                    new DummyGameServerProviderApi(serverPeer);
             }
             else
             {
@@ -75,7 +82,9 @@ namespace Scripts.Services.GameServerProvider
 
         protected override PeerConnectionInformation GetConnectionInfo()
         {
-            var serverInfo = NetworkConfiguration.GetInstance().GetServerInfo(ServerType.GameServerProvider);
+            var serverInfo = 
+                NetworkConfiguration.GetInstance()
+                    .GetServerInfo(ServerType.GameServerProvider);
             var ip = serverInfo.IpAddress;
             var port = serverInfo.Port;
 
@@ -84,7 +93,9 @@ namespace Scripts.Services.GameServerProvider
 
         protected override ConnectionProtocol GetConnectionProtocol()
         {
-            var serverInfo = NetworkConfiguration.GetInstance().GetServerInfo(ServerType.GameServerProvider);
+            var serverInfo = 
+                NetworkConfiguration.GetInstance()
+                    .GetServerInfo(ServerType.GameServerProvider);
             var protocol = serverInfo.Protocol;
 
             return protocol;
