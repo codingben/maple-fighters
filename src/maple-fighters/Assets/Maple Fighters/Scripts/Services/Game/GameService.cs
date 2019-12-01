@@ -15,7 +15,8 @@ namespace Scripts.Services.Game
 
         public IGameSceneApi GameSceneApi { get; private set; }
 
-        public IPeerDisconnectionNotifier DisconnectionNotifier => gamePeer?.PeerDisconnectionNotifier;
+        public IPeerDisconnectionNotifier DisconnectionNotifier =>
+            gamePeer?.PeerDisconnectionNotifier;
 
         public bool IsConnected => gamePeer != null && gamePeer.IsConnected;
 
@@ -59,7 +60,8 @@ namespace Scripts.Services.Game
             var isDummy = NetworkConfiguration.GetInstance().IsDummy();
             if (isDummy)
             {
-                CharacterSelectorApi = new DummyCharacterSelectorApi(serverPeer);
+                CharacterSelectorApi =
+                    new DummyCharacterSelectorApi(serverPeer);
                 GameSceneApi = new DummyGameSceneApi(serverPeer);
             }
             else
@@ -104,7 +106,9 @@ namespace Scripts.Services.Game
 
         protected override ConnectionProtocol GetConnectionProtocol()
         {
-            var serverInfo = NetworkConfiguration.GetInstance().GetServerInfo(ServerType.Game);
+            var serverInfo = 
+                NetworkConfiguration.GetInstance()
+                    .GetServerInfo(ServerType.Game);
             var protocol = serverInfo.Protocol;
 
             return protocol;
