@@ -14,7 +14,6 @@ namespace Scripts.Services.Chat
         public IChatApi ChatApi { get; private set; }
 
         private IServerPeer chatPeer;
-
         private ExternalCoroutinesExecutor coroutinesExecutor;
 
         private void Awake()
