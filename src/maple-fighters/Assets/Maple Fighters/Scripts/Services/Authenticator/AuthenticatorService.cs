@@ -16,7 +16,6 @@ namespace Scripts.Services.Authenticator
         public bool IsConnected => authenticatorPeer != null && authenticatorPeer.IsConnected;
 
         private IServerPeer authenticatorPeer;
-
         private ExternalCoroutinesExecutor coroutinesExecutor;
 
         private void Awake()
