@@ -16,7 +16,6 @@ namespace Scripts.Services.GameServerProvider
         public bool IsConnected => gameServerProviderPeer != null && gameServerProviderPeer.IsConnected;
 
         private IServerPeer gameServerProviderPeer;
-
         private ExternalCoroutinesExecutor coroutinesExecutor;
 
         private void Awake()
