@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace Scripts.Gameplay.GameEntity
+namespace Scripts.Gameplay.Entity
 {
     public class EntityCollection : IEntityCollection
     {
