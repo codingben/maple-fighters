@@ -1,5 +1,5 @@
 ﻿using Game.Common;
-using Scripts.Gameplay.GameEntity;
+using Scripts.Gameplay.Entity;
 using Scripts.Gameplay.Player;
 using Scripts.Gameplay.PlayerCharacter;
 using Scripts.Services.Game;
