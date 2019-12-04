@@ -9,6 +9,7 @@ using Scripts.Services.Chat;
 using Scripts.Services.Game;
 using Scripts.UI.Chat;
 using Scripts.UI.Focus;
+using UI.Manager;
 using UnityEngine;
 
 namespace Scripts.Gameplay.Creator
