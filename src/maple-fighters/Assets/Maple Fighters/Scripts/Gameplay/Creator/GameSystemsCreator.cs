@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Network.Utils;
-using Scripts.Gameplay.GameEntity;
+using Scripts.Gameplay.Entity;
 using Scripts.Gameplay.Map;
 using Scripts.Gameplay.PlayerCharacter;
 using Scripts.Services.Chat;
