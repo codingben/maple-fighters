@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Scripts.Gameplay.GameEntity
 {
     [DisallowMultipleComponent]
-    public class Entity : MonoBehaviour, IEntity
+    public class EntityIdentifier : MonoBehaviour, IEntity
     {
         public int Id
         {
