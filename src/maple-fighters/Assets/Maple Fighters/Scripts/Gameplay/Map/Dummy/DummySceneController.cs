@@ -2,7 +2,7 @@
 using Scripts.Constants;
 using UnityEngine;
 
-namespace Scripts.World.Dummy
+namespace Scripts.Gameplay.Map.Dummy
 {
     public class DummySceneController : MonoBehaviour
     {
