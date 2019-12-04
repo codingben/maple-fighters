@@ -3,7 +3,7 @@ using Game.Common;
 using Scripts.Services.Game;
 using UnityEngine;
 
-namespace Scripts.World.Dummy
+namespace Scripts.Gameplay.Map.Dummy
 {
     public class DummyLocalEntityCreator : MonoBehaviour
     {
