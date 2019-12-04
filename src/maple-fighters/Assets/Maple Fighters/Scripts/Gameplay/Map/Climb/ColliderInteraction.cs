@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Scripts.Gameplay.Player
+namespace Scripts.Gameplay.Map.Climb
 {
     public class ColliderInteraction
     {
