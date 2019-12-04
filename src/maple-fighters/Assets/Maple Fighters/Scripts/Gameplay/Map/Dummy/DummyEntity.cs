@@ -2,7 +2,7 @@
 using Game.Common;
 using UnityEngine;
 
-namespace Scripts.World.Dummy
+namespace Scripts.Gameplay.Map.Dummy
 {
     [Serializable]
     public class DummyEntity
