@@ -1,7 +1,6 @@
-﻿using Scripts.Gameplay.Player;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace Scripts.Gameplay.PlayerCharacter
+namespace Scripts.Gameplay.Player
 {
     [RequireComponent(typeof(SpawnCharacter))]
     public class PlayerAnimatorProvideInitializer : MonoBehaviour
