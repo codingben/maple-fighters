@@ -1,8 +1,9 @@
 ﻿using Game.Common;
 using Scripts.Constants;
+using Scripts.Gameplay.Player;
 using UnityEngine;
 
-namespace Scripts.Gameplay.Player
+namespace Scripts.Gameplay.Map.Climb
 {
     [RequireComponent(typeof(PlayerController), typeof(Collider2D))]
     public class LadderInteractor : ClimbInteractor
