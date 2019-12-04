@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Scripts.Gameplay.PlayerCharacter
+namespace Scripts.Gameplay.Player
 {
     [RequireComponent(typeof(SpawnCharacter))]
     public class CharacterCollisionDisabler : MonoBehaviour
