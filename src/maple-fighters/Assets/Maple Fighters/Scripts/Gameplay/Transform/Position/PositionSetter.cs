@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Scripts.Gameplay.EntityTransform
 {
-    [RequireComponent(typeof(Entity))]
+    [RequireComponent(typeof(EntityIdentifier))]
     public class PositionSetter : MonoBehaviour
     {
         public event Action<Directions> DirectionChanged;
