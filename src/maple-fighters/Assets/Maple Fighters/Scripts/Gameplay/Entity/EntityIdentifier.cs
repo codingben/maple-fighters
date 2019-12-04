@@ -1,7 +1,7 @@
 ﻿using Scripts.Editor;
 using UnityEngine;
 
-namespace Scripts.Gameplay.GameEntity
+namespace Scripts.Gameplay.Entity
 {
     [DisallowMultipleComponent]
     public class EntityIdentifier : MonoBehaviour, IEntity
