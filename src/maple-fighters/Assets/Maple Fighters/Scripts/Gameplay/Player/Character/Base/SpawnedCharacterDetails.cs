@@ -1,7 +1,7 @@
 ﻿using Game.Common;
 using UnityEngine;
 
-namespace Scripts.Gameplay.PlayerCharacter
+namespace Scripts.Gameplay.Player
 {
     public class SpawnedCharacterDetails : MonoBehaviour, ISpawnedCharacterDetails
     {
