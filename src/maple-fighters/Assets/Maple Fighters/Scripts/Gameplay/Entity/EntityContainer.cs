@@ -2,7 +2,7 @@
 using Scripts.Services.Game;
 using UnityEngine;
 
-namespace Scripts.Gameplay.GameEntity
+namespace Scripts.Gameplay.Entity
 {
     public class EntityContainer : MonoBehaviour
     {
