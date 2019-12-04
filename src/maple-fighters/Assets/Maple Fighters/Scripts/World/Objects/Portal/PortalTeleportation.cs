@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using CommonTools.Coroutines;
 using Game.Common;
-using Scripts.Gameplay.GameEntity;
+using Scripts.Gameplay.Entity;
 using Scripts.Services.Game;
 using UnityEngine;
 using UnityEngine.SceneManagement;
