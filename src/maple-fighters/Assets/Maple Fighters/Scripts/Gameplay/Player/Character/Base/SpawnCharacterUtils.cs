@@ -3,7 +3,7 @@ using Scripts.Constants;
 using Scripts.Gameplay.Map;
 using UnityEngine;
 
-namespace Scripts.Gameplay.PlayerCharacter
+namespace Scripts.Gameplay.Player
 {
     public static class SpawnCharacterUtils
     {
