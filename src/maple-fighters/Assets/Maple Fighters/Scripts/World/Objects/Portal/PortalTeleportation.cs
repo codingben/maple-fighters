@@ -8,7 +8,7 @@ using UnityEngine.SceneManagement;
 
 namespace Scripts.World.Objects
 {
-    [RequireComponent(typeof(Entity))]
+    [RequireComponent(typeof(EntityIdentifier))]
     public class PortalTeleportation : MonoBehaviour
     {
         private int entityId;
