@@ -60,7 +60,7 @@ namespace Scripts.Gameplay.Map.Climb
 
         private void IgnoreGroundIfNeeded()
         {
-            var ground = Utils.GetGroundedCollider(transform.parent.position);
+            var ground = Player.Utils.GetGroundedCollider(transform.parent.position);
             if (ground != null)
             {
                 GetColliderInteraction().SetIgnoredCollider(ground);
