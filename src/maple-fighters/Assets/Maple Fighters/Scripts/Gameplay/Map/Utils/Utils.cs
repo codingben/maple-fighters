@@ -1,7 +1,7 @@
 ﻿using System.Text.RegularExpressions;
 using UnityEngine;
 
-namespace Scripts.Gameplay.Map
+namespace Scripts.Gameplay.Map.Utils
 {
     public static class Utils
     {
