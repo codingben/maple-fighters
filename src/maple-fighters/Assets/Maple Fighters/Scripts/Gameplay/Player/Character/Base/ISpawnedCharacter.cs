@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Scripts.Gameplay.PlayerCharacter
+namespace Scripts.Gameplay.Player
 {
     public interface ISpawnedCharacter
     {
