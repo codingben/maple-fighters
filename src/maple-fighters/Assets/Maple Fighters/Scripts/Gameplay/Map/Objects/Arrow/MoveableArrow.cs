@@ -35,7 +35,7 @@ namespace Scripts.Gameplay.Map.Objects
             if (camera != null)
             {
                 spriteRenderer.enabled = 
-                    Utils.IsInLayerMask(gameObject.layer, camera.cullingMask);
+                    IsInLayerMask(gameObject.layer, camera.cullingMask);
             }
         }
 
@@ -45,7 +45,7 @@ namespace Scripts.Gameplay.Map.Objects
             {
                 if (camera != null)
                 {
-                    while (Utils.IsInLayerMask(gameObject.layer, camera.cullingMask))
+                    while (IsInLayerMask(gameObject.layer, camera.cullingMask))
                     {
                         yield return StartCoroutine(MoveArrowUp());
                         yield return StartCoroutine(MoveArrowDown());
@@ -78,6 +78,11 @@ namespace Scripts.Gameplay.Map.Objects
                 yield return null;
             }
             while (Time.time < currentTime + moveTime);
+        }
+
+        private bool IsInLayerMask(int layer, LayerMask layermask)
+        {
+            return layermask == (layermask | (1 << layer));
         }
     }
 }
