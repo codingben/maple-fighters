@@ -1,5 +1,5 @@
 ﻿using Game.Common;
-using Scripts.Gameplay.EntityTransform;
+using Scripts.Gameplay.Entity;
 using UnityEngine;
 
 namespace Scripts.Gameplay.Player
