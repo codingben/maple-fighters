@@ -1,5 +1,5 @@
 ﻿using Scripts.Constants;
-using Scripts.World.Objects;
+using Scripts.Gameplay.Map.Objects;
 using UnityEngine;
 
 namespace Scripts.Gameplay.Player
