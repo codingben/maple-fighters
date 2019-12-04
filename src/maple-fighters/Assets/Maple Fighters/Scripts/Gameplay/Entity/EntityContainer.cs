@@ -55,7 +55,7 @@ namespace Scripts.Gameplay.GameEntity
             var position = 
                 new Vector2(parameters.SceneObject.X, parameters.SceneObject.Y);
 
-            localEntity = collection.Add(id, name, position);
+            localEntity = collection.Create(id, name, position);
         }
 
         private void OnEntityAdded(SceneObjectAddedEventParameters parameters)
@@ -65,12 +65,12 @@ namespace Scripts.Gameplay.GameEntity
             var position =
                 new Vector2(parameters.SceneObject.X, parameters.SceneObject.Y);
 
-            collection.Add(id, name, position);
+            collection.Create(id, name, position);
         }
 
         private void OnEntityRemoved(SceneObjectRemovedEventParameters parameters)
         {
-            collection.Remove(parameters.SceneObjectId);
+            collection.Destroy(parameters.SceneObjectId);
         }
 
         private void OnEntitiesAdded(SceneObjectsAddedEventParameters parameters)
@@ -81,7 +81,7 @@ namespace Scripts.Gameplay.GameEntity
                 var name = sceneObject.Name;
                 var position = new Vector2(sceneObject.X, sceneObject.Y);
 
-                collection.Add(id, name, position);
+                collection.Create(id, name, position);
             }
         }
 
@@ -89,7 +89,7 @@ namespace Scripts.Gameplay.GameEntity
         {
             foreach (var sceneObjectId in parameters.SceneObjectsId)
             {
-                collection.Remove(sceneObjectId);
+                collection.Destroy(sceneObjectId);
             }
         }
 
