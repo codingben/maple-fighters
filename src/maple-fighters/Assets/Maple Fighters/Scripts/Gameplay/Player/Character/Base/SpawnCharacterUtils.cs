@@ -1,6 +1,6 @@
 ﻿using Game.Common;
 using Scripts.Constants;
-using Scripts.Gameplay.Map;
+using UI.Manager;
 using UnityEngine;
 
 namespace Scripts.Gameplay.Player
