@@ -1,7 +1,7 @@
 ﻿using Game.Common;
 using UnityEngine;
 
-namespace Scripts.Gameplay.PlayerCharacter
+namespace Scripts.Gameplay.Player
 {
     [RequireComponent(typeof(SpawnCharacter), typeof(SpawnedCharacterDetails))]
     public class CharacterDirectionSetter : MonoBehaviour
