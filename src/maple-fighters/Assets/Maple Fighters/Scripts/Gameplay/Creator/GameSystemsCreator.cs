@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Network.Utils;
 using Scripts.Gameplay.Entity;
 using Scripts.Gameplay.Map;
-using Scripts.Gameplay.PlayerCharacter;
+using Scripts.Gameplay.Player;
 using Scripts.Services.Chat;
 using Scripts.Services.Game;
 using Scripts.UI.Chat;
