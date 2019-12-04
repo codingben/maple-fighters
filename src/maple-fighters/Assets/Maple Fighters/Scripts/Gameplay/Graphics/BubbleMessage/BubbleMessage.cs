@@ -1,5 +1,5 @@
 ﻿using System.Collections;
-using Scripts.World.Effects;
+using Scripts.Gameplay.Map.Effects;
 using UnityEngine;
 using UnityEngine.UI;
 
