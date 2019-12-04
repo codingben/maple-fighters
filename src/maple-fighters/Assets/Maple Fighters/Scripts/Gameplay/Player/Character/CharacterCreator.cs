@@ -4,7 +4,7 @@ using Scripts.Gameplay.Entity;
 using Scripts.Services.Game;
 using UnityEngine;
 
-namespace Scripts.Gameplay.PlayerCharacter
+namespace Scripts.Gameplay.Player
 {
     public class CharacterCreator : MonoBehaviour
     {
