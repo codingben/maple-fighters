@@ -1,7 +1,7 @@
 ﻿using System;
 using Game.Common;
 
-namespace Scripts.World.Dummy
+namespace Scripts.Gameplay.Map.Dummy
 {
     [Serializable]
     public class DummyCharacter
