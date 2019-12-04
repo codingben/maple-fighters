@@ -3,7 +3,7 @@ using CommonCommunicationInterfaces;
 using CommonTools.Coroutines;
 using Game.Common;
 using Network.Scripts;
-using Scripts.World.Dummy;
+using Scripts.Gameplay.Map.Dummy;
 
 namespace Scripts.Services.Game
 {
