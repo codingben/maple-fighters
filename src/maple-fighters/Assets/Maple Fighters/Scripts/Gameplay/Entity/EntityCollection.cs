@@ -12,8 +12,10 @@ namespace Scripts.Gameplay.GameEntity
             collection = new Dictionary<int, IEntity>();
         }
 
-        public IEntity Add(int id, string name, Vector2 position)
+        public IEntity Create(int id, string name, Vector2 position)
         {
+            IEntity entity = null;
+
             if (collection.ContainsKey(id))
             {
                 Debug.LogWarning($"The entity with id #{id} already exists.");
@@ -21,21 +23,25 @@ namespace Scripts.Gameplay.GameEntity
             else
             {
                 var gameObject = Utils.CreateGameObject(name, position);
-                var entity = gameObject?.GetComponent<IEntity>();
-                if (entity != null)
+                if (gameObject != null)
                 {
-                    entity.Id = id;
+                    entity = gameObject.GetComponent<IEntity>();
 
-                    collection.Add(id, entity);
+                    if (entity != null)
+                    {
+                        entity.Id = id;
 
-                    Debug.Log($"Added a new entity with id #{id}");
+                        collection.Add(id, entity);
+
+                        Debug.Log($"Added a new entity with id #{id}");
+                    }
                 }
             }
 
-            return TryGet(id);
+            return entity;
         }
 
-        public void Remove(int id)
+        public void Destroy(int id)
         {
             var entity = TryGet(id)?.GameObject;
             if (entity != null)
