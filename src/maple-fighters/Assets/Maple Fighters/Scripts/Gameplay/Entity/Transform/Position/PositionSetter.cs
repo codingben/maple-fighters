@@ -1,10 +1,9 @@
 ﻿using System;
 using Game.Common;
-using Scripts.Gameplay.Entity;
 using Scripts.Services.Game;
 using UnityEngine;
 
-namespace Scripts.Gameplay.EntityTransform
+namespace Scripts.Gameplay.Entity
 {
     [RequireComponent(typeof(EntityIdentifier))]
     public class PositionSetter : MonoBehaviour
