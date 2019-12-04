@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Scripts.Gameplay.GameEntity
+namespace Scripts.Gameplay.Entity
 {
     public static class Utils
     {
