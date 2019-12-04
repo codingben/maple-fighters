@@ -2,7 +2,7 @@
 using Scripts.Constants;
 using UnityEngine;
 
-namespace Scripts.Gameplay.Player
+namespace Scripts.Gameplay.Map.Climb
 {
     public abstract class ClimbInteractor : MonoBehaviour
     {
