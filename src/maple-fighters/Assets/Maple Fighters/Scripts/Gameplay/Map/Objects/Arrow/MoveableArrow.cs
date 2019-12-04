@@ -2,7 +2,7 @@
 using Scripts.Constants;
 using UnityEngine;
 
-namespace Scripts.Gameplay.Map
+namespace Scripts.Gameplay.Map.Objects
 {
     [RequireComponent(typeof(SpriteRenderer))]
     public class MoveableArrow : MonoBehaviour
