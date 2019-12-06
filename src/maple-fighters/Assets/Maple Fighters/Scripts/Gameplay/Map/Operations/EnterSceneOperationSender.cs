@@ -4,7 +4,7 @@ using CommonTools.Coroutines;
 using Scripts.Services.Game;
 using UnityEngine;
 
-namespace Scripts.Gameplay.Map
+namespace Scripts.Gameplay.Map.Operations
 {
     public class EnterSceneOperationSender : MonoBehaviour
     {
