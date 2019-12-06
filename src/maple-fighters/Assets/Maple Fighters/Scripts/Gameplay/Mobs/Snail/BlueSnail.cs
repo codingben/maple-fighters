@@ -1,6 +1,7 @@
 ﻿using Game.Common;
 using Scripts.Gameplay.Entity;
 using Scripts.Gameplay.Player;
+using Scripts.Gameplay.Player.Behaviours;
 using Scripts.Services.Game;
 using UnityEngine;
 
