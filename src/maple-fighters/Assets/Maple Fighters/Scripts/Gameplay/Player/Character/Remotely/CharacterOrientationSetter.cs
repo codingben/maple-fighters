@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Scripts.Gameplay.Player
 {
     [RequireComponent(typeof(SpawnCharacter), typeof(PositionSetter))]
-    public class CharacterOrientation : MonoBehaviour
+    public class CharacterOrientationSetter : MonoBehaviour
     {
         private Transform character;
         private PositionSetter positionSetter;
