@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using Scripts.Constants;
 using Scripts.Gameplay.Map.Effects;
 using UnityEngine;
 using UnityEngine.UI;
@@ -38,6 +39,21 @@ namespace Scripts.Gameplay.Graphics
 
             var fadeEffect = GetComponent<FadeEffect>();
             fadeEffect.UnFade(() => Destroy(gameObject));
+        }
+
+        public static void Create(Transform parent, string message, int time)
+        {
+            var bubbleMessageObject =
+                Resources.Load<GameObject>(Paths.Resources.BubbleMessagePath);
+            var bubbleMessageGameObject = Instantiate(
+                bubbleMessageObject,
+                parent.position,
+                Quaternion.identity,
+                parent);
+            var bubbleMessage =
+                bubbleMessageGameObject?.GetComponent<BubbleMessage>();
+            bubbleMessage?.SetMessage(message);
+            bubbleMessage?.WaitAndDestroy(time);
         }
     }
 }
