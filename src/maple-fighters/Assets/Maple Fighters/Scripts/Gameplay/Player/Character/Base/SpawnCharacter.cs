@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Scripts.Gameplay.Player
 {
-    [RequireComponent(typeof(SpawnedCharacterDetails), typeof(CharacterSpriteProvider))]
+    [RequireComponent(typeof(SpawnedCharacterDetails))]
     public class SpawnCharacter : MonoBehaviour, ISpawnedCharacter
     {
         public event Action CharacterSpawned;
@@ -18,8 +18,6 @@ namespace Scripts.Gameplay.Player
         private void Awake()
         {
             spawnedCharacterDetails = GetComponent<ISpawnedCharacterDetails>();
-            characterSpriteGameObject =
-                GetComponent<ICharacterSpriteGameObject>();
         }
 
         public void Spawn()
@@ -39,7 +37,13 @@ namespace Scripts.Gameplay.Player
 
         public GameObject GetCharacterSpriteGameObject()
         {
-            return characterSpriteGameObject.Provide();
+            if (characterSpriteGameObject == null)
+            {
+                characterSpriteGameObject = GetCharacterGameObject()
+                    ?.GetComponent<ICharacterSpriteGameObject>();
+            }
+
+            return characterSpriteGameObject?.Provide();
         }
 
         private GameObject Create(CharacterClasses characterClass)
