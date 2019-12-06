@@ -1,8 +1,7 @@
 ﻿using Scripts.Constants;
-using Scripts.Gameplay.Map.Objects;
 using UnityEngine;
 
-namespace Scripts.Gameplay.Player
+namespace Scripts.Gameplay.Map.Objects
 {
     public class PortalInteractor : MonoBehaviour
     {
