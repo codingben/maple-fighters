@@ -2,7 +2,7 @@
 using Game.Common;
 using UnityEngine;
 
-namespace Scripts.Gameplay.Player
+namespace Scripts.Gameplay.Player.Behaviours
 {
     [RequireComponent(typeof(PlayerController))]
     public class PlayerAttackedBehaviour : MonoBehaviour, IAttackPlayer
