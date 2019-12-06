@@ -23,8 +23,9 @@ namespace Scripts.Gameplay.Camera
 
         private void Update()
         {
-            var height = Mathf.RoundToInt(
-                targetWidth / (float)Screen.width * Screen.height);
+            var dimensions = (float)Screen.width * Screen.height;
+            var height = Mathf.RoundToInt(targetWidth / dimensions);
+
             camera.m_Lens.OrthographicSize = height / pixelsToUnits / 2;
         }
     }
