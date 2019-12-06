@@ -28,14 +28,9 @@ MonoBehaviour:
     IpAddress: 127.0.0.1
     Port: 8002
     Protocol: 0
-  - Name: Game
+  - Name: Chat
     ServerType: 3
     IpAddress: 127.0.0.1
     Port: 8003
-    Protocol: 0
-  - Name: Chat
-    ServerType: 4
-    IpAddress: 127.0.0.1
-    Port: 8004
     Protocol: 0
   Environment: 1
