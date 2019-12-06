@@ -18,11 +18,6 @@
         GameServerProvider,
 
         /// <summary>
-        /// The game.
-        /// </summary>
-        Game,
-
-        /// <summary>
         /// The chat.
         /// </summary>
         Chat
