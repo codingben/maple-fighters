@@ -106,12 +106,7 @@ namespace Scripts.Services.Game
 
         protected override ConnectionProtocol GetConnectionProtocol()
         {
-            var serverInfo = 
-                NetworkConfiguration.GetInstance()
-                    .GetServerInfo(ServerType.Game);
-            var protocol = serverInfo.Protocol;
-
-            return protocol;
+            return ConnectionProtocol.Udp;
         }
     }
 }
