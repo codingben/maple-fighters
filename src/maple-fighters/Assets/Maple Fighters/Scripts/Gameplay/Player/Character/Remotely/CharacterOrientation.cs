@@ -4,53 +4,54 @@ using UnityEngine;
 
 namespace Scripts.Gameplay.Player
 {
-    [RequireComponent(typeof(SpawnCharacter))]
+    [RequireComponent(typeof(SpawnCharacter), typeof(PositionSetter))]
     public class CharacterOrientation : MonoBehaviour
     {
+        private Transform Character
+        {
+            get
+            {
+                if (character == null)
+                {
+                    character = transform;
+                }
+
+                return character;
+            }
+
+            set => character = value;
+        }
+
         private Transform character;
+        private PositionSetter positionSetter;
+
         private ISpawnedCharacter spawnedCharacter;
 
         private void Awake()
         {
+            positionSetter = GetComponent<PositionSetter>();
             spawnedCharacter = GetComponent<ISpawnedCharacter>();
-
-            if (spawnedCharacter == null)
-            {
-                character = transform;
-            }
         }
 
         private void Start()
         {
-            if (spawnedCharacter != null)
-            {
-                spawnedCharacter.CharacterSpawned += OnCharacterSpawned;
-            }
-
-            var positionSetter = GetComponent<PositionSetter>();
-            if (positionSetter != null)
-            {
-                positionSetter.DirectionChanged += OnDirectionChanged;
-            }
+            spawnedCharacter.CharacterSpawned += OnCharacterSpawned;
+            positionSetter.DirectionChanged += OnDirectionChanged;
         }
 
         private void OnDestroy()
         {
-            if (spawnedCharacter != null)
-            {
-                spawnedCharacter.CharacterSpawned -= OnCharacterSpawned;
-            }
-
-            var positionSetter = GetComponent<PositionSetter>();
-            if (positionSetter != null)
-            {
-                positionSetter.DirectionChanged -= OnDirectionChanged;
-            }
+            spawnedCharacter.CharacterSpawned -= OnCharacterSpawned;
+            positionSetter.DirectionChanged -= OnDirectionChanged;
         }
 
         private void OnCharacterSpawned()
         {
-            character = spawnedCharacter.GetCharacterGameObject().transform;
+            var characterGameObject = spawnedCharacter.GetCharacterGameObject();
+            if (characterGameObject != null)
+            {
+                Character = characterGameObject.transform;
+            }
         }
 
         private void OnDirectionChanged(Directions direction)
@@ -60,25 +61,25 @@ namespace Scripts.Gameplay.Player
 
         private void SetDirection(Directions direction)
         {
-            var x = Mathf.Abs(character.localScale.x);
+            var x = Mathf.Abs(Character.localScale.x);
 
             switch (direction)
             {
                 case Directions.Left:
                 {
-                    character.localScale = new Vector3(
+                    Character.localScale = new Vector3(
                         x,
-                        character.localScale.y,
-                        character.localScale.z);
+                        Character.localScale.y,
+                        Character.localScale.z);
                     break;
                 }
 
                 case Directions.Right:
                 {
-                    character.localScale = new Vector3(
+                    Character.localScale = new Vector3(
                         -x,
-                        character.localScale.y,
-                        character.localScale.z);
+                        Character.localScale.y,
+                        Character.localScale.z);
                     break;
                 }
             }
@@ -86,8 +87,8 @@ namespace Scripts.Gameplay.Player
 
         public Directions GetDirection()
         {
-            var direction = 
-                character.localScale.x > 0 ? Directions.Left : Directions.Right;
+            var x = Character.localScale.x;
+            var direction = x > 0 ? Directions.Left : Directions.Right;
 
             return direction;
         }
