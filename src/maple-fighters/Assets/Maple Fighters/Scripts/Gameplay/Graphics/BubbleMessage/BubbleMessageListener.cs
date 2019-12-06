@@ -22,15 +22,16 @@ namespace Scripts.Gameplay.Graphics
 
         private void OnBubbleMessageReceived(BubbleMessageEventParameters parameters)
         {
-            var id = parameters.RequesterId;
-            var entity = EntityContainer.GetInstance().GetRemoteEntity(id)
+            var entityId = parameters.RequesterId;
+            var entity = EntityContainer.GetInstance().GetRemoteEntity(entityId)
                 ?.GameObject;
             if (entity != null)
             {
                 var owner = entity.transform;
                 var message = parameters.Message;
                 var time = parameters.Time;
-                BubbleMessageCreator.Create(owner, message, time);
+
+                BubbleMessage.Create(owner, message, time);
             }
         }
     }
