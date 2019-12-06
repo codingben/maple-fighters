@@ -7,21 +7,6 @@ namespace Scripts.Gameplay.Player
     [RequireComponent(typeof(SpawnCharacter), typeof(PositionSetter))]
     public class CharacterOrientation : MonoBehaviour
     {
-        private Transform Character
-        {
-            get
-            {
-                if (character == null)
-                {
-                    character = transform;
-                }
-
-                return character;
-            }
-
-            set => character = value;
-        }
-
         private Transform character;
         private PositionSetter positionSetter;
 
@@ -48,10 +33,7 @@ namespace Scripts.Gameplay.Player
         private void OnCharacterSpawned()
         {
             var characterGameObject = spawnedCharacter.GetCharacterGameObject();
-            if (characterGameObject != null)
-            {
-                Character = characterGameObject.transform;
-            }
+            character = characterGameObject.transform;
         }
 
         private void OnDirectionChanged(Directions direction)
@@ -61,25 +43,25 @@ namespace Scripts.Gameplay.Player
 
         private void SetDirection(Directions direction)
         {
-            var x = Mathf.Abs(Character.localScale.x);
+            var x = Mathf.Abs(character.localScale.x);
 
             switch (direction)
             {
                 case Directions.Left:
                 {
-                    Character.localScale = new Vector3(
+                    character.localScale = new Vector3(
                         x,
-                        Character.localScale.y,
-                        Character.localScale.z);
+                        character.localScale.y,
+                        character.localScale.z);
                     break;
                 }
 
                 case Directions.Right:
                 {
-                    Character.localScale = new Vector3(
+                    character.localScale = new Vector3(
                         -x,
-                        Character.localScale.y,
-                        Character.localScale.z);
+                        character.localScale.y,
+                        character.localScale.z);
                     break;
                 }
             }
@@ -87,7 +69,7 @@ namespace Scripts.Gameplay.Player
 
         public Directions GetDirection()
         {
-            var x = Character.localScale.x;
+            var x = character.localScale.x;
             var direction = x > 0 ? Directions.Left : Directions.Right;
 
             return direction;
