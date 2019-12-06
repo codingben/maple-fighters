@@ -1,7 +1,7 @@
 using Game.Common;
 using UnityEngine;
 
-namespace Scripts.Gameplay.Player
+namespace Scripts.Gameplay.Player.States
 {
     public class PlayerAttackedState : IPlayerStateBehaviour
     {
