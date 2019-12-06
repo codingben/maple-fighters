@@ -32,7 +32,8 @@ namespace Scripts.Gameplay.Player
 
         private void OnCharacterSpawned()
         {
-            var characterGameObject = spawnedCharacter.GetCharacterGameObject();
+            var characterGameObject = 
+                spawnedCharacter.GetCharacterGameObject();
             character = characterGameObject.transform;
         }
 
