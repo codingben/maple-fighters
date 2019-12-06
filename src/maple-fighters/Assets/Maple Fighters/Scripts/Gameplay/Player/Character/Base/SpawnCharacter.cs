@@ -1,7 +1,6 @@
 ﻿using System;
 using Game.Common;
 using Scripts.Constants;
-using UI.Manager;
 using UnityEngine;
 
 namespace Scripts.Gameplay.Player
@@ -21,11 +20,10 @@ namespace Scripts.Gameplay.Player
 
         public void Spawn()
         {
-            var characterDetails =
-                spawnedCharacterDetails.GetCharacterDetails();
-            var characterClass = characterDetails.Character.CharacterType;
+            var details = spawnedCharacterDetails.GetCharacterDetails();
+            var type = details.Character.CharacterType;
 
-            spawnedCharacter = Create(characterClass);
+            spawnedCharacter = Create(type);
 
             CharacterSpawned?.Invoke();
         }
@@ -51,19 +49,14 @@ namespace Scripts.Gameplay.Player
             var path =
                 string.Format(Paths.Resources.GameObjectsPath, characterClass);
             var characterObject = Resources.Load<GameObject>(path);
+            var position = characterObject.transform.localPosition;
 
             // Creating the character
-            var spawnedCharacter =
-                Instantiate(characterObject, Vector3.zero, Quaternion.identity, transform);
+            var characterGameObject = Instantiate(characterObject, transform);
+            characterGameObject.transform.localPosition = position;
+            characterGameObject.transform.SetAsFirstSibling();
 
-            // Sets the position
-            spawnedCharacter.transform.localPosition = characterObject.transform.localPosition;
-            spawnedCharacter.transform.SetAsFirstSibling();
-
-            // Sets the character name
-            spawnedCharacter.name = spawnedCharacter.name.RemoveCloneFromName();
-
-            return spawnedCharacter;
+            return characterGameObject;
         }
     }
 }
