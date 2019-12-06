@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using Scripts.Constants;
-using Scripts.Gameplay.Map.Effects;
 using UnityEngine;
 using UnityEngine.UI;
 
