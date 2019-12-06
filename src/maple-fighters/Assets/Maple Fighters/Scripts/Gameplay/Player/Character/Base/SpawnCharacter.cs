@@ -5,17 +5,21 @@ using UnityEngine;
 
 namespace Scripts.Gameplay.Player
 {
-    [RequireComponent(typeof(SpawnedCharacterDetails))]
+    [RequireComponent(typeof(SpawnedCharacterDetails), typeof(CharacterSpriteProvider))]
     public class SpawnCharacter : MonoBehaviour, ISpawnedCharacter
     {
         public event Action CharacterSpawned;
 
         private GameObject spawnedCharacter;
+
         private ISpawnedCharacterDetails spawnedCharacterDetails;
+        private ICharacterSpriteGameObject characterSpriteGameObject;
 
         private void Awake()
         {
             spawnedCharacterDetails = GetComponent<ISpawnedCharacterDetails>();
+            characterSpriteGameObject =
+                GetComponent<ICharacterSpriteGameObject>();
         }
 
         public void Spawn()
@@ -35,12 +39,7 @@ namespace Scripts.Gameplay.Player
 
         public GameObject GetCharacterSpriteGameObject()
         {
-            const int CharacterIndex = 0;
-
-            var characterSprite =
-                spawnedCharacter?.transform.GetChild(CharacterIndex);
-
-            return characterSprite?.gameObject;
+            return characterSpriteGameObject.Provide();
         }
 
         private GameObject Create(CharacterClasses characterClass)
