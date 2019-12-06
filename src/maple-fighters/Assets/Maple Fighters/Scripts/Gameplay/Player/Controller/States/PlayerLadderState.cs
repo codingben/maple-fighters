@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Scripts.Gameplay.Player
+namespace Scripts.Gameplay.Player.States
 {
     public class PlayerLadderState : IPlayerStateBehaviour
     {
