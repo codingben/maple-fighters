@@ -25,8 +25,7 @@ namespace Scripts.Gameplay.Player
                 spawnedCharacterDetails.GetCharacterDetails();
             var characterClass = characterDetails.Character.CharacterType;
 
-            spawnedCharacter =
-                SpawnCharacterUtils.Create(parent: transform, characterClass);
+            spawnedCharacter = Create(characterClass);
 
             CharacterSpawned?.Invoke();
         }
@@ -46,7 +45,7 @@ namespace Scripts.Gameplay.Player
             return characterSprite?.gameObject;
         }
 
-        public static GameObject Create(Transform parent, CharacterClasses characterClass)
+        private GameObject Create(CharacterClasses characterClass)
         {
             // Loading the character
             var path =
@@ -55,7 +54,7 @@ namespace Scripts.Gameplay.Player
 
             // Creating the character
             var spawnedCharacter =
-                Instantiate(characterObject, Vector3.zero, Quaternion.identity, parent);
+                Instantiate(characterObject, Vector3.zero, Quaternion.identity, transform);
 
             // Sets the position
             spawnedCharacter.transform.localPosition = characterObject.transform.localPosition;
