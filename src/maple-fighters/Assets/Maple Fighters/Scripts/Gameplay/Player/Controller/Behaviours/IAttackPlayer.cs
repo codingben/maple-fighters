@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Scripts.Gameplay.Player
+namespace Scripts.Gameplay.Player.Behaviours
 {
     public interface IAttackPlayer
     {
