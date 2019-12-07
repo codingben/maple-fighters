@@ -47,7 +47,7 @@ namespace Scripts.Gameplay.Map.Dummy
                     characterSpawnDetails);
 
             var gameService = FindObjectOfType<GameService>();
-            gameService?.GameSceneApi.SceneEntered.Invoke(parameters);
+            gameService?.GameSceneApi?.SceneEntered.Invoke(parameters);
         }
     }
 }
