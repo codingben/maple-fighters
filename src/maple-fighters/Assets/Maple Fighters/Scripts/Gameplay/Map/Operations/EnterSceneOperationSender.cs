@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using CommonTools.Coroutines;
 using Scripts.Services.Game;
 using UnityEngine;
@@ -13,7 +12,7 @@ namespace Scripts.Gameplay.Map.Operations
         private void Start()
         {
             coroutinesExecutor = new ExternalCoroutinesExecutor();
-            coroutinesExecutor.StartTask(EnterSceneAsync, EnterSceneFailed);
+            coroutinesExecutor.StartTask(EnterSceneAsync);
         }
 
         private void Update()
@@ -31,13 +30,12 @@ namespace Scripts.Gameplay.Map.Operations
             var gameService = FindObjectOfType<GameService>();
             if (gameService != null)
             {
-                await gameService.GameSceneApi.EnterSceneAsync(yield);
+                var api = gameService.GameSceneApi;
+                if (api != null)
+                {
+                    await gameService.GameSceneApi.EnterSceneAsync(yield);
+                }
             }
-        }
-
-        private void EnterSceneFailed(Exception exception)
-        {
-            Debug.LogError("Failed to send enter scene operation.");
         }
     }
 }
