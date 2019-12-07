@@ -18,10 +18,10 @@ namespace Scripts.Gameplay.Creator
     {
         private void Awake()
         {
+            CreateGameComponents(GetSetterComponents());
             CreateGameComponents(GetCreatorsComponents());
             CreateGameComponents(GetContainersComponents());
             CreateGameComponents(GetGUIControllersComponents());
-            CreateGameComponents(GetSetterComponents());
             CreateGameComponents(GetServicesComponents());
 
             Destroy(gameObject);
