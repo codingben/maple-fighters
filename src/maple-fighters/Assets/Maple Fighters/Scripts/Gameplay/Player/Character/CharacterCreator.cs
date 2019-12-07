@@ -13,16 +13,16 @@ namespace Scripts.Gameplay.Player
         private void Start()
         {
             gameService = FindObjectOfType<GameService>();
-            gameService?.GameSceneApi.SceneEntered.AddListener(OnSceneEntered);
-            gameService?.GameSceneApi.CharacterAdded.AddListener(OnCharacterAdded);
-            gameService?.GameSceneApi.CharactersAdded.AddListener(OnCharactersAdded);
+            gameService?.GameSceneApi?.SceneEntered.AddListener(OnSceneEntered);
+            gameService?.GameSceneApi?.CharacterAdded.AddListener(OnCharacterAdded);
+            gameService?.GameSceneApi?.CharactersAdded.AddListener(OnCharactersAdded);
         }
 
         private void OnDisable()
         {
-            gameService?.GameSceneApi.SceneEntered.RemoveListener(OnSceneEntered);
-            gameService?.GameSceneApi.CharacterAdded.RemoveListener(OnCharacterAdded);
-            gameService?.GameSceneApi.CharactersAdded.RemoveListener(OnCharactersAdded);
+            gameService?.GameSceneApi?.SceneEntered.RemoveListener(OnSceneEntered);
+            gameService?.GameSceneApi?.CharacterAdded.RemoveListener(OnCharacterAdded);
+            gameService?.GameSceneApi?.CharactersAdded.RemoveListener(OnCharactersAdded);
         }
 
         private void OnSceneEntered(EnterSceneResponseParameters parameters)
