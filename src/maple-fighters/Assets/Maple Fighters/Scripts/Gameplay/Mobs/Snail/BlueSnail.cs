@@ -17,12 +17,12 @@ namespace Scripts.Gameplay.Mobs
         private void Start()
         {
             gameService = FindObjectOfType<GameService>();
-            gameService?.GameSceneApi.PlayerAttacked.AddListener(OnPlayerAttacked);
+            gameService?.GameSceneApi?.PlayerAttacked.AddListener(OnPlayerAttacked);
         }
 
         private void OnDisable()
         {
-            gameService?.GameSceneApi.PlayerAttacked.RemoveListener(OnPlayerAttacked);
+            gameService?.GameSceneApi?.PlayerAttacked.RemoveListener(OnPlayerAttacked);
         }
 
         private void OnPlayerAttacked(PlayerAttackedEventParameters parameters)
