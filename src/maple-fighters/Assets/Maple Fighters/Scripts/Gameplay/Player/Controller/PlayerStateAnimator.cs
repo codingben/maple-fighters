@@ -22,14 +22,14 @@ namespace Scripts.Gameplay.Player
         private void Start()
         {
             gameService = FindObjectOfType<GameService>();
-            gameService?.GameSceneApi.SceneObjectsAdded.AddListener(OnSceneObjectsAdded);
-            gameService?.GameSceneApi.PlayerStateChanged.AddListener(OnPlayerStateChanged);
+            gameService?.GameSceneApi?.SceneObjectsAdded.AddListener(OnSceneObjectsAdded);
+            gameService?.GameSceneApi?.PlayerStateChanged.AddListener(OnPlayerStateChanged);
         }
 
         private void OnDisable()
         {
-            gameService?.GameSceneApi.SceneObjectsAdded.RemoveListener(OnSceneObjectsAdded);
-            gameService?.GameSceneApi.PlayerStateChanged.RemoveListener(OnPlayerStateChanged);
+            gameService?.GameSceneApi?.SceneObjectsAdded.RemoveListener(OnSceneObjectsAdded);
+            gameService?.GameSceneApi?.PlayerStateChanged.RemoveListener(OnPlayerStateChanged);
         }
 
         public void SetPlayerState(PlayerState playerState)
@@ -72,7 +72,7 @@ namespace Scripts.Gameplay.Player
             var parameters =
                 new UpdatePlayerStateRequestParameters(playerState);
 
-            gameService?.GameSceneApi.UpdatePlayerState(parameters);
+            gameService?.GameSceneApi?.UpdatePlayerState(parameters);
         }
 
         private void SetPlayerAnimationState(Animator animator, PlayerState playerState)
