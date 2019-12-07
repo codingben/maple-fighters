@@ -38,12 +38,12 @@ namespace Scripts.Gameplay.Entity
         private void Start()
         {
             gameService = FindObjectOfType<GameService>();
-            gameService?.GameSceneApi.PositionChanged.AddListener(OnPositionChanged);
+            gameService?.GameSceneApi?.PositionChanged.AddListener(OnPositionChanged);
         }
 
         private void OnDisable()
         {
-            gameService?.GameSceneApi.PositionChanged.RemoveListener(OnPositionChanged);
+            gameService?.GameSceneApi?.PositionChanged.RemoveListener(OnPositionChanged);
         }
 
         private void OnPositionChanged(SceneObjectPositionChangedEventParameters parameters)
