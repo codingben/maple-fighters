@@ -31,21 +31,21 @@ namespace Scripts.Gameplay.Entity
         private void Start()
         {
             gameService = FindObjectOfType<GameService>();
-            gameService?.GameSceneApi.SceneEntered.AddListener(OnLocalEntityEntered);
-            gameService?.GameSceneApi.SceneObjectAdded.AddListener(OnEntityAdded);
-            gameService?.GameSceneApi.SceneObjectRemoved.AddListener(OnEntityRemoved);
-            gameService?.GameSceneApi.SceneObjectsAdded.AddListener(OnEntitiesAdded);
-            gameService?.GameSceneApi.SceneObjectsRemoved.AddListener(OnEntitiesRemoved);
+            gameService?.GameSceneApi?.SceneEntered.AddListener(OnLocalEntityEntered);
+            gameService?.GameSceneApi?.SceneObjectAdded.AddListener(OnEntityAdded);
+            gameService?.GameSceneApi?.SceneObjectRemoved.AddListener(OnEntityRemoved);
+            gameService?.GameSceneApi?.SceneObjectsAdded.AddListener(OnEntitiesAdded);
+            gameService?.GameSceneApi?.SceneObjectsRemoved.AddListener(OnEntitiesRemoved);
         }
 
         private void OnDisable()
         {
             // TODO: Remove SceneLeft event
-            gameService?.GameSceneApi.SceneEntered.RemoveListener(OnLocalEntityEntered);
-            gameService?.GameSceneApi.SceneObjectAdded.RemoveListener(OnEntityAdded);
-            gameService?.GameSceneApi.SceneObjectRemoved.RemoveListener(OnEntityRemoved);
-            gameService?.GameSceneApi.SceneObjectsAdded.RemoveListener(OnEntitiesAdded);
-            gameService?.GameSceneApi.SceneObjectsRemoved.RemoveListener(OnEntitiesRemoved);
+            gameService?.GameSceneApi?.SceneEntered.RemoveListener(OnLocalEntityEntered);
+            gameService?.GameSceneApi?.SceneObjectAdded.RemoveListener(OnEntityAdded);
+            gameService?.GameSceneApi?.SceneObjectRemoved.RemoveListener(OnEntityRemoved);
+            gameService?.GameSceneApi?.SceneObjectsAdded.RemoveListener(OnEntitiesAdded);
+            gameService?.GameSceneApi?.SceneObjectsRemoved.RemoveListener(OnEntitiesRemoved);
         }
 
         private void OnLocalEntityEntered(EnterSceneResponseParameters parameters)
