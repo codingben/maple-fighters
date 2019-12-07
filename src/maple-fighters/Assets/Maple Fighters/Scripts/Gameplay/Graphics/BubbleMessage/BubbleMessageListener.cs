@@ -12,12 +12,12 @@ namespace Scripts.Gameplay.Graphics
         private void Start()
         {
             gameService = FindObjectOfType<GameService>();
-            gameService?.GameSceneApi.BubbleMessageReceived.AddListener(OnBubbleMessageReceived);
+            gameService?.GameSceneApi?.BubbleMessageReceived.AddListener(OnBubbleMessageReceived);
         }
 
         private void OnDisable()
         {
-            gameService?.GameSceneApi.BubbleMessageReceived.RemoveListener(OnBubbleMessageReceived);
+            gameService?.GameSceneApi?.BubbleMessageReceived.RemoveListener(OnBubbleMessageReceived);
         }
 
         private void OnBubbleMessageReceived(BubbleMessageEventParameters parameters)
