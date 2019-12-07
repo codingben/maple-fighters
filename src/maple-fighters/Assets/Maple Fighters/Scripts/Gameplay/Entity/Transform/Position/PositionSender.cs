@@ -38,7 +38,7 @@ namespace Scripts.Gameplay.Entity
                     var parameters =
                         new UpdatePositionRequestParameters(x, y, z);
 
-                    gameService.GameSceneApi.UpdatePosition(parameters);
+                    gameService.GameSceneApi?.UpdatePosition(parameters);
                 }
             }
         }
