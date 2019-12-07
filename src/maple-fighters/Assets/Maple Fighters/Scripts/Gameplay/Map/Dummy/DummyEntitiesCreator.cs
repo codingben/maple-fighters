@@ -35,7 +35,7 @@ namespace Scripts.Gameplay.Map.Dummy
                         dummyEntity.Direction));
 
                 var gameService = FindObjectOfType<GameService>();
-                gameService?.GameSceneApi.SceneObjectAdded.Invoke(parameters);
+                gameService?.GameSceneApi?.SceneObjectAdded.Invoke(parameters);
             }
         }
     }
