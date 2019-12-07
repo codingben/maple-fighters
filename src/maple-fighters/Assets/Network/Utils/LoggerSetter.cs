@@ -1,5 +1,4 @@
-﻿using System;
-using CommonTools.Log;
+﻿using CommonTools.Log;
 using UnityEngine;
 
 namespace Network.Utils
@@ -8,17 +7,7 @@ namespace Network.Utils
     {
         private void Awake()
         {
-            try
-            {
-                if (LogUtils.Logger == null)
-                {
-                    LogUtils.Logger = new Logger();
-                }
-            }
-            catch (Exception)
-            {
-                // Left blank intentionally
-            }
+            LogUtils.Logger = new Logger();
 
             Destroy(gameObject);
         }

@@ -1,5 +1,4 @@
-﻿using System;
-using CommonTools.Coroutines;
+﻿using CommonTools.Coroutines;
 using UnityEngine;
 
 namespace Network.Utils
@@ -8,17 +7,7 @@ namespace Network.Utils
     {
         private void Awake()
         {
-            try
-            {
-                if (TimeProviders.DefaultTimeProvider == null)
-                {
-                    TimeProviders.DefaultTimeProvider = new GameTimeProvider();
-                }
-            }
-            catch (Exception)
-            {
-                // Left blank intentionally
-            }
+            TimeProviders.DefaultTimeProvider = new GameTimeProvider();
 
             Destroy(gameObject);
         }
