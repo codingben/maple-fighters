@@ -33,7 +33,7 @@ namespace Scripts.Gameplay.Map.Operations
                 var api = gameService.GameSceneApi;
                 if (api != null)
                 {
-                    await gameService.GameSceneApi.EnterSceneAsync(yield);
+                    await gameService.GameSceneApi?.EnterSceneAsync(yield);
                 }
             }
         }
