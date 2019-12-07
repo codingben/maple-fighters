@@ -44,7 +44,7 @@ namespace Scripts.Gameplay.Map.Objects
             if (gameService != null)
             {
                 var parameters = 
-                    await gameService.GameSceneApi.ChangeSceneAsync(
+                    await gameService.GameSceneApi?.ChangeSceneAsync(
                         yield,
                         new ChangeSceneRequestParameters(entityId));
 
