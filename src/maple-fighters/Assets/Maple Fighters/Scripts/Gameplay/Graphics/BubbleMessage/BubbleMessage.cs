@@ -43,7 +43,7 @@ namespace Scripts.Gameplay.Graphics
         public static void Create(Transform parent, string message, int time)
         {
             var path = 
-                string.Format(Paths.Resources.Game.GraphicsPath, "BubbleMessage");
+                string.Format(Paths.Resources.Game.Graphics, "BubbleMessage");
             var bubbleMessageObject = Resources.Load<GameObject>(path);
             var bubbleMessageGameObject = Instantiate(
                 bubbleMessageObject,
