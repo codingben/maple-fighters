@@ -12,7 +12,7 @@ namespace ScriptableObjects.Utils
             {
                 var name = typeof(TObject).Name;
                 var path = 
-                    string.Format(Paths.Resources.ConfigurationsPath, name);
+                    string.Format(Paths.Resources.Configurations, name);
                 instance = Resources.Load<TObject>(path);
             }
 
