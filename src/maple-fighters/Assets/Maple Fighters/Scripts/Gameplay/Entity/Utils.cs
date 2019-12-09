@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Scripts.Constants;
+using UnityEngine;
 
 namespace Scripts.Gameplay.Entity
 {
@@ -8,7 +9,8 @@ namespace Scripts.Gameplay.Entity
         {
             GameObject gameObject = null;
 
-            var entity = Resources.Load($"Game/{name}");
+            var path = string.Format(Paths.Resources.Game.Entities, name);
+            var entity = Resources.Load(path);
             if (entity != null)
             {
                 gameObject =
