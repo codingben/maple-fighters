@@ -50,7 +50,7 @@ namespace Scripts.Gameplay.Player
         {
             // Loading the character
             var path =
-                string.Format(Paths.Resources.GameObjectsPath, characterClass);
+                string.Format(Paths.Resources.Game.Characters, characterClass);
             var characterObject = Resources.Load<GameObject>(path);
             var position = characterObject.transform.localPosition;
 
