@@ -15,7 +15,7 @@ namespace Scripts.Gameplay.Graphics
             Fade,
 
             /// <summary>
-            /// The unfade.
+            /// The un-fade.
             /// </summary>
             UnFade
         }
