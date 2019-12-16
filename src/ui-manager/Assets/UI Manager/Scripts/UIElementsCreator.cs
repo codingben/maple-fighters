@@ -1,25 +1,21 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 namespace UI.Manager
 {
     public class UIElementsCreator : Singleton<UIElementsCreator>
     {
-        private const string UiElementsPath = "UI/{0}";
-        private const string UiBackground = "UI Background";
-        private const string UiForeground = "UI Foreground";
-
         private UILayers uiLayers;
 
         private void Awake()
         {
-            var background = FindOrCreateUILayer(UiBackground);
-            var foreground = FindOrCreateUILayer(UiForeground);
+            var background = CreateCanvas("UI Background", sortingOrder: 0);
+            var foreground = CreateCanvas("UI Foreground", sortingOrder: 1);
 
-            uiLayers = 
-                new UILayers(background.transform, foreground.transform);
-            
-            UIUtils.CreateEventSystem<EventSystem, StandaloneInputModule>();
+            uiLayers = new UILayers(background, foreground);
+
+            CreateEventSystem();
         }
 
         public TUIElement Create<TUIElement>(UILayer uiLayer = UILayer.Foreground, UIIndex uiIndex = UIIndex.Start, Transform parent = null)
@@ -42,17 +38,43 @@ namespace UI.Manager
             return uiElement;
         }
 
-        private Transform FindOrCreateUILayer(string uiLayerName)
+        private Transform CreateCanvas(string name, int sortingOrder)
         {
-            var uiLayer = GameObject.Find(uiLayerName);
-            if (uiLayer == null)
+            // Game Object
+            var canvasGameObject = new GameObject(name, typeof(Canvas));
+
+            // Canvas
+            var canvas = canvasGameObject.GetComponent<Canvas>();
+            canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+            canvas.sortingOrder = sortingOrder;
+
+            // Canvas Scaler
+            var canvasScaler = canvasGameObject.AddComponent<CanvasScaler>();
+            canvasScaler.uiScaleMode =
+                CanvasScaler.ScaleMode.ScaleWithScreenSize;
+            canvasScaler.matchWidthOrHeight = 1;
+
+            // Graphic Raycaster
+            canvasGameObject.AddComponent<GraphicRaycaster>();
+
+            // Canvas Group
+            var canvasGroup = canvasGameObject.AddComponent<CanvasGroup>();
+            canvasGroup.alpha = 1;
+            canvasGroup.interactable = true;
+            canvasGroup.blocksRaycasts = true;
+
+            return canvasGameObject.GetComponent<Transform>();
+        }
+
+        private void CreateEventSystem()
+        {
+            var eventSystem = FindObjectOfType<EventSystem>();
+            if (eventSystem == null)
             {
-                var path = string.Format(UiElementsPath, uiLayerName);
-
-                uiLayer = Utils.LoadAndCreateGameObject(path);
+                var gameObject = 
+                    new GameObject("Event System", typeof(EventSystem));
+                gameObject.AddComponent<StandaloneInputModule>();
             }
-
-            return uiLayer.transform;
         }
     }
 }
