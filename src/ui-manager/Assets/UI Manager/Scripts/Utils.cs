@@ -6,17 +6,20 @@ namespace UI.Manager
     public static class Utils
     {
         /// <summary>
-        /// Loads and creates a new game object from the resources.
+        /// Creates a new element from resources.
         /// </summary>
         /// <param name="path">
         /// The path.
         /// </param>
+        /// <typeparam name="TUIElement">
+        /// </typeparam>
         /// <returns>
-        /// The <see cref="GameObject"/>.
+        /// The <see cref="TUIElement"/>.
         /// </returns>
-        public static GameObject LoadAndCreateGameObject(string path)
+        public static TUIElement LoadAndCreateUIElement<TUIElement>(string path)
+            where TUIElement : UIElement
         {
-            var prefab = Resources.Load(path) as GameObject;
+            var prefab = Resources.Load<TUIElement>(path);
             if (prefab == null)
             {
                 throw new UtilsException(
@@ -28,9 +31,10 @@ namespace UI.Manager
                 Vector3.zero,
                 Quaternion.identity);
             gameObject.name = prefab.name.RemoveCloneFromName();
+            gameObject.name = prefab.name.MakeSpaceBetweenWords();
             gameObject.transform.position = prefab.transform.position;
 
-            return gameObject;
+            return gameObject.GetComponent<TUIElement>();
         }
 
         /// <summary>
