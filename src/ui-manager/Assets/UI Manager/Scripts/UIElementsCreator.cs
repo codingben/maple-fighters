@@ -4,8 +4,20 @@ using UnityEngine.UI;
 
 namespace UI.Manager
 {
-    public class UIElementsCreator : Singleton<UIElementsCreator>
+    public class UIElementsCreator : MonoBehaviour
     {
+        public static UIElementsCreator GetInstance()
+        {
+            if (instance == null)
+            {
+                var gameObject = new GameObject("UI Elements Creator");
+                instance = gameObject.AddComponent<UIElementsCreator>();
+            }
+
+            return instance;
+        }
+
+        private static UIElementsCreator instance;
         private UILayers uiLayers;
 
         private void Awake()
