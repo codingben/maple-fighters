@@ -23,7 +23,8 @@ namespace UI.Manager
         {
             parent = parent ?? uiLayers.GetLayer(uiLayer);
 
-            var uiElement = UIUtils.LoadAndCreateUIElement<TUIElement>();
+            var name = typeof(TUIElement).Name;
+            var uiElement = Utils.LoadAndCreateUIElement<TUIElement>($"UI/{name}");
             uiElement.transform.SetParent(parent, false);
 
             if (uiIndex == UIIndex.Start)
