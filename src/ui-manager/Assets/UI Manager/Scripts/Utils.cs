@@ -16,7 +16,7 @@ namespace UI.Manager
         /// <returns>
         /// The <see cref="TUIElement"/>.
         /// </returns>
-        public static TUIElement LoadAndCreateUIElement<TUIElement>(string path)
+        public static TUIElement LoadAndCreate<TUIElement>(string path)
             where TUIElement : UIElement
         {
             var prefab = Resources.Load<TUIElement>(path);
