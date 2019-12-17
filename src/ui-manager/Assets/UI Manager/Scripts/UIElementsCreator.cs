@@ -22,8 +22,10 @@ namespace UI.Manager
 
         private void Awake()
         {
-            var background = CreateCanvas("UI Background", sortingOrder: 0);
-            var foreground = CreateCanvas("UI Foreground", sortingOrder: 1);
+            var background =
+                CreateCanvas("UI Background", (int)UILayer.Background);
+            var foreground =
+                CreateCanvas("UI Foreground", (int)UILayer.Foreground);
 
             uiLayers = new UILayers(background, foreground);
 
