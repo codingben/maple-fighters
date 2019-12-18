@@ -18,28 +18,25 @@ namespace UI.Manager
         }
 
         private static UIElementsCreator instance;
-        private UILayers uiLayers;
+        private UILayers? uiLayers;
 
         private void Awake()
         {
-            var background =
-                CreateCanvas("UI Background", (int)UILayer.Background);
-            var foreground =
-                CreateCanvas("UI Foreground", (int)UILayer.Foreground);
-
-            uiLayers = new UILayers(background, foreground);
-
-            CreateEventSystem();
+            var eventSystem = FindObjectOfType<EventSystem>();
+            if (eventSystem == null)
+            {
+                var gameObject =
+                    new GameObject("Event System", typeof(EventSystem));
+                gameObject.AddComponent<StandaloneInputModule>();
+            }
         }
 
         public TUIElement Create<TUIElement>(UILayer uiLayer = UILayer.Foreground, UIIndex uiIndex = UIIndex.Start, Transform parent = null)
             where TUIElement : UIElement
         {
-            parent = parent ?? uiLayers.GetLayer(uiLayer);
-
             var name = typeof(TUIElement).Name;
             var uiElement = Utils.LoadAndCreate<TUIElement>($"UI/{name}");
-            uiElement.transform.SetParent(parent, false);
+            uiElement.transform.SetParent(GetUILayer(uiLayer), false);
 
             if (uiIndex == UIIndex.Start)
             {
@@ -51,6 +48,21 @@ namespace UI.Manager
             }
 
             return uiElement;
+        }
+
+        private Transform GetUILayer(UILayer uiLayer)
+        {
+            if (uiLayers == null)
+            {
+                var background =
+                    CreateCanvas("UI Background", (int)UILayer.Background);
+                var foreground =
+                    CreateCanvas("UI Foreground", (int)UILayer.Foreground);
+
+                uiLayers = new UILayers(background, foreground);
+            }
+
+            return uiLayers?.GetLayer(uiLayer);
         }
 
         private Transform CreateCanvas(string name, int sortingOrder)
@@ -79,17 +91,6 @@ namespace UI.Manager
             canvasGroup.blocksRaycasts = true;
 
             return canvasGameObject.GetComponent<Transform>();
-        }
-
-        private void CreateEventSystem()
-        {
-            var eventSystem = FindObjectOfType<EventSystem>();
-            if (eventSystem == null)
-            {
-                var gameObject = 
-                    new GameObject("Event System", typeof(EventSystem));
-                gameObject.AddComponent<StandaloneInputModule>();
-            }
         }
     }
 }
