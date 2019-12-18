@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
 namespace UI.Manager
 {
@@ -55,42 +54,14 @@ namespace UI.Manager
             if (uiLayers == null)
             {
                 var background =
-                    CreateCanvas("UI Background", (int)UILayer.Background);
+                    Utils.CreateCanvas("UI Background", (int)UILayer.Background);
                 var foreground =
-                    CreateCanvas("UI Foreground", (int)UILayer.Foreground);
+                    Utils.CreateCanvas("UI Foreground", (int)UILayer.Foreground);
 
                 uiLayers = new UILayers(background, foreground);
             }
 
             return uiLayers?.GetLayer(uiLayer);
-        }
-
-        private Transform CreateCanvas(string name, int sortingOrder)
-        {
-            // Game Object
-            var canvasGameObject = new GameObject(name, typeof(Canvas));
-
-            // Canvas
-            var canvas = canvasGameObject.GetComponent<Canvas>();
-            canvas.renderMode = RenderMode.ScreenSpaceOverlay;
-            canvas.sortingOrder = sortingOrder;
-
-            // Canvas Scaler
-            var canvasScaler = canvasGameObject.AddComponent<CanvasScaler>();
-            canvasScaler.uiScaleMode =
-                CanvasScaler.ScaleMode.ScaleWithScreenSize;
-            canvasScaler.matchWidthOrHeight = 1;
-
-            // Graphic Raycaster
-            canvasGameObject.AddComponent<GraphicRaycaster>();
-
-            // Canvas Group
-            var canvasGroup = canvasGameObject.AddComponent<CanvasGroup>();
-            canvasGroup.alpha = 1;
-            canvasGroup.interactable = true;
-            canvasGroup.blocksRaycasts = true;
-
-            return canvasGameObject.GetComponent<Transform>();
         }
     }
 }
