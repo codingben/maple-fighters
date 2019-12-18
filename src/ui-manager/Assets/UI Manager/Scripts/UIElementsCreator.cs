@@ -34,7 +34,8 @@ namespace UI.Manager
             where TUIElement : UIElement
         {
             var name = typeof(TUIElement).Name;
-            var uiElement = Utils.LoadAndCreate<TUIElement>($"UI/{name}");
+            var path = string.Format(UIConstants.UIElementsPath, name);
+            var uiElement = Utils.LoadAndCreate<TUIElement>(path);
             uiElement.transform.SetParent(parent ?? GetUILayer(uiLayer), false);
 
             if (uiIndex == UIIndex.Start)
