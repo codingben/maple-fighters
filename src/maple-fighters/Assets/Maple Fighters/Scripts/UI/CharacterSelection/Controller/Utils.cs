@@ -12,7 +12,7 @@ namespace Scripts.UI.CharacterSelection
             var name =
                 hasCharacter
                     ? $"{characterClass} {(int)characterIndex}"
-                    : $"Sample {(int)characterIndex}";
+                    : $"{Paths.Resources.Sample.SampleCharacter} {(int)characterIndex}";
 
             var path = string.Format(Paths.Resources.Sample.Characters, name);
             return path;
