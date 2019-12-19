@@ -1,4 +1,6 @@
-﻿namespace Scripts.UI.CharacterSelection
+﻿using Scripts.Constants;
+
+namespace Scripts.UI.CharacterSelection
 {
     public static class Utils
     {
@@ -12,7 +14,8 @@
                     ? $"{characterClass} {(int)characterIndex}"
                     : $"Sample {(int)characterIndex}";
 
-            return $"Characters/{name}";
+            var path = string.Format(Paths.Resources.Sample.Characters, name);
+            return path;
         }
     }
 }
