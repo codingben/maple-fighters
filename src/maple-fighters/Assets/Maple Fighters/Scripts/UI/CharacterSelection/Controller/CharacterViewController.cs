@@ -4,7 +4,6 @@ using Scripts.UI.Notice;
 using UI.Manager;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UIManagerUtils = UI.Manager.Utils;
 
 namespace Scripts.UI.CharacterSelection
 {
@@ -493,7 +492,8 @@ namespace Scripts.UI.CharacterSelection
 
         private GameObject CreateCharacterView(string path)
         {
-            var character = UIManagerUtils.LoadAndCreateGameObject(path);
+            var characterPrefab = Resources.Load<GameObject>(path);
+            var character = Instantiate(characterPrefab);
             if (character != null)
             {
                 if (characterView != null)
