@@ -14,6 +14,7 @@
             public static class Sample
             {
                 public const string Characters = "Sample/Characters/{0}";
+                public const string SampleCharacter = "Sample";
             }
 
             public const string Configurations = "Configurations/{0}";
