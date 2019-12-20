@@ -4,9 +4,9 @@ namespace Scripts.Gameplay.Entity
 {
     public interface IEntityCollection
     {
-        IEntity Create(int id, string name, Vector2 position);
+        IEntity Add(int id, string name, Vector2 position);
 
-        void Destroy(int id);
+        void Remove(int id);
 
         IEntity TryGet(int id);
     }
