@@ -12,7 +12,7 @@ namespace Scripts.Gameplay.Entity
             collection = new Dictionary<int, IEntity>();
         }
 
-        public IEntity Create(int id, string name, Vector2 position)
+        public IEntity Add(int id, string name, Vector2 position)
         {
             IEntity entity = null;
 
@@ -41,7 +41,7 @@ namespace Scripts.Gameplay.Entity
             return entity;
         }
 
-        public void Destroy(int id)
+        public void Remove(int id)
         {
             var entity = TryGet(id)?.GameObject;
             if (entity != null)
