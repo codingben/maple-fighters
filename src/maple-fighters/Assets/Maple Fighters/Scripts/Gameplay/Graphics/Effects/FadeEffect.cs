@@ -48,26 +48,18 @@ namespace Scripts.Gameplay.Graphics
 
         private void OnEnable()
         {
-            switch (startingState)
+            if (startingState == FadeState.Fade)
             {
-                case FadeState.Fade:
-                {
-                    Fade();
-                    break;
-                }
-
-                case FadeState.UnFade:
-                {
-                    UnFade();
-                    break;
-                }
+                Fade();
+            }
+            else
+            {
+                UnFade();
             }
         }
 
         public void Fade(Action onFinished = null)
         {
-            spriteRenderer.color = unFadeColor;
-
             if (fadeCoroutine != null)
             {
                 StopCoroutine(fadeCoroutine);
@@ -79,8 +71,6 @@ namespace Scripts.Gameplay.Graphics
 
         public void UnFade(Action onFinished = null)
         {
-            spriteRenderer.color = fadeColor;
-
             if (fadeCoroutine != null)
             {
                 StopCoroutine(fadeCoroutine);
@@ -93,6 +83,8 @@ namespace Scripts.Gameplay.Graphics
         private IEnumerator FadeRoutine(float speed, Action onFinished)
         {
             var color = new Color(0, 0, 0, 0.25f);
+
+            spriteRenderer.color = unFadeColor;
 
             while (true)
             {
@@ -110,6 +102,8 @@ namespace Scripts.Gameplay.Graphics
         private IEnumerator UnFadeRoutine(float speed, Action onFinished)
         {
             var color = new Color(0, 0, 0, 1);
+
+            spriteRenderer.color = fadeColor;
 
             while (true)
             {
