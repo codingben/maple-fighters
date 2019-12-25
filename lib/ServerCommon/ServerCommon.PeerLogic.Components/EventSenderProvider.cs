@@ -20,10 +20,9 @@ namespace ServerCommon.PeerLogic.Components
             IEventSender eventSender)
         {
             this.minimalPeer = minimalPeer;
-            this.eventSender =
-                new EventSender<TEventCode>(
-                    eventSender,
-                    ServerSettings.InboundPeer.LogEvents);
+            this.eventSender = new EventSender<TEventCode>(
+                eventSender,
+                ServerSettings.InboundPeer.LogEvents);
         }
 
         public void Send<TEnumCode, TParameters>(
