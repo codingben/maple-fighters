@@ -39,11 +39,11 @@ namespace ServerCommon.PeerLogic
         /// <summary>
         /// Setups the peer logic.
         /// </summary>
-        public abstract void OnSetup();
+        protected abstract void OnSetup();
 
         /// <summary>
         /// Cleanups of the peer logic.
         /// </summary>
-        public abstract void OnCleanup();
+        protected abstract void OnCleanup();
     }
 }
