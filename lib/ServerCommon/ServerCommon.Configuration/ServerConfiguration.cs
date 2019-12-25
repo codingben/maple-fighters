@@ -16,7 +16,6 @@ namespace ServerCommon.Configuration
                 new ConfigurationBuilder<IInboundPeer>()
                     .UseInMemoryConfig()
                     .Build();
-
             ServerSettings.OutboundPeer =
                 new ConfigurationBuilder<IInboundPeer>()
                     .UseInMemoryConfig()
