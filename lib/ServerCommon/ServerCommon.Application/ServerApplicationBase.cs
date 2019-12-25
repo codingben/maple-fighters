@@ -25,8 +25,7 @@ namespace ServerCommon.Application
         private readonly IFiberProvider fiberProvider;
         private readonly IServerConnector serverConnector;
 
-        protected internal ServerApplicationBase(
-            IFiberProvider fiberProvider, IServerConnector serverConnector)
+        protected ServerApplicationBase(IFiberProvider fiberProvider, IServerConnector serverConnector)
         {
             this.fiberProvider = fiberProvider;
             this.serverConnector = serverConnector;
@@ -74,13 +73,13 @@ namespace ServerCommon.Application
         {
             ExposedComponents.Add(new IdGenerator());
             Components.Add(new RandomNumberGenerator());
+
             IFiberStarter fiber =
                 Components.Add(new FiberStarter(fiberProvider));
-            Components.Add(
-                new CoroutinesExecutor(
-                    new FiberCoroutinesExecutor(
-                        fiber.GetFiberStarter(),
-                        updateRateMilliseconds: 100)));
+            var executor = 
+                new FiberCoroutinesExecutor(fiber.GetFiberStarter(), 100);
+
+            Components.Add(new CoroutinesExecutor(executor));
             ExposedComponents.Add(new InboundPeersLogicsProvider());
             Components.Add(new S2sConnectionProvider(serverConnector));
             ExposedComponents.Add(new ServerShutdownTracker());
