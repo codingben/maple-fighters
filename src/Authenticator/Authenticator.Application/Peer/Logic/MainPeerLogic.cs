@@ -9,7 +9,7 @@ namespace Authenticator.Application.Peer.Logic
 {
     public class MainPeerLogic : InboundPeerLogicBase<AuthenticatorOperations, EmptyEventCode>
     {
-        public override void OnSetup()
+        protected override void OnSetup()
         {
             base.OnSetup();
 
@@ -21,7 +21,7 @@ namespace Authenticator.Application.Peer.Logic
             AddHandlerForRegisterOperation();
         }
 
-        public override void OnCleanup()
+        protected override void OnCleanup()
         {
             base.OnCleanup();
 
