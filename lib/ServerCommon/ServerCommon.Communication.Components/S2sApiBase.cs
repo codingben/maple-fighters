@@ -31,7 +31,8 @@ namespace ServerCommon.Communication.Components
         {
             ServerComponents = components;
 
-            var s2sConnectionProvider = ServerComponents.Get<IS2sConnectionProvider>()
+            var s2sConnectionProvider = ServerComponents
+                .Get<IS2sConnectionProvider>()
                 .AssertNotNull();
             s2sConnectionProvider.Connect(
                 GetConnectionDetails(),
@@ -43,7 +44,8 @@ namespace ServerCommon.Communication.Components
         {
             ServerPeerLogic?.Dispose();
 
-            var s2sConnectionProvider = ServerComponents.Get<IS2sConnectionProvider>()
+            var s2sConnectionProvider = ServerComponents
+                .Get<IS2sConnectionProvider>()
                 .AssertNotNull();
             s2sConnectionProvider.Disconnect();
         }
@@ -55,11 +57,12 @@ namespace ServerCommon.Communication.Components
                 new OutboundPeerLogic<TOperationCode, TEventCode>();
 
             var @base = (IPeerLogicBase<IOutboundServerPeer>)ServerPeerLogic;
-            @base?.Setup(serverPeer, default(int));
+            @base?.Setup(serverPeer, default);
 
             var connectionDetails = GetConnectionDetails();
-            LogUtils.Log(
-                $"A connection with the server {connectionDetails.Ip}:{connectionDetails.Port} has been established successfully.");
+            var ip = connectionDetails.Ip;
+            var port = connectionDetails.Port;
+            LogUtils.Log($"Connected to {ip}:{port} server.");
         }
 
         protected virtual void OnConnectionClosed(
@@ -69,8 +72,9 @@ namespace ServerCommon.Communication.Components
             ServerPeerLogic.Dispose();
 
             var connectionDetails = GetConnectionDetails();
-            LogUtils.Log(
-                $"A connection with the server {connectionDetails.Ip}:{connectionDetails.Port} has been closed.");
+            var ip = connectionDetails.Ip;
+            var port = connectionDetails.Port;
+            LogUtils.Log($"Disconnected from the {ip}:{port} server.");
         }
 
         private int ProvidePeerId()
