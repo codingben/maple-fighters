@@ -38,9 +38,7 @@ namespace ServerCommon.PeerLogic.Components
                 var codeByte = Convert.ToByte(code);
                 var eventCode =
                     (TEventCode)Enum.Parse(
-                        typeof(TEventCode),
-                        codeByte.ToString(),
-                        true);
+                        typeof(TEventCode), codeByte.ToString(), true);
 
                 eventSender.Send(eventCode, parameters, sendOptions);
             }
