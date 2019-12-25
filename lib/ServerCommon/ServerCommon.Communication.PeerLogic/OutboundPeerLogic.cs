@@ -39,8 +39,7 @@ namespace ServerCommon.Communication.PeerLogic
             set;
         }
 
-        /// <inheritdoc />
-        public override void OnSetup()
+        protected override void OnSetup()
         {
             OperationRequestSender = new OperationRequestSender<TOperationCode>(
                 Peer.OperationRequestSender,
@@ -55,8 +54,7 @@ namespace ServerCommon.Communication.PeerLogic
                 ServerSettings.OutboundPeer.LogEvents);
         }
 
-        /// <inheritdoc />
-        public override void OnCleanup()
+        protected override void OnCleanup()
         {
             EventHandlerRegister?.Dispose();
             SubscriptionProvider?.Dispose();
