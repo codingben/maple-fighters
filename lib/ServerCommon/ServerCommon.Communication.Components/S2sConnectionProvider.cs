@@ -92,8 +92,11 @@ namespace ServerCommon.Communication.Components
             }
             catch (CouldNotConnectToPeerException exception)
             {
-                LogUtils.Log(
-                    $"Failed connect to {connectionDetails.Ip}:{connectionDetails.Port}. Reason: {exception.Message}");
+                var ip = connectionDetails.Ip;
+                var port = connectionDetails.Port;
+                var reason = exception.Message;
+
+                LogUtils.Log($"Failed connect to {ip}:{port}. Reason: {reason}");
             }
             finally
             {
@@ -104,8 +107,7 @@ namespace ServerCommon.Communication.Components
                     connectContinuously?.Dispose();
                     onConnected?.Invoke(outboundServerPeer);
 
-                    outboundServerPeer.NetworkTrafficState =
-                        NetworkTrafficState.Flowing;
+                    outboundServerPeer.NetworkTrafficState = NetworkTrafficState.Flowing;
                 }
             }
         }
