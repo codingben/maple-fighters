@@ -25,7 +25,7 @@ namespace ServerCommon.PeerBase
         protected virtual void OnConnected()
         {
             LogUtils.Log(
-                $"A new peer ({PeerId}) has been connected to the server.");
+                $"A new peer {PeerId} has been connected to the server.");
         }
 
         protected virtual void OnDisconnected(
@@ -35,7 +35,7 @@ namespace ServerCommon.PeerBase
             UnsubscribeFromDisconnectionNotifier();
 
             LogUtils.Log(
-                $"The peer ({PeerId}) has been disconnected from the server.");
+                $"The peer {PeerId} has been disconnected from the server.");
         }
 
         private void SubscribeToDisconnectionNotifier()
