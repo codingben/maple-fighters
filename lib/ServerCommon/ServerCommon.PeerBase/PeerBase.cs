@@ -21,7 +21,7 @@ namespace ServerCommon.PeerBase
 
         private IPeerLogicBase<IClientPeer> PeerLogicBase { get; set; }
 
-        protected internal PeerBase()
+        protected PeerBase()
         {
             SubscribeToServerShutdownNotifier();
         }
@@ -32,7 +32,7 @@ namespace ServerCommon.PeerBase
         /// <typeparam name="TPeerLogic">The peer logic.</typeparam>
         /// <param name="peerLogic">The peer logic instance.</param>
         protected void BindPeerLogic<TPeerLogic>(
-            TPeerLogic peerLogic = default(TPeerLogic))
+            TPeerLogic peerLogic = default)
             where TPeerLogic : IInboundPeerLogicBase, new()
         {
             Peer.Fiber.Enqueue(() =>
@@ -52,8 +52,9 @@ namespace ServerCommon.PeerBase
 
                 Peer.NetworkTrafficState = NetworkTrafficState.Flowing;
 
-                var peersLogicsProvider = 
-                    ServerComponents.Get<IPeersLogicsProvider>().AssertNotNull();
+                var peersLogicsProvider = ServerComponents
+                    .Get<IPeersLogicsProvider>()
+                    .AssertNotNull();
                 peersLogicsProvider.AddPeerLogic(PeerId, peerLogic);
             });
         }
@@ -64,11 +65,11 @@ namespace ServerCommon.PeerBase
         protected void UnbindPeerLogic()
         {
             Peer.NetworkTrafficState = NetworkTrafficState.Paused;
-
             PeerLogicBase?.Dispose();
 
-            var peersLogicsProvider = 
-                ServerComponents.Get<IPeersLogicsProvider>().AssertNotNull();
+            var peersLogicsProvider = ServerComponents
+                .Get<IPeersLogicsProvider>()
+                .AssertNotNull();
             peersLogicsProvider.RemovePeerLogic(PeerId);
         }
 
@@ -80,17 +81,17 @@ namespace ServerCommon.PeerBase
 
         private void SubscribeToServerShutdownNotifier()
         {
-            var serverShutdownNotifier =
-                ServerComponents.Get<IServerShutdownNotifier>().AssertNotNull();
-
+            var serverShutdownNotifier = ServerComponents
+                .Get<IServerShutdownNotifier>()
+                .AssertNotNull();
             serverShutdownNotifier.Shutdown += OnServerShutdown;
         }
 
         private void UnsubscribeFromServerShutdownNotifier()
         {
-            var serverShutdownNotifier =
-                ServerComponents.Get<IServerShutdownNotifier>().AssertNotNull();
-
+            var serverShutdownNotifier = ServerComponents
+                .Get<IServerShutdownNotifier>()
+                .AssertNotNull();
             serverShutdownNotifier.Shutdown -= OnServerShutdown;
         }
 
