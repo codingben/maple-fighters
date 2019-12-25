@@ -18,8 +18,10 @@ namespace ServerCommon.Application.Components
 
         public IFiber GetFiberStarter()
         {
-            fiberProvider.GetFiber().Start();
-            return fiberProvider.GetFiber();
+            var fiber = fiberProvider.GetFiber();
+            fiber.Start();
+
+            return fiber;
         }
     }
 }
