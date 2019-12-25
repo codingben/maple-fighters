@@ -45,13 +45,11 @@ namespace ServerCommon.Communication.PeerLogic
             OperationRequestSender = new OperationRequestSender<TOperationCode>(
                 Peer.OperationRequestSender,
                 ServerSettings.OutboundPeer.Operations.LogRequests);
-
             SubscriptionProvider =
                 new OperationResponseSubscriptionProvider<TOperationCode>(
                     Peer.OperationResponseNotifier,
                     OnOperationRequestFailed,
                     ServerSettings.OutboundPeer.Operations.LogResponses);
-
             EventHandlerRegister = new EventHandlerRegister<TEventCode>(
                 Peer.EventNotifier,
                 ServerSettings.OutboundPeer.LogEvents);
@@ -97,10 +95,10 @@ namespace ServerCommon.Communication.PeerLogic
             Action<TEventParameters> action)
             where TEventParameters : struct, IParameters
         {
-            EventHandlerRegister.SetHandler(
-                code,
+            var eventHandler =
                 new EventHandler<TEventParameters>(
-                    x => action.Invoke(x.Parameters)));
+                    x => action.Invoke(x.Parameters));
+            EventHandlerRegister.SetHandler(code, eventHandler);
         }
 
         public void RemoveEventHandler(TEventCode code)
@@ -113,7 +111,7 @@ namespace ServerCommon.Communication.PeerLogic
             short requestId)
         {
             LogUtils.Log(
-                $"Sending an operation has been failed. Peer Id: {PeerId} Code: {data.Code}");
+                $"Failed to send operation. Peer Id: {PeerId} Code: {data.Code}");
         }
     }
 }
