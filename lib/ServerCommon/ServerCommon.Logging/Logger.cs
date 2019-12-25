@@ -1,4 +1,5 @@
-﻿using CommonTools.Log;
+﻿using System;
+using CommonTools.Log;
 using log4net;
 
 namespace ServerCommon.Logging
@@ -18,10 +19,7 @@ namespace ServerCommon.Logging
             }
         }
 
-        public void Log(
-            string message,
-            LogMessageType type = LogMessageType.Log,
-            object context = null)
+        public void Log(string message, LogMessageType type = LogMessageType.Log, object context = null)
         {
             lock (locker)
             {
@@ -43,6 +41,11 @@ namespace ServerCommon.Logging
                     {
                         logger.Error(message);
                         break;
+                    }
+
+                    default:
+                    {
+                        throw new ArgumentOutOfRangeException(nameof(type), type, null);
                     }
                 }
             }
