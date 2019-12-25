@@ -19,7 +19,7 @@ namespace ServerCommon.PeerLogic.Components
                 if (!peersLogics.TryGetValue(id, out var peerLogic))
                 {
                     throw new PeerLogicException(
-                        $"A peer with id {id} does not exist in a peers logic collection.");
+                        $"A peer with id {id} does not exist.");
                 }
 
                 return peerLogic;
@@ -31,7 +31,7 @@ namespace ServerCommon.PeerLogic.Components
             if (peersLogics.ContainsKey(peerId))
             {
                 throw new PeerLogicException(
-                    $"Failed to add a new peer with id {peerId} because it already exists.");
+                    $"Failed to add a new peer with id {peerId}.");
             }
 
             peersLogics.Add(peerId, peerLogic);
