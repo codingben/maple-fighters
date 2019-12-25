@@ -61,11 +61,11 @@ namespace ServerCommon.PeerLogic.Common
         /// </summary>
         private void AddCommonComponents()
         {
-            Components.Add(
-                new CoroutinesExecutor(
-                    new FiberCoroutinesExecutor(
-                        Peer.Fiber,
-                        updateRateMilliseconds: 100)));
+            var executor = new FiberCoroutinesExecutor(
+                Peer.Fiber,
+                updateRateMilliseconds: 100);
+
+            Components.Add(new CoroutinesExecutor(executor));
             Components.Add(new EventSenderProvider<TEventCode>(
                 Peer, 
                 Peer.EventSender));
