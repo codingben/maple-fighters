@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27428.2043
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29209.62
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{45504DF7-AF97-4B23-8992-2C534F505E43}"
 EndProject
@@ -270,8 +270,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServerCommon.Communication.Components", "lib\ServerCommon\ServerCommon.Communication.Components\ServerCommon.Communication.Components.csproj", "{3C2CED3C-3F36-4A78-81A2-7B57DB0B879B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServerCommon.Communication.PeerLogic", "lib\ServerCommon\ServerCommon.Communication.PeerLogic\ServerCommon.Communication.PeerLogic.csproj", "{326F1FDB-4BBE-4654-ACEF-5F4135650D88}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServerCommon.Communication.Enums", "lib\ServerCommon\ServerCommon.Communication.Enums\ServerCommon.Communication.Enums.csproj", "{0B2F896A-A67E-45EA-98D2-E2F2EC89AACE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServerCommon.Communication.Parameters", "lib\ServerCommon\ServerCommon.Communication.Parameters\ServerCommon.Communication.Parameters.csproj", "{656278D1-DBAB-44AF-B348-5DDD4AEBA4F8}"
 EndProject
@@ -677,10 +675,6 @@ Global
 		{326F1FDB-4BBE-4654-ACEF-5F4135650D88}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{326F1FDB-4BBE-4654-ACEF-5F4135650D88}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{326F1FDB-4BBE-4654-ACEF-5F4135650D88}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0B2F896A-A67E-45EA-98D2-E2F2EC89AACE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0B2F896A-A67E-45EA-98D2-E2F2EC89AACE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0B2F896A-A67E-45EA-98D2-E2F2EC89AACE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0B2F896A-A67E-45EA-98D2-E2F2EC89AACE}.Release|Any CPU.Build.0 = Release|Any CPU
 		{656278D1-DBAB-44AF-B348-5DDD4AEBA4F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{656278D1-DBAB-44AF-B348-5DDD4AEBA4F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{656278D1-DBAB-44AF-B348-5DDD4AEBA4F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -884,7 +878,6 @@ Global
 		{FFFB66CD-6F8D-4030-902B-179E13791BB4} = {7AD3F564-C73B-47F9-8FEA-79156A386A3B}
 		{3C2CED3C-3F36-4A78-81A2-7B57DB0B879B} = {7AD3F564-C73B-47F9-8FEA-79156A386A3B}
 		{326F1FDB-4BBE-4654-ACEF-5F4135650D88} = {7AD3F564-C73B-47F9-8FEA-79156A386A3B}
-		{0B2F896A-A67E-45EA-98D2-E2F2EC89AACE} = {7AD3F564-C73B-47F9-8FEA-79156A386A3B}
 		{656278D1-DBAB-44AF-B348-5DDD4AEBA4F8} = {7AD3F564-C73B-47F9-8FEA-79156A386A3B}
 		{65C156F0-FA83-4905-9AB0-CC4D04A05627} = {B37FE882-0224-4941-9617-1565475C67DA}
 		{67374EB5-6A71-4C42-A7BF-0C5F65BDE453} = {B49E1D4D-2E9E-4B5A-8656-E2138A9420F1}
