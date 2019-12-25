@@ -33,8 +33,7 @@ namespace ServerCommon.PeerLogic.Common
             private set;
         }
 
-        /// <inheritdoc />
-        public override void OnSetup()
+        protected override void OnSetup()
         {
             AddCommonComponents();
 
@@ -50,8 +49,7 @@ namespace ServerCommon.PeerLogic.Common
                     coroutinesManager);
         }
 
-        /// <inheritdoc />
-        public override void OnCleanup()
+        protected override void OnCleanup()
         {
             OperationHandlerRegister?.Dispose();
         }
