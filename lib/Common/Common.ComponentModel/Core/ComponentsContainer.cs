@@ -106,7 +106,8 @@ namespace Common.ComponentModel.Core
         public TComponent Find<TComponent>()
             where TComponent : class
         {
-            var component = components.GetAllComponents().OfType<TComponent>()
+            var component = components.GetAllComponents()
+                .OfType<TComponent>()
                 .FirstOrDefault();
             if (component != null)
             {
@@ -123,7 +124,8 @@ namespace Common.ComponentModel.Core
         public TComponent FindExposedOnly<TComponent>()
             where TComponent : class
         {
-            var component = components.GetExposedComponents().OfType<TComponent>()
+            var component = components.GetExposedComponents()
+                .OfType<TComponent>()
                 .FirstOrDefault();
             if (component != null)
             {
