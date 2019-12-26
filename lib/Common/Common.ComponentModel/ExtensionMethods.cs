@@ -5,8 +5,7 @@ namespace Common.ComponentModel
 {
     public static class ExtensionMethods
     {
-        public static IExposedComponents ProvideExposed(
-            this IComponents components)
+        public static IExposedComponents ProvideExposed(this IComponents components)
         {
             if (components == null)
             {
@@ -16,8 +15,7 @@ namespace Common.ComponentModel
             return (ComponentsProvider)components;
         }
 
-        public static IExposedComponents ProvideExposed<TOwner>(
-            this IComponents components) 
+        public static IExposedComponents ProvideExposed<TOwner>(this IComponents components) 
             where TOwner : class
         {
             if (components == null)
