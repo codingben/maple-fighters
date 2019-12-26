@@ -17,15 +17,13 @@ namespace Common.Repository
         /// </summary>
         /// <param name="predicate">The prediction.</param>
         /// <returns>Returns the found entity.</returns>
-        TEntity Read(
-            Expression<Func<TEntity, bool>> predicate);
+        TEntity Read(Expression<Func<TEntity, bool>> predicate);
 
         /// <summary>
         /// Finds the entities which satisfied to the prediction.
         /// </summary>
         /// <param name="predicate">The prediction.</param>
         /// <returns>Returns the found entities.</returns>
-        IEnumerable<TEntity> ReadMany(
-            Expression<Func<TEntity, bool>> predicate);
+        IEnumerable<TEntity> ReadMany(Expression<Func<TEntity, bool>> predicate);
     }
 }
