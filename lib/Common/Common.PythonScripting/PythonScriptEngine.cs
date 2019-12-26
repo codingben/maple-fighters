@@ -9,6 +9,7 @@ namespace Common.PythonScripting
 {
     public class PythonScriptEngine : IScriptEngine
     {
+        private const string EnviVariable = "IRON_PYTHON_LIB";
         private ScriptEngine scriptEngine;
 
         public PythonScriptEngine()
@@ -38,7 +39,7 @@ namespace Common.PythonScripting
         {
             var target = EnvironmentVariableTarget.Machine;
             var path =
-                Environment.GetEnvironmentVariable("IRON_PYTHON_LIB", target);
+                Environment.GetEnvironmentVariable(EnviVariable, target);
             var paths = scriptEngine.GetSearchPaths();
             paths.Add(path);
 
