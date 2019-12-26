@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Common.ComponentModel.Exceptions;
 
 namespace Common.ComponentModel.Core
 {
@@ -12,6 +13,9 @@ namespace Common.ComponentModel.Core
         /// <summary>
         /// Adds a new component which is exposed and if not exists.
         /// </summary>
+        /// <exception cref="ComponentAlreadyExistsException{T}">
+        /// A component exists in a collection.
+        /// </exception>
         /// <typeparam name="TComponent">The given component type.</typeparam>
         /// <param name="component">The new component.</param>
         void Add<TComponent>(TComponent component)
@@ -20,6 +24,9 @@ namespace Common.ComponentModel.Core
         /// <summary>
         /// Adds a new component which is exposed and if not exists.
         /// </summary>
+        /// <exception cref="ComponentAlreadyExistsException{T}">
+        /// A component exists in a collection.
+        /// </exception>
         /// <typeparam name="TComponent">The given component type.</typeparam>
         /// <param name="component">The new component.</param>
         void AddExposedOnly<TComponent>(TComponent component)
