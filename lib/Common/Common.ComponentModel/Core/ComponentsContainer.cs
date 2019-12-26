@@ -22,6 +22,9 @@ namespace Common.ComponentModel.Core
         /// <summary>
         /// See <see cref="IComponentsContainer.Add{T}"/> for more information.
         /// </summary>
+        /// <exception cref="ComponentAlreadyExistsException{T}">
+        /// A component exists in a collection.
+        /// </exception>
         public void Add<TComponent>(TComponent component)
             where TComponent : class
         {
@@ -32,12 +35,19 @@ namespace Common.ComponentModel.Core
             {
                 components[exposedState].Add(component);
             }
+            else
+            {
+                throw new ComponentAlreadyExistsException<TComponent>();
+            }
         }
 
         /// <inheritdoc />
         /// <summary>
         /// See <see cref="IComponentsContainer.AddExposedOnly{T}"/> for more information.
         /// </summary>
+        /// <exception cref="ComponentAlreadyExistsException{T}">
+        /// A component exists in a collection.
+        /// </exception>
         public void AddExposedOnly<TComponent>(TComponent component)
             where TComponent : class
         {
@@ -50,6 +60,10 @@ namespace Common.ComponentModel.Core
                 if (!isExists)
                 {
                     components[ExposedState.Exposable].Add(component);
+                }
+                else
+                {
+                    throw new ComponentAlreadyExistsException<TComponent>();
                 }
             }
             else
