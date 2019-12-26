@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Common.ComponentModel.Exceptions;
 
 namespace Common.ComponentModel.Core
 {
@@ -33,20 +32,12 @@ namespace Common.ComponentModel.Core
         /// </summary>
         /// <typeparam name="TComponent">The component type.</typeparam>
         /// <param name="exposedState">Determines the collection.</param>
-        /// <exception cref="ComponentAlreadyExistsException{T}">
-        /// A component exists in a collection.
-        /// </exception>
         /// <returns>If the component exists or not.</returns>
         public bool IsExists<TComponent>(ExposedState exposedState)
             where TComponent : class
         {
             var collection = this[exposedState];
-            if (collection.OfType<TComponent>().Any())
-            {
-                throw new ComponentAlreadyExistsException<TComponent>();
-            }
-
-            return false;
+            return collection.OfType<TComponent>().Any();
         }
 
         /// <summary>
