@@ -8,15 +8,13 @@ namespace Common.ComponentModel.Core
         public static ComponentSettingsAttribute GetComponentSettings<TComponent>()
             where TComponent : class
         {
-            var component = typeof(TComponent);
-
             var componentSettings =
                 (ComponentSettingsAttribute)Attribute.GetCustomAttribute(
-                    component,
+                    typeof(TComponent),
                     typeof(ComponentSettingsAttribute));
             if (componentSettings == null)
             {
-                if (typeof(IDisposable).IsAssignableFrom(component))
+                if (typeof(IDisposable).IsAssignableFrom(typeof(TComponent)))
                 {
                     throw new ComponentSettingsMissingException<TComponent>();
                 }
