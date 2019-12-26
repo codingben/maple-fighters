@@ -4,8 +4,7 @@ namespace Common.ComponentModel.Core
 {
     internal static class ComponentsContainerUtils
     {
-        public static void SetComponentByLifetime<TComponent>(
-            ref TComponent component)
+        public static void SetComponentByLifetime<TComponent>(ref TComponent component)
             where TComponent : class
         {
             if (component == null)
@@ -14,7 +13,6 @@ namespace Common.ComponentModel.Core
             }
 
             var lifeTime = Lifetime.Singleton;
-
             var componentSettings =
                 ComponentSettingsUtils.GetComponentSettings<TComponent>();
             if (componentSettings != null)
@@ -37,8 +35,8 @@ namespace Common.ComponentModel.Core
                 case Lifetime.PerCall:
                 {
                     component =
-                    (TComponent)Activator.CreateInstance(
-                        typeof(TComponent));
+                        (TComponent)Activator.CreateInstance(
+                            typeof(TComponent));
                     break;
                 }
             }
