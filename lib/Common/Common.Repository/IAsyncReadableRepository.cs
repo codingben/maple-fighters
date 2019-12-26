@@ -18,15 +18,13 @@ namespace Common.Repository
         /// </summary>
         /// <param name="predicate">The prediction.</param>
         /// <returns>Returns the found entity.</returns>
-        Task<TEntity> ReadAsync(
-            Expression<Func<TEntity, bool>> predicate);
+        Task<TEntity> ReadAsync(Expression<Func<TEntity, bool>> predicate);
 
         /// <summary>
         /// Finds the entities which satisfied to the prediction.
         /// </summary>
         /// <param name="predicate">The prediction.</param>
         /// <returns>Returns the found entities.</returns>
-        Task<IEnumerable<TEntity>> ReadManyAsync(
-            Expression<Func<TEntity, bool>> predicate);
+        Task<IEnumerable<TEntity>> ReadManyAsync(Expression<Func<TEntity, bool>> predicate);
     }
 }
