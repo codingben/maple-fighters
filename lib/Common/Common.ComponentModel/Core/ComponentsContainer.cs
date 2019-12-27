@@ -55,8 +55,8 @@ namespace Common.ComponentModel.Core
                 ComponentsContainerUtils.GetExposedState<TComponent>();
             if (exposedState == ExposedState.Exposable)
             {
-                var isExists = components.IsExists<TComponent>(
-                    ExposedState.Exposable);
+                var isExists =
+                    components.IsExists<TComponent>(ExposedState.Exposable);
                 if (!isExists)
                 {
                     components[ExposedState.Exposable].Add(component);
@@ -83,8 +83,7 @@ namespace Common.ComponentModel.Core
                 ComponentsContainerUtils.GetExposedState<TComponent>();
             var collection = components[exposedState];
 
-            var component = collection.OfType<TComponent>()
-                .FirstOrDefault();
+            var component = collection.OfType<TComponent>().FirstOrDefault();
             if (component == null)
             {
                 throw new ComponentNotFoundException<TComponent>();
