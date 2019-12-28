@@ -23,11 +23,9 @@ namespace ServerCommon.PhotonStarter
 
         protected override void Setup()
         {
-            var fiberProvider = new PhotonFiberProvider();
-            var serverConnector =
-                new PhotonServerConnector(this, ApplicationName);
-
-            application = CreateApplication(fiberProvider, serverConnector);
+            application = CreateApplication(
+                new PhotonServerConnector(this, ApplicationName),
+                new PhotonFiberProvider());
             application.Startup();
         }
 
@@ -49,7 +47,7 @@ namespace ServerCommon.PhotonStarter
         }
 
         protected abstract TApplication CreateApplication(
-            IFiberProvider fiberProvider,
-            IServerConnector serverConnector);
+            IServerConnector serverConnector,
+            IFiberProvider fiberProvider);
     }
 }
