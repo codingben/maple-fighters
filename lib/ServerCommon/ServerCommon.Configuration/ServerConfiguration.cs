@@ -14,11 +14,11 @@ namespace ServerCommon.Configuration
         {
             ServerSettings.InboundPeer =
                 new ConfigurationBuilder<IInboundPeer>()
-                    .UseInMemoryConfig()
+                    .UseInMemoryDictionary()
                     .Build();
             ServerSettings.OutboundPeer =
                 new ConfigurationBuilder<IInboundPeer>()
-                    .UseInMemoryConfig()
+                    .UseInMemoryDictionary()
                     .Build();
         }
     }
