@@ -22,13 +22,15 @@ namespace ServerCommon.Application
 
         protected IComponents Components => new ComponentsProvider();
 
-        private readonly IFiberProvider fiberProvider;
         private readonly IServerConnector serverConnector;
+        private readonly IFiberProvider fiberProvider;
 
-        protected ServerApplicationBase(IFiberProvider fiberProvider, IServerConnector serverConnector)
+        protected ServerApplicationBase(
+            IServerConnector serverConnector,
+            IFiberProvider fiberProvider)
         {
-            this.fiberProvider = fiberProvider;
             this.serverConnector = serverConnector;
+            this.fiberProvider = fiberProvider;
 
             LogUtils.Logger = new Logger();
             TimeProviders.DefaultTimeProvider = new TimeProvider();
@@ -76,8 +78,8 @@ namespace ServerCommon.Application
 
             IFiberStarter fiber =
                 Components.Add(new FiberStarter(fiberProvider));
-            var executor = 
-                new FiberCoroutinesExecutor(fiber.GetFiberStarter(), 100);
+            var scheduler = fiber.GetFiberStarter();
+            var executor = new FiberCoroutinesExecutor(scheduler, updateRateMilliseconds: 100);
 
             Components.Add(new CoroutinesExecutor(executor));
             ExposedComponents.Add(new InboundPeersLogicsProvider());
