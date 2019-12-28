@@ -49,9 +49,7 @@
     <Compile Include="FiberCoroutinesExecutor.cs" />
     <Compile Include="FiberStarter.cs" />
     <Compile Include="IFiberStarter.cs" />
-    <Compile Include="IServerShutdownNotifier.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ServerShutdownTracker.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Common\Common.ComponentModel\Common.ComponentModel.csproj">
