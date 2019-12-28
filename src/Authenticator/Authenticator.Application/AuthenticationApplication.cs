@@ -10,8 +10,9 @@ namespace Authenticator.Application
     public class AuthenticatorApplication : ServerApplicationBase
     {
         public AuthenticatorApplication(
-            IFiberProvider fiberProvider, IServerConnector serverConnector)
-            : base(fiberProvider, serverConnector)
+            IServerConnector serverConnector,
+            IFiberProvider fiberProvider)
+            : base(serverConnector, fiberProvider)
         {
             ServerSettings.InboundPeer.LogEvents = true;
             ServerSettings.InboundPeer.Operations.LogRequests = true;
