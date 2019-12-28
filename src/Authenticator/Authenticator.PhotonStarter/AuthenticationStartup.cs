@@ -8,9 +8,10 @@ namespace Authenticator.PhotonStarter
     public class AuthenticatorStartup : PhotonStarterBase<AuthenticatorApplication, AuthenticatorPeer>
     {
         protected override AuthenticatorApplication CreateApplication(
-            IFiberProvider fiberProvider, IServerConnector serverConnector)
+            IServerConnector serverConnector,
+            IFiberProvider fiberProvider)
         {
-            return new AuthenticatorApplication(fiberProvider, serverConnector);
+            return new AuthenticatorApplication(serverConnector, fiberProvider);
         }
     }
 }
