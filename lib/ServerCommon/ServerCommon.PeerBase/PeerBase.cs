@@ -1,9 +1,7 @@
-﻿using Common.ComponentModel;
-using Common.Components;
+﻿using Common.Components;
 using CommonCommunicationInterfaces;
 using CommonTools.Log;
 using ServerCommon.Application;
-using ServerCommon.Application.Components;
 using ServerCommon.PeerLogic;
 using ServerCommon.PeerLogic.Components;
 using ServerCommunicationInterfaces;
@@ -16,14 +14,17 @@ namespace ServerCommon.PeerBase
     /// </summary>
     public class PeerBase : MinimalPeerBase
     {
-        private IExposedComponents ServerComponents => 
-            ServerExposedComponents.Provide();
-
         private IPeerLogicBase<IClientPeer> PeerLogicBase { get; set; }
+
+        private readonly IIdGenerator idGenerator;
+        private readonly IPeersLogicsProvider peersLogicsProvider;
 
         protected PeerBase()
         {
-            SubscribeToServerShutdownNotifier();
+            var components = ServerExposedComponents.Provide();
+            idGenerator = components.Get<IIdGenerator>().AssertNotNull();
+            peersLogicsProvider = 
+                components.Get<IPeersLogicsProvider>().AssertNotNull();
         }
 
         /// <summary>
@@ -36,68 +37,38 @@ namespace ServerCommon.PeerBase
         {
             Peer.Fiber.Enqueue(() =>
             {
+                Peer.NetworkTrafficState = NetworkTrafficState.Paused;
+
                 if (peerLogic == null)
                 {
                     peerLogic = new TPeerLogic();
                 }
 
-                UnbindPeerLogic();
-
                 if (peerLogic is IPeerLogicBase<IClientPeer> @base)
                 {
+                    PeerLogicBase?.Dispose();
+
+                    peersLogicsProvider?.RemovePeerLogic(PeerId);
+
                     PeerLogicBase = @base;
                     PeerLogicBase.Setup(Peer, PeerId);
+
+                    peersLogicsProvider?.AddPeerLogic(PeerId, peerLogic);
                 }
 
                 Peer.NetworkTrafficState = NetworkTrafficState.Flowing;
-
-                var peersLogicsProvider = ServerComponents
-                    .Get<IPeersLogicsProvider>()
-                    .AssertNotNull();
-                peersLogicsProvider.AddPeerLogic(PeerId, peerLogic);
             });
         }
 
-        /// <summary>
-        /// Removes the peer logic from the client peer.
-        /// </summary>
         protected void UnbindPeerLogic()
         {
-            Peer.NetworkTrafficState = NetworkTrafficState.Paused;
             PeerLogicBase?.Dispose();
 
-            var peersLogicsProvider = ServerComponents
-                .Get<IPeersLogicsProvider>()
-                .AssertNotNull();
-            peersLogicsProvider.RemovePeerLogic(PeerId);
-        }
-
-        private void OnServerShutdown()
-        {
-            UnsubscribeFromServerShutdownNotifier();
-            UnbindPeerLogic();
-        }
-
-        private void SubscribeToServerShutdownNotifier()
-        {
-            var serverShutdownNotifier = ServerComponents
-                .Get<IServerShutdownNotifier>()
-                .AssertNotNull();
-            serverShutdownNotifier.Shutdown += OnServerShutdown;
-        }
-
-        private void UnsubscribeFromServerShutdownNotifier()
-        {
-            var serverShutdownNotifier = ServerComponents
-                .Get<IServerShutdownNotifier>()
-                .AssertNotNull();
-            serverShutdownNotifier.Shutdown -= OnServerShutdown;
+            peersLogicsProvider?.RemovePeerLogic(PeerId);
         }
 
         protected override int ProvidePeerId()
         {
-            var idGenerator =
-                ServerComponents.Get<IIdGenerator>().AssertNotNull();
             return idGenerator.GenerateId();
         }
     }
