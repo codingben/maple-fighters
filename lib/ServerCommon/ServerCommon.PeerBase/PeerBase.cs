@@ -31,8 +31,7 @@ namespace ServerCommon.PeerBase
         /// </summary>
         /// <typeparam name="TPeerLogic">The peer logic.</typeparam>
         /// <param name="peerLogic">The peer logic instance.</param>
-        protected void BindPeerLogic<TPeerLogic>(
-            TPeerLogic peerLogic = default)
+        protected void BindPeerLogic<TPeerLogic>(TPeerLogic peerLogic = default)
             where TPeerLogic : IInboundPeerLogicBase, new()
         {
             Peer.Fiber.Enqueue(() =>
