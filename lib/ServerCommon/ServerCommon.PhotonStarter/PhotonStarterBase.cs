@@ -48,6 +48,8 @@ namespace ServerCommon.PhotonStarter
             return peer;
         }
 
-        protected abstract TApplication CreateApplication(IFiberProvider fiberProvider, IServerConnector serverConnector);
+        protected abstract TApplication CreateApplication(
+            IFiberProvider fiberProvider,
+            IServerConnector serverConnector);
     }
 }
