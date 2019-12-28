@@ -24,8 +24,7 @@ namespace ServerCommon.PeerLogic.Common
         public IExposedComponents ExposedComponents =>
             Components.ProvideExposed();
 
-        protected IComponents Components => 
-            new ComponentsProvider();
+        protected IComponents Components => new ComponentsProvider();
 
         protected IOperationRequestHandlerRegister<TOperationCode> OperationHandlerRegister
         {
@@ -66,9 +65,8 @@ namespace ServerCommon.PeerLogic.Common
                 updateRateMilliseconds: 100);
 
             Components.Add(new CoroutinesExecutor(executor));
-            Components.Add(new EventSenderProvider<TEventCode>(
-                Peer, 
-                Peer.EventSender));
+            Components.Add(
+                new EventSenderProvider<TEventCode>(Peer, Peer.EventSender));
         }
     }
 }
