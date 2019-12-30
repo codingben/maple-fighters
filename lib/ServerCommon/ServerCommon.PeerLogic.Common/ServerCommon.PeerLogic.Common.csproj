@@ -75,10 +75,6 @@
       <Project>{BDA69EC2-FD94-4BC0-9AD9-17BED767F48C}</Project>
       <Name>ServerCommon.Application.Components</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ServerCommon.Application\ServerCommon.Application.csproj">
-      <Project>{478144C1-2DA6-4AED-9B7A-5004A7855F1C}</Project>
-      <Name>ServerCommon.Application</Name>
-    </ProjectReference>
     <ProjectReference Include="..\ServerCommon.Configuration\ServerCommon.Configuration.csproj">
       <Project>{E294B8AA-54DC-427C-8730-7776155C524C}</Project>
       <Name>ServerCommon.Configuration</Name>
