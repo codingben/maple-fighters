@@ -49,7 +49,6 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IInboundPeerLogicBase.cs" />
     <Compile Include="IPeerLogicBase.cs" />
     <Compile Include="PeerLogicException.cs" />
     <Compile Include="PeerLogicBase.cs" />
