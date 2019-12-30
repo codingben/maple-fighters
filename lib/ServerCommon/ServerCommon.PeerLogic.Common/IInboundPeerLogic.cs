@@ -5,7 +5,7 @@ namespace ServerCommon.PeerLogic.Common
     /// <summary>
     /// Exposes a safe access to the inbound peer logic.
     /// </summary>
-    public interface IInboundPeerLogicBase
+    public interface IInboundPeerLogic
     {
         IExposedComponents ExposedComponents { get; }
     }

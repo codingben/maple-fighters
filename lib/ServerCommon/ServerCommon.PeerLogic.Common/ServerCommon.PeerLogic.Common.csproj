@@ -56,7 +56,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IInboundPeerLogicBase.cs" />
+    <Compile Include="IInboundPeerLogic.cs" />
     <Compile Include="InboundPeerLogicBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
