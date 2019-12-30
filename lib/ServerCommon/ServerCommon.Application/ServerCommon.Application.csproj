@@ -82,10 +82,6 @@
       <Project>{41A8AAA5-4D96-4E46-9D62-2B46C5619A34}</Project>
       <Name>ServerCommon.PeerLogic.Components</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ServerCommon.PeerLogic\ServerCommon.PeerLogic.csproj">
-      <Project>{F286466C-C0EB-4D2C-AD3F-640AEA24B278}</Project>
-      <Name>ServerCommon.PeerLogic</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
