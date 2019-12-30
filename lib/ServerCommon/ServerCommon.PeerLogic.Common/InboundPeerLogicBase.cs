@@ -17,7 +17,7 @@ namespace ServerCommon.PeerLogic.Common
     /// <typeparam name="TOperationCode">The operations.</typeparam>
     /// <typeparam name="TEventCode">The events.</typeparam>
     public class InboundPeerLogicBase<TOperationCode, TEventCode> : PeerLogicBase<IClientPeer>, 
-                                                                    IInboundPeerLogicBase
+                                                                    IInboundPeerLogic
         where TOperationCode : IComparable, IFormattable, IConvertible
         where TEventCode : IComparable, IFormattable, IConvertible
     {
