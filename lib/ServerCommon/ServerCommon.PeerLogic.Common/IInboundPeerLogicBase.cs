@@ -1,6 +1,6 @@
 ﻿using Common.ComponentModel;
 
-namespace ServerCommon.PeerLogic
+namespace ServerCommon.PeerLogic.Common
 {
     /// <summary>
     /// Exposes a safe access to the inbound peer logic.
