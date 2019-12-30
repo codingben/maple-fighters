@@ -69,10 +69,6 @@
       <Project>{478144C1-2DA6-4AED-9B7A-5004A7855F1C}</Project>
       <Name>ServerCommon.Application</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ServerCommon.Logging\ServerCommon.Logging.csproj">
-      <Project>{40470F37-59BB-45B3-9BD0-886703A0EC2B}</Project>
-      <Name>ServerCommon.Logging</Name>
-    </ProjectReference>
     <ProjectReference Include="..\ServerCommon.PeerBase\ServerCommon.PeerBase.csproj">
       <Project>{82123DDA-C7FE-43DA-99EF-4C04F14E8BAA}</Project>
       <Name>ServerCommon.PeerBase</Name>
