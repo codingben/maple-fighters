@@ -5,57 +5,54 @@ namespace ServerCommon.PeerLogic.Components
     internal class PeersLogicsCollection<TPeerLogic>
         where TPeerLogic : class
     {
-        private readonly Dictionary<int, TPeerLogic> peersLogics;
+        private readonly Dictionary<int, TPeerLogic> collection;
 
         public PeersLogicsCollection()
         {
-            peersLogics = new Dictionary<int, TPeerLogic>();
+            collection = new Dictionary<int, TPeerLogic>();
         }
 
-        public TPeerLogic this[int id] 
+        public void Add(int id, TPeerLogic peerLogic)
         {
-            get
+            if (!collection.ContainsKey(id))
             {
-                TPeerLogic peerLogic = null;
-
-                if (peersLogics.ContainsKey(id))
-                {
-                    peerLogic = peersLogics[id];
-                }
-
-                return peerLogic;
+                collection.Add(id, peerLogic);
             }
         }
 
-        public void Add(int peerId, TPeerLogic peerLogic)
+        public void Remove(int id)
         {
-            if (!peersLogics.ContainsKey(peerId))
+            if (collection.ContainsKey(id))
             {
-                peersLogics.Add(peerId, peerLogic);
+                collection.Remove(id);
             }
         }
 
-        public void Remove(int peerId)
+        public TPeerLogic Get(int id)
         {
-            if (peersLogics.ContainsKey(peerId))
+            TPeerLogic peerLogic = null;
+
+            if (collection.ContainsKey(id))
             {
-                peersLogics.Remove(peerId);
+                peerLogic = collection[id];
             }
+
+            return peerLogic;
         }
 
         public IEnumerable<TPeerLogic> GetAllLogics()
         {
-            return peersLogics.Values;
+            return collection.Values;
         }
 
         public void RemoveAll()
         {
-            peersLogics.Clear();
+            collection.Clear();
         }
 
         public int Count()
         {
-            return peersLogics.Count;
+            return collection.Count;
         }
     }
 }
