@@ -54,8 +54,11 @@ namespace ServerCommon.PeerLogic.Components
         {
             lock (locker)
             {
-                var logic = peersLogics[peerId];
-                peerLogic.Invoke(logic);
+                var logic = peersLogics.Get(peerId);
+                if (logic != null)
+                {
+                    peerLogic?.Invoke(logic);
+                }
             }
         }
 
