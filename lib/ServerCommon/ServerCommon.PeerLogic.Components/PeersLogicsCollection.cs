@@ -16,10 +16,11 @@ namespace ServerCommon.PeerLogic.Components
         {
             get
             {
-                if (!peersLogics.TryGetValue(id, out var peerLogic))
+                TPeerLogic peerLogic = null;
+
+                if (peersLogics.ContainsKey(id))
                 {
-                    throw new PeerLogicException(
-                        $"A peer with id {id} does not exist.");
+                    peerLogic = peersLogics[id];
                 }
 
                 return peerLogic;
@@ -28,13 +29,10 @@ namespace ServerCommon.PeerLogic.Components
 
         public void Add(int peerId, TPeerLogic peerLogic)
         {
-            if (peersLogics.ContainsKey(peerId))
+            if (!peersLogics.ContainsKey(peerId))
             {
-                throw new PeerLogicException(
-                    $"Failed to add a new peer with id {peerId}.");
+                peersLogics.Add(peerId, peerLogic);
             }
-
-            peersLogics.Add(peerId, peerLogic);
         }
 
         public void Remove(int peerId)
