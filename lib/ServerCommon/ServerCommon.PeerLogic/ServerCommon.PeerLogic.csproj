@@ -50,7 +50,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IPeerLogicBase.cs" />
-    <Compile Include="PeerLogicException.cs" />
     <Compile Include="PeerLogicBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
