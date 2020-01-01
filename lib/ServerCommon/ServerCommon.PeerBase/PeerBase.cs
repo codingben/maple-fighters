@@ -3,7 +3,6 @@ using CommonCommunicationInterfaces;
 using CommonTools.Log;
 using ServerCommon.Application;
 using ServerCommon.PeerLogic;
-using ServerCommon.PeerLogic.Components;
 using ServerCommunicationInterfaces;
 
 namespace ServerCommon.PeerBase
@@ -17,14 +16,11 @@ namespace ServerCommon.PeerBase
         private IPeerLogicBase<IClientPeer> PeerLogicBase { get; set; }
 
         private readonly IIdGenerator idGenerator;
-        private readonly IPeersLogicsProvider peersLogicsProvider;
 
         protected PeerBase()
         {
             var components = ServerExposedComponents.Provide();
             idGenerator = components.Get<IIdGenerator>().AssertNotNull();
-            peersLogicsProvider = 
-                components.Get<IPeersLogicsProvider>().AssertNotNull();
         }
 
         /// <summary>
@@ -33,7 +29,7 @@ namespace ServerCommon.PeerBase
         /// <typeparam name="TPeerLogic">The peer logic.</typeparam>
         /// <param name="peerLogic">The peer logic instance.</param>
         protected void BindPeerLogic<TPeerLogic>(TPeerLogic peerLogic = default)
-            where TPeerLogic : IInboundPeerLogicBase, new()
+            where TPeerLogic : class, new()
         {
             Peer.Fiber.Enqueue(() =>
             {
@@ -47,13 +43,8 @@ namespace ServerCommon.PeerBase
                 if (peerLogic is IPeerLogicBase<IClientPeer> @base)
                 {
                     PeerLogicBase?.Dispose();
-
-                    peersLogicsProvider?.RemovePeerLogic(PeerId);
-
                     PeerLogicBase = @base;
                     PeerLogicBase.Setup(Peer, PeerId);
-
-                    peersLogicsProvider?.AddPeerLogic(PeerId, peerLogic);
                 }
 
                 Peer.NetworkTrafficState = NetworkTrafficState.Flowing;
@@ -63,8 +54,6 @@ namespace ServerCommon.PeerBase
         protected void UnbindPeerLogic()
         {
             PeerLogicBase?.Dispose();
-
-            peersLogicsProvider?.RemovePeerLogic(PeerId);
         }
 
         protected override int ProvidePeerId()
