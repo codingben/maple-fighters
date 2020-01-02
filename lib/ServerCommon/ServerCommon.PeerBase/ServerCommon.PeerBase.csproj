@@ -55,22 +55,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Common\Common.ComponentModel\Common.ComponentModel.csproj">
-      <Project>{C1AFE671-D598-4C89-B045-30CC20023849}</Project>
-      <Name>Common.ComponentModel</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Common\Common.Components\Common.Components.csproj">
-      <Project>{2B10158D-FFBE-46A8-A637-1B7BBE56700D}</Project>
-      <Name>Common.Components</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ServerCommon.Application\ServerCommon.Application.csproj">
-      <Project>{478144C1-2DA6-4AED-9B7A-5004A7855F1C}</Project>
-      <Name>ServerCommon.Application</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ServerCommon.PeerLogic.Components\ServerCommon.PeerLogic.Components.csproj">
-      <Project>{41A8AAA5-4D96-4E46-9D62-2B46C5619A34}</Project>
-      <Name>ServerCommon.PeerLogic.Components</Name>
-    </ProjectReference>
     <ProjectReference Include="..\ServerCommon.PeerLogic\ServerCommon.PeerLogic.csproj">
       <Project>{F286466C-C0EB-4D2C-AD3F-640AEA24B278}</Project>
       <Name>ServerCommon.PeerLogic</Name>
