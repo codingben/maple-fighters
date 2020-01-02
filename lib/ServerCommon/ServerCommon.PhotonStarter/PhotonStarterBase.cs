@@ -23,9 +23,11 @@ namespace ServerCommon.PhotonStarter
 
         protected override void Setup()
         {
-            application = CreateApplication(
-                new PhotonServerConnector(this, ApplicationName),
-                new PhotonFiberProvider());
+            var serverConnector =
+                new PhotonServerConnector(this, ApplicationName);
+            var fiberProvider = new PhotonFiberProvider();
+
+            application = CreateApplication(serverConnector, fiberProvider);
             application.Startup();
         }
 
@@ -40,7 +42,7 @@ namespace ServerCommon.PhotonStarter
             peer.Fiber.Enqueue(() => 
             {
                 var peerBase = new TPeerBase();
-                peerBase.Connected(peer);
+                peerBase.Connected(peer, peer.ConnectionId);
             });
 
             return peer;
