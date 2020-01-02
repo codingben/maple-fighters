@@ -1,7 +1,4 @@
-﻿using Common.Components;
-using CommonCommunicationInterfaces;
-using CommonTools.Log;
-using ServerCommon.Application;
+﻿using CommonCommunicationInterfaces;
 using ServerCommon.PeerLogic;
 using ServerCommunicationInterfaces;
 
@@ -11,16 +8,16 @@ namespace ServerCommon.PeerBase
     /// <summary>
     /// A common peer implementation for the inbound communication. 
     /// </summary>
-    public class PeerBase : MinimalPeerBase
+    public class PeerBase : IPeerBase
     {
-        private IPeerLogicBase<IClientPeer> PeerLogicBase { get; set; }
+        private IClientPeer peer;
+        private int peerId;
+        private IPeerLogicBase<IClientPeer> peerLogicBase;
 
-        private readonly IIdGenerator idGenerator;
-
-        protected PeerBase()
+        public void Connected(IClientPeer peer, int peerId)
         {
-            var components = ServerExposedComponents.Provide();
-            idGenerator = components.Get<IIdGenerator>().AssertNotNull();
+            this.peer = peer;
+            this.peerId = peerId;
         }
 
         /// <summary>
@@ -28,37 +25,28 @@ namespace ServerCommon.PeerBase
         /// </summary>
         /// <typeparam name="TPeerLogic">The peer logic.</typeparam>
         /// <param name="peerLogic">The peer logic instance.</param>
-        protected void BindPeerLogic<TPeerLogic>(TPeerLogic peerLogic = default)
-            where TPeerLogic : class, new()
+        protected void BindPeerLogic<TPeerLogic>(TPeerLogic peerLogic)
+            where TPeerLogic : IPeerLogicBase<IClientPeer>
         {
-            Peer.Fiber.Enqueue(() =>
+            peer.Fiber.Enqueue(() =>
             {
-                Peer.NetworkTrafficState = NetworkTrafficState.Paused;
+                peer.NetworkTrafficState = NetworkTrafficState.Paused;
 
-                if (peerLogic == null)
-                {
-                    peerLogic = new TPeerLogic();
-                }
+                UnbindPeerLogic();
 
-                if (peerLogic is IPeerLogicBase<IClientPeer> @base)
-                {
-                    PeerLogicBase?.Dispose();
-                    PeerLogicBase = @base;
-                    PeerLogicBase.Setup(Peer, PeerId);
-                }
+                peerLogicBase = peerLogic;
+                peerLogicBase.Setup(peer, peerId);
 
-                Peer.NetworkTrafficState = NetworkTrafficState.Flowing;
+                peer.NetworkTrafficState = NetworkTrafficState.Flowing;
             });
         }
 
+        /// <summary>
+        /// Get rid of peer logic.
+        /// </summary>
         protected void UnbindPeerLogic()
         {
-            PeerLogicBase?.Dispose();
-        }
-
-        protected override int ProvidePeerId()
-        {
-            return idGenerator.GenerateId();
+            peerLogicBase?.Dispose();
         }
     }
 }
