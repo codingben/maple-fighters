@@ -49,7 +49,6 @@
   <ItemGroup>
     <Compile Include="PeerBase.cs" />
     <Compile Include="IPeerBase.cs" />
-    <Compile Include="MinimalPeerBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
