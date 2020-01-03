@@ -2,22 +2,18 @@
 using PhotonServerImplementation;
 using PhotonServerImplementation.Server;
 using ServerCommon.Application;
-using ServerCommon.PeerBase;
 using ServerCommunicationInterfaces;
 
 namespace ServerCommon.PhotonStarter
 {
-    using ApplicationBase = PhotonServerImplementation.ApplicationBase;
-    using PeerBase = Photon.SocketServer.PeerBase;
-
     /// <summary>
     /// The starter of the server application which uses photon socket server.
     /// </summary>
     /// <typeparam name="TApplication">The server application.</typeparam>
-    /// <typeparam name="TPeerBase">The client peer.</typeparam>
-    public abstract class PhotonStarterBase<TApplication, TPeerBase> : ApplicationBase
+    /// <typeparam name="TPeerCreator">The client peer.</typeparam>
+    public abstract class PhotonStarterBase<TApplication, TPeerCreator> : PhotonServerImplementation.ApplicationBase
         where TApplication : class, IApplicationBase
-        where TPeerBase : class, IPeerBase, new()
+        where TPeerCreator : class, new()
     {
         private TApplication application;
 
@@ -41,15 +37,12 @@ namespace ServerCommon.PhotonStarter
             var peer = new PhotonClientPeer(initRequest);
             peer.Fiber.Enqueue(() => 
             {
-                var peerBase = new TPeerBase();
-                peerBase.Connected(peer, peer.ConnectionId);
+                // TODO: Implement
             });
 
             return peer;
         }
 
-        protected abstract TApplication CreateApplication(
-            IServerConnector serverConnector,
-            IFiberProvider fiberProvider);
+        protected abstract TApplication CreateApplication(IServerConnector serverConnector, IFiberProvider fiberProvider);
     }
 }
