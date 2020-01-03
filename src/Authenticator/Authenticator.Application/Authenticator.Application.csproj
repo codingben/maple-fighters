@@ -95,10 +95,6 @@
       <Project>{E294B8AA-54DC-427C-8730-7776155C524C}</Project>
       <Name>ServerCommon.Configuration</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\lib\ServerCommon\ServerCommon.PeerBase\ServerCommon.PeerBase.csproj">
-      <Project>{82123DDA-C7FE-43DA-99EF-4C04F14E8BAA}</Project>
-      <Name>ServerCommon.PeerBase</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\lib\ServerCommon\ServerCommon.PeerLogic.Common\ServerCommon.PeerLogic.Common.csproj">
       <Project>{119DCFD8-63CD-47CC-B26F-9BACB91A062B}</Project>
       <Name>ServerCommon.PeerLogic.Common</Name>

@@ -295,8 +295,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServerCommon.Configuration"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServerCommon.PeerLogic.Common", "lib\ServerCommon\ServerCommon.PeerLogic.Common\ServerCommon.PeerLogic.Common.csproj", "{119DCFD8-63CD-47CC-B26F-9BACB91A062B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServerCommon.PeerBase", "lib\ServerCommon\ServerCommon.PeerBase\ServerCommon.PeerBase.csproj", "{82123DDA-C7FE-43DA-99EF-4C04F14E8BAA}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -703,10 +701,6 @@ Global
 		{119DCFD8-63CD-47CC-B26F-9BACB91A062B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{119DCFD8-63CD-47CC-B26F-9BACB91A062B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{119DCFD8-63CD-47CC-B26F-9BACB91A062B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{82123DDA-C7FE-43DA-99EF-4C04F14E8BAA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{82123DDA-C7FE-43DA-99EF-4C04F14E8BAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{82123DDA-C7FE-43DA-99EF-4C04F14E8BAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{82123DDA-C7FE-43DA-99EF-4C04F14E8BAA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -854,7 +848,6 @@ Global
 		{8B0C40C6-A638-41F0-93A7-17FE6BAA0259} = {B37FE882-0224-4941-9617-1565475C67DA}
 		{E294B8AA-54DC-427C-8730-7776155C524C} = {7AD3F564-C73B-47F9-8FEA-79156A386A3B}
 		{119DCFD8-63CD-47CC-B26F-9BACB91A062B} = {7AD3F564-C73B-47F9-8FEA-79156A386A3B}
-		{82123DDA-C7FE-43DA-99EF-4C04F14E8BAA} = {7AD3F564-C73B-47F9-8FEA-79156A386A3B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {20317580-AFD3-4C35-BADC-B5E94CD0B788}
