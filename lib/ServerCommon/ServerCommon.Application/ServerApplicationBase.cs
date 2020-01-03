@@ -25,9 +25,7 @@ namespace ServerCommon.Application
         private readonly IServerConnector serverConnector;
         private readonly IFiberProvider fiberProvider;
 
-        protected ServerApplicationBase(
-            IServerConnector serverConnector,
-            IFiberProvider fiberProvider)
+        protected ServerApplicationBase(IServerConnector serverConnector, IFiberProvider fiberProvider)
         {
             this.serverConnector = serverConnector;
             this.fiberProvider = fiberProvider;
