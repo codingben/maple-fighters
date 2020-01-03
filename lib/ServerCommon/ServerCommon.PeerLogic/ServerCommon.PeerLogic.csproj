@@ -54,12 +54,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Common\Common.ComponentModel\Common.ComponentModel.csproj">
-      <Project>{C1AFE671-D598-4C89-B045-30CC20023849}</Project>
-      <Name>Common.ComponentModel</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
