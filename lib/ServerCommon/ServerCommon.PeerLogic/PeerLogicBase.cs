@@ -7,7 +7,7 @@ namespace ServerCommon.PeerLogic
     /// A base implementation for the client peer logic.
     /// </summary>
     /// <typeparam name="TPeer">The peer.</typeparam>
-    public abstract class PeerLogicBase<TPeer> : IPeerLogicBase<TPeer>
+    public abstract class PeerLogicBase<TPeer>
         where TPeer : class, IMinimalPeer
     {
         protected TPeer Peer { get; private set; }
@@ -27,7 +27,6 @@ namespace ServerCommon.PeerLogic
             OnSetup();
         }
 
-        /// <inheritdoc />
         /// <summary>
         /// See <see cref="IDisposable.Dispose" /> for more information.
         /// </summary>
