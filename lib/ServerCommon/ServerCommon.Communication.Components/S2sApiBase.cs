@@ -56,7 +56,7 @@ namespace ServerCommon.Communication.Components
             ServerPeerLogic =
                 new OutboundPeerLogic<TOperationCode, TEventCode>();
 
-            var @base = (IPeerLogicBase<IOutboundServerPeer>)ServerPeerLogic;
+            var @base = (PeerLogicBase<IOutboundServerPeer>)ServerPeerLogic;
             @base?.Setup(serverPeer, default);
 
             var connectionDetails = GetConnectionDetails();
