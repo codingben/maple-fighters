@@ -1,9 +1,13 @@
 ﻿using System;
+using ServerCommunicationInterfaces;
 
 namespace ServerCommon.Peer
 {
-    public interface IPeerBase : IDisposable
+    public interface IPeerBase<out TPeer> : IDisposable
+        where TPeer : class, IMinimalPeer
     {
-        // TODO: Implement
+        TPeer Peer { get; }
+
+        int PeerId { get; }
     }
 }
