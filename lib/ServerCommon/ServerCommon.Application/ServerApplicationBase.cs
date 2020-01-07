@@ -6,7 +6,6 @@ using ServerCommon.Application.Components;
 using ServerCommon.Communication.Components;
 using ServerCommon.Configuration;
 using ServerCommon.Logging;
-using ServerCommon.PeerLogic.Components;
 using ServerCommunicationInterfaces;
 
 namespace ServerCommon.Application
@@ -65,8 +64,7 @@ namespace ServerCommon.Application
         /// 2. <see cref="IRandomNumberGenerator"/>
         /// 3. <see cref="IFiberStarter"/>
         /// 4. <see cref="ICoroutinesExecutor"/>
-        /// 5. <see cref="IPeersLogicsProvider"/>
-        /// 6. <see cref="IS2sConnectionProvider"/>
+        /// 5. <see cref="IS2sConnectionProvider"/>
         /// </summary>
         protected void AddCommonComponents()
         {
@@ -79,7 +77,6 @@ namespace ServerCommon.Application
             var executor = new FiberCoroutinesExecutor(scheduler, updateRateMilliseconds: 100);
 
             Components.Add(new CoroutinesExecutor(executor));
-            ExposedComponents.Add(new InboundPeersLogicsProvider());
             Components.Add(new S2sConnectionProvider(serverConnector));
         }
     }
