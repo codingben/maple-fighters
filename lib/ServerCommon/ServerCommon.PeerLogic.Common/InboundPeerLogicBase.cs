@@ -5,7 +5,6 @@ using CommonTools.Coroutines;
 using CommonTools.Log;
 using ServerCommon.Application.Components;
 using ServerCommon.Configuration;
-using ServerCommon.PeerLogic.Components;
 using ServerCommunicationHelper;
 using ServerCommunicationInterfaces;
 
@@ -56,7 +55,6 @@ namespace ServerCommon.PeerLogic.Common
         /// <summary>
         /// Adds common components:
         /// 1. <see cref="ICoroutinesExecutor"/>
-        /// 2. <see cref="IEventSenderProvider"/>
         /// </summary>
         private void AddCommonComponents()
         {
@@ -65,8 +63,6 @@ namespace ServerCommon.PeerLogic.Common
                 updateRateMilliseconds: 100);
 
             Components.Add(new CoroutinesExecutor(executor));
-            Components.Add(
-                new EventSenderProvider<TEventCode>(Peer, Peer.EventSender));
         }
     }
 }
