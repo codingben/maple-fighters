@@ -95,10 +95,6 @@
       <Project>{E294B8AA-54DC-427C-8730-7776155C524C}</Project>
       <Name>ServerCommon.Configuration</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\lib\ServerCommon\ServerCommon.PeerLogic.Common\ServerCommon.PeerLogic.Common.csproj">
-      <Project>{119DCFD8-63CD-47CC-B26F-9BACB91A062B}</Project>
-      <Name>ServerCommon.PeerLogic.Common</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Authenticator.Common.Enums\Authenticator.Common.Enums.csproj">
       <Project>{D312D1B6-9289-4659-A0C8-2AB87464FD15}</Project>
       <Name>Authenticator.Common.Enums</Name>
