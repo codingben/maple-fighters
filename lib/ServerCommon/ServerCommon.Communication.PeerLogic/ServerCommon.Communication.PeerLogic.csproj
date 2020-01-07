@@ -62,10 +62,6 @@
       <Project>{E294B8AA-54DC-427C-8730-7776155C524C}</Project>
       <Name>ServerCommon.Configuration</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ServerCommon.PeerLogic\ServerCommon.PeerLogic.csproj">
-      <Project>{F286466C-C0EB-4D2C-AD3F-640AEA24B278}</Project>
-      <Name>ServerCommon.PeerLogic</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
