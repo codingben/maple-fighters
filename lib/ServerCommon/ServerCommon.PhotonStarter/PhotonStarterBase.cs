@@ -10,10 +10,8 @@ namespace ServerCommon.PhotonStarter
     /// The starter of the server application which uses photon socket server.
     /// </summary>
     /// <typeparam name="TApplication">The server application.</typeparam>
-    /// <typeparam name="TPeerCreator">The client peer.</typeparam>
-    public abstract class PhotonStarterBase<TApplication, TPeerCreator> : PhotonServerImplementation.ApplicationBase
+    public abstract class PhotonStarterBase<TApplication> : PhotonServerImplementation.ApplicationBase
         where TApplication : class, IApplicationBase
-        where TPeerCreator : class, new()
     {
         private TApplication application;
 
@@ -35,14 +33,13 @@ namespace ServerCommon.PhotonStarter
         protected override PeerBase CreatePeer(InitRequest initRequest)
         {
             var peer = new PhotonClientPeer(initRequest);
-            peer.Fiber.Enqueue(() => 
-            {
-                // TODO: Implement
-            });
+            peer.Fiber.Enqueue(() => CreateClientPeer(peer));
 
             return peer;
         }
 
         protected abstract TApplication CreateApplication(IServerConnector serverConnector, IFiberProvider fiberProvider);
+
+        protected abstract void CreateClientPeer(IClientPeer clientPeer);
     }
 }
