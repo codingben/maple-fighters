@@ -61,10 +61,6 @@
       <Project>{2B10158D-FFBE-46A8-A637-1B7BBE56700D}</Project>
       <Name>Common.Components</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ServerCommon.Communication.PeerLogic\ServerCommon.Communication.PeerLogic.csproj">
-      <Project>{326F1FDB-4BBE-4654-ACEF-5F4135650D88}</Project>
-      <Name>ServerCommon.Communication.PeerLogic</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
