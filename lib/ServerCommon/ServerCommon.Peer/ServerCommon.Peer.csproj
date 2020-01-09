@@ -59,11 +59,5 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\ServerCommon.Peer.Interfaces\ServerCommon.Peer.Interfaces.csproj">
-      <Project>{481b425e-c488-4424-9f99-e57e93ce1f51}</Project>
-      <Name>ServerCommon.Peer.Interfaces</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
