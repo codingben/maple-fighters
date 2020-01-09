@@ -5,7 +5,7 @@ using ServerCommunicationInterfaces;
 
 namespace ServerCommon.Peer
 {
-    public abstract class ClientPeerBase<TO, TE>
+    public abstract class ClientPeerBase<TO, TE> : IDisposable
         where TO : IComparable, IFormattable, IConvertible
         where TE : IComparable, IFormattable, IConvertible
     {
