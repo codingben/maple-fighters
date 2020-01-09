@@ -9,6 +9,11 @@ namespace ServerCommon.Peer
         where TO : IComparable, IFormattable, IConvertible
         where TE : IComparable, IFormattable, IConvertible
     {
+        protected IMinimalPeer Peer
+        {
+            get;
+        }
+
         protected IOperationRequestHandlerRegister<TO> OperationHandlerRegister
         {
             get;
@@ -19,18 +24,13 @@ namespace ServerCommon.Peer
             get;
         }
 
-        protected IFiber Fiber
-        {
-            get;
-        }
-
         protected ICoroutinesExecutor CoroutinesExecutor => GetCoroutinesExecutor();
 
         protected ClientPeerBase(IClientPeer peer, bool log = false)
         {
+            Peer = peer;
             OperationHandlerRegister = new OperationRequestsHandler<TO>(peer.OperationRequestNotifier, peer.OperationResponseSender, log, log, CoroutinesExecutor);
             EventSender = new EventSender<TE>(peer.EventSender, log);
-            Fiber = peer.Fiber;
         }
 
         public void Dispose()
