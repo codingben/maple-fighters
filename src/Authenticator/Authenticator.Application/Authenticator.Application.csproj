@@ -45,7 +45,6 @@
     <Reference Include="LogUtils, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Coroutines.5.0.5\lib\net46\LogUtils.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.CSharp" />
     <Reference Include="ServerCommunicationHelper, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\ServerCommunicationHelper.3.0.0\lib\net46\ServerCommunicationHelper.dll</HintPath>
     </Reference>
@@ -53,12 +52,10 @@
       <HintPath>..\..\..\packages\ServerCommunicationInterfaces.2.0.0\lib\net46\ServerCommunicationInterfaces.dll</HintPath>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.ComponentModel.Primitives, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\System.ComponentModel.Primitives.4.3.0\lib\net45\System.ComponentModel.Primitives.dll</HintPath>
     </Reference>
     <Reference Include="System.Core" />
-    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\System.ValueTuple.4.5.0\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
     </Reference>
@@ -94,6 +91,10 @@
     <ProjectReference Include="..\..\..\lib\ServerCommon\ServerCommon.Configuration\ServerCommon.Configuration.csproj">
       <Project>{E294B8AA-54DC-427C-8730-7776155C524C}</Project>
       <Name>ServerCommon.Configuration</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\lib\ServerCommon\ServerCommon.Peer\ServerCommon.Peer.csproj">
+      <Project>{adbc8bd4-dd76-4fa5-8cd2-4361b6777ef5}</Project>
+      <Name>ServerCommon.Peer</Name>
     </ProjectReference>
     <ProjectReference Include="..\Authenticator.Common.Enums\Authenticator.Common.Enums.csproj">
       <Project>{D312D1B6-9289-4659-A0C8-2AB87464FD15}</Project>
