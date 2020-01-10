@@ -2,9 +2,11 @@
 using Authenticator.Common.Enums;
 using Authenticator.Domain.Aggregates.User.Services;
 using Common.ComponentModel;
+using Common.Components;
 using CommonTools.Coroutines;
 using CommonTools.Log;
 using CommunicationHelper;
+using ServerCommon.Application.Components;
 using ServerCommon.Peer;
 using ServerCommunicationInterfaces;
 
@@ -25,7 +27,10 @@ namespace Authenticator.Application.Peer.Logic
 
         protected override ICoroutinesExecutor GetCoroutinesExecutor()
         {
-            throw new System.NotImplementedException();
+            var executor = 
+                new FiberCoroutinesExecutor(Peer.Fiber, updateRateMilliseconds: 100);
+
+            return Components.Add(new CoroutinesExecutor(executor));
         }
 
         private void AddComponents()
