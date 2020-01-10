@@ -62,7 +62,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AuthenticationApplication.cs" />
-    <Compile Include="Peer\Logic\MainPeerLogic.cs" />
+    <Compile Include="Peer\Logic\AuthenticatorClientPeer.cs" />
     <Compile Include="Peer\Logic\Operations\Converters\ExtensionMethods.cs" />
     <Compile Include="Peer\Logic\Operations\LoginOperationHandler.cs" />
     <Compile Include="Peer\AuthenticatorPeer.cs" />
@@ -76,6 +76,10 @@
       <Project>{C1AFE671-D598-4C89-B045-30CC20023849}</Project>
       <Name>Common.ComponentModel</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\lib\Common\Common.Components\Common.Components.csproj">
+      <Project>{2B10158D-FFBE-46A8-A637-1B7BBE56700D}</Project>
+      <Name>Common.Components</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\lib\Common\Common.MongoDB\Common.MongoDB.csproj">
       <Project>{263590D6-4984-477E-8D22-67C477870E8C}</Project>
       <Name>Common.MongoDB</Name>
@@ -83,6 +87,10 @@
     <ProjectReference Include="..\..\..\lib\Common\Common.ParametersValidation\Common.ParametersValidation.csproj">
       <Project>{41F5F951-B6A6-4F67-BBC1-EBEF53F62FA8}</Project>
       <Name>Common.ParametersValidation</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\lib\ServerCommon\ServerCommon.Application.Components\ServerCommon.Application.Components.csproj">
+      <Project>{BDA69EC2-FD94-4BC0-9AD9-17BED767F48C}</Project>
+      <Name>ServerCommon.Application.Components</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\lib\ServerCommon\ServerCommon.Application\ServerCommon.Application.csproj">
       <Project>{478144C1-2DA6-4AED-9B7A-5004A7855F1C}</Project>
