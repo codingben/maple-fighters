@@ -65,7 +65,6 @@
     <Compile Include="Peer\Logic\AuthenticatorClientPeer.cs" />
     <Compile Include="Peer\Logic\Operations\Converters\ExtensionMethods.cs" />
     <Compile Include="Peer\Logic\Operations\LoginOperationHandler.cs" />
-    <Compile Include="Peer\AuthenticatorPeer.cs" />
     <Compile Include="Peer\Logic\Operations\RegisterOperationHandler.cs" />
     <Compile Include="Peer\Logic\Operations\Validators\LoginParametersValidator.cs" />
     <Compile Include="Peer\Logic\Operations\Validators\RegisterParametersValidator.cs" />
