@@ -17,9 +17,8 @@ namespace ServerCommon.Application
                 throw new ServerComponentsAlreadyInitializedException();
             }
 
-            _components =
-                components ?? throw new ArgumentNullException(
-                    nameof(components));
+            _components = 
+                components ?? throw new ArgumentNullException(nameof(components));
         }
 
         public static IExposedComponents Provide()
