@@ -14,8 +14,7 @@ namespace ServerCommon.Application
         {
             if (_components != null)
             {
-                throw new ServerApplicationException(
-                    "The server components provider has already been initialized.");
+                throw new ServerComponentsAlreadyInitializedException();
             }
 
             _components =
@@ -27,8 +26,7 @@ namespace ServerCommon.Application
         {
             if (_components == null)
             {
-                throw new ServerApplicationException(
-                    "The server components provider is not initialized.");
+                throw new ServerComponentsNotInitializedException();
             }
 
             return _components;
