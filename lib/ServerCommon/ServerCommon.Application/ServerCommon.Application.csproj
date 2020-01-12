@@ -47,7 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ServerApplicationBase.cs" />
-    <Compile Include="ServerApplicationException.cs" />
+    <Compile Include="ServerComponentsAlreadyInitializedException.cs" />
     <Compile Include="IApplicationBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServerExposedComponents.cs" />
