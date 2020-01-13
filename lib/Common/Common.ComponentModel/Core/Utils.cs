@@ -12,7 +12,7 @@ namespace Common.ComponentModel.Core
                 return;
             }
 
-            throw new InterfaceExpectedException<TComponent>();
+            throw new ComponentSettingsMissingException(nameof(TComponent));
         }
     }
 }
