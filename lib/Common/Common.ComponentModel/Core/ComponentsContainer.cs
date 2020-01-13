@@ -22,7 +22,7 @@ namespace Common.ComponentModel.Core
         /// <summary>
         /// See <see cref="IComponentsContainer.Add{T}"/> for more information.
         /// </summary>
-        /// <exception cref="ComponentAlreadyExistsException{T}">
+        /// <exception cref="ComponentAlreadyExistsException">
         /// A component exists in a collection.
         /// </exception>
         public void Add<TComponent>(TComponent component)
@@ -31,21 +31,19 @@ namespace Common.ComponentModel.Core
             var exposedState =
                 ComponentsContainerUtils.GetExposedState<TComponent>();
             var isExists = components.IsExists<TComponent>(exposedState);
-            if (!isExists)
+            if (isExists)
             {
-                components[exposedState].Add(component);
+                throw new ComponentAlreadyExistsException(nameof(TComponent));
             }
-            else
-            {
-                throw new ComponentAlreadyExistsException<TComponent>();
-            }
+
+            components[exposedState].Add(component);
         }
 
         /// <inheritdoc />
         /// <summary>
         /// See <see cref="IComponentsContainer.AddExposedOnly{T}"/> for more information.
         /// </summary>
-        /// <exception cref="ComponentAlreadyExistsException{T}">
+        /// <exception cref="ComponentAlreadyExistsException">
         /// A component exists in a collection.
         /// </exception>
         public void AddExposedOnly<TComponent>(TComponent component)
@@ -57,18 +55,16 @@ namespace Common.ComponentModel.Core
             {
                 var isExists =
                     components.IsExists<TComponent>(ExposedState.Exposable);
-                if (!isExists)
+                if (isExists)
                 {
-                    components[ExposedState.Exposable].Add(component);
+                    throw new ComponentAlreadyExistsException(nameof(TComponent));
                 }
-                else
-                {
-                    throw new ComponentAlreadyExistsException<TComponent>();
-                }
+
+                components[ExposedState.Exposable].Add(component);
             }
             else
             {
-                throw new ComponentNotExposedException<TComponent>();
+                throw new ComponentNotExposedException(nameof(TComponent));
             }
         }
 
@@ -86,7 +82,7 @@ namespace Common.ComponentModel.Core
             var component = collection.OfType<TComponent>().FirstOrDefault();
             if (component == null)
             {
-                throw new ComponentNotFoundException<TComponent>();
+                throw new ComponentNotFoundException(nameof(TComponent));
             }
 
             var index = collection.IndexOf(component);
@@ -126,14 +122,12 @@ namespace Common.ComponentModel.Core
             var component = components.GetExposedComponents()
                 .OfType<TComponent>()
                 .FirstOrDefault();
-            if (component != null)
+            if (component == null)
             {
-                ComponentsContainerUtils.SetComponentByLifetime(ref component);
+                throw new ComponentNotFoundException(nameof(TComponent));
             }
-            else
-            {
-                throw new ComponentNotFoundException<TComponent>();
-            }
+
+            ComponentsContainerUtils.SetComponentByLifetime(ref component);
 
             return component;
         }
