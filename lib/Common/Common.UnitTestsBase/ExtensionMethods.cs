@@ -7,8 +7,7 @@
         {
             if (component == null)
             {
-                throw new UnitTestsException(
-                    $"Failed to get {typeof(TComponent).Name} component."); 
+                throw new FailedToGetComponentException(nameof(TComponent));
             }
 
             return component;
