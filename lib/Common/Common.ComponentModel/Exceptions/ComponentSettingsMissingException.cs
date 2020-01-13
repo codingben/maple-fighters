@@ -2,12 +2,10 @@
 
 namespace Common.ComponentModel.Exceptions
 {
-    public class ComponentSettingsMissingException<TComponent> : Exception
-        where TComponent : class
+    public class ComponentSettingsMissingException : Exception
     {
-        public ComponentSettingsMissingException()
-            : base(
-                $"A component {typeof(TComponent).Name} does not have component settings!")
+        public ComponentSettingsMissingException(string componentName)
+            : base($"The component {componentName} has no settings!")
         {
             // Left blank intentionally
         }
