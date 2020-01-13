@@ -34,7 +34,7 @@ namespace Common.ComponentModel.UnitTests
             componentsContainer.Add(new SingletonComponent());
 
             // Act & Assert
-            Should.Throw<ComponentAlreadyExistsException<SingletonComponent>>(
+            Should.Throw<ComponentAlreadyExistsException>(
                 () => componentsContainer.Add(new SingletonComponent()));
         }
 
@@ -46,7 +46,7 @@ namespace Common.ComponentModel.UnitTests
                 new ComponentsContainer();
 
             // Act & Assert
-            Should.Throw<ComponentSettingsMissingException<NoAttributeComponent>>(
+            Should.Throw<ComponentSettingsMissingException>(
                 () => componentsContainer.Add(new NoAttributeComponent()));
         }
 
@@ -58,7 +58,7 @@ namespace Common.ComponentModel.UnitTests
                 new ComponentsContainer();
 
             // Act & Assert
-            Should.Throw<ComponentNotExposedException<SingletonComponent>>(
+            Should.Throw<ComponentNotExposedException>(
                 () => componentsContainer.AddExposedOnly(new SingletonComponent()));
         }
 
@@ -88,7 +88,7 @@ namespace Common.ComponentModel.UnitTests
                 new ComponentsContainer();
 
             // Act & Assert
-            Should.Throw<ComponentNotFoundException<SingletonComponent>>(
+            Should.Throw<ComponentNotFoundException>(
                 () => componentsContainer.Remove<SingletonComponent>());
         }
 
