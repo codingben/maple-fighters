@@ -46,7 +46,7 @@
     <Compile Include="Exceptions\ComponentNotExposedException.cs" />
     <Compile Include="Exceptions\ComponentNotFoundException.cs" />
     <Compile Include="Exceptions\ComponentSettingsMissingException.cs" />
-    <Compile Include="Exceptions\InterfaceExpectedException.cs" />
+    <Compile Include="Exceptions\ComponentInterfaceExpectedException.cs" />
     <Compile Include="ExposedState.cs" />
     <Compile Include="ExtensionMethods.cs" />
     <Compile Include="Generic\ComponentBase.cs" />
