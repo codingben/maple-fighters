@@ -2,11 +2,10 @@
 
 namespace Common.ComponentModel.Exceptions
 {
-    public class ComponentNotFoundException<TComponent> : Exception
-        where TComponent : class
+    public class ComponentNotFoundException : Exception
     {
-        public ComponentNotFoundException()
-            : base($"The {typeof(TComponent).Name} component was not found.")
+        public ComponentNotFoundException(string componentName)
+            : base($"The {componentName} component was not found.")
         {
             // Left blank intentionally
         }
