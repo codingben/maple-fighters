@@ -10,8 +10,7 @@ namespace ServerCommon.Configuration
             {
                 if (_inboundPeer == null)
                 {
-                    throw new ServerSettingsException(
-                        "The inbound peer configuration is not initialized.");
+                    throw new ConfigurationNotInitializedException("Inbound Peer");
                 }
 
                 return _inboundPeer;
@@ -28,8 +27,7 @@ namespace ServerCommon.Configuration
             {
                 if (_inboundPeer == null)
                 {
-                    throw new ServerSettingsException(
-                        "The outbound peer configuration is not initialized.");
+                    throw new ConfigurationNotInitializedException("Outbound Peer");
                 }
 
                 return _outboundPeer;
@@ -46,8 +44,7 @@ namespace ServerCommon.Configuration
             {
                 if (_databases == null)
                 {
-                    throw new ServerSettingsException(
-                        "The databases configuration is not initialized.");
+                    throw new ConfigurationNotInitializedException("Databases");
                 }
 
                 return _databases;
