@@ -46,7 +46,7 @@ namespace Common.ComponentModel.Generic.UnitTests
             components.Add(new UnexposableComponent());
 
             // Act & Assert
-            Should.Throw<ComponentAlreadyExistsException<UnexposableComponent>>(
+            Should.Throw<ComponentAlreadyExistsException>(
                 () => components.Add(new UnexposableComponent()));
         }
 
@@ -59,7 +59,7 @@ namespace Common.ComponentModel.Generic.UnitTests
             components.Add(new ExposableComponent());
 
             // Act & Assert
-            Should.Throw<ComponentAlreadyExistsException<ExposableComponent>>(
+            Should.Throw<ComponentAlreadyExistsException>(
                 () => components.Add(new ExposableComponent()));
         }
 
@@ -147,8 +147,8 @@ namespace Common.ComponentModel.Generic.UnitTests
             components.Add(new UnexposableComponent());
 
             // Act && Assert
-            Should.Throw<InterfaceExpectedException<UnexposableComponent>>(() => 
-                components.Get<UnexposableComponent>());
+            Should.Throw<ComponentInterfaceExpectedException>(
+                () => components.Get<UnexposableComponent>());
         }
 
         [Fact]
