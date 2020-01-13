@@ -16,7 +16,7 @@ namespace Common.ComponentModel.Core
             {
                 if (typeof(IDisposable).IsAssignableFrom(typeof(TComponent)))
                 {
-                    throw new ComponentSettingsMissingException<TComponent>();
+                    throw new ComponentSettingsMissingException(nameof(TComponent));
                 }
             }
 
