@@ -2,12 +2,11 @@
 
 namespace Common.ComponentModel.Exceptions
 {
-    public class ComponentNotExposedException<TComponent> : Exception
-        where TComponent : class
+    public class ComponentNotExposedException : Exception
     {
-        public ComponentNotExposedException()
+        public ComponentNotExposedException(string componentName)
             : base(
-                $"The component {typeof(TComponent).Name} should be exposed.")
+                $"The component {componentName} should be exposed.")
         {
             // Left blank intentionally
         }
