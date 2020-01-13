@@ -2,11 +2,10 @@
 
 namespace Common.ComponentModel.Exceptions
 {
-    public class ComponentAlreadyExistsException<TComponent> : Exception
-        where TComponent : class
+    public class ComponentAlreadyExistsException : Exception
     {
-        public ComponentAlreadyExistsException()
-            : base($"The {typeof(TComponent).Name} component already exists!")
+        public ComponentAlreadyExistsException(string componentName)
+            : base($"The {componentName} component already exists!")
         {
             // Left blank intentionally
         }
