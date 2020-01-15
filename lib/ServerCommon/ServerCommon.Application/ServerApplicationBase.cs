@@ -15,8 +15,7 @@ namespace ServerCommon.Application
     /// </summary>
     public class ServerApplicationBase : IApplicationBase
     {
-        protected IExposedComponents ExposedComponents =>
-            Components.ProvideExposed();
+        protected IExposedComponents ExposedComponents => Components.ProvideExposed();
 
         protected IComponents Components => new ComponentsProvider();
 
