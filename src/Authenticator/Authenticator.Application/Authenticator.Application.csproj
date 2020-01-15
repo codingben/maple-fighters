@@ -62,6 +62,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AuthenticationApplication.cs" />
+    <Compile Include="AuthenticatorClientPeerCreator.cs" />
     <Compile Include="Peer\Logic\AuthenticatorClientPeer.cs" />
     <Compile Include="Peer\Logic\Operations\Converters\ExtensionMethods.cs" />
     <Compile Include="Peer\Logic\Operations\LoginOperationHandler.cs" />
