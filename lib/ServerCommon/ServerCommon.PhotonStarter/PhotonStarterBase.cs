@@ -40,6 +40,6 @@ namespace ServerCommon.PhotonStarter
 
         protected abstract TApplication CreateApplication(IServerConnector serverConnector, IFiberProvider fiberProvider);
 
-        protected abstract void CreateClientPeer(IClientPeer clientPeer);
+        protected abstract void CreateClientPeer(IClientPeer peer);
     }
 }
