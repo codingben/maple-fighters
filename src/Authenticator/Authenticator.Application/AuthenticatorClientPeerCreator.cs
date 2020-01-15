@@ -5,7 +5,7 @@ namespace Authenticator.Application
 {
     public class AuthenticatorClientPeerCreator : IClientPeerCreator
     {
-        public void Create(IClientPeer clientPeer)
+        public void Create(IClientPeer peer)
         {
             // TODO: Implement
         }
