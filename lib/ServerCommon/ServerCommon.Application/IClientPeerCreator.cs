@@ -4,6 +4,6 @@ namespace ServerCommon.Application
 {
     public interface IClientPeerCreator
     {
-        void Create(IClientPeer clientPeer);
+        void Create(IClientPeer peer);
     }
 }
