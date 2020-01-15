@@ -12,8 +12,8 @@ namespace ServerCommon.Application.Components
         public FiberStarter(IFiberProvider fiberProvider)
         {
             this.fiberProvider = 
-                fiberProvider ?? throw new ArgumentNullException(
-                    nameof(fiberProvider));
+                fiberProvider
+                ?? throw new ArgumentNullException(nameof(fiberProvider));
         }
 
         public IFiber GetFiberStarter()
