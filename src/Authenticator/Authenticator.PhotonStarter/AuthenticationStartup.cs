@@ -19,9 +19,9 @@ namespace Authenticator.PhotonStarter
             return new AuthenticatorApplication(serverConnector, fiberProvider);
         }
 
-        protected override void CreateClientPeer(IClientPeer clientPeer)
+        protected override void CreateClientPeer(IClientPeer peer)
         {
-            clientPeerCreator.Create(clientPeer);
+            clientPeerCreator.Create(peer);
         }
     }
 }
