@@ -21,12 +21,6 @@ namespace UI.Manager
             where TUIElement : UIElement
         {
             var prefab = Resources.Load<TUIElement>(path);
-            if (prefab == null)
-            {
-                throw new UtilsException(
-                    $"The prefab in the path {path} not found.");
-            }
-
             var gameObject = Object.Instantiate(
                 prefab,
                 Vector3.zero,
