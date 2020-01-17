@@ -7,37 +7,34 @@ namespace Common.ComponentModel.Core
         public static void SetComponentByLifetime<TComponent>(ref TComponent component)
             where TComponent : class
         {
-            if (component == null)
-            {
-                throw new ArgumentNullException(nameof(component));
-            }
-
-            var lifeTime = Lifetime.Singleton;
             var componentSettings =
                 ComponentSettingsUtils.GetComponentSettings<TComponent>();
             if (componentSettings != null)
             {
-                lifeTime = componentSettings.Lifetime;
-            }
-
-            switch (lifeTime)
-            {
-                case Lifetime.Singleton:
+                var lifeTime = componentSettings.Lifetime;
+                switch (lifeTime)
                 {
-                    break;
-                }
+                    case Lifetime.Singleton:
+                    {
+                        break;
+                    }
 
-                case Lifetime.PerThread:
-                {
-                    throw new NotImplementedException();
-                }
+                    case Lifetime.PerThread:
+                    {
+                        throw new NotImplementedException();
+                    }
 
-                case Lifetime.PerCall:
-                {
-                    component =
-                        (TComponent)Activator.CreateInstance(
-                            typeof(TComponent));
-                    break;
+                    case Lifetime.PerCall:
+                    {
+                        component = 
+                            (TComponent)Activator.CreateInstance(typeof(TComponent));
+                        break;
+                    }
+
+                    default:
+                    {
+                        throw new ArgumentOutOfRangeException();
+                    }
                 }
             }
         }
