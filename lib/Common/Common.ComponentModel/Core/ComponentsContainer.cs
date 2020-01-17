@@ -106,7 +106,7 @@ namespace Common.ComponentModel.Core
                 .FirstOrDefault();
             if (component != null)
             {
-                ComponentsContainerUtils.SetComponentByLifetime(ref component);
+                ComponentsContainerUtils.GetComponentByLifetime(ref component);
             }
 
             return component;
@@ -127,7 +127,7 @@ namespace Common.ComponentModel.Core
                 throw new ComponentNotFoundException(nameof(TComponent));
             }
 
-            ComponentsContainerUtils.SetComponentByLifetime(ref component);
+            ComponentsContainerUtils.GetComponentByLifetime(ref component);
 
             return component;
         }
