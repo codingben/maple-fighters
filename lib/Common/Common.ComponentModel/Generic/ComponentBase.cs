@@ -14,9 +14,7 @@ namespace Common.ComponentModel.Generic
 
         protected IComponents Components { get; private set; }
         
-        void IComponent<TOwner>.Awake(
-            TOwner owner,
-            IComponents components)
+        void IComponent<TOwner>.Awake(TOwner owner, IComponents components)
         {
             Owner = owner;
             Components = components;
