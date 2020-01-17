@@ -13,7 +13,7 @@ namespace Common.ComponentModel.Core
         /// <summary>
         /// Adds a new component which is exposed and if not exists.
         /// </summary>
-        /// <exception cref="ComponentAlreadyExistsException{T}">
+        /// <exception cref="ComponentAlreadyExistsException">
         /// A component exists in a collection.
         /// </exception>
         /// <typeparam name="TComponent">The given component type.</typeparam>
@@ -24,7 +24,7 @@ namespace Common.ComponentModel.Core
         /// <summary>
         /// Adds a new component which is exposed and if not exists.
         /// </summary>
-        /// <exception cref="ComponentAlreadyExistsException{T}">
+        /// <exception cref="ComponentAlreadyExistsException">
         /// A component exists in a collection.
         /// </exception>
         /// <typeparam name="TComponent">The given component type.</typeparam>
