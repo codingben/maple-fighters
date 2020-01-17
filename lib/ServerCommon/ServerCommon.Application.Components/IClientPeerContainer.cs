@@ -4,7 +4,7 @@ namespace ServerCommon.Application.Components
 {
     public interface IClientPeerContainer
     {
-        void Add(IDisposable peer);
+        void Add(int id, IDisposable peer);
 
         void Remove(int id);
 
