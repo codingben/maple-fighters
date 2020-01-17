@@ -4,7 +4,7 @@ namespace Common.ComponentModel.Core
 {
     internal static class ComponentsContainerUtils
     {
-        public static void SetComponentByLifetime<TComponent>(ref TComponent component)
+        public static void GetComponentByLifetime<TComponent>(ref TComponent component)
             where TComponent : class
         {
             var componentSettings =
