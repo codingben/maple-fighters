@@ -42,16 +42,14 @@ namespace Common.ComponentModel.Core
         public static ExposedState GetExposedState<TComponent>()
             where TComponent : class 
         {
-            var exposedState = ExposedState.Exposable;
-
             var componentSettings =
                 ComponentSettingsUtils.GetComponentSettings<TComponent>();
             if (componentSettings != null)
             {
-                exposedState = componentSettings.ExposedState;
+                return componentSettings.ExposedState;
             }
 
-            return exposedState;
+            throw new InvalidOperationException();
         }
     }
 }
