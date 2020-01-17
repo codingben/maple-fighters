@@ -46,6 +46,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ClientPeerContainer.cs" />
     <Compile Include="FiberCoroutinesExecutor.cs" />
     <Compile Include="FiberStarter.cs" />
     <Compile Include="IClientPeerContainer.cs" />
