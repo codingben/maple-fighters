@@ -62,17 +62,19 @@ namespace ServerCommon.Application
         /// 2. <see cref="IRandomNumberGenerator"/>
         /// 3. <see cref="IFiberStarter"/>
         /// 4. <see cref="ICoroutinesExecutor"/>
+        /// 5. <see cref="IClientPeerContainer"/>
         /// </summary>
         protected void AddCommonComponents()
         {
             ExposedComponents.Add(new IdGenerator());
             Components.Add(new RandomNumberGenerator());
 
-            IFiberStarter fiber = Components.Add(new FiberStarter(fiberProvider));
-            var scheduler = fiber.GetFiberStarter();
+            IFiberStarter fiberStarter = Components.Add(new FiberStarter(fiberProvider));
+            var scheduler = fiberStarter.GetFiberStarter();
             var executor = new FiberCoroutinesExecutor(scheduler, updateRateMilliseconds: 100);
 
             Components.Add(new CoroutinesExecutor(executor));
+            ExposedComponents.Add(new ClientPeerContainer());
         }
 
         protected void AddS2SCommunicationComponents()
