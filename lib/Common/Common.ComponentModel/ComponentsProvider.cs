@@ -6,8 +6,7 @@ namespace Common.ComponentModel
     /// <summary>
     /// Represents a components container.
     /// </summary>
-    public sealed class ComponentsProvider : IComponents,
-                                             IExposedComponents
+    public sealed class ComponentsProvider : IComponents, IExposedComponents
     {
         private readonly IComponentsContainer components;
 
