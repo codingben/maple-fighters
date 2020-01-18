@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ClientPeerContainer.cs" />
+    <Compile Include="ClientPeerWrapper.cs" />
     <Compile Include="FiberCoroutinesExecutor.cs" />
     <Compile Include="FiberStarter.cs" />
     <Compile Include="IClientPeerContainer.cs" />
