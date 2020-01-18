@@ -51,6 +51,7 @@
     <Compile Include="FiberStarter.cs" />
     <Compile Include="IClientPeerContainer.cs" />
     <Compile Include="IFiberStarter.cs" />
+    <Compile Include="IPeerWrapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
