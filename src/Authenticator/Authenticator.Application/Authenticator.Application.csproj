@@ -61,7 +61,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AuthenticationApplication.cs" />
+    <Compile Include="AuthenticatorApplication.cs" />
     <Compile Include="AuthenticatorClientPeerCreator.cs" />
     <Compile Include="Peer\Logic\AuthenticatorClientPeer.cs" />
     <Compile Include="Peer\Logic\Operations\Converters\ExtensionMethods.cs" />
