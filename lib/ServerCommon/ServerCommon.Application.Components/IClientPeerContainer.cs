@@ -1,13 +1,11 @@
-﻿using System;
-
-namespace ServerCommon.Application.Components
+﻿namespace ServerCommon.Application.Components
 {
     public interface IClientPeerContainer
     {
-        void Add(int id, IDisposable peer);
+        void Add(int id, IPeerWrapper peer);
 
         void Remove(int id);
 
-        bool Get(int id, out IDisposable peer);
+        bool Get(int id, out IPeerWrapper peer);
     }
 }
