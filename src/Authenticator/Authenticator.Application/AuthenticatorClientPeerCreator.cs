@@ -8,17 +8,17 @@ namespace Authenticator.Application
 {
     public class AuthenticatorClientPeerCreator : IClientPeerCreator
     {
-        private readonly IClientPeerContainer clientPeerContainer;
         private readonly IIdGenerator idGenerator;
+        private readonly IClientPeerContainer clientPeerContainer;
 
         public AuthenticatorClientPeerCreator()
         {
-            clientPeerContainer = ServerExposedComponents
-                .Provide()
-                .Get<IClientPeerContainer>();
             idGenerator = ServerExposedComponents
                 .Provide()
                 .Get<IIdGenerator>();
+            clientPeerContainer = ServerExposedComponents
+                .Provide()
+                .Get<IClientPeerContainer>();
         }
 
         public void Create(IClientPeer peer)
