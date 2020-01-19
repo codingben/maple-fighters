@@ -3,10 +3,11 @@ using Common.ComponentModel;
 
 namespace ServerCommon.Application.Components
 {
-    [ComponentSettings(ExposedState.Unexposable)]
+    [ComponentSettings(ExposedState.Exposable)]
     public class ClientPeerContainer : ComponentBase, IClientPeerContainer
     {
         private readonly Dictionary<int, IPeerWrapper> collection;
+        private readonly object locker = new object();
 
         public ClientPeerContainer()
         {
@@ -15,17 +16,26 @@ namespace ServerCommon.Application.Components
 
         public void Add(int id, IPeerWrapper peer)
         {
-            collection.Add(id, peer);
+            lock (locker)
+            {
+                collection.Add(id, peer);
+            }
         }
 
         public void Remove(int id)
         {
-            collection.Remove(id);
+            lock (locker)
+            {
+                collection.Remove(id);
+            }
         }
 
         public bool Get(int id, out IPeerWrapper peer)
         {
-            return collection.TryGetValue(id, out peer);
+            lock (locker)
+            {
+                return collection.TryGetValue(id, out peer);
+            }
         }
     }
 }
