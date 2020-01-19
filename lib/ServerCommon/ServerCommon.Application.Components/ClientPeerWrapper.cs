@@ -27,8 +27,6 @@ namespace ServerCommon.Application.Components
 
         public void ChangePeerLogic(IDisposable newPeerLogic)
         {
-            Dispose();
-
             peerLogic = newPeerLogic;
         }
 
@@ -51,12 +49,7 @@ namespace ServerCommon.Application.Components
         {
             UnsubscribeFromPeerDisconnectionNotifier();
 
-            RemovePeerFromClientPeerContainer();
-        }
-
-        // TODO: Find an alternative to this method
-        private void RemovePeerFromClientPeerContainer()
-        {
+            // TODO: Find an alternative to this method
             clientPeerContainer?.Remove(id);
         }
     }
