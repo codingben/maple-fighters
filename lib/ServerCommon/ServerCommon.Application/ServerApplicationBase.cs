@@ -63,6 +63,7 @@ namespace ServerCommon.Application
         /// 3. <see cref="IFiberStarter"/>
         /// 4. <see cref="ICoroutinesExecutor"/>
         /// 5. <see cref="IClientPeerContainer"/>
+        /// 6. <see cref="IOnClientPeerContainerRemoved"/>
         /// </summary>
         protected void AddCommonComponents()
         {
@@ -75,6 +76,7 @@ namespace ServerCommon.Application
 
             Components.Add(new CoroutinesExecutor(executor));
             ExposedComponents.Add(new ClientPeerContainer());
+            Components.Add(new OnClientPeerContainerRemovedHandler());
         }
 
         protected void AddS2SCommunicationComponents()
