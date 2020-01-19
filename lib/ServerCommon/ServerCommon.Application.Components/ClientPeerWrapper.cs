@@ -6,6 +6,8 @@ namespace ServerCommon.Application.Components
 {
     public class ClientPeerWrapper : IPeerWrapper
     {
+        public IMinimalPeer Peer => peer;
+
         private readonly int id;
         private readonly IClientPeer peer;
         private IDisposable peerLogic;
