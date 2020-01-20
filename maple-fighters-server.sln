@@ -289,6 +289,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServerCommon.Peer", "lib\Se
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServerCommon.Peer.Extensions", "lib\ServerCommon\ServerCommon.Peer.Extensions\ServerCommon.Peer.Extensions.csproj", "{BCCBB884-7BE5-4C8E-93C6-961370F98E59}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServerCommon.Communication", "lib\ServerCommon\ServerCommon.Communication\ServerCommon.Communication.csproj", "{4E02181E-1AF2-4F52-BDA3-DCC50039852B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -683,6 +685,10 @@ Global
 		{BCCBB884-7BE5-4C8E-93C6-961370F98E59}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BCCBB884-7BE5-4C8E-93C6-961370F98E59}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BCCBB884-7BE5-4C8E-93C6-961370F98E59}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4E02181E-1AF2-4F52-BDA3-DCC50039852B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E02181E-1AF2-4F52-BDA3-DCC50039852B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4E02181E-1AF2-4F52-BDA3-DCC50039852B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E02181E-1AF2-4F52-BDA3-DCC50039852B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -827,6 +833,7 @@ Global
 		{E294B8AA-54DC-427C-8730-7776155C524C} = {7AD3F564-C73B-47F9-8FEA-79156A386A3B}
 		{ADBC8BD4-DD76-4FA5-8CD2-4361B6777EF5} = {7AD3F564-C73B-47F9-8FEA-79156A386A3B}
 		{BCCBB884-7BE5-4C8E-93C6-961370F98E59} = {7AD3F564-C73B-47F9-8FEA-79156A386A3B}
+		{4E02181E-1AF2-4F52-BDA3-DCC50039852B} = {7AD3F564-C73B-47F9-8FEA-79156A386A3B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {20317580-AFD3-4C35-BADC-B5E94CD0B788}
