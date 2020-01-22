@@ -5,18 +5,18 @@ using ServerCommunicationInterfaces;
 namespace ServerCommon.Application.Components
 {
     [ComponentSettings(ExposedState.Unexposable)]
-    public class FiberStarter : ComponentBase, IFiberStarter
+    public class FiberStarterProvider : ComponentBase, IFiberStarter
     {
         private readonly IFiberProvider fiberProvider;
 
-        public FiberStarter(IFiberProvider fiberProvider)
+        public FiberStarterProvider(IFiberProvider fiberProvider)
         {
             this.fiberProvider = 
                 fiberProvider
                 ?? throw new ArgumentNullException(nameof(fiberProvider));
         }
 
-        public IFiber GetFiberStarter()
+        public IFiber ProvideFiberStarter()
         {
             var fiber = fiberProvider.GetFiber();
             fiber.Start();

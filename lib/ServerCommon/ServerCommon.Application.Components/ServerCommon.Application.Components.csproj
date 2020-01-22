@@ -49,7 +49,7 @@
     <Compile Include="ClientPeerContainer.cs" />
     <Compile Include="ClientPeerWrapper.cs" />
     <Compile Include="FiberCoroutinesExecutor.cs" />
-    <Compile Include="FiberStarter.cs" />
+    <Compile Include="FiberStarterProvider.cs" />
     <Compile Include="IClientPeerContainer.cs" />
     <Compile Include="IFiberStarter.cs" />
     <Compile Include="IOnClientPeerContainerRemoved.cs" />
