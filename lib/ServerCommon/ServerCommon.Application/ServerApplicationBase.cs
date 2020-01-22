@@ -75,8 +75,8 @@ namespace ServerCommon.Application
             ExposedComponents.Add(new IdGenerator());
             Components.Add(new RandomNumberGenerator());
 
-            var fiberStarter = Components.Add(new FiberStarter(FiberProvider));
-            var scheduler = fiberStarter.GetFiberStarter();
+            var fiberStarter = Components.Add(new FiberStarterProvider(FiberProvider));
+            var scheduler = fiberStarter.ProvideFiberStarter();
             var executor = new FiberCoroutinesExecutor(scheduler, updateRateMilliseconds: 100);
 
             Components.Add(new CoroutinesExecutor(executor));
