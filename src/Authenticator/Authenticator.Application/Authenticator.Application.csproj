@@ -100,6 +100,10 @@
       <Project>{E294B8AA-54DC-427C-8730-7776155C524C}</Project>
       <Name>ServerCommon.Configuration</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\lib\ServerCommon\ServerCommon.Logging\ServerCommon.Logging.csproj">
+      <Project>{40470F37-59BB-45B3-9BD0-886703A0EC2B}</Project>
+      <Name>ServerCommon.Logging</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\lib\ServerCommon\ServerCommon.Peer\ServerCommon.Peer.csproj">
       <Project>{adbc8bd4-dd76-4fa5-8cd2-4361b6777ef5}</Project>
       <Name>ServerCommon.Peer</Name>
