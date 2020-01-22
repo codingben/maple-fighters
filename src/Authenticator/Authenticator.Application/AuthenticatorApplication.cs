@@ -1,8 +1,10 @@
 ﻿using Authenticator.Infrastructure.Repository;
 using Common.MongoDB;
+using CommonTools.Coroutines;
 using CommonTools.Log;
 using ServerCommon.Application;
 using ServerCommon.Configuration;
+using ServerCommon.Logging;
 using ServerCommunicationInterfaces;
 
 namespace Authenticator.Application
@@ -12,6 +14,10 @@ namespace Authenticator.Application
         public AuthenticatorApplication(IServerConnector serverConnector, IFiberProvider fiberProvider)
             : base(serverConnector, fiberProvider)
         {
+            // Initializing server settings
+            ServerConfiguration.Setup();
+
+            // Setting server settings
             ServerSettings.InboundPeer.LogEvents = true;
             ServerSettings.InboundPeer.Operations.LogRequests = true;
             ServerSettings.InboundPeer.Operations.LogResponses = true;
@@ -36,6 +42,16 @@ namespace Authenticator.Application
             base.OnShutdown();
 
             LogUtils.Log("OnShutdown");
+        }
+
+        protected override ILogger GetLogger()
+        {
+            return new Logger();
+        }
+
+        protected override ITimeProvider GetTimeProvider()
+        {
+            return new TimeProvider();
         }
 
         private void AddComponents()
