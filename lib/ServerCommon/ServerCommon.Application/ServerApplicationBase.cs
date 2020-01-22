@@ -3,8 +3,6 @@ using Common.Components;
 using CommonTools.Coroutines;
 using CommonTools.Log;
 using ServerCommon.Application.Components;
-using ServerCommon.Configuration;
-using ServerCommon.Logging;
 using ServerCommunicationInterfaces;
 
 namespace ServerCommon.Application
@@ -13,25 +11,33 @@ namespace ServerCommon.Application
     /// <summary>
     /// A base for the server application to be initialized properly.
     /// </summary>
-    public class ServerApplicationBase : IApplicationBase
+    public abstract class ServerApplicationBase : IApplicationBase
     {
-        protected IExposedComponents ExposedComponents => Components.ProvideExposed();
+        protected IExposedComponents ExposedComponents
+        {
+            get
+            {
+                var components = Components.ProvideExposed();
 
-        protected IComponents Components => new ComponentsProvider();
+                if (ServerExposedComponents.Provide() == null)
+                {
+                    ServerExposedComponents.SetProvider(components);
+                }
 
-        private readonly IServerConnector serverConnector;
-        private readonly IFiberProvider fiberProvider;
+                return components;
+            }
+        }
+
+        protected IComponents Components { get; } = new ComponentsProvider();
+
+        protected IServerConnector ServerConnector { get; }
+
+        protected IFiberProvider FiberProvider { get; }
 
         protected ServerApplicationBase(IServerConnector serverConnector, IFiberProvider fiberProvider)
         {
-            this.serverConnector = serverConnector;
-            this.fiberProvider = fiberProvider;
-
-            LogUtils.Logger = new Logger();
-            TimeProviders.DefaultTimeProvider = new TimeProvider();
-
-            ServerExposedComponents.SetProvider(ExposedComponents);
-            ServerConfiguration.Setup();
+            ServerConnector = serverConnector;
+            FiberProvider = fiberProvider;
         }
 
         void IApplicationBase.Startup()
@@ -46,14 +52,13 @@ namespace ServerCommon.Application
 
         protected virtual void OnStartup()
         {
-            LogUtils.Log("An application has started.");
+            LogUtils.Logger = GetLogger();
+            TimeProviders.DefaultTimeProvider = GetTimeProvider();
         }
 
         protected virtual void OnShutdown()
         {
             Components?.Dispose();
-
-            LogUtils.Log("An application has been stopped.");
         }
 
         /// <summary>
@@ -70,7 +75,7 @@ namespace ServerCommon.Application
             ExposedComponents.Add(new IdGenerator());
             Components.Add(new RandomNumberGenerator());
 
-            IFiberStarter fiberStarter = Components.Add(new FiberStarter(fiberProvider));
+            var fiberStarter = Components.Add(new FiberStarter(FiberProvider));
             var scheduler = fiberStarter.GetFiberStarter();
             var executor = new FiberCoroutinesExecutor(scheduler, updateRateMilliseconds: 100);
 
@@ -79,10 +84,8 @@ namespace ServerCommon.Application
             Components.Add(new OnClientPeerContainerRemovedHandler());
         }
 
-        protected void AddS2SCommunicationComponents()
-        {
-            // TODO: Implement
-            // TODO: Use IServerConnector
-        }
+        protected abstract ILogger GetLogger();
+
+        protected abstract ITimeProvider GetTimeProvider();
     }
 }
