@@ -3,11 +3,6 @@ using ServerCommunicationInterfaces;
 
 namespace ServerCommon.Communication
 {
-    public interface IServerConnectorProvider
-    {
-        IServerConnector Provide();
-    }
-
     [ComponentSettings(ExposedState.Unexposable)]
     public class ServerConnectorProvider : ComponentBase, IServerConnectorProvider
     {
