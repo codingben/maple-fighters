@@ -50,6 +50,7 @@
     <Compile Include="IServerConnectorProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServerConnectorProvider.cs" />
+    <Compile Include="ServerPeerCreator.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
