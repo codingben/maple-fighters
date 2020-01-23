@@ -8,12 +8,11 @@ using ServerCommunicationInterfaces;
 
 namespace ServerCommon.Communication
 {
-    public class ServerPeerCreator : ComponentBase
+    public class ServerPeerCreator : ComponentBase, IServerPeerCreator
     {
         private readonly Action<IOutboundServerPeer> onServerPeerCreated;
 
         private IServerConnectorProvider serverConnectorProvider;
-        private ICoroutinesExecuter coroutinesExecuter;
 
         public ServerPeerCreator(Action<IOutboundServerPeer> onServerPeerCreated)
         {
@@ -25,19 +24,6 @@ namespace ServerCommon.Communication
             base.OnAwake();
 
             serverConnectorProvider = Components.Get<IServerConnectorProvider>();
-            coroutinesExecuter = Components.Get<ICoroutinesExecuter>();
-        }
-
-        protected override void OnRemoved()
-        {
-            base.OnRemoved();
-
-            coroutinesExecuter.Dispose();
-        }
-
-        public void Connect(string ip, int port)
-        {
-            coroutinesExecuter.StartTask((y) => ConnectAsync(y, ip, port));
         }
 
         public async Task ConnectAsync(IYield yield, string ip, int port)
