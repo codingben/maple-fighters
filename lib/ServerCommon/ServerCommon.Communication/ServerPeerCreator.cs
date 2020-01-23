@@ -11,7 +11,6 @@ namespace ServerCommon.Communication
     public class ServerPeerCreator : ComponentBase, IServerPeerCreator
     {
         private readonly Action<IOutboundServerPeer> onServerPeerCreated;
-
         private IServerConnectorProvider serverConnectorProvider;
 
         public ServerPeerCreator(Action<IOutboundServerPeer> onServerPeerCreated)
@@ -31,8 +30,8 @@ namespace ServerCommon.Communication
             try
             {
                 var serverConnector = serverConnectorProvider.Provide();
-                var peer = new PeerConnectionInformation(ip, port);
-                var serverPeer = await serverConnector.Connect(yield, peer);
+                var serverConnectionInfo = new PeerConnectionInformation(ip, port);
+                var serverPeer = await serverConnector.Connect(yield, serverConnectionInfo);
                 if (serverPeer != null)
                 {
                     onServerPeerCreated?.Invoke(serverPeer);
