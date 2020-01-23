@@ -28,6 +28,13 @@ namespace ServerCommon.Communication
             coroutinesExecuter = Components.Get<ICoroutinesExecuter>();
         }
 
+        protected override void OnRemoved()
+        {
+            base.OnRemoved();
+
+            coroutinesExecuter.Dispose();
+        }
+
         public void Connect(string ip, int port)
         {
             coroutinesExecuter.StartTask((y) => ConnectAsync(y, ip, port));
@@ -35,10 +42,9 @@ namespace ServerCommon.Communication
 
         public async Task ConnectAsync(IYield yield, string ip, int port)
         {
-            var serverConnector = serverConnectorProvider.Provide();
-
             try
             {
+                var serverConnector = serverConnectorProvider.Provide();
                 var peer = new PeerConnectionInformation(ip, port);
                 var serverPeer = await serverConnector.Connect(yield, peer);
                 if (serverPeer != null)
