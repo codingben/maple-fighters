@@ -3,7 +3,8 @@ using Common.ComponentModel;
 
 namespace ServerCommon.Application.Components
 {
-    public class OnClientPeerContainerRemovedHandler : ComponentBase, IOnClientPeerContainerRemoved
+    public class OnClientPeerContainerRemovedHandler : ComponentBase,
+                                                       IOnClientPeerContainerRemoved
     {
         public void Handle(IEnumerable<IPeerWrapper> peerWrappers)
         {
