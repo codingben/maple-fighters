@@ -6,9 +6,7 @@ namespace Common.ParametersValidation
     {
         public static string ToErrorMessage(this ValidationResult validationResult)
         {
-            var errorMessage = 
-                !validationResult.IsValid ? validationResult.ToString() : null;
-            return errorMessage;
+            return !validationResult.IsValid ? validationResult.ToString() : null;
         }
     }
 }
