@@ -29,7 +29,12 @@ namespace ServerCommon.Peer
         protected ClientPeerBase(IClientPeer peer, bool log = false)
         {
             Peer = peer;
-            OperationHandlerRegister = new OperationRequestsHandler<TO>(peer.OperationRequestNotifier, peer.OperationResponseSender, log, log, CoroutinesExecutor);
+            OperationHandlerRegister = new OperationRequestsHandler<TO>(
+                peer.OperationRequestNotifier,
+                peer.OperationResponseSender,
+                log,
+                log,
+                CoroutinesExecutor);
             EventSender = new EventSender<TE>(peer.EventSender, log);
         }
 
