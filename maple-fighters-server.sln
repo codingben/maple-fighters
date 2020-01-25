@@ -79,7 +79,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authenticator.UnitTests", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authenticator.IntegrationTests", "tests\integration\Authenticator\Authenticator.IntegrationTests\Authenticator.IntegrationTests.csproj", "{207A0F06-3A7C-472F-97A7-9AD9A7FB86FA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authenticator.Common.Parameters", "src\Authenticator\Authenticator.Common.Parameters\Authenticator.Common.Parameters.csproj", "{A102CDE4-CC98-46FD-86B4-C0F1DE34DF61}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authenticator.Common", "src\Authenticator\Authenticator.Common\Authenticator.Common.csproj", "{A102CDE4-CC98-46FD-86B4-C0F1DE34DF61}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{1AC54CEA-7B98-452D-A537-5414C1E6A137}"
 EndProject

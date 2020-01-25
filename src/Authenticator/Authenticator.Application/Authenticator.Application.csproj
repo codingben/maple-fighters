@@ -108,9 +108,9 @@
       <Project>{adbc8bd4-dd76-4fa5-8cd2-4361b6777ef5}</Project>
       <Name>ServerCommon.Peer</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Authenticator.Common.Parameters\Authenticator.Common.Parameters.csproj">
+    <ProjectReference Include="..\Authenticator.Common.Parameters\Authenticator.Common.csproj">
       <Project>{A102CDE4-CC98-46FD-86B4-C0F1DE34DF61}</Project>
-      <Name>Authenticator.Common.Parameters</Name>
+      <Name>Authenticator.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\Authenticator.Domain\Authenticator.Domain.csproj">
       <Project>{FB2E99EB-16B4-4035-9F27-9C74A849B441}</Project>
