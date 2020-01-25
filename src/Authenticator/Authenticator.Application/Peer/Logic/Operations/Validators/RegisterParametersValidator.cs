@@ -1,4 +1,4 @@
-﻿using Authenticator.Common.Parameters;
+﻿using Authenticator.Common;
 using FluentValidation;
 
 namespace Authenticator.Application.Peer.Logic.Operations.Validators
