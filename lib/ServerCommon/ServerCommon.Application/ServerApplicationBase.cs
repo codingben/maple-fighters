@@ -65,7 +65,7 @@ namespace ServerCommon.Application
         /// Adds common components:
         /// 1. <see cref="IIdGenerator"/>
         /// 2. <see cref="IRandomNumberGenerator"/>
-        /// 3. <see cref="IFiberStarter"/>
+        /// 3. <see cref="IFiberStarterProvider"/>
         /// 4. <see cref="ICoroutinesExecutor"/>
         /// 5. <see cref="IClientPeerContainer"/>
         /// 6. <see cref="IOnClientPeerContainerRemoved"/>
@@ -75,9 +75,11 @@ namespace ServerCommon.Application
             ExposedComponents.Add(new IdGenerator());
             Components.Add(new RandomNumberGenerator());
 
-            var fiberStarter = Components.Add(new FiberStarterProvider(FiberProvider));
+            var fiberStarter = 
+                Components.Add(new FiberStarterProvider(FiberProvider));
             var scheduler = fiberStarter.ProvideFiberStarter();
-            var executor = new FiberCoroutinesExecutor(scheduler, updateRateMilliseconds: 100);
+            var executor = 
+                new FiberCoroutinesExecutor(scheduler, updateRateMilliseconds: 100);
 
             Components.Add(new CoroutinesExecutor(executor));
             ExposedComponents.Add(new ClientPeerContainer());
