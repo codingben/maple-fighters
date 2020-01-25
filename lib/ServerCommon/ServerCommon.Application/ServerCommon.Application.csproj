@@ -48,7 +48,7 @@
   <ItemGroup>
     <Compile Include="IClientPeerCreator.cs" />
     <Compile Include="ServerApplicationBase.cs" />
-    <Compile Include="ServerComponentsAlreadyInitializedException.cs" />
+    <Compile Include="Exceptions\ServerComponentsAlreadyInitializedException.cs" />
     <Compile Include="IApplicationBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServerComponentsNotInitializedException.cs" />
@@ -72,8 +72,6 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Exceptions\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
