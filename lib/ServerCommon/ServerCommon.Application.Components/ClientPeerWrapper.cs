@@ -10,21 +10,21 @@ namespace ServerCommon.Application.Components
 
         private readonly int id;
         private readonly IClientPeer peer;
+        private readonly IClientPeerContainer clientPeerContainer;
         private IDisposable peerLogic;
-        private IClientPeerContainer clientPeerContainer;
 
-        public ClientPeerWrapper(int id, IClientPeer peer, IDisposable peerLogic)
+        public ClientPeerWrapper(
+            int id,
+            IClientPeer peer,
+            IDisposable peerLogic,
+            IClientPeerContainer clientPeerContainer)
         {
             this.id = id;
             this.peer = peer;
             this.peerLogic = peerLogic;
+            this.clientPeerContainer = clientPeerContainer;
 
             SubscribeToPeerDisconnectionNotifier();
-        }
-
-        public void SetClientPeerContainer(IClientPeerContainer clientPeerContainer)
-        {
-            this.clientPeerContainer = clientPeerContainer;
         }
 
         public void ChangePeerLogic(IDisposable newPeerLogic)
