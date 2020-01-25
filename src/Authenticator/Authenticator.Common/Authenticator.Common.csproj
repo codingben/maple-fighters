@@ -49,7 +49,7 @@
     <Compile Include="Enums\LoginStatus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Parameters\RegisterRequestParameters.cs" />
-    <Compile Include="RegisterResponseParameters.cs" />
+    <Compile Include="Parameters\RegisterResponseParameters.cs" />
     <Compile Include="Enums\RegistrationStatus.cs" />
   </ItemGroup>
   <ItemGroup>
