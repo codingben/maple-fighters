@@ -7,8 +7,7 @@ namespace Common.ComponentModel.Generic
     /// Represents a components container and allows to set an owner.
     /// </summary>
     /// <typeparam name="TOwner">An entity which owns this component.</typeparam>
-    public sealed class OwnerComponentsProvider<TOwner> : IComponents,
-                                                          IExposedComponents
+    public sealed class OwnerComponentsProvider<TOwner> : IComponents, IExposedComponents
         where TOwner : class
     {
         private readonly TOwner owner;
