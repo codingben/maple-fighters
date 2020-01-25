@@ -1,5 +1,5 @@
 ﻿using System;
-using Authenticator.Common.Enums;
+using Authenticator.Common;
 using Authenticator.Domain.Aggregates.User.Services;
 
 namespace Authenticator.Application.Peer.Logic.Operations.Converters
