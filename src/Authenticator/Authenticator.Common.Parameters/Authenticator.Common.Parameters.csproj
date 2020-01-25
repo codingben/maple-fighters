@@ -50,6 +50,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RegisterRequestParameters.cs" />
     <Compile Include="RegisterResponseParameters.cs" />
+    <Compile Include="RegistrationStatus.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
