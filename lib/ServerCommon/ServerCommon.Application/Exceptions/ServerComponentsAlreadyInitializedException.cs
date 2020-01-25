@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ServerCommon.Application
+namespace ServerCommon.Application.Exceptions
 {
     public class ServerComponentsAlreadyInitializedException : Exception
     {
