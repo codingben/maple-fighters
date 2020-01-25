@@ -1,5 +1,5 @@
 ﻿using Authenticator.Application.Peer.Logic.Operations;
-using Authenticator.Common.Enums;
+using Authenticator.Common;
 using Authenticator.Domain.Aggregates.User.Services;
 using Common.ComponentModel;
 using Common.Components;
