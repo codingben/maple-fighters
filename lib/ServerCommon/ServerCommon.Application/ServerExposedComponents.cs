@@ -1,5 +1,6 @@
 ﻿using System;
 using Common.ComponentModel;
+using ServerCommon.Application.Exceptions;
 
 namespace ServerCommon.Application
 {
