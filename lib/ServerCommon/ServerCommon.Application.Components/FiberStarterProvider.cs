@@ -5,7 +5,7 @@ using ServerCommunicationInterfaces;
 namespace ServerCommon.Application.Components
 {
     [ComponentSettings(ExposedState.Unexposable)]
-    public class FiberStarterProvider : ComponentBase, IFiberStarter
+    public class FiberStarterProvider : ComponentBase, IFiberStarterProvider
     {
         private readonly IFiberProvider fiberProvider;
 
