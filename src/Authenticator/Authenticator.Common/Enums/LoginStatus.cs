@@ -1,4 +1,4 @@
-﻿namespace Authenticator.Common.Enums
+﻿namespace Authenticator.Common
 {
     public enum LoginStatus : byte
     {
