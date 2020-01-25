@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using CommonCommunicationInterfaces;
 
-namespace Authenticator.Common.Parameters
+namespace Authenticator.Common
 {
     public struct RegisterRequestParameters : IParameters
     {
