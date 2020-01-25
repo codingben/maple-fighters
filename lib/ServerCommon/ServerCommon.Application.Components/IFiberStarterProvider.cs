@@ -2,7 +2,7 @@
 
 namespace ServerCommon.Application.Components
 {
-    public interface IFiberStarter
+    public interface IFiberStarterProvider
     {
         IFiber ProvideFiberStarter();
     }
