@@ -44,7 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Enums\AuthenticatorOperations.cs" />
-    <Compile Include="LoginRequestParameters.cs" />
+    <Compile Include="Parameters\LoginRequestParameters.cs" />
     <Compile Include="LoginResponseParameters.cs" />
     <Compile Include="Enums\LoginStatus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -55,8 +55,6 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Parameters\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
