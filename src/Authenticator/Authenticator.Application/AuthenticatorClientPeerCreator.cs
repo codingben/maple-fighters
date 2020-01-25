@@ -25,9 +25,9 @@ namespace Authenticator.Application
         {
             var id = idGenerator.GenerateId();
             var peerLogic = new AuthenticatorClientPeer(peer);
-            var clientPeerWrapper = new ClientPeerWrapper(id, peer, peerLogic);
-            clientPeerWrapper.SetClientPeerContainer(clientPeerContainer);
-
+            var clientPeerWrapper = 
+                new ClientPeerWrapper(id, peer, peerLogic, clientPeerContainer);
+            
             clientPeerContainer.Add(id, clientPeerWrapper);
         }
     }
