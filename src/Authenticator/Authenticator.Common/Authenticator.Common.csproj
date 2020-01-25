@@ -45,7 +45,7 @@
   <ItemGroup>
     <Compile Include="Enums\AuthenticatorOperations.cs" />
     <Compile Include="Parameters\LoginRequestParameters.cs" />
-    <Compile Include="LoginResponseParameters.cs" />
+    <Compile Include="Parameters\LoginResponseParameters.cs" />
     <Compile Include="Enums\LoginStatus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RegisterRequestParameters.cs" />
