@@ -55,11 +55,5 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Authenticator.Common.Enums\Authenticator.Common.Enums.csproj">
-      <Project>{D312D1B6-9289-4659-A0C8-2AB87464FD15}</Project>
-      <Name>Authenticator.Common.Enums</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
