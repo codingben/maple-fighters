@@ -43,6 +43,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AuthenticatorOperations.cs" />
     <Compile Include="LoginRequestParameters.cs" />
     <Compile Include="LoginResponseParameters.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
