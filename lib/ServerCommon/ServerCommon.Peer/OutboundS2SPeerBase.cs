@@ -25,9 +25,16 @@ namespace ServerCommon.Peer
 
         protected OutboundS2SPeerBase(IOutboundServerPeer peer, bool log = false)
         {
-            OperationRequestSender = new OperationRequestSender<TO>(peer.OperationRequestSender, log);
-            EventHandlerRegister = new EventHandlerRegister<TE>(peer.EventNotifier, log);
-            SubscriptionProvider = new OperationResponseSubscriptionProvider<TO>(peer.OperationResponseNotifier, null, log);
+            OperationRequestSender = new OperationRequestSender<TO>(
+                peer.OperationRequestSender,
+                log);
+            EventHandlerRegister =
+                new EventHandlerRegister<TE>(peer.EventNotifier, log);
+            SubscriptionProvider =
+                new OperationResponseSubscriptionProvider<TO>(
+                    peer.OperationResponseNotifier,
+                    null,
+                    log);
         }
 
         public void Dispose()
