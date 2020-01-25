@@ -8,14 +8,10 @@ namespace ServerCommon.Application.Components
     {
         private readonly IDisposable scheduler;
 
-        public FiberCoroutinesExecutor(
-            IScheduler fiber, 
-            int updateRateMilliseconds)
+        public FiberCoroutinesExecutor(IScheduler fiber, int updateRateMilliseconds)
         {
-            scheduler = fiber.ScheduleOnInterval(
-                action: Update,
-                firstInMs: 0,
-                regularInMs: updateRateMilliseconds);
+            scheduler = 
+                fiber.ScheduleOnInterval(Update, 0, updateRateMilliseconds);
         }
 
         public override void Dispose()
