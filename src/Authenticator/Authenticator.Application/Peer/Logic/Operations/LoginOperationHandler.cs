@@ -1,7 +1,6 @@
 ﻿using Authenticator.Application.Peer.Logic.Operations.Converters;
 using Authenticator.Application.Peer.Logic.Operations.Validators;
-using Authenticator.Common.Enums;
-using Authenticator.Common.Parameters;
+using Authenticator.Common;
 using Authenticator.Domain.Aggregates.User.Services;
 using Common.ParametersValidation;
 using CommonCommunicationInterfaces;
