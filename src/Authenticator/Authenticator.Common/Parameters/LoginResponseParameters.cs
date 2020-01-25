@@ -1,8 +1,7 @@
 ﻿using System.IO;
-using Authenticator.Common.Enums;
 using CommonCommunicationInterfaces;
 
-namespace Authenticator.Common.Parameters
+namespace Authenticator.Common
 {
     public struct LoginResponseParameters : IParameters
     {
