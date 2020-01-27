@@ -7,11 +7,8 @@ namespace Authenticator.Application.Peer.Logic.Operations.Validators
     {
         public LoginParametersValidator()
         {
-            RuleFor(x => x.Email).NotEmpty().EmailAddress()
-                .WithMessage("Invalid email address.");
-
-            RuleFor(x => x.Password).NotEmpty()
-                .WithMessage("Password is required.");
+            RuleFor(x => x.Email).NotEmpty().EmailAddress().WithMessage("Invalid email address.");
+            RuleFor(x => x.Password).NotEmpty().WithMessage("Password is required.");
         }
     }
 }
