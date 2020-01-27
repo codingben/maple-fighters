@@ -29,27 +29,31 @@ namespace Authenticator.Application.Peer.Logic.Operations
             ref MessageSendOptions sendOptions)
         {
             var registrationStatus = RegistrationStatus.Failed;
+            var parameters = messageData.Parameters;
 
             var validationResult =
-                registerParametersValidator.Validate(messageData.Parameters);
+                registerParametersValidator.Validate(parameters);
             if (validationResult.IsValid)
             {
-                var account = AccountFactory.CreateAccount(
-                    messageData.Parameters.Email,
-                    messageData.Parameters.Password,
-                    messageData.Parameters.FirstName,
-                    messageData.Parameters.LastName);
+                var email = parameters.Email;
+                var password = parameters.Password;
+                var firstName = parameters.FirstName;
+                var lastName = parameters.LastName;
+                var account = 
+                    AccountFactory.CreateAccount(email, password, firstName, lastName);
+                var accountCreationStatus = GetAccountCreationStatus(account);
 
-                var accountCreationStatus =
-                    registrationService.CreateAccount(account);
-
-                registrationStatus =
-                    accountCreationStatus.ToRegistrationStatus();
+                registrationStatus = accountCreationStatus.ToRegistrationStatus();
             }
 
-            return new RegisterResponseParameters(
-                registrationStatus,
-                validationResult.ToErrorMessage());
+            var errorMessage = validationResult.ToErrorMessage();
+
+            return new RegisterResponseParameters(registrationStatus, errorMessage);
+        }
+
+        private AccountCreationStatus GetAccountCreationStatus(Account account)
+        {
+            return registrationService.CreateAccount(account);
         }
     }
 }
