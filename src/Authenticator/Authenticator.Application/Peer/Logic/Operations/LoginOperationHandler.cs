@@ -27,13 +27,14 @@ namespace Authenticator.Application.Peer.Logic.Operations
             ref MessageSendOptions sendOptions)
         {
             var loginStatus = LoginStatus.Failed;
+            var parameters = messageData.Parameters;
 
-            var validationResult =
-                loginParametersValidator.Validate(messageData.Parameters);
+            var validationResult = 
+                loginParametersValidator.Validate(parameters);
             if (validationResult.IsValid)
             {
-                var email = messageData.Parameters.Email;
-                var password = messageData.Parameters.Password;
+                var email = parameters.Email;
+                var password = parameters.Password;
                 var authenticationStatus =
                     GetAuthenticationStatus(email, password);
 
