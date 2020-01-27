@@ -32,17 +32,24 @@ namespace Authenticator.Application.Peer.Logic.Operations
                 loginParametersValidator.Validate(messageData.Parameters);
             if (validationResult.IsValid)
             {
+                var email = messageData.Parameters.Email;
+                var password = messageData.Parameters.Password;
                 var authenticationStatus =
-                    loginService.Authenticate(
-                        messageData.Parameters.Email,
-                        messageData.Parameters.Password);
+                    GetAuthenticationStatus(email, password);
 
                 loginStatus = authenticationStatus.ToLoginStatus();
             }
 
-            return new LoginResponseParameters(
-                loginStatus,
-                validationResult.ToErrorMessage());
+            var errorMessage = validationResult.ToErrorMessage();
+
+            return new LoginResponseParameters(loginStatus, errorMessage);
+        }
+
+        private AuthenticationStatus GetAuthenticationStatus(
+            string email,
+            string password)
+        {
+            return loginService.Authenticate(email, password);
         }
     }
 }
