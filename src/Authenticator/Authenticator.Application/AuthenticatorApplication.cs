@@ -14,10 +14,7 @@ namespace Authenticator.Application
         public AuthenticatorApplication(IServerConnector serverConnector, IFiberProvider fiberProvider)
             : base(serverConnector, fiberProvider)
         {
-            // Initializing server settings
             ServerConfiguration.Setup();
-
-            // Setting server settings
             ServerSettings.InboundPeer.LogEvents = true;
             ServerSettings.InboundPeer.Operations.LogRequests = true;
             ServerSettings.InboundPeer.Operations.LogResponses = true;
