@@ -15,8 +15,7 @@ namespace Common.ComponentModel
             components = new ComponentsContainer();
         }
 
-        public TComponent Add<TComponent>(TComponent component)
-            where TComponent : IComponent
+        TComponent IComponents.Add<TComponent>(TComponent component)
         {
             components.Add(component);
 
@@ -34,8 +33,7 @@ namespace Common.ComponentModel
             return component;
         }
 
-        public void Remove<TComponent>()
-            where TComponent : IComponent
+        void IComponents.Remove<TComponent>()
         {
             var component = components.Remove<TComponent>();
             component.Dispose();
