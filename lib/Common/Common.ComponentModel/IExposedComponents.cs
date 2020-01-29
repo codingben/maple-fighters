@@ -14,7 +14,7 @@
         /// <param name="component">The new component.</param>
         /// <returns>The new component after it was added to the container.</returns>
         TComponent Add<TComponent>(TComponent component)
-            where TComponent : IComponent;
+            where TComponent : class;
 
         /// <summary>
         /// Searches for the exposed component on the component's container.
