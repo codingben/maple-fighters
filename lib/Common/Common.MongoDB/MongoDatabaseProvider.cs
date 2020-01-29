@@ -9,14 +9,19 @@ namespace Common.MongoDB
     [ComponentSettings(ExposedState.Unexposable)]
     public class MongoDatabaseProvider : ComponentBase, IMongoDatabaseProvider
     {
-        public IMongoDatabase MongoDatabase { get; }
+        private readonly IMongoDatabase database;
 
         public MongoDatabaseProvider(string url)
         {
             var mongoUrl = new MongoUrl(url);
             var mongoClient = new MongoClient(mongoUrl);
 
-            MongoDatabase = mongoClient.GetDatabase(mongoUrl.DatabaseName);
+            database = mongoClient.GetDatabase(mongoUrl.DatabaseName);
+        }
+
+        public IMongoDatabase Provide()
+        {
+            return database;
         }
     }
 }
