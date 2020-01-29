@@ -11,12 +11,19 @@ namespace Authenticator.Infrastructure.Repository
     {
         private const string CollectionName = "accounts";
 
-        protected override IMongoCollection<Account> GetCollection()
+        private IMongoDatabase mongoDatabase;
+
+        protected override void OnAwake()
         {
+            base.OnAwake();
+
             var mongoDatabaseProvider = Components.Get<IMongoDatabaseProvider>()
                 .AssertNotNull();
-            var mongoDatabase = mongoDatabaseProvider.MongoDatabase;
+            mongoDatabase = mongoDatabaseProvider.Provide();
+        }
 
+        protected override IMongoCollection<Account> GetCollection()
+        {
             return mongoDatabase.GetCollection<Account>(CollectionName);
         }
     }
