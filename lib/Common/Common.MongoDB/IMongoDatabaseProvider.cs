@@ -7,6 +7,6 @@ namespace Common.MongoDB
     /// </summary>
     public interface IMongoDatabaseProvider
     {
-        IMongoDatabase MongoDatabase { get; }
+        IMongoDatabase Provide();
     }
 }
