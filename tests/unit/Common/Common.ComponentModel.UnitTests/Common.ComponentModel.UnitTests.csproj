@@ -65,7 +65,6 @@
     <Compile Include="ComponentBaseTests.cs" />
     <Compile Include="ComponentsContainerTests.cs" />
     <Compile Include="ComponentsProviderTests.cs" />
-    <Compile Include="Generic\ComponentBaseTests.cs" />
     <Compile Include="Generic\OwnerComponentsProviderTests.cs" />
     <Compile Include="MockedComponentsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
