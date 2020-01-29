@@ -1,5 +1,4 @@
 ﻿using System;
-using Common.ComponentModel.Generic;
 
 namespace Common.ComponentModel
 {
@@ -13,17 +12,6 @@ namespace Common.ComponentModel
             }
 
             return (ComponentsProvider)components;
-        }
-
-        public static IExposedComponents ProvideExposed<TOwner>(this IComponents components) 
-            where TOwner : class
-        {
-            if (components == null)
-            {
-                throw new ArgumentNullException(nameof(components));
-            }
-
-            return (OwnerComponentsProvider<TOwner>)components;
         }
     }
 }
