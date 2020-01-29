@@ -49,13 +49,15 @@
     <Compile Include="Exceptions\ComponentInterfaceExpectedException.cs" />
     <Compile Include="ExposedState.cs" />
     <Compile Include="ExtensionMethods.cs" />
-    <Compile Include="Generic\OwnerComponentsProvider.cs" />
     <Compile Include="IComponent.cs" />
     <Compile Include="Core\IComponentsContainer.cs" />
     <Compile Include="IComponents.cs" />
     <Compile Include="IExposedComponents.cs" />
     <Compile Include="Lifetime.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Generic\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
