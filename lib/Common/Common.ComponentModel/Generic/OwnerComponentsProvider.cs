@@ -23,10 +23,7 @@ namespace Common.ComponentModel.Generic
         {
             components.Add(component);
 
-            if (component is IComponent<TOwner> componentBase)
-            {
-                componentBase.Awake(owner, this);
-            }
+            component.Awake(this);
 
             return component;
         }
@@ -35,10 +32,7 @@ namespace Common.ComponentModel.Generic
         {
             components.AddExposedOnly(component);
 
-            if (component is IComponent<TOwner> componentBase)
-            {
-                componentBase.Awake(owner, this);
-            }
+            component.Awake(this);
 
             return component;
         }
@@ -46,10 +40,7 @@ namespace Common.ComponentModel.Generic
         void IComponents.Remove<TComponent>()
         {
             var component = components.Remove<TComponent>();
-            if (component is IComponent<TOwner> componentBase)
-            {
-                componentBase.Dispose();
-            }
+            component.Dispose();
         }
 
         TComponent IComponents.Get<TComponent>()
