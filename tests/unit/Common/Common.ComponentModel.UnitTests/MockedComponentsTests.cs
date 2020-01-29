@@ -1,5 +1,4 @@
-﻿using Common.ComponentModel.Generic;
-using Common.ComponentModel.Tests;
+﻿using Common.ComponentModel.Tests;
 using Common.UnitTestsBase;
 using NSubstitute;
 using Xunit;
@@ -41,13 +40,13 @@ namespace Common.ComponentModel.UnitTests
         public int Id { get; }
 
         public IExposedComponents ExposedComponents =>
-            Components.ProvideExposed<ISceneObject>();
+            Components.ProvideExposed();
 
         protected IComponents Components { get; }
 
         public GameObject()
         {
-            Components = new OwnerComponentsProvider<ISceneObject>(this);
+            Components = new ComponentsProvider();
             Components.Add(new Transform());
         }
     }
@@ -58,7 +57,7 @@ namespace Common.ComponentModel.UnitTests
     }
 
     [ComponentSettings(ExposedState.Exposable)]
-    public class Transform : ComponentBase<ISceneObject>, ITransform
+    public class Transform : ComponentBase, ITransform
     {
         public void SetPosition()
         {
