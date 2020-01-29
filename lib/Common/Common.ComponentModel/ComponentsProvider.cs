@@ -29,7 +29,10 @@ namespace Common.ComponentModel
         {
             components.AddExposedOnly(component);
 
-            component.Awake(this);
+            if (component is IComponent componentBase)
+            {
+                componentBase.Awake(this);
+            }
 
             return component;
         }
