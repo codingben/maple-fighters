@@ -15,14 +15,14 @@ namespace Common.ComponentModel
         /// <param name="component">The new component.</param>
         /// <returns>The new component after it was added to the container.</returns>
         TComponent Add<TComponent>(TComponent component)
-            where TComponent : IComponent;
+            where TComponent : class;
 
         /// <summary>
         /// Removes and disposes a component from the component's container.
         /// </summary>
         /// <typeparam name="TComponent">The desired component.</typeparam>
         void Remove<TComponent>()
-            where TComponent : IComponent;
+            where TComponent : class;
 
         /// <summary>
         /// Searches for the desired component on the component's container.
