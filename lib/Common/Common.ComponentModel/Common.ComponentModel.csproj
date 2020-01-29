@@ -49,7 +49,6 @@
     <Compile Include="Exceptions\ComponentInterfaceExpectedException.cs" />
     <Compile Include="ExposedState.cs" />
     <Compile Include="ExtensionMethods.cs" />
-    <Compile Include="Generic\IComponent.cs" />
     <Compile Include="Generic\OwnerComponentsProvider.cs" />
     <Compile Include="IComponent.cs" />
     <Compile Include="Core\IComponentsContainer.cs" />
