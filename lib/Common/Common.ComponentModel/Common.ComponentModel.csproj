@@ -35,7 +35,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ComponentBase.cs" />
-    <Compile Include="Core\ComponentSettingsUtils.cs" />
     <Compile Include="Core\Utils.cs" />
     <Compile Include="Exceptions\ComponentAlreadyExistsException.cs" />
     <Compile Include="Core\ComponentsContainer.cs" />
