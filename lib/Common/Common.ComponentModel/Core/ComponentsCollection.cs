@@ -8,13 +8,13 @@ namespace Common.ComponentModel.Core
     /// </summary>
     internal sealed class ComponentsCollection
     {
-        private readonly List<object> exposedComponents;
-        private readonly List<object> unexposedComponents;
+        private readonly List<IComponent> exposedComponents;
+        private readonly List<IComponent> unexposedComponents;
         
         public ComponentsCollection()
         {
-            exposedComponents = new List<object>();
-            unexposedComponents = new List<object>();
+            exposedComponents = new List<IComponent>();
+            unexposedComponents = new List<IComponent>();
         }
 
         /// <summary>
@@ -22,7 +22,7 @@ namespace Common.ComponentModel.Core
         /// </summary>
         /// <param name="exposedState">Determines the collection.</param>
         /// <returns>An exposed or unexposed components.</returns>
-        public List<object> this[ExposedState exposedState] =>
+        public List<IComponent> this[ExposedState exposedState] =>
             exposedState == ExposedState.Exposable
                 ? exposedComponents
                 : unexposedComponents;
@@ -34,7 +34,7 @@ namespace Common.ComponentModel.Core
         /// <param name="exposedState">Determines the collection.</param>
         /// <returns>If the component exists or not.</returns>
         public bool IsExists<TComponent>(ExposedState exposedState)
-            where TComponent : class
+            where TComponent : IComponent
         {
             var collection = this[exposedState];
             return collection.OfType<TComponent>().Any();
