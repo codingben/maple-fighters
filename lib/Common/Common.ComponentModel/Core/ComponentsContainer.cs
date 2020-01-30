@@ -25,8 +25,7 @@ namespace Common.ComponentModel.Core
         /// </exception>
         TComponent IComponents.Add<TComponent>(TComponent component)
         {
-            var exposedState =
-                ComponentSettingsUtils.GetExposedState<TComponent>();
+            var exposedState = Utils.GetExposedState<TComponent>();
             var isExists = components.IsExists<TComponent>(exposedState);
             if (isExists)
             {
@@ -47,8 +46,7 @@ namespace Common.ComponentModel.Core
         /// </exception>
         TComponent IExposedComponents.Add<TComponent>(TComponent component)
         {
-            var exposedState =
-                ComponentSettingsUtils.GetExposedState<TComponent>();
+            var exposedState = Utils.GetExposedState<TComponent>();
             if (exposedState == ExposedState.Exposable)
             {
                 var isExists =
@@ -74,8 +72,7 @@ namespace Common.ComponentModel.Core
         /// </summary>
         void IComponents.Remove<TComponent>()
         {
-            var exposedState =
-                ComponentSettingsUtils.GetExposedState<TComponent>();
+            var exposedState = Utils.GetExposedState<TComponent>();
             var collection = components[exposedState];
 
             var component = collection.OfType<TComponent>().FirstOrDefault();
