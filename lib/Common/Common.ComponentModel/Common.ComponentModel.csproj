@@ -51,7 +51,6 @@
     <Compile Include="IComponent.cs" />
     <Compile Include="IComponents.cs" />
     <Compile Include="IExposedComponents.cs" />
-    <Compile Include="Lifetime.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />
