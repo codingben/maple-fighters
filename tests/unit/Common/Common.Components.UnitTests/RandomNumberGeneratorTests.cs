@@ -10,7 +10,7 @@ namespace Common.Components.UnitTests
 
         public RandomNumberGeneratorTests()
         {
-            components = new ComponentsProvider();
+            components = new ComponentsContainer();
             components.Add(new RandomNumberGenerator());
         }
 
