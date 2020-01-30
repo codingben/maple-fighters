@@ -64,7 +64,6 @@
   <ItemGroup>
     <Compile Include="ComponentBaseTests.cs" />
     <Compile Include="ComponentsContainerTests.cs" />
-    <Compile Include="ComponentsProviderTests.cs" />
     <Compile Include="MockedComponentsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
