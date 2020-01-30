@@ -42,7 +42,6 @@
     <Compile Include="Core\ComponentsContainer.cs" />
     <Compile Include="Core\ComponentsCollection.cs" />
     <Compile Include="ComponentSettingsAttribute.cs" />
-    <Compile Include="ComponentsProvider.cs" />
     <Compile Include="Exceptions\ComponentNotExposedException.cs" />
     <Compile Include="Exceptions\ComponentNotFoundException.cs" />
     <Compile Include="Exceptions\ComponentSettingsMissingException.cs" />
