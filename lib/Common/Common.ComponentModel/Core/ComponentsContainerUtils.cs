@@ -40,7 +40,7 @@ namespace Common.ComponentModel.Core
         }
 
         public static ExposedState GetExposedState<TComponent>()
-            where TComponent : class 
+            where TComponent : IComponent
         {
             var componentSettings =
                 ComponentSettingsUtils.GetComponentSettings<TComponent>();
