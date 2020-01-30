@@ -49,7 +49,6 @@
     <Compile Include="ExposedState.cs" />
     <Compile Include="ExtensionMethods.cs" />
     <Compile Include="IComponent.cs" />
-    <Compile Include="Core\IComponentsContainer.cs" />
     <Compile Include="IComponents.cs" />
     <Compile Include="IExposedComponents.cs" />
     <Compile Include="Lifetime.cs" />
