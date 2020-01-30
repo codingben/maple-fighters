@@ -28,7 +28,7 @@ namespace ServerCommon.Application
             }
         }
 
-        protected IComponents Components { get; } = new ComponentsProvider();
+        protected IComponents Components { get; } = new ComponentsContainer();
 
         protected IServerConnector ServerConnector { get; }
 
