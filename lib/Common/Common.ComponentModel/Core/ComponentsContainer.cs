@@ -1,15 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using Common.ComponentModel.Exceptions;
 
 namespace Common.ComponentModel.Core
 {
-    /// <inheritdoc />
     /// <summary>
     /// A container which contains the components.
     /// </summary>
-    public sealed class ComponentsContainer : IComponentsContainer
+    public sealed class ComponentsContainer : IComponents, IExposedComponents
     {
         private readonly ComponentsCollection components;
 
@@ -20,13 +18,12 @@ namespace Common.ComponentModel.Core
 
         /// <inheritdoc />
         /// <summary>
-        /// See <see cref="IComponentsContainer.Add{T}"/> for more information.
+        /// See <see cref="IComponents.Add{T}"/> for more information.
         /// </summary>
         /// <exception cref="ComponentAlreadyExistsException">
         /// A component exists in a collection.
         /// </exception>
-        public void Add<TComponent>(TComponent component)
-            where TComponent : class
+        TComponent IComponents.Add<TComponent>(TComponent component)
         {
             var exposedState =
                 ComponentsContainerUtils.GetExposedState<TComponent>();
@@ -37,17 +34,18 @@ namespace Common.ComponentModel.Core
             }
 
             components[exposedState].Add(component);
+
+            return component;
         }
 
         /// <inheritdoc />
         /// <summary>
-        /// See <see cref="IComponentsContainer.AddExposedOnly{T}"/> for more information.
+        /// See <see cref="IExposedComponents.Add{T}"/> for more information.
         /// </summary>
         /// <exception cref="ComponentAlreadyExistsException">
         /// A component exists in a collection.
         /// </exception>
-        public void AddExposedOnly<TComponent>(TComponent component)
-            where TComponent : class
+        TComponent IExposedComponents.Add<TComponent>(TComponent component)
         {
             var exposedState =
                 ComponentsContainerUtils.GetExposedState<TComponent>();
@@ -66,14 +64,15 @@ namespace Common.ComponentModel.Core
             {
                 throw new ComponentNotExposedException(nameof(TComponent));
             }
+
+            return component;
         }
 
         /// <inheritdoc />
         /// <summary>
-        /// See <see cref="IComponentsContainer.Remove{T}"/> for more information.
+        /// See <see cref="IComponents.Remove{T}"/> for more information.
         /// </summary>
-        public TComponent Remove<TComponent>()
-            where TComponent : class
+        void IComponents.Remove<TComponent>()
         {
             var exposedState =
                 ComponentsContainerUtils.GetExposedState<TComponent>();
@@ -90,16 +89,13 @@ namespace Common.ComponentModel.Core
             {
                 collection.RemoveAt(index);
             }
-
-            return component;
         }
 
         /// <inheritdoc />
         /// <summary>
-        /// See <see cref="IComponentsContainer.Find{T}"/> for more information.
+        /// See <see cref="IComponents.Get{T}"/> for more information.
         /// </summary>
-        public TComponent Find<TComponent>()
-            where TComponent : class
+        TComponent IComponents.Get<TComponent>()
         {
             var component = components.GetAllComponents()
                 .OfType<TComponent>()
@@ -114,10 +110,9 @@ namespace Common.ComponentModel.Core
 
         /// <inheritdoc />
         /// <summary>
-        /// See <see cref="IComponentsContainer.FindExposedOnly{T}"/> for more information.
+        /// See <see cref="IExposedComponents.Get{T}"/> for more information.
         /// </summary>
-        public TComponent FindExposedOnly<TComponent>()
-            where TComponent : class
+        TComponent IExposedComponents.Get<TComponent>()
         {
             var component = components.GetExposedComponents()
                 .OfType<TComponent>()
@@ -134,19 +129,16 @@ namespace Common.ComponentModel.Core
 
         /// <inheritdoc />
         /// <summary>
-        /// See <see cref="IComponentsContainer.GetAll"/> for more information.
-        /// </summary>
-        public IEnumerable<object> GetAll()
-        {
-            return components.GetAllComponents();
-        }
-
-        /// <inheritdoc />
-        /// <summary>
         /// See <see cref="IDisposable.Dispose"/> for more information.
         /// </summary>
         public void Dispose()
         {
+            foreach (var component in components.GetAllComponents())
+            {
+                var disposable = component as IDisposable;
+                disposable?.Dispose();
+            }
+
             components.Clear();
         }
     }
