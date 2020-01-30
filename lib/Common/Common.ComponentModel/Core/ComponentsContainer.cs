@@ -100,9 +100,9 @@ namespace Common.ComponentModel.Core
             var component = components.GetAllComponents()
                 .OfType<TComponent>()
                 .FirstOrDefault();
-            if (component != null)
+            if (component == null)
             {
-                ComponentsContainerUtils.GetComponentByLifetime(ref component);
+                throw new ComponentNotFoundException(nameof(TComponent));
             }
 
             return component;
@@ -121,8 +121,6 @@ namespace Common.ComponentModel.Core
             {
                 throw new ComponentNotFoundException(nameof(TComponent));
             }
-
-            ComponentsContainerUtils.GetComponentByLifetime(ref component);
 
             return component;
         }
