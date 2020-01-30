@@ -35,7 +35,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ComponentBase.cs" />
-    <Compile Include="Core\Utils.cs" />
+    <Compile Include="Utils.cs" />
     <Compile Include="Exceptions\ComponentAlreadyExistsException.cs" />
     <Compile Include="ComponentsContainer.cs" />
     <Compile Include="ComponentsCollection.cs" />
@@ -51,6 +51,8 @@
     <Compile Include="IExposedComponents.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Core\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,7 +1,7 @@
 ﻿using System;
 using Common.ComponentModel.Exceptions;
 
-namespace Common.ComponentModel.Core
+namespace Common.ComponentModel
 {
     internal static class Utils
     {
