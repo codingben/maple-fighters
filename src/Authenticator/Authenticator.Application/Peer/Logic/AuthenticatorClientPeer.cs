@@ -14,7 +14,7 @@ namespace Authenticator.Application.Peer.Logic
 {
     public class AuthenticatorClientPeer : ClientPeerBase<AuthenticatorOperations, EmptyEventCode>
     {
-        private IComponents Components { get; } = new ComponentsProvider();
+        private IComponents Components { get; } = new ComponentsContainer();
 
         public AuthenticatorClientPeer(IClientPeer peer, bool log = false)
             : base(peer, log)
