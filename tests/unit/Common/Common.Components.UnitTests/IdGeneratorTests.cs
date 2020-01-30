@@ -11,7 +11,7 @@ namespace Common.Components.UnitTests
 
         public IdGeneratorTests()
         {
-            components = new ComponentsProvider();
+            components = new ComponentsContainer();
             components.Add(new IdGenerator());
         }
 
