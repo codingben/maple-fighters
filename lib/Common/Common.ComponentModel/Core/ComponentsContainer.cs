@@ -32,6 +32,8 @@ namespace Common.ComponentModel.Core
                 throw new ComponentAlreadyExistsException(nameof(TComponent));
             }
 
+            component.Awake(this);
+
             components[exposedState].Add(component);
 
             return component;
@@ -56,6 +58,8 @@ namespace Common.ComponentModel.Core
                     throw new ComponentAlreadyExistsException(nameof(TComponent));
                 }
 
+                component.Awake(this);
+
                 components[ExposedState.Exposable].Add(component);
             }
             else
@@ -74,12 +78,13 @@ namespace Common.ComponentModel.Core
         {
             var exposedState = Utils.GetExposedState<TComponent>();
             var collection = components[exposedState];
-
             var component = collection.OfType<TComponent>().FirstOrDefault();
             if (component == null)
             {
                 throw new ComponentNotFoundException(nameof(TComponent));
             }
+
+            component.Dispose();
 
             var index = collection.IndexOf(component);
             if (index != -1)
@@ -94,6 +99,8 @@ namespace Common.ComponentModel.Core
         /// </summary>
         TComponent IComponents.Get<TComponent>()
         {
+            Utils.ThrowExceptionIfNotInterface<TComponent>();
+
             var component = components.GetAllComponents()
                 .OfType<TComponent>()
                 .FirstOrDefault();
@@ -111,6 +118,8 @@ namespace Common.ComponentModel.Core
         /// </summary>
         TComponent IExposedComponents.Get<TComponent>()
         {
+            Utils.ThrowExceptionIfNotInterface<TComponent>();
+
             var component = components.GetExposedComponents()
                 .OfType<TComponent>()
                 .FirstOrDefault();
