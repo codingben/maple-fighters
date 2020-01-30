@@ -46,7 +46,7 @@ namespace Common.ComponentModel.UnitTests
 
         public GameObject()
         {
-            Components = new ComponentsProvider();
+            Components = new ComponentsContainer();
             Components.Add(new Transform());
         }
     }
