@@ -26,7 +26,7 @@ namespace Common.ComponentModel.UnitTests
         public void OnRemoved_Called()
         {
             // Arrange
-            IComponents components = new ComponentsContainer();();
+            IComponents components = new ComponentsContainer();
             var otherDummyComponent =
                 components.AddAndMock<IOtherDummyComponent>();
 
