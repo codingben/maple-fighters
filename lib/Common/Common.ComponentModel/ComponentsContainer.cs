@@ -2,7 +2,7 @@
 using System.Linq;
 using Common.ComponentModel.Exceptions;
 
-namespace Common.ComponentModel.Core
+namespace Common.ComponentModel
 {
     /// <summary>
     /// A container which contains the components.
