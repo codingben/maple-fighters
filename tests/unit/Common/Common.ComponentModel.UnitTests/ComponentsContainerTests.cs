@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using Common.ComponentModel.Exceptions;
 using Shouldly;
 using Xunit;
@@ -12,11 +11,11 @@ namespace Common.ComponentModel.UnitTests
         public void Add_Should_Not_Throw_Error()
         {
             // Arrange
-            IComponents componentsContainer = new ComponentsContainer();
-            componentsContainer.Add(new SingletonComponent());
+            IComponents components = new ComponentsContainer();
+            components.Add(new SingletonComponent());
 
             // Act
-            var component = componentsContainer.Get<SingletonComponent>();
+            var component = components.Get<SingletonComponent>();
 
             // Assert
             component.ShouldNotBeNull();
@@ -26,48 +25,48 @@ namespace Common.ComponentModel.UnitTests
         public void Add_Should_Throw_Error_When_Added_Two_Same_Components()
         {
             // Arrange
-            IComponents componentsContainer = new ComponentsContainer();
-            componentsContainer.Add(new SingletonComponent());
+            IComponents components = new ComponentsContainer();
+            components.Add(new SingletonComponent());
 
             // Act & Assert
             Should.Throw<ComponentAlreadyExistsException>(
-                () => componentsContainer.Add(new SingletonComponent()));
+                () => components.Add(new SingletonComponent()));
         }
 
         [Fact]
         public void Add_Should_Throw_Error_When_No_Attribute()
         {
             // Arrange
-            IComponents componentsContainer = new ComponentsContainer();
+            IComponents components = new ComponentsContainer();
 
             // Act & Assert
             Should.Throw<ComponentSettingsMissingException>(
-                () => componentsContainer.Add(new NoAttributeComponent()));
+                () => components.Add(new NoAttributeComponent()));
         }
 
         [Fact]
         public void AddExposed_Throws_Error_When_Not_Exposed()
         {
             // Arrange
-            IExposedComponents componentsContainer = new ComponentsContainer();
+            IExposedComponents components = new ComponentsContainer();
 
             // Act & Assert
             Should.Throw<ComponentNotExposedException>(
-                () => componentsContainer.Add(new SingletonComponent()));
+                () => components.Add(new SingletonComponent()));
         }
 
         [Fact]
         public void Remove_Should_Find_Component()
         {
             // Arrange
-            IComponents componentsContainer = new ComponentsContainer();
-            componentsContainer.Add(new SingletonComponent());
+            IComponents components = new ComponentsContainer();
+            components.Add(new SingletonComponent());
 
             // Act
-            componentsContainer.Remove<SingletonComponent>();
+            components.Remove<SingletonComponent>();
 
             // Assert
-            var someComponent = componentsContainer.Get<SingletonComponent>();
+            var someComponent = components.Get<SingletonComponent>();
             someComponent.ShouldBeNull();
         }
 
@@ -75,24 +74,24 @@ namespace Common.ComponentModel.UnitTests
         public void Remove_Should_Throw_Error_When_Component_Not_Found()
         {
             // Arrange
-            IComponents componentsContainer = new ComponentsContainer();
+            IComponents components = new ComponentsContainer();
 
             // Act & Assert
             Should.Throw<ComponentNotFoundException>(
-                () => componentsContainer.Remove<SingletonComponent>());
+                () => components.Remove<SingletonComponent>());
         }
 
         [Fact]
         public void Find_Should_Return_Singleton_Component()
         {
             // Arrange
-            IComponents componentsContainer = new ComponentsContainer();
+            IComponents components = new ComponentsContainer();
 
             var component = new SingletonComponent();
-            componentsContainer.Add(component);
+            components.Add(component);
 
             // Act
-            var someComponent = componentsContainer.Get<SingletonComponent>();
+            var someComponent = components.Get<SingletonComponent>();
 
             // Assert
             someComponent.ShouldBeSameAs(component);
@@ -102,14 +101,14 @@ namespace Common.ComponentModel.UnitTests
         public void After_Dispose_Should_Not_Return_Any_Components()
         {
             // Arrange
-            IComponents componentsContainer = new ComponentsContainer();
-            componentsContainer.Add(new SingletonComponent());
+            IComponents components = new ComponentsContainer();
+            components.Add(new SingletonComponent());
 
             // Act
-            componentsContainer.Dispose();
+            components.Dispose();
 
             // Assert
-            var someComponent = componentsContainer.Get<SingletonComponent>();
+            var someComponent = components.Get<SingletonComponent>();
             someComponent.ShouldBeNull();
         }
     }
