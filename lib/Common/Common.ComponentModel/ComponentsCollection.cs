@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace Common.ComponentModel.Core
+namespace Common.ComponentModel
 {
     /// <summary>
     /// A collection of the exposed and unexposed components.
