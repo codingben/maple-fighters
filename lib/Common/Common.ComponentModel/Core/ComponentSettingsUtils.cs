@@ -22,5 +22,17 @@ namespace Common.ComponentModel.Core
 
             return componentSettings;
         }
+
+        public static ExposedState GetExposedState<TComponent>()
+            where TComponent : IComponent
+        {
+            var componentSettings = GetComponentSettings<TComponent>();
+            if (componentSettings != null)
+            {
+                return componentSettings.ExposedState;
+            }
+
+            throw new InvalidOperationException();
+        }
     }
 }
