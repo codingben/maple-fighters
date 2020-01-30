@@ -6,7 +6,7 @@ namespace Common.ComponentModel.Core
     internal static class ComponentSettingsUtils
     {
         public static ComponentSettingsAttribute GetComponentSettings<TComponent>()
-            where TComponent : class
+            where TComponent : IComponent
         {
             var componentSettings =
                 (ComponentSettingsAttribute)Attribute.GetCustomAttribute(
