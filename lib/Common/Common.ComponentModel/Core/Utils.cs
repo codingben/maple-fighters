@@ -35,7 +35,7 @@ namespace Common.ComponentModel.Core
             throw new InvalidOperationException();
         }
 
-        public static void AssertNotInterface<TComponent>()
+        public static void ThrowExceptionIfNotInterface<TComponent>()
             where TComponent : class
         {
             if (typeof(TComponent).IsInterface)
