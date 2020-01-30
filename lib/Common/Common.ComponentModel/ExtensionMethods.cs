@@ -1,4 +1,5 @@
 ﻿using System;
+using Common.ComponentModel.Core;
 
 namespace Common.ComponentModel
 {
@@ -11,7 +12,7 @@ namespace Common.ComponentModel
                 throw new ArgumentNullException(nameof(components));
             }
 
-            return (ComponentsProvider)components;
+            return (ComponentsContainer)components;
         }
     }
 }
