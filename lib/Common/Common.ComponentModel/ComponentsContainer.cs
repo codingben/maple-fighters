@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Common.ComponentModel.Exceptions;
 
@@ -137,7 +138,8 @@ namespace Common.ComponentModel
         /// </summary>
         public void Dispose()
         {
-            foreach (var component in components.GetAllComponents())
+            var collection = new List<object>(components.GetAllComponents());
+            foreach (var component in collection)
             {
                 var disposable = component as IDisposable;
                 disposable?.Dispose();
