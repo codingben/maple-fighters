@@ -36,8 +36,7 @@ namespace Common.ComponentModel
         public bool IsExists<TComponent>(ExposedState exposedState)
             where TComponent : IComponent
         {
-            var collection = this[exposedState];
-            return collection.OfType<TComponent>().Any();
+            return this[exposedState].OfType<TComponent>().Any();
         }
 
         /// <summary>
