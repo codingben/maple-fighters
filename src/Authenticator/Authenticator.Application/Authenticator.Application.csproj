@@ -88,6 +88,10 @@
       <Project>{41F5F951-B6A6-4F67-BBC1-EBEF53F62FA8}</Project>
       <Name>Common.ParametersValidation</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\lib\Common\Common.Repository\Common.Repository.csproj">
+      <Project>{65c156f0-fa83-4905-9ab0-cc4d04a05627}</Project>
+      <Name>Common.Repository</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\lib\ServerCommon\ServerCommon.Application.Components\ServerCommon.Application.Components.csproj">
       <Project>{BDA69EC2-FD94-4BC0-9AD9-17BED767F48C}</Project>
       <Name>ServerCommon.Application.Components</Name>
