@@ -105,10 +105,6 @@ namespace Common.ComponentModel
             var component = components.GetAllComponents()
                 .OfType<TComponent>()
                 .FirstOrDefault();
-            if (component == null)
-            {
-                throw new ComponentNotFoundException(nameof(TComponent));
-            }
 
             return component;
         }
@@ -124,10 +120,6 @@ namespace Common.ComponentModel
             var component = components.GetExposedComponents()
                 .OfType<TComponent>()
                 .FirstOrDefault();
-            if (component == null)
-            {
-                throw new ComponentNotFoundException(nameof(TComponent));
-            }
 
             return component;
         }
