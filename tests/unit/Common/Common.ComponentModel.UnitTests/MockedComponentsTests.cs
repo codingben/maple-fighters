@@ -72,7 +72,7 @@ namespace Common.ComponentModel.UnitTests
         void Move();
     }
 
-    [ComponentSettings(ExposedState.Unexposable)]
+    [ComponentSettings(ExposedState.Exposable)]
     public class DummyCharacter : ComponentBase, IDummyCharacter
     {
         public void Move()
