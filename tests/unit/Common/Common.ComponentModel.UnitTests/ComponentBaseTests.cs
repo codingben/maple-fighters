@@ -13,7 +13,7 @@ namespace Common.ComponentModel.UnitTests
             // Arrange
             IComponents components = new ComponentsContainer();
             var otherDummyComponent =
-                components.AddAndMock<IOtherDummyComponent>();
+                components.AddAndMock<OtherDummyComponent>();
 
             // Act
             components.Add(new DummyComponent());
@@ -28,7 +28,7 @@ namespace Common.ComponentModel.UnitTests
             // Arrange
             IComponents components = new ComponentsContainer();
             var otherDummyComponent =
-                components.AddAndMock<IOtherDummyComponent>();
+                components.AddAndMock<OtherDummyComponent>();
 
             components.Add(new DummyComponent());
 
