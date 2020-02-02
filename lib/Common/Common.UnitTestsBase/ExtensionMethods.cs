@@ -7,7 +7,7 @@
         {
             if (component == null)
             {
-                throw new FailedToGetComponentException(nameof(TComponent));
+                throw new FailedToGetComponentException(typeof(TComponent).Name);
             }
 
             return component;
