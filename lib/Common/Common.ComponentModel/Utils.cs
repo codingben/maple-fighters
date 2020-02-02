@@ -16,7 +16,7 @@ namespace Common.ComponentModel
             {
                 if (typeof(IDisposable).IsAssignableFrom(typeof(TComponent)))
                 {
-                    throw new ComponentSettingsMissingException(nameof(TComponent));
+                    throw new ComponentSettingsMissingException(typeof(TComponent).Name);
                 }
             }
 
@@ -43,7 +43,7 @@ namespace Common.ComponentModel
                 return;
             }
 
-            throw new ComponentSettingsMissingException(nameof(TComponent));
+            throw new ComponentSettingsMissingException(typeof(TComponent).Name);
         }
     }
 }
