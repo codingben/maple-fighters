@@ -30,7 +30,7 @@ namespace Common.ComponentModel
             var isExists = components.IsExists<TComponent>(exposedState);
             if (isExists)
             {
-                throw new ComponentAlreadyExistsException(nameof(TComponent));
+                throw new ComponentAlreadyExistsException(typeof(TComponent).Name);
             }
 
             component.Awake(this);
@@ -56,7 +56,7 @@ namespace Common.ComponentModel
                     components.IsExists<TComponent>(ExposedState.Exposable);
                 if (isExists)
                 {
-                    throw new ComponentAlreadyExistsException(nameof(TComponent));
+                    throw new ComponentAlreadyExistsException(typeof(TComponent).Name);
                 }
 
                 component.Awake(this);
@@ -65,7 +65,7 @@ namespace Common.ComponentModel
             }
             else
             {
-                throw new ComponentNotExposedException(nameof(TComponent));
+                throw new ComponentNotExposedException(typeof(TComponent).Name);
             }
 
             return component;
@@ -82,7 +82,7 @@ namespace Common.ComponentModel
             var component = collection.OfType<TComponent>().FirstOrDefault();
             if (component == null)
             {
-                throw new ComponentNotFoundException(nameof(TComponent));
+                throw new ComponentNotFoundException(typeof(TComponent).Name);
             }
 
             component.Dispose();
