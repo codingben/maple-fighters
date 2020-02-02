@@ -48,6 +48,20 @@ namespace Common.ComponentModel.UnitTests
     }
 
     [ComponentSettings(ExposedState.Unexposable)]
+    public class OtherDummyComponent : ComponentBase, IOtherDummyComponent
+    {
+        public void Create()
+        {
+            // Left blank intentionally
+        }
+
+        public void Destroy()
+        {
+            // Left blank intentionally
+        }
+    }
+
+    [ComponentSettings(ExposedState.Unexposable)]
     public class DummyComponent : ComponentBase
     {
         protected override void OnAwake()
