@@ -15,7 +15,7 @@ namespace Common.ComponentModel.UnitTests
             components.Add(new SingletonComponent());
 
             // Act
-            var component = components.Get<SingletonComponent>();
+            var component = components.Get<ISingletonComponent>();
 
             // Assert
             component.ShouldNotBeNull();
@@ -66,7 +66,7 @@ namespace Common.ComponentModel.UnitTests
             components.Remove<SingletonComponent>();
 
             // Assert
-            var someComponent = components.Get<SingletonComponent>();
+            var someComponent = components.Get<ISingletonComponent>();
             someComponent.ShouldBeNull();
         }
 
@@ -91,7 +91,7 @@ namespace Common.ComponentModel.UnitTests
             components.Add(component);
 
             // Act
-            var someComponent = components.Get<SingletonComponent>();
+            var someComponent = components.Get<ISingletonComponent>();
 
             // Assert
             someComponent.ShouldBeSameAs(component);
@@ -108,22 +108,27 @@ namespace Common.ComponentModel.UnitTests
             components.Dispose();
 
             // Assert
-            var someComponent = components.Get<SingletonComponent>();
+            var someComponent = components.Get<ISingletonComponent>();
             someComponent.ShouldBeNull();
         }
     }
 
+    public interface ISingletonComponent
+    {
+        // Left blank intentionally
+    }
+
     [ComponentSettings(ExposedState.Unexposable)]
-    public class SingletonComponent : IComponent
+    public class SingletonComponent : IComponent, ISingletonComponent
     {
         public void Awake(IComponents components)
         {
-            throw new NotImplementedException();
+            // Left blank intentionally
         }
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            // Left blank intentionally
         }
     }
 
