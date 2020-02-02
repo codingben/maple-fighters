@@ -14,7 +14,7 @@ namespace Common.ComponentModel.UnitTests
             IGameObject gameObject = new GameObject();
 
             var dummyCharacter =
-                gameObject.ExposedComponents.AddAndMock<IDummyCharacter>();
+                gameObject.ExposedComponents.AddAndMock<DummyCharacter>();
             var transform = gameObject.ExposedComponents.Get<ITransform>();
 
             // Act
@@ -70,5 +70,14 @@ namespace Common.ComponentModel.UnitTests
     public interface IDummyCharacter
     {
         void Move();
+    }
+
+    [ComponentSettings(ExposedState.Unexposable)]
+    public class DummyCharacter : ComponentBase, IDummyCharacter
+    {
+        public void Move()
+        {
+            // Left blank intentionally
+        }
     }
 }
