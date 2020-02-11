@@ -11,7 +11,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tools", "tools", "{E194BA9B
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Authenticator", "Authenticator", "{FF0073D3-7E19-4D22-9369-813CA0B83C83}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Game", "Game", "{AF7EF6E3-7F8E-4DEF-B299-EB150B3B040F}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "game-service", "game-service", "{AF7EF6E3-7F8E-4DEF-B299-EB150B3B040F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "benchmarks", "benchmarks", "{B66053DD-BEAB-4318-930C-1D97F00A1824}"
 EndProject
@@ -39,25 +39,25 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{1AC54C
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Physics", "Physics", "{6457D5EC-D264-4557-9B9B-5353EA5D11F4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Physics.Box2D.Core", "src\Game\Physics\Physics.Box2D.Core\Physics.Box2D.Core.csproj", "{1134EFE3-4D97-4EB1-AF61-6E2078BBFA8F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Physics.Box2D.Core", "src\game-service\Physics\Physics.Box2D.Core\Physics.Box2D.Core.csproj", "{1134EFE3-4D97-4EB1-AF61-6E2078BBFA8F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Physics.Box2D.Components", "src\Game\Physics\Physics.Box2D.Components\Physics.Box2D.Components.csproj", "{96C6C229-6D5E-40E1-9509-0E23912641E6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Physics.Box2D.Components", "src\game-service\Physics\Physics.Box2D.Components\Physics.Box2D.Components.csproj", "{96C6C229-6D5E-40E1-9509-0E23912641E6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Physics.Box2D.SimulationWindow", "src\Game\Physics\Physics.Box2D.SimulationWindow\Physics.Box2D.SimulationWindow.csproj", "{53D42A10-B2E3-4B59-A810-CB933937EE8F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Physics.Box2D.SimulationWindow", "src\game-service\Physics\Physics.Box2D.SimulationWindow\Physics.Box2D.SimulationWindow.csproj", "{53D42A10-B2E3-4B59-A810-CB933937EE8F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Physics.Box2D.SimulationTests", "src\Game\Physics\Physics.Box2D.SimulationTests\Physics.Box2D.SimulationTests.csproj", "{FF85331F-8A90-44AA-A6A8-D1A56B673B5B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Physics.Box2D.SimulationTests", "src\game-service\Physics\Physics.Box2D.SimulationTests\Physics.Box2D.SimulationTests.csproj", "{FF85331F-8A90-44AA-A6A8-D1A56B673B5B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Game.Application", "src\Game\Game.Application\Game.Application.csproj", "{D2EED8D3-2D5B-4773-A166-652A39533D35}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Game.Application", "src\game-service\Game.Application\Game.Application.csproj", "{D2EED8D3-2D5B-4773-A166-652A39533D35}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Game.Domain", "src\Game\Game.Domain\Game.Domain.csproj", "{FE2E572C-4C8C-4E62-A0E8-287B6959059F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Game.Domain", "src\game-service\Game.Domain\Game.Domain.csproj", "{FE2E572C-4C8C-4E62-A0E8-287B6959059F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Game.Infrastructure", "src\Game\Game.Infrastructure\Game.Infrastructure.csproj", "{F101AAD9-A4EE-4BB4-B6EF-C52F0D483735}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Game.Infrastructure", "src\game-service\Game.Infrastructure\Game.Infrastructure.csproj", "{F101AAD9-A4EE-4BB4-B6EF-C52F0D483735}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Game.PhotonStarter", "src\Game\Game.PhotonStarter\Game.PhotonStarter.csproj", "{0F20C440-BE85-47D1-ACCC-D2125395D47D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Game.PhotonStarter", "src\game-service\Game.PhotonStarter\Game.PhotonStarter.csproj", "{0F20C440-BE85-47D1-ACCC-D2125395D47D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{7E86A678-0678-4E00-8540-D830030AA7ED}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Game.InterestManagement", "src\Game\Game.InterestManagement\Game.InterestManagement.csproj", "{89B14D4C-B7EE-4EB4-B3A3-84F3FDD6C7A1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Game.InterestManagement", "src\game-service\Game.InterestManagement\Game.InterestManagement.csproj", "{89B14D4C-B7EE-4EB4-B3A3-84F3FDD6C7A1}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "InterestManagement", "InterestManagement", "{F25C21A8-412E-4A4C-804F-293B3C864009}"
 EndProject
@@ -115,7 +115,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServerCommon.Peer.Extension
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServerCommon.Communication", "lib\ServerCommon\ServerCommon.Communication\ServerCommon.Communication.csproj", "{4E02181E-1AF2-4F52-BDA3-DCC50039852B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Game.Common", "src\Game\Game.Common\Game.Common.csproj", "{07EC5F02-39DA-464B-8563-930023FD4C93}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Game.Common", "src\game-service\Game.Common\Game.Common.csproj", "{07EC5F02-39DA-464B-8563-930023FD4C93}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
