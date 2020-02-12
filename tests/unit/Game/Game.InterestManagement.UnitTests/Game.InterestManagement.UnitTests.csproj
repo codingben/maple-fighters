@@ -78,7 +78,7 @@
       <Project>{0d1f61dd-6f1a-4d2d-9b40-6b4d2fbac30d}</Project>
       <Name>Common.MathematicsHelper</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\src\Game\Game.InterestManagement\Game.InterestManagement.csproj">
+    <ProjectReference Include="..\..\..\..\src\game-service\Game.InterestManagement\Game.InterestManagement.csproj">
       <Project>{89b14d4c-b7ee-4eb4-b3a3-84f3fdd6c7a1}</Project>
       <Name>Game.InterestManagement</Name>
     </ProjectReference>
