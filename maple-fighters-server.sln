@@ -109,8 +109,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServerCommon.Communication"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Game.Common", "src\game-service\Game.Common\Game.Common.csproj", "{07EC5F02-39DA-464B-8563-930023FD4C93}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authenticator.API", "src\auth-service\Authenticator.API\Authenticator.API.csproj", "{8481E886-80F3-47D2-938A-C34401C002C0}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -257,10 +255,6 @@ Global
 		{07EC5F02-39DA-464B-8563-930023FD4C93}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{07EC5F02-39DA-464B-8563-930023FD4C93}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{07EC5F02-39DA-464B-8563-930023FD4C93}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8481E886-80F3-47D2-938A-C34401C002C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8481E886-80F3-47D2-938A-C34401C002C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8481E886-80F3-47D2-938A-C34401C002C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8481E886-80F3-47D2-938A-C34401C002C0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -315,7 +309,6 @@ Global
 		{BCCBB884-7BE5-4C8E-93C6-961370F98E59} = {7AD3F564-C73B-47F9-8FEA-79156A386A3B}
 		{4E02181E-1AF2-4F52-BDA3-DCC50039852B} = {7AD3F564-C73B-47F9-8FEA-79156A386A3B}
 		{07EC5F02-39DA-464B-8563-930023FD4C93} = {7E86A678-0678-4E00-8540-D830030AA7ED}
-		{8481E886-80F3-47D2-938A-C34401C002C0} = {FF0073D3-7E19-4D22-9369-813CA0B83C83}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {20317580-AFD3-4C35-BADC-B5E94CD0B788}
