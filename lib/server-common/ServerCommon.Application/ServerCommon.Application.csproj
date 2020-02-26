@@ -30,9 +30,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CommonCommunicationInterfaces, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\CommonCommunicationInterfaces.4.3.0\lib\net46\CommonCommunicationInterfaces.dll</HintPath>
-    </Reference>
     <Reference Include="Coroutines, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Coroutines.5.0.5\lib\net46\Coroutines.dll</HintPath>
     </Reference>
