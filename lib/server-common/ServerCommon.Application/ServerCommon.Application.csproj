@@ -56,6 +56,14 @@
     <Compile Include="TimeProvider.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\common\Common.ComponentModel\Common.ComponentModel.csproj">
+      <Project>{c1afe671-d598-4c89-b045-30cc20023849}</Project>
+      <Name>Common.ComponentModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\common\Common.Components\Common.Components.csproj">
+      <Project>{2b10158d-ffbe-46a8-a637-1b7bbe56700d}</Project>
+      <Name>Common.Components</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ServerCommon.Application.Components\ServerCommon.Application.Components.csproj">
       <Project>{BDA69EC2-FD94-4BC0-9AD9-17BED767F48C}</Project>
       <Name>ServerCommon.Application.Components</Name>
