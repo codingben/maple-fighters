@@ -24,6 +24,7 @@ namespace Common.MongoDB
         /// See <see cref="IAsyncEditableRepository{TEntity, TKey}.CreateAsync"/> for more information.
         /// </summary>
         /// <param name="entity">The mongo entity.</param>
+        /// <returns>The <see cref="Task"/>.</returns>
         public async Task CreateAsync(TEntity entity)
         {
             await Collection.InsertOneAsync(entity);
@@ -33,6 +34,7 @@ namespace Common.MongoDB
         /// See <see cref="IAsyncEditableRepository{TEntity, TKey}.DeleteAsync"/> for more information.
         /// </summary>
         /// <param name="id">The entity's Id.</param>
+        /// <returns>The <see cref="Task"/>.</returns>
         public async Task DeleteAsync(string id)
         {
             await Collection.DeleteOneAsync(x => x.Id == id);
@@ -42,6 +44,7 @@ namespace Common.MongoDB
         /// See <see cref="IAsyncEditableRepository{TEntity, TKey}.UpdateAsync"/> for more information.
         /// </summary>
         /// <param name="entity">The mongo entity.</param>
+        /// <returns>The <see cref="Task"/>.</returns>
         public async Task UpdateAsync(TEntity entity)
         {
             await Collection.ReplaceOneAsync(x => x.Id == entity.Id, entity);
