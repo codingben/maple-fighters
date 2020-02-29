@@ -62,7 +62,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Coroutines">
-      <Version>4.0.0</Version>
+      <Version>5.0.5</Version>
     </PackageReference>
     <PackageReference Include="NSubstitute">
       <Version>4.2.1</Version>
