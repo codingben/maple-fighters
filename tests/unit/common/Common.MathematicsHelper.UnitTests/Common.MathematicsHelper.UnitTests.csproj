@@ -47,12 +47,6 @@
     <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\lib\Common\Common.MathematicsHelper\Common.MathematicsHelper.csproj">
-      <Project>{0D1F61DD-6F1A-4D2D-9B40-6B4D2FBAC30D}</Project>
-      <Name>Common.MathematicsHelper</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <PackageReference Include="NSubstitute">
       <Version>4.2.1</Version>
     </PackageReference>
