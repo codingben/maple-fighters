@@ -33,9 +33,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.ComponentModel.UnitT
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.Components.UnitTests", "..\..\tests\unit\common\Common.Components.UnitTests\Common.Components.UnitTests.csproj", "{921E0CA1-ADE9-4334-950A-B852FB0C78F4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.MathematicsHelper.UnitTests", "..\..\tests\unit\common\Common.MathematicsHelper.UnitTests\Common.MathematicsHelper.UnitTests.csproj", "{32B74361-4996-453C-99B5-DB42CFB602B0}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.MathematicsHelper", "Common.MathematicsHelper\Common.MathematicsHelper.csproj", "{539C18E9-C737-4DA9-BE43-F702507E248F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common.MathematicsHelper", "Common.MathematicsHelper\Common.MathematicsHelper.csproj", "{539C18E9-C737-4DA9-BE43-F702507E248F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -83,10 +81,6 @@ Global
 		{921E0CA1-ADE9-4334-950A-B852FB0C78F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{921E0CA1-ADE9-4334-950A-B852FB0C78F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{921E0CA1-ADE9-4334-950A-B852FB0C78F4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{32B74361-4996-453C-99B5-DB42CFB602B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{32B74361-4996-453C-99B5-DB42CFB602B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{32B74361-4996-453C-99B5-DB42CFB602B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{32B74361-4996-453C-99B5-DB42CFB602B0}.Release|Any CPU.Build.0 = Release|Any CPU
 		{539C18E9-C737-4DA9-BE43-F702507E248F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{539C18E9-C737-4DA9-BE43-F702507E248F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{539C18E9-C737-4DA9-BE43-F702507E248F}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -109,7 +103,6 @@ Global
 		{57219F32-8DBC-4A58-8B1D-CBC0284DA002} = {EFB0CFED-C195-4C8A-85CA-9701FCABC1A7}
 		{FFBA98A3-BDE7-46BD-9C47-ADFAD88D1AA2} = {57219F32-8DBC-4A58-8B1D-CBC0284DA002}
 		{921E0CA1-ADE9-4334-950A-B852FB0C78F4} = {57219F32-8DBC-4A58-8B1D-CBC0284DA002}
-		{32B74361-4996-453C-99B5-DB42CFB602B0} = {57219F32-8DBC-4A58-8B1D-CBC0284DA002}
 		{539C18E9-C737-4DA9-BE43-F702507E248F} = {D2A77E02-1A1B-47A3-BB4D-366707466A7E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
