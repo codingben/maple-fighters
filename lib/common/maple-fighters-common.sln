@@ -35,6 +35,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.Components.UnitTests
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common.MathematicsHelper", "Common.MathematicsHelper\Common.MathematicsHelper.csproj", "{539C18E9-C737-4DA9-BE43-F702507E248F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.MathematicsHelper.UnitTests", "..\..\tests\unit\common\Common.MathematicsHelper.UnitTests\Common.MathematicsHelper.UnitTests.csproj", "{EF76A04E-1488-4308-A402-A3D618DC0926}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -85,6 +87,10 @@ Global
 		{539C18E9-C737-4DA9-BE43-F702507E248F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{539C18E9-C737-4DA9-BE43-F702507E248F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{539C18E9-C737-4DA9-BE43-F702507E248F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EF76A04E-1488-4308-A402-A3D618DC0926}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EF76A04E-1488-4308-A402-A3D618DC0926}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EF76A04E-1488-4308-A402-A3D618DC0926}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EF76A04E-1488-4308-A402-A3D618DC0926}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -104,6 +110,7 @@ Global
 		{FFBA98A3-BDE7-46BD-9C47-ADFAD88D1AA2} = {57219F32-8DBC-4A58-8B1D-CBC0284DA002}
 		{921E0CA1-ADE9-4334-950A-B852FB0C78F4} = {57219F32-8DBC-4A58-8B1D-CBC0284DA002}
 		{539C18E9-C737-4DA9-BE43-F702507E248F} = {D2A77E02-1A1B-47A3-BB4D-366707466A7E}
+		{EF76A04E-1488-4308-A402-A3D618DC0926} = {57219F32-8DBC-4A58-8B1D-CBC0284DA002}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9CD4A52D-E9C4-48FA-9982-D2458BBC1A32}
