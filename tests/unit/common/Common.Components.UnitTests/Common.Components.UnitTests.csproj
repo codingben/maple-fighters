@@ -44,10 +44,6 @@
     <Compile Include="RandomNumberGeneratorTests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\lib\Common\Common.Components\Common.Components.csproj">
-      <Project>{2B10158D-FFBE-46A8-A637-1B7BBE56700D}</Project>
-      <Name>Common.Components</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\..\lib\Common\Common.UnitTestsBase\Common.UnitTestsBase.csproj">
       <Project>{6E32A395-D89B-426C-ADB3-E25F824ACE86}</Project>
       <Name>Common.UnitTestsBase</Name>
