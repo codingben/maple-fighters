@@ -41,7 +41,7 @@
     <Compile Include="IMongoAsyncRepository.cs" />
     <Compile Include="IMongoRepository.cs" />
     <Compile Include="MongoDatabaseProvider.cs" />
-    <Compile Include="MongoAsyncRepositoryBase.cs" />
+    <Compile Include="MongoAsyncRepository.cs" />
     <Compile Include="MongoRepositoryBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

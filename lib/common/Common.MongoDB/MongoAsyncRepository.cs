@@ -11,7 +11,7 @@ namespace Common.MongoDB
     /// The mongo repository base for all the repositories.
     /// </summary>
     /// <typeparam name="TEntity">The mongo entity.</typeparam>
-    public abstract class MongoAsyncRepositoryBase<TEntity> : IAsyncRepository<TEntity, string>
+    public abstract class MongoAsyncRepository<TEntity> : IAsyncRepository<TEntity, string>
         where TEntity : IMongoEntity
     {
         protected IMongoCollection<TEntity> Collection => GetCollection();
