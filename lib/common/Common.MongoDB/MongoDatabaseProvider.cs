@@ -5,7 +5,7 @@ namespace Common.MongoDB
     /// <summary>
     /// Provides the mongo database.
     /// </summary>
-    public class MongoDatabaseProvider : IMongoDatabaseProvider
+    public class MongoDatabaseProvider : IDatabaseProvider
     {
         private readonly IMongoDatabase database;
 
