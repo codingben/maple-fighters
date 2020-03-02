@@ -1,13 +1,11 @@
-﻿using Common.ComponentModel;
-using MongoDB.Driver;
+﻿using MongoDB.Driver;
 
 namespace Common.MongoDB
 {
     /// <summary>
     /// Provides the mongo database.
     /// </summary>
-    [ComponentSettings(ExposedState.Unexposable)]
-    public class MongoDatabaseProvider : ComponentBase, IMongoDatabaseProvider
+    public class MongoDatabaseProvider : IMongoDatabaseProvider
     {
         private readonly IMongoDatabase database;
 
