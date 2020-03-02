@@ -38,12 +38,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Common.ComponentModel\Common.ComponentModel.csproj">
-      <Project>{c1afe671-d598-4c89-b045-30cc20023849}</Project>
-      <Name>Common.ComponentModel</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>

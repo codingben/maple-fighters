@@ -53,10 +53,6 @@
       <Project>{8B0C40C6-A638-41F0-93A7-17FE6BAA0259}</Project>
       <Name>Common.ComponentModel.Tests</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\lib\Common\Common.ComponentModel\Common.ComponentModel.csproj">
-      <Project>{C1AFE671-D598-4C89-B045-30CC20023849}</Project>
-      <Name>Common.ComponentModel</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\..\lib\Common\Common.UnitTestsBase\Common.UnitTestsBase.csproj">
       <Project>{6E32A395-D89B-426C-ADB3-E25F824ACE86}</Project>
       <Name>Common.UnitTestsBase</Name>

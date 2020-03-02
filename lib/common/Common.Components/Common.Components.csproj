@@ -42,12 +42,6 @@
     <Compile Include="RandomNumberGenerator.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Common.ComponentModel\Common.ComponentModel.csproj">
-      <Project>{C1AFE671-D598-4C89-B045-30CC20023849}</Project>
-      <Name>Common.ComponentModel</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <PackageReference Include="Coroutines">
       <Version>5.0.5</Version>
     </PackageReference>

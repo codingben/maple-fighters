@@ -7,8 +7,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "lib", "lib", "{A9D8132B-976
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "common", "common", "{D2A77E02-1A1B-47A3-BB4D-366707466A7E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.ComponentModel", "Common.ComponentModel\Common.ComponentModel.csproj", "{C1AFE671-D598-4C89-B045-30CC20023849}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.ComponentModel.Tests", "Common.ComponentModel.Tests\Common.ComponentModel.Tests.csproj", "{8B0C40C6-A638-41F0-93A7-17FE6BAA0259}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.Components", "Common.Components\Common.Components.csproj", "{2B10158D-FFBE-46A8-A637-1B7BBE56700D}"
@@ -35,7 +33,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.Components.UnitTests
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common.MathematicsHelper", "Common.MathematicsHelper\Common.MathematicsHelper.csproj", "{539C18E9-C737-4DA9-BE43-F702507E248F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.MathematicsHelper.UnitTests", "..\..\tests\unit\common\Common.MathematicsHelper.UnitTests\Common.MathematicsHelper.UnitTests.csproj", "{EF76A04E-1488-4308-A402-A3D618DC0926}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common.MathematicsHelper.UnitTests", "..\..\tests\unit\common\Common.MathematicsHelper.UnitTests\Common.MathematicsHelper.UnitTests.csproj", "{EF76A04E-1488-4308-A402-A3D618DC0926}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -43,10 +41,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{C1AFE671-D598-4C89-B045-30CC20023849}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C1AFE671-D598-4C89-B045-30CC20023849}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C1AFE671-D598-4C89-B045-30CC20023849}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C1AFE671-D598-4C89-B045-30CC20023849}.Release|Any CPU.Build.0 = Release|Any CPU
 		{8B0C40C6-A638-41F0-93A7-17FE6BAA0259}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8B0C40C6-A638-41F0-93A7-17FE6BAA0259}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8B0C40C6-A638-41F0-93A7-17FE6BAA0259}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -97,7 +91,6 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{D2A77E02-1A1B-47A3-BB4D-366707466A7E} = {A9D8132B-976C-4154-B2CB-988393D08444}
-		{C1AFE671-D598-4C89-B045-30CC20023849} = {D2A77E02-1A1B-47A3-BB4D-366707466A7E}
 		{8B0C40C6-A638-41F0-93A7-17FE6BAA0259} = {D2A77E02-1A1B-47A3-BB4D-366707466A7E}
 		{2B10158D-FFBE-46A8-A637-1B7BBE56700D} = {D2A77E02-1A1B-47A3-BB4D-366707466A7E}
 		{263590D6-4984-477E-8D22-67C477870E8C} = {D2A77E02-1A1B-47A3-BB4D-366707466A7E}
