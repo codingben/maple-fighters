@@ -10,7 +10,7 @@ namespace Common.MongoDB
     /// The mongo repository base for all the repositories.
     /// </summary>
     /// <typeparam name="TEntity">The mongo entity.</typeparam>
-    public abstract class MongoRepositoryBase<TEntity> : IRepository<TEntity, string>
+    public abstract class MongoRepository<TEntity> : IRepository<TEntity, string>
         where TEntity : IMongoEntity
     {
         protected IMongoCollection<TEntity> Collection => GetCollection();
