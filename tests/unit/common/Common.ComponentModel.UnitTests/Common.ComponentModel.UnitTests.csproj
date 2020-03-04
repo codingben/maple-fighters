@@ -18,7 +18,6 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\lib\common\Common.ComponentModel.Tests\Common.ComponentModel.Tests.csproj" />
     <ProjectReference Include="..\..\..\..\lib\common\Common.ComponentModel\Common.ComponentModel.csproj" />
-    <ProjectReference Include="..\..\..\..\lib\common\Common.UnitTestsBase\Common.UnitTestsBase.csproj" />
   </ItemGroup>
 
 </Project>
