@@ -1,5 +1,4 @@
 ﻿using Common.ComponentModel.Tests;
-using Common.UnitTestsBase;
 using NSubstitute;
 using Xunit;
 
@@ -61,8 +60,7 @@ namespace Common.ComponentModel.UnitTests
     {
         public void SetPosition()
         {
-            var dummyCharacter =
-                Components.Get<IDummyCharacter>().AssertNotNull();
+            var dummyCharacter = Components.Get<IDummyCharacter>();
             dummyCharacter.Move();
         }
     }
