@@ -44,12 +44,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Common.Repository\Common.Repository.csproj">
-      <Project>{65C156F0-FA83-4905-9AB0-CC4D04A05627}</Project>
-      <Name>Common.Repository</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>
