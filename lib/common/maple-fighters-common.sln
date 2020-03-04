@@ -35,6 +35,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.MongoDB", "Common.Mo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.ParametersValidation", "Common.ParametersValidation\Common.ParametersValidation.csproj", "{4A202108-2DBF-4BBE-A03E-58D191BF41C3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.PythonScripting", "Common.PythonScripting\Common.PythonScripting.csproj", "{27EB68C7-35C1-43A6-BABD-F4F19999DF33}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -85,6 +87,10 @@ Global
 		{4A202108-2DBF-4BBE-A03E-58D191BF41C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4A202108-2DBF-4BBE-A03E-58D191BF41C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4A202108-2DBF-4BBE-A03E-58D191BF41C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{27EB68C7-35C1-43A6-BABD-F4F19999DF33}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{27EB68C7-35C1-43A6-BABD-F4F19999DF33}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{27EB68C7-35C1-43A6-BABD-F4F19999DF33}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{27EB68C7-35C1-43A6-BABD-F4F19999DF33}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -104,6 +110,7 @@ Global
 		{961A523C-9E33-4C85-92C2-7A937FEBA26D} = {D2A77E02-1A1B-47A3-BB4D-366707466A7E}
 		{A524042E-6711-4141-90DA-398704D1836F} = {D2A77E02-1A1B-47A3-BB4D-366707466A7E}
 		{4A202108-2DBF-4BBE-A03E-58D191BF41C3} = {D2A77E02-1A1B-47A3-BB4D-366707466A7E}
+		{27EB68C7-35C1-43A6-BABD-F4F19999DF33} = {D2A77E02-1A1B-47A3-BB4D-366707466A7E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9CD4A52D-E9C4-48FA-9982-D2458BBC1A32}
