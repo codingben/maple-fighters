@@ -1,5 +1,4 @@
 ﻿using Common.ComponentModel;
-using Common.UnitTestsBase;
 using Shouldly;
 using Xunit;
 
@@ -20,7 +19,7 @@ namespace Common.Components.UnitTests
         private void GenerateId(int id)
         {
             // Arrange
-            var idGenerator = components.Get<IIdGenerator>().AssertNotNull();
+            var idGenerator = components.Get<IIdGenerator>();
 
             // Act
             var generateId = idGenerator.GenerateId();
