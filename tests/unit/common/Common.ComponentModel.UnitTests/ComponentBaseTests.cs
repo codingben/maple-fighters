@@ -1,5 +1,4 @@
 ﻿using Common.ComponentModel.Tests;
-using Common.UnitTestsBase;
 using NSubstitute;
 using Xunit;
 
@@ -68,8 +67,7 @@ namespace Common.ComponentModel.UnitTests
         {
             base.OnAwake();
 
-            var otherDummyComponent = Components.Get<IOtherDummyComponent>()
-                .AssertNotNull();
+            var otherDummyComponent = Components.Get<IOtherDummyComponent>();
             otherDummyComponent.Create();
         }
 
@@ -77,8 +75,7 @@ namespace Common.ComponentModel.UnitTests
         {
             base.OnRemoved();
 
-            var otherDummyComponent = Components.Get<IOtherDummyComponent>()
-                .AssertNotNull();
+            var otherDummyComponent = Components.Get<IOtherDummyComponent>();
             otherDummyComponent.Destroy();
         }
     }
