@@ -4,4 +4,9 @@
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="CommonCommunicationInterfaces" Version="4.3.0" />
+    <PackageReference Include="CommunicationHelper" Version="3.2.5" />
+  </ItemGroup>
+
 </Project>
