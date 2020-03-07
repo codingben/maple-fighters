@@ -4,4 +4,13 @@
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Coroutines" Version="5.0.5" />
+    <PackageReference Include="ServerCommunicationInterfaces" Version="2.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ServerCommon.Application.Components\ServerCommon.Application.Components.csproj" />
+  </ItemGroup>
+
 </Project>
