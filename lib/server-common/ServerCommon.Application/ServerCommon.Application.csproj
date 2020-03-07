@@ -45,7 +45,6 @@
   <ItemGroup>
     <Compile Include="IClientPeerCreator.cs" />
     <Compile Include="ServerApplicationBase.cs" />
-    <Compile Include="Exceptions\ServerComponentsAlreadyInitializedException.cs" />
     <Compile Include="IApplicationBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Exceptions\ServerComponentsNotInitializedException.cs" />
