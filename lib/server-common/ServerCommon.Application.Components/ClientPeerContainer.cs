@@ -9,19 +9,9 @@ namespace ServerCommon.Application.Components
         private readonly Dictionary<int, IPeerWrapper> collection;
         private readonly object locker = new object();
 
-        private IOnClientPeerContainerRemoved onClientPeerContainerRemoved;
-
         public ClientPeerContainer()
         {
             collection = new Dictionary<int, IPeerWrapper>();
-        }
-
-        protected override void OnAwake()
-        {
-            base.OnAwake();
-
-            onClientPeerContainerRemoved =
-                Components.Get<IOnClientPeerContainerRemoved>();
         }
 
         protected override void OnRemoved()
@@ -31,7 +21,14 @@ namespace ServerCommon.Application.Components
             lock (locker)
             {
                 var peerWrappers = collection.Values;
-                onClientPeerContainerRemoved.Handle(peerWrappers);
+                foreach (var peerWrapper in peerWrappers)
+                {
+                    var peer = peerWrapper.Peer;
+                    if (peer.IsConnected)
+                    {
+                        peer.Disconnect();
+                    }
+                }
             }
         }
 
