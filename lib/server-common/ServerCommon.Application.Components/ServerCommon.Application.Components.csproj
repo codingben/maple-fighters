@@ -48,6 +48,7 @@
     <Compile Include="FiberCoroutinesExecutor.cs" />
     <Compile Include="FiberStarterProvider.cs" />
     <Compile Include="IClientPeerContainer.cs" />
+    <Compile Include="IClientPeerCreator.cs" />
     <Compile Include="IFiberStarterProvider.cs" />
     <Compile Include="IPeerWrapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
