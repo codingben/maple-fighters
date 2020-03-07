@@ -47,7 +47,6 @@
     <Compile Include="ServerApplicationBase.cs" />
     <Compile Include="IApplicationBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Exceptions\ServerComponentsNotInitializedException.cs" />
     <Compile Include="ServerExposedComponents.cs" />
     <Compile Include="TimeProvider.cs" />
   </ItemGroup>
@@ -60,6 +59,8 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Exceptions\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
