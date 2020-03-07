@@ -1,5 +1,4 @@
-﻿using System;
-using Common.ComponentModel;
+﻿using Common.ComponentModel;
 using ServerCommunicationInterfaces;
 
 namespace ServerCommon.Application.Components
@@ -11,9 +10,7 @@ namespace ServerCommon.Application.Components
 
         public FiberStarterProvider(IFiberProvider fiberProvider)
         {
-            this.fiberProvider = 
-                fiberProvider
-                ?? throw new ArgumentNullException(nameof(fiberProvider));
+            this.fiberProvider = fiberProvider;
         }
 
         public IFiber ProvideFiberStarter()
