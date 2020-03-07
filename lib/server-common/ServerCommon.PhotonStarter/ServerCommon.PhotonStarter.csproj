@@ -9,6 +9,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ServerCommon.Application\ServerCommon.Application.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Reference Include="Photon.SocketServer">
       <HintPath>..\..\..\photon\Photon.SocketServer.dll</HintPath>
     </Reference>
