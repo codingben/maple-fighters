@@ -13,20 +13,7 @@ namespace ServerCommon.Application
     /// </summary>
     public abstract class ServerApplicationBase : IApplicationBase
     {
-        protected IExposedComponents ExposedComponents
-        {
-            get
-            {
-                var components = Components.ProvideExposed();
-
-                if (ServerExposedComponents.Provide() == null)
-                {
-                    ServerExposedComponents.SetProvider(components);
-                }
-
-                return components;
-            }
-        }
+        protected IExposedComponents ExposedComponents => Components.ProvideExposed();
 
         protected IComponents Components { get; } = new ComponentsContainer();
 
