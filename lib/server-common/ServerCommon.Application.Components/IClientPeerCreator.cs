@@ -1,6 +1,6 @@
 ﻿using ServerCommunicationInterfaces;
 
-namespace ServerCommon.Application
+namespace ServerCommon.Application.Components
 {
     /// <summary>
     /// Creator of a new connected peer.
