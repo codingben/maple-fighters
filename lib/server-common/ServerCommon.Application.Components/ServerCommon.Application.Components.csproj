@@ -50,7 +50,6 @@
     <Compile Include="IClientPeerContainer.cs" />
     <Compile Include="IFiberStarterProvider.cs" />
     <Compile Include="IPeerWrapper.cs" />
-    <Compile Include="OnClientPeerContainerRemovedHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
