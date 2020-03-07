@@ -49,12 +49,6 @@
     <Compile Include="TimeProvider.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ServerCommon.Application.Components\ServerCommon.Application.Components.csproj">
-      <Project>{BDA69EC2-FD94-4BC0-9AD9-17BED767F48C}</Project>
-      <Name>ServerCommon.Application.Components</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />
