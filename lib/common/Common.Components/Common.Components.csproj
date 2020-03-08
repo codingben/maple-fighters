@@ -5,11 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Common.ComponentModel" Version="1.0.0" />
     <PackageReference Include="Coroutines" Version="5.0.5" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\Common.ComponentModel\Common.ComponentModel.csproj" />
   </ItemGroup>
 
 </Project>
