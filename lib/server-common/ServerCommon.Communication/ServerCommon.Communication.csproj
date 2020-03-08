@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Common.ComponentModel" Version="1.0.0" />
     <PackageReference Include="ServerCommunicationInterfaces" Version="2.0.0" />
   </ItemGroup>
 
