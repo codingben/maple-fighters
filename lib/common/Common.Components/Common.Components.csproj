@@ -2,6 +2,12 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <Authors>Ben Ukhanov</Authors>
+    <Description>A common components library.</Description>
+    <Copyright>Copyright © Ben Ukhanov 2020</Copyright>
+    <PackageProjectUrl>https://github.com/benzuk/maple-fighters-server/tree/feature/new-common-projects/lib/common/Common.Components</PackageProjectUrl>
+    <PackageTags>Common</PackageTags>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <ItemGroup>
