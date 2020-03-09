@@ -7,6 +7,7 @@
     <Copyright>Copyright © Ben Ukhanov 2020</Copyright>
     <PackageProjectUrl>https://github.com/benzuk/maple-fighters-server/tree/feature/new-common-projects/lib/common/Common.ParametersValidation</PackageProjectUrl>
     <PackageTags>Common</PackageTags>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <ItemGroup>
