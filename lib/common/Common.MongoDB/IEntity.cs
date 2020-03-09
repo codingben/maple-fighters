@@ -1,4 +1,4 @@
-﻿using Common.Repository;
+﻿using Common.Repository.Interfaces;
 
 namespace Common.MongoDB
 {

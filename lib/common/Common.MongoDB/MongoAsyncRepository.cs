@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using Common.Repository;
+using Common.Repository.Interfaces;
 using MongoDB.Driver;
 
 namespace Common.MongoDB
