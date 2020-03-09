@@ -27,13 +27,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common.ComponentModel.UnitT
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common.Components.UnitTests", "..\..\tests\unit\common\Common.Components.UnitTests\Common.Components.UnitTests.csproj", "{10BEA5F5-FAFB-4222-8CA1-2A2C58C64B7D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.Repository", "Common.Repository\Common.Repository.csproj", "{961A523C-9E33-4C85-92C2-7A937FEBA26D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common.Repository.Interfaces", "Common.Repository\Common.Repository.Interfaces.csproj", "{961A523C-9E33-4C85-92C2-7A937FEBA26D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.MongoDB", "Common.MongoDB\Common.MongoDB.csproj", "{A524042E-6711-4141-90DA-398704D1836F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common.MongoDB", "Common.MongoDB\Common.MongoDB.csproj", "{A524042E-6711-4141-90DA-398704D1836F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.ParametersValidation", "Common.ParametersValidation\Common.ParametersValidation.csproj", "{4A202108-2DBF-4BBE-A03E-58D191BF41C3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common.ParametersValidation", "Common.ParametersValidation\Common.ParametersValidation.csproj", "{4A202108-2DBF-4BBE-A03E-58D191BF41C3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.PythonScripting", "Common.PythonScripting\Common.PythonScripting.csproj", "{27EB68C7-35C1-43A6-BABD-F4F19999DF33}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common.PythonScripting", "Common.PythonScripting\Common.PythonScripting.csproj", "{27EB68C7-35C1-43A6-BABD-F4F19999DF33}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
