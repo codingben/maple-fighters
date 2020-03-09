@@ -1,4 +1,4 @@
-﻿namespace Common.Repository
+﻿namespace Common.Repository.Interfaces
 {
     /// <summary>
     /// Represents the editable and readable repository definitions.

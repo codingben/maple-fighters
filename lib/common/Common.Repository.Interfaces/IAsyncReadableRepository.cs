@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
-namespace Common.Repository
+namespace Common.Repository.Interfaces
 {
     /// <summary>
     /// Represents the readable repository definition.

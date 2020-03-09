@@ -1,4 +1,4 @@
-﻿namespace Common.Repository
+﻿namespace Common.Repository.Interfaces
 {
     /// <summary>
     /// The type contained in the repository.
