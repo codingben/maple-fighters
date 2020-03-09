@@ -2,6 +2,11 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <Authors>Ben Ukhanov</Authors>
+    <Description>A common extension methods used to help with parameters.</Description>
+    <Copyright>Copyright © Ben Ukhanov 2020</Copyright>
+    <PackageProjectUrl>https://github.com/benzuk/maple-fighters-server/tree/feature/new-common-projects/lib/common/Common.ParametersValidation</PackageProjectUrl>
+    <PackageTags>Common</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>
