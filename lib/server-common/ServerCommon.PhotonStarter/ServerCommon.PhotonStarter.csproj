@@ -12,10 +12,7 @@
 
   <ItemGroup>
     <PackageReference Include="PhotonServerImplementation" Version="3.0.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\ServerCommon.Application\ServerCommon.Application.csproj" />
+    <PackageReference Include="ServerCommon.Application" Version="1.0.0" />
   </ItemGroup>
 
   <ItemGroup>
