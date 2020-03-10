@@ -2,6 +2,12 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <Authors>Ben Ukhanov</Authors>
+    <Copyright>Copyright © Ben Ukhanov 2020</Copyright>
+    <PackageTags>Common</PackageTags>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageProjectUrl>https://github.com/benzuk/maple-fighters-server/tree/feature/new-common-projects/lib/server-common/ServerCommon.Peer</PackageProjectUrl>
+    <Description>A common peer bases library.</Description>
   </PropertyGroup>
 
   <ItemGroup>
