@@ -14,11 +14,8 @@
     <PackageReference Include="Common.ComponentModel" Version="1.0.0" />
     <PackageReference Include="Common.Components" Version="1.0.0" />
     <PackageReference Include="Coroutines" Version="5.0.5" />
+    <PackageReference Include="ServerCommon.Application.Components" Version="1.0.0" />
     <PackageReference Include="ServerCommunicationInterfaces" Version="2.0.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\ServerCommon.Application.Components\ServerCommon.Application.Components.csproj" />
   </ItemGroup>
 
 </Project>
