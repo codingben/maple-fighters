@@ -6,7 +6,7 @@
     <Authors>Ben Ukhanov</Authors>
     <Description>A common S2S communication library.</Description>
     <Copyright>Copyright © Ben Ukhanov 2020</Copyright>
-    <PackageProjectUrl>https://github.com/benzuk/maple-fighters-server/tree/feature/new-common-projects/lib/server-common/ServerCommon.Application.Components</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/benzuk/maple-fighters-server/tree/feature/new-common-projects/lib/server-common/ServerCommon.Communication</PackageProjectUrl>
     <PackageTags>Common</PackageTags>
   </PropertyGroup>
 
