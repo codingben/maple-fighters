@@ -5,9 +5,14 @@ VisualStudioVersion = 16.0.29806.167
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{E260B4E5-3568-4CDF-B28E-A04CD81B0E09}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "auth-service", "auth-service", "{13B11368-5B27-40BD-80D6-C95A4890E29A}"
+EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{13B11368-5B27-40BD-80D6-C95A4890E29A} = {E260B4E5-3568-4CDF-B28E-A04CD81B0E09}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D2F9C6BE-6E61-4BFF-A732-BF0DF6EB571E}
