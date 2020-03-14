@@ -7,12 +7,25 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{E260B4E5-356
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "auth-service", "auth-service", "{13B11368-5B27-40BD-80D6-C95A4890E29A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authenticator.API", "Authenticator.API\Authenticator.API.csproj", "{3C33E1D7-5BBA-4DA0-8B4D-F229649B2F64}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3C33E1D7-5BBA-4DA0-8B4D-F229649B2F64}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C33E1D7-5BBA-4DA0-8B4D-F229649B2F64}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C33E1D7-5BBA-4DA0-8B4D-F229649B2F64}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C33E1D7-5BBA-4DA0-8B4D-F229649B2F64}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{13B11368-5B27-40BD-80D6-C95A4890E29A} = {E260B4E5-3568-4CDF-B28E-A04CD81B0E09}
+		{3C33E1D7-5BBA-4DA0-8B4D-F229649B2F64} = {13B11368-5B27-40BD-80D6-C95A4890E29A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D2F9C6BE-6E61-4BFF-A732-BF0DF6EB571E}
