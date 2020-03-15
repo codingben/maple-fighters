@@ -26,14 +26,10 @@ namespace Authenticator.Domain.Aggregates.User
             string firstName,
             string lastName)
         {
-            Email = 
-                email ?? throw new ArgumentNullException(nameof(email));
-            Password = 
-                password ?? throw new ArgumentNullException(nameof(password));
-            FirstName = 
-                firstName ?? throw new ArgumentNullException(nameof(firstName));
-            LastName = 
-                lastName ?? throw new ArgumentNullException(nameof(lastName));
+            Email = email ?? throw new ArgumentNullException(nameof(email));
+            Password = password ?? throw new ArgumentNullException(nameof(password));
+            FirstName = firstName ?? throw new ArgumentNullException(nameof(firstName));
+            LastName = lastName ?? throw new ArgumentNullException(nameof(lastName));
         }
     }
 }
