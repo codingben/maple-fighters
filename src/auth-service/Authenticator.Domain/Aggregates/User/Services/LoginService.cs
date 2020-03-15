@@ -1,18 +1,12 @@
-﻿using Common.ComponentModel;
-using CommonTools.Log;
-
-namespace Authenticator.Domain.Aggregates.User.Services
+﻿namespace Authenticator.Domain.Aggregates.User.Services
 {
-    public class LoginService : ComponentBase, ILoginService
+    public class LoginService : ILoginService
     {
-        private IAccountRepository accountRepository;
+        private readonly IAccountRepository accountRepository;
 
-        protected override void OnAwake()
+        public LoginService(IAccountRepository accountRepository)
         {
-            base.OnAwake();
-
-            accountRepository =
-                Components.Get<IAccountRepository>().AssertNotNull();
+            this.accountRepository = accountRepository;
         }
 
         public AuthenticationStatus Authenticate(
