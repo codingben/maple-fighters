@@ -9,9 +9,7 @@
             this.accountRepository = accountRepository;
         }
 
-        public AuthenticationStatus Authenticate(
-            string email,
-            string password)
+        public AuthenticationStatus Authenticate(string email, string password)
         {
             var authenticationStatus = AuthenticationStatus.NotFound;
 
