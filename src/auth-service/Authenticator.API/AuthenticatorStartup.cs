@@ -6,7 +6,7 @@ using Microsoft.Extensions.Hosting;
 
 namespace Authenticator.API
 {
-    public class Startup
+    public class AuthenticatorStartup
     {
         public void ConfigureServices(IServiceCollection services)
         {
