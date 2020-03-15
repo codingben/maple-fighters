@@ -23,7 +23,6 @@ namespace Authenticator.API
             app.UseRouting();
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapGrpcService<GreeterService>();
                 endpoints.MapGet(
                     "/", 
                     async context =>
