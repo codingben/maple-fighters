@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <PackageReference Include="Common.MongoDB" Version="1.0.0" />
+    <PackageReference Include="Common.Repository.Interfaces" Version="1.0.0" />
   </ItemGroup>
 
 </Project>
