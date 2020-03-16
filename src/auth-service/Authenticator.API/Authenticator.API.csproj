@@ -5,7 +5,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Protos\authenticator.proto" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Grpc.AspNetCore" Version="2.24.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Protobuf Include="Protos\authenticator.proto" GrpcServices="Server" ClientBaseType="LiteClientBase" />
   </ItemGroup>
 
 </Project>
