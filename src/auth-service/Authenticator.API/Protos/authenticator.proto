@@ -1,3 +1,29 @@
 syntax = "proto3";
 
 option csharp_namespace = "Authenticator.API.Protos";
+
+package authenticator;
+
+service Authenticator
+{
+	rpc Login(LoginRequest) returns (LoginResponse);
+}
+
+message LoginRequest
+{
+	string email = 1;
+	string password = 2;
+}
+
+message LoginResponse
+{
+	enum LoginStatus
+	{
+		Failed = 0;
+		WrongEmail = 1;
+		WrongPassword = 2;
+		Succeed = 3;
+	}
+
+	LoginStatus loginStatus = 1;
+}
