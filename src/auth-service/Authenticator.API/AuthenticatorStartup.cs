@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using Authenticator.API.Services;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
@@ -25,6 +26,7 @@ namespace Authenticator.API
             applicationBuilder.UseRouting();
             applicationBuilder.UseEndpoints(endpoints =>
             {
+                endpoints.MapGrpcService<AuthenticatorService>();
                 endpoints.MapGet(
                     "/", 
                     async context => await context.Response.WriteAsync("Please use a gRPC client."));
