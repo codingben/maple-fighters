@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-option csharp_namespace = "Authenticator.API.Protos";
+option csharp_namespace = "Authenticator.API.Services";
 
 package authenticator;
 
