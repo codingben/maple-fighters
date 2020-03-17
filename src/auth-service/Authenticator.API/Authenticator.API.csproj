@@ -13,6 +13,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Authenticator.Domain\Authenticator.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Protobuf Include="Protos\authenticator.proto" GrpcServices="Server" ClientBaseType="LiteClientBase" />
   </ItemGroup>
 
