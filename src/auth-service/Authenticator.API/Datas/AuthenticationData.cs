@@ -2,6 +2,14 @@
 {
     public struct AuthenticationData
     {
-        // TODO: Implement
+        public string Email { get; }
+
+        public string Password { get; }
+
+        public AuthenticationData(string email, string password)
+        {
+            Email = email;
+            Password = password;
+        }
     }
 }
