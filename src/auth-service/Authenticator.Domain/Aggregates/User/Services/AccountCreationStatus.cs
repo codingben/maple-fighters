@@ -3,6 +3,11 @@
     public enum AccountCreationStatus
     {
         /// <summary>
+        /// The failed.
+        /// </summary>
+        Failed,
+
+        /// <summary>
         /// The succeed.
         /// </summary>
         Succeed,
