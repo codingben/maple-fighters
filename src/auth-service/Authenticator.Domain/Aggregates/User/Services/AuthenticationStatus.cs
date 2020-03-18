@@ -3,6 +3,11 @@
     public enum AuthenticationStatus : byte
     {
         /// <summary>
+        /// The failed.
+        /// </summary>
+        Failed,
+
+        /// <summary>
         /// The authenticated.
         /// </summary>
         Authenticated,
