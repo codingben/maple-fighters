@@ -1,86 +1,57 @@
 ﻿using System.Threading.Tasks;
-using Authenticator.Domain.Aggregates.User;
-using Authenticator.Domain.Aggregates.User.Services;
+using Authenticator.API.Controllers;
+using Authenticator.API.Converters;
+using Authenticator.API.Datas;
 using Grpc.Core;
 
 namespace Authenticator.API.Services
 {
     public class AuthenticatorService : Authenticator.AuthenticatorBase
     {
-        private readonly ILoginService loginService;
-        private readonly IRegistrationService registrationService;
+        private readonly ILoginController loginController;
+        private readonly IRegistrationController registrationController;
 
-        public AuthenticatorService(ILoginService loginService, IRegistrationService registrationService)
+        public AuthenticatorService(
+            ILoginController loginController,
+            IRegistrationController registrationController)
         {
-            this.loginService = loginService;
-            this.registrationService = registrationService;
+            this.loginController = loginController;
+            this.registrationController = registrationController;
         }
 
-        public override Task<LoginResponse> Login(LoginRequest request, ServerCallContext context)
+        public override Task<LoginResponse> Login(
+            LoginRequest request,
+            ServerCallContext context)
         {
-            // TODO: Validate parameters
-            var authenticationStatus = loginService.Authenticate(
+            var authenticationData = new AuthenticationData(
                 request.Email,
                 request.Password);
+            var authenticationStatus =
+                loginController.Login(authenticationData);
 
-            var loginStatus = LoginResponse.Types.LoginStatus.Failed;
-
-            // TODO: Use convertor
-            switch (authenticationStatus)
+            return Task.FromResult(new LoginResponse
             {
-                case AuthenticationStatus.Authenticated:
-                {
-                    loginStatus = LoginResponse.Types.LoginStatus.Succeed;
-                    break;
-                }
-
-                case AuthenticationStatus.NotFound:
-                {
-                    loginStatus = LoginResponse.Types.LoginStatus.Failed;
-                    break;
-                }
-
-                case AuthenticationStatus.WrongPassword:
-                {
-                    loginStatus = LoginResponse.Types.LoginStatus.WrongPassword;
-                    break;
-                }
-            }
-
-            return Task.FromResult(new LoginResponse { LoginStatus = loginStatus });
+                LoginStatus = authenticationStatus.ToLoginStatus()
+            });
         }
 
-        public override Task<RegisterResponse> Register(RegisterRequest request, ServerCallContext context)
+        public override Task<RegisterResponse> Register(
+            RegisterRequest request,
+            ServerCallContext context)
         {
-            // TODO: Validate parameters
-            var account = AccountFactory.CreateAccount(
+            var registrationData = new RegistrationData(
                 request.Email,
                 request.Password,
                 request.FirstName,
                 request.LastName);
             var accountCreationStatus =
-                registrationService.CreateAccount(account);
+                registrationController.Register(registrationData);
 
-            // TODO: Use converter
-            var registrationStatus =
-                RegisterResponse.Types.RegistrationStatus.Failed;
-
-            switch (accountCreationStatus)
+            return Task.FromResult(new RegisterResponse
             {
-                case AccountCreationStatus.Succeed:
-                {
-                    registrationStatus = RegisterResponse.Types.RegistrationStatus.Created;
-                    break;
-                }
-
-                case AccountCreationStatus.EmailExists:
-                {
-                    registrationStatus = RegisterResponse.Types.RegistrationStatus.EmailAlreadyInUse;
-                    break;
-                }
-            }
-
-            return Task.FromResult(new RegisterResponse { RegistrationStatus = registrationStatus });
+                RegistrationStatus =
+                    accountCreationStatus.ToRegistrationStatus()
+            });
         }
     }
 }
