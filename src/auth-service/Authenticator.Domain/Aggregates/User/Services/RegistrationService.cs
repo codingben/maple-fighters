@@ -13,9 +13,8 @@
         {
             AccountCreationStatus accountCreationStatus;
 
-            var isEmailExists =
-                accountRepository.Read(x => x.Email == account.Email) != null;
-            if (isEmailExists)
+            var email = accountRepository.Read(x => x.Email == account.Email);
+            if (email != null)
             {
                 accountCreationStatus = AccountCreationStatus.EmailExists;
             }
