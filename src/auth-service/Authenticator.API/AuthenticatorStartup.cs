@@ -1,4 +1,8 @@
-﻿using Authenticator.API.Services;
+﻿using Authenticator.API.Controllers;
+using Authenticator.API.Services;
+using Authenticator.Domain.Aggregates.User;
+using Authenticator.Domain.Aggregates.User.Services;
+using Authenticator.Infrastructure.Repository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -12,6 +16,11 @@ namespace Authenticator.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddGrpc();
+            services.AddSingleton<IAccountRepository, AccountRepository>();
+            services.AddTransient<ILoginController, LoginController>();
+            services.AddTransient<IRegistrationController, RegistrationController>();
+            services.AddTransient<ILoginService, LoginService>();
+            services.AddTransient<IRegistrationService, RegistrationService>();
         }
 
         public void Configure(
