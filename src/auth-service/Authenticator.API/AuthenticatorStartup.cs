@@ -38,12 +38,12 @@ namespace Authenticator.API
 
             applicationBuilder.UseRouting();
             applicationBuilder.UseEndpoints(endpoints =>
-                {
-                    endpoints.MapGrpcService<AuthenticatorService>();
-                    endpoints.MapGet(
-                        "/",
-                        async context => await context.Response.WriteAsync("Please use a gRPC client."));
-                });
+            {
+                endpoints.MapGrpcService<AuthenticatorService>();
+                endpoints.MapGet(
+                    "/",
+                    async c => await c.Response.WriteAsync("Please use a gRPC client."));
+            });
 
             logger.LogInformation("AuthenticatorStartup::Configure()");
         }
