@@ -28,7 +28,8 @@ namespace Authenticator.API
 
         public void Configure(
             IApplicationBuilder applicationBuilder,
-            IWebHostEnvironment environment)
+            IWebHostEnvironment environment,
+            ILogger<AuthenticatorStartup> logger)
         {
             if (environment.IsDevelopment())
             {
@@ -37,12 +38,14 @@ namespace Authenticator.API
 
             applicationBuilder.UseRouting();
             applicationBuilder.UseEndpoints(endpoints =>
-            {
-                endpoints.MapGrpcService<AuthenticatorService>();
-                endpoints.MapGet(
-                    "/", 
-                    async context => await context.Response.WriteAsync("Please use a gRPC client."));
-            });
+                {
+                    endpoints.MapGrpcService<AuthenticatorService>();
+                    endpoints.MapGet(
+                        "/",
+                        async context => await context.Response.WriteAsync("Please use a gRPC client."));
+                });
+
+            logger.LogInformation("AuthenticatorStartup::Configure()");
         }
     }
 }
