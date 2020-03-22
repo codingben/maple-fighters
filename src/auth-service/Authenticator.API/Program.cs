@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 
 namespace Authenticator.API
 {
@@ -13,6 +14,11 @@ namespace Authenticator.API
         */
         public static IHostBuilder CreateHostBuilder() =>
             Host.CreateDefaultBuilder()
+                .ConfigureLogging(x =>
+                {
+                    x.ClearProviders();
+                    x.AddConsole();
+                })
                 .ConfigureWebHostDefaults(x => x.UseStartup<AuthenticatorStartup>());
     }
 }
