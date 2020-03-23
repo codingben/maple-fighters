@@ -19,7 +19,7 @@ namespace Authenticator.API
         {
             services.AddGrpc();
             services.AddSingleton<IDatabaseProvider>(new MongoDatabaseProvider(url: "mongodb://localhost:27017/maple_fighters"));
-            services.AddSingleton<IAccountRepository, AccountRepository>();
+            services.AddSingleton<IAccountRepository, MongoAccountRepository>();
             services.AddTransient<ILoginController, LoginController>();
             services.AddTransient<IRegistrationController, RegistrationController>();
             services.AddTransient<ILoginService, LoginService>();
