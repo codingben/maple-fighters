@@ -4,11 +4,11 @@ using MongoDB.Driver;
 
 namespace Authenticator.Infrastructure.Repository
 {
-    public class AccountRepository : MongoRepository<Account>, IAccountRepository
+    public class MongoAccountRepository : MongoRepository<Account>, IAccountRepository
     {
         private readonly IMongoDatabase mongoDatabase;
 
-        public AccountRepository(IDatabaseProvider databaseProvider)
+        public MongoAccountRepository(IDatabaseProvider databaseProvider)
         {
             mongoDatabase = databaseProvider.Provide();
         }
