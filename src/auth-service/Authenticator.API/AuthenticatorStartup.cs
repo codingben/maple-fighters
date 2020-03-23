@@ -18,8 +18,10 @@ namespace Authenticator.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddGrpc();
-            services.AddSingleton<IDatabaseProvider>(new MongoDatabaseProvider(url: "mongodb://localhost:27017/maple_fighters"));
-            services.AddSingleton<IAccountRepository, MongoAccountRepository>();
+
+            // services.AddSingleton<IDatabaseProvider>(new MongoDatabaseProvider(url: "mongodb://localhost:27017/maple_fighters"));
+            // services.AddSingleton<IAccountRepository, MongoAccountRepository>();
+            services.AddSingleton<IAccountRepository, InMemoryAccountRepository>();
             services.AddTransient<ILoginController, LoginController>();
             services.AddTransient<IRegistrationController, RegistrationController>();
             services.AddTransient<ILoginService, LoginService>();
