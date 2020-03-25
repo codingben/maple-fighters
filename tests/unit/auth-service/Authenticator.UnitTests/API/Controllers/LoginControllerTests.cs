@@ -20,10 +20,13 @@ namespace Authenticator.UnitTests.API.Controllers
             var authenticationData = new AuthenticationData(email, password);
 
             // Act
-            var authenticationStatus = loginController.Login(authenticationData);
+            var authenticationStatus =
+                loginController.Login(authenticationData);
 
             // Assert
-            authenticationStatus.Equals(AuthenticationStatus.Failed).ShouldBeTrue();
+            authenticationStatus
+                .Equals(AuthenticationStatus.Failed)
+                .ShouldBeTrue();
         }
 
         [Fact]
@@ -34,16 +37,21 @@ namespace Authenticator.UnitTests.API.Controllers
             const string Password = "benzuk";
 
             var loginService = Substitute.For<ILoginService>();
-            loginService.Authenticate(Email, Password).Returns(AuthenticationStatus.Authenticated);
+            loginService
+                .Authenticate(Email, Password)
+                .Returns(AuthenticationStatus.Authenticated);
 
             var loginController = new LoginController(loginService);
             var authenticationData = new AuthenticationData(Email, Password);
 
             // Act
-            var authenticationStatus = loginController.Login(authenticationData);
+            var authenticationStatus =
+                loginController.Login(authenticationData);
 
             // Assert
-            authenticationStatus.Equals(AuthenticationStatus.Authenticated).ShouldBeTrue();
+            authenticationStatus
+                .Equals(AuthenticationStatus.Authenticated)
+                .ShouldBeTrue();
         }
     }
 }
