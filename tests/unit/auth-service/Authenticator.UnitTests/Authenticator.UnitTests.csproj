@@ -15,4 +15,10 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\src\auth-service\Authenticator.API\Authenticator.API.csproj" />
+    <ProjectReference Include="..\..\..\..\src\auth-service\Authenticator.Domain\Authenticator.Domain.csproj" />
+    <ProjectReference Include="..\..\..\..\src\auth-service\Authenticator.Infrastructure\Authenticator.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>
