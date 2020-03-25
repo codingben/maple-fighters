@@ -7,11 +7,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{E260B4E5-356
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "auth-service", "auth-service", "{13B11368-5B27-40BD-80D6-C95A4890E29A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authenticator.API", "Authenticator.API\Authenticator.API.csproj", "{3C33E1D7-5BBA-4DA0-8B4D-F229649B2F64}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Authenticator.API", "Authenticator.API\Authenticator.API.csproj", "{3C33E1D7-5BBA-4DA0-8B4D-F229649B2F64}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authenticator.Domain", "Authenticator.Domain\Authenticator.Domain.csproj", "{9EF2385B-8A6A-467A-9F4D-53EF3209178E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Authenticator.Domain", "Authenticator.Domain\Authenticator.Domain.csproj", "{9EF2385B-8A6A-467A-9F4D-53EF3209178E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authenticator.Infrastructure", "Authenticator.Infrastructure\Authenticator.Infrastructure.csproj", "{B11991C6-52F0-42AB-81EA-9810BCEBC38D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Authenticator.Infrastructure", "Authenticator.Infrastructure\Authenticator.Infrastructure.csproj", "{B11991C6-52F0-42AB-81EA-9810BCEBC38D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
