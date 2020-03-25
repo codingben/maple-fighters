@@ -18,7 +18,7 @@ namespace Authenticator.API.Controllers
 
         public AuthenticationStatus Login(AuthenticationData authenticationData)
         {
-            var authenticationStatus = AuthenticationStatus.NotFound;
+            var authenticationStatus = AuthenticationStatus.Failed;
 
             // TODO: Get errors if invalid
             var validationResult =
