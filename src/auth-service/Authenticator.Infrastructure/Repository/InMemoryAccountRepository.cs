@@ -32,7 +32,10 @@ namespace Authenticator.Infrastructure.Repository
         public void Update(Account entity)
         {
             var index = collection.FindIndex(x => x.Id == entity.Id);
-            collection[index] = entity;
+            if (index != -1)
+            {
+                collection[index] = entity;
+            }
         }
 
         public Account Read(Expression<Func<Account, bool>> predicate)
