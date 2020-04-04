@@ -3,8 +3,8 @@ It is planned that the server-side will be able to accommodate a lot of players 
 
 # Server-side Architecture
 
-| Service                                              | Language      | Description                                                    |
-| ---------------------------------------------------- | ------------- | ---------------------------------------------------------------|
-| [auth-service](./src/auth-service)                   | C#            | Stores user data and verifies user. 			   	                  |
-| [game-service](./src/game-service)                   | C#            | Creates the player in the game world to play with others. 	    |
-| [gameprovider-service](./src/gameprovider-service)   | Rust          | Provides the list of game servers from a JSON file. 		        |
+| Service                                              | Language      | Description                                                    														|
+| ---------------------------------------------------- | ------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| [auth-service](./src/auth-service)                   | C#            | Stores user data and verifies user. 			   															|
+| [game-service](./src/game-service)                   | C#            | Creates a player entity in the game world to play with others. It also creates player characters and objects of the game world (such as mobs, non-game characters, etc.). 	|
+| [gameprovider-service](./src/gameprovider-service)   | Rust          | Provides the list of game servers from a JSON file. 																|
