@@ -1,4 +1,4 @@
-# Client-side Unity Project (WIP)
+# Client-side Unity Project
 At the moment there are two maps in the game:
 
 - Lobby
