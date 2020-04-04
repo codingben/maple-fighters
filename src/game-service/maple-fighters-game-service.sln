@@ -5,9 +5,14 @@ VisualStudioVersion = 16.0.29806.167
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{9C6ABCC8-67E4-496A-A9E8-0FE003A304D1}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "game-service", "game-service", "{5EE5D8AB-D4A6-477C-AA47-2CB39B060682}"
+EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{5EE5D8AB-D4A6-477C-AA47-2CB39B060682} = {9C6ABCC8-67E4-496A-A9E8-0FE003A304D1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7717BE3A-A099-4453-933F-0C51F837CFD2}
