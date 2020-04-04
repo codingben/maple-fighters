@@ -1,5 +1,5 @@
 # Client-side Unity Project
-At the moment there are two maps in the game:
+The game maps:
 
 - Lobby
 - The Dark Forest
