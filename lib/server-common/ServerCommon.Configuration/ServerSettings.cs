@@ -21,11 +21,11 @@ namespace ServerCommon.Configuration
 
         private static IInboundPeer _inboundPeer;
 
-        public static IInboundPeer OutboundPeer
+        public static IOutboundPeer OutboundPeer
         {
             get
             {
-                if (_inboundPeer == null)
+                if (_outboundPeer == null)
                 {
                     throw new ConfigurationNotInitializedException("Outbound Peer");
                 }
@@ -36,7 +36,7 @@ namespace ServerCommon.Configuration
             set => _outboundPeer = value;
         }
 
-        private static IInboundPeer _outboundPeer;
+        private static IOutboundPeer _outboundPeer;
 
         public static IDatabases Databases
         {
