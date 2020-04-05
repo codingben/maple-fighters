@@ -5,9 +5,10 @@
     <Authors>Ben Ukhanov</Authors>
     <Description>A common server configuration library.</Description>
     <Copyright>Copyright © Ben Ukhanov 2020</Copyright>
-    <PackageProjectUrl>https://github.com/benzuk/maple-fighters-server/tree/feature/new-common-projects/lib/server-common/ServerCommon.Configuration</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/benzuk/maple-fighters-server/tree/develop/lib/server-common/ServerCommon.Configuration</PackageProjectUrl>
     <PackageTags>Common</PackageTags>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Version>1.0.1</Version>
   </PropertyGroup>
 
   <ItemGroup>
