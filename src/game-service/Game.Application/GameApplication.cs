@@ -1,8 +1,9 @@
-﻿using CommonTools.Coroutines;
+﻿using System;
+using CommonTools.Coroutines;
 using CommonTools.Log;
 using ServerCommon.Application;
 using ServerCommon.Configuration;
-using ServerCommon.Logging;
+using ServerCommon.TimeProviders;
 using ServerCommunicationInterfaces;
 
 namespace Game.Application
@@ -12,7 +13,6 @@ namespace Game.Application
         public GameApplication(IServerConnector serverConnector, IFiberProvider fiberProvider)
             : base(serverConnector, fiberProvider)
         {
-            ServerConfiguration.Setup();
             ServerSettings.InboundPeer.LogEvents = true;
             ServerSettings.InboundPeer.Operations.LogRequests = true;
             ServerSettings.InboundPeer.Operations.LogResponses = true;
@@ -40,12 +40,12 @@ namespace Game.Application
 
         protected override ILogger GetLogger()
         {
-            return new Logger();
+            throw new NotImplementedException();
         }
 
         protected override ITimeProvider GetTimeProvider()
         {
-            return new TimeProvider();
+            return new EnvTimeProvider();
         }
     }
 }
