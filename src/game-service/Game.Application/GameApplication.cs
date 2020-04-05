@@ -1,5 +1,4 @@
-﻿using System;
-using CommonTools.Coroutines;
+﻿using CommonTools.Coroutines;
 using CommonTools.Log;
 using Config.Net;
 using ServerCommon.Application;
@@ -51,7 +50,7 @@ namespace Game.Application
 
         protected override ILogger GetLogger()
         {
-            throw new NotImplementedException();
+            return new Logger();
         }
 
         protected override ITimeProvider GetTimeProvider()
