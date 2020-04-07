@@ -7,8 +7,8 @@
     <ProjectGuid>{53D42A10-B2E3-4B59-A810-CB933937EE8F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Physics.Box2D.SimulationWindow</RootNamespace>
-    <AssemblyName>Physics.Box2D.SimulationWindow</AssemblyName>
+    <RootNamespace>Game.Physics.SimulationWindow</RootNamespace>
+    <AssemblyName>Game.Physics.SimulationWindow</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
