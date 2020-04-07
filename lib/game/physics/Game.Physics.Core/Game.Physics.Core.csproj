@@ -7,8 +7,8 @@
     <ProjectGuid>{1134EFE3-4D97-4EB1-AF61-6E2078BBFA8F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Physics.Box2D.Core</RootNamespace>
-    <AssemblyName>Physics.Box2D.Core</AssemblyName>
+    <RootNamespace>Game.Physics.Core</RootNamespace>
+    <AssemblyName>Game.Physics.Core</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
