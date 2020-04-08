@@ -9,13 +9,26 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "game", "game", "{B62BF8C7-2
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "interest-management", "interest-management", "{D4AD8503-2953-4CD2-BC16-92FFB3FDCFBF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Game.InterestManagement", "Game.InterestManagement\Game.InterestManagement.csproj", "{89B14D4C-B7EE-4EB4-B3A3-84F3FDD6C7A1}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{89B14D4C-B7EE-4EB4-B3A3-84F3FDD6C7A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{89B14D4C-B7EE-4EB4-B3A3-84F3FDD6C7A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{89B14D4C-B7EE-4EB4-B3A3-84F3FDD6C7A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{89B14D4C-B7EE-4EB4-B3A3-84F3FDD6C7A1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{B62BF8C7-2B43-487A-B913-05B56ECAABDE} = {A01A01DD-A7C7-4C04-B32F-9A013CE65173}
 		{D4AD8503-2953-4CD2-BC16-92FFB3FDCFBF} = {B62BF8C7-2B43-487A-B913-05B56ECAABDE}
+		{89B14D4C-B7EE-4EB4-B3A3-84F3FDD6C7A1} = {D4AD8503-2953-4CD2-BC16-92FFB3FDCFBF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {33EC7A08-248E-4748-906D-CC2F9AC5B0F5}
