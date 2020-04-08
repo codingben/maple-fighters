@@ -5,9 +5,14 @@ VisualStudioVersion = 16.0.29926.136
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "lib", "lib", "{908864C9-0709-4172-A0CD-3750E2934A27}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "game", "game", "{3DC8A421-7DBF-4F3C-AD91-703DDD43916B}"
+EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{3DC8A421-7DBF-4F3C-AD91-703DDD43916B} = {908864C9-0709-4172-A0CD-3750E2934A27}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5686F942-001D-428C-BE36-3310DCECF505}
