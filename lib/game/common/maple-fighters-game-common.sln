@@ -9,13 +9,26 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "game", "game", "{3DC8A421-7
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "common", "common", "{51F43DA9-620F-4B75-9554-99D4C4D286D7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Game.Common", "Game.Common\Game.Common.csproj", "{07EC5F02-39DA-464B-8563-930023FD4C93}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{07EC5F02-39DA-464B-8563-930023FD4C93}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{07EC5F02-39DA-464B-8563-930023FD4C93}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{07EC5F02-39DA-464B-8563-930023FD4C93}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{07EC5F02-39DA-464B-8563-930023FD4C93}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{3DC8A421-7DBF-4F3C-AD91-703DDD43916B} = {908864C9-0709-4172-A0CD-3750E2934A27}
 		{51F43DA9-620F-4B75-9554-99D4C4D286D7} = {3DC8A421-7DBF-4F3C-AD91-703DDD43916B}
+		{07EC5F02-39DA-464B-8563-930023FD4C93} = {51F43DA9-620F-4B75-9554-99D4C4D286D7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5686F942-001D-428C-BE36-3310DCECF505}
