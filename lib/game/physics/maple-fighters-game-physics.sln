@@ -7,12 +7,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{8EE25CE2-638
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "game", "game", "{F0664EA7-5E89-4EED-9881-C2429C723F23}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "physics", "physics", "{4D8A8129-4B35-4978-9F0C-473F8ECA5E0F}"
+EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{F0664EA7-5E89-4EED-9881-C2429C723F23} = {8EE25CE2-638D-4995-9971-E3649ADF3868}
+		{4D8A8129-4B35-4978-9F0C-473F8ECA5E0F} = {F0664EA7-5E89-4EED-9881-C2429C723F23}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6CA468A9-A688-4A3E-9DE9-F53C6AB5CE06}
