@@ -5,14 +5,11 @@ namespace Scripts.Gameplay.Map.Objects
 {
     public class PortalInteractor : MonoBehaviour
     {
-        [SerializeField]
-        private KeyCode key = KeyCode.LeftControl;
-
         private PortalTeleportation portalTeleportation;
 
         private void Update()
         {
-            if (Input.GetKeyDown(key))
+            if (Input.GetKeyDown(Keyboard.Keys.TeleportKey))
             {
                 portalTeleportation?.Teleport();
             }
