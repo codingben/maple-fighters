@@ -8,9 +8,6 @@ namespace Scripts.Gameplay.Map.Climb
     [RequireComponent(typeof(PlayerController), typeof(Collider2D))]
     public class RopeInteractor : ClimbInteractor
     {
-        [SerializeField]
-        private KeyCode key = KeyCode.LeftControl;
-
         private PlayerController playerController;
         private ColliderInteraction colliderInteraction;
 
@@ -39,7 +36,7 @@ namespace Scripts.Gameplay.Map.Climb
 
         protected override KeyCode GetKey()
         {
-            return key;
+            return Keyboard.Keys.ClimbKey;
         }
 
         protected override ColliderInteraction GetColliderInteraction()
