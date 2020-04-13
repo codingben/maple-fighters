@@ -96,6 +96,7 @@ LightmapSettings:
     m_PVRFilteringAtrousPositionSigmaAO: 1
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
+    m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 112000002, guid: 62cee541b8ec6c84487a60feaee1d475,
     type: 2}
   m_UseShadowmask: 1
@@ -446,6 +447,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -819,6 +821,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -1083,11 +1086,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 7975134696199156423, guid: 9b90022dd14ef1540926dadbc7033cf1,
-        type: 3}
-      propertyPath: m_Name
-      value: Event System Setter
-      objectReference: {fileID: 0}
     - target: {fileID: 7975134696199156409, guid: 9b90022dd14ef1540926dadbc7033cf1,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1142,6 +1140,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7975134696199156423, guid: 9b90022dd14ef1540926dadbc7033cf1,
+        type: 3}
+      propertyPath: m_Name
+      value: Event System Setter
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9b90022dd14ef1540926dadbc7033cf1, type: 3}
@@ -1207,6 +1210,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -1382,6 +1386,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Map Scene Title Creator
       objectReference: {fileID: 0}
+    - target: {fileID: 2684237133731809878, guid: 72753bb142bbcc147baa4197a60c44fc,
+        type: 3}
+      propertyPath: titleText
+      value: The Dark Forest
+      objectReference: {fileID: 0}
+    - target: {fileID: 2684237133731809878, guid: 72753bb142bbcc147baa4197a60c44fc,
+        type: 3}
+      propertyPath: messageText
+      value: The Dark Forest
+      objectReference: {fileID: 0}
     - target: {fileID: 2684237133731809879, guid: 72753bb142bbcc147baa4197a60c44fc,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1436,11 +1450,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2684237133731809878, guid: 72753bb142bbcc147baa4197a60c44fc,
-        type: 3}
-      propertyPath: titleText
-      value: The Dark Forest
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 72753bb142bbcc147baa4197a60c44fc, type: 3}
@@ -1603,6 +1612,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -1783,6 +1793,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -1863,6 +1874,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -2808,6 +2820,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -3036,6 +3049,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
