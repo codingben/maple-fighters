@@ -1,6 +1,6 @@
 ﻿namespace Scripts.UI.MapScene
 {
-    public interface IMapSceneTitleView
+    public interface IMessageView
     {
         string Text { set; }
     }
