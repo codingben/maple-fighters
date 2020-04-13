@@ -31,10 +31,9 @@ namespace Scripts.Services.Game
                     CharacterIndex.Second,
                     new CharacterParameters
                     {
-                        Name = "benzuk",
-                        HasCharacter = true,
-                        Index = CharacterIndex.Second,
-                        CharacterType = CharacterClasses.Arrow
+                        Name = "Dummy",
+                        HasCharacter = false,
+                        Index = CharacterIndex.Second
                     }
                 },
                 {
