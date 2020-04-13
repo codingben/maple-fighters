@@ -9,7 +9,7 @@ namespace Scripts.UI.MapScene
         private string messageText;
 
         [SerializeField]
-        private int time = 1;
+        private float seconds = 2;
 
         private void Awake()
         {
