@@ -13,7 +13,7 @@ namespace Scripts.Constants
         public static class Keys
         {
             public const KeyCode TeleportKey = KeyCode.T;
-            public const KeyCode ClimbKey = KeyCode.LeftShift;
+            public const KeyCode ClimbKey = KeyCode.C;
         }
     }
 }
