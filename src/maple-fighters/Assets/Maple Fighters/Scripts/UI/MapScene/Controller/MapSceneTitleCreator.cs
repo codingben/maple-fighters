@@ -5,21 +5,17 @@ namespace Scripts.UI.MapScene
 {
     public class MapSceneTitleCreator : MonoBehaviour
     {
-        private const string DefaultTitleText = "Map Name";
+        [SerializeField]
+        private string messageText;
 
         [SerializeField]
-        private string titleText;
+        private int time = 1;
 
         private void Awake()
         {
-            if (string.IsNullOrEmpty(titleText))
-            {
-                titleText = DefaultTitleText;
-            }
-
-            IMapSceneTitleView mapSceneTitleView = UIElementsCreator
-                .GetInstance().Create<MapSceneTitleText>();
-            mapSceneTitleView.Text = titleText;
+            IMessageView messageView =
+                UIElementsCreator.GetInstance().Create<MessageText>();
+            messageView.Text = messageText;
 
             Destroy(gameObject);
         }
