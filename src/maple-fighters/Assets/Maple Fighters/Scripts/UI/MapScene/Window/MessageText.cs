@@ -17,9 +17,12 @@ namespace Scripts.UI.MapScene
             }
         }
 
-        [Header("Timer"), SerializeField]
-        private float time;
+        public float Seconds
+        {
+            set => seconds = value;
+        }
 
+        private float seconds;
         private UIFadeAnimation uiFadeAnimation;
 
         private void Awake()
@@ -52,7 +55,7 @@ namespace Scripts.UI.MapScene
 
         private IEnumerator HideAfterSomeTime()
         {
-            yield return new WaitForSeconds(time);
+            yield return new WaitForSeconds(seconds);
 
             Hide();
         }
