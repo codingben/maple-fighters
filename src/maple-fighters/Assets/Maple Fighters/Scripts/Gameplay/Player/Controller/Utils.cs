@@ -16,8 +16,8 @@ namespace Scripts.Gameplay.Player
                 {
                     result =
                         isRaw
-                            ? Input.GetAxisRaw(KeyboardNames.Axes.Vertical)
-                            : Input.GetAxis(KeyboardNames.Axes.Vertical);
+                            ? Input.GetAxisRaw(Keyboard.Axes.Vertical)
+                            : Input.GetAxis(Keyboard.Axes.Vertical);
 
                     break;
                 }
@@ -26,8 +26,8 @@ namespace Scripts.Gameplay.Player
                 {
                     result = 
                         isRaw
-                            ? Input.GetAxisRaw(KeyboardNames.Axes.Horizontal)
-                            : Input.GetAxis(KeyboardNames.Axes.Horizontal);
+                            ? Input.GetAxisRaw(Keyboard.Axes.Horizontal)
+                            : Input.GetAxis(Keyboard.Axes.Horizontal);
 
                     break;
                 }
