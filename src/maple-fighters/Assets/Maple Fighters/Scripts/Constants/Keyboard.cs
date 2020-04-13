@@ -1,6 +1,6 @@
 ﻿namespace Scripts.Constants
 {
-    public static class KeyboardNames
+    public static class Keyboard
     {
         public static class Axes
         {
