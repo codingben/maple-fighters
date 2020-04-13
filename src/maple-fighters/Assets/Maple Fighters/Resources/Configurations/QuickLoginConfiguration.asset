@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c814caa306c7446449f75041aabd0ee9, type: 3}
   m_Name: QuickLoginConfiguration
   m_EditorClassIdentifier: 
-  Email: benzuk@gmail.com
+  Email: sample@gmail.com
   Password: 123456123456
