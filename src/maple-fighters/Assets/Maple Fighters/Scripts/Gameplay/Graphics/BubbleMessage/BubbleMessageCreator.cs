@@ -2,7 +2,6 @@
 
 namespace Scripts.Gameplay.Graphics
 {
-    [ExecuteInEditMode]
     public class BubbleMessageCreator : MonoBehaviour
     {
         [SerializeField]
@@ -16,15 +15,12 @@ namespace Scripts.Gameplay.Graphics
 
         private void Start()
         {
-            BubbleMessage.Create(owner, message, time);
-        }
-
-        private void Update()
-        {
             if (owner == null)
             {
                 owner = transform;
             }
+
+            BubbleMessage.Create(owner, message, time);
         }
     }
 }
