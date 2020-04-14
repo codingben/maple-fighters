@@ -367,7 +367,7 @@ MonoBehaviour:
   dummyEntities:
   - Type: 3
     Id: 1
-    Position: {x: -2, y: -8.1}
+    Position: {x: -2, y: -8.2}
     Direction: 1
   - Type: 1
     Id: 3
