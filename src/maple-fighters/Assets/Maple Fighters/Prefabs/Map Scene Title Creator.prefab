@@ -40,7 +40,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 2684237133731809872}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d8cf5cf89f05ec4e81a556a7227103c, type: 3}
+  m_Script: {fileID: 11500000, guid: 9fc2febde393e524082817c4c10cf95b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  titleText: Map Name
+  messageText: Sample Message
+  tipText: 
+  seconds: 2
