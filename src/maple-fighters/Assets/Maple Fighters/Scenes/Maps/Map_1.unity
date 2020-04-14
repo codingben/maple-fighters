@@ -283,12 +283,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dummyEntities:
-  - Id: 1
-    Name: Guardian
+  - Type: 2
+    Id: 1
     Position: {x: -14.24, y: -1.95}
     Direction: 2
-  - Id: 2
-    Name: Portal
+  - Type: 1
+    Id: 2
     Position: {x: -17.125, y: -1.5}
     Direction: 1
 --- !u!1 &438923631
@@ -1209,8 +1209,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dummyCharacter:
     DummyEntity:
+      Type: 0
       Id: 0
-      Name: Local Player
       Position: {x: 18, y: -1.815}
       Direction: 1
     CharacterClass: 0
