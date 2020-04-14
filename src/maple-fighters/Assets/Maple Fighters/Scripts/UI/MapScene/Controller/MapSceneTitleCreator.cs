@@ -16,6 +16,7 @@ namespace Scripts.UI.MapScene
             IMessageView messageView =
                 UIElementsCreator.GetInstance().Create<MessageText>();
             messageView.Text = messageText;
+            messageView.Seconds = seconds;
 
             Destroy(gameObject);
         }
