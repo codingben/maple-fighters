@@ -1237,6 +1237,12 @@ PrefabInstance:
       propertyPath: messageText
       value: Lobby
       objectReference: {fileID: 0}
+    - target: {fileID: 2684237133731809878, guid: 72753bb142bbcc147baa4197a60c44fc,
+        type: 3}
+      propertyPath: tipText
+      value: <color=yellow>Tip! Move with <color=red>A</color> or <color=red>D</color>
+        and <color=red>Space</color> to jump
+      objectReference: {fileID: 0}
     - target: {fileID: 2684237133731809879, guid: 72753bb142bbcc147baa4197a60c44fc,
         type: 3}
       propertyPath: m_LocalPosition.x
