@@ -31,7 +31,7 @@ namespace Scripts.Services.Game
                     CharacterIndex.Second,
                     new CharacterParameters
                     {
-                        Name = "You",
+                        Name = "Jack",
                         HasCharacter = true,
                         CharacterType = CharacterClasses.Knight,
                         Index = CharacterIndex.Second
