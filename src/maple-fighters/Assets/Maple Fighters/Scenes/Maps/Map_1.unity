@@ -201,7 +201,7 @@ MonoBehaviour:
   m_LookaheadTime: 0
   m_LookaheadSmoothing: 10
   m_LookaheadIgnoreY: 0
-  m_XDamping: 0
+  m_XDamping: 1
   m_YDamping: 1
   m_ZDamping: 1
   m_ScreenX: 0.5
@@ -1428,7 +1428,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1e80ebe19bc8af45bc9337dce4cb161, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 5
+  moveSpeed: 0
   minimum: {x: 0, y: 0}
   maximum: {x: 0, y: 0}
   center: {x: 0, y: 13.5}
