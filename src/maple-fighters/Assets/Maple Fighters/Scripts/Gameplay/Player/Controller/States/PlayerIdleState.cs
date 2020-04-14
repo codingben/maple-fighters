@@ -18,7 +18,7 @@ namespace Scripts.Gameplay.Player.States
 
         public void OnStateEnter()
         {
-            rigidbody2D.Sleep();
+            rigidbody2D.velocity = Vector2.zero;
         }
 
         public void OnStateUpdate()
