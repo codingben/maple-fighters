@@ -478,8 +478,8 @@ MonoBehaviour:
   playerState: 3
   properties:
     Speed: 4
-    JumpHeight: 5
-    JumpForce: 3
+    JumpHeight: 6
+    JumpForce: 4
     RopeSpeed: 2
     LadderSpeed: 2
     JumpKey: 32
@@ -512,7 +512,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd6108e526d55094482c8e814f4d4f5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  key: 306
 --- !u!114 &114791287851909474
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -525,7 +524,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b03175bd7e398542a11d7773e6307b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  key: 306
 --- !u!114 &114474275508558034
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -538,7 +536,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d66ae6c5fb3e4b24088b30a2e397bc38, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  key: 116
 --- !u!114 &4397616534160401849
 MonoBehaviour:
   m_ObjectHideFlags: 0
