@@ -26,13 +26,13 @@ namespace Scripts.Gameplay.Map.Dummy
         {
             var sceneObject = new SceneObjectParameters(
                 dummyCharacter.DummyEntity.Id,
-                dummyCharacter.DummyEntity.Name,
+                dummyCharacter.DummyEntity.Type.ToString(),
                 dummyCharacter.DummyEntity.Position.x,
                 dummyCharacter.DummyEntity.Position.y,
                 dummyCharacter.DummyEntity.Direction);
 
             var character = new CharacterParameters(
-                dummyCharacter.DummyEntity.Name,
+                dummyCharacter.DummyEntity.Type.ToString(),
                 dummyCharacter.CharacterClass,
                 dummyCharacter.CharacterIndex);
 
