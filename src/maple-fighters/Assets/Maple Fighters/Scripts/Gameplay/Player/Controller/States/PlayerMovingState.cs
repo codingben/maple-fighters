@@ -55,13 +55,11 @@ namespace Scripts.Gameplay.Player.States
 
         public void OnStateFixedUpdate()
         {
-            var horizontal = Utils.GetAxis(Axes.Horizontal, isRaw: true);
             var speed = playerController.Properties.Speed;
-            var position = rigidbody2D.transform.position;
-            var direction = new Vector3(horizontal, 0, 0).normalized;
-            var newPosition = position + (direction * speed * Time.deltaTime);
-            
-            rigidbody2D.MovePosition(newPosition);
+            var horizontal = Utils.GetAxis(Axes.Horizontal);
+            var y = rigidbody2D.velocity.y;
+
+            rigidbody2D.velocity = new Vector3(horizontal * speed, y);
         }
 
         public void OnStateExit()
