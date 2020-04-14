@@ -29,7 +29,7 @@ namespace Scripts.Gameplay.Map.Dummy
                 var parameters = new SceneObjectAddedEventParameters(
                     new SceneObjectParameters(
                         dummyEntity.Id,
-                        dummyEntity.Name,
+                        dummyEntity.Type.ToString(),
                         dummyEntity.Position.x,
                         dummyEntity.Position.y,
                         dummyEntity.Direction));
