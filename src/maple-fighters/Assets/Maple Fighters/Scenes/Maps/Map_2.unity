@@ -1396,6 +1396,12 @@ PrefabInstance:
       propertyPath: messageText
       value: The Dark Forest
       objectReference: {fileID: 0}
+    - target: {fileID: 2684237133731809878, guid: 72753bb142bbcc147baa4197a60c44fc,
+        type: 3}
+      propertyPath: tipText
+      value: '<color=yellow>Tip! Press <color=red>C</color> to climb and move with
+        <color=red>W</color> or <color=red>S</color></color> '
+      objectReference: {fileID: 0}
     - target: {fileID: 2684237133731809879, guid: 72753bb142bbcc147baa4197a60c44fc,
         type: 3}
       propertyPath: m_LocalPosition.x
