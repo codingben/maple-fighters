@@ -285,7 +285,7 @@ MonoBehaviour:
   dummyEntities:
   - Type: 2
     Id: 1
-    Position: {x: -14.24, y: -1.95}
+    Position: {x: -14.24, y: -2.025}
     Direction: 2
   - Type: 1
     Id: 2
