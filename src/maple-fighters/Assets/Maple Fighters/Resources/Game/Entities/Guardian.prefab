@@ -302,7 +302,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   owner: {fileID: 4767100953068380}
-  message: Press <color=red>T</color> to teleport to the next map!
+  message: Press <color=red>Up Arrow</color> to teleport to the next map!
   time: 120
 --- !u!1 &1904602514930178
 GameObject:
