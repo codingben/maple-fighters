@@ -31,8 +31,9 @@ namespace Scripts.Services.Game
                     CharacterIndex.Second,
                     new CharacterParameters
                     {
-                        Name = "Dummy",
-                        HasCharacter = false,
+                        Name = "You",
+                        HasCharacter = true,
+                        CharacterType = CharacterClasses.Knight,
                         Index = CharacterIndex.Second
                     }
                 },
