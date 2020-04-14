@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 585372851503896885}
   - component: {fileID: 5656068619675177839}
   m_Layer: 0
-  m_Name: Player
+  m_Name: RemotePlayer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
