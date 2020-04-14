@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using TMPro;
 using UI.Manager;
 using UnityEngine;
@@ -8,6 +9,8 @@ namespace Scripts.UI.MapScene
     [RequireComponent(typeof(TextMeshProUGUI), typeof(UIFadeAnimation))]
     public class MessageText : UIElement, IMessageView
     {
+        public Action TimeUp { get; set; }
+
         public string Text
         {
             set
@@ -58,6 +61,8 @@ namespace Scripts.UI.MapScene
             yield return new WaitForSeconds(seconds);
 
             Hide();
+
+            TimeUp?.Invoke();
         }
     }
 }
