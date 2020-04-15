@@ -246,7 +246,7 @@ MonoBehaviour:
     DummyEntity:
       Type: 0
       Id: 0
-      Position: {x: -12.8, y: -12.8}
+      Position: {x: -12.8, y: -12.95}
       Direction: 2
     CharacterClass: 1
     CharacterIndex: 4
