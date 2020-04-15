@@ -480,8 +480,8 @@ MonoBehaviour:
     Speed: 4
     JumpHeight: 6
     JumpForce: 4
-    RopeSpeed: 2
-    LadderSpeed: 2
+    RopeSpeed: 3
+    LadderSpeed: 3
     JumpKey: 32
   overlapCircleRadius: 0.125
   groundLayerMask:
