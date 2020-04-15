@@ -184,7 +184,7 @@ MonoBehaviour:
   playerState: 3
   properties:
     Speed: 4
-    JumpHeight: 6
+    JumpHeight: 9
     JumpForce: 4
     RopeSpeed: 3
     LadderSpeed: 3
