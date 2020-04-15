@@ -7,7 +7,7 @@ namespace Scripts.QuickAccess
 {
     public class QuickLogin : MonoBehaviour
     {
-        #if UNITY_EDITOR
+        #if UNITY_EDITOR || UNITY_WEBGL
         private void Start()
         {
             StartCoroutine(WaitFrameBeforeDestroy());
