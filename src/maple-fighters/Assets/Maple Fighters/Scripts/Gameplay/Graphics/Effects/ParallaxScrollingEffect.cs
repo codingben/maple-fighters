@@ -25,10 +25,12 @@ namespace Scripts.Gameplay.Graphics
             {
                 var x = background.position.x;
                 var y = background.position.y;
+                var z = background.position.z;
                 var a = background.position;
                 var b = new Vector3(
                     x + (mainCamera.position.x - cameraPosition.x),
-                    y);
+                    y,
+                    z);
                 var t = speed * Time.deltaTime;
 
                 background.position = Vector3.Lerp(a, b, t);
