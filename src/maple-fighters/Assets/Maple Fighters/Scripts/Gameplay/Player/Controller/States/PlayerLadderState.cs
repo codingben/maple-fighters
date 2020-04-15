@@ -1,3 +1,4 @@
+using Game.Common;
 using UnityEngine;
 
 namespace Scripts.Gameplay.Player.States
@@ -22,7 +23,10 @@ namespace Scripts.Gameplay.Player.States
 
         public void OnStateUpdate()
         {
-            // Left blank intentionally
+            if (IsJumpKeyClicked())
+            {
+                playerController.ChangePlayerState(PlayerState.Falling);
+            }
         }
 
         public void OnStateFixedUpdate()
@@ -37,6 +41,12 @@ namespace Scripts.Gameplay.Player.States
         public void OnStateExit()
         {
             // Left blank intentionally
+        }
+
+        private bool IsJumpKeyClicked()
+        {
+            var jumpKey = playerController.Properties.JumpKey;
+            return Input.GetKeyDown(jumpKey);
         }
     }
 }
