@@ -7,8 +7,6 @@ namespace Scripts.Gameplay.Player.States
         private readonly PlayerController playerController;
         private readonly Rigidbody2D rigidbody2D;
 
-        private float direction;
-
         public PlayerLadderState(PlayerController playerController)
         {
             this.playerController = playerController;
@@ -24,19 +22,21 @@ namespace Scripts.Gameplay.Player.States
 
         public void OnStateUpdate()
         {
-            direction = Utils.GetAxis(Axes.Vertical, isRaw: true);
+            // Left blank intentionally
         }
 
         public void OnStateFixedUpdate()
         {
+            var direction = Utils.GetAxis(Axes.Vertical);
             var speed = playerController.Properties.LadderSpeed;
-            rigidbody2D.velocity =
-                new Vector2(rigidbody2D.velocity.x, direction * speed);
+            var x = rigidbody2D.velocity.x;
+
+            rigidbody2D.velocity = new Vector2(x, direction * speed);
         }
 
         public void OnStateExit()
         {
-            direction = 0;
+            // Left blank intentionally
         }
     }
 }
