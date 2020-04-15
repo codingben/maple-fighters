@@ -9,6 +9,12 @@ namespace Scripts.Gameplay.Player
     [RequireComponent(typeof(Animator))]
     public class PlayerStateAnimator : MonoBehaviour, IPlayerStateAnimator
     {
+        public bool Enabled
+        {
+            get => animator.enabled;
+            set => animator.enabled = value;
+        }
+
         private PlayerState playerState = PlayerState.Idle;
         private Animator animator;
 
@@ -69,6 +75,7 @@ namespace Scripts.Gameplay.Player
 
         private void SendUpdatePlayerStateOperation()
         {
+            // TODO: Send animation enabled
             var parameters =
                 new UpdatePlayerStateRequestParameters(playerState);
 
