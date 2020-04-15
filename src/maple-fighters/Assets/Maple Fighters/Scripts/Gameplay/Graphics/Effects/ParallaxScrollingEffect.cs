@@ -29,7 +29,7 @@ namespace Scripts.Gameplay.Graphics
                 var a = background.position;
                 var b = new Vector3(
                     x + (mainCamera.position.x - cameraPosition.x),
-                    y,
+                    y + (mainCamera.position.y - cameraPosition.y),
                     z);
                 var t = speed * Time.deltaTime;
 
