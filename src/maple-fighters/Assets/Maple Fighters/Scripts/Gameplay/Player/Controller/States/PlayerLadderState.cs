@@ -8,6 +8,9 @@ namespace Scripts.Gameplay.Player.States
         private readonly PlayerController playerController;
         private readonly Rigidbody2D rigidbody2D;
 
+        private float previousTime;
+        private float previousGravityScale;
+
         public PlayerLadderState(PlayerController playerController)
         {
             this.playerController = playerController;
@@ -18,7 +21,9 @@ namespace Scripts.Gameplay.Player.States
 
         public void OnStateEnter()
         {
-            // Left blank intentionally
+            previousTime = Time.time;
+            previousGravityScale = rigidbody2D.gravityScale;
+            rigidbody2D.gravityScale = default;
         }
 
         public void OnStateUpdate()
@@ -26,6 +31,15 @@ namespace Scripts.Gameplay.Player.States
             if (IsJumpKeyClicked())
             {
                 playerController.ChangePlayerState(PlayerState.Falling);
+            }
+            else
+            {
+                if (Time.time > previousTime + 1)
+                {
+                    var isMoving =
+                        Mathf.Abs(Utils.GetAxis(Axes.Vertical, isRaw: true));
+                    playerController.PlayerStateAnimator.Enabled = isMoving > 0;
+                }
             }
         }
 
@@ -40,7 +54,8 @@ namespace Scripts.Gameplay.Player.States
 
         public void OnStateExit()
         {
-            // Left blank intentionally
+            rigidbody2D.gravityScale = previousGravityScale;
+            playerController.PlayerStateAnimator.Enabled = true;
         }
 
         private bool IsJumpKeyClicked()
