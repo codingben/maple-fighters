@@ -1000,7 +1000,7 @@ MonoBehaviour:
   m_LookaheadTime: 0
   m_LookaheadSmoothing: 10
   m_LookaheadIgnoreY: 0
-  m_XDamping: 1
+  m_XDamping: 0
   m_YDamping: 1
   m_ZDamping: 1
   m_ScreenX: 0.5
