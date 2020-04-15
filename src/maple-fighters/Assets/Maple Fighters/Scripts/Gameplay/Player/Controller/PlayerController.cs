@@ -16,6 +16,8 @@ namespace Scripts.Gameplay.Player
 
         public PlayerState PlayerState => playerState;
 
+        public IPlayerStateAnimator PlayerStateAnimator => playerStateAnimator;
+
         [Header("Debug")]
         [ViewOnly, SerializeField]
         private PlayerState playerState = PlayerState.Falling;
