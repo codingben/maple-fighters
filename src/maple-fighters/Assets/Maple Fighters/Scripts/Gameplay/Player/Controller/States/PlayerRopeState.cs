@@ -25,11 +25,7 @@ namespace Scripts.Gameplay.Player.States
         {
             if (IsJumpKeyClicked())
             {
-                // TODO: Deprecated due to collider issues
-
-                // Jump();
-
-                // playerController.ChangePlayerState(PlayerState.Falling);
+                playerController.ChangePlayerState(PlayerState.Falling);
             }
         }
 
@@ -45,21 +41,6 @@ namespace Scripts.Gameplay.Player.States
         public void OnStateExit()
         {
             // Left blank intentionally
-        }
-
-        private void Jump()
-        {
-            var horizontal = Utils.GetAxis(Axes.Horizontal, isRaw: true);
-            if (Mathf.Abs(horizontal) > 0)
-            {
-                var direction = 
-                    horizontal < 0 ? Directions.Left : Directions.Right;
-                playerController.ChangeDirection(direction);
-
-                var jumpForce = playerController.Properties.JumpForce;
-                var force = new Vector2(horizontal, 1) * (jumpForce / 2);
-                rigidbody2D.AddForce(force, ForceMode2D.Impulse);
-            }
         }
 
         private bool IsJumpKeyClicked()
