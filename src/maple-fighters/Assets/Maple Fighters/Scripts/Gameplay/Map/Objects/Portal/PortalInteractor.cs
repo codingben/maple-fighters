@@ -1,4 +1,5 @@
-﻿using Scripts.Constants;
+﻿using ScriptableObjects.Configurations;
+using Scripts.Constants;
 using UnityEngine;
 
 namespace Scripts.Gameplay.Map.Objects
@@ -6,10 +7,18 @@ namespace Scripts.Gameplay.Map.Objects
     public class PortalInteractor : MonoBehaviour
     {
         private PortalTeleportation portalTeleportation;
+        private KeyCode teleportKey;
+
+        private void Awake()
+        {
+            var playerKeyboard =
+                PlayerConfiguration.GetInstance().PlayerKeyboard;
+            teleportKey = playerKeyboard.TeleportKey;
+        }
 
         private void Update()
         {
-            if (Input.GetKeyDown(Keyboard.Keys.TeleportKey))
+            if (Input.GetKeyDown(teleportKey))
             {
                 portalTeleportation?.Teleport();
             }
