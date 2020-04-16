@@ -27,17 +27,17 @@ namespace Scripts.Gameplay.Player.States
             {
                 if (IsMoving())
                 {
-                    playerController.ChangePlayerState(PlayerState.Moving);
+                    playerController.SetPlayerState(PlayerState.Moving);
                 }
 
                 if (IsJumpKeyClicked() && CanJump())
                 {
-                    playerController.ChangePlayerState(PlayerState.Jumping);
+                    playerController.SetPlayerState(PlayerState.Jumping);
                 }
             }
             else
             {
-                playerController.ChangePlayerState(PlayerState.Falling);
+                playerController.SetPlayerState(PlayerState.Falling);
             }
         }
 
@@ -68,7 +68,7 @@ namespace Scripts.Gameplay.Player.States
 
         private bool IsJumpKeyClicked()
         {
-            var jumpKey = playerController.Properties.JumpKey;
+            var jumpKey = playerController.GetKeyboardSettings().JumpKey;
             return Input.GetKeyDown(jumpKey);
         }
     }
