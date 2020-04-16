@@ -21,22 +21,27 @@ namespace Scripts.Gameplay.Map.Climb
 
         protected override void SetPlayerToClimbState()
         {
-            playerController.ChangePlayerState(GetClimbState());
+            playerController.SetPlayerState(GetClimbState());
         }
 
         protected override void UnsetPlayerFromClimbState()
         {
-            playerController.ResetPlayerState();
+            var playerState = 
+                playerController.IsGrounded()
+                    ? PlayerState.Idle
+                    : PlayerState.Falling;
+
+            playerController.SetPlayerState(playerState);
         }
 
         protected override PlayerState GetPlayerState()
         {
-            return playerController.PlayerState;
+            return playerController.GetPlayerState();
         }
 
         protected override KeyCode GetKey()
         {
-            return Keyboard.Keys.ClimbKey;
+            return playerController.GetKeyboardSettings().ClimbKey;
         }
 
         protected override ColliderInteraction GetColliderInteraction()
