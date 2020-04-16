@@ -30,12 +30,12 @@ namespace Scripts.Gameplay.Player.States
             {
                 if (IsMoveStopped())
                 {
-                    playerController.ChangePlayerState(PlayerState.Idle);
+                    playerController.SetPlayerState(PlayerState.Idle);
                 }
 
                 if (IsJumpKeyClicked() && CanJump())
                 {
-                    playerController.ChangePlayerState(PlayerState.Jumping);
+                    playerController.SetPlayerState(PlayerState.Jumping);
                 }
 
                 var horizontal = Utils.GetAxis(Axes.Horizontal, isRaw: true);
@@ -49,13 +49,13 @@ namespace Scripts.Gameplay.Player.States
             }
             else
             {
-                playerController.ChangePlayerState(PlayerState.Falling);
+                playerController.SetPlayerState(PlayerState.Falling);
             }
         }
 
         public void OnStateFixedUpdate()
         {
-            var speed = playerController.Properties.Speed;
+            var speed = playerController.GetProperties().Speed;
             var horizontal = Utils.GetAxis(Axes.Horizontal);
             var y = rigidbody2D.velocity.y;
 
@@ -74,7 +74,7 @@ namespace Scripts.Gameplay.Player.States
 
         private bool IsJumpKeyClicked()
         {
-            var jumpKey = playerController.Properties.JumpKey;
+            var jumpKey = playerController.GetKeyboardSettings().JumpKey;
             return Input.GetKeyDown(jumpKey);
         }
 
