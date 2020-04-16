@@ -39,33 +39,7 @@ namespace Scripts.Gameplay.Player
 
         private void OnDirectionChanged(Directions direction)
         {
-            SetDirection(direction);
-        }
-
-        private void SetDirection(Directions direction)
-        {
-            var x = Mathf.Abs(character.localScale.x);
-
-            switch (direction)
-            {
-                case Directions.Left:
-                {
-                    character.localScale = new Vector3(
-                        x,
-                        character.localScale.y,
-                        character.localScale.z);
-                    break;
-                }
-
-                case Directions.Right:
-                {
-                    character.localScale = new Vector3(
-                        -x,
-                        character.localScale.y,
-                        character.localScale.z);
-                    break;
-                }
-            }
+            Utils.SetLocalScaleByDirection(ref character, direction);
         }
 
         public Directions GetDirection()
