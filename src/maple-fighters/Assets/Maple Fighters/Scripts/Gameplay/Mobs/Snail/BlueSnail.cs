@@ -36,10 +36,7 @@ namespace Scripts.Gameplay.Mobs
                 var point = 
                     new Vector3(parameters.ContactPointX, parameters.ContactPointY);
                 var direction = new Vector2(
-                    x: ((character.transform.position - point).normalized.x
-                        > 0
-                            ? 1
-                            : -1) * hitAmount.x,
+                    x: ((character.transform.position - point).normalized.x > 0 ? 1 : -1) * hitAmount.x,
                     y: hitAmount.y);
 
                 var attackPlayer = character.GetComponent<IAttackPlayer>();
