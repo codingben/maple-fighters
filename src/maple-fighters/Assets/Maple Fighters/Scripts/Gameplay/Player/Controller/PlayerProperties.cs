@@ -12,10 +12,6 @@ namespace Scripts.Gameplay.Player
         public float JumpForce;
 
         [Header("Climbing")]
-        public float RopeSpeed;
-        public float LadderSpeed;
-
-        [Header("Keyboard")]
-        public KeyCode JumpKey = KeyCode.Space;
+        public float ClimbSpeed;
     }
 }
