@@ -1,4 +1,5 @@
-﻿using Game.Common;
+﻿using System;
+using Game.Common;
 using UnityEngine;
 
 namespace Scripts.Gameplay.Graphics
@@ -8,44 +9,37 @@ namespace Scripts.Gameplay.Graphics
     {
         [SerializeField]
         private Transform parent;
-        private float x;
+        private Vector2 previousLocalScale;
 
         private void Awake()
         {
-            x = transform.localScale.x;
+            previousLocalScale = transform.localScale;
         }
 
         private void Update()
         {
             if (parent != null)
             {
-                var direction = 
-                    parent.localScale.x > 0
-                        ? Directions.Left
-                        : Directions.Right;
+                var x = parent.localScale.x;
+                var direction = x > 0 ? Directions.Left : Directions.Right;
 
                 switch (direction)
                 {
                     case Directions.Left:
                     {
-                        transform.localScale = 
-                            new Vector3(
-                                x,
-                                transform.localScale.y,
-                                transform.localScale.z);
+                        previousLocalScale.x = Math.Abs(previousLocalScale.x);
                         break;
                     }
 
                     case Directions.Right:
                     {
-                        transform.localScale = 
-                            new Vector3(
-                                -x,
-                                transform.localScale.y,
-                                transform.localScale.z);
+                        previousLocalScale.x = -Math.Abs(previousLocalScale.x);
                         break;
                     }
                 }
+
+                transform.localScale = 
+                    new Vector3(previousLocalScale.x, previousLocalScale.y);
             }
         }
     }
