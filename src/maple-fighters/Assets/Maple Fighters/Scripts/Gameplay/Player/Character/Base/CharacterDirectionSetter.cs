@@ -1,5 +1,4 @@
-﻿using Game.Common;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Scripts.Gameplay.Player
 {
@@ -28,34 +27,13 @@ namespace Scripts.Gameplay.Player
             var spawnedCharacterDetails = GetComponent<ISpawnedCharacterDetails>();
             if (spawnedCharacterDetails != null)
             {
-                var characterDetails = spawnedCharacterDetails.GetCharacterDetails();
+                var characterDetails =
+                    spawnedCharacterDetails.GetCharacterDetails();
                 var direction = characterDetails.Direction;
-
-                const float Scale = 1;
-
                 var transform = 
                     spawnedCharacter.GetCharacterGameObject().transform;
 
-                switch (direction)
-                {
-                    case Directions.Left:
-                    {
-                        transform.localScale = new Vector3(
-                            Scale,
-                            transform.localScale.y,
-                            transform.localScale.z);
-                        break;
-                    }
-
-                    case Directions.Right:
-                    {
-                        transform.localScale = new Vector3(
-                            -Scale,
-                            transform.localScale.y,
-                            transform.localScale.z);
-                        break;
-                    }
-                }
+                Utils.SetLocalScaleByDirection(ref transform, direction);
             }
         }
     }
