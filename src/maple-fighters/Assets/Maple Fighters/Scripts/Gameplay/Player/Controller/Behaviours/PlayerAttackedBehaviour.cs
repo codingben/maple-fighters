@@ -16,9 +16,9 @@ namespace Scripts.Gameplay.Player.Behaviours
 
         public void OnPlayerAttacked(Vector3 direction)
         {
-            if (playerController.PlayerState != PlayerState.Attacked)
+            if (playerController.GetPlayerState() != PlayerState.Attacked)
             {
-                playerController.ChangePlayerState(PlayerState.Attacked);
+                playerController.SetPlayerState(PlayerState.Attacked);
 
                 StartCoroutine(WaitFrameAndBounce(direction));
             }
