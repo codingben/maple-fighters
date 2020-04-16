@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using Game.Common;
 using Scripts.Constants;
 using UnityEngine;
 
@@ -52,6 +53,28 @@ namespace Scripts.Gameplay.Player
             }
 
             return collider;
+        }
+
+        public static void SetLocalScaleByDirection(ref Transform transform, Directions direction)
+        {
+            var x = Mathf.Abs(transform.localScale.x);
+            var y = transform.localScale.y;
+            var z = transform.localScale.z;
+
+            switch (direction)
+            {
+                case Directions.Left:
+                {
+                    transform.localScale = new Vector3(x, y, z);
+                    break;
+                }
+
+                case Directions.Right:
+                {
+                    transform.localScale = new Vector3(-x, y, z);
+                    break;
+                }
+            }
         }
     }
 }
