@@ -24,7 +24,7 @@ namespace Scripts.Gameplay.Player.States
         private void FallDownWithDirection()
         {
             var horizontal = Utils.GetAxis(Axes.Horizontal);
-            var speed = playerController.Properties.Speed;
+            var speed = playerController.GetProperties().Speed;
 
             rigidbody2D.velocity = 
                 new Vector2(horizontal * speed, rigidbody2D.velocity.y);
@@ -46,7 +46,7 @@ namespace Scripts.Gameplay.Player.States
         {
             if (IsGrounded())
             {
-                playerController.ChangePlayerState(PlayerState.Idle);
+                playerController.SetPlayerState(PlayerState.Idle);
             }
         }
 
