@@ -30,7 +30,7 @@ namespace Scripts.Gameplay.Player.States
         {
             if (IsJumpKeyClicked())
             {
-                playerController.ChangePlayerState(PlayerState.Falling);
+                playerController.SetPlayerState(PlayerState.Falling);
             }
             else
             {
@@ -38,7 +38,7 @@ namespace Scripts.Gameplay.Player.States
                 {
                     var isMoving =
                         Mathf.Abs(Utils.GetAxis(Axes.Vertical, isRaw: true));
-                    playerController.PlayerStateAnimator.Enabled = isMoving > 0;
+                    playerController.GetPlayerStateAnimator().Enabled = isMoving > 0;
                 }
             }
         }
@@ -46,7 +46,7 @@ namespace Scripts.Gameplay.Player.States
         public void OnStateFixedUpdate()
         {
             var direction = Utils.GetAxis(Axes.Vertical);
-            var speed = playerController.Properties.LadderSpeed;
+            var speed = playerController.GetProperties().ClimbSpeed;
             var x = rigidbody2D.velocity.x;
 
             rigidbody2D.velocity = new Vector2(x, direction * speed);
@@ -55,12 +55,12 @@ namespace Scripts.Gameplay.Player.States
         public void OnStateExit()
         {
             rigidbody2D.gravityScale = previousGravityScale;
-            playerController.PlayerStateAnimator.Enabled = true;
+            playerController.GetPlayerStateAnimator().Enabled = true;
         }
 
         private bool IsJumpKeyClicked()
         {
-            var jumpKey = playerController.Properties.JumpKey;
+            var jumpKey = playerController.GetKeyboardSettings().JumpKey;
             return Input.GetKeyDown(jumpKey);
         }
     }
