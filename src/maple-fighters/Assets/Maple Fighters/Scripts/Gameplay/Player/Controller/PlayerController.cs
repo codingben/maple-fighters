@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Game.Common;
+using ScriptableObjects.Configurations;
 using Scripts.Editor;
 using Scripts.Gameplay.Player.States;
 using Scripts.UI.Focus;
@@ -12,19 +13,9 @@ namespace Scripts.Gameplay.Player
     [RequireComponent(typeof(Collider2D))]
     public class PlayerController : MonoBehaviour
     {
-        public PlayerProperties Properties => properties;
-
-        public PlayerState PlayerState => playerState;
-
-        public IPlayerStateAnimator PlayerStateAnimator => playerStateAnimator;
-
         [Header("Debug")]
         [ViewOnly, SerializeField]
         private PlayerState playerState = PlayerState.Falling;
-
-        [Header("Configuration")]
-        [SerializeField]
-        private PlayerProperties properties;
 
         [Header("Ground")]
         [SerializeField]
@@ -41,48 +32,24 @@ namespace Scripts.Gameplay.Player
         private IPlayerStateBehaviour playerStateBehaviour;
         private IPlayerStateAnimator playerStateAnimator;
 
-        private Vector2 localScale;
+        private new Transform transform2D;
         private new Rigidbody2D rigidbody2D;
 
         private FocusStateController focusStateController;
 
         private void Awake()
         {
-            playerStateBehaviours =
-                new Dictionary<PlayerState, IPlayerStateBehaviour>
-                {
-                    {
-                        PlayerState.Idle,
-                        new PlayerIdleState(this)
-                    },
-                    {
-                        PlayerState.Moving,
-                        new PlayerMovingState(this)
-                    },
-                    {
-                        PlayerState.Jumping,
-                        new PlayerJumpingState(this)
-                    },
-                    {
-                        PlayerState.Falling,
-                        new PlayerFallingState(this)
-                    },
-                    {
-                        PlayerState.Attacked,
-                        new PlayerAttackedState(this)
-                    },
-                    {
-                        PlayerState.Rope,
-                        new PlayerRopeState(this)
-                    },
-                    { 
-                        PlayerState.Ladder,
-                        new PlayerLadderState(this)
-                    }
-                };
-
+            playerStateBehaviours = new Dictionary<PlayerState, IPlayerStateBehaviour>
+            {
+                { PlayerState.Idle, new PlayerIdleState(this) },
+                { PlayerState.Moving, new PlayerMovingState(this) },
+                { PlayerState.Jumping, new PlayerJumpingState(this) },
+                { PlayerState.Falling, new PlayerFallingState(this) },
+                { PlayerState.Attacked, new PlayerAttackedState(this) },
+                { PlayerState.Rope, new PlayerRopeState(this) },
+                { PlayerState.Ladder, new PlayerLadderState(this) }
+            };
             playerStateBehaviour = playerStateBehaviours[playerState];
-            localScale = transform.localScale;
             focusStateController = FindObjectOfType<FocusStateController>();
         }
 
@@ -101,12 +68,27 @@ namespace Scripts.Gameplay.Player
             playerStateBehaviour.OnStateFixedUpdate();
         }
 
+        public PlayerProperties GetProperties()
+        {
+            return PlayerConfiguration.GetInstance().PlayerProperties;
+        }
+
+        public PlayerKeyboard GetKeyboardSettings()
+        {
+            return PlayerConfiguration.GetInstance().PlayerKeyboard;
+        }
+
         public void SetPlayerStateAnimator(IPlayerStateAnimator playerStateAnimator)
         {
             this.playerStateAnimator = playerStateAnimator;
         }
 
-        public void ChangePlayerState(PlayerState newPlayerState)
+        public IPlayerStateAnimator GetPlayerStateAnimator()
+        {
+            return playerStateAnimator;
+        }
+
+        public void SetPlayerState(PlayerState newPlayerState)
         {
             if (playerState != newPlayerState)
             {
@@ -119,30 +101,19 @@ namespace Scripts.Gameplay.Player
             }
         }
 
-        public void ResetPlayerState()
+        public PlayerState GetPlayerState()
         {
-            var inTheAir = IsGrounded();
-            var playerState = inTheAir ? PlayerState.Idle : PlayerState.Falling;
-
-            ChangePlayerState(playerState);
+            return playerState;
         }
 
         public void ChangeDirection(Directions direction)
         {
-            if (direction == Directions.Left)
+            if (transform2D == null)
             {
-                transform.localScale = new Vector3(
-                    localScale.x,
-                    transform.localScale.y,
-                    transform.localScale.z);
+                transform2D = transform;
             }
-            else
-            {
-                transform.localScale = new Vector3(
-                    -localScale.x,
-                    transform.localScale.y,
-                    transform.localScale.z);
-            }
+
+            Utils.SetLocalScaleByDirection(ref transform2D, direction);
         }
 
         public void Bounce(Vector2 force)
