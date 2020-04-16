@@ -26,8 +26,8 @@ namespace Scripts.Gameplay.Player.States
         private void Jump()
         {
             var horizontal = Utils.GetAxis(Axes.Horizontal, isRaw: true);
-            var jumpForce = playerController.Properties.JumpForce;
-            var jumpHeight = playerController.Properties.JumpHeight;
+            var jumpForce = playerController.GetProperties().JumpForce;
+            var jumpHeight = playerController.GetProperties().JumpHeight;
 
             rigidbody2D.velocity = 
                 new Vector2(horizontal * jumpForce, jumpHeight);
@@ -44,7 +44,7 @@ namespace Scripts.Gameplay.Player.States
         {
             if (isJumping && IsGrounded())
             {
-                playerController.ChangePlayerState(PlayerState.Idle);
+                playerController.SetPlayerState(PlayerState.Idle);
             }
             else
             {
