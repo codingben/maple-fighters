@@ -25,7 +25,7 @@ namespace Scripts.Gameplay.Player.States
         {
             if (IsGrounded())
             {
-                playerController.ChangePlayerState(PlayerState.Idle);
+                playerController.SetPlayerState(PlayerState.Idle);
             }
         }
 
