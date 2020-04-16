@@ -6,6 +6,8 @@ namespace Scripts.Gameplay.Map.Climb
 {
     public abstract class ClimbInteractor : MonoBehaviour
     {
+        private Transform LocalPlayer => transform.parent;
+
         private void Update()
         {
             if (Input.GetKeyDown(GetKey()) && IsPlayerStateSuitable() && !IsClimbing())
@@ -60,7 +62,7 @@ namespace Scripts.Gameplay.Map.Climb
 
         private void IgnoreGroundIfNeeded()
         {
-            var ground = Player.Utils.GetGroundedCollider(transform.parent.position);
+            var ground = Player.Utils.GetGroundedCollider(LocalPlayer.position);
             if (ground != null)
             {
                 GetColliderInteraction().SetIgnoredCollider(ground);
@@ -87,8 +89,10 @@ namespace Scripts.Gameplay.Map.Climb
             {
                 ChangeVelocityToZero();
 
-                transform.parent.position = 
-                    new Vector3(center.x, transform.parent.position.y);
+                var x = center.x;
+                var y = LocalPlayer.position.y;
+
+                LocalPlayer.position = new Vector3(x, y);
             }
         }
 
