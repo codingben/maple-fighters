@@ -25,7 +25,7 @@ namespace Physics.Box2D.Components
             world.SetContinuousPhysics(false);
         }
 
-        private void SimulateWorld()
+        public void SimulateWorld()
         {
             var timeStep = PhysicsSettings.TimeStep;
             var velocityIterations = PhysicsSettings.VelocityIterations;
