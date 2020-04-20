@@ -1,18 +1,19 @@
-﻿using Box2DX.Collision;
-using Box2DX.Common;
+﻿using Box2DX.Common;
 using Box2DX.Dynamics;
-using MathematicsHelper;
+using Common.MathematicsHelper;
 
 namespace Physics.Box2D.Core
 {
     public static class PhysicsUtils
     {
-        public const float UPDATES_PER_SECOND = 30.0f;
-        public const float FRAMES_PER_SECOND = 30.0f;
+        public const float UpdatesPerSecond = 30.0f;
+        public const float FramesPerSecond = 30.0f;
+        public const float TeleportDistance = 1.0f;
 
-        private static readonly object locker = new object();
-
-        public static void CreateGround(this World world, Vector2 position, Vector2 size)
+        public static void CreateGround(
+            World world,
+            Vector2 position,
+            Vector2 size)
         {
             var bodyDef = new BodyDef();
             bodyDef.Position.Set(position.X, position.Y);
@@ -26,70 +27,82 @@ namespace Physics.Box2D.Core
             };
 
             var body = world.CreateBody(bodyDef);
-            body.CreateShape(boxDef);
+            body.CreateFixture(boxDef);
             body.SetMassFromShapes();
         }
 
-        public static BodyDefinitionWrapper CreateBodyDefinitionWrapper(PolygonDef fixture, Vector2 position, object userData = null)
+        public static BodyDef CreateBodyDefinition(
+            Vector2 position,
+            object userData = null)
         {
-            var bodyDefinition = new BodyDef();
+            var bodyDefinition = new BodyDef 
+            { 
+                UserData = userData,
+                FixedRotation = true
+            };
             bodyDefinition.Position.Set(position.X, position.Y);
-            bodyDefinition.FixedRotation = true;
 
-            var bodyDefinitionWrapper = new BodyDefinitionWrapper(bodyDefinition, fixture, userData);
-            return bodyDefinitionWrapper;
+            return bodyDefinition;
         }
 
-        public static PolygonDef CreateFixtureDefinition(Vector2 size, LayerMask layerMask, object userData = null)
+        public static PolygonDef CreateFixtureDefinition(
+            Vector2 size,
+            LayerMask layerMask,
+            object userData = null)
         {
-            var polygonDefinition = new PolygonDef();
-            polygonDefinition.SetAsBox(size.X, size.Y);
-            polygonDefinition.Density = 1.0f;
-            polygonDefinition.Friction = 4.0f;
-            polygonDefinition.Filter = new FilterData
+            var polygonDefinition = new PolygonDef
             {
-                GroupIndex = (short) layerMask
+                UserData = userData,
+                Density = 1.0f,
+                Friction = 4.0f,
+                Filter = new FilterData
+                {
+                    GroupIndex = (short)layerMask
+                }
             };
-            polygonDefinition.UserData = userData;
+            polygonDefinition.SetAsBox(size.X, size.Y);
+
             return polygonDefinition;
         }
 
-        public static Body CreateCharacter(this World world, BodyDefinitionWrapper bodyDefinition, PolygonDef polygonDefinition)
+        public static Body CreateCharacter(
+            this World world,
+            BodyDef bodyDefinition,
+            PolygonDef polygonDefinition)
         {
-            lock (locker)
-            {
-                var body = world.CreateBody(bodyDefinition.BodyDefiniton);
-                body.SetUserData(bodyDefinition.UserData);
-                body.CreateShape(polygonDefinition);
-                body.SetMassFromShapes();
-                return body;
-            }
+            var body = world.CreateBody(bodyDefinition);
+            body.SetUserData(bodyDefinition.UserData);
+            body.CreateFixture(polygonDefinition);
+            body.SetMassFromShapes();
+
+            return body;
         }
 
-        public static void MoveBody(this Body body, Vector2 position, float speed, bool teleport = true)
+        public static void MoveBody(
+            Body body,
+            Vector2 position,
+            float speed,
+            bool teleport = true)
         {
-            lock (locker)
+            var direction = position - body.GetPosition().ToVector2();
+            var distanceToTravel = direction.FromVector2().Normalize();
+
+            if (teleport && (distanceToTravel > TeleportDistance))
             {
-                const float TELEPORT_DISTANCE = 1;
-
-                var direction = position - body.GetPosition().ToVector2();
-                var distanceToTravel = direction.FromVector2().Normalize();
-                if (teleport && (distanceToTravel > TELEPORT_DISTANCE))
-                {
-                    body.SetXForm(position.FromVector2(), body.GetAngle());
-                    return;
-                }
-
-                var distancePerTimestep = speed / FRAMES_PER_SECOND;
+                body.SetXForm(position.FromVector2(), body.GetAngle());
+            }
+            else
+            {
+                var distancePerTimestep = speed / FramesPerSecond;
                 if (distancePerTimestep > distanceToTravel)
                 {
-                    speed *= (distanceToTravel / distancePerTimestep);
+                    speed *= distanceToTravel / distancePerTimestep;
                 }
 
                 var desiredVelocity = speed * direction;
                 var changeInVelocity = desiredVelocity - body.GetLinearVelocity().ToVector2();
+                var force = body.GetMass() * FramesPerSecond * changeInVelocity;
 
-                var force = body.GetMass() * FRAMES_PER_SECOND * changeInVelocity;
                 body.ApplyForce(force.FromVector2(), body.GetWorldCenter());
             }
         }
