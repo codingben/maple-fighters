@@ -1,14 +1,27 @@
-﻿namespace Physics.Box2D.Core
+﻿using Box2DX.Dynamics;
+
+namespace Physics.Box2D.Core
 {
     public struct BodyInfo
     {
-        public readonly int Id;
-        public readonly BodyDefinitionWrapper BodyDefinition;
+        public int Id { get; }
 
-        public BodyInfo(int id, BodyDefinitionWrapper bodyDefinition)
+        public BodyDef BodyDefinition { get; }
+
+        public PolygonDef FixtureDefinition { get; }
+
+        public object UserData { get; }
+
+        public BodyInfo(
+            int id,
+            BodyDef bodyDefinition,
+            PolygonDef fixtureDefinition,
+            object userData)
         {
             Id = id;
             BodyDefinition = bodyDefinition;
+            FixtureDefinition = fixtureDefinition;
+            UserData = userData;
         }
     }
 }
