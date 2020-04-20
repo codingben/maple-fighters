@@ -2,7 +2,7 @@
 
 namespace Physics.Box2D.Core
 {
-    public class ContactFilterModified : ContactFilter
+    public class GroupContactFilter : ContactFilter
     {
         public override bool ShouldCollide(Fixture fixtureA, Fixture fixtureB)
         {
