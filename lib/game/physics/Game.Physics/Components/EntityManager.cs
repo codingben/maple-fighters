@@ -1,47 +1,32 @@
 ﻿using System.Collections.Generic;
 using Box2DX.Dynamics;
-using CommonTools.Coroutines;
-using CommonTools.Log;
-using ComponentModel.Common;
 using Physics.Box2D.Components.Interfaces;
 using Physics.Box2D.Core;
 
 namespace Physics.Box2D.Components
 {
-    public class EntityManager : Component, IEntityManager
+    public class EntityManager : IEntityManager
     {
-        private World world;
-
+        private readonly World world;
         private readonly List<BodyInfo> addBodies = new List<BodyInfo>(); 
         private readonly List<Body> removeBodies = new List<Body>(); 
-
         private readonly Dictionary<int, Body> bodies = new Dictionary<int, Body>();
 
-        protected override void OnAwake()
+        public EntityManager(World world)
         {
-            base.OnAwake();
-
-            var physicsWorldProvider = Components.GetComponent<IPhysicsWorldProvider>().AssertNotNull();
-            world = physicsWorldProvider.GetWorld();
-
-            var executor = Components.GetComponent<ISceneOrderExecutor>().AssertNotNull();
-            executor.GetPostUpdateExecutor().StartCoroutine(Update());
+            this.world = world;
         }
 
-        private IEnumerator<IYieldInstruction> Update()
+        public void Update()
         {
-            while (true)
+            if (removeBodies.Count > 0)
             {
-                if (removeBodies.Count > 0)
-                {
-                    RemoveBodies();
-                }
+                RemoveBodies();
+            }
 
-                if (addBodies.Count > 0)
-                {
-                    AddBodies();
-                }
-                yield return null;
+            if (addBodies.Count > 0)
+            {
+                AddBodies();
             }
         }
 
@@ -49,7 +34,10 @@ namespace Physics.Box2D.Components
         {
             foreach (var addBody in addBodies)
             {
-                var body = world.CreateCharacter(addBody.BodyDefinition, addBody.BodyDefinition.FixtureDefinition);
+                var bodyDefinition = addBody.BodyDefinition;
+                var fixtureDefinition = addBody.FixtureDefinition;
+                var body = WorldUtils.CreateCharacter(world, bodyDefinition, fixtureDefinition);
+
                 bodies.Add(addBody.Id, body);
             }
 
@@ -81,7 +69,9 @@ namespace Physics.Box2D.Components
 
         public Body GetBody(int id)
         {
-            return bodies.TryGetValue(id, out var body) ? body : null;
+            bodies.TryGetValue(id, out var body);
+
+            return body;
         }
     }
 }
