@@ -7,6 +7,6 @@
         public static float PositionIterations = 3;
         public static float UpdatesPerSecond = 30.0f;
         public static float FramesPerSecond = 30.0f;
-        public static float TeleportationDistance = 1.0f;
+        public static float MaxTravelDistance = 1.0f;
     }
 }
