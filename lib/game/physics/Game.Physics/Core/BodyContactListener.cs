@@ -3,7 +3,7 @@ using Box2DX.Dynamics;
 
 namespace Physics.Box2D.Core
 {
-    public class ContactListenerModified : ContactListener
+    public class BodyContactListener : ContactListener
     {
         public void BeginContact(Contact contact)
         {
