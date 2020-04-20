@@ -5,50 +5,40 @@ namespace Physics.Box2D.Core
 {
     public class ContactListenerModified : ContactListener
     {
-        public override void Add(ContactPoint point)
+        public void BeginContact(Contact contact)
         {
-            base.Add(point);
-
-            if (!CanContact(point.Shape1.FilterData, point.Shape2.FilterData))
+            if (contact.FixtureA.UserData is IPhysicsCollisionCallback fixtureA)
             {
-                return;
+                fixtureA.OnCollisionEnter(contact.FixtureB.Body);
             }
 
-            var userData1 = point.Shape1.UserData as IPhysicsCollisionCallback;
-            var userData2 = point.Shape2.UserData as IPhysicsCollisionCallback;
-
-            userData1?.OnCollisionEnter(new CollisionInfo(point.Shape2.GetBody(), point.Position.ToVector2(), point.Velocity.ToVector2(), point.Normal.ToVector2()));
-            userData2?.OnCollisionEnter(new CollisionInfo(point.Shape1.GetBody(), point.Position.ToVector2(), point.Velocity.ToVector2(), point.Normal.ToVector2()));
+            if (contact.FixtureB.UserData is IPhysicsCollisionCallback fixtureB)
+            {
+                fixtureB.OnCollisionEnter(contact.FixtureA.Body);
+            }
         }
 
-        public override void Remove(ContactPoint point)
+        public void EndContact(Contact contact)
         {
-            base.Remove(point);
-
-            if (!CanContact(point.Shape1.FilterData, point.Shape2.FilterData))
+            if (contact.FixtureA.UserData is IPhysicsCollisionCallback fixtureA)
             {
-                return;
+                fixtureA.OnCollisionExit(contact.FixtureB.Body);
             }
 
-            var userData1 = point.Shape1.UserData as IPhysicsCollisionCallback;
-            var userData2 = point.Shape2.UserData as IPhysicsCollisionCallback;
-
-            userData1?.OnCollisionExit(new CollisionInfo(point.Shape2.GetBody(), point.Position.ToVector2(), point.Velocity.ToVector2(), point.Normal.ToVector2()));
-            userData2?.OnCollisionExit(new CollisionInfo(point.Shape1.GetBody(), point.Position.ToVector2(), point.Velocity.ToVector2(), point.Normal.ToVector2()));
+            if (contact.FixtureB.UserData is IPhysicsCollisionCallback fixtureB)
+            {
+                fixtureB.OnCollisionExit(contact.FixtureA.Body);
+            }
         }
 
-        /// <summary>
-        /// Disallow collision with fixtures with same layer mask and with ground.
-        /// </summary>
-        private bool CanContact(FilterData filterData1, FilterData filterData2)
+        public void PreSolve(Contact contact, Manifold oldManifold)
         {
-            if (filterData1.GroupIndex == (short)LayerMask.Ground
-                || filterData2.GroupIndex == (short)LayerMask.Ground)
-            {
-                return false;
-            }
+            // Left blank intentionally
+        }
 
-            return filterData1.GroupIndex != filterData2.GroupIndex;
+        public void PostSolve(Contact contact, ContactImpulse impulse)
+        {
+            // Left blank intentionally
         }
     }
 }
