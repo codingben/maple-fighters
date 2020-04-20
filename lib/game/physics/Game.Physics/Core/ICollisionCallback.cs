@@ -2,7 +2,7 @@
 
 namespace Physics.Box2D.Core
 {
-    public interface IPhysicsCollisionCallback
+    public interface ICollisionCallback
     {
         void OnCollisionEnter(Body otherBody);
 
