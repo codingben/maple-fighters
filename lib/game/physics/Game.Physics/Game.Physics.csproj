@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <PackageReference Include="Box2D.NetStandard" Version="1.0.1" />
+    <PackageReference Include="Common.MathematicsHelper" Version="1.0.0" />
   </ItemGroup>
 
 </Project>
