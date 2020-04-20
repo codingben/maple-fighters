@@ -7,12 +7,12 @@ namespace Physics.Box2D.Core
     {
         public void BeginContact(Contact contact)
         {
-            if (contact.FixtureA.UserData is IPhysicsCollisionCallback fixtureA)
+            if (contact.FixtureA.UserData is ICollisionCallback fixtureA)
             {
                 fixtureA.OnCollisionEnter(contact.FixtureB.Body);
             }
 
-            if (contact.FixtureB.UserData is IPhysicsCollisionCallback fixtureB)
+            if (contact.FixtureB.UserData is ICollisionCallback fixtureB)
             {
                 fixtureB.OnCollisionEnter(contact.FixtureA.Body);
             }
@@ -20,12 +20,12 @@ namespace Physics.Box2D.Core
 
         public void EndContact(Contact contact)
         {
-            if (contact.FixtureA.UserData is IPhysicsCollisionCallback fixtureA)
+            if (contact.FixtureA.UserData is ICollisionCallback fixtureA)
             {
                 fixtureA.OnCollisionExit(contact.FixtureB.Body);
             }
 
-            if (contact.FixtureB.UserData is IPhysicsCollisionCallback fixtureB)
+            if (contact.FixtureB.UserData is ICollisionCallback fixtureB)
             {
                 fixtureB.OnCollisionExit(contact.FixtureA.Body);
             }
