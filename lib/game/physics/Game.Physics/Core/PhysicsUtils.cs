@@ -6,10 +6,6 @@ namespace Physics.Box2D.Core
 {
     public static class PhysicsUtils
     {
-        public const float UpdatesPerSecond = 30.0f;
-        public const float FramesPerSecond = 30.0f;
-        public const float TeleportDistance = 1.0f;
-
         public static void CreateGround(
             World world,
             Vector2 position,
