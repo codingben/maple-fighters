@@ -6,7 +6,7 @@ using Physics.Box2D.Core;
 
 namespace Physics.Box2D.Components
 {
-    public class PhysicsWorldSimulation : IDisposable
+    public class WorldWrapper : IDisposable
     {
         private World world;
 
