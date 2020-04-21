@@ -7,14 +7,14 @@ namespace Physics.Box2D.Components
 {
     public class EntityManager : IEntityManager
     {
-        private readonly World world;
-        private readonly List<BodyInfo> addBodies = new List<BodyInfo>(); 
-        private readonly List<Body> removeBodies = new List<Body>(); 
-        private readonly Dictionary<int, Body> bodies = new Dictionary<int, Body>();
+        private readonly IWorldProvider worldProvider;
+        private readonly IList<BodyInfo> addBodies = new List<BodyInfo>(); 
+        private readonly IList<Body> removeBodies = new List<Body>(); 
+        private readonly IDictionary<int, Body> bodies = new Dictionary<int, Body>();
 
-        public EntityManager(World world)
+        public EntityManager(IWorldProvider worldProvider)
         {
-            this.world = world;
+            this.worldProvider = worldProvider;
         }
 
         public void Update()
@@ -34,12 +34,16 @@ namespace Physics.Box2D.Components
         {
             foreach (var addBody in addBodies)
             {
-                var newBody = WorldUtils.CreateCharacter(
-                    world,
-                    addBody.BodyDefinition,
-                    addBody.FixtureDefinition);
+                var world = worldProvider.GetWorld();
+                if (world != null)
+                {
+                    var newBody = WorldUtils.CreateCharacter(
+                        world,
+                        addBody.BodyDefinition,
+                        addBody.FixtureDefinition);
 
-                bodies.Add(addBody.Id, newBody);
+                    bodies.Add(addBody.Id, newBody);
+                }
             }
 
             addBodies.Clear();
@@ -49,7 +53,8 @@ namespace Physics.Box2D.Components
         {
             foreach (var removeBody in removeBodies)
             {
-                world.DestroyBody(removeBody);
+                var world = worldProvider.GetWorld();
+                world?.DestroyBody(removeBody);
             }
 
             removeBodies.Clear();
