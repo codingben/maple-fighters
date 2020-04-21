@@ -22,13 +22,15 @@ namespace Physics.Box2D.Core
         public static PolygonDef CreateFixtureDefinition(
             Vector2 size,
             LayerMask layerMask,
-            object userData = null)
+            object userData = null,
+            float density = 1.0f,
+            float friction = 4.0f)
         {
             var polygonDefinition = new PolygonDef
             {
                 UserData = userData,
-                Density = 1.0f,
-                Friction = 4.0f,
+                Density = density,
+                Friction = friction,
                 Filter = new FilterData
                 {
                     GroupIndex = (short)layerMask
