@@ -6,18 +6,14 @@ namespace Physics.Box2D.Core
     {
         public int Id { get; }
 
-        public BodyDef BodyDefinition { get; }
-
-        public PolygonDef FixtureDefinition { get; }
+        public Body Body { get; }
 
         public BodyData(
             int id,
-            BodyDef bodyDefinition,
-            PolygonDef fixtureDefinition)
+            Body body)
         {
             Id = id;
-            BodyDefinition = bodyDefinition;
-            FixtureDefinition = fixtureDefinition;
+            Body = body;
         }
     }
 }
