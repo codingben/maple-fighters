@@ -34,11 +34,12 @@ namespace Physics.Box2D.Components
         {
             foreach (var addBody in addBodies)
             {
-                var bodyDefinition = addBody.BodyDefinition;
-                var fixtureDefinition = addBody.FixtureDefinition;
-                var body = WorldUtils.CreateCharacter(world, bodyDefinition, fixtureDefinition);
+                var newBody = WorldUtils.CreateCharacter(
+                    world,
+                    addBody.BodyDefinition,
+                    addBody.FixtureDefinition);
 
-                bodies.Add(addBody.Id, body);
+                bodies.Add(addBody.Id, newBody);
             }
 
             addBodies.Clear();
