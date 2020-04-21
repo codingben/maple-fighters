@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Physics.Box2D
+namespace Game.Physics
 {
     public class EntityManager : IDisposable
     {
