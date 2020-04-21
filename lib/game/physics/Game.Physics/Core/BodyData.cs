@@ -2,7 +2,7 @@
 
 namespace Physics.Box2D.Core
 {
-    public struct BodyInfo
+    public struct BodyData
     {
         public int Id { get; }
 
@@ -10,18 +10,14 @@ namespace Physics.Box2D.Core
 
         public PolygonDef FixtureDefinition { get; }
 
-        public object UserData { get; }
-
-        public BodyInfo(
+        public BodyData(
             int id,
             BodyDef bodyDefinition,
-            PolygonDef fixtureDefinition,
-            object userData)
+            PolygonDef fixtureDefinition)
         {
             Id = id;
             BodyDefinition = bodyDefinition;
             FixtureDefinition = fixtureDefinition;
-            UserData = userData;
         }
     }
 }
