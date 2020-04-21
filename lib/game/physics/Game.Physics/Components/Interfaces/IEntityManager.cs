@@ -1,5 +1,4 @@
-﻿using Box2DX.Dynamics;
-using Physics.Box2D.Core;
+﻿using Physics.Box2D.Core;
 
 namespace Physics.Box2D.Components.Interfaces
 {
@@ -7,10 +6,10 @@ namespace Physics.Box2D.Components.Interfaces
     {
         void Update();
 
-        void AddBody(BodyInfo bodyInfo);
+        void AddBody(BodyData bodyData);
 
         void RemoveBody(int id);
 
-        Body GetBody(int id);
+        BodyData GetBody(int id);
     }
 }
