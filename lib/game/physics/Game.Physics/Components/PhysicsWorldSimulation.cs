@@ -1,6 +1,7 @@
 ﻿using System;
 using Box2DX.Collision;
 using Box2DX.Dynamics;
+using Common.MathematicsHelper;
 using Physics.Box2D.Core;
 
 namespace Physics.Box2D.Components
@@ -9,20 +10,23 @@ namespace Physics.Box2D.Components
     {
         private readonly World world;
 
-        public PhysicsWorldSimulation(PhysicsWorldInfo worldInfo)
+        public PhysicsWorldSimulation(
+            Vector2 lowerBound,
+            Vector2 upperBound,
+            Vector2 gravity,
+            bool doSleep = true,
+            bool continuousPhysics = false)
         {
             var worldAabb = new AABB
             {
-                LowerBound = worldInfo.LowerBound.FromVector2(),
-                UpperBound = worldInfo.UpperBound.FromVector2()
+                LowerBound = lowerBound.FromVector2(),
+                UpperBound = upperBound.FromVector2()
             };
-            var gravity = worldInfo.Gravity.FromVector2();
-            var doSleep = worldInfo.DoSleep;
 
-            world = new World(worldAabb, gravity, doSleep);
+            world = new World(worldAabb, gravity.FromVector2(), doSleep);
             world.SetContactFilter(new GroupContactFilter());
             world.SetContactListener(new BodyContactListener());
-            world.SetContinuousPhysics(false);
+            world.SetContinuousPhysics(continuousPhysics);
         }
 
         public void SimulateWorld()
