@@ -34,7 +34,7 @@ namespace Physics.Box2D.Components
         {
             foreach (var addBody in addBodies)
             {
-                var world = worldProvider.GetWorld();
+                var world = worldProvider.Provide();
                 if (world != null)
                 {
                     var newBody = WorldUtils.CreateCharacter(
@@ -53,7 +53,7 @@ namespace Physics.Box2D.Components
         {
             foreach (var removeBody in removeBodies)
             {
-                var world = worldProvider.GetWorld();
+                var world = worldProvider.Provide();
                 world?.DestroyBody(removeBody);
             }
 
