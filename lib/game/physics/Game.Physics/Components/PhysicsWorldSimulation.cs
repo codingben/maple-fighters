@@ -8,9 +8,9 @@ namespace Physics.Box2D.Components
 {
     public class PhysicsWorldSimulation : IDisposable
     {
-        private readonly World world;
+        private World world;
 
-        public PhysicsWorldSimulation(
+        public void CreateWorldSimulation(
             Vector2 lowerBound,
             Vector2 upperBound,
             Vector2 gravity,
@@ -27,6 +27,11 @@ namespace Physics.Box2D.Components
             world.SetContactFilter(new GroupContactFilter());
             world.SetContactListener(new BodyContactListener());
             world.SetContinuousPhysics(continuousPhysics);
+        }
+
+        public World GetWorld()
+        {
+            return world;
         }
 
         public void SimulateWorld()
