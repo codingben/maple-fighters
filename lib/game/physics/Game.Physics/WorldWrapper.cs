@@ -2,9 +2,8 @@
 using Box2DX.Collision;
 using Box2DX.Dynamics;
 using Common.MathematicsHelper;
-using Physics.Box2D;
 
-namespace Physics.Box2D.Components
+namespace Physics.Box2D
 {
     public class WorldWrapper : IDisposable
     {

@@ -1,6 +1,6 @@
 ﻿using Box2DX.Dynamics;
 
-namespace Physics.Box2D.Components.Interfaces
+namespace Physics.Box2D
 {
     public interface IWorldProvider
     {
