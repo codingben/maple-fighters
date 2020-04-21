@@ -2,7 +2,7 @@
 
 namespace Physics.Box2D.Components.Interfaces
 {
-    public interface IPhysicsWorldProvider
+    public interface IWorldProvider
     {
         World GetWorld();
     }
