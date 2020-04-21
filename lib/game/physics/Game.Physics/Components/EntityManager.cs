@@ -1,20 +1,32 @@
-﻿using System.Collections.Generic;
-using Box2DX.Dynamics;
+﻿using System;
+using System.Collections.Generic;
 using Physics.Box2D.Components.Interfaces;
 using Physics.Box2D.Core;
 
 namespace Physics.Box2D.Components
 {
-    public class EntityManager : IEntityManager
+    public class EntityManager : IDisposable
     {
         private readonly IWorldProvider worldProvider;
-        private readonly IList<BodyInfo> addBodies = new List<BodyInfo>(); 
-        private readonly IList<Body> removeBodies = new List<Body>(); 
-        private readonly IDictionary<int, Body> bodies = new Dictionary<int, Body>();
+
+        private readonly LinkedList<BodyData> addBodies;
+        private readonly LinkedList<BodyData> removeBodies;
+
+        private readonly Dictionary<int, BodyData> bodies;
 
         public EntityManager(IWorldProvider worldProvider)
         {
             this.worldProvider = worldProvider;
+
+            addBodies = new LinkedList<BodyData>();
+            removeBodies = new LinkedList<BodyData>();
+
+            bodies = new Dictionary<int, BodyData>();
+        }
+
+        public void Dispose()
+        {
+            RemoveAllBodies();
         }
 
         public void Update()
@@ -32,17 +44,12 @@ namespace Physics.Box2D.Components
 
         private void AddBodies()
         {
-            foreach (var addBody in addBodies)
+            foreach (var bodyData in addBodies)
             {
                 var world = worldProvider.Provide();
                 if (world != null)
                 {
-                    var newBody = WorldUtils.CreateCharacter(
-                        world,
-                        addBody.BodyDefinition,
-                        addBody.FixtureDefinition);
-
-                    bodies.Add(addBody.Id, newBody);
+                    bodies.Add(bodyData.Id, bodyData);
                 }
             }
 
@@ -51,18 +58,18 @@ namespace Physics.Box2D.Components
 
         private void RemoveBodies()
         {
-            foreach (var removeBody in removeBodies)
+            foreach (var bodyData in removeBodies)
             {
                 var world = worldProvider.Provide();
-                world?.DestroyBody(removeBody);
+                world?.DestroyBody(bodyData.Body);
             }
 
             removeBodies.Clear();
         }
 
-        public void AddBody(BodyInfo bodyInfo)
+        public void AddBody(BodyData bodyData)
         {
-            addBodies.Add(bodyInfo);
+            addBodies.AddLast(bodyData);
         }
 
         public void RemoveBody(int id)
@@ -70,10 +77,20 @@ namespace Physics.Box2D.Components
             var body = bodies[id];
             bodies.Remove(id);
 
-            removeBodies.Add(body);
+            removeBodies.AddLast(body);
         }
 
-        public Body GetBody(int id)
+        public void RemoveAllBodies()
+        {
+            foreach (var body in bodies.Values)
+            {
+                removeBodies.AddLast(body);
+            }
+
+            bodies.Clear();
+        }
+
+        public BodyData GetBody(int id)
         {
             bodies.TryGetValue(id, out var body);
 
