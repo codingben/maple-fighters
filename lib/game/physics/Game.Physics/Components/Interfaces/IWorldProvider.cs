@@ -4,6 +4,6 @@ namespace Physics.Box2D.Components.Interfaces
 {
     public interface IWorldProvider
     {
-        World GetWorld();
+        World Provide();
     }
 }
