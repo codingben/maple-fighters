@@ -9,8 +9,4 @@
     <PackageReference Include="Common.MathematicsHelper" Version="1.0.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Core\" />
-  </ItemGroup>
-
 </Project>
