@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Physics.Box2D.Components.Interfaces;
-using Physics.Box2D.Core;
+using Physics.Box2D;
 
 namespace Physics.Box2D.Components
 {

@@ -2,7 +2,7 @@
 using Box2DX.Collision;
 using Box2DX.Dynamics;
 using Common.MathematicsHelper;
-using Physics.Box2D.Core;
+using Physics.Box2D;
 
 namespace Physics.Box2D.Components
 {

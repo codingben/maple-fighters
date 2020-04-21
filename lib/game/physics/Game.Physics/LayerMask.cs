@@ -1,4 +1,4 @@
-﻿namespace Physics.Box2D.Core
+﻿namespace Physics.Box2D
 {
     public enum LayerMask : short
     {
