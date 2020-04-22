@@ -27,18 +27,5 @@ namespace Game.Physics
             body.CreateFixture(polygonDefinition);
             body.SetMassFromShapes();
         }
-
-        public static Body CreateCharacter(
-            World world,
-            BodyDef bodyDefinition,
-            PolygonDef polygonDefinition)
-        {
-            var body = world.CreateBody(bodyDefinition);
-            body.SetUserData(bodyDefinition.UserData);
-            body.CreateFixture(polygonDefinition);
-            body.SetMassFromShapes();
-
-            return body;
-        }
     }
 }
