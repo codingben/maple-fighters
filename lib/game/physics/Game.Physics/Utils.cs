@@ -3,7 +3,7 @@ using Common.MathematicsHelper;
 
 namespace Game.Physics
 {
-    public static class WorldUtils
+    public static class Utils
     {
         public static void CreateGround(
             World world,
