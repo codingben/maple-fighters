@@ -5,20 +5,18 @@ namespace Game.Physics
 {
     public class EntityManager : IDisposable
     {
-        private readonly IWorldProvider worldProvider;
+        private readonly IWorldWrapper worldWrapper;
 
         private readonly LinkedList<BodyData> addBodies;
         private readonly LinkedList<BodyData> removeBodies;
-
         private readonly Dictionary<int, BodyData> bodies;
 
-        public EntityManager(IWorldProvider worldProvider)
+        public EntityManager(IWorldWrapper worldWrapper)
         {
-            this.worldProvider = worldProvider;
+            this.worldWrapper = worldWrapper;
 
             addBodies = new LinkedList<BodyData>();
             removeBodies = new LinkedList<BodyData>();
-
             bodies = new Dictionary<int, BodyData>();
         }
 
@@ -44,11 +42,7 @@ namespace Game.Physics
         {
             foreach (var bodyData in addBodies)
             {
-                var world = worldProvider.Provide();
-                if (world != null)
-                {
-                    bodies.Add(bodyData.Id, bodyData);
-                }
+                bodies.Add(bodyData.Id, bodyData);
             }
 
             addBodies.Clear();
@@ -58,8 +52,7 @@ namespace Game.Physics
         {
             foreach (var bodyData in removeBodies)
             {
-                var world = worldProvider.Provide();
-                world?.DestroyBody(bodyData.Body);
+                worldWrapper?.DestroyBody(bodyData.Body);
             }
 
             removeBodies.Clear();
