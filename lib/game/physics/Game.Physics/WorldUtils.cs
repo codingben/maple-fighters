@@ -9,8 +9,8 @@ namespace Game.Physics
             World world,
             Vector2 position,
             Vector2 size,
-            float density = 0.0f,
-            LayerMask layerMask = LayerMask.Ground)
+            short groupIndex,
+            float density = 0.0f)
         {
             var bodyDefinition = new BodyDef();
             bodyDefinition.Position.Set(position.X, position.Y);
@@ -20,7 +20,7 @@ namespace Game.Physics
             boxDefinition.Density = density;
             boxDefinition.Filter = new FilterData
             {
-                GroupIndex = (short)layerMask
+                GroupIndex = groupIndex
             };
 
             var body = world.CreateBody(bodyDefinition);
