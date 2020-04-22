@@ -21,7 +21,7 @@ namespace Game.Physics
 
         public static PolygonDef CreateFixtureDefinition(
             Vector2 size,
-            LayerMask layerMask,
+            short groupIndex,
             object userData = null,
             float density = 1.0f,
             float friction = 4.0f)
@@ -33,7 +33,7 @@ namespace Game.Physics
                 Friction = friction,
                 Filter = new FilterData
                 {
-                    GroupIndex = (short)layerMask
+                    GroupIndex = groupIndex
                 }
             };
             polygonDefinition.SetAsBox(size.X, size.Y);
