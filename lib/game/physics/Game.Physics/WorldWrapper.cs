@@ -7,9 +7,9 @@ namespace Game.Physics
 {
     public class WorldWrapper : IDisposable
     {
-        private World world;
+        private readonly World world;
 
-        public void CreateWorldSimulation(
+        public WorldWrapper(
             Vector2 lowerBound,
             Vector2 upperBound,
             Vector2 gravity,
@@ -26,20 +26,6 @@ namespace Game.Physics
             world.SetContactFilter(new GroupContactFilter());
             world.SetContactListener(new BodyContactListener());
             world.SetContinuousPhysics(continuousPhysics);
-        }
-
-        public World GetWorld()
-        {
-            return world;
-        }
-
-        public void SimulateWorld()
-        {
-            var timeStep = PhysicsSettings.TimeStep;
-            var velocityIterations = PhysicsSettings.VelocityIterations;
-            var positionIterations = PhysicsSettings.PositionIterations;
-
-            world.Step(timeStep, velocityIterations, positionIterations);
         }
 
         public void Dispose()
