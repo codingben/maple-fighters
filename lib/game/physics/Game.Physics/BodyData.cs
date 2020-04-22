@@ -8,9 +8,7 @@ namespace Game.Physics
 
         public Body Body { get; }
 
-        public BodyData(
-            int id,
-            Body body)
+        public BodyData(int id, Body body)
         {
             Id = id;
             Body = body;
