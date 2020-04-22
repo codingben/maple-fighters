@@ -15,16 +15,16 @@ namespace Game.Physics
             var bodyDefinition = new BodyDef();
             bodyDefinition.Position.Set(position.X, position.Y);
 
-            var boxDefinition = new PolygonDef();
-            boxDefinition.SetAsBox(size.X, size.Y);
-            boxDefinition.Density = density;
-            boxDefinition.Filter = new FilterData
+            var polygonDefinition = new PolygonDef();
+            polygonDefinition.SetAsBox(size.X, size.Y);
+            polygonDefinition.Density = density;
+            polygonDefinition.Filter = new FilterData
             {
                 GroupIndex = groupIndex
             };
 
             var body = world.CreateBody(bodyDefinition);
-            body.CreateFixture(boxDefinition);
+            body.CreateFixture(polygonDefinition);
             body.SetMassFromShapes();
         }
 
