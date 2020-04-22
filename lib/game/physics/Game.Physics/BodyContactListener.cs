@@ -7,27 +7,47 @@ namespace Game.Physics
     {
         public void BeginContact(Contact contact)
         {
-            if (contact.FixtureA.UserData is ICollisionCallback fixtureA)
             {
-                fixtureA.OnCollisionEnter(contact.FixtureB.Body);
+                var userData = contact.FixtureA.UserData;
+                var body = contact.FixtureB.Body;
+
+                if (userData is IContactEvents contactEvents)
+                {
+                    contactEvents.OnBeginContact(body);
+                }
             }
 
-            if (contact.FixtureB.UserData is ICollisionCallback fixtureB)
             {
-                fixtureB.OnCollisionEnter(contact.FixtureA.Body);
+                var userData = contact.FixtureB.UserData;
+                var body = contact.FixtureA.Body;
+
+                if (userData is IContactEvents contactEvents)
+                {
+                    contactEvents.OnBeginContact(body);
+                }
             }
         }
 
         public void EndContact(Contact contact)
         {
-            if (contact.FixtureA.UserData is ICollisionCallback fixtureA)
             {
-                fixtureA.OnCollisionExit(contact.FixtureB.Body);
+                var userData = contact.FixtureA.UserData;
+                var body = contact.FixtureB.Body;
+
+                if (userData is IContactEvents contactEvents)
+                {
+                    contactEvents.OnEndContact(body);
+                }
             }
 
-            if (contact.FixtureB.UserData is ICollisionCallback fixtureB)
             {
-                fixtureB.OnCollisionExit(contact.FixtureA.Body);
+                var userData = contact.FixtureB.UserData;
+                var body = contact.FixtureA.Body;
+
+                if (userData is IContactEvents contactEvents)
+                {
+                    contactEvents.OnEndContact(body);
+                }
             }
         }
 
