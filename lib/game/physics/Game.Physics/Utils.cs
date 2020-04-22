@@ -19,7 +19,7 @@ namespace Game.Physics
             return bodyDefinition;
         }
 
-        public static PolygonDef CreateFixtureDefinition(
+        public static PolygonDef CreatePolygonDefinition(
             Vector2 size,
             short groupIndex,
             object userData = null,
@@ -41,7 +41,7 @@ namespace Game.Physics
             return polygonDefinition;
         }
 
-        public static void CreateGround(
+        public static void CreateBox(
             World world,
             Vector2 position,
             Vector2 size,
