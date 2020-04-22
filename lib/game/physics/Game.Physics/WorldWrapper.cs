@@ -1,11 +1,10 @@
-﻿using System;
-using Box2DX.Collision;
+﻿using Box2DX.Collision;
 using Box2DX.Dynamics;
 using Common.MathematicsHelper;
 
 namespace Game.Physics
 {
-    public class WorldWrapper : IDisposable
+    public class WorldWrapper : IWorldWrapper
     {
         private readonly World world;
 
@@ -32,6 +31,26 @@ namespace Game.Physics
         {
             world.SetDebugDraw(null);
             world.Dispose();
+        }
+
+        public Body CreateBody(BodyDef bodyDefinition, PolygonDef polygonDefinition)
+        {
+            var body = world.CreateBody(bodyDefinition);
+            body.SetUserData(bodyDefinition.UserData);
+            body.CreateFixture(polygonDefinition);
+            body.SetMassFromShapes();
+
+            return body;
+        }
+
+        public void DestroyBody(Body body)
+        {
+            world.DestroyBody(body);
+        }
+
+        public World GetWorld()
+        {
+            return world;
         }
     }
 }
