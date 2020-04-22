@@ -5,6 +5,19 @@ namespace Game.Physics
 {
     public static class BodyUtils
     {
+        public static Body CreateBody(
+            World world,
+            BodyDef bodyDefinition,
+            PolygonDef polygonDefinition)
+        {
+            var body = world.CreateBody(bodyDefinition);
+            body.SetUserData(bodyDefinition.UserData);
+            body.CreateFixture(polygonDefinition);
+            body.SetMassFromShapes();
+
+            return body;
+        }
+
         public static void MoveBody(Body body, Vector2 position, float speed)
         {
             var direction = position - body.GetPosition().ToVector2();
