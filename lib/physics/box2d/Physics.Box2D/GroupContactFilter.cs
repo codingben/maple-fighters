@@ -1,6 +1,6 @@
 ﻿using Box2DX.Dynamics;
 
-namespace Game.Physics
+namespace Physics.Box2D
 {
     public class GroupContactFilter : ContactFilter
     {

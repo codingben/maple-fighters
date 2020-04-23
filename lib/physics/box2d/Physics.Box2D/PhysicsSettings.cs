@@ -1,4 +1,4 @@
-﻿namespace Game.Physics
+﻿namespace Physics.Box2D
 {
     public static class PhysicsSettings
     {

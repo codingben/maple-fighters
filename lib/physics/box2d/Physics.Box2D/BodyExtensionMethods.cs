@@ -1,7 +1,7 @@
 ﻿using Box2DX.Dynamics;
 using Common.MathematicsHelper;
 
-namespace Game.Physics
+namespace Physics.Box2D
 {
     public static class BodyExtensionMethods
     {
