@@ -6,7 +6,7 @@ namespace InterestManagement
     public interface ITransform
     {
         /// <summary>
-        /// The notifier of the new position.
+        /// Occurs when a position has changed.
         /// </summary>
         event Action PositionChanged;
 
