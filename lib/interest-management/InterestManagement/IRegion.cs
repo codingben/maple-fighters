@@ -8,12 +8,12 @@ namespace InterestManagement
         where TObject : ISceneObject
     {
         /// <summary>
-        /// The notifier of the new subscriber to the region.
+        /// Occurs when a new subscriber enters the region.
         /// </summary>
         event Action<TObject> SubscriberAdded;
 
         /// <summary>
-        /// The notifier of the removed subscriber from the region.
+        /// Occurs when a subscriber leaves the region.
         /// </summary>
         event Action<TObject> SubscriberRemoved;
 
