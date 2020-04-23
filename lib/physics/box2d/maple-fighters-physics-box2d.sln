@@ -1,0 +1,36 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29926.136
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "lib", "lib", "{B2ACA16F-E0E9-4C24-A4CA-2BEF4775EB8D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "physics", "physics", "{AD4C7E71-63A6-4CF1-B558-DB4FBC355871}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "box2d", "box2d", "{988CA18B-746B-4D12-8C88-739F0D9F9879}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Physics.Box2D", "Physics.Box2D\Physics.Box2D.csproj", "{EB2E6A4F-B787-4C0B-9E47-59D09FF9B4B8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EB2E6A4F-B787-4C0B-9E47-59D09FF9B4B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB2E6A4F-B787-4C0B-9E47-59D09FF9B4B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB2E6A4F-B787-4C0B-9E47-59D09FF9B4B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EB2E6A4F-B787-4C0B-9E47-59D09FF9B4B8}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{AD4C7E71-63A6-4CF1-B558-DB4FBC355871} = {B2ACA16F-E0E9-4C24-A4CA-2BEF4775EB8D}
+		{988CA18B-746B-4D12-8C88-739F0D9F9879} = {AD4C7E71-63A6-4CF1-B558-DB4FBC355871}
+		{EB2E6A4F-B787-4C0B-9E47-59D09FF9B4B8} = {988CA18B-746B-4D12-8C88-739F0D9F9879}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A9D62E12-CEAD-4D61-88A3-38D782FCD3B8}
+	EndGlobalSection
+EndGlobal
