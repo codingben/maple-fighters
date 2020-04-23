@@ -6,7 +6,7 @@ namespace InterestManagement
         where TObject : ISceneObject
     {
         /// <summary>
-        /// Gets the notifier of the interest area events.
+        /// Gets the area of interest of the events.
         /// </summary>
         INearbySceneObjectsEvents<TObject> NearbySceneObjectsEvents { get; }
     }
