@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Game.InterestManagement
+namespace InterestManagement
 {
     public class NearbySceneObjectsCollection<TObject> : INearbySceneObjectsEvents<TObject>
         where TObject : ISceneObject

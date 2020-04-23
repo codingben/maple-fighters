@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace Game.InterestManagement
+namespace InterestManagement
 {
     public class InterestArea<TObject> : IInterestArea<TObject>
         where TObject : ISceneObject

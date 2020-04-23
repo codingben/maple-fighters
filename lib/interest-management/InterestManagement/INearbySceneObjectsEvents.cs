@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Game.InterestManagement
+namespace InterestManagement
 {
     public interface INearbySceneObjectsEvents<out TObject> : IDisposable
         where TObject : ISceneObject

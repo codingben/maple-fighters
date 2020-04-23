@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Common.MathematicsHelper;
 
-namespace Game.InterestManagement
+namespace InterestManagement
 {
     public interface IMatrixRegion<TObject> : IDisposable
         where TObject : ISceneObject

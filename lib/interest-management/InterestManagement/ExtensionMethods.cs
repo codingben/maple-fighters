@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Common.MathematicsHelper;
 
-namespace Game.InterestManagement
+namespace InterestManagement
 {
     public static class ExtensionMethods
     {

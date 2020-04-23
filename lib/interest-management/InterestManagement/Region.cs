@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Common.MathematicsHelper;
 
-namespace Game.InterestManagement
+namespace InterestManagement
 {
     public struct Region<TObject> : IRegion<TObject>
         where TObject : ISceneObject

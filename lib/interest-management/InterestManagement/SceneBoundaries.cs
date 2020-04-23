@@ -1,6 +1,6 @@
 ﻿using Common.MathematicsHelper;
 
-namespace Game.InterestManagement
+namespace InterestManagement
 {
     public struct SceneBoundaries
     {

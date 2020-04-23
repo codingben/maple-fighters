@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Game.InterestManagement
+namespace InterestManagement
 {
     public interface IInterestArea<out TObject> : IDisposable
         where TObject : ISceneObject

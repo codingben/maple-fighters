@@ -1,7 +1,7 @@
 ﻿using System;
 using Common.MathematicsHelper;
 
-namespace Game.InterestManagement
+namespace InterestManagement
 {
     public interface ITransform
     {

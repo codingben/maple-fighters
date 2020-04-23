@@ -1,4 +1,4 @@
-﻿namespace Game.InterestManagement
+﻿namespace InterestManagement
 {
     public interface ISceneObject
     {
