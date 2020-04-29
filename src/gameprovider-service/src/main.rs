@@ -24,7 +24,7 @@ fn main() {
         .games
         .push(Game::new("My Game", "127.0.0.1", 1001));
 
-    for x in game_provider.games.iter() {
-        println!("Server: {} IP: {}:{}", x.name, x.ip, x.port);
+    for game in game_provider.games.iter() {
+        println!("Server: {} IP: {}:{}", game.name, game.ip, game.port);
     }
 }
