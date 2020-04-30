@@ -15,10 +15,14 @@ impl<'a> Game<'a> {
 }
 
 pub struct GameProvider<'a> {
-    pub games: Vec<Game<'a>>,
+    games: Vec<Game<'a>>,
 }
 
 impl<'a> GameProvider<'a> {
+    pub fn new() -> GameProvider<'a> {
+        GameProvider { games: Vec::new() }
+    }
+
     pub fn add(&mut self, game: Game<'a>) {
         self.games.push(game);
     }
