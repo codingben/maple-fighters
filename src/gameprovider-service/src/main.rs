@@ -1,22 +1,5 @@
-struct Game<'a> {
-    name: &'a str,
-    ip: &'a str,
-    port: i32,
-}
-
-impl<'a> Game<'a> {
-    fn new(name: &'a str, ip: &'a str, port: i32) -> Game<'a> {
-        Game {
-            name: name,
-            ip: ip,
-            port: port,
-        }
-    }
-}
-
-struct GameProvider<'a> {
-    games: Vec<Game<'a>>,
-}
+mod models;
+use models::*;
 
 fn main() {
     let mut game_provider = GameProvider { games: Vec::new() };
