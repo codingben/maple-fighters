@@ -17,3 +17,13 @@ impl<'a> Game<'a> {
 pub struct GameProvider<'a> {
     pub games: Vec<Game<'a>>,
 }
+
+impl<'a> GameProvider<'a> {
+    pub fn add(&mut self, game: Game<'a>) {
+        self.games.push(game);
+    }
+
+    pub fn get_all(&self) -> impl Iterator<Item = &Game<'a>> {
+        self.games.iter()
+    }
+}
