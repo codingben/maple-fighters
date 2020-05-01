@@ -1,3 +1,6 @@
+use serde::Deserialize;
+
+#[derive(Deserialize, Debug)]
 pub struct Game<'a> {
     pub name: &'a str,
     pub ip: &'a str,
