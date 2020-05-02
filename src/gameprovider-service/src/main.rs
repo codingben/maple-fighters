@@ -1,22 +1,21 @@
 mod models;
-use models::*;
-use serde_json::Result;
+use models::GameProvider;
+use serde_json;
+use std::fs::File;
+use std::path::Path;
 
-fn main() -> Result<()> {
-    let data = r#"
-    {
-        "name": "Game 1",
-        "ip": "127.0.0.1",
-        "port": 1025
-    }"#;
+fn get_gameprovider(path: &str) -> GameProvider {
+    let json_file_path = Path::new(path);
+    let json_file = File::open(json_file_path).expect("File not found");
+    let gameprovider: GameProvider =
+        serde_json::from_reader(json_file).expect("Could not read json");
 
-    let game: models::Game = serde_json::from_str(&data)?;
-    let mut gameprovider = GameProvider::new();
-    gameprovider.add(Game::new(game.name, game.ip, game.port));
+    return gameprovider;
+}
 
-    for x in gameprovider.get_all() {
-        println!("Server: {} IP: {}:{}", x.name, x.ip, x.port);
+fn main() {
+    let gameprovider = get_gameprovider("games.json");
+    for game in gameprovider.get_all() {
+        println!("Server: {} IP: {}:{}", game.name, game.ip, game.port);
     }
-
-    Ok(())
 }
