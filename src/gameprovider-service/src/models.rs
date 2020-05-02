@@ -1,14 +1,15 @@
 use serde::Deserialize;
 
-#[derive(Deserialize, Debug)]
-pub struct Game<'a> {
-    pub name: &'a str,
-    pub ip: &'a str,
+#[derive(Deserialize)]
+pub struct Game {
+    pub name: String,
+    pub ip: String,
     pub port: i32,
 }
 
-impl<'a> Game<'a> {
-    pub fn new(name: &'a str, ip: &'a str, port: i32) -> Game<'a> {
+#[allow(dead_code)]
+impl Game {
+    pub fn new(name: String, ip: String, port: i32) -> Game {
         Game {
             name: name,
             ip: ip,
@@ -17,20 +18,22 @@ impl<'a> Game<'a> {
     }
 }
 
-pub struct GameProvider<'a> {
-    games: Vec<Game<'a>>,
+#[derive(Deserialize)]
+pub struct GameProvider {
+    pub games: Vec<Game>,
 }
 
-impl<'a> GameProvider<'a> {
-    pub fn new() -> GameProvider<'a> {
+#[allow(dead_code)]
+impl GameProvider {
+    pub fn new() -> GameProvider {
         GameProvider { games: Vec::new() }
     }
 
-    pub fn add(&mut self, game: Game<'a>) {
+    pub fn add(&mut self, game: Game) {
         self.games.push(game);
     }
 
-    pub fn get_all(&self) -> impl Iterator<Item = &Game<'a>> {
+    pub fn get_all(&self) -> impl Iterator<Item = &Game> {
         self.games.iter()
     }
 }
