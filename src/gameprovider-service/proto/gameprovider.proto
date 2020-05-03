@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+import "google/protobuf/empty.proto";
+
+package game_provider;
+
+service GameProvider
+{
+    rpc GetGames(google.protobuf.Empty) returns (GameCollection);
+}
+
+message GameCollection
+{
+    message Game
+    {
+        string name = 1;
+        string ip = 2;
+        int32 port = 3;
+    }
+
+    repeated Game games = 1;
+}
