@@ -1,21 +1,48 @@
-mod models;
-use models::GameProvider;
-use serde_json;
-use std::fs::File;
-use std::path::Path;
+use tonic::{transport::Server, Request, Response, Status};
 
-fn get_gameprovider(path: &str) -> GameProvider {
-    let json_file_path = Path::new(path);
-    let json_file = File::open(json_file_path).expect("File not found");
-    let gameprovider: GameProvider =
-        serde_json::from_reader(json_file).expect("Could not read json");
+use game_provider::game_collection::Game;
+use game_provider::game_provider_server::{GameProvider, GameProviderServer};
+use game_provider::GameCollection;
 
-    return gameprovider;
+use std::error::Error;
+
+mod game_provider {
+    tonic::include_proto!("game_provider");
 }
 
-fn main() {
-    let gameprovider = get_gameprovider("games.json");
-    for game in gameprovider.get_all() {
-        println!("Server: {} IP: {}:{}", game.name, game.ip, game.port);
+mod models;
+
+#[derive(Debug, Default)]
+pub struct GameProviderData {
+    game_servers: Vec<Game>,
+}
+
+#[tonic::async_trait]
+impl GameProvider for GameProviderData {
+    async fn get_games(&self, _request: Request<()>) -> Result<Response<GameCollection>, Status> {
+        Ok(Response::new(GameCollection {
+            games: self.game_servers.to_vec(),
+        }))
     }
+}
+
+#[tokio::main]
+async fn main() -> Result<(), Box<dyn Error>> {
+    let address = "0.0.0.0:50051".parse()?;
+    let mut game_provider_data = GameProviderData::default();
+    let game_server_collection = models::GameServerCollection::new("gameServerData.json");
+    for game_server in game_server_collection.get_all() {
+        game_provider_data.game_servers.push(Game {
+            name: game_server.name.clone(),
+            ip: game_server.ip.clone(),
+            port: game_server.port.clone(),
+        });
+    }
+
+    Server::builder()
+        .add_service(GameProviderServer::new(game_provider_data))
+        .serve(address)
+        .await?;
+
+    Ok(())
 }
