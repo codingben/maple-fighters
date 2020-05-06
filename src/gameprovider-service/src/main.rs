@@ -33,10 +33,10 @@ async fn main() -> Result<(), Box<dyn Error>> {
     dotenv().expect("Could not find .env file");
 
     let address = env::var("IP_ADDRESS").expect("IP_ADDRESS not found");
-    let path = env::var("GAME_SERVER_DATA_PATH").expect("GAME_SERVER_DATA_PATH not found");
+    let data_path = env::var("DATABASE_PATH").expect("DATABASE_PATH not found");
     let address_parsed = address.parse()?;
     let mut game_provider_data = GameProviderData::default();
-    let game_server_collection = models::GameServerCollection::new(&path);
+    let game_server_collection = models::GameServerCollection::new(&data_path);
     for game_server in game_server_collection.get_all() {
         game_provider_data.game_servers.push(Game {
             name: game_server.name.clone(),
