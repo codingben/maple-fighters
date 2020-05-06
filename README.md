@@ -7,4 +7,5 @@ It is planned that the server-side will be able to accommodate a lot of players 
 | ---------------------------------------------------- | ------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | [auth-service](./src/auth-service)                   | C#            | Stores user data and verifies user. 			   															|
 | [game-service](./src/game-service)                   | C#            | Creates a player entity in the game world to play with others. It also creates player characters and objects of the game world (such as mobs, non-player characters, etc.). 	|
-| [gameprovider-service](./src/gameprovider-service)   | Rust          | Provides the list of game servers from a JSON file. 																|
+| [gameprovider-service](./src/gameprovider-service)   | Rust          | Provides the list of game servers. 																|
+| [character-service](./src/character-service)         | Rust          | Stores player character data. 																|
