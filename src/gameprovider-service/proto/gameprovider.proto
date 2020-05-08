@@ -6,10 +6,10 @@ package game_provider;
 
 service GameProvider
 {
-    rpc GetGames(google.protobuf.Empty) returns (GameCollection);
+    rpc GetGameCollection(google.protobuf.Empty) returns (GetGameCollectionResponse);
 }
 
-message GameCollection
+message GetGameCollectionResponse
 {
     message Game
     {
@@ -18,5 +18,5 @@ message GameCollection
         int32 port = 3;
     }
 
-    repeated Game games = 1;
+    repeated Game game_collection = 1;
 }
