@@ -1,8 +1,8 @@
 use tonic::{transport::Server, Request, Response, Status};
 
-use game_provider::game_collection::Game;
 use game_provider::game_provider_server::{GameProvider, GameProviderServer};
-use game_provider::GameCollection;
+use game_provider::get_game_collection_response::Game;
+use game_provider::GetGameCollectionResponse;
 
 use dotenv::dotenv;
 use std::env;
@@ -21,9 +21,12 @@ pub struct GameProviderData {
 
 #[tonic::async_trait]
 impl GameProvider for GameProviderData {
-    async fn get_games(&self, _request: Request<()>) -> Result<Response<GameCollection>, Status> {
-        Ok(Response::new(GameCollection {
-            games: self.game_servers.to_vec(),
+    async fn get_game_collection(
+        &self,
+        _request: Request<()>,
+    ) -> Result<Response<GetGameCollectionResponse>, Status> {
+        Ok(Response::new(GetGameCollectionResponse {
+            game_collection: self.game_servers.to_vec(),
         }))
     }
 }
