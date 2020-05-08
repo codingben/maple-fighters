@@ -6,10 +6,10 @@ package game_provider;
 
 service GameProvider
 {
-    rpc GetGameCollection(google.protobuf.Empty) returns (GetGameCollectionResponse);
+    rpc GetGameServers(google.protobuf.Empty) returns (GetGameServersResponse);
 }
 
-message GetGameCollectionResponse
+message GetGameServersResponse
 {
     message Game
     {
