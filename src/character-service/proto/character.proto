@@ -1,3 +1,33 @@
 syntax = "proto3";
 
 import "google/protobuf/empty.proto";
+
+service CharacterService
+{
+    rpc Create(CreateRequest) returns (CreateResponse);
+}
+
+message Character
+{
+    string name = 1;
+    byte index = 2;
+    byte classIndex = 3;
+    byte mapIndex = 4;
+}
+
+message CreateRequest
+{
+    Character character = 1;
+}
+
+message CreateResponse
+{
+    enum CharacterCreationStatus
+    {
+        FAILED = 0;
+        SUCCEED = 1;
+        NAME_ALREADY_IN_USE = 2;
+    }
+
+    CharacterCreationStatus character_creation_status = 1;
+}
