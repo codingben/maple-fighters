@@ -20,31 +20,31 @@ message LoginResponse
 {
 	enum LoginStatus
 	{
-		Failed = 0;
-		WrongEmail = 1;
-		WrongPassword = 2;
-		Succeed = 3;
+		FAILED = 0;
+		WRONG_EMAIL = 1;
+		WRONG_PASSWORD = 2;
+		SUCCEED = 3;
 	}
 
-	LoginStatus loginStatus = 1;
+	LoginStatus login_status = 1;
 }
 
 message RegisterRequest
 {
 	string email = 1;
 	string password = 2;
-	string firstName = 3;
-	string lastName = 4;
+	string first_name = 3;
+	string last_name = 4;
 }
 
 message RegisterResponse
 {
 	enum RegistrationStatus
 	{
-		Failed = 0;
-		EmailAlreadyInUse = 1;
-		Created = 2;
+		FAILED = 0;
+		EMAIL_ALREADY_IN_USE = 1;
+		CREATED = 2;
 	}
 
-	RegistrationStatus registrationStatus = 1;
+	RegistrationStatus registration_status = 1;
 }
