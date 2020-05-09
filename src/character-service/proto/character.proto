@@ -8,6 +8,7 @@ service CharacterService
     rpc Remove(RemoveRequest) returns (RemoveResponse);
     rpc Get(GetRequest) returns (GetResponse);
     rpc GetAll(GetAllRequest) returns (GetAllResponse);
+    rpc Update(UpdateRequest) returns (google.protobuf.Empty);
 }
 
 message Character
@@ -70,4 +71,10 @@ message GetAllRequest
 message GetAllResponse
 {
     repeated Character character_collection = 1;
+}
+
+message UpdateRequest
+{
+    int32 user_id = 1;
+    byte map_index = 2;
 }
