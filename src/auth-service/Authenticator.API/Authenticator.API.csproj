@@ -19,7 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Protobuf Include="Proto\authenticator.proto" GrpcServices="Server" ClientBaseType="LiteClientBase" />
+    <Protobuf Include="Proto\authenticator.proto" GrpcServices="Server" />
   </ItemGroup>
 
 </Project>
