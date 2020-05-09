@@ -2,7 +2,9 @@ syntax = "proto3";
 
 import "google/protobuf/empty.proto";
 
-service CharacterService
+package character;
+
+service Character
 {
     rpc Create(CreateRequest) returns (CreateResponse);
     rpc Remove(RemoveRequest) returns (RemoveResponse);
@@ -11,7 +13,7 @@ service CharacterService
     rpc Update(UpdateRequest) returns (google.protobuf.Empty);
 }
 
-message Character
+message CharacterData
 {
     string name = 1;
     byte index = 2;
@@ -21,7 +23,7 @@ message Character
 
 message CreateRequest
 {
-    Character character = 1;
+    CharacterData character_data = 1;
 }
 
 message CreateResponse
@@ -60,7 +62,7 @@ message GetRequest
 
 message GetResponse
 {
-    Character character = 1;
+    CharacterData character_data = 1;
 }
 
 message GetAllRequest
@@ -70,7 +72,7 @@ message GetAllRequest
 
 message GetAllResponse
 {
-    repeated Character character_collection = 1;
+    repeated CharacterData character_collection = 1;
 }
 
 message UpdateRequest
