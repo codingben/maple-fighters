@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Protos\authenticator.proto" />
+    <None Remove="Proto\authenticator.proto" />
   </ItemGroup>
 
   <ItemGroup>
@@ -19,7 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Protobuf Include="Protos\authenticator.proto" GrpcServices="Server" ClientBaseType="LiteClientBase" />
+    <Protobuf Include="Proto\authenticator.proto" GrpcServices="Server" ClientBaseType="LiteClientBase" />
   </ItemGroup>
 
 </Project>
