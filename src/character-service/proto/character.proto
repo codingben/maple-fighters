@@ -5,6 +5,7 @@ import "google/protobuf/empty.proto";
 service CharacterService
 {
     rpc Create(CreateRequest) returns (CreateResponse);
+    rpc Remove(RemoveRequest) returns (RemoveResponse);
 }
 
 message Character
@@ -30,4 +31,20 @@ message CreateResponse
     }
 
     CharacterCreationStatus character_creation_status = 1;
+}
+
+message RemoveRequest
+{
+    byte index = 1;
+}
+
+message RemoveResponse
+{
+    enum CharacterRemoveStatus
+    {
+        FAILED = 0;
+        SUCCEED = 1;
+    }
+
+    CharacterRemoveStatus character_remove_status = 1;
 }
