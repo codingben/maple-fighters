@@ -6,6 +6,7 @@ service CharacterService
 {
     rpc Create(CreateRequest) returns (CreateResponse);
     rpc Remove(RemoveRequest) returns (RemoveResponse);
+    rpc GetAll(GetAllRequest) returns (GetAllResponse);
 }
 
 message Character
@@ -47,4 +48,14 @@ message RemoveResponse
     }
 
     CharacterRemoveStatus character_remove_status = 1;
+}
+
+message GetAllRequest
+{
+    int32 user_id = 1;
+}
+
+message GetAllResponse
+{
+    repeated Character character_collection = 1;
 }
