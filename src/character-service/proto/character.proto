@@ -16,9 +16,9 @@ service Character
 message CharacterData
 {
     string name = 1;
-    byte index = 2;
-    byte class_index = 3;
-    byte map_index = 4;
+    int32 index = 2;
+    int32 class_index = 3;
+    int32 map_index = 4;
 }
 
 message CreateRequest
@@ -40,7 +40,7 @@ message CreateResponse
 
 message RemoveRequest
 {
-    byte index = 1;
+    int32 index = 1;
 }
 
 message RemoveResponse
@@ -57,7 +57,7 @@ message RemoveResponse
 message GetRequest
 {
     int32 user_id = 1;
-    byte index = 2;
+    int32 index = 2;
 }
 
 message GetResponse
@@ -78,5 +78,5 @@ message GetAllResponse
 message UpdateRequest
 {
     int32 user_id = 1;
-    byte map_index = 2;
+    int32 map_index = 2;
 }
