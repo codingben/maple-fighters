@@ -29,7 +29,7 @@ impl Character {
     pub fn insert(character: NewCharacter, conn: &PgConnection) -> bool {
         diesel::insert_into(characters::table)
             .values(&character)
-            .execute(connection)
+            .execute(conn)
             .is_ok()
     }
 }
