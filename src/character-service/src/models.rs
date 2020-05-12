@@ -3,6 +3,7 @@ use diesel::pg::PgConnection;
 use diesel::prelude::*;
 
 use schema::characters;
+use schema::characters::dsl::characters as all_characters;
 use schema::characters::dsl::*;
 
 #[derive(Queryable)]
@@ -29,6 +30,12 @@ impl Character {
     pub fn insert(character: NewCharacter, conn: &PgConnection) -> bool {
         diesel::insert_into(characters::table)
             .values(&character)
+            .execute(conn)
+            .is_ok()
+    }
+
+    pub fn delete(id: i32, conn: &PgConnection) -> bool {
+        diesel::delete(all_characters.find(id))
             .execute(conn)
             .is_ok()
     }
