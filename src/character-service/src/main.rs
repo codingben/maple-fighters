@@ -1,3 +1,15 @@
+#[macro_use]
+extern crate diesel;
+extern crate dotenv;
+
+pub mod models;
+pub mod schema;
+
+use diesel::pg::PgConnection;
+use diesel::prelude::*;
+use dotenv::dotenv;
+use std::env;
+
 use tonic::{transport::Server, Request, Response, Status};
 
 use character::character_server::{Character, CharacterServer};
@@ -59,5 +71,28 @@ impl Character for CharacterData {
 }
 
 fn main() {
-    println!("Hello, world!");
+    dotenv().expect("Could not find .env file");
+
+    let database_url = env::var("DATABASE_URL").expect("DATABASE_URL not found");
+    let conn = PgConnection::establish(&database_url).unwrap();
+
+    let character = models::NewCharacter {
+        userid: 1,
+        charactername: String::from("benzuk"),
+        index: 1,
+        classindex: 0,
+        mapindex: 0,
+    };
+
+    if models::Character::insert(character, &conn) {
+        println!("insert::succeed");
+    } else {
+        println!("insert::failed");
+    }
+
+    if models::Character::delete(1, &conn) {
+        println!("delete::succeed");
+    } else {
+        println!("delete::failed");
+    }
 }
