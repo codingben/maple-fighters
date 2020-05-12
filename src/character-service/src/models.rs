@@ -1,10 +1,8 @@
-use diesel;
 use diesel::pg::PgConnection;
 use diesel::prelude::*;
 
-use schema::characters;
-use schema::characters::dsl::characters as all_characters;
-use schema::characters::dsl::*;
+use super::schema::characters;
+use super::schema::characters::dsl::characters as all_characters;
 
 #[derive(Queryable)]
 pub struct Character {
