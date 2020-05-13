@@ -8,7 +8,6 @@ service Character
 {
     rpc Create(CreateRequest) returns (CreateResponse);
     rpc Remove(RemoveRequest) returns (RemoveResponse);
-    rpc Get(GetRequest) returns (GetResponse);
     rpc GetAll(GetAllRequest) returns (GetAllResponse);
     rpc Update(UpdateRequest) returns (google.protobuf.Empty);
 }
@@ -53,17 +52,6 @@ message RemoveResponse
     }
 
     CharacterRemoveStatus character_remove_status = 1;
-}
-
-message GetRequest
-{
-    int32 user_id = 1;
-    int32 index = 2;
-}
-
-message GetResponse
-{
-    CharacterData character_data = 1;
 }
 
 message GetAllRequest
