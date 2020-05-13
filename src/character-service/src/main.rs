@@ -52,13 +52,6 @@ impl Character for CharacterData {
             character_collection: Vec::new(),
         }))
     }
-
-    async fn update(
-        &self,
-        _request: tonic::Request<UpdateRequest>,
-    ) -> Result<tonic::Response<()>, tonic::Status> {
-        Ok(Response::new(()))
-    }
 }
 
 fn main() {
@@ -72,7 +65,6 @@ fn main() {
         charactername: String::from("benzuk"),
         index: 1,
         classindex: 0,
-        mapindex: 0,
     };
 
     if models::Character::insert(character, &conn) {
