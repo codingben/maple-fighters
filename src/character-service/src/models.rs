@@ -11,7 +11,6 @@ pub struct Character {
     pub charactername: String,
     pub index: i32,
     pub classindex: i32,
-    pub mapindex: i32,
 }
 
 #[derive(Insertable)]
@@ -21,7 +20,6 @@ pub struct NewCharacter {
     pub charactername: String,
     pub index: i32,
     pub classindex: i32,
-    pub mapindex: i32,
 }
 
 impl Character {
