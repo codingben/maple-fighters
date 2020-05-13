@@ -37,4 +37,11 @@ impl Character {
             .execute(conn)
             .is_ok()
     }
+
+    pub fn get_all(userid: i32, conn: &PgConnection) -> Vec<Character> {
+        all_characters
+            .filter(characters::userid.eq(userid))
+            .load::<Character>(conn)
+            .expect(&format!("Error loading characters for user id {}", userid))
+    }
 }
