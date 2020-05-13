@@ -44,15 +44,6 @@ impl Character for CharacterData {
         }))
     }
 
-    async fn get(
-        &self,
-        _request: tonic::Request<GetRequest>,
-    ) -> Result<tonic::Response<GetResponse>, tonic::Status> {
-        Ok(Response::new(GetResponse {
-            character_data: None,
-        }))
-    }
-
     async fn get_all(
         &self,
         _request: tonic::Request<GetAllRequest>,
