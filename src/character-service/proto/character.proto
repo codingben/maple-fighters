@@ -9,7 +9,6 @@ service Character
     rpc Create(CreateRequest) returns (CreateResponse);
     rpc Remove(RemoveRequest) returns (RemoveResponse);
     rpc GetAll(GetAllRequest) returns (GetAllResponse);
-    rpc Update(UpdateRequest) returns (google.protobuf.Empty);
 }
 
 message CharacterData
@@ -18,7 +17,6 @@ message CharacterData
     string name = 2;
     int32 index = 3;
     int32 class_index = 4;
-    int32 map_index = 5;
 }
 
 message CreateRequest
@@ -62,10 +60,4 @@ message GetAllRequest
 message GetAllResponse
 {
     repeated CharacterData character_collection = 1;
-}
-
-message UpdateRequest
-{
-    int32 user_id = 1;
-    int32 map_index = 2;
 }
