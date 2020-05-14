@@ -7,8 +7,10 @@ pub mod schema;
 
 use diesel::pg::PgConnection;
 use diesel::prelude::*;
+use diesel::r2d2;
 use dotenv::dotenv;
 use std::env;
+use std::error::Error;
 
 use tonic::{transport::Server, Request, Response, Status};
 
@@ -21,11 +23,12 @@ mod character {
     tonic::include_proto!("character");
 }
 
-#[derive(Debug, Default)]
-struct CharacterData {}
+struct CharacterImpl {
+    conn: r2d2::Pool<r2d2::ConnectionManager<PgConnection>>,
+}
 
 #[tonic::async_trait]
-impl Character for CharacterData {
+impl Character for CharacterImpl {
     async fn create(
         &self,
         _request: tonic::Request<CreateRequest>,
@@ -54,28 +57,24 @@ impl Character for CharacterData {
     }
 }
 
-fn main() {
+#[tokio::main]
+async fn main() -> Result<(), Box<dyn Error>> {
     dotenv().expect("Could not find .env file");
 
     let database_url = env::var("DATABASE_URL").expect("DATABASE_URL not found");
-    let conn = PgConnection::establish(&database_url).unwrap();
+    let manager = r2d2::ConnectionManager::<PgConnection>::new(database_url);
+    let pool = r2d2::Pool::builder()
+        .build(manager)
+        .expect("Failed to create pool.");
 
-    let character = models::NewCharacter {
-        userid: 1,
-        charactername: String::from("benzuk"),
-        index: 1,
-        classindex: 0,
-    };
+    let character = CharacterImpl { conn: pool };
+    let address = "0.0.0.0:50054";
+    let address_parsed = address.parse()?;
 
-    if models::Character::insert(character, &conn) {
-        println!("insert::succeed");
-    } else {
-        println!("insert::failed");
-    }
+    Server::builder()
+        .add_service(CharacterServer::new(character))
+        .serve(address_parsed)
+        .await?;
 
-    if models::Character::delete(1, &conn) {
-        println!("delete::succeed");
-    } else {
-        println!("delete::failed");
-    }
+    Ok(())
 }
