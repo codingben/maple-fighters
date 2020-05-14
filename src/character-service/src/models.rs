@@ -4,7 +4,7 @@ use diesel::prelude::*;
 use super::schema::characters;
 use super::schema::characters::dsl::characters as all_characters;
 
-#[derive(Queryable)]
+#[derive(Queryable, Debug)]
 pub struct Character {
     pub id: i32,
     pub userid: i32,
@@ -13,7 +13,7 @@ pub struct Character {
     pub classindex: i32,
 }
 
-#[derive(Insertable)]
+#[derive(Insertable, Debug)]
 #[table_name = "characters"]
 pub struct NewCharacter {
     pub userid: i32,
