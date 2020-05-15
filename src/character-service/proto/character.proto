@@ -13,15 +13,15 @@ service Character
 
 message CharacterData
 {
-    int32 user_id = 1;
-    string name = 2;
-    int32 index = 3;
-    int32 class_index = 4;
+    string name = 1;
+    int32 index = 2;
+    int32 class_index = 3;
 }
 
 message CreateRequest
 {
-    CharacterData character_data = 1;
+    int32 user_id = 1;
+    CharacterData character_data = 2;
 }
 
 message CreateResponse
