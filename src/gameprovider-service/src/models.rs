@@ -1,7 +1,6 @@
 use serde::Deserialize;
 use serde_json;
-use std::fs::File;
-use std::path::Path;
+use std::{fs::File, path::Path};
 
 #[derive(Deserialize)]
 pub struct GameServer {
