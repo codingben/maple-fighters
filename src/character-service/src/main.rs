@@ -81,7 +81,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
     let manager = r2d2::ConnectionManager::<PgConnection>::new(database_url);
     let pool = r2d2::Pool::builder()
         .build(manager)
-        .expect("Failed to create pool.");
+        .expect("Failed to create pool");
 
     let character = CharacterImpl { pool: pool };
     let address_parsed = address.parse()?;
