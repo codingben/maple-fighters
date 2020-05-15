@@ -1,18 +1,16 @@
-use tonic::{transport::Server, Request, Response, Status};
-
-use game_provider::game_provider_server::{GameProvider, GameProviderServer};
-use game_provider::get_game_servers_response::Game;
-use game_provider::GetGameServersResponse;
-
-use dotenv::dotenv;
-use std::env;
-use std::error::Error;
-
 mod game_provider {
     tonic::include_proto!("game_provider");
 }
-
 mod models;
+
+use dotenv::dotenv;
+use game_provider::{
+    game_provider_server::{GameProvider, GameProviderServer},
+    get_game_servers_response::Game,
+    GetGameServersResponse,
+};
+use std::{env, error::Error};
+use tonic::{transport::Server, Request, Response, Status};
 
 #[derive(Debug, Default)]
 pub struct GameProviderImpl {
