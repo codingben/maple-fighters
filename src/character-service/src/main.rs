@@ -2,17 +2,14 @@
 extern crate diesel;
 extern crate dotenv;
 
-pub mod models;
-pub mod schema;
+mod models;
+mod schema;
 
 use character::character_server::{Character, CharacterServer};
-use character::create_response::CharacterCreationStatus;
-use character::remove_response::CharacterRemoveStatus;
 use character::*;
 use diesel::pg::PgConnection;
 use diesel::r2d2;
 use dotenv::dotenv;
-use models::NewCharacter;
 use r2d2::ConnectionManager;
 use r2d2::Pool;
 use std::env;
@@ -35,19 +32,19 @@ impl Character for CharacterImpl {
     ) -> Result<Response<CreateResponse>, Status> {
         let create_request = request.into_inner();
         if let Some(data) = create_request.character_data {
-            let character = NewCharacter {
+            let character = models::NewCharacter {
                 userid: data.user_id,
                 charactername: data.name,
                 index: data.index,
                 classindex: data.class_index,
             };
             let connection = self.pool.get().unwrap();
-            let status: CharacterCreationStatus;
+            let status: create_response::CharacterCreationStatus;
 
             if models::Character::insert(character, &connection) {
-                status = CharacterCreationStatus::Succeed;
+                status = create_response::CharacterCreationStatus::Succeed;
             } else {
-                status = CharacterCreationStatus::Failed;
+                status = create_response::CharacterCreationStatus::Failed;
             }
 
             Ok(Response::new(CreateResponse {
@@ -63,7 +60,7 @@ impl Character for CharacterImpl {
         _request: tonic::Request<RemoveRequest>,
     ) -> Result<tonic::Response<RemoveResponse>, tonic::Status> {
         Ok(Response::new(RemoveResponse {
-            character_remove_status: CharacterRemoveStatus::Failed as i32,
+            character_remove_status: remove_response::CharacterRemoveStatus::Failed as i32,
         }))
     }
 
