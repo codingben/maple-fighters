@@ -74,10 +74,23 @@ impl Character for CharacterImpl {
 
     async fn get_all(
         &self,
-        _request: tonic::Request<GetAllRequest>,
-    ) -> Result<tonic::Response<GetAllResponse>, tonic::Status> {
+        request: Request<GetAllRequest>,
+    ) -> Result<Response<GetAllResponse>, Status> {
+        let remove_request = request.into_inner();
+        let connection = self.pool.get().unwrap();
+        let characters = models::Character::get_all(remove_request.user_id, &connection);
+        let mut collection = Vec::new();
+        for character in characters {
+            collection.push(character::CharacterData {
+                user_id: character.userid,
+                name: character.charactername,
+                index: character.index,
+                class_index: character.classindex,
+            })
+        }
+
         Ok(Response::new(GetAllResponse {
-            character_collection: Vec::new(),
+            character_collection: collection.to_vec(),
         }))
     }
 }
