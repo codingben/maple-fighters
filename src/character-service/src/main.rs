@@ -83,7 +83,8 @@ impl Character for CharacterImpl {
         let characters = models::Character::get_all(remove_request.user_id, &connection);
         let mut collection = Vec::new();
         for character in characters {
-            collection.push(character::CharacterData {
+            collection.push(get_all_response::CharacterData {
+                id: character.id,
                 name: character.charactername,
                 index: character.index,
                 class_index: character.classindex,
