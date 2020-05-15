@@ -5,37 +5,57 @@ extern crate dotenv;
 pub mod models;
 pub mod schema;
 
-use diesel::pg::PgConnection;
-use diesel::prelude::*;
-use diesel::r2d2;
-use dotenv::dotenv;
-use std::env;
-use std::error::Error;
-
-use tonic::{transport::Server, Request, Response, Status};
-
 use character::character_server::{Character, CharacterServer};
 use character::create_response::CharacterCreationStatus;
 use character::remove_response::CharacterRemoveStatus;
 use character::*;
+use diesel::pg::PgConnection;
+use diesel::r2d2;
+use dotenv::dotenv;
+use models::NewCharacter;
+use r2d2::ConnectionManager;
+use r2d2::Pool;
+use std::env;
+use std::error::Error;
+use tonic::{transport::Server, Request, Response, Status};
 
 mod character {
     tonic::include_proto!("character");
 }
 
 struct CharacterImpl {
-    conn: r2d2::Pool<r2d2::ConnectionManager<PgConnection>>,
+    pool: Pool<ConnectionManager<PgConnection>>,
 }
 
 #[tonic::async_trait]
 impl Character for CharacterImpl {
     async fn create(
         &self,
-        _request: tonic::Request<CreateRequest>,
-    ) -> Result<tonic::Response<CreateResponse>, tonic::Status> {
-        Ok(Response::new(CreateResponse {
-            character_creation_status: CharacterCreationStatus::Failed as i32,
-        }))
+        request: Request<CreateRequest>,
+    ) -> Result<Response<CreateResponse>, Status> {
+        let create_request = request.into_inner();
+        if let Some(data) = create_request.character_data {
+            let character = NewCharacter {
+                userid: data.user_id,
+                charactername: data.name,
+                index: data.index,
+                classindex: data.class_index,
+            };
+            let connection = self.pool.get().unwrap();
+            let status: CharacterCreationStatus;
+
+            if models::Character::insert(character, &connection) {
+                status = CharacterCreationStatus::Succeed;
+            } else {
+                status = CharacterCreationStatus::Failed;
+            }
+
+            Ok(Response::new(CreateResponse {
+                character_creation_status: status as i32,
+            }))
+        } else {
+            Err(Status::invalid_argument("Invalid character data"))
+        }
     }
 
     async fn remove(
@@ -67,7 +87,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
         .build(manager)
         .expect("Failed to create pool.");
 
-    let character = CharacterImpl { conn: pool };
+    let character = CharacterImpl { pool: pool };
     let address = "0.0.0.0:50054";
     let address_parsed = address.parse()?;
 
