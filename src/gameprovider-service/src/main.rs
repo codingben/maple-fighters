@@ -6,8 +6,7 @@ mod models;
 use dotenv::dotenv;
 use game_provider::{
     game_provider_server::{GameProvider, GameProviderServer},
-    get_game_servers_response::Game,
-    GetGameServersResponse,
+    *,
 };
 use std::{env, error::Error};
 use tonic::{transport::Server, Request, Response, Status};
