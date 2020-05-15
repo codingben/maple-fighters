@@ -2,6 +2,9 @@
 extern crate diesel;
 extern crate dotenv;
 
+mod character {
+    tonic::include_proto!("character");
+}
 mod models;
 mod schema;
 
@@ -14,10 +17,6 @@ use dotenv::dotenv;
 use r2d2::{ConnectionManager, Pool};
 use std::{env, error::Error};
 use tonic::{transport::Server, Request, Response, Status};
-
-mod character {
-    tonic::include_proto!("character");
-}
 
 struct CharacterImpl {
     pool: Pool<ConnectionManager<PgConnection>>,
