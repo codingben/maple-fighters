@@ -1,8 +1,6 @@
-use diesel::pg::PgConnection;
-use diesel::prelude::*;
-
 use super::schema::characters;
 use super::schema::characters::dsl::characters as all_characters;
+use diesel::{pg::PgConnection, prelude::*};
 
 #[derive(Queryable, Debug)]
 pub struct Character {
