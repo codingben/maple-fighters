@@ -55,10 +55,20 @@ impl Character for CharacterImpl {
 
     async fn remove(
         &self,
-        _request: tonic::Request<RemoveRequest>,
-    ) -> Result<tonic::Response<RemoveResponse>, tonic::Status> {
+        request: Request<RemoveRequest>,
+    ) -> Result<Response<RemoveResponse>, Status> {
+        let remove_request = request.into_inner();
+        let connection = self.pool.get().unwrap();
+        let status: remove_response::CharacterRemoveStatus;
+
+        if models::Character::delete(remove_request.id, &connection) {
+            status = remove_response::CharacterRemoveStatus::Succeed;
+        } else {
+            status = remove_response::CharacterRemoveStatus::Failed;
+        }
+
         Ok(Response::new(RemoveResponse {
-            character_remove_status: remove_response::CharacterRemoveStatus::Failed as i32,
+            character_remove_status: status as i32,
         }))
     }
 
