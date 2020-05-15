@@ -29,12 +29,14 @@ impl Character for CharacterImpl {
         request: Request<CreateRequest>,
     ) -> Result<Response<CreateResponse>, Status> {
         let create_request = request.into_inner();
-        if let Some(data) = create_request.character_data {
+        let user_id = create_request.user_id;
+        let character_data = create_request.character_data;
+        if let Some(new_character) = character_data {
             let character = models::NewCharacter {
-                userid: data.user_id,
-                charactername: data.name,
-                index: data.index,
-                classindex: data.class_index,
+                userid: user_id,
+                charactername: new_character.name,
+                index: new_character.index,
+                classindex: new_character.class_index,
             };
             let connection = self.pool.get().unwrap();
             let status: create_response::CharacterCreationStatus;
@@ -82,7 +84,6 @@ impl Character for CharacterImpl {
         let mut collection = Vec::new();
         for character in characters {
             collection.push(character::CharacterData {
-                user_id: character.userid,
                 name: character.charactername,
                 index: character.index,
                 class_index: character.classindex,
