@@ -76,6 +76,7 @@ impl Character for CharacterImpl {
 async fn main() -> Result<(), Box<dyn Error>> {
     dotenv().expect("Could not find .env file");
 
+    let address = env::var("IP_ADDRESS").expect("IP_ADDRESS not found");
     let database_url = env::var("DATABASE_URL").expect("DATABASE_URL not found");
     let manager = r2d2::ConnectionManager::<PgConnection>::new(database_url);
     let pool = r2d2::Pool::builder()
@@ -83,7 +84,6 @@ async fn main() -> Result<(), Box<dyn Error>> {
         .expect("Failed to create pool.");
 
     let character = CharacterImpl { pool: pool };
-    let address = "0.0.0.0:50054";
     let address_parsed = address.parse()?;
 
     Server::builder()
