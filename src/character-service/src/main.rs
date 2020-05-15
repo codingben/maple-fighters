@@ -5,15 +5,14 @@ extern crate dotenv;
 mod models;
 mod schema;
 
-use character::character_server::{Character, CharacterServer};
-use character::*;
-use diesel::pg::PgConnection;
-use diesel::r2d2;
+use character::{
+    character_server::{Character, CharacterServer},
+    *,
+};
+use diesel::{pg::PgConnection, r2d2};
 use dotenv::dotenv;
-use r2d2::ConnectionManager;
-use r2d2::Pool;
-use std::env;
-use std::error::Error;
+use r2d2::{ConnectionManager, Pool};
+use std::{env, error::Error};
 use tonic::{transport::Server, Request, Response, Status};
 
 mod character {
