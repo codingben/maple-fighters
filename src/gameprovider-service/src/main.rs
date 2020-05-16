@@ -1,6 +1,7 @@
 mod game_provider {
     tonic::include_proto!("game_provider");
 }
+mod database;
 mod models;
 
 use dotenv::dotenv;
@@ -36,7 +37,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
     let data_path = env::var("DATABASE_PATH").expect("DATABASE_PATH not found");
     let address_parsed = address.parse()?;
     let mut game_provider = GameProviderImpl::default();
-    let game_server_collection = models::GameServerCollection::new(&data_path);
+    let game_server_collection = database::GameServerCollection::new(&data_path);
     for game_server in game_server_collection.get_all() {
         game_provider.game_servers.push(Game {
             name: game_server.name.clone(),
