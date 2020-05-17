@@ -1,11 +1,13 @@
 mod database;
-mod gameprovider;
+mod endpoints;
 mod models;
 mod game_provider {
     tonic::include_proto!("game_provider");
 }
 
+use database::GameServerCollection;
 use dotenv::dotenv;
+use endpoints::GameProviderImpl;
 use game_provider::{game_provider_server::GameProviderServer, *};
 use std::{env, error::Error};
 use tonic::transport::Server;
@@ -18,8 +20,8 @@ async fn main() -> Result<(), Box<dyn Error>> {
     let data_path = env::var("DATABASE_PATH").expect("DATABASE_PATH not found");
     let address_parsed = address.parse()?;
 
-    let mut game_provider = gameprovider::GameProviderImpl::default();
-    let game_server_collection = database::GameServerCollection::new(&data_path);
+    let mut game_provider = GameProviderImpl::default();
+    let game_server_collection = GameServerCollection::new(&data_path);
     for game_server in game_server_collection.get_all() {
         game_provider.game_servers.push(Game {
             name: game_server.name.clone(),
