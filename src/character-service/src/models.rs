@@ -51,4 +51,14 @@ impl Character {
             .load::<Character>(conn)
             .expect(&format!("Error loading characters for user id {}", userid))
     }
+
+    pub fn is_name_already_in_use<'a>(userid: i32, name: &'a str, conn: &PgConnection) -> bool {
+        for character in Character::get_by_user_id(userid, &conn) {
+            if character.charactername == name {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }
