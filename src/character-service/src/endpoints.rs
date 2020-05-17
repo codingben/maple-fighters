@@ -68,7 +68,7 @@ impl Character for CharacterImpl {
         let remove_request = request.into_inner();
         let user_id = remove_request.user_id;
         let connection = self.pool.get().unwrap();
-        let characters = models::Character::get_all(user_id, &connection);
+        let characters = models::Character::get_by_user_id(user_id, &connection);
         let mut collection = Vec::new();
         for character in characters {
             collection.push(get_all_response::CharacterData {
