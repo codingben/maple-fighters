@@ -34,7 +34,14 @@ impl Character {
             .is_ok()
     }
 
-    pub fn get_all(userid: i32, conn: &PgConnection) -> Vec<Character> {
+    pub fn get_by_id(id: i32, conn: &PgConnection) -> Vec<Character> {
+        all_characters
+            .find(id)
+            .load::<Character>(conn)
+            .expect(&format!("Error loading character for id {}", id))
+    }
+
+    pub fn get_by_user_id(userid: i32, conn: &PgConnection) -> Vec<Character> {
         all_characters
             .filter(characters::userid.eq(userid))
             .load::<Character>(conn)
