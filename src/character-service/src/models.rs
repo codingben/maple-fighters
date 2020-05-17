@@ -29,6 +29,10 @@ impl Character {
     }
 
     pub fn delete(id: i32, conn: &PgConnection) -> bool {
+        if Character::get_by_id(id, conn).is_empty() {
+            return false;
+        };
+
         diesel::delete(all_characters.find(id))
             .execute(conn)
             .is_ok()
