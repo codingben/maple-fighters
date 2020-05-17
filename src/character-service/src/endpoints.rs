@@ -26,11 +26,20 @@ impl Character for CharacterImpl {
             };
             let connection = self.pool.get().unwrap();
             let status: create_response::CharacterCreationStatus;
+            let is_name_already_in_use = models::Character::is_name_already_in_use(
+                character.userid,
+                &character.charactername,
+                &connection,
+            );
 
-            if models::Character::insert(character, &connection) {
-                status = create_response::CharacterCreationStatus::Succeed;
+            if is_name_already_in_use {
+                status = create_response::CharacterCreationStatus::NameAlreadyInUse;
             } else {
-                status = create_response::CharacterCreationStatus::Failed;
+                if models::Character::insert(character, &connection) {
+                    status = create_response::CharacterCreationStatus::Succeed;
+                } else {
+                    status = create_response::CharacterCreationStatus::Failed;
+                }
             }
 
             Ok(Response::new(CreateResponse {
