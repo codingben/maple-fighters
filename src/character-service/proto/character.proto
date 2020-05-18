@@ -15,9 +15,9 @@ message CreateRequest
 {
     message NewCharacterData
     {
-        string name = 2;
-        int32 index = 3;
-        int32 class_index = 4;
+        string name = 1;
+        int32 index = 2;
+        int32 class_index = 3;
     }
 
     int32 user_id = 1;
