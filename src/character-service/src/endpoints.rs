@@ -18,6 +18,9 @@ impl Character for CharacterService {
         let user_id = create_request.user_id;
         let character_data = create_request.character_data;
         if let Some(new_character) = character_data {
+            if new_character.name.trim().is_empty() {
+                return Err(Status::invalid_argument("Invalid character name"));
+            }
             let character = models::NewCharacter {
                 userid: user_id,
                 charactername: new_character.name,
