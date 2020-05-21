@@ -24,18 +24,18 @@ impl Character for CharacterService {
                 index: new_character.index,
                 classindex: new_character.class_index,
             };
-            let connection = self.pool.get().unwrap();
+            let pg_connection = self.pool.get().unwrap();
             let status: create_response::CharacterCreationStatus;
             let is_name_already_in_use = models::Character::is_name_already_in_use(
                 character.userid,
                 &character.charactername,
-                &connection,
+                &pg_connection,
             );
 
             if is_name_already_in_use {
                 status = create_response::CharacterCreationStatus::NameAlreadyInUse;
             } else {
-                if models::Character::insert(character, &connection) {
+                if models::Character::insert(character, &pg_connection) {
                     status = create_response::CharacterCreationStatus::Succeed;
                 } else {
                     status = create_response::CharacterCreationStatus::Failed;
@@ -56,10 +56,10 @@ impl Character for CharacterService {
     ) -> Result<Response<RemoveResponse>, Status> {
         let remove_request = request.into_inner();
         let id = remove_request.id;
-        let connection = self.pool.get().unwrap();
+        let pg_connection = self.pool.get().unwrap();
         let status: remove_response::CharacterRemoveStatus;
 
-        if models::Character::delete(id, &connection) {
+        if models::Character::delete(id, &pg_connection) {
             status = remove_response::CharacterRemoveStatus::Succeed;
         } else {
             status = remove_response::CharacterRemoveStatus::Failed;
@@ -76,8 +76,8 @@ impl Character for CharacterService {
     ) -> Result<Response<GetAllResponse>, Status> {
         let remove_request = request.into_inner();
         let user_id = remove_request.user_id;
-        let connection = self.pool.get().unwrap();
-        let characters = models::Character::get_by_user_id(user_id, &connection);
+        let pg_connection = self.pool.get().unwrap();
+        let characters = models::Character::get_by_user_id(user_id, &pg_connection);
         let mut collection = Vec::new();
         for character in characters {
             collection.push(get_all_response::CharacterData {
