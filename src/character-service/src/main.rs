@@ -12,7 +12,7 @@ mod character {
 use character::character_server::CharacterServer;
 use diesel::{pg::PgConnection, r2d2::ConnectionManager, r2d2::Pool};
 use dotenv::dotenv;
-use endpoints::CharacterImpl;
+use endpoints::CharacterService;
 use std::{env, error::Error};
 use tonic::transport::Server;
 
@@ -27,11 +27,11 @@ async fn main() -> Result<(), Box<dyn Error>> {
         .build(manager)
         .expect("Failed to create pool");
 
-    let character = CharacterImpl { pool: r2d2_pool };
+    let character_service = CharacterService { pool: r2d2_pool };
     let address_parsed = address.parse()?;
 
     Server::builder()
-        .add_service(CharacterServer::new(character))
+        .add_service(CharacterServer::new(character_service))
         .serve(address_parsed)
         .await?;
 

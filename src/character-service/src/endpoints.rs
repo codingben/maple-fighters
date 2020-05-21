@@ -4,12 +4,12 @@ use diesel::{pg::PgConnection, r2d2};
 use r2d2::{ConnectionManager, Pool};
 use tonic::{Request, Response, Status};
 
-pub struct CharacterImpl {
+pub struct CharacterService {
     pub pool: Pool<ConnectionManager<PgConnection>>,
 }
 
 #[tonic::async_trait]
-impl Character for CharacterImpl {
+impl Character for CharacterService {
     async fn create(
         &self,
         request: Request<CreateRequest>,
