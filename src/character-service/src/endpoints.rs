@@ -81,18 +81,17 @@ impl Character for CharacterService {
         let user_id = remove_request.user_id;
         let pg_connection = self.pool.get().unwrap();
         let characters = models::Character::get_by_user_id(user_id, &pg_connection);
-        let mut collection = Vec::new();
-        for character in characters {
-            collection.push(get_all_response::CharacterData {
-                id: character.id,
-                name: character.charactername,
-                index: character.index,
-                class_index: character.classindex,
-            })
-        }
 
         Ok(Response::new(GetAllResponse {
-            character_collection: collection.to_vec(),
+            character_collection: characters
+                .into_iter()
+                .map(|character| get_all_response::CharacterData {
+                    id: character.id,
+                    name: character.charactername,
+                    index: character.index,
+                    class_index: character.classindex,
+                })
+                .collect(),
         }))
     }
 }
