@@ -1,7 +1,6 @@
 use super::game_provider::{game_provider_server::GameProvider, *};
 use tonic::{Request, Response, Status};
 
-#[derive(Debug, Default)]
 pub struct GameProviderService {
     pub game_collection: Vec<Game>,
 }
