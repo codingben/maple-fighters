@@ -1,28 +1,18 @@
-use super::models::GameServer;
-use serde::Deserialize;
 use serde_json;
 use std::{fs::File, path::Path};
 
-#[derive(Deserialize)]
-pub struct GameServerCollection {
-    pub game_servers: Vec<GameServer>,
-}
+pub fn load(path: &str) -> Vec<super::game_provider::Game> {
+    let json_file_path = Path::new(path);
+    let json_file = File::open(json_file_path).expect("File not found");
+    let json_data: Vec<super::models::Game> =
+        serde_json::from_reader(&json_file).expect("Could not read json");
 
-#[allow(dead_code)]
-impl GameServerCollection {
-    pub fn new(path: &str) -> GameServerCollection {
-        let json_file_path = Path::new(path);
-        let json_file = File::open(json_file_path).expect("File not found");
-        let gameprovider: GameServerCollection =
-            serde_json::from_reader(json_file).expect("Could not read json");
-        return gameprovider;
-    }
-
-    pub fn add(&mut self, game_server: GameServer) {
-        self.game_servers.push(game_server);
-    }
-
-    pub fn get_all(&self) -> impl Iterator<Item = &GameServer> {
-        return self.game_servers.iter();
-    }
+    json_data
+        .into_iter()
+        .map(|game| super::game_provider::Game {
+            name: game.name,
+            ip: game.ip,
+            port: game.port,
+        })
+        .collect()
 }
