@@ -19,7 +19,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
     let data_path = env::var("DATABASE_PATH").expect("DATABASE_PATH not found");
     let address_parsed = address.parse()?;
     let game_provider_service = GameProviderService {
-        game_servers: database::load(&data_path),
+        game_collection: database::load(&data_path),
     };
 
     Server::builder()
