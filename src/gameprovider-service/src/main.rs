@@ -7,7 +7,7 @@ mod game_provider {
 
 use database::GameServerCollection;
 use dotenv::dotenv;
-use endpoints::GameProviderImpl;
+use endpoints::GameProviderService;
 use game_provider::{game_provider_server::GameProviderServer, *};
 use std::{env, error::Error};
 use tonic::transport::Server;
@@ -20,10 +20,10 @@ async fn main() -> Result<(), Box<dyn Error>> {
     let data_path = env::var("DATABASE_PATH").expect("DATABASE_PATH not found");
     let address_parsed = address.parse()?;
 
-    let mut game_provider = GameProviderImpl::default();
+    let mut game_provider_service = GameProviderService::default();
     let game_server_collection = GameServerCollection::new(&data_path);
     for game_server in game_server_collection.get_all() {
-        game_provider.game_servers.push(Game {
+        game_provider_service.game_servers.push(Game {
             name: game_server.name.clone(),
             ip: game_server.ip.clone(),
             port: game_server.port.clone(),
@@ -31,7 +31,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
     }
 
     Server::builder()
-        .add_service(GameProviderServer::new(game_provider))
+        .add_service(GameProviderServer::new(game_provider_service))
         .serve(address_parsed)
         .await?;
 
