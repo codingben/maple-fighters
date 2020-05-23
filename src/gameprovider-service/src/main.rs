@@ -22,6 +22,8 @@ async fn main() -> Result<(), Box<dyn Error>> {
         game_collection: database::load(&data_path),
     };
 
+    println!("Server is running {}", address);
+
     Server::builder()
         .add_service(GameProviderServer::new(game_provider_service))
         .serve(address_parsed)
