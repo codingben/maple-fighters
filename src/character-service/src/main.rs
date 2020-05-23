@@ -30,6 +30,8 @@ async fn main() -> Result<(), Box<dyn Error>> {
     let character_service = CharacterService { pool: r2d2_pool };
     let address_parsed = address.parse()?;
 
+    println!("Server is running {}", address);
+
     Server::builder()
         .add_service(CharacterServer::new(character_service))
         .serve(address_parsed)
