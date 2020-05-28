@@ -4,7 +4,7 @@ namespace Game.Application
 {
     public class GameApplication
     {
-        WebSocketServer webSocketServer;
+        private readonly WebSocketServer webSocketServer;
 
         public GameApplication(string url)
         {
