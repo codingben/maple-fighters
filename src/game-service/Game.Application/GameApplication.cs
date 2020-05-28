@@ -1,20 +1,25 @@
+using WebSocketSharp.Server;
+
 namespace Game.Application
 {
     public class GameApplication
     {
+        WebSocketServer webSocketServer;
+
         public GameApplication(string url)
         {
-            // TODO: Implement
+            webSocketServer = new WebSocketServer(url);
         }
 
         public void Startup()
         {
-            // TODO: Implement
+            webSocketServer.AddWebSocketService<GameService>("/game");
+            webSocketServer.Start();
         }
 
         public void Shutdown()
         {
-            // TODO: Implement
+            webSocketServer.Stop();
         }
     }
 }
