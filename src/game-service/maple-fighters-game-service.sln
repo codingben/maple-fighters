@@ -5,6 +5,8 @@ VisualStudioVersion = 16.0.29926.136
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Game.AppStarter", "Game.AppStarter\Game.AppStarter.csproj", "{6CE04D8C-966D-44E0-969A-B7FC38342293}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Game.Application", "Game.Application\Game.Application.csproj", "{1F234C8C-2BFF-459C-88FC-DB5ABAB1B997}"
+EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -33,5 +35,17 @@ Global
 		{6CE04D8C-966D-44E0-969A-B7FC38342293}.Release|x64.Build.0 = Release|Any CPU
 		{6CE04D8C-966D-44E0-969A-B7FC38342293}.Release|x86.ActiveCfg = Release|Any CPU
 		{6CE04D8C-966D-44E0-969A-B7FC38342293}.Release|x86.Build.0 = Release|Any CPU
+		{1F234C8C-2BFF-459C-88FC-DB5ABAB1B997}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1F234C8C-2BFF-459C-88FC-DB5ABAB1B997}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1F234C8C-2BFF-459C-88FC-DB5ABAB1B997}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{1F234C8C-2BFF-459C-88FC-DB5ABAB1B997}.Debug|x64.Build.0 = Debug|Any CPU
+		{1F234C8C-2BFF-459C-88FC-DB5ABAB1B997}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{1F234C8C-2BFF-459C-88FC-DB5ABAB1B997}.Debug|x86.Build.0 = Debug|Any CPU
+		{1F234C8C-2BFF-459C-88FC-DB5ABAB1B997}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1F234C8C-2BFF-459C-88FC-DB5ABAB1B997}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1F234C8C-2BFF-459C-88FC-DB5ABAB1B997}.Release|x64.ActiveCfg = Release|Any CPU
+		{1F234C8C-2BFF-459C-88FC-DB5ABAB1B997}.Release|x64.Build.0 = Release|Any CPU
+		{1F234C8C-2BFF-459C-88FC-DB5ABAB1B997}.Release|x86.ActiveCfg = Release|Any CPU
+		{1F234C8C-2BFF-459C-88FC-DB5ABAB1B997}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
