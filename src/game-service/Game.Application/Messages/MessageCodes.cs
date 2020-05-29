@@ -2,13 +2,11 @@ namespace Game.Application
 {
     public enum MessageCodes
     {
-        EnterScene,
         ChangeScene,
-        ChangePosition,
+        ChangePlayerPosition,
         ChangePlayerState,
         SceneObjectAdded,
         SceneObjectRemoved,
-        CharacterAdded,
         PositionChanged,
         PlayerStateChanged,
         PlayerAttacked,
