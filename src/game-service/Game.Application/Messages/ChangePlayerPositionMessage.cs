@@ -1,6 +1,6 @@
-namespace Game.Application
+﻿namespace Game.Application
 {
-    public class ChangePositionMessage
+    public class ChangePlayerPositionMessage
     {
         public float X { get; set; }
 
