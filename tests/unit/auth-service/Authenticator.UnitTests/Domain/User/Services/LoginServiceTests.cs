@@ -43,7 +43,7 @@ namespace Authenticator.UnitTests.Domain.User.Services
             var loginService = new LoginService(accountRepository);
 
             // Act
-            var authenticationStatus = 
+            var authenticationStatus =
                 loginService.Authenticate("benzuk@gmail.com", "benzuk");
 
             // Assert
