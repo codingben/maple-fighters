@@ -2,12 +2,12 @@
 
 namespace InterestManagement
 {
-    public interface IScene<TObject> : IDisposable
-        where TObject : ISceneObject
+    public interface IScene<TSceneObject> : IDisposable
+        where TSceneObject : ISceneObject
     {
         /// <summary>
         /// Gets the access to the scene regions.
         /// </summary>
-        IMatrixRegion<TObject> MatrixRegion { get; }
+        IMatrixRegion<TSceneObject> MatrixRegion { get; }
     }
 }
