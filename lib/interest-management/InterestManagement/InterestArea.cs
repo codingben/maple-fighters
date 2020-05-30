@@ -3,24 +3,24 @@ using System.Linq;
 
 namespace InterestManagement
 {
-    public class InterestArea<TObject> : IInterestArea<TObject>
-        where TObject : ISceneObject
+    public class InterestArea<TSceneObject> : IInterestArea<TSceneObject>
+        where TSceneObject : ISceneObject
     {
-        public INearbySceneObjectsEvents<TObject> NearbySceneObjectsEvents =>
+        public INearbySceneObjectsEvents<TSceneObject> NearbySceneObjectsEvents =>
             sceneObjects;
 
-        private readonly IScene<TObject> scene;
-        private readonly TObject sceneObject;
-        private readonly List<IRegion<TObject>> regions;
-        private readonly NearbySceneObjectsCollection<TObject> sceneObjects;
+        private readonly IScene<TSceneObject> scene;
+        private readonly TSceneObject sceneObject;
+        private readonly List<IRegion<TSceneObject>> regions;
+        private readonly NearbySceneObjectsCollection<TSceneObject> sceneObjects;
 
-        public InterestArea(IScene<TObject> scene, TObject sceneObject)
+        public InterestArea(IScene<TSceneObject> scene, TSceneObject sceneObject)
         {
             this.scene = scene;
             this.sceneObject = sceneObject;
 
-            regions = new List<IRegion<TObject>>();
-            sceneObjects = new NearbySceneObjectsCollection<TObject>();
+            regions = new List<IRegion<TSceneObject>>();
+            sceneObjects = new NearbySceneObjectsCollection<TSceneObject>();
 
             UpdateNearbyRegions();
 
@@ -111,24 +111,24 @@ namespace InterestManagement
             }
         }
 
-        private void SubscribeToRegionEvents(IRegion<TObject> region)
+        private void SubscribeToRegionEvents(IRegion<TSceneObject> region)
         {
             region.SubscriberAdded += OnSubscriberAdded;
             region.SubscriberRemoved += OnSubscriberRemoved;
         }
 
-        private void UnsubscribeFromRegionEvents(IRegion<TObject> region)
+        private void UnsubscribeFromRegionEvents(IRegion<TSceneObject> region)
         {
             region.SubscriberAdded -= OnSubscriberAdded;
             region.SubscriberRemoved -= OnSubscriberRemoved;
         }
 
-        private void OnSubscriberAdded(TObject sceneObject)
+        private void OnSubscriberAdded(TSceneObject sceneObject)
         {
             sceneObjects.Add(sceneObject);
         }
 
-        private void OnSubscriberRemoved(TObject sceneObject)
+        private void OnSubscriberRemoved(TSceneObject sceneObject)
         {
             if (!IsOverlapsWithNearbyRegions(sceneObject))
             {
@@ -136,7 +136,7 @@ namespace InterestManagement
             }
         }
 
-        private bool IsOverlapsWithNearbyRegions(TObject sceneObject)
+        private bool IsOverlapsWithNearbyRegions(TSceneObject sceneObject)
         {
             return regions.Any(
                 x => x.IsOverlaps(
