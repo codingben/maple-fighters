@@ -4,15 +4,15 @@ using Common.MathematicsHelper;
 
 namespace InterestManagement
 {
-    public struct Region<TObject> : IRegion<TObject>
-        where TObject : ISceneObject
+    public struct Region<TSceneObject> : IRegion<TSceneObject>
+        where TSceneObject : ISceneObject
     {
-        public event Action<TObject> SubscriberAdded;
+        public event Action<TSceneObject> SubscriberAdded;
 
-        public event Action<TObject> SubscriberRemoved;
+        public event Action<TSceneObject> SubscriberRemoved;
 
         private Rectangle rectangle;
-        private readonly HashSet<TObject> sceneObjects;
+        private readonly HashSet<TSceneObject> sceneObjects;
 
         public Region(Vector2 position, Vector2 size)
         {
@@ -20,7 +20,7 @@ namespace InterestManagement
             SubscriberRemoved = null;
 
             rectangle = new Rectangle(position, size);
-            sceneObjects = new HashSet<TObject>();
+            sceneObjects = new HashSet<TSceneObject>();
         }
 
         public void Dispose()
@@ -31,7 +31,7 @@ namespace InterestManagement
             sceneObjects?.Clear();
         }
 
-        public void Subscribe(TObject sceneObject)
+        public void Subscribe(TSceneObject sceneObject)
         {
             if (sceneObjects.Add(sceneObject))
             {
@@ -39,7 +39,7 @@ namespace InterestManagement
             }
         }
 
-        public void Unsubscribe(TObject sceneObject)
+        public void Unsubscribe(TSceneObject sceneObject)
         {
             if (sceneObjects.Remove(sceneObject))
             {
@@ -47,7 +47,7 @@ namespace InterestManagement
             }
         }
 
-        public IEnumerable<TObject> GetAllSubscribers()
+        public IEnumerable<TSceneObject> GetAllSubscribers()
         {
             return sceneObjects;
         }
