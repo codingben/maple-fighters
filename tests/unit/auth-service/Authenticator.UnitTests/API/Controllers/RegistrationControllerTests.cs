@@ -25,7 +25,7 @@ namespace Authenticator.UnitTests.API.Controllers
             var registrationService = Substitute.For<IRegistrationService>();
             var registrationController =
                 new RegistrationController(registrationService);
-            var registrationData = 
+            var registrationData =
                 new RegistrationData(email, password, firstName, lastName);
 
             // Act
