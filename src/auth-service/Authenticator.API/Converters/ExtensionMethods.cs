@@ -8,69 +8,54 @@ namespace Authenticator.API.Converters
         public static LoginResponse.Types.LoginStatus ToLoginStatus(
             this AuthenticationStatus authenticationStatus)
         {
-            var loginStatus = LoginResponse.Types.LoginStatus.Failed;
-
             switch (authenticationStatus)
             {
                 case AuthenticationStatus.Failed:
                 {
-                    loginStatus = LoginResponse.Types.LoginStatus.Failed;
-                    break;
+                    return LoginResponse.Types.LoginStatus.Failed;
                 }
 
                 case AuthenticationStatus.Authenticated:
                 {
-                    loginStatus = LoginResponse.Types.LoginStatus.Succeed;
-                    break;
+                    return LoginResponse.Types.LoginStatus.Succeed;
                 }
 
                 case AuthenticationStatus.NotFound:
                 {
-                    loginStatus = LoginResponse.Types.LoginStatus.WrongEmail;
-                    break;
+                    return LoginResponse.Types.LoginStatus.WrongEmail;
                 }
 
                 case AuthenticationStatus.WrongPassword:
                 {
-                    loginStatus = LoginResponse.Types.LoginStatus.WrongPassword;
-                    break;
+                    return LoginResponse.Types.LoginStatus.WrongPassword;
                 }
             }
 
-            return loginStatus;
+            return LoginResponse.Types.LoginStatus.Failed;
         }
 
         public static RegisterResponse.Types.RegistrationStatus ToRegistrationStatus(
             this AccountCreationStatus accountCreationStatus)
         {
-            var registrationStatus = 
-                RegisterResponse.Types.RegistrationStatus.Failed;
-
             switch (accountCreationStatus)
             {
                 case AccountCreationStatus.Failed:
                 {
-                    registrationStatus = 
-                        RegisterResponse.Types.RegistrationStatus.Failed;
-                    break;
+                    return RegisterResponse.Types.RegistrationStatus.Failed;
                 }
 
                 case AccountCreationStatus.Succeed:
                 {
-                    registrationStatus = 
-                        RegisterResponse.Types.RegistrationStatus.Created;
-                    break;
+                    return RegisterResponse.Types.RegistrationStatus.Created;
                 }
 
                 case AccountCreationStatus.EmailExists:
                 {
-                    registrationStatus = 
-                        RegisterResponse.Types.RegistrationStatus.EmailAlreadyInUse;
-                    break;
+                    return RegisterResponse.Types.RegistrationStatus.EmailAlreadyInUse;
                 }
             }
 
-            return registrationStatus;
+            return RegisterResponse.Types.RegistrationStatus.Failed;
         }
     }
 }
