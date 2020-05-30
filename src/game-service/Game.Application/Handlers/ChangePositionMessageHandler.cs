@@ -4,7 +4,7 @@ namespace Game.Application
     {
         public void Handle(byte[] rawData)
         {
-            var message = MessageUtils.GetMessage<ChangePositionMessage>(rawData);
+            var message = MessageUtils.GetMessage<ChangePlayerPositionMessage>(rawData);
             var x = message.X;
             var y = message.Y;
         }
