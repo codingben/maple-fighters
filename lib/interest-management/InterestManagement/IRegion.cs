@@ -4,36 +4,36 @@ using Common.MathematicsHelper;
 
 namespace InterestManagement
 {
-    public interface IRegion<TObject> : IDisposable
-        where TObject : ISceneObject
+    public interface IRegion<TSceneObject> : IDisposable
+        where TSceneObject : ISceneObject
     {
         /// <summary>
         /// Occurs when a new subscriber enters the region.
         /// </summary>
-        event Action<TObject> SubscriberAdded;
+        event Action<TSceneObject> SubscriberAdded;
 
         /// <summary>
         /// Occurs when a subscriber leaves the region.
         /// </summary>
-        event Action<TObject> SubscriberRemoved;
+        event Action<TSceneObject> SubscriberRemoved;
 
         /// <summary>
         /// Adds a new scene object to the region.
         /// </summary>
         /// <param name="sceneObject">The actual scene object.</param>
-        void Subscribe(TObject sceneObject);
+        void Subscribe(TSceneObject sceneObject);
 
         /// <summary>
         /// Removes the scene object from the region.
         /// </summary>
         /// <param name="sceneObject">The scene object.</param>
-        void Unsubscribe(TObject sceneObject);
+        void Unsubscribe(TSceneObject sceneObject);
 
         /// <summary>
         /// Gets all the subscribed scene objects to this region.
         /// </summary>
         /// <returns>All the relevant scene objects.</returns>
-        IEnumerable<TObject> GetAllSubscribers();
+        IEnumerable<TSceneObject> GetAllSubscribers();
 
         /// <summary>
         /// Gets the subscriber count.
