@@ -10,7 +10,7 @@ namespace Common.ComponentModel
     {
         private readonly List<IComponent> exposedComponents;
         private readonly List<IComponent> unexposedComponents;
-        
+
         public ComponentsCollection()
         {
             exposedComponents = new List<IComponent>();
