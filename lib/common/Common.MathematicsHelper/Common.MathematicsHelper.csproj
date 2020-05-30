@@ -1,11 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>netstandard2.1</TargetFramework>
     <Authors>Ben Ukhanov</Authors>
     <Description>A common math helpers.</Description>
     <Copyright>Copyright © Ben Ukhanov 2020</Copyright>
-    <PackageProjectUrl>https://github.com/benzuk/maple-fighters-server/tree/feature/new-common-projects/lib/common/Common.MathematicsHelper</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/benzuk/maple-fighters-server/tree/develop/lib/common/Common.MathematicsHelper</PackageProjectUrl>
     <PackageTags>Common</PackageTags>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
