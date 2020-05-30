@@ -4,7 +4,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Authenticator.API
 {
-    public class Program
+    public static class Program
     {
         public static void Main() => CreateHostBuilder().Build().Run();
 
