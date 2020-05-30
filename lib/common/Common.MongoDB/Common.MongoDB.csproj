@@ -1,12 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>netstandard2.1</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>Ben Ukhanov</Authors>
     <Description>A common implementation of the repository pattern.</Description>
     <Copyright>Copyright © Ben Ukhanov 2020</Copyright>
-    <PackageProjectUrl>https://github.com/benzuk/maple-fighters-server/tree/feature/new-common-projects/lib/common/Common.MongoDB</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/benzuk/maple-fighters-server/tree/develop/lib/common/Common.MongoDB</PackageProjectUrl>
     <PackageTags>Common</PackageTags>
   </PropertyGroup>
 
