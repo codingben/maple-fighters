@@ -5,10 +5,10 @@ namespace InterestManagement
 {
     public static class ExtensionMethods
     {
-        public static IEnumerable<IRegion<TObject>> GetRegions<TObject>(
-            this IMatrixRegion<TObject> @this,
+        public static IEnumerable<IRegion<TSceneObject>> GetRegions<TSceneObject>(
+            this IMatrixRegion<TSceneObject> @this,
             ITransform transform)
-            where TObject : ISceneObject
+            where TSceneObject : ISceneObject
         {
             var vertices = Rectangle.GetVertices(
                 transform.Position,
