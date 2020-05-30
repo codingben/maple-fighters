@@ -2,15 +2,15 @@
 
 namespace InterestManagement
 {
-    public class Scene<TObject> : IScene<TObject>
-        where TObject : ISceneObject
+    public class Scene<TSceneObject> : IScene<TSceneObject>
+        where TSceneObject : ISceneObject
     {
-        public IMatrixRegion<TObject> MatrixRegion { get; }
+        public IMatrixRegion<TSceneObject> MatrixRegion { get; }
 
         public Scene(Vector2 worldSize, Vector2 regionSize)
         {
             MatrixRegion =
-                new MatrixRegion<TObject>(worldSize, regionSize);
+                new MatrixRegion<TSceneObject>(worldSize, regionSize);
         }
 
         public void Dispose()
