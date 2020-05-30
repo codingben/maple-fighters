@@ -79,7 +79,7 @@ namespace Common.MathematicsHelper.UnitTests
             // Assert
             point.Equals(min).ShouldBeTrue();
         }
-        
+
         [Fact]
         private void Equality_With_Operator_Returns_True()
         {
