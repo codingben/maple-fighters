@@ -4,19 +4,19 @@ using Common.MathematicsHelper;
 
 namespace InterestManagement
 {
-    public class MatrixRegion<TObject> : IMatrixRegion<TObject>
-        where TObject : ISceneObject
+    public class MatrixRegion<TSceneObject> : IMatrixRegion<TSceneObject>
+        where TSceneObject : ISceneObject
     {
         private readonly Vector2 sceneSize;
         private readonly Vector2 regionSize;
         private readonly int rows;
         private readonly int columns;
-        private readonly IRegion<TObject>[,] regions;
+        private readonly IRegion<TSceneObject>[,] regions;
         private readonly object locker = new object();
 
         // TODO: Optimize
-        private HashSet<IRegion<TObject>> temporaryRegions;
-        private SceneBoundaries sceneBoundaries;
+        private HashSet<IRegion<TSceneObject>> temporaryRegions;
+        private readonly SceneBoundaries sceneBoundaries;
 
         public MatrixRegion(Vector2 sceneSize, Vector2 regionSize)
         {
@@ -35,7 +35,7 @@ namespace InterestManagement
                 {
                     if (regions == null)
                     {
-                        regions = new IRegion<TObject>[rows, columns];
+                        regions = new IRegion<TSceneObject>[rows, columns];
                     }
 
                     var x2 = x1 + (row * regionSize.X);
@@ -43,12 +43,12 @@ namespace InterestManagement
                     var position = new Vector2(x2, y2);
 
                     regions[row, column] =
-                        new Region<TObject>(position, regionSize);
+                        new Region<TSceneObject>(position, regionSize);
                 }
             }
 
             sceneBoundaries = new SceneBoundaries(
-                upperBound: new Vector2(sceneSize.X / 2, sceneSize.Y / 2), 
+                upperBound: new Vector2(sceneSize.X / 2, sceneSize.Y / 2),
                 lowerBound: new Vector2(sceneSize.X / 2, sceneSize.Y / 2) * -1);
         }
 
@@ -60,14 +60,14 @@ namespace InterestManagement
             }
         }
 
-        public IEnumerable<IRegion<TObject>> GetRegions(
+        public IEnumerable<IRegion<TSceneObject>> GetRegions(
             IEnumerable<Vector2> points)
         {
             lock (locker)
             {
                 if (temporaryRegions == null)
                 {
-                    temporaryRegions = new HashSet<IRegion<TObject>>();
+                    temporaryRegions = new HashSet<IRegion<TSceneObject>>();
                 }
                 else
                 {
@@ -99,7 +99,7 @@ namespace InterestManagement
             }
         }
 
-        public IRegion<TObject>[,] GetAllRegions()
+        public IRegion<TSceneObject>[,] GetAllRegions()
         {
             return regions;
         }
