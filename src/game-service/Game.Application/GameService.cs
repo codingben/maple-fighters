@@ -15,12 +15,12 @@ namespace Game.Application
 
         protected override void OnOpen()
         {
-            handlers.Add((byte)MessageCodes.ChangePosition, new ChangePositionMessageHandler());
+            handlers.Add((byte)MessageCodes.ChangePlayerPosition, new ChangePositionMessageHandler());
         }
 
         protected override void OnClose(CloseEventArgs e)
         {
-            handlers.Remove((byte)MessageCodes.ChangePosition);
+            handlers.Remove((byte)MessageCodes.ChangePlayerPosition);
         }
 
         protected override void OnError(WebSocketSharp.ErrorEventArgs e)
