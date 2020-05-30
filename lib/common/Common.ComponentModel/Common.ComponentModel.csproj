@@ -1,12 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>netstandard2.1</TargetFramework>
     <PackageId>Common.ComponentModel</PackageId>
     <Authors>Ben Ukhanov</Authors>
     <Description>A component model library.</Description>
     <Copyright>Copyright © Ben Ukhanov 2020</Copyright>
-    <PackageProjectUrl>https://github.com/benzuk/maple-fighters-server/tree/feature/new-common-projects/lib/common/Common.ComponentModel</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/benzuk/maple-fighters-server/tree/develop/lib/common/Common.ComponentModel</PackageProjectUrl>
     <PackageTags>Common</PackageTags>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
