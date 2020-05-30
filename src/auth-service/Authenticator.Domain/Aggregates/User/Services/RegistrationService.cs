@@ -11,21 +11,17 @@
 
         public AccountCreationStatus CreateAccount(Account account)
         {
-            AccountCreationStatus accountCreationStatus;
-
             var email = accountRepository.Read(x => x.Email == account.Email);
             if (email != null)
             {
-                accountCreationStatus = AccountCreationStatus.EmailExists;
+                return AccountCreationStatus.EmailExists;
             }
             else
             {
                 accountRepository.Create(account);
 
-                accountCreationStatus = AccountCreationStatus.Succeed;
+                return AccountCreationStatus.Succeed;
             }
-
-            return accountCreationStatus;
         }
     }
 }
