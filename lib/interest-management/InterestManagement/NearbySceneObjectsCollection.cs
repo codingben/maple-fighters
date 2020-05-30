@@ -4,22 +4,22 @@ using System.Linq;
 
 namespace InterestManagement
 {
-    public class NearbySceneObjectsCollection<TObject> : INearbySceneObjectsEvents<TObject>
-        where TObject : ISceneObject
+    public class NearbySceneObjectsCollection<TSceneObject> : INearbySceneObjectsEvents<TSceneObject>
+        where TSceneObject : ISceneObject
     {
-        public event Action<TObject> SceneObjectAdded;
+        public event Action<TSceneObject> SceneObjectAdded;
 
-        public event Action<TObject> SceneObjectRemoved;
+        public event Action<TSceneObject> SceneObjectRemoved;
 
-        public event Action<IEnumerable<TObject>> SceneObjectsAdded;
+        public event Action<IEnumerable<TSceneObject>> SceneObjectsAdded;
 
-        public event Action<IEnumerable<TObject>> SceneObjectsRemoved;
+        public event Action<IEnumerable<TSceneObject>> SceneObjectsRemoved;
 
-        private readonly HashSet<TObject> collection;
+        private readonly HashSet<TSceneObject> collection;
 
         public NearbySceneObjectsCollection()
         {
-            collection = new HashSet<TObject>();
+            collection = new HashSet<TSceneObject>();
         }
 
         public void Dispose()
@@ -27,7 +27,7 @@ namespace InterestManagement
             collection?.Clear();
         }
 
-        public void Add(IEnumerable<TObject> sceneObjects)
+        public void Add(IEnumerable<TSceneObject> sceneObjects)
         {
             var visibleSceneObjects =
                 sceneObjects
@@ -42,7 +42,7 @@ namespace InterestManagement
             }
         }
 
-        public void Add(TObject sceneObject)
+        public void Add(TSceneObject sceneObject)
         {
             if (collection.Add(sceneObject))
             {
@@ -50,7 +50,7 @@ namespace InterestManagement
             }
         }
 
-        public void Remove(IEnumerable<TObject> sceneObjects)
+        public void Remove(IEnumerable<TSceneObject> sceneObjects)
         {
             var invisibleSceneObjects =
                 sceneObjects
@@ -65,7 +65,7 @@ namespace InterestManagement
             }
         }
 
-        public void Remove(TObject sceneObject)
+        public void Remove(TSceneObject sceneObject)
         {
             if (collection.Remove(sceneObject))
             {
