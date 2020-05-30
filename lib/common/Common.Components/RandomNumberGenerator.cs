@@ -10,7 +10,7 @@ namespace Common.Components
 
         public int GenerateRandomNumber()
         {
-            return random.Next(int.MinValue, int.MaxValue); 
+            return random.Next(int.MinValue, int.MaxValue);
         }
 
         public int GenerateRandomNumber(int minimum, int maximum)
