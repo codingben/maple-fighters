@@ -8,11 +8,12 @@
     <Copyright>Copyright © Ben Ukhanov 2020</Copyright>
     <PackageProjectUrl>https://github.com/benzuk/maple-fighters-server/tree/develop/lib/common/Common.MongoDB</PackageProjectUrl>
     <PackageTags>Common</PackageTags>
+    <Version>1.0.1</Version>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Common.Repository.Interfaces" Version="1.0.0" />
-    <PackageReference Include="MongoDB.Driver" Version="2.10.2" />
+    <PackageReference Include="Common.Repository.Interfaces" Version="1.0.1" />
+    <PackageReference Include="MongoDB.Driver" Version="2.10.4" />
   </ItemGroup>
 
 </Project>
