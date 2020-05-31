@@ -8,10 +8,11 @@
     <PackageProjectUrl>https://github.com/benzuk/maple-fighters-server/tree/develop/lib/common/Common.PythonScripting</PackageProjectUrl>
     <PackageTags>Common</PackageTags>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Version>1.0.1</Version>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="IronPython.StdLib" Version="2.7.9" />
+    <PackageReference Include="IronPython.StdLib" Version="2.7.10" />
   </ItemGroup>
 
 </Project>
