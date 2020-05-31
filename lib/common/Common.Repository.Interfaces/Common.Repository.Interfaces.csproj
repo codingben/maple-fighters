@@ -8,6 +8,7 @@
     <Description>A common interfaces for the repository pattern.</Description>
     <PackageTags>Common</PackageTags>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Version>1.0.1</Version>
   </PropertyGroup>
 
 </Project>
