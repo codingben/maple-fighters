@@ -9,6 +9,7 @@
     <PackageProjectUrl>https://github.com/benzuk/maple-fighters-server/tree/develop/lib/common/Common.ComponentModel</PackageProjectUrl>
     <PackageTags>Common</PackageTags>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Version>1.0.1</Version>
   </PropertyGroup>
 
 </Project>
