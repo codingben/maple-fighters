@@ -8,10 +8,11 @@
     <PackageProjectUrl>https://github.com/benzuk/maple-fighters-server/tree/develop/lib/common/Common.ComponentModel.Tests</PackageProjectUrl>
     <PackageTags>Common</PackageTags>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Version>1.0.1</Version>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Common.ComponentModel" Version="1.0.0" />
+    <PackageReference Include="Common.ComponentModel" Version="1.0.1" />
     <PackageReference Include="NSubstitute" Version="4.2.1" />
   </ItemGroup>
 
