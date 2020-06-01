@@ -18,21 +18,21 @@ namespace Game.Application
             handlers.Add((byte)MessageCodes.ChangePlayerPosition, new ChangePositionMessageHandler());
         }
 
-        protected override void OnClose(CloseEventArgs e)
+        protected override void OnClose(CloseEventArgs eventArgs)
         {
             handlers.Remove((byte)MessageCodes.ChangePlayerPosition);
         }
 
-        protected override void OnError(WebSocketSharp.ErrorEventArgs e)
+        protected override void OnError(ErrorEventArgs eventArgs)
         {
             // TODO: Log $"e.Message"
         }
 
-        protected override void OnMessage(MessageEventArgs e)
+        protected override void OnMessage(MessageEventArgs eventArgs)
         {
-            if (e.IsBinary)
+            if (eventArgs.IsBinary)
             {
-                var message = MessageUtils.GetMessage<MessageData>(e.RawData);
+                var message = MessageUtils.GetMessage<MessageData>(eventArgs.RawData);
                 var code = message.Code;
                 var rawData = message.RawData;
 
