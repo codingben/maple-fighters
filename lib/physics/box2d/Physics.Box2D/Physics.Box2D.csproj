@@ -8,11 +8,13 @@
     <PackageTags>Physics, Box2D</PackageTags>
     <Description>A simple library for working with Box2D physics.</Description>
     <PackageProjectUrl>https://github.com/benzuk/maple-fighters-server/tree/develop/lib/physics/box2d</PackageProjectUrl>
-    <Version>1.0.0</Version>
+    <Version>1.0.1</Version>
+    <AssemblyVersion>1.0.1.0</AssemblyVersion>
+    <FileVersion>1.0.1.0</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Box2D.NetStandard" Version="1.0.2" />
+    <PackageReference Include="Box2D.NetStandard" Version="1.0.3" />
     <PackageReference Include="Common.MathematicsHelper" Version="1.0.1" />
   </ItemGroup>
 
