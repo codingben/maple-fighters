@@ -1,6 +1,6 @@
-namespace Game.Application
+﻿namespace Game.Application
 {
-    public class SceneObjectData
+    public class GameObjectData
     {
         public int Id { get; set; }
 
