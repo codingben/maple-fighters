@@ -2,7 +2,7 @@ namespace Game.Application
 {
     public class PositionChangedMessage
     {
-        public int SceneObjectId { get; set; }
+        public int GameObjectId { get; set; }
 
         public float X { get; set; }
 
