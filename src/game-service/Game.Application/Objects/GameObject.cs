@@ -1,3 +1,4 @@
+using Common.ComponentModel;
 using InterestManagement;
 
 namespace Game.Application.Objects
@@ -9,6 +10,8 @@ namespace Game.Application.Objects
         public string Name { get; }
 
         public ITransform Transform => new Transform();
+
+        protected IComponents Components => new ComponentsContainer();
 
         public GameObject(int id, string name)
         {
