@@ -11,7 +11,7 @@ namespace Game.Application.Objects
 
         public ITransform Transform => new Transform();
 
-        protected IComponents Components => new ComponentsContainer();
+        public IComponents Components => new ComponentsContainer();
 
         public GameObject(int id, string name)
         {
