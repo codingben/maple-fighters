@@ -1,4 +1,5 @@
 using Common.ComponentModel;
+using Common.Components;
 using WebSocketSharp.Server;
 
 namespace Game.Application
@@ -16,6 +17,8 @@ namespace Game.Application
 
         public void Startup()
         {
+            AddCommonComponents();
+
             webSocketServer.AddWebSocketService("/game", () => new GameService(components));
             webSocketServer.Start();
         }
@@ -23,6 +26,11 @@ namespace Game.Application
         public void Shutdown()
         {
             webSocketServer.Stop();
+        }
+
+        private void AddCommonComponents()
+        {
+            components.Add(new IdGenerator());
         }
     }
 }
