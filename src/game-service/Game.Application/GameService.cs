@@ -11,7 +11,7 @@ namespace Game.Application
     public class GameService : WebSocketBehavior
     {
         private readonly IExposedComponents components;
-        private readonly Dictionary<byte, IMessageHandler> handlers;
+        private readonly IDictionary<byte, IMessageHandler> handlers;
         private readonly IGameObject player;
 
         public GameService(IExposedComponents components)
