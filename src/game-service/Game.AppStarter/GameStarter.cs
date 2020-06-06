@@ -7,12 +7,17 @@ namespace Game.AppStarter
     {
         public static void Main()
         {
-            var gameApplication = new GameApplication("ws://localhost:50060");
-            gameApplication.Startup();
+            var serverApplication = GetServerApplication();
+            serverApplication.Startup();
 
             Console.ReadLine();
 
-            gameApplication.Shutdown();
+            serverApplication.Shutdown();
+        }
+
+        private static IServerApplication GetServerApplication()
+        {
+            return new GameApplication("ws://localhost:50060");
         }
     }
 }
