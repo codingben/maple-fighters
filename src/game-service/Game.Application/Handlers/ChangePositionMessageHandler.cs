@@ -5,9 +5,9 @@ namespace Game.Application
 {
     public class ChangePositionMessageHandler : IMessageHandler
     {
-        private readonly GameObject player;
+        private readonly IGameObject player;
 
-        public ChangePositionMessageHandler(GameObject player)
+        public ChangePositionMessageHandler(IGameObject player)
         {
             this.player = player;
         }
