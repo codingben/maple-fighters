@@ -6,12 +6,6 @@ using InterestManagement;
 
 namespace Game.Application.Components
 {
-    public enum Map
-    {
-        Lobby,
-        TheDarkForest
-    }
-
     [ComponentSettings(ExposedState.Exposable)]
     public class GameSceneContainer : ComponentBase, IGameSceneContainer
     {
@@ -19,11 +13,20 @@ namespace Game.Application.Components
 
         public GameSceneContainer()
         {
+            // TODO: Consider adding new scenes using method or OnAwake()
             container = new Dictionary<Map, IScene<IGameObject>>()
             {
                 { Map.Lobby, new Scene<IGameObject>(Vector2.Zero, Vector2.Zero) },
                 { Map.TheDarkForest, new Scene<IGameObject>(Vector2.Zero, Vector2.Zero) }
             };
+        }
+
+        protected override void OnRemoved()
+        {
+            foreach (var scene in container.Values)
+            {
+                scene?.Dispose();
+            }
         }
 
         public bool TryGetScene(Map map, out IScene<IGameObject> scene)
