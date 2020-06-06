@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using WebSocketSharp;
 using WebSocketSharp.Server;
 using Game.Application.Objects;
+using Game.Application.Objects.Components;
 using Common.MathematicsHelper;
 using Common.Components;
+using Game.Application.Components;
 
 namespace Game.Application
 {
@@ -60,12 +62,17 @@ namespace Game.Application
         {
             var idGenerator = components.Get<IIdGenerator>();
             var id = idGenerator.GenerateId();
-            var name = "Player"; // (Map from Object Type to Name)
-            var player = new GameObject(id, name);
+            var player = new GameObject(id, nameof(GameObjectType.Player));
             player.Transform.SetPosition(Vector2.Zero);
             player.Transform.SetSize(Vector2.One);
 
-            // Add components
+            var gameSceneContainer = components.Get<IGameSceneContainer>();
+            gameSceneContainer.TryGetScene(Map.Lobby, out var scene);
+
+            // TODO: Dispose won't be called
+            player.Components.Add(new GameObjectGetter(player));
+            player.Components.Add(new PresenceSceneProvider(scene));
+            player.Components.Add(new ProximityChecker());
 
             return player;
         }
