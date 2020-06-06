@@ -12,7 +12,7 @@ namespace Game.Application
     {
         private readonly IExposedComponents components;
         private readonly Dictionary<byte, IMessageHandler> handlers;
-        private readonly GameObject player;
+        private readonly IGameObject player;
 
         public GameService(IExposedComponents components)
         {
@@ -56,7 +56,7 @@ namespace Game.Application
             }
         }
 
-        private GameObject CreatePlayerGameObject()
+        private IGameObject CreatePlayerGameObject()
         {
             var idGenerator = components.Get<IIdGenerator>();
             var id = idGenerator.GenerateId();
