@@ -3,7 +3,7 @@ using InterestManagement;
 
 namespace Game.Application.Objects
 {
-    public class GameObject : ISceneObject
+    public class GameObject : IGameObject
     {
         public int Id { get; }
 
@@ -11,7 +11,7 @@ namespace Game.Application.Objects
 
         public ITransform Transform => new Transform();
 
-        public IComponents Components => new ComponentsContainer();
+        public IExposedComponents Components => new ComponentsContainer();
 
         public GameObject(int id, string name)
         {
