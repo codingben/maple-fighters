@@ -63,11 +63,11 @@ namespace Game.Application
             var idGenerator = components.Get<IIdGenerator>();
             var id = idGenerator.GenerateId();
             var player = new GameObject(id, nameof(GameObjectType.Player));
-            player.Transform.SetPosition(Vector2.Zero);
-            player.Transform.SetSize(Vector2.One);
-
             var gameSceneContainer = components.Get<IGameSceneContainer>();
             gameSceneContainer.TryGetScene(Map.Lobby, out var scene);
+
+            player.Transform.SetPosition(scene.PlayerSpawnData.Position);
+            player.Transform.SetSize(scene.PlayerSpawnData.Size);
 
             // TODO: Dispose won't be called
             player.Components.Add(new GameObjectGetter(player));
