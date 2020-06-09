@@ -1,24 +1,24 @@
 using Common.ComponentModel;
-using InterestManagement;
+using Game.Application.Components;
 
 namespace Game.Application.Objects.Components
 {
     [ComponentSettings(ExposedState.Exposable)]
     public class PresenceSceneProvider : ComponentBase, IPresenceSceneProvider
     {
-        private IScene<IGameObject> scene;
+        private IGameScene scene;
 
-        public PresenceSceneProvider(IScene<IGameObject> scene)
+        public PresenceSceneProvider(IGameScene scene)
         {
             this.scene = scene;
         }
 
-        public void SetScene(IScene<IGameObject> scene)
+        public void SetScene(IGameScene scene)
         {
             this.scene = scene;
         }
 
-        public IScene<IGameObject> GetScene()
+        public IGameScene GetScene()
         {
             return scene;
         }
