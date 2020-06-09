@@ -1,8 +1,6 @@
 using System.Collections.Generic;
 using Common.ComponentModel;
 using Common.MathematicsHelper;
-using Game.Application.Objects;
-using InterestManagement;
 
 namespace Game.Application.Components
 {
@@ -13,10 +11,10 @@ namespace Game.Application.Components
 
         public GameSceneContainer()
         {
-            var lobbyScene = new GameScene(new Scene<IGameObject>(worldSize: new Vector2(40, 5), regionSize: new Vector2(10, 5)));
+            var lobbyScene = new GameScene(worldSize: new Vector2(40, 5), regionSize: new Vector2(10, 5));
             lobbyScene.PlayerSpawnData = new PlayerSpawnData(Vector2.Zero, Vector2.Zero);
 
-            var theDarkForestScene = new GameScene(new Scene<IGameObject>(worldSize: new Vector2(30, 30), regionSize: new Vector2(10, 5)));
+            var theDarkForestScene = new GameScene(worldSize: new Vector2(30, 30), regionSize: new Vector2(10, 5));
             theDarkForestScene.PlayerSpawnData = new PlayerSpawnData(Vector2.Zero, Vector2.Zero);
 
             // TODO: Consider adding new scenes using method or OnAwake()
