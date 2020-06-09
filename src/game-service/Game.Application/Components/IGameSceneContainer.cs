@@ -1,10 +1,7 @@
-using Game.Application.Objects;
-using InterestManagement;
-
 namespace Game.Application.Components
 {
     public interface IGameSceneContainer
     {
-        bool TryGetScene(Map map, out IScene<IGameObject> scene);
+        bool TryGetScene(Map map, out IGameScene scene);
     }
 }
