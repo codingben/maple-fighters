@@ -1,13 +1,10 @@
-using System;
 using Game.Application.Objects;
 using InterestManagement;
 
 namespace Game.Application.Components
 {
-    public interface IGameScene : IDisposable
+    public interface IGameScene : IScene<IGameObject>
     {
         PlayerSpawnData PlayerSpawnData { get; set; }
-
-        IScene<IGameObject> GetScene();
     }
 }
