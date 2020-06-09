@@ -1,27 +1,17 @@
+using Common.MathematicsHelper;
 using Game.Application.Objects;
 using InterestManagement;
 
 namespace Game.Application.Components
 {
-    public class GameScene : IGameScene
+    public class GameScene : Scene<IGameObject>, IGameScene
     {
         public PlayerSpawnData PlayerSpawnData { get; set; }
 
-        private IScene<IGameObject> scene;
-
-        public GameScene(IScene<IGameObject> scene)
+        public GameScene(Vector2 worldSize, Vector2 regionSize)
+            : base(worldSize, regionSize)
         {
-            this.scene = scene;
-        }
-
-        public IScene<IGameObject> GetScene()
-        {
-            return scene;
-        }
-
-        public void Dispose()
-        {
-            scene?.Dispose();
+            // Left blank intentionally
         }
     }
 }
