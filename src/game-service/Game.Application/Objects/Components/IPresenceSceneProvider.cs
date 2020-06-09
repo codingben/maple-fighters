@@ -1,11 +1,11 @@
-using InterestManagement;
+using Game.Application.Components;
 
 namespace Game.Application.Objects.Components
 {
     public interface IPresenceSceneProvider
     {
-        void SetScene(IScene<IGameObject> scene);
+        void SetScene(IGameScene scene);
 
-        IScene<IGameObject> GetScene();
+        IGameScene GetScene();
     }
 }
