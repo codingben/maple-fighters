@@ -9,15 +9,21 @@ namespace Game.Application.Components
     [ComponentSettings(ExposedState.Exposable)]
     public class GameSceneContainer : ComponentBase, IGameSceneContainer
     {
-        private readonly IReadOnlyDictionary<Map, IScene<IGameObject>> container;
+        private readonly IReadOnlyDictionary<Map, IGameScene> container;
 
         public GameSceneContainer()
         {
+            var lobbyScene = new GameScene(new Scene<IGameObject>(worldSize: new Vector2(40, 5), regionSize: new Vector2(10, 5)));
+            lobbyScene.PlayerSpawnData = new PlayerSpawnData(Vector2.Zero, Vector2.Zero);
+
+            var theDarkForestScene = new GameScene(new Scene<IGameObject>(worldSize: new Vector2(30, 30), regionSize: new Vector2(10, 5)));
+            theDarkForestScene.PlayerSpawnData = new PlayerSpawnData(Vector2.Zero, Vector2.Zero);
+
             // TODO: Consider adding new scenes using method or OnAwake()
-            container = new Dictionary<Map, IScene<IGameObject>>()
+            container = new Dictionary<Map, IGameScene>()
             {
-                { Map.Lobby, new Scene<IGameObject>(Vector2.Zero, Vector2.Zero) },
-                { Map.TheDarkForest, new Scene<IGameObject>(Vector2.Zero, Vector2.Zero) }
+                { Map.Lobby, lobbyScene },
+                { Map.TheDarkForest, theDarkForestScene }
             };
         }
 
@@ -29,7 +35,7 @@ namespace Game.Application.Components
             }
         }
 
-        public bool TryGetScene(Map map, out IScene<IGameObject> scene)
+        public bool TryGetScene(Map map, out IGameScene scene)
         {
             return container.TryGetValue(map, out scene);
         }
