@@ -70,6 +70,7 @@ namespace Game.Application
 
             // TODO: Dispose won't be called
             player.Components.Add(new GameObjectGetter(player));
+            player.Components.Add(new GameObjectAnimation());
             player.Components.Add(new PresenceSceneProvider(scene));
             player.Components.Add(new ProximityChecker());
 
