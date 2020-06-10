@@ -10,8 +10,6 @@ namespace Game.Application.Objects
 
         public Vector2 Size { get; private set; }
 
-        public byte Direction { get; private set; }
-
         public event Action PositionChanged;
 
         public void SetPosition(Vector2 position)
@@ -24,11 +22,6 @@ namespace Game.Application.Objects
         public void SetSize(Vector2 size)
         {
             Size = size;
-        }
-
-        public void SetDirection(byte direction)
-        {
-            Direction = direction;
         }
     }
 }
