@@ -1,9 +1,10 @@
 ﻿using System;
 using Common.MathematicsHelper;
+using InterestManagement;
 
 namespace Game.Application.Objects
 {
-    public class GameObjectTransform : IGameObjectTransform
+    public class Transform : ITransform
     {
         public Vector2 Position { get; private set; }
 
