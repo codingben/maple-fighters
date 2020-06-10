@@ -7,7 +7,5 @@ namespace Game.Application
         public float X { get; set; }
 
         public float Y { get; set; }
-
-        public byte Direction { get; set; }
     }
 }
