@@ -6,7 +6,7 @@ namespace Game.Application
 {
     public static class MessageUtils
     {
-        public static T GetMessage<T>(byte[] rawData)
+        public static T FromMessage<T>(byte[] rawData)
         {
             T message;
 
