@@ -1,9 +1,9 @@
-using Common.ComponentModel;
+﻿using Common.ComponentModel;
 
 namespace Game.Application.Objects.Components
 {
     [ComponentSettings(ExposedState.Exposable)]
-    public class GameObjectAnimation : ComponentBase, IGameObjectAnimation
+    public class AnimationData : ComponentBase, IAnimationData
     {
         private byte animationState;
 
