@@ -12,7 +12,7 @@ namespace Game.Application.Objects.Components
             this.gameObject = gameObject;
         }
 
-        public IGameObject GetGameObject()
+        public IGameObject Get()
         {
             return gameObject;
         }
