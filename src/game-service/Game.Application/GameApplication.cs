@@ -35,6 +35,7 @@ namespace Game.Application
         {
             components.Add(new IdGenerator());
             components.Add(new GameSceneContainer());
+            components.Add(new SessionIdContainer());
         }
 
         private void RemoveCommonComponents()
