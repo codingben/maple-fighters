@@ -13,7 +13,7 @@ namespace Game.Application.Objects.Components
             var presenceSceneProvider = Components.Get<IPresenceSceneProvider>();
             var scene = presenceSceneProvider.GetScene();
             var gameObjectGetter = Components.Get<IGameObjectGetter>();
-            var gameObject = gameObjectGetter.GetGameObject();
+            var gameObject = gameObjectGetter.Get();
 
             interestArea = new InterestArea<IGameObject>(scene, gameObject);
         }
