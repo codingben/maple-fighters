@@ -18,5 +18,18 @@ namespace Game.Application
 
             return message;
         }
+
+        public static byte[] ToMessage<T>(T message)
+        {
+            var memoryStream = new MemoryStream();
+
+            using (BsonWriter writer = new BsonWriter(memoryStream))
+            {
+                var serializer = new JsonSerializer();
+                serializer.Serialize(writer, message);
+            }
+
+            return memoryStream.ToArray();
+        }
     }
 }
