@@ -1,6 +1,6 @@
-namespace Game.Application.Objects.Components
+﻿namespace Game.Application.Objects.Components
 {
-    public interface IGameObjectAnimation
+    public interface IAnimationData
     {
         void SetAnimationState(byte animationState);
 
