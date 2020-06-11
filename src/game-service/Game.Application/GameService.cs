@@ -9,15 +9,17 @@ using Game.Application.Components;
 
 namespace Game.Application
 {
-    public class GameService : WebSocketBehavior
+    public class GameService : WebSocketBehavior, IGameService
     {
         private readonly IExposedComponents components;
+        private readonly ISessionIdContainer sessionIdContainer;
         private readonly IDictionary<byte, IMessageHandler> handlers;
         private readonly IGameObject player;
 
         public GameService(IExposedComponents components)
         {
             this.components = components;
+            this.sessionIdContainer = components.Get<ISessionIdContainer>();
 
             handlers = new Dictionary<byte, IMessageHandler>();
             player = CreatePlayerGameObject();
@@ -25,7 +27,7 @@ namespace Game.Application
 
         protected override void OnOpen()
         {
-            handlers.Add((byte)MessageCodes.ChangePlayerPosition, new ChangePositionMessageHandler(player));
+            handlers.Add((byte)MessageCodes.ChangePlayerPosition, new ChangePositionMessageHandler(player, this));
         }
 
         protected override void OnClose(CloseEventArgs eventArgs)
@@ -54,6 +56,14 @@ namespace Game.Application
             else
             {
                 // TODO: Log "Only binary data is allowed."
+            }
+        }
+
+        public void SendMessage(byte[] data, int id)
+        {
+            if (sessionIdContainer.GetSessionId(id, out var sessionId))
+            {
+                Sessions.SendTo(data, sessionId);
             }
         }
 
