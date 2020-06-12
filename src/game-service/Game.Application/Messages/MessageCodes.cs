@@ -4,11 +4,11 @@ namespace Game.Application.Messages
     {
         ChangeScene,
         ChangePosition,
-        ChangeState,
+        ChangeAnimationState,
         SceneObjectAdded,
         SceneObjectRemoved,
         PositionChanged,
-        StateChanged,
+        AnimationStateChanged,
         Attacked,
         BubbleNotification
     }
