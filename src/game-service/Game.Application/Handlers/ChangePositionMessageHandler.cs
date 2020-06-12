@@ -1,17 +1,24 @@
-using Game.Application.Objects;
 using Common.MathematicsHelper;
+using InterestManagement;
+using Game.Application.Objects.Components;
+using System;
 
 namespace Game.Application
 {
     public class ChangePositionMessageHandler : IMessageHandler
     {
-        private readonly IGameObject player;
-        private readonly IGameService gameService;
+        private readonly ITransform transform;
+        private readonly IProximityChecker prxomitiyChecker;
+        private readonly Action<byte[], int> sendMessageCallback;
 
-        public ChangePositionMessageHandler(IGameObject player, IGameService gameService)
+        public ChangePositionMessageHandler(
+            ITransform transform,
+            IProximityChecker prxomitiyChecker,
+            Action<byte[], int> sendMessageCallback)
         {
-            this.player = player;
-            this.gameService = gameService;
+            this.transform = transform;
+            this.prxomitiyChecker = prxomitiyChecker;
+            this.sendMessageCallback = sendMessageCallback;
         }
 
         public void Handle(byte[] rawData)
@@ -21,27 +28,26 @@ namespace Game.Application
             var y = message.Y;
             var position = new Vector2(x, y);
 
-            player.Transform.SetPosition(position);
+            transform.SetPosition(position);
 
-            ChangePositionForNearbyGameObjects(position);
+            SendMessageToNearbyGameObjects(position);
         }
 
-        private void ChangePositionForNearbyGameObjects(Vector2 position)
+        private void SendMessageToNearbyGameObjects(Vector2 position)
         {
-            // TODO: Refactor this: collection.GetAllNearbyGameObjects()
-            var nearbyGameObjects = new int[0];
+            var nearbyGameObjects = prxomitiyChecker.GetGameObjects();
 
-            foreach (var id in nearbyGameObjects)
+            foreach (var gameObject in nearbyGameObjects)
             {
                 var message = new PositionChangedMessage()
                 {
-                    GameObjectId = id,
+                    GameObjectId = gameObject.Id,
                     X = position.X,
                     Y = position.Y
                 };
-                var data = MessageUtils.ToMessage(message);
+                var rawData = MessageUtils.ToMessage(message);
 
-                gameService.SendMessage(data, id);
+                sendMessageCallback(rawData, gameObject.Id);
             }
         }
     }
