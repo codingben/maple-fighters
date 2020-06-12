@@ -3,13 +3,13 @@ namespace Game.Application.Messages
     public enum MessageCodes
     {
         ChangeScene,
-        ChangePlayerPosition,
-        ChangePlayerState,
+        ChangePosition,
+        ChangeState,
         SceneObjectAdded,
         SceneObjectRemoved,
         PositionChanged,
-        PlayerStateChanged,
-        PlayerAttacked,
+        StateChanged,
+        Attacked,
         BubbleNotification
     }
 }
