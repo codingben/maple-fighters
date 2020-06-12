@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Common.ComponentModel;
 using InterestManagement;
 
@@ -7,6 +8,12 @@ namespace Game.Application.Objects.Components
     public class ProximityChecker : ComponentBase, IProximityChecker
     {
         private IInterestArea<IGameObject> interestArea;
+        private List<IGameObject> gameObjects;
+
+        public ProximityChecker()
+        {
+            gameObjects = new List<IGameObject>();
+        }
 
         protected override void OnAwake()
         {
@@ -16,16 +23,59 @@ namespace Game.Application.Objects.Components
             var gameObject = gameObjectGetter.Get();
 
             interestArea = new InterestArea<IGameObject>(scene, gameObject);
+
+            SubscribeToNearbySceneObjectsEvents();
         }
 
         protected override void OnRemoved()
         {
+            UnsubscribeFromNearbySceneObjectsEvents();
+
             interestArea?.Dispose();
         }
 
-        public INearbySceneObjectsEvents<IGameObject> GetEvents()
+        private void SubscribeToNearbySceneObjectsEvents()
         {
-            return interestArea.NearbySceneObjectsEvents;
+            interestArea.NearbySceneObjectsEvents.SceneObjectAdded += OnSceneObjectAdded;
+            interestArea.NearbySceneObjectsEvents.SceneObjectRemoved += SceneObjectRemoved;
+            interestArea.NearbySceneObjectsEvents.SceneObjectsAdded += OnSceneObjectsAdded;
+            interestArea.NearbySceneObjectsEvents.SceneObjectsRemoved += OnSceneObjectsRemoved;
+        }
+
+        private void UnsubscribeFromNearbySceneObjectsEvents()
+        {
+            interestArea.NearbySceneObjectsEvents.SceneObjectAdded -= OnSceneObjectAdded;
+            interestArea.NearbySceneObjectsEvents.SceneObjectRemoved -= SceneObjectRemoved;
+            interestArea.NearbySceneObjectsEvents.SceneObjectsAdded -= OnSceneObjectsAdded;
+            interestArea.NearbySceneObjectsEvents.SceneObjectsRemoved -= OnSceneObjectsRemoved;
+        }
+
+        private void OnSceneObjectAdded(IGameObject sceneObject)
+        {
+            gameObjects.Add(sceneObject);
+        }
+
+        private void SceneObjectRemoved(IGameObject sceneObject)
+        {
+            gameObjects.Remove(sceneObject);
+        }
+
+        private void OnSceneObjectsAdded(IEnumerable<IGameObject> sceneObjects)
+        {
+            gameObjects.AddRange(sceneObjects);
+        }
+
+        private void OnSceneObjectsRemoved(IEnumerable<IGameObject> sceneObjects)
+        {
+            foreach (var sceneObject in sceneObjects)
+            {
+                gameObjects.Remove(sceneObject);
+            }
+        }
+
+        public IEnumerable<IGameObject> GetGameObjects()
+        {
+            return gameObjects;
         }
     }
 }
