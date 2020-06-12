@@ -29,14 +29,14 @@ namespace Game.Application
         {
             sessionDataContainer.AddSessionData(player.Id, new SessionData(ID));
 
-            handlers.Add((byte)MessageCodes.ChangePlayerPosition, new ChangePositionMessageHandler(player, this));
+            AddHandlerForChangePlayerPosition();
         }
 
         protected override void OnClose(CloseEventArgs eventArgs)
         {
             sessionDataContainer.RemoveSessionData(player.Id);
 
-            handlers.Remove((byte)MessageCodes.ChangePlayerPosition);
+            RemoveHandlerForChangePlayerPosition();
         }
 
         protected override void OnError(ErrorEventArgs eventArgs)
@@ -61,6 +61,20 @@ namespace Game.Application
             {
                 // TODO: Log "Only binary data is allowed."
             }
+        }
+
+        private void AddHandlerForChangePlayerPosition()
+        {
+            var transform = player.Transform;
+            var prxomitiyChecker = player.Components.Get<IProximityChecker>();
+            var handler = new ChangePositionMessageHandler(transform, prxomitiyChecker, SendMessage);
+
+            handlers.Add((byte)MessageCodes.ChangePlayerPosition, handler);
+        }
+
+        private void RemoveHandlerForChangePlayerPosition()
+        {
+            handlers.Remove((byte)MessageCodes.ChangePlayerPosition);
         }
 
         public void SendMessage(byte[] data, int id)
