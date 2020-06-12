@@ -32,14 +32,14 @@ namespace Game.Application
         {
             sessionDataContainer.AddSessionData(player.Id, new SessionData(ID));
 
-            AddHandlerForChangePlayerPosition();
+            AddHandlerForChangePosition();
         }
 
         protected override void OnClose(CloseEventArgs eventArgs)
         {
             sessionDataContainer.RemoveSessionData(player.Id);
 
-            RemoveHandlerForChangePlayerPosition();
+            RemoveHandlerForChangePosition();
         }
 
         protected override void OnError(ErrorEventArgs eventArgs)
@@ -66,18 +66,18 @@ namespace Game.Application
             }
         }
 
-        private void AddHandlerForChangePlayerPosition()
+        private void AddHandlerForChangePosition()
         {
             var transform = player.Transform;
             var prxomitiyChecker = player.Components.Get<IProximityChecker>();
             var handler = new ChangePositionMessageHandler(transform, prxomitiyChecker, SendMessage);
 
-            handlers.Add((byte)MessageCodes.ChangePlayerPosition, handler);
+            handlers.Add((byte)MessageCodes.ChangePosition, handler);
         }
 
-        private void RemoveHandlerForChangePlayerPosition()
+        private void RemoveHandlerForChangePosition()
         {
-            handlers.Remove((byte)MessageCodes.ChangePlayerPosition);
+            handlers.Remove((byte)MessageCodes.ChangePosition);
         }
 
         public void SendMessage(byte[] data, int id)
