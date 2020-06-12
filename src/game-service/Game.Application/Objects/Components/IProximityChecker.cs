@@ -1,9 +1,9 @@
-using InterestManagement;
+using System.Collections.Generic;
 
 namespace Game.Application.Objects.Components
 {
     public interface IProximityChecker
     {
-        INearbySceneObjectsEvents<IGameObject> GetEvents();
+        IEnumerable<IGameObject> GetGameObjects();
     }
 }
