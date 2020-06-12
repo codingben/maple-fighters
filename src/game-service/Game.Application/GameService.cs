@@ -51,9 +51,9 @@ namespace Game.Application
         {
             if (eventArgs.IsBinary)
             {
-                var message = MessageUtils.FromMessage<MessageData>(eventArgs.RawData);
-                var code = message.Code;
-                var rawData = message.RawData;
+                var messageData = MessageUtils.FromMessage<MessageData>(eventArgs.RawData);
+                var code = messageData.Code;
+                var rawData = messageData.RawData;
 
                 if (handlers.TryGetValue(code, out var handler))
                 {
