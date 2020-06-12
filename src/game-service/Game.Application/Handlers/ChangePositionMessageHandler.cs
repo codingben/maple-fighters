@@ -3,7 +3,7 @@ using InterestManagement;
 using Game.Application.Objects.Components;
 using System;
 
-namespace Game.Application
+namespace Game.Application.Handlers
 {
     public class ChangePositionMessageHandler : IMessageHandler
     {
