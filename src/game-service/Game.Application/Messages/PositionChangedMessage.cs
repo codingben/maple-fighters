@@ -1,4 +1,4 @@
-namespace Game.Application
+namespace Game.Application.Messages
 {
     public class PositionChangedMessage
     {
