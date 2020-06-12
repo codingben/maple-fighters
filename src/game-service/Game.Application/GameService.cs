@@ -12,7 +12,7 @@ using Game.Application.Messages;
 
 namespace Game.Application
 {
-    public class GameService : WebSocketBehavior, IGameService
+    public class GameService : WebSocketBehavior
     {
         private readonly IExposedComponents components;
         private readonly ISessionDataContainer sessionDataContainer;
