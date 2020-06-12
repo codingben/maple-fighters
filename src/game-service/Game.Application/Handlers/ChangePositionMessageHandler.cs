@@ -25,7 +25,7 @@ namespace Game.Application.Handlers
 
         public void Handle(byte[] rawData)
         {
-            var message = MessageUtils.FromMessage<ChangePlayerPositionMessage>(rawData);
+            var message = MessageUtils.FromMessage<ChangePositionMessage>(rawData);
             var x = message.X;
             var y = message.Y;
             var position = new Vector2(x, y);
