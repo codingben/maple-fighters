@@ -12,14 +12,14 @@ namespace Game.Application
     public class GameService : WebSocketBehavior, IGameService
     {
         private readonly IExposedComponents components;
-        private readonly ISessionIdContainer sessionIdContainer;
+        private readonly ISessionDataContainer sessionDataContainer;
         private readonly IDictionary<byte, IMessageHandler> handlers;
         private readonly IGameObject player;
 
         public GameService(IExposedComponents components)
         {
             this.components = components;
-            this.sessionIdContainer = components.Get<ISessionIdContainer>();
+            this.sessionDataContainer = components.Get<ISessionDataContainer>();
 
             handlers = new Dictionary<byte, IMessageHandler>();
             player = CreatePlayerGameObject();
@@ -27,11 +27,15 @@ namespace Game.Application
 
         protected override void OnOpen()
         {
+            sessionDataContainer.AddSessionData(player.Id, new SessionData(ID));
+
             handlers.Add((byte)MessageCodes.ChangePlayerPosition, new ChangePositionMessageHandler(player, this));
         }
 
         protected override void OnClose(CloseEventArgs eventArgs)
         {
+            sessionDataContainer.RemoveSessionData(player.Id);
+
             handlers.Remove((byte)MessageCodes.ChangePlayerPosition);
         }
 
@@ -61,9 +65,9 @@ namespace Game.Application
 
         public void SendMessage(byte[] data, int id)
         {
-            if (sessionIdContainer.GetSessionId(id, out var sessionId))
+            if (sessionDataContainer.GetSessionData(id, out var sessionData))
             {
-                Sessions.SendTo(data, sessionId);
+                Sessions.SendTo(data, sessionData.Id);
             }
         }
 
