@@ -3,7 +3,7 @@ using Game.Application.Messages;
 
 namespace Game.Application.Objects.Components
 {
-    [ComponentSettings(ExposedState.Exposable)]
+    [ComponentSettings(ExposedState.Unexposable)]
     public class PositionChangedMessageSender : ComponentBase
     {
         private IMessageSender messageSender;
