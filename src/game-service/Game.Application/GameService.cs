@@ -119,6 +119,9 @@ namespace Game.Application
             player.Components.Add(new AnimationData());
             player.Components.Add(new PresenceSceneProvider(scene));
             player.Components.Add(new ProximityChecker());
+            player.Components.Add(new MessageSender(SendMessage));
+            player.Components.Add(new PositionChangedMessageSender());
+            player.Components.Add(new AnimationStateChangedMessageSender());
 
             return player;
         }
