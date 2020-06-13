@@ -23,7 +23,8 @@ namespace Game.Application.Handlers
 
         public void Handle(byte[] rawData)
         {
-            var message = MessageUtils.FromMessage<ChangeAnimationStateMessage>(rawData);
+            var message =
+                MessageUtils.DeserializeMessage<ChangeAnimationStateMessage>(rawData);
             var animationState = message.AnimationState;
 
             animationData.SetAnimationState(animationState);
@@ -42,7 +43,8 @@ namespace Game.Application.Handlers
                     GameObjectId = gameObject.Id,
                     AnimationState = animationState
                 };
-                var rawData = MessageUtils.WrapMessage((byte)MessageCodes.AnimationStateChanged, message);
+                var rawData =
+                    MessageUtils.WrapMessage((byte)MessageCodes.AnimationStateChanged, message);
 
                 sendMessageCallback(rawData, gameObject.Id);
             }
