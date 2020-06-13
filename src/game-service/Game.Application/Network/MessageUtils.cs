@@ -9,14 +9,15 @@ namespace Game.Application.Network
         public static byte[] WrapMessage<T>(byte code, T message)
             where T : class
         {
-            return MessageUtils.ToMessage(new MessageData()
+            return SerializeMessage(new MessageData()
             {
                 Code = code,
-                RawData = MessageUtils.ToMessage(message)
+                RawData = SerializeMessage(message)
             });
         }
 
-        public static T FromMessage<T>(byte[] rawData)
+        public static T DeserializeMessage<T>(byte[] rawData)
+            where T : class
         {
             T message;
 
@@ -29,7 +30,8 @@ namespace Game.Application.Network
             return message;
         }
 
-        public static byte[] ToMessage<T>(T message)
+        public static byte[] SerializeMessage<T>(T message)
+            where T : class
         {
             var memoryStream = new MemoryStream();
 
