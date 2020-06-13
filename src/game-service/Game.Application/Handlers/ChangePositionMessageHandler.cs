@@ -10,16 +10,16 @@ namespace Game.Application.Handlers
     public class ChangePositionMessageHandler : IMessageHandler
     {
         private readonly ITransform transform;
-        private readonly IProximityChecker prxomitiyChecker;
+        private readonly IProximityChecker proximityChecker;
         private readonly Action<byte[], int> sendMessageCallback;
 
         public ChangePositionMessageHandler(
             ITransform transform,
-            IProximityChecker prxomitiyChecker,
+            IProximityChecker proximityChecker,
             Action<byte[], int> sendMessageCallback)
         {
             this.transform = transform;
-            this.prxomitiyChecker = prxomitiyChecker;
+            this.proximityChecker = proximityChecker;
             this.sendMessageCallback = sendMessageCallback;
         }
 
@@ -37,7 +37,7 @@ namespace Game.Application.Handlers
 
         private void SendMessageToNearbyGameObjects(Vector2 position)
         {
-            var nearbyGameObjects = prxomitiyChecker.GetGameObjects();
+            var nearbyGameObjects = proximityChecker.GetGameObjects();
 
             foreach (var gameObject in nearbyGameObjects)
             {
