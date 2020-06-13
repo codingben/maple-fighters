@@ -51,7 +51,8 @@ namespace Game.Application
         {
             if (eventArgs.IsBinary)
             {
-                var messageData = MessageUtils.FromMessage<MessageData>(eventArgs.RawData);
+                var messageData =
+                    MessageUtils.DeserializeMessage<MessageData>(eventArgs.RawData);
                 var code = messageData.Code;
                 var rawData = messageData.RawData;
 
@@ -70,7 +71,8 @@ namespace Game.Application
         {
             var transform = player.Transform;
             var proximityChecker = player.Components.Get<IProximityChecker>();
-            var handler = new ChangePositionMessageHandler(transform, proximityChecker, SendMessage);
+            var handler =
+                new ChangePositionMessageHandler(transform, proximityChecker, SendMessage);
 
             handlers.Add((byte)MessageCodes.ChangePosition, handler);
         }
