@@ -41,17 +41,13 @@ namespace Game.Application.Handlers
 
             foreach (var gameObject in nearbyGameObjects)
             {
-                var messageData = new MessageData()
+                var message = new PositionChangedMessage()
                 {
-                    Code = (byte)MessageCodes.PositionChanged,
-                    RawData = MessageUtils.ToMessage(new PositionChangedMessage()
-                    {
-                        GameObjectId = gameObject.Id,
-                        X = position.X,
-                        Y = position.Y
-                    })
+                    GameObjectId = gameObject.Id,
+                    X = position.X,
+                    Y = position.Y
                 };
-                var rawData = MessageUtils.ToMessage(messageData);
+                var rawData = MessageUtils.WrapMessage((byte)MessageCodes.PositionChanged, message);
 
                 sendMessageCallback(rawData, gameObject.Id);
             }
