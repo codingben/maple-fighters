@@ -33,6 +33,7 @@ namespace Game.Application
             sessionDataContainer.AddSessionData(player.Id, new SessionData(ID));
 
             AddHandlerForChangePosition();
+            AddHandlerForChangeAnimationState();
         }
 
         protected override void OnClose(CloseEventArgs eventArgs)
@@ -40,6 +41,7 @@ namespace Game.Application
             sessionDataContainer.RemoveSessionData(player.Id);
 
             RemoveHandlerForChangePosition();
+            RemoveHandlerForChangeAnimationState();
         }
 
         protected override void OnError(ErrorEventArgs eventArgs)
@@ -80,6 +82,21 @@ namespace Game.Application
         private void RemoveHandlerForChangePosition()
         {
             handlers.Remove((byte)MessageCodes.ChangePosition);
+        }
+
+        private void AddHandlerForChangeAnimationState()
+        {
+            var animationData = player.Components.Get<IAnimationData>();
+            var proximityChecker = player.Components.Get<IProximityChecker>();
+            var handler =
+                new ChangeAnimationStateHandler(animationData, proximityChecker, SendMessage);
+
+            handlers.Add((byte)MessageCodes.ChangeAnimationState, handler);
+        }
+
+        private void RemoveHandlerForChangeAnimationState()
+        {
+            handlers.Remove((byte)MessageCodes.ChangeAnimationState);
         }
 
         public void SendMessage(byte[] data, int id)
