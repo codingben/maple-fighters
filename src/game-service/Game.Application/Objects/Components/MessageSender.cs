@@ -1,12 +1,35 @@
-﻿using Common.ComponentModel;
+﻿using System;
+using Common.ComponentModel;
+using Game.Application.Network;
 
 namespace Game.Application.Objects.Components
 {
     public class MessageSender : ComponentBase, IMessageSender
     {
-        public void SendMessage(byte[] rawData, int id)
+        private readonly Action<byte[], int> sendMessageCallback;
+        private IProximityChecker proximityChecker;
+
+        public MessageSender(Action<byte[], int> sendMessageCallback)
         {
-            throw new System.NotImplementedException();
+            this.sendMessageCallback = sendMessageCallback;
+        }
+
+        protected override void OnAwake()
+        {
+            proximityChecker = Components.Get<IProximityChecker>();
+        }
+
+        public void SendMessageToNearbyGameObjects<TMessage>(byte code, TMessage message)
+            where TMessage : class
+        {
+            var nearbyGameObjects = proximityChecker.GetGameObjects();
+
+            foreach (var gameObject in nearbyGameObjects)
+            {
+                var rawData = MessageUtils.WrapMessage(code, message);
+
+                sendMessageCallback(rawData, gameObject.Id);
+            }
         }
     }
 }
