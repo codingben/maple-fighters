@@ -8,16 +8,16 @@ namespace Game.Application.Handlers
     public class ChangeAnimationStateHandler : IMessageHandler
     {
         private readonly IAnimationData animationData;
-        private readonly IProximityChecker prxomitiyChecker;
+        private readonly IProximityChecker proximityChecker;
         private readonly Action<byte[], int> sendMessageCallback;
 
         public ChangeAnimationStateHandler(
             IAnimationData animationData,
-            IProximityChecker prxomitiyChecker,
+            IProximityChecker proximityChecker,
             Action<byte[], int> sendMessageCallback)
         {
             this.animationData = animationData;
-            this.prxomitiyChecker = prxomitiyChecker;
+            this.proximityChecker = proximityChecker;
             this.sendMessageCallback = sendMessageCallback;
         }
 
@@ -33,7 +33,7 @@ namespace Game.Application.Handlers
 
         private void SendMessageToNearbyGameObjects(byte animationState)
         {
-            var nearbyGameObjects = prxomitiyChecker.GetGameObjects();
+            var nearbyGameObjects = proximityChecker.GetGameObjects();
 
             foreach (var gameObject in nearbyGameObjects)
             {
