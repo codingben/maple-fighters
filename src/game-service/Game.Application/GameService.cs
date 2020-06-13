@@ -72,9 +72,7 @@ namespace Game.Application
         private void AddHandlerForChangePosition()
         {
             var transform = player.Transform;
-            var proximityChecker = player.Components.Get<IProximityChecker>();
-            var handler =
-                new ChangePositionMessageHandler(transform, proximityChecker, SendMessage);
+            var handler = new ChangePositionMessageHandler(transform);
 
             handlers.Add((byte)MessageCodes.ChangePosition, handler);
         }
@@ -87,9 +85,7 @@ namespace Game.Application
         private void AddHandlerForChangeAnimationState()
         {
             var animationData = player.Components.Get<IAnimationData>();
-            var proximityChecker = player.Components.Get<IProximityChecker>();
-            var handler =
-                new ChangeAnimationStateHandler(animationData, proximityChecker, SendMessage);
+            var handler = new ChangeAnimationStateHandler(animationData);
 
             handlers.Add((byte)MessageCodes.ChangeAnimationState, handler);
         }
