@@ -4,6 +4,7 @@ using Game.Application.Network;
 
 namespace Game.Application.Objects.Components
 {
+    [ComponentSettings(ExposedState.Exposable)]
     public class MessageSender : ComponentBase, IMessageSender
     {
         private readonly Action<byte[], int> sendMessageCallback;
@@ -19,7 +20,7 @@ namespace Game.Application.Objects.Components
             proximityChecker = Components.Get<IProximityChecker>();
         }
 
-        public void SendMessageToNearbyGameObjects<TMessage>(byte code, TMessage message)
+        public void SendMessage<TMessage>(byte code, TMessage message)
             where TMessage : class
         {
             var nearbyGameObjects = proximityChecker.GetGameObjects();
