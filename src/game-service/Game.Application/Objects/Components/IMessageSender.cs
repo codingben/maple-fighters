@@ -2,6 +2,7 @@ namespace Game.Application.Objects.Components
 {
     public interface IMessageSender
     {
-        void SendMessage(byte[] rawData, int id);
+        void SendMessageToNearbyGameObjects<TMessage>(byte code, TMessage message)
+            where TMessage : class;
     }
 }
