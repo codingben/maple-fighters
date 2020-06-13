@@ -25,7 +25,8 @@ namespace Game.Application.Handlers
 
         public void Handle(byte[] rawData)
         {
-            var message = MessageUtils.FromMessage<ChangePositionMessage>(rawData);
+            var message =
+                MessageUtils.DeserializeMessage<ChangePositionMessage>(rawData);
             var x = message.X;
             var y = message.Y;
             var position = new Vector2(x, y);
@@ -47,7 +48,8 @@ namespace Game.Application.Handlers
                     X = position.X,
                     Y = position.Y
                 };
-                var rawData = MessageUtils.WrapMessage((byte)MessageCodes.PositionChanged, message);
+                var rawData =
+                    MessageUtils.WrapMessage((byte)MessageCodes.PositionChanged, message);
 
                 sendMessageCallback(rawData, gameObject.Id);
             }
