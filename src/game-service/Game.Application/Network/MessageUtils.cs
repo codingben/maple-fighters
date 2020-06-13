@@ -6,6 +6,16 @@ namespace Game.Application.Network
 {
     public static class MessageUtils
     {
+        public static byte[] WrapMessage<T>(byte code, T message)
+            where T : class
+        {
+            return MessageUtils.ToMessage(new MessageData()
+            {
+                Code = code,
+                RawData = MessageUtils.ToMessage(message)
+            });
+        }
+
         public static T FromMessage<T>(byte[] rawData)
         {
             T message;
