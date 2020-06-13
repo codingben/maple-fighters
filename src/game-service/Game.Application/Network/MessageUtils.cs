@@ -6,8 +6,8 @@ namespace Game.Application.Network
 {
     public static class MessageUtils
     {
-        public static byte[] WrapMessage<T>(byte code, T message)
-            where T : class
+        public static byte[] WrapMessage<TMessage>(byte code, TMessage message)
+            where TMessage : class
         {
             return SerializeMessage(new MessageData()
             {
@@ -16,22 +16,8 @@ namespace Game.Application.Network
             });
         }
 
-        public static T DeserializeMessage<T>(byte[] rawData)
-            where T : class
-        {
-            T message;
-
-            using (var reader = new BsonReader(new MemoryStream(rawData)))
-            {
-                var serializer = new JsonSerializer();
-                message = serializer.Deserialize<T>(reader);
-            }
-
-            return message;
-        }
-
-        public static byte[] SerializeMessage<T>(T message)
-            where T : class
+        public static byte[] SerializeMessage<TMessage>(TMessage message)
+            where TMessage : class
         {
             var memoryStream = new MemoryStream();
 
@@ -42,6 +28,20 @@ namespace Game.Application.Network
             }
 
             return memoryStream.ToArray();
+        }
+
+        public static TMessage DeserializeMessage<TMessage>(byte[] rawData)
+            where TMessage : class
+        {
+            TMessage message;
+
+            using (var reader = new BsonReader(new MemoryStream(rawData)))
+            {
+                var serializer = new JsonSerializer();
+                message = serializer.Deserialize<TMessage>(reader);
+            }
+
+            return message;
         }
     }
 }
