@@ -13,9 +13,13 @@ namespace Game.Application.Objects.Components
             // Left blank intentionally
         }
 
-        public void Set(string name, byte characterType)
+        public void SetName(string name)
         {
             this.name = name;
+        }
+
+        public void SetCharacterType(byte characterType)
+        {
             this.characterType = characterType;
         }
 
