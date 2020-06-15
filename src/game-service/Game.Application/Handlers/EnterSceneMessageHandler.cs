@@ -17,8 +17,8 @@ namespace Game.Application.Handlers
         {
             var message =
                 MessageUtils.DeserializeMessage<EnterSceneMessage>(rawData);
-            var name = message.Character.Name;
-            var characterType = message.Character.CharacterType;
+            var name = message.CharacterName;
+            var characterType = message.CharacterType;
 
             characterData.SetName(name);
             characterData.SetCharacterType(characterType);
