@@ -41,9 +41,9 @@ namespace Game.Application
         {
             sessionDataContainer.RemoveSessionData(player.Id);
 
-            RemoveHandlerForChangePosition();
-            RemoveHandlerForChangeAnimationState();
-            RemoveHandlerForEnterScene();
+            RemoveHandlerFromChangePosition();
+            RemoveHandlerFromChangeAnimationState();
+            RemoveHandlerFromEnterScene();
         }
 
         protected override void OnError(ErrorEventArgs eventArgs)
@@ -79,7 +79,7 @@ namespace Game.Application
             handlers.Add((byte)MessageCodes.ChangePosition, handler);
         }
 
-        private void RemoveHandlerForChangePosition()
+        private void RemoveHandlerFromChangePosition()
         {
             handlers.Remove((byte)MessageCodes.ChangePosition);
         }
@@ -92,7 +92,7 @@ namespace Game.Application
             handlers.Add((byte)MessageCodes.ChangeAnimationState, handler);
         }
 
-        private void RemoveHandlerForChangeAnimationState()
+        private void RemoveHandlerFromChangeAnimationState()
         {
             handlers.Remove((byte)MessageCodes.ChangeAnimationState);
         }
@@ -108,7 +108,7 @@ namespace Game.Application
             handlers.Add((byte)MessageCodes.EnterScene, handler);
         }
 
-        private void RemoveHandlerForEnterScene()
+        private void RemoveHandlerFromEnterScene()
         {
             handlers.Remove((byte)MessageCodes.EnterScene);
         }
