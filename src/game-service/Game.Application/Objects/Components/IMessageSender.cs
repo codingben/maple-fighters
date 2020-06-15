@@ -4,5 +4,8 @@ namespace Game.Application.Objects.Components
     {
         void SendMessage<TMessage>(byte code, TMessage message)
             where TMessage : class;
+
+        void SendMessageToNearbyGameObjects<TMessage>(byte code, TMessage message)
+            where TMessage : class;
     }
 }
