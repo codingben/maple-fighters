@@ -44,7 +44,7 @@ namespace Game.Application.Objects.Components
                 AnimationState = animationData.GetAnimationState()
             };
 
-            messageSender.SendMessage((byte)MessageCodes.AnimationStateChanged, message);
+            messageSender.SendMessageToNearbyGameObjects((byte)MessageCodes.AnimationStateChanged, message);
         }
     }
 }
