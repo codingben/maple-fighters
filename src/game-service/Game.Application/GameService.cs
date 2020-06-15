@@ -34,6 +34,7 @@ namespace Game.Application
 
             AddHandlerForChangePosition();
             AddHandlerForChangeAnimationState();
+            AddHandlerForEnterScene();
         }
 
         protected override void OnClose(CloseEventArgs eventArgs)
@@ -42,6 +43,7 @@ namespace Game.Application
 
             RemoveHandlerForChangePosition();
             RemoveHandlerForChangeAnimationState();
+            RemoveHandlerForEnterScene();
         }
 
         protected override void OnError(ErrorEventArgs eventArgs)
@@ -93,6 +95,22 @@ namespace Game.Application
         private void RemoveHandlerForChangeAnimationState()
         {
             handlers.Remove((byte)MessageCodes.ChangeAnimationState);
+        }
+
+        private void AddHandlerForEnterScene()
+        {
+            var gameObjectGetter = player.Components.Get<IGameObjectGetter>();
+            var characterData = player.Components.Get<ICharacterData>();
+            var messageSender = player.Components.Get<IMessageSender>();
+            var handler =
+                new EnterSceneMessageHandler(gameObjectGetter, characterData, messageSender);
+
+            handlers.Add((byte)MessageCodes.EnterScene, handler);
+        }
+
+        private void RemoveHandlerForEnterScene()
+        {
+            handlers.Remove((byte)MessageCodes.EnterScene);
         }
 
         public void SendMessage(byte[] data, int id)
