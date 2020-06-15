@@ -2,6 +2,8 @@ namespace Game.Application.Messages
 {
     public class EnterSceneMessage
     {
-        public CharacterData Character { get; set; }
+        public string CharacterName { get; set; }
+
+        public byte CharacterType { get; set; }
     }
 }
