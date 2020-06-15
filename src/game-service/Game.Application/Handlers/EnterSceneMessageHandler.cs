@@ -20,8 +20,7 @@ namespace Game.Application.Handlers
             var name = message.CharacterName;
             var characterType = message.CharacterType;
 
-            characterData.SetName(name);
-            characterData.SetCharacterType(characterType);
+            characterData.Set(name, characterType);
 
             // TODO: Send the entered scene message from here or from component (and get player spawn data)
         }
