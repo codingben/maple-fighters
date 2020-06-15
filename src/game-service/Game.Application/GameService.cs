@@ -122,6 +122,7 @@ namespace Game.Application
             player.Components.Add(new MessageSender(SendMessage));
             player.Components.Add(new PositionChangedMessageSender());
             player.Components.Add(new AnimationStateChangedMessageSender());
+            player.Components.Add(new CharacterData());
 
             return player;
         }
