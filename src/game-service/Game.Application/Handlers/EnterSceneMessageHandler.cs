@@ -6,11 +6,18 @@ namespace Game.Application.Handlers
 {
     public class EnterSceneMessageHandler : IMessageHandler
     {
-        private ICharacterData characterData;
+        private readonly IGameObjectGetter gameObjectGetter;
+        private readonly ICharacterData characterData;
+        private readonly IMessageSender messageSender;
 
-        public EnterSceneMessageHandler(ICharacterData characterData)
+        public EnterSceneMessageHandler(
+            IGameObjectGetter gameObjectGetter,
+            ICharacterData characterData,
+            IMessageSender messageSender)
         {
+            this.gameObjectGetter = gameObjectGetter;
             this.characterData = characterData;
+            this.messageSender = messageSender;
         }
 
         public void Handle(byte[] rawData)
@@ -20,9 +27,25 @@ namespace Game.Application.Handlers
             var name = message.CharacterName;
             var characterType = message.CharacterType;
 
-            characterData.Set(name, characterType);
+            characterData.SetName(name);
+            characterData.SetCharacterType(characterType);
 
-            // TODO: Send the entered scene message from here or from component (and get player spawn data)
+            SendEnteredSceneMessage();
+        }
+
+        private void SendEnteredSceneMessage()
+        {
+            var gameObject = gameObjectGetter.Get();
+
+            messageSender.SendMessage((byte)MessageCodes.EnteredScene, new EnteredSceneMessage()
+            {
+                GameObjectId = gameObject.Id,
+                SpawnPositionData = new SpawnPositionData
+                {
+                    X = gameObject.Transform.Position.X,
+                    Y = gameObject.Transform.Position.Y
+                }
+            });
         }
     }
 }
