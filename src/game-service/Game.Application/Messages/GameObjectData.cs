@@ -10,7 +10,9 @@
 
         public float Y { get; set; }
 
-        public CharacterData Character { get; set; }
+        public string CharacterName { get; set; }
+
+        public byte CharacterType { get; set; }
 
         public bool HasCharacter { get; set; }
     }
