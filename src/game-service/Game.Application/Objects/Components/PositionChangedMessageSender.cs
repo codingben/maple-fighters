@@ -43,7 +43,7 @@ namespace Game.Application.Objects.Components
                 Y = gameObject.Transform.Position.Y
             };
 
-            messageSender.SendMessage((byte)MessageCodes.PositionChanged, message);
+            messageSender.SendMessageToNearbyGameObjects((byte)MessageCodes.PositionChanged, message);
         }
     }
 }
