@@ -2,7 +2,9 @@ namespace Game.Application.Objects.Components
 {
     public interface ICharacterData
     {
-        void Set(string name, byte characterType);
+        void SetName(string name);
+
+        void SetCharacterType(byte characterType);
 
         string GetName();
 
