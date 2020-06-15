@@ -6,22 +6,16 @@ namespace Game.Application.Objects.Components
     public class CharacterData : ComponentBase, ICharacterData
     {
         private string name;
-
         private byte characterType;
 
-        public CharacterData(string name, byte characterType)
+        public CharacterData()
         {
-            this.name = name;
-            this.characterType = characterType;
+            // Left blank intentionally
         }
 
-        public void SetName(string name)
+        public void Set(string name, byte characterType)
         {
             this.name = name;
-        }
-
-        public void SetCharacterType(byte characterType)
-        {
             this.characterType = characterType;
         }
 
