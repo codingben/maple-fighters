@@ -113,11 +113,16 @@ namespace Game.Application
             handlers.Remove((byte)MessageCodes.EnterScene);
         }
 
-        public void SendMessage(byte[] data, int id)
+        public void SendMessageToMySession(byte[] rawData)
+        {
+            Send(rawData);
+        }
+
+        public void SendMessageToSession(byte[] rawData, int id)
         {
             if (sessionDataContainer.GetSessionData(id, out var sessionData))
             {
-                Sessions.SendTo(data, sessionData.Id);
+                Sessions.SendTo(rawData, sessionData.Id);
             }
         }
 
@@ -137,7 +142,7 @@ namespace Game.Application
             player.Components.Add(new AnimationData());
             player.Components.Add(new PresenceSceneProvider(scene));
             player.Components.Add(new ProximityChecker());
-            player.Components.Add(new MessageSender(SendMessage));
+            player.Components.Add(new MessageSender(SendMessageToMySession, SendMessageToSession));
             player.Components.Add(new PositionChangedMessageSender());
             player.Components.Add(new AnimationStateChangedMessageSender());
             player.Components.Add(new CharacterData());
