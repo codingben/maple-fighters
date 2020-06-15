@@ -2,6 +2,7 @@ namespace Game.Application.Messages
 {
     public enum MessageCodes
     {
+        EnterScene,
         ChangeScene,
         ChangePosition,
         ChangeAnimationState,
