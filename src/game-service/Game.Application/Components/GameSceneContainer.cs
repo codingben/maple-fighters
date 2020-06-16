@@ -1,6 +1,9 @@
 using System.Collections.Generic;
 using Common.ComponentModel;
+using Common.Components;
 using Common.MathematicsHelper;
+using Game.Application.Objects;
+using Game.Application.Objects.Components;
 
 namespace Game.Application.Components
 {
@@ -23,6 +26,26 @@ namespace Game.Application.Components
                 { Map.Lobby, lobbyScene },
                 { Map.TheDarkForest, theDarkForestScene }
             };
+        }
+
+        protected override void OnAwake()
+        {
+            CreatePortal();
+
+            // TODO: Remove this from here
+            void CreatePortal()
+            {
+                var idGenerator = Components.Get<IIdGenerator>();
+                var id = idGenerator.GenerateId();
+                var portalGameObject = new GameObject(id, "Portal");
+                var scene = container[0]; // Lobby Scene
+
+                portalGameObject.Transform.SetPosition(new Vector2(-17.125f, -1.5f));
+                portalGameObject.Transform.SetSize(Vector2.One);
+
+                portalGameObject.Components.Add(new PresenceSceneProvider(scene));
+                portalGameObject.Components.Add(new ProximityChecker());
+            }
         }
 
         protected override void OnRemoved()
