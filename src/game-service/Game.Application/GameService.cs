@@ -115,9 +115,15 @@ namespace Game.Application
 
         private void AddHandlerForChangeScene()
         {
+            var presenceSceneProvider = player.Components.Get<IPresenceSceneProvider>();
+            var gameSceneContainer = components.Get<IGameSceneContainer>();
             var proximityChecker = player.Components.Get<IProximityChecker>();
             var messageSender = player.Components.Get<IMessageSender>();
-            var handler = new ChangeSceneHandler(proximityChecker, messageSender);
+            var handler = new ChangeSceneHandler(
+                presenceSceneProvider,
+                gameSceneContainer,
+                proximityChecker,
+                messageSender);
 
             handlers.Add((byte)MessageCodes.ChangeScene, handler);
         }
