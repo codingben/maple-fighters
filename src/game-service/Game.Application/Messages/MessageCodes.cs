@@ -12,6 +12,7 @@ namespace Game.Application.Messages
         AnimationStateChanged,
         Attacked,
         BubbleNotification,
-        EnteredScene
+        EnteredScene,
+        SceneChanged
     }
 }
