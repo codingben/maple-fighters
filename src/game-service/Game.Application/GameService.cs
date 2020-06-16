@@ -113,6 +113,20 @@ namespace Game.Application
             handlers.Remove((byte)MessageCodes.EnterScene);
         }
 
+        private void AddHandlerForChangeScene()
+        {
+            var proximityChecker = player.Components.Get<IProximityChecker>();
+            var messageSender = player.Components.Get<IMessageSender>();
+            var handler = new ChangeSceneHandler(proximityChecker, messageSender);
+
+            handlers.Add((byte)MessageCodes.ChangeScene, handler);
+        }
+
+        private void RemoveHandlerFromChangeScene()
+        {
+            handlers.Remove((byte)MessageCodes.ChangeScene);
+        }
+
         public void SendMessageToMySession(byte[] rawData)
         {
             Send(rawData);
