@@ -33,12 +33,14 @@ namespace Game.Application.Components
             CreateLobbyGameObjects();
             CreateTheDarkForestGameObjects();
 
+            // TODO: Remove this from here
             void CreateLobbyGameObjects()
             {
                 CreatePortalToTheDarkForest();
                 CreateGuardianForLobby();
             }
 
+            // TODO: Remove this from here
             void CreateTheDarkForestGameObjects()
             {
                 CreateMobForTheDarkForest();
@@ -61,6 +63,7 @@ namespace Game.Application.Components
                 portalGameObject.Components.Add(new PortalData((byte)Map.TheDarkForest));
             }
 
+            // TODO: Remove this from here
             void CreateGuardianForLobby()
             {
                 var idGenerator = Components.Get<IIdGenerator>();
@@ -75,6 +78,7 @@ namespace Game.Application.Components
                 portalGameObject.Components.Add(new ProximityChecker());
             }
 
+            // TODO: Remove this from here
             void CreateMobForTheDarkForest()
             {
                 var idGenerator = Components.Get<IIdGenerator>();
@@ -89,6 +93,7 @@ namespace Game.Application.Components
                 portalGameObject.Components.Add(new ProximityChecker());
             }
 
+            // TODO: Remove this from here
             void CreatePortalToLobby()
             {
                 var idGenerator = Components.Get<IIdGenerator>();
