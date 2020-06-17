@@ -31,6 +31,7 @@ namespace Game.Application.Components
         protected override void OnAwake()
         {
             CreateLobbyGameObjects();
+            CreateTheDarkForestGameObjects();
 
             void CreateLobbyGameObjects()
             {
