@@ -40,6 +40,7 @@ namespace Game.Application.Components
 
             void CreateTheDarkForestGameObjects()
             {
+                CreateMobForTheDarkForest();
                 CreatePortalToLobby();
             }
 
