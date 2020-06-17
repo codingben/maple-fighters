@@ -38,6 +38,11 @@ namespace Game.Application.Components
                 CreateGuardianForLobby();
             }
 
+            void CreateTheDarkForestGameObjects()
+            {
+                CreatePortalToLobby();
+            }
+
             // TODO: Remove this from here
             void CreatePortalToTheDarkForest()
             {
@@ -66,6 +71,21 @@ namespace Game.Application.Components
 
                 portalGameObject.Components.Add(new PresenceSceneProvider(scene));
                 portalGameObject.Components.Add(new ProximityChecker());
+            }
+
+            void CreatePortalToLobby()
+            {
+                var idGenerator = Components.Get<IIdGenerator>();
+                var id = idGenerator.GenerateId();
+                var portalGameObject = new GameObject(id, "Portal");
+                var scene = container[0]; // Lobby Scene
+
+                portalGameObject.Transform.SetPosition(new Vector2(12.5f, -1.125f));
+                portalGameObject.Transform.SetSize(Vector2.One);
+
+                portalGameObject.Components.Add(new PresenceSceneProvider(scene));
+                portalGameObject.Components.Add(new ProximityChecker());
+                portalGameObject.Components.Add(new PortalData((byte)Map.Lobby));
             }
         }
 
