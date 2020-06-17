@@ -30,10 +30,10 @@ namespace Game.Application.Components
 
         protected override void OnAwake()
         {
-            CreatePortal();
+            CreatePortalToTheDarkForest();
 
             // TODO: Remove this from here
-            void CreatePortal()
+            void CreatePortalToTheDarkForest()
             {
                 var idGenerator = Components.Get<IIdGenerator>();
                 var id = idGenerator.GenerateId();
