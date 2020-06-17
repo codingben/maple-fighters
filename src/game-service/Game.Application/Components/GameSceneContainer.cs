@@ -50,7 +50,7 @@ namespace Game.Application.Components
                 var idGenerator = Components.Get<IIdGenerator>();
                 var id = idGenerator.GenerateId();
                 var portalGameObject = new GameObject(id, "Portal");
-                var scene = container[0]; // Lobby Scene
+                var scene = container[Map.Lobby];
 
                 portalGameObject.Transform.SetPosition(new Vector2(-17.125f, -1.5f));
                 portalGameObject.Transform.SetSize(Vector2.One);
@@ -65,7 +65,7 @@ namespace Game.Application.Components
                 var idGenerator = Components.Get<IIdGenerator>();
                 var id = idGenerator.GenerateId();
                 var portalGameObject = new GameObject(id, "Guardian");
-                var scene = container[0]; // Lobby Scene
+                var scene = container[Map.Lobby];
 
                 portalGameObject.Transform.SetPosition(new Vector2(-14.24f, -2.025f));
                 portalGameObject.Transform.SetSize(Vector2.One);
@@ -79,7 +79,7 @@ namespace Game.Application.Components
                 var idGenerator = Components.Get<IIdGenerator>();
                 var id = idGenerator.GenerateId();
                 var portalGameObject = new GameObject(id, "BlueSnail");
-                var scene = container[0]; // Lobby Scene
+                var scene = container[Map.TheDarkForest];
 
                 portalGameObject.Transform.SetPosition(new Vector2(-2f, -8.2f));
                 portalGameObject.Transform.SetSize(Vector2.One);
@@ -93,7 +93,7 @@ namespace Game.Application.Components
                 var idGenerator = Components.Get<IIdGenerator>();
                 var id = idGenerator.GenerateId();
                 var portalGameObject = new GameObject(id, "Portal");
-                var scene = container[0]; // Lobby Scene
+                var scene = container[Map.TheDarkForest];
 
                 portalGameObject.Transform.SetPosition(new Vector2(12.5f, -1.125f));
                 portalGameObject.Transform.SetSize(Vector2.One);
