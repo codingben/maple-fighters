@@ -10,6 +10,11 @@ namespace Game.Application.Objects.Components
 
         private byte animationState;
 
+        public AnimationData()
+        {
+            // Left blank intentionally
+        }
+
         public void SetAnimationState(byte animationState)
         {
             this.animationState = animationState;
