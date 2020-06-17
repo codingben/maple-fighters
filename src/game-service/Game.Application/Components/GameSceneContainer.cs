@@ -44,12 +44,10 @@ namespace Game.Application.Components
                 var idGenerator = Components.Get<IIdGenerator>();
                 var id = idGenerator.GenerateId();
                 var portalGameObject = new GameObject(id, "Portal");
-                var scene = container[0]; // Lobby Scene
 
                 portalGameObject.Transform.SetPosition(new Vector2(-17.125f, -1.5f));
                 portalGameObject.Transform.SetSize(Vector2.One);
 
-                portalGameObject.Components.Add(new PresenceSceneProvider(scene));
                 portalGameObject.Components.Add(new ProximityChecker());
                 portalGameObject.Components.Add(new PortalData((byte)Map.TheDarkForest));
             }
