@@ -45,6 +45,7 @@ namespace Game.Application.Components
 
                 portalGameObject.Components.Add(new PresenceSceneProvider(scene));
                 portalGameObject.Components.Add(new ProximityChecker());
+                portalGameObject.Components.Add(new PortalData((byte)Map.TheDarkForest));
             }
         }
 
