@@ -73,6 +73,20 @@ namespace Game.Application.Components
                 portalGameObject.Components.Add(new ProximityChecker());
             }
 
+            void CreateMobForTheDarkForest()
+            {
+                var idGenerator = Components.Get<IIdGenerator>();
+                var id = idGenerator.GenerateId();
+                var portalGameObject = new GameObject(id, "BlueSnail");
+                var scene = container[0]; // Lobby Scene
+
+                portalGameObject.Transform.SetPosition(new Vector2(-2f, -8.2f));
+                portalGameObject.Transform.SetSize(Vector2.One);
+
+                portalGameObject.Components.Add(new PresenceSceneProvider(scene));
+                portalGameObject.Components.Add(new ProximityChecker());
+            }
+
             void CreatePortalToLobby()
             {
                 var idGenerator = Components.Get<IIdGenerator>();
