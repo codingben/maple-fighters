@@ -30,7 +30,13 @@ namespace Game.Application.Components
 
         protected override void OnAwake()
         {
-            CreatePortalToTheDarkForest();
+            CreateLobbyGameObjects();
+
+            void CreateLobbyGameObjects()
+            {
+                CreatePortalToTheDarkForest();
+                CreateGuardianForLobby();
+            }
 
             // TODO: Remove this from here
             void CreatePortalToTheDarkForest()
@@ -46,6 +52,18 @@ namespace Game.Application.Components
                 portalGameObject.Components.Add(new PresenceSceneProvider(scene));
                 portalGameObject.Components.Add(new ProximityChecker());
                 portalGameObject.Components.Add(new PortalData((byte)Map.TheDarkForest));
+            }
+
+            void CreateGuardianForLobby()
+            {
+                var idGenerator = Components.Get<IIdGenerator>();
+                var id = idGenerator.GenerateId();
+                var portalGameObject = new GameObject(id, "Guardian");
+
+                portalGameObject.Transform.SetPosition(new Vector2(-14.24f, -2.025f));
+                portalGameObject.Transform.SetSize(Vector2.One);
+
+                portalGameObject.Components.Add(new ProximityChecker());
             }
         }
 
