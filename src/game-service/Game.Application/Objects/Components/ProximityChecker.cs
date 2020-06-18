@@ -77,5 +77,10 @@ namespace Game.Application.Objects.Components
         {
             return nearbyGameObjects;
         }
+
+        public INearbySceneObjectsEvents<IGameObject> GetNearbyGameObjectsEvents()
+        {
+            return interestArea.NearbySceneObjectsEvents;
+        }
     }
 }
