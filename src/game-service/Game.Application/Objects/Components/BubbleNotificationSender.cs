@@ -11,6 +11,7 @@ namespace Game.Application.Objects.Components
         private readonly int time;
 
         private IMessageSender messageSender;
+        private IGameObject gameObject;
         private INearbySceneObjectsEvents<IGameObject> nearbySceneObjectsEvents;
 
         public BubbleNotificationSender(string text, int time)
@@ -22,6 +23,9 @@ namespace Game.Application.Objects.Components
         protected override void OnAwake()
         {
             messageSender = Components.Get<IMessageSender>();
+
+            var gameObjectGetter = Components.Get<IGameObjectGetter>();
+            gameObject = gameObjectGetter.Get();
 
             var proximityChecker = Components.Get<IProximityChecker>();
             nearbySceneObjectsEvents = proximityChecker.GetNearbyGameObjectsEvents();
@@ -48,6 +52,7 @@ namespace Game.Application.Objects.Components
         {
             var message = new BubbleNotificationMessage()
             {
+                RequesterId = gameObject.Id,
                 Message = text,
                 Time = time
             };
