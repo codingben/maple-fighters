@@ -4,6 +4,6 @@ namespace Game.Application.Objects.Components
 {
     public interface IProximityChecker
     {
-        IEnumerable<IGameObject> GetGameObjects();
+        IEnumerable<IGameObject> GetNearbyGameObjects();
     }
 }
