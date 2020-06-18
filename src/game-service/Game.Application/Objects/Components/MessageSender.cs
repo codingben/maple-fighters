@@ -34,7 +34,7 @@ namespace Game.Application.Objects.Components
         public void SendMessageToNearbyGameObjects<TMessage>(byte code, TMessage message)
             where TMessage : class
         {
-            var nearbyGameObjects = proximityChecker.GetGameObjects();
+            var nearbyGameObjects = proximityChecker.GetNearbyGameObjects();
 
             foreach (var gameObject in nearbyGameObjects)
             {
