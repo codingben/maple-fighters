@@ -76,6 +76,7 @@ namespace Game.Application.Components
 
                 portalGameObject.Components.Add(new PresenceSceneProvider(scene));
                 portalGameObject.Components.Add(new ProximityChecker());
+                portalGameObject.Components.Add(new BubbleNotificationSender("Hello!", 1));
             }
 
             // TODO: Remove this from here
