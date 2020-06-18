@@ -44,7 +44,7 @@ namespace Game.Application.Objects.Components
             nearbySceneObjectsEvents.SceneObjectAdded -= OnNearbyGameObjectAdded;
         }
 
-        private void OnNearbyGameObjectAdded(IGameObject gameObject)
+        private void OnNearbyGameObjectAdded(IGameObject _)
         {
             var message = new BubbleNotificationMessage()
             {
