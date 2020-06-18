@@ -8,11 +8,11 @@ namespace Game.Application.Objects.Components
     public class ProximityChecker : ComponentBase, IProximityChecker
     {
         private IInterestArea<IGameObject> interestArea;
-        private List<IGameObject> gameObjects;
+        private List<IGameObject> nearbyGameObjects;
 
         public ProximityChecker()
         {
-            gameObjects = new List<IGameObject>();
+            nearbyGameObjects = new List<IGameObject>();
         }
 
         protected override void OnAwake()
@@ -52,30 +52,30 @@ namespace Game.Application.Objects.Components
 
         private void OnSceneObjectAdded(IGameObject sceneObject)
         {
-            gameObjects.Add(sceneObject);
+            nearbyGameObjects.Add(sceneObject);
         }
 
         private void SceneObjectRemoved(IGameObject sceneObject)
         {
-            gameObjects.Remove(sceneObject);
+            nearbyGameObjects.Remove(sceneObject);
         }
 
         private void OnSceneObjectsAdded(IEnumerable<IGameObject> sceneObjects)
         {
-            gameObjects.AddRange(sceneObjects);
+            nearbyGameObjects.AddRange(sceneObjects);
         }
 
         private void OnSceneObjectsRemoved(IEnumerable<IGameObject> sceneObjects)
         {
             foreach (var sceneObject in sceneObjects)
             {
-                gameObjects.Remove(sceneObject);
+                nearbyGameObjects.Remove(sceneObject);
             }
         }
 
-        public IEnumerable<IGameObject> GetGameObjects()
+        public IEnumerable<IGameObject> GetNearbyGameObjects()
         {
-            return gameObjects;
+            return nearbyGameObjects;
         }
     }
 }
