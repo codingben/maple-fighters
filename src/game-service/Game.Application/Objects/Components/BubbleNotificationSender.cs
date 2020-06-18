@@ -26,20 +26,20 @@ namespace Game.Application.Objects.Components
             var proximityChecker = Components.Get<IProximityChecker>();
             nearbySceneObjectsEvents = proximityChecker.GetNearbyGameObjectsEvents();
 
-            SubscribeToGameObjectAdded();
+            SubscribeToNearbyGameObjectAdded();
         }
 
         protected override void OnRemoved()
         {
-            UnsubscribeFromGameObjectAdded();
+            UnsubscribeFromNearbyGameObjectAdded();
         }
 
-        private void SubscribeToGameObjectAdded()
+        private void SubscribeToNearbyGameObjectAdded()
         {
             nearbySceneObjectsEvents.SceneObjectAdded += OnNearbyGameObjectAdded;
         }
 
-        private void UnsubscribeFromGameObjectAdded()
+        private void UnsubscribeFromNearbyGameObjectAdded()
         {
             nearbySceneObjectsEvents.SceneObjectAdded -= OnNearbyGameObjectAdded;
         }
