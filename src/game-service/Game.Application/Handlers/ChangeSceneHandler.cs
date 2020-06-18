@@ -58,7 +58,9 @@ namespace Game.Application.Handlers
 
         private IGameObject GetPortal(int id)
         {
-            foreach (var gameObject in proximityChecker.GetGameObjects())
+            var nearbyGameObjects = proximityChecker.GetNearbyGameObjects();
+
+            foreach (var gameObject in nearbyGameObjects)
             {
                 if (gameObject.Id != id)
                 {
