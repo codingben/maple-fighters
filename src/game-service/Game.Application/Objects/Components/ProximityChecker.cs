@@ -36,40 +36,40 @@ namespace Game.Application.Objects.Components
 
         private void SubscribeToNearbySceneObjectsEvents()
         {
-            interestArea.NearbySceneObjectsEvents.SceneObjectAdded += OnSceneObjectAdded;
-            interestArea.NearbySceneObjectsEvents.SceneObjectRemoved += SceneObjectRemoved;
-            interestArea.NearbySceneObjectsEvents.SceneObjectsAdded += OnSceneObjectsAdded;
-            interestArea.NearbySceneObjectsEvents.SceneObjectsRemoved += OnSceneObjectsRemoved;
+            interestArea.NearbySceneObjectsEvents.SceneObjectAdded += OnGameObjectAdded;
+            interestArea.NearbySceneObjectsEvents.SceneObjectRemoved += GameObjectRemoved;
+            interestArea.NearbySceneObjectsEvents.SceneObjectsAdded += OnGameObjectsAdded;
+            interestArea.NearbySceneObjectsEvents.SceneObjectsRemoved += OnGameObjectsRemoved;
         }
 
         private void UnsubscribeFromNearbySceneObjectsEvents()
         {
-            interestArea.NearbySceneObjectsEvents.SceneObjectAdded -= OnSceneObjectAdded;
-            interestArea.NearbySceneObjectsEvents.SceneObjectRemoved -= SceneObjectRemoved;
-            interestArea.NearbySceneObjectsEvents.SceneObjectsAdded -= OnSceneObjectsAdded;
-            interestArea.NearbySceneObjectsEvents.SceneObjectsRemoved -= OnSceneObjectsRemoved;
+            interestArea.NearbySceneObjectsEvents.SceneObjectAdded -= OnGameObjectAdded;
+            interestArea.NearbySceneObjectsEvents.SceneObjectRemoved -= GameObjectRemoved;
+            interestArea.NearbySceneObjectsEvents.SceneObjectsAdded -= OnGameObjectsAdded;
+            interestArea.NearbySceneObjectsEvents.SceneObjectsRemoved -= OnGameObjectsRemoved;
         }
 
-        private void OnSceneObjectAdded(IGameObject sceneObject)
+        private void OnGameObjectAdded(IGameObject gameObject)
         {
-            nearbyGameObjects.Add(sceneObject);
+            nearbyGameObjects.Add(gameObject);
         }
 
-        private void SceneObjectRemoved(IGameObject sceneObject)
+        private void GameObjectRemoved(IGameObject gameObject)
         {
-            nearbyGameObjects.Remove(sceneObject);
+            nearbyGameObjects.Remove(gameObject);
         }
 
-        private void OnSceneObjectsAdded(IEnumerable<IGameObject> sceneObjects)
+        private void OnGameObjectsAdded(IEnumerable<IGameObject> gameObjects)
         {
-            nearbyGameObjects.AddRange(sceneObjects);
+            nearbyGameObjects.AddRange(gameObjects);
         }
 
-        private void OnSceneObjectsRemoved(IEnumerable<IGameObject> sceneObjects)
+        private void OnGameObjectsRemoved(IEnumerable<IGameObject> gameObjects)
         {
-            foreach (var sceneObject in sceneObjects)
+            foreach (var gameObject in gameObjects)
             {
-                nearbyGameObjects.Remove(sceneObject);
+                nearbyGameObjects.Remove(gameObject);
             }
         }
 
