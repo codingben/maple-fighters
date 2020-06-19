@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Common.MathematicsHelper;
 
 namespace InterestManagement
 {
@@ -74,8 +75,7 @@ namespace InterestManagement
 
                     if (region.SubscriberCount() != 0)
                     {
-                        var subscribers = region.GetAllSubscribers();
-                        nearbySceneObjects.Add(subscribers);
+                        nearbySceneObjects.Add(region.GetAllSubscribers());
                     }
 
                     region.Subscribe(sceneObject);
@@ -99,15 +99,16 @@ namespace InterestManagement
             foreach (var region in invisibleRegions)
             {
                 regions.Remove(region);
-
                 region.Unsubscribe(sceneObject);
 
                 if (region.SubscriberCount() != 0)
                 {
-                    var subscribers = region.GetAllSubscribers();
-                    foreach (var subscriber in subscribers)
+                    foreach (var subscriber in region.GetAllSubscribers())
                     {
-                        if (!IsOverlapsWithNearbyRegions(subscriber))
+                        var position = sceneObject.Transform.Position;
+                        var size = sceneObject.Transform.Size;
+
+                        if (IsOverlapsWithNearbyRegions(position, size) == false)
                         {
                             nearbySceneObjects.Remove(subscriber);
                         }
@@ -137,18 +138,18 @@ namespace InterestManagement
 
         private void OnSubscriberRemoved(TSceneObject sceneObject)
         {
-            if (!IsOverlapsWithNearbyRegions(sceneObject))
+            var position = sceneObject.Transform.Position;
+            var size = sceneObject.Transform.Size;
+
+            if (IsOverlapsWithNearbyRegions(position, size) == false)
             {
                 nearbySceneObjects.Remove(sceneObject);
             }
         }
 
-        private bool IsOverlapsWithNearbyRegions(TSceneObject sceneObject)
+        private bool IsOverlapsWithNearbyRegions(Vector2 position, Vector2 size)
         {
-            return regions.Any(
-                x => x.IsOverlaps(
-                    sceneObject.Transform.Position,
-                    sceneObject.Transform.Size));
+            return regions.Any(region => region.IsOverlaps(position, size));
         }
 
         public IEnumerable<IRegion<TSceneObject>> GetRegions()
