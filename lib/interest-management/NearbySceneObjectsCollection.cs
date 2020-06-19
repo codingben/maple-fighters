@@ -22,11 +22,6 @@ namespace InterestManagement
             collection = new HashSet<TSceneObject>();
         }
 
-        public void Dispose()
-        {
-            collection?.Clear();
-        }
-
         public void Add(IEnumerable<TSceneObject> sceneObjects)
         {
             var visibleSceneObjects =
@@ -71,6 +66,16 @@ namespace InterestManagement
             {
                 SceneObjectRemoved?.Invoke(sceneObject);
             }
+        }
+
+        public void Clear()
+        {
+            collection?.Clear();
+        }
+
+        public IEnumerable<TSceneObject> GetSceneObjects()
+        {
+            return collection.ToArray();
         }
     }
 }
