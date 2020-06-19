@@ -1,13 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace InterestManagement
 {
-    public interface IInterestArea<out TSceneObject> : IDisposable
+    public interface IInterestArea<TSceneObject> : IDisposable
         where TSceneObject : ISceneObject
     {
-        /// <summary>
-        /// Gets the area of interest of the events.
-        /// </summary>
-        INearbySceneObjectsEvents<TSceneObject> NearbySceneObjectsEvents { get; }
+        IEnumerable<IRegion<TSceneObject>> GetRegions();
+
+        IEnumerable<TSceneObject> GetNearbySceneObjects();
+
+        INearbySceneObjectsEvents<TSceneObject> GetNearbySceneObjectsEvents();
     }
 }
