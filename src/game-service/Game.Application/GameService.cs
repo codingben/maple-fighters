@@ -14,18 +14,19 @@ namespace Game.Application
 {
     public class GameService : WebSocketBehavior
     {
-        private readonly IExposedComponents components;
+        private readonly IIdGenerator idGenerator;
         private readonly ISessionDataContainer sessionDataContainer;
-        private readonly IDictionary<byte, IMessageHandler> handlers;
+        private readonly IGameSceneContainer gameSceneContainer;
         private readonly IGameObject player;
+        private readonly IDictionary<byte, IMessageHandler> handlers;
 
         public GameService(IExposedComponents components)
         {
-            this.components = components;
-            this.sessionDataContainer = components.Get<ISessionDataContainer>();
-
-            handlers = new Dictionary<byte, IMessageHandler>();
+            idGenerator = components.Get<IIdGenerator>();
+            sessionDataContainer = components.Get<ISessionDataContainer>();
+            gameSceneContainer = components.Get<IGameSceneContainer>();
             player = CreatePlayerGameObject();
+            handlers = new Dictionary<byte, IMessageHandler>();
         }
 
         protected override void OnOpen()
@@ -116,7 +117,6 @@ namespace Game.Application
         private void AddHandlerForChangeScene()
         {
             var presenceSceneProvider = player.Components.Get<IPresenceSceneProvider>();
-            var gameSceneContainer = components.Get<IGameSceneContainer>();
             var proximityChecker = player.Components.Get<IProximityChecker>();
             var messageSender = player.Components.Get<IMessageSender>();
             var handler = new ChangeSceneMessageHandler(
@@ -148,10 +148,9 @@ namespace Game.Application
 
         private IGameObject CreatePlayerGameObject()
         {
-            var idGenerator = components.Get<IIdGenerator>();
             var id = idGenerator.GenerateId();
             var player = new GameObject(id, nameof(GameObjectType.Player));
-            var gameSceneContainer = components.Get<IGameSceneContainer>();
+
             gameSceneContainer.TryGetScene(Map.Lobby, out var scene);
 
             player.Transform.SetPosition(scene.PlayerSpawnData.Position);
