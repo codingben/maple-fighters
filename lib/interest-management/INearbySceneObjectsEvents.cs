@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace InterestManagement
 {
-    public interface INearbySceneObjectsEvents<out TSceneObject> : IDisposable
+    public interface INearbySceneObjectsEvents<out TSceneObject>
         where TSceneObject : ISceneObject
     {
         /// <summary>
