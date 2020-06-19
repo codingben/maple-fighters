@@ -25,14 +25,23 @@ namespace Game.Application.Objects.Components
             interestArea?.Dispose();
         }
 
+        public void ChangeScene()
+        {
+            var presenceSceneProvider = Components.Get<IPresenceSceneProvider>();
+            var scene = presenceSceneProvider.GetScene();
+
+            interestArea?.Dispose();
+            interestArea?.SetScene(scene);
+        }
+
         public IEnumerable<IGameObject> GetNearbyGameObjects()
         {
-            return interestArea.GetNearbySceneObjects();
+            return interestArea?.GetNearbySceneObjects();
         }
 
         public INearbySceneObjectsEvents<IGameObject> GetNearbyGameObjectsEvents()
         {
-            return interestArea.GetNearbySceneObjectsEvents();
+            return interestArea?.GetNearbySceneObjectsEvents();
         }
     }
 }
