@@ -7,7 +7,7 @@ namespace Game.Application.Objects.Components
     [ComponentSettings(ExposedState.Exposable)]
     public class ProximityChecker : ComponentBase, IProximityChecker
     {
-        private InterestArea<IGameObject> interestArea;
+        private IInterestArea<IGameObject> interestArea;
 
         protected override void OnAwake()
         {
