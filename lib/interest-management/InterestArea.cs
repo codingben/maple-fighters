@@ -6,13 +6,11 @@ namespace InterestManagement
     public class InterestArea<TSceneObject> : IInterestArea<TSceneObject>
         where TSceneObject : ISceneObject
     {
-        public INearbySceneObjectsEvents<TSceneObject> NearbySceneObjectsEvents =>
-            sceneObjects;
-
         private readonly IScene<TSceneObject> scene;
         private readonly TSceneObject sceneObject;
+
         private readonly List<IRegion<TSceneObject>> regions;
-        private readonly NearbySceneObjectsCollection<TSceneObject> sceneObjects;
+        private readonly NearbySceneObjectsCollection<TSceneObject> nearbySceneObjects;
 
         public InterestArea(IScene<TSceneObject> scene, TSceneObject sceneObject)
         {
@@ -20,10 +18,9 @@ namespace InterestManagement
             this.sceneObject = sceneObject;
 
             regions = new List<IRegion<TSceneObject>>();
-            sceneObjects = new NearbySceneObjectsCollection<TSceneObject>();
+            nearbySceneObjects = new NearbySceneObjectsCollection<TSceneObject>();
 
             UpdateNearbyRegions();
-
             SubscribeToPositionChanged();
         }
 
@@ -32,6 +29,7 @@ namespace InterestManagement
             UnsubscribeFromPositionChanged();
 
             regions?.Clear();
+            nearbySceneObjects?.Clear();
         }
 
         private void SubscribeToPositionChanged()
@@ -68,7 +66,7 @@ namespace InterestManagement
                     if (region.SubscriberCount() != 0)
                     {
                         var subscribers = region.GetAllSubscribers();
-                        sceneObjects.Add(subscribers);
+                        nearbySceneObjects.Add(subscribers);
                     }
 
                     region.Subscribe(sceneObject);
@@ -102,7 +100,7 @@ namespace InterestManagement
                     {
                         if (!IsOverlapsWithNearbyRegions(subscriber))
                         {
-                            sceneObjects.Remove(subscriber);
+                            nearbySceneObjects.Remove(subscriber);
                         }
                     }
                 }
@@ -125,14 +123,14 @@ namespace InterestManagement
 
         private void OnSubscriberAdded(TSceneObject sceneObject)
         {
-            sceneObjects.Add(sceneObject);
+            nearbySceneObjects.Add(sceneObject);
         }
 
         private void OnSubscriberRemoved(TSceneObject sceneObject)
         {
             if (!IsOverlapsWithNearbyRegions(sceneObject))
             {
-                sceneObjects.Remove(sceneObject);
+                nearbySceneObjects.Remove(sceneObject);
             }
         }
 
@@ -142,6 +140,21 @@ namespace InterestManagement
                 x => x.IsOverlaps(
                     sceneObject.Transform.Position,
                     sceneObject.Transform.Size));
+        }
+
+        public IEnumerable<IRegion<TSceneObject>> GetRegions()
+        {
+            return regions;
+        }
+
+        public IEnumerable<TSceneObject> GetNearbySceneObjects()
+        {
+            return nearbySceneObjects.GetSceneObjects();
+        }
+
+        public INearbySceneObjectsEvents<TSceneObject> GetNearbySceneObjectsEvents()
+        {
+            return nearbySceneObjects;
         }
     }
 }
