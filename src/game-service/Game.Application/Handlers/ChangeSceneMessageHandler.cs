@@ -8,21 +8,21 @@ namespace Game.Application.Handlers
 {
     public class ChangeSceneMessageHandler : IMessageHandler
     {
-        private IPresenceSceneProvider presenceSceneProvider;
-        private IGameSceneContainer gameSceneContainer;
-        private IProximityChecker proximityChecker;
         private IMessageSender messageSender;
+        private IProximityChecker proximityChecker;
+        private IGameSceneContainer gameSceneContainer;
+        private IPresenceSceneProvider presenceSceneProvider;
 
         public ChangeSceneMessageHandler(
-            IPresenceSceneProvider presenceSceneProvider,
-            IGameSceneContainer gameSceneContainer,
+            IMessageSender messageSender,
             IProximityChecker proximityChecker,
-            IMessageSender messageSender)
+            IGameSceneContainer gameSceneContainer,
+            IPresenceSceneProvider presenceSceneProvider)
         {
-            this.presenceSceneProvider = presenceSceneProvider;
-            this.gameSceneContainer = gameSceneContainer;
-            this.proximityChecker = proximityChecker;
             this.messageSender = messageSender;
+            this.proximityChecker = proximityChecker;
+            this.gameSceneContainer = gameSceneContainer;
+            this.presenceSceneProvider = presenceSceneProvider;
         }
 
         public void Handle(byte[] rawData)
