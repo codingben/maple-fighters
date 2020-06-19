@@ -119,7 +119,7 @@ namespace Game.Application
             var gameSceneContainer = components.Get<IGameSceneContainer>();
             var proximityChecker = player.Components.Get<IProximityChecker>();
             var messageSender = player.Components.Get<IMessageSender>();
-            var handler = new ChangeSceneHandler(
+            var handler = new ChangeSceneMessageHandler(
                 presenceSceneProvider,
                 gameSceneContainer,
                 proximityChecker,
