@@ -1,4 +1,4 @@
-using Game.Application.Components;
+﻿using Game.Application.Components;
 using Game.Application.Messages;
 using Game.Application.Network;
 using Game.Application.Objects;
@@ -6,14 +6,14 @@ using Game.Application.Objects.Components;
 
 namespace Game.Application.Handlers
 {
-    public class ChangeSceneHandler : IMessageHandler
+    public class ChangeSceneMessageHandler : IMessageHandler
     {
         private IPresenceSceneProvider presenceSceneProvider;
         private IGameSceneContainer gameSceneContainer;
         private IProximityChecker proximityChecker;
         private IMessageSender messageSender;
 
-        public ChangeSceneHandler(
+        public ChangeSceneMessageHandler(
             IPresenceSceneProvider presenceSceneProvider,
             IGameSceneContainer gameSceneContainer,
             IProximityChecker proximityChecker,
