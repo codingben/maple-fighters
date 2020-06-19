@@ -40,6 +40,7 @@ namespace Game.Application.Handlers
                 if (sceneExists)
                 {
                     presenceSceneProvider.SetScene(newScene);
+                    proximityChecker.ChangeScene();
 
                     SendSceneChangedMessage(map);
                 }
