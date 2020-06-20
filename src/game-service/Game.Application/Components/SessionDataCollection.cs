@@ -4,28 +4,28 @@ using Common.ComponentModel;
 namespace Game.Application.Components
 {
     [ComponentSettings(ExposedState.Exposable)]
-    public class SessionDataContainer : ComponentBase, ISessionDataContainer
+    public class SessionDataCollection : ComponentBase, ISessionDataCollection
     {
-        private readonly ConcurrentDictionary<int, SessionData> container;
+        private readonly ConcurrentDictionary<int, SessionData> collection;
 
-        public SessionDataContainer()
+        public SessionDataCollection()
         {
-            container = new ConcurrentDictionary<int, SessionData>();
+            collection = new ConcurrentDictionary<int, SessionData>();
         }
 
         public bool AddSessionData(int id, SessionData sessionData)
         {
-            return container.TryAdd(id, sessionData);
+            return collection.TryAdd(id, sessionData);
         }
 
         public bool RemoveSessionData(int id)
         {
-            return container.TryRemove(id, out _);
+            return collection.TryRemove(id, out _);
         }
 
         public bool GetSessionData(int id, out SessionData sessionData)
         {
-            return container.TryGetValue(id, out sessionData);
+            return collection.TryGetValue(id, out sessionData);
         }
     }
 }
