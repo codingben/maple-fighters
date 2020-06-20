@@ -5,19 +5,19 @@ namespace Game.Application.Components
     [ComponentSettings(ExposedState.Unexposable)]
     public class GameSceneManager : ComponentBase
     {
-        private IGameSceneContainer gameSceneContainer;
+        private IGameSceneCollection gameSceneCollection;
 
         protected override void OnAwake()
         {
-            gameSceneContainer = Components.Get<IGameSceneContainer>();
-            gameSceneContainer.AddScene(Map.Lobby, new LobbyGameScene());
-            gameSceneContainer.AddScene(Map.TheDarkForest, new TheDarkForestGameScene());
+            gameSceneCollection = Components.Get<IGameSceneCollection>();
+            gameSceneCollection.AddScene(Map.Lobby, new LobbyGameScene());
+            gameSceneCollection.AddScene(Map.TheDarkForest, new TheDarkForestGameScene());
         }
 
         protected override void OnRemoved()
         {
-            gameSceneContainer.RemoveScene(Map.Lobby);
-            gameSceneContainer.RemoveScene(Map.TheDarkForest);
+            gameSceneCollection.RemoveScene(Map.Lobby);
+            gameSceneCollection.RemoveScene(Map.TheDarkForest);
         }
     }
 }
