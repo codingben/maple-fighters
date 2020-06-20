@@ -1,6 +1,6 @@
 ﻿namespace Game.Application.Components
 {
-    public interface ISessionDataContainer
+    public interface ISessionDataCollection
     {
         bool AddSessionData(int id, SessionData sessionData);
 
