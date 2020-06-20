@@ -15,7 +15,7 @@ namespace Game.Application
     public class GameService : WebSocketBehavior
     {
         private readonly IIdGenerator idGenerator;
-        private readonly ISessionDataContainer sessionDataContainer;
+        private readonly ISessionDataCollection sessionDataCollection;
         private readonly IGameSceneCollection gameSceneCollection;
         private readonly IGameObject player;
         private readonly IDictionary<byte, IMessageHandler> handlers;
@@ -23,7 +23,7 @@ namespace Game.Application
         public GameService(IExposedComponents components)
         {
             idGenerator = components.Get<IIdGenerator>();
-            sessionDataContainer = components.Get<ISessionDataContainer>();
+            sessionDataCollection = components.Get<ISessionDataCollection>();
             gameSceneCollection = components.Get<IGameSceneCollection>();
             player = CreatePlayerGameObject();
             handlers = new Dictionary<byte, IMessageHandler>();
@@ -31,7 +31,7 @@ namespace Game.Application
 
         protected override void OnOpen()
         {
-            sessionDataContainer.AddSessionData(player.Id, new SessionData(ID));
+            sessionDataCollection.AddSessionData(player.Id, new SessionData(ID));
 
             AddHandlerForChangePosition();
             AddHandlerForChangeAnimationState();
@@ -40,7 +40,7 @@ namespace Game.Application
 
         protected override void OnClose(CloseEventArgs eventArgs)
         {
-            sessionDataContainer.RemoveSessionData(player.Id);
+            sessionDataCollection.RemoveSessionData(player.Id);
 
             RemoveHandlerFromChangePosition();
             RemoveHandlerFromChangeAnimationState();
@@ -140,7 +140,7 @@ namespace Game.Application
 
         public void SendMessageToSession(byte[] rawData, int id)
         {
-            if (sessionDataContainer.GetSessionData(id, out var sessionData))
+            if (sessionDataCollection.GetSessionData(id, out var sessionData))
             {
                 Sessions.SendTo(rawData, sessionData.Id);
             }
