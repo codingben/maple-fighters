@@ -17,40 +17,6 @@ namespace Game.Application.Components
             collection = new Dictionary<Map, IGameScene>();
         }
 
-        protected override void OnAwake()
-        {
-            // TODO: Remove this from here
-            void CreateMobForTheDarkForest()
-            {
-                var idGenerator = Components.Get<IIdGenerator>();
-                var id = idGenerator.GenerateId();
-                var portalGameObject = new GameObject(id, "BlueSnail");
-                var scene = collection[Map.TheDarkForest];
-
-                portalGameObject.Transform.SetPosition(new Vector2(-2f, -8.2f));
-                portalGameObject.Transform.SetSize(Vector2.One);
-
-                portalGameObject.Components.Add(new PresenceSceneProvider(scene));
-                portalGameObject.Components.Add(new ProximityChecker());
-            }
-
-            // TODO: Remove this from here
-            void CreatePortalToLobby()
-            {
-                var idGenerator = Components.Get<IIdGenerator>();
-                var id = idGenerator.GenerateId();
-                var portalGameObject = new GameObject(id, "Portal");
-                var scene = collection[Map.TheDarkForest];
-
-                portalGameObject.Transform.SetPosition(new Vector2(12.5f, -1.125f));
-                portalGameObject.Transform.SetSize(Vector2.One);
-
-                portalGameObject.Components.Add(new PresenceSceneProvider(scene));
-                portalGameObject.Components.Add(new ProximityChecker());
-                portalGameObject.Components.Add(new PortalData((byte)Map.Lobby));
-            }
-        }
-
         public void AddScene(Map map, IGameScene scene)
         {
             collection.Add(map, scene);
