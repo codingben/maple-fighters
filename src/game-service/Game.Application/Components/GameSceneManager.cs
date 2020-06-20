@@ -14,7 +14,7 @@ namespace Game.Application.Components
 
             gameSceneCollection = Components.Get<IGameSceneCollection>();
             gameSceneCollection.AddScene(Map.Lobby, new LobbyGameScene(idGenerator));
-            gameSceneCollection.AddScene(Map.TheDarkForest, new TheDarkForestGameScene());
+            gameSceneCollection.AddScene(Map.TheDarkForest, new TheDarkForestGameScene(idGenerator));
         }
 
         protected override void OnRemoved()
