@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Common.ComponentModel;
 using Common.Components;
 using Common.MathematicsHelper;
@@ -7,15 +7,14 @@ using Game.Application.Objects.Components;
 
 namespace Game.Application.Components
 {
-    // TODO: Rename to GameSceneCollection
     [ComponentSettings(ExposedState.Exposable)]
-    public class GameSceneContainer : ComponentBase, IGameSceneContainer
+    public class GameSceneCollection : ComponentBase, IGameSceneCollection
     {
-        private readonly IDictionary<Map, IGameScene> container;
+        private readonly IDictionary<Map, IGameScene> collection;
 
-        public GameSceneContainer()
+        public GameSceneCollection()
         {
-            container = new Dictionary<Map, IGameScene>();
+            collection = new Dictionary<Map, IGameScene>();
         }
 
         protected override void OnAwake()
@@ -103,17 +102,17 @@ namespace Game.Application.Components
 
         public void AddScene(Map map, IGameScene scene)
         {
-            container.Add(map, scene);
+            collection.Add(map, scene);
         }
 
         public void RemoveScene(Map map)
         {
-            container.Remove(map);
+            collection.Remove(map);
         }
 
         public bool TryGetScene(Map map, out IGameScene scene)
         {
-            return container.TryGetValue(map, out scene);
+            return collection.TryGetValue(map, out scene);
         }
     }
 }
