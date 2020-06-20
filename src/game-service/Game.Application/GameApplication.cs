@@ -35,7 +35,7 @@ namespace Game.Application
         {
             components.Add(new IdGenerator());
             components.Add(new GameSceneCollection());
-            components.Add(new SessionDataContainer());
+            components.Add(new SessionDataCollection());
             components.Add(new GameSceneManager());
         }
 
