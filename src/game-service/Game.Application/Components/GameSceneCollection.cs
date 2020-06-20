@@ -19,55 +19,6 @@ namespace Game.Application.Components
 
         protected override void OnAwake()
         {
-            CreateLobbyGameObjects();
-            CreateTheDarkForestGameObjects();
-
-            // TODO: Remove this from here
-            void CreateLobbyGameObjects()
-            {
-                CreatePortalToTheDarkForest();
-                CreateGuardianForLobby();
-            }
-
-            // TODO: Remove this from here
-            void CreateTheDarkForestGameObjects()
-            {
-                CreateMobForTheDarkForest();
-                CreatePortalToLobby();
-            }
-
-            // TODO: Remove this from here
-            void CreatePortalToTheDarkForest()
-            {
-                var idGenerator = Components.Get<IIdGenerator>();
-                var id = idGenerator.GenerateId();
-                var portalGameObject = new GameObject(id, "Portal");
-                var scene = collection[Map.Lobby];
-
-                portalGameObject.Transform.SetPosition(new Vector2(-17.125f, -1.5f));
-                portalGameObject.Transform.SetSize(Vector2.One);
-
-                portalGameObject.Components.Add(new PresenceSceneProvider(scene));
-                portalGameObject.Components.Add(new ProximityChecker());
-                portalGameObject.Components.Add(new PortalData((byte)Map.TheDarkForest));
-            }
-
-            // TODO: Remove this from here
-            void CreateGuardianForLobby()
-            {
-                var idGenerator = Components.Get<IIdGenerator>();
-                var id = idGenerator.GenerateId();
-                var portalGameObject = new GameObject(id, "Guardian");
-                var scene = collection[Map.Lobby];
-
-                portalGameObject.Transform.SetPosition(new Vector2(-14.24f, -2.025f));
-                portalGameObject.Transform.SetSize(Vector2.One);
-
-                portalGameObject.Components.Add(new PresenceSceneProvider(scene));
-                portalGameObject.Components.Add(new ProximityChecker());
-                portalGameObject.Components.Add(new BubbleNotificationSender("Hello!", 1));
-            }
-
             // TODO: Remove this from here
             void CreateMobForTheDarkForest()
             {
@@ -107,6 +58,7 @@ namespace Game.Application.Components
 
         public void RemoveScene(Map map)
         {
+            collection[map]?.Dispose();
             collection.Remove(map);
         }
 
