@@ -7,25 +7,15 @@ using Game.Application.Objects.Components;
 
 namespace Game.Application.Components
 {
+    // TODO: Rename to GameSceneCollection
     [ComponentSettings(ExposedState.Exposable)]
     public class GameSceneContainer : ComponentBase, IGameSceneContainer
     {
-        private readonly IReadOnlyDictionary<Map, IGameScene> container;
+        private readonly IDictionary<Map, IGameScene> container;
 
         public GameSceneContainer()
         {
-            var lobbyScene = new GameScene(worldSize: new Vector2(40, 5), regionSize: new Vector2(10, 5));
-            lobbyScene.PlayerSpawnData = new PlayerSpawnData(Vector2.Zero, Vector2.Zero);
-
-            var theDarkForestScene = new GameScene(worldSize: new Vector2(30, 30), regionSize: new Vector2(10, 5));
-            theDarkForestScene.PlayerSpawnData = new PlayerSpawnData(Vector2.Zero, Vector2.Zero);
-
-            // TODO: Consider adding new scenes using method or OnAwake()
-            container = new Dictionary<Map, IGameScene>()
-            {
-                { Map.Lobby, lobbyScene },
-                { Map.TheDarkForest, theDarkForestScene }
-            };
+            container = new Dictionary<Map, IGameScene>();
         }
 
         protected override void OnAwake()
@@ -111,12 +101,14 @@ namespace Game.Application.Components
             }
         }
 
-        protected override void OnRemoved()
+        public void AddScene(Map map, IGameScene scene)
         {
-            foreach (var scene in container.Values)
-            {
-                scene?.Dispose();
-            }
+            container.Add(map, scene);
+        }
+
+        public void RemoveScene(Map map)
+        {
+            container.Remove(map);
         }
 
         public bool TryGetScene(Map map, out IGameScene scene)
