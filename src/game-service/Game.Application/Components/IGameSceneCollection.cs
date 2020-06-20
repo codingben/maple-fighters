@@ -1,6 +1,6 @@
-namespace Game.Application.Components
+﻿namespace Game.Application.Components
 {
-    public interface IGameSceneContainer
+    public interface IGameSceneCollection
     {
         void AddScene(Map map, IGameScene scene);
 
