@@ -16,7 +16,7 @@ namespace Game.Application
     {
         private readonly IIdGenerator idGenerator;
         private readonly ISessionDataContainer sessionDataContainer;
-        private readonly IGameSceneContainer gameSceneContainer;
+        private readonly IGameSceneCollection gameSceneCollection;
         private readonly IGameObject player;
         private readonly IDictionary<byte, IMessageHandler> handlers;
 
@@ -24,7 +24,7 @@ namespace Game.Application
         {
             idGenerator = components.Get<IIdGenerator>();
             sessionDataContainer = components.Get<ISessionDataContainer>();
-            gameSceneContainer = components.Get<IGameSceneContainer>();
+            gameSceneCollection = components.Get<IGameSceneCollection>();
             player = CreatePlayerGameObject();
             handlers = new Dictionary<byte, IMessageHandler>();
         }
@@ -122,7 +122,7 @@ namespace Game.Application
             var handler = new ChangeSceneMessageHandler(
                 messageSender,
                 proximityChecker,
-                gameSceneContainer,
+                gameSceneCollection,
                 presenceSceneProvider);
 
             handlers.Add((byte)MessageCodes.ChangeScene, handler);
@@ -151,7 +151,7 @@ namespace Game.Application
             var id = idGenerator.GenerateId();
             var player = new GameObject(id, nameof(GameObjectType.Player));
 
-            gameSceneContainer.TryGetScene(Map.Lobby, out var scene);
+            gameSceneCollection.TryGetScene(Map.Lobby, out var scene);
 
             player.Transform.SetPosition(scene.PlayerSpawnData.Position);
             player.Transform.SetSize(scene.PlayerSpawnData.Size);
