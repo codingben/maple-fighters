@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Common.ComponentModel;
 using Common.Components;
@@ -30,9 +31,9 @@ namespace Game.Application
 
         protected override void OnOpen()
         {
-            sessionDataCollection.AddSessionData(player.Id, new SessionData(ID));
-
             CreatePlayer();
+
+            sessionDataCollection.AddSessionData(player.Id, new SessionData(ID));
 
             handlers = new Dictionary<byte, IMessageHandler>();
 
@@ -46,6 +47,8 @@ namespace Game.Application
             sessionDataCollection.RemoveSessionData(player.Id);
 
             handlers?.Clear();
+
+            ((IDisposable)player?.Components)?.Dispose();
         }
 
         protected override void OnError(ErrorEventArgs eventArgs)
@@ -140,7 +143,6 @@ namespace Game.Application
             player.Transform.SetPosition(playerSpawnData.Position);
             player.Transform.SetSize(playerSpawnData.Size);
 
-            // TODO: Dispose won't be called
             player.Components.Add(new GameObjectGetter(player));
             player.Components.Add(new AnimationData());
             player.Components.Add(new PresenceSceneProvider(scene));
