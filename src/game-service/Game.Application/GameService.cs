@@ -45,7 +45,7 @@ namespace Game.Application
         {
             sessionDataCollection.RemoveSessionData(player.Id);
 
-            handlers.Clear();
+            handlers?.Clear();
         }
 
         protected override void OnError(ErrorEventArgs eventArgs)
