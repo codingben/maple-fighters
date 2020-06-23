@@ -28,7 +28,7 @@ namespace Game.Application.Components
 
         PlayerSpawnData GetPlayerSpawnData()
         {
-            return new PlayerSpawnData(new Vector2(18, -1.86f), new Vector2(10, 5));
+            return new PlayerSpawnData(new Vector2(-12.8f, - -2.95f), new Vector2(10, 5));
         }
 
         IGameObject CreatePortal()
