@@ -17,7 +17,7 @@ namespace Game.Application
     {
         private readonly IIdGenerator idGenerator;
         private readonly ISessionDataCollection sessionDataCollection;
-        private readonly IGameSceneCollection gameSceneCollection;
+        private readonly IGameSceneManager gameSceneManager;
 
         private IGameObject player;
         private IDictionary<byte, IMessageHandler> handlers;
@@ -26,7 +26,7 @@ namespace Game.Application
         {
             idGenerator = components.Get<IIdGenerator>();
             sessionDataCollection = components.Get<ISessionDataCollection>();
-            gameSceneCollection = components.Get<IGameSceneCollection>();
+            gameSceneManager = components.Get<IGameSceneManager>();
         }
 
         protected override void OnOpen()
@@ -111,7 +111,7 @@ namespace Game.Application
             var handler = new ChangeSceneMessageHandler(
                 messageSender,
                 proximityChecker,
-                gameSceneCollection,
+                gameSceneManager,
                 presenceSceneProvider);
 
             handlers.Add((byte)MessageCodes.ChangeScene, handler);
@@ -132,25 +132,30 @@ namespace Game.Application
 
         private void CreatePlayer()
         {
-            var id = idGenerator.GenerateId();
-            player = new GameObject(id, nameof(GameObjectType.Player));
+            if (gameSceneManager.TryGetGameScene(Map.Lobby, out var scene))
+            {
+                var id = idGenerator.GenerateId();
+                var playerSpawnDataProvider = scene.Components.Get<IPlayerSpawnDataProvider>();
+                var playerSpawnData = playerSpawnDataProvider.Provide();
 
-            gameSceneCollection.TryGetScene(Map.Lobby, out var scene);
+                player = new GameObject(id, nameof(GameObjectType.Player));
 
-            var playerSpawnDataProvider = scene.Components.Get<IPlayerSpawnDataProvider>();
-            var playerSpawnData = playerSpawnDataProvider.Provide();
+                player.Transform.SetPosition(playerSpawnData.Position);
+                player.Transform.SetSize(playerSpawnData.Size);
 
-            player.Transform.SetPosition(playerSpawnData.Position);
-            player.Transform.SetSize(playerSpawnData.Size);
-
-            player.Components.Add(new GameObjectGetter(player));
-            player.Components.Add(new AnimationData());
-            player.Components.Add(new PresenceSceneProvider(scene));
-            player.Components.Add(new ProximityChecker());
-            player.Components.Add(new MessageSender(SendMessageToMySession, SendMessageToSession));
-            player.Components.Add(new PositionChangedMessageSender());
-            player.Components.Add(new AnimationStateChangedMessageSender());
-            player.Components.Add(new CharacterData());
+                player.Components.Add(new GameObjectGetter(player));
+                player.Components.Add(new AnimationData());
+                player.Components.Add(new PresenceSceneProvider(scene));
+                player.Components.Add(new ProximityChecker());
+                player.Components.Add(new MessageSender(SendMessageToMySession, SendMessageToSession));
+                player.Components.Add(new PositionChangedMessageSender());
+                player.Components.Add(new AnimationStateChangedMessageSender());
+                player.Components.Add(new CharacterData());
+            }
+            else
+            {
+                // TODO: Throw the error "Could not enter the world of the game"
+            }
         }
     }
 }
