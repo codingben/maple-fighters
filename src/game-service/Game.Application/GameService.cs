@@ -49,6 +49,8 @@ namespace Game.Application
             handlers?.Clear();
 
             ((IDisposable)player?.Components)?.Dispose();
+
+            // TODO: Remove player from game scene object collection
         }
 
         protected override void OnError(ErrorEventArgs eventArgs)
@@ -151,6 +153,8 @@ namespace Game.Application
                 player.Components.Add(new PositionChangedMessageSender());
                 player.Components.Add(new AnimationStateChangedMessageSender());
                 player.Components.Add(new CharacterData());
+
+                // TODO: Add player to game scene object collection
             }
             else
             {
