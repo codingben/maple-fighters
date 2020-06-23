@@ -22,6 +22,13 @@ namespace Game.Application.Components
                 CreatePortal(),
                 CreateBlueSnail()
             };
+
+            Components.Add(new PlayerSpawnDataProvider(GetPlayerSpawnData()));
+        }
+
+        PlayerSpawnData GetPlayerSpawnData()
+        {
+            return new PlayerSpawnData(new Vector2(18, -1.86f), new Vector2(10, 5));
         }
 
         IGameObject CreatePortal()
