@@ -13,6 +13,7 @@ namespace Game.Application.Components
         {
             this.idGenerator = idGenerator;
 
+            // TODO: Refactor this
             var gameObjects = new IGameObject[]
             {
                 CreateGuardian(),
@@ -25,11 +26,15 @@ namespace Game.Application.Components
 
         PlayerSpawnData GetPlayerSpawnData()
         {
+            // TODO: Refactor this method
+
             return new PlayerSpawnData(new Vector2(18, -1.86f), new Vector2(10, 5));
         }
 
         IGameObject CreateGuardian()
         {
+            // TODO: Refactor this method
+
             var id = idGenerator.GenerateId();
             var position = new Vector2(-14.24f, -2.025f);
             var scene = this;
@@ -46,6 +51,8 @@ namespace Game.Application.Components
 
         IGameObject CreatePortal()
         {
+            // TODO: Refactor this method
+
             var id = idGenerator.GenerateId();
             var position = new Vector2(-17.125f, -1.5f);
             var scene = this;
