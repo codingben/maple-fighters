@@ -19,6 +19,8 @@ namespace Game.Application.Components
 
         protected override void OnRemoved()
         {
+            // TODO: Dispose scenes
+
             gameSceneCollection.RemoveScene(Map.Lobby);
             gameSceneCollection.RemoveScene(Map.TheDarkForest);
         }
