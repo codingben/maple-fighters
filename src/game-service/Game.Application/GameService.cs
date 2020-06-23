@@ -153,9 +153,11 @@ namespace Game.Application
 
             gameSceneCollection.TryGetScene(Map.Lobby, out var scene);
 
-            // TODO: Get PlayerSpawnData (component)
-            // player.Transform.SetPosition(scene.PlayerSpawnData.Position);
-            // player.Transform.SetSize(scene.PlayerSpawnData.Size);
+            var playerSpawnDataProvider = scene.Components.Get<IPlayerSpawnDataProvider>();
+            var playerSpawnData = playerSpawnDataProvider.Provide();
+
+            player.Transform.SetPosition(playerSpawnData.Position);
+            player.Transform.SetSize(playerSpawnData.Size);
 
             // TODO: Dispose won't be called
             player.Components.Add(new GameObjectGetter(player));
