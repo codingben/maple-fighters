@@ -1,9 +1,5 @@
 ﻿using System.Collections.Generic;
 using Common.ComponentModel;
-using Common.Components;
-using Common.MathematicsHelper;
-using Game.Application.Objects;
-using Game.Application.Objects.Components;
 
 namespace Game.Application.Components
 {
