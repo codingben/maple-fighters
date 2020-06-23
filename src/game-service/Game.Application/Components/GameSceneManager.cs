@@ -14,6 +14,7 @@ namespace Game.Application.Components
         {
             var idGenerator = Components.Get<IIdGenerator>();
 
+            // TODO: Use another way to add game scenes
             collection = new ConcurrentDictionary<Map, IGameScene>();
             collection.TryAdd(Map.Lobby, new LobbyGameScene(idGenerator));
             collection.TryAdd(Map.TheDarkForest, new TheDarkForestGameScene(idGenerator));
@@ -21,10 +22,12 @@ namespace Game.Application.Components
 
         protected override void OnRemoved()
         {
+            // TODO: Use another way to dispose
             var lobby = collection[Map.Lobby];
             lobby.Dispose();
             ((IDisposable)lobby.Components).Dispose();
 
+            // TODO: Use another way to dispose
             var TheDarkForest = collection[Map.TheDarkForest];
             TheDarkForest.Dispose();
             ((IDisposable)TheDarkForest.Components).Dispose();
