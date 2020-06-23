@@ -17,8 +17,9 @@ namespace Game.Application
         private readonly IIdGenerator idGenerator;
         private readonly ISessionDataCollection sessionDataCollection;
         private readonly IGameSceneCollection gameSceneCollection;
+
         private IGameObject player;
-        private readonly IDictionary<byte, IMessageHandler> handlers = new Dictionary<byte, IMessageHandler>();
+        private IDictionary<byte, IMessageHandler> handlers;
 
         public GameService(IExposedComponents components)
         {
@@ -33,6 +34,8 @@ namespace Game.Application
 
             CreatePlayer();
 
+            handlers = new Dictionary<byte, IMessageHandler>();
+
             AddHandlerForChangePosition();
             AddHandlerForChangeAnimationState();
             AddHandlerForEnterScene();
@@ -42,9 +45,7 @@ namespace Game.Application
         {
             sessionDataCollection.RemoveSessionData(player.Id);
 
-            RemoveHandlerFromChangePosition();
-            RemoveHandlerFromChangeAnimationState();
-            RemoveHandlerFromEnterScene();
+            handlers.Clear();
         }
 
         protected override void OnError(ErrorEventArgs eventArgs)
@@ -80,22 +81,12 @@ namespace Game.Application
             handlers.Add((byte)MessageCodes.ChangePosition, handler);
         }
 
-        private void RemoveHandlerFromChangePosition()
-        {
-            handlers.Remove((byte)MessageCodes.ChangePosition);
-        }
-
         private void AddHandlerForChangeAnimationState()
         {
             var animationData = player.Components.Get<IAnimationData>();
             var handler = new ChangeAnimationStateHandler(animationData);
 
             handlers.Add((byte)MessageCodes.ChangeAnimationState, handler);
-        }
-
-        private void RemoveHandlerFromChangeAnimationState()
-        {
-            handlers.Remove((byte)MessageCodes.ChangeAnimationState);
         }
 
         private void AddHandlerForEnterScene()
@@ -107,11 +98,6 @@ namespace Game.Application
                 new EnterSceneMessageHandler(gameObjectGetter, characterData, messageSender);
 
             handlers.Add((byte)MessageCodes.EnterScene, handler);
-        }
-
-        private void RemoveHandlerFromEnterScene()
-        {
-            handlers.Remove((byte)MessageCodes.EnterScene);
         }
 
         private void AddHandlerForChangeScene()
@@ -126,11 +112,6 @@ namespace Game.Application
                 presenceSceneProvider);
 
             handlers.Add((byte)MessageCodes.ChangeScene, handler);
-        }
-
-        private void RemoveHandlerFromChangeScene()
-        {
-            handlers.Remove((byte)MessageCodes.ChangeScene);
         }
 
         public void SendMessageToMySession(byte[] rawData)
