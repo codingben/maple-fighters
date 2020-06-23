@@ -17,21 +17,21 @@ namespace Game.Application
         private readonly IIdGenerator idGenerator;
         private readonly ISessionDataCollection sessionDataCollection;
         private readonly IGameSceneCollection gameSceneCollection;
-        private readonly IGameObject player;
-        private readonly IDictionary<byte, IMessageHandler> handlers;
+        private IGameObject player;
+        private readonly IDictionary<byte, IMessageHandler> handlers = new Dictionary<byte, IMessageHandler>();
 
         public GameService(IExposedComponents components)
         {
             idGenerator = components.Get<IIdGenerator>();
             sessionDataCollection = components.Get<ISessionDataCollection>();
             gameSceneCollection = components.Get<IGameSceneCollection>();
-            player = CreatePlayerGameObject();
-            handlers = new Dictionary<byte, IMessageHandler>();
         }
 
         protected override void OnOpen()
         {
             sessionDataCollection.AddSessionData(player.Id, new SessionData(ID));
+
+            CreatePlayer();
 
             AddHandlerForChangePosition();
             AddHandlerForChangeAnimationState();
@@ -146,10 +146,10 @@ namespace Game.Application
             }
         }
 
-        private IGameObject CreatePlayerGameObject()
+        private void CreatePlayer()
         {
             var id = idGenerator.GenerateId();
-            var player = new GameObject(id, nameof(GameObjectType.Player));
+            player = new GameObject(id, nameof(GameObjectType.Player));
 
             gameSceneCollection.TryGetScene(Map.Lobby, out var scene);
 
@@ -168,8 +168,6 @@ namespace Game.Application
             player.Components.Add(new PositionChangedMessageSender());
             player.Components.Add(new AnimationStateChangedMessageSender());
             player.Components.Add(new CharacterData());
-
-            return player;
         }
     }
 }
