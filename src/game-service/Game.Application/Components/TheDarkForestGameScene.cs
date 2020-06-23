@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Common.Components;
 using Common.MathematicsHelper;
 using Game.Application.Objects;
@@ -8,22 +7,20 @@ namespace Game.Application.Components
     public class TheDarkForestGameScene : GameScene
     {
         private readonly IIdGenerator idGenerator;
-        private readonly IList<IGameObject> gameObjects;
 
         public TheDarkForestGameScene(IIdGenerator idGenerator)
             : base(new Vector2(30, 30), new Vector2(10, 5))
         {
             this.idGenerator = idGenerator;
 
-            // TODO: Who will "destroy" game objects?
-
-            gameObjects = new List<IGameObject>()
+            var gameObjects = new IGameObject[]
             {
                 CreatePortal(),
                 CreateBlueSnail()
             };
 
             Components.Add(new PlayerSpawnDataProvider(GetPlayerSpawnData()));
+            Components.Add(new GameObjectCollection(gameObjects));
         }
 
         PlayerSpawnData GetPlayerSpawnData()
