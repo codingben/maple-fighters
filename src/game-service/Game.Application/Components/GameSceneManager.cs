@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Concurrent;
 using Common.ComponentModel;
 using Common.Components;
@@ -20,9 +21,15 @@ namespace Game.Application.Components
 
         protected override void OnRemoved()
         {
-            collection[Map.Lobby]?.Dispose();
-            collection[Map.TheDarkForest]?.Dispose();
-            collection?.Clear();
+            var lobby = collection[Map.Lobby];
+            lobby.Dispose();
+            ((IDisposable)lobby.Components).Dispose();
+
+            var TheDarkForest = collection[Map.TheDarkForest];
+            TheDarkForest.Dispose();
+            ((IDisposable)TheDarkForest.Components).Dispose();
+
+            collection.Clear();
         }
 
         public bool TryGetGameScene(Map map, out IGameScene gameScene)
