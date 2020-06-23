@@ -13,6 +13,7 @@ namespace Game.Application.Components
         {
             this.idGenerator = idGenerator;
 
+            // TODO: Use another way to add game objects
             var gameObjects = new IGameObject[]
             {
                 CreatePortal(),
@@ -25,11 +26,15 @@ namespace Game.Application.Components
 
         PlayerSpawnData GetPlayerSpawnData()
         {
-            return new PlayerSpawnData(new Vector2(-12.8f, - -2.95f), new Vector2(10, 5));
+            // TODO: Refactor this method
+
+            return new PlayerSpawnData(new Vector2(-12.8f, -2.95f), new Vector2(10, 5));
         }
 
         IGameObject CreatePortal()
         {
+            // TODO: Refactor this method
+
             var id = idGenerator.GenerateId();
             var position = new Vector2(12.5f, -1.125f);
             var scene = this;
@@ -44,6 +49,8 @@ namespace Game.Application.Components
 
         IGameObject CreateBlueSnail()
         {
+            // TODO: Refactor this method
+
             var id = idGenerator.GenerateId();
             var position = new Vector2(-2f, -8.2f);
             var scene = this;
