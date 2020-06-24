@@ -12,12 +12,12 @@ namespace Game.Application.Objects.Components
         protected override void OnAwake()
         {
             var presenceSceneProvider = Components.Get<IPresenceSceneProvider>();
-            var scene = presenceSceneProvider.GetScene();
+            var gameScene = presenceSceneProvider.GetScene();
             var gameObjectGetter = Components.Get<IGameObjectGetter>();
             var gameObject = gameObjectGetter.Get();
 
             interestArea = new InterestArea<IGameObject>(gameObject);
-            interestArea.SetScene(scene);
+            interestArea.SetScene(gameScene);
         }
 
         protected override void OnRemoved()
@@ -28,10 +28,10 @@ namespace Game.Application.Objects.Components
         public void ChangeScene()
         {
             var presenceSceneProvider = Components.Get<IPresenceSceneProvider>();
-            var scene = presenceSceneProvider.GetScene();
+            var gameScene = presenceSceneProvider.GetScene();
 
             interestArea?.Dispose();
-            interestArea?.SetScene(scene);
+            interestArea?.SetScene(gameScene);
         }
 
         public IEnumerable<IGameObject> GetNearbyGameObjects()
