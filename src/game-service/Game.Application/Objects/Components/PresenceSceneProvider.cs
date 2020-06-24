@@ -6,21 +6,21 @@ namespace Game.Application.Objects.Components
     [ComponentSettings(ExposedState.Exposable)]
     public class PresenceSceneProvider : ComponentBase, IPresenceSceneProvider
     {
-        private IGameScene scene;
+        private IGameScene gameScene;
 
-        public PresenceSceneProvider(IGameScene scene)
+        public PresenceSceneProvider(IGameScene gameScene)
         {
-            this.scene = scene;
+            this.gameScene = gameScene;
         }
 
-        public void SetScene(IGameScene scene)
+        public void SetScene(IGameScene gameScene)
         {
-            this.scene = scene;
+            this.gameScene = gameScene;
         }
 
         public IGameScene GetScene()
         {
-            return scene;
+            return gameScene;
         }
     }
 }
