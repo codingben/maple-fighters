@@ -11,13 +11,16 @@ namespace Game.Application.Components
     {
         private ConcurrentDictionary<int, IGameObject> collection;
 
-        public GameObjectCollection(IEnumerable<IGameObject> gameObjects)
+        public GameObjectCollection(IEnumerable<IGameObject> gameObjects = null)
         {
             collection = new ConcurrentDictionary<int, IGameObject>();
 
-            foreach (var gameObject in gameObjects)
+            if (gameObjects != null)
             {
-                collection.TryAdd(gameObject.Id, gameObject);
+                foreach (var gameObject in gameObjects)
+                {
+                    collection.TryAdd(gameObject.Id, gameObject);
+                }
             }
         }
 
