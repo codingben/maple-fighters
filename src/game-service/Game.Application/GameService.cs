@@ -48,9 +48,7 @@ namespace Game.Application
 
             handlers?.Clear();
 
-            ((IDisposable)player?.Components)?.Dispose();
-
-            // TODO: Remove player from game scene object collection
+            RemovePlayer();
         }
 
         protected override void OnError(ErrorEventArgs eventArgs)
@@ -168,6 +166,18 @@ namespace Game.Application
             else
             {
                 // TODO: Throw the error "Could not enter the world of the game"
+            }
+        }
+
+        private void RemovePlayer()
+        {
+            var presenceSceneProvider = player?.Components.Get<IPresenceSceneProvider>();
+            var gameScene = presenceSceneProvider?.GetScene();
+            if (gameScene != null)
+            {
+                var gameObjectCollection = gameScene.Components.Get<IGameObjectCollection>();
+
+                gameObjectCollection.RemoveGameObject(player.Id);
             }
         }
     }
