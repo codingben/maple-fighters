@@ -35,9 +35,9 @@ namespace Game.Application.Handlers
             {
                 var portalData = portal.Components.Get<IPortalData>();
                 var map = portalData.GetMap();
-                var sceneExists =
+                var gameSceneExists =
                     gameSceneManager.TryGetGameScene((Map)map, out var newScene);
-                if (sceneExists)
+                if (gameSceneExists)
                 {
                     presenceSceneProvider.SetScene(newScene);
                     proximityChecker.ChangeScene();
