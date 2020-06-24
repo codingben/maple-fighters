@@ -34,6 +34,16 @@ namespace Game.Application.Components
             collection.Clear();
         }
 
+        public bool AddGameObject(IGameObject gameObject)
+        {
+            return collection.TryAdd(gameObject.Id, gameObject);
+        }
+
+        public bool RemoveGameObject(int id)
+        {
+            return collection.TryRemove(id, out _);
+        }
+
         public bool TryGetGameObject(int id, out IGameObject gameObject)
         {
             return collection.TryGetValue(id, out gameObject);
