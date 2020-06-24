@@ -154,7 +154,16 @@ namespace Game.Application
                 player.Components.Add(new AnimationStateChangedMessageSender());
                 player.Components.Add(new CharacterData());
 
-                // TODO: Add player to game scene object collection
+                var gameObjectCollection = scene.Components.Get<IGameObjectCollection>();
+
+                if (gameObjectCollection.AddGameObject(player))
+                {
+                    // TODO: Notify the player
+                }
+                else
+                {
+                    // TODO: Throw the error "Could not create player"
+                }
             }
             else
             {
