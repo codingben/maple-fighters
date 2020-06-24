@@ -6,7 +6,7 @@ namespace Game.Application.Components
     {
         bool AddGameObject(IGameObject gameObject);
 
-        bool RemoveGameObject(int id);
+        void RemoveGameObject(int id);
 
         bool TryGetGameObject(int id, out IGameObject gameObject);
     }
