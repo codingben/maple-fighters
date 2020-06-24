@@ -132,10 +132,10 @@ namespace Game.Application
 
         private void CreatePlayer()
         {
-            if (gameSceneManager.TryGetGameScene(Map.Lobby, out var scene))
+            if (gameSceneManager.TryGetGameScene(Map.Lobby, out var gameScene))
             {
                 var id = idGenerator.GenerateId();
-                var playerSpawnDataProvider = scene.Components.Get<IPlayerSpawnDataProvider>();
+                var playerSpawnDataProvider = gameScene.Components.Get<IPlayerSpawnDataProvider>();
                 var playerSpawnData = playerSpawnDataProvider.Provide();
 
                 player = new GameObject(id, nameof(GameObjectType.Player));
@@ -145,14 +145,14 @@ namespace Game.Application
 
                 player.Components.Add(new GameObjectGetter(player));
                 player.Components.Add(new AnimationData());
-                player.Components.Add(new PresenceSceneProvider(scene));
+                player.Components.Add(new PresenceSceneProvider(gameScene));
                 player.Components.Add(new ProximityChecker());
                 player.Components.Add(new MessageSender(SendMessageToMySession, SendMessageToSession));
                 player.Components.Add(new PositionChangedMessageSender());
                 player.Components.Add(new AnimationStateChangedMessageSender());
                 player.Components.Add(new CharacterData());
 
-                var gameObjectCollection = scene.Components.Get<IGameObjectCollection>();
+                var gameObjectCollection = gameScene.Components.Get<IGameObjectCollection>();
 
                 if (gameObjectCollection.AddGameObject(player))
                 {
