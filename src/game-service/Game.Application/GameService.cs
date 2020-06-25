@@ -17,9 +17,9 @@ namespace Game.Application
         private readonly IIdGenerator idGenerator;
         private readonly ISessionDataCollection sessionDataCollection;
         private readonly IGameSceneManager gameSceneManager;
+        private readonly IDictionary<byte, IMessageHandler> handlers = new Dictionary<byte, IMessageHandler>();
 
         private IGameObject player;
-        private IDictionary<byte, IMessageHandler> handlers = new Dictionary<byte, IMessageHandler>();
 
         public GameService(IExposedComponents components)
         {
@@ -88,8 +88,10 @@ namespace Game.Application
             var gameObjectGetter = player.Components.Get<IGameObjectGetter>();
             var characterData = player.Components.Get<ICharacterData>();
             var messageSender = player.Components.Get<IMessageSender>();
-            var handler =
-                new EnterSceneMessageHandler(gameObjectGetter, characterData, messageSender);
+            var handler = new EnterSceneMessageHandler(
+                gameObjectGetter,
+                characterData,
+                messageSender);
 
             handlers.Add((byte)MessageCodes.EnterScene, handler);
         }
@@ -98,7 +100,8 @@ namespace Game.Application
         {
             var messageSender = player.Components.Get<IMessageSender>();
             var proximityChecker = player.Components.Get<IProximityChecker>();
-            var presenceSceneProvider = player.Components.Get<IPresenceSceneProvider>();
+            var presenceSceneProvider =
+                player.Components.Get<IPresenceSceneProvider>();
             var handler = new ChangeSceneMessageHandler(
                 messageSender,
                 proximityChecker,
@@ -126,7 +129,8 @@ namespace Game.Application
             if (gameSceneManager.TryGetGameScene(Map.Lobby, out var gameScene))
             {
                 var id = idGenerator.GenerateId();
-                var playerSpawnDataProvider = gameScene.Components.Get<IPlayerSpawnDataProvider>();
+                var playerSpawnDataProvider =
+                    gameScene.Components.Get<IPlayerSpawnDataProvider>();
                 var playerSpawnData = playerSpawnDataProvider?.Provide();
 
                 player = new GameObject(id, nameof(GameObjectType.Player));
@@ -146,7 +150,8 @@ namespace Game.Application
                 player.Components.Add(new AnimationStateChangedMessageSender());
                 player.Components.Add(new CharacterData());
 
-                var gameObjectCollection = gameScene.Components.Get<IGameObjectCollection>();
+                var gameObjectCollection =
+                    gameScene.Components.Get<IGameObjectCollection>();
                 if (gameObjectCollection != null)
                 {
                     if (gameObjectCollection.AddGameObject(player))
@@ -169,11 +174,13 @@ namespace Game.Application
 
         private void RemovePlayer()
         {
-            var presenceSceneProvider = player?.Components.Get<IPresenceSceneProvider>();
+            var presenceSceneProvider =
+                player?.Components.Get<IPresenceSceneProvider>();
             var gameScene = presenceSceneProvider?.GetScene();
             if (gameScene != null)
             {
-                var gameObjectCollection = gameScene.Components.Get<IGameObjectCollection>();
+                var gameObjectCollection =
+                    gameScene.Components.Get<IGameObjectCollection>();
                 if (gameObjectCollection != null)
                 {
                     gameObjectCollection.RemoveGameObject(player.Id);
