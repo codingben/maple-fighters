@@ -100,13 +100,10 @@ namespace Game.Application
         {
             var messageSender = player.Components.Get<IMessageSender>();
             var proximityChecker = player.Components.Get<IProximityChecker>();
-            var presenceSceneProvider =
-                player.Components.Get<IPresenceSceneProvider>();
             var handler = new ChangeSceneMessageHandler(
                 messageSender,
                 proximityChecker,
-                gameSceneManager,
-                presenceSceneProvider);
+                gameSceneManager);
 
             handlers.Add((byte)MessageCodes.ChangeScene, handler);
         }
@@ -143,8 +140,7 @@ namespace Game.Application
 
                 player.Components.Add(new GameObjectGetter(player));
                 player.Components.Add(new AnimationData());
-                player.Components.Add(new PresenceSceneProvider(gameScene));
-                player.Components.Add(new ProximityChecker());
+                player.Components.Add(new ProximityChecker(gameScene));
                 player.Components.Add(new MessageSender(SendMessageToMySession, SendMessageToSession));
                 player.Components.Add(new PositionChangedMessageSender());
                 player.Components.Add(new AnimationStateChangedMessageSender());
@@ -174,9 +170,8 @@ namespace Game.Application
 
         private void RemovePlayer()
         {
-            var presenceSceneProvider =
-                player?.Components.Get<IPresenceSceneProvider>();
-            var gameScene = presenceSceneProvider?.GetScene();
+            var proximityChecker = player?.Components.Get<IProximityChecker>();
+            var gameScene = proximityChecker?.GetGameScene();
             if (gameScene != null)
             {
                 var gameObjectCollection =
