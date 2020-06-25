@@ -28,6 +28,7 @@ namespace Game.Application.Components
         {
             foreach (var gameScene in collection.Values)
             {
+                gameScene?.Dispose();
                 ((IDisposable)gameScene.Components)?.Dispose();
             }
 
