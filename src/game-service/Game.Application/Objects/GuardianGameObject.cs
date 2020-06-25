@@ -8,8 +8,7 @@ namespace Game.Application.Objects
         public GuardianGameObject(int id, IGameScene gameScene)
             : base(id, "Guardian")
         {
-            Components.Add(new PresenceSceneProvider(gameScene));
-            Components.Add(new ProximityChecker());
+            Components.Add(new ProximityChecker(gameScene));
         }
 
         public void AddBubbleNotification(string text, int time)
