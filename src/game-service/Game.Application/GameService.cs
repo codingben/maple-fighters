@@ -127,12 +127,15 @@ namespace Game.Application
             {
                 var id = idGenerator.GenerateId();
                 var playerSpawnDataProvider = gameScene.Components.Get<IPlayerSpawnDataProvider>();
-                var playerSpawnData = playerSpawnDataProvider.Provide();
+                var playerSpawnData = playerSpawnDataProvider?.Provide();
 
                 player = new GameObject(id, nameof(GameObjectType.Player));
 
-                player.Transform.SetPosition(playerSpawnData.Position);
-                player.Transform.SetSize(playerSpawnData.Size);
+                if (playerSpawnData != null)
+                {
+                    player.Transform.SetPosition(playerSpawnData.Position);
+                    player.Transform.SetSize(playerSpawnData.Size);
+                }
 
                 player.Components.Add(new GameObjectGetter(player));
                 player.Components.Add(new AnimationData());
@@ -144,14 +147,16 @@ namespace Game.Application
                 player.Components.Add(new CharacterData());
 
                 var gameObjectCollection = gameScene.Components.Get<IGameObjectCollection>();
-
-                if (gameObjectCollection.AddGameObject(player))
+                if (gameObjectCollection != null)
                 {
-                    // TODO: Notify the player
-                }
-                else
-                {
-                    // TODO: Throw the error "Could not create player"
+                    if (gameObjectCollection.AddGameObject(player))
+                    {
+                        // TODO: Notify the player
+                    }
+                    else
+                    {
+                        // TODO: Throw the error "Could not create player"
+                    }
                 }
 
                 sessionDataCollection.AddSessionData(player.Id, new SessionData(ID));
@@ -169,8 +174,10 @@ namespace Game.Application
             if (gameScene != null)
             {
                 var gameObjectCollection = gameScene.Components.Get<IGameObjectCollection>();
-
-                gameObjectCollection.RemoveGameObject(player.Id);
+                if (gameObjectCollection != null)
+                {
+                    gameObjectCollection.RemoveGameObject(player.Id);
+                }
             }
 
             sessionDataCollection.RemoveSessionData(player.Id);
