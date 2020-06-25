@@ -8,8 +8,7 @@ namespace Game.Application.Objects
         public PortalGameObject(int id, IGameScene gameScene)
             : base(id, "Portal")
         {
-            Components.Add(new PresenceSceneProvider(gameScene));
-            Components.Add(new ProximityChecker());
+            Components.Add(new ProximityChecker(gameScene));
         }
 
         public void AddPortalData(byte map)
