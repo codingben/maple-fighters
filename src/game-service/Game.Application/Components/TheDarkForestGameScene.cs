@@ -26,39 +26,26 @@ namespace Game.Application.Components
 
         PlayerSpawnData GetPlayerSpawnData()
         {
-            // TODO: Refactor this method
-
             return new PlayerSpawnData(new Vector2(-12.8f, -2.95f), new Vector2(10, 5));
         }
 
         IGameObject CreatePortal()
         {
-            // TODO: Refactor this method
-
             var id = idGenerator.GenerateId();
             var position = new Vector2(12.5f, -1.125f);
-            var scene = this;
-            var map = (byte)Map.Lobby;
+            var portal = new PortalGameObject(id, this);
 
-            return new PortalGameObject(
-                id,
-                position,
-                scene,
-                map);
+            portal.AddPortalData((byte)Map.Lobby);
+
+            return portal;
         }
 
         IGameObject CreateBlueSnail()
         {
-            // TODO: Refactor this method
-
             var id = idGenerator.GenerateId();
             var position = new Vector2(-2f, -8.2f);
-            var scene = this;
 
-            return new BlueSnailGameObject(
-                id,
-                position,
-                scene);
+            return new BlueSnailGameObject(id, this);
         }
     }
 }
