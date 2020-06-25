@@ -88,10 +88,8 @@ namespace Game.Application
             var gameObjectGetter = player.Components.Get<IGameObjectGetter>();
             var characterData = player.Components.Get<ICharacterData>();
             var messageSender = player.Components.Get<IMessageSender>();
-            var handler = new EnterSceneMessageHandler(
-                gameObjectGetter,
-                characterData,
-                messageSender);
+            var handler =
+                new EnterSceneMessageHandler(gameObjectGetter, characterData, messageSender);
 
             handlers.Add((byte)MessageCodes.EnterScene, handler);
         }
@@ -100,10 +98,8 @@ namespace Game.Application
         {
             var messageSender = player.Components.Get<IMessageSender>();
             var proximityChecker = player.Components.Get<IProximityChecker>();
-            var handler = new ChangeSceneMessageHandler(
-                messageSender,
-                proximityChecker,
-                gameSceneManager);
+            var handler =
+                new ChangeSceneMessageHandler(messageSender, proximityChecker, gameSceneManager);
 
             handlers.Add((byte)MessageCodes.ChangeScene, handler);
         }
