@@ -28,7 +28,7 @@ namespace Game.Application.Components
         {
             foreach (var gameObject in collection.Values)
             {
-                ((IDisposable)gameObject.Components)?.Dispose();
+                gameObject?.Dispose();
             }
 
             collection.Clear();
@@ -43,7 +43,7 @@ namespace Game.Application.Components
         {
             if (collection.TryRemove(id, out var gameObject))
             {
-                ((IDisposable)gameObject.Components)?.Dispose();
+                gameObject?.Dispose();
             }
         }
 
