@@ -18,7 +18,7 @@ namespace Game.Application.Components
             {
                 foreach (var gameObject in gameObjects)
                 {
-                    collection.TryAdd(gameObject.Id, gameObject);
+                    AddGameObject(gameObject);
                 }
             }
         }
