@@ -40,7 +40,7 @@ namespace Game.Application
 
         private void RemoveCommonComponents()
         {
-            components.Dispose();
+            components?.Dispose();
         }
     }
 }
