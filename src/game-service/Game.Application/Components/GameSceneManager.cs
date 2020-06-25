@@ -10,27 +10,26 @@ namespace Game.Application.Components
     {
         private ConcurrentDictionary<Map, IGameScene> collection;
 
+        public GameSceneManager()
+        {
+            collection = new ConcurrentDictionary<Map, IGameScene>();
+        }
+
         protected override void OnAwake()
         {
             var idGenerator = Components.Get<IIdGenerator>();
 
             // TODO: Use another way to add game scenes
-            collection = new ConcurrentDictionary<Map, IGameScene>();
             collection.TryAdd(Map.Lobby, new LobbyGameScene(idGenerator));
             collection.TryAdd(Map.TheDarkForest, new TheDarkForestGameScene(idGenerator));
         }
 
         protected override void OnRemoved()
         {
-            // TODO: Use another way to dispose
-            var lobby = collection[Map.Lobby];
-            lobby.Dispose();
-            ((IDisposable)lobby.Components).Dispose();
-
-            // TODO: Use another way to dispose
-            var TheDarkForest = collection[Map.TheDarkForest];
-            TheDarkForest.Dispose();
-            ((IDisposable)TheDarkForest.Components).Dispose();
+            foreach (var gameScene in collection.Values)
+            {
+                ((IDisposable)gameScene.Components)?.Dispose();
+            }
 
             collection.Clear();
         }
