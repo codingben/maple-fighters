@@ -6,7 +6,9 @@ namespace Game.Application.Objects.Components
 {
     public interface IProximityChecker
     {
-        void ChangeScene(IGameScene gameScene);
+        void ChangeGameScene(IGameScene gameScene);
+
+        IGameScene GetGameScene();
 
         IEnumerable<IGameObject> GetNearbyGameObjects();
 
