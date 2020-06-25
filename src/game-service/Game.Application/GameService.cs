@@ -19,7 +19,7 @@ namespace Game.Application
         private readonly IGameSceneManager gameSceneManager;
 
         private IGameObject player;
-        private IDictionary<byte, IMessageHandler> handlers;
+        private IDictionary<byte, IMessageHandler> handlers = new Dictionary<byte, IMessageHandler>();
 
         public GameService(IExposedComponents components)
         {
@@ -32,8 +32,6 @@ namespace Game.Application
         {
             CreatePlayer();
 
-            handlers = new Dictionary<byte, IMessageHandler>();
-
             AddHandlerForChangePosition();
             AddHandlerForChangeAnimationState();
             AddHandlerForEnterScene();
@@ -41,8 +39,6 @@ namespace Game.Application
 
         protected override void OnClose(CloseEventArgs eventArgs)
         {
-            handlers?.Clear();
-
             RemovePlayer();
         }
 
