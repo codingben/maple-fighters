@@ -26,43 +26,31 @@ namespace Game.Application.Components
 
         PlayerSpawnData GetPlayerSpawnData()
         {
-            // TODO: Refactor this method
-
             return new PlayerSpawnData(new Vector2(18, -1.86f), new Vector2(10, 5));
         }
 
         IGameObject CreateGuardian()
         {
-            // TODO: Refactor this method
-
             var id = idGenerator.GenerateId();
             var position = new Vector2(-14.24f, -2.025f);
-            var scene = this;
-            var text = "Hello!";
-            var time = 5;
+            var guardian = new GuardianGameObject(id, this);
 
-            return new GuardianGameObject(
-                id,
-                position,
-                scene,
-                text,
-                time);
+            guardian.Transform.SetPosition(position);
+            guardian.Transform.SetSize(Vector2.One);
+            guardian.AddBubbleNotification("Hello", 1);
+
+            return guardian;
         }
 
         IGameObject CreatePortal()
         {
-            // TODO: Refactor this method
-
             var id = idGenerator.GenerateId();
             var position = new Vector2(-17.125f, -1.5f);
-            var scene = this;
-            var map = (byte)Map.TheDarkForest;
+            var portal = new PortalGameObject(id, this);
 
-            return new PortalGameObject(
-                id,
-                position,
-                scene,
-                map);
+            portal.AddPortalData((byte)Map.TheDarkForest);
+
+            return portal;
         }
     }
 }
