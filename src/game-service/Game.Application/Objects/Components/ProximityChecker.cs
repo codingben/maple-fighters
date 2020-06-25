@@ -30,10 +30,15 @@ namespace Game.Application.Objects.Components
             interestArea?.Dispose();
         }
 
-        public void ChangeScene(IGameScene gameScene)
+        public void ChangeGameScene(IGameScene gameScene)
         {
             interestArea?.Dispose();
             interestArea?.SetScene(gameScene);
+        }
+
+        public IGameScene GetGameScene()
+        {
+            return gameScene;
         }
 
         public IEnumerable<IGameObject> GetNearbyGameObjects()
