@@ -32,8 +32,6 @@ namespace Game.Application
         {
             CreatePlayer();
 
-            sessionDataCollection.AddSessionData(player.Id, new SessionData(ID));
-
             handlers = new Dictionary<byte, IMessageHandler>();
 
             AddHandlerForChangePosition();
@@ -43,8 +41,6 @@ namespace Game.Application
 
         protected override void OnClose(CloseEventArgs eventArgs)
         {
-            sessionDataCollection.RemoveSessionData(player.Id);
-
             handlers?.Clear();
 
             RemovePlayer();
@@ -161,6 +157,8 @@ namespace Game.Application
                 {
                     // TODO: Throw the error "Could not create player"
                 }
+
+                sessionDataCollection.AddSessionData(player.Id, new SessionData(ID));
             }
             else
             {
@@ -178,6 +176,8 @@ namespace Game.Application
 
                 gameObjectCollection.RemoveGameObject(player.Id);
             }
+
+            sessionDataCollection.RemoveSessionData(player.Id);
         }
     }
 }
