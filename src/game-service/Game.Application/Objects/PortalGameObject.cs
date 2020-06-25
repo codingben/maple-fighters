@@ -1,4 +1,3 @@
-using Common.MathematicsHelper;
 using Game.Application.Components;
 using Game.Application.Objects.Components;
 
@@ -6,18 +5,15 @@ namespace Game.Application.Objects
 {
     public class PortalGameObject : GameObject
     {
-        public PortalGameObject(
-            int id,
-            Vector2 position,
-            IGameScene scene,
-            byte map)
+        public PortalGameObject(int id, IGameScene gameScene)
             : base(id, "Portal")
         {
-            Transform.SetPosition(position);
-            Transform.SetSize(Vector2.One);
-
-            Components.Add(new PresenceSceneProvider(scene));
+            Components.Add(new PresenceSceneProvider(gameScene));
             Components.Add(new ProximityChecker());
+        }
+
+        public void AddPortalData(byte map)
+        {
             Components.Add(new PortalData(map));
         }
     }
