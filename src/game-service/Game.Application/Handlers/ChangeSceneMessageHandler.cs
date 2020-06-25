@@ -11,18 +11,15 @@ namespace Game.Application.Handlers
         private IMessageSender messageSender;
         private IProximityChecker proximityChecker;
         private IGameSceneManager gameSceneManager;
-        private IPresenceSceneProvider presenceSceneProvider;
 
         public ChangeSceneMessageHandler(
             IMessageSender messageSender,
             IProximityChecker proximityChecker,
-            IGameSceneManager gameSceneManager,
-            IPresenceSceneProvider presenceSceneProvider)
+            IGameSceneManager gameSceneManager)
         {
             this.messageSender = messageSender;
             this.proximityChecker = proximityChecker;
             this.gameSceneManager = gameSceneManager;
-            this.presenceSceneProvider = presenceSceneProvider;
         }
 
         public void Handle(byte[] rawData)
@@ -36,11 +33,10 @@ namespace Game.Application.Handlers
                 var portalData = portal.Components.Get<IPortalData>();
                 var map = portalData.GetMap();
                 var gameSceneExists =
-                    gameSceneManager.TryGetGameScene((Map)map, out var newScene);
+                    gameSceneManager.TryGetGameScene((Map)map, out var gameScene);
                 if (gameSceneExists)
                 {
-                    presenceSceneProvider.SetScene(newScene);
-                    proximityChecker.ChangeScene();
+                    proximityChecker.ChangeScene(gameScene);
 
                     SendSceneChangedMessage(map);
                 }
