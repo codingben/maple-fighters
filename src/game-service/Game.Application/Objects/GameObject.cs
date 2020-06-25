@@ -1,3 +1,4 @@
+using System;
 using Common.ComponentModel;
 using InterestManagement;
 
@@ -17,6 +18,11 @@ namespace Game.Application.Objects
         {
             Id = id;
             Name = name;
+        }
+
+        public void Dispose()
+        {
+            ((IDisposable)Components)?.Dispose();
         }
     }
 }
