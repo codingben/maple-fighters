@@ -26,6 +26,7 @@ namespace Game.Application.Components
 
         protected override void OnRemoved()
         {
+            // TODO: Refactor
             foreach (var gameScene in collection.Values)
             {
                 gameScene?.Dispose();
