@@ -147,7 +147,7 @@ namespace Coroutines
             return false;
         }
 
-        bool MoveNext(IEnumerator routine, int index)
+        private bool MoveNext(IEnumerator routine, int index)
         {
             if (routine.Current is IEnumerator)
             {
