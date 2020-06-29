@@ -34,8 +34,8 @@ namespace Coroutines
     /// </summary>
     public class CoroutineRunner
     {
-        List<IEnumerator> running = new List<IEnumerator>();
-        List<float> delays = new List<float>();
+        private List<IEnumerator> running = new List<IEnumerator>();
+        private List<float> delays = new List<float>();
 
         /// <summary>
         /// Run a coroutine.
@@ -47,6 +47,7 @@ namespace Coroutines
         {
             running.Add(routine);
             delays.Add(delay);
+
             return new CoroutineHandle(this, routine);
         }
 
@@ -69,9 +70,13 @@ namespace Coroutines
         {
             int i = running.IndexOf(routine);
             if (i < 0)
+            {
                 return false;
+            }
+
             running[i] = null;
             delays[i] = 0f;
+
             return true;
         }
 
@@ -126,15 +131,19 @@ namespace Coroutines
                 for (int i = 0; i < running.Count; i++)
                 {
                     if (delays[i] > 0f)
+                    {
                         delays[i] -= deltaTime;
+                    }
                     else if (running[i] == null || !MoveNext(running[i], i))
                     {
                         running.RemoveAt(i);
                         delays.RemoveAt(i--);
                     }
                 }
+
                 return true;
             }
+
             return false;
         }
 
@@ -143,7 +152,9 @@ namespace Coroutines
             if (routine.Current is IEnumerator)
             {
                 if (MoveNext((IEnumerator)routine.Current, index))
+                {
                     return true;
+                }
 
                 delays[index] = 0f;
             }
@@ -151,7 +162,9 @@ namespace Coroutines
             bool result = routine.MoveNext();
 
             if (routine.Current is float)
+            {
                 delays[index] = (float)routine.Current;
+            }
 
             return result;
         }
@@ -161,7 +174,7 @@ namespace Coroutines
         /// </summary>
         public int Count
         {
-            get { return running.Count; }
+            get => running.Count;
         }
     }
 }
