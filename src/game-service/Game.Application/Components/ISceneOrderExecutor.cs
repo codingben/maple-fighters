@@ -1,7 +1,13 @@
+using Coroutines;
+
 namespace Game.Application.Components
 {
     public interface ISceneOrderExecutor
     {
-        // TODO: Implement
+        CoroutineRunner GetBeforeUpdateRunner();
+
+        CoroutineRunner GetDuringUpdateRunner();
+
+        CoroutineRunner GetAfterUpdatedRunner();
     }
 }
