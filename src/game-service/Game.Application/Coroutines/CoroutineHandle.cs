@@ -70,8 +70,12 @@ namespace Coroutines
         public IEnumerator Wait()
         {
             if (Enumerator != null)
+            {
                 while (Runner.IsRunning(Enumerator))
+                {
                     yield return null;
+                }
+            }
         }
 
         /// <summary>
@@ -79,7 +83,7 @@ namespace Coroutines
         /// </summary>
         public bool IsRunning
         {
-            get { return Enumerator != null && Runner.IsRunning(Enumerator); }
+            get => Enumerator != null && Runner.IsRunning(Enumerator);
         }
     }
 }
