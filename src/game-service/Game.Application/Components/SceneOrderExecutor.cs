@@ -1,5 +1,5 @@
+using System.Diagnostics;
 using System.Threading;
-using System.Threading.Tasks;
 using Common.ComponentModel;
 using Coroutines;
 
@@ -11,19 +11,26 @@ namespace Game.Application.Components
         private readonly CoroutineRunner beforeUpdateRunner;
         private readonly CoroutineRunner duringUpdateRunner;
         private readonly CoroutineRunner afterUpdatedRunner;
-
-        private CancellationTokenSource source = new CancellationTokenSource();
+        private readonly Thread thread;
+        private readonly CancellationTokenSource cancellationTokenSource;
 
         public SceneOrderExecutor()
         {
             beforeUpdateRunner = new CoroutineRunner();
             duringUpdateRunner = new CoroutineRunner();
             afterUpdatedRunner = new CoroutineRunner();
+
+            thread = new Thread(new ParameterizedThreadStart(Execute))
+            {
+                Priority = ThreadPriority.Lowest
+            };
+
+            cancellationTokenSource = new CancellationTokenSource();
         }
 
         protected override void OnAwake()
         {
-            Task.Run(() => Execute(source.Token), source.Token);
+            thread.Start(cancellationTokenSource.Token);
         }
 
         protected override void OnRemoved()
@@ -32,11 +39,22 @@ namespace Game.Application.Components
             duringUpdateRunner.StopAll();
             afterUpdatedRunner.StopAll();
 
-            source.Cancel();
+            cancellationTokenSource.Cancel();
+            cancellationTokenSource.Dispose();
+
+            // TODO: Investigate thread interruption
+            thread.Interrupt();
         }
 
-        private async Task Execute(CancellationToken token)
+        private void Execute(object cancellationToken)
         {
+            const float UpdateRate = 1f / 30f; // 30 FPS
+
+            var watch = Stopwatch.StartNew();
+            var previousTime = watch.ElapsedMilliseconds / 1000f;
+            var elapsed = 0f;
+            var token = (CancellationToken)cancellationToken;
+
             while (true)
             {
                 if (token.IsCancellationRequested)
@@ -44,11 +62,18 @@ namespace Game.Application.Components
                     return;
                 }
 
-                beforeUpdateRunner.Update(10);
-                duringUpdateRunner.Update(10);
-                afterUpdatedRunner.Update(10);
+                var currentTime = watch.ElapsedMilliseconds / 1000f;
+                elapsed += currentTime - previousTime;
+                previousTime = currentTime;
 
-                await Task.Delay(100);
+                if (elapsed > UpdateRate)
+                {
+                    elapsed -= UpdateRate;
+
+                    beforeUpdateRunner.Update(UpdateRate);
+                    duringUpdateRunner.Update(UpdateRate);
+                    afterUpdatedRunner.Update(UpdateRate);
+                }
             }
         }
 
