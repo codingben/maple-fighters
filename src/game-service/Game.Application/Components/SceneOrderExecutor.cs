@@ -23,7 +23,7 @@ namespace Game.Application.Components
 
         protected override void OnAwake()
         {
-            Task.Run(Execute, source.Token);
+            Task.Run(() => Execute(source.Token), source.Token);
         }
 
         protected override void OnRemoved()
@@ -32,13 +32,18 @@ namespace Game.Application.Components
             duringUpdateRunner.StopAll();
             afterUpdatedRunner.StopAll();
 
-            source.Cancel(false);
+            source.Cancel();
         }
 
-        private async Task Execute()
+        private async Task Execute(CancellationToken token)
         {
             while (true)
             {
+                if (token.IsCancellationRequested)
+                {
+                    return;
+                }
+
                 beforeUpdateRunner.Update(10);
                 duringUpdateRunner.Update(10);
                 afterUpdatedRunner.Update(10);
