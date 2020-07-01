@@ -1,4 +1,4 @@
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Threading;
 using Common.ComponentModel;
 using Coroutines;
@@ -6,7 +6,7 @@ using Coroutines;
 namespace Game.Application.Components
 {
     [ComponentSettings(ExposedState.Exposable)]
-    public class SceneOrderExecutor : ComponentBase, ISceneOrderExecutor
+    public class GameSceneOrderExecutor : ComponentBase, IGameSceneOrderExecutor
     {
         private readonly CoroutineRunner beforeUpdateRunner;
         private readonly CoroutineRunner duringUpdateRunner;
@@ -14,7 +14,7 @@ namespace Game.Application.Components
         private readonly Thread thread;
         private readonly CancellationTokenSource cancellationTokenSource;
 
-        public SceneOrderExecutor()
+        public GameSceneOrderExecutor()
         {
             beforeUpdateRunner = new CoroutineRunner();
             duringUpdateRunner = new CoroutineRunner();
