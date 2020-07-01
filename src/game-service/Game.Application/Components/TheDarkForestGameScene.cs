@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Common.Components;
 using Common.MathematicsHelper;
 using Game.Application.Objects;
+using Physics.Box2D;
 
 namespace Game.Application.Components
 {
@@ -16,6 +17,19 @@ namespace Game.Application.Components
 
             Components.Add(new PlayerSpawnDataProvider(GetPlayerSpawnData()));
             Components.Add(new GameObjectCollection(GetGameObjects()));
+            Components.Add(new GameSceneOrderExecutor());
+            Components.Add(new GamePhysicsExecutor(GetWorld()));
+        }
+
+        IWorldWrapper GetWorld()
+        {
+            var lowerBound = new Vector2(-100, -100);
+            var upperBound = new Vector2(100, 100);
+            var gravity = new Vector2(0, -9.8f);
+            var doSleep = false;
+            var continuousPhysics = false;
+
+            return new WorldWrapper(lowerBound, upperBound, gravity, doSleep, continuousPhysics);
         }
 
         PlayerSpawnData GetPlayerSpawnData()
