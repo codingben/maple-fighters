@@ -10,7 +10,7 @@ namespace Physics.Box2D
     {
         private readonly World world;
 
-        private readonly LinkedList<BodyData> addBodies;
+        private readonly LinkedList<NewBodyData> addBodies;
         private readonly LinkedList<BodyData> removeBodies;
 
         private readonly Dictionary<int, BodyData> bodies;
@@ -54,11 +54,14 @@ namespace Physics.Box2D
 
         private void AddBodies()
         {
-            foreach (var bodyData in addBodies)
+            foreach (var newBodyData in addBodies)
             {
-                bodies.Add(bodyData.Id, bodyData);
+                var id = newBodyData.Id;
+                var body =
+                    CreateBody(newBodyData.BodyDef, newBodyData.PolygonDef);
+                var bodyData = new BodyData(id, body);
 
-                // TODO: Create body
+                bodies.Add(newBodyData.Id, bodyData);
             }
 
             addBodies.Clear();
@@ -68,17 +71,17 @@ namespace Physics.Box2D
         {
             foreach (var bodyData in removeBodies)
             {
-                bodies.Remove(bodyData.Id);
-
                 world.DestroyBody(bodyData.Body);
+
+                bodies.Remove(bodyData.Id);
             }
 
             removeBodies.Clear();
         }
 
-        public void AddBody(BodyData bodyData)
+        public void AddBody(NewBodyData newBodyData)
         {
-            addBodies.AddLast(bodyData);
+            addBodies.AddLast(newBodyData);
         }
 
         public void RemoveBody(int id)
