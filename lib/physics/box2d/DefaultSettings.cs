@@ -1,6 +1,6 @@
 ﻿namespace Physics.Box2D
 {
-    public static class PhysicsSettings
+    public static class DefaultSettings
     {
         public const float TimeStep = 1.0f / 25.0f; // (25Hz)
 
