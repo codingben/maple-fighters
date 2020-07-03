@@ -16,25 +16,28 @@ namespace Game.Application.Components
         public IExposedComponents Components => new ComponentsContainer();
 
         private readonly IIdGenerator idGenerator;
+        private readonly WorldManager worldManager;
 
         public Lobby(IIdGenerator idGenerator)
         {
             this.idGenerator = idGenerator;
 
             MatrixRegion = CreateMatrixRegion();
+            worldManager = CreateWorldManager();
 
             Components.Add(new PlayerSpawnData(new Vector2(18, -1.86f), new Vector2(10, 5)));
             Components.Add(new GameObjectCollection(CreateGameObjects()));
             Components.Add(new GameSceneOrderExecutor());
-            // Components.Add(new GamePhysicsExecutor());
+            Components.Add(new GamePhysicsExecutor(worldManager));
         }
 
         public void Dispose()
         {
-            ((IDisposable)Components).Dispose();
+            ((IDisposable)Components)?.Dispose();
+            worldManager?.Dispose();
         }
 
-        WorldManager CreateWorld()
+        WorldManager CreateWorldManager()
         {
             var lowerBound = new Vector2(-100, -100);
             var upperBound = new Vector2(100, 100);
