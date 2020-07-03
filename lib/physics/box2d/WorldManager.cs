@@ -6,7 +6,7 @@ using Common.MathematicsHelper;
 
 namespace Physics.Box2D
 {
-    public class WorldManager : IDisposable
+    public class WorldManager : IWorldManager, IBodyManager, IDisposable
     {
         private readonly World world;
 
@@ -91,14 +91,9 @@ namespace Physics.Box2D
             removeBodies.AddLast(body);
         }
 
-        public void RemoveAllBodies()
+        public void Step(float timeStep, int velocityIterations, int positionIterations)
         {
-            foreach (var body in bodies.Values)
-            {
-                removeBodies.AddLast(body);
-            }
-
-            bodies.Clear();
+            world.Step(timeStep, velocityIterations, positionIterations);
         }
 
         public bool GetBody(int id, out BodyData bodyData)
