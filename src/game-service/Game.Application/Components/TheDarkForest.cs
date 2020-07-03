@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using Common.ComponentModel;
 using Common.Components;
@@ -9,8 +9,7 @@ using Physics.Box2D;
 
 namespace Game.Application.Components
 {
-    // TODO: Rename to TheDarkForest
-    public class TheDarkForestGameScene : IGameScene
+    public class TheDarkForest : IGameScene
     {
         public IMatrixRegion<IGameObject> MatrixRegion { get; }
 
@@ -18,7 +17,7 @@ namespace Game.Application.Components
 
         private readonly IIdGenerator idGenerator;
 
-        public TheDarkForestGameScene(IIdGenerator idGenerator)
+        public TheDarkForest(IIdGenerator idGenerator)
         {
             this.idGenerator = idGenerator;
 
