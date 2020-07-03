@@ -19,15 +19,27 @@ namespace Game.Application.Components
         protected override void OnAwake()
         {
             gameSceneOrderExecutor = Components.Get<IGameSceneOrderExecutor>();
-            gameSceneOrderExecutor.GetAfterUpdatedRunner().Run(Execute());
+            gameSceneOrderExecutor.GetBeforeUpdateRunner().Run(UpdateWorld());
+            gameSceneOrderExecutor.GetAfterUpdatedRunner().Run(StepWorld());
         }
 
         protected override void OnRemoved()
         {
-            gameSceneOrderExecutor.GetAfterUpdatedRunner().Stop(Execute());
+            gameSceneOrderExecutor.GetBeforeUpdateRunner().Stop(UpdateWorld());
+            gameSceneOrderExecutor.GetAfterUpdatedRunner().Stop(StepWorld());
         }
 
-        private IEnumerator Execute()
+        private IEnumerator UpdateWorld()
+        {
+            while (true)
+            {
+                worldManager.Update();
+
+                yield return null;
+            }
+        }
+
+        private IEnumerator StepWorld()
         {
             var timeStep = DefaultSettings.TimeStep;
             var velocityIterations = DefaultSettings.VelocityIterations;
