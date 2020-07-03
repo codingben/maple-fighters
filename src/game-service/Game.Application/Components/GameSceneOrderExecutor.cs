@@ -2,15 +2,17 @@
 using System.Threading;
 using Common.ComponentModel;
 using Coroutines;
+using Physics.Box2D;
 
 namespace Game.Application.Components
 {
-    [ComponentSettings(ExposedState.Exposable)]
+    [ComponentSettings(ExposedState.Unexposable)]
     public class GameSceneOrderExecutor : ComponentBase, IGameSceneOrderExecutor
     {
         private readonly CoroutineRunner beforeUpdateRunner;
         private readonly CoroutineRunner duringUpdateRunner;
         private readonly CoroutineRunner afterUpdatedRunner;
+
         private readonly Thread thread;
         private readonly CancellationTokenSource cancellationTokenSource;
 
@@ -35,21 +37,13 @@ namespace Game.Application.Components
 
         protected override void OnRemoved()
         {
-            beforeUpdateRunner.StopAll();
-            duringUpdateRunner.StopAll();
-            afterUpdatedRunner.StopAll();
-
             cancellationTokenSource.Cancel();
             cancellationTokenSource.Dispose();
-
-            // TODO: Investigate thread interruption
-            thread.Interrupt();
         }
 
         private void Execute(object cancellationToken)
         {
-            const float UpdateRate = 1f / 30f; // 30 FPS
-
+            var timeStep = DefaultSettings.TimeStep;
             var watch = Stopwatch.StartNew();
             var previousTime = watch.ElapsedMilliseconds / 1000f;
             var elapsed = 0f;
@@ -66,13 +60,13 @@ namespace Game.Application.Components
                 elapsed += currentTime - previousTime;
                 previousTime = currentTime;
 
-                if (elapsed > UpdateRate)
+                if (elapsed > timeStep)
                 {
-                    elapsed -= UpdateRate;
+                    elapsed -= timeStep;
 
-                    beforeUpdateRunner.Update(UpdateRate);
-                    duringUpdateRunner.Update(UpdateRate);
-                    afterUpdatedRunner.Update(UpdateRate);
+                    beforeUpdateRunner.Update(timeStep);
+                    duringUpdateRunner.Update(timeStep);
+                    afterUpdatedRunner.Update(timeStep);
                 }
             }
         }
