@@ -122,16 +122,14 @@ namespace Game.Application
             if (gameSceneManager.TryGetGameScene(Map.Lobby, out var gameScene))
             {
                 var id = idGenerator.GenerateId();
-                var playerSpawnDataProvider =
-                    gameScene.Components.Get<IPlayerSpawnDataProvider>();
-                var playerSpawnData = playerSpawnDataProvider?.Provide();
+                var playerSpawnData = gameScene.Components.Get<IPlayerSpawnData>();
 
                 player = new GameObject(id, nameof(GameObjectType.Player));
 
                 if (playerSpawnData != null)
                 {
-                    player.Transform.SetPosition(playerSpawnData.Position);
-                    player.Transform.SetSize(playerSpawnData.Size);
+                    player.Transform.SetPosition(playerSpawnData.GetPosition());
+                    player.Transform.SetSize(playerSpawnData.GetSize());
                 }
 
                 player.Components.Add(new GameObjectGetter(player));
