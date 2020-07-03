@@ -1,10 +1,10 @@
-using Common.ComponentModel;
+﻿using Common.ComponentModel;
 using Common.MathematicsHelper;
 
 namespace Game.Application.Components
 {
     [ComponentSettings(ExposedState.Exposable)]
-    public class PlayerSpawnDataProvider : ComponentBase, IPlayerSpawnDataProvider
+    public class PlayerSpawnData : ComponentBase, IPlayerSpawnDataProvider
     {
         private readonly Vector2 position;
         private readonly Vector2 size;
