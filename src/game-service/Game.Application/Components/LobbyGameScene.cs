@@ -1,27 +1,41 @@
+using System;
 using System.Collections.Generic;
+using Common.ComponentModel;
 using Common.Components;
 using Common.MathematicsHelper;
 using Game.Application.Objects;
+using InterestManagement;
 using Physics.Box2D;
 
 namespace Game.Application.Components
 {
-    public class LobbyGameScene : GameScene
+    // TODO: Rename to Lobby
+    public class LobbyGameScene : IGameScene
     {
+        public IMatrixRegion<IGameObject> MatrixRegion { get; }
+
+        public IExposedComponents Components => new ComponentsContainer();
+
         private readonly IIdGenerator idGenerator;
 
         public LobbyGameScene(IIdGenerator idGenerator)
-            : base(new Vector2(40, 5), new Vector2(10, 5))
         {
             this.idGenerator = idGenerator;
 
-            Components.Add(new PlayerSpawnDataProvider(GetPlayerSpawnData()));
-            Components.Add(new GameObjectCollection(GetGameObjects()));
+            MatrixRegion = CreateMatrixRegion();
+
+            Components.Add(new PlayerSpawnDataProvider(CreatePlayerSpawnData()));
+            Components.Add(new GameObjectCollection(CreateGameObjects()));
             Components.Add(new GameSceneOrderExecutor());
-            Components.Add(new GamePhysicsExecutor(GetWorld()));
+            // Components.Add(new GamePhysicsExecutor());
         }
 
-        IWorldWrapper GetWorld()
+        public void Dispose()
+        {
+            ((IDisposable)Components).Dispose();
+        }
+
+        WorldManager CreateWorld()
         {
             var lowerBound = new Vector2(-100, -100);
             var upperBound = new Vector2(100, 100);
@@ -29,15 +43,26 @@ namespace Game.Application.Components
             var doSleep = false;
             var continuousPhysics = false;
 
-            return new WorldWrapper(lowerBound, upperBound, gravity, doSleep, continuousPhysics);
+            return new WorldManager(lowerBound, upperBound, gravity, doSleep, continuousPhysics);
         }
 
-        PlayerSpawnData GetPlayerSpawnData()
+        IMatrixRegion<IGameObject> CreateMatrixRegion()
         {
-            return new PlayerSpawnData(new Vector2(18, -1.86f), new Vector2(10, 5));
+            var sceneSize = new Vector2(40, 5);
+            var regionSize = new Vector2(10, 5);
+
+            return new MatrixRegion<IGameObject>(sceneSize, regionSize);
         }
 
-        IEnumerable<IGameObject> GetGameObjects()
+        PlayerSpawnData CreatePlayerSpawnData()
+        {
+            var position = new Vector2(18, -1.86f);
+            var size = new Vector2(10, 5);
+
+            return new PlayerSpawnData(position, size);
+        }
+
+        IEnumerable<IGameObject> CreateGameObjects()
         {
             yield return CreateGuardian();
             yield return CreatePortal();
