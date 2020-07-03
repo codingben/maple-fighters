@@ -7,13 +7,13 @@ namespace Game.Application.Components
     [ComponentSettings(ExposedState.Exposable)]
     public class GamePhysicsExecutor : ComponentBase
     {
-        private readonly IWorldWrapper worldWrapper;
+        private readonly IWorldManager worldManager;
 
         private IGameSceneOrderExecutor gameSceneOrderExecutor;
 
-        public GamePhysicsExecutor(IWorldWrapper worldWrapper)
+        public GamePhysicsExecutor(IWorldManager worldManager)
         {
-            this.worldWrapper = worldWrapper;
+            this.worldManager = worldManager;
         }
 
         protected override void OnAwake()
@@ -25,20 +25,17 @@ namespace Game.Application.Components
         protected override void OnRemoved()
         {
             gameSceneOrderExecutor.GetAfterUpdatedRunner().Stop(Execute());
-
-            worldWrapper.Dispose();
         }
 
         private IEnumerator Execute()
         {
-            var world = worldWrapper.GetWorld();
-            var timeStep = PhysicsSettings.TimeStep;
-            var velocityIterations = PhysicsSettings.VelocityIterations;
-            var positionIterations = PhysicsSettings.PositionIterations;
+            var timeStep = DefaultSettings.TimeStep;
+            var velocityIterations = DefaultSettings.VelocityIterations;
+            var positionIterations = DefaultSettings.PositionIterations;
 
             while (true)
             {
-                world.Step(timeStep, velocityIterations, positionIterations);
+                worldManager.Step(timeStep, velocityIterations, positionIterations);
 
                 yield return null;
             }
