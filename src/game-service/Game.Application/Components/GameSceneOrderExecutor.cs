@@ -37,8 +37,8 @@ namespace Game.Application.Components
 
         protected override void OnRemoved()
         {
-            cancellationTokenSource.Cancel();
-            cancellationTokenSource.Dispose();
+            cancellationTokenSource?.Cancel();
+            cancellationTokenSource?.Dispose();
         }
 
         private void Execute(object cancellationToken)
