@@ -48,6 +48,11 @@ namespace Game.Application.Components
             return new WorldManager(lowerBound, upperBound, gravity, doSleep, continuousPhysics);
         }
 
+        IBodyManager GetBodyManager()
+        {
+            return worldManager;
+        }
+
         IMatrixRegion<IGameObject> CreateMatrixRegion()
         {
             var sceneSize = new Vector2(30, 30);
