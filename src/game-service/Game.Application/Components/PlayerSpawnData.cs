@@ -4,12 +4,12 @@ using Common.MathematicsHelper;
 namespace Game.Application.Components
 {
     [ComponentSettings(ExposedState.Exposable)]
-    public class PlayerSpawnData : ComponentBase, IPlayerSpawnDataProvider
+    public class PlayerSpawnData : ComponentBase, IPlayerSpawnData
     {
         private readonly Vector2 position;
         private readonly Vector2 size;
 
-        public PlayerSpawnDataProvider(Vector2 position, Vector2 size)
+        public PlayerSpawnData(Vector2 position, Vector2 size)
         {
             this.position = position;
             this.size = size;

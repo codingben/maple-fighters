@@ -1,8 +1,8 @@
-using Common.MathematicsHelper;
+﻿using Common.MathematicsHelper;
 
 namespace Game.Application.Components
 {
-    public interface IPlayerSpawnDataProvider
+    public interface IPlayerSpawnData
     {
         Vector2 GetPosition();
 
