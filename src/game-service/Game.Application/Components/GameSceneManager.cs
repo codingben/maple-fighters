@@ -19,8 +19,8 @@ namespace Game.Application.Components
             var idGenerator = Components.Get<IIdGenerator>();
 
             // TODO: Use another way to add game scenes
-            collection.TryAdd(Map.Lobby, new LobbyGameScene(idGenerator));
-            collection.TryAdd(Map.TheDarkForest, new TheDarkForestGameScene(idGenerator));
+            collection.TryAdd(Map.Lobby, new Lobby(idGenerator));
+            collection.TryAdd(Map.TheDarkForest, new TheDarkForest(idGenerator));
         }
 
         protected override void OnRemoved()
