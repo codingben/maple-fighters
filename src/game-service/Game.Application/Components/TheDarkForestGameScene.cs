@@ -24,7 +24,7 @@ namespace Game.Application.Components
 
             MatrixRegion = CreateMatrixRegion();
 
-            Components.Add(new PlayerSpawnDataProvider(GetPlayerSpawnData()));
+            Components.Add(new PlayerSpawnData(new Vector2(-12.8f, -2.95f), new Vector2(10, 5)));
             Components.Add(new GameObjectCollection(GetGameObjects()));
             Components.Add(new GameSceneOrderExecutor());
             // Components.Add(new GamePhysicsExecutor());
@@ -52,11 +52,6 @@ namespace Game.Application.Components
             var regionSize = new Vector2(10, 5);
 
             return new MatrixRegion<IGameObject>(sceneSize, regionSize);
-        }
-
-        PlayerSpawnData GetPlayerSpawnData()
-        {
-            return new PlayerSpawnData(new Vector2(-12.8f, -2.95f), new Vector2(10, 5));
         }
 
         IEnumerable<IGameObject> GetGameObjects()
