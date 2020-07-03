@@ -1,27 +1,41 @@
+using System;
 using System.Collections.Generic;
+using Common.ComponentModel;
 using Common.Components;
 using Common.MathematicsHelper;
 using Game.Application.Objects;
+using InterestManagement;
 using Physics.Box2D;
 
 namespace Game.Application.Components
 {
-    public class TheDarkForestGameScene : GameScene
+    // TODO: Rename to TheDarkForest
+    public class TheDarkForestGameScene : IGameScene
     {
+        public IMatrixRegion<IGameObject> MatrixRegion { get; }
+
+        public IExposedComponents Components => new ComponentsContainer();
+
         private readonly IIdGenerator idGenerator;
 
         public TheDarkForestGameScene(IIdGenerator idGenerator)
-            : base(new Vector2(30, 30), new Vector2(10, 5))
         {
             this.idGenerator = idGenerator;
+
+            MatrixRegion = CreateMatrixRegion();
 
             Components.Add(new PlayerSpawnDataProvider(GetPlayerSpawnData()));
             Components.Add(new GameObjectCollection(GetGameObjects()));
             Components.Add(new GameSceneOrderExecutor());
-            Components.Add(new GamePhysicsExecutor(GetWorld()));
+            // Components.Add(new GamePhysicsExecutor());
         }
 
-        IWorldWrapper GetWorld()
+        public void Dispose()
+        {
+            ((IDisposable)Components).Dispose();
+        }
+
+        WorldManager GetWorld()
         {
             var lowerBound = new Vector2(-100, -100);
             var upperBound = new Vector2(100, 100);
@@ -29,7 +43,15 @@ namespace Game.Application.Components
             var doSleep = false;
             var continuousPhysics = false;
 
-            return new WorldWrapper(lowerBound, upperBound, gravity, doSleep, continuousPhysics);
+            return new WorldManager(lowerBound, upperBound, gravity, doSleep, continuousPhysics);
+        }
+
+        IMatrixRegion<IGameObject> CreateMatrixRegion()
+        {
+            var sceneSize = new Vector2(30, 30);
+            var regionSize = new Vector2(10, 5);
+
+            return new MatrixRegion<IGameObject>(sceneSize, regionSize);
         }
 
         PlayerSpawnData GetPlayerSpawnData()
