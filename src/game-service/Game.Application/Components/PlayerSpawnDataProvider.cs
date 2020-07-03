@@ -1,20 +1,28 @@
 using Common.ComponentModel;
+using Common.MathematicsHelper;
 
 namespace Game.Application.Components
 {
     [ComponentSettings(ExposedState.Exposable)]
-    public class PlayerSpawnDataProvider : ComponentBase
+    public class PlayerSpawnDataProvider : ComponentBase, IPlayerSpawnDataProvider
     {
-        private PlayerSpawnData playerSpawnData;
+        private readonly Vector2 position;
+        private readonly Vector2 size;
 
-        public PlayerSpawnDataProvider(PlayerSpawnData playerSpawnData)
+        public PlayerSpawnDataProvider(Vector2 position, Vector2 size)
         {
-            this.playerSpawnData = playerSpawnData;
+            this.position = position;
+            this.size = size;
         }
 
-        public PlayerSpawnData Provide()
+        public Vector2 GetPosition()
         {
-            return playerSpawnData;
+            return position;
+        }
+
+        public Vector2 GetSize()
+        {
+            return size;
         }
     }
 }
