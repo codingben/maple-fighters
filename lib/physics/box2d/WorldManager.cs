@@ -9,10 +9,8 @@ namespace Physics.Box2D
     public class WorldManager : IWorldManager, IBodyManager, IDisposable
     {
         private readonly World world;
-
         private readonly LinkedList<NewBodyData> addBodies;
         private readonly LinkedList<BodyData> removeBodies;
-
         private readonly Dictionary<int, BodyData> bodies;
 
         public WorldManager(
@@ -29,6 +27,11 @@ namespace Physics.Box2D
             };
 
             world = new World(worldAabb, gravity.FromVector2(), doSleep);
+            addBodies = new LinkedList<NewBodyData>();
+            removeBodies = new LinkedList<BodyData>();
+            bodies = new Dictionary<int, BodyData>();
+
+            // TODO: Move out
             world.SetContactFilter(new GroupContactFilter());
             world.SetContactListener(new BodyContactListener());
             world.SetContinuousPhysics(continuousPhysics);
@@ -94,6 +97,11 @@ namespace Physics.Box2D
         public void Step(float timeStep, int velocityIterations, int positionIterations)
         {
             world.Step(timeStep, velocityIterations, positionIterations);
+        }
+
+        public void SetDebugDraw(DebugDraw debugDraw)
+        {
+            world.SetDebugDraw(debugDraw);
         }
 
         public bool GetBody(int id, out BodyData bodyData)
