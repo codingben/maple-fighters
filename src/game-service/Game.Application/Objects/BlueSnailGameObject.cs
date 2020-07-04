@@ -5,10 +5,14 @@ namespace Game.Application.Objects
 {
     public class BlueSnailGameObject : GameObject
     {
-        public BlueSnailGameObject(int id, IGameScene gameScene)
-            : base(id, "BlueSnail")
+        public BlueSnailGameObject(int id)
+            : base(id, name: "BlueSnail")
         {
             Components.Add(new GameObjectGetter(this));
+        }
+
+        public void AddProximityChecker(IGameScene gameScene)
+        {
             Components.Add(new ProximityChecker(gameScene));
         }
     }
