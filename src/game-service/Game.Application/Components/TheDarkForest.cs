@@ -71,8 +71,9 @@ namespace Game.Application.Components
         {
             var id = idGenerator.GenerateId();
             var position = new Vector2(12.5f, -1.125f);
-            var portal = new PortalGameObject(id, this);
+            var portal = new PortalGameObject(id);
 
+            portal.AddProximityChecker(this);
             portal.AddPortalData((byte)Map.Lobby);
 
             return portal;
@@ -82,8 +83,11 @@ namespace Game.Application.Components
         {
             var id = idGenerator.GenerateId();
             var position = new Vector2(-2f, -8.2f);
+            var blueSnail = new BlueSnailGameObject(id);
 
-            return new BlueSnailGameObject(id, this);
+            blueSnail.AddProximityChecker(this);
+
+            return blueSnail;
         }
     }
 }
