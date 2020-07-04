@@ -8,6 +8,7 @@ namespace Game.Application.Objects
         public GuardianGameObject(int id, IGameScene gameScene)
             : base(id, "Guardian")
         {
+            Components.Add(new GameObjectGetter(this));
             Components.Add(new ProximityChecker(gameScene));
         }
 
