@@ -6,7 +6,7 @@ using Physics.Box2D;
 
 namespace Game.Application.Components
 {
-    [ComponentSettings(ExposedState.Unexposable)]
+    [ComponentSettings(ExposedState.Exposable)]
     public class GameSceneOrderExecutor : ComponentBase, IGameSceneOrderExecutor
     {
         private readonly CoroutineRunner beforeUpdateRunner;
@@ -24,7 +24,8 @@ namespace Game.Application.Components
 
             thread = new Thread(new ParameterizedThreadStart(Execute))
             {
-                Priority = ThreadPriority.Lowest
+                Priority = ThreadPriority.Lowest,
+                IsBackground = true
             };
 
             cancellationTokenSource = new CancellationTokenSource();
@@ -44,6 +45,7 @@ namespace Game.Application.Components
         private void Execute(object cancellationToken)
         {
             var timeStep = DefaultSettings.TimeStep;
+            var sleepTime = DefaultSettings.SleepTime;
             var watch = Stopwatch.StartNew();
             var previousTime = watch.ElapsedMilliseconds / 1000f;
             var elapsed = 0f;
@@ -68,6 +70,8 @@ namespace Game.Application.Components
                     duringUpdateRunner.Update(timeStep);
                     afterUpdatedRunner.Update(timeStep);
                 }
+
+                Thread.Sleep(sleepTime);
             }
         }
 
