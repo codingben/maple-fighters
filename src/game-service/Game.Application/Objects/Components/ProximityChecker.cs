@@ -8,7 +8,8 @@ namespace Game.Application.Objects.Components
     [ComponentSettings(ExposedState.Exposable)]
     public class ProximityChecker : ComponentBase, IProximityChecker
     {
-        private IGameScene gameScene;
+        private readonly IGameScene gameScene;
+
         private IInterestArea<IGameObject> interestArea;
 
         public ProximityChecker(IGameScene gameScene)
