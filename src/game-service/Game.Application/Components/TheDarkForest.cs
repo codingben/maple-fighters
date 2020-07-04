@@ -13,28 +13,30 @@ namespace Game.Application.Components
     {
         public IMatrixRegion<IGameObject> MatrixRegion { get; }
 
-        public IExposedComponents Components => new ComponentsContainer();
+        public IExposedComponents Components { get; }
+
+        private WorldManager WorldManager { get; }
 
         private readonly IIdGenerator idGenerator;
-        private readonly WorldManager worldManager;
 
         public TheDarkForest(IIdGenerator idGenerator)
         {
             this.idGenerator = idGenerator;
 
             MatrixRegion = CreateMatrixRegion();
-            worldManager = CreateWorldManager();
+            WorldManager = CreateWorldManager();
 
+            Components = new ComponentsContainer();
             Components.Add(new PlayerSpawnData(new Vector2(-12.8f, -2.95f), new Vector2(10, 5)));
             Components.Add(new GameObjectCollection(GetGameObjects()));
             Components.Add(new GameSceneOrderExecutor());
-            Components.Add(new GamePhysicsExecutor(worldManager));
+            Components.Add(new GamePhysicsExecutor(WorldManager));
         }
 
         public void Dispose()
         {
             ((IDisposable)Components)?.Dispose();
-            worldManager?.Dispose();
+            WorldManager?.Dispose();
         }
 
         WorldManager CreateWorldManager()
@@ -48,9 +50,14 @@ namespace Game.Application.Components
             return new WorldManager(lowerBound, upperBound, gravity, doSleep, continuousPhysics);
         }
 
-        IBodyManager GetBodyManager()
+        public IBodyManager GetBodyManager()
         {
-            return worldManager;
+            return WorldManager;
+        }
+
+        public IWorldManager GetWorldManager()
+        {
+            return WorldManager;
         }
 
         IMatrixRegion<IGameObject> CreateMatrixRegion()
