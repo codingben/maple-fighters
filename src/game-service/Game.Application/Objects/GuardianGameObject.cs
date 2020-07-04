@@ -5,10 +5,14 @@ namespace Game.Application.Objects
 {
     public class GuardianGameObject : GameObject
     {
-        public GuardianGameObject(int id, IGameScene gameScene)
-            : base(id, "Guardian")
+        public GuardianGameObject(int id)
+            : base(id, name: "Guardian")
         {
             Components.Add(new GameObjectGetter(this));
+        }
+
+        public void AddProximityChecker(IGameScene gameScene)
+        {
             Components.Add(new ProximityChecker(gameScene));
         }
 
