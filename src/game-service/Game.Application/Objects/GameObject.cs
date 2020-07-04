@@ -10,14 +10,16 @@ namespace Game.Application.Objects
 
         public string Name { get; }
 
-        public ITransform Transform => new Transform();
+        public ITransform Transform { get; }
 
-        public IExposedComponents Components => new ComponentsContainer();
+        public IExposedComponents Components { get; }
 
         public GameObject(int id, string name)
         {
             Id = id;
             Name = name;
+            Transform = new Transform();
+            Components = new ComponentsContainer();
         }
 
         public void Dispose()
