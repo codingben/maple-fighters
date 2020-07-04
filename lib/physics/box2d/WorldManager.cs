@@ -112,6 +112,7 @@ namespace Physics.Box2D
         private Body CreateBody(BodyDef bodyDef, PolygonDef polygonDef)
         {
             var body = world.CreateBody(bodyDef);
+
             body.SetUserData(bodyDef.UserData);
             body.CreateFixture(polygonDef);
             body.SetMassFromShapes();
