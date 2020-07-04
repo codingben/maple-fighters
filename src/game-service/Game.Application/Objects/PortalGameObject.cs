@@ -5,10 +5,14 @@ namespace Game.Application.Objects
 {
     public class PortalGameObject : GameObject
     {
-        public PortalGameObject(int id, IGameScene gameScene)
-            : base(id, "Portal")
+        public PortalGameObject(int id)
+            : base(id, name: "Portal")
         {
             Components.Add(new GameObjectGetter(this));
+        }
+
+        public void AddProximityChecker(IGameScene gameScene)
+        {
             Components.Add(new ProximityChecker(gameScene));
         }
 
