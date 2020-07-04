@@ -78,10 +78,11 @@ namespace Game.Application.Components
         {
             var id = idGenerator.GenerateId();
             var position = new Vector2(-14.24f, -2.025f);
-            var guardian = new GuardianGameObject(id, this);
+            var guardian = new GuardianGameObject(id);
 
             guardian.Transform.SetPosition(position);
             guardian.Transform.SetSize(Vector2.One);
+            guardian.AddProximityChecker(this);
             guardian.AddBubbleNotification("Hello", 1);
 
             return guardian;
@@ -91,8 +92,9 @@ namespace Game.Application.Components
         {
             var id = idGenerator.GenerateId();
             var position = new Vector2(-17.125f, -1.5f);
-            var portal = new PortalGameObject(id, this);
+            var portal = new PortalGameObject(id);
 
+            portal.AddProximityChecker(this);
             portal.AddPortalData((byte)Map.TheDarkForest);
 
             return portal;
