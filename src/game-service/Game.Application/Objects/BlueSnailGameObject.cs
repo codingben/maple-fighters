@@ -8,6 +8,7 @@ namespace Game.Application.Objects
         public BlueSnailGameObject(int id, IGameScene gameScene)
             : base(id, "BlueSnail")
         {
+            Components.Add(new GameObjectGetter(this));
             Components.Add(new ProximityChecker(gameScene));
         }
     }
