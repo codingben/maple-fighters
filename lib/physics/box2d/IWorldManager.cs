@@ -1,3 +1,5 @@
+using Box2DX.Dynamics;
+
 namespace Physics.Box2D
 {
     public interface IWorldManager
@@ -5,5 +7,7 @@ namespace Physics.Box2D
         void Update();
 
         void Step(float timeStep, int velocityIterations, int positionIterations);
+
+        void SetDebugDraw(DebugDraw debugDraw);
     }
 }
