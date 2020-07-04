@@ -4,7 +4,7 @@ using InterestManagement;
 
 namespace Game.Application.Objects.Components
 {
-    [ComponentSettings(ExposedState.Unexposable)]
+    [ComponentSettings(ExposedState.Exposable)]
     public class BubbleNotificationSender : ComponentBase
     {
         private readonly string text;
