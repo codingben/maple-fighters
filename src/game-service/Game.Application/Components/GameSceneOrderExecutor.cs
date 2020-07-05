@@ -9,18 +9,16 @@ namespace Game.Application.Components
     [ComponentSettings(ExposedState.Exposable)]
     public class GameSceneOrderExecutor : ComponentBase, IGameSceneOrderExecutor
     {
-        private readonly CoroutineRunner beforeUpdateRunner;
-        private readonly CoroutineRunner duringUpdateRunner;
-        private readonly CoroutineRunner afterUpdatedRunner;
-
+        private readonly IWorldManager worldManager;
+        private readonly CoroutineRunner coroutineRunner;
         private readonly Thread thread;
         private readonly CancellationTokenSource cancellationTokenSource;
 
-        public GameSceneOrderExecutor()
+        public GameSceneOrderExecutor(IWorldManager worldManager)
         {
-            beforeUpdateRunner = new CoroutineRunner();
-            duringUpdateRunner = new CoroutineRunner();
-            afterUpdatedRunner = new CoroutineRunner();
+            this.worldManager = worldManager;
+
+            coroutineRunner = new CoroutineRunner();
 
             thread = new Thread(new ParameterizedThreadStart(Execute))
             {
@@ -45,6 +43,8 @@ namespace Game.Application.Components
         private void Execute(object cancellationToken)
         {
             var timeStep = DefaultSettings.TimeStep;
+            var velocityIterations = DefaultSettings.VelocityIterations;
+            var positionIterations = DefaultSettings.PositionIterations;
             var sleepTime = DefaultSettings.SleepTime;
             var watch = Stopwatch.StartNew();
             var previousTime = watch.ElapsedMilliseconds / 1000f;
@@ -62,32 +62,24 @@ namespace Game.Application.Components
                 elapsed += currentTime - previousTime;
                 previousTime = currentTime;
 
+                worldManager.Update();
+
                 if (elapsed > timeStep)
                 {
                     elapsed -= timeStep;
 
-                    beforeUpdateRunner.Update(timeStep);
-                    duringUpdateRunner.Update(timeStep);
-                    afterUpdatedRunner.Update(timeStep);
+                    coroutineRunner.Update(timeStep);
                 }
+
+                worldManager.Step(timeStep, velocityIterations, positionIterations);
 
                 Thread.Sleep(sleepTime);
             }
         }
 
-        public CoroutineRunner GetBeforeUpdateRunner()
+        public CoroutineRunner GetCoroutineRunner()
         {
-            return beforeUpdateRunner;
-        }
-
-        public CoroutineRunner GetDuringUpdateRunner()
-        {
-            return duringUpdateRunner;
-        }
-
-        public CoroutineRunner GetAfterUpdatedRunner()
-        {
-            return afterUpdatedRunner;
+            return coroutineRunner;
         }
     }
 }
