@@ -2,7 +2,7 @@
 {
     public static class DefaultSettings
     {
-        public const float TimeStep = 1.0f / 30.0f; // (30Hz)
+        public const float TimeStep = 1.0f / 25.0f; // (30Hz)
 
         public const int SleepTime = 10;
 
