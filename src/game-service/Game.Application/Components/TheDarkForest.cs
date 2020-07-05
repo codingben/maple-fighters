@@ -29,8 +29,7 @@ namespace Game.Application.Components
             Components = new ComponentsContainer();
             Components.Add(new PlayerSpawnData(new Vector2(-12.8f, -2.95f), new Vector2(10, 5)));
             Components.Add(new GameObjectCollection(GetGameObjects()));
-            Components.Add(new GameSceneOrderExecutor());
-            Components.Add(new GamePhysicsExecutor(WorldManager));
+            Components.Add(new GameSceneOrderExecutor(GetWorldManager()));
         }
 
         public void Dispose()
