@@ -7,14 +7,14 @@ using Physics.Box2D;
 namespace Game.Application.Components
 {
     [ComponentSettings(ExposedState.Exposable)]
-    public class GameSceneOrderExecutor : ComponentBase, IGameSceneOrderExecutor
+    public class GameScenePhysicsExecutor : ComponentBase, IGameScenePhysicsExecutor
     {
         private readonly IWorldManager worldManager;
         private readonly CoroutineRunner coroutineRunner;
         private readonly Thread thread;
         private readonly CancellationTokenSource cancellationTokenSource;
 
-        public GameSceneOrderExecutor(IWorldManager worldManager)
+        public GameScenePhysicsExecutor(IWorldManager worldManager)
         {
             this.worldManager = worldManager;
 
