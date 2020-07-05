@@ -6,7 +6,7 @@ namespace InterestManagement
     public interface IInterestArea<TSceneObject> : IDisposable
         where TSceneObject : ISceneObject
     {
-        void SetScene(IScene<TSceneObject> scene);
+        void SetMatrixRegion(IMatrixRegion<TSceneObject> matrixRegion);
 
         IEnumerable<IRegion<TSceneObject>> GetRegions();
 
