@@ -12,11 +12,11 @@ namespace InterestManagement
         private readonly int rows;
         private readonly int columns;
         private readonly IRegion<TSceneObject>[,] regions;
+        private readonly SceneBoundaries sceneBoundaries;
         private readonly object locker = new object();
 
         // TODO: Optimize
         private HashSet<IRegion<TSceneObject>> temporaryRegions;
-        private readonly SceneBoundaries sceneBoundaries;
 
         public MatrixRegion(Vector2 sceneSize, Vector2 regionSize)
         {
