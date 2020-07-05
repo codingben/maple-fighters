@@ -2,7 +2,7 @@
 
 namespace Game.Application.Components
 {
-    public interface IGameSceneOrderExecutor
+    public interface IGameScenePhysicsExecutor
     {
         CoroutineRunner GetCoroutineRunner();
     }
