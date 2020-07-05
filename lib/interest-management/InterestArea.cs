@@ -11,7 +11,7 @@ namespace InterestManagement
         private readonly List<IRegion<TSceneObject>> regions;
         private readonly NearbySceneObjectsCollection<TSceneObject> nearbySceneObjects;
 
-        private IScene<TSceneObject> scene;
+        private IMatrixRegion<TSceneObject> matrixRegion;
 
         public InterestArea(TSceneObject sceneObject)
         {
@@ -21,9 +21,9 @@ namespace InterestManagement
             nearbySceneObjects = new NearbySceneObjectsCollection<TSceneObject>();
         }
 
-        public void SetScene(IScene<TSceneObject> scene)
+        public void SetMatrixRegion(IMatrixRegion<TSceneObject> matrixRegion)
         {
-            this.scene = scene;
+            this.matrixRegion = matrixRegion;
 
             UpdateNearbyRegions();
             SubscribeToPositionChanged();
@@ -60,8 +60,7 @@ namespace InterestManagement
 
         private void SubscribeToVisibleRegions()
         {
-            var visibleRegions =
-                scene?.MatrixRegion.GetRegions(sceneObject.Transform);
+            var visibleRegions = matrixRegion.GetRegions(sceneObject.Transform);
             if (visibleRegions != null)
             {
                 foreach (var region in visibleRegions)
@@ -99,6 +98,7 @@ namespace InterestManagement
             foreach (var region in invisibleRegions)
             {
                 regions.Remove(region);
+
                 region.Unsubscribe(sceneObject);
 
                 if (region.SubscriberCount() != 0)
