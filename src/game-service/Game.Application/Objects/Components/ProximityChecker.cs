@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using Common.ComponentModel;
-using Game.Application.Components;
 using InterestManagement;
 
 namespace Game.Application.Objects.Components
@@ -8,14 +7,7 @@ namespace Game.Application.Objects.Components
     [ComponentSettings(ExposedState.Exposable)]
     public class ProximityChecker : ComponentBase, IProximityChecker
     {
-        private readonly IGameScene gameScene;
-
         private IInterestArea<IGameObject> interestArea;
-
-        public ProximityChecker(IGameScene gameScene)
-        {
-            this.gameScene = gameScene;
-        }
 
         protected override void OnAwake()
         {
@@ -23,7 +15,6 @@ namespace Game.Application.Objects.Components
             var gameObject = gameObjectGetter.Get();
 
             interestArea = new InterestArea<IGameObject>(gameObject);
-            interestArea.SetScene(gameScene);
         }
 
         protected override void OnRemoved()
@@ -31,15 +22,10 @@ namespace Game.Application.Objects.Components
             interestArea?.Dispose();
         }
 
-        public void ChangeGameScene(IGameScene gameScene)
+        public void SetMatrixRegion(IMatrixRegion<IGameObject> matrixRegion)
         {
             interestArea?.Dispose();
-            interestArea?.SetScene(gameScene);
-        }
-
-        public IGameScene GetGameScene()
-        {
-            return gameScene;
+            interestArea?.SetMatrixRegion(matrixRegion);
         }
 
         public IEnumerable<IGameObject> GetNearbyGameObjects()
