@@ -10,15 +10,18 @@ namespace Game.Application.Handlers
     {
         private IMessageSender messageSender;
         private IProximityChecker proximityChecker;
+        private IPresenceMapProvider presenceMapProvider;
         private IGameSceneManager gameSceneManager;
 
         public ChangeSceneMessageHandler(
             IMessageSender messageSender,
             IProximityChecker proximityChecker,
+            IPresenceMapProvider presenceMapProvider,
             IGameSceneManager gameSceneManager)
         {
             this.messageSender = messageSender;
             this.proximityChecker = proximityChecker;
+            this.presenceMapProvider = presenceMapProvider;
             this.gameSceneManager = gameSceneManager;
         }
 
@@ -37,6 +40,7 @@ namespace Game.Application.Handlers
                 if (gameSceneExists)
                 {
                     proximityChecker.SetMatrixRegion(gameScene.MatrixRegion);
+                    presenceMapProvider.SetMap(map);
 
                     SendSceneChangedMessage(map);
                 }
