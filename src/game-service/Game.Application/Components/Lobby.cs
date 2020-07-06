@@ -81,7 +81,7 @@ namespace Game.Application.Components
 
             guardian.Transform.SetPosition(position);
             guardian.Transform.SetSize(Vector2.One);
-            guardian.AddProximityChecker(this);
+            guardian.AddProximityChecker();
             guardian.AddBubbleNotification("Hello", 1);
 
             return guardian;
@@ -93,7 +93,7 @@ namespace Game.Application.Components
             var position = new Vector2(-17.125f, -1.5f);
             var portal = new PortalGameObject(id);
 
-            portal.AddProximityChecker(this);
+            portal.AddProximityChecker();
             portal.AddPortalData((byte)Map.TheDarkForest);
 
             return portal;
