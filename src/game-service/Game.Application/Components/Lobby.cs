@@ -19,16 +19,17 @@ namespace Game.Application.Components
 
         private readonly IIdGenerator idGenerator;
 
-        public Lobby(IIdGenerator idGenerator)
+        public Lobby()
         {
-            this.idGenerator = idGenerator;
+            Components = new ComponentsContainer();
 
             MatrixRegion = CreateMatrixRegion();
             WorldManager = CreateWorldManager();
 
-            Components = new ComponentsContainer();
+            idGenerator = Components.Add(new IdGenerator());
             Components.Add(new PlayerSpawnData(new Vector2(18, -1.86f), new Vector2(10, 5)));
             Components.Add(new GameObjectCollection(CreateGameObjects()));
+            Components.Add(new GamePlayerCreator());
             Components.Add(new GameScenePhysicsExecutor(GetWorldManager()));
         }
 
