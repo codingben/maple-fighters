@@ -134,7 +134,7 @@ namespace Game.Application
 
                 player.Components.Add(new GameObjectGetter(player));
                 player.Components.Add(new AnimationData());
-                player.Components.Add(new ProximityChecker(gameScene));
+                player.Components.Add(new ProximityChecker());
                 player.Components.Add(new MessageSender(SendMessageToMySession, SendMessageToSession));
                 player.Components.Add(new PositionChangedMessageSender());
                 player.Components.Add(new AnimationStateChangedMessageSender());
