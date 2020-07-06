@@ -1,4 +1,3 @@
-using Game.Application.Components;
 using Game.Application.Objects.Components;
 
 namespace Game.Application.Objects
@@ -11,9 +10,9 @@ namespace Game.Application.Objects
             Components.Add(new GameObjectGetter(this));
         }
 
-        public void AddProximityChecker(IGameScene gameScene)
+        public void AddProximityChecker()
         {
-            Components.Add(new ProximityChecker(gameScene));
+            Components.Add(new ProximityChecker());
         }
 
         public void AddPortalData(byte map)
