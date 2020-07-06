@@ -1,4 +1,5 @@
 using Game.Application.Objects.Components;
+using InterestManagement;
 
 namespace Game.Application.Objects
 {
@@ -10,9 +11,10 @@ namespace Game.Application.Objects
             Components.Add(new GameObjectGetter(this));
         }
 
-        public void AddProximityChecker()
+        public void AddProximityChecker(IMatrixRegion<IGameObject> matrixRegion)
         {
-            Components.Add(new ProximityChecker());
+            var proximityChecker = Components.Add(new ProximityChecker());
+            proximityChecker.SetMatrixRegion(matrixRegion);
         }
 
         public void AddBubbleNotification(string text, int time)

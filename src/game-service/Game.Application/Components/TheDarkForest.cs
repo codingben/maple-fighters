@@ -79,7 +79,7 @@ namespace Game.Application.Components
             var position = new Vector2(12.5f, -1.125f);
             var portal = new PortalGameObject(id);
 
-            portal.AddProximityChecker();
+            portal.AddProximityChecker(MatrixRegion);
             portal.AddPortalData((byte)Map.Lobby);
 
             return portal;
@@ -91,7 +91,7 @@ namespace Game.Application.Components
             var position = new Vector2(-2f, -8.2f);
             var blueSnail = new BlueSnailGameObject(id);
 
-            blueSnail.AddProximityChecker();
+            blueSnail.AddProximityChecker(MatrixRegion);
 
             return blueSnail;
         }
