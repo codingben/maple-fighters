@@ -121,38 +121,9 @@ namespace Game.Application
         {
             if (gameSceneManager.TryGetGameScene(Map.Lobby, out var gameScene))
             {
-                var id = idGenerator.GenerateId();
-                var playerSpawnData = gameScene.Components.Get<IPlayerSpawnData>();
+                var gamePlayerCreator = gameScene.Components.Get<IGamePlayerCreator>();
 
-                player = new GameObject(id, nameof(GameObjectType.Player));
-
-                if (playerSpawnData != null)
-                {
-                    player.Transform.SetPosition(playerSpawnData.GetPosition());
-                    player.Transform.SetSize(playerSpawnData.GetSize());
-                }
-
-                player.Components.Add(new GameObjectGetter(player));
-                player.Components.Add(new AnimationData());
-                player.Components.Add(new ProximityChecker());
-                player.Components.Add(new MessageSender(SendMessageToMySession, SendMessageToSession));
-                player.Components.Add(new PositionChangedMessageSender());
-                player.Components.Add(new AnimationStateChangedMessageSender());
-                player.Components.Add(new CharacterData());
-
-                var gameObjectCollection =
-                    gameScene.Components.Get<IGameObjectCollection>();
-                if (gameObjectCollection != null)
-                {
-                    if (gameObjectCollection.AddGameObject(player))
-                    {
-                        // TODO: Notify the player
-                    }
-                    else
-                    {
-                        // TODO: Throw the error "Could not create player"
-                    }
-                }
+                player = gamePlayerCreator.Create();
 
                 sessionDataCollection.AddSessionData(player.Id, new SessionData(ID));
             }
@@ -164,16 +135,15 @@ namespace Game.Application
 
         private void RemovePlayer()
         {
-            var proximityChecker = player?.Components.Get<IProximityChecker>();
-            var gameScene = proximityChecker?.GetGameScene();
-            if (gameScene != null)
+            var presenceMapProvider = player.Components.Get<IPresenceMapProvider>();
+            var map = presenceMapProvider.GetMap();
+
+            if (gameSceneManager.TryGetGameScene((Map)map, out var gameScene))
             {
                 var gameObjectCollection =
                     gameScene.Components.Get<IGameObjectCollection>();
-                if (gameObjectCollection != null)
-                {
-                    gameObjectCollection.RemoveGameObject(player.Id);
-                }
+
+                gameObjectCollection.RemoveGameObject(player.Id);
             }
 
             sessionDataCollection.RemoveSessionData(player.Id);
