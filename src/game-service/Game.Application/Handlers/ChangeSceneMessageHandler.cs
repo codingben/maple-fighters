@@ -36,7 +36,7 @@ namespace Game.Application.Handlers
                     gameSceneManager.TryGetGameScene((Map)map, out var gameScene);
                 if (gameSceneExists)
                 {
-                    proximityChecker.ChangeGameScene(gameScene);
+                    proximityChecker.SetMatrixRegion(gameScene.MatrixRegion);
 
                     SendSceneChangedMessage(map);
                 }
