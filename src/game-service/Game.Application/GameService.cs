@@ -123,7 +123,10 @@ namespace Game.Application
         // TODO: Remove
         private void CreatePlayer()
         {
-            if (gameSceneManager.TryGetGameScene(Map.Lobby, out var gameScene))
+            // TODO: Refactor
+            const Map EntranceMap = Map.Lobby;
+
+            if (gameSceneManager.TryGetGameScene(EntranceMap, out var gameScene))
             {
                 var gamePlayerCreator =
                     gameScene.Components.Get<IGamePlayerCreator>();
