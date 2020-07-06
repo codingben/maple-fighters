@@ -12,6 +12,7 @@ using Game.Application.Messages;
 
 namespace Game.Application
 {
+    // TODO: The purpose of this class is to process only messages
     public class GameService : WebSocketBehavior
     {
         private readonly IIdGenerator idGenerator;
@@ -104,11 +105,13 @@ namespace Game.Application
             handlers.Add((byte)MessageCodes.ChangeScene, handler);
         }
 
+        // TODO: Remove
         public void SendMessageToMySession(byte[] rawData)
         {
             Send(rawData);
         }
 
+        // TODO: Remove
         public void SendMessageToSession(byte[] rawData, int id)
         {
             if (sessionDataCollection.GetSessionData(id, out var sessionData))
@@ -117,11 +120,13 @@ namespace Game.Application
             }
         }
 
+        // TODO: Remove
         private void CreatePlayer()
         {
             if (gameSceneManager.TryGetGameScene(Map.Lobby, out var gameScene))
             {
-                var gamePlayerCreator = gameScene.Components.Get<IGamePlayerCreator>();
+                var gamePlayerCreator =
+                    gameScene.Components.Get<IGamePlayerCreator>();
 
                 player = gamePlayerCreator.Create();
 
@@ -133,9 +138,11 @@ namespace Game.Application
             }
         }
 
+        // TODO: Remove
         private void RemovePlayer()
         {
-            var presenceMapProvider = player.Components.Get<IPresenceMapProvider>();
+            var presenceMapProvider =
+                player.Components.Get<IPresenceMapProvider>();
             var map = presenceMapProvider.GetMap();
 
             if (gameSceneManager.TryGetGameScene((Map)map, out var gameScene))
