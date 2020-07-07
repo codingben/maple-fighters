@@ -1,17 +1,14 @@
 ﻿using System.Diagnostics;
 using System.Threading;
-using Common.ComponentModel;
 using Coroutines;
 using Physics.Box2D;
 
 namespace Game.Application.Components
 {
-    [ComponentSettings(ExposedState.Exposable)]
-    public class GameScenePhysicsExecutor : ComponentBase, IGameScenePhysicsExecutor
+    public class GameScenePhysicsExecutor : IGameScenePhysicsExecutor
     {
         private readonly IWorldManager worldManager;
         private readonly CoroutineRunner coroutineRunner;
-        private readonly Thread thread;
         private readonly CancellationTokenSource cancellationTokenSource;
 
         public GameScenePhysicsExecutor(IWorldManager worldManager)
@@ -19,22 +16,17 @@ namespace Game.Application.Components
             this.worldManager = worldManager;
 
             coroutineRunner = new CoroutineRunner();
+            cancellationTokenSource = new CancellationTokenSource();
 
-            thread = new Thread(new ParameterizedThreadStart(Execute))
+            var thread = new Thread(new ParameterizedThreadStart(Execute))
             {
                 Priority = ThreadPriority.Lowest,
                 IsBackground = true
             };
-
-            cancellationTokenSource = new CancellationTokenSource();
-        }
-
-        protected override void OnAwake()
-        {
             thread.Start(cancellationTokenSource.Token);
         }
 
-        protected override void OnRemoved()
+        public void Dispose()
         {
             cancellationTokenSource?.Cancel();
             cancellationTokenSource?.Dispose();
