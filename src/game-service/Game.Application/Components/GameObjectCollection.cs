@@ -1,5 +1,4 @@
 using System.Collections.Concurrent;
-using System.Collections.Generic;
 using Common.ComponentModel;
 using Game.Application.Objects;
 
@@ -10,27 +9,9 @@ namespace Game.Application.Components
     {
         private ConcurrentDictionary<int, IGameObject> collection;
 
-        public GameObjectCollection(IEnumerable<IGameObject> gameObjects = null)
+        public GameObjectCollection()
         {
             collection = new ConcurrentDictionary<int, IGameObject>();
-
-            if (gameObjects != null)
-            {
-                foreach (var gameObject in gameObjects)
-                {
-                    AddGameObject(gameObject);
-                }
-            }
-        }
-
-        protected override void OnRemoved()
-        {
-            foreach (var gameObject in collection.Values)
-            {
-                gameObject?.Dispose();
-            }
-
-            collection.Clear();
         }
 
         public bool AddGameObject(IGameObject gameObject)
@@ -38,12 +19,9 @@ namespace Game.Application.Components
             return collection.TryAdd(gameObject.Id, gameObject);
         }
 
-        public void RemoveGameObject(int id)
+        public bool RemoveGameObject(int id)
         {
-            if (collection.TryRemove(id, out var gameObject))
-            {
-                gameObject?.Dispose();
-            }
+            return collection.TryRemove(id, out _);
         }
 
         public bool TryGetGameObject(int id, out IGameObject gameObject)
