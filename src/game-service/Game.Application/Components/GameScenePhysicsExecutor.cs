@@ -18,18 +18,23 @@ namespace Game.Application.Components
             coroutineRunner = new CoroutineRunner();
             cancellationTokenSource = new CancellationTokenSource();
 
-            var thread = new Thread(new ParameterizedThreadStart(Execute))
-            {
-                Priority = ThreadPriority.Lowest,
-                IsBackground = true
-            };
-            thread.Start(cancellationTokenSource.Token);
+            StartExecution();
         }
 
         public void Dispose()
         {
             cancellationTokenSource?.Cancel();
             cancellationTokenSource?.Dispose();
+        }
+
+        private void StartExecution()
+        {
+            var thread = new Thread(new ParameterizedThreadStart(Execute))
+            {
+                Priority = ThreadPriority.Lowest,
+                IsBackground = true
+            };
+            thread.Start(cancellationTokenSource.Token);
         }
 
         private void Execute(object cancellationToken)
