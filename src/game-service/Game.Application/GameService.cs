@@ -154,6 +154,8 @@ namespace Game.Application
                 var gameObjectCollection =
                     gameScene.Components.Get<IGameObjectCollection>();
 
+                player.Dispose();
+
                 gameObjectCollection.RemoveGameObject(player.Id);
             }
 
