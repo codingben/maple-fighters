@@ -35,7 +35,7 @@ namespace Game.Application.Components
 
             foreach (var gameObject in CreateGameObjects())
             {
-                gameObjectCollection.AddGameObject(gameObject);
+                gameObjectCollection.Add(gameObject);
             }
         }
 

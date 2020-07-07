@@ -17,7 +17,7 @@ namespace Game.Application
     {
         private readonly IIdGenerator idGenerator;
         private readonly ISessionDataCollection sessionDataCollection;
-        private readonly IGameSceneManager gameSceneManager;
+        private readonly IGameSceneCollection gameSceneCollection;
         private readonly IDictionary<byte, IMessageHandler> handlers = new Dictionary<byte, IMessageHandler>();
 
         private IGameObject player;
@@ -26,7 +26,7 @@ namespace Game.Application
         {
             idGenerator = components.Get<IIdGenerator>();
             sessionDataCollection = components.Get<ISessionDataCollection>();
-            gameSceneManager = components.Get<IGameSceneManager>();
+            gameSceneCollection = components.Get<IGameSceneCollection>();
         }
 
         protected override void OnOpen()
@@ -101,7 +101,7 @@ namespace Game.Application
             var presenceMapProvider = player.Components.Get<IPresenceMapProvider>();
             var proximityChecker = player.Components.Get<IProximityChecker>();
             var handler =
-                new ChangeSceneMessageHandler(messageSender, proximityChecker, presenceMapProvider, gameSceneManager);
+                new ChangeSceneMessageHandler(messageSender, proximityChecker, presenceMapProvider, gameSceneCollection);
 
             handlers.Add((byte)MessageCodes.ChangeScene, handler);
         }
@@ -127,7 +127,7 @@ namespace Game.Application
             // TODO: Refactor
             const Map EntranceMap = Map.Lobby;
 
-            if (gameSceneManager.TryGetGameScene(EntranceMap, out var gameScene))
+            if (gameSceneCollection.TryGet(EntranceMap, out var gameScene))
             {
                 var gamePlayerCreator =
                     gameScene.Components.Get<IGamePlayerCreator>();
@@ -149,14 +149,14 @@ namespace Game.Application
                 player.Components.Get<IPresenceMapProvider>();
             var map = presenceMapProvider.GetMap();
 
-            if (gameSceneManager.TryGetGameScene((Map)map, out var gameScene))
+            if (gameSceneCollection.TryGet((Map)map, out var gameScene))
             {
                 var gameObjectCollection =
                     gameScene.Components.Get<IGameObjectCollection>();
 
                 player.Dispose();
 
-                gameObjectCollection.RemoveGameObject(player.Id);
+                gameObjectCollection.Remove(player.Id);
             }
 
             sessionDataCollection.RemoveSessionData(player.Id);

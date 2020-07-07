@@ -25,7 +25,7 @@ namespace Game.Application.Components
             player.Transform.SetPosition(playerSpawnData.GetPosition());
             player.Transform.SetSize(playerSpawnData.GetSize());
 
-            gameObjectCollection.AddGameObject(player);
+            gameObjectCollection.Add(player);
 
             return player;
         }
