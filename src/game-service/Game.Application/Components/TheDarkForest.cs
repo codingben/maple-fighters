@@ -18,6 +18,7 @@ namespace Game.Application.Components
         private WorldManager WorldManager { get; }
 
         private readonly IIdGenerator idGenerator;
+        private readonly IGameObjectCollection gameObjectCollection;
 
         public TheDarkForest(IIdGenerator idGenerator)
         {
@@ -28,12 +29,19 @@ namespace Game.Application.Components
 
             Components = new ComponentsContainer();
             Components.Add(new PlayerSpawnData(new Vector2(-12.8f, -2.95f), new Vector2(10, 5)));
-            Components.Add(new GameObjectCollection(GetGameObjects()));
+            gameObjectCollection = Components.Add(new GameObjectCollection());
             Components.Add(new GameScenePhysicsExecutor(GetWorldManager()));
+
+            foreach (var gameObject in CreateGameObjects())
+            {
+                gameObjectCollection.AddGameObject(gameObject);
+            }
         }
 
         public void Dispose()
         {
+            // TODO: Dispose all game objects
+
             ((IDisposable)Components)?.Dispose();
             WorldManager?.Dispose();
         }
@@ -67,7 +75,7 @@ namespace Game.Application.Components
             return new MatrixRegion<IGameObject>(sceneSize, regionSize);
         }
 
-        IEnumerable<IGameObject> GetGameObjects()
+        IEnumerable<IGameObject> CreateGameObjects()
         {
             yield return CreatePortal();
             yield return CreateBlueSnail();
