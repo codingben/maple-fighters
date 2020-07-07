@@ -1,11 +1,19 @@
 ﻿using System.Collections.Generic;
+using Common.Components;
 using Common.MathematicsHelper;
 using Game.Application.Objects;
 
 namespace Game.Application.Components
 {
-    public class TheDarkForest
+    public struct TheDarkForest
     {
+        private readonly IIdGenerator idGenerator;
+
+        public TheDarkForest(IIdGenerator idGenerator)
+        {
+            this.idGenerator = idGenerator;
+        }
+
         public IEnumerable<IGameObject> CreateGameObjects()
         {
             yield return CreatePortal();
@@ -14,7 +22,7 @@ namespace Game.Application.Components
 
         private IGameObject CreatePortal()
         {
-            var id = 0;
+            var id = idGenerator.GenerateId();
             var position = new Vector2(12.5f, -1.125f);
             var portal = new PortalGameObject(id);
 
@@ -26,7 +34,7 @@ namespace Game.Application.Components
 
         private IGameObject CreateBlueSnail()
         {
-            var id = 1;
+            var id = idGenerator.GenerateId();
             var position = new Vector2(-2f, -8.2f);
             var blueSnail = new BlueSnailGameObject(id);
 
