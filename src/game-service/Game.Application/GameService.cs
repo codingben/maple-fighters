@@ -9,6 +9,7 @@ using Game.Application.Components;
 using Game.Application.Network;
 using Game.Application.Handlers;
 using Game.Application.Messages;
+using Common.MathematicsHelper;
 
 namespace Game.Application
 {
@@ -129,10 +130,12 @@ namespace Game.Application
 
             if (gameSceneCollection.TryGet(EntranceMap, out var gameScene))
             {
-                var gamePlayerCreator =
-                    gameScene.Components.Get<IGamePlayerCreator>();
+                var id = idGenerator.GenerateId();
+                player = new PlayerGameObject(id, new Vector2(18, -1.86f));
 
-                player = gamePlayerCreator.Create();
+                // The Dark Forest: new Vector2(-12.8f, -2.95f)
+
+                gameScene.GameObjectCollection.Add(player);
 
                 sessionDataCollection.AddSessionData(player.Id, new SessionData(ID));
             }
@@ -151,12 +154,9 @@ namespace Game.Application
 
             if (gameSceneCollection.TryGet((Map)map, out var gameScene))
             {
-                var gameObjectCollection =
-                    gameScene.Components.Get<IGameObjectCollection>();
-
                 player.Dispose();
 
-                gameObjectCollection.Remove(player.Id);
+                gameScene.GameObjectCollection.Remove(player.Id);
             }
 
             sessionDataCollection.RemoveSessionData(player.Id);
