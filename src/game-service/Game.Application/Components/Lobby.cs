@@ -1,11 +1,19 @@
 ﻿using System.Collections.Generic;
+using Common.Components;
 using Common.MathematicsHelper;
 using Game.Application.Objects;
 
 namespace Game.Application.Components
 {
-    public class Lobby
+    public struct Lobby
     {
+        private readonly IIdGenerator idGenerator;
+
+        public Lobby(IIdGenerator idGenerator)
+        {
+            this.idGenerator = idGenerator;
+        }
+
         public IEnumerable<IGameObject> CreateGameObjects()
         {
             yield return CreateGuardian();
@@ -14,7 +22,7 @@ namespace Game.Application.Components
 
         private IGameObject CreateGuardian()
         {
-            var id = 0;
+            var id = idGenerator.GenerateId();
             var position = new Vector2(-14.24f, -2.025f);
             var guardian = new GuardianGameObject(id);
 
@@ -29,7 +37,7 @@ namespace Game.Application.Components
 
         private IGameObject CreatePortal()
         {
-            var id = 1;
+            var id = idGenerator.GenerateId();
             var position = new Vector2(-17.125f, -1.5f);
             var portal = new PortalGameObject(id);
 
