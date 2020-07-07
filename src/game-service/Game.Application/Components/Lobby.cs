@@ -18,6 +18,7 @@ namespace Game.Application.Components
         private WorldManager WorldManager { get; }
 
         private readonly IIdGenerator idGenerator;
+        private readonly IGameObjectCollection gameObjectCollection;
 
         public Lobby()
         {
@@ -28,13 +29,20 @@ namespace Game.Application.Components
 
             idGenerator = Components.Add(new IdGenerator());
             Components.Add(new PlayerSpawnData(new Vector2(18, -1.86f), new Vector2(10, 5)));
-            Components.Add(new GameObjectCollection(CreateGameObjects()));
+            gameObjectCollection = Components.Add(new GameObjectCollection());
             Components.Add(new GamePlayerCreator());
             Components.Add(new GameScenePhysicsExecutor(GetWorldManager()));
+
+            foreach (var gameObject in CreateGameObjects())
+            {
+                gameObjectCollection.AddGameObject(gameObject);
+            }
         }
 
         public void Dispose()
         {
+            // TODO: Dispose all game objects
+
             ((IDisposable)Components)?.Dispose();
             WorldManager?.Dispose();
         }
