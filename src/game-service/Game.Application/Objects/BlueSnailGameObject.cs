@@ -1,3 +1,4 @@
+using Common.MathematicsHelper;
 using Game.Application.Objects.Components;
 using InterestManagement;
 
@@ -5,9 +6,11 @@ namespace Game.Application.Objects
 {
     public class BlueSnailGameObject : GameObject
     {
-        public BlueSnailGameObject(int id)
+        public BlueSnailGameObject(int id, Vector2 position)
             : base(id, name: "BlueSnail")
         {
+            Transform.SetPosition(position);
+            
             Components.Add(new GameObjectGetter(this));
         }
 
