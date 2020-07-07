@@ -1,4 +1,3 @@
-using Common.ComponentModel;
 using Game.Application.Objects;
 using InterestManagement;
 
@@ -6,6 +5,8 @@ namespace Game.Application.Components
 {
     public interface IGameScene : IScene<IGameObject>
     {
-        IExposedComponents Components { get; }
+        IGameObjectCollection GameObjectCollection { get; }
+
+        IGameScenePhysicsExecutor GameScenePhysicsExecutor { get; }
     }
 }
