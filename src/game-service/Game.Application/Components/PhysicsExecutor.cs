@@ -1,19 +1,22 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using System.Threading;
 using Coroutines;
 using Physics.Box2D;
 
 namespace Game.Application.Components
 {
-    public class GameScenePhysicsExecutor : IGameScenePhysicsExecutor
+    public class PhysicsExecutor : IPhysicsExecutor
     {
-        private readonly IWorldManager worldManager;
+        private readonly Action updateBodies;
+        private readonly Action simulatePhysics;
         private readonly CoroutineRunner coroutineRunner;
         private readonly CancellationTokenSource cancellationTokenSource;
 
-        public GameScenePhysicsExecutor(IWorldManager worldManager)
+        public PhysicsExecutor(Action updateBodies = null, Action simulatePhysics = null)
         {
-            this.worldManager = worldManager;
+            this.updateBodies = updateBodies;
+            this.simulatePhysics = simulatePhysics;
 
             coroutineRunner = new CoroutineRunner();
             cancellationTokenSource = new CancellationTokenSource();
@@ -34,15 +37,13 @@ namespace Game.Application.Components
                 Priority = ThreadPriority.Lowest,
                 IsBackground = true
             };
+
             thread.Start(cancellationTokenSource.Token);
         }
 
         private void Execute(object cancellationToken)
         {
             var timeStep = DefaultSettings.TimeStep;
-            var velocityIterations = DefaultSettings.VelocityIterations;
-            var positionIterations = DefaultSettings.PositionIterations;
-            var sleepTime = DefaultSettings.SleepTime;
             var watch = Stopwatch.StartNew();
             var previousTime = watch.ElapsedMilliseconds / 1000f;
             var elapsed = 0f;
@@ -59,7 +60,7 @@ namespace Game.Application.Components
                 elapsed += currentTime - previousTime;
                 previousTime = currentTime;
 
-                worldManager.UpdateBodies();
+                updateBodies?.Invoke();
 
                 if (elapsed > timeStep)
                 {
@@ -68,9 +69,9 @@ namespace Game.Application.Components
                     coroutineRunner.Update(timeStep);
                 }
 
-                worldManager.Step(timeStep, velocityIterations, positionIterations);
+                simulatePhysics?.Invoke();
 
-                Thread.Sleep(sleepTime);
+                Thread.Sleep(10);
             }
         }
 
