@@ -4,10 +4,10 @@ namespace Game.Application.Components
 {
     public interface IGameObjectCollection
     {
-        bool AddGameObject(IGameObject gameObject);
+        bool Add(IGameObject gameObject);
 
-        bool RemoveGameObject(int id);
+        bool Remove(int id);
 
-        bool TryGetGameObject(int id, out IGameObject gameObject);
+        bool TryGet(int id, out IGameObject gameObject);
     }
 }
