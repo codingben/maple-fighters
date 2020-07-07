@@ -1,11 +1,9 @@
 using System.Collections.Concurrent;
-using Common.ComponentModel;
 using Game.Application.Objects;
 
 namespace Game.Application.Components
 {
-    [ComponentSettings(ExposedState.Exposable)]
-    public class GameObjectCollection : ComponentBase, IGameObjectCollection
+    public class GameObjectCollection : IGameObjectCollection
     {
         private ConcurrentDictionary<int, IGameObject> collection;
 
