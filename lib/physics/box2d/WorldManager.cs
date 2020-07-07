@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using Box2DX.Collision;
 using Box2DX.Dynamics;
@@ -6,7 +5,7 @@ using Common.MathematicsHelper;
 
 namespace Physics.Box2D
 {
-    public class WorldManager : IWorldManager, IBodyManager, IDisposable
+    public class WorldManager : IWorldManager
     {
         private readonly World world;
         private readonly LinkedList<NewBodyData> addBodies;
@@ -42,7 +41,7 @@ namespace Physics.Box2D
             world.Dispose();
         }
 
-        public void Update()
+        public void UpdateBodies()
         {
             if (removeBodies.Count > 0)
             {
