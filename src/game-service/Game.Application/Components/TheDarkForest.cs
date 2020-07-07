@@ -20,14 +20,14 @@ namespace Game.Application.Components
         private readonly IIdGenerator idGenerator;
         private readonly IGameObjectCollection gameObjectCollection;
 
-        public TheDarkForest(IIdGenerator idGenerator)
+        public TheDarkForest()
         {
-            this.idGenerator = idGenerator;
+            Components = new ComponentsContainer();
 
             MatrixRegion = CreateMatrixRegion();
             WorldManager = CreateWorldManager();
 
-            Components = new ComponentsContainer();
+            idGenerator = Components.Add(new IdGenerator());
             Components.Add(new PlayerSpawnData(new Vector2(-12.8f, -2.95f), new Vector2(10, 5)));
             gameObjectCollection = Components.Add(new GameObjectCollection());
             Components.Add(new GameScenePhysicsExecutor(GetWorldManager()));
