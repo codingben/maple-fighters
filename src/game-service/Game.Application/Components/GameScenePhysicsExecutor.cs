@@ -54,7 +54,7 @@ namespace Game.Application.Components
                 elapsed += currentTime - previousTime;
                 previousTime = currentTime;
 
-                worldManager.Update();
+                worldManager.UpdateBodies();
 
                 if (elapsed > timeStep)
                 {
