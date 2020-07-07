@@ -8,9 +8,9 @@
     <PackageTags>Physics, Box2D</PackageTags>
     <Description>A simple library for working with Box2D physics.</Description>
     <PackageProjectUrl>https://github.com/benzuk/maple-fighters-server/tree/develop/lib/physics/box2d</PackageProjectUrl>
-    <Version>1.0.2</Version>
-    <AssemblyVersion>1.0.2.0</AssemblyVersion>
-    <FileVersion>1.0.2.0</FileVersion>
+    <Version>1.0.1</Version>
+    <AssemblyVersion>1.0.1.0</AssemblyVersion>
+    <FileVersion>1.0.1.0</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>
