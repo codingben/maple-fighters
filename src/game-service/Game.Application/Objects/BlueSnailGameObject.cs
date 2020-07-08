@@ -1,6 +1,4 @@
 using Common.MathematicsHelper;
-using Game.Application.Objects.Components;
-using InterestManagement;
 
 namespace Game.Application.Objects
 {
@@ -10,14 +8,6 @@ namespace Game.Application.Objects
             : base(id, name: "BlueSnail")
         {
             Transform.SetPosition(position);
-            
-            Components.Add(new GameObjectGetter(this));
-        }
-
-        public void AddProximityChecker(IMatrixRegion<IGameObject> matrixRegion)
-        {
-            var proximityChecker = Components.Add(new ProximityChecker());
-            proximityChecker.SetMatrixRegion(matrixRegion);
         }
     }
 }
