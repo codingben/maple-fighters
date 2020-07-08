@@ -21,7 +21,7 @@ namespace Game.Application
         private readonly IGameSceneCollection gameSceneCollection;
         private readonly IDictionary<byte, IMessageHandler> handlers = new Dictionary<byte, IMessageHandler>();
 
-        private IGameObject player;
+        private PlayerGameObject player;
 
         public GameService(IExposedComponents components)
         {
@@ -131,7 +131,9 @@ namespace Game.Application
             if (gameSceneCollection.TryGet(EntranceMap, out var gameScene))
             {
                 var id = idGenerator.GenerateId();
+
                 player = new PlayerGameObject(id, new Vector2(18, -1.86f));
+                player.AddProximityChecker(gameScene.MatrixRegion);
 
                 // The Dark Forest: new Vector2(-12.8f, -2.95f)
 
