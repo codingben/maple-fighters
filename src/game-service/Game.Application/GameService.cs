@@ -133,6 +133,11 @@ namespace Game.Application
                 var id = idGenerator.GenerateId();
 
                 player = new PlayerGameObject(id, new Vector2(18, -1.86f));
+                player.Components.Add(new MessageSender(SendMessageToMySession, SendMessageToSession));
+                player.Components.Add(new AnimationData());
+                player.Components.Add(new PositionChangedMessageSender());
+                player.Components.Add(new AnimationStateChangedMessageSender());
+                player.Components.Add(new CharacterData());
                 player.AddProximityChecker(gameScene.MatrixRegion);
 
                 // The Dark Forest: new Vector2(-12.8f, -2.95f)
