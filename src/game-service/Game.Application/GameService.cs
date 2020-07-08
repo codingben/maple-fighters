@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Common.ComponentModel;
 using Common.Components;
@@ -108,21 +109,6 @@ namespace Game.Application
         }
 
         // TODO: Remove
-        public void SendMessageToMySession(byte[] rawData)
-        {
-            Send(rawData);
-        }
-
-        // TODO: Remove
-        public void SendMessageToSession(byte[] rawData, int id)
-        {
-            if (sessionDataCollection.GetSessionData(id, out var sessionData))
-            {
-                Sessions.SendTo(rawData, sessionData.Id);
-            }
-        }
-
-        // TODO: Remove
         private void CreatePlayer()
         {
             // TODO: Refactor
@@ -132,8 +118,21 @@ namespace Game.Application
             {
                 var id = idGenerator.GenerateId();
 
+                Action<byte[], int> sendTo = (rawData, id) =>
+                {
+                    if (sessionDataCollection.GetSessionData(id, out var sessionData))
+                    {
+                        Sessions.SendTo(rawData, sessionData.Id);
+                    }
+                };
+
+                Action<byte[]> send = (rawData) =>
+                {
+                    Send(rawData);
+                };
+
                 player = new PlayerGameObject(id, new Vector2(18, -1.86f));
-                player.Components.Add(new MessageSender(SendMessageToMySession, SendMessageToSession));
+                player.Components.Add(new MessageSender(send, sendTo));
                 player.Components.Add(new AnimationData());
                 player.Components.Add(new PositionChangedMessageSender());
                 player.Components.Add(new AnimationStateChangedMessageSender());
