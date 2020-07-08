@@ -10,6 +10,11 @@ namespace Game.Application.Objects
         {
             Transform.SetPosition(position);
 
+            AddComponents();
+        }
+
+        private void AddComponents()
+        {
             Components.Add(new AnimationData());
             // Components.Add(new MessageSender(SendMessageToMySession, SendMessageToSession));
             Components.Add(new PositionChangedMessageSender());
