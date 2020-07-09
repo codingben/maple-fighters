@@ -22,7 +22,7 @@ namespace Game.Application
         private readonly IGameSceneCollection gameSceneCollection;
         private readonly IDictionary<byte, IMessageHandler> handlers = new Dictionary<byte, IMessageHandler>();
 
-        private PlayerGameObject player;
+        private IGameObject player;
 
         public GameService(IExposedComponents components)
         {
@@ -34,7 +34,6 @@ namespace Game.Application
         protected override void OnOpen()
         {
             CreatePlayer();
-            AddPlayerToGameScene();
 
             AddHandlerForChangePosition();
             AddHandlerForChangeAnimationState();
@@ -46,7 +45,6 @@ namespace Game.Application
         protected override void OnClose(CloseEventArgs eventArgs)
         {
             RemovePlayer();
-            RemovePlayerFromGameScene();
 
             sessionDataCollection.RemoveSessionData(player.Id);
         }
@@ -140,17 +138,14 @@ namespace Game.Application
             player.Components.Add(new CharacterData());
 
             // The Dark Forest: new Vector2(-12.8f, -2.95f)
+
+            AddPlayerToGameScene(Map.Lobby);
         }
 
-        private void AddPlayerToGameScene()
+        private void AddPlayerToGameScene(Map map)
         {
-            // TODO: Refactor
-            const Map EntranceMap = Map.Lobby;
-
-            if (gameSceneCollection.TryGet(EntranceMap, out var gameScene))
+            if (gameSceneCollection.TryGet(map, out var gameScene))
             {
-                player.AddProximityChecker(gameScene.MatrixRegion);
-
                 gameScene.GameObjectCollection.Add(player);
             }
             else
@@ -162,16 +157,17 @@ namespace Game.Application
         // TODO: Remove
         private void RemovePlayer()
         {
+            var presenceMapProvider = player.Components.Get<IPresenceMapProvider>();
+            var map = presenceMapProvider.GetMap();
+
+            RemovePlayerFromGameScene((Map)map);
+
             player.Dispose();
         }
 
-        private void RemovePlayerFromGameScene()
+        private void RemovePlayerFromGameScene(Map map)
         {
-            var presenceMapProvider =
-                player.Components.Get<IPresenceMapProvider>();
-            var map = presenceMapProvider.GetMap();
-
-            if (gameSceneCollection.TryGet((Map)map, out var gameScene))
+            if (gameSceneCollection.TryGet(map, out var gameScene))
             {
                 gameScene.GameObjectCollection.Remove(player.Id);
             }
