@@ -34,15 +34,21 @@ namespace Game.Application
         protected override void OnOpen()
         {
             CreatePlayer();
+            AddPlayerToGameScene();
 
             AddHandlerForChangePosition();
             AddHandlerForChangeAnimationState();
             AddHandlerForEnterScene();
+
+            sessionDataCollection.AddSessionData(player.Id, new SessionData(ID));
         }
 
         protected override void OnClose(CloseEventArgs eventArgs)
         {
             RemovePlayer();
+            RemovePlayerFromGameScene();
+
+            sessionDataCollection.RemoveSessionData(player.Id);
         }
 
         protected override void OnError(ErrorEventArgs eventArgs)
@@ -111,39 +117,41 @@ namespace Game.Application
         // TODO: Remove
         private void CreatePlayer()
         {
+            var id = idGenerator.GenerateId();
+
+            Action<byte[], int> sendTo = (rawData, id) =>
+            {
+                if (sessionDataCollection.GetSessionData(id, out var sessionData))
+                {
+                    Sessions.SendTo(rawData, sessionData.Id);
+                }
+            };
+
+            Action<byte[]> send = (rawData) =>
+            {
+                Send(rawData);
+            };
+
+            player = new PlayerGameObject(id, new Vector2(18, -1.86f));
+            player.Components.Add(new MessageSender(send, sendTo));
+            player.Components.Add(new AnimationData());
+            player.Components.Add(new PositionChangedMessageSender());
+            player.Components.Add(new AnimationStateChangedMessageSender());
+            player.Components.Add(new CharacterData());
+
+            // The Dark Forest: new Vector2(-12.8f, -2.95f)
+        }
+
+        private void AddPlayerToGameScene()
+        {
             // TODO: Refactor
             const Map EntranceMap = Map.Lobby;
 
             if (gameSceneCollection.TryGet(EntranceMap, out var gameScene))
             {
-                var id = idGenerator.GenerateId();
-
-                Action<byte[], int> sendTo = (rawData, id) =>
-                {
-                    if (sessionDataCollection.GetSessionData(id, out var sessionData))
-                    {
-                        Sessions.SendTo(rawData, sessionData.Id);
-                    }
-                };
-
-                Action<byte[]> send = (rawData) =>
-                {
-                    Send(rawData);
-                };
-
-                player = new PlayerGameObject(id, new Vector2(18, -1.86f));
-                player.Components.Add(new MessageSender(send, sendTo));
-                player.Components.Add(new AnimationData());
-                player.Components.Add(new PositionChangedMessageSender());
-                player.Components.Add(new AnimationStateChangedMessageSender());
-                player.Components.Add(new CharacterData());
                 player.AddProximityChecker(gameScene.MatrixRegion);
 
-                // The Dark Forest: new Vector2(-12.8f, -2.95f)
-
                 gameScene.GameObjectCollection.Add(player);
-
-                sessionDataCollection.AddSessionData(player.Id, new SessionData(ID));
             }
             else
             {
@@ -154,18 +162,25 @@ namespace Game.Application
         // TODO: Remove
         private void RemovePlayer()
         {
+            var presenceMapProvider = player.Components.Get<IPresenceMapProvider>();
+            var map = presenceMapProvider.GetMap();
+
+            if (gameSceneCollection.TryGet((Map)map, out var gameScene))
+            {
+                player.Dispose();
+            }
+        }
+
+        private void RemovePlayerFromGameScene()
+        {
             var presenceMapProvider =
                 player.Components.Get<IPresenceMapProvider>();
             var map = presenceMapProvider.GetMap();
 
             if (gameSceneCollection.TryGet((Map)map, out var gameScene))
             {
-                player.Dispose();
-
                 gameScene.GameObjectCollection.Remove(player.Id);
             }
-
-            sessionDataCollection.RemoveSessionData(player.Id);
         }
     }
 }
