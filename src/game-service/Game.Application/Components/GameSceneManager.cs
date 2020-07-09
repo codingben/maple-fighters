@@ -29,7 +29,7 @@ namespace Game.Application.Components
             gameSceneCollection.Remove(Map.TheDarkForest);
         }
 
-        // TODO: Move out
+        // TODO: Move out. Refactor. Another way to add game objects.
         private IGameScene CreateMap(Map map)
         {
             IGameScene gameScene = null;
@@ -45,7 +45,7 @@ namespace Game.Application.Components
                     // Guardian Game Object
                     var guardianId = idGenerator.GenerateId();
                     var guardianPosition = new Vector2(-14.24f, -2.025f);
-                    var guardian = 
+                    var guardian =
                         new GuardianGameObject(guardianId, guardianPosition, region);
                     guardian.AddBubbleNotification("Hello", 1);
 
@@ -54,7 +54,7 @@ namespace Game.Application.Components
                     // Portal Game Object
                     var portalId = idGenerator.GenerateId();
                     var portalPosition = new Vector2(-14.24f, -2.025f);
-                    var portal = 
+                    var portal =
                         new PortalGameObject(portalId, portalPosition, region);
                     portal.AddPortalData((byte)Map.TheDarkForest);
 
@@ -71,7 +71,7 @@ namespace Game.Application.Components
                     // Blue Snail Game Object
                     var guardianId = idGenerator.GenerateId();
                     var blueSnailPosition = new Vector2(-2f, -8.2f);
-                    var blueSnail = 
+                    var blueSnail =
                         new BlueSnailGameObject(guardianId, blueSnailPosition, region);
 
                     gameScene.GameObjectCollection.Add(blueSnail);
@@ -79,7 +79,7 @@ namespace Game.Application.Components
                     // Portal Game Object
                     var portalId = idGenerator.GenerateId();
                     var portalPosition = new Vector2(12.5f, -1.125f);
-                    var portal = 
+                    var portal =
                         new PortalGameObject(portalId, portalPosition, region);
                     portal.AddPortalData((byte)Map.Lobby);
 
