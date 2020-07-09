@@ -15,30 +15,25 @@ namespace Game.Application.Objects
 
         public IExposedComponents Components { get; }
 
-        public GameObject(int id, string name)
+        public GameObject(int id, string name, IMatrixRegion<IGameObject> region = null)
         {
             Id = id;
             Name = name;
             Transform = new Transform();
             Components = new ComponentsContainer();
 
-            AddCommonComponents();
+            Components.Add(new GameObjectGetter(this));
+            var proximityChecker = Components.Add(new ProximityChecker());
+
+            if (region != null)
+            {
+                proximityChecker.SetMatrixRegion(region);
+            }
         }
 
         public void Dispose()
         {
             ((IDisposable)Components)?.Dispose();
-        }
-
-        public void AddProximityChecker(IMatrixRegion<IGameObject> matrixRegion)
-        {
-            var proximityChecker = Components.Add(new ProximityChecker());
-            proximityChecker.SetMatrixRegion(matrixRegion);
-        }
-
-        private void AddCommonComponents()
-        {
-            Components.Add(new GameObjectGetter(this));
         }
     }
 }
