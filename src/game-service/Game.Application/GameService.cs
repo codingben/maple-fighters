@@ -130,16 +130,28 @@ namespace Game.Application
                 Send(rawData);
             };
 
-            player = new PlayerGameObject(id, new Vector2(18, -1.86f));
+            var playerPosition = new Vector2(18, -1.86f);
+
+            player = new PlayerGameObject(id, playerPosition);
             player.Components.Add(new MessageSender(send, sendTo));
             player.Components.Add(new AnimationData());
             player.Components.Add(new PositionChangedMessageSender());
             player.Components.Add(new AnimationStateChangedMessageSender());
             player.Components.Add(new CharacterData());
 
+            var map = Map.Lobby;
+
+            if (gameSceneCollection.TryGet(map, out var gameScene))
+            {
+                var proximityChecker = player.Components.Get<IProximityChecker>();
+                var region = gameScene.MatrixRegion;
+
+                proximityChecker.SetMatrixRegion(region);
+            }
+
             // The Dark Forest: new Vector2(-12.8f, -2.95f)
 
-            AddPlayerToGameScene(Map.Lobby);
+            AddPlayerToGameScene(map);
         }
 
         private void AddPlayerToGameScene(Map map)
