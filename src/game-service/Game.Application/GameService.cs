@@ -162,13 +162,7 @@ namespace Game.Application
         // TODO: Remove
         private void RemovePlayer()
         {
-            var presenceMapProvider = player.Components.Get<IPresenceMapProvider>();
-            var map = presenceMapProvider.GetMap();
-
-            if (gameSceneCollection.TryGet((Map)map, out var gameScene))
-            {
-                player.Dispose();
-            }
+            player.Dispose();
         }
 
         private void RemovePlayerFromGameScene()
