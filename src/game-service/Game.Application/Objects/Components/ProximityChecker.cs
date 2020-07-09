@@ -22,10 +22,10 @@ namespace Game.Application.Objects.Components
             interestArea?.Dispose();
         }
 
-        public void SetMatrixRegion(IMatrixRegion<IGameObject> matrixRegion)
+        public void SetMatrixRegion(IMatrixRegion<IGameObject> region)
         {
             interestArea?.Dispose();
-            interestArea?.SetMatrixRegion(matrixRegion);
+            interestArea?.SetMatrixRegion(region);
         }
 
         public IEnumerable<IGameObject> GetNearbyGameObjects()

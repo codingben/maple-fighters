@@ -5,7 +5,7 @@ namespace Game.Application.Objects.Components
 {
     public interface IProximityChecker
     {
-        void SetMatrixRegion(IMatrixRegion<IGameObject> matrixRegion);
+        void SetMatrixRegion(IMatrixRegion<IGameObject> region);
 
         IEnumerable<IGameObject> GetNearbyGameObjects();
 
