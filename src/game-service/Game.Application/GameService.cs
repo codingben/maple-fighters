@@ -32,7 +32,7 @@ namespace Game.Application
         protected override void OnOpen()
         {
             AddPlayer();
-            AddSessionData();
+            AddWebSocketSessionData();
             AddHandlerForChangePosition();
             AddHandlerForChangeAnimationState();
             AddHandlerForEnterScene();
@@ -40,7 +40,7 @@ namespace Game.Application
 
         protected override void OnClose(CloseEventArgs eventArgs)
         {
-            RemoveSessionData();
+            RemoveWebSocketSessionData();
             RemovePlayer();
         }
 
@@ -129,7 +129,7 @@ namespace Game.Application
             gamePlayer?.Dispose();
         }
 
-        private void AddSessionData()
+        private void AddWebSocketSessionData()
         {
             var player = gamePlayer?.GetPlayer();
             if (player != null)
@@ -140,7 +140,7 @@ namespace Game.Application
             }
         }
 
-        private void RemoveSessionData()
+        private void RemoveWebSocketSessionData()
         {
             var player = gamePlayer?.GetPlayer();
             if (player != null)
