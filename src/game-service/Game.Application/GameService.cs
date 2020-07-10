@@ -3,7 +3,6 @@ using Common.ComponentModel;
 using Common.Components;
 using WebSocketSharp;
 using WebSocketSharp.Server;
-using Game.Application.Objects.Components;
 using Game.Application.Components;
 using Game.Application.Network;
 using Game.Application.Handlers;
@@ -70,10 +69,10 @@ namespace Game.Application
             var player = gamePlayer?.GetPlayer();
             if (player != null)
             {
-                var transform = player.Transform;
-                var handler = new ChangePositionMessageHandler(transform);
+                var messageCode = (byte)MessageCodes.ChangePosition;
+                var messageHandler = new ChangePositionMessageHandler(player);
 
-                handlers.Add((byte)MessageCodes.ChangePosition, handler);
+                handlers.Add(messageCode, messageHandler);
             }
         }
 
@@ -82,10 +81,10 @@ namespace Game.Application
             var player = gamePlayer?.GetPlayer();
             if (player != null)
             {
-                var animationData = player.Components.Get<IAnimationData>();
-                var handler = new ChangeAnimationStateHandler(animationData);
+                var messageCode = (byte)MessageCodes.ChangeAnimationState;
+                var messageHandler = new ChangeAnimationStateHandler(player);
 
-                handlers.Add((byte)MessageCodes.ChangeAnimationState, handler);
+                handlers.Add(messageCode, messageHandler);
             }
         }
 
@@ -94,13 +93,10 @@ namespace Game.Application
             var player = gamePlayer?.GetPlayer();
             if (player != null)
             {
-                var gameObjectGetter = player.Components.Get<IGameObjectGetter>();
-                var characterData = player.Components.Get<ICharacterData>();
-                var messageSender = player.Components.Get<IMessageSender>();
-                var handler =
-                    new EnterSceneMessageHandler(gameObjectGetter, characterData, messageSender);
+                var messageCode = (byte)MessageCodes.EnterScene;
+                var messageHandler = new EnterSceneMessageHandler(player);
 
-                handlers.Add((byte)MessageCodes.EnterScene, handler);
+                handlers.Add(messageCode, messageHandler);
             }
         }
 
@@ -109,13 +105,11 @@ namespace Game.Application
             var player = gamePlayer?.GetPlayer();
             if (player != null)
             {
-                var messageSender = player.Components.Get<IMessageSender>();
-                var presenceMapProvider = player.Components.Get<IPresenceMapProvider>();
-                var proximityChecker = player.Components.Get<IProximityChecker>();
-                var handler =
-                    new ChangeSceneMessageHandler(messageSender, proximityChecker, presenceMapProvider, gameSceneCollection);
+                var messageCode = (byte)MessageCodes.ChangeScene;
+                var messageHandler =
+                    new ChangeSceneMessageHandler(player, gameSceneCollection);
 
-                handlers.Add((byte)MessageCodes.ChangeScene, handler);
+                handlers.Add(messageCode, messageHandler);
             }
         }
 
