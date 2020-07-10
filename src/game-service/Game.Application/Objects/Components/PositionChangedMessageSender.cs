@@ -6,15 +6,13 @@ namespace Game.Application.Objects.Components
     [ComponentSettings(ExposedState.Unexposable)]
     public class PositionChangedMessageSender : ComponentBase
     {
+        private IGameObjectGetter gameObjectGetter;
         private IMessageSender messageSender;
-        private IGameObject gameObject;
 
         protected override void OnAwake()
         {
+            gameObjectGetter = Components.Get<IGameObjectGetter>();
             messageSender = Components.Get<IMessageSender>();
-
-            var gameObjectGetter = Components.Get<IGameObjectGetter>();
-            gameObject = gameObjectGetter.Get();
 
             SubscribeToPositionChanged();
         }
@@ -26,24 +24,29 @@ namespace Game.Application.Objects.Components
 
         private void SubscribeToPositionChanged()
         {
-            gameObject.Transform.PositionChanged += OnPositionChanged;
+            var transform = gameObjectGetter.Get().Transform;
+            transform.PositionChanged += OnPositionChanged;
         }
 
         private void UnsubscribeFromPositionChanged()
         {
-            gameObject.Transform.PositionChanged -= OnPositionChanged;
+            var transform = gameObjectGetter.Get().Transform;
+            transform.PositionChanged -= OnPositionChanged;
         }
 
         private void OnPositionChanged()
         {
+            var id = gameObjectGetter.Get().Id;
+            var transform = gameObjectGetter.Get().Transform;
+            var messageCode = (byte)MessageCodes.PositionChanged;
             var message = new PositionChangedMessage()
             {
-                GameObjectId = gameObject.Id,
-                X = gameObject.Transform.Position.X,
-                Y = gameObject.Transform.Position.Y
+                GameObjectId = id,
+                X = transform.Position.X,
+                Y = transform.Position.Y
             };
 
-            messageSender.SendMessageToNearbyGameObjects((byte)MessageCodes.PositionChanged, message);
+            messageSender.SendMessageToNearbyGameObjects(messageCode, message);
         }
     }
 }
