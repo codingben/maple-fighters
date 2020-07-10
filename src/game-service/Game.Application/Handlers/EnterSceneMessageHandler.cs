@@ -30,6 +30,9 @@ namespace Game.Application.Handlers
             characterData.SetName(name);
             characterData.SetCharacterType(characterType);
 
+            // TODO: Add to game scene
+            // TODO: Set matrix region
+
             SendEnteredSceneMessage();
         }
 
