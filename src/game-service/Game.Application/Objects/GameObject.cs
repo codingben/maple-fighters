@@ -22,11 +22,11 @@ namespace Game.Application.Objects
             Transform = new Transform();
             Components = new ComponentsContainer();
 
-            Components.Add(new GameObjectGetter(this));
-            var proximityChecker = Components.Add(new ProximityChecker());
+            AddCommonComponents();
 
             if (region != null)
             {
+                var proximityChecker = Components.Get<IProximityChecker>();
                 proximityChecker.SetMatrixRegion(region);
             }
         }
@@ -34,6 +34,12 @@ namespace Game.Application.Objects
         public void Dispose()
         {
             ((IDisposable)Components)?.Dispose();
+        }
+
+        private void AddCommonComponents()
+        {
+            Components.Add(new GameObjectGetter(this));
+            Components.Add(new ProximityChecker());
         }
     }
 }
