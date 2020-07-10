@@ -1,6 +1,5 @@
 using Common.ComponentModel;
 using Game.Application.Messages;
-using InterestManagement;
 
 namespace Game.Application.Objects.Components
 {
@@ -10,9 +9,9 @@ namespace Game.Application.Objects.Components
         private readonly string text;
         private readonly int time;
 
+        private IProximityChecker proximityChecker;
+        private IGameObjectGetter gameObjectGetter;
         private IMessageSender messageSender;
-        private IGameObject gameObject;
-        private INearbySceneObjectsEvents<IGameObject> nearbySceneObjectsEvents;
 
         public BubbleNotificationSender(string text, int time)
         {
@@ -22,13 +21,9 @@ namespace Game.Application.Objects.Components
 
         protected override void OnAwake()
         {
+            proximityChecker = Components.Get<IProximityChecker>();
+            gameObjectGetter = Components.Get<IGameObjectGetter>();
             messageSender = Components.Get<IMessageSender>();
-
-            var gameObjectGetter = Components.Get<IGameObjectGetter>();
-            gameObject = gameObjectGetter.Get();
-
-            var proximityChecker = Components.Get<IProximityChecker>();
-            nearbySceneObjectsEvents = proximityChecker.GetNearbyGameObjectsEvents();
 
             SubscribeToNearbyGameObjectAdded();
         }
@@ -40,24 +35,28 @@ namespace Game.Application.Objects.Components
 
         private void SubscribeToNearbyGameObjectAdded()
         {
+            var nearbySceneObjectsEvents = proximityChecker.GetNearbyGameObjectsEvents();
             nearbySceneObjectsEvents.SceneObjectAdded += OnNearbyGameObjectAdded;
         }
 
         private void UnsubscribeFromNearbyGameObjectAdded()
         {
+            var nearbySceneObjectsEvents = proximityChecker.GetNearbyGameObjectsEvents();
             nearbySceneObjectsEvents.SceneObjectAdded -= OnNearbyGameObjectAdded;
         }
 
         private void OnNearbyGameObjectAdded(IGameObject _)
         {
+            var id = gameObjectGetter.Get().Id;
+            var messageCode = (byte)MessageCodes.BubbleNotification;
             var message = new BubbleNotificationMessage()
             {
-                RequesterId = gameObject.Id,
+                RequesterId = id,
                 Message = text,
                 Time = time
             };
 
-            messageSender.SendMessage((byte)MessageCodes.BubbleNotification, message);
+            messageSender.SendMessage(messageCode, message);
         }
     }
 }
