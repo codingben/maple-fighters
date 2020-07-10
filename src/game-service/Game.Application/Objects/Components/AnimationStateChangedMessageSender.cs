@@ -6,17 +6,15 @@ namespace Game.Application.Objects.Components
     [ComponentSettings(ExposedState.Unexposable)]
     public class AnimationStateChangedMessageSender : ComponentBase
     {
-        private IMessageSender messageSender;
         private IAnimationData animationData;
-        private IGameObject gameObject;
+        private IGameObjectGetter gameObjectGetter;
+        private IMessageSender messageSender;
 
         protected override void OnAwake()
         {
-            messageSender = Components.Get<IMessageSender>();
             animationData = Components.Get<IAnimationData>();
-
-            var gameObjectGetter = Components.Get<IGameObjectGetter>();
-            gameObject = gameObjectGetter.Get();
+            gameObjectGetter = Components.Get<IGameObjectGetter>();
+            messageSender = Components.Get<IMessageSender>();
 
             SubscribeToAnimationStateChanged();
         }
@@ -38,13 +36,15 @@ namespace Game.Application.Objects.Components
 
         private void OnAnimationStateChanged()
         {
+            var id = gameObjectGetter.Get().Id;
+            var messageCode = (byte)MessageCodes.AnimationStateChanged;
             var message = new AnimationStateChangedMessage()
             {
-                GameObjectId = gameObject.Id,
+                GameObjectId = id,
                 AnimationState = animationData.GetAnimationState()
             };
 
-            messageSender.SendMessageToNearbyGameObjects((byte)MessageCodes.AnimationStateChanged, message);
+            messageSender.SendMessageToNearbyGameObjects(messageCode, message);
         }
     }
 }
