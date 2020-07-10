@@ -2,6 +2,7 @@ using Common.MathematicsHelper;
 using InterestManagement;
 using Game.Application.Network;
 using Game.Application.Messages;
+using Game.Application.Objects;
 
 namespace Game.Application.Handlers
 {
@@ -9,9 +10,9 @@ namespace Game.Application.Handlers
     {
         private readonly ITransform transform;
 
-        public ChangePositionMessageHandler(ITransform transform)
+        public ChangePositionMessageHandler(IGameObject player)
         {
-            this.transform = transform;
+            this.transform = player.Transform;
         }
 
         public void Handle(byte[] rawData)

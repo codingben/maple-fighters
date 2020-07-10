@@ -8,21 +8,17 @@ namespace Game.Application.Handlers
 {
     public class ChangeSceneMessageHandler : IMessageHandler
     {
-        private IMessageSender messageSender;
-        private IProximityChecker proximityChecker;
-        private IPresenceMapProvider presenceMapProvider;
         private IGameSceneCollection gameSceneCollection;
+        private IProximityChecker proximityChecker;
+        private IMessageSender messageSender;
+        private IPresenceMapProvider presenceMapProvider;
 
-        public ChangeSceneMessageHandler(
-            IMessageSender messageSender,
-            IProximityChecker proximityChecker,
-            IPresenceMapProvider presenceMapProvider,
-            IGameSceneCollection gameSceneCollection)
+        public ChangeSceneMessageHandler(IGameObject player, IGameSceneCollection gameSceneCollection)
         {
-            this.messageSender = messageSender;
-            this.proximityChecker = proximityChecker;
-            this.presenceMapProvider = presenceMapProvider;
             this.gameSceneCollection = gameSceneCollection;
+            this.proximityChecker = player.Components.Get<ProximityChecker>();
+            this.presenceMapProvider = player.Components.Get<PresenceMapProvider>();
+            this.messageSender = player.Components.Get<MessageSender>();
         }
 
         public void Handle(byte[] rawData)
@@ -51,12 +47,13 @@ namespace Game.Application.Handlers
 
         private void SendSceneChangedMessage(byte map)
         {
+            var messageCode = (byte)MessageCodes.SceneChanged;
             var message = new SceneChangedMessage
             {
                 Map = map
             };
 
-            messageSender.SendMessage((byte)MessageCodes.SceneChanged, message);
+            messageSender.SendMessage(messageCode, message);
         }
 
         private IGameObject GetPortal(int id)

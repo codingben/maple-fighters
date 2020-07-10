@@ -1,23 +1,21 @@
 using Game.Application.Messages;
 using Game.Application.Network;
+using Game.Application.Objects;
 using Game.Application.Objects.Components;
 
 namespace Game.Application.Handlers
 {
     public class EnterSceneMessageHandler : IMessageHandler
     {
-        private readonly IGameObjectGetter gameObjectGetter;
+        private readonly IGameObject player;
         private readonly ICharacterData characterData;
         private readonly IMessageSender messageSender;
 
-        public EnterSceneMessageHandler(
-            IGameObjectGetter gameObjectGetter,
-            ICharacterData characterData,
-            IMessageSender messageSender)
+        public EnterSceneMessageHandler(IGameObject player)
         {
-            this.gameObjectGetter = gameObjectGetter;
-            this.characterData = characterData;
-            this.messageSender = messageSender;
+            this.player = player;
+            this.characterData = player.Components.Get<CharacterData>();
+            this.messageSender = player.Components.Get<MessageSender>();
         }
 
         public void Handle(byte[] rawData)
@@ -38,17 +36,18 @@ namespace Game.Application.Handlers
 
         private void SendEnteredSceneMessage()
         {
-            var gameObject = gameObjectGetter.Get();
-
-            messageSender.SendMessage((byte)MessageCodes.EnteredScene, new EnteredSceneMessage()
+            var messageCode = (byte)MessageCodes.EnteredScene;
+            var message = new EnteredSceneMessage()
             {
-                GameObjectId = gameObject.Id,
+                GameObjectId = player.Id,
                 SpawnPositionData = new SpawnPositionData
                 {
-                    X = gameObject.Transform.Position.X,
-                    Y = gameObject.Transform.Position.Y
+                    X = player.Transform.Position.X,
+                    Y = player.Transform.Position.Y
                 }
-            });
+            };
+
+            messageSender.SendMessage(messageCode, message);
         }
     }
 }

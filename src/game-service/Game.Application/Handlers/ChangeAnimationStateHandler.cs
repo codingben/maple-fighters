@@ -1,5 +1,6 @@
 using Game.Application.Messages;
 using Game.Application.Network;
+using Game.Application.Objects;
 using Game.Application.Objects.Components;
 
 namespace Game.Application.Handlers
@@ -8,9 +9,9 @@ namespace Game.Application.Handlers
     {
         private readonly IAnimationData animationData;
 
-        public ChangeAnimationStateHandler(IAnimationData animationData)
+        public ChangeAnimationStateHandler(IGameObject player)
         {
-            this.animationData = animationData;
+            this.animationData = player.Components.Get<AnimationData>();
         }
 
         public void Handle(byte[] rawData)
