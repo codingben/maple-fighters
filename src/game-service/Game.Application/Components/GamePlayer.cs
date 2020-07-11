@@ -15,6 +15,11 @@ namespace Game.Application.Components
 
         public void Dispose()
         {
+            var presenceMapProvider = player.Components.Get<IPresenceMapProvider>();
+            var map = presenceMapProvider.GetMap();
+
+            map.GameObjectCollection.Remove(id);
+
             player?.Dispose();
         }
 
