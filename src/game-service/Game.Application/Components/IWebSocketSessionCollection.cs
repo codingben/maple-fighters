@@ -2,10 +2,10 @@
 {
     public interface IWebSocketSessionCollection
     {
-        bool AddSessionData(int id, WebSocketSessionData webSocketSessionData);
+        bool Add(int id, WebSocketSessionData webSocketSessionData);
 
-        bool RemoveSessionData(int id);
+        bool Remove(int id);
 
-        bool GetSessionData(int id, out WebSocketSessionData webSocketSessionData);
+        bool TryGet(int id, out WebSocketSessionData webSocketSessionData);
     }
 }

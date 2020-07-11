@@ -13,17 +13,17 @@ namespace Game.Application.Components
             collection = new ConcurrentDictionary<int, WebSocketSessionData>();
         }
 
-        public bool AddSessionData(int id, WebSocketSessionData webSocketSessionData)
+        public bool Add(int id, WebSocketSessionData webSocketSessionData)
         {
             return collection.TryAdd(id, webSocketSessionData);
         }
 
-        public bool RemoveSessionData(int id)
+        public bool Remove(int id)
         {
             return collection.TryRemove(id, out _);
         }
 
-        public bool GetSessionData(int id, out WebSocketSessionData webSocketSessionData)
+        public bool TryGet(int id, out WebSocketSessionData webSocketSessionData)
         {
             return collection.TryGetValue(id, out webSocketSessionData);
         }
