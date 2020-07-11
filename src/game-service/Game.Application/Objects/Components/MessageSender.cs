@@ -7,15 +7,15 @@ namespace Game.Application.Objects.Components
     [ComponentSettings(ExposedState.Exposable)]
     public class MessageSender : ComponentBase, IMessageSender
     {
-        private readonly Action<byte[]> sendMessageCallback;
-        private readonly Action<byte[], int> sendMessageToCallback;
+        private readonly Action<byte[]> sendMessage;
+        private readonly Action<byte[], int> sendToMessage;
 
         private IProximityChecker proximityChecker;
 
-        public MessageSender(Action<byte[]> sendMessageCallback, Action<byte[], int> sendMessageToCallback)
+        public MessageSender(Action<byte[]> sendMessage, Action<byte[], int> sendToMessage)
         {
-            this.sendMessageCallback = sendMessageCallback;
-            this.sendMessageToCallback = sendMessageToCallback;
+            this.sendMessage = sendMessage;
+            this.sendToMessage = sendToMessage;
         }
 
         protected override void OnAwake()
@@ -28,7 +28,7 @@ namespace Game.Application.Objects.Components
         {
             var rawData = MessageUtils.WrapMessage(code, message);
 
-            sendMessageCallback(rawData);
+            sendMessage?.Invoke(rawData);
         }
 
         public void SendMessageToNearbyGameObjects<TMessage>(byte code, TMessage message)
@@ -40,7 +40,7 @@ namespace Game.Application.Objects.Components
             {
                 var rawData = MessageUtils.WrapMessage(code, message);
 
-                sendMessageToCallback(rawData, gameObject.Id);
+                sendToMessage?.Invoke(rawData, gameObject.Id);
             }
         }
     }
