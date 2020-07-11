@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Common.ComponentModel;
 using Common.Components;
@@ -7,6 +8,7 @@ using Game.Application.Components;
 using Game.Application.Network;
 using Game.Application.Handlers;
 using Game.Application.Messages;
+using Game.Application.Objects.Components;
 
 namespace Game.Application
 {
@@ -31,6 +33,7 @@ namespace Game.Application
         protected override void OnOpen()
         {
             AddPlayerGameObject();
+            AddMessageSenderToPlayer();
             AddWebSocketSessionData();
             AddHandlerForChangePosition();
             AddHandlerForChangeAnimationState();
@@ -117,6 +120,26 @@ namespace Game.Application
         private void AddPlayerGameObject()
         {
             gamePlayer?.Create();
+        }
+
+        private void AddMessageSenderToPlayer()
+        {
+            var player = gamePlayer?.GetPlayer();
+
+            Action<byte[], int> sendToMessage = (rawData, id) =>
+            {
+                if (webSocketSessionCollection.TryGet(id, out var webSocketSessionData))
+                {
+                    Sessions.SendTo(rawData, webSocketSessionData.Id);
+                }
+            };
+
+            Action<byte[]> sendMessage = (rawData) =>
+            {
+                Send(rawData);
+            };
+
+            player?.Components.Add(new MessageSender(sendMessage, sendToMessage));
         }
 
         private void RemovePlayerGameObject()
