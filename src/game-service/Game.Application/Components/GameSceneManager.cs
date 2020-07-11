@@ -1,7 +1,9 @@
-﻿using Common.ComponentModel;
+﻿using System.Collections.Generic;
+using Common.ComponentModel;
 using Common.Components;
 using Common.MathematicsHelper;
 using Game.Application.Objects;
+using InterestManagement;
 
 namespace Game.Application.Components
 {
@@ -16,8 +18,8 @@ namespace Game.Application.Components
             idGenerator = Components.Get<IIdGenerator>();
             gameSceneCollection = Components.Get<IGameSceneCollection>();
 
-            var lobby = CreateMap(Map.Lobby);
-            var theDarkForest = CreateMap(Map.TheDarkForest);
+            var lobby = CreateLobby();
+            var theDarkForest = CreateTheDarkForest();
 
             gameSceneCollection.Add(Map.Lobby, lobby);
             gameSceneCollection.Add(Map.TheDarkForest, theDarkForest);
@@ -29,76 +31,83 @@ namespace Game.Application.Components
             gameSceneCollection.Remove(Map.TheDarkForest);
         }
 
-        // TODO: Move out. Refactor. Another way to add game objects.
-        private IGameScene CreateMap(Map map)
+        // TODO: Refactor
+        private IGameScene CreateLobby()
         {
-            IGameScene gameScene = null;
+            var gameScene = new GameScene(new Vector2(40, 5), new Vector2(10, 5));
 
-            switch (map)
+            // Lobby Spawn Position
+            gameScene.GamePlayerSpawnData.SetSpawnPosition(new Vector2(18, -1.86f));
+
+            var region = gameScene.MatrixRegion;
+
+            foreach (var gameObject in CreateLobbyGameObjects(region))
             {
-                case Map.Lobby:
-                {
-                    var sceneSize = new Vector2(40, 5);
-                    var regionSize = new Vector2(10, 5);
-                    gameScene = new GameScene(sceneSize, regionSize);
-
-                    var playerSpawnPosition = new Vector2(18, -1.86f);
-                    gameScene.GamePlayerSpawnData.SetSpawnPosition(playerSpawnPosition);
-
-                    var region = gameScene.MatrixRegion;
-
-                    // Guardian Game Object
-                    var guardianId = idGenerator.GenerateId();
-                    var guardianPosition = new Vector2(-14.24f, -2.025f);
-                    var guardian =
-                        new GuardianGameObject(guardianId, guardianPosition, region);
-                    guardian.AddBubbleNotification("Hello", 1);
-
-                    gameScene.GameObjectCollection.Add(guardian);
-
-                    // Portal Game Object
-                    var portalId = idGenerator.GenerateId();
-                    var portalPosition = new Vector2(-17.125f, -1.5f);
-                    var portal =
-                        new PortalGameObject(portalId, portalPosition, region);
-                    portal.AddPortalData((byte)Map.TheDarkForest);
-
-                    gameScene.GameObjectCollection.Add(portal);
-                    break;
-                }
-
-                case Map.TheDarkForest:
-                {
-                    var sceneSize = new Vector2(30, 30);
-                    var regionSize = new Vector2(10, 5);
-                    gameScene = new GameScene(sceneSize, regionSize);
-
-                    var playerSpawnPosition = new Vector2(-12.8f, -2.95f);
-                    gameScene.GamePlayerSpawnData.SetSpawnPosition(playerSpawnPosition);
-
-                    var region = gameScene.MatrixRegion;
-
-                    // Blue Snail Game Object
-                    var guardianId = idGenerator.GenerateId();
-                    var blueSnailPosition = new Vector2(-2f, -8.2f);
-                    var blueSnail =
-                        new BlueSnailGameObject(guardianId, blueSnailPosition, region);
-
-                    gameScene.GameObjectCollection.Add(blueSnail);
-
-                    // Portal Game Object
-                    var portalId = idGenerator.GenerateId();
-                    var portalPosition = new Vector2(12.5f, -1.125f);
-                    var portal =
-                        new PortalGameObject(portalId, portalPosition, region);
-                    portal.AddPortalData((byte)Map.Lobby);
-
-                    gameScene.GameObjectCollection.Add(portal);
-                    break;
-                }
+                gameScene.GameObjectCollection.Add(gameObject);
             }
 
             return gameScene;
+        }
+
+        // TODO: Refactor
+        private IEnumerable<IGameObject> CreateLobbyGameObjects(IMatrixRegion<IGameObject> region)
+        {
+            // Guardian Game Object
+            var guardianId = idGenerator.GenerateId();
+            var guardianPosition = new Vector2(-14.24f, -2.025f);
+            var guardian =
+                new GuardianGameObject(guardianId, guardianPosition, region);
+            guardian.AddBubbleNotification("Hello", 1);
+
+            yield return guardian;
+
+            // Portal Game Object
+            var portalId = idGenerator.GenerateId();
+            var portalPosition = new Vector2(-17.125f, -1.5f);
+            var portal =
+                new PortalGameObject(portalId, portalPosition, region);
+            portal.AddPortalData((byte)Map.TheDarkForest);
+
+            yield return portal;
+        }
+
+        // TODO: Refactor
+        private IGameScene CreateTheDarkForest()
+        {
+            var gameScene = new GameScene(new Vector2(30, 30), new Vector2(10, 5));
+
+            // The Dark Forest Spawn Position
+            gameScene.GamePlayerSpawnData.SetSpawnPosition(new Vector2(-12.8f, -2.95f));
+
+            var region = gameScene.MatrixRegion;
+
+            foreach (var gameObject in CreateTheDarkForestGameObjects(region))
+            {
+                gameScene.GameObjectCollection.Add(gameObject);
+            }
+
+            return gameScene;
+        }
+
+        // TODO: Refactor
+        private IEnumerable<IGameObject> CreateTheDarkForestGameObjects(IMatrixRegion<IGameObject> region)
+        {
+            // Blue Snail Game Object
+            var guardianId = idGenerator.GenerateId();
+            var blueSnailPosition = new Vector2(-2f, -8.2f);
+            var blueSnail =
+                new BlueSnailGameObject(guardianId, blueSnailPosition, region);
+
+            yield return blueSnail;
+
+            // Portal Game Object
+            var portalId = idGenerator.GenerateId();
+            var portalPosition = new Vector2(12.5f, -1.125f);
+            var portal =
+                new PortalGameObject(portalId, portalPosition, region);
+            portal.AddPortalData((byte)Map.Lobby);
+
+            yield return portal;
         }
     }
 }
