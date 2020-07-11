@@ -35,10 +35,7 @@ namespace Game.Application.Handlers
                     gameSceneCollection.TryGet((Map)map, out var gameScene);
                 if (gameSceneExists)
                 {
-                    var region = gameScene.MatrixRegion;
-
-                    proximityChecker.SetMatrixRegion(region);
-                    presenceMapProvider.SetMap(map);
+                    presenceMapProvider.SetMap(gameScene);
 
                     SendSceneChangedMessage(map);
                 }
