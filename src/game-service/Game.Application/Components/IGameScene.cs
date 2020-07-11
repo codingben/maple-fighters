@@ -8,6 +8,8 @@ namespace Game.Application.Components
     {
         IGameObjectCollection GameObjectCollection { get; }
 
+        IGamePlayerSpawnData GamePlayerSpawnData { get; }
+
         IPhysicsExecutor PhysicsExecutor { get; }
 
         IPhysicsWorldManager PhysicsWorldManager { get; }
