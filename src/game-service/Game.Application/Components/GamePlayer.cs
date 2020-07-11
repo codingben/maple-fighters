@@ -15,10 +15,7 @@ namespace Game.Application.Components
 
         public void Dispose()
         {
-            var presenceMapProvider = player.Components.Get<IPresenceMapProvider>();
-            var map = presenceMapProvider.GetMap();
-
-            map.GameObjectCollection.Remove(id);
+            Remove();
 
             player?.Dispose();
         }
@@ -31,6 +28,14 @@ namespace Game.Application.Components
             player.Components.Add(new AnimationStateChangedMessageSender());
             player.Components.Add(new CharacterData());
             player.Components.Add(new PresenceMapProvider());
+        }
+
+        private void Remove()
+        {
+            var presenceMapProvider = player?.Components?.Get<IPresenceMapProvider>();
+            var map = presenceMapProvider?.GetMap();
+
+            map?.GameObjectCollection?.Remove(id);
         }
 
         public IGameObject GetPlayer()
