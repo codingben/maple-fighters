@@ -1,4 +1,3 @@
-using Common.MathematicsHelper;
 using Game.Application.Objects;
 using Game.Application.Objects.Components;
 
@@ -7,7 +6,6 @@ namespace Game.Application.Components
     public class GamePlayer : IGamePlayer
     {
         private readonly int id;
-
         private IGameObject player;
 
         public GamePlayer(int id)
