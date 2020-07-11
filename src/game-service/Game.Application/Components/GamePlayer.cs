@@ -22,10 +22,7 @@ namespace Game.Application.Components
 
         public void Create()
         {
-            // TODO: Refactor. Lobby Spawn Position
-            var position = new Vector2(18, -1.86f);
-
-            player = new PlayerGameObject(id, position);
+            player = new PlayerGameObject(id);
             player.Components.Add(new AnimationData());
             player.Components.Add(new PositionChangedMessageSender());
             player.Components.Add(new AnimationStateChangedMessageSender());
