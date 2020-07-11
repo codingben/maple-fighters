@@ -1,25 +1,30 @@
 using Common.ComponentModel;
+using Game.Application.Components;
 
 namespace Game.Application.Objects.Components
 {
     [ComponentSettings(ExposedState.Exposable)]
     public class PresenceMapProvider : ComponentBase, IPresenceMapProvider
     {
-        private byte map;
+        private IGameScene gameScene;
+        private IProximityChecker proximityChecker;
 
-        public PresenceMapProvider(byte map = 0)
+        protected override void OnAwake()
         {
-            this.map = map;
+            proximityChecker = Components.Get<IProximityChecker>();
         }
 
-        public void SetMap(byte map)
+        public void SetMap(IGameScene gameScene)
         {
-            this.map = map;
+            this.gameScene = gameScene;
+
+            var region = gameScene.MatrixRegion;
+            proximityChecker.SetMatrixRegion(region);
         }
 
-        public byte GetMap()
+        public IGameScene GetMap()
         {
-            return map;
+            return gameScene;
         }
     }
 }

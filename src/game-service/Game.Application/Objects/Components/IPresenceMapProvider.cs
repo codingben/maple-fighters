@@ -1,9 +1,11 @@
+using Game.Application.Components;
+
 namespace Game.Application.Objects.Components
 {
     public interface IPresenceMapProvider
     {
-        void SetMap(byte map);
+        void SetMap(IGameScene gameScene);
 
-        byte GetMap();
+        IGameScene GetMap();
     }
 }
