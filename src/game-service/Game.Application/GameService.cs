@@ -25,7 +25,7 @@ namespace Game.Application
             var idGenerator = components.Get<IIdGenerator>();
             var id = idGenerator.GenerateId();
 
-            gamePlayer = new GamePlayer(id, gameSceneCollection);
+            gamePlayer = new GamePlayer(id);
         }
 
         protected override void OnOpen()

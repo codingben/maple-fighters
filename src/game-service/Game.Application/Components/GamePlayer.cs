@@ -7,14 +7,12 @@ namespace Game.Application.Components
     public class GamePlayer : IGamePlayer
     {
         private readonly int id;
-        private readonly IGameSceneCollection gameSceneCollection;
 
         private IGameObject player;
 
-        public GamePlayer(int id, IGameSceneCollection gameSceneCollection)
+        public GamePlayer(int id)
         {
             this.id = id;
-            this.gameSceneCollection = gameSceneCollection;
         }
 
         public void Dispose()
