@@ -38,7 +38,12 @@ namespace Game.Application.Components
             {
                 case Map.Lobby:
                 {
-                    gameScene = new GameScene(new Vector2(40, 5), new Vector2(40, 5));
+                    var sceneSize = new Vector2(40, 5);
+                    var regionSize = new Vector2(10, 5);
+                    gameScene = new GameScene(sceneSize, regionSize);
+
+                    var playerSpawnPosition = new Vector2(18, -1.86f);
+                    gameScene.GamePlayerSpawnData.SetSpawnPosition(playerSpawnPosition);
 
                     var region = gameScene.MatrixRegion;
 
@@ -53,7 +58,7 @@ namespace Game.Application.Components
 
                     // Portal Game Object
                     var portalId = idGenerator.GenerateId();
-                    var portalPosition = new Vector2(-14.24f, -2.025f);
+                    var portalPosition = new Vector2(-17.125f, -1.5f);
                     var portal =
                         new PortalGameObject(portalId, portalPosition, region);
                     portal.AddPortalData((byte)Map.TheDarkForest);
@@ -64,7 +69,12 @@ namespace Game.Application.Components
 
                 case Map.TheDarkForest:
                 {
-                    gameScene = new GameScene(new Vector2(30, 30), new Vector2(40, 5));
+                    var sceneSize = new Vector2(30, 30);
+                    var regionSize = new Vector2(10, 5);
+                    gameScene = new GameScene(sceneSize, regionSize);
+
+                    var playerSpawnPosition = new Vector2(-12.8f, -2.95f);
+                    gameScene.GamePlayerSpawnData.SetSpawnPosition(playerSpawnPosition);
 
                     var region = gameScene.MatrixRegion;
 
