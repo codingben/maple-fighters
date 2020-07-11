@@ -1,13 +1,11 @@
-using Common.MathematicsHelper;
-
 namespace Game.Application.Objects
 {
     public class PlayerGameObject : GameObject
     {
-        public PlayerGameObject(int id, Vector2 position)
+        public PlayerGameObject(int id)
             : base(id, name: "Player")
         {
-            Transform.SetPosition(position);
+            // Left blank intentionally
         }
     }
 }
