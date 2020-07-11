@@ -131,7 +131,7 @@ namespace Game.Application
             {
                 var data = new WebSocketSessionData(ID);
 
-                webSocketSessionCollection.AddSessionData(player.Id, data);
+                webSocketSessionCollection.Add(player.Id, data);
             }
         }
 
@@ -140,7 +140,7 @@ namespace Game.Application
             var player = gamePlayer?.GetPlayer();
             if (player != null)
             {
-                webSocketSessionCollection.RemoveSessionData(player.Id);
+                webSocketSessionCollection.Remove(player.Id);
             }
         }
     }
