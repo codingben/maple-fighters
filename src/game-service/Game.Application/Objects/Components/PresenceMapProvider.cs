@@ -18,6 +18,11 @@ namespace Game.Application.Objects.Components
         {
             this.gameScene = gameScene;
 
+            SetRegion();
+        }
+
+        private void SetRegion()
+        {
             var region = gameScene.MatrixRegion;
             proximityChecker.SetMatrixRegion(region);
         }
