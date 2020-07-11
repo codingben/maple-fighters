@@ -12,7 +12,6 @@ namespace Game.Application.Handlers
         private readonly IGameSceneCollection gameSceneCollection;
         private readonly ICharacterData characterData;
         private readonly IPresenceMapProvider presenceMapProvider;
-        private readonly IProximityChecker proximityChecker;
         private readonly IMessageSender messageSender;
 
         public EnterSceneMessageHandler(IGameObject player, IGameSceneCollection gameSceneCollection)
@@ -21,7 +20,6 @@ namespace Game.Application.Handlers
             this.gameSceneCollection = gameSceneCollection;
             this.characterData = player.Components.Get<CharacterData>();
             this.presenceMapProvider = player.Components.Get<IPresenceMapProvider>();
-            this.proximityChecker = player.Components.Get<IProximityChecker>();
             this.messageSender = player.Components.Get<MessageSender>();
         }
 
@@ -43,11 +41,7 @@ namespace Game.Application.Handlers
                 player.Transform.SetPosition(position);
 
                 // Set's map
-                presenceMapProvider.SetMap(map);
-
-                // Set's region
-                var region = gameScene.MatrixRegion;
-                proximityChecker.SetMatrixRegion(region);
+                presenceMapProvider.SetMap(gameScene);
 
                 // Adds to this game scene
                 gameScene.GameObjectCollection.Add(player);
