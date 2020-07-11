@@ -25,6 +25,7 @@ namespace Game.Application.Components
             player.Components.Add(new PositionChangedMessageSender());
             player.Components.Add(new AnimationStateChangedMessageSender());
             player.Components.Add(new CharacterData());
+            player.Components.Add(new PresenceMapProvider());
         }
 
         public IGameObject GetPlayer()
