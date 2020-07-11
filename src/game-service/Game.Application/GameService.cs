@@ -94,7 +94,8 @@ namespace Game.Application
             if (player != null)
             {
                 var messageCode = (byte)MessageCodes.EnterScene;
-                var messageHandler = new EnterSceneMessageHandler(player);
+                var messageHandler =
+                    new EnterSceneMessageHandler(player, gameSceneCollection);
 
                 handlers.Add(messageCode, messageHandler);
             }
