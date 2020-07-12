@@ -11,4 +11,8 @@
     <PackageReference Include="Common.Components" Version="1.0.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Game.Application\Game.Application.csproj" />
+  </ItemGroup>
+
 </Project>
