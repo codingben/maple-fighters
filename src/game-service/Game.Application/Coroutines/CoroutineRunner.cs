@@ -32,7 +32,7 @@ namespace Coroutines
     /// <summary>
     /// A container for running multiple routines in parallel. Coroutines can be nested.
     /// </summary>
-    public class CoroutineRunner
+    public class CoroutineRunner : ICoroutineRunner
     {
         private List<IEnumerator> running = new List<IEnumerator>();
         private List<float> delays = new List<float>();
