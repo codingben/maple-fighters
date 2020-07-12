@@ -9,6 +9,7 @@
     <PackageReference Include="Box2D.Window" Version="1.0.3" />
     <PackageReference Include="Common.ComponentModel" Version="1.0.1" />
     <PackageReference Include="Common.Components" Version="1.0.1" />
+    <PackageReference Include="Physics.Box2D" Version="1.0.2" />
   </ItemGroup>
 
   <ItemGroup>
