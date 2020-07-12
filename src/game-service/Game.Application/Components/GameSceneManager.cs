@@ -3,6 +3,7 @@ using Common.ComponentModel;
 using Common.Components;
 using Common.MathematicsHelper;
 using Game.Application.Objects;
+using Game.Application.Objects.Components;
 
 namespace Game.Application.Components
 {
@@ -96,6 +97,11 @@ namespace Game.Application.Components
             var blueSnailPosition = new Vector2(-2f, -8.2f);
             var blueSnail =
                 new BlueSnailGameObject(guardianId, blueSnailPosition, region);
+            var presenceMapProvider = blueSnail.Components.Add(new PresenceMapProvider());
+            presenceMapProvider.SetMap(gameScene);
+
+            blueSnail.Components.Add(new BlueSnailMoveBehaviour());
+
             var bodyData = blueSnail.CreateBodyData();
             gameScene.PhysicsWorldManager.AddBody(bodyData);
 
