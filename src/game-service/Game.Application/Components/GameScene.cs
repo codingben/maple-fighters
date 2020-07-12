@@ -28,7 +28,7 @@ namespace Game.Application.Components
             var gravity = new Vector2(0, -9.8f);
 
             PhysicsWorldManager = new PhysicsWorldManager(lowerBound, upperBound, gravity);
-            PhysicsExecutor = new PhysicsExecutor();
+            PhysicsExecutor = new PhysicsExecutor(OnUpdateBodies, OnSimulatePhysics);
         }
 
         public void Dispose()
