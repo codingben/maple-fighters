@@ -4,8 +4,10 @@ using Physics.Box2D;
 
 namespace Game.Application.Components
 {
-    public interface IGameScene : IScene<IGameObject>
+    public interface IGameScene
     {
+        IMatrixRegion<IGameObject> MatrixRegion { get; }
+
         IGameObjectCollection GameObjectCollection { get; }
 
         IGamePlayerSpawnData GamePlayerSpawnData { get; }
