@@ -3,7 +3,6 @@ using Common.ComponentModel;
 using Common.Components;
 using Common.MathematicsHelper;
 using Game.Application.Objects;
-using InterestManagement;
 
 namespace Game.Application.Components
 {
@@ -39,9 +38,7 @@ namespace Game.Application.Components
             // Lobby Spawn Position
             gameScene.GamePlayerSpawnData.SetSpawnPosition(new Vector2(18, -1.86f));
 
-            var region = gameScene.MatrixRegion;
-
-            foreach (var gameObject in CreateLobbyGameObjects(region))
+            foreach (var gameObject in CreateLobbyGameObjects(gameScene))
             {
                 gameScene.GameObjectCollection.Add(gameObject);
             }
@@ -50,8 +47,10 @@ namespace Game.Application.Components
         }
 
         // TODO: Refactor
-        private IEnumerable<IGameObject> CreateLobbyGameObjects(IMatrixRegion<IGameObject> region)
+        private IEnumerable<IGameObject> CreateLobbyGameObjects(IGameScene gameScene)
         {
+            var region = gameScene.MatrixRegion;
+
             // Guardian Game Object
             var guardianId = idGenerator.GenerateId();
             var guardianPosition = new Vector2(-14.24f, -2.025f);
@@ -79,9 +78,7 @@ namespace Game.Application.Components
             // The Dark Forest Spawn Position
             gameScene.GamePlayerSpawnData.SetSpawnPosition(new Vector2(-12.8f, -2.95f));
 
-            var region = gameScene.MatrixRegion;
-
-            foreach (var gameObject in CreateTheDarkForestGameObjects(region))
+            foreach (var gameObject in CreateTheDarkForestGameObjects(gameScene))
             {
                 gameScene.GameObjectCollection.Add(gameObject);
             }
@@ -90,13 +87,17 @@ namespace Game.Application.Components
         }
 
         // TODO: Refactor
-        private IEnumerable<IGameObject> CreateTheDarkForestGameObjects(IMatrixRegion<IGameObject> region)
+        private IEnumerable<IGameObject> CreateTheDarkForestGameObjects(IGameScene gameScene)
         {
+            var region = gameScene.MatrixRegion;
+
             // Blue Snail Game Object
             var guardianId = idGenerator.GenerateId();
             var blueSnailPosition = new Vector2(-2f, -8.2f);
             var blueSnail =
                 new BlueSnailGameObject(guardianId, blueSnailPosition, region);
+            var bodyData = blueSnail.CreateBodyData();
+            gameScene.PhysicsWorldManager.AddBody(bodyData);
 
             yield return blueSnail;
 
