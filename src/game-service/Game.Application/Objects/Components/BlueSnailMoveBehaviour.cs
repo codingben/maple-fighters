@@ -12,8 +12,8 @@ namespace Game.Application.Objects.Components
     {
         private IGameObject blueSnail;
         private IPhysicsWorldManager physicsWorldManager;
+        private ICoroutineRunner coroutineRunner;
         private BodyData bodyData;
-        private CoroutineRunner coroutineRunner;
 
         protected override void OnAwake()
         {
