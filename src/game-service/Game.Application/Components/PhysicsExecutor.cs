@@ -75,7 +75,7 @@ namespace Game.Application.Components
             }
         }
 
-        public CoroutineRunner GetCoroutineRunner()
+        public ICoroutineRunner GetCoroutineRunner()
         {
             return coroutineRunner;
         }

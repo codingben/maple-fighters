@@ -5,6 +5,6 @@ namespace Game.Application.Components
 {
     public interface IPhysicsExecutor : IDisposable
     {
-        CoroutineRunner GetCoroutineRunner();
+        ICoroutineRunner GetCoroutineRunner();
     }
 }
