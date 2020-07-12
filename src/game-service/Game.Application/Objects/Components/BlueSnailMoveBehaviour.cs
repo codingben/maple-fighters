@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using Common.ComponentModel;
 using Common.MathematicsHelper;
-using Game.Application.Components;
+using Coroutines;
 using Physics.Box2D;
 
 namespace Game.Application.Objects.Components
@@ -11,8 +11,9 @@ namespace Game.Application.Objects.Components
     public class BlueSnailMoveBehaviour : ComponentBase
     {
         private IGameObject blueSnail;
-        private IGameScene gameScene;
-        private BodyData blueSnailBodyData;
+        private IPhysicsWorldManager physicsWorldManager;
+        private BodyData bodyData;
+        private CoroutineRunner coroutineRunner;
 
         protected override void OnAwake()
         {
@@ -20,13 +21,15 @@ namespace Game.Application.Objects.Components
             blueSnail = gameObjectGetter.Get();
 
             var presenceMapProvider = Components.Get<IPresenceMapProvider>();
-            gameScene = presenceMapProvider.GetMap();
-            gameScene.PhysicsExecutor.GetCoroutineRunner().Run(Move());
+            var gameScene = presenceMapProvider.GetMap();
+            physicsWorldManager = gameScene.PhysicsWorldManager;
+            coroutineRunner = gameScene.PhysicsExecutor.GetCoroutineRunner();
+            coroutineRunner.Run(Move());
         }
 
         protected override void OnRemoved()
         {
-            gameScene.PhysicsExecutor.GetCoroutineRunner().Stop(Move());
+            coroutineRunner.Stop(Move());
         }
 
         private IEnumerator Move()
@@ -38,7 +41,7 @@ namespace Game.Application.Objects.Components
             var distance = 10;
 
             var id = blueSnail.Id;
-            gameScene.PhysicsWorldManager.GetBody(id, out blueSnailBodyData);
+            physicsWorldManager.GetBody(id, out bodyData);
 
             while (true)
             {
@@ -49,9 +52,9 @@ namespace Game.Application.Objects.Components
                     direction *= -1;
                 }
 
-                if (blueSnailBodyData.Body != null)
+                if (bodyData.Body != null)
                 {
-                    var body = blueSnailBodyData.Body;
+                    var body = bodyData.Body;
                     body.SetXForm(position.FromVector2(), body.GetAngle());
                 }
 
