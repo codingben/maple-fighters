@@ -2,6 +2,6 @@
 {
     public class AttackedMessage
     {
-        public ContactPointData ContactPoint { get; set; }
+        public int AttackerId { get; set; }
     }
 }
