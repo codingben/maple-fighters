@@ -1,5 +1,6 @@
 using Box2DX.Dynamics;
 using Common.MathematicsHelper;
+using Game.Application.Objects.Components;
 using InterestManagement;
 using Physics.Box2D;
 
@@ -21,7 +22,11 @@ namespace Game.Application.Objects
             var polygonDef = new PolygonDef();
             polygonDef.SetAsBox(5, 5);
             polygonDef.Density = 0.0f;
-            polygonDef.Filter = new FilterData();
+            polygonDef.Filter = new FilterData()
+            {
+                GroupIndex = (short)LayerMask.Mob
+            };
+            polygonDef.UserData = new MobContactEvents(Id);
 
             return new NewBodyData(Id, bodyDef, polygonDef);
         }
