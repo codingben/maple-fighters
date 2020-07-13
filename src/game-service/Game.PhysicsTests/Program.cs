@@ -5,6 +5,7 @@ using Common.ComponentModel;
 using Common.Components;
 using Game.Application.Components;
 using Game.Application.Objects;
+using Game.Application.Objects.Components;
 using static Box2DX.Dynamics.DebugDraw;
 
 namespace Game.PhysicsTests
@@ -48,6 +49,9 @@ namespace Game.PhysicsTests
 
             var playerId = 1;
             var player = new PlayerGameObject(playerId);
+            player.Components.Add(new MessageSender(null, null));
+            player.Components.Add(new PlayerAttackedMessageSender());
+
             var playerBody = player.CreateBodyData();
 
             gameScene.GameObjectCollection.Add(player);
