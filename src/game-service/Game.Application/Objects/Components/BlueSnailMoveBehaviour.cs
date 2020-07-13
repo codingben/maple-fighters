@@ -37,8 +37,8 @@ namespace Game.Application.Objects.Components
             var id = blueSnail.Id;
             var position = blueSnail.Transform.Position;
             var direction = 0.1f;
-            var speed = 1;
-            var distance = 10;
+            var speed = 1.5f;
+            var distance = 15;
 
             physicsWorldManager.GetBody(id, out bodyData);
 
