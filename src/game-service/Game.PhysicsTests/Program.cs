@@ -46,9 +46,12 @@ namespace Game.PhysicsTests
                 gameScene.PhysicsWorldManager.SetDebugDraw(physicsDrawer);
             }
 
-            var player = new PlayerGameObject(1);
+            var playerId = 1;
+            var player = new PlayerGameObject(playerId);
+            var playerBody = player.CreateBodyData();
+
             gameScene.GameObjectCollection.Add(player);
-            gameScene.PhysicsWorldManager.AddBody(player.CreateBodyData());
+            gameScene.PhysicsWorldManager.AddBody(playerBody);
 
             simulationWindow.VSync = OpenTK.VSyncMode.On;
             simulationWindow.Run(25.0);
