@@ -23,11 +23,6 @@ namespace Game.Application.Components
         public void Create()
         {
             player = new PlayerGameObject(id);
-            player.Components.Add(new AnimationData());
-            player.Components.Add(new PositionChangedMessageSender());
-            player.Components.Add(new AnimationStateChangedMessageSender());
-            player.Components.Add(new CharacterData());
-            player.Components.Add(new PresenceMapProvider());
         }
 
         private void Remove()
