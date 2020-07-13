@@ -34,13 +34,12 @@ namespace Game.Application.Objects.Components
 
         private IEnumerator Move()
         {
-            var transform = blueSnail.Transform;
-            var position = transform.Position;
+            var id = blueSnail.Id;
+            var position = blueSnail.Transform.Position;
             var direction = 0.1f;
             var speed = 1;
             var distance = 10;
 
-            var id = blueSnail.Id;
             physicsWorldManager.GetBody(id, out bodyData);
 
             while (true)
