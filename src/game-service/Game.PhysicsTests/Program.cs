@@ -4,6 +4,7 @@ using Box2D.Window;
 using Common.ComponentModel;
 using Common.Components;
 using Game.Application.Components;
+using Game.Application.Objects;
 using static Box2DX.Dynamics.DebugDraw;
 
 namespace Game.PhysicsTests
@@ -44,6 +45,10 @@ namespace Game.PhysicsTests
             {
                 gameScene.PhysicsWorldManager.SetDebugDraw(physicsDrawer);
             }
+
+            var player = new PlayerGameObject(1);
+            gameScene.GameObjectCollection.Add(player);
+            gameScene.PhysicsWorldManager.AddBody(player.CreateBodyData());
 
             simulationWindow.VSync = OpenTK.VSyncMode.On;
             simulationWindow.Run(25.0);
