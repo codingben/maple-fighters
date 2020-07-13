@@ -142,7 +142,7 @@ namespace Game.Application
             player?.Components.Add(new MessageSender(sendMessage, sendToMessage));
             player?.Components.Add(new PositionChangedMessageSender());
             player?.Components.Add(new AnimationStateChangedMessageSender());
-            player?.Components.Add(new PlayerAttackedBehaviour());
+            player?.Components.Add(new PlayerAttackedMessageSender());
         }
 
         private void RemovePlayerGameObject()
