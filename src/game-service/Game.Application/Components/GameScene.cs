@@ -25,7 +25,7 @@ namespace Game.Application.Components
 
             var lowerBound = new Vector2(-100, -100);
             var upperBound = new Vector2(100, 100);
-            var gravity = new Vector2(0, -9.8f);
+            var gravity = new Vector2(0, 0 /* -9.81f */);
 
             PhysicsWorldManager = new PhysicsWorldManager(lowerBound, upperBound, gravity);
             PhysicsExecutor = new PhysicsExecutor(OnUpdateBodies, OnSimulatePhysics);
