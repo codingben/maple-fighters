@@ -32,7 +32,7 @@ namespace Game.Application
 
         protected override void OnOpen()
         {
-            AddPlayerGameObject();
+            AddPlayer();
             AddMessageSenderToPlayer();
             AddWebSocketSessionData();
             AddHandlerForChangePosition();
@@ -43,7 +43,7 @@ namespace Game.Application
         protected override void OnClose(CloseEventArgs eventArgs)
         {
             RemoveWebSocketSessionData();
-            RemovePlayerGameObject();
+            RemovePlayer();
         }
 
         protected override void OnError(ErrorEventArgs eventArgs)
@@ -117,7 +117,7 @@ namespace Game.Application
             }
         }
 
-        private void AddPlayerGameObject()
+        private void AddPlayer()
         {
             gamePlayer?.Create();
         }
@@ -145,7 +145,7 @@ namespace Game.Application
             player?.Components.Add(new PlayerAttackedMessageSender());
         }
 
-        private void RemovePlayerGameObject()
+        private void RemovePlayer()
         {
             gamePlayer?.Dispose();
         }
