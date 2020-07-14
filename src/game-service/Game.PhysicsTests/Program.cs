@@ -14,7 +14,7 @@ namespace Game.PhysicsTests
     {
         private static void Main(string[] args)
         {
-            new Thread(new ThreadStart(CreateWindow))
+            new Thread(new ThreadStart(RunWindow))
             {
                 Priority = ThreadPriority.Lowest,
                 IsBackground = true
@@ -23,16 +23,13 @@ namespace Game.PhysicsTests
             Console.ReadKey();
         }
 
-        private static void CreateWindow()
+        private static void RunWindow()
         {
-            var simulationWindow = new SimulationWindow("Physics Tests", 800, 600);
-            simulationWindow.SetView(new CameraView());
-
-            var physicsDrawer = new DrawPhysics(simulationWindow);
-            physicsDrawer.AppendFlags(DrawFlags.Aabb);
-            physicsDrawer.AppendFlags(DrawFlags.Shape);
-            physicsDrawer.AppendFlags(DrawFlags.Pair);
-            physicsDrawer.AppendFlags(DrawFlags.Joint);
+            var simulationWindow = CreateSimulationWindow();
+            var physicsDrawer = new DrawPhysics(simulationWindow)
+            {
+                Flags = DrawFlags.Aabb | DrawFlags.Shape
+            };
 
             var gameScene = CreateMap(Map.TheDarkForest);
             if (gameScene != null)
@@ -42,8 +39,17 @@ namespace Game.PhysicsTests
                 CreatePlayer(gameScene);
             }
 
-            simulationWindow.VSync = OpenTK.VSyncMode.On;
             simulationWindow.Run(25.0);
+        }
+
+        private static SimulationWindow CreateSimulationWindow()
+        {
+            var simulationWindow = new SimulationWindow("Physics Tests", 800, 600);
+
+            simulationWindow.SetView(new CameraView());
+            simulationWindow.VSync = OpenTK.VSyncMode.On;
+
+            return simulationWindow;
         }
 
         private static IGameScene CreateMap(Map map)
