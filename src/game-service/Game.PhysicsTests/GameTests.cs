@@ -10,7 +10,7 @@ using static Box2DX.Dynamics.DebugDraw;
 
 namespace Game.PhysicsTests
 {
-    public class Program
+    public class GameTests
     {
         private static void Main(string[] args)
         {
