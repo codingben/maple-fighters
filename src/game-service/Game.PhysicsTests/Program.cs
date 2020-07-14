@@ -14,24 +14,17 @@ namespace Game.PhysicsTests
     {
         private static void Main(string[] args)
         {
-            var thread = new Thread(new ThreadStart(CreateWindow))
+            new Thread(new ThreadStart(CreateWindow))
             {
                 Priority = ThreadPriority.Lowest,
                 IsBackground = true
-            };
-
-            thread.Start();
+            }.Start();
 
             Console.ReadKey();
         }
 
         private static void CreateWindow()
         {
-            IComponents components = new ComponentsContainer();
-            components.Add(new IdGenerator());
-            components.Add(new GameSceneCollection());
-            components.Add(new GameSceneManager());
-
             var simulationWindow = new SimulationWindow("Physics Tests", 800, 600);
             simulationWindow.SetView(new CameraView());
 
@@ -41,24 +34,43 @@ namespace Game.PhysicsTests
             physicsDrawer.AppendFlags(DrawFlags.Pair);
             physicsDrawer.AppendFlags(DrawFlags.Joint);
 
-            var gameSceneCollection = components.Get<IGameSceneCollection>();
-            if (gameSceneCollection.TryGet(Map.TheDarkForest, out var gameScene))
+            var gameScene = CreateMap(Map.TheDarkForest);
+            if (gameScene != null)
             {
                 gameScene.PhysicsWorldManager.SetDebugDraw(physicsDrawer);
+
+                CreatePlayer(gameScene);
             }
-
-            var playerId = 1;
-            var player = new PlayerGameObject(playerId);
-            player.Components.Add(new MessageSender(null, null));
-            player.Components.Add(new PlayerAttackedMessageSender());
-
-            var playerBody = player.CreateBodyData();
-
-            gameScene.GameObjectCollection.Add(player);
-            gameScene.PhysicsWorldManager.AddBody(playerBody);
 
             simulationWindow.VSync = OpenTK.VSyncMode.On;
             simulationWindow.Run(25.0);
+        }
+
+        private static IGameScene CreateMap(Map map)
+        {
+            IComponents components = new ComponentsContainer();
+
+            components.Add(new IdGenerator());
+            var gameSceneCollection = components.Add(new GameSceneCollection());
+            components.Add(new GameSceneManager());
+
+            gameSceneCollection.TryGet(map, out var gameScene);
+
+            return gameScene;
+        }
+
+        private static void CreatePlayer(IGameScene gameScene)
+        {
+            var playerId = 1;
+            var player = new PlayerGameObject(playerId);
+
+            player.Components.Add(new MessageSender(null, null));
+            player.Components.Add(new PlayerAttackedMessageSender());
+
+            var bodyData = player.CreateBodyData();
+
+            gameScene.GameObjectCollection.Add(player);
+            gameScene.PhysicsWorldManager.AddBody(bodyData);
         }
     }
 }
