@@ -8,13 +8,13 @@ namespace Common.ComponentModel
     /// <summary>
     /// A container which contains the components.
     /// </summary>
-    public sealed class ComponentsContainer : IComponents, IExposedComponents
+    public sealed class ComponentsContainer : IComponents
     {
-        private readonly ComponentsCollection components;
+        private readonly List<IComponent> components;
 
         public ComponentsContainer()
         {
-            components = new ComponentsCollection();
+            components = new List<IComponent>();
         }
 
         /// <inheritdoc />
@@ -26,47 +26,14 @@ namespace Common.ComponentModel
         /// </exception>
         TComponent IComponents.Add<TComponent>(TComponent component)
         {
-            var exposedState = Utils.GetExposedState<TComponent>();
-            var isExists = components.IsExists<TComponent>(exposedState);
+            var isExists = components.OfType<TComponent>().Any();
             if (isExists)
             {
                 throw new ComponentAlreadyExistsException(typeof(TComponent).Name);
             }
 
             component.Awake(this);
-
-            components[exposedState].Add(component);
-
-            return component;
-        }
-
-        /// <inheritdoc />
-        /// <summary>
-        /// See <see cref="IExposedComponents.Add{T}"/> for more information.
-        /// </summary>
-        /// <exception cref="ComponentAlreadyExistsException">
-        /// A component exists in a collection.
-        /// </exception>
-        TComponent IExposedComponents.Add<TComponent>(TComponent component)
-        {
-            var exposedState = Utils.GetExposedState<TComponent>();
-            if (exposedState == ExposedState.Exposable)
-            {
-                var isExists =
-                    components.IsExists<TComponent>(ExposedState.Exposable);
-                if (isExists)
-                {
-                    throw new ComponentAlreadyExistsException(typeof(TComponent).Name);
-                }
-
-                component.Awake(this);
-
-                components[ExposedState.Exposable].Add(component);
-            }
-            else
-            {
-                throw new ComponentNotExposedException(typeof(TComponent).Name);
-            }
+            components.Add(component);
 
             return component;
         }
@@ -77,9 +44,7 @@ namespace Common.ComponentModel
         /// </summary>
         void IComponents.Remove<TComponent>()
         {
-            var exposedState = Utils.GetExposedState<TComponent>();
-            var collection = components[exposedState];
-            var component = collection.OfType<TComponent>().FirstOrDefault();
+            var component = components.OfType<TComponent>().FirstOrDefault();
             if (component == null)
             {
                 throw new ComponentNotFoundException(typeof(TComponent).Name);
@@ -87,10 +52,10 @@ namespace Common.ComponentModel
 
             component.Dispose();
 
-            var index = collection.IndexOf(component);
+            var index = components.IndexOf(component);
             if (index != -1)
             {
-                collection.RemoveAt(index);
+                components.RemoveAt(index);
             }
         }
 
@@ -102,24 +67,7 @@ namespace Common.ComponentModel
         {
             Utils.ThrowExceptionIfNotInterface<TComponent>();
 
-            var component = components.GetAllComponents()
-                .OfType<TComponent>()
-                .FirstOrDefault();
-
-            return component;
-        }
-
-        /// <inheritdoc />
-        /// <summary>
-        /// See <see cref="IExposedComponents.Get{T}"/> for more information.
-        /// </summary>
-        TComponent IExposedComponents.Get<TComponent>()
-        {
-            Utils.ThrowExceptionIfNotInterface<TComponent>();
-
-            var component = components.GetExposedComponents()
-                .OfType<TComponent>()
-                .FirstOrDefault();
+            var component = components.OfType<TComponent>().FirstOrDefault();
 
             return component;
         }
@@ -130,8 +78,7 @@ namespace Common.ComponentModel
         /// </summary>
         public void Dispose()
         {
-            var collection = new List<object>(components.GetAllComponents());
-            foreach (var component in collection)
+            foreach (var component in components)
             {
                 var disposable = component as IDisposable;
                 disposable?.Dispose();
