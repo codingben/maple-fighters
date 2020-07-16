@@ -1,5 +1,4 @@
-﻿using Common.ComponentModel.Tests;
-using NSubstitute;
+﻿using NSubstitute;
 using Xunit;
 
 namespace Common.ComponentModel.UnitTests
@@ -12,9 +11,8 @@ namespace Common.ComponentModel.UnitTests
             // Arrange
             IGameObject gameObject = new GameObject();
 
-            var dummyCharacter =
-                gameObject.ExposedComponents.AddAndMock<DummyCharacter>();
-            var transform = gameObject.ExposedComponents.Get<ITransform>();
+            var dummyCharacter = gameObject.Components.Get<IDummyCharacter>();
+            var transform = gameObject.Components.Get<ITransform>();
 
             // Act
             transform.SetPosition();
@@ -31,22 +29,22 @@ namespace Common.ComponentModel.UnitTests
 
     public interface IGameObject
     {
-        IExposedComponents ExposedComponents { get; }
+        IComponents Components { get; }
     }
 
     public class GameObject : IGameObject, ISceneObject
     {
         public int Id { get; }
 
-        public IExposedComponents ExposedComponents =>
-            Components.ProvideExposed();
-
-        protected IComponents Components { get; }
+        public IComponents Components { get; }
 
         public GameObject()
         {
-            Components = new ComponentsContainer();
-            Components.Add(new Transform());
+            var transform = Substitute.For<Transform>();
+            var dummyCharacter = Substitute.For<DummyCharacter>();
+            var collection = new IComponent[] { transform, dummyCharacter };
+
+            Components = new ComponentCollection(collection);
         }
     }
 
@@ -55,7 +53,6 @@ namespace Common.ComponentModel.UnitTests
         void SetPosition();
     }
 
-    [ComponentSettings(ExposedState.Exposable)]
     public class Transform : ComponentBase, ITransform
     {
         public void SetPosition()
@@ -70,7 +67,6 @@ namespace Common.ComponentModel.UnitTests
         void Move();
     }
 
-    [ComponentSettings(ExposedState.Exposable)]
     public class DummyCharacter : ComponentBase, IDummyCharacter
     {
         public void Move()
