@@ -11,16 +11,15 @@ namespace Common.ComponentModel.UnitTests
         public void Get_Should_Return_Singleton_Component()
         {
             // Arrange
-            IComponents components = new ComponentsContainer();
-
-            var component = new SingletonComponent();
-            components.Add(component);
+            var singletonComponent = Substitute.For<SingletonComponent>();
+            var collection = new IComponent[] { singletonComponent };
+            var components = new ComponentCollection(collection);
 
             // Act
             var someComponent = components.Get<ISingletonComponent>();
 
             // Assert
-            someComponent.ShouldBeSameAs(component);
+            someComponent.ShouldBeSameAs(singletonComponent);
         }
     }
 
