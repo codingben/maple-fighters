@@ -54,23 +54,4 @@ namespace Common.ComponentModel.UnitTests
             // Left blank intentionally
         }
     }
-
-    public class DummyComponent : ComponentBase
-    {
-        protected override void OnAwake()
-        {
-            base.OnAwake();
-
-            var otherDummyComponent = Components.Get<IOtherDummyComponent>();
-            otherDummyComponent.Create();
-        }
-
-        protected override void OnRemoved()
-        {
-            base.OnRemoved();
-
-            var otherDummyComponent = Components.Get<IOtherDummyComponent>();
-            otherDummyComponent.Destroy();
-        }
-    }
 }
