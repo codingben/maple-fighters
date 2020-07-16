@@ -1,5 +1,4 @@
-﻿using Common.ComponentModel.Tests;
-using NSubstitute;
+﻿using NSubstitute;
 using Xunit;
 
 namespace Common.ComponentModel.UnitTests
@@ -10,12 +9,11 @@ namespace Common.ComponentModel.UnitTests
         public void OnAwake_Called()
         {
             // Arrange
-            IComponents components = new ComponentsContainer();
-            var otherDummyComponent =
-                components.AddAndMock<OtherDummyComponent>();
+            var otherDummyComponent = Substitute.For<OtherDummyComponent>();
+            var collection = new IComponent[] { otherDummyComponent };
 
             // Act
-            components.Add(new DummyComponent());
+            var components = new ComponentCollection(collection);
 
             // Assert
             otherDummyComponent.Received().Create();
@@ -25,14 +23,12 @@ namespace Common.ComponentModel.UnitTests
         public void OnRemoved_Called()
         {
             // Arrange
-            IComponents components = new ComponentsContainer();
-            var otherDummyComponent =
-                components.AddAndMock<OtherDummyComponent>();
-
-            components.Add(new DummyComponent());
+            var otherDummyComponent = Substitute.For<OtherDummyComponent>();
+            var collection = new IComponent[] { otherDummyComponent };
+            var components = new ComponentCollection(collection);
 
             // Act
-            components.Remove<DummyComponent>();
+            components.Dispose();
 
             // Assert
             otherDummyComponent.Received().Destroy();
@@ -46,7 +42,6 @@ namespace Common.ComponentModel.UnitTests
         void Destroy();
     }
 
-    [ComponentSettings(ExposedState.Unexposable)]
     public class OtherDummyComponent : ComponentBase, IOtherDummyComponent
     {
         public void Create()
@@ -60,7 +55,6 @@ namespace Common.ComponentModel.UnitTests
         }
     }
 
-    [ComponentSettings(ExposedState.Unexposable)]
     public class DummyComponent : ComponentBase
     {
         protected override void OnAwake()
