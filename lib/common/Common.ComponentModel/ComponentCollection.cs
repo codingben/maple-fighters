@@ -24,7 +24,8 @@ namespace Common.ComponentModel
         /// <summary>
         /// See <see cref="IComponents.Get{T}"/> for more information.
         /// </summary>
-        TComponent IComponents.Get<TComponent>()
+        public TComponent Get<TComponent>()
+            where TComponent : class
         {
             if (typeof(TComponent).IsInterface == false)
             {
