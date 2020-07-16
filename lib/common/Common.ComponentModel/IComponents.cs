@@ -3,7 +3,7 @@
     public interface IComponents
     {
         /// <summary>
-        /// Gets the component from the collection.
+        /// Get a component from the collection only through the interface.
         /// </summary>
         /// <typeparam name="TComponent">The component represented by the interface.</typeparam>
         /// <returns>The component.</returns>
