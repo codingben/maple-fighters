@@ -1,5 +1,4 @@
-﻿using System;
-using NSubstitute;
+﻿using NSubstitute;
 using Shouldly;
 using Xunit;
 
@@ -38,19 +37,6 @@ namespace Common.ComponentModel.UnitTests
         public void Dispose()
         {
             // Left blank intentionally
-        }
-    }
-
-    public class NoAttributeComponent : IComponent
-    {
-        public void Awake(IComponents components)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Dispose()
-        {
-            throw new NotImplementedException();
         }
     }
 }
