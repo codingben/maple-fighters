@@ -1,34 +1,12 @@
-﻿using System;
-
-namespace Common.ComponentModel
+﻿namespace Common.ComponentModel
 {
-    /// <inheritdoc />
-    /// <summary>
-    /// Represents an access to the component's container.
-    /// </summary>
-    public interface IComponents : IDisposable
+    public interface IComponents
     {
         /// <summary>
-        /// Adds and awakes a new component to the component's container.
+        /// Gets the component from the collection.
         /// </summary>
-        /// <typeparam name="TComponent">The component itself.</typeparam>
-        /// <param name="component">The new component.</param>
-        /// <returns>The new component after it was added to the container.</returns>
-        TComponent Add<TComponent>(TComponent component)
-            where TComponent : IComponent;
-
-        /// <summary>
-        /// Removes and disposes a component from the component's container.
-        /// </summary>
-        /// <typeparam name="TComponent">The desired component.</typeparam>
-        void Remove<TComponent>()
-            where TComponent : IComponent;
-
-        /// <summary>
-        /// Searches for the desired component on the component's container.
-        /// </summary>
-        /// <typeparam name="TComponent">A component represented by an interface.</typeparam>
-        /// <returns>The component which will be found.</returns>
+        /// <typeparam name="TComponent">The component represented by the interface.</typeparam>
+        /// <returns>The component.</returns>
         TComponent Get<TComponent>()
             where TComponent : class;
     }
