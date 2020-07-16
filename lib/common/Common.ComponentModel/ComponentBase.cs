@@ -2,9 +2,8 @@
 
 namespace Common.ComponentModel
 {
-    /// <inheritdoc />
     /// <summary>
-    /// A component base which every component must inherit from it.
+    /// The component base that each component must inherit from it.
     /// </summary>
     public class ComponentBase : IComponent
     {
