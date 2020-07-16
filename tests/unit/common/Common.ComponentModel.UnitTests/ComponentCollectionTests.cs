@@ -4,7 +4,7 @@ using Xunit;
 
 namespace Common.ComponentModel.UnitTests
 {
-    public class ComponentsContainerTests
+    public class ComponentCollectionTests
     {
         [Fact]
         public void Get_Should_Return_Singleton_Component()
