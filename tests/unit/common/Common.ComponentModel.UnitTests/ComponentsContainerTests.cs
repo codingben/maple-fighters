@@ -1,5 +1,5 @@
 ﻿using System;
-using Common.ComponentModel.Exceptions;
+using NSubstitute;
 using Shouldly;
 using Xunit;
 
@@ -11,8 +11,9 @@ namespace Common.ComponentModel.UnitTests
         public void Add_Should_Not_Throw_Error()
         {
             // Arrange
-            IComponents components = new ComponentsContainer();
-            components.Add(new SingletonComponent());
+            var singletonComponent = Substitute.For<SingletonComponent>();
+            var collection = new IComponent[] { singletonComponent };
+            IComponents components = new ComponentCollection(collection);
 
             // Act
             var component = components.Get<ISingletonComponent>();
@@ -118,7 +119,6 @@ namespace Common.ComponentModel.UnitTests
         // Left blank intentionally
     }
 
-    [ComponentSettings(ExposedState.Unexposable)]
     public class SingletonComponent : IComponent, ISingletonComponent
     {
         public void Awake(IComponents components)
