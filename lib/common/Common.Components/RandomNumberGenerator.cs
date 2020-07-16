@@ -3,7 +3,6 @@ using Common.ComponentModel;
 
 namespace Common.Components
 {
-    [ComponentSettings(ExposedState.Unexposable)]
     public class RandomNumberGenerator : ComponentBase, IRandomNumberGenerator
     {
         private readonly Random random = new Random();

@@ -2,7 +2,6 @@
 
 namespace Common.Components
 {
-    [ComponentSettings(ExposedState.Exposable)]
     public class IdGenerator : ComponentBase, IIdGenerator
     {
         private readonly object locker = new object();
