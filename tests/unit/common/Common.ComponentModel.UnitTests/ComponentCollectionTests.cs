@@ -1,4 +1,5 @@
-﻿using NSubstitute;
+﻿using System;
+using NSubstitute;
 using Shouldly;
 using Xunit;
 
@@ -19,6 +20,18 @@ namespace Common.ComponentModel.UnitTests
 
             // Assert
             someComponent.ShouldBeSameAs(singletonComponent);
+        }
+
+        [Fact]
+        public void Get_Should_Throw_Exception()
+        {
+            // Arrange
+            var singletonComponent = Substitute.For<SingletonComponent>();
+            var collection = new IComponent[] { singletonComponent };
+            var components = new ComponentCollection(collection);
+
+            // Act & Assert
+            Assert.Throws<Exception>(() => components.Get<SingletonComponent>());
         }
     }
 
