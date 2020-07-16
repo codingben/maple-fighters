@@ -2,9 +2,8 @@
 
 namespace Common.ComponentModel
 {
-    /// <inheritdoc />
     /// <summary>
-    /// Represents a class which will be a component.
+    /// Represents a class that will be a component.
     /// </summary>
     public interface IComponent : IDisposable
     {
