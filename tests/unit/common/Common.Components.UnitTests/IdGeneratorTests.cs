@@ -10,8 +10,9 @@ namespace Common.Components.UnitTests
 
         public IdGeneratorTests()
         {
-            components = new ComponentsContainer();
-            components.Add(new IdGenerator());
+            var collection = new[] { new IdGenerator() };
+
+            components = new ComponentCollection(collection);
         }
 
         [Theory]
