@@ -10,8 +10,9 @@ namespace Common.Components.UnitTests
 
         public RandomNumberGeneratorTests()
         {
-            components = new ComponentsContainer();
-            components.Add(new RandomNumberGenerator());
+            var collection = new[] { new RandomNumberGenerator() };
+
+            components = new ComponentCollection(collection);
         }
 
         [Fact]
