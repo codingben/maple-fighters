@@ -7,39 +7,38 @@ namespace Game.Application
 {
     public class GameApplication : WebSocketServer, IServerApplication
     {
-        private readonly IComponents components;
+        private readonly ComponentCollection components;
 
         public GameApplication(string url)
             : base(url)
         {
-            components = new ComponentsContainer();
+            var collection = new IComponent[]
+            {
+                new IdGenerator(),
+                new WebSocketSessionCollection(),
+                new GameSceneCollection(),
+                new GameSceneManager()
+            };
+
+            components = new ComponentCollection(collection);
         }
 
         public void Startup()
         {
-            AddCommonComponents();
-            AddWebSocketService("/game", () => new GameService((IExposedComponents)components));
+            AddWebSocketService("/game", () => new GameService(components));
 
             Start();
         }
 
         public void Shutdown()
         {
-            RemoveCommonComponents();
+            RemoveComponents();
             RemoveWebSocketService("/game");
 
             Stop();
         }
 
-        private void AddCommonComponents()
-        {
-            components.Add(new IdGenerator());
-            components.Add(new WebSocketSessionCollection());
-            components.Add(new GameSceneCollection());
-            components.Add(new GameSceneManager());
-        }
-
-        private void RemoveCommonComponents()
+        private void RemoveComponents()
         {
             components?.Dispose();
         }
