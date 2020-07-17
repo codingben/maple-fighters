@@ -99,11 +99,10 @@ namespace Game.Application.Components
             {
                 var id = idGenerator.GenerateId();
                 var position = new Vector2(-2f, -8.2f);
-                var components = new IComponent[]
+                var blueSnail = new BlueSnailGameObject(id, position, new IComponent[]
                 {
                     new BlueSnailMoveBehaviour()
-                };
-                var blueSnail = new BlueSnailGameObject(id, position, components);
+                });
                 var presenceMapProvider = blueSnail.Components.Get<IPresenceMapProvider>();
                 presenceMapProvider.SetMap(gameScene);
 
