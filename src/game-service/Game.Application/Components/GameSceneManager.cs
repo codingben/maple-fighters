@@ -101,9 +101,11 @@ namespace Game.Application.Components
             {
                 var id = idGenerator.GenerateId();
                 var position = new Vector2(-2f, -8.2f);
+                var coroutineRunner = gameScene.PhysicsExecutor.GetCoroutineRunner();
+                var physicsWorldManager = gameScene.PhysicsWorldManager;
                 var blueSnail = new BlueSnailGameObject(id, position, new IComponent[]
                 {
-                    new BlueSnailMoveBehaviour()
+                    new BlueSnailMoveBehaviour(coroutineRunner, physicsWorldManager)
                 });
                 var presenceMapProvider = blueSnail.Components.Get<IPresenceMapProvider>();
                 presenceMapProvider.SetMap(gameScene);
