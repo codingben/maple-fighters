@@ -10,19 +10,20 @@ namespace Game.Application.Objects.Components
     public class BlueSnailMoveBehaviour : ComponentBase
     {
         private ICoroutineRunner coroutineRunner;
-        private IGameObject blueSnail;
         private IPhysicsWorldManager physicsWorldManager;
+        private IGameObject blueSnail;
         private BodyData bodyData;
+
+        public BlueSnailMoveBehaviour(ICoroutineRunner coroutineRunner, IPhysicsWorldManager physicsWorldManager)
+        {
+            this.coroutineRunner = coroutineRunner;
+            this.physicsWorldManager = physicsWorldManager;
+        }
 
         protected override void OnAwake()
         {
             var gameObjectGetter = Components.Get<IGameObjectGetter>();
-            var presenceMapProvider = Components.Get<IPresenceMapProvider>();
-            var gameScene = presenceMapProvider.GetMap();
-
-            coroutineRunner = gameScene.PhysicsExecutor.GetCoroutineRunner();
             blueSnail = gameObjectGetter.Get();
-            physicsWorldManager = gameScene.PhysicsWorldManager;
 
             coroutineRunner.Run(Move());
         }
