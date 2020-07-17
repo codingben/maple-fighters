@@ -1,4 +1,3 @@
-using System;
 using Common.ComponentModel;
 using Game.Application.Objects.Components;
 using InterestManagement;
@@ -13,16 +12,18 @@ namespace Game.Application.Objects
 
         public ITransform Transform { get; }
 
-        public IExposedComponents Components { get; }
+        public IComponents Components { get; }
 
         public GameObject(int id, string name, IMatrixRegion<IGameObject> region = null)
         {
             Id = id;
             Name = name;
             Transform = new Transform();
-            Components = new ComponentsContainer();
-
-            AddCommonComponents();
+            Components = new ComponentCollection(new IComponent[]
+            {
+                new GameObjectGetter(this),
+                new ProximityChecker()
+            });
 
             if (region != null)
             {
@@ -33,13 +34,7 @@ namespace Game.Application.Objects
 
         public void Dispose()
         {
-            ((IDisposable)Components)?.Dispose();
-        }
-
-        private void AddCommonComponents()
-        {
-            Components.Add(new GameObjectGetter(this));
-            Components.Add(new ProximityChecker());
+            Components?.Dispose();
         }
     }
 }
