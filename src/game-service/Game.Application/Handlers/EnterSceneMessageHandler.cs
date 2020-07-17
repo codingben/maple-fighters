@@ -18,9 +18,9 @@ namespace Game.Application.Handlers
         {
             this.player = player;
             this.gameSceneCollection = gameSceneCollection;
-            this.characterData = player.Components.Get<CharacterData>();
+            this.characterData = player.Components.Get<ICharacterData>();
             this.presenceMapProvider = player.Components.Get<IPresenceMapProvider>();
-            this.messageSender = player.Components.Get<MessageSender>();
+            this.messageSender = player.Components.Get<IMessageSender>();
         }
 
         public void Handle(byte[] rawData)

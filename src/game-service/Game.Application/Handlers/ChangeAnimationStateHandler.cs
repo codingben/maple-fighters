@@ -11,7 +11,7 @@ namespace Game.Application.Handlers
 
         public ChangeAnimationStateHandler(IGameObject player)
         {
-            this.animationData = player.Components.Get<AnimationData>();
+            this.animationData = player.Components.Get<IAnimationData>();
         }
 
         public void Handle(byte[] rawData)
