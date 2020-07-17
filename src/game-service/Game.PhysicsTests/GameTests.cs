@@ -72,7 +72,7 @@ namespace Game.PhysicsTests
             var playerId = 1;
             var player = new PlayerGameObject(playerId, new IComponent[]
             {
-                new MessageSender(null, null),
+                new MessageSender(),
                 new PlayerAttackedMessageSender()
             });
             var bodyData = player.CreateBodyData();
