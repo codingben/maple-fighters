@@ -1,19 +1,14 @@
+using Common.ComponentModel;
 using Common.MathematicsHelper;
-using Game.Application.Objects.Components;
 
 namespace Game.Application.Objects
 {
     public class GuardianGameObject : GameObject
     {
-        public GuardianGameObject(int id, Vector2 position)
-            : base(id, name: "Guardian")
+        public GuardianGameObject(int id, Vector2 position, IComponent[] components)
+            : base(id, name: "Guardian", components)
         {
             Transform.SetPosition(position);
-        }
-
-        public void AddBubbleNotification(string text, int time)
-        {
-            Components.Add(new BubbleNotificationSender(text, time));
         }
     }
 }
