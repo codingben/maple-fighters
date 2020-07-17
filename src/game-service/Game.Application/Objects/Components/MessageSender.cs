@@ -6,8 +6,9 @@ namespace Game.Application.Objects.Components
 {
     public class MessageSender : ComponentBase, IMessageSender
     {
-        private Action<byte[]> sendMessage;
-        private Action<byte[], int> sendToMessage;
+        public Action<byte[]> SendMessageAction { private get; set; }
+
+        public Action<byte[], int> SendToMessageAction { private get; set; }
 
         private IProximityChecker proximityChecker;
 
@@ -16,18 +17,12 @@ namespace Game.Application.Objects.Components
             proximityChecker = Components.Get<IProximityChecker>();
         }
 
-        public void Initialize(Action<byte[]> sendMessage, Action<byte[], int> sendToMessage)
-        {
-            this.sendMessage = sendMessage;
-            this.sendToMessage = sendToMessage;
-        }
-
         public void SendMessage<TMessage>(byte code, TMessage message)
             where TMessage : class
         {
             var rawData = MessageUtils.WrapMessage(code, message);
 
-            sendMessage?.Invoke(rawData);
+            SendMessageAction?.Invoke(rawData);
         }
 
         public void SendMessageToNearbyGameObjects<TMessage>(byte code, TMessage message)
@@ -39,7 +34,7 @@ namespace Game.Application.Objects.Components
             {
                 var rawData = MessageUtils.WrapMessage(code, message);
 
-                sendToMessage?.Invoke(rawData, gameObject.Id);
+                SendToMessageAction?.Invoke(rawData, gameObject.Id);
             }
         }
     }
