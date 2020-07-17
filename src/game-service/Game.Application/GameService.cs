@@ -125,22 +125,20 @@ namespace Game.Application
         private void AddMessageSenderToPlayer()
         {
             var player = gamePlayer?.GetPlayer();
+            var messageSender = player?.Components.Get<IMessageSender>();
 
-            Action<byte[], int> sendToMessage = (rawData, id) =>
+            messageSender.SendMessageAction = (rawData) =>
+            {
+                Send(rawData);
+            };
+
+            messageSender.SendToMessageAction = (rawData, id) =>
             {
                 if (webSocketSessionCollection.TryGet(id, out var webSocketSessionData))
                 {
                     Sessions.SendTo(rawData, webSocketSessionData.Id);
                 }
             };
-
-            Action<byte[]> sendMessage = (rawData) =>
-            {
-                Send(rawData);
-            };
-
-            var messageSender = player?.Components.Get<IMessageSender>();
-            messageSender?.Initialize(sendMessage, sendToMessage);
         }
 
         private void RemovePlayer()
