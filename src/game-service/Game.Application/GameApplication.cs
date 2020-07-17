@@ -7,20 +7,18 @@ namespace Game.Application
 {
     public class GameApplication : WebSocketServer, IServerApplication
     {
-        private readonly ComponentCollection components;
+        private readonly IComponents components;
 
         public GameApplication(string url)
             : base(url)
         {
-            var collection = new IComponent[]
+            components = new ComponentCollection(new IComponent[]
             {
                 new IdGenerator(),
                 new WebSocketSessionCollection(),
                 new GameSceneCollection(),
                 new GameSceneManager()
-            };
-
-            components = new ComponentCollection(collection);
+            });
         }
 
         public void Startup()
