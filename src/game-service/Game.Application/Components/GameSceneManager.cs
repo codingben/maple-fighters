@@ -53,11 +53,12 @@ namespace Game.Application.Components
             {
                 var id = idGenerator.GenerateId();
                 var position = new Vector2(-14.24f, -2.025f);
-                var guardian = new GuardianGameObject(id, position);
+                var guardian = new GuardianGameObject(id, position, new IComponent[]
+                {
+                    new BubbleNotificationSender(text: "Hello", time: 1)
+                });
                 var presenceMapProvider = guardian.Components.Get<IPresenceMapProvider>();
                 presenceMapProvider.SetMap(gameScene);
-
-                guardian.AddBubbleNotification("Hello", 1);
 
                 yield return guardian;
             }
@@ -66,11 +67,12 @@ namespace Game.Application.Components
             {
                 var id = idGenerator.GenerateId();
                 var position = new Vector2(-17.125f, -1.5f);
-                var portal = new PortalGameObject(id, position);
+                var portal = new PortalGameObject(id, position, new IComponent[]
+                {
+                    new PortalData(map: (byte)Map.TheDarkForest)
+                });
                 var presenceMapProvider = portal.Components.Get<IPresenceMapProvider>();
                 presenceMapProvider.SetMap(gameScene);
-
-                portal.AddPortalData((byte)Map.TheDarkForest);
 
                 yield return portal;
             }
@@ -116,11 +118,12 @@ namespace Game.Application.Components
             {
                 var id = idGenerator.GenerateId();
                 var position = new Vector2(12.5f, -1.125f);
-                var portal = new PortalGameObject(id, position);
+                var portal = new PortalGameObject(id, position, new IComponent[]
+                {
+                    new PortalData(map: (byte)Map.Lobby)
+                });
                 var presenceMapProvider = portal.Components.Get<IPresenceMapProvider>();
                 presenceMapProvider.SetMap(gameScene);
-
-                portal.AddPortalData((byte)Map.Lobby);
 
                 yield return portal;
             }
