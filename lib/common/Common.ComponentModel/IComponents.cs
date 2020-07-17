@@ -1,6 +1,8 @@
-﻿namespace Common.ComponentModel
+﻿using System;
+
+namespace Common.ComponentModel
 {
-    public interface IComponents
+    public interface IComponents : IDisposable
     {
         /// <summary>
         /// Get a component from the collection only through the interface.
