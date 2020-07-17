@@ -139,10 +139,8 @@ namespace Game.Application
                 Send(rawData);
             };
 
-            player?.Components.Add(new MessageSender(sendMessage, sendToMessage));
-            player?.Components.Add(new PositionChangedMessageSender());
-            player?.Components.Add(new AnimationStateChangedMessageSender());
-            player?.Components.Add(new PlayerAttackedMessageSender());
+            var messageSender = player?.Components.Get<IMessageSender>();
+            messageSender?.Initialize(sendMessage, sendToMessage);
         }
 
         private void RemovePlayer()
