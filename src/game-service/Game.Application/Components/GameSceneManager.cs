@@ -49,25 +49,31 @@ namespace Game.Application.Components
         // TODO: Refactor
         private IEnumerable<IGameObject> CreateLobbyGameObjects(IGameScene gameScene)
         {
-            var region = gameScene.MatrixRegion;
+            // Guardian Game Object #1
+            {
+                var id = idGenerator.GenerateId();
+                var position = new Vector2(-14.24f, -2.025f);
+                var guardian = new GuardianGameObject(id, position);
+                var presenceMapProvider = guardian.Components.Get<IPresenceMapProvider>();
+                presenceMapProvider.SetMap(gameScene);
 
-            // Guardian Game Object
-            var guardianId = idGenerator.GenerateId();
-            var guardianPosition = new Vector2(-14.24f, -2.025f);
-            var guardian =
-                new GuardianGameObject(guardianId, guardianPosition, region);
-            guardian.AddBubbleNotification("Hello", 1);
+                guardian.AddBubbleNotification("Hello", 1);
 
-            yield return guardian;
+                yield return guardian;
+            }
 
-            // Portal Game Object
-            var portalId = idGenerator.GenerateId();
-            var portalPosition = new Vector2(-17.125f, -1.5f);
-            var portal =
-                new PortalGameObject(portalId, portalPosition, region);
-            portal.AddPortalData((byte)Map.TheDarkForest);
+            // Portal Game Object #2
+            {
+                var id = idGenerator.GenerateId();
+                var position = new Vector2(-17.125f, -1.5f);
+                var portal = new PortalGameObject(id, position);
+                var presenceMapProvider = portal.Components.Get<IPresenceMapProvider>();
+                presenceMapProvider.SetMap(gameScene);
 
-            yield return portal;
+                portal.AddPortalData((byte)Map.TheDarkForest);
+
+                yield return portal;
+            }
         }
 
         // TODO: Refactor
@@ -89,31 +95,36 @@ namespace Game.Application.Components
         // TODO: Refactor
         private IEnumerable<IGameObject> CreateTheDarkForestGameObjects(IGameScene gameScene)
         {
-            var region = gameScene.MatrixRegion;
+            // Blue Snail Game Object #1
+            {
+                var id = idGenerator.GenerateId();
+                var position = new Vector2(-2f, -8.2f);
+                var components = new IComponent[]
+                {
+                    new BlueSnailMoveBehaviour()
+                };
+                var blueSnail = new BlueSnailGameObject(id, position, components);
+                var presenceMapProvider = blueSnail.Components.Get<IPresenceMapProvider>();
+                presenceMapProvider.SetMap(gameScene);
 
-            // Blue Snail Game Object
-            var guardianId = idGenerator.GenerateId();
-            var blueSnailPosition = new Vector2(-2f, -8.2f);
-            var blueSnail =
-                new BlueSnailGameObject(guardianId, blueSnailPosition, region);
-            var presenceMapProvider = blueSnail.Components.Add(new PresenceMapProvider());
-            presenceMapProvider.SetMap(gameScene);
+                var bodyData = blueSnail.CreateBodyData();
+                gameScene.PhysicsWorldManager.AddBody(bodyData);
 
-            blueSnail.Components.Add(new BlueSnailMoveBehaviour());
+                yield return blueSnail;
+            }
 
-            var bodyData = blueSnail.CreateBodyData();
-            gameScene.PhysicsWorldManager.AddBody(bodyData);
+            // Portal Game Object #2
+            {
+                var id = idGenerator.GenerateId();
+                var position = new Vector2(12.5f, -1.125f);
+                var portal = new PortalGameObject(id, position);
+                var presenceMapProvider = portal.Components.Get<IPresenceMapProvider>();
+                presenceMapProvider.SetMap(gameScene);
 
-            yield return blueSnail;
+                portal.AddPortalData((byte)Map.Lobby);
 
-            // Portal Game Object
-            var portalId = idGenerator.GenerateId();
-            var portalPosition = new Vector2(12.5f, -1.125f);
-            var portal =
-                new PortalGameObject(portalId, portalPosition, region);
-            portal.AddPortalData((byte)Map.Lobby);
-
-            yield return portal;
+                yield return portal;
+            }
         }
     }
 }
