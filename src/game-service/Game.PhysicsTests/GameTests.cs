@@ -54,12 +54,14 @@ namespace Game.PhysicsTests
 
         private static IGameScene CreateMap(Map map)
         {
-            IComponents components = new ComponentsContainer();
+            var components = new ComponentCollection(new IComponent[]
+            {
+                new IdGenerator(),
+                new GameSceneCollection(),
+                new GameSceneManager()
+            });
 
-            components.Add(new IdGenerator());
-            var gameSceneCollection = components.Add(new GameSceneCollection());
-            components.Add(new GameSceneManager());
-
+            var gameSceneCollection = components.Get<GameSceneCollection>();
             gameSceneCollection.TryGet(map, out var gameScene);
 
             return gameScene;
@@ -68,11 +70,11 @@ namespace Game.PhysicsTests
         private static void CreatePlayer(IGameScene gameScene)
         {
             var playerId = 1;
-            var player = new PlayerGameObject(playerId);
-
-            player.Components.Add(new MessageSender(null, null));
-            player.Components.Add(new PlayerAttackedMessageSender());
-
+            var player = new PlayerGameObject(playerId, new IComponent[]
+            {
+                new MessageSender(null, null),
+                new PlayerAttackedMessageSender()
+            });
             var bodyData = player.CreateBodyData();
 
             gameScene.GameObjectCollection.Add(player);
