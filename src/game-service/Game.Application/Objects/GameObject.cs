@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Common.ComponentModel;
 using Game.Application.Objects.Components;
 using InterestManagement;
@@ -14,27 +15,32 @@ namespace Game.Application.Objects
 
         public IComponents Components { get; }
 
-        public GameObject(int id, string name, IMatrixRegion<IGameObject> region = null)
+        public GameObject(int id, string name, IComponent[] components = null)
         {
             Id = id;
             Name = name;
             Transform = new Transform();
-            Components = new ComponentCollection(new IComponent[]
-            {
-                new GameObjectGetter(this),
-                new ProximityChecker()
-            });
-
-            if (region != null)
-            {
-                var proximityChecker = Components.Get<IProximityChecker>();
-                proximityChecker.SetMatrixRegion(region);
-            }
+            Components = new ComponentCollection(UnionCommonComponents(components));
         }
 
         public void Dispose()
         {
             Components?.Dispose();
+        }
+
+        private IEnumerable<IComponent> UnionCommonComponents(IComponent[] components = null)
+        {
+            yield return new GameObjectGetter(this);
+            yield return new ProximityChecker();
+            yield return new PresenceMapProvider();
+
+            if (components != null)
+            {
+                foreach (var component in components)
+                {
+                    yield return component;
+                }
+            }
         }
     }
 }
