@@ -19,7 +19,7 @@ namespace Game.Application
         private readonly IGamePlayer gamePlayer;
         private readonly IDictionary<byte, IMessageHandler> handlers = new Dictionary<byte, IMessageHandler>();
 
-        public GameService(IExposedComponents components)
+        public GameService(IComponents components)
         {
             webSocketSessionCollection = components.Get<IWebSocketSessionCollection>();
             gameSceneCollection = components.Get<IGameSceneCollection>();
