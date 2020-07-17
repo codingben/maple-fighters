@@ -9,11 +9,11 @@
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageTags>Common</PackageTags>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>1.0.2</Version>
+    <Version>1.0.3</Version>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Common.ComponentModel" Version="2.0.0" />
+    <PackageReference Include="Common.ComponentModel" Version="2.0.1" />
   </ItemGroup>
 
 </Project>
