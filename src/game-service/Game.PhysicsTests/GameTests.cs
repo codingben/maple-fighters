@@ -61,7 +61,7 @@ namespace Game.PhysicsTests
                 new GameSceneManager()
             });
 
-            var gameSceneCollection = components.Get<GameSceneCollection>();
+            var gameSceneCollection = components.Get<IGameSceneCollection>();
             gameSceneCollection.TryGet(map, out var gameScene);
 
             return gameScene;
