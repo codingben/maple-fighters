@@ -1,15 +1,15 @@
 using Box2DX.Dynamics;
+using Common.ComponentModel;
 using Common.MathematicsHelper;
 using Game.Application.Objects.Components;
-using InterestManagement;
 using Physics.Box2D;
 
 namespace Game.Application.Objects
 {
     public class BlueSnailGameObject : GameObject
     {
-        public BlueSnailGameObject(int id, Vector2 position, IMatrixRegion<IGameObject> region)
-            : base(id, name: "BlueSnail", region)
+        public BlueSnailGameObject(int id, Vector2 position, IComponent[] components)
+            : base(id, name: "BlueSnail", components)
         {
             Transform.SetPosition(position);
         }

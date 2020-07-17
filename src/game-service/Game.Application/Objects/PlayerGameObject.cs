@@ -1,4 +1,5 @@
 using Box2DX.Dynamics;
+using Common.ComponentModel;
 using Game.Application.Objects.Components;
 using Physics.Box2D;
 
@@ -6,8 +7,8 @@ namespace Game.Application.Objects
 {
     public class PlayerGameObject : GameObject
     {
-        public PlayerGameObject(int id)
-            : base(id, name: "Player")
+        public PlayerGameObject(int id, IComponent[] components)
+            : base(id, name: "Player", components)
         {
             AddCommonComponents();
         }
