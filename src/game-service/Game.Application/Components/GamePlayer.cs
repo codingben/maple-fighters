@@ -1,3 +1,4 @@
+using Common.ComponentModel;
 using Game.Application.Objects;
 using Game.Application.Objects.Components;
 
@@ -22,7 +23,16 @@ namespace Game.Application.Components
 
         public void Create()
         {
-            player = new PlayerGameObject(id);
+            player = new PlayerGameObject(id, new IComponent[]
+            {
+                new AnimationData(),
+                new CharacterData(),
+                new PresenceMapProvider(),
+                new MessageSender(),
+                new PositionChangedMessageSender(),
+                new AnimationStateChangedMessageSender(),
+                new PlayerAttackedMessageSender()
+            });
         }
 
         private void Remove()
