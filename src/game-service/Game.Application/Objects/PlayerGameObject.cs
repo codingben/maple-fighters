@@ -1,6 +1,5 @@
 using Box2DX.Dynamics;
 using Common.ComponentModel;
-using Game.Application.Objects.Components;
 using Physics.Box2D;
 
 namespace Game.Application.Objects
@@ -10,14 +9,7 @@ namespace Game.Application.Objects
         public PlayerGameObject(int id, IComponent[] components)
             : base(id, name: "Player", components)
         {
-            AddCommonComponents();
-        }
-
-        private void AddCommonComponents()
-        {
-            Components.Add(new AnimationData());
-            Components.Add(new CharacterData());
-            Components.Add(new PresenceMapProvider());
+            // Left blank intentionally
         }
 
         public NewBodyData CreateBodyData()
