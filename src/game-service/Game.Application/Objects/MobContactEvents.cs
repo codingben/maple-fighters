@@ -1,7 +1,8 @@
 ﻿using Box2DX.Dynamics;
+using Game.Application.Objects.Components;
 using Physics.Box2D;
 
-namespace Game.Application.Objects.Components
+namespace Game.Application.Objects
 {
     public class MobContactEvents : IContactEvents
     {
