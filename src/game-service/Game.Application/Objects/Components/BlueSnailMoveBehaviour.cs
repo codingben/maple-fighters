@@ -7,7 +7,6 @@ using Physics.Box2D;
 
 namespace Game.Application.Objects.Components
 {
-    [ComponentSettings(ExposedState.Exposable)]
     public class BlueSnailMoveBehaviour : ComponentBase
     {
         private IGameObject blueSnail;

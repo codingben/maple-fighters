@@ -7,7 +7,6 @@ using Game.Application.Objects.Components;
 
 namespace Game.Application.Components
 {
-    [ComponentSettings(ExposedState.Exposable)]
     public class GameSceneManager : ComponentBase
     {
         private IIdGenerator idGenerator;

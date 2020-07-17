@@ -3,7 +3,6 @@ using Common.ComponentModel;
 
 namespace Game.Application.Components
 {
-    [ComponentSettings(ExposedState.Exposable)]
     public class WebSocketSessionCollection : ComponentBase, IWebSocketSessionCollection
     {
         private readonly ConcurrentDictionary<int, WebSocketSessionData> collection;

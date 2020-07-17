@@ -3,7 +3,6 @@ using Common.ComponentModel;
 
 namespace Game.Application.Objects.Components
 {
-    [ComponentSettings(ExposedState.Exposable)]
     public class AnimationData : ComponentBase, IAnimationData
     {
         public event Action AnimationStateChanged;

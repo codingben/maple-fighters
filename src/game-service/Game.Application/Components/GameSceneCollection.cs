@@ -3,7 +3,6 @@ using Common.ComponentModel;
 
 namespace Game.Application.Components
 {
-    [ComponentSettings(ExposedState.Exposable)]
     public class GameSceneCollection : ComponentBase, IGameSceneCollection
     {
         private ConcurrentDictionary<Map, IGameScene> collection;

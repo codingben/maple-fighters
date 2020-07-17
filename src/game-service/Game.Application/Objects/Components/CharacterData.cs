@@ -2,7 +2,6 @@ using Common.ComponentModel;
 
 namespace Game.Application.Objects.Components
 {
-    [ComponentSettings(ExposedState.Exposable)]
     public class CharacterData : ComponentBase, ICharacterData
     {
         private string name;

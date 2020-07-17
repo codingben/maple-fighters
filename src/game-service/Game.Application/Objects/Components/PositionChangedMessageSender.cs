@@ -3,7 +3,6 @@ using Game.Application.Messages;
 
 namespace Game.Application.Objects.Components
 {
-    [ComponentSettings(ExposedState.Unexposable)]
     public class PositionChangedMessageSender : ComponentBase
     {
         private IGameObjectGetter gameObjectGetter;

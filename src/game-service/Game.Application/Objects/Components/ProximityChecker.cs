@@ -4,7 +4,6 @@ using InterestManagement;
 
 namespace Game.Application.Objects.Components
 {
-    [ComponentSettings(ExposedState.Exposable)]
     public class ProximityChecker : ComponentBase, IProximityChecker
     {
         private IInterestArea<IGameObject> interestArea;

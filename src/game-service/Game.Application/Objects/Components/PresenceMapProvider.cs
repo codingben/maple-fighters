@@ -3,7 +3,6 @@ using Game.Application.Components;
 
 namespace Game.Application.Objects.Components
 {
-    [ComponentSettings(ExposedState.Exposable)]
     public class PresenceMapProvider : ComponentBase, IPresenceMapProvider
     {
         private IGameScene gameScene;
