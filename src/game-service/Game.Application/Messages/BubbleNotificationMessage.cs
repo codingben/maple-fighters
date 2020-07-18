@@ -2,7 +2,7 @@ namespace Game.Application.Messages
 {
     public class BubbleNotificationMessage
     {
-        public int RequesterId { get; set; }
+        public int NotifierId { get; set; }
 
         public string Message { get; set; }
 
