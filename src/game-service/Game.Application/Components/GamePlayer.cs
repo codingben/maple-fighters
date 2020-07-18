@@ -31,7 +31,8 @@ namespace Game.Application.Components
                 new MessageSender(),
                 new PositionChangedMessageSender(),
                 new AnimationStateChangedMessageSender(),
-                new PlayerAttackedMessageSender()
+                new PlayerAttackedMessageSender(),
+                new BubbleNotificationMessageSender()
             });
         }
 
