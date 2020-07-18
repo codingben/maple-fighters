@@ -55,7 +55,7 @@ namespace Game.Application.Components
                 var position = new Vector2(-14.24f, -2.025f);
                 var guardian = new GuardianGameObject(id, position, new IComponent[]
                 {
-                    new BubbleNotificationSender(text: "Hello", time: 1)
+                    new GuardianIdleBehaviour(text: "Hello", time: 1)
                 });
                 var presenceMapProvider = guardian.Components.Get<IPresenceMapProvider>();
                 presenceMapProvider.SetMap(gameScene);
