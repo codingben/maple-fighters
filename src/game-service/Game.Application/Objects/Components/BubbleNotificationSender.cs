@@ -1,5 +1,4 @@
 using Common.ComponentModel;
-using Game.Application.Messages;
 
 namespace Game.Application.Objects.Components
 {
@@ -10,7 +9,6 @@ namespace Game.Application.Objects.Components
 
         private IProximityChecker proximityChecker;
         private IGameObjectGetter gameObjectGetter;
-        private IMessageSender messageSender;
 
         public BubbleNotificationSender(string text, int time)
         {
@@ -22,7 +20,6 @@ namespace Game.Application.Objects.Components
         {
             proximityChecker = Components.Get<IProximityChecker>();
             gameObjectGetter = Components.Get<IGameObjectGetter>();
-            messageSender = Components.Get<IMessageSender>();
 
             SubscribeToNearbyGameObjectAdded();
         }
@@ -44,18 +41,11 @@ namespace Game.Application.Objects.Components
             nearbySceneObjectsEvents.SceneObjectAdded -= OnNearbyGameObjectAdded;
         }
 
-        private void OnNearbyGameObjectAdded(IGameObject _)
+        private void OnNearbyGameObjectAdded(IGameObject gameObject)
         {
             var id = gameObjectGetter.Get().Id;
-            var messageCode = (byte)MessageCodes.BubbleNotification;
-            var message = new BubbleNotificationMessage()
-            {
-                RequesterId = id,
-                Message = text,
-                Time = time
-            };
-
-            messageSender.SendMessage(messageCode, message);
+            var bubbleNotifier = gameObject.Components.Get<IBubbleNotifier>();
+            bubbleNotifier?.Notify(id, text, time);
         }
     }
 }
