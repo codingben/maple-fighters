@@ -1,8 +1,8 @@
-using Common.ComponentModel;
+﻿using Common.ComponentModel;
 
 namespace Game.Application.Objects.Components
 {
-    public class BubbleNotificationSender : ComponentBase
+    public class GuardianIdleBehaviour : ComponentBase
     {
         private readonly string text;
         private readonly int time;
@@ -10,7 +10,7 @@ namespace Game.Application.Objects.Components
         private IProximityChecker proximityChecker;
         private IGameObjectGetter gameObjectGetter;
 
-        public BubbleNotificationSender(string text, int time)
+        public GuardianIdleBehaviour(string text, int time)
         {
             this.text = text;
             this.time = time;
