@@ -55,10 +55,9 @@ namespace Game.Application.Components
                 var position = new Vector2(-14.24f, -2.025f);
                 var guardian = new GuardianGameObject(id, position, new IComponent[]
                 {
+                    new PresenceMapProvider(gameScene),
                     new GuardianIdleBehaviour(text: "Hello", time: 1)
                 });
-                var presenceMapProvider = guardian.Components.Get<IPresenceMapProvider>();
-                presenceMapProvider.SetMap(gameScene);
 
                 yield return guardian;
             }
@@ -69,10 +68,9 @@ namespace Game.Application.Components
                 var position = new Vector2(-17.125f, -1.5f);
                 var portal = new PortalGameObject(id, position, new IComponent[]
                 {
+                    new PresenceMapProvider(gameScene),
                     new PortalData(map: (byte)Map.TheDarkForest)
                 });
-                var presenceMapProvider = portal.Components.Get<IPresenceMapProvider>();
-                presenceMapProvider.SetMap(gameScene);
 
                 yield return portal;
             }
@@ -105,10 +103,9 @@ namespace Game.Application.Components
                 var physicsWorldManager = gameScene.PhysicsWorldManager;
                 var blueSnail = new BlueSnailGameObject(id, position, new IComponent[]
                 {
+                    new PresenceMapProvider(gameScene),
                     new BlueSnailMoveBehaviour(coroutineRunner, physicsWorldManager)
                 });
-                var presenceMapProvider = blueSnail.Components.Get<IPresenceMapProvider>();
-                presenceMapProvider.SetMap(gameScene);
 
                 var bodyData = blueSnail.CreateBodyData();
                 gameScene.PhysicsWorldManager.AddBody(bodyData);
@@ -122,10 +119,9 @@ namespace Game.Application.Components
                 var position = new Vector2(12.5f, -1.125f);
                 var portal = new PortalGameObject(id, position, new IComponent[]
                 {
+                    new PresenceMapProvider(gameScene),
                     new PortalData(map: (byte)Map.Lobby)
                 });
-                var presenceMapProvider = portal.Components.Get<IPresenceMapProvider>();
-                presenceMapProvider.SetMap(gameScene);
 
                 yield return portal;
             }
