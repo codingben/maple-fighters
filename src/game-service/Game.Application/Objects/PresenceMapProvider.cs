@@ -8,9 +8,16 @@ namespace Game.Application.Objects.Components
         private IGameScene gameScene;
         private IProximityChecker proximityChecker;
 
+        public PresenceMapProvider(IGameScene gameScene = null)
+        {
+            this.gameScene = gameScene;
+        }
+
         protected override void OnAwake()
         {
             proximityChecker = Components.Get<IProximityChecker>();
+
+            SetRegion();
         }
 
         public void SetMap(IGameScene gameScene)
@@ -22,8 +29,11 @@ namespace Game.Application.Objects.Components
 
         private void SetRegion()
         {
-            var region = gameScene.MatrixRegion;
-            proximityChecker.SetMatrixRegion(region);
+            var region = gameScene?.MatrixRegion;
+            if (region != null)
+            {
+                proximityChecker.SetMatrixRegion(region);
+            }
         }
 
         public IGameScene GetMap()
