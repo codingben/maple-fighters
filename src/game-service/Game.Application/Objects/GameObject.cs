@@ -32,7 +32,6 @@ namespace Game.Application.Objects
         {
             yield return new GameObjectGetter(this);
             yield return new ProximityChecker();
-            yield return new PresenceMapProvider();
 
             if (components != null)
             {
