@@ -17,17 +17,23 @@ namespace Game.Application.Components
             idGenerator = Components.Get<IIdGenerator>();
             gameSceneCollection = Components.Get<IGameSceneCollection>();
 
-            var lobby = CreateLobby();
-            var theDarkForest = CreateTheDarkForest();
-
-            gameSceneCollection.Add(Map.Lobby, lobby);
-            gameSceneCollection.Add(Map.TheDarkForest, theDarkForest);
+            gameSceneCollection.Add(Map.Lobby, CreateLobby());
+            gameSceneCollection.Add(Map.TheDarkForest, CreateTheDarkForest());
         }
 
         protected override void OnRemoved()
         {
-            gameSceneCollection.Remove(Map.Lobby);
-            gameSceneCollection.Remove(Map.TheDarkForest);
+            var maps = new[] { Map.Lobby, Map.TheDarkForest };
+
+            foreach (var map in maps)
+            {
+                if (gameSceneCollection.TryGet(map, out var gameScene))
+                {
+                    gameScene?.Dispose();
+                }
+
+                gameSceneCollection.Remove(map);
+            }
         }
 
         // TODO: Refactor
