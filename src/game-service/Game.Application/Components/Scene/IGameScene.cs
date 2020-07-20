@@ -1,10 +1,11 @@
+using System;
 using Game.Application.Objects;
 using InterestManagement;
 using Physics.Box2D;
 
 namespace Game.Application.Components
 {
-    public interface IGameScene
+    public interface IGameScene : IDisposable
     {
         IMatrixRegion<IGameObject> MatrixRegion { get; }
 
