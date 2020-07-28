@@ -1,7 +1,7 @@
 using Common.ComponentModel;
 using Game.Application.Components;
 
-namespace Game.Application.Objects.Components
+namespace Game.Application.Objects
 {
     public class PresenceMapProvider : ComponentBase, IPresenceMapProvider
     {

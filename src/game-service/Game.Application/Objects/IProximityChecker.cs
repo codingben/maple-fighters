@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using InterestManagement;
 
-namespace Game.Application.Objects.Components
+namespace Game.Application.Objects
 {
     public interface IProximityChecker
     {

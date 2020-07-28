@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using Common.ComponentModel;
 using InterestManagement;
 
-namespace Game.Application.Objects.Components
+namespace Game.Application.Objects
 {
     public class ProximityChecker : ComponentBase, IProximityChecker
     {

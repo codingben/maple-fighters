@@ -1,4 +1,4 @@
-namespace Game.Application.Objects.Components
+namespace Game.Application.Objects
 {
     public interface IGameObjectGetter
     {

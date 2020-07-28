@@ -1,6 +1,6 @@
 using Common.ComponentModel;
 
-namespace Game.Application.Objects.Components
+namespace Game.Application.Objects
 {
     public class GameObjectGetter : ComponentBase, IGameObjectGetter
     {
