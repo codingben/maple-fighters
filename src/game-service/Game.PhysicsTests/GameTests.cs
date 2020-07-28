@@ -12,7 +12,7 @@ namespace Game.PhysicsTests
 {
     public class GameTests
     {
-        private static void Main(string[] args)
+        private static void Main()
         {
             new Thread(new ThreadStart(RunWindow))
             {
