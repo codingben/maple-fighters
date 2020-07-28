@@ -37,6 +37,7 @@ namespace Game.Application
             AddHandlerForChangePosition();
             AddHandlerForChangeAnimationState();
             AddHandlerForEnterScene();
+            AddHandlerForChangeScene();
         }
 
         protected override void OnClose(CloseEventArgs eventArgs)
