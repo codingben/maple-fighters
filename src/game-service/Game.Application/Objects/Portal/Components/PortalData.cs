@@ -4,7 +4,7 @@ namespace Game.Application.Objects.Components
 {
     public class PortalData : ComponentBase, IPortalData
     {
-        private byte map;
+        private readonly byte map;
 
         public PortalData(byte map)
         {

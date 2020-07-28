@@ -5,7 +5,7 @@ namespace Game.Application.Components
 {
     public class GameSceneCollection : ComponentBase, IGameSceneCollection
     {
-        private ConcurrentDictionary<Map, IGameScene> collection;
+        private readonly ConcurrentDictionary<Map, IGameScene> collection;
 
         public GameSceneCollection()
         {

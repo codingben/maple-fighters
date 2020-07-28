@@ -5,7 +5,7 @@ namespace Game.Application.Components
 {
     public class GameObjectCollection : IGameObjectCollection
     {
-        private ConcurrentDictionary<int, IGameObject> collection;
+        private readonly ConcurrentDictionary<int, IGameObject> collection;
 
         public GameObjectCollection()
         {

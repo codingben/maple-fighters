@@ -9,8 +9,8 @@ namespace Game.Application.Objects.Components
 {
     public class BlueSnailMoveBehaviour : ComponentBase
     {
-        private ICoroutineRunner coroutineRunner;
-        private IPhysicsWorldManager physicsWorldManager;
+        private readonly ICoroutineRunner coroutineRunner;
+        private readonly IPhysicsWorldManager physicsWorldManager;
         private IGameObject blueSnail;
         private BodyData bodyData;
 

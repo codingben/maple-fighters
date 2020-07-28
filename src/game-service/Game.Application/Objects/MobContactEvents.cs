@@ -6,7 +6,7 @@ namespace Game.Application.Objects
 {
     public class MobContactEvents : IContactEvents
     {
-        private int id;
+        private readonly int id;
 
         public MobContactEvents(int id)
         {
