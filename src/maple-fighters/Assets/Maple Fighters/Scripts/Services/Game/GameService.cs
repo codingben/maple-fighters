@@ -60,13 +60,10 @@ namespace Scripts.Services.Game
             var isDummy = NetworkConfiguration.GetInstance().IsDummy();
             if (isDummy)
             {
-                CharacterSelectorApi =
-                    new DummyCharacterSelectorApi(serverPeer);
                 GameSceneApi = new DummyGameSceneApi(serverPeer);
             }
             else
             {
-                CharacterSelectorApi = new CharacterSelectorApi(serverPeer);
                 GameSceneApi = new GameSceneApi(serverPeer);
             }
 
