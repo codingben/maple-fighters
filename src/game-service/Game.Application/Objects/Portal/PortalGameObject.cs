@@ -6,7 +6,7 @@ namespace Game.Application.Objects
     public class PortalGameObject : GameObject
     {
         public PortalGameObject(int id, Vector2 position, IComponent[] components)
-            : base(id, name: "Portal")
+            : base(id, name: "Portal", components)
         {
             Transform.SetPosition(position);
         }
