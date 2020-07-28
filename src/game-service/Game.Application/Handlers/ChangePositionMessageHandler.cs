@@ -1,7 +1,7 @@
 using Common.MathematicsHelper;
 using InterestManagement;
 using Game.Application.Network;
-using Game.Application.Messages;
+using Game.Messages;
 using Game.Application.Objects;
 
 namespace Game.Application.Handlers

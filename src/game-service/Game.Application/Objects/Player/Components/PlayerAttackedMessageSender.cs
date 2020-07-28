@@ -1,5 +1,5 @@
 ﻿using Common.ComponentModel;
-using Game.Application.Messages;
+using Game.Messages;
 
 namespace Game.Application.Objects.Components
 {

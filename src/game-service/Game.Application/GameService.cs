@@ -6,7 +6,7 @@ using WebSocketSharp.Server;
 using Game.Application.Components;
 using Game.Application.Network;
 using Game.Application.Handlers;
-using Game.Application.Messages;
+using Game.Messages;
 using Game.Application.Objects.Components;
 
 namespace Game.Application

@@ -1,4 +1,4 @@
-﻿namespace Game.Application.Messages
+﻿namespace Game.Messages
 {
     public class GameObjectsAddedMessage
     {
