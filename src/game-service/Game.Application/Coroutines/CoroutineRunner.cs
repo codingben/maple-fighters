@@ -34,8 +34,8 @@ namespace Coroutines
     /// </summary>
     public class CoroutineRunner : ICoroutineRunner
     {
-        private List<IEnumerator> running = new List<IEnumerator>();
-        private List<float> delays = new List<float>();
+        private readonly List<IEnumerator> running = new List<IEnumerator>();
+        private readonly List<float> delays = new List<float>();
 
         /// <summary>
         /// Run a coroutine.
@@ -149,9 +149,9 @@ namespace Coroutines
 
         private bool MoveNext(IEnumerator routine, int index)
         {
-            if (routine.Current is IEnumerator)
+            if (routine.Current is IEnumerator enumerator)
             {
-                if (MoveNext((IEnumerator)routine.Current, index))
+                if (MoveNext(enumerator, index))
                 {
                     return true;
                 }
@@ -161,9 +161,9 @@ namespace Coroutines
 
             bool result = routine.MoveNext();
 
-            if (routine.Current is float)
+            if (routine.Current is float single)
             {
-                delays[index] = (float)routine.Current;
+                delays[index] = single;
             }
 
             return result;
