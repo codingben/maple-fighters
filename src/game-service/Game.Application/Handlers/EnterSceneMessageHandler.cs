@@ -17,10 +17,10 @@ namespace Game.Application.Handlers
         public EnterSceneMessageHandler(IGameObject player, IGameSceneCollection gameSceneCollection)
         {
             this.player = player;
-            this.gameSceneCollection = gameSceneCollection;
             this.characterData = player.Components.Get<ICharacterData>();
             this.presenceMapProvider = player.Components.Get<IPresenceMapProvider>();
             this.messageSender = player.Components.Get<IMessageSender>();
+            this.gameSceneCollection = gameSceneCollection;
         }
 
         public void Handle(byte[] rawData)

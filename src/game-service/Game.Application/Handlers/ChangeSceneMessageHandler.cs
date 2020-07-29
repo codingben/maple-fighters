@@ -15,10 +15,10 @@ namespace Game.Application.Handlers
 
         public ChangeSceneMessageHandler(IGameObject player, IGameSceneCollection gameSceneCollection)
         {
-            this.gameSceneCollection = gameSceneCollection;
             this.proximityChecker = player.Components.Get<IProximityChecker>();
             this.presenceMapProvider = player.Components.Get<IPresenceMapProvider>();
             this.messageSender = player.Components.Get<IMessageSender>();
+            this.gameSceneCollection = gameSceneCollection;
         }
 
         public void Handle(byte[] rawData)
