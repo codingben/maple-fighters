@@ -1,6 +1,6 @@
 using Game.Messages;
 
-namespace Scripts.Services
+namespace Scripts.Services.Game
 {
     interface IGameApi
     {
