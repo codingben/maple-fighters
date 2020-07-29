@@ -1,4 +1,5 @@
 ﻿using Game.Common;
+using Game.Messages;
 using Scripts.Services.Game;
 using UnityEngine;
 
@@ -6,11 +7,11 @@ namespace Scripts.Gameplay.Entity
 {
     public class PositionSender : MonoBehaviour
     {
+        private IGameApi gameApi;
+
         [SerializeField]
         private float greaterDistance = 0.1f;
         private Vector2 lastPosition;
-
-        private GameService gameService;
 
         private void Awake()
         {
@@ -19,7 +20,7 @@ namespace Scripts.Gameplay.Entity
 
         private void Start()
         {
-            gameService = FindObjectOfType<GameService>();
+            gameApi = FindObjectOfType<GameApi>();
         }
 
         private void Update()
@@ -29,20 +30,25 @@ namespace Scripts.Gameplay.Entity
             {
                 lastPosition = transform.position;
 
-                if (gameService != null)
+                if (gameApi != null)
                 {
                     var x = transform.position.x;
                     var y = transform.position.y;
-                    var z = GetDirection();
+                    // var z = GetDirection();
 
                     var parameters =
-                        new UpdatePositionRequestParameters(x, y, z);
+                        new ChangePositionMessage()
+                        {
+                            X = x,
+                            Y = y
+                        };
 
-                    gameService.GameSceneApi?.UpdatePosition(parameters);
+                    gameApi?.ChangePosition(parameters);
                 }
             }
         }
 
+        // TODO: Use this method
         private Directions GetDirection()
         {
             var position = new Vector3(lastPosition.x, lastPosition.y);
