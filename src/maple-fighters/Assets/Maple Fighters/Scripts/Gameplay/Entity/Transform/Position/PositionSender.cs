@@ -34,12 +34,11 @@ namespace Scripts.Gameplay.Entity
                 var y = transform.position.y;
                 // var z = GetDirection();
 
-                var parameters =
-                    new ChangePositionMessage()
-                    {
-                        X = x,
-                        Y = y
-                    };
+                var parameters = new ChangePositionMessage()
+                {
+                    X = x,
+                    Y = y
+                };
 
                 gameApi?.ChangePosition(parameters);
             }
