@@ -30,21 +30,18 @@ namespace Scripts.Gameplay.Entity
             {
                 lastPosition = transform.position;
 
-                if (gameApi != null)
-                {
-                    var x = transform.position.x;
-                    var y = transform.position.y;
-                    // var z = GetDirection();
+                var x = transform.position.x;
+                var y = transform.position.y;
+                // var z = GetDirection();
 
-                    var parameters =
-                        new ChangePositionMessage()
-                        {
-                            X = x,
-                            Y = y
-                        };
+                var parameters =
+                    new ChangePositionMessage()
+                    {
+                        X = x,
+                        Y = y
+                    };
 
-                    gameApi?.ChangePosition(parameters);
-                }
+                gameApi?.ChangePosition(parameters);
             }
         }
 
