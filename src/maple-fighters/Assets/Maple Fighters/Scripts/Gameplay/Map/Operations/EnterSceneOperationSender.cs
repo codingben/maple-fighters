@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using CommonTools.Coroutines;
+﻿using Game.Messages;
 using Scripts.Services.Game;
 using UnityEngine;
 
@@ -7,35 +6,24 @@ namespace Scripts.Gameplay.Map.Operations
 {
     public class EnterSceneOperationSender : MonoBehaviour
     {
-        private ExternalCoroutinesExecutor coroutinesExecutor;
-
         private void Start()
         {
-            coroutinesExecutor = new ExternalCoroutinesExecutor();
-            coroutinesExecutor.StartTask(EnterSceneAsync);
+            EnterScene();
         }
 
-        private void Update()
+        private void EnterScene()
         {
-            coroutinesExecutor?.Update();
-        }
+            var gameApi = FindObjectOfType<GameApi>();
 
-        private void OnDestroy()
-        {
-            coroutinesExecutor?.Dispose();
-        }
-
-        private async Task EnterSceneAsync(IYield yield)
-        {
-            var gameService = FindObjectOfType<GameService>();
-            if (gameService != null)
+            // TODO: Set values
+            var message = new EnterSceneMessage()
             {
-                var api = gameService.GameSceneApi;
-                if (api != null)
-                {
-                    await gameService.GameSceneApi?.EnterSceneAsync(yield);
-                }
-            }
+                Map = 0,
+                CharacterName = "Arrow",
+                CharacterType = 0
+            };
+
+            gameApi?.EnterScene(message);
         }
     }
 }
