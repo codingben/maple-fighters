@@ -18,12 +18,12 @@ namespace Scripts.Gameplay.Map.Objects
         public void Teleport()
         {
             var gameApi = FindObjectOfType<GameApi>();
-            var parameters = new ChangeSceneMessage()
+            var message = new ChangeSceneMessage()
             {
                 PortalId = entityId
             };
 
-            gameApi?.ChangeScene(parameters);
+            gameApi?.ChangeScene(message);
         }
     }
 }
