@@ -9,10 +9,10 @@ namespace Game.Application.Handlers
     public class EnterSceneMessageHandler : IMessageHandler
     {
         private readonly IGameObject player;
-        private readonly IGameSceneCollection gameSceneCollection;
         private readonly ICharacterData characterData;
         private readonly IPresenceMapProvider presenceMapProvider;
         private readonly IMessageSender messageSender;
+        private readonly IGameSceneCollection gameSceneCollection;
 
         public EnterSceneMessageHandler(IGameObject player, IGameSceneCollection gameSceneCollection)
         {

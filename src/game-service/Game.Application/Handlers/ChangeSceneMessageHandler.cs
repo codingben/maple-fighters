@@ -8,10 +8,10 @@ namespace Game.Application.Handlers
 {
     public class ChangeSceneMessageHandler : IMessageHandler
     {
-        private readonly IGameSceneCollection gameSceneCollection;
         private readonly IProximityChecker proximityChecker;
         private readonly IMessageSender messageSender;
         private readonly IPresenceMapProvider presenceMapProvider;
+        private readonly IGameSceneCollection gameSceneCollection;
 
         public ChangeSceneMessageHandler(IGameObject player, IGameSceneCollection gameSceneCollection)
         {
