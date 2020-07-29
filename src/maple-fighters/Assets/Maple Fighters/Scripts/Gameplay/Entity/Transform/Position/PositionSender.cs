@@ -34,13 +34,13 @@ namespace Scripts.Gameplay.Entity
                 var y = transform.position.y;
                 // var z = GetDirection();
 
-                var parameters = new ChangePositionMessage()
+                var message = new ChangePositionMessage()
                 {
                     X = x,
                     Y = y
                 };
 
-                gameApi?.ChangePosition(parameters);
+                gameApi?.ChangePosition(message);
             }
         }
 
