@@ -1,4 +1,5 @@
 ﻿using Game.Common;
+using Game.Messages;
 using Scripts.Constants;
 using Scripts.Gameplay.Entity;
 using Scripts.Services.Game;
@@ -15,10 +16,10 @@ namespace Scripts.Gameplay.Player
             set => animator.enabled = value;
         }
 
+        private IGameApi gameApi;
+
         private PlayerState playerState = PlayerState.Idle;
         private Animator animator;
-
-        private GameService gameService;
 
         private void Awake()
         {
@@ -27,7 +28,7 @@ namespace Scripts.Gameplay.Player
 
         private void Start()
         {
-            gameService = FindObjectOfType<GameService>();
+            gameApi = FindObjectOfType<GameApi>();
             gameService?.GameSceneApi?.SceneObjectsAdded.AddListener(OnSceneObjectsAdded);
             gameService?.GameSceneApi?.PlayerStateChanged.AddListener(OnPlayerStateChanged);
         }
@@ -52,7 +53,7 @@ namespace Scripts.Gameplay.Player
             SendUpdatePlayerStateOperation();
         }
 
-        private void OnSceneObjectsAdded(SceneObjectsAddedEventParameters parameters)
+        private void OnSceneObjectsAdded(SceneObjectsAddedEventParameters _)
         {
             // When a new game objects added, will send them the last current state
             SendUpdatePlayerStateOperation();
@@ -60,7 +61,7 @@ namespace Scripts.Gameplay.Player
 
         private void OnPlayerStateChanged(PlayerStateChangedEventParameters parameters)
         {
-            var entity = 
+            var entity =
                 EntityContainer.GetInstance()
                     .GetRemoteEntity(parameters.SceneObjectId)?.GameObject;
             var playerAnimatorProvider =
@@ -76,10 +77,12 @@ namespace Scripts.Gameplay.Player
         private void SendUpdatePlayerStateOperation()
         {
             // TODO: Send animation enabled
-            var parameters =
-                new UpdatePlayerStateRequestParameters(playerState);
+            var message = new ChangeAnimationStateMessage()
+            {
+                AnimationState = (byte)playerState
+            };
 
-            gameService?.GameSceneApi?.UpdatePlayerState(parameters);
+            gameApi?.ChangeAnimationState(message);
         }
 
         private void SetPlayerAnimationState(Animator animator, PlayerState playerState)
