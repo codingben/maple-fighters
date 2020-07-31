@@ -40,7 +40,7 @@ namespace Scripts.Gameplay.Entity
                     Y = y
                 };
 
-                gameApi?.ChangePosition(message);
+                gameApi?.SendMessage(MessageCodes.ChangePosition, message);
             }
         }
 
