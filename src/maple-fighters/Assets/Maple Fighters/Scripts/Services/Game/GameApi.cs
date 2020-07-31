@@ -1,4 +1,5 @@
-using Game.Messages;
+using System;
+using Game.Network;
 using NativeWebSocket;
 using UnityEngine;
 
@@ -27,28 +28,11 @@ namespace Scripts.Services.Game
             await webSocket.Close();
         }
 
-        public async void ChangeAnimationState(ChangeAnimationStateMessage message)
+        async void IGameApi.SendMessage<TCode, TMessage>(TCode code, TMessage message)
         {
-            throw new System.NotImplementedException();
-        }
+            var rawData =
+                MessageUtils.WrapMessage(Convert.ToByte(code), message);
 
-        public async void ChangePosition(ChangePositionMessage message)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public async void ChangeScene(ChangeSceneMessage message)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public async void EnterScene(EnterSceneMessage message)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        private async void SendMessage(byte[] rawData)
-        {
             if (webSocket.State == WebSocketState.Open)
             {
                 await webSocket.Send(rawData);

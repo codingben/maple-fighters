@@ -1,15 +1,11 @@
-using Game.Messages;
+using System;
 
 namespace Scripts.Services.Game
 {
-    interface IGameApi
+    public interface IGameApi
     {
-        void EnterScene(EnterSceneMessage message);
-
-        void ChangeScene(ChangeSceneMessage message);
-
-        void ChangePosition(ChangePositionMessage message);
-
-        void ChangeAnimationState(ChangeAnimationStateMessage message);
+        void SendMessage<TCode, TMessage>(TCode code, TMessage message)
+            where TCode : IComparable, IFormattable, IConvertible
+            where TMessage : class;
     }
 }
