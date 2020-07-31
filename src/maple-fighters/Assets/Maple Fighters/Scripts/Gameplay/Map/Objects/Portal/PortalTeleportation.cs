@@ -17,13 +17,14 @@ namespace Scripts.Gameplay.Map.Objects
 
         public void Teleport()
         {
-            var gameApi = FindObjectOfType<GameApi>();
+            IGameApi gameApi = FindObjectOfType<GameApi>();
+
             var message = new ChangeSceneMessage()
             {
                 PortalId = entityId
             };
 
-            gameApi?.ChangeScene(message);
+            gameApi?.SendMessage(MessageCodes.ChangeScene, message);
         }
     }
 }
