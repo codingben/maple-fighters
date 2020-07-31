@@ -1,4 +1,4 @@
-namespace Game.Application.Network
+namespace Game.Network
 {
     public class MessageData
     {

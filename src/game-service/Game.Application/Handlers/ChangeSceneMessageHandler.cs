@@ -1,6 +1,6 @@
 ﻿using Game.Application.Components;
 using Game.Messages;
-using Game.Application.Network;
+using Game.Network;
 using Game.Application.Objects;
 using Game.Application.Objects.Components;
 

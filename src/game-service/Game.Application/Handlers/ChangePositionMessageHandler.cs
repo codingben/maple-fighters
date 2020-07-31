@@ -1,6 +1,6 @@
 using Common.MathematicsHelper;
 using InterestManagement;
-using Game.Application.Network;
+using Game.Network;
 using Game.Messages;
 using Game.Application.Objects;
 

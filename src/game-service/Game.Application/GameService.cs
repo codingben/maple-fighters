@@ -4,7 +4,7 @@ using Common.Components;
 using WebSocketSharp;
 using WebSocketSharp.Server;
 using Game.Application.Components;
-using Game.Application.Network;
+using Game.Network;
 using Game.Application.Handlers;
 using Game.Messages;
 using Game.Application.Objects.Components;

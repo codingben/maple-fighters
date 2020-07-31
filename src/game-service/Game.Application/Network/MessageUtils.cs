@@ -2,7 +2,7 @@ using System.IO;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Bson;
 
-namespace Game.Application.Network
+namespace Game.Network
 {
     public static class MessageUtils
     {
