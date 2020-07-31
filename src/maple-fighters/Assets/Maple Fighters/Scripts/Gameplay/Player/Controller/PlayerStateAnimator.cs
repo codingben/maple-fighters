@@ -82,7 +82,7 @@ namespace Scripts.Gameplay.Player
                 AnimationState = (byte)playerState
             };
 
-            gameApi?.ChangeAnimationState(message);
+            gameApi?.SendMessage(MessageCodes.ChangeAnimationState, message);
         }
 
         private void SetPlayerAnimationState(Animator animator, PlayerState playerState)
