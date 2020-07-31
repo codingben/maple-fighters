@@ -13,7 +13,7 @@ namespace Scripts.Gameplay.Map.Operations
 
         private void EnterScene()
         {
-            var gameApi = FindObjectOfType<GameApi>();
+            IGameApi gameApi = FindObjectOfType<GameApi>();
 
             // TODO: Set values
             var message = new EnterSceneMessage()
@@ -23,7 +23,7 @@ namespace Scripts.Gameplay.Map.Operations
                 CharacterType = 0
             };
 
-            gameApi?.EnterScene(message);
+            gameApi?.SendMessage(MessageCodes.EnterScene, message);
         }
     }
 }
