@@ -6,7 +6,7 @@ using Game.Application.Objects.Components;
 
 namespace Game.Application.Handlers
 {
-    public class EnterSceneMessageHandler : IMessageHandler
+    public class EnterSceneMessageHandler : IMessageHandler<EnterSceneMessage>
     {
         private readonly IGameObject player;
         private readonly ICharacterData characterData;
@@ -17,16 +17,15 @@ namespace Game.Application.Handlers
         public EnterSceneMessageHandler(IGameObject player, IGameSceneCollection gameSceneCollection)
         {
             this.player = player;
-            this.characterData = player.Components.Get<ICharacterData>();
-            this.presenceMapProvider = player.Components.Get<IPresenceMapProvider>();
-            this.messageSender = player.Components.Get<IMessageSender>();
             this.gameSceneCollection = gameSceneCollection;
+
+            characterData = player.Components.Get<ICharacterData>();
+            presenceMapProvider = player.Components.Get<IPresenceMapProvider>();
+            messageSender = player.Components.Get<IMessageSender>();
         }
 
-        public void Handle(byte[] rawData)
+        public void Handle(EnterSceneMessage message)
         {
-            var message =
-                MessageUtils.DeserializeMessage<EnterSceneMessage>(rawData);
             var map = message.Map;
             var name = message.CharacterName;
             var characterType = message.CharacterType;

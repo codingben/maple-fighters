@@ -6,7 +6,7 @@ using Game.Application.Objects.Components;
 
 namespace Game.Application.Handlers
 {
-    public class ChangeSceneMessageHandler : IMessageHandler
+    public class ChangeSceneMessageHandler : IMessageHandler<ChangeSceneMessage>
     {
         private readonly IProximityChecker proximityChecker;
         private readonly IMessageSender messageSender;
@@ -15,16 +15,15 @@ namespace Game.Application.Handlers
 
         public ChangeSceneMessageHandler(IGameObject player, IGameSceneCollection gameSceneCollection)
         {
-            this.proximityChecker = player.Components.Get<IProximityChecker>();
-            this.presenceMapProvider = player.Components.Get<IPresenceMapProvider>();
-            this.messageSender = player.Components.Get<IMessageSender>();
             this.gameSceneCollection = gameSceneCollection;
+
+            proximityChecker = player.Components.Get<IProximityChecker>();
+            presenceMapProvider = player.Components.Get<IPresenceMapProvider>();
+            messageSender = player.Components.Get<IMessageSender>();
         }
 
-        public void Handle(byte[] rawData)
+        public void Handle(ChangeSceneMessage message)
         {
-            var message =
-                MessageUtils.DeserializeMessage<ChangeSceneMessage>(rawData);
             var portalId = message.PortalId;
             var portal = GetPortal(portalId);
             if (portal != null)

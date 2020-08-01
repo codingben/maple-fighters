@@ -5,19 +5,17 @@ using Game.Application.Objects.Components;
 
 namespace Game.Application.Handlers
 {
-    public class ChangeAnimationStateHandler : IMessageHandler
+    public class ChangeAnimationStateHandler : IMessageHandler<ChangeAnimationStateMessage>
     {
         private readonly IAnimationData animationData;
 
         public ChangeAnimationStateHandler(IGameObject player)
         {
-            this.animationData = player.Components.Get<IAnimationData>();
+            animationData = player.Components.Get<IAnimationData>();
         }
 
-        public void Handle(byte[] rawData)
+        public void Handle(ChangeAnimationStateMessage message)
         {
-            var message =
-                MessageUtils.DeserializeMessage<ChangeAnimationStateMessage>(rawData);
             var animationState = message.AnimationState;
 
             animationData.SetAnimationState(animationState);

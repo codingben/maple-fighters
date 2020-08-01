@@ -6,19 +6,17 @@ using Game.Application.Objects;
 
 namespace Game.Application.Handlers
 {
-    public class ChangePositionMessageHandler : IMessageHandler
+    public class ChangePositionMessageHandler : IMessageHandler<ChangePositionMessage>
     {
         private readonly ITransform transform;
 
         public ChangePositionMessageHandler(IGameObject player)
         {
-            this.transform = player.Transform;
+            transform = player.Transform;
         }
 
-        public void Handle(byte[] rawData)
+        public void Handle(ChangePositionMessage message)
         {
-            var message =
-                MessageUtils.DeserializeMessage<ChangePositionMessage>(rawData);
             var x = message.X;
             var y = message.Y;
             var position = new Vector2(x, y);
