@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Game.Network
 {
-    public class MessageHandlerCollection
+    public class MessageHandlerCollection : IMessageHandlerCollection
     {
         private readonly Dictionary<byte, Action<byte[]>> collection;
 
