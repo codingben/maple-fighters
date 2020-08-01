@@ -42,6 +42,10 @@ namespace Game.Application
 
         protected override void OnClose(CloseEventArgs eventArgs)
         {
+            RemoveHandlerFromChangePosition();
+            RemoveHandlerFromChangeAnimationState();
+            RemoveHandlerFromEnterScene();
+            RemoveHandlerFromChangeScene();
             RemoveWebSocketSessionData();
             RemovePlayer();
         }
@@ -78,6 +82,11 @@ namespace Game.Application
             }
         }
 
+        private void RemoveHandlerFromChangePosition()
+        {
+            messageHandlerCollection.Unset(MessageCodes.ChangePosition);
+        }
+
         private void AddHandlerForChangeAnimationState()
         {
             var player = gamePlayer?.GetPlayer();
@@ -87,6 +96,11 @@ namespace Game.Application
 
                 messageHandlerCollection.Set(MessageCodes.ChangeAnimationState, messageHandler);
             }
+        }
+
+        private void RemoveHandlerFromChangeAnimationState()
+        {
+            messageHandlerCollection.Unset(MessageCodes.ChangeAnimationState);
         }
 
         private void AddHandlerForEnterScene()
@@ -101,6 +115,11 @@ namespace Game.Application
             }
         }
 
+        private void RemoveHandlerFromEnterScene()
+        {
+            messageHandlerCollection.Unset(MessageCodes.EnterScene);
+        }
+
         private void AddHandlerForChangeScene()
         {
             var player = gamePlayer?.GetPlayer();
@@ -111,6 +130,11 @@ namespace Game.Application
 
                 messageHandlerCollection.Set(MessageCodes.ChangeScene, messageHandler);
             }
+        }
+
+        private void RemoveHandlerFromChangeScene()
+        {
+            messageHandlerCollection.Unset(MessageCodes.ChangeScene);
         }
 
         private void AddPlayer()
