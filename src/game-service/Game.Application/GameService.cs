@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Common.ComponentModel;
 using Common.Components;
 using WebSocketSharp;
@@ -16,7 +15,7 @@ namespace Game.Application
         private readonly IWebSocketSessionCollection webSocketSessionCollection;
         private readonly IGameSceneCollection gameSceneCollection;
         private readonly IGamePlayer gamePlayer;
-        private readonly IDictionary<byte, IMessageHandler> handlers = new Dictionary<byte, IMessageHandler>();
+        private readonly MessageHandlerCollection messageHandlerCollection;
 
         public GameService(IComponents components)
         {
@@ -27,6 +26,7 @@ namespace Game.Application
             var id = idGenerator.GenerateId();
 
             gamePlayer = new GamePlayer(id);
+            messageHandlerCollection = new MessageHandlerCollection();
         }
 
         protected override void OnOpen()
@@ -60,9 +60,9 @@ namespace Game.Application
                 var code = messageData.Code;
                 var rawData = messageData.RawData;
 
-                if (handlers.TryGetValue(code, out var handler))
+                if (messageHandlerCollection.TryGet(code, out var handler))
                 {
-                    handler?.Handle(rawData);
+                    handler?.Invoke(rawData);
                 }
             }
         }
@@ -72,10 +72,9 @@ namespace Game.Application
             var player = gamePlayer?.GetPlayer();
             if (player != null)
             {
-                var messageCode = (byte)MessageCodes.ChangePosition;
                 var messageHandler = new ChangePositionMessageHandler(player);
 
-                handlers.Add(messageCode, messageHandler);
+                messageHandlerCollection.Set(MessageCodes.ChangePosition, messageHandler);
             }
         }
 
@@ -84,10 +83,9 @@ namespace Game.Application
             var player = gamePlayer?.GetPlayer();
             if (player != null)
             {
-                var messageCode = (byte)MessageCodes.ChangeAnimationState;
                 var messageHandler = new ChangeAnimationStateHandler(player);
 
-                handlers.Add(messageCode, messageHandler);
+                messageHandlerCollection.Set(MessageCodes.ChangeAnimationState, messageHandler);
             }
         }
 
@@ -96,11 +94,10 @@ namespace Game.Application
             var player = gamePlayer?.GetPlayer();
             if (player != null)
             {
-                var messageCode = (byte)MessageCodes.EnterScene;
                 var messageHandler =
                     new EnterSceneMessageHandler(player, gameSceneCollection);
 
-                handlers.Add(messageCode, messageHandler);
+                messageHandlerCollection.Set(MessageCodes.EnterScene, messageHandler);
             }
         }
 
@@ -109,11 +106,10 @@ namespace Game.Application
             var player = gamePlayer?.GetPlayer();
             if (player != null)
             {
-                var messageCode = (byte)MessageCodes.ChangeScene;
                 var messageHandler =
                     new ChangeSceneMessageHandler(player, gameSceneCollection);
 
-                handlers.Add(messageCode, messageHandler);
+                messageHandlerCollection.Set(MessageCodes.ChangeScene, messageHandler);
             }
         }
 
