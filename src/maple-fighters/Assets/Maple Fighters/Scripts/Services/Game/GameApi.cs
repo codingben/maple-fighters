@@ -8,12 +8,16 @@ namespace Scripts.Services.Game
     public class GameApi : MonoBehaviour, IGameApi
     {
         private WebSocket webSocket;
+        private IMessageHandlerCollection messageHandlerCollection;
 
         private async void Start()
         {
             webSocket = new WebSocket("ws://localhost:50060");
+            messageHandlerCollection = new MessageHandlerCollection();
 
             await webSocket.Connect();
+
+            SubscribeToMessageNotifier();
         }
 
         private void Update()
@@ -25,6 +29,8 @@ namespace Scripts.Services.Game
 
         private async void OnApplicationQuit()
         {
+            UnsubscribeFromMessageNotifier();
+
             await webSocket.Close();
         }
 
@@ -36,6 +42,29 @@ namespace Scripts.Services.Game
             if (webSocket.State == WebSocketState.Open)
             {
                 await webSocket.Send(rawData);
+            }
+        }
+
+        private void SubscribeToMessageNotifier()
+        {
+            webSocket.OnMessage += OnMessageReceived;
+        }
+
+        private void UnsubscribeFromMessageNotifier()
+        {
+            webSocket.OnMessage -= OnMessageReceived;
+        }
+
+        private void OnMessageReceived(byte[] data)
+        {
+            var messageData =
+                MessageUtils.DeserializeMessage<MessageData>(data);
+            var code = messageData.Code;
+            var rawData = messageData.RawData;
+
+            if (messageHandlerCollection.TryGet(code, out var handler))
+            {
+                handler?.Invoke(data);
             }
         }
     }
