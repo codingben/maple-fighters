@@ -12,7 +12,7 @@ namespace Game.Network
             collection = new Dictionary<byte, Action<byte[]>>();
         }
 
-        public void Set<TMessageCode, TMessage>(TMessageCode messageCode, Action<TMessage> handler)
+        public void Set<TMessageCode, TMessage>(TMessageCode messageCode, IMessageHandler<TMessage> handler)
             where TMessageCode : IComparable, IFormattable, IConvertible
             where TMessage : class
         {
@@ -23,7 +23,7 @@ namespace Game.Network
                 var message =
                     MessageUtils.DeserializeMessage<TMessage>(rawData);
 
-                handler.Invoke(message);
+                handler.Handle(message);
             };
         }
 
