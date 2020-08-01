@@ -15,7 +15,7 @@ namespace Game.Application
         private readonly IWebSocketSessionCollection webSocketSessionCollection;
         private readonly IGameSceneCollection gameSceneCollection;
         private readonly IGamePlayer gamePlayer;
-        private readonly MessageHandlerCollection messageHandlerCollection;
+        private readonly IMessageHandlerCollection messageHandlerCollection;
 
         public GameService(IComponents components)
         {
