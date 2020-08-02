@@ -22,7 +22,7 @@ namespace Scripts.Gameplay.Creator
             CreateGameComponents(GetCreatorsComponents());
             CreateGameComponents(GetContainersComponents());
             CreateGameComponents(GetGUIControllersComponents());
-            CreateGameComponents(GetServicesComponents());
+            CreateGameComponents(GetApiComponents());
 
             Destroy(gameObject);
         }
@@ -51,11 +51,13 @@ namespace Scripts.Gameplay.Creator
             yield return typeof(DefaultTimeProviderSetter);
         }
 
-        private IEnumerable<Type> GetServicesComponents()
+        private IEnumerable<Type> GetApiComponents()
         {
             if (FindObjectOfType<GameApi>() == null)
             {
                 yield return typeof(GameApi);
+
+                // TODO: Dummy connect to game server
             }
 
             if (FindObjectOfType<ChatService>() == null)
