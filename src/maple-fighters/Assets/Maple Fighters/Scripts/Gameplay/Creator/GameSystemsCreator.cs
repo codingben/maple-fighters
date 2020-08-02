@@ -53,10 +53,9 @@ namespace Scripts.Gameplay.Creator
 
         private IEnumerable<Type> GetServicesComponents()
         {
-            if (FindObjectOfType<GameService>() == null)
+            if (FindObjectOfType<GameApi>() == null)
             {
-                yield return typeof(GameService);
-                yield return typeof(DummyGameServiceConnector);
+                yield return typeof(GameApi);
             }
 
             if (FindObjectOfType<ChatService>() == null)
