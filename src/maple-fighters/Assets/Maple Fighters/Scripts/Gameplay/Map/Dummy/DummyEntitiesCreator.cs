@@ -1,5 +1,6 @@
 ﻿using System.Collections;
-using Game.Common;
+using System.Linq;
+using Game.Messages;
 using Scripts.Services.Game;
 using UnityEngine;
 
@@ -24,19 +25,18 @@ namespace Scripts.Gameplay.Map.Dummy
 
         private void CreateDummyEntities()
         {
-            foreach (var dummyEntity in dummyEntities)
-            {
-                var parameters = new SceneObjectAddedEventParameters(
-                    new SceneObjectParameters(
-                        dummyEntity.Id,
-                        dummyEntity.Type.ToString(),
-                        dummyEntity.Position.x,
-                        dummyEntity.Position.y,
-                        dummyEntity.Direction));
+            var gameApi = FindObjectOfType<GameApi>();
 
-                var gameService = FindObjectOfType<GameService>();
-                gameService?.GameSceneApi?.SceneObjectAdded.Invoke(parameters);
-            }
+            gameApi.SceneObjectsAdded.Invoke(new GameObjectsAddedMessage()
+            {
+                GameObjects = dummyEntities.Select(x => new GameObjectData()
+                {
+                    Id = x.Id,
+                    Name = x.Type.ToString(),
+                    X = x.Position.x,
+                    Y = x.Position.y
+                }).ToArray()
+            });
         }
     }
 }
