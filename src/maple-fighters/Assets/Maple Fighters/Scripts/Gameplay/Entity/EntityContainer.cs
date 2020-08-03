@@ -1,4 +1,5 @@
 ﻿using Game.Common;
+using Game.Messages;
 using Scripts.Services.Game;
 using UnityEngine;
 
@@ -20,8 +21,7 @@ namespace Scripts.Gameplay.Entity
 
         private IEntity localEntity;
         private IEntityCollection collection;
-
-        private GameService gameService;
+        private IGameApi gameApi;
 
         private void Awake()
         {
@@ -30,66 +30,53 @@ namespace Scripts.Gameplay.Entity
 
         private void Start()
         {
-            gameService = FindObjectOfType<GameService>();
-            gameService?.GameSceneApi?.SceneEntered.AddListener(OnLocalEntityEntered);
-            gameService?.GameSceneApi?.SceneObjectAdded.AddListener(OnEntityAdded);
-            gameService?.GameSceneApi?.SceneObjectRemoved.AddListener(OnEntityRemoved);
-            gameService?.GameSceneApi?.SceneObjectsAdded.AddListener(OnEntitiesAdded);
-            gameService?.GameSceneApi?.SceneObjectsRemoved.AddListener(OnEntitiesRemoved);
+            gameApi = FindObjectOfType<GameApi>();
+            gameApi.SceneEntered += OnLocalEntityEntered;
+            gameApi.SceneObjectsAdded += OnEntitiesAdded;
+            gameApi.SceneObjectsRemoved += OnEntitiesRemoved;
         }
 
         private void OnDisable()
         {
             // TODO: Remove SceneLeft event
-            gameService?.GameSceneApi?.SceneEntered.RemoveListener(OnLocalEntityEntered);
-            gameService?.GameSceneApi?.SceneObjectAdded.RemoveListener(OnEntityAdded);
-            gameService?.GameSceneApi?.SceneObjectRemoved.RemoveListener(OnEntityRemoved);
-            gameService?.GameSceneApi?.SceneObjectsAdded.RemoveListener(OnEntitiesAdded);
-            gameService?.GameSceneApi?.SceneObjectsRemoved.RemoveListener(OnEntitiesRemoved);
+            gameApi.SceneEntered -= OnLocalEntityEntered;
+            gameApi.SceneObjectsAdded -= OnEntitiesAdded;
+            gameApi.SceneObjectsRemoved -= OnEntitiesRemoved;
         }
 
-        private void OnLocalEntityEntered(EnterSceneResponseParameters parameters)
+        private void OnLocalEntityEntered(EnteredSceneMessage message)
         {
-            var id = parameters.SceneObject.Id;
-            var name = parameters.SceneObject.Name;
-            var position = 
-                new Vector2(parameters.SceneObject.X, parameters.SceneObject.Y);
+            // TODO: Remove "Local Player"
+            var name = "Local Player";
+            var id = message.GameObjectId;
+            var x = message.SpawnPositionData.X;
+            var y = message.SpawnPositionData.Y;
+            var position = new Vector2(x, y);
 
             localEntity = collection.Add(id, name, position);
         }
 
-        private void OnEntityAdded(SceneObjectAddedEventParameters parameters)
+        private void OnEntitiesAdded(GameObjectsAddedMessage message)
         {
-            var id = parameters.SceneObject.Id;
-            var name = parameters.SceneObject.Name;
-            var position =
-                new Vector2(parameters.SceneObject.X, parameters.SceneObject.Y);
+            var gameObjects = message.GameObjects;
 
-            collection.Add(id, name, position);
-        }
-
-        private void OnEntityRemoved(SceneObjectRemovedEventParameters parameters)
-        {
-            collection.Remove(parameters.SceneObjectId);
-        }
-
-        private void OnEntitiesAdded(SceneObjectsAddedEventParameters parameters)
-        {
-            foreach (var sceneObject in parameters.SceneObjects)
+            foreach (var gameObject in gameObjects)
             {
-                var id = sceneObject.Id;
-                var name = sceneObject.Name;
-                var position = new Vector2(sceneObject.X, sceneObject.Y);
+                var id = gameObject.Id;
+                var name = gameObject.Name;
+                var position = new Vector2(gameObject.X, gameObject.Y);
 
                 collection.Add(id, name, position);
             }
         }
 
-        private void OnEntitiesRemoved(SceneObjectsRemovedEventParameters parameters)
+        private void OnEntitiesRemoved(GameObjectsRemovedMessage message)
         {
-            foreach (var sceneObjectId in parameters.SceneObjectsId)
+            var identifiers = message.Identifiers;
+
+            foreach (var id in identifiers)
             {
-                collection.Remove(sceneObjectId);
+                collection.Remove(id);
             }
         }
 
