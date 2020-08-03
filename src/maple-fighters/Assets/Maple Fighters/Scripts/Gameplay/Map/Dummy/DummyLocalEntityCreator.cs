@@ -1,5 +1,5 @@
 ﻿using System.Collections;
-using Game.Common;
+using Game.Messages;
 using Scripts.Services.Game;
 using UnityEngine;
 
@@ -24,7 +24,19 @@ namespace Scripts.Gameplay.Map.Dummy
 
         private void CreateLocalDummyEntity()
         {
-            var sceneObject = new SceneObjectParameters(
+            var gameApi = FindObjectOfType<GameApi>();
+            gameApi.SceneEntered.Invoke(new EnteredSceneMessage()
+            {
+                GameObjectId = dummyCharacter.DummyEntity.Id,
+                SpawnPositionData = new SpawnPositionData()
+                {
+                    X = dummyCharacter.DummyEntity.Position.x,
+                    Y = dummyCharacter.DummyEntity.Position.y
+                }
+            });
+
+            // TODO: Remove old code
+            /*var sceneObject = new SceneObjectParameters(
                 dummyCharacter.DummyEntity.Id,
                 dummyCharacter.DummyEntity.Type.ToString(),
                 dummyCharacter.DummyEntity.Position.x,
@@ -47,7 +59,7 @@ namespace Scripts.Gameplay.Map.Dummy
                     characterSpawnDetails);
 
             var gameService = FindObjectOfType<GameService>();
-            gameService?.GameSceneApi?.SceneEntered.Invoke(parameters);
+            gameService?.GameSceneApi?.SceneEntered.Invoke(parameters);*/
         }
     }
 }
