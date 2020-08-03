@@ -1,4 +1,4 @@
-﻿using Game.Common;
+﻿using Game.Messages;
 using Scripts.Gameplay.Entity;
 using Scripts.Gameplay.Player;
 using Scripts.Gameplay.Player.Behaviours;
@@ -12,20 +12,20 @@ namespace Scripts.Gameplay.Mobs
         [Header("Attack"), SerializeField]
         private Vector2 hitAmount;
 
-        private GameService gameService;
+        private IGameApi gameApi;
 
         private void Start()
         {
-            gameService = FindObjectOfType<GameService>();
-            gameService?.GameSceneApi?.PlayerAttacked.AddListener(OnPlayerAttacked);
+            gameApi = FindObjectOfType<GameApi>();
+            gameApi.Attacked += OnPlayerAttacked;
         }
 
         private void OnDisable()
         {
-            gameService?.GameSceneApi?.PlayerAttacked.RemoveListener(OnPlayerAttacked);
+            gameApi.Attacked -= OnPlayerAttacked;
         }
 
-        private void OnPlayerAttacked(PlayerAttackedEventParameters parameters)
+        private void OnPlayerAttacked(AttackedMessage message)
         {
             var entity = EntityContainer.GetInstance().GetLocalEntity()
                 ?.GameObject;
@@ -33,10 +33,10 @@ namespace Scripts.Gameplay.Mobs
             var character = spawnedCharacter?.GetCharacterGameObject();
             if (character != null)
             {
-                var point = 
-                    new Vector3(parameters.ContactPointX, parameters.ContactPointY);
+                var normalized =
+                    (character.transform.position - transform.position).normalized;
                 var direction = new Vector2(
-                    x: ((character.transform.position - point).normalized.x > 0 ? 1 : -1) * hitAmount.x,
+                    x: (normalized.x > 0 ? 1 : -1) * hitAmount.x,
                     y: hitAmount.y);
 
                 var attackPlayer = character.GetComponent<IAttackPlayer>();
