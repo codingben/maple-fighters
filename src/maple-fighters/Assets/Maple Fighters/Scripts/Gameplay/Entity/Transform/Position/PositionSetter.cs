@@ -1,5 +1,6 @@
 ﻿using System;
 using Game.Common;
+using Game.Messages;
 using Scripts.Services.Game;
 using UnityEngine;
 
@@ -27,7 +28,7 @@ namespace Scripts.Gameplay.Entity
         private int entityId;
         private Vector3 newPosition;
 
-        private GameService gameService;
+        private IGameApi gameApi;
 
         private void Awake()
         {
@@ -37,22 +38,27 @@ namespace Scripts.Gameplay.Entity
 
         private void Start()
         {
-            gameService = FindObjectOfType<GameService>();
-            gameService?.GameSceneApi?.PositionChanged.AddListener(OnPositionChanged);
+            gameApi = FindObjectOfType<GameApi>();
+            gameApi.PositionChanged += OnPositionChanged;
         }
 
         private void OnDisable()
         {
-            gameService?.GameSceneApi?.PositionChanged.RemoveListener(OnPositionChanged);
+            gameApi.PositionChanged -= OnPositionChanged;
         }
 
-        private void OnPositionChanged(SceneObjectPositionChangedEventParameters parameters)
+        private void OnPositionChanged(PositionChangedMessage message)
         {
-            if (entityId == parameters.SceneObjectId)
-            {
-                newPosition = new Vector2(parameters.X, parameters.Y);
+            var id = message.GameObjectId;
+            var x = message.X;
+            var y = message.Y;
 
-                DirectionChanged?.Invoke(parameters.Direction);
+            if (entityId == id)
+            {
+                newPosition = new Vector2(x, y);
+
+                // TODO: Remove
+                // DirectionChanged?.Invoke(message.Direction);
             }
         }
 
@@ -66,30 +72,30 @@ namespace Scripts.Gameplay.Entity
             switch (interpolateOption)
             {
                 case InterpolateOption.Disabled:
-                {
-                    transform.position = newPosition;
-                    break;
-                }
+                    {
+                        transform.position = newPosition;
+                        break;
+                    }
 
                 case InterpolateOption.Lerp:
-                {
-                    var distance = 
-                        Vector2.Distance(transform.position, newPosition);
-                    if (distance > greaterDistance)
                     {
-                        if (canTeleport)
+                        var distance =
+                            Vector2.Distance(transform.position, newPosition);
+                        if (distance > greaterDistance)
                         {
-                            transform.position = newPosition;
+                            if (canTeleport)
+                            {
+                                transform.position = newPosition;
+                            }
                         }
-                    }
-                    else
-                    {
-                        transform.position = 
-                            Vector3.Lerp(transform.position, newPosition, speed * Time.deltaTime);
-                    }
+                        else
+                        {
+                            transform.position =
+                                Vector3.Lerp(transform.position, newPosition, speed * Time.deltaTime);
+                        }
 
-                    break;
-                }
+                        break;
+                    }
             }
         }
     }
