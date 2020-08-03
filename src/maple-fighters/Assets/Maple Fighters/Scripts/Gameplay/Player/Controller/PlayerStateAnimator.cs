@@ -29,14 +29,14 @@ namespace Scripts.Gameplay.Player
         private void Start()
         {
             gameApi = FindObjectOfType<GameApi>();
-            gameService?.GameSceneApi?.SceneObjectsAdded.AddListener(OnSceneObjectsAdded);
-            gameService?.GameSceneApi?.PlayerStateChanged.AddListener(OnPlayerStateChanged);
+            gameApi.SceneObjectsAdded += OnSceneObjectsAdded;
+            gameApi.AnimationStateChanged += OnPlayerStateChanged;
         }
 
         private void OnDisable()
         {
-            gameService?.GameSceneApi?.SceneObjectsAdded.RemoveListener(OnSceneObjectsAdded);
-            gameService?.GameSceneApi?.PlayerStateChanged.RemoveListener(OnPlayerStateChanged);
+            gameApi.SceneObjectsAdded -= OnSceneObjectsAdded;
+            gameApi.AnimationStateChanged -= OnPlayerStateChanged;
         }
 
         public void SetPlayerState(PlayerState playerState)
@@ -53,23 +53,24 @@ namespace Scripts.Gameplay.Player
             SendUpdatePlayerStateOperation();
         }
 
-        private void OnSceneObjectsAdded(SceneObjectsAddedEventParameters _)
+        private void OnSceneObjectsAdded(GameObjectsAddedMessage _)
         {
             // When a new game objects added, will send them the last current state
             SendUpdatePlayerStateOperation();
         }
 
-        private void OnPlayerStateChanged(PlayerStateChangedEventParameters parameters)
+        private void OnPlayerStateChanged(AnimationStateChangedMessage message)
         {
             var entity =
                 EntityContainer.GetInstance()
-                    .GetRemoteEntity(parameters.SceneObjectId)?.GameObject;
+                    .GetRemoteEntity(message.GameObjectId)?.GameObject;
             var playerAnimatorProvider =
                 entity?.GetComponent<PlayerAnimatorProvider>();
             var animator = playerAnimatorProvider?.Provide();
             if (animator != null)
             {
-                var playerState = parameters.PlayerState;
+                var playerState = (PlayerState)message.AnimationState;
+
                 SetPlayerAnimationState(animator, playerState);
             }
         }
