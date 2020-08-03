@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using Game.Common;
+using Game.Messages;
 using Scripts.Gameplay.Entity;
 using Scripts.Services.Game;
 using UnityEngine;
@@ -8,42 +9,35 @@ namespace Scripts.Gameplay.Player
 {
     public class CharacterCreator : MonoBehaviour
     {
-        private GameService gameService;
+        private IGameApi gameApi;
 
         private void Start()
         {
-            gameService = FindObjectOfType<GameService>();
-            gameService?.GameSceneApi?.SceneEntered.AddListener(OnSceneEntered);
-            gameService?.GameSceneApi?.CharacterAdded.AddListener(OnCharacterAdded);
-            gameService?.GameSceneApi?.CharactersAdded.AddListener(OnCharactersAdded);
+            gameApi = FindObjectOfType<GameApi>();
+            gameApi.SceneEntered += OnSceneEntered;
+            gameApi.SceneObjectsAdded += OnSceneObjectsAdded;
         }
 
         private void OnDisable()
         {
-            gameService?.GameSceneApi?.SceneEntered.RemoveListener(OnSceneEntered);
-            gameService?.GameSceneApi?.CharacterAdded.RemoveListener(OnCharacterAdded);
-            gameService?.GameSceneApi?.CharactersAdded.RemoveListener(OnCharactersAdded);
+            gameApi.SceneEntered -= OnSceneEntered;
+            gameApi.SceneObjectsAdded -= OnSceneObjectsAdded;
         }
 
-        private void OnSceneEntered(EnterSceneResponseParameters parameters)
+        private void OnSceneEntered(EnteredSceneMessage _)
         {
-            var characterSpawnDetails = parameters.Character;
-            StartCoroutine(WaitFrameAndSpawn(characterSpawnDetails));
+            // TODO: Get locally character data
+            // StartCoroutine(WaitFrameAndSpawn(characterSpawnDetails));
         }
 
-        private void OnCharacterAdded(CharacterAddedEventParameters parameters)
+        private void OnSceneObjectsAdded(GameObjectsAddedMessage message)
         {
-            var characterSpawnDetails = parameters.CharacterSpawnDetails;
-            StartCoroutine(WaitFrameAndSpawn(characterSpawnDetails));
-        }
+            // TODO: Get character data from message
 
-        private void OnCharactersAdded(CharactersAddedEventParameters parameters)
-        {
-            var characterSpawnDetails = parameters.CharactersSpawnDetails;
-            foreach (var characterSpawn in characterSpawnDetails)
+            /*foreach (var characterSpawn in characterSpawnDetails)
             {
                 StartCoroutine(WaitFrameAndSpawn(characterSpawn));
-            }
+            }*/
         }
 
         // TODO: Hack
