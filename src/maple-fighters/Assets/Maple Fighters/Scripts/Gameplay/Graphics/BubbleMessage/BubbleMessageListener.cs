@@ -1,4 +1,4 @@
-﻿using Game.Common;
+﻿using Game.Messages;
 using Scripts.Gameplay.Entity;
 using Scripts.Services.Game;
 using UnityEngine;
@@ -7,31 +7,31 @@ namespace Scripts.Gameplay.Graphics
 {
     public class BubbleMessageListener : MonoBehaviour
     {
-        private GameService gameService;
+        private IGameApi gameApi;
 
         private void Start()
         {
-            gameService = FindObjectOfType<GameService>();
-            gameService?.GameSceneApi?.BubbleMessageReceived.AddListener(OnBubbleMessageReceived);
+            gameApi = FindObjectOfType<GameApi>();
+            gameApi.BubbleMessageReceived += OnBubbleMessageReceived;
         }
 
         private void OnDisable()
         {
-            gameService?.GameSceneApi?.BubbleMessageReceived.RemoveListener(OnBubbleMessageReceived);
+            gameApi.BubbleMessageReceived -= OnBubbleMessageReceived;
         }
 
-        private void OnBubbleMessageReceived(BubbleMessageEventParameters parameters)
+        private void OnBubbleMessageReceived(BubbleNotificationMessage message)
         {
-            var entityId = parameters.RequesterId;
+            var entityId = message.NotifierId;
             var entity = EntityContainer.GetInstance().GetRemoteEntity(entityId)
                 ?.GameObject;
             if (entity != null)
             {
                 var owner = entity.transform;
-                var message = parameters.Message;
-                var time = parameters.Time;
+                var text = message.Message;
+                var time = message.Time;
 
-                BubbleMessage.Create(owner, message, time);
+                BubbleMessage.Create(owner, text, time);
             }
         }
     }
