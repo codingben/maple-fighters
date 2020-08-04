@@ -1,4 +1,4 @@
-﻿using Game.Common;
+﻿using System.Collections.Generic;
 using Game.Messages;
 using Scripts.Services.Game;
 using UnityEngine;
@@ -20,12 +20,13 @@ namespace Scripts.Gameplay.Entity
         private static EntityContainer instance;
 
         private IEntity localEntity;
-        private IEntityCollection collection;
         private IGameApi gameApi;
+
+        private Dictionary<int, IEntity> collection;
 
         private void Awake()
         {
-            collection = new EntityCollection();
+            collection = new Dictionary<int, IEntity>();
         }
 
         private void Start()
@@ -53,7 +54,7 @@ namespace Scripts.Gameplay.Entity
             var y = message.SpawnPositionData.Y;
             var position = new Vector2(x, y);
 
-            localEntity = collection.Add(id, name, position);
+            localEntity = AddEntity(id, name, position);
         }
 
         private void OnEntitiesAdded(GameObjectsAddedMessage message)
@@ -66,7 +67,7 @@ namespace Scripts.Gameplay.Entity
                 var name = gameObject.Name;
                 var position = new Vector2(gameObject.X, gameObject.Y);
 
-                collection.Add(id, name, position);
+                AddEntity(id, name, position);
             }
         }
 
@@ -76,8 +77,45 @@ namespace Scripts.Gameplay.Entity
 
             foreach (var id in identifiers)
             {
-                collection.Remove(id);
+                if (collection.TryGetValue(id, out var entity))
+                {
+                    RemoveEntity(entity);
+                }
             }
+        }
+
+        private IEntity AddEntity(int id, string name, Vector2 position)
+        {
+            IEntity entity = null;
+
+            var gameObject = Utils.CreateGameObject(name, position);
+            if (gameObject != null)
+            {
+                entity = gameObject.GetComponent<IEntity>();
+
+                if (entity != null)
+                {
+                    entity.Id = id;
+
+                    collection.Add(id, entity);
+
+                    Debug.Log($"Added a new entity with id #{id}");
+                }
+            }
+
+            return entity;
+        }
+
+        private void RemoveEntity(IEntity entity)
+        {
+            var gameObject = entity.GameObject;
+            var id = entity.Id;
+
+            Destroy(gameObject);
+
+            collection.Remove(id);
+
+            Debug.Log($"Removed an entity with id #{id}");
         }
 
         public IEntity GetLocalEntity()
@@ -85,9 +123,9 @@ namespace Scripts.Gameplay.Entity
             return localEntity;
         }
 
-        public IEntity GetRemoteEntity(int id)
+        public bool GetRemoteEntity(int id, out IEntity entity)
         {
-            return collection.TryGet(id);
+            return collection.TryGetValue(id, out entity);
         }
     }
 }
