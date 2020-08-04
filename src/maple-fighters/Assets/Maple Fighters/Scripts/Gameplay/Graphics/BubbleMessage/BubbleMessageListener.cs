@@ -22,12 +22,11 @@ namespace Scripts.Gameplay.Graphics
 
         private void OnBubbleMessageReceived(BubbleNotificationMessage message)
         {
-            var entityId = message.NotifierId;
-            var entity = EntityContainer.GetInstance().GetRemoteEntity(entityId)
-                ?.GameObject;
-            if (entity != null)
+            var id = message.NotifierId;
+
+            if (EntityContainer.GetInstance().GetRemoteEntity(id, out var entity))
             {
-                var owner = entity.transform;
+                var owner = entity?.GameObject.transform;
                 var text = message.Message;
                 var time = message.Time;
 
