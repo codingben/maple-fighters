@@ -67,7 +67,14 @@ namespace Scripts.Gameplay.Entity
                 var name = gameObject.Name;
                 var position = new Vector2(gameObject.X, gameObject.Y);
 
-                AddEntity(id, name, position);
+                if (collection.ContainsKey(id))
+                {
+                    Debug.LogWarning($"The entity with id #{id} already exists.");
+                }
+                else
+                {
+                    AddEntity(id, name, position);
+                }
             }
         }
 
