@@ -12,7 +12,8 @@ namespace Scripts.Gameplay.Map.Objects
 
         private void Start()
         {
-            entityId = GetComponent<IEntity>().Id;
+            var entity = GetComponent<IEntity>();
+            entityId = entity.Id;
         }
 
         public void Teleport()
