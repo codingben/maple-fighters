@@ -61,17 +61,19 @@ namespace Scripts.Gameplay.Player
 
         private void OnPlayerStateChanged(AnimationStateChangedMessage message)
         {
-            var entity =
-                EntityContainer.GetInstance()
-                    .GetRemoteEntity(message.GameObjectId)?.GameObject;
-            var playerAnimatorProvider =
-                entity?.GetComponent<PlayerAnimatorProvider>();
-            var animator = playerAnimatorProvider?.Provide();
-            if (animator != null)
-            {
-                var playerState = (PlayerState)message.AnimationState;
+            var id = message.GameObjectId;
 
-                SetPlayerAnimationState(animator, playerState);
+            if (EntityContainer.GetInstance().GetRemoteEntity(id, out var entity))
+            {
+                var playerAnimatorProvider =
+                    entity?.GameObject.GetComponent<PlayerAnimatorProvider>();
+                var animator = playerAnimatorProvider?.Provide();
+                if (animator != null)
+                {
+                    var playerState = (PlayerState)message.AnimationState;
+
+                    SetPlayerAnimationState(animator, playerState);
+                }
             }
         }
 
