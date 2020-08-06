@@ -8,7 +8,7 @@ namespace Scripts.Gameplay.Entity
     [RequireComponent(typeof(EntityIdentifier))]
     public class PositionSetter : MonoBehaviour
     {
-        public event Action<Vector2> PositionChanged;
+        public event Action<Vector3> PositionChanged;
 
         [Header("Synchronization")]
         [SerializeField]
