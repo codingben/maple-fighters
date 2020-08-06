@@ -1,5 +1,4 @@
-﻿using Game.Common;
-using Scripts.Gameplay.Entity;
+﻿using Scripts.Gameplay.Entity;
 using UnityEngine;
 
 namespace Scripts.Gameplay.Player
@@ -21,33 +20,37 @@ namespace Scripts.Gameplay.Player
         private void Start()
         {
             spawnedCharacter.CharacterSpawned += OnCharacterSpawned;
-            positionSetter.DirectionChanged += OnDirectionChanged;
+            positionSetter.PositionChanged += OnPositionChanged;
         }
 
         private void OnDestroy()
         {
             spawnedCharacter.CharacterSpawned -= OnCharacterSpawned;
-            positionSetter.DirectionChanged -= OnDirectionChanged;
+            positionSetter.PositionChanged -= OnPositionChanged;
         }
 
         private void OnCharacterSpawned()
         {
-            var characterGameObject = 
+            var characterGameObject =
                 spawnedCharacter.GetCharacterGameObject();
             character = characterGameObject.transform;
         }
 
-        private void OnDirectionChanged(Directions direction)
+        private void OnPositionChanged(Vector3 position)
         {
-            Utils.SetLocalScaleByDirection(ref character, direction);
-        }
+            var direction = (character.position - position).normalized;
+            var x = Mathf.Abs(character.localScale.x);
+            var y = character.localScale.y;
+            var z = character.localScale.z;
 
-        public Directions GetDirection()
-        {
-            var x = character.localScale.x;
-            var direction = x > 0 ? Directions.Left : Directions.Right;
-
-            return direction;
+            if (direction.x < 0)
+            {
+                character.localScale = new Vector3(x, y, z);
+            }
+            else
+            {
+                character.localScale = new Vector3(-x, y, z);
+            }
         }
     }
 }
