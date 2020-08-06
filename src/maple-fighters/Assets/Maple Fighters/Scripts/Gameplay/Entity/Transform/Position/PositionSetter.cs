@@ -1,5 +1,4 @@
 ﻿using System;
-using Game.Common;
 using Game.Messages;
 using Scripts.Services.Game;
 using UnityEngine;
@@ -9,7 +8,7 @@ namespace Scripts.Gameplay.Entity
     [RequireComponent(typeof(EntityIdentifier))]
     public class PositionSetter : MonoBehaviour
     {
-        public event Action<Directions> DirectionChanged;
+        public event Action<Vector2> PositionChanged;
 
         [Header("Synchronization")]
         [SerializeField]
@@ -57,8 +56,7 @@ namespace Scripts.Gameplay.Entity
             {
                 newPosition = new Vector2(x, y);
 
-                // TODO: Remove
-                // DirectionChanged?.Invoke(message.Direction);
+                PositionChanged?.Invoke(newPosition);
             }
         }
 
