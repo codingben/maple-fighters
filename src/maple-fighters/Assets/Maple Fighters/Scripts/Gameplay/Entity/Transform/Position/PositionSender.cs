@@ -1,5 +1,4 @@
-﻿using Game.Common;
-using Game.Messages;
+﻿using Game.Messages;
 using Scripts.Services.Game;
 using UnityEngine;
 
@@ -32,7 +31,6 @@ namespace Scripts.Gameplay.Entity
 
                 var x = transform.position.x;
                 var y = transform.position.y;
-                // var z = GetDirection();
 
                 var message = new ChangePositionMessage()
                 {
@@ -42,16 +40,6 @@ namespace Scripts.Gameplay.Entity
 
                 gameApi?.SendMessage(MessageCodes.ChangePosition, message);
             }
-        }
-
-        // TODO: Use this method
-        private Directions GetDirection()
-        {
-            var position = new Vector3(lastPosition.x, lastPosition.y);
-            var orientation = (transform.position - position).normalized;
-            var direction = orientation.x < 0 ? Directions.Left : Directions.Right;
-
-            return direction;
         }
     }
 }
