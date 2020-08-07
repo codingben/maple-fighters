@@ -1,5 +1,4 @@
 ﻿using System;
-using Game.Common;
 using UnityEngine;
 
 namespace Scripts.Gameplay.Graphics
@@ -21,24 +20,16 @@ namespace Scripts.Gameplay.Graphics
             if (parent != null)
             {
                 var x = parent.localScale.x;
-                var direction = x > 0 ? Directions.Left : Directions.Right;
-
-                switch (direction)
+                if (x > 0)
                 {
-                    case Directions.Left:
-                    {
-                        previousLocalScale.x = Math.Abs(previousLocalScale.x);
-                        break;
-                    }
-
-                    case Directions.Right:
-                    {
-                        previousLocalScale.x = -Math.Abs(previousLocalScale.x);
-                        break;
-                    }
+                    previousLocalScale.x = Math.Abs(previousLocalScale.x);
+                }
+                else
+                {
+                    previousLocalScale.x = -Math.Abs(previousLocalScale.x);
                 }
 
-                transform.localScale = 
+                transform.localScale =
                     new Vector3(previousLocalScale.x, previousLocalScale.y);
             }
         }
