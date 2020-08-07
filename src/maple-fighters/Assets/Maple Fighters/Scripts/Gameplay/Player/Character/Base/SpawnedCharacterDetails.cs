@@ -1,5 +1,4 @@
-﻿using Game.Common;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Scripts.Gameplay.Player
 {

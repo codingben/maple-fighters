@@ -1,5 +1,5 @@
-﻿using Game.Common;
-using Scripts.Constants;
+﻿using Scripts.Constants;
+using Scripts.Gameplay.Player;
 using UnityEngine;
 
 namespace Scripts.Gameplay.Map.Climb
@@ -109,7 +109,7 @@ namespace Scripts.Gameplay.Map.Climb
         private bool IsPlayerStateSuitable()
         {
             return GetPlayerState() == PlayerState.Idle ||
-                   GetPlayerState() == PlayerState.Jumping || 
+                   GetPlayerState() == PlayerState.Jumping ||
                    GetPlayerState() == PlayerState.Falling;
         }
 

@@ -1,5 +1,4 @@
-﻿using Game.Common;
-using Scripts.Constants;
+﻿using Scripts.Constants;
 using Scripts.Gameplay.Player;
 using UnityEngine;
 
@@ -26,7 +25,7 @@ namespace Scripts.Gameplay.Map.Climb
 
         protected override void UnsetPlayerFromClimbState()
         {
-            var playerState = 
+            var playerState =
                 playerController.IsGrounded()
                     ? PlayerState.Idle
                     : PlayerState.Falling;

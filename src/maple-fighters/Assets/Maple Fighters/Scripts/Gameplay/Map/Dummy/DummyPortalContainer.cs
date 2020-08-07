@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Game.Common;
 using UnityEngine;
 
 namespace Scripts.Gameplay.Map.Dummy

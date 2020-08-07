@@ -1,6 +1,4 @@
-﻿using Game.Common;
-
-namespace Scripts.Gameplay.Player
+﻿namespace Scripts.Gameplay.Player
 {
     public interface ISpawnedCharacterDetails
     {

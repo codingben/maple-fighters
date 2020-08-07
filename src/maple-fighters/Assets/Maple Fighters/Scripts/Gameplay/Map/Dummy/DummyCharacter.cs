@@ -1,5 +1,4 @@
 ﻿using System;
-using Game.Common;
 
 namespace Scripts.Gameplay.Map.Dummy
 {
