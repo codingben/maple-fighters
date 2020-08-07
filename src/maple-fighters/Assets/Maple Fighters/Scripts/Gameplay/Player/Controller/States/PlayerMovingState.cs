@@ -1,5 +1,4 @@
 using System;
-using Game.Common;
 using UnityEngine;
 
 namespace Scripts.Gameplay.Player.States
@@ -41,10 +40,10 @@ namespace Scripts.Gameplay.Player.States
                 var horizontal = Utils.GetAxis(Axes.Horizontal, isRaw: true);
                 if (Math.Abs(horizontal) > 0)
                 {
-                    direction = 
+                    direction =
                         horizontal < 0 ? Directions.Left : Directions.Right;
                 }
-                
+
                 playerController.ChangeDirection(direction);
             }
             else

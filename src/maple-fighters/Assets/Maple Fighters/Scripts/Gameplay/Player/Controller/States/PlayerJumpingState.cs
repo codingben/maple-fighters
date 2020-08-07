@@ -1,4 +1,3 @@
-using Game.Common;
 using UnityEngine;
 
 namespace Scripts.Gameplay.Player.States
@@ -29,7 +28,7 @@ namespace Scripts.Gameplay.Player.States
             var jumpForce = playerController.GetProperties().JumpForce;
             var jumpHeight = playerController.GetProperties().JumpHeight;
 
-            rigidbody2D.velocity = 
+            rigidbody2D.velocity =
                 new Vector2(horizontal * jumpForce, jumpHeight);
 
             if (horizontal != 0)

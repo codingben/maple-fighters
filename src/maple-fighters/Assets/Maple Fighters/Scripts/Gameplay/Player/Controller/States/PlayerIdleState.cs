@@ -1,5 +1,4 @@
-﻿using Game.Common;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Scripts.Gameplay.Player.States
 {
@@ -7,7 +6,7 @@ namespace Scripts.Gameplay.Player.States
     {
         private readonly PlayerController playerController;
         private readonly Rigidbody2D rigidbody2D;
- 
+
         public PlayerIdleState(PlayerController playerController)
         {
             this.playerController = playerController;

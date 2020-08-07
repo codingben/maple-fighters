@@ -1,4 +1,3 @@
-using Game.Common;
 using UnityEngine;
 
 namespace Scripts.Gameplay.Player.States
@@ -26,7 +25,7 @@ namespace Scripts.Gameplay.Player.States
             var horizontal = Utils.GetAxis(Axes.Horizontal);
             var speed = playerController.GetProperties().Speed;
 
-            rigidbody2D.velocity = 
+            rigidbody2D.velocity =
                 new Vector2(horizontal * speed, rigidbody2D.velocity.y);
 
             if (horizontal != 0)

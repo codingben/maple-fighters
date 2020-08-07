@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Game.Common;
 using ScriptableObjects.Configurations;
 using Scripts.Editor;
 using Scripts.Gameplay.Player.States;
@@ -155,7 +154,7 @@ namespace Scripts.Gameplay.Player
                 var radius = overlapCircleRadius;
                 var layerMask = groundLayerMask;
 
-                isGrounded = 
+                isGrounded =
                     Physics2D.OverlapCircle(position, radius, layerMask);
             }
 
