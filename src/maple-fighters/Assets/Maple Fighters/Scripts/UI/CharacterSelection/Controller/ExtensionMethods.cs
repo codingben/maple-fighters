@@ -1,6 +1,4 @@
-﻿using Game.Common;
-
-namespace Scripts.UI.CharacterSelection
+﻿namespace Scripts.UI.CharacterSelection
 {
     public static class ExtensionMethods
     {
