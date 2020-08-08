@@ -14,13 +14,13 @@ namespace Scripts.Gameplay.Player
         {
             gameApi = FindObjectOfType<GameApi>();
             gameApi.SceneEntered += OnSceneEntered;
-            gameApi.SceneObjectsAdded += OnSceneObjectsAdded;
+            gameApi.GameObjectsAdded += OnGameObjectsAdded;
         }
 
         private void OnDisable()
         {
             gameApi.SceneEntered -= OnSceneEntered;
-            gameApi.SceneObjectsAdded -= OnSceneObjectsAdded;
+            gameApi.GameObjectsAdded -= OnGameObjectsAdded;
         }
 
         private void OnSceneEntered(EnteredSceneMessage _)
@@ -28,7 +28,7 @@ namespace Scripts.Gameplay.Player
             // TODO: Get locally character data and spawn character
         }
 
-        private void OnSceneObjectsAdded(GameObjectsAddedMessage message)
+        private void OnGameObjectsAdded(GameObjectsAddedMessage message)
         {
             foreach (var gameObject in message.GameObjects)
             {

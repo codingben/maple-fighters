@@ -28,13 +28,13 @@ namespace Scripts.Gameplay.Player
         private void Start()
         {
             gameApi = FindObjectOfType<GameApi>();
-            gameApi.SceneObjectsAdded += OnSceneObjectsAdded;
+            gameApi.GameObjectsAdded += OnGameObjectsAdded;
             gameApi.AnimationStateChanged += OnPlayerStateChanged;
         }
 
         private void OnDisable()
         {
-            gameApi.SceneObjectsAdded -= OnSceneObjectsAdded;
+            gameApi.GameObjectsAdded -= OnGameObjectsAdded;
             gameApi.AnimationStateChanged -= OnPlayerStateChanged;
         }
 
@@ -52,7 +52,7 @@ namespace Scripts.Gameplay.Player
             SendUpdatePlayerStateOperation();
         }
 
-        private void OnSceneObjectsAdded(GameObjectsAddedMessage _)
+        private void OnGameObjectsAdded(GameObjectsAddedMessage _)
         {
             // When a new game objects added, will send them the last current state
             SendUpdatePlayerStateOperation();

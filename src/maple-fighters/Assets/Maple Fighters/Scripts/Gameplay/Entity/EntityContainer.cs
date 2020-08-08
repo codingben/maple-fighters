@@ -32,20 +32,20 @@ namespace Scripts.Gameplay.Entity
         private void Start()
         {
             gameApi = FindObjectOfType<GameApi>();
-            gameApi.SceneEntered += OnLocalEntityEntered;
-            gameApi.SceneObjectsAdded += OnEntitiesAdded;
-            gameApi.SceneObjectsRemoved += OnEntitiesRemoved;
+            gameApi.SceneEntered += OnSceneEntered;
+            gameApi.GameObjectsAdded += OnGameObjectsAdded;
+            gameApi.GameObjectsRemoved += OnGameObjectsRemoved;
         }
 
         private void OnDisable()
         {
             // TODO: Remove SceneLeft event
-            gameApi.SceneEntered -= OnLocalEntityEntered;
-            gameApi.SceneObjectsAdded -= OnEntitiesAdded;
-            gameApi.SceneObjectsRemoved -= OnEntitiesRemoved;
+            gameApi.SceneEntered -= OnSceneEntered;
+            gameApi.GameObjectsAdded -= OnGameObjectsAdded;
+            gameApi.GameObjectsRemoved -= OnGameObjectsRemoved;
         }
 
-        private void OnLocalEntityEntered(EnteredSceneMessage message)
+        private void OnSceneEntered(EnteredSceneMessage message)
         {
             // TODO: Remove "Local Player"
             var name = "Local Player";
@@ -57,7 +57,7 @@ namespace Scripts.Gameplay.Entity
             localEntity = AddEntity(id, name, position);
         }
 
-        private void OnEntitiesAdded(GameObjectsAddedMessage message)
+        private void OnGameObjectsAdded(GameObjectsAddedMessage message)
         {
             var gameObjects = message.GameObjects;
 
@@ -78,7 +78,7 @@ namespace Scripts.Gameplay.Entity
             }
         }
 
-        private void OnEntitiesRemoved(GameObjectsRemovedMessage message)
+        private void OnGameObjectsRemoved(GameObjectsRemovedMessage message)
         {
             var identifiers = message.Identifiers;
 

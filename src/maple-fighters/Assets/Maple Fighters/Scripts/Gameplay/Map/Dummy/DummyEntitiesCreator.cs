@@ -27,7 +27,7 @@ namespace Scripts.Gameplay.Map.Dummy
         {
             var gameApi = FindObjectOfType<GameApi>();
 
-            gameApi.SceneObjectsAdded.Invoke(new GameObjectsAddedMessage()
+            gameApi.GameObjectsAdded.Invoke(new GameObjectsAddedMessage()
             {
                 GameObjects = dummyEntities.Select(x => new GameObjectData()
                 {
