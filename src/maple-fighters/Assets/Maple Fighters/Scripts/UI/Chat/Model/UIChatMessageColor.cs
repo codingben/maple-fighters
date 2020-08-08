@@ -1,6 +1,6 @@
 ﻿namespace Scripts.UI.Chat
 {
-    public enum ChatMessageColor
+    public enum UIChatMessageColor
     {
         /// <summary>
         /// The no color.
