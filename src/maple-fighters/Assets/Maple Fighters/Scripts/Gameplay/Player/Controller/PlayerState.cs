@@ -1,6 +1,6 @@
 namespace Scripts.Gameplay.Player
 {
-    public enum PlayerState : byte
+    public enum PlayerState
     {
         Idle,
         Moving,

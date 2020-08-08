@@ -1,6 +1,6 @@
 namespace Scripts.Gameplay.Player
 {
-    public enum CharacterClasses : byte
+    public enum CharacterClasses
     {
         Knight,
         Arrow,
