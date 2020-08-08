@@ -37,7 +37,7 @@ namespace Scripts.Services.Game
             messageHandlerCollection.Set(MessageCodes.Attacked, Attacked.ToMessageHandler());
             messageHandlerCollection.Set(MessageCodes.BubbleNotification, BubbleMessageReceived.ToMessageHandler());
 
-            await webSocket.Connect();
+            await webSocket?.Connect();
 
             SubscribeToMessageNotifier();
             SetMessageHandlers();
@@ -46,7 +46,7 @@ namespace Scripts.Services.Game
         private void Update()
         {
 #if !UNITY_WEBGL || UNITY_EDITOR
-            webSocket.DispatchMessageQueue();
+            webSocket?.DispatchMessageQueue();
 #endif
         }
 
@@ -55,7 +55,7 @@ namespace Scripts.Services.Game
             UnsubscribeFromMessageNotifier();
             UnsetMessageHandlers();
 
-            await webSocket.Close();
+            await webSocket?.Close();
         }
 
         async void IGameApi.SendMessage<TCode, TMessage>(TCode code, TMessage message)
@@ -63,9 +63,9 @@ namespace Scripts.Services.Game
             var rawData =
                 MessageUtils.WrapMessage(Convert.ToByte(code), message);
 
-            if (webSocket.State == WebSocketState.Open)
+            if (webSocket?.State == WebSocketState.Open)
             {
-                await webSocket.Send(rawData);
+                await webSocket?.Send(rawData);
             }
         }
 
