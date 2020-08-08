@@ -1,6 +1,6 @@
 ﻿namespace Scripts.UI.Focus
 {
-    public enum FocusState
+    public enum UIFocusState
     {
         /// <summary>
         /// The game.
