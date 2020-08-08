@@ -33,7 +33,7 @@ namespace Scripts.Gameplay.Map.Climb
             playerController.SetPlayerState(playerState);
         }
 
-        protected override PlayerState GetPlayerState()
+        protected override PlayerStates GetPlayerState()
         {
             return playerController.GetPlayerState();
         }
@@ -53,7 +53,7 @@ namespace Scripts.Gameplay.Map.Climb
             return GameTags.LadderTag;
         }
 
-        protected override PlayerState GetClimbState()
+        protected override PlayerStates GetClimbState()
         {
             return PlayerStates.Ladder;
         }
