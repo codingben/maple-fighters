@@ -30,8 +30,8 @@ namespace Scripts.Services.Game
             webSocket = new WebSocket("ws://localhost:50060");
             messageHandlerCollection = new MessageHandlerCollection();
             messageHandlerCollection.Set(MessageCodes.EnteredScene, SceneEntered.ToMessageHandler());
-            messageHandlerCollection.Set(MessageCodes.SceneObjectAdded, GameObjectsAdded.ToMessageHandler());
-            messageHandlerCollection.Set(MessageCodes.SceneObjectRemoved, GameObjectsRemoved.ToMessageHandler());
+            messageHandlerCollection.Set(MessageCodes.GameObjectAdded, GameObjectsAdded.ToMessageHandler());
+            messageHandlerCollection.Set(MessageCodes.GameObjectRemoved, GameObjectsRemoved.ToMessageHandler());
             messageHandlerCollection.Set(MessageCodes.PositionChanged, PositionChanged.ToMessageHandler());
             messageHandlerCollection.Set(MessageCodes.AnimationStateChanged, AnimationStateChanged.ToMessageHandler());
             messageHandlerCollection.Set(MessageCodes.Attacked, Attacked.ToMessageHandler());
@@ -72,8 +72,8 @@ namespace Scripts.Services.Game
         private void SetMessageHandlers()
         {
             messageHandlerCollection.Set(MessageCodes.EnteredScene, SceneEntered.ToMessageHandler());
-            messageHandlerCollection.Set(MessageCodes.SceneObjectAdded, GameObjectsAdded.ToMessageHandler());
-            messageHandlerCollection.Set(MessageCodes.SceneObjectRemoved, GameObjectsRemoved.ToMessageHandler());
+            messageHandlerCollection.Set(MessageCodes.GameObjectAdded, GameObjectsAdded.ToMessageHandler());
+            messageHandlerCollection.Set(MessageCodes.GameObjectRemoved, GameObjectsRemoved.ToMessageHandler());
             messageHandlerCollection.Set(MessageCodes.PositionChanged, PositionChanged.ToMessageHandler());
             messageHandlerCollection.Set(MessageCodes.AnimationStateChanged, AnimationStateChanged.ToMessageHandler());
             messageHandlerCollection.Set(MessageCodes.Attacked, Attacked.ToMessageHandler());
@@ -83,8 +83,8 @@ namespace Scripts.Services.Game
         private void UnsetMessageHandlers()
         {
             messageHandlerCollection.Unset(MessageCodes.EnteredScene);
-            messageHandlerCollection.Unset(MessageCodes.SceneObjectAdded);
-            messageHandlerCollection.Unset(MessageCodes.SceneObjectRemoved);
+            messageHandlerCollection.Unset(MessageCodes.GameObjectAdded);
+            messageHandlerCollection.Unset(MessageCodes.GameObjectRemoved);
             messageHandlerCollection.Unset(MessageCodes.PositionChanged);
             messageHandlerCollection.Unset(MessageCodes.AnimationStateChanged);
             messageHandlerCollection.Unset(MessageCodes.Attacked);
