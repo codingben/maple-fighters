@@ -40,17 +40,17 @@ namespace Scripts.Gameplay.Player
         }
 
         // TODO: Hack
-        private IEnumerator WaitFrameAndSpawn(CharacterSpawnDetailsParameters characterSpawnDetails)
+        private IEnumerator WaitFrameAndSpawn(CharacterData characterData)
         {
             yield return null;
 
-            var id = characterSpawnDetails.SceneObjectId;
+            var id = characterData.Id;
 
             if (EntityContainer.GetInstance().GetRemoteEntity(id, out var entity))
             {
                 var spawnedCharacterDetails =
                     entity?.GameObject.GetComponent<SpawnedCharacterDetails>();
-                spawnedCharacterDetails?.SetCharacterDetails(characterSpawnDetails);
+                spawnedCharacterDetails?.SetCharacterDetails(characterData);
 
                 var spawnedCharacter = entity?.GameObject.GetComponent<SpawnCharacter>();
                 spawnedCharacter?.Spawn();
