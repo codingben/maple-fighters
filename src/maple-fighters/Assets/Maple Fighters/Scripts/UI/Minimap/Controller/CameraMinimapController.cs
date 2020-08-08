@@ -9,11 +9,11 @@ namespace Scripts.UI.Minimap
     public class CameraMinimapController : MonoBehaviour
     {
         [SerializeField]
-        private MarkSelection[] markSelections;
+        private UIMarkSelection[] markSelections;
 
         private new Camera camera;
         private IMinimapView minimapView;
-        
+
         private void Awake()
         {
             var minimapCamera =
