@@ -47,8 +47,8 @@ namespace Scripts.Gameplay.Entity
 
         private void OnSceneEntered(EnteredSceneMessage message)
         {
-            // TODO: Remove "Local Player"
-            var name = "Local Player";
+            // TODO: Remove "LocalPlayer"
+            var name = "LocalPlayer";
             var id = message.GameObjectId;
             var x = message.SpawnPositionData.X;
             var y = message.SpawnPositionData.Y;
