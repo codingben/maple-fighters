@@ -2,6 +2,6 @@
 {
     public interface ISpawnedCharacterDetails
     {
-        CharacterSpawnDetailsParameters GetCharacterDetails();
+        CharacterData GetCharacterData();
     }
 }

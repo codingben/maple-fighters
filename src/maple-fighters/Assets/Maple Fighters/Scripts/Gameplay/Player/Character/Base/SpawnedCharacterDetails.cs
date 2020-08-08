@@ -4,16 +4,16 @@ namespace Scripts.Gameplay.Player
 {
     public class SpawnedCharacterDetails : MonoBehaviour, ISpawnedCharacterDetails
     {
-        private CharacterSpawnDetailsParameters characterDetails;
+        private CharacterData characterData;
 
-        public void SetCharacterDetails(CharacterSpawnDetailsParameters characterDetails)
+        public void SetCharacterDetails(CharacterData characterData)
         {
-            this.characterDetails = characterDetails;
+            this.characterData = characterData;
         }
 
-        public CharacterSpawnDetailsParameters GetCharacterDetails()
+        public CharacterData GetCharacterData()
         {
-            return characterDetails;
+            return characterData;
         }
     }
 }
