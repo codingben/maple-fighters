@@ -49,9 +49,9 @@ namespace Scripts.Gameplay.Player
 
             if (EntityContainer.GetInstance().GetRemoteEntity(id, out var entity))
             {
-                var spawnedCharacterDetails =
-                    entity?.GameObject.GetComponent<SpawnedCharacterDetails>();
-                spawnedCharacterDetails?.SetCharacterDetails(characterData);
+                var characterDataProvider =
+                    entity?.GameObject.GetComponent<CharacterDataProvider>();
+                characterDataProvider?.SetCharacterData(characterData);
 
                 var spawnedCharacter = entity?.GameObject.GetComponent<SpawnCharacter>();
                 spawnedCharacter?.Spawn();
