@@ -1,6 +1,6 @@
 ﻿namespace Scripts.UI.CharacterSelection
 {
-    public struct CharacterDetails
+    public struct UICharacterDetails
     {
         private string characterName;
         private UICharacterIndex uiCharacterIndex;
@@ -8,7 +8,7 @@
         private string mapName;
         private bool hasCharacter;
 
-        public CharacterDetails(
+        public UICharacterDetails(
             string characterName,
             UICharacterIndex uiCharacterIndex,
             UICharacterClass uiCharacterClass,
