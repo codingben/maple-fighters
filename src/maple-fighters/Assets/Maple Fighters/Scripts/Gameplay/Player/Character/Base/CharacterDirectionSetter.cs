@@ -2,7 +2,7 @@
 
 namespace Scripts.Gameplay.Player
 {
-    [RequireComponent(typeof(SpawnCharacter), typeof(SpawnedCharacterDetails))]
+    [RequireComponent(typeof(SpawnCharacter), typeof(CharacterDataProvider))]
     public class CharacterDirectionSetter : MonoBehaviour
     {
         private ISpawnedCharacter spawnedCharacter;
@@ -24,12 +24,14 @@ namespace Scripts.Gameplay.Player
 
         private void OnCharacterSpawned()
         {
-            var spawnedCharacterDetails = GetComponent<ISpawnedCharacterDetails>();
-            if (spawnedCharacterDetails != null)
+            var characterDataProvider = GetComponent<ICharacterDataProvider>();
+            if (characterDataProvider != null)
             {
-                var characterDetails =
-                    spawnedCharacterDetails.GetCharacterDetails();
-                var direction = characterDetails.Direction;
+                // TODO: Use character data
+                var characterData = characterDataProvider.GetCharacterData();
+
+                // TODO: Change value
+                var direction = Directions.Left;
                 var transform =
                     spawnedCharacter.GetCharacterGameObject().transform;
 
