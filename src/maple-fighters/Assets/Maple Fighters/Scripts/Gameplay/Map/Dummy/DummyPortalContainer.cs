@@ -3,6 +3,13 @@ using UnityEngine;
 
 namespace Scripts.Gameplay.Map.Dummy
 {
+    // TODO: Move out
+    public enum Maps
+    {
+        Map_1 = 2,
+        Map_2 = 3
+    }
+
     public class DummyPortalContainer : MonoBehaviour
     {
         public static DummyPortalContainer GetInstance()
