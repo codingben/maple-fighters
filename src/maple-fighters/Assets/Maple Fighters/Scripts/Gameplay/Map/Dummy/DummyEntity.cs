@@ -1,4 +1,5 @@
 ﻿using System;
+using Scripts.Gameplay.Player;
 using UnityEngine;
 
 namespace Scripts.Gameplay.Map.Dummy
