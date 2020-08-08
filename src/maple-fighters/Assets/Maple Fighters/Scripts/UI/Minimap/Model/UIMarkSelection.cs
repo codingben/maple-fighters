@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Scripts.UI.Minimap
 {
     [Serializable]
-    public class MarkSelection
+    public class UIMarkSelection
     {
         public string Name;
         public LayerMask MarkLayerMask;
