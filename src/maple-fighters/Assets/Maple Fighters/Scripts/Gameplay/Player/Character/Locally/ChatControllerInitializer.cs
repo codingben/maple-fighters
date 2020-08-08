@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Scripts.Gameplay.Player
 {
-    [RequireComponent(typeof(SpawnCharacter), typeof(SpawnedCharacterDetails))]
+    [RequireComponent(typeof(SpawnCharacter), typeof(CharacterDataProvider))]
     public class ChatControllerInitializer : MonoBehaviour
     {
         private ISpawnedCharacter spawnedCharacter;
@@ -28,9 +28,9 @@ namespace Scripts.Gameplay.Player
             var chatController = FindObjectOfType<ChatController>();
             if (chatController != null)
             {
-                var characterDetailsProvider = GetComponent<ISpawnedCharacterDetails>();
-                var characterDetails = characterDetailsProvider.GetCharacterDetails();
-                var characterName = characterDetails.Character.Name;
+                var characterDataProvider = GetComponent<ICharacterDataProvider>();
+                var characterData = characterDataProvider.GetCharacterData();
+                var characterName = characterData.CharacterName;
 
                 chatController.SetCharacterName(characterName);
             }
