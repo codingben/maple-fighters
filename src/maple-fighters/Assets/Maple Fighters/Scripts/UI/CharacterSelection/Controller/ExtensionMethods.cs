@@ -1,33 +1,34 @@
-﻿namespace Scripts.UI.CharacterSelection
+﻿using Scripts.Gameplay.Player;
+
+namespace Scripts.UI.CharacterSelection
 {
     public static class ExtensionMethods
     {
-        public static UICharacterIndex ToUiCharacterIndex(
-            this CharacterIndex characterIndex)
+        public static UICharacterIndex ToUiCharacterIndex(this byte index)
         {
             var uiCharacterIndex = UICharacterIndex.Zero;
 
-            switch (characterIndex)
+            switch (index)
             {
-                case CharacterIndex.Zero:
+                case 0:
                 {
                     uiCharacterIndex = UICharacterIndex.Zero;
                     break;
                 }
 
-                case CharacterIndex.First:
+                case 1:
                 {
                     uiCharacterIndex = UICharacterIndex.First;
                     break;
                 }
 
-                case CharacterIndex.Second:
+                case 2:
                 {
                     uiCharacterIndex = UICharacterIndex.Second;
                     break;
                 }
 
-                case CharacterIndex.Third:
+                case 3:
                 {
                     uiCharacterIndex = UICharacterIndex.Third;
                     break;
@@ -37,39 +38,39 @@
             return uiCharacterIndex;
         }
 
-        public static CharacterIndex FromUiCharacterIndex(
+        public static byte FromUiCharacterIndex(
             this UICharacterIndex uiCharacterIndex)
         {
-            var characterIndex = CharacterIndex.Zero;
+            var index = default(byte);
 
             switch (uiCharacterIndex)
             {
                 case UICharacterIndex.Zero:
                 {
-                    characterIndex = CharacterIndex.Zero;
+                    index = 0;
                     break;
                 }
 
                 case UICharacterIndex.First:
                 {
-                    characterIndex = CharacterIndex.First;
+                    index = 1;
                     break;
                 }
 
                 case UICharacterIndex.Second:
                 {
-                    characterIndex = CharacterIndex.Second;
+                    index = 2;
                     break;
                 }
 
                 case UICharacterIndex.Third:
                 {
-                    characterIndex = CharacterIndex.Third;
+                    index = 3;
                     break;
                 }
             }
 
-            return characterIndex;
+            return index;
         }
 
         public static UICharacterClass ToUiCharacterClass(
