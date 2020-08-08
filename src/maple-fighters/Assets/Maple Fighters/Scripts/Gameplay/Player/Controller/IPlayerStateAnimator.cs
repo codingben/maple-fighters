@@ -4,6 +4,6 @@
     {
         bool Enabled { get; set; }
 
-        void SetPlayerState(PlayerState playerState);
+        void SetPlayerState(PlayerStates playerState);
     }
 }

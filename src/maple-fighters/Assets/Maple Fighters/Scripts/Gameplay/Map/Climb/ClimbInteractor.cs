@@ -122,7 +122,7 @@ namespace Scripts.Gameplay.Map.Climb
 
         protected abstract void UnsetPlayerFromClimbState();
 
-        protected abstract PlayerState GetPlayerState();
+        protected abstract PlayerStates GetPlayerState();
 
         protected abstract KeyCode GetKey();
 
@@ -130,6 +130,6 @@ namespace Scripts.Gameplay.Map.Climb
 
         protected abstract string GetTagName();
 
-        protected abstract PlayerState GetClimbState();
+        protected abstract PlayerStates GetClimbState();
     }
 }

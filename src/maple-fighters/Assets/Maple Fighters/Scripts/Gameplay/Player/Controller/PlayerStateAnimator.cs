@@ -17,7 +17,7 @@ namespace Scripts.Gameplay.Player
 
         private IGameApi gameApi;
 
-        private PlayerState playerState = PlayerStates.Idle;
+        private PlayerStates playerState = PlayerStates.Idle;
         private Animator animator;
 
         private void Awake()
@@ -38,7 +38,7 @@ namespace Scripts.Gameplay.Player
             gameApi.AnimationStateChanged -= OnPlayerStateChanged;
         }
 
-        public void SetPlayerState(PlayerState playerState)
+        public void SetPlayerState(PlayerStates playerState)
         {
             // TODO: Hack
             if (playerState == PlayerStates.Attacked)
@@ -69,7 +69,7 @@ namespace Scripts.Gameplay.Player
                 var animator = playerAnimatorProvider?.Provide();
                 if (animator != null)
                 {
-                    var playerState = (PlayerState)message.AnimationState;
+                    var playerState = (PlayerStates)message.AnimationState;
 
                     SetPlayerAnimationState(animator, playerState);
                 }
@@ -87,7 +87,7 @@ namespace Scripts.Gameplay.Player
             gameApi?.SendMessage(MessageCodes.ChangeAnimationState, message);
         }
 
-        private void SetPlayerAnimationState(Animator animator, PlayerState playerState)
+        private void SetPlayerAnimationState(Animator animator, PlayerStates playerState)
         {
             var isMoving = playerState == PlayerStates.Moving;
             var isJumping = playerState == PlayerStates.Jumping;
