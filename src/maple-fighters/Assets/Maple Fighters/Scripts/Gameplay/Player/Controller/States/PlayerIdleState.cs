@@ -26,17 +26,17 @@ namespace Scripts.Gameplay.Player.States
             {
                 if (IsMoving())
                 {
-                    playerController.SetPlayerState(PlayerState.Moving);
+                    playerController.SetPlayerState(PlayerStates.Moving);
                 }
 
                 if (IsJumpKeyClicked() && CanJump())
                 {
-                    playerController.SetPlayerState(PlayerState.Jumping);
+                    playerController.SetPlayerState(PlayerStates.Jumping);
                 }
             }
             else
             {
-                playerController.SetPlayerState(PlayerState.Falling);
+                playerController.SetPlayerState(PlayerStates.Falling);
             }
         }
 

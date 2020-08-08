@@ -14,7 +14,7 @@ namespace Scripts.Gameplay.Player
     {
         [Header("Debug")]
         [ViewOnly, SerializeField]
-        private PlayerState playerState = PlayerState.Falling;
+        private PlayerState playerState = PlayerStates.Falling;
 
         [Header("Ground")]
         [SerializeField]
@@ -40,13 +40,13 @@ namespace Scripts.Gameplay.Player
         {
             playerStateBehaviours = new Dictionary<PlayerState, IPlayerStateBehaviour>
             {
-                { PlayerState.Idle, new PlayerIdleState(this) },
-                { PlayerState.Moving, new PlayerMovingState(this) },
-                { PlayerState.Jumping, new PlayerJumpingState(this) },
-                { PlayerState.Falling, new PlayerFallingState(this) },
-                { PlayerState.Attacked, new PlayerAttackedState(this) },
-                { PlayerState.Rope, new PlayerRopeState(this) },
-                { PlayerState.Ladder, new PlayerLadderState(this) }
+                { PlayerStates.Idle, new PlayerIdleState(this) },
+                { PlayerStates.Moving, new PlayerMovingState(this) },
+                { PlayerStates.Jumping, new PlayerJumpingState(this) },
+                { PlayerStates.Falling, new PlayerFallingState(this) },
+                { PlayerStates.Attacked, new PlayerAttackedState(this) },
+                { PlayerStates.Rope, new PlayerRopeState(this) },
+                { PlayerStates.Ladder, new PlayerLadderState(this) }
             };
             playerStateBehaviour = playerStateBehaviours[playerState];
             focusStateController = FindObjectOfType<FocusStateController>();

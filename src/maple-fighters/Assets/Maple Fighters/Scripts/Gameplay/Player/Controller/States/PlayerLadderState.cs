@@ -29,7 +29,7 @@ namespace Scripts.Gameplay.Player.States
         {
             if (IsJumpKeyClicked())
             {
-                playerController.SetPlayerState(PlayerState.Falling);
+                playerController.SetPlayerState(PlayerStates.Falling);
             }
             else
             {

@@ -29,12 +29,12 @@ namespace Scripts.Gameplay.Player.States
             {
                 if (IsMoveStopped())
                 {
-                    playerController.SetPlayerState(PlayerState.Idle);
+                    playerController.SetPlayerState(PlayerStates.Idle);
                 }
 
                 if (IsJumpKeyClicked() && CanJump())
                 {
-                    playerController.SetPlayerState(PlayerState.Jumping);
+                    playerController.SetPlayerState(PlayerStates.Jumping);
                 }
 
                 var horizontal = Utils.GetAxis(Axes.Horizontal, isRaw: true);
@@ -48,7 +48,7 @@ namespace Scripts.Gameplay.Player.States
             }
             else
             {
-                playerController.SetPlayerState(PlayerState.Falling);
+                playerController.SetPlayerState(PlayerStates.Falling);
             }
         }
 

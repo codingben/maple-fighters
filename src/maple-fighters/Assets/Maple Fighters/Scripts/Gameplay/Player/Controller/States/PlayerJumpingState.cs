@@ -43,7 +43,7 @@ namespace Scripts.Gameplay.Player.States
         {
             if (isJumping && IsGrounded())
             {
-                playerController.SetPlayerState(PlayerState.Idle);
+                playerController.SetPlayerState(PlayerStates.Idle);
             }
             else
             {

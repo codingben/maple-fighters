@@ -45,7 +45,7 @@ namespace Scripts.Gameplay.Player.States
         {
             if (IsGrounded())
             {
-                playerController.SetPlayerState(PlayerState.Idle);
+                playerController.SetPlayerState(PlayerStates.Idle);
             }
         }
 
