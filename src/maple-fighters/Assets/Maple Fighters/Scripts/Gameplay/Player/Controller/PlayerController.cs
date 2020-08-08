@@ -112,7 +112,18 @@ namespace Scripts.Gameplay.Player
                 transform2D = transform;
             }
 
-            Utils.SetLocalScaleByDirection(ref transform2D, direction);
+            var x = Mathf.Abs(transform2D.localScale.x);
+            var y = transform2D.localScale.y;
+            var z = transform2D.localScale.z;
+
+            if (direction == Directions.Left)
+            {
+                transform2D.localScale = new Vector3(x, y, z);
+            }
+            else if (direction == Directions.Right)
+            {
+                transform2D.localScale = new Vector3(-x, y, z);
+            }
         }
 
         public void Bounce(Vector2 force)
