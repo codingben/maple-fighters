@@ -25,18 +25,19 @@ namespace Scripts.Gameplay.Player
 
         private void OnSceneEntered(EnteredSceneMessage _)
         {
-            // TODO: Get locally character data
-            // StartCoroutine(WaitFrameAndSpawn(characterSpawnDetails));
+            // TODO: Get locally character data and spawn character
         }
 
         private void OnSceneObjectsAdded(GameObjectsAddedMessage message)
         {
-            // TODO: Get character data from message
-
-            /*foreach (var characterSpawn in characterSpawnDetails)
+            foreach (var gameObject in message.GameObjects)
             {
-                StartCoroutine(WaitFrameAndSpawn(characterSpawn));
-            }*/
+                var id = gameObject.Id;
+                var characterName = gameObject.CharacterName;
+                var characterType = gameObject.CharacterType;
+
+                WaitFrameAndSpawn(new CharacterData(id, characterName, characterType));
+            }
         }
 
         // TODO: Hack
