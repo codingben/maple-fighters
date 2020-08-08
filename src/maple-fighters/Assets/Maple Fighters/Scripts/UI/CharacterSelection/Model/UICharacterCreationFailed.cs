@@ -1,6 +1,6 @@
 ﻿namespace Scripts.UI.CharacterSelection
 {
-    public enum CharacterCreationFailed
+    public enum UICharacterCreationFailed
     {
         /// <summary>
         /// The unknown.
