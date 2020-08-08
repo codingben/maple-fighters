@@ -2,7 +2,7 @@
 
 namespace Scripts.Gameplay.Player
 {
-    public class SpawnedCharacterDetails : MonoBehaviour, ISpawnedCharacterDetails
+    public class CharacterDataProvider : MonoBehaviour, ISpawnedCharacterDetails
     {
         private CharacterData characterData;
 

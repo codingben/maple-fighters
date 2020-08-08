@@ -1,6 +1,6 @@
 ﻿namespace Scripts.Gameplay.Player
 {
-    public interface ISpawnedCharacterDetails
+    public interface ICharacterDataProvider
     {
         CharacterData GetCharacterData();
     }
