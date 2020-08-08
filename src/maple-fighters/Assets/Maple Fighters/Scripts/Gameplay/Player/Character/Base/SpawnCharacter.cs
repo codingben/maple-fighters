@@ -4,29 +4,27 @@ using UnityEngine;
 
 namespace Scripts.Gameplay.Player
 {
-    [RequireComponent(typeof(SpawnedCharacterDetails))]
+    [RequireComponent(typeof(CharacterDataProvider))]
     public class SpawnCharacter : MonoBehaviour, ISpawnedCharacter
     {
         public event Action CharacterSpawned;
 
         private GameObject spawnedCharacter;
 
-        private ISpawnedCharacterDetails spawnedCharacterDetails;
+        private ICharacterDataProvider characterDataProvider;
         private ICharacterSpriteGameObject characterSpriteGameObject;
 
         private void Awake()
         {
-            spawnedCharacterDetails = GetComponent<ISpawnedCharacterDetails>();
+            characterDataProvider = GetComponent<ICharacterDataProvider>();
         }
 
         public void Spawn()
         {
-            var details = spawnedCharacterDetails.GetCharacterDetails();
-            var type = details.Character.CharacterType;
+            var characterData = characterDataProvider.GetCharacterData();
+            var CharacterType = characterData.CharacterType;
 
-            spawnedCharacter = Create(type);
-
-            CharacterSpawned?.Invoke();
+            CreateCharacter((CharacterClasses)CharacterType);
         }
 
         public GameObject GetCharacterGameObject()
@@ -45,7 +43,7 @@ namespace Scripts.Gameplay.Player
             return characterSpriteGameObject?.Provide();
         }
 
-        private GameObject Create(CharacterClasses characterClass)
+        private void CreateCharacter(CharacterClasses characterClass)
         {
             // Loading the character
             var path =
@@ -54,11 +52,12 @@ namespace Scripts.Gameplay.Player
             var position = characterObject.transform.localPosition;
 
             // Creating the character
-            var characterGameObject = Instantiate(characterObject, transform);
-            characterGameObject.transform.localPosition = position;
-            characterGameObject.transform.SetAsFirstSibling();
+            spawnedCharacter = Instantiate(characterObject, transform);
+            spawnedCharacter.transform.localPosition = position;
+            spawnedCharacter.transform.SetAsFirstSibling();
 
-            return characterGameObject;
+            // Invoke
+            CharacterSpawned?.Invoke();
         }
     }
 }
