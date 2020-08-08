@@ -4,7 +4,7 @@ namespace Scripts.UI.CharacterSelection
 {
     public static class Utils
     {
-        public static string GetCharacterPath(CharacterDetails characterDetails)
+        public static string GetCharacterPath(UICharacterDetails characterDetails)
         {
             var characterIndex = characterDetails.GetCharacterIndex();
             var characterClass = characterDetails.GetCharacterClass();

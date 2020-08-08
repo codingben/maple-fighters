@@ -4,6 +4,6 @@
     {
         void OnCharacterCreated();
 
-        void OnCreateCharacterFailed(CharacterCreationFailed reason);
+        void OnCreateCharacterFailed(UICharacterCreationFailed reason);
     }
 }

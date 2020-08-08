@@ -141,7 +141,7 @@ namespace Scripts.Gameplay.Player
         {
             var isMoving = false;
 
-            if (focusStateController?.GetFocusState() == FocusState.Game)
+            if (focusStateController?.GetFocusState() == UIFocusState.Game)
             {
                 var horizontal = Utils.GetAxis(Axes.Horizontal, isRaw: true);
                 isMoving = Mathf.Abs(horizontal) > 0;
@@ -152,7 +152,7 @@ namespace Scripts.Gameplay.Player
 
         public bool CanJump()
         {
-            return focusStateController?.GetFocusState() == FocusState.Game;
+            return focusStateController?.GetFocusState() == UIFocusState.Game;
         }
 
         public bool IsGrounded()

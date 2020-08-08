@@ -8,7 +8,7 @@ using UnityEngine.SceneManagement;
 namespace Scripts.UI.CharacterSelection
 {
     [RequireComponent(typeof(CharacterViewInteractor))]
-    public class CharacterViewController : MonoBehaviour, 
+    public class CharacterViewController : MonoBehaviour,
                                            IOnConnectionFinishedListener,
                                            IOnCharacterReceivedListener,
                                            IOnCharacterValidationFinishedListener,
@@ -25,14 +25,14 @@ namespace Scripts.UI.CharacterSelection
         private ICharacterSelectionView characterSelectionView;
         private ICharacterNameView characterNameView;
 
-        private CharacterDetails characterDetails;
+        private UICharacterDetails characterDetails;
         private CharacterViewCollection? characterViewCollection;
 
         private CharacterViewInteractor characterViewInteractor;
 
         private void Awake()
         {
-            characterDetails = new CharacterDetails();
+            characterDetails = new UICharacterDetails();
             characterViewInteractor = GetComponent<CharacterViewInteractor>();
         }
 
@@ -217,11 +217,11 @@ namespace Scripts.UI.CharacterSelection
         public void OnConnectionFailed()
         {
             NoticeUtils.ShowNotice(
-                message: NoticeMessages.CharacterView.ConnectionFailed, 
+                message: NoticeMessages.CharacterView.ConnectionFailed,
                 () => SceneManager.LoadScene(sceneName: SceneNames.Main));
         }
 
-        public void OnCharacterReceived(CharacterDetails characterDetails)
+        public void OnCharacterReceived(UICharacterDetails characterDetails)
         {
             var path = Utils.GetCharacterPath(characterDetails);
             var characterView = CreateAndShowCharacterView(path);
@@ -284,17 +284,17 @@ namespace Scripts.UI.CharacterSelection
             RemoveAndShowAllCharacterImages();
         }
 
-        public void OnCreateCharacterFailed(CharacterCreationFailed reason)
+        public void OnCreateCharacterFailed(UICharacterCreationFailed reason)
         {
             switch (reason)
             {
-                case CharacterCreationFailed.Unknown:
+                case UICharacterCreationFailed.Unknown:
                 {
                     NoticeUtils.ShowNotice(message: NoticeMessages.CharacterView.CharacterCreationFailed);
                     break;
                 }
 
-                case CharacterCreationFailed.NameAlreadyInUse:
+                case UICharacterCreationFailed.NameAlreadyInUse:
                 {
                     NoticeUtils.ShowNotice(message: NoticeMessages.CharacterView.NameAlreadyInUse);
                     break;

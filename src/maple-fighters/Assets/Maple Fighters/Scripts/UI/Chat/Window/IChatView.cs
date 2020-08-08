@@ -10,6 +10,6 @@ namespace Scripts.UI.Chat
 
         string CharacterName { set; }
 
-        void AddMessage(string message, ChatMessageColor color = ChatMessageColor.None);
+        void AddMessage(string message, UIChatMessageColor color = UIChatMessageColor.None);
     }
 }

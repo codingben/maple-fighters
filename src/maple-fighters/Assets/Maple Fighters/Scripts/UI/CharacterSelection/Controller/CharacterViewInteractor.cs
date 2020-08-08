@@ -118,7 +118,7 @@ namespace Scripts.UI.CharacterSelection
             }*/
         }
 
-        public void CreateCharacter(CharacterDetails characterDetails)
+        public void CreateCharacter(UICharacterDetails characterDetails)
         {
             /*var parameters = new CreateCharacterRequestParameters(
                 characterDetails.GetCharacterClass().FromUiCharacterClass(),

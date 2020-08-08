@@ -83,11 +83,11 @@ namespace Scripts.UI.Chat
             }
         }
 
-        public void AddMessage(string message, ChatMessageColor color = ChatMessageColor.None)
+        public void AddMessage(string message, UIChatMessageColor color = UIChatMessageColor.None)
         {
             if (chatText != null)
             {
-                if (color != ChatMessageColor.None)
+                if (color != UIChatMessageColor.None)
                 {
                     var colorName = color.ToString().ToLower();
                     message = $"<color={colorName}>{message}</color>";

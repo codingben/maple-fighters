@@ -2,7 +2,7 @@
 {
     public interface IOnCharacterReceivedListener
     {
-        void OnCharacterReceived(CharacterDetails characterDetails);
+        void OnCharacterReceived(UICharacterDetails characterDetails);
 
         void OnAfterCharacterReceived();
     }
