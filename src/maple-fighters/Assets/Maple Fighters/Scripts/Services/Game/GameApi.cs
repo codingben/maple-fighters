@@ -10,9 +10,9 @@ namespace Scripts.Services.Game
     {
         public Action<EnteredSceneMessage> SceneEntered { get; set; }
 
-        public Action<GameObjectsAddedMessage> SceneObjectsAdded { get; set; }
+        public Action<GameObjectsAddedMessage> GameObjectsAdded { get; set; }
 
-        public Action<GameObjectsRemovedMessage> SceneObjectsRemoved { get; set; }
+        public Action<GameObjectsRemovedMessage> GameObjectsRemoved { get; set; }
 
         public Action<PositionChangedMessage> PositionChanged { get; set; }
 
@@ -30,8 +30,8 @@ namespace Scripts.Services.Game
             webSocket = new WebSocket("ws://localhost:50060");
             messageHandlerCollection = new MessageHandlerCollection();
             messageHandlerCollection.Set(MessageCodes.EnteredScene, SceneEntered.ToMessageHandler());
-            messageHandlerCollection.Set(MessageCodes.SceneObjectAdded, SceneObjectsAdded.ToMessageHandler());
-            messageHandlerCollection.Set(MessageCodes.SceneObjectRemoved, SceneObjectsRemoved.ToMessageHandler());
+            messageHandlerCollection.Set(MessageCodes.SceneObjectAdded, GameObjectsAdded.ToMessageHandler());
+            messageHandlerCollection.Set(MessageCodes.SceneObjectRemoved, GameObjectsRemoved.ToMessageHandler());
             messageHandlerCollection.Set(MessageCodes.PositionChanged, PositionChanged.ToMessageHandler());
             messageHandlerCollection.Set(MessageCodes.AnimationStateChanged, AnimationStateChanged.ToMessageHandler());
             messageHandlerCollection.Set(MessageCodes.Attacked, Attacked.ToMessageHandler());
@@ -72,8 +72,8 @@ namespace Scripts.Services.Game
         private void SetMessageHandlers()
         {
             messageHandlerCollection.Set(MessageCodes.EnteredScene, SceneEntered.ToMessageHandler());
-            messageHandlerCollection.Set(MessageCodes.SceneObjectAdded, SceneObjectsAdded.ToMessageHandler());
-            messageHandlerCollection.Set(MessageCodes.SceneObjectRemoved, SceneObjectsRemoved.ToMessageHandler());
+            messageHandlerCollection.Set(MessageCodes.SceneObjectAdded, GameObjectsAdded.ToMessageHandler());
+            messageHandlerCollection.Set(MessageCodes.SceneObjectRemoved, GameObjectsRemoved.ToMessageHandler());
             messageHandlerCollection.Set(MessageCodes.PositionChanged, PositionChanged.ToMessageHandler());
             messageHandlerCollection.Set(MessageCodes.AnimationStateChanged, AnimationStateChanged.ToMessageHandler());
             messageHandlerCollection.Set(MessageCodes.Attacked, Attacked.ToMessageHandler());

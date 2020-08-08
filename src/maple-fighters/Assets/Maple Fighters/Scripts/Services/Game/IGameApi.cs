@@ -7,9 +7,9 @@ namespace Scripts.Services.Game
     {
         Action<EnteredSceneMessage> SceneEntered { get; set; }
 
-        Action<GameObjectsAddedMessage> SceneObjectsAdded { get; set; }
+        Action<GameObjectsAddedMessage> GameObjectsAdded { get; set; }
 
-        Action<GameObjectsRemovedMessage> SceneObjectsRemoved { get; set; }
+        Action<GameObjectsRemovedMessage> GameObjectsRemoved { get; set; }
 
         Action<PositionChangedMessage> PositionChanged { get; set; }
 
