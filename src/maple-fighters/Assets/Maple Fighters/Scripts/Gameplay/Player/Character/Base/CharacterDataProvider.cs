@@ -2,11 +2,11 @@
 
 namespace Scripts.Gameplay.Player
 {
-    public class CharacterDataProvider : MonoBehaviour, ISpawnedCharacterDetails
+    public class CharacterDataProvider : MonoBehaviour, ICharacterDataProvider
     {
         private CharacterData characterData;
 
-        public void SetCharacterDetails(CharacterData characterData)
+        public void SetCharacterData(CharacterData characterData)
         {
             this.characterData = characterData;
         }
