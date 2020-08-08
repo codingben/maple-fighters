@@ -14,7 +14,7 @@ namespace Scripts.Gameplay.Player
     {
         [Header("Debug")]
         [ViewOnly, SerializeField]
-        private PlayerState playerState = PlayerStates.Falling;
+        private PlayerStates playerState = PlayerStates.Falling;
 
         [Header("Ground")]
         [SerializeField]
@@ -26,7 +26,7 @@ namespace Scripts.Gameplay.Player
         [SerializeField]
         private Transform groundTransform;
 
-        private Dictionary<PlayerState, IPlayerStateBehaviour> playerStateBehaviours;
+        private Dictionary<PlayerStates, IPlayerStateBehaviour> playerStateBehaviours;
 
         private IPlayerStateBehaviour playerStateBehaviour;
         private IPlayerStateAnimator playerStateAnimator;
@@ -38,7 +38,7 @@ namespace Scripts.Gameplay.Player
 
         private void Awake()
         {
-            playerStateBehaviours = new Dictionary<PlayerState, IPlayerStateBehaviour>
+            playerStateBehaviours = new Dictionary<PlayerStates, IPlayerStateBehaviour>
             {
                 { PlayerStates.Idle, new PlayerIdleState(this) },
                 { PlayerStates.Moving, new PlayerMovingState(this) },
@@ -87,7 +87,7 @@ namespace Scripts.Gameplay.Player
             return playerStateAnimator;
         }
 
-        public void SetPlayerState(PlayerState newPlayerState)
+        public void SetPlayerState(PlayerStates newPlayerState)
         {
             if (playerState != newPlayerState)
             {
@@ -100,7 +100,7 @@ namespace Scripts.Gameplay.Player
             }
         }
 
-        public PlayerState GetPlayerState()
+        public PlayerStates GetPlayerState()
         {
             return playerState;
         }
