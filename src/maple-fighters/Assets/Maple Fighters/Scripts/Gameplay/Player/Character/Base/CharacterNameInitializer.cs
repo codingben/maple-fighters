@@ -2,7 +2,7 @@
 
 namespace Scripts.Gameplay.Player
 {
-    [RequireComponent(typeof(SpawnCharacter), typeof(SpawnedCharacterDetails))]
+    [RequireComponent(typeof(SpawnCharacter), typeof(CharacterDataProvider))]
     public class CharacterNameInitializer : MonoBehaviour
     {
         [SerializeField]
@@ -32,9 +32,9 @@ namespace Scripts.Gameplay.Player
                 .GetComponent<CharacterNameSetter>();
             if (characterNameSetter != null)
             {
-                var characterDetailsProvider = GetComponent<ISpawnedCharacterDetails>();
-                var characterDetails = characterDetailsProvider.GetCharacterDetails();
-                var characterName = characterDetails.Character.Name;
+                var characterDataProvider = GetComponent<ICharacterDataProvider>();
+                var characterData = characterDataProvider.GetCharacterData();
+                var characterName = characterData.CharacterName;
 
                 characterNameSetter.SetName(characterName);
                 characterNameSetter.SetSortingOrder(sortingOrderIndex);
