@@ -7,5 +7,12 @@ namespace Scripts.Gameplay.Player
         public string CharacterName { get; set; }
 
         public byte CharacterType { get; set; }
+
+        public CharacterData(int id, string characterName, byte characterType)
+        {
+            Id = id;
+            CharacterName = characterName;
+            CharacterType = characterType;
+        }
     }
 }
