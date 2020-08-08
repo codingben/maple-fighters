@@ -30,10 +30,21 @@ namespace Scripts.Gameplay.Player
                 var characterDetails =
                     spawnedCharacterDetails.GetCharacterDetails();
                 var direction = characterDetails.Direction;
-                var transform = 
+                var transform =
                     spawnedCharacter.GetCharacterGameObject().transform;
 
-                Utils.SetLocalScaleByDirection(ref transform, direction);
+                var x = Mathf.Abs(transform.localScale.x);
+                var y = transform.localScale.y;
+                var z = transform.localScale.z;
+
+                if (direction == Directions.Left)
+                {
+                    transform.localScale = new Vector3(x, y, z);
+                }
+                else if (direction == Directions.Right)
+                {
+                    transform.localScale = new Vector3(-x, y, z);
+                }
             }
         }
     }
