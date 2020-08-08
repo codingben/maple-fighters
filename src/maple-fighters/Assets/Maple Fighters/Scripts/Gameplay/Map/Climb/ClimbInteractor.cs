@@ -108,9 +108,9 @@ namespace Scripts.Gameplay.Map.Climb
 
         private bool IsPlayerStateSuitable()
         {
-            return GetPlayerState() == PlayerState.Idle ||
-                   GetPlayerState() == PlayerState.Jumping ||
-                   GetPlayerState() == PlayerState.Falling;
+            return GetPlayerState() == PlayerStates.Idle ||
+                   GetPlayerState() == PlayerStates.Jumping ||
+                   GetPlayerState() == PlayerStates.Falling;
         }
 
         private bool IsClimbing()

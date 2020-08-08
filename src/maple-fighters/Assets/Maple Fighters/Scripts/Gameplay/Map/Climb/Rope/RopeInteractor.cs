@@ -27,8 +27,8 @@ namespace Scripts.Gameplay.Map.Climb
         {
             var playerState =
                 playerController.IsGrounded()
-                    ? PlayerState.Idle
-                    : PlayerState.Falling;
+                    ? PlayerStates.Idle
+                    : PlayerStates.Falling;
 
             playerController.SetPlayerState(playerState);
         }
@@ -55,7 +55,7 @@ namespace Scripts.Gameplay.Map.Climb
 
         protected override PlayerState GetClimbState()
         {
-            return PlayerState.Rope;
+            return PlayerStates.Rope;
         }
     }
 }
