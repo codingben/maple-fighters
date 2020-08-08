@@ -1,6 +1,6 @@
-namespace Scripts.Gameplay.Player
+﻿namespace Scripts.Gameplay.Player
 {
-    public enum PlayerState
+    public enum PlayerStates
     {
         Idle,
         Moving,
