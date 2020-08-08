@@ -7,6 +7,5 @@ namespace Scripts.Gameplay.Map.Dummy
     {
         public DummyEntity DummyEntity;
         public CharacterClasses CharacterClass;
-        public CharacterIndex CharacterIndex = CharacterIndex.Zero;
     }
 }
