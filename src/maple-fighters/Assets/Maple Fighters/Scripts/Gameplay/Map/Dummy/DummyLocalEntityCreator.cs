@@ -32,6 +32,12 @@ namespace Scripts.Gameplay.Map.Dummy
                 {
                     X = dummyCharacter.DummyEntity.Position.x,
                     Y = dummyCharacter.DummyEntity.Position.y
+                },
+                CharacterData = new CharacterData()
+                {
+                    CharacterName = dummyCharacter.DummyEntity.Type.ToString(),
+                    CharacterType = (byte)dummyCharacter.CharacterClass,
+                    HasCharacter = true
                 }
             });
         }

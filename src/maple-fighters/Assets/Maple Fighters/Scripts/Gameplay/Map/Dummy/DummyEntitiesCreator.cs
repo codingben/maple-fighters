@@ -34,8 +34,12 @@ namespace Scripts.Gameplay.Map.Dummy
                     Id = x.Id,
                     Name = x.Type.ToString(),
                     X = x.Position.x,
-                    Y = x.Position.y
-                }).ToArray()
+                    Y = x.Position.y,
+                    CharacterData = new CharacterData()
+                    {
+                        HasCharacter = false
+                    }
+                }).ToArray(),
             });
         }
     }
