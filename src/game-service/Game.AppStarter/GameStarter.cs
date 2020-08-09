@@ -7,11 +7,14 @@ namespace Game.AppStarter
     {
         public static void Main()
         {
+            // TODO: Docker
             var serverApplication = GetServerApplication();
             serverApplication.Startup();
 
+            // TODO: Remove
             Console.ReadLine();
 
+            // TODO: Remove
             serverApplication.Shutdown();
         }
 
