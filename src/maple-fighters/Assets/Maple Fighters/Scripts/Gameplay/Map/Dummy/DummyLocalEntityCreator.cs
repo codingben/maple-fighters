@@ -34,32 +34,6 @@ namespace Scripts.Gameplay.Map.Dummy
                     Y = dummyCharacter.DummyEntity.Position.y
                 }
             });
-
-            // TODO: Remove old code
-            /*var sceneObject = new SceneObjectParameters(
-                dummyCharacter.DummyEntity.Id,
-                dummyCharacter.DummyEntity.Type.ToString(),
-                dummyCharacter.DummyEntity.Position.x,
-                dummyCharacter.DummyEntity.Position.y,
-                dummyCharacter.DummyEntity.Direction);
-
-            var character = new CharacterParameters(
-                dummyCharacter.DummyEntity.Type.ToString(),
-                dummyCharacter.CharacterClass,
-                dummyCharacter.CharacterIndex);
-
-            var characterSpawnDetails = new CharacterSpawnDetailsParameters(
-                dummyCharacter.DummyEntity.Id,
-                character,
-                dummyCharacter.DummyEntity.Direction);
-
-            var parameters =
-                new EnterSceneResponseParameters(
-                    sceneObject,
-                    characterSpawnDetails);
-
-            var gameService = FindObjectOfType<GameService>();
-            gameService?.GameSceneApi?.SceneEntered.Invoke(parameters);*/
         }
     }
 }
