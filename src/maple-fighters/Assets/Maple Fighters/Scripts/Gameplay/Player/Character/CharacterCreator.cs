@@ -28,8 +28,9 @@ namespace Scripts.Gameplay.Player
             var id = message.GameObjectId;
             var characterName = message.CharacterData.CharacterName;
             var characterType = message.CharacterData.CharacterType;
+            var characterData = new CharacterData(id, characterName, characterType);
 
-            WaitFrameAndSpawn(new CharacterData(id, characterName, characterType));
+            StartCoroutine(WaitFrameAndSpawn(characterData));
         }
 
         private void OnGameObjectsAdded(GameObjectsAddedMessage message)
@@ -39,8 +40,9 @@ namespace Scripts.Gameplay.Player
                 var id = gameObject.Id;
                 var characterName = gameObject.CharacterData.CharacterName;
                 var characterType = gameObject.CharacterData.CharacterType;
+                var characterData = new CharacterData(id, characterName, characterType);
 
-                WaitFrameAndSpawn(new CharacterData(id, characterName, characterType));
+                StartCoroutine(WaitFrameAndSpawn(characterData));
             }
         }
 
