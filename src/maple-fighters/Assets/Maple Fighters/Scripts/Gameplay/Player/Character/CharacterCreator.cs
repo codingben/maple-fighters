@@ -25,6 +25,8 @@ namespace Scripts.Gameplay.Player
 
         private void OnSceneEntered(EnteredSceneMessage _)
         {
+            print("yo");
+
             // TODO: Get locally character data and spawn character
         }
 
