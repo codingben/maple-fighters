@@ -23,11 +23,13 @@ namespace Scripts.Gameplay.Player
             gameApi.GameObjectsAdded -= OnGameObjectsAdded;
         }
 
-        private void OnSceneEntered(EnteredSceneMessage _)
+        private void OnSceneEntered(EnteredSceneMessage message)
         {
-            print("yo");
+            var id = message.GameObjectId;
+            var characterName = message.CharacterData.CharacterName;
+            var characterType = message.CharacterData.CharacterType;
 
-            // TODO: Get locally character data and spawn character
+            WaitFrameAndSpawn(new CharacterData(id, characterName, characterType));
         }
 
         private void OnGameObjectsAdded(GameObjectsAddedMessage message)
@@ -35,8 +37,8 @@ namespace Scripts.Gameplay.Player
             foreach (var gameObject in message.GameObjects)
             {
                 var id = gameObject.Id;
-                var characterName = gameObject.CharacterName;
-                var characterType = gameObject.CharacterType;
+                var characterName = gameObject.CharacterData.CharacterName;
+                var characterType = gameObject.CharacterData.CharacterType;
 
                 WaitFrameAndSpawn(new CharacterData(id, characterName, characterType));
             }
