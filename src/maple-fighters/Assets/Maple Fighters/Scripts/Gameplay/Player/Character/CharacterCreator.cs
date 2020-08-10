@@ -26,11 +26,11 @@ namespace Scripts.Gameplay.Player
         private void OnSceneEntered(EnteredSceneMessage message)
         {
             var id = message.GameObjectId;
-            var characterName = message.CharacterData.Name;
-            var characterClass = message.CharacterData.Class;
-            var characterData = new CharacterData(id, characterName, characterClass);
+            var name = message.CharacterData.Name;
+            var @class = message.CharacterData.Class;
+            var characterData = new CharacterData(name, @class);
 
-            StartCoroutine(WaitFrameAndSpawn(characterData));
+            StartCoroutine(WaitFrameAndSpawn(id, characterData));
         }
 
         private void OnGameObjectsAdded(GameObjectsAddedMessage message)
@@ -38,22 +38,20 @@ namespace Scripts.Gameplay.Player
             foreach (var gameObject in message.GameObjects)
             {
                 var id = gameObject.Id;
-                var characterName = gameObject.CharacterData.Name;
-                var characterClass = gameObject.CharacterData.Class;
-                var characterData = new CharacterData(id, characterName, characterClass);
+                var name = gameObject.CharacterData.Name;
+                var @class = gameObject.CharacterData.Class;
+                var characterData = new CharacterData(name, @class);
 
-                StartCoroutine(WaitFrameAndSpawn(characterData));
+                StartCoroutine(WaitFrameAndSpawn(id, characterData));
             }
         }
 
         // TODO: Hack
-        private IEnumerator WaitFrameAndSpawn(CharacterData characterData)
+        private IEnumerator WaitFrameAndSpawn(int entityId, CharacterData characterData)
         {
             yield return null;
 
-            var id = characterData.Id;
-
-            if (EntityContainer.GetInstance().GetRemoteEntity(id, out var entity))
+            if (EntityContainer.GetInstance().GetRemoteEntity(entityId, out var entity))
             {
                 var characterDataProvider =
                     entity?.GameObject.GetComponent<CharacterDataProvider>();
