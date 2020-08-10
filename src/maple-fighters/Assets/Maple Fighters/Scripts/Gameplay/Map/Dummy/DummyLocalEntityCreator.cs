@@ -35,10 +35,9 @@ namespace Scripts.Gameplay.Map.Dummy
                 },
                 CharacterData = new CharacterData()
                 {
-                    CharacterName = dummyCharacter.DummyEntity.Type.ToString(),
-                    CharacterType = (byte)dummyCharacter.CharacterClass,
-                    HasCharacter = true
-                }
+                    Name = "Dummy",
+                    Class = (byte)dummyCharacter.CharacterClass,
+                },
             });
         }
     }
