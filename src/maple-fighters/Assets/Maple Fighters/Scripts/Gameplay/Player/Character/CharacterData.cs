@@ -2,17 +2,14 @@ namespace Scripts.Gameplay.Player
 {
     public class CharacterData
     {
-        public int Id { get; set; }
+        public string Name { get; set; }
 
-        public string CharacterName { get; set; }
+        public byte Class { get; set; }
 
-        public byte CharacterType { get; set; }
-
-        public CharacterData(int id, string characterName, byte characterType)
+        public CharacterData(string name, byte @class = 0)
         {
-            Id = id;
-            CharacterName = characterName;
-            CharacterType = characterType;
+            Name = name;
+            Class = @class;
         }
     }
 }
