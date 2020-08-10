@@ -2,6 +2,6 @@
 {
     public class GameObjectsRemovedMessage
     {
-        public int[] Identifiers;
+        public int[] GameObjectIds;
     }
 }
