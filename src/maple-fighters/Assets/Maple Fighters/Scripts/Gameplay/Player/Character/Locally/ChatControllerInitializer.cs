@@ -30,9 +30,9 @@ namespace Scripts.Gameplay.Player
             {
                 var characterDataProvider = GetComponent<ICharacterDataProvider>();
                 var characterData = characterDataProvider.GetCharacterData();
-                var characterName = characterData.CharacterName;
+                var name = characterData.Name;
 
-                chatController.SetCharacterName(characterName);
+                chatController.SetCharacterName(name);
             }
         }
     }
