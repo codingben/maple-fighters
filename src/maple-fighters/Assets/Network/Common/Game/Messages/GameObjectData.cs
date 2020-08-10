@@ -11,5 +11,7 @@
         public float Y { get; set; }
 
         public CharacterData CharacterData { get; set; }
+
+        public bool HasCharacter { get; set; }
     }
 }
