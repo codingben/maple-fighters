@@ -80,9 +80,9 @@ namespace Scripts.Gameplay.Entity
 
         private void OnGameObjectsRemoved(GameObjectsRemovedMessage message)
         {
-            var identifiers = message.Identifiers;
+            var gameObjectIds = message.GameObjectIds;
 
-            foreach (var id in identifiers)
+            foreach (var id in gameObjectIds)
             {
                 if (collection.TryGetValue(id, out var entity))
                 {
