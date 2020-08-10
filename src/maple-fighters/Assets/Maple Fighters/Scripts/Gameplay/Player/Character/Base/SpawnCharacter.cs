@@ -22,9 +22,9 @@ namespace Scripts.Gameplay.Player
         public void Spawn()
         {
             var characterData = characterDataProvider.GetCharacterData();
-            var CharacterType = characterData.CharacterType;
+            var @class = characterData.Class;
 
-            CreateCharacter((CharacterClasses)CharacterType);
+            CreateCharacter((CharacterClasses)@class);
         }
 
         public GameObject GetCharacterGameObject()
