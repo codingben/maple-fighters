@@ -2,10 +2,8 @@ namespace Game.Messages
 {
     public class CharacterData
     {
-        public string CharacterName { get; set; }
+        public string Name { get; set; }
 
-        public byte CharacterType { get; set; }
-
-        public bool HasCharacter { get; set; }
+        public byte Class { get; set; }
     }
 }
