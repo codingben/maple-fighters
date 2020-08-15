@@ -8,16 +8,15 @@ namespace Scripts.UI.Authenticator
     [RequireComponent(typeof(IOnRegistrationFinishedListener))]
     public class AuthenticatorInteractor : MonoBehaviour
     {
-        private AuthenticatorApi authenticatorApi;
-
+        private IAuthenticatorApi authenticatorApi;
         private IOnConnectionFinishedListener onConnectionFinishedListener;
         private IOnLoginFinishedListener onLoginFinishedListener;
         private IOnRegistrationFinishedListener onRegistrationFinishedListener;
 
         private void Awake()
         {
-            authenticatorApi = FindObjectOfType<AuthenticatorApi>();
-
+            authenticatorApi =
+                FindObjectOfType<AuthenticatorApi>();
             onConnectionFinishedListener =
                 GetComponent<IOnConnectionFinishedListener>();
             onLoginFinishedListener =
