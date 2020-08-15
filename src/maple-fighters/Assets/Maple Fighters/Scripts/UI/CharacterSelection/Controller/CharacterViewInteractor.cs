@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Scripts.Services.CharacterProvider;
+using UnityEngine;
 
 namespace Scripts.UI.CharacterSelection
 {
@@ -9,6 +10,7 @@ namespace Scripts.UI.CharacterSelection
     [RequireComponent(typeof(IOnCharacterDeletionFinishedListener))]
     public class CharacterViewInteractor : MonoBehaviour
     {
+        private ICharacterProviderApi characterProviderApi;
         private IOnConnectionFinishedListener onConnectionFinishedListener;
         private IOnCharacterReceivedListener onCharacterReceivedListener;
         private IOnCharacterValidationFinishedListener onCharacterValidationFinishedListener;
@@ -20,6 +22,8 @@ namespace Scripts.UI.CharacterSelection
 
         private void Awake()
         {
+            characterProviderApi =
+                FindObjectOfType<CharacterProviderApi>();
             onConnectionFinishedListener =
                 GetComponent<IOnConnectionFinishedListener>();
             onCharacterReceivedListener =
