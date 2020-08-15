@@ -1,4 +1,4 @@
-﻿using Scripts.Services.GameServerProvider;
+﻿using Scripts.Services.GameProvider;
 using UnityEngine;
 
 namespace Scripts.UI.GameServerBrowser
@@ -7,14 +7,14 @@ namespace Scripts.UI.GameServerBrowser
     [RequireComponent(typeof(IOnGameServerReceivedListener))]
     public class GameServerBrowserInteractor : MonoBehaviour
     {
-        private IGameServerProviderApi gameServerProviderApi;
+        private IGameProviderApi gameProviderApi;
         private IOnConnectionFinishedListener onConnectionFinishedListener;
         private IOnGameServerReceivedListener onGameServerReceivedListener;
 
         private void Awake()
         {
-            gameServerProviderApi =
-                FindObjectOfType<GameServerProviderApi>();
+            gameProviderApi =
+                FindObjectOfType<GameProviderApi>();
             onConnectionFinishedListener =
                 GetComponent<IOnConnectionFinishedListener>();
             onGameServerReceivedListener =
