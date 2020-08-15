@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using Network.Utils;
 using Scripts.Gameplay.Entity;
 using Scripts.Gameplay.Map.Dummy;
 using Scripts.Gameplay.Map.Operations;
 using Scripts.Gameplay.Player;
-using Scripts.Services.Chat;
 using Scripts.Services.Game;
 using Scripts.UI.Chat;
 using Scripts.UI.Focus;
@@ -18,7 +16,6 @@ namespace Scripts.Gameplay.Creator
     {
         private void Awake()
         {
-            CreateGameComponents(GetSetterComponents());
             CreateGameComponents(GetCreatorsComponents());
             CreateGameComponents(GetContainersComponents());
             CreateGameComponents(GetGUIControllersComponents());
@@ -45,12 +42,6 @@ namespace Scripts.Gameplay.Creator
             yield return typeof(ChatController);
         }
 
-        private IEnumerable<Type> GetSetterComponents()
-        {
-            yield return typeof(LoggerSetter);
-            yield return typeof(DefaultTimeProviderSetter);
-        }
-
         private IEnumerable<Type> GetApiComponents()
         {
             if (FindObjectOfType<GameApi>() == null)
@@ -58,11 +49,6 @@ namespace Scripts.Gameplay.Creator
                 yield return typeof(GameApi);
 
                 // TODO: Dummy connect to game server
-            }
-
-            if (FindObjectOfType<ChatService>() == null)
-            {
-                yield return typeof(ChatService);
             }
         }
 
