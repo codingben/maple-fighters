@@ -30,6 +30,8 @@ namespace Scripts.UI.Authenticator
             var email = uiAuthenticationDetails.Email;
             var password = uiAuthenticationDetails.Password;
 
+            authenticatorApi?.Authenticate();
+
             // TODO: onException: (e) => onLoginFinishedListener.OnLoginFailed());
             // TODO: Handle other statuses
             onLoginFinishedListener.OnLoginSucceed();
@@ -41,6 +43,8 @@ namespace Scripts.UI.Authenticator
             var password = uiRegistrationDetails.Password;
             var firstName = uiRegistrationDetails.FirstName;
             var lastName = uiRegistrationDetails.LastName;
+
+            authenticatorApi?.Register();
 
             // TODO: onException: (e) => onRegistrationFinishedListener.OnRegistrationFailed()
             // TODO: Handle other statuses
