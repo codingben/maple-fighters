@@ -19,6 +19,11 @@ namespace ScriptableObjects.Configurations
             return ServerData.FirstOrDefault((x) => x.ServerType == serverType);
         }
 
+        public bool IsProduction()
+        {
+            return HostingEnvironment == HostingEnvironment.Production;
+        }
+
         public bool IsDevelopment()
         {
             return HostingEnvironment == HostingEnvironment.Development;
