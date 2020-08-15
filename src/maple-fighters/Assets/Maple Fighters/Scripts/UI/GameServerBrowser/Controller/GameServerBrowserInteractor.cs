@@ -1,9 +1,4 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
-using CommonTools.Coroutines;
-using Network.Scripts;
-using Scripts.Services.Game;
-using Scripts.Services.GameServerProvider;
+﻿using Scripts.Services.GameServerProvider;
 using UnityEngine;
 
 namespace Scripts.UI.GameServerBrowser
@@ -12,81 +7,38 @@ namespace Scripts.UI.GameServerBrowser
     [RequireComponent(typeof(IOnGameServerReceivedListener))]
     public class GameServerBrowserInteractor : MonoBehaviour
     {
-        private GameServerProviderService gameServerProviderService;
-
+        private IGameServerProviderApi gameServerProviderApi;
         private IOnConnectionFinishedListener onConnectionFinishedListener;
         private IOnGameServerReceivedListener onGameServerReceivedListener;
 
-        private ExternalCoroutinesExecutor coroutinesExecutor;
-
         private void Awake()
         {
-            gameServerProviderService =
-                FindObjectOfType<GameServerProviderService>();
-
+            gameServerProviderApi =
+                FindObjectOfType<GameServerProviderApi>();
             onConnectionFinishedListener =
                 GetComponent<IOnConnectionFinishedListener>();
             onGameServerReceivedListener =
                 GetComponent<IOnGameServerReceivedListener>();
-
-            coroutinesExecutor = new ExternalCoroutinesExecutor();
-        }
-
-        private void Update()
-        {
-            coroutinesExecutor?.Update();
-        }
-
-        private void OnDestroy()
-        {
-            coroutinesExecutor?.Dispose();
         }
 
         public void SetGameServerInfo(string ip, int port)
         {
             // TODO: Set game server data
-            // gameServerInfoProvider?.SetConnectionInfo(ip, port);
         }
 
         public void ProvideGameServers()
         {
-            coroutinesExecutor?.StartTask(ProvideGameServersAsync);
-        }
-
-        private async Task ProvideGameServersAsync(IYield yield)
-        {
-            await ConnectIfNotConnectedAsync(yield);
-
-            var gameServerProviderApi =
-                gameServerProviderService?.GameServerProviderApi;
-            if (gameServerProviderApi != null)
+            var data = new[]
             {
-                var responseParameters =
-                    await gameServerProviderApi.ProvideGameServersAsync(yield);
-                var gameServers =
-                    responseParameters.GameServerInformations.Select(
-                        (x) => new UIGameServerButtonData(
-                            x.IP,
-                            x.Name,
-                            x.Port,
-                            x.Connections,
-                            x.MaxConnections));
+                new UIGameServerButtonData(
+                    ip: "localhost",
+                    serverName: "Game 1",
+                    port: 1000,
+                    connections: 0,
+                    maxConnections: 1000)
+            };
 
-                onGameServerReceivedListener.OnGameServerReceived(gameServers);
-            }
-        }
-
-        private async Task ConnectIfNotConnectedAsync(IYield yield)
-        {
-            if (gameServerProviderService != null && !gameServerProviderService.IsConnected)
-            {
-                var connectionStatus =
-                    await gameServerProviderService.ConnectAsync(yield);
-                if (connectionStatus == ConnectionStatus.Failed)
-                {
-                    onConnectionFinishedListener.OnConnectionFailed();
-                }
-            }
+            onGameServerReceivedListener.OnGameServerReceived(data);
         }
     }
 }
