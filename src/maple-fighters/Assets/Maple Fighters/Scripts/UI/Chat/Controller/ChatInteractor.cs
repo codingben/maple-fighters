@@ -1,5 +1,4 @@
-﻿using Chat.Common;
-using Scripts.Services.Chat;
+﻿using Scripts.Services.Chat;
 using UnityEngine;
 
 namespace Scripts.UI.Chat
@@ -7,12 +6,12 @@ namespace Scripts.UI.Chat
     [RequireComponent(typeof(IOnChatMessageReceived))]
     public class ChatInteractor : MonoBehaviour
     {
-        private ChatService chatService;
+        private IChatApi chatApi;
         private IOnChatMessageReceived onChatMessageReceived;
 
         private void Awake()
         {
-            chatService = FindObjectOfType<ChatService>();
+            chatApi = FindObjectOfType<ChatApi>();
             onChatMessageReceived = GetComponent<IOnChatMessageReceived>();
         }
 
@@ -28,30 +27,27 @@ namespace Scripts.UI.Chat
 
         private void SubscribeToChatApiEvents()
         {
-            chatService?.ChatApi?.ChatMessageReceived.AddListener(OnChatMessageReceived);
+            if (chatApi != null)
+            {
+                chatApi.ChatMessageReceived += OnChatMessageReceived;
+            }
         }
 
         private void UnsubscribeFromChatApiEvents()
         {
-            chatService?.ChatApi?.ChatMessageReceived.RemoveListener(OnChatMessageReceived);
+            if (chatApi != null)
+            {
+                chatApi.ChatMessageReceived -= OnChatMessageReceived;
+            }
         }
 
         public void SendChatMessage(string message)
         {
-            if (chatService != null)
-            {
-                var chatApi = chatService.ChatApi;
-                if (chatApi != null)
-                {
-                    var parameters = new ChatMessageRequestParameters(message);
-                    chatApi.SendChatMessage(parameters);
-                }
-            }
+            chatApi?.SendChatMessage(message);
         }
 
-        private void OnChatMessageReceived(ChatMessageEventParameters parameters)
+        private void OnChatMessageReceived(string message)
         {
-            var message = parameters.Message;
             onChatMessageReceived.OnMessageReceived(message);
         }
     }
