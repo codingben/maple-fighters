@@ -1,12 +1,11 @@
-﻿using Chat.Common;
-using Network.Scripts;
+﻿using System;
 
 namespace Scripts.Services.Chat
 {
     public interface IChatApi
     {
-        UnityEvent<ChatMessageEventParameters> ChatMessageReceived { get; }
+        Action<string> ChatMessageReceived { get; }
 
-        void SendChatMessage(ChatMessageRequestParameters parameters);
+        void SendChatMessage(string message);
     }
 }
