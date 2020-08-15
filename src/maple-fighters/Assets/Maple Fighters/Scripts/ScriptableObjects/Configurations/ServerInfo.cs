@@ -1,5 +1,4 @@
 ﻿using System;
-using ExitGames.Client.Photon;
 
 namespace ScriptableObjects.Configurations
 {
@@ -11,9 +10,5 @@ namespace ScriptableObjects.Configurations
         public ServerType ServerType;
 
         public string IpAddress;
-
-        public int Port;
-
-        public ConnectionProtocol Protocol;
     }
 }
