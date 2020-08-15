@@ -10,18 +10,18 @@ namespace ScriptableObjects.Configurations
         order = 0)]
     public class NetworkConfiguration : ScriptableSingleton<NetworkConfiguration>
     {
-        public ServerInfo[] ServerInfos;
+        public ServerData[] ServerData;
 
-        public HostingEnvironment Environment;
+        public HostingEnvironment HostingEnvironment;
 
-        public ServerInfo GetServerInfo(ServerType serverType)
+        public ServerData GetServerData(ServerType serverType)
         {
-            return ServerInfos.FirstOrDefault((x) => x.ServerType == serverType);
+            return ServerData.FirstOrDefault((x) => x.ServerType == serverType);
         }
 
-        public bool IsDummy()
+        public bool IsDevelopment()
         {
-            return Environment == HostingEnvironment.Development;
+            return HostingEnvironment == HostingEnvironment.Development;
         }
     }
 }
