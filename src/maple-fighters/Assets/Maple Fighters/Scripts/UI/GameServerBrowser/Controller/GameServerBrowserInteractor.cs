@@ -38,6 +38,8 @@ namespace Scripts.UI.GameServerBrowser
                     maxConnections: 1000)
             };
 
+            gameProviderApi?.ProvideGameServer();
+
             onGameServerReceivedListener.OnGameServerReceived(data);
         }
     }
