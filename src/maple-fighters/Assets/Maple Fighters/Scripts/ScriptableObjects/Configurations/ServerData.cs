@@ -3,7 +3,7 @@
 namespace ScriptableObjects.Configurations
 {
     [Serializable]
-    public class ServerInfo
+    public class ServerData
     {
         public string Name;
 
