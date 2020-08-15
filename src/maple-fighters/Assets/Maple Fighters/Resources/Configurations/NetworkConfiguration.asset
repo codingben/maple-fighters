@@ -12,25 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05c8ccb8a03f08646b2ec0522b88a75b, type: 3}
   m_Name: NetworkConfiguration
   m_EditorClassIdentifier: 
-  ServerInfos:
-  - Name: Authenticator
-    ServerType: 0
-    IpAddress: 127.0.0.1
-    Port: 8000
-    Protocol: 0
-  - Name: Authorizer
-    ServerType: 1
-    IpAddress: 127.0.0.1
-    Port: 8001
-    Protocol: 0
-  - Name: GameServerProvider
-    ServerType: 2
-    IpAddress: 127.0.0.1
-    Port: 8002
-    Protocol: 0
-  - Name: Chat
-    ServerType: 3
-    IpAddress: 127.0.0.1
-    Port: 8003
-    Protocol: 0
-  Environment: 1
+  ServerData: []
+  HostingEnvironment: 1
