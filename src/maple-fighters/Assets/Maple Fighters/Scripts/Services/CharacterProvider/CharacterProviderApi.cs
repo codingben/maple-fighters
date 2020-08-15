@@ -2,7 +2,7 @@
 
 namespace Scripts.Services.CharacterProvider
 {
-    public class CharacterProviderApi : MonoBehaviour, ICharacterApi
+    public class CharacterProviderApi : MonoBehaviour, ICharacterProviderApi
     {
         // TODO: Implement
     }
