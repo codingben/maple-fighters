@@ -12,7 +12,7 @@ namespace Scripts.Gameplay.Map.Dummy
             var networkConfiguration = NetworkConfiguration.GetInstance();
             if (networkConfiguration != null)
             {
-                if (networkConfiguration.Environment != HostingEnvironment.Development)
+                if (networkConfiguration.IsProduction())
                 {
                     var dummyScene =
                         GameObject.FindGameObjectWithTag(GameTags.DummySceneTag);
