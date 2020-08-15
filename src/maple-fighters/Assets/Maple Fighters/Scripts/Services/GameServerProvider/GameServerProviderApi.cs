@@ -1,6 +1,8 @@
+using UnityEngine;
+
 namespace Scripts.Services.GameServerProvider
 {
-    public class GameServerProviderApi : IGameServerProviderApi
+    public class GameServerProviderApi : MonoBehaviour, IGameServerProviderApi
     {
         public void ProvideGameServer()
         {

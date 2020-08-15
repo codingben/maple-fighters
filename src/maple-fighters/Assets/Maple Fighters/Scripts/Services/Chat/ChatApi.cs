@@ -1,8 +1,9 @@
 using System;
+using UnityEngine;
 
 namespace Scripts.Services.Chat
 {
-    public class ChatApi : IChatApi
+    public class ChatApi : MonoBehaviour, IChatApi
     {
         public Action<string> ChatMessageReceived { get; }
 
