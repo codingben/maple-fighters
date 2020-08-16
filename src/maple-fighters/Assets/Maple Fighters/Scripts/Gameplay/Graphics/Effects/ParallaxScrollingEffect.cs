@@ -23,17 +23,13 @@ namespace Scripts.Gameplay.Graphics
         {
             foreach (var background in backgrounds)
             {
-                var x = background.position.x;
-                var y = background.position.y;
-                var z = background.position.z;
-                var a = background.position;
-                var b = new Vector3(
-                    x + (mainCamera.position.x - cameraPosition.x),
-                    y + (mainCamera.position.y - cameraPosition.y),
-                    z);
-                var t = speed * Time.deltaTime;
+                var newPosition = new Vector3(
+                    background.position.x + (mainCamera.position.x - cameraPosition.x),
+                    background.position.y + (mainCamera.position.y - cameraPosition.y),
+                    background.position.z);
 
-                background.position = Vector3.Lerp(a, b, t);
+                background.position =
+                    Vector3.Lerp(background.position, newPosition, speed * Time.deltaTime);
             }
 
             cameraPosition = mainCamera.position;
