@@ -1,4 +1,6 @@
-﻿namespace Game.InterestManagement.Simulation
+﻿using InterestManagement;
+
+namespace Game.InterestManagement.Simulation
 {
     public interface IGameObject : ISceneObject
     {

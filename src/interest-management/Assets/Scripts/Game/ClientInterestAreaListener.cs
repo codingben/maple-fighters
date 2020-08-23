@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using InterestManagement;
 using UnityEngine;
 
 namespace Game.InterestManagement.Simulation

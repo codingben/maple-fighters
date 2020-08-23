@@ -2,7 +2,7 @@
 {
     using UnityVector2 = UnityEngine.Vector2;
     using UnityVector3 = UnityEngine.Vector3;
-    using Vector2 = Common.MathematicsHelper.Vector2;
+    using Vector2 = MathematicsHelper.Vector2;
 
     public static class ExtensionMethods
     {

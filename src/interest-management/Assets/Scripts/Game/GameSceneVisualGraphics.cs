@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using InterestManagement;
 using UnityEngine;
 
 namespace Game.InterestManagement.Simulation
