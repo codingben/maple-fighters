@@ -1,4 +1,4 @@
-﻿using Common.MathematicsHelper;
+﻿using MathematicsHelper;
 
 namespace InterestManagement
 {

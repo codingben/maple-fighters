@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Common.MathematicsHelper;
+using MathematicsHelper;
 
 namespace InterestManagement
 {
