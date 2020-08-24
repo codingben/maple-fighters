@@ -11,14 +11,16 @@ namespace Game.InterestManagement.Simulation
         private void Start()
         {
             var scene = SceneUtils.GetSceneGameObject();
+            var matrixRegion = scene.GetScene().MatrixRegion;
             var gameObject = GetComponent<IGameObject>();
-            interestArea = 
-                new InterestArea<IGameObject>(scene.GetScene(), gameObject);
+
+            interestArea = new InterestArea<IGameObject>(gameObject);
+            interestArea.SetMatrixRegion(matrixRegion);
         }
 
         public INearbySceneObjectsEvents<IGameObject> GetNearbySceneObjectsEvents()
         {
-            return interestArea.NearbySceneObjectsEvents;
+            return interestArea.GetNearbySceneObjectsEvents();
         }
     }
 }
