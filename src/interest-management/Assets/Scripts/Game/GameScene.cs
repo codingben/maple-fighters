@@ -15,9 +15,8 @@ namespace Game.InterestManagement.Simulation
 
         private void Awake()
         {
-            scene = 
-                new Scene<IGameObject>(
-                    sceneSize.ToVector2(), regionSize.ToVector2());
+            scene =
+                new Scene<IGameObject>(sceneSize.ToVector2(), regionSize.ToVector2());
         }
 
         public Vector2 GetSceneSize()
