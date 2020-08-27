@@ -5,30 +5,8 @@ using UnityEngine;
 namespace Game.InterestManagement.Simulation
 {
     [RequireComponent(typeof(GameScene))]
-    public class GameSceneVisualGraphics : MonoBehaviour
+    public partial class GameSceneVisualGraphics : MonoBehaviour
     {
-        public struct GameRegion
-        {
-            public int Index { get; }
-
-            public IRegion<IGameObject> Region { get; }
-
-            public Vector2 Position { get; }
-
-            public Vector2 Size { get; }
-
-            public GameRegion(
-                int index,
-                IRegion<IGameObject> region)
-            {
-                Index = index;
-                Region = region;
-                Position = ((Region<IGameObject>)region).GetPosition()
-                    .FromVector2();
-                Size = ((Region<IGameObject>)region).GetSize().FromVector2();
-            }
-        }
-
         private const string RegionObject = "Region";
 
         [Header("The higher value the smaller region will be.")]
@@ -52,8 +30,8 @@ namespace Game.InterestManagement.Simulation
         {
             var index = 0;
             var regionObject = Resources.Load<GameObject>(RegionObject);
-
             var regions = scene.MatrixRegion.GetAllRegions();
+
             foreach (var region in regions)
             {
                 var gameRegion = new GameRegion(index, region);
@@ -66,7 +44,7 @@ namespace Game.InterestManagement.Simulation
                 regionGameObject.name =
                     $"Index: {index} (X: {gameRegion.Size.x} Y: {gameRegion.Size.y})";
 
-                var gameRegionVisualGraphics = 
+                var gameRegionVisualGraphics =
                     regionGameObject.GetComponent<GameRegionVisualGraphics>();
                 if (gameRegionVisualGraphics != null)
                 {
