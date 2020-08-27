@@ -17,9 +17,7 @@ namespace Game.InterestManagement.Simulation
         private void Update()
         {
             GraphicsUtils.DrawRectangle(
-                transform.position,
-                transform.localScale,
-                GetColor());
+                transform.position, transform.localScale, GetColor());
         }
 
         public void SetRegion(IRegion<IGameObject> region)
