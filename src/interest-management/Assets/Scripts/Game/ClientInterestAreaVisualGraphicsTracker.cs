@@ -20,9 +20,7 @@ namespace Game.InterestManagement.Simulation
         private void Move()
         {
             transform.position = Vector3.Lerp(
-                transform.position,
-                target.position,
-                speed * Time.deltaTime);
+                transform.position, target.position, speed * Time.deltaTime);
         }
 
         public void SetTarget(Transform target)
