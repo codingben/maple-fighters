@@ -57,9 +57,9 @@ namespace InterestManagement
             return sceneObjects.Count;
         }
 
-        public bool IsOverlaps(Vector2 position, Vector2 size)
+        public bool IsOverlaps(ITransform transform)
         {
-            return rectangle.Intersects(position, size);
+            return rectangle.Intersects(transform.Position, transform.Size);
         }
 
         public Vector2 GetPosition()
