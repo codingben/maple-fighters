@@ -22,7 +22,7 @@ namespace Game.InterestManagement.Simulation
             var clientInterestArea = GetComponent<ClientInterestArea>();
             nearbySceneObjectsEvents =
                 clientInterestArea.GetNearbySceneObjectsEvents();
-            
+
             SubscribeToNearbyGameObjectsEvents();
         }
 
@@ -33,31 +33,31 @@ namespace Game.InterestManagement.Simulation
 
         private void SubscribeToNearbyGameObjectsEvents()
         {
-            nearbySceneObjectsEvents.SceneObjectAdded += OnGameObjectAdded;
-            nearbySceneObjectsEvents.SceneObjectRemoved += OnGameObjectRemoved;
-            nearbySceneObjectsEvents.SceneObjectsAdded += OnGameObjectsAdded;
-            nearbySceneObjectsEvents.SceneObjectsRemoved += OnGameObjectsRemoved;
+            nearbySceneObjectsEvents.SceneObjectAdded += OnSceneObjectAdded;
+            nearbySceneObjectsEvents.SceneObjectRemoved += OnSceneObjectRemoved;
+            nearbySceneObjectsEvents.SceneObjectsAdded += OnSceneObjectsAdded;
+            nearbySceneObjectsEvents.SceneObjectsRemoved += OnSceneObjectsRemoved;
         }
 
         private void UnsubscribeFromNearbyGameObjectsEvents()
         {
-            nearbySceneObjectsEvents.SceneObjectAdded -= OnGameObjectAdded;
-            nearbySceneObjectsEvents.SceneObjectRemoved -= OnGameObjectRemoved;
-            nearbySceneObjectsEvents.SceneObjectsAdded -= OnGameObjectsAdded;
-            nearbySceneObjectsEvents.SceneObjectsRemoved -= OnGameObjectsRemoved;
+            nearbySceneObjectsEvents.SceneObjectAdded -= OnSceneObjectAdded;
+            nearbySceneObjectsEvents.SceneObjectRemoved -= OnSceneObjectRemoved;
+            nearbySceneObjectsEvents.SceneObjectsAdded -= OnSceneObjectsAdded;
+            nearbySceneObjectsEvents.SceneObjectsRemoved -= OnSceneObjectsRemoved;
         }
 
-        private void OnGameObjectAdded(IGameObject gameObject)
+        private void OnSceneObjectAdded(IGameObject gameObject)
         {
             gameObject.SetGraphics(true);
         }
 
-        private void OnGameObjectRemoved(IGameObject gameObject)
+        private void OnSceneObjectRemoved(IGameObject gameObject)
         {
             gameObject.SetGraphics(false);
         }
 
-        private void OnGameObjectsAdded(IEnumerable<IGameObject> gameObjects)
+        private void OnSceneObjectsAdded(IEnumerable<IGameObject> gameObjects)
         {
             foreach (var gameObject in gameObjects)
             {
@@ -65,7 +65,7 @@ namespace Game.InterestManagement.Simulation
             }
         }
 
-        private void OnGameObjectsRemoved(IEnumerable<IGameObject> gameObjects)
+        private void OnSceneObjectsRemoved(IEnumerable<IGameObject> gameObjects)
         {
             foreach (var gameObject in gameObjects)
             {
