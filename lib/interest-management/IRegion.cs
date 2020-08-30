@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Common.MathematicsHelper;
 
 namespace InterestManagement
 {
@@ -47,6 +46,6 @@ namespace InterestManagement
         /// <param name="position">The other position.</param>
         /// <param name="size">The other size.</param>
         /// <returns>If overlaps or not.</returns>
-        bool IsOverlaps(Vector2 position, Vector2 size);
+        bool IsOverlaps(ITransform transform);
     }
 }
