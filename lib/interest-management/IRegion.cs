@@ -43,8 +43,7 @@ namespace InterestManagement
         /// <summary>
         /// Checks if the region overlaps with the other rectangle.
         /// </summary>
-        /// <param name="position">The other position.</param>
-        /// <param name="size">The other size.</param>
+        /// <param name="transform">The other transform.</param>
         /// <returns>If overlaps or not.</returns>
         bool IsOverlaps(ITransform transform);
     }
