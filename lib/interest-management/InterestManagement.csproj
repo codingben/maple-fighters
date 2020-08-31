@@ -5,10 +5,10 @@
     <Authors>Ben Ukhanov</Authors>
     <Description>This library is region-based interest management.</Description>
     <Copyright>Copyright © Ben Ukhanov 2020</Copyright>
-    <PackageProjectUrl>https://github.com/benzuk/maple-fighters-server/tree/develop/lib/interest-management</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/benzuk/interest-management-simulation</PackageProjectUrl>
     <PackageTags>Common</PackageTags>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>1.0.4</Version>
+    <Version>1.0.5</Version>
   </PropertyGroup>
 
   <ItemGroup>
