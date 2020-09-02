@@ -1,4 +1,4 @@
-# Client-side Unity Project
+# Maple Fighters
 This is a small game similar to MapleStory.
 
 ## Lobby
