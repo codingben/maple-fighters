@@ -1,8 +1,10 @@
 # Client-side Unity Project
-The game maps:
+This is a small game similar to MapleStory.
 
-- Lobby
-- The Dark Forest
+## Lobby
 
 <img src="docs/Lobby.png">
+
+## The Dark Forest
+
 <img src="docs/The Dark Forest.png">
