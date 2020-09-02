@@ -1,7 +1,13 @@
-# Server-side Projects
-It is planned that the server-side will be able to accommodate a lot of players who can play together in a world. My goal is to create (for study purposes) a game similar to MapleStory (MMO).
+# Maple Fighters
+The server-side will be able to accommodate many players who can play together in the game world.
 
-# Server-side Architecture
+## Technology
+
+**Client**: Unity WebGL   
+**Server**: C#, Rust   
+**Database**: MongoDB, PostgreSQL   
+
+## Service Architecture
 
 | Service                                              | Language      | Description                                                    														|
 | ---------------------------------------------------- | ------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
