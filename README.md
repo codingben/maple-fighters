@@ -1,5 +1,7 @@
 # Maple Fighters
-This is a small game similar to MapleStory.
+This is a small game similar to MapleStory. 
+
+- Click [here](https://benzuk.github.io/) to play.
 
 ## Lobby
 
