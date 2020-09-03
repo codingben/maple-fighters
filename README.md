@@ -1,7 +1,7 @@
 # Maple Fighters
 The server-side will be able to accommodate many players who can play together in the game world.
 
-### NOTE: This branch was created to save grpc services.
+**NOTE**: This branch was created to save grpc services.
 
 ## Technology
 
