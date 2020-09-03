@@ -5,21 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Proto\authenticator.proto" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="FluentValidation" Version="8.6.2" />
-    <PackageReference Include="Grpc.AspNetCore" Version="2.27.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Authenticator.Domain\Authenticator.Domain.csproj" />
     <ProjectReference Include="..\Authenticator.Infrastructure\Authenticator.Infrastructure.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Protobuf Include="Proto\authenticator.proto" GrpcServices="Server" />
   </ItemGroup>
 
 </Project>
