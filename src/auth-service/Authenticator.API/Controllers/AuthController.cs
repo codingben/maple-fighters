@@ -4,6 +4,7 @@ using Authenticator.Domain.Aggregates.User.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using Authenticator.Domain.Aggregates.User;
+using Authenticator.API.Converters;
 
 namespace Authenticator.API.Controllers
 {
