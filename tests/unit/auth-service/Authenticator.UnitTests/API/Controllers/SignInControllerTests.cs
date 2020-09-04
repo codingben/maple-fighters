@@ -17,11 +17,10 @@ namespace Authenticator.UnitTests.API.Controllers
             // Arrange
             var loginService = Substitute.For<ILoginService>();
             var signInController = new SignInController(loginService);
-            var authenticationData = new AuthenticationData(email, password);
+            var loginData = new LoginData(email, password);
 
             // Act
-            var authenticationStatus =
-                signInController.Login(authenticationData);
+            var authenticationStatus = signInController.Login(loginData);
 
             // Assert
             authenticationStatus
@@ -42,11 +41,10 @@ namespace Authenticator.UnitTests.API.Controllers
                 .Returns(AuthenticationStatus.Authenticated);
 
             var signInController = new SignInController(loginService);
-            var authenticationData = new AuthenticationData(Email, Password);
+            var loginData = new LoginData(Email, Password);
 
             // Act
-            var authenticationStatus =
-                signInController.Login(authenticationData);
+            var authenticationStatus = signInController.Login(loginData);
 
             // Assert
             authenticationStatus

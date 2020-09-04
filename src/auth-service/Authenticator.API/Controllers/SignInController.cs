@@ -11,29 +11,28 @@ namespace Authenticator.API.Controllers
     public class SignInController : ControllerBase
     {
         private readonly ILoginService loginService;
-        private readonly AuthenticationDataValidator authenticationDataValidator;
+        private readonly LoginDataValidator loginDataValidator;
 
         public SignInController(ILoginService loginService)
         {
             this.loginService = loginService;
 
-            authenticationDataValidator = new AuthenticationDataValidator();
+            loginDataValidator = new LoginDataValidator();
         }
 
         [HttpPost]
         [Consumes("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult<AuthenticationStatus> Login(AuthenticationData authenticationData)
+        public ActionResult<AuthenticationStatus> Login(LoginData loginData)
         {
             AuthenticationStatus authenticationStatus;
 
-            var validationResult =
-                authenticationDataValidator.Validate(authenticationData);
+            var validationResult = loginDataValidator.Validate(loginData);
             if (validationResult.IsValid)
             {
-                var email = authenticationData.Email;
-                var password = authenticationData.Password;
+                var email = loginData.Email;
+                var password = loginData.Password;
 
                 authenticationStatus =
                     loginService.Authenticate(email, password);
