@@ -47,9 +47,12 @@ namespace Authenticator.API.Controllers
             }
             else
             {
-                var errorMessage = validationResult.ToString();
+                var errorData = new ErrorData()
+                {
+                    ErrorMessages = validationResult.Errors.ConvertToErrorMessages()
+                };
 
-                return BadRequest(errorMessage);
+                return BadRequest(errorData);
             }
 
             return Ok(authenticationStatus);
@@ -80,9 +83,12 @@ namespace Authenticator.API.Controllers
             }
             else
             {
-                var errorMessage = validationResult.ToString();
+                var errorData = new ErrorData()
+                {
+                    ErrorMessages = validationResult.Errors.ConvertToErrorMessages()
+                };
 
-                return BadRequest(errorMessage);
+                return BadRequest(errorData);
             }
 
             return Ok(accountCreationStatus);
