@@ -1,9 +1,9 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using FluentValidation.Results;
 
-namespace Authenticator.API
+namespace Authenticator.API.Converters
 {
-    public static class Converter
+    public static class ExtensionMethods
     {
         public static string[] ConvertToErrorMessages(this IList<ValidationFailure> validationFailures)
         {
