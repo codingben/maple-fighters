@@ -8,7 +8,7 @@ using Xunit;
 
 namespace Authenticator.UnitTests.API.Controllers
 {
-    public class RegistrationControllerTests
+    public class SignUpControllerTests
     {
         [Theory]
         [InlineData("", "benzuk", "Ben", "Ukhanov")]
@@ -23,14 +23,14 @@ namespace Authenticator.UnitTests.API.Controllers
         {
             // Arrange
             var registrationService = Substitute.For<IRegistrationService>();
-            var registrationController =
-                new RegistrationController(registrationService);
+            var signUpController =
+                new SignUpController(registrationService);
             var registrationData =
                 new RegistrationData(email, password, firstName, lastName);
 
             // Act
             var authenticationStatus =
-                registrationController.Signup(registrationData);
+                signUpController.Register(registrationData);
 
             // Assert
             authenticationStatus
@@ -52,14 +52,14 @@ namespace Authenticator.UnitTests.API.Controllers
                 .CreateAccount(Arg.Any<Account>())
                 .Returns(AccountCreationStatus.Succeed);
 
-            var registrationController =
-                new RegistrationController(registrationService);
+            var signUpController =
+                new SignUpController(registrationService);
             var registrationData =
                 new RegistrationData(Email, Password, FirstName, LastName);
 
             // Act
             var authenticationStatus =
-                registrationController.Signup(registrationData);
+                signUpController.Register(registrationData);
 
             // Assert
             authenticationStatus
