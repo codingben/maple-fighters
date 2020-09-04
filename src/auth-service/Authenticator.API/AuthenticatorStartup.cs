@@ -18,7 +18,6 @@ namespace Authenticator.API
             // services.AddSingleton<IDatabaseProvider>(new MongoDatabaseProvider(url: "mongodb://localhost:27017/maple_fighters"));
             // services.AddSingleton<IAccountRepository, MongoAccountRepository>();
             services.AddSingleton<IAccountRepository, InMemoryAccountRepository>();
-            services.AddTransient<ILoginController, LoginController>();
             services.AddTransient<IRegistrationController, RegistrationController>();
             services.AddTransient<ILoginService, LoginService>();
             services.AddTransient<IRegistrationService, RegistrationService>();
@@ -37,7 +36,7 @@ namespace Authenticator.API
             applicationBuilder.UseRouting();
             applicationBuilder.UseEndpoints(endpoints =>
             {
-                // TODO: Implement
+                endpoints.MapControllers();
             });
 
             logger.LogInformation("AuthenticatorStartup::Configure()");
