@@ -1,24 +1,56 @@
 ﻿using Authenticator.API.Datas;
 using Authenticator.API.Validators;
-using Authenticator.Domain.Aggregates.User;
 using Authenticator.Domain.Aggregates.User.Services;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
+using Authenticator.Domain.Aggregates.User;
 
 namespace Authenticator.API.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
-    public class SignUpController : ControllerBase
+    public class AuthController : ControllerBase
     {
+        private readonly ILoginService loginService;
         private readonly IRegistrationService registrationService;
         private readonly RegistrationDataValidator registrationDataValidator;
+        private readonly LoginDataValidator loginDataValidator;
 
-        public SignUpController(IRegistrationService registrationService)
+        public AuthController(
+            ILoginService loginService,
+            IRegistrationService registrationService)
         {
+            this.loginService = loginService;
             this.registrationService = registrationService;
 
+            loginDataValidator = new LoginDataValidator();
             registrationDataValidator = new RegistrationDataValidator();
+        }
+
+        [HttpPost]
+        [Consumes("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public ActionResult<AuthenticationStatus> Login(LoginData loginData)
+        {
+            AuthenticationStatus authenticationStatus;
+
+            var validationResult = loginDataValidator.Validate(loginData);
+            if (validationResult.IsValid)
+            {
+                var email = loginData.Email;
+                var password = loginData.Password;
+
+                authenticationStatus =
+                    loginService.Authenticate(email, password);
+            }
+            else
+            {
+                var errorMessage = validationResult.ToString();
+
+                return BadRequest(errorMessage);
+            }
+
+            return Ok(authenticationStatus);
         }
 
         [HttpPost]
