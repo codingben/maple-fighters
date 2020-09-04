@@ -7,7 +7,7 @@ using Xunit;
 
 namespace Authenticator.UnitTests.API.Controllers
 {
-    public class LoginControllerTests
+    public class SignInControllerTests
     {
         [Theory]
         [InlineData("benzuk@gmail.com", "")]
@@ -16,12 +16,12 @@ namespace Authenticator.UnitTests.API.Controllers
         {
             // Arrange
             var loginService = Substitute.For<ILoginService>();
-            var authController = new AuthController(loginService);
+            var signInController = new SignInController(loginService);
             var authenticationData = new AuthenticationData(email, password);
 
             // Act
             var authenticationStatus =
-                authController.Login(authenticationData);
+                signInController.Login(authenticationData);
 
             // Assert
             authenticationStatus
@@ -41,12 +41,12 @@ namespace Authenticator.UnitTests.API.Controllers
                 .Authenticate(Email, Password)
                 .Returns(AuthenticationStatus.Authenticated);
 
-            var authController = new AuthController(loginService);
+            var signInController = new SignInController(loginService);
             var authenticationData = new AuthenticationData(Email, Password);
 
             // Act
             var authenticationStatus =
-                authController.Login(authenticationData);
+                signInController.Login(authenticationData);
 
             // Assert
             authenticationStatus
