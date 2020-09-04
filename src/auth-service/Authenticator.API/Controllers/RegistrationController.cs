@@ -2,10 +2,14 @@
 using Authenticator.API.Validators;
 using Authenticator.Domain.Aggregates.User;
 using Authenticator.Domain.Aggregates.User.Services;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Authenticator.API.Controllers
 {
-    public class RegistrationController : IRegistrationController
+    [ApiController]
+    [Route("[controller]")]
+    public class RegistrationController : ControllerBase
     {
         private readonly IRegistrationService registrationService;
         private readonly RegistrationDataValidator registrationDataValidator;
@@ -17,11 +21,14 @@ namespace Authenticator.API.Controllers
             registrationDataValidator = new RegistrationDataValidator();
         }
 
-        public AccountCreationStatus Register(RegistrationData registrationData)
+        [HttpPost]
+        [Consumes("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public ActionResult<AccountCreationStatus> Signup(RegistrationData registrationData)
         {
             var accountCreationStatus = AccountCreationStatus.Failed;
 
-            // TODO: Get errors if invalid
             var validationResult =
                 registrationDataValidator.Validate(registrationData);
             if (validationResult.IsValid)
@@ -35,8 +42,14 @@ namespace Authenticator.API.Controllers
                 accountCreationStatus =
                     registrationService.CreateAccount(account);
             }
+            else
+            {
+                var errorMessage = validationResult.ToString();
 
-            return accountCreationStatus;
+                return BadRequest(errorMessage);
+            }
+
+            return Ok(accountCreationStatus);
         }
     }
 }
