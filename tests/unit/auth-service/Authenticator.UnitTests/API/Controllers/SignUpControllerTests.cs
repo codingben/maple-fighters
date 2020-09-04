@@ -25,8 +25,13 @@ namespace Authenticator.UnitTests.API.Controllers
             var registrationService = Substitute.For<IRegistrationService>();
             var signUpController =
                 new SignUpController(registrationService);
-            var registrationData =
-                new RegistrationData(email, password, firstName, lastName);
+            var registrationData = new RegistrationData()
+            {
+                Email = email,
+                Password = password,
+                FirstName = firstName,
+                LastName = lastName
+            };
 
             // Act
             var authenticationStatus =
@@ -54,8 +59,13 @@ namespace Authenticator.UnitTests.API.Controllers
 
             var signUpController =
                 new SignUpController(registrationService);
-            var registrationData =
-                new RegistrationData(Email, Password, FirstName, LastName);
+            var registrationData = new RegistrationData()
+            {
+                Email = Email,
+                Password = Password,
+                FirstName = FirstName,
+                LastName = LastName
+            };
 
             // Act
             var authenticationStatus =
