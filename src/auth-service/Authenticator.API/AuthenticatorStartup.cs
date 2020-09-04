@@ -32,6 +32,7 @@ namespace Authenticator.API
                 applicationBuilder.UseDeveloperExceptionPage();
             }
 
+            applicationBuilder.UseHttpsRedirection();
             applicationBuilder.UseRouting();
             applicationBuilder.UseEndpoints(endpoints =>
             {
