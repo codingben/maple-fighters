@@ -3,9 +3,9 @@ using FluentValidation;
 
 namespace Authenticator.API.Validators
 {
-    public class AuthenticationDataValidator : AbstractValidator<AuthenticationData>
+    public class LoginDataValidator : AbstractValidator<LoginData>
     {
-        public AuthenticationDataValidator()
+        public LoginDataValidator()
         {
             RuleFor(x => x.Email).NotEmpty().EmailAddress().WithMessage("Invalid email address.");
             RuleFor(x => x.Password).NotEmpty().WithMessage("Password is required.");
