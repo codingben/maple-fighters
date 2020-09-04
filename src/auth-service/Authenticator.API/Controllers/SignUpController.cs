@@ -9,12 +9,12 @@ namespace Authenticator.API.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class RegistrationController : ControllerBase
+    public class SignUpController : ControllerBase
     {
         private readonly IRegistrationService registrationService;
         private readonly RegistrationDataValidator registrationDataValidator;
 
-        public RegistrationController(IRegistrationService registrationService)
+        public SignUpController(IRegistrationService registrationService)
         {
             this.registrationService = registrationService;
 
@@ -25,7 +25,7 @@ namespace Authenticator.API.Controllers
         [Consumes("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult<AccountCreationStatus> Signup(RegistrationData registrationData)
+        public ActionResult<AccountCreationStatus> Register(RegistrationData registrationData)
         {
             AccountCreationStatus accountCreationStatus;
 
