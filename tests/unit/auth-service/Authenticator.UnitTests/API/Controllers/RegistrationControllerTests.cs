@@ -30,7 +30,7 @@ namespace Authenticator.UnitTests.API.Controllers
 
             // Act
             var authenticationStatus =
-                registrationController.Register(registrationData);
+                registrationController.Signup(registrationData);
 
             // Assert
             authenticationStatus
@@ -59,7 +59,7 @@ namespace Authenticator.UnitTests.API.Controllers
 
             // Act
             var authenticationStatus =
-                registrationController.Register(registrationData);
+                registrationController.Signup(registrationData);
 
             // Assert
             authenticationStatus
