@@ -27,7 +27,7 @@ namespace Authenticator.API.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public ActionResult<AccountCreationStatus> Signup(RegistrationData registrationData)
         {
-            var accountCreationStatus = AccountCreationStatus.Failed;
+            AccountCreationStatus accountCreationStatus;
 
             var validationResult =
                 registrationDataValidator.Validate(registrationData);

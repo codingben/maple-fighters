@@ -26,7 +26,7 @@ namespace Authenticator.API.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public ActionResult<AuthenticationStatus> Login(AuthenticationData authenticationData)
         {
-            var authenticationStatus = AuthenticationStatus.Failed;
+            AuthenticationStatus authenticationStatus;
 
             var validationResult =
                 authenticationDataValidator.Validate(authenticationData);
