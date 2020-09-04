@@ -19,6 +19,7 @@ namespace Authenticator.API
             services.AddSingleton<IAccountRepository, InMemoryAccountRepository>();
             services.AddTransient<ILoginService, LoginService>();
             services.AddTransient<IRegistrationService, RegistrationService>();
+            services.AddControllers();
         }
 
         public void Configure(
