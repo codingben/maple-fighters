@@ -8,12 +8,12 @@ namespace Authenticator.API.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class AuthController : ControllerBase
+    public class SignInController : ControllerBase
     {
         private readonly ILoginService loginService;
         private readonly AuthenticationDataValidator authenticationDataValidator;
 
-        public AuthController(ILoginService loginService)
+        public SignInController(ILoginService loginService)
         {
             this.loginService = loginService;
 
