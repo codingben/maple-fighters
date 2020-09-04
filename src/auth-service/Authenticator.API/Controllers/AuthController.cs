@@ -27,7 +27,9 @@ namespace Authenticator.API.Controllers
         }
 
         [HttpPost]
+        [Route("/login")]
         [Consumes("application/json")]
+        [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public ActionResult<AuthenticationStatus> Login(LoginData loginData)
@@ -54,7 +56,9 @@ namespace Authenticator.API.Controllers
         }
 
         [HttpPost]
+        [Route("/register")]
         [Consumes("application/json")]
+        [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public ActionResult<AccountCreationStatus> Register(RegistrationData registrationData)
