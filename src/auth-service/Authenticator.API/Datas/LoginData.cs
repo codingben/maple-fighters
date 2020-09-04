@@ -1,15 +1,9 @@
 ﻿namespace Authenticator.API.Datas
 {
-    public struct LoginData
+    public class LoginData
     {
-        public string Email { get; }
+        public string Email { get; set; }
 
-        public string Password { get; }
-
-        public LoginData(string email, string password)
-        {
-            Email = email;
-            Password = password;
-        }
+        public string Password { get; set; }
     }
 }

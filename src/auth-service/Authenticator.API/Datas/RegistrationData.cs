@@ -1,25 +1,13 @@
 ﻿namespace Authenticator.API.Datas
 {
-    public struct RegistrationData
+    public class RegistrationData
     {
-        public string Email { get; }
+        public string Email { get; set; }
 
-        public string Password { get; }
+        public string Password { get; set; }
 
-        public string FirstName { get; }
+        public string FirstName { get; set; }
 
-        public string LastName { get; }
-
-        public RegistrationData(
-            string email,
-            string password,
-            string firstName,
-            string lastName)
-        {
-            Email = email;
-            Password = password;
-            FirstName = firstName;
-            LastName = lastName;
-        }
+        public string LastName { get; set; }
     }
 }
