@@ -1,4 +1,5 @@
-﻿using Authenticator.API.Datas;
+﻿using Authenticator.API.Constants;
+using Authenticator.API.Datas;
 using FluentValidation;
 
 namespace Authenticator.API.Validators
@@ -7,10 +8,10 @@ namespace Authenticator.API.Validators
     {
         public RegistrationDataValidator()
         {
-            RuleFor(x => x.Email).NotEmpty().EmailAddress().WithMessage("Invalid email address.");
-            RuleFor(x => x.Password).NotEmpty().WithMessage("Password is required.");
-            RuleFor(x => x.FirstName).NotEmpty().WithMessage("First name is required.");
-            RuleFor(x => x.LastName).NotEmpty().WithMessage("Last name is required.");
+            RuleFor(x => x.Email).NotEmpty().EmailAddress().WithMessage(ErrorMessages.InvalidEmail);
+            RuleFor(x => x.Password).NotEmpty().WithMessage(ErrorMessages.PasswordRequired);
+            RuleFor(x => x.FirstName).NotEmpty().WithMessage(ErrorMessages.FirstNameRequired);
+            RuleFor(x => x.LastName).NotEmpty().WithMessage(ErrorMessages.LastNameRequired);
         }
     }
 }
