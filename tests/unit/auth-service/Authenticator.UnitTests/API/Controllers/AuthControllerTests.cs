@@ -14,7 +14,7 @@ namespace Authenticator.UnitTests.API.Controllers
         [Theory]
         [InlineData("benzuk@gmail.com", "")]
         [InlineData("", "benzuk")]
-        public void Login_Returns_Failed(string email, string password)
+        public void Login_Returns_BadRequest(string email, string password)
         {
             // Arrange
             var loginService = Substitute.For<ILoginService>();
@@ -60,7 +60,7 @@ namespace Authenticator.UnitTests.API.Controllers
         [InlineData("benzuk@gmail.com", "", "Ben", "Ukhanov")]
         [InlineData("benzuk@gmail.com", "benzuk", "", "Ukhanov")]
         [InlineData("benzuk@gmail.com", "benzuk", "Ben", "")]
-        public void Register_Returns_Failed(
+        public void Register_Returns_BadRequest(
             string email,
             string password,
             string firstName,
@@ -89,7 +89,7 @@ namespace Authenticator.UnitTests.API.Controllers
         }
 
         [Fact]
-        public void Register_Returns_Succeed()
+        public void Register_CreateAccount_Received()
         {
             // Arrange
             var loginService = Substitute.For<ILoginService>();
