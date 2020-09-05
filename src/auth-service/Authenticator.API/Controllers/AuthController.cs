@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using Authenticator.Domain.Aggregates.User;
 using Authenticator.API.Converters;
+using Authenticator.API.Constants;
 
 namespace Authenticator.API.Controllers
 {
@@ -33,18 +34,28 @@ namespace Authenticator.API.Controllers
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult<AuthenticationStatus> Login(LoginData loginData)
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public ActionResult<AccountData> Login(LoginData loginData)
         {
-            AuthenticationStatus authenticationStatus;
+            AccountData accountData;
 
             var validationResult = loginDataValidator.Validate(loginData);
             if (validationResult.IsValid)
             {
                 var email = loginData.Email;
                 var password = loginData.Password;
-
-                authenticationStatus =
-                    loginService.Authenticate(email, password);
+                var account = loginService.Authenticate(email, password);
+                if (account != null)
+                {
+                    accountData = new AccountData()
+                    {
+                        Id = account.Id
+                    };
+                }
+                else
+                {
+                    return NotFound();
+                }
             }
             else
             {
@@ -56,7 +67,7 @@ namespace Authenticator.API.Controllers
                 return BadRequest(errorData);
             }
 
-            return Ok(authenticationStatus);
+            return Ok(accountData);
         }
 
         [HttpPost]
@@ -65,22 +76,28 @@ namespace Authenticator.API.Controllers
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult<AccountCreationStatus> Register(RegistrationData registrationData)
+        public ActionResult Register(RegistrationData registrationData)
         {
-            AccountCreationStatus accountCreationStatus;
-
             var validationResult =
                 registrationDataValidator.Validate(registrationData);
             if (validationResult.IsValid)
             {
-                var account = AccountFactory.CreateAccount(
-                    registrationData.Email,
-                    registrationData.Password,
-                    registrationData.FirstName,
-                    registrationData.LastName);
+                var email = registrationData.Email;
+                var password = registrationData.Password;
+                var firstName = registrationData.FirstName;
+                var lastName = registrationData.LastName;
 
-                accountCreationStatus =
+                if (registrationService.VerifyEmail(email))
+                {
+                    var account =
+                        Account.Create(email, password, firstName, lastName);
+
                     registrationService.CreateAccount(account);
+                }
+                else
+                {
+                    return BadRequest(ErrorMessages.EmailAlreadyExists);
+                }
             }
             else
             {
@@ -92,7 +109,7 @@ namespace Authenticator.API.Controllers
                 return BadRequest(errorData);
             }
 
-            return Ok(accountCreationStatus);
+            return Ok();
         }
     }
 }
