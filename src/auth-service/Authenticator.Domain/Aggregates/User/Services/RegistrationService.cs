@@ -9,19 +9,14 @@
             this.accountRepository = accountRepository;
         }
 
-        public AccountCreationStatus CreateAccount(Account account)
+        public void CreateAccount(Account account)
         {
-            var email = accountRepository.Read(x => x.Email == account.Email);
-            if (email != null)
-            {
-                return AccountCreationStatus.EmailExists;
-            }
-            else
-            {
-                accountRepository.Create(account);
+            accountRepository.Create(account);
+        }
 
-                return AccountCreationStatus.Succeed;
-            }
+        public bool VerifyEmail(string email)
+        {
+            return accountRepository.Read(x => x.Email == email) == null;
         }
     }
 }

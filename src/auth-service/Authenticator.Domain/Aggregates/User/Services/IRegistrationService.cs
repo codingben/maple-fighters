@@ -2,6 +2,8 @@
 {
     public interface IRegistrationService
     {
-        AccountCreationStatus CreateAccount(Account account);
+        void CreateAccount(Account account);
+
+        bool VerifyEmail(string email);
     }
 }
