@@ -11,7 +11,7 @@ namespace Authenticator.UnitTests.Domain.User.Services
     public class RegistrationServiceTests
     {
         [Fact]
-        public void CheckIfEmailExists_Returns_Exists()
+        public void CheckIfEmailExists_Returns_EmailExists()
         {
             // Arrange
             var account = Account.Create(
@@ -35,7 +35,7 @@ namespace Authenticator.UnitTests.Domain.User.Services
         }
 
         [Fact]
-        public void CreateAccount_Returns_Succeed()
+        public void CreateAccount_Create_Received()
         {
             // Arrange
             var account = Account.Create(
@@ -51,7 +51,7 @@ namespace Authenticator.UnitTests.Domain.User.Services
             registrationService.CreateAccount(account);
 
             // Assert
-            accountRepository.Received();
+            accountRepository.Received().Create(Arg.Any<Account>());
         }
     }
 }
