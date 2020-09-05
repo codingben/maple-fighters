@@ -9,21 +9,19 @@
             this.accountRepository = accountRepository;
         }
 
-        public AuthenticationStatus Authenticate(string email, string password)
+        public Account Authenticate(string email, string password)
         {
-            var authenticationStatus = AuthenticationStatus.NotFound;
-
             var account =
                 accountRepository.Read(x => x.Email == email);
             if (account != null)
             {
-                authenticationStatus =
-                    account.Password == password
-                        ? AuthenticationStatus.Authenticated
-                        : AuthenticationStatus.WrongPassword;
+                if (account.Password == password)
+                {
+                    return account;
+                }
             }
 
-            return authenticationStatus;
+            return null;
         }
     }
 }

@@ -2,6 +2,6 @@
 {
     public interface ILoginService
     {
-        AuthenticationStatus Authenticate(string email, string password);
+        Account Authenticate(string email, string password);
     }
 }
