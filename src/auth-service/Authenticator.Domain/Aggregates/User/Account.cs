@@ -31,5 +31,14 @@ namespace Authenticator.Domain.Aggregates.User
             FirstName = firstName ?? throw new ArgumentNullException(nameof(firstName));
             LastName = lastName ?? throw new ArgumentNullException(nameof(lastName));
         }
+
+        public static Account Create(
+            string email,
+            string password,
+            string firstName,
+            string lastName)
+        {
+            return new Account(email, password, firstName, lastName);
+        }
     }
 }
