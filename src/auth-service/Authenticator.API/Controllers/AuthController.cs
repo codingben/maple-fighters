@@ -87,16 +87,16 @@ namespace Authenticator.API.Controllers
                 var firstName = registrationData.FirstName;
                 var lastName = registrationData.LastName;
 
-                if (registrationService.VerifyEmail(email))
+                if (registrationService.CheckIfEmailExists(email))
+                {
+                    return BadRequest(ErrorMessages.EmailAlreadyExists);
+                }
+                else
                 {
                     var account =
                         Account.Create(email, password, firstName, lastName);
 
                     registrationService.CreateAccount(account);
-                }
-                else
-                {
-                    return BadRequest(ErrorMessages.EmailAlreadyExists);
                 }
             }
             else
