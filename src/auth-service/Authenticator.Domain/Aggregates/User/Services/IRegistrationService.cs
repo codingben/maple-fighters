@@ -4,6 +4,6 @@
     {
         void CreateAccount(Account account);
 
-        bool VerifyEmail(string email);
+        bool CheckIfEmailExists(string email);
     }
 }

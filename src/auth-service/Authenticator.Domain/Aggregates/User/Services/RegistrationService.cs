@@ -14,9 +14,9 @@
             accountRepository.Create(account);
         }
 
-        public bool VerifyEmail(string email)
+        public bool CheckIfEmailExists(string email)
         {
-            return accountRepository.Read(x => x.Email == email) == null;
+            return accountRepository.Read(x => x.Email == email) != null;
         }
     }
 }
