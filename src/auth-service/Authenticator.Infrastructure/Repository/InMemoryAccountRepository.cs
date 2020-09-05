@@ -20,6 +20,11 @@ namespace Authenticator.Infrastructure.Repository
         {
             lock (locker)
             {
+                if (entity.Id == null)
+                {
+                    entity.Id = Guid.NewGuid().ToString();
+                }
+
                 collection.Add(entity);
             }
         }
