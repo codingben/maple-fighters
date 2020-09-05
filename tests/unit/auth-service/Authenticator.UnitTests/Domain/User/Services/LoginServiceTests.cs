@@ -26,7 +26,7 @@ namespace Authenticator.UnitTests.Domain.User.Services
         }
 
         [Fact]
-        public void Authenticate_Returns_Authenticated()
+        public void Authenticate_Returns_Account()
         {
             // Arrange
             var dummyAccount = Account.Create(
@@ -49,7 +49,7 @@ namespace Authenticator.UnitTests.Domain.User.Services
         }
 
         [Fact]
-        public void Authenticate_Returns_WrongPassword()
+        public void Authenticate_Returns_No_Account()
         {
             // Arrange
             var dummyAccount = Account.Create(
