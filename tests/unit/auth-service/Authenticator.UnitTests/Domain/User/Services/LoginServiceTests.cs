@@ -18,20 +18,18 @@ namespace Authenticator.UnitTests.Domain.User.Services
             var loginService = new LoginService(accountRepository);
 
             // Act
-            var authenticationStatus =
+            var account =
                 loginService.Authenticate("benzuk@gmail.com", "benzuk");
 
             // Assert
-            authenticationStatus
-                .Equals(AuthenticationStatus.NotFound)
-                .ShouldBeTrue();
+            account.ShouldBeNull();
         }
 
         [Fact]
         public void Authenticate_Returns_Authenticated()
         {
             // Arrange
-            var account = AccountFactory.CreateAccount(
+            var dummyAccount = Account.Create(
                 "benzuk@gmail.com",
                 "benzuk",
                 "Ben",
@@ -39,24 +37,22 @@ namespace Authenticator.UnitTests.Domain.User.Services
             var accountRepository = Substitute.For<IAccountRepository>();
             accountRepository
                 .Read(Arg.Any<Expression<Func<Account, bool>>>())
-                .Returns(account);
+                .Returns(dummyAccount);
             var loginService = new LoginService(accountRepository);
 
             // Act
-            var authenticationStatus =
+            var account =
                 loginService.Authenticate("benzuk@gmail.com", "benzuk");
 
             // Assert
-            authenticationStatus
-                .Equals(AuthenticationStatus.Authenticated)
-                .ShouldBeTrue();
+            account.ShouldNotBeNull();
         }
 
         [Fact]
         public void Authenticate_Returns_WrongPassword()
         {
             // Arrange
-            var account = AccountFactory.CreateAccount(
+            var dummyAccount = Account.Create(
                 "benzuk@gmail.com",
                 "benzuk",
                 "Ben",
@@ -64,17 +60,15 @@ namespace Authenticator.UnitTests.Domain.User.Services
             var accountRepository = Substitute.For<IAccountRepository>();
             accountRepository
                 .Read(Arg.Any<Expression<Func<Account, bool>>>())
-                .Returns(account);
+                .Returns(dummyAccount);
             var loginService = new LoginService(accountRepository);
 
             // Act
-            var authenticationStatus =
+            var account =
                 loginService.Authenticate("benzuk@gmail.com", "ben");
 
             // Assert
-            authenticationStatus
-                .Equals(AuthenticationStatus.WrongPassword)
-                .ShouldBeTrue();
+            account.ShouldBeNull();
         }
     }
 }

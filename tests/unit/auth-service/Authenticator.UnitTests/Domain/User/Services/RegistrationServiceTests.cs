@@ -11,10 +11,10 @@ namespace Authenticator.UnitTests.Domain.User.Services
     public class RegistrationServiceTests
     {
         [Fact]
-        public void CreateAccount_Returns_EmailExists()
+        public void CheckIfEmailExists_Returns_Exists()
         {
             // Arrange
-            var account = AccountFactory.CreateAccount(
+            var account = Account.Create(
                 "benzuk@gmail.com",
                 "benzuk",
                 "Ben",
@@ -23,38 +23,35 @@ namespace Authenticator.UnitTests.Domain.User.Services
             accountRepository
                 .Read(Arg.Any<Expression<Func<Account, bool>>>())
                 .Returns(account);
-            var registrationService = new RegistrationService(accountRepository);
+            var registrationService =
+                new RegistrationService(accountRepository);
 
             // Act
-            var accountCreationStatus =
-                registrationService.CreateAccount(account);
+            var result =
+                registrationService.CheckIfEmailExists("benzuk@gmail.com");
 
             // Assert
-            accountCreationStatus
-                .Equals(AccountCreationStatus.EmailExists)
-                .ShouldBeTrue();
+            result.ShouldBeTrue();
         }
 
         [Fact]
         public void CreateAccount_Returns_Succeed()
         {
             // Arrange
-            var account = AccountFactory.CreateAccount(
+            var account = Account.Create(
                 "benzuk@gmail.com",
                 "benzuk",
                 "Ben",
                 "Ben Ukhanov");
             var accountRepository = Substitute.For<IAccountRepository>();
-            var registrationService = new RegistrationService(accountRepository);
+            var registrationService =
+                new RegistrationService(accountRepository);
 
             // Act
-            var accountCreationStatus =
-                registrationService.CreateAccount(account);
+            registrationService.CreateAccount(account);
 
             // Assert
-            accountCreationStatus
-                .Equals(AccountCreationStatus.Succeed)
-                .ShouldBeTrue();
+            accountRepository.Received();
         }
     }
 }

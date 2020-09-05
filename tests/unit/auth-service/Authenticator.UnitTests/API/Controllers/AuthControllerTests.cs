@@ -2,6 +2,7 @@
 using Authenticator.API.Datas;
 using Authenticator.Domain.Aggregates.User;
 using Authenticator.Domain.Aggregates.User.Services;
+using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
 using Shouldly;
 using Xunit;
@@ -27,42 +28,31 @@ namespace Authenticator.UnitTests.API.Controllers
             };
 
             // Act
-            var authenticationStatus = authController.Login(loginData);
+            var actionResult = authController.Login(loginData);
 
             // Assert
-            authenticationStatus
-                .Equals(AuthenticationStatus.Failed)
-                .ShouldBeTrue();
+            actionResult.Value.ShouldBeNull();
         }
 
         [Fact]
-        public void Login_Returns_Authenticated()
+        public void Login_Authenticate_Received()
         {
             // Arrange
-            const string Email = "benzuk@gmail.com";
-            const string Password = "benzuk";
-
             var registrationService = Substitute.For<IRegistrationService>();
             var loginService = Substitute.For<ILoginService>();
-            loginService
-                .Authenticate(Email, Password)
-                .Returns(AuthenticationStatus.Authenticated);
-
             var authController =
                 new AuthController(loginService, registrationService);
             var loginData = new LoginData()
             {
-                Email = Email,
-                Password = Password
+                Email = "benzuk@gmail.com",
+                Password = "benzuk"
             };
 
             // Act
-            var authenticationStatus = authController.Login(loginData);
+            authController.Login(loginData);
 
             // Assert
-            authenticationStatus
-                .Equals(AuthenticationStatus.Authenticated)
-                .ShouldBeTrue();
+            loginService.Received().Authenticate(Arg.Any<string>(), Arg.Any<string>());
         }
 
         [Theory]
@@ -90,48 +80,35 @@ namespace Authenticator.UnitTests.API.Controllers
             };
 
             // Act
-            var authenticationStatus =
-                authController.Register(registrationData);
+            var actionResult = authController.Register(registrationData);
 
             // Assert
-            authenticationStatus
-                .Equals(AccountCreationStatus.Failed)
-                .ShouldBeTrue();
+            var isBadRequest = actionResult is BadRequestObjectResult;
+
+            isBadRequest.ShouldBeTrue();
         }
 
         [Fact]
         public void Register_Returns_Succeed()
         {
             // Arrange
-            const string Email = "benzuk@gmail.com";
-            const string Password = "benzuk";
-            const string FirstName = "Ben";
-            const string LastName = "Ukhanov";
-
             var loginService = Substitute.For<ILoginService>();
             var registrationService = Substitute.For<IRegistrationService>();
-            registrationService
-                .CreateAccount(Arg.Any<Account>())
-                .Returns(AccountCreationStatus.Succeed);
-
             var authController =
                 new AuthController(loginService, registrationService);
             var registrationData = new RegistrationData()
             {
-                Email = Email,
-                Password = Password,
-                FirstName = FirstName,
-                LastName = LastName
+                Email = "benzuk@gmail.com",
+                Password = "benzuk",
+                FirstName = "ben",
+                LastName = "ukhanov"
             };
 
             // Act
-            var authenticationStatus =
-                authController.Register(registrationData);
+            authController.Register(registrationData);
 
             // Assert
-            authenticationStatus
-                .Equals(AccountCreationStatus.Succeed)
-                .ShouldBeTrue();
+            registrationService.Received().CreateAccount(Arg.Any<Account>());
         }
     }
 }
