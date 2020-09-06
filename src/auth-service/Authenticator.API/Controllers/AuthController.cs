@@ -54,7 +54,12 @@ namespace Authenticator.API.Controllers
                 }
                 else
                 {
-                    return NotFound();
+                    var errorData = new ErrorData()
+                    {
+                        ErrorMessages = new string[] { ErrorMessages.AccountNotFound }
+                    };
+
+                    return NotFound(errorData);
                 }
             }
             else
@@ -89,7 +94,12 @@ namespace Authenticator.API.Controllers
 
                 if (registrationService.CheckIfEmailExists(email))
                 {
-                    return BadRequest(ErrorMessages.EmailAlreadyExists);
+                    var errorData = new ErrorData()
+                    {
+                        ErrorMessages = new string[] { ErrorMessages.EmailAlreadyExists }
+                    };
+
+                    return BadRequest(errorData);
                 }
                 else
                 {
