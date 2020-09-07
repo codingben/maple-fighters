@@ -1,6 +1,6 @@
 use actix_web::{App, HttpServer};
 use dotenv::dotenv;
-use std::env;
+use std::{env, io::Result};
 
 mod database;
 mod endpoints;
@@ -12,13 +12,12 @@ async fn main() -> Result<()> {
 
     let address = env::var("IP_ADDRESS").expect("IP_ADDRESS not found");
     let data_path = env::var("DATABASE_PATH").expect("DATABASE_PATH not found");
-    let address_parsed = address.parse()?;
     // TODO: Use: database::load(&data_path)
 
     println!("Server is running {}", address);
 
     HttpServer::new(move || App::new())
-        .bind(address_parsed)?
+        .bind(address)?
         .run()
         .await
 }
