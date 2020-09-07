@@ -1,7 +1,8 @@
+use super::models::Game;
 use serde_json;
 use std::{fs::File, path::Path};
 
-pub fn load(path: &str) -> Vec<super::game_provider::Game> {
+pub fn load(path: &str) -> Vec<Game> {
     let json_file_path = Path::new(path);
     let json_file = File::open(json_file_path).expect("File not found");
     let json_data: Vec<super::models::Game> =
@@ -9,7 +10,7 @@ pub fn load(path: &str) -> Vec<super::game_provider::Game> {
 
     json_data
         .into_iter()
-        .map(|game| super::game_provider::Game {
+        .map(|game| Game {
             name: game.name,
             ip: game.ip,
             port: game.port,
