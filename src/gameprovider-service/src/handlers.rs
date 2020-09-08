@@ -4,6 +4,6 @@ use actix_web::HttpResponse;
 use std::sync::Arc;
 
 pub fn get_game_servers(data: Data<Arc<GameCollection>>) -> HttpResponse {
-    let data = data.clone();
-    HttpResponse::Ok().json(&data.game_collection)
+    let game_collection = data.clone();
+    HttpResponse::Ok().json(&game_collection.collection)
 }

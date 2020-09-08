@@ -19,7 +19,7 @@ async fn main() -> Result<()> {
     HttpServer::new(move || {
         App::new()
             .data(Arc::new(GameCollection {
-                game_collection: database::load(&data_path),
+                collection: database::load(&data_path),
             }))
             .route("/games", web::get().to(handlers::get_game_servers))
     })
