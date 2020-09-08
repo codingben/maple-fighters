@@ -3,7 +3,7 @@ use dotenv::dotenv;
 use std::{env, io::Result};
 
 mod database;
-mod endpoints;
+mod handlers;
 mod models;
 
 #[actix_rt::main]
