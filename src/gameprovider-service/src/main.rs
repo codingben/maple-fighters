@@ -1,6 +1,7 @@
-use actix_web::{App, HttpServer};
+use crate::models::GameCollection;
+use actix_web::{web, App, HttpServer};
 use dotenv::dotenv;
-use std::{env, io::Result};
+use std::{env, io::Result, sync::Arc};
 
 mod database;
 mod handlers;
@@ -12,12 +13,17 @@ async fn main() -> Result<()> {
 
     let address = env::var("IP_ADDRESS").expect("IP_ADDRESS not found");
     let data_path = env::var("DATABASE_PATH").expect("DATABASE_PATH not found");
-    // TODO: Use: database::load(&data_path)
 
     println!("Server is running {}", address);
 
-    HttpServer::new(move || App::new())
-        .bind(address)?
-        .run()
-        .await
+    HttpServer::new(move || {
+        App::new()
+            .data(Arc::new(GameCollection {
+                game_collection: database::load(&data_path),
+            }))
+            .route("/games", web::get().to(handlers::get_game_servers))
+    })
+    .bind(address)?
+    .run()
+    .await
 }
