@@ -6,6 +6,7 @@ use diesel::{pg::PgConnection, r2d2::ConnectionManager, r2d2::Pool};
 use dotenv::dotenv;
 use std::env;
 
+mod database;
 mod models;
 mod schema;
 
