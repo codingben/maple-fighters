@@ -1,7 +1,9 @@
 use super::models::*;
 use super::schema::characters;
 use super::schema::characters::dsl::characters as all_characters;
-use diesel::{pg::PgConnection, prelude::*};
+use diesel::{pg::PgConnection, prelude::*, r2d2, r2d2::ConnectionManager};
+
+pub type Pool = r2d2::Pool<ConnectionManager<PgConnection>>;
 
 pub fn insert(character: NewCharacter, conn: &PgConnection) -> bool {
     diesel::insert_into(characters::table)
