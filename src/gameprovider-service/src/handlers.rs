@@ -1,4 +1,4 @@
-use crate::models::GameCollection;
+use super::models::GameCollection;
 use actix_web::web::Data;
 use actix_web::HttpResponse;
 use std::sync::Arc;

@@ -1,6 +1,6 @@
-use crate::models::GameCollection;
 use actix_web::{web, App, HttpServer};
 use dotenv::dotenv;
+use models::GameCollection;
 use std::{env, io::Result, sync::Arc};
 
 mod database;
