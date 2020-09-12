@@ -5,5 +5,7 @@ authors = ["Ben Ukhanov"]
 edition = "2018"
 
 [dependencies]
+actix-rt = "1.0.0"
+actix-web = "2.0.0"
 diesel = { version = "1.4.4", features = ["postgres", "r2d2"] }
 dotenv = "0.15"
