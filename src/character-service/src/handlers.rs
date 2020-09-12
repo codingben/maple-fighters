@@ -1,8 +1,15 @@
-use models;
-use web;
+use crate::database::Pool;
+use crate::models::NewCharacter;
+use actix_web::{web, web::Json, web::Path, HttpResponse};
 
-pub fn create_character(db: web<Pool>, character: Json<NewCharacter>) -> HttpResponse {}
+pub fn create_new(db: web::Data<Pool>, character: Json<NewCharacter>) -> HttpResponse {
+    HttpResponse::Ok().finish()
+}
 
-pub fn remove_character(db: web<Pool>, id: Path<i32>) -> HttpResponse {}
+pub fn remove_by_id(db: web::Data<Pool>, id: Path<i32>) -> HttpResponse {
+    HttpResponse::Ok().finish()
+}
 
-pub fn get_all_characters(db: web<Pool>) -> HttpResponse {}
+pub fn get_all(db: web::Data<Pool>) -> HttpResponse {
+    HttpResponse::Ok().finish()
+}
