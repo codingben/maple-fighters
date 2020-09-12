@@ -2,15 +2,18 @@
 extern crate diesel;
 extern crate dotenv;
 
+use actix_web::App;
+use actix_web::HttpServer;
 use diesel::{pg::PgConnection, r2d2::ConnectionManager, r2d2::Pool};
 use dotenv::dotenv;
-use std::env;
+use std::{env, io::Result};
 
 mod database;
 mod models;
 mod schema;
 
-fn main() {
+#[actix_rt::main]
+async fn main() -> Result<()> {
     dotenv().expect("Could not find .env file");
 
     let address = env::var("IP_ADDRESS").expect("IP_ADDRESS not found");
@@ -21,4 +24,9 @@ fn main() {
         .expect("Failed to create pool");
 
     println!("Server is running {}", address);
+
+    HttpServer::new(move || App::new().data(r2d2_pool.clone()))
+        .bind(address)?
+        .run()
+        .await
 }
