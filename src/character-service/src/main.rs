@@ -2,13 +2,13 @@
 extern crate diesel;
 extern crate dotenv;
 
-use actix_web::App;
-use actix_web::HttpServer;
+use actix_web::{web, App, HttpServer};
 use diesel::{pg::PgConnection, r2d2::ConnectionManager, r2d2::Pool};
 use dotenv::dotenv;
 use std::{env, io::Result};
 
 mod database;
+mod handlers;
 mod models;
 mod schema;
 
@@ -25,8 +25,14 @@ async fn main() -> Result<()> {
 
     println!("Server is running {}", address);
 
-    HttpServer::new(move || App::new().data(r2d2_pool.clone()))
-        .bind(address)?
-        .run()
-        .await
+    HttpServer::new(move || {
+        App::new()
+            .data(r2d2_pool.clone())
+            .route("/characters", web::post().to(handlers::create_new))
+            .route("/characters/{id}", web::delete().to(handlers::remove_by_id))
+            .route("/characters", web::get().to(handlers::get_all))
+    })
+    .bind(address)?
+    .run()
+    .await
 }
