@@ -1,4 +1,4 @@
-use super::schema::characters;
+use crate::schema::characters;
 use serde::{Deserialize, Serialize};
 
 #[derive(Queryable, Serialize, Debug)]
