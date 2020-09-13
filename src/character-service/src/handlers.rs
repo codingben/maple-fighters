@@ -18,7 +18,14 @@ pub fn create_new(db: web::Data<Pool>, character: Json<NewCharacter>) -> HttpRes
 }
 
 pub fn remove_by_id(db: web::Data<Pool>, id: Path<i32>) -> HttpResponse {
-    HttpResponse::Ok().finish()
+    let conn = db.get().unwrap();
+    let character_id = id.into_inner();
+
+    if delete_character(character_id, &conn) {
+        HttpResponse::Ok().finish()
+    } else {
+        HttpResponse::NotFound().json("The character was not found.")
+    }
 }
 
 pub fn get_all(db: web::Data<Pool>) -> HttpResponse {
