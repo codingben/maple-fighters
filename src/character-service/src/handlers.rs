@@ -28,6 +28,10 @@ pub fn remove_by_id(db: web::Data<Pool>, id: Path<i32>) -> HttpResponse {
     }
 }
 
-pub fn get_all(db: web::Data<Pool>) -> HttpResponse {
-    HttpResponse::Ok().finish()
+pub fn get_all(db: web::Data<Pool>, id: Path<i32>) -> HttpResponse {
+    let conn = db.get().unwrap();
+    let user_id = id.into_inner();
+    let characters = get_characters_by_user_id(user_id, &conn);
+
+    HttpResponse::Ok().json(characters)
 }
