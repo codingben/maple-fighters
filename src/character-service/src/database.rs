@@ -29,7 +29,7 @@ pub fn get_character_by_id(id: i32, conn: &PgConnection) -> Vec<Character> {
         .expect(&format!("Error loading character for id {}", id))
 }
 
-pub fn get_character_by_user_id(userid: i32, conn: &PgConnection) -> Vec<Character> {
+pub fn get_characters_by_user_id(userid: i32, conn: &PgConnection) -> Vec<Character> {
     all_characters
         .filter(characters::userid.eq(userid))
         .load::<Character>(conn)
@@ -37,7 +37,7 @@ pub fn get_character_by_user_id(userid: i32, conn: &PgConnection) -> Vec<Charact
 }
 
 pub fn is_character_name_used<'a>(userid: i32, name: &'a str, conn: &PgConnection) -> bool {
-    for character in get_character_by_user_id(userid, &conn) {
+    for character in get_characters_by_user_id(userid, &conn) {
         if character.charactername == name {
             return true;
         }
