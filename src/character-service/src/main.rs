@@ -30,7 +30,7 @@ async fn main() -> Result<()> {
             .data(r2d2_pool.clone())
             .route("/characters", web::post().to(handlers::create_new))
             .route("/characters/{id}", web::delete().to(handlers::remove_by_id))
-            .route("/characters", web::get().to(handlers::get_all))
+            .route("/characters/{id}", web::get().to(handlers::get_all))
     })
     .bind(address)?
     .run()
