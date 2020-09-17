@@ -1,7 +1,7 @@
 use actix_web::{web, App, HttpServer};
 use dotenv::dotenv;
 use models::GameCollection;
-use std::{env, io::Result, sync::Arc};
+use std::{env::var, io::Result, sync::Arc};
 
 mod database;
 mod handlers;
@@ -11,8 +11,8 @@ mod models;
 async fn main() -> Result<()> {
     dotenv().expect("Could not find .env file");
 
-    let address = env::var("IP_ADDRESS").expect("IP_ADDRESS not found");
-    let data_path = env::var("DATABASE_PATH").expect("DATABASE_PATH not found");
+    let address = var("IP_ADDRESS").expect("IP_ADDRESS not found");
+    let data_path = var("DATABASE_PATH").expect("DATABASE_PATH not found");
 
     println!("Server is running {}", address);
 
