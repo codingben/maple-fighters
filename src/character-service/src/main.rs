@@ -5,7 +5,7 @@ extern crate dotenv;
 use actix_web::{web, App, HttpServer};
 use diesel::{pg::PgConnection, r2d2::ConnectionManager, r2d2::Pool};
 use dotenv::dotenv;
-use std::{env, io::Result};
+use std::{env::var, io::Result};
 
 mod database;
 mod handlers;
@@ -16,8 +16,8 @@ mod schema;
 async fn main() -> Result<()> {
     dotenv().expect("Could not find .env file");
 
-    let address = env::var("IP_ADDRESS").expect("IP_ADDRESS not found");
-    let database_url = env::var("DATABASE_URL").expect("DATABASE_URL not found");
+    let address = var("IP_ADDRESS").expect("IP_ADDRESS not found");
+    let database_url = var("DATABASE_URL").expect("DATABASE_URL not found");
     let manager = ConnectionManager::<PgConnection>::new(database_url);
     let r2d2_pool = Pool::builder()
         .build(manager)
