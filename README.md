@@ -1,4 +1,8 @@
 # Maple Fighters
+This is a small game similar to MapleStory. 
+
+- Click [here](https://benzuk.github.io/) to play.
+
 The server-side will be able to accommodate many players who can play together in the game world.
 
 ## Technology
