@@ -1,7 +1,7 @@
 use crate::models::*;
 use crate::schema::characters;
 use crate::schema::characters::dsl::characters as all_characters;
-use diesel::{pg::PgConnection, prelude::*, r2d2, r2d2::ConnectionManager};
+use diesel::{pg::PgConnection, prelude::*, r2d2, r2d2::ConnectionManager, result::Error};
 
 pub type Pool = r2d2::Pool<ConnectionManager<PgConnection>>;
 
@@ -29,11 +29,15 @@ pub fn get_character_by_id(id: i32, conn: &PgConnection) -> Vec<Character> {
         .expect(&format!("Error loading character for id {}", id))
 }
 
-pub fn get_characters_by_user_id(userid: i32, conn: &PgConnection) -> Vec<Character> {
-    all_characters
+pub fn get_characters_by_user_id(
+    userid: i32,
+    conn: &PgConnection,
+) -> Result<Vec<Character>, Error> {
+    let result = all_characters
         .filter(characters::userid.eq(userid))
-        .load::<Character>(conn)
-        .expect(&format!("Error loading characters for user id {}", userid))
+        .load::<Character>(conn)?;
+
+    Ok(result)
 }
 
 pub fn is_character_name_used<'a>(userid: i32, name: &'a str, conn: &PgConnection) -> bool {
