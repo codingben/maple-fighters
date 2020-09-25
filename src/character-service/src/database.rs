@@ -40,12 +40,18 @@ pub fn get_characters_by_user_id(
     Ok(result)
 }
 
-pub fn is_character_name_used<'a>(userid: i32, name: &'a str, conn: &PgConnection) -> bool {
-    for character in get_characters_by_user_id(userid, &conn) {
+pub fn is_character_name_used<'a>(
+    userid: i32,
+    name: &'a str,
+    conn: &PgConnection,
+) -> Result<bool, Error> {
+    let result = get_characters_by_user_id(userid, &conn)?;
+
+    for character in result {
         if character.charactername == name {
-            return true;
+            return Ok(true);
         }
     }
 
-    return false;
+    Ok(false)
 }
