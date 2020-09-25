@@ -1,6 +1,6 @@
 use crate::database::*;
 use crate::models::NewCharacter;
-use actix_web::{web, web::Json, web::Path, HttpResponse};
+use actix_web::{web, web::Json, web::Path, Error, HttpResponse};
 
 pub fn create_new(db: web::Data<Pool>, character: Json<NewCharacter>) -> HttpResponse {
     let conn = db.get().unwrap();
@@ -28,10 +28,11 @@ pub fn remove_by_id(db: web::Data<Pool>, id: Path<i32>) -> HttpResponse {
     }
 }
 
-pub fn get_all(db: web::Data<Pool>, id: Path<i32>) -> HttpResponse {
-    let conn = db.get().unwrap();
-    let user_id = id.into_inner();
-    let characters = get_characters_by_user_id(user_id, &conn);
+pub async fn get_all(db: web::Data<Pool>, id: Path<i32>) -> Result<HttpResponse, Error> {
+    let characters =
+        web::block(move || get_characters_by_user_id(id.into_inner(), &db.get().unwrap()))
+            .await
+            .map_err(|e| HttpResponse::InternalServerError().finish())?;
 
-    HttpResponse::Ok().json(characters)
+    Ok(HttpResponse::Ok().json(&characters))
 }
