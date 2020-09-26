@@ -17,14 +17,17 @@ pub fn create_new(db: web::Data<Pool>, character: Json<NewCharacter>) -> HttpRes
     }
 }
 
-pub fn remove_by_id(db: web::Data<Pool>, id: Path<i32>) -> HttpResponse {
+pub async fn remove_by_id(db: web::Data<Pool>, id: Path<i32>) -> Result<HttpResponse, Error> {
     let conn = db.get().unwrap();
     let character_id = id.into_inner();
+    let is_deleted = web::block(move || delete_character(character_id, &conn))
+        .await
+        .map_err(|e| HttpResponse::InternalServerError().finish())?;
 
-    if delete_character(character_id, &conn) {
-        HttpResponse::Ok().finish()
+    if is_deleted {
+        Ok(HttpResponse::Ok().finish())
     } else {
-        HttpResponse::NotFound().json("The character was not found.")
+        Ok(HttpResponse::NotFound().json("The character was not found."))
     }
 }
 
