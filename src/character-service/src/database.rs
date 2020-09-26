@@ -5,28 +5,31 @@ use diesel::{pg::PgConnection, prelude::*, r2d2, r2d2::ConnectionManager, result
 
 pub type Pool = r2d2::Pool<ConnectionManager<PgConnection>>;
 
-pub fn insert_character(character: NewCharacter, conn: &PgConnection) -> bool {
-    diesel::insert_into(characters::table)
+pub fn insert_character(character: NewCharacter, conn: &PgConnection) -> Result<bool, Error> {
+    let is_ok = diesel::insert_into(characters::table)
         .values(&character)
         .execute(conn)
-        .is_ok()
+        .is_ok();
+
+    Ok(is_ok)
 }
 
-pub fn delete_character(id: i32, conn: &PgConnection) -> bool {
-    if get_character_by_id(id, conn).is_empty() {
-        return false;
+pub fn delete_character(id: i32, conn: &PgConnection) -> Result<bool, Error> {
+    if get_character_by_id(id, conn)?.is_empty() {
+        return Ok(false);
     };
 
-    diesel::delete(all_characters.find(id))
+    let is_ok = diesel::delete(all_characters.find(id))
         .execute(conn)
-        .is_ok()
+        .is_ok();
+
+    Ok(is_ok)
 }
 
-pub fn get_character_by_id(id: i32, conn: &PgConnection) -> Vec<Character> {
-    all_characters
-        .find(id)
-        .load::<Character>(conn)
-        .expect(&format!("Error loading character for id {}", id))
+pub fn get_character_by_id(id: i32, conn: &PgConnection) -> Result<Vec<Character>, Error> {
+    let result = all_characters.find(id).load::<Character>(conn)?;
+
+    Ok(result)
 }
 
 pub fn get_characters_by_user_id(
