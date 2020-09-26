@@ -10,7 +10,7 @@ pub async fn create_new(
     let new_character = character.into_inner();
     let is_created = web::block(move || insert_character(new_character, &conn))
         .await
-        .map_err(|e| HttpResponse::InternalServerError().finish())?;
+        .map_err(|_| HttpResponse::InternalServerError().finish())?;
 
     if is_created {
         Ok(HttpResponse::Created().finish())
@@ -24,7 +24,7 @@ pub async fn remove_by_id(db: web::Data<Pool>, id: Path<i32>) -> Result<HttpResp
     let character_id = id.into_inner();
     let is_deleted = web::block(move || delete_character(character_id, &conn))
         .await
-        .map_err(|e| HttpResponse::InternalServerError().finish())?;
+        .map_err(|_| HttpResponse::InternalServerError().finish())?;
 
     if is_deleted {
         Ok(HttpResponse::Ok().finish())
@@ -38,7 +38,7 @@ pub async fn get_all(db: web::Data<Pool>, id: Path<i32>) -> Result<HttpResponse,
     let conn = db.get().unwrap();
     let characters = web::block(move || get_characters_by_user_id(user_id, &conn))
         .await
-        .map_err(|e| HttpResponse::InternalServerError().finish())?;
+        .map_err(|_| HttpResponse::InternalServerError().finish())?;
 
     Ok(HttpResponse::Ok().json(&characters))
 }
