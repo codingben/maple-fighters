@@ -29,10 +29,14 @@ pub fn remove_by_id(db: web::Data<Pool>, id: Path<i32>) -> HttpResponse {
 }
 
 pub async fn get_all(db: web::Data<Pool>, id: Path<i32>) -> Result<HttpResponse, Error> {
-    let characters =
-        web::block(move || get_characters_by_user_id(id.into_inner(), &db.get().unwrap()))
-            .await
-            .map_err(|e| HttpResponse::InternalServerError().finish())?;
+    let characters = web::block(move || {
+        let user_id = id.into_inner();
+        let conn = db.get().unwrap();
+
+        get_characters_by_user_id(user_id, &conn)
+    })
+    .await
+    .map_err(|e| HttpResponse::InternalServerError().finish())?;
 
     Ok(HttpResponse::Ok().json(&characters))
 }
