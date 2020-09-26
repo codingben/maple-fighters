@@ -8,7 +8,7 @@ pub async fn create_new(
 ) -> Result<HttpResponse, Error> {
     let conn = db.get().unwrap();
     let new_character = character.into_inner();
-    let is_created = web::block(move || insert_character(new_character, &conn))
+    let is_created = web::block(move || insert(new_character, &conn))
         .await
         .map_err(|_| HttpResponse::InternalServerError().finish())?;
 
@@ -22,7 +22,7 @@ pub async fn create_new(
 pub async fn remove_by_id(db: web::Data<Pool>, id: Path<i32>) -> Result<HttpResponse, Error> {
     let conn = db.get().unwrap();
     let character_id = id.into_inner();
-    let is_deleted = web::block(move || delete_character(character_id, &conn))
+    let is_deleted = web::block(move || delete(character_id, &conn))
         .await
         .map_err(|_| HttpResponse::InternalServerError().finish())?;
 
@@ -36,7 +36,7 @@ pub async fn remove_by_id(db: web::Data<Pool>, id: Path<i32>) -> Result<HttpResp
 pub async fn get_all(db: web::Data<Pool>, id: Path<i32>) -> Result<HttpResponse, Error> {
     let user_id = id.into_inner();
     let conn = db.get().unwrap();
-    let characters = web::block(move || get_characters_by_user_id(user_id, &conn))
+    let characters = web::block(move || get_all_by_user_id(user_id, &conn))
         .await
         .map_err(|_| HttpResponse::InternalServerError().finish())?;
 
