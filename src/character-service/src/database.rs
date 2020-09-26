@@ -6,6 +6,10 @@ use diesel::{pg::PgConnection, prelude::*, r2d2, r2d2::ConnectionManager, result
 pub type Pool = r2d2::Pool<ConnectionManager<PgConnection>>;
 
 pub fn insert_character(character: NewCharacter, conn: &PgConnection) -> Result<bool, Error> {
+    if is_character_name_used(character.userid, &character.charactername, &conn)? {
+        return Ok(false);
+    }
+
     let is_ok = diesel::insert_into(characters::table)
         .values(&character)
         .execute(conn)
