@@ -31,20 +31,16 @@ pub fn delete_character(id: i32, conn: &PgConnection) -> Result<bool, Error> {
 }
 
 pub fn get_character_by_id(id: i32, conn: &PgConnection) -> Result<Vec<Character>, Error> {
-    let result = all_characters.find(id).load::<Character>(conn)?;
-
-    Ok(result)
+    all_characters.find(id).load::<Character>(conn)
 }
 
 pub fn get_characters_by_user_id(
     userid: i32,
     conn: &PgConnection,
 ) -> Result<Vec<Character>, Error> {
-    let result = all_characters
+    all_characters
         .filter(characters::userid.eq(userid))
-        .load::<Character>(conn)?;
-
-    Ok(result)
+        .load::<Character>(conn)
 }
 
 pub fn is_character_name_used<'a>(
@@ -52,9 +48,7 @@ pub fn is_character_name_used<'a>(
     name: &'a str,
     conn: &PgConnection,
 ) -> Result<bool, Error> {
-    let result = get_characters_by_user_id(userid, &conn)?;
-
-    for character in result {
+    for character in get_characters_by_user_id(userid, &conn)? {
         if character.charactername == name {
             return Ok(true);
         }
