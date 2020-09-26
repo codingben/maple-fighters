@@ -2,18 +2,20 @@ use crate::database::*;
 use crate::models::NewCharacter;
 use actix_web::{web, web::Json, web::Path, Error, HttpResponse};
 
-pub fn create_new(db: web::Data<Pool>, character: Json<NewCharacter>) -> HttpResponse {
+pub async fn create_new(
+    db: web::Data<Pool>,
+    character: Json<NewCharacter>,
+) -> Result<HttpResponse, Error> {
     let conn = db.get().unwrap();
     let new_character = character.into_inner();
+    let is_created = web::block(move || insert_character(new_character, &conn))
+        .await
+        .map_err(|e| HttpResponse::InternalServerError().finish())?;
 
-    if is_character_name_used(new_character.userid, &new_character.charactername, &conn) {
-        HttpResponse::BadRequest().json("Please choose a different character name.")
+    if is_created {
+        Ok(HttpResponse::Created().finish())
     } else {
-        if insert_character(new_character, &conn) {
-            HttpResponse::Created().finish()
-        } else {
-            HttpResponse::InternalServerError().finish()
-        }
+        Ok(HttpResponse::BadRequest().json("Please choose a different character name."))
     }
 }
 
