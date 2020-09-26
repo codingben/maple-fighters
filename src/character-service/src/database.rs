@@ -5,8 +5,8 @@ use diesel::{pg::PgConnection, prelude::*, r2d2, r2d2::ConnectionManager, result
 
 pub type Pool = r2d2::Pool<ConnectionManager<PgConnection>>;
 
-pub fn insert_character(character: NewCharacter, conn: &PgConnection) -> Result<bool, Error> {
-    if is_character_name_used(character.userid, &character.charactername, &conn)? {
+pub fn insert(character: NewCharacter, conn: &PgConnection) -> Result<bool, Error> {
+    if is_name_used(character.userid, &character.charactername, &conn)? {
         return Ok(false);
     }
 
@@ -18,8 +18,8 @@ pub fn insert_character(character: NewCharacter, conn: &PgConnection) -> Result<
     Ok(is_ok)
 }
 
-pub fn delete_character(id: i32, conn: &PgConnection) -> Result<bool, Error> {
-    if get_character_by_id(id, conn)?.is_empty() {
+pub fn delete(id: i32, conn: &PgConnection) -> Result<bool, Error> {
+    if get_by_id(id, conn)?.is_empty() {
         return Ok(false);
     };
 
@@ -30,25 +30,18 @@ pub fn delete_character(id: i32, conn: &PgConnection) -> Result<bool, Error> {
     Ok(is_ok)
 }
 
-pub fn get_character_by_id(id: i32, conn: &PgConnection) -> Result<Vec<Character>, Error> {
+pub fn get_by_id(id: i32, conn: &PgConnection) -> Result<Vec<Character>, Error> {
     all_characters.find(id).load::<Character>(conn)
 }
 
-pub fn get_characters_by_user_id(
-    userid: i32,
-    conn: &PgConnection,
-) -> Result<Vec<Character>, Error> {
+pub fn get_all_by_user_id(userid: i32, conn: &PgConnection) -> Result<Vec<Character>, Error> {
     all_characters
         .filter(characters::userid.eq(userid))
         .load::<Character>(conn)
 }
 
-pub fn is_character_name_used<'a>(
-    userid: i32,
-    name: &'a str,
-    conn: &PgConnection,
-) -> Result<bool, Error> {
-    for character in get_characters_by_user_id(userid, &conn)? {
+pub fn is_name_used<'a>(userid: i32, name: &'a str, conn: &PgConnection) -> Result<bool, Error> {
+    for character in get_all_by_user_id(userid, &conn)? {
         if character.charactername == name {
             return Ok(true);
         }
