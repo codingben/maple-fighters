@@ -2,10 +2,7 @@ use crate::database::*;
 use crate::models::NewCharacter;
 use actix_web::{web, web::Json, web::Path, Error, HttpResponse};
 
-pub async fn create_new(
-    db: web::Data<Pool>,
-    data: Json<NewCharacter>,
-) -> Result<HttpResponse, Error> {
+pub async fn create(db: web::Data<Pool>, data: Json<NewCharacter>) -> Result<HttpResponse, Error> {
     let conn = db.get().unwrap();
     let character_data = data.into_inner();
     let is_inserted = web::block(move || insert(character_data, &conn))
