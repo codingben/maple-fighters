@@ -19,7 +19,7 @@ pub async fn create_new(
     }
 }
 
-pub async fn remove_by_id(db: web::Data<Pool>, id: Path<i32>) -> Result<HttpResponse, Error> {
+pub async fn delete_by_id(db: web::Data<Pool>, id: Path<i32>) -> Result<HttpResponse, Error> {
     let conn = db.get().unwrap();
     let character_id = id.into_inner();
     let is_deleted = web::block(move || delete(character_id, &conn))

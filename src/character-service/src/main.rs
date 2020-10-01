@@ -32,7 +32,7 @@ async fn main() -> Result<()> {
             .wrap(Logger::default())
             .data(r2d2_pool.clone())
             .route("/characters", web::post().to(handlers::create_new))
-            .route("/characters/{id}", web::delete().to(handlers::remove_by_id))
+            .route("/characters/{id}", web::delete().to(handlers::delete_by_id))
             .route("/characters/{id}", web::get().to(handlers::get_all))
     })
     .bind(address)?
