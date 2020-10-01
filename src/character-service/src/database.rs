@@ -1,6 +1,6 @@
 use crate::models::*;
 use crate::schema::characters;
-use crate::schema::characters::dsl::characters as all_characters;
+use crate::schema::characters::dsl::characters as db_characters;
 use diesel::{pg::PgConnection, prelude::*, r2d2, r2d2::ConnectionManager, result::Error};
 
 pub type Pool = r2d2::Pool<ConnectionManager<PgConnection>>;
@@ -23,19 +23,17 @@ pub fn delete(id: i32, conn: &PgConnection) -> Result<bool, Error> {
         return Ok(false);
     };
 
-    let is_ok = diesel::delete(all_characters.find(id))
-        .execute(conn)
-        .is_ok();
+    let is_ok = diesel::delete(db_characters.find(id)).execute(conn).is_ok();
 
     Ok(is_ok)
 }
 
 pub fn get_by_id(id: i32, conn: &PgConnection) -> Result<Vec<Character>, Error> {
-    all_characters.find(id).load::<Character>(conn)
+    db_characters.find(id).load::<Character>(conn)
 }
 
 pub fn get_all_by_user_id(userid: i32, conn: &PgConnection) -> Result<Vec<Character>, Error> {
-    all_characters
+    db_characters
         .filter(characters::userid.eq(userid))
         .load::<Character>(conn)
 }
