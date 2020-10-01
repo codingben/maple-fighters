@@ -4,15 +4,15 @@ use actix_web::{web, web::Json, web::Path, Error, HttpResponse};
 
 pub async fn create_new(
     db: web::Data<Pool>,
-    character: Json<NewCharacter>,
+    data: Json<NewCharacter>,
 ) -> Result<HttpResponse, Error> {
     let conn = db.get().unwrap();
-    let new_character = character.into_inner();
-    let is_created = web::block(move || insert(new_character, &conn))
+    let character_data = data.into_inner();
+    let is_inserted = web::block(move || insert(character_data, &conn))
         .await
         .map_err(|_| HttpResponse::InternalServerError().finish())?;
 
-    if is_created {
+    if is_inserted {
         Ok(HttpResponse::Created().finish())
     } else {
         Ok(HttpResponse::BadRequest().json("Please choose a different character name."))
@@ -34,8 +34,8 @@ pub async fn delete_by_id(db: web::Data<Pool>, id: Path<i32>) -> Result<HttpResp
 }
 
 pub async fn get_all(db: web::Data<Pool>, id: Path<i32>) -> Result<HttpResponse, Error> {
-    let user_id = id.into_inner();
     let conn = db.get().unwrap();
+    let user_id = id.into_inner();
     let characters = web::block(move || get_all_by_user_id(user_id, &conn))
         .await
         .map_err(|_| HttpResponse::InternalServerError().finish())?;
