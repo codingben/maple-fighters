@@ -20,7 +20,7 @@ namespace Game.AppStarter
 
         private static IServerApplication GetServerApplication()
         {
-            return new GameApplication("ws://localhost:50060");
+            return new GameApplication("ws://localhost:50051");
         }
     }
 }
