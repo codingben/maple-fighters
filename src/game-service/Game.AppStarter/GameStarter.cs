@@ -7,13 +7,10 @@ namespace Game.AppStarter
     {
         private static IServerApplication serverApplication;
 
-        static GameStarter()
-        {
-            AddProcessExitEventHandler();
-        }
-
         public static void Main()
         {
+            AddProcessExitEventHandler();
+
             StartApplication();
         }
 
