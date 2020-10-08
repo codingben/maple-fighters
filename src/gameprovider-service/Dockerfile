@@ -7,6 +7,10 @@ RUN cargo new --bin ${NAME}
 WORKDIR /usr/src/${NAME}
 COPY ./Cargo.lock ./Cargo.lock
 COPY ./Cargo.toml ./Cargo.toml
+# TODO: Share this data file between containers
+COPY ./data.json ./data.json
+# TODO: Don't copy this
+COPY ./.env ./.env
 RUN cargo build --release
 RUN rm src/*.rs
 
