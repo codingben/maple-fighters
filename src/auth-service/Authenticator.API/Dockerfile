@@ -5,6 +5,8 @@ EXPOSE 50050
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS build
 WORKDIR /src
 COPY ["Authenticator.API.csproj", "./"]
+COPY ["../Authenticator.Domain/Authenticator.Domain.csproj", "./"]
+COPY ["../Authenticator.Infrastructure/Authenticator.Infrastructure.csproj", "./"]
 RUN dotnet restore "Authenticator.API.csproj"
 COPY . .
 WORKDIR "/src/."
