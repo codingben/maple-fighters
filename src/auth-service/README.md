@@ -3,6 +3,7 @@ The authentication service stores user data and validates the user.
 
 ## Docker
 > 💡 You need to install the .NET Core SDK locally.
+
 Follow these instructions to create an image and run a container:
 
 1. Create a single file deployment:
