@@ -10,11 +10,8 @@ Follow these instructions to create an image and run a container:
 ```bash
 make build
 ```
-2. Clean builder:
-```bash
-make clean
 ```
-3. Running in a docker container:
+2. Running in a docker container:
 ```bash
 make run
 ```
