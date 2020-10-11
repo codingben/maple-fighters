@@ -1,13 +1,18 @@
-FROM ekidd/rust-musl-builder:stable AS build
-COPY . ./
+FROM rust:1.47.0 as builder
+LABEL builder=true
 
-RUN sudo chown -R rust:rust .
-RUN cargo build --release
+COPY target/release /usr/target/release
 
-FROM scratch
-COPY --from=build /home/rust/src/target/x86_64-unknown-linux-musl/release/gameprovider-service /
+FROM debian:buster-slim
 
-ENV PORT 50053
+COPY --from=builder /usr/target/release/gameprovider-service /
+COPY data.json /tmp
 
-EXPOSE ${PORT}
+ENV RUST_LOG=info
+ENV RUST_BACKTRACE=full
+ENV IP_ADDRESS=0.0.0.0:50053
+ENV DATABASE_PATH=tmp/data.json
+
+EXPOSE 50053
+
 CMD ["/gameprovider-service"]
