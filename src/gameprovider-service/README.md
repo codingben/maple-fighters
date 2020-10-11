@@ -11,7 +11,6 @@ Follow these instructions to create an image and run a container:
 make build
 ```
 
-```
 2. Running in a docker container:
 ```bash
 make run
