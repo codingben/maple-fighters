@@ -18,4 +18,4 @@ make clean
 ```bash
 make run
 ```
-You should now be able to access it at `http://localhost:50053`.
+You should now be able to access it at `http://localhost:50052`.
