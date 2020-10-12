@@ -14,7 +14,7 @@ mod schema;
 
 #[actix_rt::main]
 async fn main() -> Result<()> {
-    dotenv().expect("Could not find .env file");
+    dotenv().ok();
 
     env_logger::init();
 
