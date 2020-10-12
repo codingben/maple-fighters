@@ -1,5 +1,5 @@
 # Auth Service
-The authentication service stores user data and verifies user
+The authentication service stores user data and verifies user.
 
 ## Docker
 > 💡 You need to install the .NET Core SDK locally.
