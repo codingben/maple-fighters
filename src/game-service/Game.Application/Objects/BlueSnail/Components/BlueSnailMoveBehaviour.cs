@@ -12,7 +12,7 @@ namespace Game.Application.Objects.Components
         private readonly ICoroutineRunner coroutineRunner;
         private readonly IPhysicsWorldManager physicsWorldManager;
         private IGameObject blueSnail;
-        private BodyData bodyData;
+        private BodyData? bodyData;
 
         public BlueSnailMoveBehaviour(ICoroutineRunner coroutineRunner, IPhysicsWorldManager physicsWorldManager)
         {
@@ -41,7 +41,10 @@ namespace Game.Application.Objects.Components
             var speed = 1.5f;
             var distance = 15;
 
-            physicsWorldManager.GetBody(id, out bodyData);
+            if (physicsWorldManager.GetBody(id, out var value))
+            {
+                bodyData = value;
+            }
 
             while (true)
             {
@@ -52,9 +55,9 @@ namespace Game.Application.Objects.Components
                     direction *= -1;
                 }
 
-                if (bodyData.Body != null)
+                var body = bodyData?.Body;
+                if (body != null)
                 {
-                    var body = bodyData.Body;
                     body.SetXForm(position.FromVector2(), body.GetAngle());
                 }
 
