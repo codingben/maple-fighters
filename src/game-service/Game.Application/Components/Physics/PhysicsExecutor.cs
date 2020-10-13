@@ -32,12 +32,7 @@ namespace Game.Application.Components
 
         private void StartExecution()
         {
-            var thread = new Thread(new ParameterizedThreadStart(Execute))
-            {
-                Priority = ThreadPriority.Lowest,
-                IsBackground = true
-            };
-
+            var thread = new Thread(new ParameterizedThreadStart(Execute));
             thread.Start(cancellationTokenSource.Token);
         }
 
