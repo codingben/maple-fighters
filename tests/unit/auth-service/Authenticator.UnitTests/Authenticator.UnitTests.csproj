@@ -1,10 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="NSubstitute" Version="4.2.1" />
     <PackageReference Include="Shouldly" Version="3.0.2" />
@@ -14,11 +12,9 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
   </ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\src\auth-service\Authenticator.API\Authenticator.API.csproj" />
     <ProjectReference Include="..\..\..\..\src\auth-service\Authenticator.Domain\Authenticator.Domain.csproj" />
     <ProjectReference Include="..\..\..\..\src\auth-service\Authenticator.Infrastructure\Authenticator.Infrastructure.csproj" />
   </ItemGroup>
-
 </Project>
