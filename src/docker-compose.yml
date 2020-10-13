@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+    auth-service:
+        build:
+            context: ./auth-service
+            dockerfile: Dockerfile
+    character-service:
+        build:
+            context: ./character-service
+            dockerfile: Dockerfile
+    game-service:
+        build:
+            context: ./game-service
+            dockerfile: Dockerfile
+    gameprovider-service:
+        build:
+            context: ./gameprovider-service
+            dockerfile: Dockerfile
