@@ -1,5 +1,4 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
     <Authors>Ben Ukhanov</Authors>
@@ -11,9 +10,7 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Version>1.0.3</Version>
   </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="Common.ComponentModel" Version="2.0.1" />
   </ItemGroup>
-
 </Project>

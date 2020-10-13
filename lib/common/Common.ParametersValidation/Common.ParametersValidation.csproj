@@ -1,5 +1,4 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
     <Authors>Ben Ukhanov</Authors>
@@ -10,9 +9,7 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Version>1.0.1</Version>
   </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="FluentValidation" Version="8.6.2" />
   </ItemGroup>
-
 </Project>

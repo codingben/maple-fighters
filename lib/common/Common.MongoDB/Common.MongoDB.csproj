@@ -1,5 +1,4 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -10,10 +9,8 @@
     <PackageTags>Common</PackageTags>
     <Version>1.0.1</Version>
   </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="Common.Repository.Interfaces" Version="1.0.1" />
     <PackageReference Include="MongoDB.Driver" Version="2.10.4" />
   </ItemGroup>
-
 </Project>
