@@ -43,7 +43,14 @@ namespace Game.Application.Handlers
                 presenceMapProvider.SetMap(gameScene);
 
                 // Adds to this game scene
-                gameScene.GameObjectCollection.Add(player);
+                var playerGameObject = player as PlayerGameObject;
+                if (playerGameObject != null)
+                {
+                    var bodyData = playerGameObject.CreateBodyData();
+
+                    gameScene.GameObjectCollection.Add(player);
+                    gameScene.PhysicsWorldManager.AddBody(bodyData);
+                }
             }
 
             SendEnteredSceneMessage();
