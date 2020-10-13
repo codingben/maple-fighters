@@ -1,5 +1,4 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <Authors>Ben Ukhanov</Authors>
@@ -9,16 +8,13 @@
     <PackageProjectUrl>https://github.com/benzuk/maple-fighters-server/tree/feature/new-common-projects/lib/server-common/ServerCommon.PhotonStarter</PackageProjectUrl>
     <PackageTags>Common</PackageTags>
   </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="PhotonServerImplementation" Version="3.0.0" />
     <PackageReference Include="ServerCommon.Application" Version="1.0.0" />
   </ItemGroup>
-
   <ItemGroup>
     <Reference Include="Photon.SocketServer">
       <HintPath>..\..\..\photon\Photon.SocketServer.dll</HintPath>
     </Reference>
   </ItemGroup>
-
 </Project>

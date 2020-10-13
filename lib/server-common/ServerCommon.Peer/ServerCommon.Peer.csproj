@@ -1,5 +1,4 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <Authors>Ben Ukhanov</Authors>
@@ -9,11 +8,9 @@
     <PackageProjectUrl>https://github.com/benzuk/maple-fighters-server/tree/feature/new-common-projects/lib/server-common/ServerCommon.Peer</PackageProjectUrl>
     <Description>A common peer bases library.</Description>
   </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="CommunicationHelper" Version="3.2.5" />
     <PackageReference Include="ServerCommunicationHelper" Version="3.0.0" />
     <PackageReference Include="ServerCommunicationInterfaces" Version="2.0.0" />
   </ItemGroup>
-
 </Project>

@@ -1,5 +1,4 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -9,9 +8,7 @@
     <PackageProjectUrl>https://github.com/benzuk/maple-fighters-server/tree/feature/new-common-projects/lib/server-common/ServerCommon.TimeProviders</PackageProjectUrl>
     <PackageTags>Common</PackageTags>
   </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="Coroutines" Version="5.0.5" />
   </ItemGroup>
-
 </Project>

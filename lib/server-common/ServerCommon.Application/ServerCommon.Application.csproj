@@ -1,5 +1,4 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -9,7 +8,6 @@
     <PackageTags>Common</PackageTags>
     <PackageProjectUrl>https://github.com/benzuk/maple-fighters-server/tree/feature/new-common-projects/lib/server-common/ServerCommon.Application</PackageProjectUrl>
   </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="Common.ComponentModel" Version="1.0.0" />
     <PackageReference Include="Common.Components" Version="1.0.0" />
@@ -17,5 +15,4 @@
     <PackageReference Include="ServerCommon.Application.Components" Version="1.0.0" />
     <PackageReference Include="ServerCommunicationInterfaces" Version="2.0.0" />
   </ItemGroup>
-
 </Project>
