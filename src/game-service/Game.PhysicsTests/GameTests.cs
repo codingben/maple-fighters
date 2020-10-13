@@ -14,12 +14,13 @@ namespace Game.PhysicsTests
     {
         private static void Main()
         {
-            new Thread(new ThreadStart(RunWindow))
+            var windowThread = new Thread(new ThreadStart(RunWindow))
             {
                 Priority = ThreadPriority.Lowest,
                 IsBackground = true
-            }.Start();
+            };
 
+            windowThread.Start();
             Console.ReadKey();
         }
 
