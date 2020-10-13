@@ -1,19 +1,15 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
-
   <ItemGroup>
-    <PackageReference Include="Box2D.Window" Version="1.0.3" />
-    <PackageReference Include="Common.ComponentModel" Version="2.0.1" />
-    <PackageReference Include="Common.Components" Version="1.0.3" />
-    <PackageReference Include="Physics.Box2D" Version="1.0.2" />
+    <PackageReference Include="Box2D.Window" Version="1.0.3"/>
+    <PackageReference Include="Common.ComponentModel" Version="2.0.1"/>
+    <PackageReference Include="Common.Components" Version="1.0.3"/>
+    <PackageReference Include="Physics.Box2D" Version="1.0.3"/>
   </ItemGroup>
-
   <ItemGroup>
-    <ProjectReference Include="..\Game.Application\Game.Application.csproj" />
+    <ProjectReference Include="..\Game.Application\Game.Application.csproj"/>
   </ItemGroup>
-
 </Project>
