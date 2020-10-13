@@ -1,3 +1,4 @@
+using System;
 using Common.ComponentModel;
 using Common.Components;
 using Game.Application.Components;
@@ -19,6 +20,8 @@ namespace Game.Application
                 new GameSceneCollection(),
                 new GameSceneManager()
             });
+
+            Console.WriteLine($"Server is running {url}");
         }
 
         public void Startup()
