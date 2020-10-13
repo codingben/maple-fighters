@@ -40,7 +40,7 @@ namespace Game.Application.Components
 
         private void OnUpdateBodies()
         {
-            PhysicsWorldManager.UpdateBodies();
+            PhysicsWorldManager?.UpdateBodies();
         }
 
         private void OnSimulatePhysics()
@@ -49,7 +49,7 @@ namespace Game.Application.Components
             var velocityIterations = DefaultSettings.VelocityIterations;
             var positionIterations = DefaultSettings.PositionIterations;
 
-            PhysicsWorldManager.Step(timeStep, velocityIterations, positionIterations);
+            PhysicsWorldManager?.Step(timeStep, velocityIterations, positionIterations);
         }
     }
 }
