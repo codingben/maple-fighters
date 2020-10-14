@@ -2,18 +2,35 @@ version: '3.8'
 
 services:
     auth-service:
+        image: auth-service:1.0.0
         build:
             context: ./auth-service
-            dockerfile: Dockerfile
+        ports:
+            - "50050:50050"
+
     character-service:
+        image: character-service:1.0.0
         build:
             context: ./character-service
-            dockerfile: Dockerfile
+        ports:
+            - "50053:50053"
+        depends_on:
+            - postgres
+
     game-service:
+        image: game-service:1.0.0
         build:
             context: ./game-service
-            dockerfile: Dockerfile
+        ports:
+            - "50051:50051"
+
     gameprovider-service:
+        image: gameprovider-service:1.0.0
         build:
             context: ./gameprovider-service
-            dockerfile: Dockerfile
+        ports:
+            - "50052:50052"
+
+    postgres:
+        image: postgres:13.0-alpine
+        env_file: .env-postgres
