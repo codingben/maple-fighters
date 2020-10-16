@@ -1,4 +1,4 @@
-FROM rust:1.47.0 as builder
+FROM rust:latest as builder
 LABEL builder=true
 
 COPY target/release /usr/target/release
