@@ -16,6 +16,7 @@ extern crate dotenv;
 use actix_web::{middleware::Logger, web, App, HttpServer};
 use diesel::{pg::PgConnection, r2d2::ConnectionManager, r2d2::Pool};
 use dotenv::dotenv;
+use embedded_migrations::run;
 use std::{env::var, io::Result};
 
 mod database;
@@ -32,16 +33,18 @@ async fn main() -> Result<()> {
     let address = var("IP_ADDRESS").expect("IP_ADDRESS not found");
     let database_url = var("DATABASE_URL").expect("DATABASE_URL not found");
     let manager = ConnectionManager::<PgConnection>::new(database_url);
-    let r2d2_pool = Pool::builder()
+    let pool = Pool::builder()
         .build(manager)
         .expect("Failed to create pool");
+
+    run(&*pool.clone().get().expect("No db connection")).expect("Could not run migrations");
 
     println!("Server is running {}", address);
 
     HttpServer::new(move || {
         App::new()
             .wrap(Logger::default())
-            .data(r2d2_pool.clone())
+            .data(pool.clone())
             .route("/characters", web::post().to(handlers::create))
             .route("/characters/{id}", web::delete().to(handlers::delete_by_id))
             .route("/characters/{id}", web::get().to(handlers::get_all))
