@@ -1,4 +1,4 @@
-FROM alpine:3.12.0
+FROM alpine:latest
 
 # Add some libs required by .NET runtime 
 RUN apk add --no-cache libstdc++ libintl
