@@ -39,7 +39,7 @@ services:
             - "50052:50052"
 
     postgres:
-        image: postgres:13.0-alpine
+        image: postgres:latest
         env_file: .env-postgres
         ports:
             - "5432:5432"
