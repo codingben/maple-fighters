@@ -1,17 +1,28 @@
-FROM rust:1.47.0 as builder
-LABEL builder=true
+# -*- mode: dockerfile -*-
+#
+# An example Dockerfile showing how to build a Rust executable using this
+# image, and deploy it with a tiny Alpine Linux container.
 
-COPY target/release /usr/target/release
+# You can override this `--build-arg BASE_IMAGE=...` to use different
+# version of Rust or OpenSSL.
+ARG BASE_IMAGE=ekidd/rust-musl-builder:latest
 
-FROM debian:buster-slim
+# Our first FROM statement declares the build environment.
+FROM ${BASE_IMAGE} AS builder
 
-COPY --from=builder /usr/target/release/character-service /
+# Add our source code.
+ADD --chown=rust:rust . ./
 
-ENV RUST_LOG=info
-ENV RUST_BACKTRACE=full
-ENV IP_ADDRESS=0.0.0.0:50053
-ENV DATABASE_URL=postgres://postgres:postgres@localhost:5432/postgres
+# Build our application.
+RUN cargo build --release
 
-EXPOSE 50053
+# Now, we need to build our _real_ Docker container, copying in `character-service`.
+FROM alpine:latest
 
-CMD ["/character-service"]
+RUN apk --no-cache add ca-certificates
+
+COPY --from=builder \
+    /home/rust/src/target/x86_64-unknown-linux-musl/release/character-service \
+    /usr/local/bin/
+    
+CMD /usr/local/bin/character-service
