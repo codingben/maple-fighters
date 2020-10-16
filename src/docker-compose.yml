@@ -21,10 +21,10 @@ services:
         expose:
             - 50053
         environment:
-            DATABASE_URL: postgres://postgres:postgres@localhost:5432/postgres
-            IP_ADDRESS: 0.0.0.0:50053
-            RUST_BACKTRACE: 1
             RUST_LOG: info
+            RUST_BACKTRACE: full
+            IP_ADDRESS: 0.0.0.0:50053
+            DATABASE_URL: postgres://postgres:postgres@localhost:5432/postgres
 
     game-service:
         image: game-service:1.0.0
@@ -32,6 +32,8 @@ services:
             context: ./game-service
         ports:
             - "50051:50051"
+        expose:
+            - 50051
 
     gameprovider-service:
         image: gameprovider-service:1.0.0
@@ -39,6 +41,13 @@ services:
             context: ./gameprovider-service
         ports:
             - "50052:50052"
+        expose:
+            - 50052
+        environment:
+            RUST_LOG: info
+            RUST_BACKTRACE: full
+            IP_ADDRESS: 0.0.0.0:50052
+            DATABASE_PATH: tmp/data.json
 
     postgres:
         image: postgres:latest

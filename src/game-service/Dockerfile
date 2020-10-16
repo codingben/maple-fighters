@@ -3,8 +3,6 @@ FROM alpine:latest
 # Add some libs required by .NET runtime 
 RUN apk add --no-cache libstdc++ libintl
 
-EXPOSE 50051
-
 # Copy 
 WORKDIR /app
 COPY ./publish ./
@@ -15,4 +13,4 @@ ENV DOTNET_SYSTEM_GLOBALIZATION_INVARIANT true
 # ENV LC_ALL en_US.UTF-8
 # ENV LANG en_US.UTF-8
 
-ENTRYPOINT ["./Game.AppStarter", "--urls", "http://0.0.0.0:50051"]
+ENTRYPOINT ["./Game.AppStarter"]
