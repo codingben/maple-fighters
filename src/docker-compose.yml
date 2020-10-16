@@ -19,7 +19,7 @@ services:
         expose:
             - 50053
         environment:
-            DATABASE_URL: postgresql://postgres:postgres@localhost:5432/postgres
+            DATABASE_URL: postgres://postgres:postgres@localhost:5432/postgres
             IP_ADDRESS: 0.0.0.0:50053
             RUST_BACKTRACE: 1
             RUST_LOG: info
