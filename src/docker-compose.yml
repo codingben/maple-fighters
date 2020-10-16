@@ -7,6 +7,8 @@ services:
             context: ./auth-service
         ports:
             - "50050:50050"
+        expose:
+            - 50050
 
     character-service:
         image: character-service:1.0.0
