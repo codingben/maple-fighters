@@ -10,6 +10,7 @@ actix-web = "2.0.0"
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0.52"
 diesel = { version = "1.4.5", features = ["postgres", "r2d2"] }
+diesel_migrations = "1.4.0"
 # Needed for sqlite.
 libsqlite3-sys = { version = "*", features = ["bundled"] }
 # Needed for Postgres.
