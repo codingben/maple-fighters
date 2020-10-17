@@ -1,4 +1,4 @@
-# Running
+# Running locally
 > 💡 You need to install Docker and Docker Compose locally.
 
 Follow these instructions to run locally:
