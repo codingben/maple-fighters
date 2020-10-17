@@ -20,3 +20,20 @@ The server-side will be able to accommodate many players who can play together i
 | [game-service](./src/game-service)                   | C#            | Creates a player in the game world to play with others. Also creates objects of the game world (e.g. mobs, NPCs, etc.). 	|
 | [gameprovider-service](./src/gameprovider-service)   | Rust          | Provides a list of game servers. 																|
 | [character-service](./src/character-service)         | Rust          | Creates and receives player character data. 																|
+
+# Running locally
+> 💡 You need to install Docker and Docker Compose locally.
+
+Follow these instructions to run locally:
+
+1. To create containers:
+```bash
+docker-compose up
+```
+
+2. Stop and remove containers:
+```bash
+docker-compose down
+```
+
+You should now be able to access it at `http://localhost/api_name/handler_name`.
