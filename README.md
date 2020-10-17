@@ -10,6 +10,7 @@ The server-side will be able to accommodate many players who can play together i
 **Client**: Unity WebGL   
 **Server**: C#, Rust   
 **Database**: MongoDB, PostgreSQL   
+**Reverse Proxy**: Nginx   
 
 ## Service Architecture
 
