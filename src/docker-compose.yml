@@ -24,7 +24,7 @@ services:
             RUST_LOG: info
             RUST_BACKTRACE: full
             IP_ADDRESS: 0.0.0.0:50053
-            DATABASE_URL: postgres://postgres:postgres@localhost:5432/postgres
+            DATABASE_URL: postgres://postgres:postgres@postgres:5432/postgres
 
     game-service:
         image: game-service:1.0.0
