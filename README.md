@@ -21,7 +21,7 @@ The server-side will be able to accommodate many players who can play together i
 | [gameprovider-service](./src/gameprovider-service)   | Rust          | Provides a list of game servers. 																|
 | [character-service](./src/character-service)         | Rust          | Creates and receives player character data. 																|
 
-# Running locally
+## Running locally
 > 💡 You need to install Docker and Docker Compose locally.
 
 Follow these instructions to run locally:
