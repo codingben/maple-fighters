@@ -27,10 +27,10 @@ services:
             context: ./character-service
         ports:
             - "50053:50053"
-        depends_on:
-            - postgres
         expose:
             - 50053
+        depends_on:
+            - postgres
         environment:
             RUST_LOG: info
             RUST_BACKTRACE: full
