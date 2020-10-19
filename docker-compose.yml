@@ -8,12 +8,12 @@ services:
         depends_on:
             - auth-service
         volumes:
-            - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+            - ./src/nginx/nginx.conf:/etc/nginx/nginx.conf
 
     auth-service:
         image: auth-service:1.0.0
         build:
-            context: ./auth-service
+            context: ./src/auth-service
         ports:
             - "50050:50050"
         expose:
@@ -26,7 +26,7 @@ services:
     character-service:
         image: character-service:1.0.0
         build:
-            context: ./character-service
+            context: ./src/character-service
         ports:
             - "50053:50053"
         expose:
@@ -42,7 +42,7 @@ services:
     game-service:
         image: game-service:1.0.0
         build:
-            context: ./game-service
+            context: ./src/game-service
         ports:
             - "50051:50051"
         expose:
@@ -51,7 +51,7 @@ services:
     gameprovider-service:
         image: gameprovider-service:1.0.0
         build:
-            context: ./gameprovider-service
+            context: ./src/gameprovider-service
         ports:
             - "50052:50052"
         expose:
