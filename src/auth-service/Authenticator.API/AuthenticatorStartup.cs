@@ -38,8 +38,6 @@ namespace Authenticator.API
             {
                 endpoints.MapControllers();
             });
-
-            logger.LogInformation("AuthenticatorStartup::Configure()");
         }
     }
 }
