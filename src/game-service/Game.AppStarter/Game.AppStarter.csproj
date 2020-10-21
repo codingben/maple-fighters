@@ -1,6 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
-    <ProjectReference Include="..\Game.Application\Game.Application.csproj" />
+    <ProjectReference Include="..\Game.Application\Game.Application.csproj"/>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="DotNetEnv" Version="1.4.0"/>
   </ItemGroup>
   <PropertyGroup>
     <OutputType>Exe</OutputType>
