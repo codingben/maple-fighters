@@ -1,7 +1,7 @@
-using System;
 using Common.ComponentModel;
 using Common.Components;
 using Game.Application.Components;
+using WebSocketSharp;
 using WebSocketSharp.Server;
 
 namespace Game.Application
@@ -21,7 +21,7 @@ namespace Game.Application
                 new GameSceneManager()
             });
 
-            Console.WriteLine($"Server is running {url}");
+            Log.Level = LogLevel.Info;
         }
 
         public void Startup()
@@ -29,6 +29,11 @@ namespace Game.Application
             AddWebSocketService("/game", () => new GameService(components));
 
             Start();
+
+            if (IsListening)
+            {
+                Log.Info($"Server is running {Address:Port}");
+            }
         }
 
         public void Shutdown()
