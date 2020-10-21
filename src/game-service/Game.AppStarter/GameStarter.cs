@@ -1,4 +1,5 @@
 ﻿using System;
+using DotNetEnv;
 using Game.Application;
 
 namespace Game.AppStarter
@@ -9,6 +10,8 @@ namespace Game.AppStarter
 
         public static void Main()
         {
+            Env.Load();
+
             AddProcessExitEventHandler();
 
             StartApplication();
@@ -33,8 +36,13 @@ namespace Game.AppStarter
 
         private static IServerApplication CreateServerApplication()
         {
-            // TODO: Get IP address from config
-            return new GameApplication("ws://localhost:50051");
+            var ipAddress = Environment.GetEnvironmentVariable("IP_ADDRESS");
+            if (ipAddress == null)
+            {
+                throw new NullReferenceException("Please set IP_ADDRESS");
+            }
+
+            return new GameApplication(ipAddress);
         }
     }
 }
