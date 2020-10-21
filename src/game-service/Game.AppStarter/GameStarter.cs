@@ -30,7 +30,6 @@ namespace Game.AppStarter
 
         private static void AddProcessExitEventHandler()
         {
-            // It's supposed to work with a docker container:
             AppDomain.CurrentDomain.ProcessExit += (x, y) => StopApplication();
         }
 
