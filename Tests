@@ -1,0 +1,8 @@
+- Docker Images: Why character-service image is smaller than gameprovider-service?
+
+- Docker Compose Stats: Auth-service and mongo uses about 80~90mb
+compared to 30mb of rust service and postgressql
+
+Ideal: One db (postgres) with different tables (which are using also foregien keys and have 
+relationships between them, "relational db")
+Research: If it's okay to use 1 db for 2 microservices
