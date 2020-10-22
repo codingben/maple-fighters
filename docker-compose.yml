@@ -21,7 +21,7 @@ services:
         depends_on:
             - mongo
         environment:
-            DATABASE_URL: mongodb://localhost:27017/maple_fighters
+            DATABASE_URL: mongodb://mongo:27017/maple_fighters
             
     character-service:
         image: character-service:1.0.0
@@ -72,6 +72,8 @@ services:
 
     mongo:
         image: mongo
+	ports:
+            - "27017:27017"
         environment:
             MONGO_INITDB_ROOT_USERNAME: root
             MONGO_INITDB_ROOT_PASSWORD: root
