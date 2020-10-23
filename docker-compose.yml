@@ -47,6 +47,8 @@ services:
             - "50051:50051"
         expose:
             - 50051
+        environment:
+            IP_ADDRESS: http://0.0.0.0:50051
 
     gameprovider-service:
         image: gameprovider-service:1.0.0
@@ -72,8 +74,6 @@ services:
 
     mongo:
         image: mongo
-	    ports:
-            - "27017:27017"
         environment:
             MONGO_INITDB_ROOT_USERNAME: root
             MONGO_INITDB_ROOT_PASSWORD: root
