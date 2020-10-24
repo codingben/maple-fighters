@@ -5,7 +5,8 @@
       "launchBrowser": false,
       "applicationUrl": "https://localhost:50050",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "DATABASE_URL": "mongodb://mongo:27017/maple_fighters"
       }
     }
   }
