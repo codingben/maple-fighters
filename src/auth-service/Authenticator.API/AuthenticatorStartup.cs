@@ -27,11 +27,6 @@ namespace Authenticator.API
             IWebHostEnvironment environment,
             ILogger<AuthenticatorStartup> logger)
         {
-            if (environment.IsDevelopment())
-            {
-                applicationBuilder.UseDeveloperExceptionPage();
-            }
-
             applicationBuilder.UseHttpsRedirection();
             applicationBuilder.UseRouting();
             applicationBuilder.UseEndpoints(endpoints =>
