@@ -14,8 +14,6 @@ services:
         image: auth-service:1.0.0
         build:
             context: ./src/auth-service
-        ports:
-            - "50050:50050"
         expose:
             - 50050
         depends_on:
@@ -29,8 +27,6 @@ services:
         image: character-service:1.0.0
         build:
             context: ./src/character-service
-        ports:
-            - "50053:50053"
         expose:
             - 50053
         depends_on:
@@ -45,8 +41,6 @@ services:
         image: game-service:1.0.0
         build:
             context: ./src/game-service
-        ports:
-            - "50051:50051"
         expose:
             - 50051
         environment:
@@ -56,8 +50,6 @@ services:
         image: gameprovider-service:1.0.0
         build:
             context: ./src/gameprovider-service
-        ports:
-            - "50052:50052"
         expose:
             - 50052
         environment:
@@ -68,14 +60,16 @@ services:
 
     postgres:
         image: postgres:latest
-        ports:
-            - "5432:5432"
+        expose:
+            - 5432
         environment:
             POSTGRES_USER: postgres
             POSTGRES_PASSWORD: postgres
 
     mongo:
         image: mongo
+        expose:
+            - 21707
         environment:
             MONGO_INITDB_ROOT_USERNAME: root
             MONGO_INITDB_ROOT_PASSWORD: root
