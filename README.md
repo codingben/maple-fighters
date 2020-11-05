@@ -31,7 +31,7 @@ Follow these instructions to start and stop locally:
 docker-compose up
 ```
 
-You should now be able to access it at `http://localhost/api_name/handler_name`.
+You should now be able to access it at `http://localhost/api_name/api_endpoint`.
 
 2. To stop and remove containers:
 ```bash
