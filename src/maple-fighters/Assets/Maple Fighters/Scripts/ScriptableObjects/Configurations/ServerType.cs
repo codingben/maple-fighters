@@ -3,17 +3,27 @@
     public enum ServerType
     {
         /// <summary>
-        /// The authenticator.
+        /// The authenticator server.
         /// </summary>
         Authenticator,
 
         /// <summary>
         /// The game server provider.
         /// </summary>
-        GameServerProvider,
+        GameProvider,
 
         /// <summary>
-        /// The chat.
+        /// The game server.
+        /// </summary>
+        Game,
+
+        /// <summary>
+        /// The character server.
+        /// </summary>
+        Character,
+
+        /// <summary>
+        /// The chat server.
         /// </summary>
         Chat
     }
