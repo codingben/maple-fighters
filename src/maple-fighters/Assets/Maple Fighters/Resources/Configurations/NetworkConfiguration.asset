@@ -12,5 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05c8ccb8a03f08646b2ec0522b88a75b, type: 3}
   m_Name: NetworkConfiguration
   m_EditorClassIdentifier: 
-  ServerData: []
+  ServerData:
+  - Name: Authenticator
+    ServerType: 0
+    Url: http://localhost:80/auth
+  - Name: Game Provider
+    ServerType: 1
+    Url: http://localhost:80/gameprovider
+  - Name: Game
+    ServerType: 2
+    Url: http://localhost:80/game
+  - Name: Character
+    ServerType: 3
+    Url: http://localhost:80/character
+  - Name: Chat
+    ServerType: 4
+    Url: http://localhost:80/chat
   HostingEnvironment: 1
