@@ -9,8 +9,6 @@ namespace ScriptableObjects.Configurations
 
         public ServerType ServerType;
 
-        public string IpAddress;
-
-        public int Port;
+        public string Url;
     }
 }
