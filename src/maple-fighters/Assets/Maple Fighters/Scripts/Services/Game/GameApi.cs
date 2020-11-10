@@ -2,6 +2,7 @@ using System;
 using Game.Messages;
 using Game.Network;
 using NativeWebSocket;
+using ScriptableObjects.Configurations;
 using UnityEngine;
 
 namespace Scripts.Services.Game
@@ -27,7 +28,11 @@ namespace Scripts.Services.Game
 
         private async void Start()
         {
-            webSocket = new WebSocket("ws://localhost:50060");
+            var networkConfiguration = NetworkConfiguration.GetInstance();
+            var gameServerData = networkConfiguration.GetServerData(ServerType.Game);
+            var gameServerUrl = gameServerData.Url;
+
+            webSocket = new WebSocket(gameServerUrl);
             messageHandlerCollection = new MessageHandlerCollection();
             messageHandlerCollection.Set(MessageCodes.EnteredScene, SceneEntered.ToMessageHandler());
             messageHandlerCollection.Set(MessageCodes.GameObjectAdded, GameObjectsAdded.ToMessageHandler());
