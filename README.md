@@ -1,7 +1,7 @@
 # Maple Fighters
 This is a small game similar to MapleStory. 
 
-- Click [here](https://benzuk.github.io/) to play.
+- Click [here](https://maplefighters.io/) to play.
 
 The client-side is built on Unity and must be compatible with all platforms (e.g. PC, WebGL).
 
