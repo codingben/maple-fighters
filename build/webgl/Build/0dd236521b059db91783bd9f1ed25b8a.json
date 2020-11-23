@@ -1,0 +1,15 @@
+{
+"companyName": "Ben Ukhanov",
+"productName": "Maple Fighters",
+"productVersion": "1.0",
+"dataUrl": "a0970aab603955e94fa38dbdef1da57f.unityweb",
+"wasmCodeUrl": "66d5c51e17c75ed665fdf904c70afaf2.unityweb",
+"wasmFrameworkUrl": "4c55f6005391fe4e83cda2fb07df47c1.unityweb",
+"graphicsAPI": ["WebGL 2.0","WebGL 1.0"],
+"webglContextAttributes": {"preserveDrawingBuffer": false},
+"splashScreenStyle": "Dark",
+"backgroundColor": "#000000",
+"developmentBuild": false,
+"multithreading": false,
+"unityVersion": "2019.3.0f6"
+}
