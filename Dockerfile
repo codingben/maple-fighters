@@ -1,6 +1,4 @@
 FROM nginx:alpine
 
-WORKDIR /build/webgl
-COPY webgl/ .
-
+COPY ./build/webgl/ .
 COPY ./nginx/nginx.conf /etc/nginx/conf.d/default.conf
