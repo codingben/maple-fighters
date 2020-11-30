@@ -5,4 +5,4 @@ services:
     image: game-client:1.0.0
     build: .
     ports:
-      - "8000:80"
+      - 8000:80
