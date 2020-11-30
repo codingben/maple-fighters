@@ -1,0 +1,8 @@
+version: '3.8'
+
+services:
+  game-client:
+    image: game-client:1.0.0
+    build: .
+    ports:
+      - "8000:80"
