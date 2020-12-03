@@ -1,9 +1,9 @@
 # Maple Fighters
 This is a small game similar to MapleStory. 
 
-- Click [here](https://maplefighters.io/) to play.
+- Click [here](https://maplefighters.io/) to play (Coming soon).
 
-The server-side will be able to accommodate many players who can play together in the game world.
+The client side is built on Unity and should be compatible with all platforms (e.g. PC, WebGL). And the server side will be able to accommodate many players who can play together in the game world.
 
 ## Technology
 
@@ -16,6 +16,7 @@ The server-side will be able to accommodate many players who can play together i
 
 | Service                                              | Language      | Description                                                    														|
 | ---------------------------------------------------- | ------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| [maple-fighters](./src/maple-fighters)                   | C#            | Exposes an HTTP server for serving the game's website.		   															|
 | [auth-service](./src/auth-service)                   | C#            | Stores user data and verifies user. 			   															|
 | [game-service](./src/game-service)                   | C#            | Creates a player in the game world to play with others. Also creates objects of the game world (e.g. mobs, NPCs, etc.). 	|
 | [gameprovider-service](./src/gameprovider-service)   | Rust          | Provides a list of game servers. 																|
@@ -37,3 +38,11 @@ You should now be able to access it at `http://localhost/api_name/api_endpoint`.
 ```bash
 docker-compose down
 ```
+
+## Lobby
+
+<img src="docs/Lobby.png">
+
+## The Dark Forest
+
+<img src="docs/The Dark Forest.png">
