@@ -10,13 +10,13 @@ The client side is built on Unity and should be compatible with all platforms (e
 **Client**: Unity WebGL   
 **Server**: C#, Rust   
 **Database**: MongoDB, PostgreSQL   
-**Reverse Proxy**: Nginx   
+**Web Server and Reverse Proxy**: Nginx   
 
 ## Service Architecture
 
 | Service                                              | Language      | Description                                                    														|
 | ---------------------------------------------------- | ------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| [maple-fighters](./src/maple-fighters)                   | Nginx       | Exposes an HTTP server for serving the game's website.		   															|
+| [maple-fighters](./src/maple-fighters)                   | C (Nginx)       | Exposes an HTTP server for serving the game's website.		   															|
 | [auth-service](./src/auth-service)                   | C#            | Stores user data and verifies user. 			   															|
 | [game-service](./src/game-service)                   | C#            | Creates a player in the game world to play with others. 	|
 | [gameprovider-service](./src/gameprovider-service)   | Rust          | Provides a list of game servers. 																|
