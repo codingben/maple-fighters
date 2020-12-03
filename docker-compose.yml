@@ -1,8 +1,75 @@
 version: '3.8'
 
 services:
-  game-client:
-    image: game-client:1.0.0
-    build: .
-    ports:
-      - 8000:80
+    reverse-proxy:
+        image: nginx:latest
+        ports:
+            - 80:80
+        depends_on:
+            - auth-service
+        volumes:
+            - ./src/nginx/nginx.conf:/etc/nginx/nginx.conf
+
+    auth-service:
+        image: auth-service:1.0.0
+        build:
+            context: ./src/auth-service
+        expose:
+            - 50050
+        depends_on:
+            - mongo
+        environment:
+            ASPNETCORE_ENVIRONMENT: Development
+            ASPNETCORE_URLS: http://0.0.0.0:50050
+            DATABASE_URL: mongodb://mongo:27017/maple_fighters
+
+    character-service:
+        image: character-service:1.0.0
+        build:
+            context: ./src/character-service
+        expose:
+            - 50053
+        depends_on:
+            - postgres
+        environment:
+            RUST_LOG: info
+            RUST_BACKTRACE: full
+            IP_ADDRESS: 0.0.0.0:50053
+            DATABASE_URL: postgres://postgres:postgres@postgres:5432/postgres
+
+    game-service:
+        image: game-service:1.0.0
+        build:
+            context: ./src/game-service
+        expose:
+            - 50051
+        environment:
+            IP_ADDRESS: http://0.0.0.0:50051
+
+    gameprovider-service:
+        image: gameprovider-service:1.0.0
+        build:
+            context: ./src/gameprovider-service
+        expose:
+            - 50052
+        environment:
+            RUST_LOG: info
+            RUST_BACKTRACE: full
+            IP_ADDRESS: 0.0.0.0:50052
+            DATABASE_PATH: tmp/data.json
+
+    postgres:
+        image: postgres:latest
+        expose:
+            - 5432
+        environment:
+            POSTGRES_USER: postgres
+            POSTGRES_PASSWORD: postgres
+
+    mongo:
+        image: mongo
+        expose:
+            - 21707
+        environment:
+            MONGO_INITDB_ROOT_USERNAME: root
+            MONGO_INITDB_ROOT_PASSWORD: root

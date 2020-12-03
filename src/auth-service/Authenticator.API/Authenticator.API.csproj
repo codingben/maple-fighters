@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="FluentValidation" Version="8.6.2" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Authenticator.Domain\Authenticator.Domain.csproj" />
+    <ProjectReference Include="..\Authenticator.Infrastructure\Authenticator.Infrastructure.csproj" />
+  </ItemGroup>
+  <PropertyGroup>
+    <IncludeOpenAPIAnalyzers>true</IncludeOpenAPIAnalyzers>
+  </PropertyGroup>
+</Project>

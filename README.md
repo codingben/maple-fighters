@@ -3,29 +3,37 @@ This is a small game similar to MapleStory.
 
 - Click [here](https://maplefighters.io/) to play.
 
-The client-side is built on Unity and must be compatible with all platforms (e.g. PC, WebGL).
+The server-side will be able to accommodate many players who can play together in the game world.
 
-## Lobby
+## Technology
 
-<img src="docs/Lobby.png">
+**Client**: Unity WebGL   
+**Server**: C#, Rust   
+**Database**: MongoDB, PostgreSQL   
+**Reverse Proxy**: Nginx   
 
-## The Dark Forest
+## Service Architecture
 
-<img src="docs/The Dark Forest.png">
+| Service                                              | Language      | Description                                                    														|
+| ---------------------------------------------------- | ------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| [auth-service](./src/auth-service)                   | C#            | Stores user data and verifies user. 			   															|
+| [game-service](./src/game-service)                   | C#            | Creates a player in the game world to play with others. Also creates objects of the game world (e.g. mobs, NPCs, etc.). 	|
+| [gameprovider-service](./src/gameprovider-service)   | Rust          | Provides a list of game servers. 																|
+| [character-service](./src/character-service)         | Rust          | Creates and receives player character data. 																|
 
 ## Running locally
 > 💡 You need to install Docker and Docker Compose locally.
 
 Follow these instructions to start and stop locally:
 
-1. To start game:
+1. To create containers:
 ```bash
 docker-compose up
 ```
 
-You should now be able to access it at `http://localhost:8000`.
+You should now be able to access it at `http://localhost/api_name/api_endpoint`.
 
-2. To stop game:
+2. To stop and remove containers:
 ```bash
 docker-compose down
 ```
