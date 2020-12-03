@@ -1,0 +1,14 @@
+Photon Stardust Client
+----------------------------------
+A simple load testing client as .NET console application.
+Provided to be run by PhotonControl on localhost (by default).
+----------------------------------
+
+(C) 2015 Exit Games GmbH
+http://www.exitgames.com - developer@exitgames.com
+
+
+* REQUIREMENTS
+Vista, Windows 7, Windows 8
+Windows Server 2008, Windows Server 2012
+.NET Framework 3.5
