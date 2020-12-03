@@ -18,7 +18,7 @@ The client side is built on Unity and should be compatible with all platforms (e
 | ---------------------------------------------------- | ------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | [maple-fighters](./src/maple-fighters)                   | C#            | Exposes an HTTP server for serving the game's website.		   															|
 | [auth-service](./src/auth-service)                   | C#            | Stores user data and verifies user. 			   															|
-| [game-service](./src/game-service)                   | C#            | Creates a player in the game world to play with others. Also creates objects of the game world (e.g. mobs, NPCs, etc.). 	|
+| [game-service](./src/game-service)                   | C#            | Creates a player in the game world to play with others. 	|
 | [gameprovider-service](./src/gameprovider-service)   | Rust          | Provides a list of game servers. 																|
 | [character-service](./src/character-service)         | Rust          | Creates and receives player character data. 																|
 
@@ -32,12 +32,11 @@ Follow these instructions to start and stop locally:
 docker-compose up
 ```
 
-You should now be able to access it at `http://localhost/api_name/api_endpoint`.
-
 2. To stop and remove containers:
 ```bash
 docker-compose down
 ```
+You should now be able to access it at `http://localhost:8000`.
 
 ## Lobby
 
