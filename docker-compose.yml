@@ -3,18 +3,19 @@ version: '3.8'
 services:
     web-server:
         image: web-server:1.0.0
-        build: .
+        build:
+            context: ./src/maple-fighters
         ports:
             - 8000:80
 
     reverse-proxy:
-        image: nginx:latest
+        image: nginx:alpine
         ports:
             - 80:80
         depends_on:
             - auth-service
         volumes:
-            - ./src/nginx/nginx.conf:/etc/nginx/nginx.conf
+            - ./src/reverse-proxy/nginx.conf:/etc/nginx/nginx.conf
 
     auth-service:
         image: auth-service:1.0.0
