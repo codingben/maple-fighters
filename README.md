@@ -1,28 +1,29 @@
 # Maple Fighters
-This is a small game similar to MapleStory. 
 
-- Click [here](https://maplefighters.io/) to play (Coming soon).
+Maple Fighters is a small online game similar to MapleStory. The goal is to make a minimalistic, simple and effective game using the latest technology.
 
-The client side is built on Unity and should be compatible with all platforms (e.g. PC, WebGL). And the server side will be able to accommodate many players who can play together in the game world.
+## Gameplay
+| Lobby                                                                                                         | The Dark Forest                                                                                                    |
+| ----------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
+| <img src="docs/Lobby.png"> | <img src="docs/The Dark Forest.png"> |
 
 ## Technology
 
-**Client**: Unity WebGL   
+**Client**: Unity   
 **Server**: C#, Rust   
 **Database**: MongoDB, PostgreSQL   
-**Web Server and Reverse Proxy**: Nginx   
+**Reverse Proxy**: Nginx   
 
-## Service Architecture
+## Microservices Architecture
 
 | Service                                              | Language      | Description                                                    														|
 | ---------------------------------------------------- | ------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| [maple-fighters](./src/maple-fighters)                   | C (Nginx)       | Exposes an HTTP server for serving the game's website.		   															|
 | [auth-service](./src/auth-service)                   | C#            | Stores user data and verifies user. 			   															|
 | [game-service](./src/game-service)                   | C#            | Creates a player in the game world to play with others. 	|
 | [gameprovider-service](./src/gameprovider-service)   | Rust          | Provides a list of game servers. 																|
 | [character-service](./src/character-service)         | Rust          | Creates and receives player character data. 																|
 
-## Running locally
+## Quickstart
 > 💡 You need to install Docker and Docker Compose locally.
 
 Follow these instructions to start and stop locally:
@@ -38,10 +39,4 @@ docker-compose down
 ```
 You should be able to access it at `http://localhost:8000`.
 
-## Lobby
-
-<img src="docs/Lobby.png">
-
-## The Dark Forest
-
-<img src="docs/The Dark Forest.png">
+**WIP**: Currently, client-server communication has not yet been implemented.
