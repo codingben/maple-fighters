@@ -2,6 +2,8 @@
 
 Maple Fighters is a small online game similar to MapleStory. The goal is to make a minimalistic, simple and effective game using the latest technology.
 
+Please **★ Star** this repository if you like it and find it useful. Made with ❤ for Open Source Community!
+
 ## Gameplay
 | Lobby                                                                                                         | The Dark Forest                                                                                                    |
 | ----------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
