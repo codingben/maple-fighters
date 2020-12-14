@@ -98,12 +98,18 @@ namespace Scripts.Services.Game
 
         private void SubscribeToMessageNotifier()
         {
-            webSocket.OnMessage += OnMessageReceived;
+            if (webSocket != null)
+            {
+                webSocket.OnMessage += OnMessageReceived;
+            }
         }
 
         private void UnsubscribeFromMessageNotifier()
         {
-            webSocket.OnMessage -= OnMessageReceived;
+            if (webSocket != null)
+            {
+                webSocket.OnMessage -= OnMessageReceived;
+            }
         }
 
         private void OnMessageReceived(byte[] data)
