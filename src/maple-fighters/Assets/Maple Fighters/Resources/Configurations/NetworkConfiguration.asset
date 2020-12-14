@@ -21,7 +21,7 @@ MonoBehaviour:
     Url: http://localhost:80/gameprovider
   - Name: Game
     ServerType: 2
-    Url: http://localhost:80/game
+    Url: ws://localhost:80/game
   - Name: Character
     ServerType: 3
     Url: http://localhost:80/character
