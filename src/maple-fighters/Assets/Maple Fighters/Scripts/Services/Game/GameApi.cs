@@ -34,13 +34,6 @@ namespace Scripts.Services.Game
 
             webSocket = new WebSocket(gameServerUrl);
             messageHandlerCollection = new MessageHandlerCollection();
-            messageHandlerCollection.Set(MessageCodes.EnteredScene, SceneEntered.ToMessageHandler());
-            messageHandlerCollection.Set(MessageCodes.GameObjectAdded, GameObjectsAdded.ToMessageHandler());
-            messageHandlerCollection.Set(MessageCodes.GameObjectRemoved, GameObjectsRemoved.ToMessageHandler());
-            messageHandlerCollection.Set(MessageCodes.PositionChanged, PositionChanged.ToMessageHandler());
-            messageHandlerCollection.Set(MessageCodes.AnimationStateChanged, AnimationStateChanged.ToMessageHandler());
-            messageHandlerCollection.Set(MessageCodes.Attacked, Attacked.ToMessageHandler());
-            messageHandlerCollection.Set(MessageCodes.BubbleNotification, BubbleMessageReceived.ToMessageHandler());
 
             await webSocket?.Connect();
 
