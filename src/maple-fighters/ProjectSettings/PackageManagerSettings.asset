@@ -26,6 +26,13 @@ MonoBehaviour:
     m_Scopes:
     - jillejr
     m_IsDefault: 0
+  - m_Id: scoped:package.openupm.com
+    m_Name: package.openupm.com
+    m_Url: https://package.openupm.com
+    m_Scopes:
+    - com.littlebigfun.addressable-importer
+    - com.openupm
+    m_IsDefault: 0
   m_UserSelectedRegistryName: package.jillejr
   m_UserAddingNewScopedRegistry: 0
   m_RegistryInfoDraft:
