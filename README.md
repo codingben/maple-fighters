@@ -17,3 +17,6 @@ Please **★ Star** this repository if you like it and find it useful. Made with
 **Client**: Unity   
 **Server**: C#, Python   
 **Database**: MySQL   
+
+## License
+[AGPL](https://choosealicense.com/licenses/agpl-3.0/)
