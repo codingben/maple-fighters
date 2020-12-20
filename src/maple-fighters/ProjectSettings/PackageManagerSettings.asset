@@ -33,7 +33,7 @@ MonoBehaviour:
     - com.littlebigfun.addressable-importer
     - com.openupm
     m_IsDefault: 0
-  m_UserSelectedRegistryName: package.jillejr
+  m_UserSelectedRegistryName: 
   m_UserAddingNewScopedRegistry: 0
   m_RegistryInfoDraft:
     m_ErrorMessage: 
