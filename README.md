@@ -6,3 +6,9 @@ This is region-based interest management. The scripts were designed to work insi
 ## Sample
 
 <img src="docs/Sample.png">
+
+## Contributing
+Any new ideas, improvements are welcome!
+
+## License
+[MIT](https://choosealicense.com/licenses/mit)
