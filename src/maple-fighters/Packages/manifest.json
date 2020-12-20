@@ -17,6 +17,8 @@
     }
   ],
   "dependencies": {
+    "com.benukhanov.ui-manager": "https://github.com/benukhanov/ui-manager.git#upm",
+    "com.littlebigfun.addressable-importer": "0.9.3",
     "com.unity.2d.sprite": "1.0.0",
     "com.unity.2d.tilemap": "1.0.0",
     "com.unity.cinemachine": "2.6.3",
@@ -56,7 +58,6 @@
     "com.unity.modules.video": "1.0.0",
     "com.unity.modules.vr": "1.0.0",
     "com.unity.modules.wind": "1.0.0",
-    "com.unity.modules.xr": "1.0.0",
-    "com.littlebigfun.addressable-importer": "0.9.3"
+    "com.unity.modules.xr": "1.0.0"
   }
 }
