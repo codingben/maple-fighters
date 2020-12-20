@@ -1,0 +1,14 @@
+{
+  "name": "com.benukhanov.game-common",
+  "version": "1.0.0",
+  "description": "Shared game library from the game server.",
+  "license": "AGPL",
+  "author": {
+    "name": "Ben Ukhanov",
+    "email": "ben.ukhanov@gmail.com",
+    "url": "https://github.com/benukhanov/maple-fighters"
+  },
+  "displayName": "Game Common",
+  "unity": "2018.1",
+  "dependencies": {}
+}

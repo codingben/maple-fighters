@@ -1,5 +1,11 @@
 {
   "dependencies": {
+    "com.benukhanov.game-common": {
+      "version": "file:com.benukhanov.game-common",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
     "com.benukhanov.ui-manager": {
       "version": "https://github.com/benukhanov/ui-manager.git#upm",
       "depth": 0,
