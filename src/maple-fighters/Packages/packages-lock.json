@@ -14,10 +14,11 @@
       "hash": "c8b2826178f3388f11e0daa9066c8410549e93d1"
     },
     "com.endel.nativewebsocket": {
-      "version": "file:com.endel.nativewebsocket",
+      "version": "https://github.com/benukhanov/NativeWebSocket.git#upm",
       "depth": 0,
-      "source": "embedded",
-      "dependencies": {}
+      "source": "git",
+      "dependencies": {},
+      "hash": "407af4d8dc969a225c8c008c54e7d6ddb3c6d07b"
     },
     "com.littlebigfun.addressable-importer": {
       "version": "0.9.3",
