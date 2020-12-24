@@ -2,13 +2,15 @@
 using Scripts.Services.Game;
 using UnityEngine;
 
-namespace Scripts.Gameplay.Map.Operations
+namespace Scripts.Gameplay.Map
 {
-    public class EnterSceneOperationSender : MonoBehaviour
+    public class EnterMapMessageSender : MonoBehaviour
     {
         private void Start()
         {
             EnterScene();
+
+            Destroy(gameObject);
         }
 
         private void EnterScene()
