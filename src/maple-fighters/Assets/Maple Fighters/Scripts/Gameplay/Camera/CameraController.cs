@@ -20,6 +20,7 @@ namespace Scripts.Gameplay.Camera
         private Vector2 center;
 
         private Transform target;
+        private Vector2 oldPosition;
 
         public void SetTarget(Transform target)
         {
@@ -28,16 +29,21 @@ namespace Scripts.Gameplay.Camera
 
         private void LateUpdate()
         {
-            if (target != null)
-            {
-                Move();
-            }
+            MoveCamera();
         }
 
-        private void Move()
+        private void MoveCamera()
         {
-            var x = Mathf.Clamp(target.position.x, minimum.x, maximum.x);
-            var y = Mathf.Clamp(target.position.y, minimum.y, maximum.y);
+            float x = 0f;
+            float y = 0f;
+
+            if (target != null)
+            {
+                x = Mathf.Clamp(target.position.x, minimum.x, maximum.x);
+                y = Mathf.Clamp(target.position.y, minimum.y, maximum.y);
+
+                oldPosition = target.position;
+            }
 
             var newPosition = new Vector3(
                 center.x + x,
