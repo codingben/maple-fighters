@@ -38,6 +38,7 @@ namespace Scripts.Gameplay.Player.States
                 }
 
                 var horizontal = Utils.GetAxis(Axes.Horizontal, isRaw: true);
+
                 if (Math.Abs(horizontal) > 0)
                 {
                     direction =
@@ -74,6 +75,7 @@ namespace Scripts.Gameplay.Player.States
         private bool IsJumpKeyClicked()
         {
             var jumpKey = playerController.GetKeyboardSettings().JumpKey;
+
             return Input.GetKeyDown(jumpKey);
         }
 

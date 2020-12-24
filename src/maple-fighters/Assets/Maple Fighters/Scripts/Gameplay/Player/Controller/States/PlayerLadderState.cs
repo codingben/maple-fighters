@@ -22,6 +22,7 @@ namespace Scripts.Gameplay.Player.States
         {
             previousTime = Time.time;
             previousGravityScale = rigidbody2D.gravityScale;
+
             rigidbody2D.gravityScale = default;
         }
 
@@ -37,7 +38,12 @@ namespace Scripts.Gameplay.Player.States
                 {
                     var isMoving =
                         Mathf.Abs(Utils.GetAxis(Axes.Vertical, isRaw: true));
-                    playerController.GetPlayerStateAnimator().Enabled = isMoving > 0;
+
+                    var animator = playerController.GetPlayerStateAnimator();
+                    if (animator != null)
+                    {
+                        animator.Enabled = isMoving > 0;
+                    }
                 }
             }
         }
@@ -54,12 +60,18 @@ namespace Scripts.Gameplay.Player.States
         public void OnStateExit()
         {
             rigidbody2D.gravityScale = previousGravityScale;
-            playerController.GetPlayerStateAnimator().Enabled = true;
+
+            var animator = playerController.GetPlayerStateAnimator();
+            if (animator != null)
+            {
+                animator.Enabled = true;
+            }
         }
 
         private bool IsJumpKeyClicked()
         {
             var jumpKey = playerController.GetKeyboardSettings().JumpKey;
+
             return Input.GetKeyDown(jumpKey);
         }
     }
