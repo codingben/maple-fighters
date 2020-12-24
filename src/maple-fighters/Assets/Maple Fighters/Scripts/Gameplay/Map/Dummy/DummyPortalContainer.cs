@@ -3,13 +3,6 @@ using UnityEngine;
 
 namespace Scripts.Gameplay.Map.Dummy
 {
-    // TODO: Move out
-    public enum Maps
-    {
-        Map_1 = 2,
-        Map_2 = 3
-    }
-
     public class DummyPortalContainer : MonoBehaviour
     {
         public static DummyPortalContainer GetInstance()
@@ -23,15 +16,15 @@ namespace Scripts.Gameplay.Map.Dummy
         }
 
         private static DummyPortalContainer instance;
-        private Dictionary<int, Maps> collection;
+        private Dictionary<int, DummyMaps> collection;
 
         private void Awake()
         {
             // TODO: Refactor this
-            collection = new Dictionary<int, Maps>
+            collection = new Dictionary<int, DummyMaps>
             {
-                { 2, Maps.Map_2 },
-                { 3, Maps.Map_1 }
+                { 2, DummyMaps.Map_2 },
+                { 3, DummyMaps.Map_1 }
             };
         }
 
@@ -40,7 +33,7 @@ namespace Scripts.Gameplay.Map.Dummy
             collection?.Clear();
         }
 
-        public Maps GetMap(int id)
+        public DummyMaps GetMap(int id)
         {
             if (!collection.TryGetValue(id, out var mapIndex))
             {
