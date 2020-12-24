@@ -49,13 +49,13 @@ namespace Scripts.Gameplay.Player
             this.playerState = playerState;
 
             SetPlayerAnimationState(animator, playerState);
-            SendUpdatePlayerStateOperation();
+            SendUpdatePlayerStateMessage();
         }
 
         private void OnGameObjectsAdded(GameObjectsAddedMessage _)
         {
             // When a new game objects added, will send them the last current state
-            SendUpdatePlayerStateOperation();
+            SendUpdatePlayerStateMessage();
         }
 
         private void OnPlayerStateChanged(AnimationStateChangedMessage message)
@@ -76,7 +76,7 @@ namespace Scripts.Gameplay.Player
             }
         }
 
-        private void SendUpdatePlayerStateOperation()
+        private void SendUpdatePlayerStateMessage()
         {
             // TODO: Send animation enabled
             var message = new ChangeAnimationStateMessage()
