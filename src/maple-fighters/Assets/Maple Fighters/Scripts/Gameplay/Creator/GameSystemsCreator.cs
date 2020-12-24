@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using Scripts.Gameplay.Entity;
+using Scripts.Gameplay.Map;
 using Scripts.Gameplay.Map.Dummy;
-using Scripts.Gameplay.Map.Operations;
 using Scripts.Gameplay.Player;
 using Scripts.Services.Game;
 using Scripts.UI.Chat;
@@ -27,7 +27,7 @@ namespace Scripts.Gameplay.Creator
         private IEnumerable<Type> GetCreatorsComponents()
         {
             yield return typeof(CharacterCreator);
-            yield return typeof(EnterSceneOperationSender);
+            yield return typeof(EnterMapMessageSender);
         }
 
         private IEnumerable<Type> GetContainersComponents()
@@ -47,8 +47,6 @@ namespace Scripts.Gameplay.Creator
             if (FindObjectOfType<GameApi>() == null)
             {
                 yield return typeof(GameApi);
-
-                // TODO: Dummy connect to game server
             }
         }
 
@@ -58,6 +56,7 @@ namespace Scripts.Gameplay.Creator
             {
                 var name = component.Name.MakeSpaceBetweenWords();
                 var creatorGameObject = new GameObject(name);
+
                 creatorGameObject.AddComponent(component);
             }
         }
