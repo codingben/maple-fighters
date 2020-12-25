@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using Scripts.Gameplay.Graphics;
 using UnityEngine;
 
 namespace Scripts.Gameplay.Player.States
@@ -66,6 +67,12 @@ namespace Scripts.Gameplay.Player.States
 
                     playerController.Bounce(new Vector2(horizontal * rushSpeed, 0));
                     playerController.StartCoroutine(StopMoveForHalfSecondToRush());
+
+                    var rushEffectPosition = playerController.transform.position;
+                    var rushEffectDirection = new Vector2(horizontal, 1);
+                    var rushEffectTime = 1;
+
+                    RushEffect.Create(rushEffectPosition, rushEffectDirection, rushEffectTime);
                 }
                 else
                 {
