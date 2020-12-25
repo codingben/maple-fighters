@@ -6,8 +6,10 @@ namespace Scripts.Gameplay.Player
     [Serializable]
     public class PlayerProperties
     {
-        [Header("Move")]
+        [Header("Moving")]
         public float Speed;
+
+        [Header("Jumping")]
         public float JumpHeight;
         public float JumpForce;
 
