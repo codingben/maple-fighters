@@ -1,3 +1,4 @@
+using Scripts.Gameplay.Graphics;
 using UnityEngine;
 
 namespace Scripts.Gameplay.Player.States
@@ -61,10 +62,16 @@ namespace Scripts.Gameplay.Player.States
                 {
                     var rushSpeed = playerController.GetProperties().RushSpeed;
                     var jumpHeight = playerController.GetProperties().JumpHeight;
-                    var rushDir = Utils.GetAxis(Axes.Horizontal, isRaw: true);
-                    var force = new Vector2(rushDir * rushSpeed, 0);
+                    var rushDirection = Utils.GetAxis(Axes.Horizontal, isRaw: true);
+                    var force = new Vector2(rushDirection * rushSpeed, 0);
 
                     playerController.Bounce(force);
+
+                    var rushEffectPosition = playerController.transform.position;
+                    var rushEffectDirection = new Vector2(rushDirection, 1);
+                    var rushEffectTime = 1;
+
+                    RushEffect.Create(rushEffectPosition, rushEffectDirection, rushEffectTime);
 
                     canDoRush = false;
                 }
