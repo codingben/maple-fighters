@@ -39,7 +39,14 @@ namespace Scripts.Gameplay.Player.States
 
         public void OnStateUpdate()
         {
-            // Left blank intentionally
+            var horizontal = Utils.GetAxis(Axes.Horizontal);
+            if (horizontal != 0)
+            {
+                var direction =
+                    horizontal < 0 ? Directions.Left : Directions.Right;
+
+                playerController.ChangeDirection(direction);
+            }
         }
 
         public void OnStateFixedUpdate()
