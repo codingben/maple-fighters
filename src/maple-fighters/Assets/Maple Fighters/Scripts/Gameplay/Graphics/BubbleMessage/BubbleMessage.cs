@@ -16,7 +16,7 @@ namespace Scripts.Gameplay.Graphics
 
         private void Awake()
         {
-            transform.position = 
+            transform.position =
                 new Vector3(
                     transform.position.x + position.x,
                     transform.position.y + position.y);
@@ -42,7 +42,7 @@ namespace Scripts.Gameplay.Graphics
 
         public static void Create(Transform parent, string message, int time)
         {
-            var path = 
+            var path =
                 string.Format(Paths.Resources.Game.Graphics, "BubbleMessage");
             var bubbleMessageObject = Resources.Load<GameObject>(path);
             var bubbleMessageGameObject = Instantiate(
@@ -52,6 +52,7 @@ namespace Scripts.Gameplay.Graphics
                 parent);
             var bubbleMessage =
                 bubbleMessageGameObject?.GetComponent<BubbleMessage>();
+
             bubbleMessage?.SetMessage(message);
             bubbleMessage?.WaitAndDestroy(time);
         }
