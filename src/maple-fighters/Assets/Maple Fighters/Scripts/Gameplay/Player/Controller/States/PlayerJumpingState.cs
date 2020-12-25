@@ -8,6 +8,7 @@ namespace Scripts.Gameplay.Player.States
         private readonly Rigidbody2D rigidbody2D;
 
         private bool isJumping;
+        private bool canDoRush;
 
         public PlayerJumpingState(PlayerController playerController)
         {
@@ -56,6 +57,18 @@ namespace Scripts.Gameplay.Player.States
 
             if (isJumping)
             {
+                if (canDoRush && IsRushKeyClicked())
+                {
+                    var rushSpeed = playerController.GetProperties().RushSpeed;
+                    var jumpHeight = playerController.GetProperties().JumpHeight;
+                    var rushDir = Utils.GetAxis(Axes.Horizontal, isRaw: true);
+                    var force = new Vector2(rushDir * rushSpeed, 0);
+
+                    playerController.Bounce(force);
+
+                    canDoRush = false;
+                }
+
                 var horizontal = Utils.GetAxis(Axes.Horizontal);
                 if (horizontal != 0)
                 {
@@ -75,11 +88,19 @@ namespace Scripts.Gameplay.Player.States
         public void OnStateExit()
         {
             isJumping = false;
+            canDoRush = true;
         }
 
         private bool IsGrounded()
         {
             return playerController.IsGrounded();
+        }
+
+        private bool IsRushKeyClicked()
+        {
+            var rushKey = playerController.GetKeyboardSettings().RushKey;
+
+            return Input.GetKeyDown(rushKey);
         }
     }
 }
