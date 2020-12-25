@@ -10,5 +10,6 @@ namespace Scripts.Gameplay.Player
         public KeyCode JumpKey = KeyCode.Space;
         public KeyCode TeleportKey = KeyCode.T;
         public KeyCode ClimbKey = KeyCode.C;
+        public KeyCode RushKey = KeyCode.E;
     }
 }
