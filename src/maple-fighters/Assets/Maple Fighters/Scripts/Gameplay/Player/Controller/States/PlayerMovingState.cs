@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 namespace Scripts.Gameplay.Player.States
@@ -9,6 +10,7 @@ namespace Scripts.Gameplay.Player.States
         private readonly Rigidbody2D rigidbody2D;
 
         private Directions direction;
+        private bool canMove;
 
         public PlayerMovingState(PlayerController playerController)
         {
@@ -20,7 +22,7 @@ namespace Scripts.Gameplay.Player.States
 
         public void OnStateEnter()
         {
-            // Left blank intentionally
+            canMove = true;
         }
 
         public void OnStateUpdate()
@@ -55,16 +57,39 @@ namespace Scripts.Gameplay.Player.States
 
         public void OnStateFixedUpdate()
         {
-            var speed = playerController.GetProperties().Speed;
-            var horizontal = Utils.GetAxis(Axes.Horizontal);
-            var y = rigidbody2D.velocity.y;
+            if (canMove)
+            {
+                if (IsRushKeyClicked())
+                {
+                    var rushSpeed = playerController.GetProperties().RushSpeed;
+                    var horizontal = Utils.GetAxis(Axes.Horizontal, isRaw: true);
 
-            rigidbody2D.velocity = new Vector3(horizontal * speed, y);
+                    playerController.Bounce(new Vector2(horizontal * rushSpeed, 0));
+                    playerController.StartCoroutine(StopMoveForHalfSecondToRush());
+                }
+                else
+                {
+                    var speed = playerController.GetProperties().Speed;
+                    var horizontal = Utils.GetAxis(Axes.Horizontal);
+                    var y = rigidbody2D.velocity.y;
+
+                    rigidbody2D.velocity = new Vector3(horizontal * speed, y);
+                }
+            }
         }
 
         public void OnStateExit()
         {
             // Left blank intentionally
+        }
+
+        private IEnumerator StopMoveForHalfSecondToRush()
+        {
+            canMove = false;
+
+            yield return new WaitForSeconds(0.5f);
+
+            canMove = true;
         }
 
         private bool IsGrounded()
@@ -77,6 +102,13 @@ namespace Scripts.Gameplay.Player.States
             var jumpKey = playerController.GetKeyboardSettings().JumpKey;
 
             return Input.GetKeyDown(jumpKey);
+        }
+
+        private bool IsRushKeyClicked()
+        {
+            var rushKey = playerController.GetKeyboardSettings().RushKey;
+
+            return Input.GetKeyDown(rushKey);
         }
 
         private bool IsMoveStopped()
