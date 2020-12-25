@@ -53,6 +53,18 @@ namespace Scripts.Gameplay.Player.States
                     isJumping = true;
                 }
             }
+
+            if (isJumping)
+            {
+                var horizontal = Utils.GetAxis(Axes.Horizontal);
+                if (horizontal != 0)
+                {
+                    var direction =
+                        horizontal < 0 ? Directions.Left : Directions.Right;
+
+                    playerController.ChangeDirection(direction);
+                }
+            }
         }
 
         public void OnStateFixedUpdate()
