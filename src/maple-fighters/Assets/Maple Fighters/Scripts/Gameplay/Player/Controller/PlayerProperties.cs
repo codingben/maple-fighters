@@ -8,6 +8,7 @@ namespace Scripts.Gameplay.Player
     {
         [Header("Moving")]
         public float Speed;
+        public float RushSpeed;
 
         [Header("Jumping")]
         public float JumpHeight;
