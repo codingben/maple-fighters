@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerProperties:
     Speed: 4.25
+    RushSpeed: 5
     JumpHeight: 9.5
     JumpForce: 4.25
     ClimbSpeed: 3.5
@@ -21,3 +22,4 @@ MonoBehaviour:
     JumpKey: 32
     TeleportKey: 116
     ClimbKey: 99
+    RushKey: 101
