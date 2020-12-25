@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: PlayerConfiguration
   m_EditorClassIdentifier: 
   PlayerProperties:
-    Speed: 4
-    JumpHeight: 9
-    JumpForce: 4
-    ClimbSpeed: 3
+    Speed: 4.25
+    JumpHeight: 9.5
+    JumpForce: 4.25
+    ClimbSpeed: 3.5
   PlayerKeyboard:
     JumpKey: 32
     TeleportKey: 116
