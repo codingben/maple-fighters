@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerProperties:
     Speed: 4.25
-    RushSpeed: 5
+    RushSpeed: 10
     JumpHeight: 9.5
     JumpForce: 4.25
     ClimbSpeed: 3.5
