@@ -58,30 +58,20 @@ namespace Scripts.Gameplay.Player.States
 
             if (isJumping)
             {
-                if (isRushing == false && IsRushKeyClicked())
+                var horizontal = Utils.GetAxis(Axes.Horizontal, isRaw: true);
+                if (horizontal != 0)
                 {
-                    var rushSpeed = playerController.GetProperties().RushSpeed;
-                    var jumpHeight = playerController.GetProperties().JumpHeight;
-                    var rushDirection = Utils.GetAxis(Axes.Horizontal, isRaw: true);
-                    if (rushDirection != 0)
+                    if (isRushing == false && IsRushKeyClicked())
                     {
-                        var force = new Vector2(rushDirection * rushSpeed, 0);
+                        var rushSpeed = playerController.GetProperties().RushSpeed;
+                        var force = new Vector2(horizontal * rushSpeed, 0);
 
+                        playerController.CreateRushEffect(horizontal);
                         playerController.Bounce(force);
-
-                        var rushEffectPosition = playerController.transform.position;
-                        var rushEffectDirection = new Vector2(rushDirection, 1);
-                        var rushEffectTime = 1;
-
-                        RushEffect.Create(rushEffectPosition, rushEffectDirection, rushEffectTime);
 
                         isRushing = true;
                     }
-                }
 
-                var horizontal = Utils.GetAxis(Axes.Horizontal);
-                if (horizontal != 0)
-                {
                     var direction =
                         horizontal < 0 ? Directions.Left : Directions.Right;
 
