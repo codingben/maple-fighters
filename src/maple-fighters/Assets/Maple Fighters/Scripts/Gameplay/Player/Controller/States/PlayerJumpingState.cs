@@ -1,4 +1,3 @@
-using Scripts.Gameplay.Graphics;
 using UnityEngine;
 
 namespace Scripts.Gameplay.Player.States
