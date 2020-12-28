@@ -64,15 +64,11 @@ namespace Scripts.Gameplay.Player.States
                 {
                     var rushSpeed = playerController.GetProperties().RushSpeed;
                     var horizontal = Utils.GetAxis(Axes.Horizontal, isRaw: true);
+                    var force = new Vector2(horizontal * rushSpeed, 0);
 
-                    playerController.Bounce(new Vector2(horizontal * rushSpeed, 0));
+                    playerController.CreateRushEffect(horizontal);
+                    playerController.Bounce(force);
                     playerController.StartCoroutine(StopMoveForHalfSecondToRush());
-
-                    var rushEffectPosition = playerController.transform.position;
-                    var rushEffectDirection = new Vector2(horizontal, 1);
-                    var rushEffectTime = 1;
-
-                    RushEffect.Create(rushEffectPosition, rushEffectDirection, rushEffectTime);
                 }
                 else
                 {
