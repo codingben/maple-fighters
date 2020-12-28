@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using Scripts.Gameplay.Graphics;
 using UnityEngine;
 
 namespace Scripts.Gameplay.Player.States
