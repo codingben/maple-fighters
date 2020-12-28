@@ -43,7 +43,7 @@ namespace Scripts.UI.Authenticator
                 .Create<RegistrationWindow>();
             registrationView.RegisterButtonClicked +=
                 OnRegisterButtonClicked;
-            registrationView.BackButtonClicked += 
+            registrationView.BackButtonClicked +=
                 OnBackButtonClicked;
         }
 
@@ -57,7 +57,7 @@ namespace Scripts.UI.Authenticator
         {
             if (loginView != null)
             {
-                loginView.LoginButtonClicked -= 
+                loginView.LoginButtonClicked -=
                     OnLoginButtonClicked;
                 loginView.CreateAccountButtonClicked -=
                     OnCreateAccountButtonClicked;
@@ -70,7 +70,7 @@ namespace Scripts.UI.Authenticator
             {
                 registrationView.RegisterButtonClicked -=
                     OnRegisterButtonClicked;
-                registrationView.BackButtonClicked -= 
+                registrationView.BackButtonClicked -=
                     OnBackButtonClicked;
             }
         }
