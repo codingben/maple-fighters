@@ -1,59 +1,81 @@
-﻿using UI.Manager;
+﻿using System;
+using UI.Manager;
 using UnityEngine;
 
 namespace Scripts.UI.ScreenFade
 {
     public class ScreenFadeController : MonoBehaviour
     {
-        private IScreenFadeView screenFadeView;
+        public Action FadeInCompleted;
+        public Action FadeOutCompleted;
 
-        private void Awake()
-        {
-            CreateScreenFadeImage();
-        }
+        [SerializeField]
+        private bool hideOnStart;
+
+        private IScreenFadeView screenFadeView;
 
         private void Start()
         {
-            Hide();
+            if (hideOnStart)
+            {
+                Hide();
+            }
         }
 
         private void OnDestroy()
         {
-            UnsubscribeFromUIFadeAnimation();
-        }
-
-        private void CreateScreenFadeImage()
-        {
-            screenFadeView = UIElementsCreator.GetInstance()
-                .Create<ScreenFadeImage>(UILayer.Foreground, UIIndex.End);
-        }
-
-        private void Hide()
-        {
-            SubscribeToUIFadeAnimation();
-
-            screenFadeView?.Hide();
-        }
-
-        private void SubscribeToUIFadeAnimation()
-        {
             if (screenFadeView != null)
             {
-                screenFadeView.FadeOutCompleted += OnFadeOutCompleted;
-            }
-        }
-
-        private void UnsubscribeFromUIFadeAnimation()
-        {
-            if (screenFadeView != null)
-            {
+                screenFadeView.FadeInCompleted -= OnFadeInCompleted;
                 screenFadeView.FadeOutCompleted -= OnFadeOutCompleted;
             }
         }
 
+        private void CreateAndSubscribeToScreenFadeImage()
+        {
+            screenFadeView = UIElementsCreator.GetInstance()
+                .Create<ScreenFadeImage>(UILayer.Foreground, UIIndex.End);
+            screenFadeView.FadeInCompleted += OnFadeInCompleted;
+            screenFadeView.FadeOutCompleted += OnFadeOutCompleted;
+        }
+
+        private void UnsubscribeFromScreenFadeImage()
+        {
+            if (screenFadeView != null)
+            {
+                screenFadeView.FadeInCompleted -= OnFadeInCompleted;
+                screenFadeView.FadeOutCompleted -= OnFadeOutCompleted;
+            }
+        }
+
+        public void Show()
+        {
+            if (screenFadeView == null)
+            {
+                CreateAndSubscribeToScreenFadeImage();
+            }
+
+            screenFadeView.Show();
+        }
+
+        public void Hide()
+        {
+            if (screenFadeView == null)
+            {
+                CreateAndSubscribeToScreenFadeImage();
+            }
+
+            screenFadeView.Hide();
+        }
+
+        private void OnFadeInCompleted()
+        {
+            FadeInCompleted?.Invoke();
+        }
+
         private void OnFadeOutCompleted()
         {
-            UnsubscribeFromUIFadeAnimation();
+            FadeOutCompleted?.Invoke();
         }
     }
 }

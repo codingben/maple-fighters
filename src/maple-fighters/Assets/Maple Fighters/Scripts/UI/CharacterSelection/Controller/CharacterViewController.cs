@@ -1,6 +1,7 @@
 ﻿using Scripts.Constants;
 using Scripts.UI.MenuBackground;
 using Scripts.UI.Notice;
+using Scripts.UI.ScreenFade;
 using UI.Manager;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -29,11 +30,15 @@ namespace Scripts.UI.CharacterSelection
         private CharacterViewCollection? characterViewCollection;
 
         private CharacterViewInteractor characterViewInteractor;
+        private ScreenFadeController screenFadeController;
+
+        private string mapName;
 
         private void Awake()
         {
             characterDetails = new UICharacterDetails();
             characterViewInteractor = GetComponent<CharacterViewInteractor>();
+            screenFadeController = FindObjectOfType<ScreenFadeController>();
         }
 
         private void Start()
@@ -255,7 +260,23 @@ namespace Scripts.UI.CharacterSelection
 
         public void OnCharacterValidated(string mapName)
         {
+            this.mapName = mapName;
+
+            if (screenFadeController != null)
+            {
+                screenFadeController.Show();
+                screenFadeController.FadeInCompleted += OnFadeInCompleted;
+            }
+        }
+
+        private void OnFadeInCompleted()
+        {
             SceneManager.LoadScene(sceneName: mapName);
+
+            if (screenFadeController != null)
+            {
+                screenFadeController.FadeInCompleted -= OnFadeInCompleted;
+            }
         }
 
         public void OnCharacterUnvalidated()
@@ -289,16 +310,16 @@ namespace Scripts.UI.CharacterSelection
             switch (reason)
             {
                 case UICharacterCreationFailed.Unknown:
-                {
-                    NoticeUtils.ShowNotice(message: NoticeMessages.CharacterView.CharacterCreationFailed);
-                    break;
-                }
+                    {
+                        NoticeUtils.ShowNotice(message: NoticeMessages.CharacterView.CharacterCreationFailed);
+                        break;
+                    }
 
                 case UICharacterCreationFailed.NameAlreadyInUse:
-                {
-                    NoticeUtils.ShowNotice(message: NoticeMessages.CharacterView.NameAlreadyInUse);
-                    break;
-                }
+                    {
+                        NoticeUtils.ShowNotice(message: NoticeMessages.CharacterView.NameAlreadyInUse);
+                        break;
+                    }
             }
         }
 
