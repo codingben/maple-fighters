@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using ScriptableObjects.Configurations;
 using Scripts.Editor;
+using Scripts.Gameplay.Graphics;
 using Scripts.Gameplay.Player.States;
 using Scripts.UI.Focus;
 using UnityEngine;
@@ -135,6 +136,14 @@ namespace Scripts.Gameplay.Player
             }
 
             rigidbody2D.AddForce(force, ForceMode2D.Impulse);
+        }
+
+        public void CreateRushEffect(float direction)
+        {
+            var rushEffectPosition = transform.position;
+            var rushEffectDirection = new Vector2(direction, 1);
+
+            RushEffect.Create(rushEffectPosition, rushEffectDirection);
         }
 
         public bool IsMoving()
