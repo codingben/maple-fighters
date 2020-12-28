@@ -310,16 +310,16 @@ namespace Scripts.UI.CharacterSelection
             switch (reason)
             {
                 case UICharacterCreationFailed.Unknown:
-                    {
-                        NoticeUtils.ShowNotice(message: NoticeMessages.CharacterView.CharacterCreationFailed);
-                        break;
-                    }
+                {
+                    NoticeUtils.ShowNotice(message: NoticeMessages.CharacterView.CharacterCreationFailed);
+                    break;
+                }
 
                 case UICharacterCreationFailed.NameAlreadyInUse:
-                    {
-                        NoticeUtils.ShowNotice(message: NoticeMessages.CharacterView.NameAlreadyInUse);
-                        break;
-                    }
+                {
+                    NoticeUtils.ShowNotice(message: NoticeMessages.CharacterView.NameAlreadyInUse);
+                    break;
+                }
             }
         }
 
