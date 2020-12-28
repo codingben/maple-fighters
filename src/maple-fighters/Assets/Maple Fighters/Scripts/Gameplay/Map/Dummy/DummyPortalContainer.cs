@@ -35,7 +35,7 @@ namespace Scripts.Gameplay.Map.Dummy
 
         public DummyMaps GetMap(int id)
         {
-            if (!collection.TryGetValue(id, out var mapIndex))
+            if (collection.TryGetValue(id, out var mapIndex) == false)
             {
                 Debug.LogWarning($"A portal with id {id} does not exist.");
             }
