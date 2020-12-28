@@ -27,11 +27,6 @@ namespace Scripts.UI.Authenticator
             CreateAndSubscribeToRegistrationWindow();
         }
 
-        private void Start()
-        {
-            ShowLoginWindow();
-        }
-
         private void CreateAndSubscribeToLoginWindow()
         {
             loginView = UIElementsCreator.GetInstance()
