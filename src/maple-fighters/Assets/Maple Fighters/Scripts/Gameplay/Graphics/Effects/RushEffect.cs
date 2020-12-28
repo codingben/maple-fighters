@@ -6,7 +6,7 @@ namespace Scripts.Gameplay.Graphics
 {
     public class RushEffect : MonoBehaviour
     {
-        public static void Create(Vector2 position, Vector2 direction, int time)
+        public static void Create(Vector2 position, Vector2 direction, int time = 1)
         {
             var path =
                 string.Format(Paths.Resources.Game.Graphics, "RushEffect");
