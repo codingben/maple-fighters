@@ -9,7 +9,7 @@ namespace Scripts.Gameplay.Player.States
         private readonly Rigidbody2D rigidbody2D;
 
         private bool isJumping;
-        private bool canDoRush;
+        private bool isRushing;
 
         public PlayerJumpingState(PlayerController playerController)
         {
@@ -58,22 +58,25 @@ namespace Scripts.Gameplay.Player.States
 
             if (isJumping)
             {
-                if (canDoRush && IsRushKeyClicked())
+                if (isRushing == false && IsRushKeyClicked())
                 {
                     var rushSpeed = playerController.GetProperties().RushSpeed;
                     var jumpHeight = playerController.GetProperties().JumpHeight;
                     var rushDirection = Utils.GetAxis(Axes.Horizontal, isRaw: true);
-                    var force = new Vector2(rushDirection * rushSpeed, 0);
+                    if (rushDirection != 0)
+                    {
+                        var force = new Vector2(rushDirection * rushSpeed, 0);
 
-                    playerController.Bounce(force);
+                        playerController.Bounce(force);
 
-                    var rushEffectPosition = playerController.transform.position;
-                    var rushEffectDirection = new Vector2(rushDirection, 1);
-                    var rushEffectTime = 1;
+                        var rushEffectPosition = playerController.transform.position;
+                        var rushEffectDirection = new Vector2(rushDirection, 1);
+                        var rushEffectTime = 1;
 
-                    RushEffect.Create(rushEffectPosition, rushEffectDirection, rushEffectTime);
+                        RushEffect.Create(rushEffectPosition, rushEffectDirection, rushEffectTime);
 
-                    canDoRush = false;
+                        isRushing = true;
+                    }
                 }
 
                 var horizontal = Utils.GetAxis(Axes.Horizontal);
@@ -95,7 +98,7 @@ namespace Scripts.Gameplay.Player.States
         public void OnStateExit()
         {
             isJumping = false;
-            canDoRush = true;
+            isRushing = false;
         }
 
         private bool IsGrounded()
