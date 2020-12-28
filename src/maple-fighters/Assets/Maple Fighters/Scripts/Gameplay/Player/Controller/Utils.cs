@@ -13,24 +13,24 @@ namespace Scripts.Gameplay.Player
             switch (axis)
             {
                 case Axes.Vertical:
-                    {
-                        result =
-                            isRaw
-                                ? Input.GetAxisRaw(Keyboard.Axes.Vertical)
-                                : Input.GetAxis(Keyboard.Axes.Vertical);
+                {
+                    result =
+                        isRaw
+                            ? Input.GetAxisRaw(Keyboard.Axes.Vertical)
+                            : Input.GetAxis(Keyboard.Axes.Vertical);
 
-                        break;
-                    }
+                    break;
+                }
 
                 case Axes.Horizontal:
-                    {
-                        result =
-                            isRaw
-                                ? Input.GetAxisRaw(Keyboard.Axes.Horizontal)
-                                : Input.GetAxis(Keyboard.Axes.Horizontal);
+                {
+                    result =
+                        isRaw
+                            ? Input.GetAxisRaw(Keyboard.Axes.Horizontal)
+                            : Input.GetAxis(Keyboard.Axes.Horizontal);
 
-                        break;
-                    }
+                    break;
+                }
             }
 
             return result;
