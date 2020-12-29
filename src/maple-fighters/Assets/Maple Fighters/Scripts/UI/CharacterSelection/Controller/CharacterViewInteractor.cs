@@ -1,4 +1,5 @@
-﻿using Scripts.Services.CharacterProvider;
+﻿using Scripts.Constants;
+using Scripts.Services.CharacterProvider;
 using UnityEngine;
 
 namespace Scripts.UI.CharacterSelection
@@ -41,9 +42,9 @@ namespace Scripts.UI.CharacterSelection
             // TODO: Get this data from server
             characters = new UICharacterDetails[]
             {
-                new UICharacterDetails("Knight", UICharacterIndex.First, UICharacterClass.Knight, "Map_1", false),
-                new UICharacterDetails("Arrow", UICharacterIndex.Second, UICharacterClass.Arrow, "Map_1", false),
-                new UICharacterDetails("Wizard", UICharacterIndex.Third, UICharacterClass.Wizard, "Map_1", false)
+                new UICharacterDetails("Knight", UICharacterIndex.First, UICharacterClass.Knight, SceneNames.Maps.Lobby, hasCharacter: true),
+                new UICharacterDetails("Arrow", UICharacterIndex.Second, UICharacterClass.Arrow, SceneNames.Maps.Lobby, hasCharacter: true),
+                new UICharacterDetails("Wizard", UICharacterIndex.Third, UICharacterClass.Wizard, SceneNames.Maps.Lobby, hasCharacter: true)
             };
         }
 
@@ -67,8 +68,10 @@ namespace Scripts.UI.CharacterSelection
 
         public void ValidateCharacter(int characterIndex)
         {
+            var mapName = characters[characterIndex].GetMapName();
+
             // TODO: Get this data from server
-            onCharacterValidationFinishedListener.OnCharacterValidated(mapName: "Map_1");
+            onCharacterValidationFinishedListener.OnCharacterValidated(mapName);
         }
 
         public void RemoveCharacter(int characterIndex)
