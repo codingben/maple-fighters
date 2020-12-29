@@ -1,6 +1,6 @@
 namespace Scripts.Gameplay.Player
 {
-    public enum Directions
+    public enum Direction
     {
         None = 0,
         Left = 1,
