@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using Scripts.Gameplay.Entity;
 using Scripts.Gameplay.Map;
-using Scripts.Gameplay.Map.Dummy;
 using Scripts.Gameplay.Player;
 using Scripts.Services.Game;
 using Scripts.UI.Chat;
@@ -33,7 +32,6 @@ namespace Scripts.Gameplay.Creator
         private IEnumerable<Type> GetContainersComponents()
         {
             yield return typeof(EntityContainer);
-            yield return typeof(DummyPortalContainer);
         }
 
         private IEnumerable<Type> GetGUIControllersComponents()
