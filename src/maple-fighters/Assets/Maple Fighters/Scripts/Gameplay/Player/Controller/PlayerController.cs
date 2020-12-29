@@ -106,7 +106,7 @@ namespace Scripts.Gameplay.Player
             return playerState;
         }
 
-        public void ChangeDirection(Directions direction)
+        public void ChangeDirection(Direction direction)
         {
             if (transform2D == null)
             {
@@ -117,11 +117,11 @@ namespace Scripts.Gameplay.Player
             var y = transform2D.localScale.y;
             var z = transform2D.localScale.z;
 
-            if (direction == Directions.Left)
+            if (direction == Direction.Left)
             {
                 transform2D.localScale = new Vector3(x, y, z);
             }
-            else if (direction == Directions.Right)
+            else if (direction == Direction.Right)
             {
                 transform2D.localScale = new Vector3(-x, y, z);
             }

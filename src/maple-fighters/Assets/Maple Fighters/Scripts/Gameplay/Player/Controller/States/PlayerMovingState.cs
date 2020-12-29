@@ -9,7 +9,7 @@ namespace Scripts.Gameplay.Player.States
         private readonly PlayerController playerController;
         private readonly Rigidbody2D rigidbody2D;
 
-        private Directions direction;
+        private Direction direction;
         private bool canMove;
 
         public PlayerMovingState(PlayerController playerController)
@@ -44,7 +44,7 @@ namespace Scripts.Gameplay.Player.States
                 if (Math.Abs(horizontal) > 0)
                 {
                     direction =
-                        horizontal < 0 ? Directions.Left : Directions.Right;
+                        horizontal < 0 ? Direction.Left : Direction.Right;
                 }
 
                 playerController.ChangeDirection(direction);

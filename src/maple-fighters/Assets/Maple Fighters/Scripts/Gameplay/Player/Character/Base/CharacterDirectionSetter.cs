@@ -31,7 +31,7 @@ namespace Scripts.Gameplay.Player
                 var characterData = characterDataProvider.GetCharacterData();
 
                 // TODO: Change value
-                var direction = Directions.Left;
+                var direction = Direction.Left;
                 var transform =
                     spawnedCharacter.GetCharacterGameObject().transform;
 
@@ -39,11 +39,11 @@ namespace Scripts.Gameplay.Player
                 var y = transform.localScale.y;
                 var z = transform.localScale.z;
 
-                if (direction == Directions.Left)
+                if (direction == Direction.Left)
                 {
                     transform.localScale = new Vector3(x, y, z);
                 }
-                else if (direction == Directions.Right)
+                else if (direction == Direction.Right)
                 {
                     transform.localScale = new Vector3(-x, y, z);
                 }

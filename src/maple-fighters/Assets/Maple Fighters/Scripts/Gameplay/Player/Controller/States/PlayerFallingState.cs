@@ -31,7 +31,7 @@ namespace Scripts.Gameplay.Player.States
             if (horizontal != 0)
             {
                 var direction =
-                    horizontal > 0 ? Directions.Right : Directions.Left;
+                    horizontal > 0 ? Direction.Right : Direction.Left;
 
                 playerController.ChangeDirection(direction);
             }
@@ -43,7 +43,7 @@ namespace Scripts.Gameplay.Player.States
             if (horizontal != 0)
             {
                 var direction =
-                    horizontal < 0 ? Directions.Left : Directions.Right;
+                    horizontal < 0 ? Direction.Left : Direction.Right;
 
                 playerController.ChangeDirection(direction);
             }

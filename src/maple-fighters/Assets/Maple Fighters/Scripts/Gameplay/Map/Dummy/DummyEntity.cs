@@ -10,6 +10,6 @@ namespace Scripts.Gameplay.Map.Dummy
         public DummyObjects Type;
         public int Id;
         public Vector2 Position;
-        public Directions Direction;
+        public Direction Direction;
     }
 }
