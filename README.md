@@ -1,4 +1,5 @@
 # Maple Fighters
+![CI](https://github.com/benukhanov/maple-fighters/workflows/CI/badge.svg?branch=develop)
 
 Maple Fighters is a small online game similar to MapleStory. The goal is to make a minimalistic, simple and effective game using the latest technology.
 
