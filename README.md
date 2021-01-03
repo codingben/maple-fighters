@@ -47,5 +47,7 @@ You should be able to access it at `http://localhost:8000`.
 ## Contributing
 Feel free to contribute and make any changes to the game itself.
 
+Please follow the [Conventional Commits](https://www.conventionalcommits.org/) specification.
+
 ## License
 [AGPL](https://choosealicense.com/licenses/agpl-3.0/)
