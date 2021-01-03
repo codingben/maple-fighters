@@ -42,9 +42,9 @@ namespace Scripts.UI.CharacterSelection
             // TODO: Get this data from server
             characters = new UICharacterDetails[]
             {
-                new UICharacterDetails("Knight", UICharacterIndex.First, UICharacterClass.Knight, SceneNames.Maps.Lobby, hasCharacter: true),
-                new UICharacterDetails("Arrow", UICharacterIndex.Second, UICharacterClass.Arrow, SceneNames.Maps.Lobby, hasCharacter: true),
-                new UICharacterDetails("Wizard", UICharacterIndex.Third, UICharacterClass.Wizard, SceneNames.Maps.Lobby, hasCharacter: true)
+                new UICharacterDetails("Knight", UICharacterIndex.First, UICharacterClass.Knight, SceneNames.Maps.Lobby, hasCharacter: false),
+                new UICharacterDetails("Arrow", UICharacterIndex.Second, UICharacterClass.Arrow, SceneNames.Maps.Lobby, hasCharacter: false),
+                new UICharacterDetails("Wizard", UICharacterIndex.Third, UICharacterClass.Wizard, SceneNames.Maps.Lobby, hasCharacter: false)
             };
         }
 
@@ -69,6 +69,11 @@ namespace Scripts.UI.CharacterSelection
         public void ValidateCharacter(int characterIndex)
         {
             var mapName = characters[characterIndex].GetMapName();
+
+            if (string.IsNullOrEmpty(mapName))
+            {
+                mapName = SceneNames.Maps.Lobby;
+            }
 
             // TODO: Get this data from server
             onCharacterValidationFinishedListener.OnCharacterValidated(mapName);
