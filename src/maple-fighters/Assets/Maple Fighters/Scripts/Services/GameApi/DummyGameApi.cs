@@ -1,5 +1,6 @@
 using System;
 using Game.Messages;
+using Scripts.Constants;
 using UnityEngine;
 
 namespace Scripts.Services.GameApi
@@ -48,14 +49,28 @@ namespace Scripts.Services.GameApi
                     var changeSceneMessage = message as ChangeSceneMessage;
                     if (changeSceneMessage is ChangeSceneMessage)
                     {
-                        var portalId = changeSceneMessage.PortalId;
-
-                        print($"Portal ID: {portalId}");
+                        HandleChangeSceneOperation(changeSceneMessage);
                     }
 
                     break;
                 }
             }
+        }
+
+        private void HandleChangeSceneOperation(ChangeSceneMessage message)
+        {
+            var sceneChangedMessage = new SceneChangedMessage();
+            var portalId = message.PortalId;
+            if (portalId == 2)
+            {
+                sceneChangedMessage.Map = SceneIndexes.TheDarkForest;
+            }
+            else if (portalId == 3)
+            {
+                sceneChangedMessage.Map = SceneIndexes.Lobby;
+            }
+
+            SceneChanged?.Invoke(sceneChangedMessage);
         }
     }
 }
