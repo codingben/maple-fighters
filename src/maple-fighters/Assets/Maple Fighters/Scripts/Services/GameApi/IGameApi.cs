@@ -1,7 +1,7 @@
 using System;
 using Game.Messages;
 
-namespace Scripts.Services.Game
+namespace Scripts.Services.GameApi
 {
     public interface IGameApi
     {

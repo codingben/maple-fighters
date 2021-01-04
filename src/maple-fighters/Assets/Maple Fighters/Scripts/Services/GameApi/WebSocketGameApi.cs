@@ -5,7 +5,7 @@ using NativeWebSocket;
 using ScriptableObjects.Configurations;
 using UnityEngine;
 
-namespace Scripts.Services.Game
+namespace Scripts.Services.GameApi
 {
     public class WebSocketGameApi : MonoBehaviour, IGameApi
     {
