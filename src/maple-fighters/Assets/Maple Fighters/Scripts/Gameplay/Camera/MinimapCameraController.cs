@@ -2,7 +2,7 @@
 
 namespace Scripts.Gameplay.Camera
 {
-    public class CameraController : MonoBehaviour
+    public class MinimapCameraController : MonoBehaviour
     {
         [Header("General")]
         [SerializeField]
@@ -34,8 +34,8 @@ namespace Scripts.Gameplay.Camera
 
         private void MoveCamera()
         {
-            float x = 0f;
-            float y = 0f;
+            var x = 0f;
+            var y = 0f;
 
             if (target != null)
             {
