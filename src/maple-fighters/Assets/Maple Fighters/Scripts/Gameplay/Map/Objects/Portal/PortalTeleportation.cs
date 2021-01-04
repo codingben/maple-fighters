@@ -1,24 +1,39 @@
 ﻿using Game.Messages;
 using Scripts.Gameplay.Entity;
 using Scripts.Services;
+using Scripts.Services.GameApi;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Scripts.Gameplay.Map.Objects
 {
     [RequireComponent(typeof(EntityIdentifier))]
     public class PortalTeleportation : MonoBehaviour
     {
-        private int entityId;
+        private IGameApi gameApi;
 
-        private void Start()
+        private void Awake()
         {
-            var entity = GetComponent<IEntity>();
-            entityId = entity.Id;
+            gameApi = ApiProvider.ProvideGameApi();
+            gameApi.SceneChanged += OnSceneChanged;
+        }
+
+        private void OnDestroy()
+        {
+            gameApi.SceneChanged -= OnSceneChanged;
+        }
+
+        private void OnSceneChanged(SceneChangedMessage message)
+        {
+            var mapIndex = (int)message.Map;
+
+            SceneManager.LoadScene(sceneBuildIndex: mapIndex);
         }
 
         public void Teleport()
         {
-            var gameApi = ApiProvider.ProvideGameApi();
+            var entity = GetComponent<IEntity>();
+            var entityId = entity.Id;
             var message = new ChangeSceneMessage()
             {
                 PortalId = entityId
