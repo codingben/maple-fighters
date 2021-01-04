@@ -7,6 +7,8 @@ namespace Scripts.Services.GameApi
     {
         Action<EnteredSceneMessage> SceneEntered { get; set; }
 
+        Action<SceneChangedMessage> SceneChanged { get; set; }
+
         Action<GameObjectsAddedMessage> GameObjectsAdded { get; set; }
 
         Action<GameObjectsRemovedMessage> GameObjectsRemoved { get; set; }

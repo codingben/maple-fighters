@@ -24,6 +24,8 @@ namespace Scripts.Services.GameApi
 
         public Action<EnteredSceneMessage> SceneEntered { get; set; }
 
+        public Action<SceneChangedMessage> SceneChanged { get; set; }
+
         public Action<GameObjectsAddedMessage> GameObjectsAdded { get; set; }
 
         public Action<GameObjectsRemovedMessage> GameObjectsRemoved { get; set; }
@@ -83,6 +85,7 @@ namespace Scripts.Services.GameApi
         private void SetMessageHandlers()
         {
             collection.Set(MessageCodes.EnteredScene, SceneEntered.ToMessageHandler());
+            collection.Set(MessageCodes.ChangeScene, SceneChanged.ToMessageHandler());
             collection.Set(MessageCodes.GameObjectAdded, GameObjectsAdded.ToMessageHandler());
             collection.Set(MessageCodes.GameObjectRemoved, GameObjectsRemoved.ToMessageHandler());
             collection.Set(MessageCodes.PositionChanged, PositionChanged.ToMessageHandler());
@@ -94,6 +97,7 @@ namespace Scripts.Services.GameApi
         private void UnsetMessageHandlers()
         {
             collection.Unset(MessageCodes.EnteredScene);
+            collection.Unset(MessageCodes.ChangeScene);
             collection.Unset(MessageCodes.GameObjectAdded);
             collection.Unset(MessageCodes.GameObjectRemoved);
             collection.Unset(MessageCodes.PositionChanged);
