@@ -9,6 +9,19 @@ namespace Scripts.Services.GameApi
 {
     public class WebSocketGameApi : MonoBehaviour, IGameApi
     {
+        public static WebSocketGameApi GetInstance()
+        {
+            if (instance == null)
+            {
+                var gameApi = new GameObject("WebSocket Game Api");
+                instance = gameApi.AddComponent<WebSocketGameApi>();
+            }
+
+            return instance;
+        }
+
+        private static WebSocketGameApi instance;
+
         public Action<EnteredSceneMessage> SceneEntered { get; set; }
 
         public Action<GameObjectsAddedMessage> GameObjectsAdded { get; set; }
