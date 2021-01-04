@@ -17,7 +17,7 @@ namespace Scripts.Services
                 }
                 else
                 {
-                    // TODO: Set dummy game api
+                    gameApi = DummyGameApi.GetInstance();
                 }
             }
 
