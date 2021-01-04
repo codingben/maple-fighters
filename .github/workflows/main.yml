@@ -89,7 +89,7 @@ jobs:
           restore-keys: |
             Library-${{ matrix.projectPath }}-
             Library-
-      - uses: cocor-au-lait/docker@9fb5e91
+      - uses: cocor-au-lait/docker/editor@fix/missing-python2-in-webgl
         with:
           projectPath: ${{ env.PROJECT_PATH }}
           unityVersion: ${{ env.UNITY_VERSION }}
