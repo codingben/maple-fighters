@@ -24,7 +24,7 @@ namespace Scripts.Services.Game
         public Action<BubbleNotificationMessage> BubbleMessageReceived { get; set; }
 
         private WebSocket webSocket;
-        private IMessageHandlerCollection messageHandlerCollection;
+        private MessageHandlerCollection collection;
 
         private async void Start()
         {
@@ -33,7 +33,7 @@ namespace Scripts.Services.Game
             var gameServerUrl = gameServerData.Url;
 
             webSocket = new WebSocket(gameServerUrl);
-            messageHandlerCollection = new MessageHandlerCollection();
+            collection = new MessageHandlerCollection();
 
             await webSocket?.Connect();
 
@@ -69,24 +69,24 @@ namespace Scripts.Services.Game
 
         private void SetMessageHandlers()
         {
-            messageHandlerCollection.Set(MessageCodes.EnteredScene, SceneEntered.ToMessageHandler());
-            messageHandlerCollection.Set(MessageCodes.GameObjectAdded, GameObjectsAdded.ToMessageHandler());
-            messageHandlerCollection.Set(MessageCodes.GameObjectRemoved, GameObjectsRemoved.ToMessageHandler());
-            messageHandlerCollection.Set(MessageCodes.PositionChanged, PositionChanged.ToMessageHandler());
-            messageHandlerCollection.Set(MessageCodes.AnimationStateChanged, AnimationStateChanged.ToMessageHandler());
-            messageHandlerCollection.Set(MessageCodes.Attacked, Attacked.ToMessageHandler());
-            messageHandlerCollection.Set(MessageCodes.BubbleNotification, BubbleMessageReceived.ToMessageHandler());
+            collection.Set(MessageCodes.EnteredScene, SceneEntered.ToMessageHandler());
+            collection.Set(MessageCodes.GameObjectAdded, GameObjectsAdded.ToMessageHandler());
+            collection.Set(MessageCodes.GameObjectRemoved, GameObjectsRemoved.ToMessageHandler());
+            collection.Set(MessageCodes.PositionChanged, PositionChanged.ToMessageHandler());
+            collection.Set(MessageCodes.AnimationStateChanged, AnimationStateChanged.ToMessageHandler());
+            collection.Set(MessageCodes.Attacked, Attacked.ToMessageHandler());
+            collection.Set(MessageCodes.BubbleNotification, BubbleMessageReceived.ToMessageHandler());
         }
 
         private void UnsetMessageHandlers()
         {
-            messageHandlerCollection.Unset(MessageCodes.EnteredScene);
-            messageHandlerCollection.Unset(MessageCodes.GameObjectAdded);
-            messageHandlerCollection.Unset(MessageCodes.GameObjectRemoved);
-            messageHandlerCollection.Unset(MessageCodes.PositionChanged);
-            messageHandlerCollection.Unset(MessageCodes.AnimationStateChanged);
-            messageHandlerCollection.Unset(MessageCodes.Attacked);
-            messageHandlerCollection.Unset(MessageCodes.BubbleNotification);
+            collection.Unset(MessageCodes.EnteredScene);
+            collection.Unset(MessageCodes.GameObjectAdded);
+            collection.Unset(MessageCodes.GameObjectRemoved);
+            collection.Unset(MessageCodes.PositionChanged);
+            collection.Unset(MessageCodes.AnimationStateChanged);
+            collection.Unset(MessageCodes.Attacked);
+            collection.Unset(MessageCodes.BubbleNotification);
         }
 
         private void SubscribeToMessageNotifier()
@@ -112,7 +112,7 @@ namespace Scripts.Services.Game
             var code = messageData.Code;
             var rawData = messageData.RawData;
 
-            if (messageHandlerCollection.TryGet(code, out var handler))
+            if (collection.TryGet(code, out var handler))
             {
                 handler?.Invoke(data);
             }
