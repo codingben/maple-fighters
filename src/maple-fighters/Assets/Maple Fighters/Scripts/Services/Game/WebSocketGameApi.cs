@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Scripts.Services.Game
 {
-    public class GameApi : MonoBehaviour, IGameApi
+    public class WebSocketGameApi : MonoBehaviour, IGameApi
     {
         public Action<EnteredSceneMessage> SceneEntered { get; set; }
 
