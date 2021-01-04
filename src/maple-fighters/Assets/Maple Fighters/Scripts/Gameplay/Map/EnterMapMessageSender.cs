@@ -1,5 +1,5 @@
 ﻿using Game.Messages;
-using Scripts.Services.Game;
+using Scripts.Services;
 using UnityEngine;
 
 namespace Scripts.Gameplay.Map
@@ -15,7 +15,7 @@ namespace Scripts.Gameplay.Map
 
         private void EnterScene()
         {
-            IGameApi gameApi = FindObjectOfType<GameApi>();
+            var gameApi = ApiProvider.ProvideGameApi();
 
             // TODO: Set values
             var message = new EnterSceneMessage()

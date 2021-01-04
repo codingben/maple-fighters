@@ -1,7 +1,8 @@
 ﻿using System.Collections;
 using Game.Messages;
 using Scripts.Gameplay.Entity;
-using Scripts.Services.Game;
+using Scripts.Services;
+using Scripts.Services.GameApi;
 using UnityEngine;
 
 namespace Scripts.Gameplay.Player
@@ -12,7 +13,7 @@ namespace Scripts.Gameplay.Player
 
         private void Start()
         {
-            gameApi = FindObjectOfType<GameApi>();
+            gameApi = ApiProvider.ProvideGameApi();
             gameApi.SceneEntered += OnSceneEntered;
             gameApi.GameObjectsAdded += OnGameObjectsAdded;
         }

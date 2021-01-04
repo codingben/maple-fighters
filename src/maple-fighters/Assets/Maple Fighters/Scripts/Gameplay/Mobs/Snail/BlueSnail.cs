@@ -2,7 +2,8 @@
 using Scripts.Gameplay.Entity;
 using Scripts.Gameplay.Player;
 using Scripts.Gameplay.Player.Behaviours;
-using Scripts.Services.Game;
+using Scripts.Services;
+using Scripts.Services.GameApi;
 using UnityEngine;
 
 namespace Scripts.Gameplay.Mobs
@@ -16,7 +17,7 @@ namespace Scripts.Gameplay.Mobs
 
         private void Start()
         {
-            gameApi = FindObjectOfType<GameApi>();
+            gameApi = ApiProvider.ProvideGameApi();
             gameApi.Attacked += OnPlayerAttacked;
         }
 

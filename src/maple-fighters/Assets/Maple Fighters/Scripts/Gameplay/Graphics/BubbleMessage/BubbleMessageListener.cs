@@ -1,6 +1,7 @@
 ﻿using Game.Messages;
 using Scripts.Gameplay.Entity;
-using Scripts.Services.Game;
+using Scripts.Services;
+using Scripts.Services.GameApi;
 using UnityEngine;
 
 namespace Scripts.Gameplay.Graphics
@@ -11,7 +12,7 @@ namespace Scripts.Gameplay.Graphics
 
         private void Start()
         {
-            gameApi = FindObjectOfType<GameApi>();
+            gameApi = ApiProvider.ProvideGameApi();
             gameApi.BubbleMessageReceived += OnBubbleMessageReceived;
         }
 

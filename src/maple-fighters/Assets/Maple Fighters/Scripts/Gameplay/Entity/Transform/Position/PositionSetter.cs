@@ -1,6 +1,7 @@
 ﻿using System;
 using Game.Messages;
-using Scripts.Services.Game;
+using Scripts.Services;
+using Scripts.Services.GameApi;
 using UnityEngine;
 
 namespace Scripts.Gameplay.Entity
@@ -37,7 +38,7 @@ namespace Scripts.Gameplay.Entity
 
         private void Start()
         {
-            gameApi = FindObjectOfType<GameApi>();
+            gameApi = ApiProvider.ProvideGameApi();
             gameApi.PositionChanged += OnPositionChanged;
         }
 
@@ -70,30 +71,30 @@ namespace Scripts.Gameplay.Entity
             switch (interpolateOption)
             {
                 case InterpolateOption.Disabled:
-                {
-                    transform.position = newPosition;
-                    break;
-                }
+                    {
+                        transform.position = newPosition;
+                        break;
+                    }
 
                 case InterpolateOption.Lerp:
-                {
-                    var distance =
-                        Vector2.Distance(transform.position, newPosition);
-                    if (distance > greaterDistance)
                     {
-                        if (canTeleport)
+                        var distance =
+                            Vector2.Distance(transform.position, newPosition);
+                        if (distance > greaterDistance)
                         {
-                            transform.position = newPosition;
+                            if (canTeleport)
+                            {
+                                transform.position = newPosition;
+                            }
                         }
-                    }
-                    else
-                    {
-                        transform.position =
-                            Vector3.Lerp(transform.position, newPosition, speed * Time.deltaTime);
-                    }
+                        else
+                        {
+                            transform.position =
+                                Vector3.Lerp(transform.position, newPosition, speed * Time.deltaTime);
+                        }
 
-                    break;
-                }
+                        break;
+                    }
             }
         }
     }

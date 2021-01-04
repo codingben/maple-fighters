@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Linq;
 using Game.Messages;
-using Scripts.Services.Game;
+using Scripts.Services;
 using UnityEngine;
 
 namespace Scripts.Gameplay.Map.Dummy
@@ -25,7 +25,7 @@ namespace Scripts.Gameplay.Map.Dummy
 
         private void CreateDummyEntities()
         {
-            var gameApi = FindObjectOfType<GameApi>();
+            var gameApi = ApiProvider.ProvideGameApi();
 
             gameApi.GameObjectsAdded.Invoke(new GameObjectsAddedMessage()
             {

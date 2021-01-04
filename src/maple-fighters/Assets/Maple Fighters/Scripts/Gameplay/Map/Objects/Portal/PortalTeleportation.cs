@@ -1,6 +1,6 @@
 ﻿using Game.Messages;
 using Scripts.Gameplay.Entity;
-using Scripts.Services.Game;
+using Scripts.Services;
 using UnityEngine;
 
 namespace Scripts.Gameplay.Map.Objects
@@ -18,8 +18,7 @@ namespace Scripts.Gameplay.Map.Objects
 
         public void Teleport()
         {
-            IGameApi gameApi = FindObjectOfType<GameApi>();
-
+            var gameApi = ApiProvider.ProvideGameApi();
             var message = new ChangeSceneMessage()
             {
                 PortalId = entityId

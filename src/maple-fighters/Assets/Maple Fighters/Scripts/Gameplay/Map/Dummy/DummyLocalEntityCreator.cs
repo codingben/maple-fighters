@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 using Game.Messages;
-using Scripts.Services.Game;
+using Scripts.Services;
 using UnityEngine;
 
 namespace Scripts.Gameplay.Map.Dummy
@@ -24,7 +24,8 @@ namespace Scripts.Gameplay.Map.Dummy
 
         private void CreateLocalDummyEntity()
         {
-            var gameApi = FindObjectOfType<GameApi>();
+            var gameApi = ApiProvider.ProvideGameApi();
+
             gameApi.SceneEntered.Invoke(new EnteredSceneMessage()
             {
                 GameObjectId = dummyCharacter.DummyEntity.Id,
