@@ -7,11 +7,11 @@
       "dependencies": {}
     },
     "com.benukhanov.ui-manager": {
-      "version": "https://github.com/benukhanov/ui-manager.git#upm",
+      "version": "https://github.com/benukhanov/ui-manager.git",
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "c8b2826178f3388f11e0daa9066c8410549e93d1"
+      "hash": "36c7d3534b356c1da5a6e6ee4a55ec33850d63b8"
     },
     "com.endel.nativewebsocket": {
       "version": "https://github.com/benukhanov/NativeWebSocket.git#upm",

@@ -17,7 +17,7 @@
     }
   ],
   "dependencies": {
-    "com.benukhanov.ui-manager": "https://github.com/benukhanov/ui-manager.git#upm",
+    "com.benukhanov.ui-manager": "https://github.com/benukhanov/ui-manager.git",
     "com.endel.nativewebsocket": "https://github.com/benukhanov/NativeWebSocket.git#upm",
     "com.littlebigfun.addressable-importer": "0.9.3",
     "com.unity.2d.sprite": "1.0.0",
