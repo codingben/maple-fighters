@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using Scripts.Gameplay.Entity;
 using Scripts.Gameplay.Map;
 using Scripts.Gameplay.Player;
-using Scripts.Services.Game;
 using Scripts.UI.Chat;
 using Scripts.UI.Focus;
 using UI.Manager;
@@ -18,7 +17,6 @@ namespace Scripts.Gameplay.Creator
             CreateGameComponents(GetCreatorsComponents());
             CreateGameComponents(GetContainersComponents());
             CreateGameComponents(GetGUIControllersComponents());
-            CreateGameComponents(GetApiComponents());
 
             Destroy(gameObject);
         }
@@ -38,14 +36,6 @@ namespace Scripts.Gameplay.Creator
         {
             yield return typeof(FocusStateController);
             yield return typeof(ChatController);
-        }
-
-        private IEnumerable<Type> GetApiComponents()
-        {
-            if (FindObjectOfType<GameApi>() == null)
-            {
-                yield return typeof(GameApi);
-            }
         }
 
         private void CreateGameComponents(IEnumerable<Type> components)
