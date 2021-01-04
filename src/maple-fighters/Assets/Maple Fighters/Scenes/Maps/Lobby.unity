@@ -1447,13 +1447,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1388639404}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b1e80ebe19bc8af45bc9337dce4cb161, type: 3}
+  m_Script: {fileID: 11500000, guid: a0ba8a792795c0230b409d6af0bb768c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 0
   minimum: {x: 0, y: 0}
   maximum: {x: 0, y: 0}
-  center: {x: 0, y: 13.5}
+  center: {x: 0, y: 0}
 --- !u!1 &1415784134
 GameObject:
   m_ObjectHideFlags: 0
