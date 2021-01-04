@@ -70,14 +70,13 @@ jobs:
   build:
     needs: [checklicense]
     if: needs.checklicense.outputs.is_unity_license_set == 'true'
-    name: Build for ${{ matrix.targetPlatform }} on version ${{ matrix.unityVersion }}
+    name: Build for ${{ matrix.targetPlatform }} on version ${{ env.UNITY_VERSION }}
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
         targetPlatform:
           - WebGL
-        unityVersion: ${{ env.UNITY_VERSION }}
 
     steps:
       - uses: actions/checkout@v2
