@@ -41,19 +41,24 @@ namespace Scripts.Services.GameApi
         private WebSocket webSocket;
         private MessageHandlerCollection collection;
 
-        private async void Start()
+        private void Awake()
         {
             var networkConfiguration = NetworkConfiguration.GetInstance();
-            var gameServerData = networkConfiguration.GetServerData(ServerType.Game);
-            var gameServerUrl = gameServerData.Url;
+            var gameServerData =
+                networkConfiguration.GetServerData(ServerType.Game);
+            var url = gameServerData.Url;
 
-            webSocket = new WebSocket(gameServerUrl);
+            webSocket = new WebSocket(url);
+            webSocket.OnOpen += OnOpen;
+            webSocket.OnClose += OnClose;
+            webSocket.OnMessage += OnMessage;
+
             collection = new MessageHandlerCollection();
+        }
 
+        private async void Start()
+        {
             await webSocket?.Connect();
-
-            SubscribeToMessageNotifier();
-            SetMessageHandlers();
         }
 
         private void Update()
@@ -65,9 +70,6 @@ namespace Scripts.Services.GameApi
 
         private async void OnApplicationQuit()
         {
-            UnsubscribeFromMessageNotifier();
-            UnsetMessageHandlers();
-
             await webSocket?.Close();
         }
 
@@ -82,54 +84,38 @@ namespace Scripts.Services.GameApi
             }
         }
 
-        private void SetMessageHandlers()
+        private void OnOpen()
         {
-            collection.Set(MessageCodes.EnteredScene, SceneEntered.ToMessageHandler());
-            collection.Set(MessageCodes.ChangeScene, SceneChanged.ToMessageHandler());
-            collection.Set(MessageCodes.GameObjectAdded, GameObjectsAdded.ToMessageHandler());
-            collection.Set(MessageCodes.GameObjectRemoved, GameObjectsRemoved.ToMessageHandler());
-            collection.Set(MessageCodes.PositionChanged, PositionChanged.ToMessageHandler());
-            collection.Set(MessageCodes.AnimationStateChanged, AnimationStateChanged.ToMessageHandler());
-            collection.Set(MessageCodes.Attacked, Attacked.ToMessageHandler());
-            collection.Set(MessageCodes.BubbleNotification, BubbleMessageReceived.ToMessageHandler());
+            collection?.Set(MessageCodes.EnteredScene, SceneEntered.ToMessageHandler());
+            collection?.Set(MessageCodes.ChangeScene, SceneChanged.ToMessageHandler());
+            collection?.Set(MessageCodes.GameObjectAdded, GameObjectsAdded.ToMessageHandler());
+            collection?.Set(MessageCodes.GameObjectRemoved, GameObjectsRemoved.ToMessageHandler());
+            collection?.Set(MessageCodes.PositionChanged, PositionChanged.ToMessageHandler());
+            collection?.Set(MessageCodes.AnimationStateChanged, AnimationStateChanged.ToMessageHandler());
+            collection?.Set(MessageCodes.Attacked, Attacked.ToMessageHandler());
+            collection?.Set(MessageCodes.BubbleNotification, BubbleMessageReceived.ToMessageHandler());
         }
 
-        private void UnsetMessageHandlers()
+        private void OnClose(WebSocketCloseCode closeCode)
         {
-            collection.Unset(MessageCodes.EnteredScene);
-            collection.Unset(MessageCodes.ChangeScene);
-            collection.Unset(MessageCodes.GameObjectAdded);
-            collection.Unset(MessageCodes.GameObjectRemoved);
-            collection.Unset(MessageCodes.PositionChanged);
-            collection.Unset(MessageCodes.AnimationStateChanged);
-            collection.Unset(MessageCodes.Attacked);
-            collection.Unset(MessageCodes.BubbleNotification);
+            collection?.Unset(MessageCodes.EnteredScene);
+            collection?.Unset(MessageCodes.ChangeScene);
+            collection?.Unset(MessageCodes.GameObjectAdded);
+            collection?.Unset(MessageCodes.GameObjectRemoved);
+            collection?.Unset(MessageCodes.PositionChanged);
+            collection?.Unset(MessageCodes.AnimationStateChanged);
+            collection?.Unset(MessageCodes.Attacked);
+            collection?.Unset(MessageCodes.BubbleNotification);
         }
 
-        private void SubscribeToMessageNotifier()
-        {
-            if (webSocket != null)
-            {
-                webSocket.OnMessage += OnMessageReceived;
-            }
-        }
-
-        private void UnsubscribeFromMessageNotifier()
-        {
-            if (webSocket != null)
-            {
-                webSocket.OnMessage -= OnMessageReceived;
-            }
-        }
-
-        private void OnMessageReceived(byte[] data)
+        private void OnMessage(byte[] data)
         {
             var messageData =
                 MessageUtils.DeserializeMessage<MessageData>(data);
             var code = messageData.Code;
             var rawData = messageData.RawData;
 
-            if (collection.TryGet(code, out var handler))
+            if (collection != null && collection.TryGet(code, out var handler))
             {
                 handler?.Invoke(data);
             }
