@@ -6,10 +6,13 @@ namespace Scripts.Gameplay.Player
 
         public byte Class { get; set; }
 
-        public CharacterData(string name, byte @class = 0)
+        public float Direction { get; set; }
+
+        public CharacterData(string name, byte @class, float direction)
         {
             Name = name;
             Class = @class;
+            Direction = direction;
         }
     }
 }
