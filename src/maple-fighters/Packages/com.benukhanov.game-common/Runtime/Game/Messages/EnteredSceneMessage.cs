@@ -4,7 +4,7 @@ namespace Game.Messages
     {
         public int GameObjectId { get; set; }
 
-        public SpawnPositionData SpawnPositionData { get; set; }
+        public SpawnData SpawnData { get; set; }
 
         public CharacterData CharacterData { get; set; }
     }
