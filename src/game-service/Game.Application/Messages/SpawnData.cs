@@ -1,6 +1,6 @@
 namespace Game.Messages
 {
-    public class SpawnPositionData
+    public class SpawnData
     {
         public float X { get; set; }
 

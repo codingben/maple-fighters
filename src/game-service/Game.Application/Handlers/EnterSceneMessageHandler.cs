@@ -68,7 +68,7 @@ namespace Game.Application.Handlers
             var message = new EnteredSceneMessage()
             {
                 GameObjectId = player.Id,
-                SpawnPositionData = new SpawnPositionData
+                SpawnData = new SpawnData
                 {
                     X = player.Transform.Position.X,
                     Y = player.Transform.Position.Y,
