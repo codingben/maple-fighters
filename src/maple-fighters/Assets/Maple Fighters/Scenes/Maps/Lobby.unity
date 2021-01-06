@@ -1263,7 +1263,13 @@ PrefabInstance:
         type: 3}
       propertyPath: tipText
       value: <color=yellow>Tip! Move with <color=red>A</color> or <color=red>D</color>
-        and <color=red>Space</color> to jump
+        and <color=red>E</color> to move fast and press <color=red>Space</color>
+        to jump
+      objectReference: {fileID: 0}
+    - target: {fileID: 2684237133731809878, guid: 72753bb142bbcc147baa4197a60c44fc,
+        type: 3}
+      propertyPath: seconds
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2684237133731809879, guid: 72753bb142bbcc147baa4197a60c44fc,
         type: 3}
