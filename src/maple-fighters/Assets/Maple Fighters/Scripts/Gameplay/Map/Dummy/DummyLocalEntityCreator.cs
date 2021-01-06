@@ -25,11 +25,10 @@ namespace Scripts.Gameplay.Map.Dummy
         private void CreateLocalDummyEntity()
         {
             var gameApi = ApiProvider.ProvideGameApi();
-
-            gameApi.SceneEntered.Invoke(new EnteredSceneMessage()
+            var message = new EnteredSceneMessage()
             {
                 GameObjectId = dummyCharacter.DummyEntity.Id,
-                SpawnPositionData = new SpawnPositionData()
+                SpawnData = new SpawnData()
                 {
                     X = dummyCharacter.DummyEntity.Position.x,
                     Y = dummyCharacter.DummyEntity.Position.y
@@ -38,8 +37,20 @@ namespace Scripts.Gameplay.Map.Dummy
                 {
                     Name = "Dummy",
                     Class = (byte)dummyCharacter.CharacterClass,
-                },
-            });
+                }
+            };
+
+            var direction = dummyCharacter.DummyEntity.Direction;
+            if (direction == Player.Direction.Left)
+            {
+                message.SpawnData.Direction = 1;
+            }
+            else
+            {
+                message.SpawnData.Direction = -1;
+            }
+
+            gameApi.SceneEntered.Invoke(message);
         }
     }
 }
