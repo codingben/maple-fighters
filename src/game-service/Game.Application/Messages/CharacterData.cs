@@ -5,5 +5,7 @@ namespace Game.Messages
         public string Name { get; set; }
 
         public byte Class { get; set; }
+
+        public byte SpawnDirection { get; set; }
     }
 }
