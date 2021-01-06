@@ -29,7 +29,8 @@ namespace Scripts.Gameplay.Player
             var id = message.GameObjectId;
             var name = message.CharacterData.Name;
             var @class = message.CharacterData.Class;
-            var characterData = new CharacterData(name, @class);
+            var direction = message.SpawnData.Direction;
+            var characterData = new CharacterData(name, @class, direction);
 
             StartCoroutine(WaitFrameAndSpawn(id, characterData));
         }
@@ -41,7 +42,8 @@ namespace Scripts.Gameplay.Player
                 var id = gameObject.Id;
                 var name = gameObject.CharacterData.Name;
                 var @class = gameObject.CharacterData.Class;
-                var characterData = new CharacterData(name, @class);
+                var direction = gameObject.Direction;
+                var characterData = new CharacterData(name, @class, direction);
 
                 StartCoroutine(WaitFrameAndSpawn(id, characterData));
             }
