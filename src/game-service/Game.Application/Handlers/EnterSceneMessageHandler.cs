@@ -3,6 +3,7 @@ using Game.Messages;
 using Game.Network;
 using Game.Application.Objects;
 using Game.Application.Objects.Components;
+using Common.MathematicsHelper;
 
 namespace Game.Application.Handlers
 {
@@ -36,8 +37,13 @@ namespace Game.Application.Handlers
             if (gameSceneCollection.TryGet((Map)map, out var gameScene))
             {
                 // Set's player position
-                var position = gameScene.GamePlayerSpawnData.GetSpawnPosition();
+                var position =
+                    gameScene.GamePlayerSpawnData.GetSpawnPosition();
+                var direction =
+                    gameScene.GamePlayerSpawnData.GetSpawnDirection();
+
                 player.Transform.SetPosition(position);
+                player.Transform.SetSize(new Vector2(direction, y: 0));
 
                 // Set's map
                 presenceMapProvider.SetMap(gameScene);
@@ -65,7 +71,8 @@ namespace Game.Application.Handlers
                 SpawnPositionData = new SpawnPositionData
                 {
                     X = player.Transform.Position.X,
-                    Y = player.Transform.Position.Y
+                    Y = player.Transform.Position.Y,
+                    Direction = player.Transform.Size.X
                 }
             };
 
