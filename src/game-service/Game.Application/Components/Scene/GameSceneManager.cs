@@ -43,6 +43,7 @@ namespace Game.Application.Components
 
             // Lobby Spawn Position
             gameScene.GamePlayerSpawnData.SetSpawnPosition(new Vector2(18, -1.86f));
+            gameScene.GamePlayerSpawnData.SetSpawnDirection(direction: 1);
 
             foreach (var gameObject in CreateLobbyGameObjects(gameScene))
             {
@@ -89,6 +90,7 @@ namespace Game.Application.Components
 
             // The Dark Forest Spawn Position
             gameScene.GamePlayerSpawnData.SetSpawnPosition(new Vector2(-12.8f, -2.95f));
+            gameScene.GamePlayerSpawnData.SetSpawnDirection(direction: -1);
 
             foreach (var gameObject in CreateTheDarkForestGameObjects(gameScene))
             {
