@@ -27,11 +27,8 @@ namespace Scripts.Gameplay.Player
             var characterDataProvider = GetComponent<ICharacterDataProvider>();
             if (characterDataProvider != null)
             {
-                // TODO: Use character data
                 var characterData = characterDataProvider.GetCharacterData();
-
-                // TODO: Change value
-                var direction = Direction.Left;
+                var direction = characterData.Direction;
                 var transform =
                     spawnedCharacter.GetCharacterGameObject().transform;
 
@@ -39,14 +36,12 @@ namespace Scripts.Gameplay.Player
                 var y = transform.localScale.y;
                 var z = transform.localScale.z;
 
-                if (direction == Direction.Left)
+                if (direction == 0)
                 {
-                    transform.localScale = new Vector3(x, y, z);
+                    direction = 1;
                 }
-                else if (direction == Direction.Right)
-                {
-                    transform.localScale = new Vector3(-x, y, z);
-                }
+
+                transform.localScale = new Vector3(direction, y, z);
             }
         }
     }
