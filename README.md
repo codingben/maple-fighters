@@ -12,7 +12,7 @@ Please **★ Star** this repository if you like it and find it useful. Made with
 
 ## Technology
 
-**Client**: Unity   
+**Client**: Unity WebGL/WebAssembly   
 **Server**: C#, Rust   
 **Database**: MongoDB, PostgreSQL   
 **Reverse Proxy**: Nginx   
