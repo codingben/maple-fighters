@@ -1,0 +1,13 @@
+{
+  "name": "com.proyecto26.restclient",
+  "version": "2.6.1",
+  "displayName": "RestClient for Unity",
+  "description": "Simple HTTP and REST client for Unity based on Promises, also support Callbacks!",
+  "unity": "2018.1",
+  "author": {
+    "name": "Proyecto 26",
+    "email": "jdnichollsc@hotmail.com",
+    "url": "https://github.com/proyecto26/RestClient"
+  },
+  "dependencies": {}
+}

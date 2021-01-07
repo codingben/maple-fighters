@@ -29,6 +29,12 @@
       },
       "url": "https://package.openupm.com"
     },
+    "com.proyecto26.restclient": {
+      "version": "file:com.proyecto26.restclient",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
     "com.unity.2d.sprite": {
       "version": "1.0.0",
       "depth": 0,
