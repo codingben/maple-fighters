@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Scripts.Services.AuthenticatorApi
 {
-    public class AuthenticatorApi : MonoBehaviour, IAuthenticatorApi
+    public class HttpAuthenticatorApi : MonoBehaviour, IAuthenticatorApi
     {
         private string url;
 
