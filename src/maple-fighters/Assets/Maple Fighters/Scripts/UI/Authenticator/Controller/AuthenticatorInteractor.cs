@@ -3,13 +3,11 @@ using UnityEngine;
 
 namespace Scripts.UI.Authenticator
 {
-    [RequireComponent(typeof(IOnConnectionFinishedListener))]
     [RequireComponent(typeof(IOnLoginFinishedListener))]
     [RequireComponent(typeof(IOnRegistrationFinishedListener))]
     public class AuthenticatorInteractor : MonoBehaviour
     {
         private IAuthenticatorApi authenticatorApi;
-        private IOnConnectionFinishedListener onConnectionFinishedListener;
         private IOnLoginFinishedListener onLoginFinishedListener;
         private IOnRegistrationFinishedListener onRegistrationFinishedListener;
 
@@ -17,8 +15,6 @@ namespace Scripts.UI.Authenticator
         {
             authenticatorApi =
                 FindObjectOfType<AuthenticatorApi>();
-            onConnectionFinishedListener =
-                GetComponent<IOnConnectionFinishedListener>();
             onLoginFinishedListener =
                 GetComponent<IOnLoginFinishedListener>();
             onRegistrationFinishedListener =
@@ -30,7 +26,7 @@ namespace Scripts.UI.Authenticator
             var email = uiAuthenticationDetails.Email;
             var password = uiAuthenticationDetails.Password;
 
-            authenticatorApi?.Authenticate();
+            authenticatorApi?.Authenticate(email, password);
 
             // TODO: onException: (e) => onLoginFinishedListener.OnLoginFailed());
             // TODO: Handle other statuses

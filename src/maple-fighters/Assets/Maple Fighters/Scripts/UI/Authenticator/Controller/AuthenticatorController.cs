@@ -8,7 +8,6 @@ namespace Scripts.UI.Authenticator
 {
     [RequireComponent(typeof(AuthenticatorInteractor))]
     public class AuthenticatorController : MonoBehaviour,
-                                           IOnConnectionFinishedListener,
                                            IOnLoginFinishedListener,
                                            IOnRegistrationFinishedListener
     {
@@ -170,45 +169,16 @@ namespace Scripts.UI.Authenticator
             }
         }
 
-        public void OnConnectionFailed()
-        {
-            loginView?.EnableInteraction();
-            registrationView?.EnableInteraction();
-
-            NoticeUtils.ShowNotice(message: NoticeMessages.AuthView.ConnectionFailed);
-        }
-
         public void OnLoginSucceed()
         {
             SceneManager.LoadScene(sceneName: SceneNames.Main);
         }
 
-        public void OnLoginFailed()
+        public void OnLoginFailed(string reason)
         {
             loginView?.EnableInteraction();
 
-            NoticeUtils.ShowNotice(message: NoticeMessages.AuthView.UnknownError);
-        }
-
-        public void OnInvalidEmailError()
-        {
-            loginView?.EnableInteraction();
-
-            NoticeUtils.ShowNotice(message: NoticeMessages.AuthView.WrongEmailAddress);
-        }
-
-        public void OnInvalidPasswordError()
-        {
-            loginView?.EnableInteraction();
-
-            NoticeUtils.ShowNotice(message: NoticeMessages.AuthView.WrongPassword);
-        }
-
-        public void OnNonAuthorizedError()
-        {
-            loginView?.EnableInteraction();
-
-            NoticeUtils.ShowNotice(message: NoticeMessages.AuthView.NonAuthorized);
+            NoticeUtils.ShowNotice(message: reason);
         }
 
         public void OnRegistrationSucceed()
@@ -221,18 +191,11 @@ namespace Scripts.UI.Authenticator
             NoticeUtils.ShowNotice(message: NoticeMessages.AuthView.RegistrationSucceed);
         }
 
-        public void OnRegistrationFailed()
+        public void OnRegistrationFailed(string reason)
         {
             registrationView?.EnableInteraction();
 
-            NoticeUtils.ShowNotice(message: NoticeMessages.AuthView.UnknownError);
-        }
-
-        public void OnEmailExistsError()
-        {
-            registrationView?.EnableInteraction();
-
-            NoticeUtils.ShowNotice(message: NoticeMessages.AuthView.EmailAddressExists);
+            NoticeUtils.ShowNotice(message: reason);
         }
     }
 }

@@ -4,8 +4,6 @@
     {
         void OnRegistrationSucceed();
 
-        void OnRegistrationFailed();
-
-        void OnEmailExistsError();
+        void OnRegistrationFailed(string reason);
     }
 }

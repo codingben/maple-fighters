@@ -4,12 +4,6 @@
     {
         void OnLoginSucceed();
 
-        void OnLoginFailed();
-
-        void OnInvalidEmailError();
-
-        void OnInvalidPasswordError();
-
-        void OnNonAuthorizedError();
+        void OnLoginFailed(string reason);
     }
 }
