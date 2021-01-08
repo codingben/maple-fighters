@@ -41,7 +41,7 @@ namespace Scripts.UI.Authenticator
             var firstName = uiRegistrationDetails.FirstName;
             var lastName = uiRegistrationDetails.LastName;
 
-            authenticatorApi?.Register();
+            authenticatorApi?.Register(email, password, firstName, lastName);
 
             // TODO: onException: (e) => onRegistrationFinishedListener.OnRegistrationFailed()
             // TODO: Handle other statuses
