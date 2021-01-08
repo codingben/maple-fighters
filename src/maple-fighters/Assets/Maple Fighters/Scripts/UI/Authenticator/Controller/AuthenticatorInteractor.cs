@@ -1,4 +1,4 @@
-﻿using Scripts.Services.Authenticator;
+﻿using Scripts.Services.AuthenticatorApi;
 using UnityEngine;
 
 namespace Scripts.UI.Authenticator

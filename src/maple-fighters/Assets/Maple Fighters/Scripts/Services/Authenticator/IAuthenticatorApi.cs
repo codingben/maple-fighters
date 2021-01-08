@@ -1,4 +1,4 @@
-﻿namespace Scripts.Services.Authenticator
+﻿namespace Scripts.Services.AuthenticatorApi
 {
     public interface IAuthenticatorApi
     {

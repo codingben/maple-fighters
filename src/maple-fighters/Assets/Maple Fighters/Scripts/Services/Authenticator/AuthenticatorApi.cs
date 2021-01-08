@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Scripts.Services.Authenticator
+namespace Scripts.Services.AuthenticatorApi
 {
     public class AuthenticatorApi : MonoBehaviour, IAuthenticatorApi
     {
