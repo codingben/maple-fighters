@@ -2,7 +2,7 @@
 {
     public interface IAuthenticatorApi
     {
-        void Authenticate();
+        void Authenticate(string email, string password);
 
         void Register();
     }
