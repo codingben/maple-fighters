@@ -53,9 +53,29 @@ namespace Scripts.Services.AuthenticatorApi
             print($"{response.Error}");
         }
 
-        public void Register()
+        public void Register(
+            string email,
+            string password,
+            string firstname,
+            string lastname)
         {
-            // TODO: Implement
+            var registrationData = new RegistrationData()
+            {
+                email = email,
+                password = password,
+                firstname = firstname,
+                lastname = lastname
+            }.ToString();
+
+            RestClient.Post(url + "/register", registrationData, OnRegistration);
+        }
+
+        public void OnRegistration(RequestException request, ResponseHelper response)
+        {
+            print($"{response.StatusCode}");
+            print($"{response.Text}");
+            print($"{response.Data}");
+            print($"{response.Error}");
         }
     }
 }

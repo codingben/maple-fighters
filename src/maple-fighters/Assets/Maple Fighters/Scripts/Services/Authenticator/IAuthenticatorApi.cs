@@ -4,6 +4,6 @@
     {
         void Authenticate(string email, string password);
 
-        void Register();
+        void Register(string email, string password, string firstname, string lastname);
     }
 }

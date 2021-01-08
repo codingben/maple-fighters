@@ -24,7 +24,11 @@ namespace Scripts.Services.AuthenticatorApi
             throw new System.NotImplementedException();
         }
 
-        public void Register()
+        public void Register(
+            string email,
+            string password,
+            string firstname,
+            string lastname)
         {
             throw new System.NotImplementedException();
         }
