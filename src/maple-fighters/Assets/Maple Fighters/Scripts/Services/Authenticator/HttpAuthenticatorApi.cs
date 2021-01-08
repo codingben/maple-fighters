@@ -6,6 +6,20 @@ namespace Scripts.Services.AuthenticatorApi
 {
     public class HttpAuthenticatorApi : MonoBehaviour, IAuthenticatorApi
     {
+        public static HttpAuthenticatorApi GetInstance()
+        {
+            if (instance == null)
+            {
+                var authenticatorApi =
+                    new GameObject("Http Authenticator Api");
+                instance =
+                    authenticatorApi.AddComponent<HttpAuthenticatorApi>();
+            }
+
+            return instance;
+        }
+
+        private static HttpAuthenticatorApi instance;
         private string url;
 
         private void Awake()
