@@ -1,4 +1,5 @@
-﻿using Scripts.Services.AuthenticatorApi;
+﻿using Scripts.Services;
+using Scripts.Services.AuthenticatorApi;
 using UnityEngine;
 
 namespace Scripts.UI.Authenticator
@@ -14,7 +15,7 @@ namespace Scripts.UI.Authenticator
         private void Awake()
         {
             authenticatorApi =
-                FindObjectOfType<AuthenticatorApi>();
+                ApiProvider.ProvideAuthenticatorApi();
             onLoginFinishedListener =
                 GetComponent<IOnLoginFinishedListener>();
             onRegistrationFinishedListener =
