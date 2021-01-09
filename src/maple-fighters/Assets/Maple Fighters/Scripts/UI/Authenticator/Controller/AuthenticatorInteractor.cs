@@ -1,4 +1,5 @@
-﻿using Scripts.Services;
+﻿using Scripts.Constants;
+using Scripts.Services;
 using Scripts.Services.AuthenticatorApi;
 using UnityEngine;
 
@@ -22,16 +23,24 @@ namespace Scripts.UI.Authenticator
                 GetComponent<IOnRegistrationFinishedListener>();
         }
 
+        private void Start()
+        {
+            authenticatorApi.Authentication += OnAuthentication;
+            authenticatorApi.Registration += OnRegistration;
+        }
+
+        private void OnDestroy()
+        {
+            authenticatorApi.Authentication -= OnAuthentication;
+            authenticatorApi.Registration -= OnRegistration;
+        }
+
         public void Login(UIAuthenticationDetails uiAuthenticationDetails)
         {
             var email = uiAuthenticationDetails.Email;
             var password = uiAuthenticationDetails.Password;
 
             authenticatorApi?.Authenticate(email, password);
-
-            // TODO: onException: (e) => onLoginFinishedListener.OnLoginFailed());
-            // TODO: Handle other statuses
-            onLoginFinishedListener.OnLoginSucceed();
         }
 
         public void Register(UIRegistrationDetails uiRegistrationDetails)
@@ -42,10 +51,70 @@ namespace Scripts.UI.Authenticator
             var lastName = uiRegistrationDetails.LastName;
 
             authenticatorApi?.Register(email, password, firstName, lastName);
+        }
 
-            // TODO: onException: (e) => onRegistrationFinishedListener.OnRegistrationFailed()
-            // TODO: Handle other statuses
-            onRegistrationFinishedListener.OnRegistrationSucceed();
+        private void OnAuthentication(long statusCode, string json)
+        {
+            switch (statusCode)
+            {
+                case 200: // Ok
+                {
+                    onLoginFinishedListener.OnLoginSucceed();
+                    break;
+                }
+
+                case 404: // Not Found
+                {
+                    var errorMessage = ErrorData.FromJsonToErrorMessage(json);
+                    if (errorMessage == string.Empty)
+                    {
+                        errorMessage = NoticeMessages.AuthView.UnknownError;
+                    }
+
+                    onLoginFinishedListener.OnLoginFailed(errorMessage);
+                    break;
+                }
+
+                default:
+                {
+                    var errorMessage = NoticeMessages.AuthView.UnknownError;
+
+                    onLoginFinishedListener.OnLoginFailed(errorMessage);
+                    break;
+                }
+            }
+        }
+
+        private void OnRegistration(long statusCode, string json)
+        {
+            switch (statusCode)
+            {
+                case 200: // Ok
+                {
+                    onRegistrationFinishedListener.OnRegistrationSucceed();
+                    break;
+                }
+
+                case 400: // Bad Request
+                {
+                    var errorMessage = ErrorData.FromJsonToErrorMessage(json);
+                    if (errorMessage == string.Empty)
+                    {
+                        errorMessage = NoticeMessages.AuthView.UnknownError;
+                    }
+
+                    onRegistrationFinishedListener.OnRegistrationFailed(errorMessage);
+                    break;
+                }
+
+                default:
+                {
+                    var errorMessage = NoticeMessages.AuthView.UnknownError;
+
+                    onRegistrationFinishedListener.OnRegistrationFailed(errorMessage);
+                    break;
+                }
+            }
         }
     }
 }
