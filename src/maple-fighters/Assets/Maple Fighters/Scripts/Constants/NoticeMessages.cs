@@ -17,6 +17,7 @@
             public const string WrongPassword = "The password is incorrect.";
             public const string WrongEmailAddress = "The email address does not exist.";
             public const string RegistrationSucceed = "Registration completed successfully!";
+            public const string UnknownError = "An unknown error has occurred. Please try again later.";
         }
 
         public static class GameServerBrowserView
