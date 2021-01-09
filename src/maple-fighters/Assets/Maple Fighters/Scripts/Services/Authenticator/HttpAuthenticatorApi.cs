@@ -1,3 +1,4 @@
+using System;
 using Proyecto26;
 using ScriptableObjects.Configurations;
 using UnityEngine;
@@ -20,6 +21,11 @@ namespace Scripts.Services.AuthenticatorApi
         }
 
         private static HttpAuthenticatorApi instance;
+
+        public Action<long, string> Authentication { get; set; }
+
+        public Action<long, string> Registration { get; set; }
+
         private string url;
 
         private void Awake()
@@ -45,12 +51,12 @@ namespace Scripts.Services.AuthenticatorApi
             RestClient.Post(url + "/login", loginData, OnAuthentication);
         }
 
-        public void OnAuthentication(RequestException request, ResponseHelper response)
+        private void OnAuthentication(RequestException request, ResponseHelper response)
         {
-            print($"{response.StatusCode}");
-            print($"{response.Text}");
-            print($"{response.Data}");
-            print($"{response.Error}");
+            var statusCode = response.StatusCode;
+            var json = response.Text;
+
+            Authentication?.Invoke(statusCode, json);
         }
 
         public void Register(
@@ -70,12 +76,12 @@ namespace Scripts.Services.AuthenticatorApi
             RestClient.Post(url + "/register", registrationData, OnRegistration);
         }
 
-        public void OnRegistration(RequestException request, ResponseHelper response)
+        private void OnRegistration(RequestException request, ResponseHelper response)
         {
-            print($"{response.StatusCode}");
-            print($"{response.Text}");
-            print($"{response.Data}");
-            print($"{response.Error}");
+            var statusCode = response.StatusCode;
+            var json = response.Text;
+
+            Registration?.Invoke(statusCode, json);
         }
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace Scripts.Services.AuthenticatorApi
@@ -19,9 +20,16 @@ namespace Scripts.Services.AuthenticatorApi
 
         private static DummyAuthenticatorApi instance;
 
+        public Action<long, string> Authentication { get; set; }
+
+        public Action<long, string> Registration { get; set; }
+
         public void Authenticate(string email, string password)
         {
-            throw new System.NotImplementedException();
+            var statusCode = 200;
+            var json = string.Empty;
+
+            Authentication?.Invoke(statusCode, json);
         }
 
         public void Register(
@@ -30,7 +38,10 @@ namespace Scripts.Services.AuthenticatorApi
             string firstname,
             string lastname)
         {
-            throw new System.NotImplementedException();
+            var statusCode = 200;
+            var json = string.Empty;
+
+            Registration?.Invoke(statusCode, json);
         }
     }
 }
