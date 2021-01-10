@@ -1,7 +1,11 @@
-﻿namespace Scripts.Services.GameProviderApi
+﻿using System;
+
+namespace Scripts.Services.GameProviderApi
 {
     public interface IGameProviderApi
     {
-        void ProvideGameServer();
+        Action<long, string> GamesCallback { get; set; }
+
+        void Games();
     }
 }
