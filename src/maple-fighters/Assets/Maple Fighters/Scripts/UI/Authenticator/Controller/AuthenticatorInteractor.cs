@@ -21,18 +21,21 @@ namespace Scripts.UI.Authenticator
                 GetComponent<IOnLoginFinishedListener>();
             onRegistrationFinishedListener =
                 GetComponent<IOnRegistrationFinishedListener>();
-        }
 
-        private void Start()
-        {
-            authenticatorApi.LoginCallback += OnLoginCallback;
-            authenticatorApi.RegisterCallback += OnRegisterCallback;
+            if (authenticatorApi != null)
+            {
+                authenticatorApi.LoginCallback += OnLoginCallback;
+                authenticatorApi.RegisterCallback += OnRegisterCallback;
+            }
         }
 
         private void OnDestroy()
         {
-            authenticatorApi.LoginCallback -= OnLoginCallback;
-            authenticatorApi.RegisterCallback -= OnRegisterCallback;
+            if (authenticatorApi != null)
+            {
+                authenticatorApi.LoginCallback -= OnLoginCallback;
+                authenticatorApi.RegisterCallback -= OnRegisterCallback;
+            }
         }
 
         public void Login(UIAuthenticationDetails uiAuthenticationDetails)
