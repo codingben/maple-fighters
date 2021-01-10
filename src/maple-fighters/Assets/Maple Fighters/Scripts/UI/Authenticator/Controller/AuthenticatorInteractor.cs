@@ -25,14 +25,14 @@ namespace Scripts.UI.Authenticator
 
         private void Start()
         {
-            authenticatorApi.Authentication += OnAuthentication;
-            authenticatorApi.Registration += OnRegistration;
+            authenticatorApi.LoginCallback += OnLoginCallback;
+            authenticatorApi.RegisterCallback += OnRegisterCallback;
         }
 
         private void OnDestroy()
         {
-            authenticatorApi.Authentication -= OnAuthentication;
-            authenticatorApi.Registration -= OnRegistration;
+            authenticatorApi.LoginCallback -= OnLoginCallback;
+            authenticatorApi.RegisterCallback -= OnRegisterCallback;
         }
 
         public void Login(UIAuthenticationDetails uiAuthenticationDetails)
@@ -40,7 +40,7 @@ namespace Scripts.UI.Authenticator
             var email = uiAuthenticationDetails.Email;
             var password = uiAuthenticationDetails.Password;
 
-            authenticatorApi?.Authenticate(email, password);
+            authenticatorApi?.Login(email, password);
         }
 
         public void Register(UIRegistrationDetails uiRegistrationDetails)
@@ -53,7 +53,7 @@ namespace Scripts.UI.Authenticator
             authenticatorApi?.Register(email, password, firstName, lastName);
         }
 
-        private void OnAuthentication(long statusCode, string json)
+        private void OnLoginCallback(long statusCode, string json)
         {
             switch (statusCode)
             {
@@ -85,7 +85,7 @@ namespace Scripts.UI.Authenticator
             }
         }
 
-        private void OnRegistration(long statusCode, string json)
+        private void OnRegisterCallback(long statusCode, string json)
         {
             switch (statusCode)
             {

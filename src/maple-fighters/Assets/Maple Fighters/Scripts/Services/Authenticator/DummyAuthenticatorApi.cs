@@ -20,16 +20,16 @@ namespace Scripts.Services.AuthenticatorApi
 
         private static DummyAuthenticatorApi instance;
 
-        public Action<long, string> Authentication { get; set; }
+        public Action<long, string> LoginCallback { get; set; }
 
-        public Action<long, string> Registration { get; set; }
+        public Action<long, string> RegisterCallback { get; set; }
 
-        public void Authenticate(string email, string password)
+        public void Login(string email, string password)
         {
             var statusCode = 200;
             var json = string.Empty;
 
-            Authentication?.Invoke(statusCode, json);
+            LoginCallback?.Invoke(statusCode, json);
         }
 
         public void Register(
@@ -41,7 +41,7 @@ namespace Scripts.Services.AuthenticatorApi
             var statusCode = 200;
             var json = string.Empty;
 
-            Registration?.Invoke(statusCode, json);
+            RegisterCallback?.Invoke(statusCode, json);
         }
     }
 }

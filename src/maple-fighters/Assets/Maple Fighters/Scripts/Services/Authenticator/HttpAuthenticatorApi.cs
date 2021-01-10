@@ -22,9 +22,9 @@ namespace Scripts.Services.AuthenticatorApi
 
         private static HttpAuthenticatorApi instance;
 
-        public Action<long, string> Authentication { get; set; }
+        public Action<long, string> LoginCallback { get; set; }
 
-        public Action<long, string> Registration { get; set; }
+        public Action<long, string> RegisterCallback { get; set; }
 
         private string url;
 
@@ -40,7 +40,7 @@ namespace Scripts.Services.AuthenticatorApi
             }
         }
 
-        public void Authenticate(string email, string password)
+        public void Login(string email, string password)
         {
             var loginData = new LoginData()
             {
@@ -48,15 +48,15 @@ namespace Scripts.Services.AuthenticatorApi
                 password = password
             }.ToString();
 
-            RestClient.Post(url + "/login", loginData, OnAuthentication);
+            RestClient.Post($"{url}/login", loginData, OnLoginCallback);
         }
 
-        private void OnAuthentication(RequestException request, ResponseHelper response)
+        private void OnLoginCallback(RequestException request, ResponseHelper response)
         {
             var statusCode = response.StatusCode;
             var json = response.Text;
 
-            Authentication?.Invoke(statusCode, json);
+            LoginCallback?.Invoke(statusCode, json);
         }
 
         public void Register(
@@ -73,15 +73,15 @@ namespace Scripts.Services.AuthenticatorApi
                 lastname = lastname
             }.ToString();
 
-            RestClient.Post(url + "/register", registrationData, OnRegistration);
+            RestClient.Post($"{url}/register", registrationData, OnRegisterCallback);
         }
 
-        private void OnRegistration(RequestException request, ResponseHelper response)
+        private void OnRegisterCallback(RequestException request, ResponseHelper response)
         {
             var statusCode = response.StatusCode;
             var json = response.Text;
 
-            Registration?.Invoke(statusCode, json);
+            RegisterCallback?.Invoke(statusCode, json);
         }
     }
 }

@@ -4,11 +4,11 @@ namespace Scripts.Services.AuthenticatorApi
 {
     public interface IAuthenticatorApi
     {
-        Action<long, string> Authentication { get; set; }
+        Action<long, string> LoginCallback { get; set; }
 
-        Action<long, string> Registration { get; set; }
+        Action<long, string> RegisterCallback { get; set; }
 
-        void Authenticate(string email, string password);
+        void Login(string email, string password);
 
         void Register(string email, string password, string firstname, string lastname);
     }
