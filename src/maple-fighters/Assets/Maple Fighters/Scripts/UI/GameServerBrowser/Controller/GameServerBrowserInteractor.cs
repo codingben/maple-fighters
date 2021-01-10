@@ -1,4 +1,7 @@
-﻿using Scripts.Services.GameProviderApi;
+﻿using System.Linq;
+using Proyecto26;
+using Scripts.Services;
+using Scripts.Services.GameProviderApi;
 using UnityEngine;
 
 namespace Scripts.UI.GameServerBrowser
@@ -12,9 +15,27 @@ namespace Scripts.UI.GameServerBrowser
         private void Awake()
         {
             gameProviderApi =
-                FindObjectOfType<GameProviderApi>();
+                ApiProvider.ProvideGameProviderApi();
             onGameServerReceivedListener =
                 GetComponent<IOnGameServerReceivedListener>();
+
+            if (gameProviderApi != null)
+            {
+                gameProviderApi.GamesCallback += OnGamesCallback;
+            }
+        }
+
+        private void OnDestroy()
+        {
+            if (gameProviderApi != null)
+            {
+                gameProviderApi.GamesCallback -= OnGamesCallback;
+            }
+        }
+
+        public void GetGames()
+        {
+            gameProviderApi?.Games();
         }
 
         public void SetGameServerInfo(string ip, int port)
@@ -22,21 +43,24 @@ namespace Scripts.UI.GameServerBrowser
             // TODO: Set game server data
         }
 
-        public void ProvideGameServers()
+        private void OnGamesCallback(long statusCode, string json)
         {
-            var data = new[]
+            if (statusCode == 200) // Ok
             {
-                new UIGameServerButtonData(
-                    ip: "localhost",
-                    serverName: "Game 1",
-                    port: 1000,
-                    connections: 0,
-                    maxConnections: 1000)
-            };
+                var gameData = JsonHelper.ArrayFromJson<GameData>(json);
+                if (gameData != null)
+                {
+                    var uiGameData =
+                        gameData.Select((x) => new UIGameServerButtonData(
+                            x.ip,
+                            x.name,
+                            x.port,
+                            connections: 0,
+                            maxConnections: 1000));
 
-            gameProviderApi?.ProvideGameServer();
-
-            onGameServerReceivedListener.OnGameServerReceived(data);
+                    onGameServerReceivedListener.OnGameServerReceived(uiGameData);
+                }
+            }
         }
     }
 }
