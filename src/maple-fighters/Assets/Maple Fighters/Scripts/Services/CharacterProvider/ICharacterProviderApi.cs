@@ -1,7 +1,19 @@
-﻿namespace Scripts.Services.CharacterProvider
+﻿using System;
+
+namespace Scripts.Services.CharacterProviderApi
 {
-    interface ICharacterProviderApi
+    public interface ICharacterProviderApi
     {
-        // TODO: Implement
+        Action<long, byte> CreateCharacterCallback { get; set; }
+
+        Action<long, byte> DeleteCharacterCallback { get; set; }
+
+        Action<long, byte> GetCharactersCallback { get; set; }
+
+        void CreateCharacter(int userid, string charactername, int index, int classindex);
+
+        void DeleteCharacter(int characterid);
+
+        void GetCharacters(int userid);
     }
 }

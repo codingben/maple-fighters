@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace Scripts.Services.CharacterProviderApi
@@ -18,5 +19,26 @@ namespace Scripts.Services.CharacterProviderApi
         }
 
         private static DummyCharacterProviderApi instance;
+
+        public Action<long, byte> CreateCharacterCallback { get; set; }
+
+        public Action<long, byte> DeleteCharacterCallback { get; set; }
+
+        public Action<long, byte> GetCharactersCallback { get; set; }
+
+        public void CreateCharacter(int userid, string charactername, int index, int classindex)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DeleteCharacter(int characterid)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void GetCharacters(int userid)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
