@@ -7,20 +7,20 @@ namespace Scripts.Services.GameProviderApi
 {
     public class HttpGameProviderApi : MonoBehaviour, IGameProviderApi
     {
-        public static GameProviderApi GetInstance()
+        public static HttpGameProviderApi GetInstance()
         {
             if (instance == null)
             {
                 var gameProviderApi =
                     new GameObject("Http GameProvider Api");
                 instance =
-                    gameProviderApi.AddComponent<GameProviderApi>();
+                    gameProviderApi.AddComponent<HttpGameProviderApi>();
             }
 
             return instance;
         }
 
-        private static GameProviderApi instance;
+        private static HttpGameProviderApi instance;
 
         public Action<long, string> GamesCallback { get; set; }
 
