@@ -12,6 +12,7 @@ namespace Scripts.UI.GameServerBrowser
                                                IOnGameServerReceivedListener
     {
         private IGameServerBrowserView gameServerBrowserView;
+
         private GameServerViewCollection? gameServerViewCollection;
         private GameServerBrowserInteractor gameServerBrowserInteractor;
 
@@ -130,8 +131,7 @@ namespace Scripts.UI.GameServerBrowser
                 {
                     if (gameServerView != null)
                     {
-                        gameServerView.ButtonClicked -=
-                            OnGameServerButtonClicked;
+                        gameServerView.ButtonClicked -= OnGameServerButtonClicked;
                     }
                 }
             }
@@ -164,7 +164,7 @@ namespace Scripts.UI.GameServerBrowser
         {
             ShowRefreshImage();
 
-            gameServerBrowserInteractor.ProvideGameServers();
+            gameServerBrowserInteractor.GetGames();
         }
 
         private void ShowRefreshImage()
