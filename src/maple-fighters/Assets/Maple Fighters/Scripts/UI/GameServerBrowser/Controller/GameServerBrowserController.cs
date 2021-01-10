@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Scripts.Constants;
-using Scripts.UI.Notice;
 using UI.Manager;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -10,7 +9,6 @@ namespace Scripts.UI.GameServerBrowser
 {
     [RequireComponent(typeof(GameServerBrowserInteractor))]
     public class GameServerBrowserController : MonoBehaviour,
-                                               IOnConnectionFinishedListener,
                                                IOnGameServerReceivedListener
     {
         private IGameServerBrowserView gameServerBrowserView;
@@ -64,13 +62,6 @@ namespace Scripts.UI.GameServerBrowser
                 gameServerBrowserView.RefreshButtonClicked -=
                     OnRefreshButtonClicked;
             }
-        }
-
-        public void OnConnectionFailed()
-        {
-            HideRefreshImage();
-
-            NoticeUtils.ShowNotice(message: NoticeMessages.GameServerBrowserView.ConnectionFailed);
         }
 
         public void OnGameServerReceived(IEnumerable<UIGameServerButtonData> gameServer)

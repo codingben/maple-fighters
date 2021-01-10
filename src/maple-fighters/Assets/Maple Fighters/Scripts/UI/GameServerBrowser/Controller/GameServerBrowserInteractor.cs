@@ -3,20 +3,16 @@ using UnityEngine;
 
 namespace Scripts.UI.GameServerBrowser
 {
-    [RequireComponent(typeof(IOnConnectionFinishedListener))]
     [RequireComponent(typeof(IOnGameServerReceivedListener))]
     public class GameServerBrowserInteractor : MonoBehaviour
     {
         private IGameProviderApi gameProviderApi;
-        private IOnConnectionFinishedListener onConnectionFinishedListener;
         private IOnGameServerReceivedListener onGameServerReceivedListener;
 
         private void Awake()
         {
             gameProviderApi =
                 FindObjectOfType<GameProviderApi>();
-            onConnectionFinishedListener =
-                GetComponent<IOnConnectionFinishedListener>();
             onGameServerReceivedListener =
                 GetComponent<IOnGameServerReceivedListener>();
         }
