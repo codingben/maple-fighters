@@ -27,7 +27,7 @@ namespace Scripts.Services.GameProviderApi
             var statusCode = 200;
             var json = "[{\"name\":\"Game 1\",\"ip\":\"127.0.0.1\",\"port\":50051}]";
 
-            GamesCallback.Invoke(statusCode, json);
+            GamesCallback?.Invoke(statusCode, json);
         }
     }
 }
