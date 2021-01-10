@@ -1,5 +1,6 @@
 using ScriptableObjects.Configurations;
 using Scripts.Services.AuthenticatorApi;
+using Scripts.Services.CharacterProviderApi;
 using Scripts.Services.GameApi;
 using Scripts.Services.GameProviderApi;
 
@@ -71,6 +72,28 @@ namespace Scripts.Services
         }
 
         private static IGameProviderApi gameProviderApi;
+        #endregion
+
+        #region CharacterProviderApi
+        public static ICharacterProviderApi ProvideCharacterProviderApi()
+        {
+            if (characterProviderApi == null)
+            {
+                var networkConfiguration = NetworkConfiguration.GetInstance();
+                if (networkConfiguration.IsProduction())
+                {
+                    characterProviderApi = HttpCharacterProviderApi.GetInstance();
+                }
+                else
+                {
+                    characterProviderApi = DummyCharacterProviderApi.GetInstance();
+                }
+            }
+
+            return characterProviderApi;
+        }
+
+        private static ICharacterProviderApi characterProviderApi;
         #endregion
     }
 }
