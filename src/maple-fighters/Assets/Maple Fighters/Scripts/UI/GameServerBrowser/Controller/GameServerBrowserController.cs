@@ -73,18 +73,18 @@ namespace Scripts.UI.GameServerBrowser
             NoticeUtils.ShowNotice(message: NoticeMessages.GameServerBrowserView.ConnectionFailed);
         }
 
-        public void OnGameServerReceived(IEnumerable<UIGameServerButtonData> datas)
+        public void OnGameServerReceived(IEnumerable<UIGameServerButtonData> gameServer)
         {
             UnsubscribeFromGameServerViews();
             DestroyGameServerViews();
 
             var index = 0;
-            var array = datas.ToArray();
+            var gameServerArray = gameServer.ToArray();
 
             gameServerViewCollection =
-                new GameServerViewCollection(array.Length);
+                new GameServerViewCollection(gameServerArray.Length);
 
-            foreach (var data in array)
+            foreach (var data in gameServerArray)
             {
                 IGameServerView view = CreateAndSubscribeToGameServerButton();
                 view.SetGameServerData(data);

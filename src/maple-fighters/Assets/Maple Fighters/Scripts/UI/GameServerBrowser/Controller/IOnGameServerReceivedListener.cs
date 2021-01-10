@@ -4,6 +4,6 @@ namespace Scripts.UI.GameServerBrowser
 {
     public interface IOnGameServerReceivedListener
     {
-        void OnGameServerReceived(IEnumerable<UIGameServerButtonData> datas);
+        void OnGameServerReceived(IEnumerable<UIGameServerButtonData> gameServer);
     }
 }
