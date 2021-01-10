@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Scripts.Services.GameProviderApi
 {
-    public class GameProviderApi : MonoBehaviour, IGameProviderApi
+    public class HttpGameProviderApi : MonoBehaviour, IGameProviderApi
     {
         public static GameProviderApi GetInstance()
         {
