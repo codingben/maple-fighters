@@ -63,7 +63,7 @@ namespace Scripts.Services
                 }
                 else
                 {
-                    // TODO: Implement
+                    gameProviderApi = DummyGameProviderApi.GetInstance();
                 }
             }
 
