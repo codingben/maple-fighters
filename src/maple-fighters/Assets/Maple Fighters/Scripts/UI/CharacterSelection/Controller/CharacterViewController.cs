@@ -10,7 +10,6 @@ namespace Scripts.UI.CharacterSelection
 {
     [RequireComponent(typeof(CharacterViewInteractor))]
     public class CharacterViewController : MonoBehaviour,
-                                           IOnConnectionFinishedListener,
                                            IOnCharacterReceivedListener,
                                            IOnCharacterValidationFinishedListener,
                                            IOnCharacterDeletionFinishedListener,
@@ -219,13 +218,6 @@ namespace Scripts.UI.CharacterSelection
             RemoveAndShowAllCharacterImages();
         }
 
-        public void OnConnectionFailed()
-        {
-            NoticeUtils.ShowNotice(
-                message: NoticeMessages.CharacterView.ConnectionFailed,
-                () => SceneManager.LoadScene(sceneName: SceneNames.Main));
-        }
-
         public void OnCharacterReceived(UICharacterDetails characterDetails)
         {
             var path = Utils.GetCharacterPath(characterDetails);
@@ -326,8 +318,6 @@ namespace Scripts.UI.CharacterSelection
         private void OnLoadingAnimationFinished()
         {
             UnsubscribeFromLoadingView();
-
-            characterViewInteractor.ConnectToGameServer();
         }
 
         private void RemoveAndShowAllCharacterImages()

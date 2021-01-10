@@ -1,10 +1,10 @@
 ﻿using Scripts.Constants;
-using Scripts.Services.CharacterProvider;
+using Scripts.Services;
+using Scripts.Services.CharacterProviderApi;
 using UnityEngine;
 
 namespace Scripts.UI.CharacterSelection
 {
-    [RequireComponent(typeof(IOnConnectionFinishedListener))]
     [RequireComponent(typeof(IOnCharacterReceivedListener))]
     [RequireComponent(typeof(IOnCharacterValidationFinishedListener))]
     [RequireComponent(typeof(IOnCharacterCreationFinishedListener))]
@@ -12,7 +12,6 @@ namespace Scripts.UI.CharacterSelection
     public class CharacterViewInteractor : MonoBehaviour
     {
         private ICharacterProviderApi characterProviderApi;
-        private IOnConnectionFinishedListener onConnectionFinishedListener;
         private IOnCharacterReceivedListener onCharacterReceivedListener;
         private IOnCharacterValidationFinishedListener onCharacterValidationFinishedListener;
         private IOnCharacterCreationFinishedListener onCharacterCreationFinishedListener;
@@ -24,9 +23,7 @@ namespace Scripts.UI.CharacterSelection
         private void Awake()
         {
             characterProviderApi =
-                FindObjectOfType<CharacterProviderApi>();
-            onConnectionFinishedListener =
-                GetComponent<IOnConnectionFinishedListener>();
+                ApiProvider.ProvideCharacterProviderApi();
             onCharacterReceivedListener =
                 GetComponent<IOnCharacterReceivedListener>();
             onCharacterValidationFinishedListener =
@@ -46,12 +43,6 @@ namespace Scripts.UI.CharacterSelection
                 new UICharacterDetails("Arrow", UICharacterIndex.Second, UICharacterClass.Arrow, SceneNames.Maps.Lobby, hasCharacter: false),
                 new UICharacterDetails("Wizard", UICharacterIndex.Third, UICharacterClass.Wizard, SceneNames.Maps.Lobby, hasCharacter: false)
             };
-        }
-
-        public void ConnectToGameServer()
-        {
-            // TODO: Get this data from server
-            onConnectionFinishedListener.OnConnectionSucceed();
         }
 
         public void GetCharacters()
