@@ -1,4 +1,4 @@
-﻿namespace Scripts.Services.GameProvider
+﻿namespace Scripts.Services.GameProviderApi
 {
     public interface IGameProviderApi
     {

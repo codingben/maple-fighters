@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Scripts.Services.GameProvider
+namespace Scripts.Services.GameProviderApi
 {
     public class GameProviderApi : MonoBehaviour, IGameProviderApi
     {

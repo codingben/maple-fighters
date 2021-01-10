@@ -1,4 +1,4 @@
-﻿using Scripts.Services.GameProvider;
+﻿using Scripts.Services.GameProviderApi;
 using UnityEngine;
 
 namespace Scripts.UI.GameServerBrowser
