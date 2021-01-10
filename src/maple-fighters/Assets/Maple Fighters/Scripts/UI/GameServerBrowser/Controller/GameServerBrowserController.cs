@@ -48,7 +48,7 @@ namespace Scripts.UI.GameServerBrowser
         {
             if (gameServerBrowserView != null)
             {
-                gameServerBrowserView.JoinButtonClicked += 
+                gameServerBrowserView.JoinButtonClicked +=
                     OnJoinButtonClicked;
                 gameServerBrowserView.RefreshButtonClicked +=
                     OnRefreshButtonClicked;
@@ -81,7 +81,7 @@ namespace Scripts.UI.GameServerBrowser
             var index = 0;
             var array = datas.ToArray();
 
-            gameServerViewCollection = 
+            gameServerViewCollection =
                 new GameServerViewCollection(array.Length);
 
             foreach (var data in array)
