@@ -22,7 +22,7 @@
 
         public static class GameServerBrowserView
         {
-            public const string ConnectionFailed = "Failed to connect to game server provider.";
+            public const string UnknownError = "An unknown error has occurred. Please try again later.";
         }
 
         public static class CharacterView
