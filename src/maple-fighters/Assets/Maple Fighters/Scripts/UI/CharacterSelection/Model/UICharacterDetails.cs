@@ -2,24 +2,21 @@
 {
     public struct UICharacterDetails
     {
+        private int characterId;
         private string characterName;
         private UICharacterIndex uiCharacterIndex;
         private UICharacterClass uiCharacterClass;
-        private string mapName;
-        private bool hasCharacter;
 
         public UICharacterDetails(
+            int characterId,
             string characterName,
             UICharacterIndex uiCharacterIndex,
-            UICharacterClass uiCharacterClass,
-            string mapName,
-            bool hasCharacter)
+            UICharacterClass uiCharacterClass)
         {
+            this.characterId = characterId;
             this.characterName = characterName;
             this.uiCharacterIndex = uiCharacterIndex;
             this.uiCharacterClass = uiCharacterClass;
-            this.mapName = mapName;
-            this.hasCharacter = hasCharacter;
         }
 
         public void SetCharacterName(string characterName)
@@ -37,14 +34,9 @@
             this.uiCharacterClass = uiCharacterClass;
         }
 
-        public void SetHasCharacter(bool hasCharacter)
+        public int GetCharacterId()
         {
-            this.hasCharacter = hasCharacter;
-        }
-
-        public void SetMapName(string mapName)
-        {
-            this.mapName = mapName;
+            return characterId;
         }
 
         public string GetCharacterName()
@@ -60,16 +52,6 @@
         public UICharacterClass GetCharacterClass()
         {
             return uiCharacterClass;
-        }
-
-        public string GetMapName()
-        {
-            return mapName;
-        }
-
-        public bool HasCharacter()
-        {
-            return hasCharacter;
         }
     }
 }
