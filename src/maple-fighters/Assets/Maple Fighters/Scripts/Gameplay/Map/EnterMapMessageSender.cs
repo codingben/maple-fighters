@@ -16,13 +16,10 @@ namespace Scripts.Gameplay.Map
         private void EnterScene()
         {
             var gameApi = ApiProvider.ProvideGameApi();
-
-            // TODO: Set values
             var message = new EnterSceneMessage()
             {
-                Map = 0,
-                CharacterName = "Arrow",
-                CharacterType = 0
+                CharacterName = UserData.CharacterData.Name,
+                CharacterType = UserData.CharacterData.Type
             };
 
             gameApi?.SendMessage(MessageCodes.EnterScene, message);
