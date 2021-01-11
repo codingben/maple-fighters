@@ -60,8 +60,11 @@ namespace Scripts.UI.Authenticator
         {
             switch (statusCode)
             {
-                case 200: // Ok
+                case 200: // Ok    
                 {
+                    // TODO: Get user id from the server
+                    UserData.Id = 1;
+
                     onLoginFinishedListener.OnLoginSucceed();
                     break;
                 }
