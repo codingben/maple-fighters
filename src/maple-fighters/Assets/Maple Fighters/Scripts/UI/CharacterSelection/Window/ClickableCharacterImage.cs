@@ -13,16 +13,6 @@ namespace Scripts.UI.CharacterSelection
     {
         public event Action<UICharacterIndex, bool> CharacterClicked;
 
-        public UICharacterIndex CharacterIndex
-        {
-            set => characterIndex = value;
-        }
-
-        public bool HasCharacter
-        {
-            set => hasCharacter = value;
-        }
-
         public string CharacterName
         {
             set
@@ -34,11 +24,22 @@ namespace Scripts.UI.CharacterSelection
             }
         }
 
+        public UICharacterIndex CharacterIndex
+        {
+            set => characterIndex = value;
+        }
+
+        public UICharacterClass CharacterClass
+        {
+            set => characterClass = value;
+        }
+
         public GameObject GameObject => gameObject;
 
         [Header("Text"), SerializeField]
         private TextMeshProUGUI characterNameText;
 
+        private UICharacterClass characterClass;
         private UICharacterIndex characterIndex;
         private bool hasCharacter;
 
@@ -63,9 +64,11 @@ namespace Scripts.UI.CharacterSelection
         {
             Destroy(gameObject);
         }
-        
+
         public void OnPointerClick(PointerEventData eventData)
         {
+            var hasCharacter = characterClass != UICharacterClass.Sample;
+
             CharacterClicked?.Invoke(characterIndex, hasCharacter);
         }
 
@@ -74,16 +77,16 @@ namespace Scripts.UI.CharacterSelection
             switch (characterAnimation)
             {
                 case UICharacterAnimation.Idle:
-                {
-                    animator.SetBool("Walk", false);
-                    break;
-                }
+                    {
+                        animator.SetBool("Walk", false);
+                        break;
+                    }
 
                 case UICharacterAnimation.Walk:
-                {
-                    animator.SetBool("Walk", true);
-                    break;
-                }
+                    {
+                        animator.SetBool("Walk", true);
+                        break;
+                    }
             }
         }
     }
