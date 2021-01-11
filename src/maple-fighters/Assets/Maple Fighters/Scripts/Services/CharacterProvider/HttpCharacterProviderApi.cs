@@ -20,11 +20,11 @@ namespace Scripts.Services.CharacterProviderApi
 
         private static HttpCharacterProviderApi instance;
 
-        public Action<long, byte> CreateCharacterCallback { get; set; }
+        public Action<long, string> CreateCharacterCallback { get; set; }
 
-        public Action<long, byte> DeleteCharacterCallback { get; set; }
+        public Action<long, string> DeleteCharacterCallback { get; set; }
 
-        public Action<long, byte> GetCharactersCallback { get; set; }
+        public Action<long, string> GetCharactersCallback { get; set; }
 
         public void CreateCharacter(int userid, string charactername, int index, int classindex)
         {
