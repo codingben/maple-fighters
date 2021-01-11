@@ -64,26 +64,26 @@ namespace Scripts.UI.CharacterSelection
             switch (statusCode)
             {
                 case 201: // Created
-                    {
-                        onCharacterCreationFinishedListener.OnCharacterCreated();
-                        break;
-                    }
+                {
+                    onCharacterCreationFinishedListener.OnCharacterCreated();
+                    break;
+                }
 
                 case 400: // Bad Request
-                    {
-                        var reason = UICharacterCreationFailed.NameAlreadyInUse;
+                {
+                    var reason = UICharacterCreationFailed.NameAlreadyInUse;
 
-                        onCharacterCreationFinishedListener.OnCreateCharacterFailed(reason);
-                        break;
-                    }
+                    onCharacterCreationFinishedListener.OnCreateCharacterFailed(reason);
+                    break;
+                }
 
                 default:
-                    {
-                        var reason = UICharacterCreationFailed.Unknown;
+                {
+                    var reason = UICharacterCreationFailed.Unknown;
 
-                        onCharacterCreationFinishedListener.OnCreateCharacterFailed(reason);
-                        break;
-                    }
+                    onCharacterCreationFinishedListener.OnCreateCharacterFailed(reason);
+                    break;
+                }
             }
         }
 
