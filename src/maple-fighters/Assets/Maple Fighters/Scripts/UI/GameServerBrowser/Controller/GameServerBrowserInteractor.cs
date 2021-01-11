@@ -40,7 +40,7 @@ namespace Scripts.UI.GameServerBrowser
 
         public void SetGameServerInfo(string ip, int port)
         {
-            // TODO: Set game server data
+            UserData.GameServerUrl = $"{ip}:{port}";
         }
 
         private void OnGamesCallback(long statusCode, string json)
