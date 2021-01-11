@@ -206,27 +206,15 @@ namespace Scripts.UI.CharacterSelection
             }
         }
 
-        public void OnConnectionSucceed()
-        {
-            CreateChooseFighterView();
-            CreateCharacterView();
-            CreateAndSubscribeToCharacterSelectionOptionsWindow();
-            CreateAndSubscribeToCharacterSelectionWindow();
-            CreateAndSubscribeToCharacterNameWindow();
-            SubscribeToBackgroundClicked();
-
-            RemoveAndShowAllCharacterImages();
-        }
-
         public void OnCharacterReceived(UICharacterDetails characterDetails)
         {
             var path = Utils.GetCharacterPath(characterDetails);
             var characterView = CreateAndShowCharacterView(path);
             if (characterView != null)
             {
-                characterView.CharacterIndex = characterDetails.GetCharacterIndex();
                 characterView.CharacterName = characterDetails.GetCharacterName();
-                characterView.HasCharacter = characterDetails.HasCharacter();
+                characterView.CharacterIndex = characterDetails.GetCharacterIndex();
+                characterView.CharacterClass = characterDetails.GetCharacterClass();
 
                 var characterIndex = characterDetails.GetCharacterIndex();
                 if (characterIndex != UICharacterIndex.Zero)
@@ -239,6 +227,7 @@ namespace Scripts.UI.CharacterSelection
                     }
 
                     var index = (int)characterIndex;
+
                     characterViewCollection?.Set(index, characterView);
                 }
             }
@@ -263,12 +252,12 @@ namespace Scripts.UI.CharacterSelection
 
         private void OnFadeInCompleted()
         {
-            SceneManager.LoadScene(sceneName: mapName);
-
             if (screenFadeController != null)
             {
                 screenFadeController.FadeInCompleted -= OnFadeInCompleted;
             }
+
+            SceneManager.LoadScene(sceneName: mapName);
         }
 
         public void OnCharacterUnvalidated()
@@ -302,22 +291,31 @@ namespace Scripts.UI.CharacterSelection
             switch (reason)
             {
                 case UICharacterCreationFailed.Unknown:
-                {
-                    NoticeUtils.ShowNotice(message: NoticeMessages.CharacterView.CharacterCreationFailed);
-                    break;
-                }
+                    {
+                        NoticeUtils.ShowNotice(message: NoticeMessages.CharacterView.CharacterCreationFailed);
+                        break;
+                    }
 
                 case UICharacterCreationFailed.NameAlreadyInUse:
-                {
-                    NoticeUtils.ShowNotice(message: NoticeMessages.CharacterView.NameAlreadyInUse);
-                    break;
-                }
+                    {
+                        NoticeUtils.ShowNotice(message: NoticeMessages.CharacterView.NameAlreadyInUse);
+                        break;
+                    }
             }
         }
 
         private void OnLoadingAnimationFinished()
         {
             UnsubscribeFromLoadingView();
+
+            CreateChooseFighterView();
+            CreateCharacterView();
+            CreateAndSubscribeToCharacterSelectionOptionsWindow();
+            CreateAndSubscribeToCharacterSelectionWindow();
+            CreateAndSubscribeToCharacterNameWindow();
+            SubscribeToBackgroundClicked();
+
+            characterViewInteractor.GetCharacters();
         }
 
         private void RemoveAndShowAllCharacterImages()
@@ -397,8 +395,10 @@ namespace Scripts.UI.CharacterSelection
 
         private void OnStartButtonClicked()
         {
-            var characterIndex = (int)characterDetails.GetCharacterIndex();
-            characterViewInteractor.ValidateCharacter(characterIndex);
+            var characterType = (byte)characterDetails.GetCharacterClass();
+            var characterName = characterDetails.GetCharacterName();
+
+            characterViewInteractor.ValidateCharacter(characterType, characterName);
         }
 
         private void OnCreateCharacterButtonClicked()
@@ -411,8 +411,9 @@ namespace Scripts.UI.CharacterSelection
         {
             HideCharacterSelectionOptionsWindow();
 
-            var characterIndex = (int)characterDetails.GetCharacterIndex();
-            characterViewInteractor.RemoveCharacter(characterIndex);
+            var characterId = (int)characterDetails.GetCharacterId();
+
+            characterViewInteractor.RemoveCharacter(characterId);
         }
 
         private void OnNameInputFieldChanged(string characterName)
