@@ -3,6 +3,11 @@
     public enum UICharacterClass
     {
         /// <summary>
+        /// The sample.
+        /// </summary>
+        Sample,
+
+        /// <summary>
         /// The knight.
         /// </summary>
         Knight,
