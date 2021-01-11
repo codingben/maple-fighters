@@ -2,7 +2,6 @@ using System;
 using Game.Messages;
 using Game.Network;
 using NativeWebSocket;
-using ScriptableObjects.Configurations;
 using UnityEngine;
 
 namespace Scripts.Services.GameApi
@@ -43,10 +42,7 @@ namespace Scripts.Services.GameApi
 
         private void Awake()
         {
-            var networkConfiguration = NetworkConfiguration.GetInstance();
-            var gameServerData =
-                networkConfiguration.GetServerData(ServerType.Game);
-            var url = gameServerData.Url;
+            var url = UserData.GameServerUrl;
 
             webSocket = new WebSocket(url);
             webSocket.OnOpen += OnOpen;

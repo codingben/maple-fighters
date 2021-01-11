@@ -13,11 +13,6 @@
         GameProvider,
 
         /// <summary>
-        /// The game server.
-        /// </summary>
-        Game,
-
-        /// <summary>
         /// The character server.
         /// </summary>
         Character,

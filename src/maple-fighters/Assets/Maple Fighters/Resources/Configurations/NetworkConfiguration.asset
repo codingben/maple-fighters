@@ -19,13 +19,10 @@ MonoBehaviour:
   - Name: Game Provider
     ServerType: 1
     Url: http://localhost:80/gameprovider
-  - Name: Game
-    ServerType: 2
-    Url: ws://localhost:80/game
   - Name: Character
-    ServerType: 3
+    ServerType: 2
     Url: http://localhost:80/character
   - Name: Chat
-    ServerType: 4
+    ServerType: 3
     Url: http://localhost:80/chat
   HostingEnvironment: 1
