@@ -1,4 +1,5 @@
-﻿using Scripts.Constants;
+﻿using Proyecto26;
+using Scripts.Constants;
 using Scripts.Services;
 using Scripts.Services.CharacterProviderApi;
 using UnityEngine;
@@ -17,9 +18,6 @@ namespace Scripts.UI.CharacterSelection
         private IOnCharacterCreationFinishedListener onCharacterCreationFinishedListener;
         private IOnCharacterDeletionFinishedListener onCharacterDeletionFinishedListener;
 
-        // TODO: Remove
-        private UICharacterDetails[] characters;
-
         private void Awake()
         {
             characterProviderApi =
@@ -32,61 +30,138 @@ namespace Scripts.UI.CharacterSelection
                 GetComponent<IOnCharacterCreationFinishedListener>();
             onCharacterDeletionFinishedListener =
                 GetComponent<IOnCharacterDeletionFinishedListener>();
-        }
 
-        private void Start()
-        {
-            // TODO: Get this data from server
-            characters = new UICharacterDetails[]
+            if (characterProviderApi != null)
             {
-                new UICharacterDetails("Knight", UICharacterIndex.First, UICharacterClass.Knight, SceneNames.Maps.Lobby, hasCharacter: false),
-                new UICharacterDetails("Arrow", UICharacterIndex.Second, UICharacterClass.Arrow, SceneNames.Maps.Lobby, hasCharacter: false),
-                new UICharacterDetails("Wizard", UICharacterIndex.Third, UICharacterClass.Wizard, SceneNames.Maps.Lobby, hasCharacter: false)
-            };
-        }
-
-        public void GetCharacters()
-        {
-            // TODO: Get this data from server
-            foreach (var character in characters)
-            {
-                onCharacterReceivedListener.OnCharacterReceived(character);
+                characterProviderApi.CreateCharacterCallback += OnCreateCharacterCallback;
+                characterProviderApi.DeleteCharacterCallback += OnDeleteCharacterCallback;
+                characterProviderApi.GetCharactersCallback += OnGetCharactersCallback;
             }
-
-            onCharacterReceivedListener.OnAfterCharacterReceived();
-
         }
 
-        public void ValidateCharacter(int characterIndex)
+        private void OnDestroy()
         {
-            var mapName = characters[characterIndex].GetMapName();
-
-            if (string.IsNullOrEmpty(mapName))
+            if (characterProviderApi != null)
             {
-                mapName = SceneNames.Maps.Lobby;
+                characterProviderApi.CreateCharacterCallback -= OnCreateCharacterCallback;
+                characterProviderApi.DeleteCharacterCallback -= OnDeleteCharacterCallback;
+                characterProviderApi.GetCharactersCallback -= OnGetCharactersCallback;
             }
-
-            // TODO: Get this data from server
-            onCharacterValidationFinishedListener.OnCharacterValidated(mapName);
-        }
-
-        public void RemoveCharacter(int characterIndex)
-        {
-            characters[characterIndex].SetHasCharacter(false);
-
-            // TODO: Get this data from server
-            onCharacterDeletionFinishedListener.OnCharacterDeletionSucceed();
         }
 
         public void CreateCharacter(UICharacterDetails characterDetails)
         {
-            characterDetails.SetHasCharacter(true);
+            var userId = UserData.Id;
+            var characterName = characterDetails.GetCharacterName();
+            var characterIndex = (int)characterDetails.GetCharacterIndex();
+            var classIndex = (int)characterDetails.GetCharacterClass();
 
-            var index = (int)characterDetails.GetCharacterIndex();
-            characters[index] = characterDetails;
+            characterProviderApi?.CreateCharacter(userId, characterName, characterIndex, classIndex);
+        }
 
-            // TODO: Get this data from server
-            onCharacterCreationFinishedListener.OnCharacterCreated();
+        private void OnCreateCharacterCallback(long statusCode, string json)
+        {
+            switch (statusCode)
+            {
+                case 201: // Created
+                    {
+                        onCharacterCreationFinishedListener.OnCharacterCreated();
+                        break;
+                    }
+
+                case 400: // Bad Request
+                    {
+                        var reason = UICharacterCreationFailed.NameAlreadyInUse;
+
+                        onCharacterCreationFinishedListener.OnCreateCharacterFailed(reason);
+                        break;
+                    }
+
+                default:
+                    {
+                        var reason = UICharacterCreationFailed.Unknown;
+
+                        onCharacterCreationFinishedListener.OnCreateCharacterFailed(reason);
+                        break;
+                    }
+            }
+        }
+
+        public void RemoveCharacter(int characterId)
+        {
+            characterProviderApi?.DeleteCharacter(characterId);
+        }
+
+        private void OnDeleteCharacterCallback(long statusCode, string json)
+        {
+            onCharacterDeletionFinishedListener.OnCharacterDeletionSucceed();
+        }
+
+        public void GetCharacters()
+        {
+            var userId = UserData.Id;
+
+            characterProviderApi?.GetCharacters(userId);
+        }
+
+        private void OnGetCharactersCallback(long statusCode, string json)
+        {
+            var characters = GetSampleCharacterData();
+
+            // Hack: "{}"
+            if (json != "{}")
+            {
+                var characterData = JsonHelper.FromJsonString<CharacterData>(json);
+                if (characterData != null && characterData.Length != 0)
+                {
+                    // Will replace sample characters with existing characters
+                    foreach (var character in characterData)
+                    {
+                        var index = character.index;
+
+                        characters[index].id = character.id;
+                        characters[index].charactername = character.charactername;
+                        characters[index].classindex = character.classindex;
+                    }
+                }
+            }
+
+            // Will create sample and/or existing characters
+            foreach (var character in characters)
+            {
+                var id = character.id;
+                var name = character.charactername;
+                var index = (UICharacterIndex)character.index;
+                var classindex = (UICharacterClass)character.classindex;
+                var uiCharacterDetails =
+                    new UICharacterDetails(id, name, index, classindex);
+
+                onCharacterReceivedListener.OnCharacterReceived(uiCharacterDetails);
+            }
+
+            onCharacterReceivedListener.OnAfterCharacterReceived();
+        }
+
+        private CharacterData[] GetSampleCharacterData()
+        {
+            // NOTE: Make sure the "index" parameter is like this array
+            return new CharacterData[3]
+            {
+                new CharacterData { userid = UserData.Id, charactername = "Sample", index = 0, classindex = 0 },
+                new CharacterData { userid = UserData.Id, charactername = "Sample", index = 1, classindex = 0 },
+                new CharacterData { userid = UserData.Id, charactername = "Sample", index = 2, classindex = 0 }
+            };
+        }
+
+        public void ValidateCharacter(byte characterType, string characterName)
+        {
+            // TODO: Get map name from the server
+            var mapName = SceneNames.Maps.Lobby;
+
+            UserData.CharacterData.Type = characterType;
+            UserData.CharacterData.Name = characterName;
+
+            onCharacterValidationFinishedListener.OnCharacterValidated(mapName);
         }
     }
 }
