@@ -35,7 +35,7 @@ namespace Scripts.Gameplay.Map.Dummy
                 },
                 CharacterData = new CharacterData()
                 {
-                    Name = "Dummy",
+                    Name = UserData.CharacterData.Name ?? "Dummy",
                     Class = (byte)dummyCharacter.CharacterClass,
                 }
             };
