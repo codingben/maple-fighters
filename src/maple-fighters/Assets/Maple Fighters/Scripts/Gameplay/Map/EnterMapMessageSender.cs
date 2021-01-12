@@ -19,7 +19,7 @@ namespace Scripts.Gameplay.Map
             var message = new EnterSceneMessage()
             {
                 CharacterName = UserData.CharacterData.Name,
-                CharacterType = UserData.CharacterData.Type
+                CharacterType = (byte)UserData.CharacterData.Type
             };
 
             gameApi?.SendMessage(MessageCodes.EnterScene, message);

@@ -5,7 +5,7 @@ namespace Scripts.Services
     {
         public static class CharacterData
         {
-            public static byte Type;
+            public static int Type = -1;
 
             public static string Name;
         }
