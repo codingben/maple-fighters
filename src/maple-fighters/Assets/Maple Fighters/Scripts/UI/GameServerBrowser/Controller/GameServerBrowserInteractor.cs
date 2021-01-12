@@ -21,7 +21,7 @@ namespace Scripts.UI.GameServerBrowser
 
             if (gameProviderApi != null)
             {
-                gameProviderApi.GamesCallback += OnGamesCallback;
+                gameProviderApi.GetGamesCallback += OnGetGamesCallback;
             }
         }
 
@@ -29,13 +29,13 @@ namespace Scripts.UI.GameServerBrowser
         {
             if (gameProviderApi != null)
             {
-                gameProviderApi.GamesCallback -= OnGamesCallback;
+                gameProviderApi.GetGamesCallback -= OnGetGamesCallback;
             }
         }
 
         public void GetGames()
         {
-            gameProviderApi?.Games();
+            gameProviderApi?.GetGames();
         }
 
         public void SetGameServerInfo(string ip, int port)
@@ -43,7 +43,7 @@ namespace Scripts.UI.GameServerBrowser
             UserData.GameServerUrl = $"{ip}:{port}";
         }
 
-        private void OnGamesCallback(long statusCode, string json)
+        private void OnGetGamesCallback(long statusCode, string json)
         {
             if (statusCode == 200) // Ok
             {

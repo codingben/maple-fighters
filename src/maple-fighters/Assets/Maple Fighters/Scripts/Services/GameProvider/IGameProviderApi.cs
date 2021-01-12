@@ -4,8 +4,8 @@ namespace Scripts.Services.GameProviderApi
 {
     public interface IGameProviderApi
     {
-        Action<long, string> GamesCallback { get; set; }
+        Action<long, string> GetGamesCallback { get; set; }
 
-        void Games();
+        void GetGames();
     }
 }

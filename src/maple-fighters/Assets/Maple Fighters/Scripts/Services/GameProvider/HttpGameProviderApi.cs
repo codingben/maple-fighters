@@ -22,7 +22,7 @@ namespace Scripts.Services.GameProviderApi
 
         private static HttpGameProviderApi instance;
 
-        public Action<long, string> GamesCallback { get; set; }
+        public Action<long, string> GetGamesCallback { get; set; }
 
         private string url;
 
@@ -38,17 +38,17 @@ namespace Scripts.Services.GameProviderApi
             }
         }
 
-        public void Games()
+        public void GetGames()
         {
-            RestClient.Get($"{url}/games", OnGamesCallback);
+            RestClient.Get($"{url}/games", OnGetGamesCallback);
         }
 
-        private void OnGamesCallback(RequestException request, ResponseHelper response)
+        private void OnGetGamesCallback(RequestException request, ResponseHelper response)
         {
             var statusCode = response.StatusCode;
             var json = response.Text;
 
-            GamesCallback?.Invoke(statusCode, json);
+            GetGamesCallback?.Invoke(statusCode, json);
         }
     }
 }

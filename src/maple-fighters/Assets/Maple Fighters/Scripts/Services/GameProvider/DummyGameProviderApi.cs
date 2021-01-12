@@ -20,14 +20,14 @@ namespace Scripts.Services.GameProviderApi
 
         private static DummyGameProviderApi instance;
 
-        public Action<long, string> GamesCallback { get; set; }
+        public Action<long, string> GetGamesCallback { get; set; }
 
-        public void Games()
+        public void GetGames()
         {
             var statusCode = 200;
             var json = "[{\"name\":\"Game 1\",\"ip\":\"127.0.0.1\",\"port\":50051}]";
 
-            GamesCallback?.Invoke(statusCode, json);
+            GetGamesCallback?.Invoke(statusCode, json);
         }
     }
 }
