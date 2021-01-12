@@ -114,7 +114,7 @@ namespace Scripts.UI.CharacterSelection
                 var characterData = JsonHelper.FromJsonString<CharacterData>(json);
                 if (characterData != null && characterData.Length != 0)
                 {
-                    // Will replace sample characters with existing characters
+                    // Replaces sample character with existing characters
                     foreach (var character in characterData)
                     {
                         var index = character.index;
@@ -126,7 +126,7 @@ namespace Scripts.UI.CharacterSelection
                 }
             }
 
-            // Will create sample and/or existing characters
+            // Create samples and/or existing characters
             foreach (var character in characters)
             {
                 var id = character.id;
