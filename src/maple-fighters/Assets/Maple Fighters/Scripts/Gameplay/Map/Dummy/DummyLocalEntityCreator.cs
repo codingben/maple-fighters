@@ -24,7 +24,18 @@ namespace Scripts.Gameplay.Map.Dummy
 
         private void CreateLocalDummyEntity()
         {
-            var gameApi = ApiProvider.ProvideGameApi();
+            var userName = UserData.CharacterData.Name;
+            if (userName == null)
+            {
+                userName = dummyCharacter.CharacterName;
+            }
+
+            var userCharacterType = UserData.CharacterData.Type;
+            if (userCharacterType == -1)
+            {
+                userCharacterType = (byte)dummyCharacter.CharacterClass;
+            }
+
             var message = new EnteredSceneMessage()
             {
                 GameObjectId = dummyCharacter.DummyEntity.Id,
@@ -35,8 +46,8 @@ namespace Scripts.Gameplay.Map.Dummy
                 },
                 CharacterData = new CharacterData()
                 {
-                    Name = UserData.CharacterData.Name ?? "Dummy",
-                    Class = (byte)dummyCharacter.CharacterClass,
+                    Name = userName,
+                    Class = (byte)userCharacterType,
                 }
             };
 
@@ -50,6 +61,7 @@ namespace Scripts.Gameplay.Map.Dummy
                 message.SpawnData.Direction = -1;
             }
 
+            var gameApi = ApiProvider.ProvideGameApi();
             gameApi.SceneEntered.Invoke(message);
         }
     }
