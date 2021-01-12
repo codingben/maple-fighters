@@ -1236,7 +1236,7 @@ MonoBehaviour:
       Id: 0
       Position: {x: 18, y: -1.86}
       Direction: 1
-    CharacterClass: 0
+    CharacterClass: 1
 --- !u!1001 &1100768649
 PrefabInstance:
   m_ObjectHideFlags: 0
