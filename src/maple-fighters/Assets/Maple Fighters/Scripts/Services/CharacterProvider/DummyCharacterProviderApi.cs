@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Proyecto26;
+using Newtonsoft.Json;
 using UnityEngine;
 
 namespace Scripts.Services.CharacterProviderApi
@@ -110,11 +110,11 @@ namespace Scripts.Services.CharacterProviderApi
         {
             var items = characters.Where(x => x.userid == userid).ToArray();
             var statusCode = 200;
-            var json = "{}";
+            var json = "[]";
 
             if (items.Length != 0)
             {
-                json = JsonHelper.ArrayToJsonString<CharacterData>(items);
+                json = JsonConvert.SerializeObject(items);
             }
 
             GetCharactersCallback?.Invoke(statusCode, json);

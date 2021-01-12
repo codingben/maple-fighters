@@ -108,10 +108,11 @@ namespace Scripts.UI.CharacterSelection
         {
             var characters = GetSampleCharacterData();
 
-            // Hack: "{}"
-            if (json != "{}")
+            // Hack: "[]"
+            if (json != "[]")
             {
-                var characterData = JsonHelper.FromJsonString<CharacterData>(json);
+                var characterData =
+                    JsonHelper.ArrayFromJson<CharacterData>(json);
                 if (characterData != null && characterData.Length != 0)
                 {
                     // Replaces sample character with existing characters
