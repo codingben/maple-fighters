@@ -8,11 +8,13 @@ namespace Scripts.UI.CharacterSelection
     {
         event Action<UICharacterIndex, bool> CharacterClicked;
 
-        string CharacterName { set; }
+        int Id { get; set; }
 
-        UICharacterIndex CharacterIndex { set; }
+        string CharacterName { get; set; }
 
-        UICharacterClass CharacterClass { set; }
+        UICharacterIndex CharacterIndex { get; set; }
+
+        UICharacterClass CharacterClass { get; set; }
 
         GameObject GameObject { get; }
 

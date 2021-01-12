@@ -13,8 +13,22 @@ namespace Scripts.UI.CharacterSelection
     {
         public event Action<UICharacterIndex, bool> CharacterClicked;
 
+        public int Id { get; set; }
+
         public string CharacterName
         {
+            get
+            {
+                var name = string.Empty;
+
+                if (characterNameText != null)
+                {
+                    name = characterNameText.text;
+                }
+
+                return name;
+            }
+
             set
             {
                 if (characterNameText != null)
@@ -24,25 +38,16 @@ namespace Scripts.UI.CharacterSelection
             }
         }
 
-        public UICharacterIndex CharacterIndex
-        {
-            set => characterIndex = value;
-        }
+        public UICharacterIndex CharacterIndex { get; set; }
 
-        public UICharacterClass CharacterClass
-        {
-            set => characterClass = value;
-        }
+        public UICharacterClass CharacterClass { get; set; }
 
         public GameObject GameObject => gameObject;
 
         [Header("Text"), SerializeField]
         private TextMeshProUGUI characterNameText;
 
-        private UICharacterClass characterClass;
-        private UICharacterIndex characterIndex;
         private bool hasCharacter;
-
         private Animator animator;
 
         private void Awake()
@@ -67,9 +72,9 @@ namespace Scripts.UI.CharacterSelection
 
         public void OnPointerClick(PointerEventData eventData)
         {
-            var hasCharacter = characterClass != UICharacterClass.Sample;
+            var hasCharacter = CharacterClass != UICharacterClass.Sample;
 
-            CharacterClicked?.Invoke(characterIndex, hasCharacter);
+            CharacterClicked?.Invoke(CharacterIndex, hasCharacter);
         }
 
         public void PlayAnimation(UICharacterAnimation characterAnimation)
