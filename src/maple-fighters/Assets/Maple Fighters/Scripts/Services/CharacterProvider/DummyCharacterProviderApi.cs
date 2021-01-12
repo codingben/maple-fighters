@@ -37,7 +37,11 @@ namespace Scripts.Services.CharacterProviderApi
             characters = new List<CharacterData>();
         }
 
-        public void CreateCharacter(int userid, string charactername, int index, int classindex)
+        public void CreateCharacter(
+            int userid,
+            string charactername,
+            int index,
+            int classindex)
         {
             var statusCode = 0;
             var json = string.Empty;
@@ -45,7 +49,8 @@ namespace Scripts.Services.CharacterProviderApi
             // On server it will iterate only by user (id) characters
             foreach (var characterData in characters)
             {
-                if (characterData.userid == userid && characterData.charactername == charactername)
+                if (characterData.userid == userid
+                    && characterData.charactername == charactername)
                 {
                     statusCode = 400;
                     json = "Please choose a different character name.";
