@@ -1,4 +1,5 @@
-﻿using Scripts.Constants;
+﻿using System.Text.RegularExpressions;
+using Scripts.Constants;
 using Scripts.UI.MenuBackground;
 using Scripts.UI.Notice;
 using Scripts.UI.ScreenFade;
@@ -433,7 +434,9 @@ namespace Scripts.UI.CharacterSelection
 
         private void OnNameInputFieldChanged(string characterName)
         {
-            if (characterName.Length >= characterNameLength)
+            if (characterName.Length >= characterNameLength
+                && !string.IsNullOrEmpty(characterName)
+                && !Regex.IsMatch(characterName, @"\s"))
             {
                 characterNameView?.EnableConfirmButton();
             }
