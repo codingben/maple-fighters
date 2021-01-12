@@ -1,4 +1,6 @@
 ﻿using System;
+using Proyecto26;
+using ScriptableObjects.Configurations;
 using UnityEngine;
 
 namespace Scripts.Services.CharacterProviderApi
@@ -26,19 +28,69 @@ namespace Scripts.Services.CharacterProviderApi
 
         public Action<long, string> GetCharactersCallback { get; set; }
 
-        public void CreateCharacter(int userid, string charactername, int index, int classindex)
+        private string url;
+
+        private void Awake()
         {
-            throw new NotImplementedException();
+            var networkConfiguration = NetworkConfiguration.GetInstance();
+            if (networkConfiguration != null)
+            {
+                var serverData =
+                    networkConfiguration.GetServerData(ServerType.Character);
+
+                url = serverData.Url;
+            }
+        }
+
+        public void CreateCharacter(
+            int userid,
+            string charactername,
+            int index,
+            int classindex)
+        {
+            var characterData = new NewCharacterData()
+            {
+                userid = userid,
+                charactername = charactername,
+                index = index,
+                classindex = classindex
+            };
+
+            RestClient.Post($"{url}/characters", characterData, OnCreateCharacterCallback);
+        }
+
+        private void OnCreateCharacterCallback(RequestException request, ResponseHelper response)
+        {
+            var statusCode = response.StatusCode;
+            var json = response.Text;
+
+            CreateCharacterCallback?.Invoke(statusCode, json);
         }
 
         public void DeleteCharacter(int characterid)
         {
-            throw new NotImplementedException();
+            RestClient.Delete($"{url}/characters/{characterid}", OnDeleteCharacterCallback);
+        }
+
+        private void OnDeleteCharacterCallback(RequestException request, ResponseHelper response)
+        {
+            var statusCode = response.StatusCode;
+            var json = response.Text;
+
+            DeleteCharacterCallback?.Invoke(statusCode, json);
         }
 
         public void GetCharacters(int userid)
         {
-            throw new NotImplementedException();
+            RestClient.Get($"{url}/characters/{userid}", OnGetCharactersCallback);
+        }
+
+        private void OnGetCharactersCallback(RequestException request, ResponseHelper response)
+        {
+            var statusCode = response.StatusCode;
+            var json = response.Text;
+
+            GetCharactersCallback?.Invoke(statusCode, json);
         }
     }
 }
