@@ -15,7 +15,12 @@ namespace Scripts.UI.CharacterSelection
         {
             collection[index] = characterView;
         }
-        
+
+        public IClickableCharacterView Get(int index)
+        {
+            return collection[index];
+        }
+
         public IEnumerable<IClickableCharacterView> GetAll()
         {
             return collection;
