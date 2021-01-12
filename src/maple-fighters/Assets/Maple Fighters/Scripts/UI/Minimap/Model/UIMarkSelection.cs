@@ -7,6 +7,7 @@ namespace Scripts.UI.Minimap
     public class UIMarkSelection
     {
         public string Name;
+
         public LayerMask MarkLayerMask;
     }
 }

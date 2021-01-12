@@ -8,8 +8,11 @@ namespace Scripts.Gameplay.Map.Dummy
     public class DummyEntity
     {
         public DummyObjects Type;
+
         public int Id;
+
         public Vector2 Position;
+
         public Direction Direction;
     }
 }
