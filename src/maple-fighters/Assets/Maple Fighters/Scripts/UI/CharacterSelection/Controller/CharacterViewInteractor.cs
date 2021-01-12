@@ -49,11 +49,11 @@ namespace Scripts.UI.CharacterSelection
             }
         }
 
-        public void CreateCharacter(UICharacterDetails characterDetails)
+        public void CreateCharacter(int index, UINewCharacterDetails characterDetails)
         {
             var userId = UserData.Id;
+            var characterIndex = index;
             var characterName = characterDetails.GetCharacterName();
-            var characterIndex = (int)characterDetails.GetCharacterIndex();
             var classIndex = (int)characterDetails.GetCharacterClass();
 
             characterProviderApi?.CreateCharacter(userId, characterName, characterIndex, classIndex);

@@ -25,8 +25,9 @@ namespace Scripts.UI.CharacterSelection
         private ICharacterSelectionView characterSelectionView;
         private ICharacterNameView characterNameView;
 
-        private UICharacterDetails characterDetails;
         private CharacterViewCollection? characterViewCollection;
+        private int characterIndex = -1;
+        private UINewCharacterDetails characterDetails;
 
         private CharacterViewInteractor characterViewInteractor;
         private ScreenFadeController screenFadeController;
@@ -35,7 +36,6 @@ namespace Scripts.UI.CharacterSelection
 
         private void Awake()
         {
-            characterDetails = new UICharacterDetails();
             characterViewInteractor = GetComponent<CharacterViewInteractor>();
             screenFadeController = FindObjectOfType<ScreenFadeController>();
         }
@@ -212,6 +212,7 @@ namespace Scripts.UI.CharacterSelection
             var characterView = CreateAndShowCharacterView(path);
             if (characterView != null)
             {
+                characterView.Id = characterDetails.GetCharacterId();
                 characterView.CharacterName = characterDetails.GetCharacterName();
                 characterView.CharacterIndex = characterDetails.GetCharacterIndex();
                 characterView.CharacterClass = characterDetails.GetCharacterClass();
@@ -387,7 +388,7 @@ namespace Scripts.UI.CharacterSelection
 
         private void OnCharacterClicked(UICharacterIndex uiCharacterIndex, bool hasCharacter)
         {
-            characterDetails.SetCharacterIndex(uiCharacterIndex);
+            characterIndex = (int)uiCharacterIndex;
 
             ShowCharacterSelectionOptionsWindow();
             EnableOrDisableCharacterSelectionOptionsViewButtons(hasCharacter);
@@ -395,10 +396,17 @@ namespace Scripts.UI.CharacterSelection
 
         private void OnStartButtonClicked()
         {
-            var characterType = (byte)characterDetails.GetCharacterClass();
-            var characterName = characterDetails.GetCharacterName();
+            if (characterIndex != -1)
+            {
+                var character = characterViewCollection?.Get(characterIndex);
+                if (character != null)
+                {
+                    var characterClass = (byte)character.CharacterClass;
+                    var characterName = character.CharacterName;
 
-            characterViewInteractor.ValidateCharacter(characterType, characterName);
+                    characterViewInteractor.ValidateCharacter(characterClass, characterName);
+                }
+            }
         }
 
         private void OnCreateCharacterButtonClicked()
@@ -411,9 +419,16 @@ namespace Scripts.UI.CharacterSelection
         {
             HideCharacterSelectionOptionsWindow();
 
-            var characterId = (int)characterDetails.GetCharacterId();
+            if (characterIndex != -1)
+            {
+                var character = characterViewCollection?.Get(characterIndex);
+                if (character != null)
+                {
+                    var characterId = character.Id;
 
-            characterViewInteractor.RemoveCharacter(characterId);
+                    characterViewInteractor.RemoveCharacter(characterId);
+                }
+            }
         }
 
         private void OnNameInputFieldChanged(string characterName)
@@ -433,7 +448,7 @@ namespace Scripts.UI.CharacterSelection
             HideCharacterNameWindow();
 
             characterDetails.SetCharacterName(characterName);
-            characterViewInteractor.CreateCharacter(characterDetails);
+            characterViewInteractor.CreateCharacter(characterIndex, characterDetails);
         }
 
         private void OnBackButtonClicked()
