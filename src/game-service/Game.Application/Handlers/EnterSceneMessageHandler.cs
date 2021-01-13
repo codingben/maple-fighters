@@ -73,6 +73,11 @@ namespace Game.Application.Handlers
                     X = player.Transform.Position.X,
                     Y = player.Transform.Position.Y,
                     Direction = player.Transform.Size.X
+                },
+                CharacterData = new Messages.CharacterData()
+                {
+                    Name = characterData.GetName(),
+                    Class = characterData.GetCharacterType()
                 }
             };
 
