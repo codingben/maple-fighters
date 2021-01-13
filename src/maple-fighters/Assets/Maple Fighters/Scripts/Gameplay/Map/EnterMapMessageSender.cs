@@ -15,7 +15,7 @@ namespace Scripts.Gameplay.Map
         // TODO: Refactor
         private IEnumerator WaitSecondAndSendEnterScene()
         {
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(0.25f);
 
             EnterScene();
 
