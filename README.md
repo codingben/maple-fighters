@@ -42,8 +42,6 @@ docker-compose down
 ```
 You should be able to access it at `http://localhost:8000`.
 
-**WIP**: Currently, client-server communication has not yet been implemented.
-
 ## Contributing
 Feel free to contribute and make any changes to the game itself.
 
