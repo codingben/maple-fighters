@@ -113,7 +113,7 @@ namespace Scripts.Services.GameApi
 
             if (collection != null && collection.TryGet(code, out var handler))
             {
-                handler?.Invoke(data);
+                handler?.Invoke(rawData);
             }
         }
     }
