@@ -27,6 +27,8 @@ namespace Scripts.Gameplay.Map
             var gameApi = ApiProvider.ProvideGameApi();
             var message = new EnterSceneMessage()
             {
+                // TODO: Don't hard code
+                Map = 0,
                 CharacterName = UserData.CharacterData.Name,
                 CharacterType = (byte)UserData.CharacterData.Type
             };
