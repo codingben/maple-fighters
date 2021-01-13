@@ -1,4 +1,5 @@
-﻿using Game.Messages;
+﻿using System.Collections;
+using Game.Messages;
 using Scripts.Services;
 using UnityEngine;
 
@@ -8,6 +9,14 @@ namespace Scripts.Gameplay.Map
     {
         private void Start()
         {
+            StartCoroutine(WaitSecondAndSendEnterScene());
+        }
+
+        // TODO: Refactor
+        private IEnumerator WaitSecondAndSendEnterScene()
+        {
+            yield return new WaitForSeconds(1);
+
             EnterScene();
 
             Destroy(gameObject);
