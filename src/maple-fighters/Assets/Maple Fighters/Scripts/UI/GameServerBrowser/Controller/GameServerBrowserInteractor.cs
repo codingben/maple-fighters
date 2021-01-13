@@ -40,7 +40,8 @@ namespace Scripts.UI.GameServerBrowser
 
         public void SetGameServerInfo(string ip, int port)
         {
-            UserData.GameServerUrl = $"{ip}:{port}";
+            // TODO: Refactor. Don't use hard-coded protocol
+            UserData.GameServerUrl = $"ws://{ip}:{port}/game";
         }
 
         private void OnGetGamesCallback(long statusCode, string json)
