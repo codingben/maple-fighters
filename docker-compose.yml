@@ -51,6 +51,8 @@ services:
         image: game-service:1.0.0
         build:
             context: ./src/game-service
+        ports:
+            - 50051:50051
         expose:
             - 50051
         environment:
