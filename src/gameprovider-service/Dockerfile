@@ -1,11 +1,29 @@
-FROM rust:latest as builder
-LABEL builder=true
+# -*- mode: dockerfile -*-
+#
+# An example Dockerfile showing how to build a Rust executable using this
+# image, and deploy it with a tiny Alpine Linux container.
 
-COPY target/release /usr/target/release
+# You can override this `--build-arg BASE_IMAGE=...` to use different
+# version of Rust or OpenSSL.
+ARG BASE_IMAGE=ekidd/rust-musl-builder:latest
 
-FROM debian:buster-slim
+# Our first FROM statement declares the build environment.
+FROM ${BASE_IMAGE} AS builder
 
-COPY --from=builder /usr/target/release/gameprovider-service /
+# Add our source code.
+ADD --chown=rust:rust . ./
+
+# Build our application.
+RUN cargo build --release
+
+# Now, we need to build our _real_ Docker container, copying in `gameprovider-service`.
+FROM alpine:latest
+
+RUN apk --no-cache add ca-certificates
+
+COPY --from=builder \
+    /home/rust/src/target/x86_64-unknown-linux-musl/release/gameprovider-service \
+    /usr/local/bin/
 COPY data.json /tmp
 
-CMD ["/gameprovider-service"]
+CMD /usr/local/bin/gameprovider-service
