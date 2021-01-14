@@ -2,8 +2,6 @@
 The game provider service provides a list of game servers.
 
 ## Docker
-> 💡 You need to install Rust locally.
-
 Follow these instructions to create an image and run a container:
 
 1. Build a docker image (The image size should be around 77.7MB):
