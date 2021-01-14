@@ -1,24 +1,32 @@
+using System;
 using Common.ComponentModel;
 using Common.Components;
-using WebSocketSharp;
-using WebSocketSharp.Server;
 using Game.Application.Components;
 using Game.Network;
 using Game.Application.Handlers;
 using Game.Messages;
 using Game.Application.Objects.Components;
+using Fleck;
 
 namespace Game.Application
 {
-    public class GameService : WebSocketBehavior
+    public class GameService
     {
+        private readonly IWebSocketConnection connection;
         private readonly IWebSocketSessionCollection webSocketSessionCollection;
         private readonly IGameSceneCollection gameSceneCollection;
         private readonly IGamePlayer gamePlayer;
         private readonly IMessageHandlerCollection messageHandlerCollection;
 
-        public GameService(IComponents components)
+        public GameService(IWebSocketConnection connection, IComponents components)
         {
+            // TODO: Unsubscribe
+            this.connection = connection;
+            this.connection.OnOpen += OnOpen;
+            this.connection.OnClose += OnClose;
+            this.connection.OnError += OnError;
+            this.connection.OnBinary += OnBinary;
+
             webSocketSessionCollection = components.Get<IWebSocketSessionCollection>();
             gameSceneCollection = components.Get<IGameSceneCollection>();
 
@@ -29,45 +37,46 @@ namespace Game.Application
             messageHandlerCollection = new MessageHandlerCollection();
         }
 
-        protected override void OnOpen()
+        private void OnOpen()
         {
             AddPlayer();
+
             AddMessageSenderToPlayer();
             AddWebSocketSessionData();
+
             AddHandlerForChangePosition();
             AddHandlerForChangeAnimationState();
             AddHandlerForEnterScene();
             AddHandlerForChangeScene();
         }
 
-        protected override void OnClose(CloseEventArgs eventArgs)
+        private void OnClose()
         {
             RemoveHandlerFromChangePosition();
             RemoveHandlerFromChangeAnimationState();
             RemoveHandlerFromEnterScene();
             RemoveHandlerFromChangeScene();
+
             RemoveWebSocketSessionData();
+
             RemovePlayer();
         }
 
-        protected override void OnError(ErrorEventArgs eventArgs)
+        private void OnError(Exception exception)
         {
-            // TODO: Logger.Log($"{eventArgs.Message}")
+            Console.WriteLine($"OnError() -> {exception.Message}");
         }
 
-        protected override void OnMessage(MessageEventArgs eventArgs)
+        private void OnBinary(byte[] data)
         {
-            if (eventArgs.IsBinary)
-            {
-                var messageData =
-                    MessageUtils.DeserializeMessage<MessageData>(eventArgs.RawData);
-                var code = messageData.Code;
-                var rawData = messageData.RawData;
+            var messageData =
+                MessageUtils.DeserializeMessage<MessageData>(data);
+            var code = messageData.Code;
+            var rawData = messageData.RawData;
 
-                if (messageHandlerCollection.TryGet(code, out var handler))
-                {
-                    handler?.Invoke(rawData);
-                }
+            if (messageHandlerCollection.TryGet(code, out var handler))
+            {
+                handler?.Invoke(rawData);
             }
         }
 
@@ -149,14 +158,15 @@ namespace Game.Application
 
             messageSender.SendMessageAction = (rawData) =>
             {
-                Send(rawData);
+                connection.Send(rawData);
             };
 
             messageSender.SendToMessageAction = (rawData, id) =>
             {
                 if (webSocketSessionCollection.TryGet(id, out var webSocketSessionData))
                 {
-                    Sessions.SendTo(rawData, webSocketSessionData.Id);
+                    // TODO: Fix
+                    // Sessions.SendTo(rawData, webSocketSessionData.Id);
                 }
             };
         }
@@ -171,9 +181,9 @@ namespace Game.Application
             var player = gamePlayer?.GetPlayer();
             if (player != null)
             {
-                var data = new WebSocketSessionData(ID);
-
-                webSocketSessionCollection.Add(player.Id, data);
+                // TODO: Fix
+                // var data = new WebSocketSessionData(ID);
+                // webSocketSessionCollection.Add(player.Id, data);
             }
         }
 
