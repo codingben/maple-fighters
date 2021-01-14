@@ -7,8 +7,8 @@ namespace Scripts.Services.GameProviderApi
     {
         public string name;
 
-        public string ip;
+        public string protocol;
 
-        public int port;
+        public string url;
     }
 }

@@ -2,28 +2,17 @@
 {
     public struct UIGameServerButtonData
     {
-        public string IP { get; }
+        public string Name { get; }
 
-        public string ServerName { get; }
+        public string Protocol { get; }
 
-        public int Port { get; }
+        public string Url { get; }
 
-        public int Connections { get; }
-
-        public int MaxConnections { get; }
-
-        public UIGameServerButtonData(
-            string ip,
-            string serverName,
-            int port,
-            int connections,
-            int maxConnections)
+        public UIGameServerButtonData(string name, string protocol, string url)
         {
-            IP = ip;
-            ServerName = serverName;
-            Port = port;
-            Connections = connections;
-            MaxConnections = maxConnections;
+            Name = name;
+            Protocol = protocol;
+            Url = url;
         }
     }
 }
