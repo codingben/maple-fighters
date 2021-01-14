@@ -2,8 +2,6 @@
 The character service creates and receives the player character data.
 
 ## Docker
-> 💡 You need to install Rust locally.
-
 Follow these instructions to create an image and run a container:
 
 1. Build a docker image (The image size should be around 78.4MB):
