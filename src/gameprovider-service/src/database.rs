@@ -11,8 +11,8 @@ pub fn load(path: &str) -> Vec<Game> {
         .into_iter()
         .map(|game| Game {
             name: game.name,
-            ip: game.ip,
-            port: game.port,
+            protocol: game.protocol,
+            url: game.url,
         })
         .collect()
 }
