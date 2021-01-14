@@ -51,7 +51,7 @@ services:
         expose:
             - 50051
         environment:
-            IP_ADDRESS: http://0.0.0.0:50051
+            IP_ADDRESS: ws://0.0.0.0:50051
 
     gameprovider-service:
         image: gameprovider-service:1.0.0
