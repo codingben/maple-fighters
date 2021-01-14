@@ -8,6 +8,6 @@ pub struct GameCollection {
 #[derive(Serialize, Deserialize)]
 pub struct Game {
     pub name: String,
-    pub ip: String,
-    pub port: i32,
+    pub protocol: String,
+    pub url: String,
 }
