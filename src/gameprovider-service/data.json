@@ -1,7 +1,7 @@
 [
     {
-        "name": "Game 1",
-        "ip": "localhost",
-        "port": 50051
+        "name": "Europe",
+        "protocol": "ws",
+        "url": "localhost/game/"
     }
 ]
