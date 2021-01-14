@@ -6,7 +6,7 @@ using WebSocketSharp.Server;
 
 namespace Game.Application
 {
-    public class GameApplication : HttpServer, IServerApplication
+    public class GameApplication : WebSocketServer, IServerApplication
     {
         private readonly IComponents components;
 
