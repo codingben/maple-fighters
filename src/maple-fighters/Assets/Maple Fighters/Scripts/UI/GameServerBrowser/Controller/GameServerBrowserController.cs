@@ -78,10 +78,10 @@ namespace Scripts.UI.GameServerBrowser
 
             foreach (var data in gameServerArray)
             {
-                IGameServerView view = CreateAndSubscribeToGameServerButton();
+                var view = CreateAndSubscribeToGameServerButton();
+
                 view.SetGameServerData(data);
-                view.SetGameServerName(data.ServerName);
-                view.SetGameServerConnections(data.Connections, data.MaxConnections);
+                view.SetGameServerName(data.Name);
 
                 gameServerViewCollection?.Set(index, view);
 
@@ -91,7 +91,7 @@ namespace Scripts.UI.GameServerBrowser
             HideRefreshImage();
         }
 
-        private GameServerButton CreateAndSubscribeToGameServerButton()
+        private IGameServerView CreateAndSubscribeToGameServerButton()
         {
             var gameServerButton = UIElementsCreator.GetInstance()
                 .Create<GameServerButton>(
@@ -139,10 +139,7 @@ namespace Scripts.UI.GameServerBrowser
 
         private void OnGameServerButtonClicked(UIGameServerButtonData gameServerData)
         {
-            var ip = gameServerData.IP;
-            var port = gameServerData.Port;
-
-            gameServerBrowserInteractor.SetGameServerInfo(ip, port);
+            gameServerBrowserInteractor.SetGameServerInfo(gameServerData);
             gameServerBrowserView?.EnableJoinButton();
         }
 

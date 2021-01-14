@@ -38,10 +38,12 @@ namespace Scripts.UI.GameServerBrowser
             gameProviderApi?.GetGames();
         }
 
-        public void SetGameServerInfo(string ip, int port)
+        public void SetGameServerInfo(UIGameServerButtonData gameServerData)
         {
-            // TODO: Refactor. Don't use hard-coded protocol
-            UserData.GameServerUrl = $"ws://{ip}:{port}/game";
+            var protocol = gameServerData.Protocol;
+            var url = gameServerData.Url;
+
+            UserData.GameServerUrl = $"{protocol}://{url}";
         }
 
         private void OnGetGamesCallback(long statusCode, string json)
@@ -53,11 +55,9 @@ namespace Scripts.UI.GameServerBrowser
                 {
                     var uiGameData =
                         gameData.Select((x) => new UIGameServerButtonData(
-                            x.ip,
                             x.name,
-                            x.port,
-                            connections: 0,
-                            maxConnections: 1000));
+                            x.protocol,
+                            x.url));
 
                     onGameServerReceivedListener.OnGameServerReceived(uiGameData);
                 }
