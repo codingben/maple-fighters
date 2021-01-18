@@ -25,7 +25,7 @@ namespace Scripts.Services.GameProviderApi
         public void GetGames()
         {
             var statusCode = 200;
-            var json = "[{\"name\":\"Game 1\",\"ip\":\"127.0.0.1\",\"port\":50051}]";
+            var json = "[{\"name\":\"Europe\",\"protocol\":\"ws\",\"url\":\"localhost/game/\"}]";
 
             GetGamesCallback?.Invoke(statusCode, json);
         }
