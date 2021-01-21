@@ -2,46 +2,15 @@
 using DotNetEnv;
 using Game.Application;
 
-namespace Game.AppStarter
+Env.Load();
+
+var ipAddress = Environment.GetEnvironmentVariable("IP_ADDRESS");
+if (ipAddress == null)
 {
-    public static class GameStarter
-    {
-        private static IServerApplication serverApplication;
-
-        public static void Main()
-        {
-            Env.Load();
-
-            AddProcessExitEventHandler();
-
-            StartApplication();
-        }
-
-        private static void StartApplication()
-        {
-            serverApplication = CreateServerApplication();
-            serverApplication.Startup();
-        }
-
-        private static void StopApplication()
-        {
-            serverApplication?.Shutdown();
-        }
-
-        private static void AddProcessExitEventHandler()
-        {
-            AppDomain.CurrentDomain.ProcessExit += (x, y) => StopApplication();
-        }
-
-        private static IServerApplication CreateServerApplication()
-        {
-            var ipAddress = Environment.GetEnvironmentVariable("IP_ADDRESS");
-            if (ipAddress == null)
-            {
-                throw new NullReferenceException("Please set IP_ADDRESS");
-            }
-
-            return new GameApplication(ipAddress);
-        }
-    }
+    throw new Exception("Please set IP_ADDRESS");
 }
+
+var serverApplication = new GameApplication(ipAddress);
+serverApplication.Startup();
+
+AppDomain.CurrentDomain.ProcessExit += (x, y) => serverApplication?.Shutdown();
