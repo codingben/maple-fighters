@@ -4,12 +4,12 @@ namespace Game.Application.Components
 {
     public interface IGamePlayerSpawnData
     {
-        void SetSpawnPosition(Vector2 position);
+        void SetPosition(Vector2 position);
 
-        void SetSpawnDirection(float direction);
+        void SetDirection(float direction);
 
-        Vector2 GetSpawnPosition();
+        Vector2 GetPosition();
 
-        float GetSpawnDirection();
+        float GetDirection();
     }
 }

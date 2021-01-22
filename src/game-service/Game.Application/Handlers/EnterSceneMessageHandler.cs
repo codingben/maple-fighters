@@ -37,10 +37,8 @@ namespace Game.Application.Handlers
             if (gameSceneCollection.TryGet((Map)map, out var gameScene))
             {
                 // Set's player position
-                var position =
-                    gameScene.GamePlayerSpawnData.GetSpawnPosition();
-                var direction =
-                    gameScene.GamePlayerSpawnData.GetSpawnDirection();
+                var position = gameScene.GamePlayerSpawnData.GetPosition();
+                var direction = gameScene.GamePlayerSpawnData.GetDirection();
 
                 player.Transform.SetPosition(position);
                 player.Transform.SetSize(new Vector2(direction, y: 0));

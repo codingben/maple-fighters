@@ -7,22 +7,22 @@ namespace Game.Application.Components
         private Vector2 position;
         private float direction;
 
-        public void SetSpawnPosition(Vector2 position)
+        public void SetPosition(Vector2 position)
         {
             this.position = position;
         }
 
-        public void SetSpawnDirection(float direction)
+        public void SetDirection(float direction)
         {
             this.direction = direction;
         }
 
-        public Vector2 GetSpawnPosition()
+        public Vector2 GetPosition()
         {
             return position;
         }
 
-        public float GetSpawnDirection()
+        public float GetDirection()
         {
             return direction;
         }
