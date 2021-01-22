@@ -115,8 +115,7 @@ namespace Game.Application
         {
             if (sessionCollection.TryGet(id, out var sessionData))
             {
-                // TODO: Fix
-                // Sessions.SendTo(rawData, sessionData.Id);
+                sessionData.Connection.Send(rawData);
             }
         }
 
@@ -130,7 +129,7 @@ namespace Game.Application
 
         private void AddWebSocketSessionData()
         {
-            sessionCollection.Add(id, new WebSocketSessionData(id));
+            sessionCollection.Add(id, new WebSocketSessionData(id, connection));
         }
 
         private void RemoveWebSocketSessionData()
