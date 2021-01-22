@@ -7,7 +7,7 @@ using Game.Application.Components;
 
 namespace Game.Application
 {
-    public class GameApplication : IServerApplication
+    public class GameApplication
     {
         private readonly IWebSocketServer webSocketServer;
         private readonly IComponents components;
