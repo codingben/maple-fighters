@@ -5,195 +5,137 @@ using Game.Application.Components;
 using Game.Network;
 using Game.Application.Handlers;
 using Game.Messages;
-using Game.Application.Objects.Components;
 using Fleck;
+using Game.Application.Objects;
+using Game.Application.Objects.Components;
 
 namespace Game.Application
 {
     public class GameService
     {
+        private readonly int id;
         private readonly IWebSocketConnection connection;
-        private readonly IWebSocketSessionCollection webSocketSessionCollection;
+        private readonly IWebSocketSessionCollection sessionCollection;
         private readonly IGameSceneCollection gameSceneCollection;
-        private readonly IGamePlayer gamePlayer;
-        private readonly IMessageHandlerCollection messageHandlerCollection;
+        private readonly IGameObject player;
+        private readonly IMessageHandlerCollection handlerCollection;
 
         public GameService(IWebSocketConnection connection, IComponents components)
         {
-            // TODO: Unsubscribe
             this.connection = connection;
-            this.connection.OnOpen += OnOpen;
-            this.connection.OnClose += OnClose;
-            this.connection.OnError += OnError;
-            this.connection.OnBinary += OnBinary;
 
-            webSocketSessionCollection = components.Get<IWebSocketSessionCollection>();
+            connection.OnOpen += OnConnectionEstablished;
+            connection.OnClose += OnConnectionClosed;
+            connection.OnError += OnErrorOccurred;
+            connection.OnBinary += OnMessageReceived;
+
+            id = components.Get<IIdGenerator>().GenerateId();
+            sessionCollection = components.Get<IWebSocketSessionCollection>();
             gameSceneCollection = components.Get<IGameSceneCollection>();
 
-            var idGenerator = components.Get<IIdGenerator>();
-            var id = idGenerator.GenerateId();
-
-            gamePlayer = new GamePlayer(id);
-            messageHandlerCollection = new MessageHandlerCollection();
+            player = new PlayerGameObject(id, new IComponent[]
+            {
+                new AnimationData(),
+                new Objects.Components.CharacterData(),
+                new PresenceMapProvider(),
+                new MessageSender(),
+                new PositionChangedMessageSender(),
+                new AnimationStateChangedMessageSender(),
+                new PlayerAttackedMessageSender(),
+                new BubbleNotificationMessageSender()
+            });
+            handlerCollection = new MessageHandlerCollection();
         }
 
-        private void OnOpen()
+        private void OnConnectionEstablished()
         {
-            AddPlayer();
-
-            AddMessageSenderToPlayer();
+            // General
+            SubscribeToMessageSender();
             AddWebSocketSessionData();
 
-            AddHandlerForChangePosition();
-            AddHandlerForChangeAnimationState();
-            AddHandlerForEnterScene();
-            AddHandlerForChangeScene();
+            // Handlers
+            handlerCollection.Set(MessageCodes.ChangePosition, new ChangePositionMessageHandler(player));
+            handlerCollection.Set(MessageCodes.ChangeAnimationState, new ChangeAnimationStateHandler(player));
+            handlerCollection.Set(MessageCodes.EnterScene, new EnterSceneMessageHandler(player, gameSceneCollection));
+            handlerCollection.Set(MessageCodes.ChangeScene, new ChangeSceneMessageHandler(player, gameSceneCollection));
         }
 
-        private void OnClose()
+        private void OnConnectionClosed()
         {
-            RemoveHandlerFromChangePosition();
-            RemoveHandlerFromChangeAnimationState();
-            RemoveHandlerFromEnterScene();
-            RemoveHandlerFromChangeScene();
-
+            // General
+            UnsubscribeFromMessageSender();
+            RemovePlayer();
             RemoveWebSocketSessionData();
 
-            RemovePlayer();
+            // Handlers
+            handlerCollection.Unset(MessageCodes.ChangePosition);
+            handlerCollection.Unset(MessageCodes.ChangeAnimationState);
+            handlerCollection.Unset(MessageCodes.EnterScene);
+            handlerCollection.Unset(MessageCodes.ChangeScene);
         }
 
-        private void OnError(Exception exception)
+        private void OnErrorOccurred(Exception exception)
         {
-            Console.WriteLine($"OnError() -> {exception.Message}");
+            Console.WriteLine($"OnErrorOccurred() -> {exception.Message}");
         }
 
-        private void OnBinary(byte[] data)
+        private void OnMessageReceived(byte[] data)
         {
             var messageData =
                 MessageUtils.DeserializeMessage<MessageData>(data);
             var code = messageData.Code;
             var rawData = messageData.RawData;
 
-            if (messageHandlerCollection.TryGet(code, out var handler))
+            if (handlerCollection.TryGet(code, out var handler))
             {
                 handler?.Invoke(rawData);
             }
         }
 
-        private void AddHandlerForChangePosition()
+        private void SubscribeToMessageSender()
         {
-            var player = gamePlayer?.GetPlayer();
-            if (player != null)
-            {
-                var messageHandler = new ChangePositionMessageHandler(player);
+            var messageSender = player.Components.Get<IMessageSender>();
+            messageSender.SendMessageCallback += SendMessageCallback;
+            messageSender.SendToMessageCallback += SendMessageCallback;
+        }
 
-                messageHandlerCollection.Set(MessageCodes.ChangePosition, messageHandler);
+        private void UnsubscribeFromMessageSender()
+        {
+            var messageSender = player.Components.Get<IMessageSender>();
+            messageSender.SendMessageCallback -= SendMessageCallback;
+            messageSender.SendToMessageCallback -= SendMessageCallback;
+        }
+
+        private void SendMessageCallback(byte[] rawData)
+        {
+            connection.Send(rawData);
+        }
+
+        private void SendMessageCallback(byte[] rawData, int id)
+        {
+            if (sessionCollection.TryGet(id, out var sessionData))
+            {
+                // TODO: Fix
+                // Sessions.SendTo(rawData, sessionData.Id);
             }
-        }
-
-        private void RemoveHandlerFromChangePosition()
-        {
-            messageHandlerCollection.Unset(MessageCodes.ChangePosition);
-        }
-
-        private void AddHandlerForChangeAnimationState()
-        {
-            var player = gamePlayer?.GetPlayer();
-            if (player != null)
-            {
-                var messageHandler = new ChangeAnimationStateHandler(player);
-
-                messageHandlerCollection.Set(MessageCodes.ChangeAnimationState, messageHandler);
-            }
-        }
-
-        private void RemoveHandlerFromChangeAnimationState()
-        {
-            messageHandlerCollection.Unset(MessageCodes.ChangeAnimationState);
-        }
-
-        private void AddHandlerForEnterScene()
-        {
-            var player = gamePlayer?.GetPlayer();
-            if (player != null)
-            {
-                var messageHandler =
-                    new EnterSceneMessageHandler(player, gameSceneCollection);
-
-                messageHandlerCollection.Set(MessageCodes.EnterScene, messageHandler);
-            }
-        }
-
-        private void RemoveHandlerFromEnterScene()
-        {
-            messageHandlerCollection.Unset(MessageCodes.EnterScene);
-        }
-
-        private void AddHandlerForChangeScene()
-        {
-            var player = gamePlayer?.GetPlayer();
-            if (player != null)
-            {
-                var messageHandler =
-                    new ChangeSceneMessageHandler(player, gameSceneCollection);
-
-                messageHandlerCollection.Set(MessageCodes.ChangeScene, messageHandler);
-            }
-        }
-
-        private void RemoveHandlerFromChangeScene()
-        {
-            messageHandlerCollection.Unset(MessageCodes.ChangeScene);
-        }
-
-        private void AddPlayer()
-        {
-            gamePlayer?.Create();
-        }
-
-        private void AddMessageSenderToPlayer()
-        {
-            var player = gamePlayer?.GetPlayer();
-            var messageSender = player?.Components.Get<IMessageSender>();
-
-            messageSender.SendMessageAction = (rawData) =>
-            {
-                connection.Send(rawData);
-            };
-
-            messageSender.SendToMessageAction = (rawData, id) =>
-            {
-                if (webSocketSessionCollection.TryGet(id, out var webSocketSessionData))
-                {
-                    // TODO: Fix
-                    // Sessions.SendTo(rawData, webSocketSessionData.Id);
-                }
-            };
         }
 
         private void RemovePlayer()
         {
-            gamePlayer?.Dispose();
+            var map = player.Components.Get<IPresenceMapProvider>().GetMap();
+            map?.GameObjectCollection.Remove(id);
+
+            player.Dispose();
         }
 
         private void AddWebSocketSessionData()
         {
-            var player = gamePlayer?.GetPlayer();
-            if (player != null)
-            {
-                // TODO: Fix
-                // var data = new WebSocketSessionData(ID);
-                // webSocketSessionCollection.Add(player.Id, data);
-            }
+            sessionCollection.Add(id, new WebSocketSessionData(id));
         }
 
         private void RemoveWebSocketSessionData()
         {
-            var player = gamePlayer?.GetPlayer();
-            if (player != null)
-            {
-                webSocketSessionCollection.Remove(player.Id);
-            }
+            sessionCollection.Remove(id);
         }
     }
 }
