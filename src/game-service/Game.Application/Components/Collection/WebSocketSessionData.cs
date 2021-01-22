@@ -1,12 +1,17 @@
-﻿namespace Game.Application.Components
+﻿using Fleck;
+
+namespace Game.Application.Components
 {
     public struct WebSocketSessionData
     {
         public int Id { get; }
 
-        public WebSocketSessionData(int id)
+        public IWebSocketConnection Connection { get; }
+
+        public WebSocketSessionData(int id, IWebSocketConnection connection)
         {
             Id = id;
+            Connection = connection;
         }
     }
 }
