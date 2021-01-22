@@ -2,9 +2,9 @@
 {
     public struct WebSocketSessionData
     {
-        public string Id { get; }
+        public int Id { get; }
 
-        public WebSocketSessionData(string id)
+        public WebSocketSessionData(int id)
         {
             Id = id;
         }
