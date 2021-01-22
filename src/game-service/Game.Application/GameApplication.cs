@@ -1,5 +1,7 @@
+using System;
 using Common.ComponentModel;
 using Common.Components;
+using DotNetEnv;
 using Fleck;
 using Game.Application.Components;
 
@@ -10,8 +12,12 @@ namespace Game.Application
         private readonly IWebSocketServer webSocketServer;
         private readonly IComponents components;
 
-        public GameApplication(string url)
+        public GameApplication()
         {
+            Env.Load();
+
+            var url = Environment.GetEnvironmentVariable("URL");
+
             webSocketServer = new WebSocketServer(url);
             components = new ComponentCollection(new IComponent[]
             {
