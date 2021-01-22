@@ -22,7 +22,7 @@ Please **★ Star** this repository if you like it and find it useful. Made with
 | Service                                              | Language      | Description                                                    														|
 | ---------------------------------------------------- | ------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | [auth-service](./src/auth-service)                   | C#            | Stores user data and verifies user. 			   															|
-| [game-service](./src/game-service)                   | C#            | Creates a player in the game world to play with others. 	|
+| [game-service](./src/game-service/Game.Application)                   | C#            | Creates a player in the game world to play with others. 	|
 | [gameprovider-service](./src/gameprovider-service)   | Rust          | Provides a list of game servers. 																|
 | [character-service](./src/character-service)         | Rust          | Creates and receives player character data. 																|
 
