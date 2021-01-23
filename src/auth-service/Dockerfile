@@ -1,16 +1,19 @@
-FROM alpine:latest
+# https://hub.docker.com/_/microsoft-dotnet
+FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 
-# Add some libs required by .NET runtime 
-RUN apk add --no-cache libstdc++ libintl
+# copy csproj and restore as distinct layers
+COPY ./Authenticator.API/Authenticator.API.csproj ./Authenticator.API/Authenticator.API.csproj
+COPY ./Authenticator.Domain/*.csproj ./Authenticator.Domain/Authenticator.Domain.csproj
+COPY ./Authenticator.Infrastructure/*.csproj ./Authenticator.Infrastructure/Authenticator.Infrastructure.csproj
+COPY ./maple-fighters-auth-service.sln .
+RUN dotnet restore maple-fighters-auth-service.sln
 
-# Copy 
+# copy and publish app and libraries
+COPY . .
+RUN dotnet publish -c release -o /app --no-restore
+
+# final stage/image
+FROM mcr.microsoft.com/dotnet/runtime:5.0
 WORKDIR /app
-COPY ./publish ./
-
-# See: https://github.com/dotnet/announcements/issues/20
-ENV DOTNET_SYSTEM_GLOBALIZATION_INVARIANT true
-# RUN apk add --no-cache icu-libs
-# ENV LC_ALL en_US.UTF-8
-# ENV LANG en_US.UTF-8
-
-ENTRYPOINT ["./Authenticator.API"]
+COPY --from=build /app .
+ENTRYPOINT ["dotnet", "Authenticator.API.dll"]
