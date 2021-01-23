@@ -19,3 +19,9 @@ var components = new ComponentCollection(new IComponent[]
 
 var webSocketServer = new WebSocketServer(url);
 webSocketServer.Start((connection) => new GameService(connection, components));
+
+AppDomain.CurrentDomain.ProcessExit += (s, e) =>
+{
+    components?.Dispose();
+    webSocketServer?.Dispose();
+};
