@@ -9,6 +9,7 @@ using Game.Application.Components;
 Env.Load();
 
 var url = Environment.GetEnvironmentVariable("URL");
+var server = new WebSocketServer(url);
 var components = new ComponentCollection(new IComponent[]
 {
     new IdGenerator(),
@@ -17,11 +18,10 @@ var components = new ComponentCollection(new IComponent[]
     new GameSceneManager()
 });
 
-var webSocketServer = new WebSocketServer(url);
-webSocketServer.Start((connection) => new GameService(connection, components));
-
 AppDomain.CurrentDomain.ProcessExit += (s, e) =>
 {
+    server?.Dispose();
     components?.Dispose();
-    webSocketServer?.Dispose();
 };
+
+server.Start((connection) => new GameService(connection, components));
