@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace Scripts.Services.Chat
+namespace Scripts.Services.ChatApi
 {
     public class ChatApi : MonoBehaviour, IChatApi
     {

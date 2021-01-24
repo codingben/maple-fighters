@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Scripts.Services.Chat
+namespace Scripts.Services.ChatApi
 {
     public interface IChatApi
     {

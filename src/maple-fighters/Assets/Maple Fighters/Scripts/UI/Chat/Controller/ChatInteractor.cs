@@ -1,4 +1,4 @@
-﻿using Scripts.Services.Chat;
+﻿using Scripts.Services.ChatApi;
 using UnityEngine;
 
 namespace Scripts.UI.Chat
