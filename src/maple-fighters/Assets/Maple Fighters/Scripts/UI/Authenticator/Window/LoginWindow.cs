@@ -1,5 +1,4 @@
 ﻿using System;
-using TMPro;
 using UI.Manager;
 using UnityEngine;
 using UnityEngine.UI;
@@ -37,10 +36,10 @@ namespace Scripts.UI.Authenticator
 
         [Header("Input Fields")]
         [SerializeField]
-        private TMP_InputField emailInputField;
+        private InputField emailInputField;
 
         [SerializeField]
-        private TMP_InputField passwordInputField;
+        private InputField passwordInputField;
 
         [Header("Buttons")]
         [SerializeField]

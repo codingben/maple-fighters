@@ -1,5 +1,4 @@
 ﻿using System;
-using TMPro;
 using UI.Manager;
 using UnityEngine;
 using UnityEngine.UI;
@@ -17,7 +16,7 @@ namespace Scripts.UI.CharacterSelection
 
         [Header("Input Field")]
         [SerializeField]
-        private TMP_InputField nameInputField;
+        private InputField nameInputField;
 
         [Header("Buttons")]
         [SerializeField]

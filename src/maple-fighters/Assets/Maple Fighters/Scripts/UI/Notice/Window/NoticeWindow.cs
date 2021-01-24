@@ -1,5 +1,4 @@
 ﻿using System;
-using TMPro;
 using UI.Manager;
 using UnityEngine;
 using UnityEngine.UI;
@@ -30,7 +29,7 @@ namespace Scripts.UI.Notice
 
         [Header("Text")]
         [SerializeField]
-        private TextMeshProUGUI messageText;
+        private Text messageText;
 
         [Header("Button")]
         [SerializeField]
@@ -39,7 +38,7 @@ namespace Scripts.UI.Notice
         private void Start()
         {
             okButton?.onClick.AddListener(OnOkButtonClicked);
-            
+
             SubscribeToUIFadeAnimation();
         }
 
@@ -52,7 +51,7 @@ namespace Scripts.UI.Notice
         private void OnDestroy()
         {
             okButton?.onClick.RemoveListener(OnOkButtonClicked);
-            
+
             UnsubscribeFromUIFadeAnimation();
         }
 

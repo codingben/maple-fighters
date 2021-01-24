@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections;
-using TMPro;
 using UI.Manager;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Scripts.UI.MapScene
 {
-    [RequireComponent(typeof(TextMeshProUGUI), typeof(UIFadeAnimation))]
+    [RequireComponent(typeof(Text), typeof(UIFadeAnimation))]
     public class MessageText : UIElement, IMessageView
     {
         public Action TimeUp { get; set; }
@@ -15,7 +15,7 @@ namespace Scripts.UI.MapScene
         {
             set
             {
-                var textMeshPro = GetComponent<TextMeshProUGUI>();
+                var textMeshPro = GetComponent<Text>();
                 textMeshPro.text = value;
             }
         }

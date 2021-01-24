@@ -1,8 +1,8 @@
 ﻿using System;
-using TMPro;
 using UI.Manager;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 namespace Scripts.UI.Chat
 {
@@ -24,10 +24,10 @@ namespace Scripts.UI.Chat
 
         [Header("Texts")]
         [SerializeField]
-        private TextMeshProUGUI chatText;
+        private Text chatText;
 
         [SerializeField]
-        private TMP_InputField chatInputField;
+        private InputField chatInputField;
 
         private bool IsTypingMessage
         {
@@ -100,11 +100,14 @@ namespace Scripts.UI.Chat
 
         private void SendMessage()
         {
-            var text = chatInputField?.text;
-
-            if (string.IsNullOrWhiteSpace(text) == false)
+            if (chatInputField != null)
             {
-                MessageAdded?.Invoke($"{characterName}: {text}");
+                var text = chatInputField.text;
+
+                if (string.IsNullOrWhiteSpace(text) == false)
+                {
+                    MessageAdded?.Invoke($"{characterName}: {text}");
+                }
             }
         }
 

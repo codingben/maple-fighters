@@ -1,8 +1,8 @@
 ﻿using System;
-using TMPro;
 using UI.Manager;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 namespace Scripts.UI.CharacterSelection
 {
@@ -45,7 +45,7 @@ namespace Scripts.UI.CharacterSelection
         public GameObject GameObject => gameObject;
 
         [Header("Text"), SerializeField]
-        private TextMeshProUGUI characterNameText;
+        private Text characterNameText;
 
         private bool hasCharacter;
         private Animator animator;
@@ -82,16 +82,16 @@ namespace Scripts.UI.CharacterSelection
             switch (characterAnimation)
             {
                 case UICharacterAnimation.Idle:
-                {
-                    animator.SetBool("Walk", false);
-                    break;
-                }
+                    {
+                        animator.SetBool("Walk", false);
+                        break;
+                    }
 
                 case UICharacterAnimation.Walk:
-                {
-                    animator.SetBool("Walk", true);
-                    break;
-                }
+                    {
+                        animator.SetBool("Walk", true);
+                        break;
+                    }
             }
         }
     }

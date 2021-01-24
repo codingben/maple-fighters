@@ -1,5 +1,4 @@
 ﻿using System;
-using TMPro;
 using UI.Manager;
 using UnityEngine;
 using UnityEngine.UI;
@@ -15,11 +14,7 @@ namespace Scripts.UI.GameServerBrowser
 
         [Header("Text")]
         [SerializeField]
-        private TextMeshProUGUI gameServerNameText;
-
-        [Header("Slider")]
-        [SerializeField]
-        private Slider connectionsBar;
+        private Text gameServerNameText;
 
         [Header("Image")]
         [SerializeField]
@@ -61,11 +56,7 @@ namespace Scripts.UI.GameServerBrowser
 
         public void SetGameServerConnections(int min, int max)
         {
-            if (connectionsBar != null)
-            {
-                connectionsBar.maxValue = max;
-                connectionsBar.value = min;
-            }
+            // TODO: Implement this
         }
 
         public void SelectButton()

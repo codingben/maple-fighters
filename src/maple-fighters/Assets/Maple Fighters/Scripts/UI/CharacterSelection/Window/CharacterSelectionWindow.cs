@@ -1,5 +1,4 @@
 ﻿using System;
-using TMPro;
 using UI.Manager;
 using UnityEngine;
 using UnityEngine.UI;
@@ -43,13 +42,13 @@ namespace Scripts.UI.CharacterSelection
 
         [Header("Texts")]
         [SerializeField]
-        private TextMeshProUGUI knightName;
+        private Text knightName;
 
         [SerializeField]
-        private TextMeshProUGUI arrowName;
+        private Text arrowName;
 
         [SerializeField]
-        private TextMeshProUGUI wizardName;
+        private Text wizardName;
 
         private void Start()
         {
@@ -118,22 +117,22 @@ namespace Scripts.UI.CharacterSelection
             switch (uiCharacterClass)
             {
                 case UICharacterClass.Knight:
-                {
-                    SelectKnightClass();
-                    break;
-                }
+                    {
+                        SelectKnightClass();
+                        break;
+                    }
 
                 case UICharacterClass.Arrow:
-                {
-                    SelectArrowClass();
-                    break;
-                }
+                    {
+                        SelectArrowClass();
+                        break;
+                    }
 
                 case UICharacterClass.Wizard:
-                {
-                    SelectWizardClass();
-                    break;
-                }
+                    {
+                        SelectWizardClass();
+                        break;
+                    }
             }
         }
 
@@ -164,7 +163,7 @@ namespace Scripts.UI.CharacterSelection
         {
             if (knightName != null)
             {
-                knightName.fontStyle = FontStyles.Bold;
+                knightName.fontStyle = FontStyle.Bold;
             }
 
             knightSelectedImage?.SetActive(true);
@@ -174,7 +173,7 @@ namespace Scripts.UI.CharacterSelection
         {
             if (knightName != null)
             {
-                knightName.fontStyle = FontStyles.Normal;
+                knightName.fontStyle = FontStyle.Normal;
             }
 
             knightSelectedImage?.SetActive(false);
@@ -184,7 +183,7 @@ namespace Scripts.UI.CharacterSelection
         {
             if (arrowName != null)
             {
-                arrowName.fontStyle = FontStyles.Bold;
+                arrowName.fontStyle = FontStyle.Bold;
             }
 
             arrowSelectedImage?.SetActive(true);
@@ -194,7 +193,7 @@ namespace Scripts.UI.CharacterSelection
         {
             if (arrowName != null)
             {
-                arrowName.fontStyle = FontStyles.Normal;
+                arrowName.fontStyle = FontStyle.Normal;
             }
 
             arrowSelectedImage?.SetActive(false);
@@ -204,7 +203,7 @@ namespace Scripts.UI.CharacterSelection
         {
             if (wizardName != null)
             {
-                wizardName.fontStyle = FontStyles.Bold;
+                wizardName.fontStyle = FontStyle.Bold;
             }
 
             wizardSelectedImage?.SetActive(true);
@@ -214,7 +213,7 @@ namespace Scripts.UI.CharacterSelection
         {
             if (wizardName != null)
             {
-                wizardName.fontStyle = FontStyles.Normal;
+                wizardName.fontStyle = FontStyle.Normal;
             }
 
             wizardSelectedImage?.SetActive(false);
