@@ -1,4 +1,5 @@
-﻿using Scripts.Services.ChatApi;
+﻿using Scripts.Services;
+using Scripts.Services.ChatApi;
 using UnityEngine;
 
 namespace Scripts.UI.Chat
@@ -9,14 +10,11 @@ namespace Scripts.UI.Chat
         private IChatApi chatApi;
         private IOnChatMessageReceived onChatMessageReceived;
 
-        private void Awake()
-        {
-            chatApi = FindObjectOfType<ChatApi>();
-            onChatMessageReceived = GetComponent<IOnChatMessageReceived>();
-        }
-
         private void Start()
         {
+            chatApi = ApiProvider.ProvideChatApi();
+            onChatMessageReceived = GetComponent<IOnChatMessageReceived>();
+
             SubscribeToChatApiEvents();
         }
 
