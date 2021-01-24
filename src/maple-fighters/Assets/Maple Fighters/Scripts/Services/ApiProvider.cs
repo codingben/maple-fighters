@@ -1,6 +1,7 @@
 using ScriptableObjects.Configurations;
 using Scripts.Services.AuthenticatorApi;
 using Scripts.Services.CharacterProviderApi;
+using Scripts.Services.ChatApi;
 using Scripts.Services.GameApi;
 using Scripts.Services.GameProviderApi;
 
@@ -94,6 +95,28 @@ namespace Scripts.Services
         }
 
         private static ICharacterProviderApi characterProviderApi;
+        #endregion
+
+        #region ChatApi
+        public static IChatApi ProvideChatApi()
+        {
+            if (chatApi == null)
+            {
+                var networkConfiguration = NetworkConfiguration.GetInstance();
+                if (networkConfiguration.IsProduction())
+                {
+                    chatApi = WebSocketChatApi.GetInstance();
+                }
+                else
+                {
+                    chatApi = DummyChatApi.GetInstance();
+                }
+            }
+
+            return chatApi;
+        }
+
+        private static IChatApi chatApi;
         #endregion
     }
 }
