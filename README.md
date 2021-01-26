@@ -8,7 +8,7 @@ Please **★ Star** this repository if you like it and find it useful. Made with
 ## Gameplay
 | Lobby                                                                                                         | The Dark Forest                                                                                                    |
 | ----------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
-| <img src="docs/Lobby.png"> | <img src="docs/The Dark Forest.png"> |
+| <img src="docs/lobby.jpg"> | <img src="docs/the-dark-forest.jpg"> |
 
 ## Technology
 
