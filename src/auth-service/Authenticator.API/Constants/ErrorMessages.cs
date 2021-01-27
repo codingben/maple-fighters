@@ -8,5 +8,6 @@ namespace Authenticator.API.Constants
         public const string FirstNameRequired = "First name is required.";
         public const string LastNameRequired = "Last name is required.";
         public const string AccountNotFound = "Account does not exist.";
+        public const string WrongPassword = "Password is incorrect.";
     }
 }
