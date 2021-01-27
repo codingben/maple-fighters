@@ -2,6 +2,6 @@
 {
     public interface ILoginService
     {
-        Account Authenticate(string email, string password);
+        Account FindAccount(string email);
     }
 }

@@ -9,19 +9,9 @@
             this.accountRepository = accountRepository;
         }
 
-        public Account Authenticate(string email, string password)
+        public Account FindAccount(string email)
         {
-            var account =
-                accountRepository.Read(x => x.Email == email);
-            if (account != null)
-            {
-                if (account.Password == password)
-                {
-                    return account;
-                }
-            }
-
-            return null;
+            return accountRepository.Read(x => x.Email == email);
         }
     }
 }
