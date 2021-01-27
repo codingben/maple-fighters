@@ -103,8 +103,10 @@ namespace Authenticator.API.Controllers
                 }
                 else
                 {
+                    var hashedPassword =
+                        BCrypt.Net.BCrypt.HashPassword(password);
                     var account =
-                        Account.Create(email, password, firstName, lastName);
+                        Account.Create(email, hashedPassword, firstName, lastName);
 
                     registrationService.CreateAccount(account);
                 }
