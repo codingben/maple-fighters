@@ -2,14 +2,15 @@
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
-  <ItemGroup>
-    <PackageReference Include="FluentValidation" Version="8.6.2" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Authenticator.Domain\Authenticator.Domain.csproj" />
-    <ProjectReference Include="..\Authenticator.Infrastructure\Authenticator.Infrastructure.csproj" />
-  </ItemGroup>
   <PropertyGroup>
     <IncludeOpenAPIAnalyzers>true</IncludeOpenAPIAnalyzers>
   </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="FluentValidation" Version="8.6.2"/>
+    <PackageReference Include="BCrypt.Net-Next" Version="4.0.2"/>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Authenticator.Domain\Authenticator.Domain.csproj"/>
+    <ProjectReference Include="..\Authenticator.Infrastructure\Authenticator.Infrastructure.csproj"/>
+  </ItemGroup>
 </Project>
