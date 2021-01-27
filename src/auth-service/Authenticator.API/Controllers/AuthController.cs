@@ -37,20 +37,30 @@ namespace Authenticator.API.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult<AccountData> Login(LoginData loginData)
         {
-            AccountData accountData;
-
+            var accountData = new AccountData();
             var validationResult = loginDataValidator.Validate(loginData);
             if (validationResult.IsValid)
             {
                 var email = loginData.Email;
                 var password = loginData.Password;
-                var account = loginService.Authenticate(email, password);
+                var account = loginService.FindAccount(email);
                 if (account != null)
                 {
-                    accountData = new AccountData()
+                    var isVerified =
+                        BCrypt.Net.BCrypt.Verify(password, account.Password);
+                    if (isVerified)
                     {
-                        Id = account.Id
-                    };
+                        accountData.Id = account.Id;
+                    }
+                    else
+                    {
+                        var errorData = new ErrorData()
+                        {
+                            ErrorMessages = new string[] { ErrorMessages.WrongPassword }
+                        };
+
+                        return BadRequest(errorData);
+                    }
                 }
                 else
                 {
