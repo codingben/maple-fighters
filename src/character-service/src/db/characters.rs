@@ -1,11 +1,12 @@
-use crate::models::*;
+use crate::models::character::Character;
+use crate::models::new_character::NewCharacter;
 use crate::schema::characters;
 use crate::schema::characters::dsl::characters as db_characters;
 use diesel::{pg::PgConnection, prelude::*, r2d2, r2d2::ConnectionManager, result::Error};
 
 pub type Pool = r2d2::Pool<ConnectionManager<PgConnection>>;
 
-pub fn insert(character: NewCharacter, conn: &PgConnection) -> Result<bool, Error> {
+pub fn create(character: NewCharacter, conn: &PgConnection) -> Result<bool, Error> {
     if is_name_used(character.userid, &character.charactername, &conn)? {
         return Ok(false);
     }
@@ -18,7 +19,7 @@ pub fn insert(character: NewCharacter, conn: &PgConnection) -> Result<bool, Erro
     Ok(is_ok)
 }
 
-pub fn delete(id: i32, conn: &PgConnection) -> Result<bool, Error> {
+pub fn delete_by_id(id: i32, conn: &PgConnection) -> Result<bool, Error> {
     if get_by_id(id, conn)?.is_empty() {
         return Ok(false);
     };
