@@ -8,12 +8,10 @@ use diesel::{pg::PgConnection, prelude::*, r2d2, r2d2::ConnectionManager, result
 pub type Pool = r2d2::Pool<ConnectionManager<PgConnection>>;
 
 pub fn create(character: NewCharacter, conn: &PgConnection) -> Result<bool, Error> {
-    let is_inserted = diesel::insert_into(characters::table)
+    Ok(diesel::insert_into(characters::table)
         .values(&character)
         .execute(conn)
-        .is_ok();
-
-    Ok(is_inserted)
+        .is_ok())
 }
 
 pub fn delete_by_id(id: i32, conn: &PgConnection) -> Result<bool, Error> {
