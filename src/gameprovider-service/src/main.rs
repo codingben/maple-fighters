@@ -1,32 +1,25 @@
 use actix_web::{middleware::Logger, web, App, HttpServer};
 use dotenv::dotenv;
-use models::GameCollection;
-use std::{env::var, io::Result, sync::Arc};
+use std::{env, io::Result};
 
-mod database;
-mod handlers;
-mod models;
+async fn get_games() -> &'static str {
+    "[{\"name\":\"Europe\",\"protocol\":\"ws\",\"url\":\"localhost/game/\"}]"
+}
 
-#[actix_rt::main]
+#[actix_web::main]
 async fn main() -> Result<()> {
     dotenv().ok();
 
     env_logger::init();
 
-    let address = var("IP_ADDRESS").expect("IP_ADDRESS not found");
-    let data_path = var("DATABASE_PATH").expect("DATABASE_PATH not found");
-
-    println!("Server is running {}", address);
+    let ip_address = env::var("IP_ADDRESS").expect("IP_ADDRESS not found");
 
     HttpServer::new(move || {
         App::new()
             .wrap(Logger::default())
-            .data(Arc::new(GameCollection {
-                collection: database::load(&data_path),
-            }))
-            .route("/games", web::get().to(handlers::get_game_servers))
+            .route("/games", web::get().to(get_games))
     })
-    .bind(address)?
+    .bind(ip_address)?
     .run()
     .await
 }
