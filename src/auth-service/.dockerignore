@@ -1,4 +1,5 @@
 **/bin/
 **/obj/
 **/out/
+*/Properties
 Dockerfile*
