@@ -61,7 +61,6 @@ services:
             RUST_LOG: info
             RUST_BACKTRACE: full
             IP_ADDRESS: 0.0.0.0:50052
-            DATABASE_PATH: tmp/data.json
 
     postgres:
         image: postgres:latest
