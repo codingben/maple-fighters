@@ -24,6 +24,5 @@ RUN apk --no-cache add ca-certificates
 COPY --from=builder \
     /home/rust/src/target/x86_64-unknown-linux-musl/release/gameprovider-service \
     /usr/local/bin/
-COPY data.json /tmp
 
 CMD /usr/local/bin/gameprovider-service
