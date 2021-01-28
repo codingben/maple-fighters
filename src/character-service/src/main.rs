@@ -14,9 +14,10 @@ use actix_web::{middleware::Logger, web, App, HttpServer};
 use diesel::{pg::PgConnection, r2d2::ConnectionManager, r2d2::Pool};
 use dotenv::dotenv;
 use embedded_migrations::run;
+use handlers::{create_handler, delete_handler, get_handler};
 use std::{env, io::Result};
 
-mod database;
+mod db;
 mod handlers;
 mod models;
 mod schema;
@@ -40,9 +41,9 @@ async fn main() -> Result<()> {
         App::new()
             .wrap(Logger::default())
             .data(pool.clone())
-            .route("/characters", web::post().to(handlers::create))
-            .route("/characters/{id}", web::delete().to(handlers::delete_by_id))
-            .route("/characters/{id}", web::get().to(handlers::get_all))
+            .route("/characters", web::post().to(create_handler::create))
+            .route("/characters/{id}", web::delete().to(delete_handler::delete))
+            .route("/characters/{id}", web::get().to(get_handler::get))
     })
     .bind(ip_address)?
     .run()
