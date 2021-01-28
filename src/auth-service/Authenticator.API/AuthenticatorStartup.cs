@@ -17,7 +17,7 @@ namespace Authenticator.API
             var databaseUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
             if (databaseUrl == null)
             {
-                throw new NullReferenceException("Please set DATABASE_URL");
+                throw new Exception("Please set DATABASE_URL");
             }
 
             services.AddSingleton<IDatabaseProvider>(new MongoDatabaseProvider(databaseUrl));
