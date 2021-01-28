@@ -2,3 +2,4 @@
 **/obj/
 **/out/
 Dockerfile*
+.env
