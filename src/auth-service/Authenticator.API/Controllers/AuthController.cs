@@ -37,7 +37,8 @@ namespace Authenticator.API.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult<AccountData> Login(LoginData loginData)
         {
-            var accountData = new AccountData();
+            ActionResult<AccountData> actionResult;
+
             var validationResult = loginDataValidator.Validate(loginData);
             if (validationResult.IsValid)
             {
@@ -50,39 +51,36 @@ namespace Authenticator.API.Controllers
                         BCrypt.Net.BCrypt.Verify(password, account.Password);
                     if (isVerified)
                     {
-                        accountData.Id = account.Id;
+                        actionResult = Ok(new AccountData()
+                        {
+                            Id = account.Id
+                        });
                     }
                     else
                     {
-                        var errorData = new ErrorData()
+                        actionResult = BadRequest(new ErrorData()
                         {
                             ErrorMessages = new string[] { ErrorMessages.WrongPassword }
-                        };
-
-                        return BadRequest(errorData);
+                        });
                     }
                 }
                 else
                 {
-                    var errorData = new ErrorData()
+                    actionResult = NotFound(new ErrorData()
                     {
                         ErrorMessages = new string[] { ErrorMessages.AccountNotFound }
-                    };
-
-                    return NotFound(errorData);
+                    });
                 }
             }
             else
             {
-                var errorData = new ErrorData()
+                actionResult = BadRequest(new ErrorData()
                 {
                     ErrorMessages = validationResult.Errors.ConvertToErrorMessages()
-                };
-
-                return BadRequest(errorData);
+                });
             }
 
-            return Ok(accountData);
+            return actionResult;
         }
 
         [HttpPost]
@@ -93,6 +91,8 @@ namespace Authenticator.API.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public ActionResult Register(RegistrationData registrationData)
         {
+            ActionResult actionResult;
+
             var validationResult =
                 registrationDataValidator.Validate(registrationData);
             if (validationResult.IsValid)
@@ -104,12 +104,10 @@ namespace Authenticator.API.Controllers
 
                 if (registrationService.CheckIfEmailExists(email))
                 {
-                    var errorData = new ErrorData()
+                    actionResult = BadRequest(new ErrorData()
                     {
                         ErrorMessages = new string[] { ErrorMessages.EmailAlreadyExists }
-                    };
-
-                    return BadRequest(errorData);
+                    });
                 }
                 else
                 {
@@ -119,19 +117,19 @@ namespace Authenticator.API.Controllers
                         Account.Create(email, hashedPassword, firstName, lastName);
 
                     registrationService.CreateAccount(account);
+
+                    actionResult = Ok();
                 }
             }
             else
             {
-                var errorData = new ErrorData()
+                actionResult = BadRequest(new ErrorData()
                 {
                     ErrorMessages = validationResult.Errors.ConvertToErrorMessages()
-                };
-
-                return BadRequest(errorData);
+                });
             }
 
-            return Ok();
+            return actionResult;
         }
     }
 }
