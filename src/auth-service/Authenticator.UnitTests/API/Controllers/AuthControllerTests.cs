@@ -13,7 +13,7 @@ namespace Authenticator.UnitTests.API.Controllers
     {
         [Theory]
         [InlineData("benzuk@gmail.com", "")]
-        [InlineData("", "benzuk")]
+        [InlineData("", "12345678")]
         public void Login_Returns_BadRequest(string email, string password)
         {
             // Arrange
@@ -35,7 +35,7 @@ namespace Authenticator.UnitTests.API.Controllers
         }
 
         [Fact]
-        public void Login_Authenticate_Received()
+        public void Login_FindAccount_Received()
         {
             // Arrange
             var registrationService = Substitute.For<IRegistrationService>();
@@ -45,21 +45,21 @@ namespace Authenticator.UnitTests.API.Controllers
             var loginData = new LoginData()
             {
                 Email = "benzuk@gmail.com",
-                Password = "benzuk"
+                Password = "12345678"
             };
 
             // Act
             authController.Login(loginData);
 
             // Assert
-            loginService.Received().Authenticate(Arg.Any<string>(), Arg.Any<string>());
+            loginService.Received().FindAccount(Arg.Any<string>());
         }
 
         [Theory]
-        [InlineData("", "benzuk", "Ben", "Ukhanov")]
+        [InlineData("", "12345678", "Ben", "Ukhanov")]
         [InlineData("benzuk@gmail.com", "", "Ben", "Ukhanov")]
-        [InlineData("benzuk@gmail.com", "benzuk", "", "Ukhanov")]
-        [InlineData("benzuk@gmail.com", "benzuk", "Ben", "")]
+        [InlineData("benzuk@gmail.com", "12345678", "", "Ukhanov")]
+        [InlineData("benzuk@gmail.com", "12345678", "Ben", "")]
         public void Register_Returns_BadRequest(
             string email,
             string password,
@@ -99,7 +99,7 @@ namespace Authenticator.UnitTests.API.Controllers
             var registrationData = new RegistrationData()
             {
                 Email = "benzuk@gmail.com",
-                Password = "benzuk",
+                Password = "12345678",
                 FirstName = "ben",
                 LastName = "ukhanov"
             };
