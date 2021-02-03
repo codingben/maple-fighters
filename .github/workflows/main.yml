@@ -6,7 +6,7 @@ on:
 
 env:
   UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
-  UNITY_VERSION: 2019.4.14f1
+  UNITY_VERSION: 2020.2.1f1
   PROJECT_PATH: src/maple-fighters
 
 jobs:
