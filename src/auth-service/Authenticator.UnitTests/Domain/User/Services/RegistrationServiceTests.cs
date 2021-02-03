@@ -14,15 +14,15 @@ namespace Authenticator.UnitTests.Domain.User.Services
         public void CheckIfEmailExists_Returns_EmailExists()
         {
             // Arrange
-            var account = Account.Create(
-                "benzuk@gmail.com",
-                "benzuk",
-                "Ben",
-                "Ben Ukhanov");
+            var dummyAccount = Account.Create(
+                email: "benzuk@gmail.com",
+                password: "benzuk",
+                firstName: "Ben",
+                lastName: "Ukhanov");
             var accountRepository = Substitute.For<IAccountRepository>();
             accountRepository
                 .Read(Arg.Any<Expression<Func<Account, bool>>>())
-                .Returns(account);
+                .Returns(dummyAccount);
             var registrationService =
                 new RegistrationService(accountRepository);
 
@@ -38,17 +38,17 @@ namespace Authenticator.UnitTests.Domain.User.Services
         public void CreateAccount_Create_Received()
         {
             // Arrange
-            var account = Account.Create(
-                "benzuk@gmail.com",
-                "benzuk",
-                "Ben",
-                "Ben Ukhanov");
+            var dummyAccount = Account.Create(
+                email: "benzuk@gmail.com",
+                password: "benzuk",
+                firstName: "Ben",
+                lastName: "Ukhanov");
             var accountRepository = Substitute.For<IAccountRepository>();
             var registrationService =
                 new RegistrationService(accountRepository);
 
             // Act
-            registrationService.CreateAccount(account);
+            registrationService.CreateAccount(dummyAccount);
 
             // Assert
             accountRepository.Received().Create(Arg.Any<Account>());
