@@ -479,6 +479,8 @@ namespace Scripts.UI.CharacterSelection
         private void OnBackgroundClicked()
         {
             HideCharacterSelectionOptionsWindow();
+            HideCharacterSelectionWindow();
+            HideCharacterNameWindow();
         }
 
         private void ShowCharacterNameWindow()
