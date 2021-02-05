@@ -490,7 +490,11 @@ namespace Scripts.UI.CharacterSelection
 
         private void HideCharacterNameWindow()
         {
-            characterNameView?.Hide();
+            if (characterNameView != null
+                && characterNameView.IsShown)
+            {
+                characterNameView?.Hide();
+            }
         }
 
         private void ShowCharacterSelectionWindow()
@@ -500,7 +504,11 @@ namespace Scripts.UI.CharacterSelection
 
         private void HideCharacterSelectionWindow()
         {
-            characterSelectionView?.Hide();
+            if (characterSelectionView != null
+                && characterSelectionView.IsShown)
+            {
+                characterSelectionView?.Hide();
+            }
         }
 
         private IClickableCharacterView CreateAndShowCharacterView(string path)
