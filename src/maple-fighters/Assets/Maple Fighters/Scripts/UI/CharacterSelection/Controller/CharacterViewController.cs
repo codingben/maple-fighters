@@ -472,6 +472,7 @@ namespace Scripts.UI.CharacterSelection
         private void OnCancelButtonClicked()
         {
             HideCharacterSelectionWindow();
+            ShowCharacterSelectionOptionsWindow();
         }
 
         private void OnCharacterSelected(UICharacterClass uiCharacterClass)
