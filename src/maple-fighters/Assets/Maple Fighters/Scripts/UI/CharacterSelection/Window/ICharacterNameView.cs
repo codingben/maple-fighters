@@ -14,5 +14,7 @@ namespace Scripts.UI.CharacterSelection
         void EnableConfirmButton();
 
         void DisableConfirmButton();
+
+        void ResetNameInputField();
     }
 }
