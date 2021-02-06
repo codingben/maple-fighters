@@ -1294,7 +1294,7 @@ PrefabInstance:
     - target: {fileID: 2684237133731809878, guid: 72753bb142bbcc147baa4197a60c44fc,
         type: 3}
       propertyPath: tipText
-      value: <color=yellow>Tip!</color> Press <color=red>C</color> To Climb
+      value: <color=yellow>Tip! Press <color=orange>C</color> To Climb</color>
       objectReference: {fileID: 0}
     - target: {fileID: 2684237133731809878, guid: 72753bb142bbcc147baa4197a60c44fc,
         type: 3}
