@@ -562,7 +562,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 581949298}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 9.409497, y: 2.9530315, z: -10}
+  m_LocalPosition: {x: 8.105127, y: 2.9576907, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 572659480}
@@ -1263,7 +1263,7 @@ PrefabInstance:
     - target: {fileID: 2684237133731809878, guid: 72753bb142bbcc147baa4197a60c44fc,
         type: 3}
       propertyPath: tipText
-      value: Tip! Move with A or D and E to move fast and press SPACE to jump
+      value: <color=yellow>Tip!</color> Press Double <color=red>Space</color>
       objectReference: {fileID: 0}
     - target: {fileID: 2684237133731809878, guid: 72753bb142bbcc147baa4197a60c44fc,
         type: 3}
