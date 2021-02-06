@@ -117,22 +117,22 @@ namespace Scripts.UI.CharacterSelection
             switch (uiCharacterClass)
             {
                 case UICharacterClass.Knight:
-                    {
-                        SelectKnightClass();
-                        break;
-                    }
+                {
+                    SelectKnightClass();
+                    break;
+                }
 
                 case UICharacterClass.Arrow:
-                    {
-                        SelectArrowClass();
-                        break;
-                    }
+                {
+                    SelectArrowClass();
+                    break;
+                }
 
                 case UICharacterClass.Wizard:
-                    {
-                        SelectWizardClass();
-                        break;
-                    }
+                {
+                    SelectWizardClass();
+                    break;
+                }
             }
         }
 
