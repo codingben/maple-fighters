@@ -70,19 +70,11 @@ namespace Scripts.UI.CharacterSelection
 
         private void OnChooseButtonClicked()
         {
-            DisableChooseButton();
-
-            DeselectAllCharacterClasses();
-
             ChooseButtonClicked?.Invoke();
         }
 
         private void OnCancelButtonClicked()
         {
-            DisableChooseButton();
-
-            DeselectAllCharacterClasses();
-
             CancelButtonClicked?.Invoke();
         }
 
@@ -103,16 +95,10 @@ namespace Scripts.UI.CharacterSelection
 
         private void OnCharacterSelected(UICharacterClass uiCharacterClass)
         {
-            EnableChooseButton();
-
-            DeselectAllCharacterClasses();
-
-            SelectCharacterClass(uiCharacterClass);
-
             CharacterSelected?.Invoke(uiCharacterClass);
         }
 
-        private void SelectCharacterClass(UICharacterClass uiCharacterClass)
+        public void SelectCharacterClass(UICharacterClass uiCharacterClass)
         {
             switch (uiCharacterClass)
             {
@@ -136,14 +122,14 @@ namespace Scripts.UI.CharacterSelection
             }
         }
 
-        private void DeselectAllCharacterClasses()
+        public void ResetSelection()
         {
             DeselectKnightClass();
             DeselectArrowClass();
             DeselectWizardClass();
         }
 
-        private void EnableChooseButton()
+        public void EnableChooseButton()
         {
             if (chooseButton != null)
             {
@@ -151,7 +137,7 @@ namespace Scripts.UI.CharacterSelection
             }
         }
 
-        private void DisableChooseButton()
+        public void DisableChooseButton()
         {
             if (chooseButton != null)
             {
