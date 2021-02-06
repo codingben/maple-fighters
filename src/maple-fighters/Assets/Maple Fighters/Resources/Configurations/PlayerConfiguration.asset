@@ -22,4 +22,4 @@ MonoBehaviour:
     JumpKey: 32
     TeleportKey: 116
     ClimbKey: 99
-    RushKey: 101
+    RushKey: 32
