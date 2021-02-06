@@ -60,7 +60,8 @@ namespace Scripts.Gameplay.Player
                     entity?.GameObject.GetComponent<CharacterDataProvider>();
                 characterDataProvider?.SetCharacterData(characterData);
 
-                var spawnedCharacter = entity?.GameObject.GetComponent<SpawnCharacter>();
+                var spawnedCharacter = 
+                    entity?.GameObject.GetComponent<SpawnCharacter>();
                 spawnedCharacter?.Spawn();
             }
         }

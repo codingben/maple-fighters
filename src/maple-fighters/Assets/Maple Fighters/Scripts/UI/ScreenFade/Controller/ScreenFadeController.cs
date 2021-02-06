@@ -33,7 +33,8 @@ namespace Scripts.UI.ScreenFade
 
         private void CreateAndSubscribeToScreenFadeImage()
         {
-            screenFadeView = UIElementsCreator.GetInstance()
+            screenFadeView = UIElementsCreator
+                .GetInstance()
                 .Create<ScreenFadeImage>(UILayer.Foreground, UIIndex.End);
             screenFadeView.FadeInCompleted += OnFadeInCompleted;
             screenFadeView.FadeOutCompleted += OnFadeOutCompleted;

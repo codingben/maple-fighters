@@ -12,7 +12,8 @@ namespace Scripts.UI.MenuBackground
 
         private void Awake()
         {
-            backgroundView = UIElementsCreator.GetInstance()
+            backgroundView = UIElementsCreator
+                .GetInstance()
                 .Create<MenuBackgroundImage>(UILayer.Background);
             backgroundView.PointerClicked += OnPointerClicked;
         }

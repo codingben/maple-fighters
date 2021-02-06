@@ -35,7 +35,7 @@ namespace Scripts.UI.MapScene
             float seconds,
             Action onTimeUp = null)
         {
-            IMessageView messageView =
+            var messageView = 
                 UIElementsCreator.GetInstance().Create<MessageText>();
             messageView.Text = message;
             messageView.Seconds = seconds;

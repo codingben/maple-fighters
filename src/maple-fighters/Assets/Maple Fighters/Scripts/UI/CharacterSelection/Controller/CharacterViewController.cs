@@ -59,28 +59,30 @@ namespace Scripts.UI.CharacterSelection
 
         private void CreateChooseFighterView()
         {
-            chooseFighterView = UIElementsCreator.GetInstance()
+            chooseFighterView = UIElementsCreator
+                .GetInstance()
                 .Create<ChooseFighterText>(UILayer.Background, UIIndex.End);
         }
 
         private void CreateLoadingView()
         {
-            loadingView = UIElementsCreator.GetInstance()
+            loadingView = UIElementsCreator
+                .GetInstance()
                 .Create<LoadingText>(UILayer.Background, UIIndex.End);
         }
 
         private void CreateCharacterView()
         {
-            characterView = UIElementsCreator.GetInstance()
+            characterView = UIElementsCreator
+                .GetInstance()
                 .Create<CharacterView>(UILayer.Background, UIIndex.End);
         }
 
         private void CreateAndSubscribeToCharacterSelectionOptionsWindow()
         {
-            characterSelectionOptionsView = UIElementsCreator.GetInstance()
-                .Create<CharacterSelectionOptionsWindow>(
-                    UILayer.Foreground,
-                    UIIndex.End);
+            characterSelectionOptionsView = UIElementsCreator
+                .GetInstance()
+                .Create<CharacterSelectionOptionsWindow>(UILayer.Foreground, UIIndex.End);
             characterSelectionOptionsView.StartButtonClicked +=
                 OnStartButtonClicked;
             characterSelectionOptionsView.CreateCharacterButtonClicked +=
@@ -91,10 +93,9 @@ namespace Scripts.UI.CharacterSelection
 
         private void CreateAndSubscribeToCharacterSelectionWindow()
         {
-            characterSelectionView = UIElementsCreator.GetInstance()
-                .Create<CharacterSelectionWindow>(
-                    UILayer.Foreground,
-                    UIIndex.End);
+            characterSelectionView = UIElementsCreator
+                .GetInstance()
+                .Create<CharacterSelectionWindow>(UILayer.Foreground, UIIndex.End);
             characterSelectionView.ChooseButtonClicked +=
                 OnChooseButtonClicked;
             characterSelectionView.CancelButtonClicked +=
@@ -105,7 +106,8 @@ namespace Scripts.UI.CharacterSelection
 
         private void CreateAndSubscribeToCharacterNameWindow()
         {
-            characterNameView = UIElementsCreator.GetInstance()
+            characterNameView = UIElementsCreator
+                .GetInstance()
                 .Create<CharacterNameWindow>(UILayer.Foreground, UIIndex.End);
             characterNameView.ConfirmButtonClicked +=
                 OnConfirmButtonClicked;

@@ -102,7 +102,8 @@ namespace Scripts.UI.Notice
 
         private void CreateAndSubscribeToNoticeWindow()
         {
-            noticeView = UIElementsCreator.GetInstance()
+            noticeView = UIElementsCreator
+                .GetInstance()
                 .Create<NoticeWindow>(UILayer.Foreground, UIIndex.End);
             noticeView.OkButtonClicked += Hide;
         }

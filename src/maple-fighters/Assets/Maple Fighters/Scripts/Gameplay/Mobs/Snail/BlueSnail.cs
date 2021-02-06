@@ -28,10 +28,12 @@ namespace Scripts.Gameplay.Mobs
 
         private void OnPlayerAttacked(AttackedMessage message)
         {
-            var entity = EntityContainer.GetInstance().GetLocalEntity()
-                ?.GameObject;
-            var spawnedCharacter = entity?.GetComponent<ISpawnedCharacter>();
-            var character = spawnedCharacter?.GetCharacterGameObject();
+            var entity =
+                EntityContainer.GetInstance().GetLocalEntity();
+            var spawnedCharacter =
+                entity?.GameObject.GetComponent<ISpawnedCharacter>();
+            var character =
+                spawnedCharacter?.GetCharacterGameObject();
             if (character != null)
             {
                 var normalized =

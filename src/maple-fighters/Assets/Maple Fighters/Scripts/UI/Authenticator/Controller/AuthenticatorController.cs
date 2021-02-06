@@ -28,7 +28,8 @@ namespace Scripts.UI.Authenticator
 
         private void CreateAndSubscribeToLoginWindow()
         {
-            loginView = UIElementsCreator.GetInstance()
+            loginView = UIElementsCreator
+                .GetInstance()
                 .Create<LoginWindow>();
             loginView.LoginButtonClicked +=
                 OnLoginButtonClicked;
@@ -38,7 +39,8 @@ namespace Scripts.UI.Authenticator
 
         private void CreateAndSubscribeToRegistrationWindow()
         {
-            registrationView = UIElementsCreator.GetInstance()
+            registrationView = UIElementsCreator
+                .GetInstance()
                 .Create<RegistrationWindow>();
             registrationView.RegisterButtonClicked +=
                 OnRegisterButtonClicked;
