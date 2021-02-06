@@ -267,7 +267,7 @@ namespace Scripts.UI.CharacterSelection
 
         public void OnCharacterUnvalidated()
         {
-            NoticeUtils.ShowNotice(message: NoticeMessages.CharacterView.CharacterValidationFailed);
+            NoticeUtils.ShowNotice(message: NoticeMessages.CharacterView.ValidationFailed);
         }
 
         public void OnCharacterDeletionSucceed()
@@ -280,7 +280,7 @@ namespace Scripts.UI.CharacterSelection
 
         public void OnCharacterDeletionFailed()
         {
-            NoticeUtils.ShowNotice(message: NoticeMessages.CharacterView.CharacterDeletionFailed);
+            NoticeUtils.ShowNotice(message: NoticeMessages.CharacterView.DeletionFailed);
         }
 
         public void OnCharacterCreated()
@@ -302,7 +302,7 @@ namespace Scripts.UI.CharacterSelection
             {
                 case UICharacterCreationFailed.Unknown:
                 {
-                    NoticeUtils.ShowNotice(message: NoticeMessages.CharacterView.CharacterCreationFailed);
+                    NoticeUtils.ShowNotice(message: NoticeMessages.CharacterView.CreationFailed);
                     break;
                 }
 

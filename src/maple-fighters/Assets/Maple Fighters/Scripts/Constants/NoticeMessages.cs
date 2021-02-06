@@ -27,10 +27,10 @@
 
         public static class CharacterView
         {
-            public const string CharacterCreationFailed = "The character creation failed. Please try again later.";
+            public const string CreationFailed = "The character creation failed. Please try again later.";
             public const string NameAlreadyInUse = "Your character name is already taken.";
-            public const string CharacterValidationFailed = "The character validation failed. Please try again later.";
-            public const string CharacterDeletionFailed = "The character deletion failed. Please try again later.";
+            public const string ValidationFailed = "The character validation failed. Please try again later.";
+            public const string DeletionFailed = "The character deletion failed. Please try again later.";
             public const string UnknownError = "An unknown error has occurred. Please try again later.";
         }
     }
