@@ -1294,7 +1294,7 @@ PrefabInstance:
     - target: {fileID: 2684237133731809878, guid: 72753bb142bbcc147baa4197a60c44fc,
         type: 3}
       propertyPath: tipText
-      value: Tip! Press C to climb and move with W or S
+      value: <color=yellow>Tip!</color> Press <color=red>C</color> To Climb
       objectReference: {fileID: 0}
     - target: {fileID: 2684237133731809878, guid: 72753bb142bbcc147baa4197a60c44fc,
         type: 3}
@@ -2578,7 +2578,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0ba8a792795c0230b409d6af0bb768c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 5
   minimum: {x: 0, y: -15}
   maximum: {x: 0, y: 15}
-  center: {x: 0, y: 10}
+  center: {x: 0, y: 8.5}
