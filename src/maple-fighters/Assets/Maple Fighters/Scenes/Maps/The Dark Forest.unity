@@ -1646,6 +1646,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Screen Fade Controller
       objectReference: {fileID: 0}
+    - target: {fileID: 963937054798504483, guid: e4b287d1d17ba0f4d835375e192e89e8,
+        type: 3}
+      propertyPath: hideOnStart
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 963937054798504484, guid: e4b287d1d17ba0f4d835375e192e89e8,
         type: 3}
       propertyPath: m_RootOrder
