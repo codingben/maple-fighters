@@ -69,16 +69,15 @@ namespace Scripts.UI.CharacterSelection
             }
 
             ResetNameInputField();
+            DisableConfirmButton();
         }
 
         private void OnBackButtonClicked()
         {
-            ResetNameInputField();
-
             BackButtonClicked?.Invoke();
         }
 
-        private void ResetNameInputField()
+        public void ResetNameInputField()
         {
             if (nameInputField != null)
             {
