@@ -22,7 +22,7 @@ namespace Scripts.Services.ChatApi
 
         public void SendChatMessage(string message)
         {
-            ChatMessageReceived?.Invoke("MapleStory: Hello World!");
+            // ChatMessageReceived?.Invoke("MapleStory: Hello World!");
         }
     }
 }
