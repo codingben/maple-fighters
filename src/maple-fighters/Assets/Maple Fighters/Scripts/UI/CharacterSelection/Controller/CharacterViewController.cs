@@ -393,6 +393,8 @@ namespace Scripts.UI.CharacterSelection
 
             HideCharacterNameWindow();
             HideCharacterSelectionWindow();
+            HideChooseFighterView();
+
             ShowCharacterSelectionOptionsWindow();
 
             EnableOrDisableCharacterSelectionOptionsViewButtons(hasCharacter);
@@ -485,6 +487,8 @@ namespace Scripts.UI.CharacterSelection
             HideCharacterSelectionOptionsWindow();
             HideCharacterSelectionWindow();
             HideCharacterNameWindow();
+
+            ShowChooseFighterView();
         }
 
         private void ShowCharacterNameWindow()
