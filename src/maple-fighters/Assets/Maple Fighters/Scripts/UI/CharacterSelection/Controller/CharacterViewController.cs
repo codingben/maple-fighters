@@ -391,7 +391,10 @@ namespace Scripts.UI.CharacterSelection
         {
             characterIndex = (int)uiCharacterIndex;
 
+            HideCharacterNameWindow();
+            HideCharacterSelectionWindow();
             ShowCharacterSelectionOptionsWindow();
+
             EnableOrDisableCharacterSelectionOptionsViewButtons(hasCharacter);
         }
 
