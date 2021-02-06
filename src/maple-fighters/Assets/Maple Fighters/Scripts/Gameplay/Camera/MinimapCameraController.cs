@@ -4,10 +4,6 @@ namespace Scripts.Gameplay.Camera
 {
     public class MinimapCameraController : MonoBehaviour
     {
-        [Header("General")]
-        [SerializeField]
-        private float moveSpeed;
-
         [Header("Boundaries")]
         [SerializeField]
         private Vector2 minimum;
@@ -45,15 +41,10 @@ namespace Scripts.Gameplay.Camera
                 oldPosition = target.position;
             }
 
-            var newPosition = new Vector3(
+            transform.position = new Vector3(
                 center.x + x,
                 center.y + y,
                 transform.position.z);
-
-            transform.position = Vector3.Lerp(
-                transform.position,
-                newPosition,
-                moveSpeed * Time.deltaTime);
         }
     }
 }
