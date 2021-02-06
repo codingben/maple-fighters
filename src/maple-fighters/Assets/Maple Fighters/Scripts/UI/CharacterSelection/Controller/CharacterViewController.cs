@@ -17,7 +17,7 @@ namespace Scripts.UI.CharacterSelection
                                            IOnCharacterCreationFinishedListener
     {
         [SerializeField]
-        private int characterNameLength;
+        private int minCharacterNameLength;
 
         private ILoadingView loadingView;
         private IChooseFighterView chooseFighterView;
@@ -130,7 +130,7 @@ namespace Scripts.UI.CharacterSelection
                 FindObjectOfType<MenuBackgroundController>();
             if (backgroundController != null)
             {
-                backgroundController.BackgroundClicked += 
+                backgroundController.BackgroundClicked +=
                     OnBackgroundClicked;
             }
         }
@@ -141,7 +141,7 @@ namespace Scripts.UI.CharacterSelection
                 FindObjectOfType<MenuBackgroundController>();
             if (backgroundController != null)
             {
-                backgroundController.BackgroundClicked -= 
+                backgroundController.BackgroundClicked -=
                     OnBackgroundClicked;
             }
         }
@@ -155,7 +155,7 @@ namespace Scripts.UI.CharacterSelection
                 {
                     if (characterImage != null)
                     {
-                        characterImage.CharacterClicked -= 
+                        characterImage.CharacterClicked -=
                             OnCharacterClicked;
                     }
                 }
@@ -345,10 +345,10 @@ namespace Scripts.UI.CharacterSelection
                 {
                     if (characterImage != null)
                     {
-                        var image = characterImage.GameObject;
-                        if (image != null)
+                        var gameObject = characterImage.GameObject;
+                        if (gameObject != null)
                         {
-                            Destroy(image);
+                            Destroy(gameObject);
                         }
                     }
                 }
@@ -447,9 +447,7 @@ namespace Scripts.UI.CharacterSelection
 
         private void OnNameInputFieldChanged(string characterName)
         {
-            if (characterName.Length >= characterNameLength
-                && !string.IsNullOrEmpty(characterName)
-                && !Regex.IsMatch(characterName, @"\s"))
+            if (IsCharacterNameValid(characterName))
             {
                 characterNameView?.EnableConfirmButton();
             }
@@ -457,6 +455,15 @@ namespace Scripts.UI.CharacterSelection
             {
                 characterNameView?.DisableConfirmButton();
             }
+        }
+
+        private bool IsCharacterNameValid(string name)
+        {
+            var isEnoughLength = name.Length >= minCharacterNameLength;
+            var isNotEmpty = !string.IsNullOrEmpty(name);
+            var isNotWhitespace = !Regex.IsMatch(name, @"\s");
+
+            return isEnoughLength && isNotEmpty && isNotWhitespace;
         }
 
         private void OnConfirmButtonClicked(string characterName)
@@ -550,7 +557,7 @@ namespace Scripts.UI.CharacterSelection
             var character = CreateCharacterView(path);
             if (character != null)
             {
-                characterView = 
+                characterView =
                     character.GetComponent<ClickableCharacterImage>();
 
                 if (characterView != null)
