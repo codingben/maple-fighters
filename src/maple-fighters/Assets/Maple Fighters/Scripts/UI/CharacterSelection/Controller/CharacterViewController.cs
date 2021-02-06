@@ -130,7 +130,8 @@ namespace Scripts.UI.CharacterSelection
                 FindObjectOfType<MenuBackgroundController>();
             if (backgroundController != null)
             {
-                backgroundController.BackgroundClicked += OnBackgroundClicked;
+                backgroundController.BackgroundClicked += 
+                    OnBackgroundClicked;
             }
         }
 
@@ -140,7 +141,8 @@ namespace Scripts.UI.CharacterSelection
                 FindObjectOfType<MenuBackgroundController>();
             if (backgroundController != null)
             {
-                backgroundController.BackgroundClicked -= OnBackgroundClicked;
+                backgroundController.BackgroundClicked -= 
+                    OnBackgroundClicked;
             }
         }
 
@@ -153,7 +155,8 @@ namespace Scripts.UI.CharacterSelection
                 {
                     if (characterImage != null)
                     {
-                        characterImage.CharacterClicked -= OnCharacterClicked;
+                        characterImage.CharacterClicked -= 
+                            OnCharacterClicked;
                     }
                 }
             }
@@ -225,11 +228,11 @@ namespace Scripts.UI.CharacterSelection
                     {
                         var views =
                             new IClickableCharacterView[] { null, null, null };
-                        characterViewCollection = new CharacterViewCollection(views);
+                        characterViewCollection =
+                            new CharacterViewCollection(views);
                     }
 
                     var index = (int)characterIndex;
-
                     characterViewCollection?.Set(index, characterView);
                 }
             }
@@ -282,7 +285,12 @@ namespace Scripts.UI.CharacterSelection
 
         public void OnCharacterCreated()
         {
+            ResetCharacterSelection();
+            ResetCharacterName();
+
+            HideCharacterNameWindow();
             HideChooseFighterView();
+
             ShowLoadingView();
 
             RemoveAndShowAllCharacterImages();
@@ -315,6 +323,7 @@ namespace Scripts.UI.CharacterSelection
             CreateAndSubscribeToCharacterSelectionOptionsWindow();
             CreateAndSubscribeToCharacterSelectionWindow();
             CreateAndSubscribeToCharacterNameWindow();
+
             SubscribeToBackgroundClicked();
 
             characterViewInteractor.GetCharacters();
@@ -431,7 +440,6 @@ namespace Scripts.UI.CharacterSelection
                 if (character != null)
                 {
                     var characterId = character.Id;
-
                     characterViewInteractor.RemoveCharacter(characterId);
                 }
             }
@@ -453,8 +461,6 @@ namespace Scripts.UI.CharacterSelection
 
         private void OnConfirmButtonClicked(string characterName)
         {
-            HideCharacterNameWindow();
-
             characterDetails.SetCharacterName(characterName);
             characterViewInteractor.CreateCharacter(characterIndex, characterDetails);
         }
@@ -473,6 +479,9 @@ namespace Scripts.UI.CharacterSelection
 
         private void OnCancelButtonClicked()
         {
+            ResetCharacterSelection();
+            ResetCharacterName();
+
             HideCharacterSelectionWindow();
             ShowCharacterSelectionOptionsWindow();
         }
@@ -480,6 +489,21 @@ namespace Scripts.UI.CharacterSelection
         private void OnCharacterSelected(UICharacterClass uiCharacterClass)
         {
             characterDetails.SetCharacterClass(uiCharacterClass);
+
+            characterSelectionView.EnableChooseButton();
+            characterSelectionView.ResetSelection();
+            characterSelectionView.SelectCharacterClass(uiCharacterClass);
+        }
+
+        private void ResetCharacterSelection()
+        {
+            characterSelectionView.ResetSelection();
+            characterSelectionView.DisableChooseButton();
+        }
+
+        private void ResetCharacterName()
+        {
+            characterNameView.ResetNameInputField();
         }
 
         private void OnBackgroundClicked()
@@ -526,7 +550,8 @@ namespace Scripts.UI.CharacterSelection
             var character = CreateCharacterView(path);
             if (character != null)
             {
-                characterView = character.GetComponent<ClickableCharacterImage>();
+                characterView = 
+                    character.GetComponent<ClickableCharacterImage>();
 
                 if (characterView != null)
                 {
