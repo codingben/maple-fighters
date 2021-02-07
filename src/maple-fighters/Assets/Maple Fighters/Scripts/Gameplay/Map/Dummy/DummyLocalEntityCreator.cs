@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using Game.Messages;
+using ScriptableObjects.Configurations;
 using Scripts.Services;
 using UnityEngine;
 
@@ -12,7 +13,14 @@ namespace Scripts.Gameplay.Map.Dummy
 
         private void Start()
         {
-            StartCoroutine(WaitFrameAndStart());
+            var networkConfiguration = NetworkConfiguration.GetInstance();
+            if (networkConfiguration != null)
+            {
+                if (networkConfiguration.IsDevelopment())
+                {
+                    StartCoroutine(WaitFrameAndStart());
+                }
+            }
         }
 
         private IEnumerator WaitFrameAndStart()
