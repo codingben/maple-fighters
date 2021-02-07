@@ -36,10 +36,8 @@ namespace Scripts.Gameplay.Player
         {
             if (characterSprite == null)
             {
-                var character =
-                    GetCharacterGameObject();
                 characterSprite =
-                    character?.GetComponent<ICharacterSpriteGameObject>();
+                    GetCharacterGameObject().GetComponent<ICharacterSpriteGameObject>();
             }
 
             return characterSprite.Provide();
@@ -47,22 +45,18 @@ namespace Scripts.Gameplay.Player
 
         private void CreateCharacter(CharacterClasses characterClass)
         {
-            var path = Paths.Resources.Game.Characters;
-            var characterPath = string.Format(path, characterClass);
-            var characterObject = Resources.Load<GameObject>(path);
-            if (characterObject != null)
+            var path =
+                string.Format(Paths.Resources.Game.Characters, characterClass);
+            var character = Resources.Load<GameObject>(path);
+            if (character != null)
             {
-                spawnedCharacter = Instantiate(characterObject, transform);
+                var position = character.transform.localPosition;
 
-                if (spawnedCharacter != null)
-                {
-                    var position = characterObject.transform.localPosition;
+                spawnedCharacter = Instantiate(character, transform);
+                spawnedCharacter.transform.localPosition = position;
+                spawnedCharacter.transform.SetAsFirstSibling();
 
-                    spawnedCharacter.transform.localPosition = position;
-                    spawnedCharacter.transform.SetAsFirstSibling();
-
-                    CharacterSpawned?.Invoke();
-                }
+                CharacterSpawned?.Invoke();
             }
         }
     }
