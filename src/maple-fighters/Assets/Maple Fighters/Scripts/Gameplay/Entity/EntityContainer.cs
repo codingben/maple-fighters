@@ -51,8 +51,8 @@ namespace Scripts.Gameplay.Entity
             // TODO: Remove "LocalPlayer"
             var name = "LocalPlayer";
             var id = message.GameObjectId;
-            var x = message.SpawnData.X;
-            var y = message.SpawnData.Y;
+            var x = message.X;
+            var y = message.Y;
             var position = new Vector2(x, y);
 
             localEntity = AddEntity(id, name, position);
