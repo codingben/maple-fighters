@@ -27,9 +27,9 @@ namespace Scripts.Gameplay.Player
         private void OnSceneEntered(EnteredSceneMessage message)
         {
             var id = message.GameObjectId;
-            var name = message.CharacterData.Name;
-            var @class = message.CharacterData.Class;
-            var direction = message.SpawnData.Direction;
+            var name = message.CharacterName;
+            var @class = message.CharacterClass;
+            var direction = message.Direction;
             var characterData = new CharacterData(name, @class, direction);
 
             StartCoroutine(WaitFrameAndSpawn(id, characterData));
@@ -40,8 +40,8 @@ namespace Scripts.Gameplay.Player
             foreach (var gameObject in message.GameObjects)
             {
                 var id = gameObject.Id;
-                var name = gameObject.CharacterData.Name;
-                var @class = gameObject.CharacterData.Class;
+                var name = gameObject.CharacterName;
+                var @class = gameObject.CharacterClass;
                 var direction = gameObject.Direction;
                 var characterData = new CharacterData(name, @class, direction);
 
@@ -57,12 +57,12 @@ namespace Scripts.Gameplay.Player
             if (EntityContainer.GetInstance().GetRemoteEntity(entityId, out var entity))
             {
                 var characterDataProvider =
-                    entity?.GameObject.GetComponent<CharacterDataProvider>();
-                characterDataProvider?.SetCharacterData(characterData);
+                    entity?.GameObject?.GetComponent<CharacterDataProvider>();
+                var spawnCharacter =
+                    entity?.GameObject?.GetComponent<SpawnCharacter>();
 
-                var spawnedCharacter = 
-                    entity?.GameObject.GetComponent<SpawnCharacter>();
-                spawnedCharacter?.Spawn();
+                characterDataProvider?.SetCharacterData(characterData);
+                spawnCharacter?.Spawn();
             }
         }
     }
