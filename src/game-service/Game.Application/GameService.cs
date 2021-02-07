@@ -17,8 +17,9 @@ namespace Game.Application
         private readonly IWebSocketConnection connection;
         private readonly IWebSocketSessionCollection sessionCollection;
         private readonly IGameSceneCollection gameSceneCollection;
-        private readonly IGameObject player;
         private readonly IMessageHandlerCollection handlerCollection;
+        private readonly IJsonSerializer jsonSerializer;
+        private readonly IGameObject player;
 
         public GameService(IWebSocketConnection connection, IComponents components)
         {
@@ -27,24 +28,25 @@ namespace Game.Application
             connection.OnOpen += OnConnectionEstablished;
             connection.OnClose += OnConnectionClosed;
             connection.OnError += OnErrorOccurred;
-            connection.OnBinary += OnMessageReceived;
+            connection.OnMessage += OnMessageReceived;
 
             id = components.Get<IIdGenerator>().GenerateId();
             sessionCollection = components.Get<IWebSocketSessionCollection>();
             gameSceneCollection = components.Get<IGameSceneCollection>();
 
+            jsonSerializer = new NativeJsonSerializer();
+            handlerCollection = new MessageHandlerCollection(jsonSerializer);
             player = new PlayerGameObject(id, new IComponent[]
             {
                 new AnimationData(),
                 new Objects.Components.CharacterData(),
                 new PresenceMapProvider(),
-                new MessageSender(),
+                new MessageSender(jsonSerializer),
                 new PositionChangedMessageSender(),
                 new AnimationStateChangedMessageSender(),
                 new PlayerAttackedMessageSender(),
                 new BubbleNotificationMessageSender()
             });
-            handlerCollection = new MessageHandlerCollection();
         }
 
         private void OnConnectionEstablished()
@@ -79,16 +81,15 @@ namespace Game.Application
             Console.WriteLine($"OnErrorOccurred() -> {exception.Message}");
         }
 
-        private void OnMessageReceived(byte[] data)
+        private void OnMessageReceived(string json)
         {
-            var messageData =
-                MessageUtils.DeserializeMessage<MessageData>(data);
+            var messageData = jsonSerializer.Deserialize<MessageData>(json);
             var code = messageData.Code;
-            var rawData = messageData.RawData;
+            var data = messageData.Data;
 
             if (handlerCollection.TryGet(code, out var handler))
             {
-                handler?.Invoke(rawData);
+                handler?.Invoke(data);
             }
         }
 
@@ -106,16 +107,16 @@ namespace Game.Application
             messageSender.SendToMessageCallback -= SendMessageCallback;
         }
 
-        private void SendMessageCallback(byte[] rawData)
+        private void SendMessageCallback(string data)
         {
-            connection.Send(rawData);
+            connection.Send(data);
         }
 
-        private void SendMessageCallback(byte[] rawData, int id)
+        private void SendMessageCallback(string data, int id)
         {
             if (sessionCollection.TryGet(id, out var sessionData))
             {
-                sessionData.Connection.Send(rawData);
+                sessionData.Connection.Send(data);
             }
         }
 
