@@ -1,4 +1,5 @@
 using System;
+using System.Text;
 using Game.Messages;
 using Game.Network;
 using NativeWebSocket;
@@ -37,23 +38,26 @@ namespace Scripts.Services.GameApi
 
         public Action<BubbleNotificationMessage> BubbleMessageReceived { get; set; }
 
-        private WebSocket webSocket;
+        private IJsonSerializer jsonSerializer;
+
         private MessageHandlerCollection collection;
+        private WebSocket webSocket;
 
         private void Awake()
         {
-            var url = UserData.GameServerUrl;
+            jsonSerializer = new NewtonsoftJsonSerializer();
+            collection = new MessageHandlerCollection(jsonSerializer);
+        }
 
+        private async void Start()
+        {
+            var url = UserData.GameServerUrl;
+            
             webSocket = new WebSocket(url);
             webSocket.OnOpen += OnOpen;
             webSocket.OnClose += OnClose;
             webSocket.OnMessage += OnMessage;
 
-            collection = new MessageHandlerCollection();
-        }
-
-        private async void Start()
-        {
             await webSocket?.Connect();
         }
 
@@ -71,49 +75,52 @@ namespace Scripts.Services.GameApi
 
         async void IGameApi.SendMessage<TCode, TMessage>(TCode code, TMessage message)
         {
-            var rawData =
-                MessageUtils.WrapMessage(Convert.ToByte(code), message);
-
             if (webSocket?.State == WebSocketState.Open)
             {
-                await webSocket?.Send(rawData);
+                var data = jsonSerializer.Serialize(new MessageData()
+                {
+                    Code = Convert.ToByte(code),
+                    Data = jsonSerializer.Serialize(message)
+                });
+
+                await webSocket?.SendText(data);
             }
         }
 
         private void OnOpen()
         {
-            collection?.Set(MessageCodes.EnteredScene, SceneEntered.ToMessageHandler());
-            collection?.Set(MessageCodes.ChangeScene, SceneChanged.ToMessageHandler());
-            collection?.Set(MessageCodes.GameObjectAdded, GameObjectsAdded.ToMessageHandler());
-            collection?.Set(MessageCodes.GameObjectRemoved, GameObjectsRemoved.ToMessageHandler());
-            collection?.Set(MessageCodes.PositionChanged, PositionChanged.ToMessageHandler());
-            collection?.Set(MessageCodes.AnimationStateChanged, AnimationStateChanged.ToMessageHandler());
-            collection?.Set(MessageCodes.Attacked, Attacked.ToMessageHandler());
-            collection?.Set(MessageCodes.BubbleNotification, BubbleMessageReceived.ToMessageHandler());
+            collection.Set(MessageCodes.EnteredScene, SceneEntered.ToMessageHandler());
+            collection.Set(MessageCodes.ChangeScene, SceneChanged.ToMessageHandler());
+            collection.Set(MessageCodes.GameObjectAdded, GameObjectsAdded.ToMessageHandler());
+            collection.Set(MessageCodes.GameObjectRemoved, GameObjectsRemoved.ToMessageHandler());
+            collection.Set(MessageCodes.PositionChanged, PositionChanged.ToMessageHandler());
+            collection.Set(MessageCodes.AnimationStateChanged, AnimationStateChanged.ToMessageHandler());
+            collection.Set(MessageCodes.Attacked, Attacked.ToMessageHandler());
+            collection.Set(MessageCodes.BubbleNotification, BubbleMessageReceived.ToMessageHandler());
         }
 
         private void OnClose(WebSocketCloseCode closeCode)
         {
-            collection?.Unset(MessageCodes.EnteredScene);
-            collection?.Unset(MessageCodes.ChangeScene);
-            collection?.Unset(MessageCodes.GameObjectAdded);
-            collection?.Unset(MessageCodes.GameObjectRemoved);
-            collection?.Unset(MessageCodes.PositionChanged);
-            collection?.Unset(MessageCodes.AnimationStateChanged);
-            collection?.Unset(MessageCodes.Attacked);
-            collection?.Unset(MessageCodes.BubbleNotification);
+            collection.Unset(MessageCodes.EnteredScene);
+            collection.Unset(MessageCodes.ChangeScene);
+            collection.Unset(MessageCodes.GameObjectAdded);
+            collection.Unset(MessageCodes.GameObjectRemoved);
+            collection.Unset(MessageCodes.PositionChanged);
+            collection.Unset(MessageCodes.AnimationStateChanged);
+            collection.Unset(MessageCodes.Attacked);
+            collection.Unset(MessageCodes.BubbleNotification);
         }
 
-        private void OnMessage(byte[] data)
+        private void OnMessage(byte[] bytes)
         {
-            var messageData =
-                MessageUtils.DeserializeMessage<MessageData>(data);
+            var message = Encoding.UTF8.GetString(bytes);
+            var messageData = jsonSerializer.Deserialize<MessageData>(message);
             var code = messageData.Code;
-            var rawData = messageData.RawData;
+            var data = messageData.Data;
 
-            if (collection != null && collection.TryGet(code, out var handler))
+            if (collection.TryGet(code, out var handler))
             {
-                handler?.Invoke(rawData);
+                handler?.Invoke(data);
             }
         }
     }
