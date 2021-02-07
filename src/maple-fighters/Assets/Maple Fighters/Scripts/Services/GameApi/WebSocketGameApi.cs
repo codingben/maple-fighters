@@ -58,7 +58,10 @@ namespace Scripts.Services.GameApi
             webSocket.OnClose += OnClose;
             webSocket.OnMessage += OnMessage;
 
-            await webSocket?.Connect();
+            if (webSocket != null)
+            {
+                await webSocket.Connect();
+            }
         }
 
         private void Update()
@@ -70,12 +73,15 @@ namespace Scripts.Services.GameApi
 
         private async void OnApplicationQuit()
         {
-            await webSocket?.Close();
+            if (webSocket != null)
+            {
+                await webSocket.Close();
+            }
         }
 
         async void IGameApi.SendMessage<TCode, TMessage>(TCode code, TMessage message)
         {
-            if (webSocket?.State == WebSocketState.Open)
+            if (webSocket != null && webSocket.State == WebSocketState.Open)
             {
                 var data = jsonSerializer.Serialize(new MessageData()
                 {
@@ -83,7 +89,10 @@ namespace Scripts.Services.GameApi
                     Data = jsonSerializer.Serialize(message)
                 });
 
-                await webSocket?.SendText(data);
+                if (webSocket != null)
+                {
+                    await webSocket.SendText(data);
+                }
             }
         }
 
