@@ -39,26 +39,20 @@ namespace Scripts.Gameplay.Map.Dummy
             var message = new EnteredSceneMessage()
             {
                 GameObjectId = dummyCharacter.DummyEntity.Id,
-                SpawnData = new SpawnData()
-                {
-                    X = dummyCharacter.DummyEntity.Position.x,
-                    Y = dummyCharacter.DummyEntity.Position.y
-                },
-                CharacterData = new CharacterData()
-                {
-                    Name = userName,
-                    Class = (byte)userCharacterType,
-                }
+                X = dummyCharacter.DummyEntity.Position.x,
+                Y = dummyCharacter.DummyEntity.Position.y,
+                CharacterName = userName,
+                CharacterClass = (byte)userCharacterType
             };
 
             var direction = dummyCharacter.DummyEntity.Direction;
             if (direction == Player.Direction.Left)
             {
-                message.SpawnData.Direction = 1;
+                message.Direction = 1;
             }
             else
             {
-                message.SpawnData.Direction = -1;
+                message.Direction = -1;
             }
 
             var gameApi = ApiProvider.ProvideGameApi();
