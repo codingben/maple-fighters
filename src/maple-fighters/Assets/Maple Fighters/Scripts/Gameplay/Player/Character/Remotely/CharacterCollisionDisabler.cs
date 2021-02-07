@@ -25,7 +25,7 @@ namespace Scripts.Gameplay.Player
         private void OnCharacterSpawned()
         {
             var collider = spawnedCharacter
-                .GetCharacterGameObject()
+                .GetCharacter()
                 .GetComponent<Collider2D>();
             if (collider != null)
             {

@@ -25,12 +25,13 @@ namespace Scripts.Gameplay.Player
         private void OnCharacterSpawned()
         {
             var animator = spawnedCharacter
-                .GetCharacterSpriteGameObject()
+                .GetCharacterSprite()
                 .GetComponent<Animator>();
             if (animator != null)
             {
                 var playerAnimatorProvider =
                     GetComponent<PlayerAnimatorProvider>();
+
                 playerAnimatorProvider?.Initialize(animator);
             }
         }

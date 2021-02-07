@@ -27,17 +27,17 @@ namespace Scripts.Gameplay.Player
             CreateCharacter((CharacterClasses)@class);
         }
 
-        public GameObject GetCharacterGameObject()
+        public GameObject GetCharacter()
         {
             return spawnedCharacter;
         }
 
-        public GameObject GetCharacterSpriteGameObject()
+        public GameObject GetCharacterSprite()
         {
             if (characterSprite == null)
             {
                 characterSprite =
-                    GetCharacterGameObject().GetComponent<ICharacterSpriteGameObject>();
+                    GetCharacter().GetComponent<ICharacterSpriteGameObject>();
             }
 
             return characterSprite.Provide();

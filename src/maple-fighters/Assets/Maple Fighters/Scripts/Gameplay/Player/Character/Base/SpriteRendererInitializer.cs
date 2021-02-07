@@ -28,7 +28,7 @@ namespace Scripts.Gameplay.Player
         private void OnCharacterSpawned()
         {
             var spriteRenderer = spawnedCharacter
-                .GetCharacterSpriteGameObject()
+                .GetCharacterSprite()
                 .GetComponent<SpriteRenderer>();
             if (spriteRenderer != null)
             {

@@ -28,7 +28,7 @@ namespace Scripts.Gameplay.Player
         private void OnCharacterSpawned()
         {
             var characterNameSetter = spawnedCharacter
-                .GetCharacterSpriteGameObject()
+                .GetCharacterSprite()
                 .GetComponent<CharacterNameSetter>();
             if (characterNameSetter != null)
             {

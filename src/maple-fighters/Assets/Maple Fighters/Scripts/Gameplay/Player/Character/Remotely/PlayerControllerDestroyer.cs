@@ -25,8 +25,9 @@ namespace Scripts.Gameplay.Player
         private void OnCharacterSpawned()
         {
             var components = spawnedCharacter
-                .GetCharacterGameObject()
+                .GetCharacter()
                 .GetComponents<MonoBehaviour>();
+
             foreach (var component in components)
             {
                 Destroy(component);

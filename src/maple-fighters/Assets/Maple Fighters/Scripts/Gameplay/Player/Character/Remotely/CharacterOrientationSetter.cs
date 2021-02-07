@@ -31,9 +31,7 @@ namespace Scripts.Gameplay.Player
 
         private void OnCharacterSpawned()
         {
-            var characterGameObject =
-                spawnedCharacter.GetCharacterGameObject();
-            character = characterGameObject.transform;
+            character = spawnedCharacter.GetCharacter().transform;
         }
 
         private void OnPositionChanged(Vector3 position)

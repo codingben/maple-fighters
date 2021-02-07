@@ -7,8 +7,8 @@ namespace Scripts.Gameplay.Player
     {
         event Action CharacterSpawned;
 
-        GameObject GetCharacterGameObject();
+        GameObject GetCharacter();
 
-        GameObject GetCharacterSpriteGameObject();
+        GameObject GetCharacterSprite();
     }
 }

@@ -29,9 +29,7 @@ namespace Scripts.Gameplay.Player
             {
                 var characterData = characterDataProvider.GetCharacterData();
                 var direction = characterData.Direction;
-                var transform =
-                    spawnedCharacter.GetCharacterGameObject().transform;
-
+                var transform = spawnedCharacter.GetCharacter().transform;
                 var x = Mathf.Abs(transform.localScale.x);
                 var y = transform.localScale.y;
                 var z = transform.localScale.z;

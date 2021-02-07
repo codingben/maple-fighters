@@ -33,7 +33,7 @@ namespace Scripts.Gameplay.Mobs
             var spawnedCharacter =
                 entity?.GameObject.GetComponent<ISpawnedCharacter>();
             var character =
-                spawnedCharacter?.GetCharacterGameObject();
+                spawnedCharacter?.GetCharacter();
             if (character != null)
             {
                 var normalized =
