@@ -9,10 +9,12 @@
         public float X { get; set; }
 
         public float Y { get; set; }
-        
+
         public float Direction { get; set; }
 
-        public CharacterData CharacterData { get; set; }
+        public string CharacterName { get; set; }
+
+        public byte CharacterClass { get; set; }
 
         public bool HasCharacter { get; set; }
     }

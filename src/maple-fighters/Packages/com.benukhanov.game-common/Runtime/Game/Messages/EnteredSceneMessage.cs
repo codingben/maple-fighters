@@ -4,8 +4,14 @@ namespace Game.Messages
     {
         public int GameObjectId { get; set; }
 
-        public SpawnData SpawnData { get; set; }
+        public float X { get; set; }
 
-        public CharacterData CharacterData { get; set; }
+        public float Y { get; set; }
+
+        public float Direction { get; set; }
+
+        public string CharacterName { get; set; }
+
+        public byte CharacterClass { get; set; }
     }
 }

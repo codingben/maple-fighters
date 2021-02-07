@@ -11,7 +11,7 @@ namespace Game.Network
         void Unset<TMessageCode>(TMessageCode messageCode)
             where TMessageCode : IComparable, IFormattable, IConvertible;
 
-        bool TryGet<TMessageCode>(TMessageCode messageCode, out Action<byte[]> handler)
+        bool TryGet<TMessageCode>(TMessageCode messageCode, out Action<string> handler)
             where TMessageCode : IComparable, IFormattable, IConvertible;
     }
 }

@@ -5,11 +5,14 @@ namespace Game.Network
 {
     public class MessageHandlerCollection : IMessageHandlerCollection
     {
-        private readonly Dictionary<byte, Action<byte[]>> collection;
+        private readonly IJsonSerializer jsonSerializer;
+        private readonly IDictionary<byte, Action<string>> collection;
 
-        public MessageHandlerCollection()
+        public MessageHandlerCollection(IJsonSerializer jsonSerializer)
         {
-            collection = new Dictionary<byte, Action<byte[]>>();
+            this.jsonSerializer = jsonSerializer;
+
+            collection = new Dictionary<byte, Action<string>>();
         }
 
         public void Set<TMessageCode, TMessage>(TMessageCode messageCode, IMessageHandler<TMessage> handler)
@@ -18,12 +21,13 @@ namespace Game.Network
         {
             var key = Convert.ToByte(messageCode);
 
-            collection[key] = rawData =>
+            collection[key] = data =>
             {
-                var message =
-                    MessageUtils.DeserializeMessage<TMessage>(rawData);
-
-                handler.Handle(message);
+                var message = jsonSerializer.Deserialize<TMessage>(data);
+                if (message != null)
+                {
+                    handler.Handle(message);
+                }
             };
         }
 
@@ -38,7 +42,7 @@ namespace Game.Network
             }
         }
 
-        public bool TryGet<TMessageCode>(TMessageCode messageCode, out Action<byte[]> handler)
+        public bool TryGet<TMessageCode>(TMessageCode messageCode, out Action<string> handler)
             where TMessageCode : IComparable, IFormattable, IConvertible
         {
             var key = Convert.ToByte(messageCode);
