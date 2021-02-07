@@ -52,7 +52,7 @@ namespace Scripts.Services.GameApi
         private async void Start()
         {
             var url = UserData.GameServerUrl;
-            
+
             webSocket = new WebSocket(url);
             webSocket.OnOpen += OnOpen;
             webSocket.OnClose += OnClose;
