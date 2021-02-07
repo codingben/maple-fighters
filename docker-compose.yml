@@ -45,7 +45,7 @@ services:
     game-service:
         image: game-service:1.0.0
         build:
-            context: ./src/game-service
+            context: ./src/game-service/Game.Application
         expose:
             - 50051
         environment:
