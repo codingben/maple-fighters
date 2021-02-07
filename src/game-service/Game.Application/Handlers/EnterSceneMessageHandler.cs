@@ -66,17 +66,11 @@ namespace Game.Application.Handlers
             var message = new EnteredSceneMessage()
             {
                 GameObjectId = player.Id,
-                SpawnData = new SpawnData
-                {
-                    X = player.Transform.Position.X,
-                    Y = player.Transform.Position.Y,
-                    Direction = player.Transform.Size.X
-                },
-                CharacterData = new Messages.CharacterData()
-                {
-                    Name = characterData.GetName(),
-                    Class = characterData.GetCharacterType()
-                }
+                X = player.Transform.Position.X,
+                Y = player.Transform.Position.Y,
+                Direction = player.Transform.Size.X,
+                CharacterName = characterData.GetName(),
+                CharacterClass = characterData.GetCharacterType()
             };
 
             messageSender.SendMessage(messageCode, message);
