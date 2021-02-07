@@ -4,6 +4,6 @@ namespace Game.Network
     {
         public byte Code { get; set; }
 
-        public byte[] RawData { get; set; } // Newtonsoft.Json.Bson
+        public string Data { get; set; }
     }
 }
