@@ -2,7 +2,7 @@
 
 namespace Scripts.Gameplay.Player
 {
-    public class CharacterSpriteProvider : MonoBehaviour, ICharacterSpriteGameObject
+    public class CharacterSpriteProvider : MonoBehaviour, ICharacterSprite
     {
         [SerializeField]
         private GameObject characterSprite;

@@ -2,7 +2,7 @@
 
 namespace Scripts.Gameplay.Player
 {
-    public interface ICharacterSpriteGameObject
+    public interface ICharacterSprite
     {
         GameObject Provide();
     }

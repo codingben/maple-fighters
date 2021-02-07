@@ -12,7 +12,7 @@ namespace Scripts.Gameplay.Player
         private GameObject spawnedCharacter;
 
         private ICharacterDataProvider characterDataProvider;
-        private ICharacterSpriteGameObject characterSprite;
+        private ICharacterSprite characterSprite;
 
         private void Awake()
         {
@@ -37,7 +37,7 @@ namespace Scripts.Gameplay.Player
             if (characterSprite == null)
             {
                 characterSprite =
-                    GetCharacter().GetComponent<ICharacterSpriteGameObject>();
+                    GetCharacter().GetComponent<ICharacterSprite>();
             }
 
             return characterSprite.Provide();
