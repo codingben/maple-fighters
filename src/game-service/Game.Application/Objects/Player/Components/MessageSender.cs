@@ -6,11 +6,17 @@ namespace Game.Application.Objects.Components
 {
     public class MessageSender : ComponentBase, IMessageSender
     {
-        public Action<byte[]> SendMessageCallback { get; set; }
+        public Action<string> SendMessageCallback { get; set; }
 
-        public Action<byte[], int> SendToMessageCallback { get; set; }
+        public Action<string, int> SendToMessageCallback { get; set; }
 
         private IProximityChecker proximityChecker;
+        private IJsonSerializer jsonSerializer;
+
+        public MessageSender(IJsonSerializer jsonSerializer)
+        {
+            this.jsonSerializer = jsonSerializer;
+        }
 
         protected override void OnAwake()
         {
@@ -20,9 +26,13 @@ namespace Game.Application.Objects.Components
         public void SendMessage<TMessage>(byte code, TMessage message)
             where TMessage : class
         {
-            var rawData = MessageUtils.WrapMessage(code, message);
+            var data = jsonSerializer.Serialize(new MessageData()
+            {
+                Code = code,
+                Data = jsonSerializer.Serialize(message)
+            });
 
-            SendMessageCallback?.Invoke(rawData);
+            SendMessageCallback?.Invoke(data);
         }
 
         public void SendMessageToNearbyGameObjects<TMessage>(byte code, TMessage message)
@@ -32,9 +42,13 @@ namespace Game.Application.Objects.Components
 
             foreach (var gameObject in nearbyGameObjects)
             {
-                var rawData = MessageUtils.WrapMessage(code, message);
+                var data = jsonSerializer.Serialize(new MessageData()
+                {
+                    Code = code,
+                    Data = jsonSerializer.Serialize(message)
+                });
 
-                SendToMessageCallback?.Invoke(rawData, gameObject.Id);
+                SendToMessageCallback?.Invoke(data, gameObject.Id);
             }
         }
     }
