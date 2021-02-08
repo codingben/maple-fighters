@@ -2,6 +2,6 @@
 {
     public class ChangeAnimationStateMessage
     {
-        public byte AnimationState { get; set; }
+        public byte AnimationState;
     }
 }

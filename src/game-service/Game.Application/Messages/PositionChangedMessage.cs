@@ -2,10 +2,10 @@ namespace Game.Messages
 {
     public class PositionChangedMessage
     {
-        public int GameObjectId { get; set; }
+        public int GameObjectId;
 
-        public float X { get; set; }
+        public float X;
 
-        public float Y { get; set; }
+        public float Y;
     }
 }

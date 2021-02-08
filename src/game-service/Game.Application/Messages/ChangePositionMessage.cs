@@ -2,8 +2,8 @@
 {
     public class ChangePositionMessage
     {
-        public float X { get; set; }
+        public float X;
 
-        public float Y { get; set; }
+        public float Y;
     }
 }

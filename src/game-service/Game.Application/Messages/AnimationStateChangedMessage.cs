@@ -2,8 +2,8 @@
 {
     public class AnimationStateChangedMessage
     {
-        public int GameObjectId { get; set; }
+        public int GameObjectId;
 
-        public byte AnimationState { get; set; }
+        public byte AnimationState;
     }
 }
