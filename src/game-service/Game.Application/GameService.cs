@@ -39,7 +39,7 @@ namespace Game.Application
             player = new PlayerGameObject(id, new IComponent[]
             {
                 new AnimationData(),
-                new Objects.Components.CharacterData(),
+                new CharacterData(),
                 new PresenceMapProvider(),
                 new MessageSender(jsonSerializer),
                 new PositionChangedMessageSender(),
