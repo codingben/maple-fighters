@@ -2,10 +2,10 @@ namespace Game.Messages
 {
     public class EnterSceneMessage
     {
-        public byte Map;
+        public byte Map { get; set; }
 
-        public string CharacterName;
+        public string CharacterName { get; set; }
 
-        public byte CharacterType;
+        public byte CharacterType { get; set; }
     }
 }

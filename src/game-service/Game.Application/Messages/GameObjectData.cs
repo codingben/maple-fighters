@@ -2,20 +2,20 @@
 {
     public class GameObjectData
     {
-        public int Id;
+        public int Id { get; set; }
 
-        public string Name;
+        public string Name { get; set; }
 
-        public float X;
+        public float X { get; set; }
 
-        public float Y;
+        public float Y { get; set; }
 
-        public float Direction;
+        public float Direction { get; set; }
 
-        public string CharacterName;
+        public string CharacterName { get; set; }
 
-        public byte CharacterClass;
+        public byte CharacterClass { get; set; }
 
-        public bool HasCharacter;
+        public bool HasCharacter { get; set; }
     }
 }

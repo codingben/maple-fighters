@@ -2,10 +2,10 @@ namespace Game.Messages
 {
     public class BubbleNotificationMessage
     {
-        public int NotifierId;
+        public int NotifierId { get; set; }
 
-        public string Message;
+        public string Message { get; set; }
 
-        public int Time;
+        public int Time { get; set; }
     }
 }

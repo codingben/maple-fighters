@@ -2,8 +2,8 @@ namespace Game.MessageTools
 {
     public class MessageData
     {
-        public byte Code;
+        public byte Code { get; set; }
 
-        public string Data;
+        public string Data { get; set; }
     }
 }

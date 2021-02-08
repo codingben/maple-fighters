@@ -2,16 +2,16 @@ namespace Game.Messages
 {
     public class EnteredSceneMessage
     {
-        public int GameObjectId;
+        public int GameObjectId { get; set; }
 
-        public float X;
+        public float X { get; set; }
 
-        public float Y;
+        public float Y { get; set; }
 
-        public float Direction;
+        public float Direction { get; set; }
 
-        public string CharacterName;
+        public string CharacterName { get; set; }
 
-        public byte CharacterClass;
+        public byte CharacterClass { get; set; }
     }
 }

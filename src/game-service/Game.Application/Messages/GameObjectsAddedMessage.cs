@@ -2,6 +2,6 @@
 {
     public class GameObjectsAddedMessage
     {
-        public GameObjectData[] GameObjects;
+        public GameObjectData[] GameObjects { get; set; }
     }
 }
