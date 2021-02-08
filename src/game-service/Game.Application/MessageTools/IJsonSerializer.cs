@@ -1,4 +1,4 @@
-namespace Game.Network
+namespace Game.MessageTools
 {
     public interface IJsonSerializer
     {

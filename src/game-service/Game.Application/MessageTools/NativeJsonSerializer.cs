@@ -1,6 +1,6 @@
 using System.Text.Json;
 
-namespace Game.Network
+namespace Game.MessageTools
 {
     public class NativeJsonSerializer : IJsonSerializer
     {

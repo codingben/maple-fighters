@@ -1,6 +1,6 @@
 using Game.Application.Components;
 using Game.Messages;
-using Game.Network;
+using Game.MessageTools;
 using Game.Application.Objects;
 using Game.Application.Objects.Components;
 using Common.MathematicsHelper;

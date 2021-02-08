@@ -1,6 +1,6 @@
 ﻿using System;
 using Common.ComponentModel;
-using Game.Network;
+using Game.MessageTools;
 
 namespace Game.Application.Objects.Components
 {

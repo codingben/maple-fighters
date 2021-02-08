@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Game.Network
+namespace Game.MessageTools
 {
     public class MessageHandlerCollection : IMessageHandlerCollection
     {

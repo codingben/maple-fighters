@@ -1,6 +1,6 @@
 using System;
 
-namespace Game.Network
+namespace Game.MessageTools
 {
     public interface IMessageHandlerCollection
     {
