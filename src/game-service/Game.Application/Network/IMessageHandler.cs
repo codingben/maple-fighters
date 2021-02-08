@@ -1,8 +1,8 @@
 namespace Game.Network
 {
-    public interface IMessageHandler<TMessage>
-        where TMessage : class
+    public interface IMessageHandler<T>
+        where T : class
     {
-        void Handle(TMessage message);
+        void Handle(T message);
     }
 }

@@ -15,15 +15,15 @@ namespace Game.Network
             collection = new Dictionary<byte, Action<string>>();
         }
 
-        public void Set<TMessageCode, TMessage>(TMessageCode messageCode, IMessageHandler<TMessage> handler)
-            where TMessageCode : IComparable, IFormattable, IConvertible
-            where TMessage : class
+        public void Set<T, M>(T messageCode, IMessageHandler<M> handler)
+            where T : IComparable, IFormattable, IConvertible
+            where M : class
         {
             var key = Convert.ToByte(messageCode);
 
             collection[key] = data =>
             {
-                var message = jsonSerializer.Deserialize<TMessage>(data);
+                var message = jsonSerializer.Deserialize<M>(data);
                 if (message != null)
                 {
                     handler.Handle(message);
@@ -31,8 +31,8 @@ namespace Game.Network
             };
         }
 
-        public void Unset<TMessageCode>(TMessageCode messageCode)
-            where TMessageCode : IComparable, IFormattable, IConvertible
+        public void Unset<TMessageCode>(T messageCode)
+            where T : IComparable, IFormattable, IConvertible
         {
             var key = Convert.ToByte(messageCode);
 
@@ -42,8 +42,8 @@ namespace Game.Network
             }
         }
 
-        public bool TryGet<TMessageCode>(TMessageCode messageCode, out Action<string> handler)
-            where TMessageCode : IComparable, IFormattable, IConvertible
+        public bool TryGet<T>(T messageCode, out Action<string> handler)
+            where T : IComparable, IFormattable, IConvertible
         {
             var key = Convert.ToByte(messageCode);
 

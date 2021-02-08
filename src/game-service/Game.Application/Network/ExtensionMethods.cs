@@ -4,10 +4,10 @@ namespace Game.Network
 {
     public static class ExtensionMethods
     {
-        public static IMessageHandler<TMessage> ToMessageHandler<TMessage>(this Action<TMessage> action)
-            where TMessage : class
+        public static IMessageHandler<T> ToMessageHandler<T>(this Action<T> action)
+            where T : class
         {
-            return new MessageHandler<TMessage>(action);
+            return new MessageHandler<T>(action);
         }
     }
 }

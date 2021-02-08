@@ -4,14 +4,14 @@ namespace Game.Network
 {
     public interface IMessageHandlerCollection
     {
-        void Set<TMessageCode, TMessage>(TMessageCode messageCode, IMessageHandler<TMessage> handler)
-            where TMessageCode : IComparable, IFormattable, IConvertible
-            where TMessage : class;
+        void Set<T, M>(T messageCode, IMessageHandler<M> handler)
+            where T : IComparable, IFormattable, IConvertible
+            where M : class;
 
-        void Unset<TMessageCode>(TMessageCode messageCode)
-            where TMessageCode : IComparable, IFormattable, IConvertible;
+        void Unset<T>(T messageCode)
+            where T : IComparable, IFormattable, IConvertible;
 
-        bool TryGet<TMessageCode>(TMessageCode messageCode, out Action<string> handler)
-            where TMessageCode : IComparable, IFormattable, IConvertible;
+        bool TryGet<T>(T messageCode, out Action<string> handler)
+            where T : IComparable, IFormattable, IConvertible;
     }
 }

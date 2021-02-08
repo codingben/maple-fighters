@@ -2,17 +2,17 @@ using System;
 
 namespace Game.Network
 {
-    public class MessageHandler<TMessage> : IMessageHandler<TMessage>
-        where TMessage : class
+    public class MessageHandler<T> : IMessageHandler<T>
+        where T : class
     {
-        private readonly Action<TMessage> handler;
+        private readonly Action<T> handler;
 
-        public MessageHandler(Action<TMessage> handler)
+        public MessageHandler(Action<T> handler)
         {
             this.handler = handler;
         }
 
-        public void Handle(TMessage message)
+        public void Handle(T message)
         {
             handler?.Invoke(message);
         }
