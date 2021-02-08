@@ -31,7 +31,7 @@ namespace Game.MessageTools
             };
         }
 
-        public void Unset<TMessageCode>(T messageCode)
+        public void Unset<T>(T messageCode)
             where T : IComparable, IFormattable, IConvertible
         {
             var key = Convert.ToByte(messageCode);
