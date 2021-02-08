@@ -1,4 +1,4 @@
-using Game.Network;
+using Game.MessageTools;
 using Newtonsoft.Json;
 
 namespace Scripts.Services.GameApi

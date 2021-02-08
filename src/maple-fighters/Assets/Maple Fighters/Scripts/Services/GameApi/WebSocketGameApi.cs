@@ -1,7 +1,7 @@
 using System;
 using System.Text;
 using Game.Messages;
-using Game.Network;
+using Game.MessageTools;
 using NativeWebSocket;
 using UnityEngine;
 
