@@ -1,6 +1,6 @@
 ﻿namespace Game.Messages
 {
-    public class AnimationStateChangedMessage
+    public struct AnimationStateChangedMessage
     {
         public int GameObjectId { get; set; }
 

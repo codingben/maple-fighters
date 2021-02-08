@@ -1,7 +1,7 @@
 namespace Game.MessageTools
 {
     public interface IMessageHandler<T>
-        where T : class
+        where T : struct
     {
         void Handle(T message);
     }

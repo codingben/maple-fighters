@@ -1,6 +1,6 @@
 ﻿namespace Game.Messages
 {
-    public class GameObjectData
+    public struct GameObjectData
     {
         public int Id { get; set; }
 

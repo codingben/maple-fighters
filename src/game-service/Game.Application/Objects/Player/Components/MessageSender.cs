@@ -23,8 +23,8 @@ namespace Game.Application.Objects.Components
             proximityChecker = Components.Get<IProximityChecker>();
         }
 
-        public void SendMessage<TMessage>(byte code, TMessage message)
-            where TMessage : class
+        public void SendMessage<T>(byte code, T message)
+            where T : struct
         {
             var data = jsonSerializer.Serialize(new MessageData()
             {
@@ -35,8 +35,8 @@ namespace Game.Application.Objects.Components
             SendMessageCallback?.Invoke(data);
         }
 
-        public void SendMessageToNearbyGameObjects<TMessage>(byte code, TMessage message)
-            where TMessage : class
+        public void SendMessageToNearbyGameObjects<T>(byte code, T message)
+            where T : struct
         {
             var nearbyGameObjects = proximityChecker.GetNearbyGameObjects();
 

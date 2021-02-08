@@ -1,6 +1,6 @@
 namespace Game.Messages
 {
-    public class PositionChangedMessage
+    public struct PositionChangedMessage
     {
         public int GameObjectId { get; set; }
 

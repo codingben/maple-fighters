@@ -8,10 +8,10 @@ namespace Game.Application.Objects.Components
 
         Action<string, int> SendToMessageCallback { get; set; }
 
-        void SendMessage<TMessage>(byte code, TMessage message)
-            where TMessage : class;
+        void SendMessage<T>(byte code, T message)
+            where T : struct;
 
-        void SendMessageToNearbyGameObjects<TMessage>(byte code, TMessage message)
-            where TMessage : class;
+        void SendMessageToNearbyGameObjects<T>(byte code, T message)
+            where T : struct;
     }
 }

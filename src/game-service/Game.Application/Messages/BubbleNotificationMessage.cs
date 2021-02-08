@@ -1,6 +1,6 @@
 namespace Game.Messages
 {
-    public class BubbleNotificationMessage
+    public struct BubbleNotificationMessage
     {
         public int NotifierId { get; set; }
 
