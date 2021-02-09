@@ -3,7 +3,7 @@ using System;
 namespace Scripts.Services.GameProviderApi
 {
     [Serializable]
-    public class GameData
+    public struct GameData
     {
         public string name;
 

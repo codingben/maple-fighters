@@ -1,10 +1,8 @@
-using System;
 using UnityEngine;
 
 namespace Scripts.Services.AuthenticatorApi
 {
-    [Serializable]
-    public class ErrorData
+    public struct ErrorData
     {
         public string[] errorMessages;
 

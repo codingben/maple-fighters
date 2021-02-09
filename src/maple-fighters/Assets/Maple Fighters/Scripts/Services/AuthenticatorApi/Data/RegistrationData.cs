@@ -1,10 +1,8 @@
-using System;
 using UnityEngine;
 
 namespace Scripts.Services.AuthenticatorApi
 {
-    [Serializable]
-    public class RegistrationData
+    public struct RegistrationData
     {
         public string email;
 

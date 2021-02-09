@@ -1,9 +1,6 @@
-using System;
-
 namespace Scripts.Services.CharacterProviderApi
 {
-    [Serializable]
-    public class NewCharacterData
+    public struct NewCharacterData
     {
         public int userid;
 

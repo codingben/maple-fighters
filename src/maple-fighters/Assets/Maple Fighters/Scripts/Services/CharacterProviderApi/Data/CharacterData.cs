@@ -3,7 +3,7 @@ using System;
 namespace Scripts.Services.CharacterProviderApi
 {
     [Serializable]
-    public class CharacterData
+    public struct CharacterData
     {
         public int id;
 
