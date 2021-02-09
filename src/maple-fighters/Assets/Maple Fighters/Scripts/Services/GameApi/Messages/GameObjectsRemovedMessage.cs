@@ -1,6 +1,6 @@
 ﻿namespace Game.Messages
 {
-    public class GameObjectsRemovedMessage
+    public struct GameObjectsRemovedMessage
     {
         public int[] GameObjectIds;
     }

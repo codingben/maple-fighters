@@ -1,6 +1,6 @@
 ﻿namespace Game.Messages
 {
-    public class GameObjectsAddedMessage
+    public struct GameObjectsAddedMessage
     {
         public GameObjectData[] GameObjects;
     }

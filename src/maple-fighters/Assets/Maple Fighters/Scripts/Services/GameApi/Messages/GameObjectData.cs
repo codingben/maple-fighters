@@ -1,6 +1,9 @@
-﻿namespace Game.Messages
+﻿using System;
+
+namespace Game.Messages
 {
-    public class GameObjectData
+    [Serializable]
+    public struct GameObjectData
     {
         public int Id;
 

@@ -1,6 +1,6 @@
 namespace Game.Messages
 {
-    public class ChangeSceneMessage
+    public struct ChangeSceneMessage
     {
         public int PortalId;
     }
