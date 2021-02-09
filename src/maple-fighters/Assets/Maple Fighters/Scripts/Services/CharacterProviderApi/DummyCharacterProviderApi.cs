@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Newtonsoft.Json;
+using Proyecto26;
 using UnityEngine;
 
 namespace Scripts.Services.CharacterProviderApi
@@ -76,20 +76,22 @@ namespace Scripts.Services.CharacterProviderApi
 
         public void DeleteCharacter(int characterid)
         {
-            CharacterData item = null;
+            var item = default(CharacterData);
+            var itemExists = false;
 
             foreach (var characterData in characters)
             {
                 if (characterData.id == characterid)
                 {
                     item = characterData;
+                    itemExists = true;
                 }
             }
 
             var statusCode = 0;
             var json = string.Empty;
 
-            if (item != null)
+            if (itemExists)
             {
                 characters.Remove(item);
 
@@ -114,7 +116,7 @@ namespace Scripts.Services.CharacterProviderApi
 
             if (items.Length != 0)
             {
-                json = JsonConvert.SerializeObject(items);
+                json = JsonHelper.ArrayToJsonString(items);
             }
 
             GetCharactersCallback?.Invoke(statusCode, json);

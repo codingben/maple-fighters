@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using Newtonsoft.Json;
+using Proyecto26;
 using Scripts.Services;
 using Scripts.Services.GameProviderApi;
 using UnityEngine;
@@ -50,8 +50,8 @@ namespace Scripts.UI.GameServerBrowser
         {
             if (statusCode == 200) // Ok
             {
-                var gameData = JsonConvert.DeserializeObject<GameData[]>(json);
-                if (gameData != null)
+                var gameData = JsonHelper.ArrayFromJson<GameData>(json);
+                if (gameData.Length != 0)
                 {
                     var uiGameData =
                         gameData.Select((x) => new UIGameServerButtonData(

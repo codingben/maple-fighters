@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using Proyecto26;
 using Scripts.Constants;
 using Scripts.Services;
 using Scripts.Services.CharacterProviderApi;
@@ -111,8 +111,7 @@ namespace Scripts.UI.CharacterSelection
             // Hack: "[]"
             if (json != "[]")
             {
-                var characterData =
-                    JsonConvert.DeserializeObject<CharacterData[]>(json);
+                var characterData = JsonHelper.FromJsonString<CharacterData>(json);
                 if (characterData != null && characterData.Length != 0)
                 {
                     // Replaces sample character with existing characters
