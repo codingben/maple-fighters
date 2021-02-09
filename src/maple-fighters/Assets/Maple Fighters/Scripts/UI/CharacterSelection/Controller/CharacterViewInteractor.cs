@@ -111,7 +111,18 @@ namespace Scripts.UI.CharacterSelection
             // Hack: "[]"
             if (json != "[]")
             {
-                var characterData = JsonHelper.FromJsonString<CharacterData>(json);
+                CharacterData[] characterData;
+
+                // NOTE: Unity json allows getting "Items" only (from dummy api)
+                if (json.Contains("Items"))
+                {
+                    characterData = JsonHelper.FromJsonString<CharacterData>(json);
+                }
+                else
+                {
+                    characterData = JsonHelper.ArrayFromJson<CharacterData>(json);
+                }
+
                 if (characterData != null && characterData.Length != 0)
                 {
                     // Replaces sample character with existing characters
