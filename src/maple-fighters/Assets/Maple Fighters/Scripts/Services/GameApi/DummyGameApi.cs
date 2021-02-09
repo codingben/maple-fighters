@@ -36,9 +36,7 @@ namespace Scripts.Services.GameApi
 
         public Action<BubbleNotificationMessage> BubbleMessageReceived { get; set; }
 
-        public void SendMessage<TCode, TMessage>(TCode code, TMessage message)
-            where TCode : IComparable, IFormattable, IConvertible
-            where TMessage : struct
+        void IGameApi.SendMessage<T, M>(T code, M message)
         {
             var messageCode = (MessageCodes)Convert.ToByte(code);
 

@@ -79,7 +79,7 @@ namespace Scripts.Services.GameApi
             }
         }
 
-        async void IGameApi.SendMessage<TCode, TMessage>(TCode code, TMessage message)
+        async void IGameApi.SendMessage<T, M>(T code, M message)
         {
             if (webSocket != null && webSocket.State == WebSocketState.Open)
             {

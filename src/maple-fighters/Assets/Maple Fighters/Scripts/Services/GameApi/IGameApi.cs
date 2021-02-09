@@ -21,8 +21,8 @@ namespace Scripts.Services.GameApi
 
         Action<BubbleNotificationMessage> BubbleMessageReceived { get; set; }
 
-        void SendMessage<TCode, TMessage>(TCode code, TMessage message)
-            where TCode : IComparable, IFormattable, IConvertible
-            where TMessage : struct;
+        void SendMessage<T, M>(T code, M message)
+            where T : IComparable, IFormattable, IConvertible
+            where M : struct;
     }
 }
