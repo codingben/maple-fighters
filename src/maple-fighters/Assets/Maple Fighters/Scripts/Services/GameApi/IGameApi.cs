@@ -23,6 +23,6 @@ namespace Scripts.Services.GameApi
 
         void SendMessage<TCode, TMessage>(TCode code, TMessage message)
             where TCode : IComparable, IFormattable, IConvertible
-            where TMessage : class;
+            where TMessage : struct;
     }
 }

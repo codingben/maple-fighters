@@ -45,7 +45,7 @@ namespace Scripts.Services.GameApi
 
         private void Awake()
         {
-            jsonSerializer = new NewtonsoftJsonSerializer();
+            jsonSerializer = new UnityJsonSerializer();
             collection = new MessageHandlerCollection(jsonSerializer);
         }
 

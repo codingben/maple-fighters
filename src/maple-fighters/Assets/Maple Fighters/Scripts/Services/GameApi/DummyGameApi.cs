@@ -38,7 +38,7 @@ namespace Scripts.Services.GameApi
 
         public void SendMessage<TCode, TMessage>(TCode code, TMessage message)
             where TCode : IComparable, IFormattable, IConvertible
-            where TMessage : class
+            where TMessage : struct
         {
             var messageCode = (MessageCodes)Convert.ToByte(code);
 
@@ -46,21 +46,16 @@ namespace Scripts.Services.GameApi
             {
                 case MessageCodes.ChangeScene:
                 {
-                    var changeSceneMessage = message as ChangeSceneMessage;
-                    if (changeSceneMessage is ChangeSceneMessage)
-                    {
-                        HandleChangeSceneOperation(changeSceneMessage);
-                    }
-
+                    HandleChangeSceneOperation(message);
                     break;
                 }
             }
         }
 
-        private void HandleChangeSceneOperation(ChangeSceneMessage message)
+        private void HandleChangeSceneOperation(object message)
         {
             var sceneChangedMessage = new SceneChangedMessage();
-            var portalId = message.PortalId;
+            var portalId = ((ChangeSceneMessage)message).PortalId;
             if (portalId == 2)
             {
                 sceneChangedMessage.Map = SceneIndexes.TheDarkForest;
