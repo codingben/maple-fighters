@@ -6,7 +6,7 @@ namespace Game.MessageTools
     {
         void Set<T, M>(T messageCode, IMessageHandler<M> handler)
             where T : IComparable, IFormattable, IConvertible
-            where M : class;
+            where M : struct;
 
         void Unset<T>(T messageCode)
             where T : IComparable, IFormattable, IConvertible;

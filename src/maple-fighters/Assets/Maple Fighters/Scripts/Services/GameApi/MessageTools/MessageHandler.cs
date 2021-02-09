@@ -3,7 +3,7 @@ using System;
 namespace Game.MessageTools
 {
     public class MessageHandler<T> : IMessageHandler<T>
-        where T : class
+        where T : struct
     {
         private readonly Action<T> handler;
 

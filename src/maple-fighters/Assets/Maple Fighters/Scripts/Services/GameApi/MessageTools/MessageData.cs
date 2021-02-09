@@ -1,6 +1,6 @@
 namespace Game.MessageTools
 {
-    public class MessageData
+    public struct MessageData
     {
         public byte Code;
 
