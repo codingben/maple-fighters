@@ -3,9 +3,15 @@
 
 A small online game similar to MapleStory.
 
-Feel free to play [here](https://ukben.dev/maple-fighters). Please note that this is a demo.
+## About
+
+Maple Fighters is a multiplayer online game inspired by MapleStory. The goal is to allow players to choose their maple fighters to travel around the game world and fight monsters with other fighters.
 
 Please **★ Star** this repository if you like it and find it useful. Made With ❤ For Open Source Community!
+
+## Gameplay
+
+Feel free to play the demo [here](https://ukben.dev/maple-fighters). Please note that it is currently offline version.
 
 ## Screenshots
 
