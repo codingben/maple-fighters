@@ -56,5 +56,8 @@ Feel free to contribute and make any changes to the game itself.
 
 Please follow the [Conventional Commits](https://www.conventionalcommits.org/) specification.
 
+## Artwork
+The artwork is owned by Nexon Co., Ltd and will never be used commercially.
+
 ## License
 [AGPL](https://choosealicense.com/licenses/agpl-3.0/)
