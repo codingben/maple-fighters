@@ -1,12 +1,13 @@
 # Maple Fighters
 ![CI](https://github.com/benukhanov/maple-fighters/workflows/CI/badge.svg?branch=develop)
 
-Maple Fighters is a small online game similar to MapleStory. The goal is to make a minimalistic, simple and effective game using the latest technology.
+A small online game similar to MapleStory.
 
-Please **★ Star** this repository if you like it and find it useful. Made with ❤ for Open Source Community!
+Feel free to play [here](https://ukben.dev/maple-fighters). Please note that this is a demo.
 
-## Gameplay
-> 💡 Feel free to play [here](https://ukben.dev/maple-fighters). Please note that this is a demo.
+Please **★ Star** this repository if you like it and find it useful. Made With ❤ For Open Source Community!
+
+## Screenshots
 
 | Lobby                                                                                                         | The Dark Forest                                                                                                    |
 | ----------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
