@@ -5,7 +5,7 @@ A small online game similar to MapleStory.
 
 ## About
 
-Maple Fighters is a multiplayer online game inspired by MapleStory. The goal is to allow players to choose their maple fighters to travel around the game world and fight monsters with other fighters.
+Maple Fighters is a multiplayer online game inspired by MapleStory. Players can choose a fighter to travel the world and fight monsters with other fighters.
 
 Please **★ Star** this repository if you like it and find it useful. Made With ❤ For Open Source Community!
 
