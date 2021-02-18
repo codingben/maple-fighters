@@ -1,0 +1,29 @@
+{
+  "name": "com.benukhanov.ui-manager",
+  "version": "1.0.0",
+  "description": "User interface manager designed for simple purposes that can be easily extended and used in Unity.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/benukhanov/ui-manager.git"
+  },
+  "author": {
+    "name": "Ben Ukhanov",
+    "email": "ben.ukhanov@gmail.com",
+    "url": "https://github.com/benukhanov"
+  },
+  "keywords": [
+    "ui",
+    "ui manager",
+    "unity ui manager"
+  ],
+  "displayName": "UI Manager",
+  "unity": "2018.1",
+  "dependencies": {},
+  "samples": [ 
+  {
+      "displayName": "Demo",
+      "description": "Demo",
+      "path": "Sample"
+  } ]
+}
