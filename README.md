@@ -21,7 +21,8 @@ Feel free to play the demo [here](https://ukben.dev/maple-fighters). Please note
 
 ## Technology
 
-**Client**: Unity WebGL/WebAssembly   
+**Game Engine**: Unity WebGL   
+**Client**: C# (In Unity C# is compiled to C++ and then to WebAssembly)   
 **Server**: C#, Rust   
 **Database**: MongoDB, PostgreSQL   
 **Reverse Proxy**: Nginx   
