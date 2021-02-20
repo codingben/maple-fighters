@@ -11,7 +11,7 @@ Please **★ Star** this repository if you like it and find it useful. Made With
 
 ## Gameplay
 
-Feel free to play the demo [here](https://ukben.dev/maple-fighters). Please note that it is currently offline version.
+Feel free to play on the web platform [here](https://ukben.dev/maple-fighters). Please note that it is currently offline version.
 
 ## Screenshots
 
