@@ -1,11 +1,11 @@
 {
   "dependencies": {
     "com.benukhanov.ui-manager": {
-      "version": "https://github.com/benukhanov/ui-manager.git",
+      "version": "https://github.com/benukhanov/maple-fighters.git?path=/lib/ui-manager/Assets",
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "36c7d3534b356c1da5a6e6ee4a55ec33850d63b8"
+      "hash": "ddc99151eabe5d4ede38e42a08304aa5c25dcbb0"
     },
     "com.endel.nativewebsocket": {
       "version": "https://github.com/endel/NativeWebSocket.git#upm",

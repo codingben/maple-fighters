@@ -17,7 +17,7 @@
     }
   ],
   "dependencies": {
-    "com.benukhanov.ui-manager": "https://github.com/benukhanov/ui-manager.git",
+    "com.benukhanov.ui-manager": "https://github.com/benukhanov/maple-fighters.git?path=/lib/ui-manager/Assets",
     "com.endel.nativewebsocket": "https://github.com/endel/NativeWebSocket.git#upm",
     "com.unity.2d.sprite": "1.0.0",
     "com.unity.2d.tilemap": "1.0.0",
