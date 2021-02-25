@@ -1,6 +1,9 @@
-# Simulation of Area of Interest Management
+# Interest Management Simulation
 
-<img src="Docs/sample.jpg">
+<img src="Docs/sample.jpg" width=50% height=50%>
+
+## About
+This simulation only shows visible objects in your current region.
 
 ## Installation
 
