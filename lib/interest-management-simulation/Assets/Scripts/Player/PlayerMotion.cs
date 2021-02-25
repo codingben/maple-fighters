@@ -7,10 +7,6 @@ namespace Game.InterestManagement.Simulation.Player
     {
         [SerializeField]
         private float speed = 10;
-
-        [SerializeField]
-        private float jumpHeight = 7.5f;
-
         private new Rigidbody2D rigidbody2D;
 
         private void Awake()
@@ -20,24 +16,12 @@ namespace Game.InterestManagement.Simulation.Player
 
         private void FixedUpdate()
         {
-            Move();
-            Jump();
-        }
-
-        private void Move()
-        {
             var horizontal = Input.GetAxis("Horizontal");
-            var direction = new Vector2(horizontal * speed, 0);
-            rigidbody2D.AddForce(direction, ForceMode2D.Force);
-        }
+            var vertical = Input.GetAxis("Vertical");
+            var direction = new Vector2(horizontal * speed, vertical * speed);
+            var newPosition = rigidbody2D.position + direction * Time.fixedDeltaTime;
 
-        private void Jump()
-        {
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                var direction = new Vector2(0, jumpHeight);
-                rigidbody2D.AddForce(direction, ForceMode2D.Impulse);
-            }
+            rigidbody2D.MovePosition(newPosition);
         }
     }
 }
