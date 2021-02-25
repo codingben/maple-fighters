@@ -1,6 +1,6 @@
 # Interest Management Simulation
 
-<img src="Docs/sample.jpg" width=50% height=50%>
+<img src="Docs/sample.jpg" width=65% height=65%>
 
 ## About
 This simulation only shows visible objects in your current region.
