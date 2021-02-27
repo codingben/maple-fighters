@@ -6,6 +6,7 @@ namespace Game.InterestManagement.Simulation
     public class PositionSetter : MonoBehaviour
     {
         private IGameObject sceneObject;
+        private Vector3 position;
 
         private void Awake()
         {
@@ -14,8 +15,12 @@ namespace Game.InterestManagement.Simulation
 
         public void Update()
         {
-            var vector2 = transform.position.ToVector2();
-            sceneObject.Transform.SetPosition(vector2);
+            if (position != transform.position)
+            {
+                position = transform.position;
+
+                sceneObject.Transform.SetPosition(position.ToVector2());
+            }
         }
     }
 }
