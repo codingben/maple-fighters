@@ -3,7 +3,7 @@ using InterestManagement;
 
 namespace Game.InterestManagement.Simulation
 {
-    using Vector2 = MathematicsHelper.Vector2;
+    using Vector2 = Common.MathematicsHelper.Vector2;
 
     public class GameTransform : ITransform
     {
