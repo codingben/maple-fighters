@@ -102,7 +102,7 @@ namespace InterestManagement
                 {
                     foreach (var subscriber in region.GetAllSubscribers())
                     {
-                        var transform = sceneObject.Transform;
+                        var transform = subscriber.Transform;
 
                         if (IsOverlapsWithNearbyRegions(transform) == false)
                         {
