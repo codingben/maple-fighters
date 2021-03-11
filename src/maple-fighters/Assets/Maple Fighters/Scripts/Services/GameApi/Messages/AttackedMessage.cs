@@ -1,6 +1,6 @@
 namespace Game.Messages
 {
-    public struct AttackedMessage
+    public class AttackedMessage
     {
         public int AttackerId;
     }

@@ -1,6 +1,6 @@
 ﻿namespace Game.Messages
 {
-    public struct ChangePositionMessage
+    public class ChangePositionMessage
     {
         public float X;
 

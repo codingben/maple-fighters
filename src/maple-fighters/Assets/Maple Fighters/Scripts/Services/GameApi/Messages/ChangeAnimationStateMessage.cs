@@ -1,6 +1,6 @@
 ﻿namespace Game.Messages
 {
-    public struct ChangeAnimationStateMessage
+    public class ChangeAnimationStateMessage
     {
         public byte AnimationState;
     }

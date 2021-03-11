@@ -17,15 +17,17 @@ namespace Game.MessageTools
 
         public void Set<T, M>(T messageCode, IMessageHandler<M> handler)
             where T : IComparable, IFormattable, IConvertible
-            where M : struct
+            where M : class
         {
             var key = Convert.ToByte(messageCode);
 
             collection[key] = data =>
             {
                 var message = jsonSerializer.Deserialize<M>(data);
-
-                handler.Handle(message);
+                if (message != null)
+                {
+                    handler.Handle(message);
+                }
             };
         }
 

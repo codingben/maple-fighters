@@ -3,7 +3,7 @@
 namespace Game.Messages
 {
     [Serializable]
-    public struct GameObjectData
+    public class GameObjectData
     {
         public int Id;
 

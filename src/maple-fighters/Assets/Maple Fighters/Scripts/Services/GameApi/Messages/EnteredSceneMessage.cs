@@ -1,6 +1,6 @@
 namespace Game.Messages
 {
-    public struct EnteredSceneMessage
+    public class EnteredSceneMessage
     {
         public int GameObjectId;
 

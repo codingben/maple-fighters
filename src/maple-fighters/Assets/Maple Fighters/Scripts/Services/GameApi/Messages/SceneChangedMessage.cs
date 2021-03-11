@@ -1,6 +1,6 @@
 namespace Game.Messages
 {
-    public struct SceneChangedMessage
+    public class SceneChangedMessage
     {
         public byte Map;
     }
