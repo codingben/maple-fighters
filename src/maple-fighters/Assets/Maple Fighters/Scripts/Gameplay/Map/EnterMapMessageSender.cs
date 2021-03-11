@@ -1,21 +1,23 @@
-﻿using System.Collections;
-using Game.Messages;
+﻿using Game.Messages;
 using Scripts.Services;
+using Scripts.Services.GameApi;
 using UnityEngine;
 
 namespace Scripts.Gameplay.Map
 {
     public class EnterMapMessageSender : MonoBehaviour
     {
-        private void Start()
+        private IGameApi gameApi;
+
+        private void Awake()
         {
-            StartCoroutine(WaitSecondAndSendEnterScene());
+            gameApi = ApiProvider.ProvideGameApi();
+            gameApi.Connected += OnConnected;
         }
 
-        // TODO: Refactor
-        private IEnumerator WaitSecondAndSendEnterScene()
+        private void OnConnected()
         {
-            yield return new WaitForSeconds(1);
+            gameApi.Connected -= OnConnected;
 
             EnterScene();
 
@@ -24,7 +26,6 @@ namespace Scripts.Gameplay.Map
 
         private void EnterScene()
         {
-            var gameApi = ApiProvider.ProvideGameApi();
             var message = new EnterSceneMessage()
             {
                 // TODO: Don't hard code
