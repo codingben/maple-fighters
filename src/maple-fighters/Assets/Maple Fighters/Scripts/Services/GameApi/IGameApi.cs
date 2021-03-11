@@ -5,6 +5,10 @@ namespace Scripts.Services.GameApi
 {
     public interface IGameApi
     {
+        Action Connected { get; set; }
+
+        Action Disconnected { get; set; }
+
         Action<EnteredSceneMessage> SceneEntered { get; set; }
 
         Action<SceneChangedMessage> SceneChanged { get; set; }

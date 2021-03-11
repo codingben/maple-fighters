@@ -20,6 +20,10 @@ namespace Scripts.Services.GameApi
 
         private static DummyGameApi instance;
 
+        public Action Connected { get; set; }
+
+        public Action Disconnected { get; set; }
+
         public Action<EnteredSceneMessage> SceneEntered { get; set; }
 
         public Action<SceneChangedMessage> SceneChanged { get; set; }
@@ -35,6 +39,16 @@ namespace Scripts.Services.GameApi
         public Action<AttackedMessage> Attacked { get; set; }
 
         public Action<BubbleNotificationMessage> BubbleMessageReceived { get; set; }
+
+        private void Start()
+        {
+            Connected?.Invoke();
+        }
+
+        private void OnApplicationQuit()
+        {
+            Disconnected?.Invoke();
+        }
 
         void IGameApi.SendMessage<T, M>(T code, M message)
         {

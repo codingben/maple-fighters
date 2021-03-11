@@ -22,6 +22,10 @@ namespace Scripts.Services.GameApi
 
         private static WebSocketGameApi instance;
 
+        public Action Connected { get; set; }
+
+        public Action Disconnected { get; set; }
+
         public Action<EnteredSceneMessage> SceneEntered { get; set; }
 
         public Action<SceneChangedMessage> SceneChanged { get; set; }
@@ -39,7 +43,6 @@ namespace Scripts.Services.GameApi
         public Action<BubbleNotificationMessage> BubbleMessageReceived { get; set; }
 
         private IJsonSerializer jsonSerializer;
-
         private MessageHandlerCollection collection;
         private WebSocket webSocket;
 
@@ -106,6 +109,8 @@ namespace Scripts.Services.GameApi
             collection.Set(MessageCodes.AnimationStateChanged, AnimationStateChanged.ToMessageHandler());
             collection.Set(MessageCodes.Attacked, Attacked.ToMessageHandler());
             collection.Set(MessageCodes.BubbleNotification, BubbleMessageReceived.ToMessageHandler());
+
+            Connected?.Invoke();
         }
 
         private void OnClose(WebSocketCloseCode closeCode)
@@ -118,6 +123,8 @@ namespace Scripts.Services.GameApi
             collection.Unset(MessageCodes.AnimationStateChanged);
             collection.Unset(MessageCodes.Attacked);
             collection.Unset(MessageCodes.BubbleNotification);
+
+            Disconnected?.Invoke();
         }
 
         private void OnMessage(byte[] bytes)
