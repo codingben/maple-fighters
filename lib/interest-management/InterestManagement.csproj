@@ -7,7 +7,7 @@
     <PackageProjectUrl>https://github.com/benzuk/interest-management-simulation</PackageProjectUrl>
     <PackageTags>Common</PackageTags>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>1.0.5</Version>
+    <Version>1.0.6</Version>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Common.MathematicsHelper" Version="1.0.1" />
