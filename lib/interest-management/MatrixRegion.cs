@@ -13,10 +13,6 @@ namespace InterestManagement
         private readonly int columns;
         private readonly IRegion<TSceneObject>[,] regions;
         private readonly SceneBoundaries sceneBoundaries;
-        private readonly object locker = new object();
-
-        // TODO: Optimize
-        private HashSet<IRegion<TSceneObject>> temporaryRegions;
 
         public MatrixRegion(Vector2 sceneSize, Vector2 regionSize)
         {
@@ -60,42 +56,24 @@ namespace InterestManagement
             }
         }
 
-        public IEnumerable<IRegion<TSceneObject>> GetRegions(
-            IEnumerable<Vector2> points)
+        public IEnumerable<IRegion<TSceneObject>> GetRegions(IEnumerable<Vector2> points)
         {
-            lock (locker)
+            foreach (var point in points)
             {
-                if (temporaryRegions == null)
+                if (sceneBoundaries.WithinBoundaries(point))
                 {
-                    temporaryRegions = new HashSet<IRegion<TSceneObject>>();
-                }
-                else
-                {
-                    temporaryRegions.Clear();
-                }
+                    var row = 
+                        (int)Math.Floor(Math.Abs(point.X - (-(sceneSize.X / 2))) / regionSize.X);
+                    var column = 
+                        (int)Math.Floor(Math.Abs(point.Y - (-(sceneSize.Y / 2))) / regionSize.Y);
 
-                foreach (var point in points)
-                {
-                    if (sceneBoundaries.WithinBoundaries(point))
+                    if (row >= rows || column >= columns)
                     {
-                        var row = (int)Math.Floor(
-                            Math.Abs(point.X - (-(sceneSize.X / 2)))
-                            / regionSize.X);
-                        var column = (int)Math.Floor(
-                            Math.Abs(point.Y - (-(sceneSize.Y / 2)))
-                            / regionSize.Y);
-
-                        if (row >= rows || column >= columns)
-                        {
-                            continue;
-                        }
-
-                        var region = regions[row, column];
-                        temporaryRegions.Add(region);
+                        continue;
                     }
-                }
 
-                return temporaryRegions;
+                    yield return regions[row, column];
+                }
             }
         }
 
