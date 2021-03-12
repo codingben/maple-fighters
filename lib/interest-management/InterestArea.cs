@@ -31,11 +31,7 @@ namespace InterestManagement
         public void Dispose()
         {
             UnsubscribeFromPositionChanged();
-
-            foreach (var region in regions)
-            {
-                region.Unsubscribe(sceneObject);
-            }
+            UnsubscribeFromAllRegions();
 
             regions?.Clear();
             nearbySceneObjects?.Clear();
@@ -51,6 +47,14 @@ namespace InterestManagement
             sceneObject.Transform.PositionChanged -= UpdateNearbyRegions;
         }
 
+        private void UnsubscribeFromAllRegions()
+        {
+            foreach (var region in regions)
+            {
+                region?.Unsubscribe(sceneObject);
+            }
+        }
+
         private void UpdateNearbyRegions()
         {
             SubscribeToVisibleRegions();
@@ -59,7 +63,8 @@ namespace InterestManagement
 
         private void SubscribeToVisibleRegions()
         {
-            var visibleRegions = matrixRegion.GetRegions(sceneObject.Transform);
+            var transform = sceneObject.Transform;
+            var visibleRegions = matrixRegion.GetRegions(transform);
             if (visibleRegions != null)
             {
                 foreach (var region in visibleRegions)
@@ -71,10 +76,7 @@ namespace InterestManagement
 
                     regions.Add(region);
 
-                    if (region.SubscriberCount() != 0)
-                    {
-                        nearbySceneObjects.Add(region.GetAllSubscribers());
-                    }
+                    AddNearbySceneObjects(region);
 
                     region.Subscribe(sceneObject);
 
@@ -85,33 +87,18 @@ namespace InterestManagement
 
         private void UnsubscribeFromInvisibleRegions()
         {
-            var invisibleRegions =
-                regions
-                    .Where(
-                        region =>
-                            !region.IsOverlaps(sceneObject.Transform))
-                    .ToArray();
-
-            foreach (var region in invisibleRegions)
+            var transform = sceneObject.Transform;
+            var invisibleRegions = regions.Where(x => !x.IsOverlaps(transform))?.ToArray();
+            if (invisibleRegions != null)
             {
-                regions.Remove(region);
-
-                region.Unsubscribe(sceneObject);
-
-                if (region.SubscriberCount() != 0)
+                foreach (var region in invisibleRegions)
                 {
-                    foreach (var subscriber in region.GetAllSubscribers())
-                    {
-                        var transform = subscriber.Transform;
+                    regions.Remove(region);
+                    region.Unsubscribe(sceneObject);
 
-                        if (IsOverlapsWithNearbyRegions(transform) == false)
-                        {
-                            nearbySceneObjects.Remove(subscriber);
-                        }
-                    }
+                    RemoveNearbySceneObjects(region);
+                    UnsubscribeFromRegionEvents(region);
                 }
-
-                UnsubscribeFromRegionEvents(region);
             }
         }
 
@@ -139,6 +126,34 @@ namespace InterestManagement
             if (IsOverlapsWithNearbyRegions(transform) == false)
             {
                 nearbySceneObjects.Remove(sceneObject);
+            }
+        }
+
+        private void AddNearbySceneObjects(IRegion<TSceneObject> region)
+        {
+            if (region.SubscriberCount() == 0)
+            {
+                return;
+            }
+
+            nearbySceneObjects.Add(region.GetAllSubscribers());
+        }
+
+        private void RemoveNearbySceneObjects(IRegion<TSceneObject> region)
+        {
+            if (region.SubscriberCount() == 0)
+            {
+                return;
+            }
+
+            foreach (var subscriber in region.GetAllSubscribers())
+            {
+                var transform = subscriber.Transform;
+
+                if (IsOverlapsWithNearbyRegions(transform) == false)
+                {
+                    nearbySceneObjects.Remove(subscriber);
+                }
             }
         }
 
