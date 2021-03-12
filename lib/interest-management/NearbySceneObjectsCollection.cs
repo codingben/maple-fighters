@@ -25,12 +25,7 @@ namespace InterestManagement
         public void Add(IEnumerable<TSceneObject> sceneObjects)
         {
             var visibleSceneObjects =
-                sceneObjects
-                    .Where(
-                        sceneObject =>
-                            collection.Add(sceneObject))
-                    .ToArray();
-
+                sceneObjects.Where(x => collection.Add(x)).ToArray();
             if (visibleSceneObjects.Length != 0)
             {
                 SceneObjectsAdded?.Invoke(visibleSceneObjects);
@@ -48,12 +43,7 @@ namespace InterestManagement
         public void Remove(IEnumerable<TSceneObject> sceneObjects)
         {
             var invisibleSceneObjects =
-                sceneObjects
-                    .Where(
-                        sceneObject =>
-                            collection.Remove(sceneObject))
-                    .ToArray();
-
+                sceneObjects.Where(x => collection.Remove(x)).ToArray();
             if (invisibleSceneObjects.Length != 0)
             {
                 SceneObjectsRemoved?.Invoke(invisibleSceneObjects);
