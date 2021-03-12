@@ -10,10 +10,7 @@ namespace Game.InterestManagement.Simulation
 
         public ITransform Transform { get; private set; }
 
-        [Header("These values will affect the interest area")]
-        [SerializeField]
-        private Vector2 position;
-
+        [Header("Interest Area Size")]
         [SerializeField]
         private Vector2 size;
 
@@ -23,12 +20,8 @@ namespace Game.InterestManagement.Simulation
 
         private void Awake()
         {
-            // The purpose to execute this in edit mode.
-            position = transform.position;
-
             Id = gameObject.GetInstanceID();
-            Transform = 
-                new GameTransform(position.ToVector2(), size.ToVector2());
+            Transform = new GameTransform(transform.position.ToVector2(), size.ToVector2());
         }
 
         public void SetGraphics(bool active)
