@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Game.InterestManagement.Simulation.Camera
+namespace Game.InterestManagement.Simulation
 {
     public struct CameraBoundaries
     {
@@ -12,7 +12,7 @@ namespace Game.InterestManagement.Simulation.Camera
             this.upperBound = upperBound;
             this.lowerBound = lowerBound;
         }
-        
+
         public Vector3 Transform(Vector3 position)
         {
             var x = Mathf.Clamp(position.x, lowerBound.x, upperBound.x);

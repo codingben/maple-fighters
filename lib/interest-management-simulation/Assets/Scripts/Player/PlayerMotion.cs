@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Game.InterestManagement.Simulation.Player
+namespace Game.InterestManagement.Simulation
 {
     [RequireComponent(typeof(Rigidbody2D))]
     public class PlayerMotion : MonoBehaviour

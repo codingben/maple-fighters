@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Game.InterestManagement.Simulation.Camera
+namespace Game.InterestManagement.Simulation
 {
     public class CameraMotion : MonoBehaviour
     {
