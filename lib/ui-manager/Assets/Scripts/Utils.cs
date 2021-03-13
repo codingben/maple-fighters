@@ -4,6 +4,8 @@ using UnityEngine.UI;
 
 namespace UI.Manager
 {
+    using ScaleMode = CanvasScaler.ScaleMode;
+
     public static class Utils
     {
         /// <summary>
@@ -20,16 +22,16 @@ namespace UI.Manager
         public static TUIElement LoadAndCreate<TUIElement>(string path)
             where TUIElement : UIElement
         {
-            var prefab = Resources.Load<TUIElement>(path);
-            var gameObject = Object.Instantiate(
-                prefab,
+            var uiPrefab = Resources.Load<TUIElement>(path);
+            var uiElement = Object.Instantiate(
+                uiPrefab,
                 Vector3.zero,
                 Quaternion.identity);
-            gameObject.name = prefab.name.RemoveCloneFromName();
-            gameObject.name = prefab.name.MakeSpaceBetweenWords();
-            gameObject.transform.position = prefab.transform.position;
+            uiElement.name = uiPrefab.name.RemoveCloneFromName();
+            uiElement.name = uiPrefab.name.MakeSpaceBetweenWords();
+            uiElement.transform.position = uiPrefab.transform.position;
 
-            return gameObject.GetComponent<TUIElement>();
+            return uiElement.GetComponent<TUIElement>();
         }
 
         /// <summary>
@@ -72,32 +74,41 @@ namespace UI.Manager
         /// <returns>
         /// The <see cref="Transform"/>.
         /// </returns>
-        public static Transform CreateCanvas(string name, int sortingOrder)
+        public static Transform CreateCanvas(
+            string name,
+            int sortingOrder,
+            RenderMode renderMode = RenderMode.ScreenSpaceOverlay,
+            ScaleMode uiScaleMode = ScaleMode.ScaleWithScreenSize,
+            float matchWidthOrHeight = 0.5f,
+            float alpha = 1f,
+            bool interactable = true,
+            bool blocksRaycasts = true)
         {
             // Game Object
-            var canvasGameObject = new GameObject(name, typeof(Canvas));
+            var uiCanvas = new GameObject(
+                name,
+                typeof(Canvas),
+                typeof(CanvasScaler),
+                typeof(GraphicRaycaster),
+                typeof(CanvasGroup));
 
             // Canvas
-            var canvas = canvasGameObject.GetComponent<Canvas>();
-            canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+            var canvas = uiCanvas.GetComponent<Canvas>();
+            canvas.renderMode = renderMode;
             canvas.sortingOrder = sortingOrder;
 
             // Canvas Scaler
-            var canvasScaler = canvasGameObject.AddComponent<CanvasScaler>();
-            canvasScaler.uiScaleMode =
-                CanvasScaler.ScaleMode.ScaleWithScreenSize;
-            canvasScaler.matchWidthOrHeight = 1;
-
-            // Graphic Raycaster
-            canvasGameObject.AddComponent<GraphicRaycaster>();
+            var canvasScaler = uiCanvas.GetComponent<CanvasScaler>();
+            canvasScaler.uiScaleMode = uiScaleMode;
+            canvasScaler.matchWidthOrHeight = matchWidthOrHeight;
 
             // Canvas Group
-            var canvasGroup = canvasGameObject.AddComponent<CanvasGroup>();
-            canvasGroup.alpha = 1;
-            canvasGroup.interactable = true;
-            canvasGroup.blocksRaycasts = true;
+            var canvasGroup = uiCanvas.GetComponent<CanvasGroup>();
+            canvasGroup.alpha = alpha;
+            canvasGroup.interactable = interactable;
+            canvasGroup.blocksRaycasts = blocksRaycasts;
 
-            return canvasGameObject.GetComponent<Transform>();
+            return uiCanvas.GetComponent<Transform>();
         }
     }
 }
