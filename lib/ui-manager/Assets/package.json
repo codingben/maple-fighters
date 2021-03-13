@@ -1,11 +1,11 @@
 {
   "name": "com.benukhanov.ui-manager",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "User interface manager designed for simple purposes that can be easily extended and used in Unity.",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/benukhanov/ui-manager.git"
+    "url": "https://github.com/benukhanov/maple-fighters"
   },
   "author": {
     "name": "Ben Ukhanov",
