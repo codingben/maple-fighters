@@ -1,7 +1,12 @@
-# Maple Fighters
-![CI](https://github.com/benukhanov/maple-fighters/workflows/CI/badge.svg?branch=develop)
-
-A small online game similar to MapleStory.
+<h1 align="center">Maple Fighters</h1>
+<p align="center">
+  <img src="docs/maplestory-icon.png" width="100px" height="100px"/>
+  <br><i>A small online game similar to MapleStory.</i><br>
+</p>
+<p align="center">
+  <a href="http://maplefighters.io"><strong>maplefighters.io</strong></a>
+  <br>
+</p>
 
 ## About
 
@@ -9,7 +14,7 @@ Maple Fighters is a multiplayer online game inspired by MapleStory. Players can 
 
 Please **★ Star** this repository if you like it and find it useful. Made With ❤ For Open Source Community!
 
-## Gameplay
+## Demo
 
 Feel free to play on the web platform [here](https://ukben.dev/maple-fighters). Please note that it is currently offline version.
 
@@ -36,7 +41,7 @@ Feel free to play on the web platform [here](https://ukben.dev/maple-fighters). 
 | [gameprovider-service](./src/gameprovider-service)   | Rust          | Provides a list of game servers. 																|
 | [character-service](./src/character-service)         | Rust          | Creates and receives player character data. 																|
 
-## Quickstart
+## Installation
 > 💡 You need to install Docker and Docker Compose locally.
 
 Follow these instructions to start and stop locally:
