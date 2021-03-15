@@ -1,6 +1,6 @@
 <h1 align="center">Maple Fighters</h1>
 <p align="center">
-  <img src="docs/maplestory-icon.png" width="100px" height="100px"/>
+  <img src="docs/images/maplestory-icon.png" width="100px" height="100px"/>
   <br><i>A small online game similar to MapleStory</i><br>
 </p>
 <p align="center">
