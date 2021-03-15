@@ -22,7 +22,7 @@ Feel free to play on the web platform [here](https://ukben.dev/maple-fighters). 
 
 | Lobby                                                                                                         | The Dark Forest                                                                                                    |
 | ----------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
-| <img src="docs/lobby.jpg"> | <img src="docs/the-dark-forest.jpg"> |
+| <img src="docs/images/lobby.jpg"> | <img src="docs/images/the-dark-forest.jpg"> |
 
 ## Technology
 
