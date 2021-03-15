@@ -6,7 +6,7 @@ This is an old version of the client and server, developed from August 2017 to A
 
 | Lobby                                                                                                         | The Dark Forest                                                                                                    |
 | ----------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
-| <img src="Docs/Lobby.png"> | <img src="Docs/The Dark Forest.png"> |
+| <img src="Docs/Images/lobby.jpg"> | <img src="Docs/Images/the-dark-forest.jpg"> |
 
 
 ## Technology
