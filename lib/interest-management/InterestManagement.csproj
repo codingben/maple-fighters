@@ -3,9 +3,8 @@
     <TargetFramework>netstandard2.1</TargetFramework>
     <Authors>Ben Ukhanov</Authors>
     <Description>This library is region-based interest management.</Description>
-    <Copyright>Copyright © Ben Ukhanov 2020</Copyright>
-    <PackageProjectUrl>https://github.com/benzuk/interest-management-simulation</PackageProjectUrl>
-    <PackageTags>Common</PackageTags>
+    <Copyright>Copyright © Ben Ukhanov 2021</Copyright>
+    <PackageProjectUrl>https://github.com/benukhanov/maple-fighters/tree/develop/lib/interest-management</PackageProjectUrl>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Version>1.0.6</Version>
   </PropertyGroup>
