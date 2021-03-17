@@ -1,14 +1,14 @@
 ﻿namespace UI
 {
-    public enum UILayer
+    public enum UICanvasLayer
     {
         /// <summary>
-        /// The background layer.
+        /// The background canvas layer.
         /// </summary>
         Background = 0,
 
         /// <summary>
-        /// The foreground layer.
+        /// The foreground canvas layer.
         /// </summary>
         Foreground = 1
     }
