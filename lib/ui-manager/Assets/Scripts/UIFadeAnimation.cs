@@ -4,6 +4,9 @@ using UnityEngine;
 
 namespace UI
 {
+    /// <summary>
+    /// The fade animation effect.
+    /// </summary>
     public class UIFadeAnimation : UICanvasGroup
     {
         /// <summary>

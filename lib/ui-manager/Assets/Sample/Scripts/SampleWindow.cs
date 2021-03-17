@@ -5,6 +5,9 @@ using UnityEngine.EventSystems;
 
 namespace Sample.Scripts
 {
+    /// <summary>
+    /// The sample window controlled by the <see cref="SampleWindowController"/>.
+    /// </summary>
     public class SampleWindow : UIElement, ISampleWindow, IPointerClickHandler
     {
         public event Action<PointerEventData> PointerClicked;

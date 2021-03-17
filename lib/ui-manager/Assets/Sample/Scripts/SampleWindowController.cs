@@ -4,6 +4,9 @@ using UnityEngine.EventSystems;
 
 namespace Sample.Scripts
 {
+    /// <summary>
+    /// The creator of the <see cref="SampleWindow"/>.
+    /// </summary>
     public class SampleWindowController : MonoBehaviour
     {
         private ISampleWindow sampleWindow;

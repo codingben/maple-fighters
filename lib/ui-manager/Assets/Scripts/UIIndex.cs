@@ -3,12 +3,12 @@
     public enum UIIndex
     {
         /// <summary>
-        /// The start of the local transform list.
+        /// The start of the UI elements list.
         /// </summary>
         Start,
 
         /// <summary>
-        /// The end of the local transform list.
+        /// The end of the UI elements list.
         /// </summary>
         End
     }

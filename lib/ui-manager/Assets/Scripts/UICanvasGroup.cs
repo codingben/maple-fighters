@@ -2,6 +2,9 @@
 
 namespace UI
 {
+    /// <summary>
+    /// The <see cref="CanvasGroup"/> controller.
+    /// </summary>
     [RequireComponent(typeof(UIElement), typeof(CanvasGroup))]
     public class UICanvasGroup : MonoBehaviour
     {

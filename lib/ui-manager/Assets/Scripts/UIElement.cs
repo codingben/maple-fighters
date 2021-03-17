@@ -3,6 +3,9 @@ using UnityEngine;
 
 namespace UI
 {
+    /// <summary>
+    /// Base implementation of the <see cref="IView"/> interface (e.g. SampleWindow : UIElement, ISampleWindow).
+    /// </summary>
     public class UIElement : MonoBehaviour, IView
     {
         /// <summary>
