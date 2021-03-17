@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace UI.Manager
+namespace UI
 {
     public class UIElement : MonoBehaviour, IView
     {

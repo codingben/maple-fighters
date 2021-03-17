@@ -1,4 +1,4 @@
-﻿namespace UI.Manager
+﻿namespace UI
 {
     public static class UIConstants
     {

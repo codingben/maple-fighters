@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace UI.Manager
+namespace UI
 {
     public struct UILayers
     {

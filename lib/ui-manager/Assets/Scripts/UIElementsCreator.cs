@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace UI.Manager
+namespace UI
 {
     public class UIElementsCreator : MonoBehaviour
     {

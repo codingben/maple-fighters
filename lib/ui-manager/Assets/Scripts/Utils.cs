@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace UI.Manager
+namespace UI
 {
     using ScaleMode = CanvasScaler.ScaleMode;
 
