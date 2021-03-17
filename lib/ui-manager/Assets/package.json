@@ -1,7 +1,7 @@
 {
   "name": "com.benukhanov.ui-manager",
-  "version": "1.0.1",
-  "description": "User interface manager designed for simple purposes that can be easily extended and used in Unity.",
+  "version": "1.1.0",
+  "description": "UI Manager designed for simple purposes that can be easily extended and used in Unity.",
   "license": "MIT",
   "repository": {
     "type": "git",
