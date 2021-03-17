@@ -3,6 +3,9 @@ using UnityEngine.EventSystems;
 
 namespace UI
 {
+    /// <summary>
+    /// The creator of the UI and its elements.
+    /// </summary>
     public class UIElementsCreator : MonoBehaviour
     {
         public static UIElementsCreator GetInstance()
@@ -17,7 +20,7 @@ namespace UI
         }
 
         private static UIElementsCreator instance;
-        private UILayers? uiLayers;
+        private UICanvas uiCanvas;
 
         private void Awake()
         {
@@ -30,13 +33,39 @@ namespace UI
             }
         }
 
-        public TUIElement Create<TUIElement>(UILayer uiLayer = UILayer.Foreground, UIIndex uiIndex = UIIndex.Start, Transform parent = null)
+        /// <summary>
+        /// Loads and creates a new UI element (e.g. SampleMessage : UIElement).
+        /// </summary>
+        /// <typeparam name="TUIElement">The UI element type.</typeparam>
+        /// <param name="uiCanvasLayer">The canvas layer.</param>
+        /// <param name="uiIndex">The UI index.</param>
+        /// <param name="parent">The parent of the UI element.</param>
+        /// <returns>The UI element.</returns>
+        public TUIElement Create<TUIElement>(
+            UICanvasLayer uiCanvasLayer = UICanvasLayer.Foreground,
+            UIIndex uiIndex = UIIndex.Start,
+            Transform uiParent = null,
+            string uiPath = UIConstants.UIElementsPath)
             where TUIElement : UIElement
         {
+            if (uiCanvas == null)
+            {
+                var background =
+                    Utils.CreateCanvas("UI Background", (int)UICanvasLayer.Background);
+                var foreground =
+                    Utils.CreateCanvas("UI Foreground", (int)UICanvasLayer.Foreground);
+
+                uiCanvas = new UICanvas(background, foreground);
+            }
+
             var name = typeof(TUIElement).Name;
-            var path = string.Format(UIConstants.UIElementsPath, name);
+            var path = string.Format(uiPath, name);
             var uiElement = Utils.LoadAndCreate<TUIElement>(path);
-            uiElement.transform.SetParent(parent ?? GetUILayer(uiLayer), false);
+
+            if (uiParent != null)
+            {
+                uiElement.transform.SetParent(uiCanvas.GetCanvas(uiCanvasLayer), worldPositionStays: false);
+            }
 
             if (uiIndex == UIIndex.Start)
             {
@@ -48,21 +77,6 @@ namespace UI
             }
 
             return uiElement;
-        }
-
-        private Transform GetUILayer(UILayer uiLayer)
-        {
-            if (uiLayers == null)
-            {
-                var background =
-                    Utils.CreateCanvas("UI Background", (int)UILayer.Background);
-                var foreground =
-                    Utils.CreateCanvas("UI Foreground", (int)UILayer.Foreground);
-
-                uiLayers = new UILayers(background, foreground);
-            }
-
-            return uiLayers?.GetLayer(uiLayer);
         }
     }
 }
