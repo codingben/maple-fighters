@@ -17,13 +17,18 @@ namespace UI
         public static TUIElement LoadAndCreate<TUIElement>(string path)
             where TUIElement : UIElement
         {
-            var uiPrefab = Resources.Load<TUIElement>(path);
-            var uiElement = Object.Instantiate(uiPrefab);
-            uiElement.name = uiPrefab.name.RemoveCloneFromName();
-            uiElement.name = uiPrefab.name.AddSpaceBetweenWords();
-            uiElement.transform.position = uiPrefab.transform.position;
+            TUIElement uiElement = null;
 
-            return uiElement.GetComponent<TUIElement>();
+            var uiPrefab = Resources.Load<TUIElement>(path);
+            if (uiPrefab != null)
+            {
+                uiElement = Object.Instantiate(uiPrefab);
+                uiElement.name = uiPrefab.name.RemoveCloneFromName();
+                uiElement.name = uiPrefab.name.AddSpaceBetweenWords();
+                uiElement.transform.position = uiPrefab.transform.position;
+            }
+
+            return uiElement != null ? uiElement.GetComponent<TUIElement>() : null;
         }
 
         /// <summary>

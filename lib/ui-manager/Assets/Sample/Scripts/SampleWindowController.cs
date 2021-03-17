@@ -28,9 +28,14 @@ namespace Sample.Scripts
 
         private void CreateAndSubscribeToSampleWindow()
         {
-            sampleWindow =
-                UIElementsCreator.GetInstance().Create<SampleWindow>();
-            sampleWindow.PointerClicked += OnPointerClicked;
+            sampleWindow = UICreator
+                .GetInstance()
+                .Create<SampleWindow>();
+
+            if (sampleWindow != null)
+            {
+                sampleWindow.PointerClicked += OnPointerClicked;
+            }
         }
 
         private void UnsubscribeFromSampleWindow()

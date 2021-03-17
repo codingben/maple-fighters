@@ -10,10 +10,13 @@ namespace Sample.Scripts
     {
         private void Awake()
         {
-            var sampleMessage =
-                UIElementsCreator.GetInstance()
-                    .Create<SampleMessage>(UICanvasLayer.Background);
-            sampleMessage.Show();
+            var sampleMessage = UICreator
+                .GetInstance()
+                .Create<SampleMessage>(UICanvasLayer.Background);
+            if (sampleMessage != null)
+            {
+                sampleMessage.Show();
+            }
         }
     }
 }
