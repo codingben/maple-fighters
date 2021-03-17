@@ -6,20 +6,20 @@ namespace UI
     /// <summary>
     /// The creator of the UI and its elements.
     /// </summary>
-    public class UIElementsCreator : MonoBehaviour
+    public class UICreator : MonoBehaviour
     {
-        public static UIElementsCreator GetInstance()
+        public static UICreator GetInstance()
         {
             if (instance == null)
             {
-                var gameObject = new GameObject("UI Elements Creator");
-                instance = gameObject.AddComponent<UIElementsCreator>();
+                var gameObject = new GameObject("UI Creator");
+                instance = gameObject.AddComponent<UICreator>();
             }
 
             return instance;
         }
 
-        private static UIElementsCreator instance;
+        private static UICreator instance;
         private UICanvas uiCanvas;
 
         private void Awake()
@@ -61,19 +61,18 @@ namespace UI
             var name = typeof(TUIElement).Name;
             var path = string.Format(uiPath, name);
             var uiElement = Utils.LoadAndCreate<TUIElement>(path);
+            if (uiElement != null)
+            {
+                uiElement.transform.SetParent(uiParent ?? uiCanvas.GetCanvas(uiCanvasLayer), worldPositionStays: false);
 
-            if (uiParent != null)
-            {
-                uiElement.transform.SetParent(uiCanvas.GetCanvas(uiCanvasLayer), worldPositionStays: false);
-            }
-
-            if (uiIndex == UIIndex.Start)
-            {
-                uiElement.transform.SetAsFirstSibling();
-            }
-            else
-            {
-                uiElement.transform.SetAsLastSibling();
+                if (uiIndex == UIIndex.Start)
+                {
+                    uiElement.transform.SetAsFirstSibling();
+                }
+                else
+                {
+                    uiElement.transform.SetAsLastSibling();
+                }
             }
 
             return uiElement;
