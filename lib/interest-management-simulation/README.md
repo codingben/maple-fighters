@@ -1,16 +1,7 @@
 # Interest Management Simulation
 
-<img src="Docs/sample.jpg" width=65% height=65%>
+Demonstration of using region-based interest management in Unity.
 
-## About
-This simulation only shows visible objects in your current region.
+## Sample
 
-## Installation
-
-[InterestManagement](https://www.nuget.org/packages/InterestManagement/) can be installed from nuget gallery.
-
-## Contributing
-Any new ideas, improvements are welcome!
-
-## License
-[MIT](https://choosealicense.com/licenses/mit)
+<img src="Docs/sample.jpg">
