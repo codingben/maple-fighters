@@ -1,6 +1,6 @@
 # UI Manager
 
-User interface manager designed for simple purposes that can be easily extended and used in Unity.
+UI Manager is designed for simple purposes that can be easily extended and used in Unity.
 
 ## Installation
 
@@ -13,7 +13,9 @@ Please use Unity Package Manager to install this package in Unity.
 Done!
 
 ## Contributing
+
 Any useful changes are greatly appreciated.
 
 ## License
+
 [MIT](https://choosealicense.com/licenses/mit)
