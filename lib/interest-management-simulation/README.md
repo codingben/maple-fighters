@@ -5,3 +5,7 @@ Demonstration of using region-based interest management in Unity. The simulation
 ## Sample
 
 <img src="Docs/sample.jpg">
+
+## License
+
+[MIT](https://choosealicense.com/licenses/mit)
