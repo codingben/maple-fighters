@@ -28,9 +28,14 @@ namespace Scripts.UI.Minimap
 
         private void CreateAndSubscribeToMinimapWindow()
         {
-            minimapView =
-                UIElementsCreator.GetInstance().Create<MinimapWindow>();
-            minimapView.MarkSelectionChanged += OnMarkSelectionChanged;
+            minimapView = UICreator
+                .GetInstance()
+                .Create<MinimapWindow>();
+
+            if (minimapView != null)
+            {
+                minimapView.MarkSelectionChanged += OnMarkSelectionChanged;
+            }
         }
 
         private void OnDestroy()

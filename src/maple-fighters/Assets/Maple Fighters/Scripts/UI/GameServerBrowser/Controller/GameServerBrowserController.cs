@@ -38,10 +38,14 @@ namespace Scripts.UI.GameServerBrowser
 
         private void CreateAndShowGameServerBrowserWindow()
         {
-            gameServerBrowserView = UIElementsCreator
+            gameServerBrowserView = UICreator
                 .GetInstance()
                 .Create<GameServerBrowserWindow>();
-            gameServerBrowserView.Show();
+
+            if (gameServerBrowserView != null)
+            {
+                gameServerBrowserView.Show();
+            }
         }
 
         private void SubscribeToGameServerBrowserWindow()
@@ -95,10 +99,14 @@ namespace Scripts.UI.GameServerBrowser
         private IGameServerView CreateAndSubscribeToGameServerButton()
         {
             var gameServerButtonList = gameServerBrowserView.GameServerList;
-            var gameServerButton = UIElementsCreator
+            var gameServerButton = UICreator
                 .GetInstance()
-                .Create<GameServerButton>(UILayer.Foreground, UIIndex.End, gameServerButtonList);
-            gameServerButton.ButtonClicked += OnGameServerButtonClicked;
+                .Create<GameServerButton>(UICanvasLayer.Foreground, UIIndex.End, gameServerButtonList);
+
+            if (gameServerButton != null)
+            {
+                gameServerButton.ButtonClicked += OnGameServerButtonClicked;
+            }
 
             return gameServerButton;
         }

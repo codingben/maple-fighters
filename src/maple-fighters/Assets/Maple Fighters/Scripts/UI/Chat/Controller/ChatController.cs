@@ -22,9 +22,15 @@ namespace Scripts.UI.Chat
 
         private void CreateAndSubscribeToChatWindow()
         {
-            chatView = UIElementsCreator.GetInstance().Create<ChatWindow>();
-            chatView.FocusChanged += OnFocusChanged;
-            chatView.MessageAdded += OnMessageAdded;
+            chatView = UICreator
+                .GetInstance()
+                .Create<ChatWindow>();
+
+            if (chatView != null)
+            {
+                chatView.FocusChanged += OnFocusChanged;
+                chatView.MessageAdded += OnMessageAdded;
+            }
         }
 
         private void OnDestroy()
@@ -57,7 +63,6 @@ namespace Scripts.UI.Chat
         private void OnMessageAdded(string message)
         {
             chatView?.AddMessage(message);
-
             chatInteractor.SendChatMessage(message);
         }
 

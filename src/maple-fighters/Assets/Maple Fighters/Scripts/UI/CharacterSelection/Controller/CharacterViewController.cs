@@ -59,62 +59,74 @@ namespace Scripts.UI.CharacterSelection
 
         private void CreateChooseFighterView()
         {
-            chooseFighterView = UIElementsCreator
+            chooseFighterView = UICreator
                 .GetInstance()
-                .Create<ChooseFighterText>(UILayer.Background, UIIndex.End);
+                .Create<ChooseFighterText>(UICanvasLayer.Background, UIIndex.End);
         }
 
         private void CreateLoadingView()
         {
-            loadingView = UIElementsCreator
+            loadingView = UICreator
                 .GetInstance()
-                .Create<LoadingText>(UILayer.Background, UIIndex.End);
+                .Create<LoadingText>(UICanvasLayer.Background, UIIndex.End);
         }
 
         private void CreateCharacterView()
         {
-            characterView = UIElementsCreator
+            characterView = UICreator
                 .GetInstance()
-                .Create<CharacterView>(UILayer.Background, UIIndex.End);
+                .Create<CharacterView>(UICanvasLayer.Background, UIIndex.End);
         }
 
         private void CreateAndSubscribeToCharacterSelectionOptionsWindow()
         {
-            characterSelectionOptionsView = UIElementsCreator
+            characterSelectionOptionsView = UICreator
                 .GetInstance()
-                .Create<CharacterSelectionOptionsWindow>(UILayer.Foreground, UIIndex.End);
-            characterSelectionOptionsView.StartButtonClicked +=
-                OnStartButtonClicked;
-            characterSelectionOptionsView.CreateCharacterButtonClicked +=
-                OnCreateCharacterButtonClicked;
-            characterSelectionOptionsView.DeleteCharacterButtonClicked +=
-                OnDeleteCharacterButtonClicked;
+                .Create<CharacterSelectionOptionsWindow>(UICanvasLayer.Foreground, UIIndex.End);
+
+            if (characterSelectionOptionsView != null)
+            {
+                characterSelectionOptionsView.StartButtonClicked +=
+                    OnStartButtonClicked;
+                characterSelectionOptionsView.CreateCharacterButtonClicked +=
+                    OnCreateCharacterButtonClicked;
+                characterSelectionOptionsView.DeleteCharacterButtonClicked +=
+                    OnDeleteCharacterButtonClicked;
+            }
         }
 
         private void CreateAndSubscribeToCharacterSelectionWindow()
         {
-            characterSelectionView = UIElementsCreator
+            characterSelectionView = UICreator
                 .GetInstance()
-                .Create<CharacterSelectionWindow>(UILayer.Foreground, UIIndex.End);
-            characterSelectionView.ChooseButtonClicked +=
-                OnChooseButtonClicked;
-            characterSelectionView.CancelButtonClicked +=
-                OnCancelButtonClicked;
-            characterSelectionView.CharacterSelected +=
-                OnCharacterSelected;
+                .Create<CharacterSelectionWindow>(UICanvasLayer.Foreground, UIIndex.End);
+
+            if (characterSelectionView != null)
+            {
+                characterSelectionView.ChooseButtonClicked +=
+                    OnChooseButtonClicked;
+                characterSelectionView.CancelButtonClicked +=
+                    OnCancelButtonClicked;
+                characterSelectionView.CharacterSelected +=
+                    OnCharacterSelected;
+            }
         }
 
         private void CreateAndSubscribeToCharacterNameWindow()
         {
-            characterNameView = UIElementsCreator
+            characterNameView = UICreator
                 .GetInstance()
-                .Create<CharacterNameWindow>(UILayer.Foreground, UIIndex.End);
-            characterNameView.ConfirmButtonClicked +=
-                OnConfirmButtonClicked;
-            characterNameView.BackButtonClicked +=
-                OnBackButtonClicked;
-            characterNameView.NameInputFieldChanged +=
-                OnNameInputFieldChanged;
+                .Create<CharacterNameWindow>(UICanvasLayer.Foreground, UIIndex.End);
+
+            if (characterNameView != null)
+            {
+                characterNameView.ConfirmButtonClicked +=
+                    OnConfirmButtonClicked;
+                characterNameView.BackButtonClicked +=
+                    OnBackButtonClicked;
+                characterNameView.NameInputFieldChanged +=
+                    OnNameInputFieldChanged;
+            }
         }
 
         private void SubscribeToLoadingView()

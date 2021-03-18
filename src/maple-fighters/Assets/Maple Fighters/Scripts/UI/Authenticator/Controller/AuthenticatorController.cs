@@ -28,24 +28,32 @@ namespace Scripts.UI.Authenticator
 
         private void CreateAndSubscribeToLoginWindow()
         {
-            loginView = UIElementsCreator
+            loginView = UICreator
                 .GetInstance()
                 .Create<LoginWindow>();
-            loginView.LoginButtonClicked +=
-                OnLoginButtonClicked;
-            loginView.CreateAccountButtonClicked +=
-                OnCreateAccountButtonClicked;
+
+            if (loginView != null)
+            {
+                loginView.LoginButtonClicked +=
+                    OnLoginButtonClicked;
+                loginView.CreateAccountButtonClicked +=
+                    OnCreateAccountButtonClicked;
+            }
         }
 
         private void CreateAndSubscribeToRegistrationWindow()
         {
-            registrationView = UIElementsCreator
+            registrationView = UICreator
                 .GetInstance()
                 .Create<RegistrationWindow>();
-            registrationView.RegisterButtonClicked +=
-                OnRegisterButtonClicked;
-            registrationView.BackButtonClicked +=
-                OnBackButtonClicked;
+
+            if (registrationView != null)
+            {
+                registrationView.RegisterButtonClicked +=
+                    OnRegisterButtonClicked;
+                registrationView.BackButtonClicked +=
+                    OnBackButtonClicked;
+            }
         }
 
         private void OnDestroy()

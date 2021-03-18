@@ -30,15 +30,17 @@ namespace Scripts.UI.MapScene
             Destroy(gameObject);
         }
 
-        private void CreateMessage(
-            string message,
-            float seconds,
-            Action onTimeUp = null)
+        private void CreateMessage(string message, float seconds, Action onTimeUp = null)
         {
-            var messageView =
-                UIElementsCreator.GetInstance().Create<MessageText>();
-            messageView.Text = message;
-            messageView.Seconds = seconds;
+            var messageView = UICreator
+                .GetInstance()
+                .Create<MessageText>();
+
+            if (messageView != null)
+            {
+                messageView.Text = message;
+                messageView.Seconds = seconds;
+            }
 
             if (onTimeUp != null)
             {
