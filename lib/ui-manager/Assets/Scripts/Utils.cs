@@ -4,8 +4,6 @@ using UnityEngine.UI;
 
 namespace UI
 {
-    using ScaleMode = CanvasScaler.ScaleMode;
-
     public static class Utils
     {
         /// <summary>
@@ -50,50 +48,46 @@ namespace UI
         /// <summary>
         /// Creates a canvas containing all of the UI elements.
         /// </summary>
-        /// <param name="name">The canvas name.</param>
-        /// <param name="sortingOrder">The sorting order.</param>
-        /// <param name="renderMode">The render mode.</param>
-        /// <param name="uiScaleMode">The scale mode.</param>
-        /// <param name="matchWidthOrHeight">The match width or height.</param>
-        /// <param name="alpha">The alpha.</param>
-        /// <param name="interactable">Is interactable?</param>
-        /// <param name="blocksRaycasts">Is blocks raycasts?</param>
         /// <returns>The canvas.</returns>
-        public static Transform CreateCanvas(
-            string name,
-            int sortingOrder,
-            RenderMode renderMode = RenderMode.ScreenSpaceOverlay,
-            ScaleMode scaleMode = ScaleMode.ScaleWithScreenSize,
-            float matchWidthOrHeight = 0.5f,
-            float alpha = 1f,
-            bool interactable = true,
-            bool blocksRaycasts = true)
+        public static Transform CreateCanvas(UICanvasType canvasType)
         {
-            // Game Object
-            var uiCanvas = new GameObject(
-                name,
-                typeof(Canvas),
-                typeof(CanvasScaler),
-                typeof(GraphicRaycaster),
-                typeof(CanvasGroup));
+            var uiConfiguration =
+                UIConfiguration.GetInstance().GetCanvasConfig(canvasType);
+            if (uiConfiguration != null)
+            {
+                // Canvas Config
+                var name = uiConfiguration.Name;
+                var sortingOrder = uiConfiguration.SortingOrder;
+                var renderMode = uiConfiguration.RenderMode;
 
-            // Canvas
-            var canvas = uiCanvas.GetComponent<Canvas>();
-            canvas.renderMode = renderMode;
-            canvas.sortingOrder = sortingOrder;
+                // Canvas Scaler Config
+                var scaleMode = uiConfiguration.UICanvasScalerConfig.ScaleMode;
+                var referenceResolution = uiConfiguration.UICanvasScalerConfig.ReferenceResolution;
+                var screenMatchMode = uiConfiguration.UICanvasScalerConfig.ScreenMatchMode;
+                var matchWidthOrHeight = uiConfiguration.UICanvasScalerConfig.MatchWidthOrHeight;
+                var referencePixelsPerUnit = uiConfiguration.UICanvasScalerConfig.ReferencePixelsPerUnit;
 
-            // Canvas Scaler
-            var canvasScaler = uiCanvas.GetComponent<CanvasScaler>();
-            canvasScaler.uiScaleMode = scaleMode;
-            canvasScaler.matchWidthOrHeight = matchWidthOrHeight;
+                // UI Canvas
+                var uiCanvas =
+                    new GameObject(name, typeof(Canvas), typeof(CanvasScaler), typeof(GraphicRaycaster));
 
-            // Canvas Group
-            var canvasGroup = uiCanvas.GetComponent<CanvasGroup>();
-            canvasGroup.alpha = alpha;
-            canvasGroup.interactable = interactable;
-            canvasGroup.blocksRaycasts = blocksRaycasts;
+                // Canvas
+                var canvas = uiCanvas.GetComponent<Canvas>();
+                canvas.sortingOrder = sortingOrder;
+                canvas.renderMode = renderMode;
 
-            return uiCanvas.GetComponent<Transform>();
+                // Canvas Scaler
+                var canvasScaler = uiCanvas.GetComponent<CanvasScaler>();
+                canvasScaler.uiScaleMode = scaleMode;
+                canvasScaler.referenceResolution = referenceResolution;
+                canvasScaler.screenMatchMode = screenMatchMode;
+                canvasScaler.matchWidthOrHeight = matchWidthOrHeight;
+                canvasScaler.referencePixelsPerUnit = referencePixelsPerUnit;
+
+                return uiCanvas.GetComponent<Transform>();
+            }
+
+            return null;
         }
     }
 }

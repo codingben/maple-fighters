@@ -45,17 +45,15 @@ namespace UI
             UICanvasLayer uiCanvasLayer = UICanvasLayer.Foreground,
             UIIndex uiIndex = UIIndex.Start,
             Transform uiParent = null,
-            string uiPath = UIConstants.UIElementsPath)
+            string uiPath = UIConstants.UIResources)
             where TUIElement : UIElement
         {
             if (uiCanvas == null)
             {
-                var background =
-                    Utils.CreateCanvas("UI Background", (int)UICanvasLayer.Background);
-                var foreground =
-                    Utils.CreateCanvas("UI Foreground", (int)UICanvasLayer.Foreground);
+                var uiBackground = Utils.CreateCanvas(UICanvasType.Background);
+                var uiForeground = Utils.CreateCanvas(UICanvasType.Foreground);
 
-                uiCanvas = new UICanvas(background, foreground);
+                uiCanvas = new UICanvas(uiBackground, uiForeground);
             }
 
             var name = typeof(TUIElement).Name;
