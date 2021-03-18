@@ -5,6 +5,6 @@
         /// <summary>
         /// The path to the UI resources.
         /// </summary>
-        public const string UIElementsPath = "UI/{0}";
+        public const string UIResources = "UI/{0}";
     }
 }
