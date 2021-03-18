@@ -1,6 +1,6 @@
 ﻿using Scripts.Constants;
 using Scripts.UI.Notice;
-using UI.Manager;
+using UI;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 

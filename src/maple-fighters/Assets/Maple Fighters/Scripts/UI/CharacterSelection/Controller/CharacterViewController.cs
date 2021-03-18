@@ -3,7 +3,7 @@ using Scripts.Constants;
 using Scripts.UI.MenuBackground;
 using Scripts.UI.Notice;
 using Scripts.UI.ScreenFade;
-using UI.Manager;
+using UI;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -303,16 +303,16 @@ namespace Scripts.UI.CharacterSelection
             switch (reason)
             {
                 case UICharacterCreationFailed.Unknown:
-                {
-                    NoticeUtils.ShowNotice(message: NoticeMessages.CharacterView.CreationFailed);
-                    break;
-                }
+                    {
+                        NoticeUtils.ShowNotice(message: NoticeMessages.CharacterView.CreationFailed);
+                        break;
+                    }
 
                 case UICharacterCreationFailed.NameAlreadyInUse:
-                {
-                    NoticeUtils.ShowNotice(message: NoticeMessages.CharacterView.NameAlreadyInUse);
-                    break;
-                }
+                    {
+                        NoticeUtils.ShowNotice(message: NoticeMessages.CharacterView.NameAlreadyInUse);
+                        break;
+                    }
             }
         }
 

@@ -1,5 +1,5 @@
 ﻿using System;
-using UI.Manager;
+using UI;
 using UnityEngine;
 using UnityEngine.UI;
 

@@ -1,5 +1,5 @@
 ﻿using System;
-using UI.Manager;
+using UI;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -103,22 +103,22 @@ namespace Scripts.UI.CharacterSelection
             switch (uiCharacterClass)
             {
                 case UICharacterClass.Knight:
-                {
-                    SelectKnightClass();
-                    break;
-                }
+                    {
+                        SelectKnightClass();
+                        break;
+                    }
 
                 case UICharacterClass.Arrow:
-                {
-                    SelectArrowClass();
-                    break;
-                }
+                    {
+                        SelectArrowClass();
+                        break;
+                    }
 
                 case UICharacterClass.Wizard:
-                {
-                    SelectWizardClass();
-                    break;
-                }
+                    {
+                        SelectWizardClass();
+                        break;
+                    }
             }
         }
 

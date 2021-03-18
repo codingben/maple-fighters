@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 using Scripts.Constants;
-using UI.Manager;
+using UI;
 using UnityEngine;
 using UnityEngine.EventSystems;
 

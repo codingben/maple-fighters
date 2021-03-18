@@ -5,7 +5,7 @@ using Scripts.Gameplay.Map;
 using Scripts.Gameplay.Player;
 using Scripts.UI.Chat;
 using Scripts.UI.Focus;
-using UI.Manager;
+using UI;
 using UnityEngine;
 
 namespace Scripts.Gameplay.Creator

@@ -1,4 +1,4 @@
-﻿using UI.Manager;
+﻿using UI;
 using UnityEngine;
 
 namespace Scripts.UI.CharacterSelection

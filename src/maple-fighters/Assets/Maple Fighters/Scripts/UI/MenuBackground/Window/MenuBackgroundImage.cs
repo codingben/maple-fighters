@@ -1,5 +1,5 @@
 ﻿using System;
-using UI.Manager;
+using UI;
 using UnityEngine.EventSystems;
 
 namespace Scripts.UI.MenuBackground

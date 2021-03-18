@@ -1,5 +1,5 @@
 ﻿using System;
-using UI.Manager;
+using UI;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -38,7 +38,7 @@ namespace Scripts.UI.CharacterSelection
             createCharacterButton?.onClick.RemoveListener(OnCreateCharacterButtonClicked);
             deleteCharacterButton?.onClick.RemoveListener(OnDeleteCharacterButtonClicked);
         }
-        
+
         private void OnStartButtonClicked()
         {
             StartButtonClicked?.Invoke();

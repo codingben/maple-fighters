@@ -1,5 +1,5 @@
 ﻿using Scripts.UI.Focus;
-using UI.Manager;
+using UI;
 using UnityEngine;
 
 namespace Scripts.UI.Chat

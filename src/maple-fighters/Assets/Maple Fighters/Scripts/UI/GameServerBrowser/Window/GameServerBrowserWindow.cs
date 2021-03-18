@@ -1,5 +1,5 @@
 ﻿using System;
-using UI.Manager;
+using UI;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -30,7 +30,7 @@ namespace Scripts.UI.GameServerBrowser
         [Header("Image")]
         [SerializeField]
         private GameServerBrowserRefreshImage refreshImage;
-        
+
         private void Start()
         {
             joinButton?.onClick.AddListener(OnJoinButtonClicked);

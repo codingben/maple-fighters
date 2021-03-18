@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Scripts.Constants;
-using UI.Manager;
+using UI;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 

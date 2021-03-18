@@ -1,5 +1,5 @@
 ﻿using System;
-using UI.Manager;
+using UI;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -82,16 +82,16 @@ namespace Scripts.UI.CharacterSelection
             switch (characterAnimation)
             {
                 case UICharacterAnimation.Idle:
-                {
-                    animator.SetBool("Walk", false);
-                    break;
-                }
+                    {
+                        animator.SetBool("Walk", false);
+                        break;
+                    }
 
                 case UICharacterAnimation.Walk:
-                {
-                    animator.SetBool("Walk", true);
-                    break;
-                }
+                    {
+                        animator.SetBool("Walk", true);
+                        break;
+                    }
             }
         }
     }

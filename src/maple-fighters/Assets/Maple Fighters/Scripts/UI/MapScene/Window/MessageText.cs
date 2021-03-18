@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections;
-using UI.Manager;
+using UI;
 using UnityEngine;
 using UnityEngine.UI;
 

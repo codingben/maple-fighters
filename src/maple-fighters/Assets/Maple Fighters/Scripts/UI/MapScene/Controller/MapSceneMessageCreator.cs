@@ -1,5 +1,5 @@
 ﻿using System;
-using UI.Manager;
+using UI;
 using UnityEngine;
 
 namespace Scripts.UI.MapScene
@@ -35,7 +35,7 @@ namespace Scripts.UI.MapScene
             float seconds,
             Action onTimeUp = null)
         {
-            var messageView = 
+            var messageView =
                 UIElementsCreator.GetInstance().Create<MessageText>();
             messageView.Text = message;
             messageView.Seconds = seconds;
