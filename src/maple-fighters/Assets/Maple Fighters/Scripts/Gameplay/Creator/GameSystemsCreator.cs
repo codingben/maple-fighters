@@ -42,7 +42,7 @@ namespace Scripts.Gameplay.Creator
         {
             foreach (var component in components)
             {
-                var name = component.Name.MakeSpaceBetweenWords();
+                var name = component.Name.AddSpaceBetweenWords();
                 var creatorGameObject = new GameObject(name);
 
                 creatorGameObject.AddComponent(component);
