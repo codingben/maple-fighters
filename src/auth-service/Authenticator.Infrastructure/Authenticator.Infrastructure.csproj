@@ -3,9 +3,9 @@
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Common.MongoDB" Version="1.0.0" />
+    <PackageReference Include="Common.MongoDB" Version="1.0.2"/>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Authenticator.Domain\Authenticator.Domain.csproj" />
+    <ProjectReference Include="..\Authenticator.Domain\Authenticator.Domain.csproj"/>
   </ItemGroup>
 </Project>
