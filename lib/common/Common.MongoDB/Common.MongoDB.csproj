@@ -4,10 +4,10 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>Ben Ukhanov</Authors>
     <Description>A common implementation of the repository pattern.</Description>
-    <Copyright>Copyright © Ben Ukhanov 2020</Copyright>
-    <PackageProjectUrl>https://github.com/benzuk/maple-fighters-server/tree/develop/lib/common/Common.MongoDB</PackageProjectUrl>
+    <Copyright>Copyright © Ben Ukhanov 2021</Copyright>
+    <PackageProjectUrl>https://github.com/benukhanov/maple-fighters/tree/develop/lib/common/Common.MongoDB</PackageProjectUrl>
     <PackageTags>Common</PackageTags>
-    <Version>1.0.1</Version>
+    <Version>1.0.2</Version>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Common.Repository.Interfaces" Version="1.0.1"/>
