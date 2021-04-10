@@ -7,6 +7,7 @@ namespace Scripts.Info
         private void Awake()
         {
             print($"Application version: {Application.version}");
+            print($"Unity version: {Application.unityVersion}");
         }
     }
 }
