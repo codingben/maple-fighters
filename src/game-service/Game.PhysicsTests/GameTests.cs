@@ -4,6 +4,7 @@ using Common.Components;
 using Game.Application.Components;
 using Game.Application.Objects;
 using Game.Application.Objects.Components;
+using Game.MessageTools;
 using static Box2DX.Dynamics.DebugDraw;
 
 var window =
@@ -32,7 +33,7 @@ if (gameScene != null)
 
     var player = new PlayerGameObject(id: 1, new IComponent[]
     {
-        new MessageSender(),
+        new MessageSender(new NativeJsonSerializer()),
         new PlayerAttackedMessageSender()
     });
     var bodyData = player.CreateBodyData();
