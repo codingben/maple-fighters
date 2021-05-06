@@ -21,10 +21,9 @@ var gameSceneCollection = new ComponentCollection(new IComponent[]
     new GameSceneCollection(),
     new GameSceneManager()
 })
-.Get<IGameSceneCollection>()
-.TryGet(map: Map.TheDarkForest, out var gameScene);
+.Get<IGameSceneCollection>();
 
-if (gameScene != null)
+if (gameSceneCollection.TryGet(map: Map.TheDarkForest, out var gameScene))
 {
     gameScene.PhysicsWorldManager.SetDebugDraw(new DrawPhysics(window)
     {
