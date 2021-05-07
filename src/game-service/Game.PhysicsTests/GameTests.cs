@@ -1,4 +1,8 @@
-﻿using Box2D.Window;
+﻿/*
+ * The test here is to ensure that the collision detection works correctly.
+ */
+
+using Box2D.Window;
 using Common.ComponentModel;
 using Common.Components;
 using Game.Application.Components;
@@ -7,6 +11,7 @@ using Game.Application.Objects.Components;
 using Game.MessageTools;
 using static Box2DX.Dynamics.DebugDraw;
 
+// Create a window to display physics simulation.
 var window =
     new SimulationWindow(title: "Physics Tests", width: 800, height: 600)
     {
@@ -15,14 +20,15 @@ var window =
 
 window.SetView(new CameraView());
 
-var gameSceneCollection = new ComponentCollection(new IComponent[]
+// Create a game scene and physical world.
+var collection = new ComponentCollection(new IComponent[]
 {
     new IdGenerator(),
     new GameSceneCollection(),
     new GameSceneManager()
-})
-.Get<IGameSceneCollection>();
+});
 
+var gameSceneCollection = collection.Get<IGameSceneCollection>();
 if (gameSceneCollection.TryGet(map: Map.TheDarkForest, out var gameScene))
 {
     gameScene.PhysicsWorldManager.SetDebugDraw(new DrawPhysics(window)
@@ -30,6 +36,7 @@ if (gameSceneCollection.TryGet(map: Map.TheDarkForest, out var gameScene))
         Flags = DrawFlags.Aabb | DrawFlags.Shape
     });
 
+    // Create a player game object.
     var player = new PlayerGameObject(id: 1, new IComponent[]
     {
         new MessageSender(new NativeJsonSerializer()),
@@ -37,6 +44,7 @@ if (gameSceneCollection.TryGet(map: Map.TheDarkForest, out var gameScene))
     });
     var bodyData = player.CreateBodyData();
 
+    // Add a player and his physical body.
     gameScene.GameObjectCollection.Add(player);
     gameScene.PhysicsWorldManager.AddBody(bodyData);
 }
