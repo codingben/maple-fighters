@@ -9,6 +9,7 @@ using Game.Application.Components;
 using Game.Application.Objects;
 using Game.Application.Objects.Components;
 using Game.MessageTools;
+using OpenTK;
 using static Box2DX.Dynamics.DebugDraw;
 
 // Create a window to display physics simulation.
@@ -18,7 +19,7 @@ var window =
         VSync = OpenTK.VSyncMode.On
     };
 
-window.SetView(new CameraView());
+window.SetView(new CameraView(position: Vector2.Zero, zoom: 0.008f));
 
 // Create a game scene and physical world.
 var collection = new ComponentCollection(new IComponent[]
