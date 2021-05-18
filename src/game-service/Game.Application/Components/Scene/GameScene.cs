@@ -45,9 +45,9 @@ namespace Game.Application.Components
 
         private void OnSimulatePhysics()
         {
-            var timeStep = DefaultSettings.TimeStep;
-            var velocityIterations = DefaultSettings.VelocityIterations;
-            var positionIterations = DefaultSettings.PositionIterations;
+            var timeStep = PhysicsSettings.TimeStep;
+            var velocityIterations = PhysicsSettings.VelocityIterations;
+            var positionIterations = PhysicsSettings.PositionIterations;
 
             PhysicsWorldManager?.Step(timeStep, velocityIterations, positionIterations);
         }

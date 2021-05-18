@@ -38,7 +38,7 @@ namespace Game.Application.Components
 
         private void Execute(object cancellationToken)
         {
-            var timeStep = DefaultSettings.TimeStep;
+            var timeStep = PhysicsSettings.TimeStep;
             var watch = Stopwatch.StartNew();
             var previousTime = watch.ElapsedMilliseconds / 1000f;
             var elapsed = 0f;

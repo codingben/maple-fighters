@@ -1,6 +1,6 @@
 ﻿namespace Game.Physics
 {
-    public static class DefaultSettings
+    public static class PhysicsSettings
     {
         public const float TimeStep = 1.0f / 25.0f; // (25Hz)
 
