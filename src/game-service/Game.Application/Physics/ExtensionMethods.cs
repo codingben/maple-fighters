@@ -3,7 +3,7 @@ using Common.MathematicsHelper;
 
 namespace Game.Physics
 {
-    public static class MathExtensionMethods
+    public static class ExtensionMethods
     {
         public static Vector2 ToVector2(this Vec2 vec2)
         {
