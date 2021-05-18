@@ -1,6 +1,6 @@
 using Box2DX.Dynamics;
 
-namespace Physics.Box2D
+namespace Game.Physics
 {
     public struct NewBodyData
     {

@@ -1,7 +1,7 @@
 using Common.MathematicsHelper;
 using Game.Application.Objects;
 using InterestManagement;
-using Physics.Box2D;
+using Game.Physics;
 
 namespace Game.Application.Components
 {

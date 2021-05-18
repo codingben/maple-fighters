@@ -1,6 +1,6 @@
 using Box2DX.Dynamics;
 using Common.ComponentModel;
-using Physics.Box2D;
+using Game.Physics;
 
 namespace Game.Application.Objects
 {

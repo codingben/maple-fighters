@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using System.Threading;
 using Coroutines;
-using Physics.Box2D;
+using Game.Physics;
 
 namespace Game.Application.Components
 {

@@ -3,7 +3,7 @@ using System.Collections;
 using Common.ComponentModel;
 using Common.MathematicsHelper;
 using Coroutines;
-using Physics.Box2D;
+using Game.Physics;
 
 namespace Game.Application.Objects.Components
 {
