@@ -3,6 +3,8 @@ name: Unity Build
 on:
   pull_request: {}
   push: { branches: [develop] }
+  paths:
+    - src/maple-fighters
 
 env:
   UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
