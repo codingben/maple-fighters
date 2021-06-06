@@ -25,7 +25,7 @@ namespace Game.Application.Objects
             {
                 GroupIndex = (short)LayerMask.Mob
             };
-            polygonDef.UserData = new MobContactEvents(Id);
+            polygonDef.UserData = new BlueSnailContactEvents(Id);
 
             return new NewBodyData(Id, bodyDef, polygonDef);
         }
