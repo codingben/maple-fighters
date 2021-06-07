@@ -60,7 +60,9 @@ Feel free to play on the web platform [here](https://ukben.dev/maple-fighters). 
     └── maple-fighters
 ```
 
-## Installation
+## Quickstart
+
+### Docker
 
 > 💡 You need to install Docker and Docker Compose locally.
 
