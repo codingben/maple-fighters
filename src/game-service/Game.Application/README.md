@@ -24,7 +24,9 @@ The game service creates a player in the game world to play with others. Also cr
 └── Physics
 ```
 
-## Docker
+## Quickstart
+
+### Docker
 
 Follow these instructions to create an image and run a container:
 
