@@ -2,9 +2,8 @@
 using System.Diagnostics;
 using System.Threading;
 using Coroutines;
-using Game.Physics;
 
-namespace Game.Application.Components
+namespace Game.Physics
 {
     public class PhysicsExecutor : IPhysicsExecutor
     {

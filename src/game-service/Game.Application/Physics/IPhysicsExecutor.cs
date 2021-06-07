@@ -1,7 +1,7 @@
 ﻿using System;
 using Coroutines;
 
-namespace Game.Application.Components
+namespace Game.Physics
 {
     public interface IPhysicsExecutor : IDisposable
     {
