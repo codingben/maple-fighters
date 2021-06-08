@@ -1,6 +1,6 @@
-# Game Service
+# Game Application
 
-The game service creates a player in the game world to play with others. Also creates objects of the game world (e.g. mobs, NPCs, etc.).
+The game application creates a WebSocket server and handles requests. When a new client connects, it creates a new player in the game world.
 
 ## Project Structure
 
