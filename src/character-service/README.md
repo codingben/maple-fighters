@@ -1,14 +1,31 @@
 # Character Service
+
 The character service creates and receives the player character data.
 
-## Docker
+## Project Structure
+
+```
+├── migrations
+└── src
+    ├── db
+    ├── handlers
+    └── models
+```
+
+## Quickstart
+
+### Docker
+
 Follow these instructions to create an image and run a container:
 
 1. Build a docker image:
+
 ```bash
 make build
 ```
+
 2. Running in a docker container:
+
 ```bash
 make run
 ```
