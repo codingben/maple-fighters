@@ -10,7 +10,7 @@ Env.Load();
 
 var url = Environment.GetEnvironmentVariable("URL");
 var server = new WebSocketServer(url);
-var components = new ComponentCollection(new IComponent[]
+var serverComponents = new ComponentCollection(new IComponent[]
 {
     new IdGenerator(),
     new WebSocketSessionCollection(),
@@ -21,7 +21,7 @@ var components = new ComponentCollection(new IComponent[]
 AppDomain.CurrentDomain.ProcessExit += (s, e) =>
 {
     server?.Dispose();
-    components?.Dispose();
+    serverComponents?.Dispose();
 };
 
-server.Start((connection) => new GameService(connection, components));
+server.Start((connection) => new GameService(connection, serverComponents));
