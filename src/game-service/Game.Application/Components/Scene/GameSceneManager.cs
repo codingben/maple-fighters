@@ -65,6 +65,7 @@ namespace Game.Application.Components
                     new PresenceMapProvider(gameScene),
                     new GuardianIdleBehaviour(text: "Hello", time: 1)
                 });
+                guardian.Transform.SetSize(Vector2.One);
 
                 yield return guardian;
             }
@@ -78,6 +79,7 @@ namespace Game.Application.Components
                     new PresenceMapProvider(gameScene),
                     new PortalData(map: (byte)Map.TheDarkForest)
                 });
+                portal.Transform.SetSize(Vector2.One);
 
                 yield return portal;
             }
@@ -114,6 +116,7 @@ namespace Game.Application.Components
                     new PresenceMapProvider(gameScene),
                     new BlueSnailMoveBehaviour(coroutineRunner, physicsWorldManager)
                 });
+                blueSnail.Transform.SetSize(Vector2.One);
 
                 var bodyData = blueSnail.CreateBodyData();
                 gameScene.PhysicsWorldManager.AddBody(bodyData);
@@ -130,6 +133,7 @@ namespace Game.Application.Components
                     new PresenceMapProvider(gameScene),
                     new PortalData(map: (byte)Map.Lobby)
                 });
+                portal.Transform.SetSize(Vector2.One);
 
                 yield return portal;
             }
