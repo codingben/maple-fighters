@@ -19,26 +19,22 @@ namespace Game.Application.Objects
             Id = id;
             Name = name;
             Transform = new Transform();
-            Components = new ComponentCollection(UnionCommonComponents(components));
+
+            var collection = new List<IComponent>();
+            collection.Add(new GameObjectGetter(this));
+            collection.Add(new ProximityChecker());
+
+            if (components != null)
+            {
+                collection.AddRange(components);
+            }
+
+            Components = new ComponentCollection(collection);
         }
 
         public void Dispose()
         {
             Components?.Dispose();
-        }
-
-        private IEnumerable<IComponent> UnionCommonComponents(IComponent[] components = null)
-        {
-            yield return new GameObjectGetter(this);
-            yield return new ProximityChecker();
-
-            if (components != null)
-            {
-                foreach (var component in components)
-                {
-                    yield return component;
-                }
-            }
         }
     }
 }
