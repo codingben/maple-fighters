@@ -11,7 +11,7 @@ using Game.Application.Objects.Components;
 
 namespace Game.Application
 {
-    public class GameService
+    public class GameClient
     {
         private readonly int id;
         private readonly IWebSocketConnection connection;
@@ -21,7 +21,7 @@ namespace Game.Application
         private readonly IJsonSerializer jsonSerializer;
         private readonly IGameObject player;
 
-        public GameService(IWebSocketConnection connection, IComponents components)
+        public GameClient(IWebSocketConnection connection, IComponents serverComponents)
         {
             this.connection = connection;
 
@@ -30,9 +30,9 @@ namespace Game.Application
             connection.OnError += OnErrorOccurred;
             connection.OnMessage += OnMessageReceived;
 
-            id = components.Get<IIdGenerator>().GenerateId();
-            sessionCollection = components.Get<IWebSocketSessionCollection>();
-            gameSceneCollection = components.Get<IGameSceneCollection>();
+            id = serverComponents.Get<IIdGenerator>().GenerateId();
+            sessionCollection = serverComponents.Get<IWebSocketSessionCollection>();
+            gameSceneCollection = serverComponents.Get<IGameSceneCollection>();
 
             jsonSerializer = new NativeJsonSerializer();
             handlerCollection = new MessageHandlerCollection(jsonSerializer);

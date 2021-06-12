@@ -24,4 +24,4 @@ AppDomain.CurrentDomain.ProcessExit += (s, e) =>
     serverComponents?.Dispose();
 };
 
-server.Start((connection) => new GameService(connection, serverComponents));
+server.Start((connection) => new GameClient(connection, serverComponents));
