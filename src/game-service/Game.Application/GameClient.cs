@@ -45,8 +45,11 @@ namespace Game.Application
                 new PositionChangedMessageSender(),
                 new AnimationStateChangedMessageSender(),
                 new PlayerAttackedMessageSender(),
-                new BubbleNotificationMessageSender()
+                new BubbleNotificationMessageSender(),
+                new InterestManagementNotifier()
             });
+
+            Console.WriteLine($"A new client {id} is connected.");
         }
 
         private void OnConnectionEstablished()
