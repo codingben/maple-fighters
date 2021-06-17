@@ -2,6 +2,19 @@
 
 UI Manager is designed for simple purposes that can be easily extended and used in Unity.
 
+## Project Structure
+
+```
+├── Assets
+│   ├── Sample
+│   │   ├── Resources
+│   │   │   └── UI
+│   │   ├── Scenes
+│   │   ├── Scripts
+│   │   └── Template
+│   └── Scripts
+```
+
 ## Installation
 
 Please use Unity Package Manager to install this package in Unity.
