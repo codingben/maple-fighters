@@ -14,7 +14,7 @@ namespace InterestManagement
         private readonly IRegion<TSceneObject>[,] regions;
         private readonly SceneBoundaries sceneBoundaries;
 
-        public MatrixRegion(Vector2 sceneSize, Vector2 regionSize)
+        public MatrixRegion(ILogger log, Vector2 sceneSize, Vector2 regionSize)
         {
             this.sceneSize = sceneSize;
             this.regionSize = regionSize;
@@ -39,7 +39,7 @@ namespace InterestManagement
                     var position = new Vector2(x2, y2);
 
                     regions[row, column] =
-                        new Region<TSceneObject>(position, regionSize);
+                        new Region<TSceneObject>(log, new Rectangle(position, regionSize));
                 }
             }
 
@@ -62,9 +62,9 @@ namespace InterestManagement
             {
                 if (sceneBoundaries.WithinBoundaries(point))
                 {
-                    var row = 
+                    var row =
                         (int)Math.Floor(Math.Abs(point.X - (-(sceneSize.X / 2))) / regionSize.X);
-                    var column = 
+                    var column =
                         (int)Math.Floor(Math.Abs(point.Y - (-(sceneSize.Y / 2))) / regionSize.Y);
 
                     if (row >= rows || column >= columns)

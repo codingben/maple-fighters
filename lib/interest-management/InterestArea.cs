@@ -6,22 +6,26 @@ namespace InterestManagement
     public class InterestArea<TSceneObject> : IInterestArea<TSceneObject>
         where TSceneObject : ISceneObject
     {
+        private readonly ILogger log;
         private readonly TSceneObject sceneObject;
         private readonly List<IRegion<TSceneObject>> regions;
         private readonly NearbySceneObjectsCollection<TSceneObject> nearbySceneObjects;
 
         private IMatrixRegion<TSceneObject> matrixRegion;
 
-        public InterestArea(TSceneObject sceneObject)
+        public InterestArea(ILogger log, TSceneObject sceneObject)
         {
+            this.log = log;
             this.sceneObject = sceneObject;
 
             regions = new List<IRegion<TSceneObject>>();
-            nearbySceneObjects = new NearbySceneObjectsCollection<TSceneObject>();
+            nearbySceneObjects = new NearbySceneObjectsCollection<TSceneObject>(log);
         }
 
         public void SetMatrixRegion(IMatrixRegion<TSceneObject> matrixRegion)
         {
+            log.Info($"Set matrix region for scene object #{sceneObject.Id}");
+
             this.matrixRegion = matrixRegion;
 
             UpdateNearbyRegions();
@@ -30,6 +34,8 @@ namespace InterestManagement
 
         public void Dispose()
         {
+            log.Info($"Remove all regions from scene object #{sceneObject.Id}");
+
             UnsubscribeFromPositionChanged();
             UnsubscribeFromAllRegions();
 
@@ -74,6 +80,8 @@ namespace InterestManagement
                         continue;
                     }
 
+                    log.Info($"Add region for scene object #{sceneObject.Id}");
+
                     regions.Add(region);
 
                     AddNearbySceneObjects(region);
@@ -93,6 +101,8 @@ namespace InterestManagement
             {
                 foreach (var region in invisibleRegions)
                 {
+                    log.Info($"Remove region from scene object #{sceneObject.Id}");
+
                     regions.Remove(region);
                     region.Unsubscribe(sceneObject);
 
