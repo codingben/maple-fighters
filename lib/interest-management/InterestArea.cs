@@ -63,14 +63,16 @@ namespace InterestManagement
 
         private void UpdateNearbyRegions()
         {
+            // NOTE: Scene object size should be exactly same as region size,
+            // if not then it'll add scene object and remove it.
             SubscribeToVisibleRegions();
             UnsubscribeFromInvisibleRegions();
         }
 
         private void SubscribeToVisibleRegions()
         {
-            var transform = sceneObject.Transform;
-            var visibleRegions = matrixRegion.GetRegions(transform);
+            var visibleRegions = 
+                matrixRegion.GetRegions(sceneObject.Transform);
             if (visibleRegions != null)
             {
                 foreach (var region in visibleRegions)
@@ -95,8 +97,8 @@ namespace InterestManagement
 
         private void UnsubscribeFromInvisibleRegions()
         {
-            var transform = sceneObject.Transform;
-            var invisibleRegions = regions.Where(x => !x.IsOverlaps(transform))?.ToArray();
+            var invisibleRegions = 
+                regions.Where(x => !x.IsOverlaps(sceneObject.Transform))?.ToArray();
             if (invisibleRegions != null)
             {
                 foreach (var region in invisibleRegions)
