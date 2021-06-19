@@ -11,16 +11,12 @@ namespace InterestManagement
 
         public event Action<TSceneObject> SubscriberRemoved;
 
-        private static int id;
-
         private readonly ILogger log;
         private readonly Rectangle rectangle;
         private readonly HashSet<TSceneObject> sceneObjects;
 
         public Region(ILogger log, Rectangle rectangle)
         {
-            id++;
-
             this.log = log;
             this.rectangle = rectangle;
 
@@ -28,8 +24,6 @@ namespace InterestManagement
             SubscriberRemoved = null;
 
             sceneObjects = new HashSet<TSceneObject>();
-
-            log.Info($"A new region #{id}");
         }
 
         public void Dispose()
@@ -44,7 +38,7 @@ namespace InterestManagement
         {
             if (sceneObjects.Add(sceneObject))
             {
-                log.Info($"Scene object #{sceneObject.Id} subscribed to region #{id}");
+                log.Info($"Scene object #{sceneObject.Id} subscribed to new region");
 
                 SubscriberAdded?.Invoke(sceneObject);
             }
@@ -54,7 +48,7 @@ namespace InterestManagement
         {
             if (sceneObjects.Remove(sceneObject))
             {
-                log.Info($"Scene object #{sceneObject.Id} unsubscribed from region #{id}");
+                log.Info($"Scene object #{sceneObject.Id} unsubscribed from old region");
 
                 SubscriberRemoved?.Invoke(sceneObject);
             }
