@@ -175,14 +175,12 @@ namespace Scripts.UI.GameServerBrowser
         private void ShowRefreshImage()
         {
             gameServerBrowserView?.DisableJoinButton();
-            gameServerBrowserView?.DisableRefreshButton();
             gameServerBrowserView?.RefreshImage?.Show();
         }
 
         private void HideRefreshImage()
         {
             gameServerBrowserView?.DisableJoinButton();
-            gameServerBrowserView?.EnableRefreshButton();
             gameServerBrowserView?.RefreshImage?.Hide();
         }
     }
