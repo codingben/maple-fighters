@@ -1,5 +1,6 @@
 using System;
 using Game.Messages;
+using Game.MessageTools;
 using Scripts.Constants;
 using UnityEngine;
 
@@ -24,21 +25,33 @@ namespace Scripts.Services.GameApi
 
         public Action Disconnected { get; set; }
 
-        public Action<EnteredSceneMessage> SceneEntered { get; set; }
+        public UnityEvent<EnteredSceneMessage> SceneEntered { get; set; }
 
-        public Action<SceneChangedMessage> SceneChanged { get; set; }
+        public UnityEvent<SceneChangedMessage> SceneChanged { get; set; }
 
-        public Action<GameObjectsAddedMessage> GameObjectsAdded { get; set; }
+        public UnityEvent<GameObjectsAddedMessage> GameObjectsAdded { get; set; }
 
-        public Action<GameObjectsRemovedMessage> GameObjectsRemoved { get; set; }
+        public UnityEvent<GameObjectsRemovedMessage> GameObjectsRemoved { get; set; }
 
-        public Action<PositionChangedMessage> PositionChanged { get; set; }
+        public UnityEvent<PositionChangedMessage> PositionChanged { get; set; }
 
-        public Action<AnimationStateChangedMessage> AnimationStateChanged { get; set; }
+        public UnityEvent<AnimationStateChangedMessage> AnimationStateChanged { get; set; }
 
-        public Action<AttackedMessage> Attacked { get; set; }
+        public UnityEvent<AttackedMessage> Attacked { get; set; }
 
-        public Action<BubbleNotificationMessage> BubbleMessageReceived { get; set; }
+        public UnityEvent<BubbleNotificationMessage> BubbleMessageReceived { get; set; }
+
+        private void Awake()
+        {
+            SceneEntered = new UnityEvent<EnteredSceneMessage>();
+            SceneChanged = new UnityEvent<SceneChangedMessage>();
+            GameObjectsAdded = new UnityEvent<GameObjectsAddedMessage>();
+            GameObjectsRemoved = new UnityEvent<GameObjectsRemovedMessage>();
+            PositionChanged = new UnityEvent<PositionChangedMessage>();
+            AnimationStateChanged = new UnityEvent<AnimationStateChangedMessage>();
+            Attacked = new UnityEvent<AttackedMessage>();
+            BubbleMessageReceived = new UnityEvent<BubbleNotificationMessage>();
+        }
 
         private void Start()
         {

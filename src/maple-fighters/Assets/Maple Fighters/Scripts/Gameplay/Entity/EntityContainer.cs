@@ -33,17 +33,16 @@ namespace Scripts.Gameplay.Entity
         private void Start()
         {
             gameApi = ApiProvider.ProvideGameApi();
-            gameApi.SceneEntered += OnSceneEntered;
-            gameApi.GameObjectsAdded += OnGameObjectsAdded;
-            gameApi.GameObjectsRemoved += OnGameObjectsRemoved;
+            gameApi.SceneEntered.AddListener(OnSceneEntered);
+            gameApi.GameObjectsAdded.AddListener(OnGameObjectsAdded);
+            gameApi.GameObjectsRemoved.AddListener(OnGameObjectsRemoved);
         }
 
         private void OnDisable()
         {
-            // TODO: Remove SceneLeft event
-            gameApi.SceneEntered -= OnSceneEntered;
-            gameApi.GameObjectsAdded -= OnGameObjectsAdded;
-            gameApi.GameObjectsRemoved -= OnGameObjectsRemoved;
+            gameApi.SceneEntered.RemoveListener(OnSceneEntered);
+            gameApi.GameObjectsAdded.RemoveListener(OnGameObjectsAdded);
+            gameApi.GameObjectsRemoved.RemoveListener(OnGameObjectsRemoved);
         }
 
         private void OnSceneEntered(EnteredSceneMessage message)

@@ -18,12 +18,12 @@ namespace Scripts.Gameplay.Mobs
         private void Start()
         {
             gameApi = ApiProvider.ProvideGameApi();
-            gameApi.Attacked += OnPlayerAttacked;
+            gameApi.Attacked.AddListener(OnPlayerAttacked);
         }
 
         private void OnDisable()
         {
-            gameApi.Attacked -= OnPlayerAttacked;
+            gameApi.Attacked.RemoveListener(OnPlayerAttacked);
         }
 
         private void OnPlayerAttacked(AttackedMessage message)

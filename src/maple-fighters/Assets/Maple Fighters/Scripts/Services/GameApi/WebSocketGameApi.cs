@@ -26,21 +26,21 @@ namespace Scripts.Services.GameApi
 
         public Action Disconnected { get; set; }
 
-        public Action<EnteredSceneMessage> SceneEntered { get; set; }
+        public UnityEvent<EnteredSceneMessage> SceneEntered { get; set; }
 
-        public Action<SceneChangedMessage> SceneChanged { get; set; }
+        public UnityEvent<SceneChangedMessage> SceneChanged { get; set; }
 
-        public Action<GameObjectsAddedMessage> GameObjectsAdded { get; set; }
+        public UnityEvent<GameObjectsAddedMessage> GameObjectsAdded { get; set; }
 
-        public Action<GameObjectsRemovedMessage> GameObjectsRemoved { get; set; }
+        public UnityEvent<GameObjectsRemovedMessage> GameObjectsRemoved { get; set; }
 
-        public Action<PositionChangedMessage> PositionChanged { get; set; }
+        public UnityEvent<PositionChangedMessage> PositionChanged { get; set; }
 
-        public Action<AnimationStateChangedMessage> AnimationStateChanged { get; set; }
+        public UnityEvent<AnimationStateChangedMessage> AnimationStateChanged { get; set; }
 
-        public Action<AttackedMessage> Attacked { get; set; }
+        public UnityEvent<AttackedMessage> Attacked { get; set; }
 
-        public Action<BubbleNotificationMessage> BubbleMessageReceived { get; set; }
+        public UnityEvent<BubbleNotificationMessage> BubbleMessageReceived { get; set; }
 
         private IJsonSerializer jsonSerializer;
         private MessageHandlerCollection collection;
@@ -48,6 +48,17 @@ namespace Scripts.Services.GameApi
 
         private void Awake()
         {
+            // Properties
+            SceneEntered = new UnityEvent<EnteredSceneMessage>();
+            SceneChanged = new UnityEvent<SceneChangedMessage>();
+            GameObjectsAdded = new UnityEvent<GameObjectsAddedMessage>();
+            GameObjectsRemoved = new UnityEvent<GameObjectsRemovedMessage>();
+            PositionChanged = new UnityEvent<PositionChangedMessage>();
+            AnimationStateChanged = new UnityEvent<AnimationStateChangedMessage>();
+            Attacked = new UnityEvent<AttackedMessage>();
+            BubbleMessageReceived = new UnityEvent<BubbleNotificationMessage>();
+
+            // Variables
             jsonSerializer = new UnityJsonSerializer();
             collection = new MessageHandlerCollection(jsonSerializer);
         }
@@ -102,9 +113,9 @@ namespace Scripts.Services.GameApi
         private void OnOpen()
         {
             collection.Set(MessageCodes.EnteredScene, SceneEntered.ToMessageHandler());
-            collection.Set(MessageCodes.ChangeScene, SceneChanged.ToMessageHandler());
-            collection.Set(MessageCodes.GameObjectAdded, GameObjectsAdded.ToMessageHandler());
-            collection.Set(MessageCodes.GameObjectRemoved, GameObjectsRemoved.ToMessageHandler());
+            collection.Set(MessageCodes.SceneChanged, SceneChanged.ToMessageHandler());
+            collection.Set(MessageCodes.GameObjectsAdded, GameObjectsAdded.ToMessageHandler());
+            collection.Set(MessageCodes.GameObjectsRemoved, GameObjectsRemoved.ToMessageHandler());
             collection.Set(MessageCodes.PositionChanged, PositionChanged.ToMessageHandler());
             collection.Set(MessageCodes.AnimationStateChanged, AnimationStateChanged.ToMessageHandler());
             collection.Set(MessageCodes.Attacked, Attacked.ToMessageHandler());
@@ -116,9 +127,9 @@ namespace Scripts.Services.GameApi
         private void OnClose(WebSocketCloseCode closeCode)
         {
             collection.Unset(MessageCodes.EnteredScene);
-            collection.Unset(MessageCodes.ChangeScene);
-            collection.Unset(MessageCodes.GameObjectAdded);
-            collection.Unset(MessageCodes.GameObjectRemoved);
+            collection.Unset(MessageCodes.SceneChanged);
+            collection.Unset(MessageCodes.GameObjectsAdded);
+            collection.Unset(MessageCodes.GameObjectsRemoved);
             collection.Unset(MessageCodes.PositionChanged);
             collection.Unset(MessageCodes.AnimationStateChanged);
             collection.Unset(MessageCodes.Attacked);

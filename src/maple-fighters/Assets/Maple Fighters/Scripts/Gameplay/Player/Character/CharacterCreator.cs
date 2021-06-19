@@ -14,14 +14,14 @@ namespace Scripts.Gameplay.Player
         private void Start()
         {
             gameApi = ApiProvider.ProvideGameApi();
-            gameApi.SceneEntered += OnSceneEntered;
-            gameApi.GameObjectsAdded += OnGameObjectsAdded;
+            gameApi.SceneEntered.AddListener(OnSceneEntered);
+            gameApi.GameObjectsAdded.AddListener(OnGameObjectsAdded);
         }
 
         private void OnDisable()
         {
-            gameApi.SceneEntered -= OnSceneEntered;
-            gameApi.GameObjectsAdded -= OnGameObjectsAdded;
+            gameApi.SceneEntered.RemoveListener(OnSceneEntered);
+            gameApi.GameObjectsAdded.RemoveListener(OnGameObjectsAdded);
         }
 
         private void OnSceneEntered(EnteredSceneMessage message)

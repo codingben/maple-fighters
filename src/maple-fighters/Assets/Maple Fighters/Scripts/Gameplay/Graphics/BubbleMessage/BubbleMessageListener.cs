@@ -13,12 +13,12 @@ namespace Scripts.Gameplay.Graphics
         private void Start()
         {
             gameApi = ApiProvider.ProvideGameApi();
-            gameApi.BubbleMessageReceived += OnBubbleMessageReceived;
+            gameApi.BubbleMessageReceived.AddListener(OnBubbleMessageReceived);
         }
 
         private void OnDisable()
         {
-            gameApi.BubbleMessageReceived -= OnBubbleMessageReceived;
+            gameApi.BubbleMessageReceived.RemoveListener(OnBubbleMessageReceived);
         }
 
         private void OnBubbleMessageReceived(BubbleNotificationMessage message)
@@ -27,7 +27,7 @@ namespace Scripts.Gameplay.Graphics
 
             if (EntityContainer.GetInstance().GetRemoteEntity(id, out var entity))
             {
-                var owner = entity?.GameObject.transform;
+                var owner = entity.GameObject.transform;
                 var text = message.Message;
                 var time = message.Time;
 

@@ -29,14 +29,14 @@ namespace Scripts.Gameplay.Player
         private void Start()
         {
             gameApi = ApiProvider.ProvideGameApi();
-            gameApi.GameObjectsAdded += OnGameObjectsAdded;
-            gameApi.AnimationStateChanged += OnPlayerStateChanged;
+            gameApi.GameObjectsAdded.AddListener(OnGameObjectsAdded);
+            gameApi.AnimationStateChanged.AddListener(OnPlayerStateChanged);
         }
 
         private void OnDisable()
         {
-            gameApi.GameObjectsAdded -= OnGameObjectsAdded;
-            gameApi.AnimationStateChanged -= OnPlayerStateChanged;
+            gameApi.GameObjectsAdded.RemoveListener(OnGameObjectsAdded);
+            gameApi.AnimationStateChanged.RemoveListener(OnPlayerStateChanged);
         }
 
         public void SetPlayerState(PlayerStates playerState)

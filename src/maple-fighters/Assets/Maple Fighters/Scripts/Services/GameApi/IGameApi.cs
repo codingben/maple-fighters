@@ -1,5 +1,6 @@
 using System;
 using Game.Messages;
+using Game.MessageTools;
 
 namespace Scripts.Services.GameApi
 {
@@ -9,21 +10,21 @@ namespace Scripts.Services.GameApi
 
         Action Disconnected { get; set; }
 
-        Action<EnteredSceneMessage> SceneEntered { get; set; }
+        UnityEvent<EnteredSceneMessage> SceneEntered { get; set; }
 
-        Action<SceneChangedMessage> SceneChanged { get; set; }
+        UnityEvent<SceneChangedMessage> SceneChanged { get; set; }
 
-        Action<GameObjectsAddedMessage> GameObjectsAdded { get; set; }
+        UnityEvent<GameObjectsAddedMessage> GameObjectsAdded { get; set; }
 
-        Action<GameObjectsRemovedMessage> GameObjectsRemoved { get; set; }
+        UnityEvent<GameObjectsRemovedMessage> GameObjectsRemoved { get; set; }
 
-        Action<PositionChangedMessage> PositionChanged { get; set; }
+        UnityEvent<PositionChangedMessage> PositionChanged { get; set; }
 
-        Action<AnimationStateChangedMessage> AnimationStateChanged { get; set; }
+        UnityEvent<AnimationStateChangedMessage> AnimationStateChanged { get; set; }
 
-        Action<AttackedMessage> Attacked { get; set; }
+        UnityEvent<AttackedMessage> Attacked { get; set; }
 
-        Action<BubbleNotificationMessage> BubbleMessageReceived { get; set; }
+        UnityEvent<BubbleNotificationMessage> BubbleMessageReceived { get; set; }
 
         void SendMessage<T, M>(T code, M message)
             where T : IComparable, IFormattable, IConvertible

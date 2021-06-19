@@ -39,12 +39,12 @@ namespace Scripts.Gameplay.Entity
         private void Start()
         {
             gameApi = ApiProvider.ProvideGameApi();
-            gameApi.PositionChanged += OnPositionChanged;
+            gameApi.PositionChanged.AddListener(OnPositionChanged);
         }
 
         private void OnDisable()
         {
-            gameApi.PositionChanged -= OnPositionChanged;
+            gameApi.PositionChanged.RemoveListener(OnPositionChanged);
         }
 
         private void OnPositionChanged(PositionChangedMessage message)

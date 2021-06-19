@@ -1,13 +1,11 @@
-using System;
-
 namespace Game.MessageTools
 {
     public class MessageHandler<T> : IMessageHandler<T>
         where T : class
     {
-        private readonly Action<T> handler;
+        private readonly UnityEvent<T> handler;
 
-        public MessageHandler(Action<T> handler)
+        public MessageHandler(UnityEvent<T> handler)
         {
             this.handler = handler;
         }
