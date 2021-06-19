@@ -21,6 +21,7 @@ namespace InterestManagement
 
             rows = (int)(sceneSize.X / regionSize.X);
             columns = (int)(sceneSize.Y / regionSize.Y);
+            regions = new IRegion<TSceneObject>[rows, columns];
 
             var x1 = -(sceneSize.X / 2) + (regionSize.X / 2);
             var y1 = -(sceneSize.Y / 2) + (regionSize.Y / 2);
@@ -29,11 +30,6 @@ namespace InterestManagement
             {
                 for (var column = 0; column < columns; column++)
                 {
-                    if (regions == null)
-                    {
-                        regions = new IRegion<TSceneObject>[rows, columns];
-                    }
-
                     var x2 = x1 + (row * regionSize.X);
                     var y2 = y1 + (column * regionSize.Y);
                     var position = new Vector2(x2, y2);
