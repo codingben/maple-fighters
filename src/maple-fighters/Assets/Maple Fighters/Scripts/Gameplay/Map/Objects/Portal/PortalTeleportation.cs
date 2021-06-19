@@ -1,4 +1,5 @@
 ﻿using Game.Messages;
+using Scripts.Constants;
 using Scripts.Gameplay.Entity;
 using Scripts.Services;
 using Scripts.Services.GameApi;
@@ -12,22 +13,34 @@ namespace Scripts.Gameplay.Map.Objects
     {
         private IGameApi gameApi;
 
-        private void Awake()
+        private void Start()
         {
             gameApi = ApiProvider.ProvideGameApi();
-            gameApi.SceneChanged += OnSceneChanged;
+            gameApi.SceneChanged.AddListener(OnSceneChanged);
         }
 
-        private void OnDestroy()
+        private void OnDisable()
         {
-            gameApi.SceneChanged -= OnSceneChanged;
+            gameApi.SceneChanged.RemoveListener(OnSceneChanged);
         }
 
         private void OnSceneChanged(SceneChangedMessage message)
         {
             var mapIndex = (int)message.Map;
 
-            SceneManager.LoadScene(sceneBuildIndex: mapIndex);
+            switch (mapIndex)
+            {
+                case 0:
+                {
+                    SceneManager.LoadScene(SceneNames.Maps.Lobby);
+                    break;
+                }
+                case 1:
+                {
+                    SceneManager.LoadScene(SceneNames.Maps.TheDarkForest);
+                    break;
+                }
+            }
         }
 
         public void Teleport()
