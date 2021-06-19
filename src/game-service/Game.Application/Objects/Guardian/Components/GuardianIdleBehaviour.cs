@@ -44,7 +44,7 @@ namespace Game.Application.Objects.Components
         private void OnNearbyGameObjectAdded(IGameObject gameObject)
         {
             var id = gameObjectGetter.Get().Id;
-            var bubbleNotifier = gameObject.Components.Get<IBubbleNotifier>();
+            var bubbleNotifier = gameObject?.Components?.Get<IBubbleNotifier>();
             bubbleNotifier?.Notify(id, text, time);
         }
     }
