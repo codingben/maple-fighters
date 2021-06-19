@@ -10,10 +10,11 @@ namespace Game.Application.Objects
 
         protected override void OnAwake()
         {
+            var log = InterestManagementLogger.GetLogger();
             var gameObjectGetter = Components.Get<IGameObjectGetter>();
             var gameObject = gameObjectGetter.Get();
 
-            interestArea = new InterestArea<IGameObject>(gameObject);
+            interestArea = new InterestArea<IGameObject>(log, gameObject);
         }
 
         protected override void OnRemoved()
