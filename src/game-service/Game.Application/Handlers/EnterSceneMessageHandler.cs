@@ -30,36 +30,37 @@ namespace Game.Application.Handlers
 
             if (gameSceneCollection.TryGet((Map)map, out var gameScene))
             {
-                // Set character data
-                var name = message.CharacterName;
-                var characterType = message.CharacterType;
-                var spawnDirection = gameScene.SpawnData.Direction;
-
-                characterData.Name = name;
-                characterData.CharacterType = characterType;
-                characterData.SpawnDirection = spawnDirection;
-
-                // Set player transform
-                var position = gameScene.SpawnData.Position;
-                var size = gameScene.SpawnData.Size;
-
-                player.Transform.SetPosition(position);
-                player.Transform.SetSize(size);
-
-                // Set player map
-                presenceMapProvider.SetMap(gameScene);
-
-                // Add player to the game scene
-                gameScene.GameObjectCollection.Add(player);
-
-                // Add player body
-                var gameObject = player as PlayerGameObject;
-                if (gameObject != null)
+                if (gameScene.GameObjectCollection.Add(player))
                 {
-                    gameScene.PhysicsWorldManager.AddBody(gameObject.CreateBodyData());
-                }
+                    // Set character data
+                    var name = message.CharacterName;
+                    var characterType = message.CharacterType;
+                    var spawnDirection = gameScene.SpawnData.Direction;
 
-                SendEnteredSceneMessage();
+                    characterData.Name = name;
+                    characterData.CharacterType = characterType;
+                    characterData.SpawnDirection = spawnDirection;
+
+                    // Set player transform
+                    var position = gameScene.SpawnData.Position;
+                    var size = gameScene.SpawnData.Size;
+
+                    player.Transform.SetPosition(position);
+                    player.Transform.SetSize(size);
+
+                    // Set player map
+                    presenceMapProvider.SetMap(gameScene);
+
+                    // Add player body
+                    var gameObject = player as PlayerGameObject;
+                    if (gameObject != null)
+                    {
+                        var bodyData = gameObject.CreateBodyData();
+                        gameScene.PhysicsWorldManager.AddBody(bodyData);
+                    }
+
+                    SendEnteredSceneMessage();
+                }
             }
         }
 
