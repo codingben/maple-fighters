@@ -11,7 +11,7 @@ namespace Game.Application.Components
 
         IGameObjectCollection GameObjectCollection { get; }
 
-        IGamePlayerSpawnData GamePlayerSpawnData { get; }
+        ISpawnData SpawnData { get; }
 
         IPhysicsExecutor PhysicsExecutor { get; }
 

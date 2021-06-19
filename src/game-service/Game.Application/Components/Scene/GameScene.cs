@@ -11,7 +11,7 @@ namespace Game.Application.Components
 
         public IGameObjectCollection GameObjectCollection { get; }
 
-        public IGamePlayerSpawnData GamePlayerSpawnData { get; }
+        public ISpawnData SpawnData { get; }
 
         public IPhysicsExecutor PhysicsExecutor { get; }
 
@@ -19,9 +19,11 @@ namespace Game.Application.Components
 
         public GameScene(Vector2 sceneSize, Vector2 regionSize)
         {
-            MatrixRegion = new MatrixRegion<IGameObject>(sceneSize, regionSize);
+            var log = InterestManagementLogger.GetLogger();
+
+            MatrixRegion = new MatrixRegion<IGameObject>(log, sceneSize, regionSize);
             GameObjectCollection = new GameObjectCollection();
-            GamePlayerSpawnData = new GamePlayerSpawnData();
+            SpawnData = new PlayerSpawnData();
 
             var lowerBound = new Vector2(-100, -100);
             var upperBound = new Vector2(100, 100);
