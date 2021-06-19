@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Common.ComponentModel;
+using Common.MathematicsHelper;
 using InterestManagement;
 
 namespace Game.Application.Objects
@@ -14,11 +15,16 @@ namespace Game.Application.Objects
 
         public IComponents Components { get; }
 
-        public GameObject(int id, string name, IComponent[] components = null)
+        public GameObject(
+            int id,
+            string name,
+            Vector2 position,
+            Vector2 size,
+            IComponent[] components = null)
         {
             Id = id;
             Name = name;
-            Transform = new Transform();
+            Transform = new Transform(position, size);
 
             var collection = new List<IComponent>();
             collection.Add(new GameObjectGetter(this));

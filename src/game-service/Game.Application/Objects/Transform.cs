@@ -12,6 +12,12 @@ namespace Game.Application.Objects
 
         public event Action PositionChanged;
 
+        public Transform(Vector2 position, Vector2 size)
+        {
+            Position = position;
+            Size = size;
+        }
+
         public void SetPosition(Vector2 position)
         {
             Position = position;

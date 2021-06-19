@@ -1,5 +1,6 @@
 using Box2DX.Dynamics;
 using Common.ComponentModel;
+using Common.MathematicsHelper;
 using Game.Physics;
 
 namespace Game.Application.Objects
@@ -7,7 +8,7 @@ namespace Game.Application.Objects
     public class PlayerGameObject : GameObject
     {
         public PlayerGameObject(int id, IComponent[] components)
-            : base(id, name: "Player", components)
+            : base(id, name: "Player", position: Vector2.Zero, size: new Vector2(10, 5), components)
         {
             // Left blank intentionally
         }

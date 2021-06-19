@@ -7,10 +7,10 @@ namespace Game.Application.Objects
 {
     public class BlueSnailGameObject : GameObject
     {
-        public BlueSnailGameObject(int id, Vector2 position, IComponent[] components)
-            : base(id, name: "BlueSnail", components)
+        public BlueSnailGameObject(int id, Vector2 position, Vector2 size, IComponent[] components)
+            : base(id, name: "BlueSnail", position, size, components)
         {
-            Transform.SetPosition(position);
+            // Left blank intentionally
         }
 
         public NewBodyData CreateBodyData()
