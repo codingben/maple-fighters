@@ -4,6 +4,7 @@ using Common.ComponentModel;
 using Common.MathematicsHelper;
 using Coroutines;
 using Game.Physics;
+using Game.Messages;
 
 namespace Game.Application.Objects.Components
 {
@@ -11,7 +12,10 @@ namespace Game.Application.Objects.Components
     {
         private readonly ICoroutineRunner coroutineRunner;
         private readonly IPhysicsWorldManager physicsWorldManager;
+
+        private IProximityChecker proximityChecker;
         private IGameObject blueSnail;
+
         private BodyData? bodyData;
 
         public BlueSnailMoveBehaviour(ICoroutineRunner coroutineRunner, IPhysicsWorldManager physicsWorldManager)
@@ -22,14 +26,17 @@ namespace Game.Application.Objects.Components
 
         protected override void OnAwake()
         {
-            var gameObjectGetter = Components.Get<IGameObjectGetter>();
-            blueSnail = gameObjectGetter.Get();
+            proximityChecker = Components.Get<IProximityChecker>();
+            blueSnail = Components.Get<IGameObjectGetter>().Get();
+            blueSnail.Transform.PositionChanged += OnPositionChanged;
 
             coroutineRunner.Run(Move());
         }
 
         protected override void OnRemoved()
         {
+            blueSnail.Transform.PositionChanged -= OnPositionChanged;
+
             coroutineRunner.Stop(Move());
         }
 
@@ -38,8 +45,8 @@ namespace Game.Application.Objects.Components
             var id = blueSnail.Id;
             var position = blueSnail.Transform.Position;
             var direction = 0.1f;
-            var speed = 1.5f;
-            var distance = 15;
+            var speed = 0.5f;
+            var distance = 2f;
 
             if (physicsWorldManager.GetBody(id, out var value))
             {
@@ -61,7 +68,23 @@ namespace Game.Application.Objects.Components
                     body.SetXForm(position.FromVector2(), body.GetAngle());
                 }
 
+                blueSnail.Transform.SetPosition(position);
                 yield return null;
+            }
+        }
+
+        private void OnPositionChanged()
+        {
+            foreach (var gameObject in proximityChecker.GetNearbyGameObjects())
+            {
+                var message = new PositionChangedMessage()
+                {
+                    GameObjectId = blueSnail.Id,
+                    X = blueSnail.Transform.Position.X,
+                    Y = blueSnail.Transform.Position.Y
+                };
+                var messageSender = gameObject.Components.Get<IMessageSender>();
+                messageSender?.SendMessage((byte)MessageCodes.PositionChanged, message);
             }
         }
     }
