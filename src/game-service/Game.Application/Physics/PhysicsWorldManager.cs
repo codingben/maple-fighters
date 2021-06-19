@@ -58,11 +58,17 @@ namespace Game.Physics
             foreach (var newBodyData in addBodies)
             {
                 var id = newBodyData.Id;
+
+                if (bodies.ContainsKey(id))
+                {
+                    continue;
+                }
+
                 var body =
                     CreateBody(newBodyData.BodyDef, newBodyData.PolygonDef);
                 var bodyData = new BodyData(id, body);
 
-                bodies.Add(newBodyData.Id, bodyData);
+                bodies.Add(id, bodyData);
             }
 
             addBodies.Clear();
@@ -74,7 +80,12 @@ namespace Game.Physics
             {
                 world?.DestroyBody(bodyData.Body);
 
-                bodies.Remove(bodyData.Id);
+                var id = bodyData.Id;
+
+                if (bodies.ContainsKey(id))
+                {
+                    bodies.Remove(id);
+                }
             }
 
             removeBodies.Clear();
