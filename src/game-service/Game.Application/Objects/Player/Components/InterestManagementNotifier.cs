@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using Common.ComponentModel;
 using Game.Messages;
@@ -6,9 +5,9 @@ using Game.Messages;
 namespace Game.Application.Objects.Components
 {
     /// <summary>
-    /// This notifier is responsible for sending game objects to the client.
+    /// The interest management notifier is responsible for sending
+    /// game objects to the client.
     /// 
-    /// Here's how it works:
     /// ProximityChecker -> InterestManagementNotifier -> MessageSender -> GameClient
     /// </summary>
     public class InterestManagementNotifier : ComponentBase
@@ -39,8 +38,6 @@ namespace Game.Application.Objects.Components
 
         private void OnSceneObjectAdded(IGameObject gameObject)
         {
-            Console.WriteLine("OnSceneObjectAdded()");
-
             var messageCode = (byte)MessageCodes.GameObjectAdded;
             var message = new GameObjectsAddedMessage()
             {
@@ -55,8 +52,6 @@ namespace Game.Application.Objects.Components
 
         private void OnSceneObjectRemoved(IGameObject gameObject)
         {
-            Console.WriteLine("OnSceneObjectRemoved()");
-
             var messageCode = (byte)MessageCodes.GameObjectRemoved;
             var message = new GameObjectsRemovedMessage()
             {
@@ -71,8 +66,6 @@ namespace Game.Application.Objects.Components
 
         private void SceneObjectsAdded(IEnumerable<IGameObject> collection)
         {
-            Console.WriteLine("SceneObjectsAdded()");
-
             var gameObjectDatas = new List<GameObjectData>();
 
             foreach (var gameObject in collection)
@@ -91,8 +84,6 @@ namespace Game.Application.Objects.Components
 
         private void SceneObjectsRemoved(IEnumerable<IGameObject> collection)
         {
-            Console.WriteLine("SceneObjectsRemoved()");
-
             var gameObjectIds = new List<int>();
 
             foreach (var gameObject in collection)
@@ -113,8 +104,8 @@ namespace Game.Application.Objects.Components
         {
             // TODO: A better way to get character
             var characterData = gameObject.Components.Get<ICharacterData>();
-            var characterName = characterData?.GetName();
-            var characterType = characterData?.GetCharacterType() ?? 0;
+            var characterName = characterData?.Name;
+            var characterType = characterData?.CharacterType ?? 0;
 
             return new GameObjectData()
             {
