@@ -4,32 +4,10 @@ namespace Game.Application.Objects.Components
 {
     public class CharacterData : ComponentBase, ICharacterData
     {
-        private string name;
-        private byte characterType;
+        public string Name { get; set; }
 
-        public CharacterData()
-        {
-            // Left blank intentionally
-        }
+        public byte CharacterType { get; set; }
 
-        public void SetName(string name)
-        {
-            this.name = name;
-        }
-
-        public void SetCharacterType(byte characterType)
-        {
-            this.characterType = characterType;
-        }
-
-        public string GetName()
-        {
-            return name;
-        }
-
-        public byte GetCharacterType()
-        {
-            return characterType;
-        }
+        public float SpawnDirection { get; set; }
     }
 }

@@ -2,12 +2,10 @@ namespace Game.Application.Objects.Components
 {
     public interface ICharacterData
     {
-        void SetName(string name);
+        string Name { get; set; }
 
-        void SetCharacterType(byte characterType);
+        byte CharacterType { get; set; }
 
-        string GetName();
-
-        byte GetCharacterType();
+        float SpawnDirection { get; set; }
     }
 }
