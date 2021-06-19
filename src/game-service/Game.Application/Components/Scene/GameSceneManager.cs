@@ -63,7 +63,7 @@ namespace Game.Application.Components
                 var guardian = new GuardianGameObject(id, position, size, new IComponent[]
                 {
                     new PresenceMapProvider(gameScene),
-                    new GuardianIdleBehaviour(text: "Hello", time: 1)
+                    new GuardianIdleBehaviour(text: "Hello World!", time: 5)
                 });
 
                 yield return guardian;
@@ -88,7 +88,7 @@ namespace Game.Application.Components
         private IGameScene CreateTheDarkForest()
         {
             var gameScene = new GameScene(new Vector2(30, 30), new Vector2(10, 5));
-            gameScene.SpawnData.Position = new Vector2(-12.8f, -2.95f);
+            gameScene.SpawnData.Position = new Vector2(-12.8f, -12.95f);
             gameScene.SpawnData.Size = new Vector2(10, 5); // NOTE: Size should be the same as region size
             gameScene.SpawnData.Direction = -1;
 
