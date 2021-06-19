@@ -3,7 +3,6 @@ using Game.Messages;
 using Game.MessageTools;
 using Game.Application.Objects;
 using Game.Application.Objects.Components;
-using Common.MathematicsHelper;
 
 namespace Game.Application.Handlers
 {
@@ -28,36 +27,40 @@ namespace Game.Application.Handlers
         public void Handle(EnterSceneMessage message)
         {
             var map = message.Map;
-            var name = message.CharacterName;
-            var characterType = message.CharacterType;
-
-            characterData.SetName(name);
-            characterData.SetCharacterType(characterType);
 
             if (gameSceneCollection.TryGet((Map)map, out var gameScene))
             {
-                // Set's player position
-                var position = gameScene.GamePlayerSpawnData.GetPosition();
-                var direction = gameScene.GamePlayerSpawnData.GetDirection();
+                // Set character data
+                var name = message.CharacterName;
+                var characterType = message.CharacterType;
+                var spawnDirection = gameScene.SpawnData.Direction;
+
+                characterData.Name = name;
+                characterData.CharacterType = characterType;
+                characterData.SpawnDirection = spawnDirection;
+
+                // Set player transform
+                var position = gameScene.SpawnData.Position;
+                var size = gameScene.SpawnData.Size;
 
                 player.Transform.SetPosition(position);
-                player.Transform.SetSize(new Vector2(direction, y: 0));
+                player.Transform.SetSize(size);
 
-                // Set's map
+                // Set player map
                 presenceMapProvider.SetMap(gameScene);
 
-                // Adds to this game scene
-                var playerGameObject = player as PlayerGameObject;
-                if (playerGameObject != null)
+                // Add player to the game scene
+                gameScene.GameObjectCollection.Add(player);
+
+                // Add player body
+                var gameObject = player as PlayerGameObject;
+                if (gameObject != null)
                 {
-                    var bodyData = playerGameObject.CreateBodyData();
-
-                    gameScene.GameObjectCollection.Add(player);
-                    gameScene.PhysicsWorldManager.AddBody(bodyData);
+                    gameScene.PhysicsWorldManager.AddBody(gameObject.CreateBodyData());
                 }
-            }
 
-            SendEnteredSceneMessage();
+                SendEnteredSceneMessage();
+            }
         }
 
         private void SendEnteredSceneMessage()
@@ -68,9 +71,9 @@ namespace Game.Application.Handlers
                 GameObjectId = player.Id,
                 X = player.Transform.Position.X,
                 Y = player.Transform.Position.Y,
-                Direction = player.Transform.Size.X,
-                CharacterName = characterData.GetName(),
-                CharacterClass = characterData.GetCharacterType()
+                Direction = characterData.SpawnDirection,
+                CharacterName = characterData.Name,
+                CharacterClass = characterData.CharacterType
             };
 
             messageSender.SendMessage(messageCode, message);
