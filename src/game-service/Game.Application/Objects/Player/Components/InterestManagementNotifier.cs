@@ -38,7 +38,7 @@ namespace Game.Application.Objects.Components
 
         private void OnSceneObjectAdded(IGameObject gameObject)
         {
-            var messageCode = (byte)MessageCodes.GameObjectAdded;
+            var messageCode = (byte)MessageCodes.GameObjectsAdded;
             var message = new GameObjectsAddedMessage()
             {
                 GameObjects = new GameObjectData[]
@@ -52,7 +52,7 @@ namespace Game.Application.Objects.Components
 
         private void OnSceneObjectRemoved(IGameObject gameObject)
         {
-            var messageCode = (byte)MessageCodes.GameObjectRemoved;
+            var messageCode = (byte)MessageCodes.GameObjectsRemoved;
             var message = new GameObjectsRemovedMessage()
             {
                 GameObjectIds = new int[]
@@ -73,7 +73,7 @@ namespace Game.Application.Objects.Components
                 gameObjectDatas.Add(GetGameObjectData(gameObject));
             }
 
-            var messageCode = (byte)MessageCodes.GameObjectAdded;
+            var messageCode = (byte)MessageCodes.GameObjectsAdded;
             var message = new GameObjectsAddedMessage()
             {
                 GameObjects = gameObjectDatas.ToArray()
@@ -91,7 +91,7 @@ namespace Game.Application.Objects.Components
                 gameObjectIds.Add(gameObject.Id);
             }
 
-            var messageCode = (byte)MessageCodes.GameObjectRemoved;
+            var messageCode = (byte)MessageCodes.GameObjectsRemoved;
             var message = new GameObjectsRemovedMessage()
             {
                 GameObjectIds = gameObjectIds.ToArray()
