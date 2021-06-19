@@ -19,7 +19,7 @@ namespace Game.Application.Objects
             bodyDef.Position.Set(Transform.Position.X, Transform.Position.Y);
 
             var polygonDef = new PolygonDef();
-            polygonDef.SetAsBox(5, 5);
+            polygonDef.SetAsBox(0.3625f, 0.825f);
             polygonDef.Density = 0.0f;
             polygonDef.Filter = new FilterData()
             {

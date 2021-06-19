@@ -20,7 +20,7 @@ namespace Game.Application.Objects
             bodyDef.UserData = (IGameObject)this;
 
             var polygonDef = new PolygonDef();
-            polygonDef.SetAsBox(5, 5);
+            polygonDef.SetAsBox(0.3625f, 0.825f);
             polygonDef.Density = 0.1f;
             polygonDef.Filter = new FilterData()
             {
