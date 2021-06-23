@@ -26,21 +26,28 @@ namespace Scripts.Gameplay.Map.Objects
 
         private void OnSceneChanged(SceneChangedMessage message)
         {
-            var mapIndex = (int)message.Map;
-
-            switch (mapIndex)
+            var gameApi = ApiProvider.ProvideGameApi();
+            gameApi.Disconnected += () =>
             {
-                case 0:
+                var mapIndex = (int)message.Map;
+
+                switch (mapIndex)
                 {
-                    SceneManager.LoadScene(SceneNames.Maps.Lobby);
-                    break;
+                    case 0:
+                    {
+                        SceneManager.LoadScene(SceneNames.Maps.Lobby);
+                        break;
+                    }
+
+                    case 1:
+                    {
+                        SceneManager.LoadScene(SceneNames.Maps.TheDarkForest);
+                        break;
+                    }
                 }
-                case 1:
-                {
-                    SceneManager.LoadScene(SceneNames.Maps.TheDarkForest);
-                    break;
-                }
-            }
+            };
+
+            Destroy((Object)ApiProvider.ProvideGameApi());
         }
 
         public void Teleport()
