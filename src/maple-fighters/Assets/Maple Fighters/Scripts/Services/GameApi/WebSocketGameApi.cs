@@ -85,6 +85,16 @@ namespace Scripts.Services.GameApi
 #endif
         }
 
+        private async void OnDestroy()
+        {
+            if (webSocket != null)
+            {
+                await webSocket.Close();
+            }
+
+            ApiProvider.RemoveGameApiProvider();
+        }
+
         private async void OnApplicationQuit()
         {
             if (webSocket != null)

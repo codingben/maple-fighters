@@ -50,6 +50,11 @@ namespace Scripts.Services
             return gameApi;
         }
 
+        public static void RemoveGameApiProvider()
+        {
+            gameApi = null;
+        }
+
         private static IGameApi gameApi;
         #endregion
 
