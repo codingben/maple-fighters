@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Game.Messages;
+using Scripts.Gameplay.Graphics;
 using Scripts.Services;
 using Scripts.Services.GameApi;
 using UnityEngine;
@@ -117,8 +118,24 @@ namespace Scripts.Gameplay.Entity
         {
             var gameObject = entity.GameObject;
             var id = entity.Id;
-
-            Destroy(gameObject);
+            var fadeEffectProvider =
+                gameObject.GetComponent<IFadeEffectProvider>();
+            if (fadeEffectProvider != null)
+            {
+                var fadeEffect = fadeEffectProvider.Provide();
+                if (fadeEffect != null)
+                {
+                    fadeEffect.UnFadeAndDestroyGameObject();
+                }
+                else
+                {
+                    Destroy(gameObject);
+                }
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
 
             collection.Remove(id);
 
