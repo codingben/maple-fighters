@@ -1,5 +1,5 @@
-using System;
 using System.Collections;
+using System.Timers;
 using Common.ComponentModel;
 using Common.MathematicsHelper;
 using Coroutines;
@@ -17,25 +17,38 @@ namespace Game.Application.Objects.Components
         private IGameObject blueSnail;
 
         private BodyData? bodyData;
+        private float direction = 0.1f;
+
+        private readonly Timer positionSenderTimer;
+        private readonly Timer directionSetterTimer;
 
         public BlueSnailMoveBehaviour(ICoroutineRunner coroutineRunner, IPhysicsWorldManager physicsWorldManager)
         {
             this.coroutineRunner = coroutineRunner;
             this.physicsWorldManager = physicsWorldManager;
+
+            positionSenderTimer = new Timer(100);
+            directionSetterTimer = new Timer(3500);
+
+            directionSetterTimer.Elapsed += (s, e) => ChangeDirection();
+            positionSenderTimer.Elapsed += (s, e) => SendPosition();
         }
 
         protected override void OnAwake()
         {
             proximityChecker = Components.Get<IProximityChecker>();
             blueSnail = Components.Get<IGameObjectGetter>().Get();
-            blueSnail.Transform.PositionChanged += OnPositionChanged;
+
+            positionSenderTimer.Start();
+            directionSetterTimer.Start();
 
             coroutineRunner.Run(Move());
         }
 
         protected override void OnRemoved()
         {
-            blueSnail.Transform.PositionChanged -= OnPositionChanged;
+            positionSenderTimer.Dispose();
+            directionSetterTimer.Dispose();
 
             coroutineRunner.Stop(Move());
         }
@@ -44,9 +57,7 @@ namespace Game.Application.Objects.Components
         {
             var id = blueSnail.Id;
             var position = blueSnail.Transform.Position;
-            var direction = 0.1f;
-            var speed = 0.5f;
-            var distance = 2f;
+            var speed = 0.75f;
 
             if (physicsWorldManager.GetBody(id, out var value))
             {
@@ -56,11 +67,6 @@ namespace Game.Application.Objects.Components
             while (true)
             {
                 position += new Vector2(direction, 0) * speed;
-
-                if (Math.Abs(position.X) > distance)
-                {
-                    direction *= -1;
-                }
 
                 var body = bodyData?.Body;
                 if (body != null)
@@ -73,7 +79,7 @@ namespace Game.Application.Objects.Components
             }
         }
 
-        private void OnPositionChanged()
+        private void SendPosition()
         {
             foreach (var gameObject in proximityChecker.GetNearbyGameObjects())
             {
@@ -86,6 +92,11 @@ namespace Game.Application.Objects.Components
                 var messageSender = gameObject.Components.Get<IMessageSender>();
                 messageSender?.SendMessage((byte)MessageCodes.PositionChanged, message);
             }
+        }
+
+        private void ChangeDirection()
+        {
+            direction *= -1;
         }
     }
 }
