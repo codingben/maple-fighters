@@ -40,6 +40,7 @@ namespace Scripts.Gameplay.Graphics
 
         private Coroutine fadeCoroutine;
         private SpriteRenderer spriteRenderer;
+        private GameObject owner;
 
         private void Awake()
         {
@@ -58,6 +59,23 @@ namespace Scripts.Gameplay.Graphics
             }
         }
 
+        public void SetOwner(GameObject owner)
+        {
+            this.owner = owner;
+        }
+
+        public void UnFadeAndDestroyGameObject()
+        {
+            if (owner != null)
+            {
+                UnFade(() => Destroy(owner));
+            }
+            else
+            {
+                Debug.LogError("Fade effect owner is null.");
+            }
+        }
+
         public void Fade(Action onFinished = null)
         {
             if (fadeCoroutine != null)
@@ -65,7 +83,7 @@ namespace Scripts.Gameplay.Graphics
                 StopCoroutine(fadeCoroutine);
             }
 
-            fadeCoroutine = 
+            fadeCoroutine =
                 StartCoroutine(FadeRoutine(showSpeed, onFinished));
         }
 
