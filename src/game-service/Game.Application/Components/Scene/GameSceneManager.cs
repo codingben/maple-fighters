@@ -106,7 +106,7 @@ namespace Game.Application.Components
             // Blue Snail Game Object #1
             {
                 var id = idGenerator.GenerateId();
-                var position = new Vector2(-2f, -8.2f);
+                var position = new Vector2(-4f, -8.2f);
                 var size = new Vector2(10, 5); // NOTE: Size should be the same as region size
                 var coroutineRunner = gameScene.PhysicsExecutor.GetCoroutineRunner();
                 var physicsWorldManager = gameScene.PhysicsWorldManager;
