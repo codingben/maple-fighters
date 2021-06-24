@@ -30,13 +30,10 @@ namespace Scripts.Gameplay.Entity
             {
                 lastPosition = transform.position;
 
-                var x = transform.position.x;
-                var y = transform.position.y;
-
                 var message = new ChangePositionMessage()
                 {
-                    X = x,
-                    Y = y
+                    X = transform.position.x,
+                    Y = transform.position.y
                 };
 
                 gameApi?.SendMessage(MessageCodes.ChangePosition, message);
