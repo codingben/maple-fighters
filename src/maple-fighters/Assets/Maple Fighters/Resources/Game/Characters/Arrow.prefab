@@ -30,7 +30,7 @@ RectTransform:
   m_GameObject: {fileID: 1054580053479146}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.01, y: 0.01, z: 1}
+  m_LocalScale: {x: 0.01, y: 0.01, z: 0}
   m_Children: []
   m_Father: {fileID: 4745549069549146}
   m_RootOrder: 0
@@ -63,6 +63,8 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -180,6 +182,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -260,8 +263,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startingState: 0
-  showSpeed: 1.5
-  hideSpeed: 1
+  showSpeed: 2
+  hideSpeed: 2
   fadeColor: {r: 1, g: 1, b: 1, a: 1}
   unFadeColor: {r: 1, g: 1, b: 1, a: 0}
 --- !u!1 &1238605613363138
@@ -312,6 +315,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -476,13 +480,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerState: 3
-  properties:
-    Speed: 4
-    JumpHeight: 9
-    JumpForce: 4
-    RopeSpeed: 3
-    LadderSpeed: 3
-    JumpKey: 32
   overlapCircleRadius: 0.1
   groundLayerMask:
     serializedVersion: 2
