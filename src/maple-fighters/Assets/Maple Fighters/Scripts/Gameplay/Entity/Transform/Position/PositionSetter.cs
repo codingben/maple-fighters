@@ -25,15 +25,14 @@ namespace Scripts.Gameplay.Entity
         [SerializeField]
         private float greaterDistance;
 
-        private int entityId;
         private Vector3 newPosition;
 
+        private IEntity entity;
         private IGameApi gameApi;
 
         private void Awake()
         {
-            var entity = GetComponent<IEntity>();
-            entityId = entity.Id;
+            entity = GetComponent<IEntity>();
         }
 
         private void Start()
@@ -49,16 +48,19 @@ namespace Scripts.Gameplay.Entity
 
         private void OnPositionChanged(PositionChangedMessage message)
         {
+            var entityId = entity.Id;
             var id = message.GameObjectId;
             var x = message.X;
             var y = message.Y;
 
-            if (entityId == id)
+            if (entityId != id)
             {
-                newPosition = new Vector2(x, y);
-
-                PositionChanged?.Invoke(newPosition);
+                return;
             }
+
+            newPosition = new Vector2(x, y);
+
+            PositionChanged?.Invoke(newPosition);
         }
 
         private void Update()
