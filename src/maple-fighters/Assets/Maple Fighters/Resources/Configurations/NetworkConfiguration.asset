@@ -25,4 +25,4 @@ MonoBehaviour:
   - Name: Chat
     ServerType: 3
     Url: http://localhost:80/chat
-  HostingEnvironment: 1
+  HostingEnvironment: 0
