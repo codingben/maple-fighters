@@ -1,4 +1,7 @@
-﻿using UnityEngine;
+﻿using Scripts.Gameplay.Map.Climb;
+using Scripts.Gameplay.Map.Objects;
+using Scripts.Gameplay.Player.Behaviours;
+using UnityEngine;
 
 namespace Scripts.Gameplay.Player
 {
@@ -24,13 +27,15 @@ namespace Scripts.Gameplay.Player
 
         private void OnCharacterSpawned()
         {
-            var components = spawnedCharacter
-                .GetCharacter()
-                .GetComponents<MonoBehaviour>();
-
-            foreach (var component in components)
+            var character = spawnedCharacter
+                .GetCharacter();
+            if (character != null)
             {
-                Destroy(component);
+                Destroy(character.GetComponent<PlayerAttackedBehaviour>());
+                Destroy(character.GetComponent<RopeInteractor>());
+                Destroy(character.GetComponent<LadderInteractor>());
+                Destroy(character.GetComponent<PortalInteractor>());
+                Destroy(character.GetComponent<PlayerController>());
             }
         }
     }
