@@ -8,8 +8,12 @@ namespace Scripts.UI.Chat
 
         event Action<string> MessageAdded;
 
+        bool IsTypingBlocked { get; }
+
         string CharacterName { set; }
 
         void AddMessage(string message, UIChatMessageColor color = UIChatMessageColor.None);
+
+        void BlockOrUnblockTyping(bool block);
     }
 }

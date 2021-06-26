@@ -16,8 +16,24 @@ namespace Scripts.UI.Chat
         {
             chatInteractor = GetComponent<ChatInteractor>();
             focusStateController = FindObjectOfType<FocusStateController>();
+            focusStateController.FocusChanged += OnFocusStateChanged;
 
             CreateAndSubscribeToChatWindow();
+        }
+
+        private void OnFocusStateChanged(UIFocusState focusState)
+        {
+            if (chatView != null)
+            {
+                if (focusState == UIFocusState.UI)
+                {
+                    chatView.BlockOrUnblockTyping(block: true);
+                }
+                else if (chatView.IsTypingBlocked)
+                {
+                    chatView.BlockOrUnblockTyping(block: false);
+                }
+            }
         }
 
         private void CreateAndSubscribeToChatWindow()
@@ -68,6 +84,11 @@ namespace Scripts.UI.Chat
 
         private void OnFocusChanged(bool isFocused)
         {
+            if (focusStateController?.GetFocusState() == UIFocusState.UI)
+            {
+                return;
+            }
+
             var focusState = isFocused ? UIFocusState.Chat : UIFocusState.Game;
             focusStateController?.ChangeFocusState(focusState);
         }

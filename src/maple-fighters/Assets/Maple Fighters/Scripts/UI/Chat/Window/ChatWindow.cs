@@ -13,6 +13,11 @@ namespace Scripts.UI.Chat
 
         public event Action<string> MessageAdded;
 
+        public bool IsTypingBlocked
+        {
+            get => isTypingBlocked;
+        }
+
         public string CharacterName
         {
             set => characterName = value;
@@ -41,11 +46,17 @@ namespace Scripts.UI.Chat
             }
         }
 
+        private bool isTypingBlocked;
         private bool isTypingMessage;
         private string characterName;
 
         private void Update()
         {
+            if (isTypingBlocked)
+            {
+                return;
+            }
+
             if (IsTypingMessage)
             {
                 FocusableState();
@@ -95,6 +106,30 @@ namespace Scripts.UI.Chat
 
                 var isEmpty = chatText.text.Length == 0;
                 chatText.text += !isEmpty ? $"\n{message}" : $"{message}";
+            }
+        }
+
+        public void BlockOrUnblockTyping(bool block)
+        {
+            if (block)
+            {
+                if (chatInputField != null)
+                {
+                    chatInputField.text = string.Empty;
+                    chatInputField.gameObject.SetActive(false);
+                }
+
+                if (EventSystem.current != null)
+                {
+                    EventSystem.current.SetSelectedGameObject(null);
+                }
+
+                isTypingBlocked = true;
+                isTypingMessage = false;
+            }
+            else
+            {
+                isTypingBlocked = false;
             }
         }
 
