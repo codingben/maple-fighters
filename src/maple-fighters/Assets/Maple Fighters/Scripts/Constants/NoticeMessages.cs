@@ -20,6 +20,11 @@
             public const string UnknownError = "An unknown error has occurred. Please try again later.";
         }
 
+        public static class GameServer
+        {
+            public const string ConnectionClosed = "Connection to the game server has been lost. Please try again.";
+        }
+
         public static class GameServerBrowserView
         {
             public const string UnknownError = "An unknown error has occurred. Please try again later.";
