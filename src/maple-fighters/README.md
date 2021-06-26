@@ -45,6 +45,7 @@ All the game code lives here. This folder can be opened with Unity.
     │   │   ├── CharacterSelection
     │   │   ├── Chat
     │   │   ├── Focus
+    │   │   ├── GameServer
     │   │   ├── GameServerBrowser
     │   │   ├── MapScene
     │   │   ├── MenuBackground
