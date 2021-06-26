@@ -5,6 +5,8 @@ using Scripts.Gameplay.Map;
 using Scripts.Gameplay.Player;
 using Scripts.UI.Chat;
 using Scripts.UI.Focus;
+using Scripts.UI.GameServer;
+using Scripts.UI.Notice;
 using UI;
 using UnityEngine;
 
@@ -35,7 +37,9 @@ namespace Scripts.Gameplay.Creator
         private IEnumerable<Type> GetGUIControllersComponents()
         {
             yield return typeof(FocusStateController);
+            yield return typeof(NoticeController);
             yield return typeof(ChatController);
+            yield return typeof(GameServerDisconnectionHandler);
         }
 
         private void CreateGameComponents(IEnumerable<Type> components)
