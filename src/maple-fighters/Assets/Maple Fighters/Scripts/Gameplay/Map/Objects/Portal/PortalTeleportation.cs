@@ -1,4 +1,5 @@
 ﻿using Game.Messages;
+using NativeWebSocket;
 using Scripts.Constants;
 using Scripts.Gameplay.Entity;
 using Scripts.Services;
@@ -12,6 +13,7 @@ namespace Scripts.Gameplay.Map.Objects
     public class PortalTeleportation : MonoBehaviour
     {
         private IGameApi gameApi;
+        private int mapIndex;
 
         private void Start()
         {
@@ -26,28 +28,12 @@ namespace Scripts.Gameplay.Map.Objects
 
         private void OnSceneChanged(SceneChangedMessage message)
         {
+            mapIndex = (int)message.Map;
+            
             var gameApi = ApiProvider.ProvideGameApi();
-            gameApi.Disconnected += () =>
-            {
-                var mapIndex = (int)message.Map;
+            gameApi.Disconnected += OnDisconnected;
 
-                switch (mapIndex)
-                {
-                    case 0:
-                    {
-                        SceneManager.LoadScene(SceneNames.Maps.Lobby);
-                        break;
-                    }
-
-                    case 1:
-                    {
-                        SceneManager.LoadScene(SceneNames.Maps.TheDarkForest);
-                        break;
-                    }
-                }
-            };
-
-            Destroy((Object)ApiProvider.ProvideGameApi());
+            Destroy((Object)gameApi);
         }
 
         public void Teleport()
@@ -60,6 +46,29 @@ namespace Scripts.Gameplay.Map.Objects
             };
 
             gameApi?.SendMessage(MessageCodes.ChangeScene, message);
+        }
+
+        private void OnDisconnected(WebSocketCloseCode code)
+        {
+            if (code != WebSocketCloseCode.Normal)
+            {
+                return;
+            }
+
+            switch (mapIndex)
+            {
+                case 0:
+                {
+                    SceneManager.LoadScene(sceneName: SceneNames.Maps.Lobby);
+                    break;
+                }
+
+                case 1:
+                {
+                    SceneManager.LoadScene(sceneName: SceneNames.Maps.TheDarkForest);
+                    break;
+                }
+            }
         }
     }
 }
