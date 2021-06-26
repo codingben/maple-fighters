@@ -1,6 +1,7 @@
 using System;
 using Game.Messages;
 using Game.MessageTools;
+using NativeWebSocket;
 
 namespace Scripts.Services.GameApi
 {
@@ -8,7 +9,7 @@ namespace Scripts.Services.GameApi
     {
         Action Connected { get; set; }
 
-        Action Disconnected { get; set; }
+        Action<WebSocketCloseCode> Disconnected { get; set; }
 
         UnityEvent<EnteredSceneMessage> SceneEntered { get; set; }
 

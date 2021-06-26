@@ -24,7 +24,7 @@ namespace Scripts.Services.GameApi
 
         public Action Connected { get; set; }
 
-        public Action Disconnected { get; set; }
+        public Action<WebSocketCloseCode> Disconnected { get; set; }
 
         public UnityEvent<EnteredSceneMessage> SceneEntered { get; set; }
 
@@ -134,7 +134,7 @@ namespace Scripts.Services.GameApi
             Connected?.Invoke();
         }
 
-        private void OnClose(WebSocketCloseCode closeCode)
+        private void OnClose(WebSocketCloseCode code)
         {
             collection.Unset(MessageCodes.EnteredScene);
             collection.Unset(MessageCodes.SceneChanged);
@@ -145,7 +145,7 @@ namespace Scripts.Services.GameApi
             collection.Unset(MessageCodes.Attacked);
             collection.Unset(MessageCodes.BubbleNotification);
 
-            Disconnected?.Invoke();
+            Disconnected?.Invoke(code);
         }
 
         private void OnMessage(byte[] bytes)

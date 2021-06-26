@@ -1,6 +1,7 @@
 using System;
 using Game.Messages;
 using Game.MessageTools;
+using NativeWebSocket;
 using Scripts.Constants;
 using UnityEngine;
 
@@ -23,7 +24,7 @@ namespace Scripts.Services.GameApi
 
         public Action Connected { get; set; }
 
-        public Action Disconnected { get; set; }
+        public Action<WebSocketCloseCode> Disconnected { get; set; }
 
         public UnityEvent<EnteredSceneMessage> SceneEntered { get; set; }
 
@@ -60,7 +61,7 @@ namespace Scripts.Services.GameApi
 
         private void OnApplicationQuit()
         {
-            Disconnected?.Invoke();
+            // Left blank intentionally
         }
 
         void IGameApi.SendMessage<T, M>(T code, M message)
