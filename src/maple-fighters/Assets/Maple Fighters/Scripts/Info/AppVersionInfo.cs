@@ -6,8 +6,8 @@ namespace Scripts.Info
     {
         private void Awake()
         {
-            print($"Application version: {Application.version}");
-            print($"Unity version: {Application.unityVersion}");
+            Debug.Log($"Application version: {Application.version}");
+            Debug.Log($"Unity version: {Application.unityVersion}");
         }
     }
 }
