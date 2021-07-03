@@ -63,7 +63,7 @@ namespace Game.Application.Components
                 var guardian = new GuardianGameObject(id, position, size, new IComponent[]
                 {
                     new PresenceMapProvider(gameScene),
-                    new GuardianIdleBehaviour(text: "Hello! Enter <color=yellow>T</color> to teleport.", time: 5)
+                    new GuardianIdleBehaviour(text: "Hello! Enter <color=red>T</color> to teleport.", time: 5)
                 });
 
                 yield return guardian;
