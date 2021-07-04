@@ -3,6 +3,7 @@ using Game.Messages;
 using Game.MessageTools;
 using Game.Application.Objects;
 using Game.Application.Objects.Components;
+using Common.MathematicsHelper;
 
 namespace Game.Application.Handlers
 {
@@ -32,35 +33,46 @@ namespace Game.Application.Handlers
             {
                 if (gameScene.GameObjectCollection.Add(player))
                 {
-                    // Set character data
                     var name = message.CharacterName;
                     var characterType = message.CharacterType;
-                    var spawnDirection = gameScene.SpawnData.Direction;
-
-                    characterData.Name = name;
-                    characterData.CharacterType = characterType;
-                    characterData.SpawnDirection = spawnDirection;
-
-                    // Set player transform
+                    var direction = gameScene.SpawnData.Direction;
                     var position = gameScene.SpawnData.Position;
                     var size = gameScene.SpawnData.Size;
 
-                    player.Transform.SetPosition(position);
-                    player.Transform.SetSize(size);
-
-                    // Set player map
-                    presenceMapProvider.SetMap(gameScene);
-
-                    // Add player body
-                    var gameObject = player as PlayerGameObject;
-                    if (gameObject != null)
-                    {
-                        var bodyData = gameObject.CreateBodyData();
-                        gameScene.PhysicsWorldManager.AddBody(bodyData);
-                    }
-
+                    SetCharacterData(name, characterType, direction);
+                    SetPresenceScene(gameScene);
+                    SetTransform(position, size);
+                    SetBody(gameScene);
                     SendEnteredSceneMessage();
                 }
+            }
+        }
+
+        private void SetCharacterData(string name, byte type, float direction)
+        {
+            characterData.Name = name;
+            characterData.CharacterType = type;
+            characterData.SpawnDirection = direction;
+        }
+
+        private void SetPresenceScene(IGameScene scene)
+        {
+            presenceMapProvider?.SetMap(scene);
+        }
+
+        private void SetTransform(Vector2 position, Vector2 size)
+        {
+            player.Transform.SetPosition(position);
+            player.Transform.SetSize(size);
+        }
+
+        private void SetBody(IGameScene scene)
+        {
+            var gameObject = player as PlayerGameObject;
+            if (gameObject != null)
+            {
+                var bodyData = gameObject.CreateBodyData();
+                scene.PhysicsWorldManager.AddBody(bodyData);
             }
         }
 
