@@ -16,14 +16,17 @@ namespace Game.Application.Components
         {
             idGenerator = Components.Get<IIdGenerator>();
             gameSceneCollection = Components.Get<IGameSceneCollection>();
-
             gameSceneCollection.Add(Map.Lobby, CreateLobby());
             gameSceneCollection.Add(Map.TheDarkForest, CreateTheDarkForest());
         }
 
         protected override void OnRemoved()
         {
-            var maps = new[] { Map.Lobby, Map.TheDarkForest };
+            var maps = new[]
+            {
+                Map.Lobby,
+                Map.TheDarkForest
+            };
 
             foreach (var map in maps)
             {
@@ -36,10 +39,11 @@ namespace Game.Application.Components
             }
         }
 
-        // TODO: Refactor
         private IGameScene CreateLobby()
         {
-            var gameScene = new GameScene(new Vector2(40, 5), new Vector2(10, 5));
+            var sceneSize = new Vector2(40, 5);
+            var regionSize = new Vector2(10, 5);
+            var gameScene = new GameScene(sceneSize, regionSize);
             gameScene.SpawnData.Position = new Vector2(18, -1.86f);
             gameScene.SpawnData.Size = new Vector2(10, 5); // NOTE: Size should be the same as region size
             gameScene.SpawnData.Direction = 1;
@@ -52,7 +56,6 @@ namespace Game.Application.Components
             return gameScene;
         }
 
-        // TODO: Refactor
         private IEnumerable<IGameObject> CreateLobbyGameObjects(IGameScene gameScene)
         {
             // Guardian Game Object #1
@@ -84,10 +87,11 @@ namespace Game.Application.Components
             }
         }
 
-        // TODO: Refactor
         private IGameScene CreateTheDarkForest()
         {
-            var gameScene = new GameScene(new Vector2(30, 30), new Vector2(10, 5));
+            var sceneSize = new Vector2(30, 30);
+            var regionSize = new Vector2(10, 5);
+            var gameScene = new GameScene(sceneSize, regionSize);
             gameScene.SpawnData.Position = new Vector2(-12.8f, -12.95f);
             gameScene.SpawnData.Size = new Vector2(10, 5); // NOTE: Size should be the same as region size
             gameScene.SpawnData.Direction = -1;
@@ -100,7 +104,6 @@ namespace Game.Application.Components
             return gameScene;
         }
 
-        // TODO: Refactor
         private IEnumerable<IGameObject> CreateTheDarkForestGameObjects(IGameScene gameScene)
         {
             // Blue Snail Game Object #1
