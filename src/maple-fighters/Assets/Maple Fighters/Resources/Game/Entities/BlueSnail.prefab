@@ -457,7 +457,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aadeb51f8dfeace4592bf30670d5a528, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitAmount: {x: 10, y: 10}
+  hitAmount: {x: 6.5, y: 6.5}
 --- !u!114 &7634553161303522574
 MonoBehaviour:
   m_ObjectHideFlags: 0
