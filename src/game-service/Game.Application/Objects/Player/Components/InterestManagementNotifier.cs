@@ -113,7 +113,7 @@ namespace Game.Application.Objects.Components
                 Name = gameObject.Name,
                 X = gameObject.Transform.Position.X,
                 Y = gameObject.Transform.Position.Y,
-                Direction = gameObject.Transform.Size.X,
+                Direction = 0, // TODO: Get direction
                 CharacterName = characterName,
                 CharacterClass = characterType,
                 HasCharacter = characterData != null
