@@ -7,7 +7,6 @@
         Jumping,
         Falling,
         Rope,
-        Ladder,
-        Attacked
+        Ladder
     }
 }

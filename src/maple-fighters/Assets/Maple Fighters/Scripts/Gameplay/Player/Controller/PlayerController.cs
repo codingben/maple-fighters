@@ -45,7 +45,6 @@ namespace Scripts.Gameplay.Player
                 { PlayerStates.Moving, new PlayerMovingState(this) },
                 { PlayerStates.Jumping, new PlayerJumpingState(this) },
                 { PlayerStates.Falling, new PlayerFallingState(this) },
-                { PlayerStates.Attacked, new PlayerAttackedState(this) },
                 { PlayerStates.Rope, new PlayerRopeState(this) },
                 { PlayerStates.Ladder, new PlayerLadderState(this) }
             };
