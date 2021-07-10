@@ -54,6 +54,9 @@ namespace Scripts.Gameplay.Entity
             var x = message.X;
             var y = message.Y;
             var position = new Vector2(x, y);
+            var direction = message.Direction;
+
+            // TODO: Set direction
 
             localEntity = AddEntity(id, name, position);
         }
@@ -67,6 +70,8 @@ namespace Scripts.Gameplay.Entity
                 var id = gameObject.Id;
                 var name = gameObject.Name;
                 var position = new Vector2(gameObject.X, gameObject.Y);
+
+                // TODO: Set direction
 
                 if (collection.ContainsKey(id))
                 {
