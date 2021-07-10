@@ -23,15 +23,14 @@ namespace Scripts.Gameplay.Player.States
         private void FallDownWithDirection()
         {
             var horizontal = Utils.GetAxis(Axes.Horizontal);
-            var speed = playerController.GetProperties().Speed;
-
-            rigidbody2D.velocity =
-                new Vector2(horizontal * speed, rigidbody2D.velocity.y);
-
             if (horizontal != 0)
             {
                 var direction =
                     horizontal > 0 ? Direction.Right : Direction.Left;
+                var speed = playerController.GetProperties().Speed;
+
+                rigidbody2D.velocity =
+                    new Vector2(horizontal * speed, rigidbody2D.velocity.y);
 
                 playerController.ChangeDirection(direction);
             }
