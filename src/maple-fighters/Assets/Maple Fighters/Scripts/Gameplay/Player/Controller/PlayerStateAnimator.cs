@@ -41,12 +41,6 @@ namespace Scripts.Gameplay.Player
 
         public void SetPlayerState(PlayerStates playerState)
         {
-            // TODO: Hack
-            if (playerState == PlayerStates.Attacked)
-            {
-                playerState = PlayerStates.Falling;
-            }
-
             this.playerState = playerState;
 
             SetPlayerAnimationState(animator, playerState);
@@ -79,7 +73,7 @@ namespace Scripts.Gameplay.Player
 
         private void SendUpdatePlayerStateMessage()
         {
-            // TODO: Send animation enabled
+            // TODO: Send animation enabled (while in rope/ladder)
             var message = new ChangeAnimationStateMessage()
             {
                 AnimationState = (byte)playerState
