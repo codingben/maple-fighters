@@ -21,8 +21,8 @@ namespace Authenticator.API
             }
 
             services.AddSingleton<IDatabaseProvider>(new MongoDatabaseProvider(databaseUrl));
-            // services.AddSingleton<IAccountRepository, MongoAccountRepository>();
-            services.AddSingleton<IAccountRepository, InMemoryAccountRepository>();
+            services.AddSingleton<IAccountRepository, MongoAccountRepository>();
+            // services.AddSingleton<IAccountRepository, InMemoryAccountRepository>();
             services.AddTransient<ILoginService, LoginService>();
             services.AddTransient<IRegistrationService, RegistrationService>();
             services.AddControllers();
