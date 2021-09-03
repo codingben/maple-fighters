@@ -71,7 +71,7 @@ namespace InterestManagement
 
         private void SubscribeToVisibleRegions()
         {
-            var visibleRegions = 
+            var visibleRegions =
                 matrixRegion.GetRegions(sceneObject.Transform);
             if (visibleRegions != null)
             {
@@ -97,7 +97,7 @@ namespace InterestManagement
 
         private void UnsubscribeFromInvisibleRegions()
         {
-            var invisibleRegions = 
+            var invisibleRegions =
                 regions.Where(x => !x.IsOverlaps(sceneObject.Transform))?.ToArray();
             if (invisibleRegions != null)
             {
@@ -135,10 +135,7 @@ namespace InterestManagement
         {
             var transform = sceneObject.Transform;
 
-            if (IsOverlapsWithNearbyRegions(transform) == false)
-            {
-                nearbySceneObjects.Remove(sceneObject);
-            }
+            nearbySceneObjects.Remove(sceneObject);
         }
 
         private void AddNearbySceneObjects(IRegion<TSceneObject> region)
@@ -162,16 +159,8 @@ namespace InterestManagement
             {
                 var transform = subscriber.Transform;
 
-                if (IsOverlapsWithNearbyRegions(transform) == false)
-                {
-                    nearbySceneObjects.Remove(subscriber);
-                }
+                nearbySceneObjects.Remove(sceneObject);
             }
-        }
-
-        private bool IsOverlapsWithNearbyRegions(ITransform transform)
-        {
-            return regions.Any(region => region.IsOverlaps(transform));
         }
 
         public IEnumerable<IRegion<TSceneObject>> GetRegions()
