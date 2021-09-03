@@ -133,8 +133,6 @@ namespace InterestManagement
 
         private void OnSubscriberRemoved(TSceneObject sceneObject)
         {
-            var transform = sceneObject.Transform;
-
             nearbySceneObjects.Remove(sceneObject);
         }
 
@@ -157,9 +155,7 @@ namespace InterestManagement
 
             foreach (var subscriber in region.GetAllSubscribers())
             {
-                var transform = subscriber.Transform;
-
-                nearbySceneObjects.Remove(sceneObject);
+                nearbySceneObjects.Remove(subscriber);
             }
         }
 
