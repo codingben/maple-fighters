@@ -14,8 +14,13 @@ namespace Game.InterestManagement.Simulation
             var matrixRegion = scene.GetScene().MatrixRegion;
             var gameObject = GetComponent<IGameObject>();
 
-            interestArea = new InterestArea<IGameObject>(gameObject);
+            interestArea = new InterestArea<IGameObject>(gameObject, new UnityLogger());
             interestArea.SetMatrixRegion(matrixRegion);
+        }
+
+        private void OnDestroy()
+        {
+            interestArea?.Dispose();
         }
 
         public INearbySceneObjectsEvents<IGameObject> GetNearbySceneObjectsEvents()
