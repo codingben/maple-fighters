@@ -155,8 +155,20 @@ namespace InterestManagement
 
             foreach (var subscriber in region.GetAllSubscribers())
             {
+                var transform = subscriber.Transform;
+
+                if (IsOverlapsWithNearbyRegions(transform))
+                {
+                    continue;
+                }
+
                 nearbySceneObjects.Remove(subscriber);
             }
+        }
+
+        private bool IsOverlapsWithNearbyRegions(ITransform transform)
+        {
+            return regions.Any(region => region.IsOverlaps(transform));
         }
 
         public IEnumerable<IRegion<TSceneObject>> GetRegions()
