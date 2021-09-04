@@ -13,7 +13,7 @@ namespace InterestManagement
 
         private IMatrixRegion<TSceneObject> matrixRegion;
 
-        public InterestArea(ILogger log, TSceneObject sceneObject)
+        public InterestArea(TSceneObject sceneObject, ILogger log = null)
         {
             this.log = log;
             this.sceneObject = sceneObject;
@@ -24,7 +24,7 @@ namespace InterestManagement
 
         public void SetMatrixRegion(IMatrixRegion<TSceneObject> matrixRegion)
         {
-            log.Info($"Set matrix region for scene object #{sceneObject.Id}");
+            log?.Info($"Set matrix region for scene object #{sceneObject.Id}");
 
             this.matrixRegion = matrixRegion;
 
@@ -34,7 +34,7 @@ namespace InterestManagement
 
         public void Dispose()
         {
-            log.Info($"Remove all regions from scene object #{sceneObject.Id}");
+            log?.Info($"Remove all regions from scene object #{sceneObject.Id}");
 
             UnsubscribeFromPositionChanged();
             UnsubscribeFromAllRegions();
@@ -82,7 +82,7 @@ namespace InterestManagement
                         continue;
                     }
 
-                    log.Info($"Add region for scene object #{sceneObject.Id}");
+                    log?.Info($"Add region for scene object #{sceneObject.Id}");
 
                     regions.Add(region);
 
@@ -103,7 +103,7 @@ namespace InterestManagement
             {
                 foreach (var region in invisibleRegions)
                 {
-                    log.Info($"Remove region from scene object #{sceneObject.Id}");
+                    log?.Info($"Remove region from scene object #{sceneObject.Id}");
 
                     regions.Remove(region);
                     region.Unsubscribe(sceneObject);

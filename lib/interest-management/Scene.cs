@@ -7,10 +7,10 @@ namespace InterestManagement
     {
         public IMatrixRegion<TSceneObject> MatrixRegion { get; }
 
-        public Scene(ILogger log, Vector2 worldSize, Vector2 regionSize)
+        public Scene(Vector2 worldSize, Vector2 regionSize, ILogger log = null)
         {
             MatrixRegion =
-                new MatrixRegion<TSceneObject>(log, worldSize, regionSize);
+                new MatrixRegion<TSceneObject>(worldSize, regionSize, log);
         }
 
         public void Dispose()

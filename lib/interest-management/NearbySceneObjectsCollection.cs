@@ -18,7 +18,7 @@ namespace InterestManagement
         private readonly ILogger log;
         private readonly HashSet<TSceneObject> collection;
 
-        public NearbySceneObjectsCollection(ILogger log)
+        public NearbySceneObjectsCollection(ILogger log = null)
         {
             this.log = log;
 
@@ -31,7 +31,7 @@ namespace InterestManagement
                 sceneObjects.Where(x => collection.Add(x)).ToArray();
             if (visibleSceneObjects.Length != 0)
             {
-                log.Info("NearbySceneObjectsCollection::Add(sceneObjects)");
+                log?.Info("NearbySceneObjectsCollection::Add(sceneObjects)");
 
                 SceneObjectsAdded?.Invoke(visibleSceneObjects);
             }
@@ -41,7 +41,7 @@ namespace InterestManagement
         {
             if (collection.Add(sceneObject))
             {
-                log.Info("NearbySceneObjectsCollection::Add(sceneObject)");
+                log?.Info("NearbySceneObjectsCollection::Add(sceneObject)");
 
                 SceneObjectAdded?.Invoke(sceneObject);
             }
@@ -53,7 +53,7 @@ namespace InterestManagement
                 sceneObjects.Where(x => collection.Remove(x)).ToArray();
             if (invisibleSceneObjects.Length != 0)
             {
-                log.Info("NearbySceneObjectsCollection::Remove(sceneObjects)");
+                log?.Info("NearbySceneObjectsCollection::Remove(sceneObjects)");
 
                 SceneObjectsRemoved?.Invoke(invisibleSceneObjects);
             }
@@ -63,7 +63,7 @@ namespace InterestManagement
         {
             if (collection.Remove(sceneObject))
             {
-                log.Info("NearbySceneObjectsCollection::Remove(sceneObject)");
+                log?.Info("NearbySceneObjectsCollection::Remove(sceneObject)");
 
                 SceneObjectRemoved?.Invoke(sceneObject);
             }

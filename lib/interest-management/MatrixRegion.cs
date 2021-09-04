@@ -14,7 +14,7 @@ namespace InterestManagement
         private readonly IRegion<TSceneObject>[,] regions;
         private readonly SceneBoundaries sceneBoundaries;
 
-        public MatrixRegion(ILogger log, Vector2 sceneSize, Vector2 regionSize)
+        public MatrixRegion(Vector2 sceneSize, Vector2 regionSize, ILogger log = null)
         {
             this.sceneSize = sceneSize;
             this.regionSize = regionSize;
@@ -35,7 +35,7 @@ namespace InterestManagement
                     var position = new Vector2(x2, y2);
 
                     regions[row, column] =
-                        new Region<TSceneObject>(log, new Rectangle(position, regionSize));
+                        new Region<TSceneObject>(new Rectangle(position, regionSize), log);
                 }
             }
 
