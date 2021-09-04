@@ -14,7 +14,7 @@ namespace Game.Application.Objects
             var gameObjectGetter = Components.Get<IGameObjectGetter>();
             var gameObject = gameObjectGetter.Get();
 
-            interestArea = new InterestArea<IGameObject>(log, gameObject);
+            interestArea = new InterestArea<IGameObject>(gameObject, log);
         }
 
         protected override void OnRemoved()

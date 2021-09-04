@@ -21,7 +21,7 @@ namespace Game.Application.Components
         {
             var log = InterestManagementLogger.GetLogger();
 
-            MatrixRegion = new MatrixRegion<IGameObject>(log, sceneSize, regionSize);
+            MatrixRegion = new MatrixRegion<IGameObject>(sceneSize, regionSize, log);
             GameObjectCollection = new GameObjectCollection();
             SpawnData = new PlayerSpawnData();
 

@@ -50,7 +50,7 @@ namespace Game.Application
                 new PhysicsBodyPositionSetter()
             });
 
-            Console.WriteLine($"A new client {id} is connected.");
+            Console.WriteLine($"A new client #{id} is connected.");
         }
 
         private void OnConnectionEstablished()
