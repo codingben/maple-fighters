@@ -81,7 +81,7 @@ You should be able to access it at `http://localhost`.
 
 ## Contributing
 
-Feel free to contribute and make any changes to the game itself.
+Feel free to contribute and make any changes to the game itself. Please open an issue to discuss the changes before sending the PR.
 
 Please follow the [Conventional Commits](https://www.conventionalcommits.org/) specification.
 
