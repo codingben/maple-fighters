@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
     frontend:
-        image: nginx:alpine
+        image: nginx:1.20.1-alpine
         container_name: frontend
         build:
             context: ./src/frontend
@@ -27,7 +27,7 @@ services:
         external_links:
             - mongo
         environment:
-            ASPNETCORE_ENVIRONMENT: Development
+            ASPNETCORE_ENVIRONMENT: Production
             ASPNETCORE_URLS: http://0.0.0.0:50050
             DATABASE_URL: mongodb://mongo:27017/maple_fighters
 
@@ -66,7 +66,7 @@ services:
             IP_ADDRESS: 0.0.0.0:50052
 
     postgres:
-        image: postgres:latest
+        image: postgres:13
         container_name: character-db
         expose:
             - 5432
@@ -75,7 +75,7 @@ services:
             POSTGRES_PASSWORD: postgres
 
     mongo:
-        image: mongo
+        image: mongo:5.0.2
         container_name: user-db
         expose:
             - 27017
