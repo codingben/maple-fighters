@@ -60,7 +60,7 @@ namespace Scripts.UI.Authenticator
         {
             switch (statusCode)
             {
-                case 200: // Ok    
+                case (long)StatusCodes.Ok:
                 {
                     var userMetadata = FindObjectOfType<UserMetadata>();
                     if (userMetadata != null)
@@ -72,7 +72,7 @@ namespace Scripts.UI.Authenticator
                     break;
                 }
 
-                case 404: // Not Found
+                case (long)StatusCodes.NotFound:
                 {
                     var errorMessage = ErrorData.FromJsonToErrorMessage(json);
                     if (errorMessage == string.Empty)
@@ -98,13 +98,13 @@ namespace Scripts.UI.Authenticator
         {
             switch (statusCode)
             {
-                case 200: // Ok
+                case (long)StatusCodes.Ok:
                 {
                     onRegistrationFinishedListener.OnRegistrationSucceed();
                     break;
                 }
 
-                case 400: // Bad Request
+                case (long)StatusCodes.BadRequest:
                 {
                     var errorMessage = ErrorData.FromJsonToErrorMessage(json);
                     if (errorMessage == string.Empty)

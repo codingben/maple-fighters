@@ -64,13 +64,13 @@ namespace Scripts.UI.CharacterSelection
         {
             switch (statusCode)
             {
-                case 201: // Created
+                case (long)StatusCodes.Created:
                 {
                     onCharacterCreationFinishedListener.OnCharacterCreated();
                     break;
                 }
 
-                case 400: // Bad Request
+                case (long)StatusCodes.BadRequest:
                 {
                     var reason = UICharacterCreationFailed.NameAlreadyInUse;
 
