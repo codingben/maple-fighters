@@ -10,10 +10,10 @@ namespace Scripts.Services.CharacterProviderApi
 
         Action<long, string> GetCharactersCallback { get; set; }
 
-        void CreateCharacter(int userid, string charactername, int index, int classindex);
+        void CreateCharacter(string userid, string charactername, int index, int classindex);
 
         void DeleteCharacter(int characterid);
 
-        void GetCharacters(int userid);
+        void GetCharacters(string userid);
     }
 }

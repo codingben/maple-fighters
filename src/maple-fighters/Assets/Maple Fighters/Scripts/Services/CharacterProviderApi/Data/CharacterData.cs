@@ -7,7 +7,7 @@ namespace Scripts.Services.CharacterProviderApi
     {
         public int id;
 
-        public int userid;
+        public string userid;
 
         public string charactername;
 

@@ -38,7 +38,7 @@ namespace Scripts.Services.CharacterProviderApi
         }
 
         public void CreateCharacter(
-            int userid,
+            string userid,
             string charactername,
             int index,
             int classindex)
@@ -108,7 +108,7 @@ namespace Scripts.Services.CharacterProviderApi
             }
         }
 
-        public void GetCharacters(int userid)
+        public void GetCharacters(string userid)
         {
             var items = characters.Where(x => x.userid == userid).ToArray();
             var statusCode = 200;

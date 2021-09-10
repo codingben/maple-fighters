@@ -43,7 +43,7 @@ namespace Scripts.Services.CharacterProviderApi
         }
 
         public void CreateCharacter(
-            int userid,
+            string userid,
             string charactername,
             int index,
             int classindex)
@@ -80,7 +80,7 @@ namespace Scripts.Services.CharacterProviderApi
             DeleteCharacterCallback?.Invoke(statusCode, json);
         }
 
-        public void GetCharacters(int userid)
+        public void GetCharacters(string userid)
         {
             RestClient.Get($"{url}/characters/{userid}", OnGetCharactersCallback);
         }
