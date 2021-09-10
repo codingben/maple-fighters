@@ -32,16 +32,17 @@ namespace Scripts.Gameplay.Map.Dummy
 
         private void CreateLocalDummyEntity()
         {
-            var userName = UserData.CharacterData.Name;
-            if (userName == null)
+            var userMetadata = FindObjectOfType<UserMetadata>();
+            var characterName = userMetadata?.CharacterName;
+            if (characterName == null)
             {
-                userName = dummyCharacter.CharacterName;
+                characterName = dummyCharacter.CharacterName;
             }
 
-            var userCharacterType = UserData.CharacterData.Type;
-            if (userCharacterType == -1)
+            var characterType = userMetadata?.CharacterType;
+            if (characterType == null)
             {
-                userCharacterType = (byte)dummyCharacter.CharacterClass;
+                characterType = (byte)dummyCharacter.CharacterClass;
             }
 
             var message = new EnteredSceneMessage()
@@ -49,8 +50,8 @@ namespace Scripts.Gameplay.Map.Dummy
                 GameObjectId = dummyCharacter.DummyEntity.Id,
                 X = dummyCharacter.DummyEntity.Position.x,
                 Y = dummyCharacter.DummyEntity.Position.y,
-                CharacterName = userName,
-                CharacterClass = (byte)userCharacterType
+                CharacterName = characterName,
+                CharacterClass = (byte)characterType
             };
 
             var direction = dummyCharacter.DummyEntity.Direction;

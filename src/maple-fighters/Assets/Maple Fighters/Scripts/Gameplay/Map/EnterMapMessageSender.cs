@@ -35,11 +35,18 @@ namespace Scripts.Gameplay.Map
                 return;
             }
 
+            var userMetadata = FindObjectOfType<UserMetadata>();
+            if (userMetadata == null)
+            {
+                Debug.LogWarning($"Could not find user metadata to enter scene.");
+                return;
+            }
+
             var message = new EnterSceneMessage()
             {
                 Map = (byte)map,
-                CharacterName = UserData.CharacterData.Name,
-                CharacterType = (byte)UserData.CharacterData.Type
+                CharacterName = userMetadata.CharacterName,
+                CharacterType = (byte)userMetadata.CharacterType
             };
 
             gameApi?.SendMessage(MessageCodes.EnterScene, message);
