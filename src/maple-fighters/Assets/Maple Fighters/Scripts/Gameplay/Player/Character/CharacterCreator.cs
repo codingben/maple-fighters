@@ -49,7 +49,7 @@ namespace Scripts.Gameplay.Player
             }
         }
 
-        // TODO: Hack
+        // NOTE: Hack
         private IEnumerator WaitFrameAndSpawn(int entityId, CharacterData characterData)
         {
             yield return null;

@@ -56,7 +56,7 @@ namespace Scripts.UI.GameServerBrowser
 
         public void SetGameServerConnections(int min, int max)
         {
-            // TODO: Implement this
+            // TODO: Implement
         }
 
         public void SelectButton()

@@ -102,7 +102,6 @@ namespace Game.Application.Objects.Components
 
         private GameObjectData GetGameObjectData(IGameObject gameObject)
         {
-            // TODO: A better way to get character
             var characterData = gameObject.Components.Get<ICharacterData>();
             var characterName = characterData?.Name;
             var characterType = characterData?.CharacterType ?? 0;

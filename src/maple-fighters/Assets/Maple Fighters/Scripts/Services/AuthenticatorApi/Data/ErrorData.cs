@@ -14,7 +14,6 @@ namespace Scripts.Services.AuthenticatorApi
 
             if (errorMessages.Length != 0)
             {
-                // TODO: Make sure won't be more than one error message
                 errorMessage = errorMessages[0];
             }
 

@@ -22,7 +22,7 @@ namespace Scripts.Services.ChatApi
 
         public void SendChatMessage(string message)
         {
-            // TODO: Implement this
+            // TODO: Implement
         }
     }
 }
