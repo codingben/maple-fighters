@@ -65,7 +65,20 @@ namespace Scripts.Services.GameApi
 
         private async void Start()
         {
-            var url = UserData.GameServerUrl;
+            var userMetadata = FindObjectOfType<UserMetadata>();
+            if (userMetadata == null)
+            {
+                Debug.LogWarning("Could not find user metadata to connect to the game server.");
+                return;
+            }
+
+            var url = userMetadata.GameServerUrl;
+
+            if (string.IsNullOrEmpty(url))
+            {
+                Debug.LogWarning("Game server url is not set.");
+                return;
+            }
 
             webSocket = new WebSocket(url);
             webSocket.OnOpen += OnOpen;
