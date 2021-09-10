@@ -62,9 +62,12 @@ namespace Scripts.UI.Authenticator
             {
                 case 200: // Ok    
                 {
-                    // TODO: Get user id from the server
-                    UserData.Id = 1;
-
+                    var userMetadata = FindObjectOfType<UserMetadata>();
+                    if (userMetadata != null)
+                    {
+                        userMetadata.UserData = UserData.FromJson(json);
+                    }
+                    
                     onLoginFinishedListener.OnLoginSucceed();
                     break;
                 }
