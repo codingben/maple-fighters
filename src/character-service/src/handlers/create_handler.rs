@@ -7,7 +7,7 @@ use actix_web::{web, web::Data, web::Json, Error, HttpResponse};
 pub async fn create(pool: Data<Pool>, data: Json<NewCharacter>) -> Result<HttpResponse, Error> {
     let conn = pool.get().unwrap();
     let character_data = data.into_inner();
-    let userid = character_data.userid;
+    let userid = character_data.userid.to_owned();
     let name = character_data.charactername.to_owned();
     let characters = characters::get_all_by_user_id(userid, &conn);
 

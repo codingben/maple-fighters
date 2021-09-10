@@ -22,7 +22,7 @@ pub fn get_by_id(id: i32, conn: &PgConnection) -> Result<Vec<Character>, Error> 
     db_characters.find(id).load::<Character>(conn)
 }
 
-pub fn get_all_by_user_id(userid: i32, conn: &PgConnection) -> Result<Vec<Character>, Error> {
+pub fn get_all_by_user_id(userid: String, conn: &PgConnection) -> Result<Vec<Character>, Error> {
     db_characters
         .filter(characters::userid.eq(userid))
         .load::<Character>(conn)
