@@ -40,10 +40,14 @@ namespace Scripts.UI.GameServerBrowser
 
         public void SetGameServerInfo(UIGameServerButtonData gameServerData)
         {
-            var protocol = gameServerData.Protocol;
-            var url = gameServerData.Url;
+            var userMetadata = FindObjectOfType<UserMetadata>();
+            if (userMetadata != null)
+            {
+                var protocol = gameServerData.Protocol;
+                var url = gameServerData.Url;
 
-            UserData.GameServerUrl = $"{protocol}://{url}";
+                userMetadata.GameServerUrl = $"{protocol}://{url}";
+            }
         }
 
         private void OnGetGamesCallback(long statusCode, string json)
