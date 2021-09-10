@@ -51,7 +51,8 @@ namespace Scripts.UI.CharacterSelection
 
         public void CreateCharacter(int index, UINewCharacterDetails characterDetails)
         {
-            var userId = UserData.Id;
+            var userMetadata = FindObjectOfType<UserMetadata>();
+            var userId = userMetadata?.UserData.id ?? string.Empty;
             var characterIndex = index;
             var characterName = characterDetails.GetCharacterName();
             var classIndex = (int)characterDetails.GetCharacterClass();
@@ -99,7 +100,8 @@ namespace Scripts.UI.CharacterSelection
 
         public void GetCharacters()
         {
-            var userId = UserData.Id;
+            var userMetadata = FindObjectOfType<UserMetadata>();
+            var userId = userMetadata?.UserData.id ?? string.Empty;
 
             characterProviderApi?.GetCharacters(userId);
         }
@@ -158,9 +160,9 @@ namespace Scripts.UI.CharacterSelection
             // NOTE: Make sure the "index" parameter is like this array
             return new CharacterData[3]
             {
-                new CharacterData { userid = UserData.Id, charactername = "Sample", index = 0, classindex = 0 },
-                new CharacterData { userid = UserData.Id, charactername = "Sample", index = 1, classindex = 0 },
-                new CharacterData { userid = UserData.Id, charactername = "Sample", index = 2, classindex = 0 }
+                new CharacterData { userid = string.Empty, charactername = "Sample", index = 0, classindex = 0 },
+                new CharacterData { userid = string.Empty, charactername = "Sample", index = 1, classindex = 0 },
+                new CharacterData { userid = string.Empty, charactername = "Sample", index = 2, classindex = 0 }
             };
         }
 
@@ -168,9 +170,12 @@ namespace Scripts.UI.CharacterSelection
         {
             // TODO: Get map name from the server
             var mapName = SceneNames.Maps.Lobby;
-
-            UserData.CharacterData.Type = characterType;
-            UserData.CharacterData.Name = characterName;
+            var userMetadata = FindObjectOfType<UserMetadata>();
+            if (userMetadata != null)
+            {
+                userMetadata.CharacterType = characterType;
+                userMetadata.CharacterName = characterName;
+            }
 
             onCharacterValidationFinishedListener.OnCharacterValidated(mapName);
         }
