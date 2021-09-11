@@ -1,0 +1,14 @@
+{
+  "name": "chat-service",
+  "version": "1.0.0",
+  "description": "A chat service for communication between players.",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js"
+  },
+  "author": "Ben Ukhanov <ben.ukhanov@gmail.com>",
+  "dependencies": {
+    "dotenv": "^10.0.0",
+    "ws": "^8.2.2"
+  }
+}
