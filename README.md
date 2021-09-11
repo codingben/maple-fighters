@@ -40,6 +40,7 @@ Feel free to play on the web platform [here](https://ukben.dev/maple-fighters). 
 | [game-service](./src/game-service/Game.Application)                   | C#            | Creates a player in the game world to play with others. 	|
 | [gameprovider-service](./src/gameprovider-service)   | Rust          | Provides a list of game servers. 																|
 | [character-service](./src/character-service)         | Rust          | Creates and receives player character data. 																|
+| [chat-service](./src/chat-service)         | Node.js          | Communication between players during the game. 																|
 
 ## Folder Structure
 
@@ -54,6 +55,7 @@ Feel free to play on the web platform [here](https://ukben.dev/maple-fighters). 
 └── src
     ├── auth-service
     ├── character-service
+    ├── chat-service
     ├── frontend
     ├── gameprovider-service
     ├── game-service
