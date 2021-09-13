@@ -13,6 +13,7 @@ services:
             - character-service
             - game-service
             - gameprovider-service
+            - chat-service
         volumes:
             - ./src/frontend/nginx.conf:/etc/nginx/nginx.conf
 
@@ -64,6 +65,15 @@ services:
             RUST_LOG: info
             RUST_BACKTRACE: full
             IP_ADDRESS: 0.0.0.0:50052
+
+    chat-service:
+        image: chat-service:1.0.0
+        build:
+            context: ./src/chat-service
+        expose:
+            - 50054
+        environment:
+            PORT: 50054
 
     postgres:
         image: postgres:13
