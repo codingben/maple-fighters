@@ -12,6 +12,8 @@ namespace Scripts.UI.Authenticator
 
         public event Action CreateAccountButtonClicked;
 
+        public event Action LoginAsGuestButtonClicked;
+
         public string Email
         {
             set
@@ -48,16 +50,21 @@ namespace Scripts.UI.Authenticator
         [SerializeField]
         private Button createAccountButton;
 
+        [SerializeField]
+        private Button loginAsGuestButton;
+
         private void Start()
         {
             loginButton?.onClick.AddListener(OnLoginButtonClicked);
             createAccountButton?.onClick.AddListener(OnCreateAccountButtonClicked);
+            loginAsGuestButton?.onClick.AddListener(OnLoginAsgGuestButtonClicked);
         }
 
         private void OnDestroy()
         {
             loginButton?.onClick.RemoveListener(OnLoginButtonClicked);
             createAccountButton?.onClick.RemoveListener(OnCreateAccountButtonClicked);
+            loginAsGuestButton?.onClick.RemoveListener(OnLoginAsgGuestButtonClicked);
         }
 
         public void EnableInteraction()
@@ -119,6 +126,11 @@ namespace Scripts.UI.Authenticator
         private void OnCreateAccountButtonClicked()
         {
             CreateAccountButtonClicked?.Invoke();
+        }
+
+        private void OnLoginAsgGuestButtonClicked()
+        {
+            LoginAsGuestButtonClicked?.Invoke();
         }
     }
 }
