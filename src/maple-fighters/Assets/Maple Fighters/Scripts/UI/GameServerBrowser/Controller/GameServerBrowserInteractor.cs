@@ -52,7 +52,7 @@ namespace Scripts.UI.GameServerBrowser
 
         private void OnGetGamesCallback(long statusCode, string json)
         {
-            if (statusCode == 200) // Ok
+            if (statusCode == (long)StatusCodes.Ok)
             {
                 var gameData = JsonHelper.ArrayFromJson<GameData>(json);
                 if (gameData.Length != 0)
