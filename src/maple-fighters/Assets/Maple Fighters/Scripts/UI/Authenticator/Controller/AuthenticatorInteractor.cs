@@ -75,6 +75,9 @@ namespace Scripts.UI.Authenticator
             else
             {
                 userid = Convert.ToBase64String(Guid.NewGuid().ToByteArray());
+
+                PlayerPrefs.SetString(key, userid);
+                PlayerPrefs.Save();
             }
 
             userMetadata.UserData = new UserData() 
