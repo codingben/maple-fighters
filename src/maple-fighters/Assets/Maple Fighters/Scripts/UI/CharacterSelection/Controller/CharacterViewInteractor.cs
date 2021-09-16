@@ -95,7 +95,10 @@ namespace Scripts.UI.CharacterSelection
 
         private void OnDeleteCharacterCallback(long statusCode, string json)
         {
-            onCharacterDeletionFinishedListener.OnCharacterDeletionSucceed();
+            if (statusCode == (long)StatusCodes.Ok)
+            {
+                onCharacterDeletionFinishedListener.OnCharacterDeletionSucceed();
+            }
         }
 
         public void GetCharacters()
@@ -110,49 +113,57 @@ namespace Scripts.UI.CharacterSelection
         {
             var characters = GetSampleCharacterData();
 
-            // Hack: "[]"
-            if (json != "[]")
+            if (statusCode == (long)StatusCodes.Ok)
             {
-                CharacterData[] characterData;
-
-                // NOTE: Unity json allows getting "Items" only (from dummy api)
-                if (json.Contains("Items"))
-                {
-                    characterData = JsonHelper.FromJsonString<CharacterData>(json);
-                }
-                else
-                {
-                    characterData = JsonHelper.ArrayFromJson<CharacterData>(json);
-                }
-
-                if (characterData != null && characterData.Length != 0)
-                {
-                    // Replaces sample character with existing characters
-                    foreach (var character in characterData)
-                    {
-                        var index = character.index;
-
-                        characters[index].id = character.id;
-                        characters[index].charactername = character.charactername;
-                        characters[index].classindex = character.classindex;
-                    }
-                }
+                SetCharacters(ref characters, json);
             }
 
-            // Create samples and/or existing characters
             foreach (var character in characters)
             {
                 var id = character.id;
                 var name = character.charactername;
                 var index = (UICharacterIndex)character.index;
                 var classindex = (UICharacterClass)character.classindex;
-                var uiCharacterDetails =
-                    new UICharacterDetails(id, name, index, classindex);
+                var uiCharacterDetails = new UICharacterDetails(id, name, index, classindex);
 
                 onCharacterReceivedListener.OnCharacterReceived(uiCharacterDetails);
             }
 
             onCharacterReceivedListener.OnAfterCharacterReceived();
+        }
+
+        private void SetCharacters(ref CharacterData[] characters, string json)
+        {
+            if (json == "[]" || string.IsNullOrEmpty(json))
+            {
+                return;
+            }
+
+            CharacterData[] characterData;
+
+            // NOTE: Unity json allows getting "Items" only (from dummy api)
+            if (json.Contains("Items"))
+            {
+                characterData = JsonHelper.FromJsonString<CharacterData>(json);
+            }
+            else
+            {
+                characterData = JsonHelper.ArrayFromJson<CharacterData>(json);
+            }
+
+            if (characterData == null || characterData?.Length == 0)
+            {
+                return;
+            }
+
+            foreach (var character in characterData)
+            {
+                var index = character.index;
+
+                characters[index].id = character.id;
+                characters[index].charactername = character.charactername;
+                characters[index].classindex = character.classindex;
+            }
         }
 
         private CharacterData[] GetSampleCharacterData()
