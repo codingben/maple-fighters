@@ -1,4 +1,5 @@
-﻿using Scripts.Constants;
+﻿using System;
+using Scripts.Constants;
 using Scripts.Services;
 using Scripts.Services.AuthenticatorApi;
 using UnityEngine;
@@ -54,6 +55,34 @@ namespace Scripts.UI.Authenticator
             var lastName = uiRegistrationDetails.LastName;
 
             authenticatorApi?.Register(email, password, firstName, lastName);
+        }
+
+        public void LoginAsGuest()
+        {
+            var userMetadata = FindObjectOfType<UserMetadata>();
+            if (userMetadata == null)
+            {
+                return;
+            }
+
+            string userid;
+            const string key = "userid";
+
+            if (PlayerPrefs.HasKey(key))
+            {
+                userid = PlayerPrefs.GetString(key);
+            }
+            else
+            {
+                userid = Convert.ToBase64String(Guid.NewGuid().ToByteArray());
+            }
+
+            userMetadata.UserData = new UserData() 
+            {
+                id = userid
+            };
+            
+            onLoginFinishedListener.OnLoginSucceed();
         }
 
         private void OnLoginCallback(long statusCode, string json)
