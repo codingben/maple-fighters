@@ -28,6 +28,11 @@ namespace Scripts.Services
             return authenticatorApi;
         }
 
+        public static void RemoveAuthenticatorApi()
+        {
+            authenticatorApi = null;
+        }
+
         private static IAuthenticatorApi authenticatorApi;
         #endregion
 
@@ -77,6 +82,11 @@ namespace Scripts.Services
             return gameProviderApi;
         }
 
+        public static void RemoveGameProviderApi()
+        {
+            gameProviderApi = null;
+        }
+
         private static IGameProviderApi gameProviderApi;
         #endregion
 
@@ -99,6 +109,11 @@ namespace Scripts.Services
             return characterProviderApi;
         }
 
+        public static void RemoveCharacterProviderApi()
+        {
+            characterProviderApi = null;
+        }
+
         private static ICharacterProviderApi characterProviderApi;
         #endregion
 
@@ -119,6 +134,11 @@ namespace Scripts.Services
             }
 
             return chatApi;
+        }
+
+        public static void RemoveChatApiProvider()
+        {
+            chatApi = null;
         }
 
         private static IChatApi chatApi;

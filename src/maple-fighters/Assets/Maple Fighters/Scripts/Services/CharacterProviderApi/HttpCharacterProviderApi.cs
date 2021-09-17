@@ -42,6 +42,11 @@ namespace Scripts.Services.CharacterProviderApi
             }
         }
 
+        private void OnDestroy()
+        {
+            ApiProvider.RemoveCharacterProviderApi();
+        }
+
         public void CreateCharacter(
             string userid,
             string charactername,

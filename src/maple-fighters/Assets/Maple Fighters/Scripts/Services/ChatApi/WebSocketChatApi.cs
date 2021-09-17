@@ -58,6 +58,8 @@ namespace Scripts.Services.ChatApi
 
         private async void OnDestroy()
         {
+            ApiProvider.RemoveChatApiProvider();
+
             if (webSocket != null)
             {
                 await webSocket.Close();
@@ -74,7 +76,10 @@ namespace Scripts.Services.ChatApi
 
         public void SendChatMessage(string message)
         {
-            webSocket.SendText(message);
+            if (webSocket != null && webSocket.State == WebSocketState.Open)
+            {
+                webSocket.SendText(message);
+            }
         }
 
         private void OnMessage(byte[] bytes)

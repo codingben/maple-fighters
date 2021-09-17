@@ -43,5 +43,10 @@ namespace Scripts.Services.AuthenticatorApi
 
             RegisterCallback?.Invoke(statusCode, json);
         }
+
+        private void OnDestroy()
+        {
+            ApiProvider.RemoveAuthenticatorApi();
+        }
     }
 }

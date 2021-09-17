@@ -37,6 +37,11 @@ namespace Scripts.Services.CharacterProviderApi
             characters = new List<CharacterData>();
         }
 
+        private void OnDestroy()
+        {
+            ApiProvider.RemoveCharacterProviderApi();
+        }
+
         public void CreateCharacter(
             string userid,
             string charactername,

@@ -100,12 +100,12 @@ namespace Scripts.Services.GameApi
 
         private async void OnDestroy()
         {
+            ApiProvider.RemoveGameApiProvider();
+
             if (webSocket != null)
             {
                 await webSocket.Close();
             }
-
-            ApiProvider.RemoveGameApiProvider();
         }
 
         private async void OnApplicationQuit()
@@ -126,10 +126,7 @@ namespace Scripts.Services.GameApi
                     Data = jsonSerializer.Serialize(message)
                 });
 
-                if (webSocket != null)
-                {
-                    await webSocket.SendText(data);
-                }
+                await webSocket.SendText(data);
             }
         }
 

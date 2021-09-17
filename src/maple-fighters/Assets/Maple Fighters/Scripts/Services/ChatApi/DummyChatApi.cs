@@ -22,7 +22,12 @@ namespace Scripts.Services.ChatApi
 
         public void SendChatMessage(string message)
         {
-            // ChatMessageReceived?.Invoke("MapleStory: Hello World!");
+            // Left blank intentionally
+        }
+
+        private void OnDestroy()
+        {
+            ApiProvider.RemoveChatApiProvider();
         }
     }
 }

@@ -40,6 +40,11 @@ namespace Scripts.Services.AuthenticatorApi
             }
         }
 
+        private void OnDestroy()
+        {
+            ApiProvider.RemoveAuthenticatorApi();
+        }
+
         public void Login(string email, string password)
         {
             var loginData = new LoginData()

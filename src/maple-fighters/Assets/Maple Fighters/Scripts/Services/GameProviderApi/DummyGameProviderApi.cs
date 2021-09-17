@@ -29,5 +29,10 @@ namespace Scripts.Services.GameProviderApi
 
             GetGamesCallback?.Invoke(statusCode, json);
         }
+
+        private void OnDestroy()
+        {
+            ApiProvider.RemoveGameProviderApi();
+        }
     }
 }

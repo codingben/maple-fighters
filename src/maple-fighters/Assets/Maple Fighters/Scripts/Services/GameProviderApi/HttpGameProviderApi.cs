@@ -38,6 +38,11 @@ namespace Scripts.Services.GameProviderApi
             }
         }
 
+        private void OnDestroy()
+        {
+            ApiProvider.RemoveGameProviderApi();
+        }
+
         public void GetGames()
         {
             RestClient.Get($"{url}/games", OnGetGamesCallback);

@@ -59,6 +59,11 @@ namespace Scripts.Services.GameApi
             Connected?.Invoke();
         }
 
+        private void OnDestroy()
+        {
+            ApiProvider.RemoveGameApiProvider();
+        }
+
         private void OnApplicationQuit()
         {
             // Left blank intentionally
