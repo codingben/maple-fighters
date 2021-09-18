@@ -133,6 +133,13 @@ namespace InterestManagement
 
         private void OnSubscriberRemoved(TSceneObject sceneObject)
         {
+            var transform = sceneObject.Transform;
+
+            if (IsOverlapsWithNearbyRegions(transform))
+            {
+                return;
+            }
+
             nearbySceneObjects.Remove(sceneObject);
         }
 
