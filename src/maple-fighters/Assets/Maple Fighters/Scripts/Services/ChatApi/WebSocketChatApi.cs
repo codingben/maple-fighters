@@ -25,7 +25,7 @@ namespace Scripts.Services.ChatApi
 
         private WebSocket webSocket;
 
-        private async void Start()
+        private void Start()
         {
             var networkConfiguration = NetworkConfiguration.GetInstance();
             if (networkConfiguration != null)
@@ -41,11 +41,7 @@ namespace Scripts.Services.ChatApi
 
                 webSocket = new WebSocket(url);
                 webSocket.OnMessage += OnMessage;
-
-                if (webSocket != null)
-                {
-                    await webSocket.Connect();
-                }
+                webSocket.Connect();
             }
         }
 
@@ -56,21 +52,21 @@ namespace Scripts.Services.ChatApi
 #endif
         }
 
-        private async void OnDestroy()
+        private void OnDestroy()
         {
             ApiProvider.RemoveChatApiProvider();
 
             if (webSocket != null)
             {
-                await webSocket.Close();
+                webSocket.Close();
             }
         }
 
-        private async void OnApplicationQuit()
+        private void OnApplicationQuit()
         {
             if (webSocket != null)
             {
-                await webSocket.Close();
+                webSocket.Close();
             }
         }
 

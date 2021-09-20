@@ -63,7 +63,7 @@ namespace Scripts.Services.GameApi
             collection = new MessageHandlerCollection(jsonSerializer);
         }
 
-        private async void Start()
+        private void Start()
         {
             var userMetadata = FindObjectOfType<UserMetadata>();
             if (userMetadata == null)
@@ -84,11 +84,7 @@ namespace Scripts.Services.GameApi
             webSocket.OnOpen += OnOpen;
             webSocket.OnClose += OnClose;
             webSocket.OnMessage += OnMessage;
-
-            if (webSocket != null)
-            {
-                await webSocket.Connect();
-            }
+            webSocket.Connect();
         }
 
         private void Update()
@@ -98,25 +94,25 @@ namespace Scripts.Services.GameApi
 #endif
         }
 
-        private async void OnDestroy()
+        private void OnDestroy()
         {
             ApiProvider.RemoveGameApiProvider();
 
             if (webSocket != null)
             {
-                await webSocket.Close();
+                webSocket.Close();
             }
         }
 
-        private async void OnApplicationQuit()
+        private void OnApplicationQuit()
         {
             if (webSocket != null)
             {
-                await webSocket.Close();
+                webSocket.Close();
             }
         }
 
-        async void IGameApi.SendMessage<T, M>(T code, M message)
+        void IGameApi.SendMessage<T, M>(T code, M message)
         {
             if (webSocket != null && webSocket.State == WebSocketState.Open)
             {
@@ -126,7 +122,7 @@ namespace Scripts.Services.GameApi
                     Data = jsonSerializer.Serialize(message)
                 });
 
-                await webSocket.SendText(data);
+                webSocket.SendText(data);
             }
         }
 
