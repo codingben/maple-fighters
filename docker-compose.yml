@@ -50,6 +50,7 @@ services:
         image: game-service:1.0.0
         build:
             context: ./src/game-service/Game.Application
+        restart: "on-failure"
         expose:
             - 50051
         environment:
