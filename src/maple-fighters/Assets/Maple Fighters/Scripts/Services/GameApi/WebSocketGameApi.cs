@@ -80,11 +80,18 @@ namespace Scripts.Services.GameApi
                 return;
             }
 
-            webSocket = new WebSocket(url);
-            webSocket.OnOpen += OnOpen;
-            webSocket.OnClose += OnClose;
-            webSocket.OnMessage += OnMessage;
-            webSocket.Connect();
+            try
+            {
+                webSocket = new WebSocket(url);
+                webSocket.OnOpen += OnOpen;
+                webSocket.OnClose += OnClose;
+                webSocket.OnMessage += OnMessage;
+                webSocket.Connect();
+            }
+            catch (Exception exception)
+            {
+                Debug.LogError(exception.Message);
+            }
         }
 
         private void Update()
@@ -98,31 +105,37 @@ namespace Scripts.Services.GameApi
         {
             ApiProvider.RemoveGameApiProvider();
 
-            if (webSocket != null)
+            try
             {
-                webSocket.Close();
+                if (webSocket != null && webSocket.State == WebSocketState.Open)
+                {
+                    webSocket.Close();
+                }
             }
-        }
-
-        private void OnApplicationQuit()
-        {
-            if (webSocket != null)
+            catch (Exception exception)
             {
-                webSocket.Close();
+                Debug.LogError(exception.Message);
             }
         }
 
         void IGameApi.SendMessage<T, M>(T code, M message)
         {
-            if (webSocket != null && webSocket.State == WebSocketState.Open)
+            try
             {
-                var data = jsonSerializer.Serialize(new MessageData()
+                if (webSocket != null && webSocket.State == WebSocketState.Open)
                 {
-                    Code = Convert.ToByte(code),
-                    Data = jsonSerializer.Serialize(message)
-                });
+                    var data = jsonSerializer.Serialize(new MessageData()
+                    {
+                        Code = Convert.ToByte(code),
+                        Data = jsonSerializer.Serialize(message)
+                    });
 
-                webSocket.SendText(data);
+                    webSocket.SendText(data);
+                }
+            }
+            catch (Exception exception)
+            {
+                Debug.LogError(exception.Message);
             }
         }
 

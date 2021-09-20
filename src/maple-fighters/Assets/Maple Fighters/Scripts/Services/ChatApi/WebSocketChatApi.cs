@@ -39,9 +39,16 @@ namespace Scripts.Services.ChatApi
                     return;
                 }
 
-                webSocket = new WebSocket(url);
-                webSocket.OnMessage += OnMessage;
-                webSocket.Connect();
+                try
+                {
+                    webSocket = new WebSocket(url);
+                    webSocket.OnMessage += OnMessage;
+                    webSocket.Connect();
+                }
+                catch (Exception exception)
+                {
+                    Debug.LogError(exception.Message);
+                }
             }
         }
 
@@ -56,25 +63,31 @@ namespace Scripts.Services.ChatApi
         {
             ApiProvider.RemoveChatApiProvider();
 
-            if (webSocket != null)
+            try
             {
-                webSocket.Close();
+                if (webSocket != null && webSocket.State == WebSocketState.Open)
+                {
+                    webSocket.Close();
+                }
             }
-        }
-
-        private void OnApplicationQuit()
-        {
-            if (webSocket != null)
+            catch (Exception exception)
             {
-                webSocket.Close();
+                Debug.LogError(exception.Message);
             }
         }
 
         public void SendChatMessage(string message)
         {
-            if (webSocket != null && webSocket.State == WebSocketState.Open)
+            try
             {
-                webSocket.SendText(message);
+                if (webSocket != null && webSocket.State == WebSocketState.Open)
+                {
+                    webSocket.SendText(message);
+                }
+            }
+            catch (Exception exception)
+            {
+                Debug.LogError(exception.Message);
             }
         }
 
