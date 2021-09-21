@@ -2,7 +2,6 @@ using System;
 using Game.Messages;
 using Game.MessageTools;
 using NativeWebSocket;
-using Scripts.Constants;
 using UnityEngine;
 
 namespace Scripts.Services.GameApi
@@ -62,11 +61,8 @@ namespace Scripts.Services.GameApi
         private void OnDestroy()
         {
             ApiProvider.RemoveGameApiProvider();
-        }
 
-        private void OnApplicationQuit()
-        {
-            // Left blank intentionally
+            Disconnected?.Invoke(WebSocketCloseCode.Normal);
         }
 
         void IGameApi.SendMessage<T, M>(T code, M message)
@@ -87,13 +83,13 @@ namespace Scripts.Services.GameApi
         {
             var sceneChangedMessage = new SceneChangedMessage();
             var portalId = ((ChangeSceneMessage)message).PortalId;
-            if (portalId == 2)
+            if (portalId == 3)
             {
-                sceneChangedMessage.Map = SceneIndexes.TheDarkForest;
+                sceneChangedMessage.Map = 0; // Lobby
             }
-            else if (portalId == 3)
+            else if (portalId == 2)
             {
-                sceneChangedMessage.Map = SceneIndexes.Lobby;
+                sceneChangedMessage.Map = 1; // The Dark Forest
             }
 
             SceneChanged?.Invoke(sceneChangedMessage);
