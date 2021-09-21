@@ -65,24 +65,9 @@ namespace Scripts.UI.Authenticator
                 return;
             }
 
-            string userid;
-            const string key = "userid";
-
-            if (PlayerPrefs.HasKey(key))
-            {
-                userid = PlayerPrefs.GetString(key);
-            }
-            else
-            {
-                userid = Convert.ToBase64String(Guid.NewGuid().ToByteArray());
-
-                PlayerPrefs.SetString(key, userid);
-                PlayerPrefs.Save();
-            }
-
             userMetadata.UserData = new UserData() 
             {
-                id = userid
+                id = Convert.ToBase64String(Guid.NewGuid().ToByteArray())
             };
             
             onLoginFinishedListener.OnLoginSucceed();
