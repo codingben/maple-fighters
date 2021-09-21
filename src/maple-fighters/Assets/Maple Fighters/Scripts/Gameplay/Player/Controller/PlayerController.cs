@@ -59,12 +59,12 @@ namespace Scripts.Gameplay.Player
 
         private void Update()
         {
-            playerStateBehaviour.OnStateUpdate();
+            playerStateBehaviour?.OnStateUpdate();
         }
 
         private void FixedUpdate()
         {
-            playerStateBehaviour.OnStateFixedUpdate();
+            playerStateBehaviour?.OnStateFixedUpdate();
         }
 
         public PlayerProperties GetProperties()
