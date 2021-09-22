@@ -20,6 +20,11 @@
         /// <summary>
         /// The blue snail.
         /// </summary>
-        BlueSnail
+        BlueSnail,
+
+        /// <summary>
+        /// The mushroom.
+        /// </summary>
+        Mushroom
     }
 }
