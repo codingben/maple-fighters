@@ -26,9 +26,11 @@ namespace Game.Application.Objects
             Name = name;
             Transform = new Transform(position, size);
 
-            var collection = new List<IComponent>();
-            collection.Add(new GameObjectGetter(this));
-            collection.Add(new ProximityChecker());
+            var collection = new List<IComponent>
+            {
+                new GameObjectGetter(this),
+                new ProximityChecker()
+            };
 
             if (components != null)
             {
