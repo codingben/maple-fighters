@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.RegularExpressions;
 using Scripts.Constants;
 using Scripts.Services;
 using Scripts.Services.AuthenticatorApi;
@@ -65,11 +66,27 @@ namespace Scripts.UI.Authenticator
                 return;
             }
 
-            userMetadata.UserData = new UserData() 
+            string userid;
+            const string key = "userid";
+
+            if (PlayerPrefs.HasKey(key))
             {
-                id = Convert.ToBase64String(Guid.NewGuid().ToByteArray())
+                userid = PlayerPrefs.GetString(key);
+            }
+            else
+            {
+                userid = Convert.ToBase64String(Guid.NewGuid().ToByteArray());
+                userid = Regex.Replace(userid, "[/+=]", string.Empty);
+
+                PlayerPrefs.SetString(key, userid);
+                PlayerPrefs.Save();
+            }
+
+            userMetadata.UserData = new UserData()
+            {
+                id = userid
             };
-            
+
             onLoginFinishedListener.OnLoginSucceed();
         }
 
@@ -84,7 +101,7 @@ namespace Scripts.UI.Authenticator
                     {
                         userMetadata.UserData = UserData.FromJson(json);
                     }
-                    
+
                     onLoginFinishedListener.OnLoginSucceed();
                     break;
                 }
