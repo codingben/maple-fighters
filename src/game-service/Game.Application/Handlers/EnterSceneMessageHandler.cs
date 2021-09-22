@@ -68,8 +68,7 @@ namespace Game.Application.Handlers
 
         private void SetBody(IGameScene scene)
         {
-            var gameObject = player as PlayerGameObject;
-            if (gameObject != null)
+            if (player is PlayerGameObject gameObject)
             {
                 var bodyData = gameObject.CreateBodyData();
                 scene.PhysicsWorldManager.AddBody(bodyData);
