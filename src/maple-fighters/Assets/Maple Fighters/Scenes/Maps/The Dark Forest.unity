@@ -384,6 +384,14 @@ MonoBehaviour:
     Id: 5
     Position: {x: -3.5, y: -3.05}
     Direction: 1
+  - Type: 4
+    Id: 6
+    Position: {x: -6.5, y: 3.75}
+    Direction: 1
+  - Type: 4
+    Id: 7
+    Position: {x: -0.8, y: 3.75}
+    Direction: 1
 --- !u!1 &507957440
 GameObject:
   m_ObjectHideFlags: 0
