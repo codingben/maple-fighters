@@ -1,10 +1,10 @@
 using Scripts.Gameplay.Entity;
 using UnityEngine;
 
-namespace Scripts.Gameplay.Mobs
+namespace Scripts.Gameplay.Map.Objects
 {
     [RequireComponent(typeof(PositionSetter))]
-    public class BlueSnailDirectionSetter : MonoBehaviour
+    public class MobDirectionSetter : MonoBehaviour
     {
         private PositionSetter positionSetter;
 

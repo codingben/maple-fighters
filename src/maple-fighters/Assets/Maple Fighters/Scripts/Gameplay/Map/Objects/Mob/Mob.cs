@@ -6,9 +6,9 @@ using Scripts.Services;
 using Scripts.Services.GameApi;
 using UnityEngine;
 
-namespace Scripts.Gameplay.Mobs
+namespace Scripts.Gameplay.Map.Objects
 {
-    public class BlueSnail : MonoBehaviour
+    public class Mob : MonoBehaviour
     {
         [Header("Attack"), SerializeField]
         private Vector2 hitAmount;
