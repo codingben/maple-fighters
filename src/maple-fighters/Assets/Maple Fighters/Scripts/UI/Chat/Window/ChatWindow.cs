@@ -139,7 +139,8 @@ namespace Scripts.UI.Chat
             {
                 var text = chatInputField.text;
 
-                if (string.IsNullOrWhiteSpace(text) == false)
+                if (!string.IsNullOrWhiteSpace(text) &&
+                    !string.IsNullOrEmpty(characterName))
                 {
                     MessageAdded?.Invoke($"{characterName}: {text}");
                 }
