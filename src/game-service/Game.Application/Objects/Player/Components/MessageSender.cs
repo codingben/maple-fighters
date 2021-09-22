@@ -11,7 +11,7 @@ namespace Game.Application.Objects.Components
         public Action<string, int> SendToMessageCallback { get; set; }
 
         private IProximityChecker proximityChecker;
-        private IJsonSerializer jsonSerializer;
+        private readonly IJsonSerializer jsonSerializer;
 
         public MessageSender(IJsonSerializer jsonSerializer)
         {
