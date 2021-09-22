@@ -50,7 +50,6 @@ namespace Game.Application.Objects.Components
 
         private IEnumerator Move()
         {
-            var id = blueSnail.Id;
             var position = blueSnail.Transform.Position;
             var speed = 0.75f;
 
