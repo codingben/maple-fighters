@@ -15,7 +15,7 @@ namespace Game.Application.Objects.Components
         private readonly Random random = new();
 
         private IProximityChecker proximityChecker;
-        private IGameObject blueSnail;
+        private IGameObject mob;
 
         public MobMoveBehaviour(ICoroutineRunner coroutineRunner)
         {
@@ -28,7 +28,7 @@ namespace Game.Application.Objects.Components
         protected override void OnAwake()
         {
             proximityChecker = Components.Get<IProximityChecker>();
-            blueSnail = Components.Get<IGameObjectGetter>().Get();
+            mob = Components.Get<IGameObjectGetter>().Get();
 
             positionSenderTimer.Start();
             coroutineRunner.Run(Move());
@@ -42,7 +42,7 @@ namespace Game.Application.Objects.Components
 
         private IEnumerator Move()
         {
-            var startPosition = blueSnail.Transform.Position;
+            var startPosition = mob.Transform.Position;
             var position = startPosition;
             var direction = GetRandomDirection();
 
@@ -58,7 +58,7 @@ namespace Game.Application.Objects.Components
 
                 position += new Vector2(direction, 0) * speed;
 
-                blueSnail.Transform.SetPosition(position);
+                mob.Transform.SetPosition(position);
                 yield return null;
             }
         }
@@ -69,9 +69,9 @@ namespace Game.Application.Objects.Components
             {
                 var message = new PositionChangedMessage()
                 {
-                    GameObjectId = blueSnail.Id,
-                    X = blueSnail.Transform.Position.X,
-                    Y = blueSnail.Transform.Position.Y
+                    GameObjectId = mob.Id,
+                    X = mob.Transform.Position.X,
+                    Y = mob.Transform.Position.Y
                 };
                 var messageSender = gameObject.Components.Get<IMessageSender>();
                 messageSender?.SendMessage((byte)MessageCodes.PositionChanged, message);

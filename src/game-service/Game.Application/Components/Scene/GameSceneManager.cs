@@ -104,7 +104,7 @@ namespace Game.Application.Components
 
         private IEnumerable<IGameObject> CreateTheDarkForestGameObjects(IGameScene gameScene)
         {
-            // Blue Snail Game Objects #1
+            // Mob Game Objects #1
             {
                 var positions = new Vector2[3]
                 {
@@ -115,11 +115,25 @@ namespace Game.Application.Components
 
                 foreach (var position in positions)
                 {
-                    yield return CreateBlueSnail(gameScene, position);
+                    yield return CreateMob(gameScene, name: "BlueSnail", position);
                 }
             }
 
-            // Portal Game Object #2
+            // Mob Game Objects #2
+            {
+                var positions = new Vector2[2]
+                {
+                    new Vector2(-6.5f, -3.75f),
+                    new Vector2(-0.8f, -3.75f)
+                };
+
+                foreach (var position in positions)
+                {
+                    yield return CreateMob(gameScene, name: "Mushroom", position);
+                }
+            }
+
+            // Portal Game Object #3
             {
                 var id = idGenerator.GenerateId();
                 var position = new Vector2(12.5f, -1.125f);
@@ -134,12 +148,12 @@ namespace Game.Application.Components
             }
         }
 
-        private IGameObject CreateBlueSnail(IGameScene scene, Vector2 position)
+        private IGameObject CreateMob(IGameScene scene, string name, Vector2 position)
         {
             var id = idGenerator.GenerateId();
             var coroutineRunner = scene.PhysicsExecutor.GetCoroutineRunner();
             var size = new Vector2(10, 5); // TODO: Size should be the same as region size
-            var blueSnail = new GameObject(id, "BlueSnail", position, size, new IComponent[]
+            var mob = new GameObject(id, name, position, size, new IComponent[]
             {
                 new PresenceMapProvider(scene),
                 new MobMoveBehaviour(coroutineRunner),
@@ -147,8 +161,8 @@ namespace Game.Application.Components
             });
 
             var bodyDef = new BodyDef();
-            var x = blueSnail.Transform.Position.X;
-            var y = blueSnail.Transform.Position.Y;
+            var x = mob.Transform.Position.X;
+            var y = mob.Transform.Position.Y;
             bodyDef.Position.Set(x, y);
 
             var polygonDef = new PolygonDef();
@@ -163,7 +177,7 @@ namespace Game.Application.Components
             var bodyData = new NewBodyData(id, bodyDef, polygonDef);
             scene.PhysicsWorldManager.AddBody(bodyData);
 
-            return blueSnail;
+            return mob;
         }
     }
 }
