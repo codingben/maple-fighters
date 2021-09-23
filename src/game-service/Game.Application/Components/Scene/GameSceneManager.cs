@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
+using Box2DX.Dynamics;
 using Common.ComponentModel;
 using Common.Components;
 using Common.MathematicsHelper;
 using Game.Application.Objects;
 using Game.Application.Objects.Components;
+using Game.Physics;
 
 namespace Game.Application.Components
 {
@@ -43,7 +45,7 @@ namespace Game.Application.Components
         {
             var gameScene = new GameScene(sceneSize: new Vector2(40, 5), regionSize: new Vector2(10, 5));
             gameScene.SpawnData.Position = new Vector2(18, -1.86f);
-            gameScene.SpawnData.Size = new Vector2(10, 5); // NOTE: Size should be the same as region size
+            gameScene.SpawnData.Size = new Vector2(10, 5); // TODO: Size should be the same as region size
             gameScene.SpawnData.Direction = 1;
 
             foreach (var gameObject in CreateLobbyGameObjects(gameScene))
@@ -60,7 +62,7 @@ namespace Game.Application.Components
             {
                 var id = idGenerator.GenerateId();
                 var position = new Vector2(-14.24f, -2.025f);
-                var size = new Vector2(10, 5); // NOTE: Size should be the same as region size
+                var size = new Vector2(10, 5); // TODO: Size should be the same as region size
                 var guardian = new GameObject(id, "Guardian", position, size, new IComponent[]
                 {
                     new PresenceMapProvider(gameScene),
@@ -74,7 +76,7 @@ namespace Game.Application.Components
             {
                 var id = idGenerator.GenerateId();
                 var position = new Vector2(-17.125f, -1.5f);
-                var size = new Vector2(10, 5); // NOTE: Size should be the same as region size
+                var size = new Vector2(10, 5); // TODO: Size should be the same as region size
                 var portal = new GameObject(id, "Portal", position, size, new IComponent[]
                 {
                     new PresenceMapProvider(gameScene),
@@ -89,7 +91,7 @@ namespace Game.Application.Components
         {
             var gameScene = new GameScene(sceneSize: new Vector2(30, 30), regionSize: new Vector2(10, 5));
             gameScene.SpawnData.Position = new Vector2(-12.8f, -12.95f);
-            gameScene.SpawnData.Size = new Vector2(10, 5); // NOTE: Size should be the same as region size
+            gameScene.SpawnData.Size = new Vector2(10, 5); // TODO: Size should be the same as region size
             gameScene.SpawnData.Direction = -1;
 
             foreach (var gameObject in CreateTheDarkForestGameObjects(gameScene))
@@ -121,7 +123,7 @@ namespace Game.Application.Components
             {
                 var id = idGenerator.GenerateId();
                 var position = new Vector2(12.5f, -1.125f);
-                var size = new Vector2(10, 5);
+                var size = new Vector2(10, 5); // TODO: Size should be the same as region size
                 var portal = new GameObject(id, "Portal", position, size, new IComponent[]
                 {
                     new PresenceMapProvider(gameScene),
@@ -132,17 +134,33 @@ namespace Game.Application.Components
             }
         }
 
-        private BlueSnailGameObject CreateBlueSnail(IGameScene scene, Vector2 position)
+        private IGameObject CreateBlueSnail(IGameScene scene, Vector2 position)
         {
             var id = idGenerator.GenerateId();
             var coroutineRunner = scene.PhysicsExecutor.GetCoroutineRunner();
-            var blueSnail = new BlueSnailGameObject(id, position, new IComponent[]
+            var size = new Vector2(10, 5); // TODO: Size should be the same as region size
+            var blueSnail = new GameObject(id, "BlueSnail", position, size, new IComponent[]
             {
                 new PresenceMapProvider(scene),
                 new BlueSnailMoveBehaviour(coroutineRunner),
                 new PhysicsBodyPositionSetter()
             });
-            var bodyData = blueSnail.CreateBodyData();
+
+            var bodyDef = new BodyDef();
+            var x = blueSnail.Transform.Position.X;
+            var y = blueSnail.Transform.Position.Y;
+            bodyDef.Position.Set(x, y);
+
+            var polygonDef = new PolygonDef();
+            polygonDef.SetAsBox(0.3625f, 0.825f); // TODO: No hard coding
+            polygonDef.Density = 0.0f; // TODO: No hard coding
+            polygonDef.Filter = new FilterData()
+            {
+                GroupIndex = (short)LayerMask.Mob
+            };
+            polygonDef.UserData = new BlueSnailContactEvents(id);
+
+            var bodyData = new NewBodyData(id, bodyDef, polygonDef);
             scene.PhysicsWorldManager.AddBody(bodyData);
 
             return blueSnail;
