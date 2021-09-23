@@ -41,9 +41,7 @@ namespace Game.Application.Components
 
         private IGameScene CreateLobby()
         {
-            var sceneSize = new Vector2(40, 5);
-            var regionSize = new Vector2(10, 5);
-            var gameScene = new GameScene(sceneSize, regionSize);
+            var gameScene = new GameScene(sceneSize: new Vector2(40, 5), regionSize: new Vector2(10, 5));
             gameScene.SpawnData.Position = new Vector2(18, -1.86f);
             gameScene.SpawnData.Size = new Vector2(10, 5); // NOTE: Size should be the same as region size
             gameScene.SpawnData.Direction = 1;
@@ -76,8 +74,7 @@ namespace Game.Application.Components
             {
                 var id = idGenerator.GenerateId();
                 var position = new Vector2(-17.125f, -1.5f);
-                var size = new Vector2(10, 5); // NOTE: Size should be the same as region size
-                var portal = new PortalGameObject(id, position, size, new IComponent[]
+                var portal = new PortalGameObject(id, position, new IComponent[]
                 {
                     new PresenceMapProvider(gameScene),
                     new PortalData(map: (byte)Map.TheDarkForest)
@@ -89,9 +86,7 @@ namespace Game.Application.Components
 
         private IGameScene CreateTheDarkForest()
         {
-            var sceneSize = new Vector2(30, 30);
-            var regionSize = new Vector2(10, 5);
-            var gameScene = new GameScene(sceneSize, regionSize);
+            var gameScene = new GameScene(sceneSize: new Vector2(30, 30), regionSize: new Vector2(10, 5));
             gameScene.SpawnData.Position = new Vector2(-12.8f, -12.95f);
             gameScene.SpawnData.Size = new Vector2(10, 5); // NOTE: Size should be the same as region size
             gameScene.SpawnData.Direction = -1;
@@ -125,8 +120,7 @@ namespace Game.Application.Components
             {
                 var id = idGenerator.GenerateId();
                 var position = new Vector2(12.5f, -1.125f);
-                var size = new Vector2(10, 5); // NOTE: Size should be the same as region size
-                var portal = new PortalGameObject(id, position, size, new IComponent[]
+                var portal = new PortalGameObject(id, position, new IComponent[]
                 {
                     new PresenceMapProvider(gameScene),
                     new PortalData(map: (byte)Map.Lobby)
@@ -139,9 +133,8 @@ namespace Game.Application.Components
         private BlueSnailGameObject CreateBlueSnail(IGameScene scene, Vector2 position)
         {
             var id = idGenerator.GenerateId();
-            var size = new Vector2(10, 5); // NOTE: Size should be the same as region size
             var coroutineRunner = scene.PhysicsExecutor.GetCoroutineRunner();
-            var blueSnail = new BlueSnailGameObject(id, position, size, new IComponent[]
+            var blueSnail = new BlueSnailGameObject(id, position, new IComponent[]
             {
                 new PresenceMapProvider(scene),
                 new BlueSnailMoveBehaviour(coroutineRunner),
