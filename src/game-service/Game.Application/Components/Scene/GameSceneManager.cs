@@ -58,18 +58,18 @@ namespace Game.Application.Components
 
         private IEnumerable<IGameObject> CreateLobbyGameObjects(IGameScene gameScene)
         {
-            // Guardian Game Object #1
+            // Npc Game Object #1
             {
                 var id = idGenerator.GenerateId();
                 var position = new Vector2(-14.24f, -2.025f);
                 var size = new Vector2(10, 5); // TODO: Size should be the same as region size
-                var guardian = new GameObject(id, "Guardian", position, size, new IComponent[]
+                var npc = new GameObject(id, "Guardian", position, size, new IComponent[]
                 {
                     new PresenceMapProvider(gameScene),
-                    new GuardianIdleBehaviour(text: "Hello! Enter <color=red>T</color> to teleport.", time: 5)
+                    new NpcIdleBehaviour(text: "Hello! Enter <color=red>T</color> to teleport.", time: 5)
                 });
 
-                yield return guardian;
+                yield return npc;
             }
 
             // Portal Game Object #2

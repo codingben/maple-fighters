@@ -2,7 +2,7 @@
 
 namespace Game.Application.Objects.Components
 {
-    public class GuardianIdleBehaviour : ComponentBase
+    public class NpcIdleBehaviour : ComponentBase
     {
         private readonly string text;
         private readonly int time;
@@ -10,7 +10,7 @@ namespace Game.Application.Objects.Components
         private IProximityChecker proximityChecker;
         private IGameObjectGetter gameObjectGetter;
 
-        public GuardianIdleBehaviour(string text, int time)
+        public NpcIdleBehaviour(string text, int time)
         {
             this.text = text;
             this.time = time;
