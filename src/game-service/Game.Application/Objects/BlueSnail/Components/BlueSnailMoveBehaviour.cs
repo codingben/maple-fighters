@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Timers;
 using Common.ComponentModel;
@@ -11,21 +12,16 @@ namespace Game.Application.Objects.Components
     {
         private readonly ICoroutineRunner coroutineRunner;
         private readonly Timer positionSenderTimer;
-        private readonly Timer directionSetterTimer;
+        private readonly Random random = new();
 
         private IProximityChecker proximityChecker;
         private IGameObject blueSnail;
-
-        private float direction = 0.1f;
 
         public BlueSnailMoveBehaviour(ICoroutineRunner coroutineRunner)
         {
             this.coroutineRunner = coroutineRunner;
 
             positionSenderTimer = new Timer(100);
-            directionSetterTimer = new Timer(3500);
-
-            directionSetterTimer.Elapsed += (s, e) => ChangeDirection();
             positionSenderTimer.Elapsed += (s, e) => SendPosition();
         }
 
@@ -35,27 +31,33 @@ namespace Game.Application.Objects.Components
             blueSnail = Components.Get<IGameObjectGetter>().Get();
 
             positionSenderTimer.Start();
-            directionSetterTimer.Start();
-
             coroutineRunner.Run(Move());
         }
 
         protected override void OnRemoved()
         {
             positionSenderTimer.Dispose();
-            directionSetterTimer.Dispose();
-
             coroutineRunner.Stop(Move());
         }
 
         private IEnumerator Move()
         {
-            var position = blueSnail.Transform.Position;
-            var speed = 0.75f;
+            var startPosition = blueSnail.Transform.Position;
+            var position = startPosition;
+            var direction = GetRandomDirection();
+
+            const float speed = 0.75f;
+            const float distance = 2.5f;
 
             while (true)
             {
+                if (Vector2.Distance(startPosition, position) >= distance)
+                {
+                    direction *= -1;
+                }
+
                 position += new Vector2(direction, 0) * speed;
+
                 blueSnail.Transform.SetPosition(position);
                 yield return null;
             }
@@ -76,9 +78,14 @@ namespace Game.Application.Objects.Components
             }
         }
 
-        private void ChangeDirection()
+        private float GetRandomDirection()
         {
-            direction *= -1;
+            float direction = random.Next(-1, 1);
+
+            if (direction == 0) direction = 0.1f;
+            else direction = -0.1f;
+
+            return direction;
         }
     }
 }
