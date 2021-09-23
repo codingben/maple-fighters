@@ -142,7 +142,7 @@ namespace Game.Application.Components
             var blueSnail = new GameObject(id, "BlueSnail", position, size, new IComponent[]
             {
                 new PresenceMapProvider(scene),
-                new BlueSnailMoveBehaviour(coroutineRunner),
+                new MobMoveBehaviour(coroutineRunner),
                 new PhysicsBodyPositionSetter()
             });
 
@@ -158,7 +158,7 @@ namespace Game.Application.Components
             {
                 GroupIndex = (short)LayerMask.Mob
             };
-            polygonDef.UserData = new BlueSnailContactEvents(id);
+            polygonDef.UserData = new MobContactEvents(id);
 
             var bodyData = new NewBodyData(id, bodyDef, polygonDef);
             scene.PhysicsWorldManager.AddBody(bodyData);

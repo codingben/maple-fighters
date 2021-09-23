@@ -4,11 +4,11 @@ using Game.Physics;
 
 namespace Game.Application.Objects
 {
-    public class BlueSnailContactEvents : IContactEvents
+    public class MobContactEvents : IContactEvents
     {
         private readonly int id;
 
-        public BlueSnailContactEvents(int id)
+        public MobContactEvents(int id)
         {
             this.id = id;
         }

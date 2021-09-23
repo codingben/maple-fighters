@@ -8,7 +8,7 @@ using Game.Messages;
 
 namespace Game.Application.Objects.Components
 {
-    public class BlueSnailMoveBehaviour : ComponentBase
+    public class MobMoveBehaviour : ComponentBase
     {
         private readonly ICoroutineRunner coroutineRunner;
         private readonly Timer positionSenderTimer;
@@ -17,7 +17,7 @@ namespace Game.Application.Objects.Components
         private IProximityChecker proximityChecker;
         private IGameObject blueSnail;
 
-        public BlueSnailMoveBehaviour(ICoroutineRunner coroutineRunner)
+        public MobMoveBehaviour(ICoroutineRunner coroutineRunner)
         {
             this.coroutineRunner = coroutineRunner;
 
