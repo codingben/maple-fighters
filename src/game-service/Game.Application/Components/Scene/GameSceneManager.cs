@@ -74,7 +74,8 @@ namespace Game.Application.Components
             {
                 var id = idGenerator.GenerateId();
                 var position = new Vector2(-17.125f, -1.5f);
-                var portal = new PortalGameObject(id, position, new IComponent[]
+                var size = new Vector2(10, 5);
+                var portal = new GameObject(id, "Portal", position, size, new IComponent[]
                 {
                     new PresenceMapProvider(gameScene),
                     new PortalData(map: (byte)Map.TheDarkForest)
@@ -120,7 +121,8 @@ namespace Game.Application.Components
             {
                 var id = idGenerator.GenerateId();
                 var position = new Vector2(12.5f, -1.125f);
-                var portal = new PortalGameObject(id, position, new IComponent[]
+                var size = new Vector2(10, 5);
+                var portal = new GameObject(id, "Portal", position, size, new IComponent[]
                 {
                     new PresenceMapProvider(gameScene),
                     new PortalData(map: (byte)Map.Lobby)
