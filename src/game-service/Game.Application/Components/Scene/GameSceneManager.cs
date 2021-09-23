@@ -106,23 +106,19 @@ namespace Game.Application.Components
 
         private IEnumerable<IGameObject> CreateTheDarkForestGameObjects(IGameScene gameScene)
         {
-            // Blue Snail Game Object #1
+            // Blue Snail Game Objects #1
             {
-                var id = idGenerator.GenerateId();
-                var position = new Vector2(-2.5f, -8.15f);
-                var size = new Vector2(10, 5); // NOTE: Size should be the same as region size
-                var coroutineRunner = gameScene.PhysicsExecutor.GetCoroutineRunner();
-                var blueSnail = new BlueSnailGameObject(id, position, size, new IComponent[]
+                var positions = new Vector2[3]
                 {
-                    new PresenceMapProvider(gameScene),
-                    new BlueSnailMoveBehaviour(coroutineRunner),
-                    new PhysicsBodyPositionSetter()
-                });
+                    new Vector2(-2.5f, -8.15f),
+                    new Vector2(2.85f, -3.05f),
+                    new Vector2(-3.5f, -3.05f)
+                };
 
-                var bodyData = blueSnail.CreateBodyData();
-                gameScene.PhysicsWorldManager.AddBody(bodyData);
-
-                yield return blueSnail;
+                foreach (var position in positions)
+                {
+                    yield return CreateBlueSnail(gameScene, position);
+                }
             }
 
             // Portal Game Object #2
@@ -138,6 +134,23 @@ namespace Game.Application.Components
 
                 yield return portal;
             }
+        }
+
+        private BlueSnailGameObject CreateBlueSnail(IGameScene scene, Vector2 position)
+        {
+            var id = idGenerator.GenerateId();
+            var size = new Vector2(10, 5); // NOTE: Size should be the same as region size
+            var coroutineRunner = scene.PhysicsExecutor.GetCoroutineRunner();
+            var blueSnail = new BlueSnailGameObject(id, position, size, new IComponent[]
+            {
+                new PresenceMapProvider(scene),
+                new BlueSnailMoveBehaviour(coroutineRunner),
+                new PhysicsBodyPositionSetter()
+            });
+            var bodyData = blueSnail.CreateBodyData();
+            scene.PhysicsWorldManager.AddBody(bodyData);
+
+            return blueSnail;
         }
     }
 }
