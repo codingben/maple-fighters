@@ -4,6 +4,8 @@ using Game.MessageTools;
 using Game.Application.Objects;
 using Game.Application.Objects.Components;
 using Common.MathematicsHelper;
+using Box2DX.Dynamics;
+using Game.Physics;
 
 namespace Game.Application.Handlers
 {
@@ -68,11 +70,22 @@ namespace Game.Application.Handlers
 
         private void SetBody(IGameScene scene)
         {
-            if (player is PlayerGameObject gameObject)
+            var bodyDef = new BodyDef();
+            var x = player.Transform.Position.X;
+            var y = player.Transform.Position.Y;
+            bodyDef.Position.Set(x, y);
+            bodyDef.UserData = player;
+
+            var polygonDef = new PolygonDef();
+            polygonDef.SetAsBox(0.3625f, 0.825f); // TODO: No hard coding
+            polygonDef.Density = 0.1f; // TODO: No hard coding
+            polygonDef.Filter = new FilterData()
             {
-                var bodyData = gameObject.CreateBodyData();
-                scene.PhysicsWorldManager.AddBody(bodyData);
-            }
+                GroupIndex = (short)LayerMask.Player
+            };
+
+            var bodyData = new NewBodyData(player.Id, bodyDef, polygonDef);
+            scene.PhysicsWorldManager.AddBody(bodyData);
         }
 
         private void SendEnteredSceneMessage()

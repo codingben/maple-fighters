@@ -8,6 +8,7 @@ using Game.MessageTools;
 using Fleck;
 using Game.Application.Objects;
 using Game.Application.Objects.Components;
+using Common.MathematicsHelper;
 
 namespace Game.Application
 {
@@ -36,7 +37,12 @@ namespace Game.Application
 
             jsonSerializer = new NativeJsonSerializer();
             handlerCollection = new MessageHandlerCollection(jsonSerializer);
-            player = new PlayerGameObject(id, new IComponent[]
+
+            // TODO: Remove position and size from here
+            var position = Vector2.Zero;
+            var size = new Vector2(10, 5);
+
+            player = new GameObject(id, "RemotePlayer", position, size, new IComponent[]
             {
                 new AnimationData(),
                 new CharacterData(),
