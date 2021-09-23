@@ -123,8 +123,8 @@ namespace Game.Application.Components
             {
                 var positions = new Vector2[2]
                 {
-                    new Vector2(-6.5f, -3.75f),
-                    new Vector2(-0.8f, -3.75f)
+                    new Vector2(-6.5f, 3.75f),
+                    new Vector2(-0.8f, 3.75f)
                 };
 
                 foreach (var position in positions)
