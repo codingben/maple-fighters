@@ -13,9 +13,9 @@ The game application creates a WebSocket server and handles requests. When a new
 ├── Messages
 ├── MessageTools
 ├── Objects
-│   ├── BlueSnail
+│   ├── Mob
 │   │   └── Components
-│   ├── Guardian
+│   ├── Npc
 │   │   └── Components
 │   ├── Player
 │   │   └── Components
