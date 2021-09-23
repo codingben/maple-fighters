@@ -61,7 +61,7 @@ namespace Game.Application.Components
                 var id = idGenerator.GenerateId();
                 var position = new Vector2(-14.24f, -2.025f);
                 var size = new Vector2(10, 5); // NOTE: Size should be the same as region size
-                var guardian = new GuardianGameObject(id, position, size, new IComponent[]
+                var guardian = new GameObject(id, "Guardian", position, size, new IComponent[]
                 {
                     new PresenceMapProvider(gameScene),
                     new GuardianIdleBehaviour(text: "Hello! Enter <color=red>T</color> to teleport.", time: 5)
@@ -74,7 +74,7 @@ namespace Game.Application.Components
             {
                 var id = idGenerator.GenerateId();
                 var position = new Vector2(-17.125f, -1.5f);
-                var size = new Vector2(10, 5);
+                var size = new Vector2(10, 5); // NOTE: Size should be the same as region size
                 var portal = new GameObject(id, "Portal", position, size, new IComponent[]
                 {
                     new PresenceMapProvider(gameScene),
