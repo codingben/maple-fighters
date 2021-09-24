@@ -6,8 +6,7 @@ namespace Scripts.Gameplay.Player.Behaviours
     [RequireComponent(typeof(PlayerController))]
     public class PlayerAttackedBehaviour : MonoBehaviour, IAttackPlayer
     {
-        [SerializeField]
-        private float attackDelay = 2;
+        private const float ATTACK_DELAY = 1;
 
         private PlayerController playerController;
         private bool isAttacked;
@@ -24,13 +23,15 @@ namespace Scripts.Gameplay.Player.Behaviours
                 return;
             }
 
-            // NOTE: Waiting one frame prevent an exception in the game server.
+            isAttacked = true;
+
             StartCoroutine(WaitFrameAndBounce(direction));
         }
 
         private IEnumerator WaitFrameAndBounce(Vector3 direction)
         {
-            yield return new WaitForSeconds(0.1f);
+            // NOTE: One frame delay to prevent an exception in the game server (in World.Step)
+            yield return null;
 
             playerController.Bounce(direction);
 
@@ -39,9 +40,7 @@ namespace Scripts.Gameplay.Player.Behaviours
 
         private IEnumerator WaitAfterAttacked()
         {
-            isAttacked = true;
-
-            yield return new WaitForSeconds(attackDelay);
+            yield return new WaitForSeconds(ATTACK_DELAY);
 
             isAttacked = false;
         }
