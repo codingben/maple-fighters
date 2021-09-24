@@ -50,7 +50,8 @@ namespace Scripts.Gameplay.Map.Objects
 
         private void OnDisconnected(WebSocketCloseCode code)
         {
-            if (code != WebSocketCloseCode.Normal)
+            if (code != WebSocketCloseCode.Normal || 
+                code != WebSocketCloseCode.Abnormal)
             {
                 return;
             }
