@@ -23,7 +23,7 @@ namespace Game.Application.Objects.Components
 
             isAttacked = true;
 
-            WaitToBeAttackableAgain(seconds: 500);
+            WaitToBeAttackableAgain(seconds: 1000);
 
             SendAttackedMessage(attackerId);
         }
