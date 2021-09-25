@@ -1,7 +1,13 @@
-body { margin: 0; padding: 0; overflow-x: hidden; }
-#unity-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: black; }
+body { padding: 0; margin: 0; background-color: black; }
+#unity-container { position: absolute }
 #unity-container.unity-desktop { left: 50%; top: 50%; transform: translate(-50%, -50%) }
-#unity-canvas { background: black }
+#unity-container.unity-mobile { width: 100%; height: 100% }
+#unity-canvas { background: #000000 }
+.unity-mobile #unity-canvas { width: 100%; height: 100% }
 #unity-loading-bar { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); display: none }
 #unity-progress-bar-empty { width: 141px; height: 18px; margin-top: 10px; background: url('progress-bar-empty-dark.png') no-repeat center }
 #unity-progress-bar-full { width: 0%; height: 18px; margin-top: 10px; background: url('progress-bar-full-dark.png') no-repeat center }
+#unity-footer { position: relative }
+.unity-mobile #unity-footer { display: none }
+#unity-fullscreen-button { float: right; width: 38px; height: 38px; background: url('fullscreen-button.png') no-repeat center }
+#unity-mobile-warning { position: absolute; left: 50%; top: 5%; transform: translate(-50%); background: rgb(0, 0, 0); padding: 10px; display: none }
