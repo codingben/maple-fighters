@@ -50,24 +50,22 @@ namespace Scripts.Gameplay.Map.Objects
 
         private void OnDisconnected(WebSocketCloseCode code)
         {
-            if (code != WebSocketCloseCode.Normal || 
-                code != WebSocketCloseCode.Abnormal)
+            if (code == WebSocketCloseCode.Normal ||
+                code == WebSocketCloseCode.Abnormal)
             {
-                return;
-            }
-
-            switch (mapIndex)
-            {
-                case 0:
+                switch (mapIndex)
                 {
-                    SceneManager.LoadScene(sceneName: SceneNames.Maps.Lobby);
-                    break;
-                }
+                    case 0:
+                    {
+                        SceneManager.LoadScene(sceneName: SceneNames.Maps.Lobby);
+                        break;
+                    }
 
-                case 1:
-                {
-                    SceneManager.LoadScene(sceneName: SceneNames.Maps.TheDarkForest);
-                    break;
+                    case 1:
+                    {
+                        SceneManager.LoadScene(sceneName: SceneNames.Maps.TheDarkForest);
+                        break;
+                    }
                 }
             }
         }
