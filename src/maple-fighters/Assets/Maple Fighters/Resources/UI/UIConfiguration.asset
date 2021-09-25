@@ -19,9 +19,9 @@ MonoBehaviour:
     RenderMode: 0
     UICanvasScalerConfig:
       ScaleMode: 1
-      ReferenceResolution: {x: 800, y: 600}
+      ReferenceResolution: {x: 1024, y: 600}
       ScreenMatchMode: 0
-      MatchWidthOrHeight: 0.5
+      MatchWidthOrHeight: 1
       ReferencePixelsPerUnit: 100
   - Name: Foreground
     CanvasType: 1
@@ -29,7 +29,7 @@ MonoBehaviour:
     RenderMode: 0
     UICanvasScalerConfig:
       ScaleMode: 1
-      ReferenceResolution: {x: 800, y: 600}
+      ReferenceResolution: {x: 1024, y: 600}
       ScreenMatchMode: 0
-      MatchWidthOrHeight: 0.5
+      MatchWidthOrHeight: 1
       ReferencePixelsPerUnit: 100
