@@ -20,27 +20,27 @@ Feel free to play on the web platform [here](https://ukben.dev/maple-fighters). 
 
 ## Screenshots
 
-| Lobby                                                                                                         | The Dark Forest                                                                                                    |
-| ----------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
+| Lobby                             | The Dark Forest                             |
+| --------------------------------- | ------------------------------------------- |
 | <img src="docs/images/lobby.jpg"> | <img src="docs/images/the-dark-forest.jpg"> |
 
 ## Technology
 
-**Game Engine**: Unity WebGL   
-**Client**: C#, React.js (C# is compiled to C++ and finally to WebAssembly)   
-**Server**: C#, Rust, Node.js   
-**Database**: MongoDB, PostgreSQL   
-**Reverse Proxy**: Nginx   
+**Game Engine**: Unity WebGL  
+**Client**: C#, React.js (C# is compiled to C++ and finally to WebAssembly)  
+**Server**: C#, Rust, Node.js  
+**Database**: MongoDB, PostgreSQL  
+**Reverse Proxy**: Nginx
 
 ## Microservices Architecture
 
-| Service                                              | Language      | Description                                                    														|
-| ---------------------------------------------------- | ------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| [auth-service](./src/auth-service)                   | C#            | Stores user data and verifies user. 			   															|
-| [game-service](./src/game-service/Game.Application)                   | C#            | Creates a player in the game world to play with others. 	|
-| [gameprovider-service](./src/gameprovider-service)   | Rust          | Provides a list of game servers. 																|
-| [character-service](./src/character-service)         | Rust          | Creates and receives player character data. 																|
-| [chat-service](./src/chat-service)         | Node.js          | Communication between players during the game. 																|
+| Service                                             | Language | Description                                             |
+| --------------------------------------------------- | -------- | ------------------------------------------------------- |
+| [auth-service](./src/auth-service)                  | C#       | Stores user data and verifies user.                     |
+| [game-service](./src/game-service/Game.Application) | C#       | Creates a player in the game world to play with others. |
+| [gameprovider-service](./src/gameprovider-service)  | Rust     | Provides a list of game servers.                        |
+| [character-service](./src/character-service)        | Rust     | Creates and receives player character data.             |
+| [chat-service](./src/chat-service)                  | Node.js  | Communication between players during the game.          |
 
 ## Folder Structure
 
@@ -71,14 +71,17 @@ Feel free to play on the web platform [here](https://ukben.dev/maple-fighters). 
 Follow these instructions to start and stop locally:
 
 1. To create containers:
+
 ```bash
 docker-compose up
 ```
 
 2. To stop and remove containers:
+
 ```bash
 docker-compose down
 ```
+
 You should be able to access it at `http://localhost`.
 
 ## Contributing
