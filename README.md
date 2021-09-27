@@ -27,7 +27,7 @@ Feel free to play on the web platform [here](https://ukben.dev/maple-fighters). 
 ## Technology
 
 **Game Engine**: Unity WebGL  
-**Client**: C#, React.js (C# is compiled to C++ and finally to WebAssembly)  
+**Client**: C#, React.js (_C# is compiled to C++ and finally to WebAssembly_)  
 **Server**: C#, Rust, Node.js  
 **Database**: MongoDB, PostgreSQL  
 **Reverse Proxy**: Nginx
