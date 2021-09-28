@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
     frontend:
-        image: nginx:1.20.1-alpine
+        image: frontend:1.0.0
         container_name: frontend
         build:
             context: ./src/frontend
