@@ -1,0 +1,31 @@
+.logo {
+  height: 60px;
+  margin: 5px 5px;
+  float: left;
+}
+
+.title {
+  color: white;
+  float: left;
+  margin: 5px 5px;
+  font-style: normal;
+  font-family: Arial;
+}
+
+.fullscreen-button {
+  position: fixed;
+  top: 100;
+  right: 0;
+  margin: 25px 115px;
+  font-size: 20px;
+  font-family: Arial;
+}
+
+.github-button {
+  position: fixed;
+  top: 100;
+  right: 0;
+  margin: 25px 30px;
+  font-size: 20px;
+  font-family: Arial;
+}
