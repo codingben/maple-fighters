@@ -13,19 +13,41 @@
 }
 
 .fullscreen-button {
+  background-color: transparent;
+  background-repeat: no-repeat;
+  border: none;
+  cursor: pointer;
+  overflow: hidden;
+  outline: none;
   position: fixed;
   top: 100;
   right: 0;
   margin: 25px 115px;
   font-size: 20px;
   font-family: Arial;
+  color: white;
+}
+
+.fullscreen-button:hover {
+  color: gainsboro;
 }
 
 .github-button {
+  background-color: transparent;
+  background-repeat: no-repeat;
+  border: none;
+  cursor: pointer;
+  overflow: hidden;
+  outline: none;
   position: fixed;
   top: 100;
   right: 0;
   margin: 25px 30px;
   font-size: 20px;
   font-family: Arial;
+  color: white;
+}
+
+.github-button:hover {
+  color: gainsboro;
 }
