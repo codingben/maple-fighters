@@ -1,11 +1,14 @@
 {
   "name": "maple-fighters",
+  "homepage": "https://ukben.dev/maple-fighters",
   "version": "1.0.0",
   "description": "A small online game similar to MapleStory",
   "main": "index.js",
   "scripts": {
     "start": "PUBLIC_URL=/ react-scripts start",
-    "build": "PUBLIC_URL=/ react-scripts build"
+    "build": "PUBLIC_URL=/ react-scripts build",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -b gh-pages -d build"
   },
   "author": "Ben Ukhanov",
   "license": "AGPL",
@@ -14,6 +17,7 @@
     "@types/node": "^16.10.1",
     "@types/react": "^17.0.24",
     "@types/react-dom": "^17.0.9",
+    "gh-pages": "^3.2.3",
     "react-dom": "^17.0.2",
     "react-scripts": "^4.0.3",
     "react-spinners": "^0.11.0",
