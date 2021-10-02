@@ -1,7 +1,8 @@
 import Unity, { UnityContext } from "react-unity-webgl";
-import "./app.css";
 import Header from "./Header";
 import Footer from "./Footer";
+import Loader from "./Loader";
+import "./app.css";
 
 export const context = new UnityContext({
   loaderUrl: "build/maple-fighters.loader.js",
@@ -16,6 +17,7 @@ function App() {
       <Header />
       <Footer />
       <Unity className="container" unityContext={context} />
+      <Loader />
     </div>
   );
 }
