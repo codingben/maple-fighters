@@ -1,4 +1,5 @@
 import Unity, { UnityContext } from "react-unity-webgl";
+import { isBrowser } from "react-device-detect";
 import Header from "./Header";
 import Footer from "./Footer";
 import Loader from "./Loader";
@@ -12,6 +13,14 @@ export const context = new UnityContext({
 });
 
 function App() {
+  if (!isBrowser) {
+    return (
+      <div className="center">
+        <h1>This game is not compatible with your device.</h1>
+      </div>
+    );
+  }
+
   return (
     <div>
       <Header />
