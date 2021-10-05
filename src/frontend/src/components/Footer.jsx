@@ -4,7 +4,7 @@ function Footer() {
   return (
     <div className="footer">
       <h4>
-        Made with ❤️ by{" "}
+        Made with <span style={{ color: "#E91E63" }}>&#x2764;</span> by{" "}
         <a href="https://ukben.dev" target="_blank">
           Ben Ukhanov
         </a>
