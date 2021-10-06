@@ -1,5 +1,5 @@
 import Unity, { UnityContext } from "react-unity-webgl";
-import { isBrowser } from "react-device-detect";
+import { isMobile } from "react-device-detect";
 import Header from "./Header";
 import Footer from "./Footer";
 import Loader from "./Loader";
@@ -14,7 +14,7 @@ export const context = new UnityContext({
 });
 
 function App() {
-  if (!isBrowser) {
+  if (isMobile) {
     return (
       <div className="warning">
         <img src={logo} alt="logo" />
