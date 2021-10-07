@@ -1,1 +1,1 @@
-migrations/* linguist-vendored
+*.sql linguist-vendored
