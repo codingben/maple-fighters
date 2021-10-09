@@ -10,9 +10,6 @@ namespace Scripts.UI.MapScene
         private string messageText;
 
         [SerializeField]
-        private string tipText;
-
-        [SerializeField]
         private float seconds = 2;
 
         private void Awake()
@@ -22,11 +19,6 @@ namespace Scripts.UI.MapScene
 
         private void OnMessageTimeUp()
         {
-            if (tipText != string.Empty)
-            {
-                CreateMessage(tipText, seconds);
-            }
-
             Destroy(gameObject);
         }
 
