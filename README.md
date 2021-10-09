@@ -10,6 +10,8 @@
 
 ## About
 
+[![Unity Build](https://github.com/benukhanov/maple-fighters/actions/workflows/unity-build.yml/badge.svg)](https://github.com/benukhanov/maple-fighters/actions/workflows/unity-build.yml)
+
 Maple Fighters is a multiplayer online game inspired by MapleStory. Players can choose a fighter to travel the world and fight monsters with other fighters.
 
 Please **★ Star** this repository if you like it and find it useful. Made With ❤ For Open Source Community!
