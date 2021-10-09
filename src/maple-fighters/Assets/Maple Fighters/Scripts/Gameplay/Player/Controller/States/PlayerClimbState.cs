@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Scripts.Gameplay.Player.States
 {
-    public class PlayerLadderState : IPlayerStateBehaviour
+    public class PlayerClimbState : IPlayerStateBehaviour
     {
         private readonly PlayerController playerController;
         private readonly Rigidbody2D rigidbody2D;
@@ -10,7 +10,7 @@ namespace Scripts.Gameplay.Player.States
         private float previousTime;
         private float previousGravityScale;
 
-        public PlayerLadderState(PlayerController playerController)
+        public PlayerClimbState(PlayerController playerController)
         {
             this.playerController = playerController;
 
