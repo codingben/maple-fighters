@@ -8,8 +8,9 @@ namespace Scripts.Gameplay.Player
     {
         [Header("Keyboard")]
         public KeyCode JumpKey = KeyCode.Space;
-        public KeyCode TeleportKey = KeyCode.T;
-        public KeyCode ClimbKey = KeyCode.C;
+        public KeyCode TeleportKey = KeyCode.UpArrow;
+        public KeyCode ClimbUpKey = KeyCode.UpArrow;
+        public KeyCode ClimbDownKey = KeyCode.DownArrow;
         public KeyCode RushKey = KeyCode.Space;
     }
 }

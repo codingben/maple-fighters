@@ -20,6 +20,7 @@ MonoBehaviour:
     ClimbSpeed: 3.5
   PlayerKeyboard:
     JumpKey: 32
-    TeleportKey: 116
-    ClimbKey: 99
+    TeleportKey: 273
+    ClimbUpKey: 273
+    ClimbDownKey: 274
     RushKey: 32
