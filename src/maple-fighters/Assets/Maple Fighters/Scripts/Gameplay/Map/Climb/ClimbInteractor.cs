@@ -10,11 +10,19 @@ namespace Scripts.Gameplay.Map.Climb
 
         private void Update()
         {
-            if (Input.GetKeyDown(GetKey()) && IsPlayerStateSuitable() && !IsClimbing())
+            if (IsClimbing())
             {
-                if (GetColliderInteraction().HasOverlappingCollider())
+                return;
+            }
+
+            if (IsPlayerStateSuitable())
+            {
+                if (Input.GetKeyDown(GetKey()) || Input.GetKeyDown(GetSecondaryKey()))
                 {
-                    StartClimbing();
+                    if (GetColliderInteraction().HasOverlappingCollider())
+                    {
+                        StartClimbing();
+                    }
                 }
             }
         }
@@ -62,7 +70,7 @@ namespace Scripts.Gameplay.Map.Climb
 
         private void IgnoreGroundIfNeeded()
         {
-            var ground = Player.Utils.GetGroundedCollider(LocalPlayer.position);
+            var ground = Utils.GetGroundedCollider(LocalPlayer.position);
             if (ground != null)
             {
                 GetColliderInteraction().SetIgnoredCollider(ground);
@@ -125,6 +133,8 @@ namespace Scripts.Gameplay.Map.Climb
         protected abstract PlayerStates GetPlayerState();
 
         protected abstract KeyCode GetKey();
+
+        protected abstract KeyCode GetSecondaryKey();
 
         protected abstract ColliderInteraction GetColliderInteraction();
 
