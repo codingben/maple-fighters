@@ -66,7 +66,7 @@ namespace Game.Application.Components
                 var npc = new GameObject(id, "Guardian", position, size, new IComponent[]
                 {
                     new PresenceMapProvider(gameScene),
-                    new NpcIdleBehaviour(text: "Hello! Enter <color=red>T</color> to teleport.", time: 5)
+                    new NpcIdleBehaviour(text: "Hello World!", time: 5)
                 });
 
                 yield return npc;
