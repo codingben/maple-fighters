@@ -5,8 +5,8 @@
   "description": "A small online game similar to MapleStory",
   "main": "index.js",
   "scripts": {
-    "start": "PUBLIC_URL=/ react-scripts start",
-    "build": "PUBLIC_URL=/ react-scripts build",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
     "predeploy": "npm run build",
     "deploy": "gh-pages -b gh-pages -d build"
   },
