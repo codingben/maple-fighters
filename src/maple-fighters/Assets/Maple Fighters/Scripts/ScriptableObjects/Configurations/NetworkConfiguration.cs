@@ -10,13 +10,36 @@ namespace ScriptableObjects.Configurations
         order = 0)]
     public class NetworkConfiguration : ScriptableSingleton<NetworkConfiguration>
     {
-        public ServerData[] ServerData;
+        public ServerData[] DevServerData;
+
+        public ServerData[] ProdServerData;
 
         public HostingEnvironment HostingEnvironment;
 
-        public ServerData GetServerData(ServerType serverType)
+        public string GetServerUrl(ServerType serverType)
         {
-            return ServerData.FirstOrDefault((x) => x.ServerType == serverType);
+            var url = string.Empty;
+
+            if (IsProduction())
+            {
+                var serverData =
+                    ProdServerData.FirstOrDefault((x) => x.ServerType == serverType);
+                if (serverData != null)
+                {
+                    url = serverData.Url;
+                }
+            }
+            else
+            {
+                var serverData =
+                    DevServerData.FirstOrDefault((x) => x.ServerType == serverType);
+                if (serverData != null)
+                {
+                    url = serverData.Url;
+                }
+            }
+
+            return url;
         }
 
         public bool IsProduction()

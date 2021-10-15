@@ -31,10 +31,8 @@ namespace Scripts.Services.GameProviderApi
             var networkConfiguration = NetworkConfiguration.GetInstance();
             if (networkConfiguration != null)
             {
-                var serverData =
-                    networkConfiguration.GetServerData(ServerType.GameProvider);
-
-                url = serverData.Url;
+                url =
+                    networkConfiguration.GetServerUrl(ServerType.GameProvider);
             }
         }
 

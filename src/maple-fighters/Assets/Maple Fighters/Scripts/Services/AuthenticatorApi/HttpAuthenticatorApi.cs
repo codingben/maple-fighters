@@ -33,10 +33,8 @@ namespace Scripts.Services.AuthenticatorApi
             var networkConfiguration = NetworkConfiguration.GetInstance();
             if (networkConfiguration != null)
             {
-                var serverData =
-                    networkConfiguration.GetServerData(ServerType.Authenticator);
-
-                url = serverData.Url;
+                url =
+                    networkConfiguration.GetServerUrl(ServerType.Authenticator);
             }
         }
 

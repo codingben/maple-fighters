@@ -35,10 +35,8 @@ namespace Scripts.Services.CharacterProviderApi
             var networkConfiguration = NetworkConfiguration.GetInstance();
             if (networkConfiguration != null)
             {
-                var serverData =
-                    networkConfiguration.GetServerData(ServerType.Character);
-
-                url = serverData.Url;
+                url =
+                    networkConfiguration.GetServerUrl(ServerType.Character);
             }
         }
 

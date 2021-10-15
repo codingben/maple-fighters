@@ -30,9 +30,8 @@ namespace Scripts.Services.ChatApi
             var networkConfiguration = NetworkConfiguration.GetInstance();
             if (networkConfiguration != null)
             {
-                var serverData =
-                    networkConfiguration.GetServerData(ServerType.Chat);
-                var url = serverData.Url;
+                var url =
+                    networkConfiguration.GetServerUrl(ServerType.Chat);
 
                 if (string.IsNullOrEmpty(url))
                 {
