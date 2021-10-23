@@ -5,9 +5,9 @@
   "description": "A small online game similar to MapleStory",
   "main": "index.js",
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "predeploy": "npm run build",
+    "start": "PUBLIC_URL=/ react-scripts start",
+    "build": "PUBLIC_URL=/ react-scripts build",
+    "build:gh-pages": "PUBLIC_URL=/maple-fighters/ react-scripts build",
     "deploy": "gh-pages -b gh-pages -d build"
   },
   "author": "Ben Ukhanov",
