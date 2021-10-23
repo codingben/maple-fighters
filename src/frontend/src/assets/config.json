@@ -1,0 +1,7 @@
+{
+    "Environment": "Development",
+    "AuthUrl": "http://localhost:80/auth",
+    "GameProviderUrl": "http://localhost:80/gameprovider",
+    "CharacterUrl": "http://localhost:80/character",
+    "ChatUrl": "ws://localhost:80/chat/"
+}

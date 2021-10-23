@@ -4,13 +4,16 @@ import Header from "./Header";
 import Footer from "./Footer";
 import Loader from "./Loader";
 import logo from "../assets/logo.png";
+import config from "../assets/config.json";
 import "./app.css";
 
+const name = "maple-fighters";
+
 export const context = new UnityContext({
-  loaderUrl: "build/maple-fighters.loader.js",
-  dataUrl: "build/maple-fighters.data",
-  frameworkUrl: "build/maple-fighters.framework.js",
-  codeUrl: "build/maple-fighters.wasm",
+  loaderUrl: "build/" + name + ".loader.js",
+  dataUrl: "build/" + name + ".data",
+  frameworkUrl: "build/" + name + ".framework.js",
+  codeUrl: "build/" + name + ".wasm",
 });
 
 function App() {
@@ -27,6 +30,14 @@ function App() {
       </div>
     );
   }
+
+  context.on("SetConfig", () => {
+    // Timeout required (maybe because of the splash screen).
+    setTimeout(() => {
+      const data = JSON.stringify(config);
+      context.send("Network Configuration Setter", "SetConfigCallback", data);
+    }, 2000);
+  });
 
   return (
     <div>
