@@ -7,7 +7,7 @@ namespace Scripts.QuickAccess
 {
     public class QuickLogin : MonoBehaviour
     {
-        #if UNITY_EDITOR || UNITY_WEBGL
+#if UNITY_EDITOR || UNITY_WEBGL
         private void Start()
         {
             StartCoroutine(WaitFrameBeforeDestroy());
@@ -30,6 +30,6 @@ namespace Scripts.QuickAccess
 
             Destroy(gameObject);
         }
-        #endif
+#endif
     }
 }
