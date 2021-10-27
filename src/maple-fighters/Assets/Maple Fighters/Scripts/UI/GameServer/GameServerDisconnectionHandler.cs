@@ -40,7 +40,7 @@ namespace Scripts.UI.GameServer
 
         private void OnClicked()
         {
-            SceneManager.LoadScene(sceneName: SceneNames.Main);
+            SceneManager.LoadScene(sceneName: SceneNames.GameServerSelection);
         }
     }
 }

@@ -190,7 +190,7 @@ namespace Scripts.UI.Authenticator
 
         public void OnLoginSucceed()
         {
-            SceneManager.LoadScene(sceneName: SceneNames.Main);
+            SceneManager.LoadScene(sceneName: SceneNames.GameServerSelection);
         }
 
         public void OnLoginFailed(string reason)
