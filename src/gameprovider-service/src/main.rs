@@ -1,9 +1,9 @@
-use actix_web::{middleware::Logger, web, App, HttpServer};
+use actix_web::{middleware::Logger, web, App, HttpServer, Responder};
 use dotenv::dotenv;
 use std::{env, io::Result};
 
-async fn get_games() -> &'static str {
-    "[{\"name\":\"Europe\",\"protocol\":\"ws\",\"url\":\"localhost/game/\"}]"
+async fn get_games() -> impl Responder {
+    env::var("GAMES").expect("GAMES not found")
 }
 
 #[actix_web::main]
