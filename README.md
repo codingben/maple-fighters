@@ -34,7 +34,7 @@ Feel free to play on the web platform [here](https://ukben.dev/maple-fighters). 
 **Database**: MongoDB, PostgreSQL  
 **Reverse Proxy**: Nginx
 
-## Projects
+## Microservices
 
 | Service                                             | Language | Description                                             |
 | --------------------------------------------------- | -------- | ------------------------------------------------------- |
