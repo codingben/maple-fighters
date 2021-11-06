@@ -1,0 +1,26 @@
+name: Auth Service Build
+
+on:
+  push:
+    branches: [develop]
+    paths:
+      - src/auth-service/Authenticator.API/**
+      - src/auth-service/Authenticator.Domain/**
+      - src/auth-service/Authenticator.Infrastructure/**
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: "5.0.x"
+      - name: Authenticator API Build
+        run: dotnet build src/auth-service/Authenticator.API -c Release
+      - name: Authenticator Domain Build
+        run: dotnet build src/auth-service/Authenticator.Domain -c Release
+      - name: Authenticator Infrastructure Build
+        run: dotnet build src/auth-service/Authenticator.Infrastructure -c Release
