@@ -1,0 +1,23 @@
+name: Character Service Build
+
+on:
+  push:
+    branches: [develop]
+    paths:
+      - src/character-service/src/**
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setup Toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+      - name: Character App Build
+        uses: actions-rs/cargo@v1
+        with:
+          command: build
+          args: --release
