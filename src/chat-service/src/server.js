@@ -2,9 +2,12 @@ const WebSocket = require("ws");
 
 require("dotenv").config();
 
-var server = new WebSocket.Server({ port: process.env.PORT });
+var port = process.env.PORT;
+var server = new WebSocket.Server({ port: port });
 server.on("connection", onConnection);
 server.on("close", onClose);
+
+console.log("Server started, listening on port %s", port);
 
 function onConnection(webSocket) {
   webSocket.on("message", (data, isBinary) => {
