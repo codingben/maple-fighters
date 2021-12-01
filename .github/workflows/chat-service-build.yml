@@ -18,6 +18,7 @@ jobs:
           node-version: '16'
           cache: 'npm'
           cache-dependency-path: src/chat-service/package-lock.json
-      - name: Chat App Build
+      - name: Chat App Install
         run: npm install
-        run: npm test
+      - name: Chat App Build
+        run: npm run build
