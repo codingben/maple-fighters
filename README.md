@@ -46,26 +46,6 @@ Feel free to play on the web platform [here](https://ukben.dev/maple-fighters). 
 | [character-service](./src/character-service)        | Rust     | Creates and receives player character data.             |
 | [chat-service](./src/chat-service)                  | Node.js  | Communication between players during the game.          |
 
-## Folder Structure
-
-```
-├── docs
-│   └── images
-├── lib
-│   ├── common
-│   ├── interest-management
-│   ├── interest-management-simulation
-│   └── ui-manager
-└── src
-    ├── auth-service
-    ├── character-service
-    ├── chat-service
-    ├── frontend
-    ├── gameprovider-service
-    ├── game-service
-    └── maple-fighters
-```
-
 ## Quickstart
 
 ### Docker
