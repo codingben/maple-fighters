@@ -34,10 +34,12 @@ Feel free to play on the web platform [here](https://ukben.dev/maple-fighters). 
 **Database**: MongoDB, PostgreSQL  
 **Reverse Proxy**: Nginx
 
-## Microservices
+## Projects
 
-| Service                                             | Language | Description                                             |
+| Name                                                | Language | Description                                             |
 | --------------------------------------------------- | -------- | ------------------------------------------------------- |
+| [maple-fighters](./src/maple-fighters)              | C#       | Maple Fighters made with Unity.                         |
+| [frontend](./src/frontend)                          | React.js | Provides game files.                                    |
 | [auth-service](./src/auth-service)                  | C#       | Stores user data and verifies user.                     |
 | [game-service](./src/game-service/Game.Application) | C#       | Creates a player in the game world to play with others. |
 | [gameprovider-service](./src/gameprovider-service)  | Rust     | Provides a list of game servers.                        |
