@@ -46,6 +46,18 @@ Feel free to play on the web platform [here](https://ukben.dev/maple-fighters). 
 | [character-service](./src/character-service)        | Rust     | Creates player characters and saves his characters.               |
 | [chat-service](./src/chat-service)                  | Node.js  | Provides communication between players in the game world.         |
 
+## Build Status
+
+| Name                 | Status                                                                                                                                                                                                                                  |
+| -------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Maple Fighters       | [![Unity Build](https://github.com/benukhanov/maple-fighters/actions/workflows/unity-build.yml/badge.svg)](https://github.com/benukhanov/maple-fighters/actions/workflows/unity-build.yml)                                              |
+| Frontend             | [![Frontend Build](https://github.com/benukhanov/maple-fighters/actions/workflows/frontend-build.yml/badge.svg)](https://github.com/benukhanov/maple-fighters/actions/workflows/frontend-build.yml)                                     |
+| Auth Service         | [![Auth Service Build](https://github.com/benukhanov/maple-fighters/actions/workflows/auth-service-build.yml/badge.svg)](https://github.com/benukhanov/maple-fighters/actions/workflows/auth-service-build.yml)                         |
+| Game Service         | [![Game Service Build](https://github.com/benukhanov/maple-fighters/actions/workflows/game-service-build.yml/badge.svg)](https://github.com/benukhanov/maple-fighters/actions/workflows/game-service-build.yml)                         |
+| GameProvider Service | [![GameProvider Service Build](https://github.com/benukhanov/maple-fighters/actions/workflows/gameprovider-service-build.yml/badge.svg)](https://github.com/benukhanov/maple-fighters/actions/workflows/gameprovider-service-build.yml) |
+| Character Service    | [![Character Service Build](https://github.com/benukhanov/maple-fighters/actions/workflows/character-service-build.yml/badge.svg)](https://github.com/benukhanov/maple-fighters/actions/workflows/character-service-build.yml)          |
+| Chat Service         | [![Chat Service Build](https://github.com/benukhanov/maple-fighters/actions/workflows/chat-service-build.yml/badge.svg)](https://github.com/benukhanov/maple-fighters/actions/workflows/chat-service-build.yml)                         |
+
 ## Quickstart
 
 ### Docker
