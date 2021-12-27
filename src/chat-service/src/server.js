@@ -4,15 +4,10 @@ require("dotenv").config();
 
 var port = process.env.PORT;
 var server = new WebSocket.Server({ port: port });
-server.on("connection", onConnection);
-server.on("close", onClose);
-
-console.log("Server started, listening on port %s", port);
-
-function onConnection(webSocket) {
+server.on("connection", (webSocket) => {
   webSocket.on("message", (data, isBinary) => {
     server.clients.forEach((client) => {
-      if (client === webSocket || client.readyState !== WebSocket.OPEN) {
+      if (client === webSocket || client.readyState !== webSocket.OPEN) {
         return;
       }
 
@@ -21,8 +16,9 @@ function onConnection(webSocket) {
   });
 
   console.log("A new client connected.");
-}
-
-function onClose() {
+});
+server.on("close", () => {
   console.log("The client has been disconnected.");
-}
+});
+
+console.log("Server started, listening on port %s", port);
