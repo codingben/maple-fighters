@@ -7,13 +7,13 @@ import logo from "../assets/logo.png";
 import config from "../assets/config.json";
 import "./app.css";
 
-const name = "maple-fighters";
+const buildPath = "build/maple-fighters";
 
 export const context = new UnityContext({
-  loaderUrl: "build/" + name + ".loader.js",
-  dataUrl: "build/" + name + ".data",
-  frameworkUrl: "build/" + name + ".framework.js",
-  codeUrl: "build/" + name + ".wasm",
+  loaderUrl: buildPath + ".loader.js",
+  dataUrl: buildPath + ".data",
+  frameworkUrl: buildPath + ".framework.js",
+  codeUrl: buildPath + ".wasm",
 });
 
 function App() {
