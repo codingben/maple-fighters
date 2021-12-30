@@ -37,15 +37,17 @@ if (gameSceneCollection.TryGet(map: Map.TheDarkForest, out var gameScene))
         Flags = DrawFlags.Aabb | DrawFlags.Shape
     });
 
-    // Create a player game object.
-    var player = new PlayerGameObject(id: 1, new IComponent[]
-    {
-        new MessageSender(new NativeJsonSerializer()),
-        new PlayerAttackedMessageSender()
-    });
+    var player = new GameObject(
+        id: 1,
+        name: "Player",
+        position: new Vector2(10, 5),
+        size: Vector2.Zero,
+        new IComponent[]
+        {
+            new MessageSender(new NativeJsonSerializer()),
+            new PlayerAttackedMessageSender()
+        });
     var bodyData = player.CreateBodyData();
-
-    // Add a player and his physical body.
     gameScene.GameObjectCollection.Add(player);
     gameScene.PhysicsWorldManager.AddBody(bodyData);
 }
