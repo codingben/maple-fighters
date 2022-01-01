@@ -4,8 +4,7 @@ on:
   push:
     branches: [develop]
     paths:
-      - src/character-service/src/**
-  workflow_dispatch: # A way to trigger a workflow manually
+      - src/character-service/**
 
 jobs:
   build:

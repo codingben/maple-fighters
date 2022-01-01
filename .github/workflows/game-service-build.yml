@@ -6,7 +6,6 @@ on:
     paths:
       - src/game-service/Game.Application/**
       - src/game-service/Game.PhysicsTests/**
-  workflow_dispatch: # A way to trigger a workflow manually
 
 jobs:
   build:

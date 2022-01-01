@@ -5,7 +5,6 @@ on:
     branches: [develop]
     paths:
       - src/maple-fighters/**
-  workflow_dispatch: # A way to trigger a workflow manually
 
 env:
   UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}

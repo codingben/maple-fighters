@@ -5,7 +5,6 @@ on:
     branches: [develop]
     paths:
       - src/frontend/src/**
-  workflow_dispatch: # A way to trigger a workflow manually
 
 jobs:
   build:

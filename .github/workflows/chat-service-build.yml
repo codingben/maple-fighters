@@ -4,8 +4,7 @@ on:
   push:
     branches: [develop]
     paths:
-      - src/chat-service/src/**
-  workflow_dispatch: # A way to trigger a workflow manually
+      - src/chat-service/**
 
 jobs:
   build:
