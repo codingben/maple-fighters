@@ -20,6 +20,6 @@ jobs:
           cache: 'npm'
           cache-dependency-path: src/frontend/package-lock.json
       - name: Frontend App Install
-        run: npm ci
+        run: npm ci --prefix src/frontend
       - name: Frontend App Build
-        run: npm run build
+        run: npm run build --prefix src/frontend
