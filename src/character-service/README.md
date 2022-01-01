@@ -1,5 +1,7 @@
 # Character Service
 
+[![Character Service Build](https://github.com/benukhanov/maple-fighters/actions/workflows/character-service-build.yml/badge.svg)](https://github.com/benukhanov/maple-fighters/actions/workflows/character-service-build.yml)
+
 The character service creates and receives the player character data.
 
 ## Project Structure
