@@ -5,6 +5,10 @@ on:
     branches: [develop]
     paths:
       - src/character-service/**
+  pull_request:
+    branches: [develop]
+    paths:
+      - src/character-service/**
 
 jobs:
   build:

@@ -5,6 +5,10 @@ on:
     branches: [develop]
     paths:
       - src/auth-service/**
+  pull_request:
+    branches: [develop]
+    paths:
+      - src/auth-service/**
 
 jobs:
   build:

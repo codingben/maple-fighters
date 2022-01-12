@@ -5,6 +5,10 @@ on:
     branches: [develop]
     paths:
       - src/gameprovider-service/**
+  pull_request:
+    branches: [develop]
+    paths:
+      - src/gameprovider-service/**
 
 jobs:
   build:

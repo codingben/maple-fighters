@@ -5,6 +5,10 @@ on:
     branches: [develop]
     paths:
       - lib/interest-management/**
+  pull_request:
+    branches: [develop]
+    paths:
+      - lib/interest-management/**
 
 jobs:
   build:

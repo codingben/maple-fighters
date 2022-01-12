@@ -6,6 +6,11 @@ on:
     paths:
       - src/game-service/Game.Application/**
       - src/game-service/Game.PhysicsTests/**
+  pull_request:
+    branches: [develop]
+    paths:
+      - src/game-service/Game.Application/**
+      - src/game-service/Game.PhysicsTests/**
 
 jobs:
   build:

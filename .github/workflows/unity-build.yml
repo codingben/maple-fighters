@@ -5,6 +5,10 @@ on:
     branches: [develop]
     paths:
       - src/maple-fighters/**
+  pull_request:
+    branches: [develop]
+    paths:
+      - src/maple-fighters/**
 
 env:
   UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}

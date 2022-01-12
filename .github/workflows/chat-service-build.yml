@@ -5,6 +5,10 @@ on:
     branches: [develop]
     paths:
       - src/chat-service/**
+  pull_request:
+    branches: [develop]
+    paths:
+      - src/chat-service/**
 
 jobs:
   build:
