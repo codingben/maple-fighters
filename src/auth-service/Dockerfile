@@ -1,4 +1,3 @@
-# Build app
 FROM mcr.microsoft.com/dotnet/sdk:5.0 as builder
 COPY ./Authenticator.API/Authenticator.API.csproj ./Authenticator.API/Authenticator.API.csproj
 COPY ./Authenticator.Domain/*.csproj ./Authenticator.Domain/Authenticator.Domain.csproj
@@ -8,8 +7,7 @@ RUN dotnet restore maple-fighters-auth-service.sln
 COPY . .
 RUN dotnet publish -c release -o /app --no-restore
 
-# Copy build artifacts
-FROM mcr.microsoft.com/dotnet/aspnet:5.0 as runtime
+FROM mcr.microsoft.com/dotnet/aspnet:5.0
 WORKDIR /app
 COPY --from=builder /app .
 ENTRYPOINT ["dotnet", "Authenticator.API.dll"]
