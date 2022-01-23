@@ -1,0 +1,7 @@
+{
+    "Environment": "Production",
+    "AuthUrl": "http://maplefighters.io/auth",
+    "GameProviderUrl": "http://maplefighters.io/gameprovider",
+    "CharacterUrl": "http://maplefighters.io/character",
+    "ChatUrl": "ws://maplefighters.io/chat/"
+}
