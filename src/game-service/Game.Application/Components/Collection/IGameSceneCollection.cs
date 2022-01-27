@@ -4,7 +4,7 @@
     {
         bool Add(Map map, IGameScene gameScene);
 
-        bool Remove(Map map);
+        void Remove(Map map);
 
         bool TryGet(Map map, out IGameScene gameScene);
     }

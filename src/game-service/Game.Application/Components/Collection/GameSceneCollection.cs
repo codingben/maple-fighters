@@ -17,9 +17,9 @@ namespace Game.Application.Components
             return collection.TryAdd(map, gameScene);
         }
 
-        public bool Remove(Map map)
+        public void Remove(Map map)
         {
-            return collection.TryRemove(map, out _);
+            collection.Remove(map, out _);
         }
 
         public bool TryGet(Map map, out IGameScene gameScene)
