@@ -5,11 +5,11 @@ namespace Game.Application.Components
 {
     public class GameSceneCollection : ComponentBase, IGameSceneCollection
     {
-        private readonly ConcurrentDictionary<Map, IGameScene> collection;
+        private readonly Dictionary<Map, IGameScene> collection;
 
         public GameSceneCollection()
         {
-            collection = new ConcurrentDictionary<Map, IGameScene>();
+            collection = new Dictionary<Map, IGameScene>();
         }
 
         public bool Add(Map map, IGameScene gameScene)
