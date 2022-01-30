@@ -12,13 +12,3 @@ services:
             - game-service
         volumes:
             - ./src/frontend/nginx.prod.conf:/etc/nginx/nginx.conf
-
-    game-service:
-        image: game-service:1.0.0
-        build:
-            context: ./src/game-service/Game.Application
-        restart: "on-failure"
-        expose:
-            - 50051
-        environment:
-            URL: ws://0.0.0.0:50051
