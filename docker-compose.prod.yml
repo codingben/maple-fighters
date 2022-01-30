@@ -8,7 +8,5 @@ services:
             context: ./src/frontend
         ports:
             - 80:80
-        depends_on:
-            - game-service
         volumes:
             - ./src/frontend/nginx.prod.conf:/etc/nginx/nginx.conf
