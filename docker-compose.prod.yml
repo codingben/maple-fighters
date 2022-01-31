@@ -10,3 +10,4 @@ services:
             - 80:80
         volumes:
             - ./src/frontend/nginx.prod.conf:/etc/nginx/nginx.conf
+            - ./src/frontend/cloudflare-ips.conf:/var/www-allow/cloudflare-ips.conf
