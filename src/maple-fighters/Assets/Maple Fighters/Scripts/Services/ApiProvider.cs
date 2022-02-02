@@ -14,15 +14,8 @@ namespace Scripts.Services
         {
             if (authenticatorApi == null)
             {
-                var networkConfiguration = NetworkConfiguration.GetInstance();
-                if (networkConfiguration.IsProduction())
-                {
-                    authenticatorApi = HttpAuthenticatorApi.GetInstance();
-                }
-                else
-                {
-                    authenticatorApi = DummyAuthenticatorApi.GetInstance();
-                }
+                // TODO: Get environment only for this service
+                authenticatorApi = DummyAuthenticatorApi.GetInstance();
             }
 
             return authenticatorApi;
@@ -41,6 +34,7 @@ namespace Scripts.Services
         {
             if (gameApi == null)
             {
+                // TODO: Get environment only for this service
                 var networkConfiguration = NetworkConfiguration.GetInstance();
                 if (networkConfiguration.IsProduction())
                 {
@@ -68,6 +62,7 @@ namespace Scripts.Services
         {
             if (gameProviderApi == null)
             {
+                // TODO: Get environment only for this service
                 var networkConfiguration = NetworkConfiguration.GetInstance();
                 if (networkConfiguration.IsProduction())
                 {
@@ -95,15 +90,8 @@ namespace Scripts.Services
         {
             if (characterProviderApi == null)
             {
-                var networkConfiguration = NetworkConfiguration.GetInstance();
-                if (networkConfiguration.IsProduction())
-                {
-                    characterProviderApi = HttpCharacterProviderApi.GetInstance();
-                }
-                else
-                {
-                    characterProviderApi = DummyCharacterProviderApi.GetInstance();
-                }
+                // TODO: Get environment only for this service
+                characterProviderApi = DummyCharacterProviderApi.GetInstance();
             }
 
             return characterProviderApi;
@@ -122,6 +110,7 @@ namespace Scripts.Services
         {
             if (chatApi == null)
             {
+                // TODO: Get environment only for this service
                 var networkConfiguration = NetworkConfiguration.GetInstance();
                 if (networkConfiguration.IsProduction())
                 {
