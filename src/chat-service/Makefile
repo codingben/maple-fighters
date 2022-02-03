@@ -1,3 +1,6 @@
+pull:
+	docker pull maplefighters/chat-service
+
 build:
 	docker build -t chat-service .
 

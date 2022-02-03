@@ -1,3 +1,6 @@
+pull:
+	docker pull maplefighters/game-service
+
 build:
 	docker build -t game-service .
 

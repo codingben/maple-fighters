@@ -1,3 +1,6 @@
+pull:
+	docker pull maplefighters/frontend
+
 build:
 	docker build -t frontend .
 
