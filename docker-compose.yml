@@ -2,8 +2,7 @@ version: '3.8'
 
 services:
     frontend:
-        image: frontend:1.0.0
-        container_name: frontend
+        image: frontend
         build:
             context: ./src/frontend
         ports:
@@ -18,7 +17,7 @@ services:
             - ./src/frontend/nginx.conf:/etc/nginx/nginx.conf
 
     auth-service:
-        image: auth-service:1.0.0
+        image: auth-service
         build:
             context: ./src/auth-service
         expose:
@@ -33,7 +32,7 @@ services:
             DATABASE_URL: mongodb://mongo:27017/maple_fighters
 
     character-service:
-        image: character-service:1.0.0
+        image: character-service
         build:
             context: ./src/character-service
         expose:
@@ -47,7 +46,7 @@ services:
             DATABASE_URL: postgres://postgres:postgres@postgres:5432/postgres
 
     game-service:
-        image: game-service:1.0.0
+        image: game-service
         build:
             context: ./src/game-service/Game.Application
         restart: "on-failure"
@@ -57,7 +56,7 @@ services:
             URL: ws://0.0.0.0:50051
 
     gameprovider-service:
-        image: gameprovider-service:1.0.0
+        image: gameprovider-service
         build:
             context: ./src/gameprovider-service
         expose:
@@ -69,7 +68,7 @@ services:
             GAME_SERVICES: "{\"name\":\"Europe\",\"protocol\":\"ws\",\"url\":\"localhost/game/\"}"
 
     chat-service:
-        image: chat-service:1.0.0
+        image: chat-service
         build:
             context: ./src/chat-service
         expose:
