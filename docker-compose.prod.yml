@@ -2,10 +2,7 @@ version: '3.8'
 
 services:
     frontend:
-        image: frontend:1.0.0
-        container_name: frontend
-        build:
-            context: ./src/frontend
+        image: frontend
         ports:
             - 80:80
         depends_on:
@@ -17,9 +14,7 @@ services:
             - ./src/frontend/cloudflare-ips.conf:/var/www-allow/cloudflare-ips.conf
 
     game-service:
-        image: game-service:1.0.0
-        build:
-            context: ./src/game-service/Game.Application
+        image: game-service
         restart: "on-failure"
         expose:
             - 50051
@@ -27,9 +22,7 @@ services:
             URL: ws://0.0.0.0:50051
 
     gameprovider-service:
-        image: gameprovider-service:1.0.0
-        build:
-            context: ./src/gameprovider-service
+        image: gameprovider-service
         expose:
             - 50052
         environment:
@@ -39,9 +32,7 @@ services:
             GAME_SERVICES: "{\"name\":\"Europe\",\"protocol\":\"ws\",\"url\":\"maplefighters.io/europe/\"}"
 
     chat-service:
-        image: chat-service:1.0.0
-        build:
-            context: ./src/chat-service
+        image: chat-service
         expose:
             - 50054
         environment:
