@@ -31,3 +31,4 @@ jobs:
           context: ./src/game-service/Game.Application
           file: ./src/game-service/Game.Application/Dockerfile
           push: true
+          tags: maplefighters/game-service:latest

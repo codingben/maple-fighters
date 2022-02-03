@@ -31,3 +31,4 @@ jobs:
           context: ./src/auth-service
           file: ./src/auth-service/Dockerfile
           push: true
+          tags: maplefighters/auth-service:latest

@@ -31,3 +31,4 @@ jobs:
           context: ./src/chat-service
           file: ./src/chat-service/Dockerfile
           push: true
+          tags: maplefighters/chat-service:latest

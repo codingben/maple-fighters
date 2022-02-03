@@ -31,3 +31,4 @@ jobs:
           context: ./src/frontend
           file: ./src/frontend/Dockerfile
           push: true
+          tags: maplefighters/frontend:latest

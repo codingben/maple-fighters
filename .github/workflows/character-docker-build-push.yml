@@ -31,3 +31,4 @@ jobs:
           context: ./src/character-service
           file: ./src/character-service/Dockerfile
           push: true
+          tags: maplefighters/character-service:latest
