@@ -30,19 +30,13 @@ function App() {
     );
   }
 
-  context.on("SetConfig", () => {
+  context.on("SetEnv", () => {
     // Timeout required (maybe because of the splash screen).
     setTimeout(() => {
-      let config = JSON.stringify({
-        DevHost: "localhost",
-        Host: "maplefighters.io",
-        Environment:
-          process.env.REACT_APP_ENV == "Production"
-            ? "Production"
-            : "Development",
-      });
+      let isProduction = process.env.REACT_APP_ENV == "Production";
+      let env = isProduction ? "Production" : "Development";
 
-      context.send("Network Configuration Setter", "SetConfigCallback", config);
+      context.send("Environment Setter", "SetEnvCallback", env);
     }, 2000);
   });
 
