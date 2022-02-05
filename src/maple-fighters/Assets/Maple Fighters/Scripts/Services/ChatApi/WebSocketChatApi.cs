@@ -28,26 +28,28 @@ namespace Scripts.Services.ChatApi
         private void Start()
         {
             var networkConfiguration = NetworkConfiguration.GetInstance();
-            if (networkConfiguration != null)
+            if (networkConfiguration == null)
             {
-                var url =
-                    networkConfiguration.GetServerUrl(ServerType.Chat);
+                return;
+            }
 
-                if (string.IsNullOrEmpty(url))
-                {
-                    return;
-                }
+            var uriBuilder = new UriBuilder()
+            {
+                Scheme = "ws",
+                Host = networkConfiguration.GetHost(),
+                Path = "/chat/"
+            };
+            var url = uriBuilder.Uri.ToString();
 
-                try
-                {
-                    webSocket = new WebSocket(url);
-                    webSocket.OnMessage += OnMessage;
-                    webSocket.Connect();
-                }
-                catch (Exception exception)
-                {
-                    Debug.LogError(exception.Message);
-                }
+            try
+            {
+                webSocket = new WebSocket(url);
+                webSocket.OnMessage += OnMessage;
+                webSocket.Connect();
+            }
+            catch (Exception exception)
+            {
+                Debug.LogError(exception.Message);
             }
         }
 

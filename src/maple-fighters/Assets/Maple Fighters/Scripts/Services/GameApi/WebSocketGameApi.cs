@@ -4,6 +4,7 @@ using Game.Messages;
 using Game.MessageTools;
 using NativeWebSocket;
 using UnityEngine;
+using ScriptableObjects.Configurations;
 
 namespace Scripts.Services.GameApi
 {
@@ -72,13 +73,13 @@ namespace Scripts.Services.GameApi
                 return;
             }
 
-            var url = userMetadata.GameServerUrl;
-
-            if (string.IsNullOrEmpty(url))
+            var networkConfiguration = NetworkConfiguration.GetInstance();
+            if (networkConfiguration == null)
             {
-                Debug.LogWarning("Game server url is not set.");
                 return;
             }
+
+            var url = userMetadata.GameServerUrl;
 
             try
             {

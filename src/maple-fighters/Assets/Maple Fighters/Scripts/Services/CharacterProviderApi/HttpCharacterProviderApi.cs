@@ -35,8 +35,13 @@ namespace Scripts.Services.CharacterProviderApi
             var networkConfiguration = NetworkConfiguration.GetInstance();
             if (networkConfiguration != null)
             {
-                url =
-                    networkConfiguration.GetServerUrl(ServerType.Character);
+                var uriBuilder = new UriBuilder()
+                {
+                    Scheme = "http",
+                    Host = networkConfiguration.GetHost(),
+                    Path = "character"
+                };
+                url = uriBuilder.Uri.ToString();
             }
         }
 

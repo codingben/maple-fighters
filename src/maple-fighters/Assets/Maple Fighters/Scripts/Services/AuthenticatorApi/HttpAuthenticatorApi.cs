@@ -33,8 +33,13 @@ namespace Scripts.Services.AuthenticatorApi
             var networkConfiguration = NetworkConfiguration.GetInstance();
             if (networkConfiguration != null)
             {
-                url =
-                    networkConfiguration.GetServerUrl(ServerType.Authenticator);
+                var uriBuilder = new UriBuilder()
+                {
+                    Scheme = "http",
+                    Host = networkConfiguration.GetHost(),
+                    Path = "auth"
+                };
+                url = uriBuilder.Uri.ToString();
             }
         }
 

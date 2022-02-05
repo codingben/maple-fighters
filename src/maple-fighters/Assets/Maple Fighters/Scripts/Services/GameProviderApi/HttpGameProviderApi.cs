@@ -31,8 +31,13 @@ namespace Scripts.Services.GameProviderApi
             var networkConfiguration = NetworkConfiguration.GetInstance();
             if (networkConfiguration != null)
             {
-                url =
-                    networkConfiguration.GetServerUrl(ServerType.GameProvider);
+                var uriBuilder = new UriBuilder()
+                {
+                    Scheme = "http",
+                    Host = networkConfiguration.GetHost(),
+                    Path = "gameprovider"
+                };
+                url = uriBuilder.Uri.ToString();
             }
         }
 
