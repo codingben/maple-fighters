@@ -5,10 +5,8 @@ namespace ScriptableObjects.Configurations
     [Serializable]
     public class NetworkConfigurationData
     {
+        public string DevHost;
+        public string Host;
         public string Environment;
-        public string AuthUrl;
-        public string GameProviderUrl;
-        public string CharacterUrl;
-        public string ChatUrl;
     }
 }

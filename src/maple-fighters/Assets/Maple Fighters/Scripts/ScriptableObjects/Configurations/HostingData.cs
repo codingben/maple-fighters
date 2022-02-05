@@ -3,12 +3,12 @@
 namespace ScriptableObjects.Configurations
 {
     [Serializable]
-    public class ServerData
+    public class HostingData
     {
         public string Name;
 
-        public ServerType ServerType;
+        public string Host;
 
-        public string Url;
+        public HostingEnvironment Environment;
     }
 }

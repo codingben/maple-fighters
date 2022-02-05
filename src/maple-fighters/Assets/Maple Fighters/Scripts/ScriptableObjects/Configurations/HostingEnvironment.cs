@@ -3,13 +3,18 @@
     public enum HostingEnvironment
     {
         /// <summary>
-        /// The production.
+        /// The editor without services.
         /// </summary>
-        Production,
+        Editor,
 
         /// <summary>
-        /// The development.
+        /// The development services.
         /// </summary>
-        Development
+        Development,
+
+        /// <summary>
+        /// The production services.
+        /// </summary>
+        Production
     }
 }

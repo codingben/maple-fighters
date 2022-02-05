@@ -19,36 +19,31 @@ namespace ScriptableObjects.Configurations
         {
             var configuration = NetworkConfiguration.GetInstance();
             var data = JsonUtility.FromJson<NetworkConfigurationData>(json);
+            var environment = data.Environment;
 
-            configuration.ServerData = new ServerData[]
+            configuration.HostingData = new HostingData[]
             {
-                new ServerData()
+                new HostingData()
                 {
-                    ServerType = ServerType.Authenticator,
-                    Url = data.AuthUrl ?? string.Empty
+                    Host = data.DevHost ?? string.Empty,
+                    Environment = HostingEnvironment.Development,
                 },
-                new ServerData()
+                new HostingData()
                 {
-                    ServerType = ServerType.GameProvider,
-                    Url = data.GameProviderUrl ?? string.Empty
-                },
-                new ServerData()
-                {
-                    ServerType = ServerType.Character,
-                    Url = data.CharacterUrl ?? string.Empty
-                },
-                new ServerData()
-                {
-                    ServerType = ServerType.Chat,
-                    Url = data.ChatUrl ?? string.Empty
+                    Host = data.Host ?? string.Empty,
+                    Environment = HostingEnvironment.Production,
                 }
             };
-            configuration.HostingEnvironment = ParseEnvironment(data.Environment);
+            configuration.Environment = ParseEnvironment(environment);
         }
 
         private HostingEnvironment ParseEnvironment(string environment)
         {
-            if (environment == "Production")
+            if (environment == "Editor")
+            {
+                return HostingEnvironment.Editor;
+            }
+            else if (environment == "Production")
             {
                 return HostingEnvironment.Production;
             }
