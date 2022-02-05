@@ -9,9 +9,6 @@ services:
             - game-service
             - gameprovider-service
             - chat-service
-        volumes:
-            - ./src/frontend/nginx.prod.conf:/etc/nginx/nginx.conf
-            - ./src/frontend/cloudflare-ips.conf:/var/www-allow/cloudflare-ips.conf
 
     game-service:
         image: maplefighters/game-service
