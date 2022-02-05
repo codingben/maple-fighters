@@ -4,8 +4,6 @@ import Header from "./Header";
 import Footer from "./Footer";
 import Loader from "./Loader";
 import logo from "../assets/logo.png";
-import gameConfig from "../assets/game-config.json";
-import gameProdConfig from "../assets/game-config.prod.json";
 import "./app.css";
 
 const buildPath = "build/maple-fighters";
@@ -35,13 +33,14 @@ function App() {
   context.on("SetConfig", () => {
     // Timeout required (maybe because of the splash screen).
     setTimeout(() => {
-      let config;
-
-      if (process.env.NODE_ENV == "production") {
-        config = JSON.stringify(gameProdConfig);
-      } else {
-        config = JSON.stringify(gameConfig);
-      }
+      let config = JSON.stringify({
+        DevHost: "localhost",
+        Host: "maplefighters.io",
+        Environment:
+          process.env.REACT_APP_ENV == "Production"
+            ? "Production"
+            : "Development",
+      });
 
       context.send("Network Configuration Setter", "SetConfigCallback", config);
     }, 2000);
