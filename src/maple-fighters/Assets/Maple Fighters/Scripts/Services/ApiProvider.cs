@@ -14,7 +14,7 @@ namespace Scripts.Services
         {
             if (authenticatorApi == null)
             {
-                // TODO: Get environment only for this service
+                // TODO: Fix backend service
                 authenticatorApi = DummyAuthenticatorApi.GetInstance();
             }
 
@@ -34,9 +34,9 @@ namespace Scripts.Services
         {
             if (gameApi == null)
             {
-                // TODO: Get environment only for this service
                 var networkConfiguration = NetworkConfiguration.GetInstance();
-                if (networkConfiguration.IsProduction())
+                if (networkConfiguration.IsProduction() ||
+                    networkConfiguration.IsDevelopment())
                 {
                     gameApi = WebSocketGameApi.GetInstance();
                 }
@@ -62,9 +62,9 @@ namespace Scripts.Services
         {
             if (gameProviderApi == null)
             {
-                // TODO: Get environment only for this service
                 var networkConfiguration = NetworkConfiguration.GetInstance();
-                if (networkConfiguration.IsProduction())
+                if (networkConfiguration.IsProduction() ||
+                    networkConfiguration.IsDevelopment())
                 {
                     gameProviderApi = HttpGameProviderApi.GetInstance();
                 }
@@ -90,7 +90,7 @@ namespace Scripts.Services
         {
             if (characterProviderApi == null)
             {
-                // TODO: Get environment only for this service
+                // TODO: Fix backend service
                 characterProviderApi = DummyCharacterProviderApi.GetInstance();
             }
 
@@ -110,9 +110,9 @@ namespace Scripts.Services
         {
             if (chatApi == null)
             {
-                // TODO: Get environment only for this service
                 var networkConfiguration = NetworkConfiguration.GetInstance();
-                if (networkConfiguration.IsProduction())
+                if (networkConfiguration.IsProduction() ||
+                    networkConfiguration.IsDevelopment())
                 {
                     chatApi = WebSocketChatApi.GetInstance();
                 }

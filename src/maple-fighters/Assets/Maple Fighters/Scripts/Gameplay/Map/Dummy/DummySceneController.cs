@@ -6,13 +6,14 @@ namespace Scripts.Gameplay.Map.Dummy
 {
     public class DummySceneController : MonoBehaviour
     {
-        #if UNITY_EDITOR
+#if UNITY_EDITOR
         private void Awake()
         {
             var networkConfiguration = NetworkConfiguration.GetInstance();
             if (networkConfiguration != null)
             {
-                if (networkConfiguration.IsProduction())
+                if (networkConfiguration.IsProduction() ||
+                    networkConfiguration.IsDevelopment())
                 {
                     var dummyScene =
                         GameObject.FindGameObjectWithTag(GameTags.DummySceneTag);
@@ -25,6 +26,6 @@ namespace Scripts.Gameplay.Map.Dummy
 
             Destroy(gameObject);
         }
-        #endif
+#endif
     }
 }
