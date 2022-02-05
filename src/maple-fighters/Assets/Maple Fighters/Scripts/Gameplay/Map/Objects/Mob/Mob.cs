@@ -23,7 +23,7 @@ namespace Scripts.Gameplay.Map.Objects
 
         private void OnDisable()
         {
-            gameApi.Attacked.RemoveListener(OnPlayerAttacked);
+            gameApi?.Attacked?.RemoveListener(OnPlayerAttacked);
         }
 
         private void OnPlayerAttacked(AttackedMessage message)

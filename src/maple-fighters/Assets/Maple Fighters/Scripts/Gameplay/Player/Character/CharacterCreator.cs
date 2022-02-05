@@ -20,8 +20,8 @@ namespace Scripts.Gameplay.Player
 
         private void OnDisable()
         {
-            gameApi.SceneEntered.RemoveListener(OnSceneEntered);
-            gameApi.GameObjectsAdded.RemoveListener(OnGameObjectsAdded);
+            gameApi?.SceneEntered?.RemoveListener(OnSceneEntered);
+            gameApi?.GameObjectsAdded?.RemoveListener(OnGameObjectsAdded);
         }
 
         private void OnSceneEntered(EnteredSceneMessage message)

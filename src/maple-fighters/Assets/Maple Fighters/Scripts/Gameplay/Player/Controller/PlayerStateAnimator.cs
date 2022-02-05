@@ -35,8 +35,8 @@ namespace Scripts.Gameplay.Player
 
         private void OnDisable()
         {
-            gameApi.GameObjectsAdded.RemoveListener(OnGameObjectsAdded);
-            gameApi.AnimationStateChanged.RemoveListener(OnPlayerStateChanged);
+            gameApi?.GameObjectsAdded?.RemoveListener(OnGameObjectsAdded);
+            gameApi?.AnimationStateChanged?.RemoveListener(OnPlayerStateChanged);
         }
 
         public void SetPlayerState(PlayerStates playerState)

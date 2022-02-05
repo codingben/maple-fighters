@@ -25,13 +25,13 @@ namespace Scripts.UI.GameServerBrowser
         private void Start()
         {
             var button = GetComponent<Button>();
-            button.onClick.AddListener(OnButtonClicked);
+            button?.onClick.AddListener(OnButtonClicked);
         }
 
         private void OnDestroy()
         {
             var button = GetComponent<Button>();
-            button.onClick.RemoveListener(OnButtonClicked);
+            button?.onClick.RemoveListener(OnButtonClicked);
         }
 
         private void OnButtonClicked()

@@ -6,7 +6,7 @@ namespace Scripts.Gameplay.Player
     [RequireComponent(typeof(SpawnCharacter), typeof(PositionSetter))]
     public class CharacterDirectionSetter : MonoBehaviour
     {
-        private Transform character;
+        private GameObject character;
         private PositionSetter positionSetter;
 
         private ISpawnedCharacter spawnedCharacter;
@@ -31,23 +31,29 @@ namespace Scripts.Gameplay.Player
 
         private void OnCharacterSpawned()
         {
-            character = spawnedCharacter.GetCharacter().transform;
+            character = spawnedCharacter.GetCharacter();
         }
 
         private void OnPositionChanged(Vector3 position)
         {
-            var direction = (character.position - position).normalized;
-            var x = Mathf.Abs(character.localScale.x);
-            var y = character.localScale.y;
-            var z = character.localScale.z;
+            if (character == null)
+            {
+                return;
+            }
+
+            var transform = character.transform;
+            var direction = (transform.position - position).normalized;
+            var x = Mathf.Abs(transform.localScale.x);
+            var y = transform.localScale.y;
+            var z = transform.localScale.z;
 
             if (direction.x > 0)
             {
-                character.localScale = new Vector3(x, y, z);
+                transform.localScale = new Vector3(x, y, z);
             }
             else
             {
-                character.localScale = new Vector3(-x, y, z);
+                transform.localScale = new Vector3(-x, y, z);
             }
         }
     }

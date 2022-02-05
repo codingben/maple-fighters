@@ -18,7 +18,7 @@ namespace Scripts.Gameplay.Graphics
 
         private void OnDisable()
         {
-            gameApi.BubbleMessageReceived.RemoveListener(OnBubbleMessageReceived);
+            gameApi?.BubbleMessageReceived?.RemoveListener(OnBubbleMessageReceived);
         }
 
         private void OnBubbleMessageReceived(BubbleNotificationMessage message)

@@ -43,7 +43,7 @@ namespace Scripts.Gameplay.Entity
 
         private void OnDisable()
         {
-            gameApi.PositionChanged.RemoveListener(OnPositionChanged);
+            gameApi?.PositionChanged?.RemoveListener(OnPositionChanged);
         }
 
         private void OnPositionChanged(PositionChangedMessage message)

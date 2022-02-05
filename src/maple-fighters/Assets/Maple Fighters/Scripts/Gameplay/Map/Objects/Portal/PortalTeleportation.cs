@@ -23,13 +23,13 @@ namespace Scripts.Gameplay.Map.Objects
 
         private void OnDisable()
         {
-            gameApi.SceneChanged.RemoveListener(OnSceneChanged);
+            gameApi?.SceneChanged?.RemoveListener(OnSceneChanged);
         }
 
         private void OnSceneChanged(SceneChangedMessage message)
         {
             mapIndex = (int)message.Map;
-            
+
             var gameApi = ApiProvider.ProvideGameApi();
             gameApi.Disconnected += OnDisconnected;
 
