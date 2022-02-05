@@ -217,7 +217,7 @@ GameObject:
   - component: {fileID: 953893310}
   - component: {fileID: 953893311}
   m_Layer: 0
-  m_Name: Network Configuration Setter
+  m_Name: Environment Setter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -246,7 +246,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 953893309}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bb5179832d86d4d86b06e2781ad200de, type: 3}
+  m_Script: {fileID: 11500000, guid: 611da99f2158f489480489c5178062ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1047737306
