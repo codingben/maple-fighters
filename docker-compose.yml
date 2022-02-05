@@ -5,6 +5,9 @@ services:
         image: frontend
         build:
             context: ./src/frontend
+            dockerfile: Dockerfile.dev
+            args:
+                ENVIRONMENT: Development
         ports:
             - 80:80
         depends_on:
@@ -13,8 +16,6 @@ services:
             - game-service
             - gameprovider-service
             - chat-service
-        volumes:
-            - ./src/frontend/nginx.conf:/etc/nginx/nginx.conf
 
     auth-service:
         image: auth-service
@@ -27,7 +28,7 @@ services:
         external_links:
             - mongo
         environment:
-            ASPNETCORE_ENVIRONMENT: Production
+            ASPNETCORE_ENVIRONMENT: Development
             ASPNETCORE_URLS: http://0.0.0.0:50050
             DATABASE_URL: mongodb://mongo:27017/maple_fighters
 
