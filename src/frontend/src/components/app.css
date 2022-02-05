@@ -20,3 +20,7 @@
   color: white;
   font-family: Arial;
 }
+
+::selection {
+  background-color: transparent;
+}
