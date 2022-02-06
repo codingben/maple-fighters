@@ -6,13 +6,11 @@ import Loader from "../Loader/Loader.jsx";
 import logo from "../../assets/logo.png";
 import "./app.css";
 
-const buildPath = "build/maple-fighters";
-
 export const context = new UnityContext({
-  loaderUrl: buildPath + ".loader.js",
-  dataUrl: buildPath + ".data",
-  frameworkUrl: buildPath + ".framework.js",
-  codeUrl: buildPath + ".wasm",
+  loaderUrl: "build/WebGL.loader.js",
+  dataUrl: "build/WebGL.data",
+  frameworkUrl: "build/WebGL.framework.js",
+  codeUrl: "build/WebGL.wasm",
 });
 
 function App() {
