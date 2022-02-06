@@ -1,9 +1,9 @@
 import Unity, { UnityContext } from "react-unity-webgl";
 import { isMobile } from "react-device-detect";
-import Header from "./Header";
-import Footer from "./Footer";
-import Loader from "./Loader";
-import logo from "../assets/logo.png";
+import Header from "../Header/Header.jsx";
+import Footer from "../Footer/Footer.jsx";
+import Loader from "../Loader/Loader.jsx";
+import logo from "../../assets/logo.png";
 import "./app.css";
 
 const buildPath = "build/maple-fighters";

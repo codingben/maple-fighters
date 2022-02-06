@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { context } from "./App";
+import { context } from "../App/App.jsx";
 import FadeLoader from "react-spinners/FadeLoader";
 import "./loader.css";
 

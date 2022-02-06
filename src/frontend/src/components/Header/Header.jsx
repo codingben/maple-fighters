@@ -1,6 +1,6 @@
-import { context } from "./App";
+import { context } from "../App/App.jsx";
 import "./header.css";
-import logo from "../assets/logo.png";
+import logo from "../../assets/logo.png";
 
 function EnterFullScreen() {
   context.setFullscreen(true);
