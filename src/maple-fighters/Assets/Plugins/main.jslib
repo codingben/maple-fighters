@@ -1,5 +1,5 @@
 mergeInto(LibraryManager.library, {
-  SetConfig: function () {
-    ReactUnityWebGL.SetConfig();
+  SetEnv: function () {
+    ReactUnityWebGL.SetEnv();
   }
 });
