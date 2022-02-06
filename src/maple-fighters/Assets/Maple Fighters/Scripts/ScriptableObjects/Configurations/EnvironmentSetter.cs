@@ -6,9 +6,13 @@ namespace ScriptableObjects.Configurations
     /// <summary>
     /// This invokes and then invoked by App.jsx (Frontend) to set
     /// one of the hosting environments:
+    /// 
     /// 1. Editor
     /// 2. Development
     /// 3. Production
+    /// 
+    /// Note: If you change invoke method name, make sure to update
+    /// the main.jslib file.
     /// </summary>
     public class EnvironmentSetter : MonoBehaviour
     {
