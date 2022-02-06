@@ -17,7 +17,7 @@ namespace Scripts.Gameplay.Map.Dummy
             var networkConfiguration = NetworkConfiguration.GetInstance();
             if (networkConfiguration != null)
             {
-                if (networkConfiguration.IsDevelopment())
+                if (networkConfiguration.IsEditor())
                 {
                     StartCoroutine(WaitFrameAndStart());
                 }
