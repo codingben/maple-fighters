@@ -26,14 +26,19 @@ namespace ScriptableObjects.Configurations
             return string.Empty;
         }
 
-        public bool IsProduction()
+        public bool IsEditor()
         {
-            return Environment == HostingEnvironment.Production;
+            return Environment == HostingEnvironment.Editor;
         }
 
         public bool IsDevelopment()
         {
             return Environment == HostingEnvironment.Development;
+        }
+
+        public bool IsProduction()
+        {
+            return Environment == HostingEnvironment.Production;
         }
     }
 }
