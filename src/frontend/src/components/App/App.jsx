@@ -7,10 +7,10 @@ import logo from "../../assets/logo.png";
 import "./app.css";
 
 export const context = new UnityContext({
-  loaderUrl: "build/WebGL.loader.js",
-  dataUrl: "build/WebGL.data",
-  frameworkUrl: "build/WebGL.framework.js",
-  codeUrl: "build/WebGL.wasm",
+  loaderUrl: "files/WebGL.loader.js",
+  dataUrl: "files/WebGL.data",
+  frameworkUrl: "files/WebGL.framework.js",
+  codeUrl: "files/WebGL.wasm",
 });
 
 function App() {
