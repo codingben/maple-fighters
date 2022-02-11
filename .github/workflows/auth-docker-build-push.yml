@@ -1,13 +1,12 @@
 name: Auth Docker Build And Push
 
 on:
-  push:
-    branches: [develop]
-    paths:
-      - src/auth-service/**
+  workflow_run:
+    workflows: [Auth Service Build]
+    types: [completed]
 
 jobs:
-  build:
+  on-success:
     runs-on: ubuntu-latest
     steps:
       - name: Setup QEMU

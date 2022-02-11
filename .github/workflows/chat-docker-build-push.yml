@@ -1,13 +1,12 @@
 name: Chat Docker Build And Push
 
 on:
-  push:
-    branches: [develop]
-    paths:
-      - src/chat-service/**
+  workflow_run:
+    workflows: [Chat Service Build]
+    types: [completed]
 
 jobs:
-  build:
+  on-success:
     runs-on: ubuntu-latest
     steps:
       - name: Setup QEMU

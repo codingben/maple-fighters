@@ -1,13 +1,12 @@
 name: Character Docker Build And Push
 
 on:
-  push:
-    branches: [develop]
-    paths:
-      - src/character-service/**
+  workflow_run:
+    workflows: [Character Service Build]
+    types: [completed]
 
 jobs:
-  build:
+  on-success:
     runs-on: ubuntu-latest
     steps:
       - name: Setup QEMU

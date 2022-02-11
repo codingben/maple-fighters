@@ -1,13 +1,12 @@
 name: GameProvider Docker Build And Push
 
 on:
-  push:
-    branches: [develop]
-    paths:
-      - src/gameprovider-service/**
+  workflow_run:
+    workflows: [GameProvider Service Build]
+    types: [completed]
 
 jobs:
-  build:
+  on-success:
     runs-on: ubuntu-latest
     steps:
       - name: Setup QEMU

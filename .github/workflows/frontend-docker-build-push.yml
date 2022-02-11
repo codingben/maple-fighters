@@ -1,13 +1,12 @@
 name: Frontend Docker Build And Push
 
 on:
-  push:
-    branches: [develop]
-    paths:
-      - src/frontend/**
+  workflow_run:
+    workflows: [Frontend Build]
+    types: [completed]
 
 jobs:
-  build:
+  on-success:
     runs-on: ubuntu-latest
     steps:
       - name: Setup QEMU
