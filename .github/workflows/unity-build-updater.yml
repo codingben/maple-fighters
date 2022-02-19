@@ -1,4 +1,4 @@
-name: Update Game Data
+name: Unity Build Updater
 
 on:
   workflow_dispatch:
@@ -8,12 +8,12 @@ env:
   ARTIFACT_NAME: Build.zip
 
 jobs:
-  test:
+  update:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Get Zip URL
+      - name: Update Game Data
         run: |
           WORKFLOW_URL=https://api.github.com/repos/benukhanov/maple-fighters/actions/workflows/unity-build.yml/runs\?per_page\=1
           ARTIFACTS_URL=$(curl -s ${WORKFLOW_URL} | jq -r '.workflow_runs[].artifacts_url')
@@ -23,3 +23,7 @@ jobs:
           mv WebGL/WebGL/Build/* src/frontend/public/files
           rm ${{ env.ARTIFACT_NAME }}
           rm -r WebGL
+      - uses: EndBug/add-and-commit@v8
+        with:
+          message: "chore(frontend): update game data"
+          default_author: github_actions
