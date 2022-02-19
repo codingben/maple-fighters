@@ -4,13 +4,12 @@ on:
   workflow_run:
     workflows: [Unity Build]
     types: [completed]
-  workflow_dispatch:
 
 env:
   TOKEN: ${{ secrets.ARTIFACTS_TOKEN }}
 
 jobs:
-  update:
+  on-success:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
