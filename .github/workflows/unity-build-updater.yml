@@ -1,11 +1,13 @@
 name: Unity Build Updater
 
 on:
+  workflow_run:
+    workflows: [Unity Build]
+    types: [completed]
   workflow_dispatch:
 
 env:
   TOKEN: ${{ secrets.ARTIFACTS_TOKEN }}
-  ARTIFACT_NAME: Build.zip
 
 jobs:
   update:
@@ -15,15 +17,27 @@ jobs:
         uses: actions/checkout@v2
       - name: Update Game Data
         run: |
-          WORKFLOW_URL=https://api.github.com/repos/benukhanov/maple-fighters/actions/workflows/unity-build.yml/runs\?per_page\=1
+          # Set Variables
+          USER=benukhanov
+          REPO=maple-fighters
+          WORKFLOW_FILE=unity-build.yml
+          ARTIFACT_NAME=Build.zip
+          PLATFORM=WebGL
+          BUILD_DIR=${PLATFORM}/${PLATFORM}/Build/*
+          FILES_DIR=src/frontend/public/files
+
+          # Download Game Files
+          WORKFLOW_URL=https://api.github.com/repos/${USER}/${REPO}/actions/workflows/${WORKFLOW_FILE}/runs?per_page=1
           ARTIFACTS_URL=$(curl -s ${WORKFLOW_URL} | jq -r '.workflow_runs[].artifacts_url')
           ZIP_URL=$(curl -s ${ARTIFACTS_URL} | jq -r '.artifacts[].archive_download_url')
-          curl -L -H "Authorization: token ${{ env.TOKEN }}" ${ZIP_URL} -o ${{ env.ARTIFACT_NAME }}
-          unzip ${{ env.ARTIFACT_NAME }}
-          mv WebGL/WebGL/Build/* src/frontend/public/files
-          rm ${{ env.ARTIFACT_NAME }}
-          rm -r WebGL
+          curl -L -H "Authorization: token ${{ env.TOKEN }}" ${ZIP_URL} -o ${{ env.ARTIFACT_NAME }} -s
+
+          # Update Game Files
+          unzip ${ARTIFACT_NAME}
+          mv ${BUILD_DIR} ${FILES_DIR}
+          rm ${ARTIFACT_NAME}
+          rm -r ${PLATFORM}
       - uses: EndBug/add-and-commit@v8
         with:
-          message: "chore(frontend): update game data"
+          message: "build(frontend): update game files"
           default_author: github_actions
