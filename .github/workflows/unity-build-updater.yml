@@ -29,7 +29,7 @@ jobs:
           WORKFLOW_URL=https://api.github.com/repos/${USER}/${REPO}/actions/workflows/${WORKFLOW_FILE}/runs?per_page=1
           ARTIFACTS_URL=$(curl -s ${WORKFLOW_URL} | jq -r '.workflow_runs[].artifacts_url')
           ZIP_URL=$(curl -s ${ARTIFACTS_URL} | jq -r '.artifacts[].archive_download_url')
-          curl -s -L -H "Authorization: token ${{ env.TOKEN }}" ${ZIP_URL} -o ${{ ARTIFACT_NAME }}
+          curl -s -L -H "Authorization: token ${{ env.TOKEN }}" ${ZIP_URL} -o ${ARTIFACT_NAME}
           # Update Game Files
           unzip ${ARTIFACT_NAME}
           mv ${BUILD_DIR} ${FILES_DIR}
