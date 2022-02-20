@@ -13,6 +13,7 @@ on:
 
 env:
   DOCKER_COMPOSE_FILE: docker-compose.prod.yml
+  DOCKER_COMPOSE_URL: https://raw.githubusercontent.com/benukhanov/maple-fighters/develop/docker-compose.prod.yml
 
 jobs:
   on-success:
@@ -26,6 +27,8 @@ jobs:
           key: ${{ secrets.DIGITALOCEAN_KEY }}
           port: ${{ secrets.DIGITALOCEAN_PORT }}
           script: |
+            rm ${{ env.DOCKER_COMPOSE_FILE }}
+            curl -s ${{ env.DOCKER_COMPOSE_URL }} -o ${{ env.DOCKER_COMPOSE_FILE }}
             docker-compose -f ${{ env.DOCKER_COMPOSE_FILE }} pull
             docker-compose -f ${{ env.DOCKER_COMPOSE_FILE }} up -d
             docker system prune -af
