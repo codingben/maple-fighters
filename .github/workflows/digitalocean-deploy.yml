@@ -1,10 +1,21 @@
 name: DigitalOcean Deploy
 
 on:
-  workflow_dispatch:
+  workflow_run:
+    workflows:
+      - Auth Docker Build And Push
+      - Character Docker Build And Push
+      - Chat Docker Build And Push
+      - Frontend Docker Build And Push
+      - Game Docker Build And Push
+      - GameProvider Docker Build And Push
+    types: [completed]
+
+env:
+  DOCKER_COMPOSE_FILE: docker-compose.prod.yml
 
 jobs:
-  deploy:
+  on-success:
     runs-on: ubuntu-latest
     steps:
       - name: Deploy
@@ -14,4 +25,7 @@ jobs:
           username: ${{ secrets.DIGITALOCEAN_USERNAME }}
           key: ${{ secrets.DIGITALOCEAN_KEY }}
           port: ${{ secrets.DIGITALOCEAN_PORT }}
-          script: whoami
+          script: |
+            docker-compose -f ${{ env.DOCKER_COMPOSE_FILE }} pull
+            docker-compose -f ${{ env.DOCKER_COMPOSE_FILE }} up -d
+            docker system prune -af
