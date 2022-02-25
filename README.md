@@ -56,28 +56,6 @@ Maple Fighters is available at [maplefighters.io](http://maplefighters.io). This
 | Character Service    | [![Character Service Build](https://github.com/benukhanov/maple-fighters/actions/workflows/character-service-build.yml/badge.svg)](https://github.com/benukhanov/maple-fighters/actions/workflows/character-service-build.yml)          |
 | Chat Service         | [![Chat Service Build](https://github.com/benukhanov/maple-fighters/actions/workflows/chat-service-build.yml/badge.svg)](https://github.com/benukhanov/maple-fighters/actions/workflows/chat-service-build.yml)                         |
 
-## Quickstart
-
-### Docker
-
-> 💡 You need to install Docker and Docker Compose locally.
-
-Follow these instructions to start and stop locally:
-
-1. To create containers:
-
-```bash
-docker-compose up
-```
-
-2. To stop and remove containers:
-
-```bash
-docker-compose down
-```
-
-You should be able to access it at `http://localhost`.
-
 ## Contributing
 
 Feel free to contribute and make any changes to the game itself. Please open an issue to discuss the changes before sending the PR.
