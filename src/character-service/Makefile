@@ -1,6 +1,3 @@
-pull:
-	docker pull maplefighters/character-service
-
 build:
 	docker build -t character-service .
 

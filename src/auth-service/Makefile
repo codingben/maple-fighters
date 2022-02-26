@@ -1,6 +1,3 @@
-pull:
-	docker pull maplefighters/auth-service
-
 build:
 	docker build -t auth-service .
 
