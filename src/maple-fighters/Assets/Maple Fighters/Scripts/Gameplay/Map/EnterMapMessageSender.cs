@@ -2,6 +2,7 @@
 using Scripts.Constants;
 using Scripts.Services;
 using Scripts.Services.GameApi;
+using Scripts.UI.ScreenFade;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -15,6 +16,7 @@ namespace Scripts.Gameplay.Map
         {
             gameApi = ApiProvider.ProvideGameApi();
             gameApi.Connected += OnConnected;
+            gameApi.SceneEntered.AddListener(OnSceneEntered);
         }
 
         private void OnConnected()
@@ -22,8 +24,6 @@ namespace Scripts.Gameplay.Map
             gameApi.Connected -= OnConnected;
 
             EnterScene();
-
-            Destroy(gameObject);
         }
 
         private void EnterScene()
@@ -31,14 +31,14 @@ namespace Scripts.Gameplay.Map
             var map = GetCurrentMap();
             if (map == -1)
             {
-                Debug.LogWarning($"Could not get current map. Map index not found.");
+                Debug.Log("Could not get current map. Map index not found.");
                 return;
             }
 
             var userMetadata = FindObjectOfType<UserMetadata>();
             if (userMetadata == null)
             {
-                Debug.LogWarning($"Could not find user metadata to enter scene.");
+                Debug.Log("Could not find user metadata to enter scene.");
                 return;
             }
 
@@ -50,6 +50,13 @@ namespace Scripts.Gameplay.Map
             };
 
             gameApi?.SendMessage(MessageCodes.EnterScene, message);
+        }
+
+        private void OnSceneEntered(EnteredSceneMessage _)
+        {
+            var screenFadeController =
+                FindObjectOfType<ScreenFadeController>();
+            screenFadeController?.Hide();
         }
 
         private int GetCurrentMap()
