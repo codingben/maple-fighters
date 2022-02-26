@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using UI;
 using UnityEngine;
 
@@ -10,16 +11,11 @@ namespace Scripts.UI.ScreenFade
         public Action FadeOutCompleted;
 
         [SerializeField]
-        private bool hideOnStart;
-
-        private IScreenFadeView screenFadeView;
+        private ScreenFadeImage screenFadeView;
 
         private void Start()
         {
-            if (hideOnStart)
-            {
-                Hide();
-            }
+            SubscribeToScreenFadeImage();
         }
 
         private void OnDestroy()
@@ -31,12 +27,8 @@ namespace Scripts.UI.ScreenFade
             }
         }
 
-        private void CreateAndSubscribeToScreenFadeImage()
+        private void SubscribeToScreenFadeImage()
         {
-            screenFadeView = UICreator
-                .GetInstance()
-                .Create<ScreenFadeImage>(UICanvasLayer.Foreground, UIIndex.End);
-
             if (screenFadeView != null)
             {
                 screenFadeView.FadeInCompleted += OnFadeInCompleted;
@@ -55,22 +47,12 @@ namespace Scripts.UI.ScreenFade
 
         public void Show()
         {
-            if (screenFadeView == null)
-            {
-                CreateAndSubscribeToScreenFadeImage();
-            }
-
-            screenFadeView.Show();
+            screenFadeView?.Show();
         }
 
         public void Hide()
         {
-            if (screenFadeView == null)
-            {
-                CreateAndSubscribeToScreenFadeImage();
-            }
-
-            screenFadeView.Hide();
+            screenFadeView?.Hide();
         }
 
         private void OnFadeInCompleted()
