@@ -3,12 +3,12 @@ name: DigitalOcean Deploy
 on:
   workflow_run:
     workflows:
-      - Auth Docker Build And Push
-      - Character Docker Build And Push
-      - Chat Docker Build And Push
-      - Frontend Docker Build And Push
-      - Game Docker Build And Push
-      - GameProvider Docker Build And Push
+      - "Auth Docker Build And Push"
+      - "Character Docker Build And Push"
+      - "Chat Docker Build And Push"
+      - "Frontend Docker Build And Push"
+      - "Game Docker Build And Push"
+      - "GameProvider Docker Build And Push"
     types: [completed]
 
 env:
