@@ -17,7 +17,10 @@ namespace Scripts.Gameplay.Map.Climb
 
             if (IsPlayerStateSuitable())
             {
-                if (Input.GetKeyDown(GetKey()) || Input.GetKeyDown(GetSecondaryKey()))
+                if (Input.GetKeyDown(GetUpKey()) ||
+                    Input.GetKeyDown(GetSecondaryUpKey()) ||
+                    Input.GetKeyDown(GetDownKey()) ||
+                    Input.GetKeyDown(GetSecondaryDownKey()))
                 {
                     if (GetColliderInteraction().HasOverlappingCollider())
                     {
@@ -132,9 +135,13 @@ namespace Scripts.Gameplay.Map.Climb
 
         protected abstract PlayerStates GetPlayerState();
 
-        protected abstract KeyCode GetKey();
+        protected abstract KeyCode GetUpKey();
 
-        protected abstract KeyCode GetSecondaryKey();
+        protected abstract KeyCode GetSecondaryUpKey();
+
+        protected abstract KeyCode GetDownKey();
+
+        protected abstract KeyCode GetSecondaryDownKey();
 
         protected abstract ColliderInteraction GetColliderInteraction();
 

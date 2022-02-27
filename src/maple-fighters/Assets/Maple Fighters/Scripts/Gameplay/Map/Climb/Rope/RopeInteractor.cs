@@ -38,14 +38,24 @@ namespace Scripts.Gameplay.Map.Climb
             return playerController.GetPlayerState();
         }
 
-        protected override KeyCode GetKey()
+        protected override KeyCode GetUpKey()
         {
             return playerController.GetKeyboardSettings().ClimbUpKey;
         }
 
-        protected override KeyCode GetSecondaryKey()
+        protected override KeyCode GetSecondaryUpKey()
+        {
+            return playerController.GetKeyboardSettings().SecondaryClimbUpKey;
+        }
+
+        protected override KeyCode GetDownKey()
         {
             return playerController.GetKeyboardSettings().ClimbDownKey;
+        }
+
+        protected override KeyCode GetSecondaryDownKey()
+        {
+            return playerController.GetKeyboardSettings().SecondaryClimbDownKey;
         }
 
         protected override ColliderInteraction GetColliderInteraction()
