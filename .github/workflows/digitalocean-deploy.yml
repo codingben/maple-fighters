@@ -10,6 +10,7 @@ on:
       - "Game Docker Build And Push"
       - "GameProvider Docker Build And Push"
     types: [completed]
+  workflow_dispatch:
 
 env:
   DOCKER_COMPOSE_FILE: docker-compose.prod.yml
