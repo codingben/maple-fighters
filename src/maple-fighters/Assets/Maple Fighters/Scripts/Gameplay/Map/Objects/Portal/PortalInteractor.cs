@@ -8,17 +8,20 @@ namespace Scripts.Gameplay.Map.Objects
     {
         private PortalTeleportation portalTeleportation;
         private KeyCode teleportKey;
+        private KeyCode secondaryTeleportKey;
 
         private void Awake()
         {
             var playerKeyboard =
                 PlayerConfiguration.GetInstance().PlayerKeyboard;
             teleportKey = playerKeyboard.TeleportKey;
+            secondaryTeleportKey = playerKeyboard.SecondaryTeleportKey;
         }
 
         private void Update()
         {
-            if (Input.GetKeyDown(teleportKey))
+            if (Input.GetKeyDown(teleportKey) ||
+                Input.GetKeyDown(secondaryTeleportKey))
             {
                 portalTeleportation?.Teleport();
             }
