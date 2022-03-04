@@ -52,7 +52,7 @@ namespace Scripts.Gameplay.Player.States
                     playerController.SetPlayerState(PlayerStates.Idle);
                 }
             }
-            else
+            else if (CanMove())
             {
                 if (isRushing == false && IsRushKeyClicked())
                 {
@@ -85,6 +85,11 @@ namespace Scripts.Gameplay.Player.States
         public void OnStateExit()
         {
             isRushing = false;
+        }
+
+        private bool CanMove()
+        {
+            return playerController.CanMove();
         }
 
         private bool IsGrounded()
