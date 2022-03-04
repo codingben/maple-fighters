@@ -18,6 +18,9 @@ namespace Scripts.Gameplay.Player
         private PlayerStates playerState = PlayerStates.Falling;
 
         [Header("Ground")]
+        [ViewOnly, SerializeField]
+        private bool canMove = true;
+
         [SerializeField]
         private float overlapCircleRadius;
 
@@ -54,7 +57,7 @@ namespace Scripts.Gameplay.Player
 
         private void Start()
         {
-            playerStateBehaviour.OnStateEnter();
+            playerStateBehaviour?.OnStateEnter();
         }
 
         private void Update()
@@ -145,22 +148,26 @@ namespace Scripts.Gameplay.Player
             RushEffect.Create(rushEffectPosition, rushEffectDirection);
         }
 
-        public bool IsMoving()
+        public void SetCanMove(bool canMove)
         {
-            var isMoving = false;
-
-            if (focusStateController?.GetFocusState() == UIFocusState.Game)
-            {
-                var horizontal = Utils.GetAxis(Axes.Horizontal, isRaw: true);
-                isMoving = Mathf.Abs(horizontal) > 0;
-            }
-
-            return isMoving;
+            this.canMove = canMove;
         }
 
-        public bool CanJump()
+        public bool CanMove()
         {
-            return focusStateController?.GetFocusState() == UIFocusState.Game;
+            if (focusStateController?.GetFocusState() != UIFocusState.Game)
+            {
+                return false;
+            }
+
+            return canMove;
+        }
+
+        public bool IsMoving()
+        {
+            var horizontal = Utils.GetAxis(Axes.Horizontal, isRaw: true);
+
+            return Mathf.Abs(horizontal) > 0;
         }
 
         public bool IsGrounded()
