@@ -4,6 +4,7 @@ using Scripts.Constants;
 using Scripts.Gameplay.Entity;
 using Scripts.Services;
 using Scripts.Services.GameApi;
+using Scripts.UI.ScreenFade;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -38,14 +39,22 @@ namespace Scripts.Gameplay.Map.Objects
 
         public void Teleport()
         {
-            var entity = GetComponent<IEntity>();
-            var entityId = entity.Id;
-            var message = new ChangeSceneMessage()
+            var screenFadeController = FindObjectOfType<ScreenFadeController>();
+            if (screenFadeController != null)
             {
-                PortalId = entityId
-            };
+                screenFadeController.FadeInCompleted = () =>
+                {
+                    var entity = GetComponent<IEntity>();
+                    var entityId = entity.Id;
+                    var message = new ChangeSceneMessage()
+                    {
+                        PortalId = entityId
+                    };
 
-            gameApi?.SendMessage(MessageCodes.ChangeScene, message);
+                    gameApi?.SendMessage(MessageCodes.ChangeScene, message);
+                };
+                screenFadeController.Show();
+            }
         }
 
         private void OnDisconnected(WebSocketCloseCode code)
