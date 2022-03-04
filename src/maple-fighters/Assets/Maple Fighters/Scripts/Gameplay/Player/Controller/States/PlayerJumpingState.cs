@@ -7,8 +7,8 @@ namespace Scripts.Gameplay.Player.States
         private readonly PlayerController playerController;
         private readonly Rigidbody2D rigidbody2D;
 
-        private bool isJumping;
         private bool isRushing;
+        private float previousTime;
 
         public PlayerJumpingState(PlayerController playerController)
         {
@@ -39,21 +39,21 @@ namespace Scripts.Gameplay.Player.States
 
                 playerController.ChangeDirection(direction);
             }
+
+            previousTime = Time.time;
         }
 
         public void OnStateUpdate()
         {
-            if (isJumping && IsGrounded())
+            if (IsGrounded())
             {
-                playerController.SetPlayerState(PlayerStates.Idle);
+                if (Time.time > previousTime + 0.1f)
+                {
+                    playerController.SetPlayerState(PlayerStates.Idle);
+                }
             }
             else
             {
-                if (IsGrounded() == false)
-                {
-                    isJumping = true;
-                }
-
                 if (isRushing == false && IsRushKeyClicked())
                 {
                     var rushSpeed = playerController.GetProperties().RushSpeed;
@@ -65,10 +65,7 @@ namespace Scripts.Gameplay.Player.States
 
                     isRushing = true;
                 }
-            }
 
-            if (isJumping)
-            {
                 var horizontal = Utils.GetAxis(Axes.Horizontal, isRaw: true);
                 if (horizontal != 0)
                 {
@@ -87,7 +84,6 @@ namespace Scripts.Gameplay.Player.States
 
         public void OnStateExit()
         {
-            isJumping = false;
             isRushing = false;
         }
 
