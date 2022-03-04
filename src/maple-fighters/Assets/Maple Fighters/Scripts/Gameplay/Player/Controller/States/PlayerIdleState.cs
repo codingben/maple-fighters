@@ -24,14 +24,17 @@ namespace Scripts.Gameplay.Player.States
         {
             if (IsGrounded())
             {
-                if (IsMoving())
+                if (CanMove())
                 {
-                    playerController.SetPlayerState(PlayerStates.Moving);
-                }
+                    if (IsMoving())
+                    {
+                        playerController.SetPlayerState(PlayerStates.Moving);
+                    }
 
-                if (IsJumpKeyClicked() && CanJump())
-                {
-                    playerController.SetPlayerState(PlayerStates.Jumping);
+                    if (IsJumpKeyClicked())
+                    {
+                        playerController.SetPlayerState(PlayerStates.Jumping);
+                    }
                 }
             }
             else
@@ -50,6 +53,11 @@ namespace Scripts.Gameplay.Player.States
             // Left blank intentionally
         }
 
+        private bool CanMove()
+        {
+            return playerController.CanMove();
+        }
+
         private bool IsGrounded()
         {
             return playerController.IsGrounded();
@@ -58,11 +66,6 @@ namespace Scripts.Gameplay.Player.States
         private bool IsMoving()
         {
             return playerController.IsMoving();
-        }
-
-        private bool CanJump()
-        {
-            return playerController.CanJump();
         }
 
         private bool IsJumpKeyClicked()

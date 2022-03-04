@@ -28,25 +28,32 @@ namespace Scripts.Gameplay.Player.States
         {
             if (IsGrounded())
             {
-                if (IsMoveStopped())
+                if (CanMove())
+                {
+                    if (IsMoveStopped())
+                    {
+                        playerController.SetPlayerState(PlayerStates.Idle);
+                    }
+
+                    if (IsJumpKeyClicked())
+                    {
+                        playerController.SetPlayerState(PlayerStates.Jumping);
+                    }
+
+                    var horizontal = Utils.GetAxis(Axes.Horizontal, isRaw: true);
+
+                    if (Math.Abs(horizontal) > 0)
+                    {
+                        direction =
+                            horizontal < 0 ? Direction.Left : Direction.Right;
+                    }
+
+                    playerController.ChangeDirection(direction);
+                }
+                else
                 {
                     playerController.SetPlayerState(PlayerStates.Idle);
                 }
-
-                if (IsJumpKeyClicked() && CanJump())
-                {
-                    playerController.SetPlayerState(PlayerStates.Jumping);
-                }
-
-                var horizontal = Utils.GetAxis(Axes.Horizontal, isRaw: true);
-
-                if (Math.Abs(horizontal) > 0)
-                {
-                    direction =
-                        horizontal < 0 ? Direction.Left : Direction.Right;
-                }
-
-                playerController.ChangeDirection(direction);
             }
             else
             {
@@ -71,6 +78,11 @@ namespace Scripts.Gameplay.Player.States
             // Left blank intentionally
         }
 
+        private bool CanMove()
+        {
+            return playerController.CanMove();
+        }
+
         private bool IsGrounded()
         {
             return playerController.IsGrounded();
@@ -86,11 +98,6 @@ namespace Scripts.Gameplay.Player.States
         private bool IsMoveStopped()
         {
             return playerController.IsMoving() == false;
-        }
-
-        private bool CanJump()
-        {
-            return playerController.CanJump();
         }
     }
 }
