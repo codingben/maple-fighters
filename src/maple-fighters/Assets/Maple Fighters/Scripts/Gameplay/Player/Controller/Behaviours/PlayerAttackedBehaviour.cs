@@ -18,14 +18,18 @@ namespace Scripts.Gameplay.Player.Behaviours
 
         public void OnPlayerAttacked(Vector3 direction)
         {
-            if (isAttacked)
+            if (playerController.GetPlayerState() == PlayerStates.Idle ||
+                playerController.GetPlayerState() == PlayerStates.Moving)
             {
-                return;
+                if (isAttacked)
+                {
+                    return;
+                }
+
+                isAttacked = true;
+
+                StartCoroutine(WaitFrameAndBounce(direction));
             }
-
-            isAttacked = true;
-
-            StartCoroutine(WaitFrameAndBounce(direction));
         }
 
         private IEnumerator WaitFrameAndBounce(Vector3 direction)
