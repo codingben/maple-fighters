@@ -1,15 +1,6 @@
 name: DigitalOcean Deploy
 
 on:
-  workflow_run:
-    workflows:
-      - "Auth Docker Build And Push"
-      - "Character Docker Build And Push"
-      - "Chat Docker Build And Push"
-      - "Frontend Docker Build And Push"
-      - "Game Docker Build And Push"
-      - "GameProvider Docker Build And Push"
-    types: [completed]
   workflow_dispatch:
 
 env:
@@ -17,7 +8,7 @@ env:
   DOCKER_COMPOSE_URL: https://raw.githubusercontent.com/benukhanov/maple-fighters/develop/docker-compose.prod.yml
 
 jobs:
-  on-success:
+  deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Deploy
