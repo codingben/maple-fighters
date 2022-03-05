@@ -16,11 +16,14 @@ MonoBehaviour:
     Speed: 4.25
     RushSpeed: 10
     JumpHeight: 9.5
-    JumpForce: 4.25
+    JumpForce: 2
     ClimbSpeed: 3.5
   PlayerKeyboard:
     JumpKey: 32
     TeleportKey: 273
+    SecondaryTeleportKey: 119
     ClimbUpKey: 273
+    SecondaryClimbUpKey: 119
     ClimbDownKey: 274
+    SecondaryClimbDownKey: 115
     RushKey: 32
