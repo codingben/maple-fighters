@@ -12,16 +12,7 @@ namespace Scripts.Gameplay.Player
         private void Awake()
         {
             spawnedCharacter = GetComponent<ISpawnedCharacter>();
-        }
-
-        private void Start()
-        {
             spawnedCharacter.CharacterSpawned += OnCharacterSpawned;
-        }
-
-        private void OnDestroy()
-        {
-            spawnedCharacter.CharacterSpawned -= OnCharacterSpawned;
         }
 
         private void OnCharacterSpawned()

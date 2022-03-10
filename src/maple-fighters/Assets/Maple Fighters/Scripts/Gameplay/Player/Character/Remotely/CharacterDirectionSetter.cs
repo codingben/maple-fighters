@@ -13,20 +13,11 @@ namespace Scripts.Gameplay.Player
 
         private void Awake()
         {
-            positionSetter = GetComponent<PositionSetter>();
             spawnedCharacter = GetComponent<ISpawnedCharacter>();
-        }
-
-        private void Start()
-        {
             spawnedCharacter.CharacterSpawned += OnCharacterSpawned;
-            positionSetter.PositionChanged += OnPositionChanged;
-        }
 
-        private void OnDestroy()
-        {
-            spawnedCharacter.CharacterSpawned -= OnCharacterSpawned;
-            positionSetter.PositionChanged -= OnPositionChanged;
+            positionSetter = GetComponent<PositionSetter>();
+            positionSetter.PositionChanged += OnPositionChanged;
         }
 
         private void OnCharacterSpawned()
