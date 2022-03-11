@@ -17,7 +17,7 @@ namespace Scripts.Gameplay.Player
         {
             var playerStateAnimator = spawnedCharacter
                 .GetCharacterSprite()
-                .AddComponent<PlayerStateAnimator>();
+                .GetComponent<PlayerStateAnimator>();
             if (playerStateAnimator != null)
             {
                 var playerController = spawnedCharacter
