@@ -183,6 +183,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerState: 3
+  canMove: 1
   overlapCircleRadius: 0.1
   groundLayerMask:
     serializedVersion: 2
@@ -393,6 +394,7 @@ GameObject:
   - component: {fileID: 95101322768173174}
   - component: {fileID: 2011847316941369080}
   - component: {fileID: 4480756568220994061}
+  - component: {fileID: 8454734998004806313}
   m_Layer: 9
   m_Name: Wizard Sprite
   m_TagString: Untagged
@@ -516,6 +518,18 @@ MonoBehaviour:
   hideSpeed: 2
   fadeColor: {r: 1, g: 1, b: 1, a: 1}
   unFadeColor: {r: 1, g: 1, b: 1, a: 0}
+--- !u!114 &8454734998004806313
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1733968886697200}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19f84c7825741fa4f8da1f625cbe1990, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1771270066105396
 GameObject:
   m_ObjectHideFlags: 0
