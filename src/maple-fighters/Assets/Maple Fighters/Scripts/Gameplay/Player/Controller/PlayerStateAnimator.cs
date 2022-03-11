@@ -1,5 +1,4 @@
 ﻿using Game.Messages;
-using Scripts.Constants;
 using Scripts.Gameplay.Entity;
 using Scripts.Services;
 using Scripts.Services.GameApi;
@@ -89,11 +88,15 @@ namespace Scripts.Gameplay.Player
             var isFalling = playerState == PlayerStates.Falling;
             var isRope = playerState == PlayerStates.Rope;
             var isLadder = playerState == PlayerStates.Ladder;
+            var isPrimaryAttack = playerState == PlayerStates.PrimaryAttack;
+            var isSecondaryAttack = playerState == PlayerStates.SecondaryAttack;
 
-            animator.SetBool(AnimationNames.Player.Walk, isMoving);
-            animator.SetBool(AnimationNames.Player.Jump, isJumping || isFalling);
-            animator.SetBool(AnimationNames.Player.Rope, isRope);
-            animator.SetBool(AnimationNames.Player.Ladder, isLadder);
+            animator.SetBool(PlayerStates.Moving.ToString(), isMoving);
+            animator.SetBool(PlayerStates.Jumping.ToString(), isJumping || isFalling);
+            animator.SetBool(PlayerStates.Rope.ToString(), isRope);
+            animator.SetBool(PlayerStates.Ladder.ToString(), isLadder);
+            animator.SetBool(PlayerStates.PrimaryAttack.ToString(), isPrimaryAttack);
+            animator.SetBool(PlayerStates.SecondaryAttack.ToString(), isSecondaryAttack);
         }
     }
 }
