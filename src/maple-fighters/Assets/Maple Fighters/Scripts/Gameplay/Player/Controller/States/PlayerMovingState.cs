@@ -8,9 +8,6 @@ namespace Scripts.Gameplay.Player.States
         private readonly PlayerController playerController;
         private readonly Rigidbody2D rigidbody2D;
 
-        private Direction direction;
-        private bool canMove;
-
         public PlayerMovingState(PlayerController playerController)
         {
             this.playerController = playerController;
@@ -21,7 +18,7 @@ namespace Scripts.Gameplay.Player.States
 
         public void OnStateEnter()
         {
-            canMove = true;
+            // Left blank intentionally
         }
 
         public void OnStateUpdate()
@@ -40,25 +37,17 @@ namespace Scripts.Gameplay.Player.States
                         playerController.SetPlayerState(PlayerStates.Jumping);
                     }
 
-                    if (IsPrimaryAttackKeyClicked())
+                    if (IsPrimaryAttackingKeyClicked())
                     {
                         playerController.SetPlayerState(PlayerStates.PrimaryAttack);
                     }
 
-                    if (IsSecondaryAttackKeyClicked())
+                    if (IsSecondaryAttackingKeyClicked())
                     {
                         playerController.SetPlayerState(PlayerStates.SecondaryAttack);
                     }
 
-                    var horizontal = Utils.GetAxis(Axes.Horizontal, isRaw: true);
-
-                    if (Math.Abs(horizontal) > 0)
-                    {
-                        direction =
-                            horizontal < 0 ? Direction.Left : Direction.Right;
-                    }
-
-                    playerController.ChangeDirection(direction);
+                    SetDirection();
                 }
                 else
                 {
@@ -73,19 +62,37 @@ namespace Scripts.Gameplay.Player.States
 
         public void OnStateFixedUpdate()
         {
-            if (canMove)
+            if (CanMove())
             {
-                var speed = playerController.GetProperties().Speed;
-                var horizontal = Utils.GetAxis(Axes.Horizontal);
-                var y = rigidbody2D.velocity.y;
-
-                rigidbody2D.velocity = new Vector3(horizontal * speed, y);
+                Move();
             }
         }
 
         public void OnStateExit()
         {
             // Left blank intentionally
+        }
+
+        private void Move()
+        {
+            var speed = playerController.GetProperties().Speed;
+            var horizontal = Utils.GetAxis(Axes.Horizontal);
+            var x = horizontal * speed;
+            var y = rigidbody2D.velocity.y;
+
+            rigidbody2D.velocity = new Vector3(x, y);
+        }
+
+        private void SetDirection()
+        {
+            var horizontal = Utils.GetAxis(Axes.Horizontal, isRaw: true);
+            if (horizontal != 0)
+            {
+                var direction =
+                    horizontal < 0 ? Direction.Left : Direction.Right;
+
+                playerController.ChangeDirection(direction);
+            }
         }
 
         private bool CanMove()
@@ -105,14 +112,14 @@ namespace Scripts.Gameplay.Player.States
             return Input.GetKeyDown(key);
         }
 
-        private bool IsPrimaryAttackKeyClicked()
+        private bool IsPrimaryAttackingKeyClicked()
         {
             var key = playerController.GetKeyboardSettings().PrimaryAttackKey;
 
             return Input.GetKeyDown(key);
         }
 
-        private bool IsSecondaryAttackKeyClicked()
+        private bool IsSecondaryAttackingKeyClicked()
         {
             var key = playerController.GetKeyboardSettings().SecondaryAttackKey;
 
