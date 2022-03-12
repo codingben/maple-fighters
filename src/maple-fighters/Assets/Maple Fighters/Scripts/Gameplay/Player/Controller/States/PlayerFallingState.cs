@@ -17,35 +17,13 @@ namespace Scripts.Gameplay.Player.States
 
         public void OnStateEnter()
         {
-            FallDownWithDirection();
-        }
-
-        private void FallDownWithDirection()
-        {
-            var horizontal = Utils.GetAxis(Axes.Horizontal);
-            if (horizontal != 0)
-            {
-                var direction =
-                    horizontal > 0 ? Direction.Right : Direction.Left;
-                var speed = playerController.GetProperties().Speed;
-
-                rigidbody2D.velocity =
-                    new Vector2(horizontal * speed, rigidbody2D.velocity.y);
-
-                playerController.ChangeDirection(direction);
-            }
+            SetVelocity();
+            SetDirection();
         }
 
         public void OnStateUpdate()
         {
-            var horizontal = Utils.GetAxis(Axes.Horizontal);
-            if (horizontal != 0)
-            {
-                var direction =
-                    horizontal < 0 ? Direction.Left : Direction.Right;
-
-                playerController.ChangeDirection(direction);
-            }
+            SetDirection();
         }
 
         public void OnStateFixedUpdate()
@@ -59,6 +37,31 @@ namespace Scripts.Gameplay.Player.States
         public void OnStateExit()
         {
             // Left blank intentionally
+        }
+
+        private void SetVelocity()
+        {
+            var horizontal = Utils.GetAxis(Axes.Horizontal);
+            if (horizontal != 0)
+            {
+                var speed = playerController.GetProperties().Speed;
+                var x = horizontal * speed;
+                var y = rigidbody2D.velocity.y;
+
+                rigidbody2D.velocity = new Vector2(x, y);
+            }
+        }
+
+        private void SetDirection()
+        {
+            var horizontal = Utils.GetAxis(Axes.Horizontal, isRaw: true);
+            if (horizontal != 0)
+            {
+                var direction =
+                    horizontal < 0 ? Direction.Left : Direction.Right;
+
+                playerController.ChangeDirection(direction);
+            }
         }
 
         private bool IsGrounded()
