@@ -40,6 +40,16 @@ namespace Scripts.Gameplay.Player.States
                         playerController.SetPlayerState(PlayerStates.Jumping);
                     }
 
+                    if (IsPrimaryAttackKeyClicked())
+                    {
+                        playerController.SetPlayerState(PlayerStates.PrimaryAttack);
+                    }
+
+                    if (IsSecondaryAttackKeyClicked())
+                    {
+                        playerController.SetPlayerState(PlayerStates.SecondaryAttack);
+                    }
+
                     var horizontal = Utils.GetAxis(Axes.Horizontal, isRaw: true);
 
                     if (Math.Abs(horizontal) > 0)
@@ -93,6 +103,22 @@ namespace Scripts.Gameplay.Player.States
             var jumpKey = playerController.GetKeyboardSettings().JumpKey;
 
             return Input.GetKeyDown(jumpKey);
+        }
+
+        private bool IsPrimaryAttackKeyClicked()
+        {
+            var primaryAttackKey =
+                playerController.GetKeyboardSettings().PrimaryAttackKey;
+
+            return Input.GetKeyDown(primaryAttackKey);
+        }
+
+        private bool IsSecondaryAttackKeyClicked()
+        {
+            var secondaryAttackKey =
+                playerController.GetKeyboardSettings().SecondaryAttackKey;
+
+            return Input.GetKeyDown(secondaryAttackKey);
         }
 
         private bool IsMoveStopped()

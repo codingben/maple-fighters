@@ -27,3 +27,5 @@ MonoBehaviour:
     ClimbDownKey: 274
     SecondaryClimbDownKey: 115
     RushKey: 32
+    PrimaryAttackKey: 306
+    SecondaryAttackKey: 122

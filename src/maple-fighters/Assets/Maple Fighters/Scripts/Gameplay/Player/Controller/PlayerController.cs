@@ -49,7 +49,9 @@ namespace Scripts.Gameplay.Player
                 { PlayerStates.Jumping, new PlayerJumpingState(this) },
                 { PlayerStates.Falling, new PlayerFallingState(this) },
                 { PlayerStates.Rope, new PlayerClimbState(this) },
-                { PlayerStates.Ladder, new PlayerClimbState(this) }
+                { PlayerStates.Ladder, new PlayerClimbState(this) },
+                { PlayerStates.PrimaryAttack, new PlayerPrimaryAttackState(this) },
+                { PlayerStates.SecondaryAttack, new PlayerSecondaryAttackState(this) }
             };
             playerStateBehaviour = playerStateBehaviours[playerState];
             focusStateController = FindObjectOfType<FocusStateController>();

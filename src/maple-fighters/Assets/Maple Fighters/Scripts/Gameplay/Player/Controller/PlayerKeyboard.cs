@@ -15,5 +15,7 @@ namespace Scripts.Gameplay.Player
         public KeyCode ClimbDownKey = KeyCode.DownArrow;
         public KeyCode SecondaryClimbDownKey = KeyCode.S;
         public KeyCode RushKey = KeyCode.Space;
+        public KeyCode PrimaryAttackKey = KeyCode.LeftControl;
+        public KeyCode SecondaryAttackKey = KeyCode.Z;
     }
 }
