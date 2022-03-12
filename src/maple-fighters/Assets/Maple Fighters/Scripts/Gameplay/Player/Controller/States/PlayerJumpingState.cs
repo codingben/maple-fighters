@@ -16,26 +16,19 @@ namespace Scripts.Gameplay.Player.States
 
         public void OnStateEnter()
         {
+            SetDirection();
             Jump();
+
+            previousTime = Time.time;
         }
 
         private void Jump()
         {
             var horizontal = Utils.GetAxis(Axes.Horizontal, isRaw: true);
-            if (horizontal != 0)
-            {
-                var direction =
-                    horizontal < 0 ? Direction.Left : Direction.Right;
-
-                playerController.ChangeDirection(direction);
-            }
-
             var jumpForce = playerController.GetProperties().JumpForce;
             var jumpHeight = playerController.GetProperties().JumpHeight;
 
             playerController.Bounce(new Vector2(horizontal * jumpForce, jumpHeight));
-
-            previousTime = Time.time;
         }
 
         public void OnStateUpdate()
@@ -49,26 +42,12 @@ namespace Scripts.Gameplay.Player.States
             }
             else if (CanMove())
             {
-                if (IsRushKeyClicked() && isRushing == false)
+                if (IsRushKeyClicked())
                 {
-                    var rushSpeed = playerController.GetProperties().RushSpeed;
-                    var direction = playerController.transform.localScale.x * -1;
-                    var force = new Vector2(direction * rushSpeed, 0);
-
-                    playerController.CreateRushEffect(direction);
-                    playerController.Bounce(force);
-
-                    isRushing = true;
+                    CreateRushEffect();
                 }
 
-                var horizontal = Utils.GetAxis(Axes.Horizontal, isRaw: true);
-                if (horizontal != 0)
-                {
-                    var direction =
-                        horizontal < 0 ? Direction.Left : Direction.Right;
-
-                    playerController.ChangeDirection(direction);
-                }
+                SetDirection();
             }
         }
 
@@ -80,6 +59,35 @@ namespace Scripts.Gameplay.Player.States
         public void OnStateExit()
         {
             isRushing = false;
+        }
+
+        private void CreateRushEffect()
+        {
+            if (isRushing)
+            {
+                return;
+            }
+
+            var rushSpeed = playerController.GetProperties().RushSpeed;
+            var direction = playerController.transform.localScale.x * -1;
+            var force = new Vector2(direction * rushSpeed, 0);
+
+            playerController.CreateRushEffect(direction);
+            playerController.Bounce(force);
+
+            isRushing = true;
+        }
+
+        private void SetDirection()
+        {
+            var horizontal = Utils.GetAxis(Axes.Horizontal, isRaw: true);
+            if (horizontal != 0)
+            {
+                var direction =
+                    horizontal < 0 ? Direction.Left : Direction.Right;
+
+                playerController.ChangeDirection(direction);
+            }
         }
 
         private bool CanMove()
