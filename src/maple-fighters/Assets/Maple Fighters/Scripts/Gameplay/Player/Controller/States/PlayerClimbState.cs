@@ -70,9 +70,9 @@ namespace Scripts.Gameplay.Player.States
 
         private bool IsJumpKeyClicked()
         {
-            var jumpKey = playerController.GetKeyboardSettings().JumpKey;
+            var key = playerController.GetKeyboardSettings().JumpKey;
 
-            return Input.GetKeyDown(jumpKey);
+            return Input.GetKeyDown(key);
         }
     }
 }

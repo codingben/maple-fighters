@@ -94,9 +94,9 @@ namespace Scripts.Gameplay.Player.States
 
         private bool IsRushKeyClicked()
         {
-            var rushKey = playerController.GetKeyboardSettings().RushKey;
+            var key = playerController.GetKeyboardSettings().RushKey;
 
-            return Input.GetKeyDown(rushKey);
+            return Input.GetKeyDown(key);
         }
     }
 }

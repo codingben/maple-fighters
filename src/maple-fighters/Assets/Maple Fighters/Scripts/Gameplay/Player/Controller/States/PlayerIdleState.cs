@@ -80,25 +80,23 @@ namespace Scripts.Gameplay.Player.States
 
         private bool IsJumpKeyClicked()
         {
-            var jumpKey = playerController.GetKeyboardSettings().JumpKey;
+            var key = playerController.GetKeyboardSettings().JumpKey;
 
-            return Input.GetKeyDown(jumpKey);
+            return Input.GetKeyDown(key);
         }
 
         private bool IsPrimaryAttackKeyClicked()
         {
-            var primaryAttackKey =
-                playerController.GetKeyboardSettings().PrimaryAttackKey;
+            var key = playerController.GetKeyboardSettings().PrimaryAttackKey;
 
-            return Input.GetKeyDown(primaryAttackKey);
+            return Input.GetKeyDown(key);
         }
 
         private bool IsSecondaryAttackKeyClicked()
         {
-            var secondaryAttackKey =
-                playerController.GetKeyboardSettings().SecondaryAttackKey;
+            var key = playerController.GetKeyboardSettings().SecondaryAttackKey;
 
-            return Input.GetKeyDown(secondaryAttackKey);
+            return Input.GetKeyDown(key);
         }
     }
 }
