@@ -39,32 +39,39 @@ namespace Scripts.Gameplay.Player.States
                     var isMoving =
                         Mathf.Abs(Utils.GetAxis(Axes.Vertical, isRaw: true));
 
-                    var animator = playerController.GetPlayerStateAnimator();
-                    if (animator != null)
-                    {
-                        animator.Enabled = isMoving > 0;
-                    }
+                    SetAnimatorState(active: isMoving > 0);
                 }
             }
         }
 
         public void OnStateFixedUpdate()
         {
-            var direction = Utils.GetAxis(Axes.Vertical);
-            var speed = playerController.GetProperties().ClimbSpeed;
-            var x = rigidbody2D.velocity.x;
-
-            rigidbody2D.velocity = new Vector2(x, direction * speed);
+            Move();
         }
 
         public void OnStateExit()
         {
             rigidbody2D.gravityScale = previousGravityScale;
 
+            SetAnimatorState(active: true);
+        }
+
+        private void Move()
+        {
+            var direction = Utils.GetAxis(Axes.Vertical);
+            var speed = playerController.GetProperties().ClimbSpeed;
+            var x = rigidbody2D.velocity.x;
+            var y = direction * speed;
+
+            rigidbody2D.velocity = new Vector2(x, y);
+        }
+
+        private void SetAnimatorState(bool active)
+        {
             var animator = playerController.GetPlayerStateAnimator();
             if (animator != null)
             {
-                animator.Enabled = true;
+                animator.Enabled = active;
             }
         }
 
