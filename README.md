@@ -58,9 +58,7 @@ Maple Fighters is available at [maplefighters.io](http://maplefighters.io). This
 
 ## Contributing
 
-Feel free to contribute and make any changes to the game itself. Please open an issue to discuss the changes before sending the PR.
-
-Please follow the [Conventional Commits](https://www.conventionalcommits.org/) specification.
+Please read the [contributing guidelines](CONTRIBUTING.md).
 
 ## Artwork
 
