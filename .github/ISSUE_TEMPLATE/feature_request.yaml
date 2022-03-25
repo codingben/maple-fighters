@@ -1,0 +1,41 @@
+name: 'Feature Request'
+description: Suggest a feature for Maple Fighters
+labels: ["enhancement"]
+
+body:
+  - type: dropdown
+    id: affected-projects
+    attributes:
+      label: Which project(s) are related to the feature request?
+      options:
+        - common
+        - interest-management
+        - interest-management-simulation
+        - ui-manager
+        - auth-service
+        - character-service
+        - chat-service
+        - game-service
+        - gameprovider-service
+        - frontend
+        - maple-fighters
+        - other
+      multiple: true
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+    validations:
+      required: true
+  - type: textarea
+    id: proposed-solution
+    attributes:
+      label: Proposed Solution
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives-considered
+    attributes:
+      label: Alternatives Considered
+    validations:
+      required: true

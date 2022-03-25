@@ -1,0 +1,48 @@
+name: 'Bug Report'
+description: Report a bug in Maple Fighters
+labels: ["bug"]
+
+body:
+  - type: dropdown
+    id: affected-projects
+    attributes:
+      label: Which project(s) are the source of the bug?
+      options:
+        - common
+        - interest-management
+        - interest-management-simulation
+        - ui-manager
+        - auth-service
+        - character-service
+        - chat-service
+        - game-service
+        - gameprovider-service
+        - frontend
+        - maple-fighters
+      multiple: true
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: How To Reproduce
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected Behavior
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      placeholder: |
+        Device: N/A
+        OS: N/A
+        Browser: N/A
