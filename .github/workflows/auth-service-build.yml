@@ -26,3 +26,5 @@ jobs:
         run: dotnet build src/auth-service/Authenticator.Domain -c Release
       - name: Authenticator Infrastructure Build
         run: dotnet build src/auth-service/Authenticator.Infrastructure -c Release
+      - name: Authenticator Unit Tests Build
+        run: dotnet build src/auth-service/Authenticator.UnitTests -c Release
