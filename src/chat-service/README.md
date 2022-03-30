@@ -4,6 +4,8 @@
 
 The chat service is a service that allows players to communicate with each other.
 
+## Quickstart
+
 ### Docker
 
 Follow these instructions to create an image and run a container:
