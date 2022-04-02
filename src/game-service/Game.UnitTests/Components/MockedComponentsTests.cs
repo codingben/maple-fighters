@@ -1,7 +1,8 @@
 ﻿using NSubstitute;
 using Xunit;
+using Game.Application.Components;
 
-namespace Common.ComponentModel.UnitTests
+namespace Game.UnitTests.Components
 {
     public class MockedComponentsTests
     {
