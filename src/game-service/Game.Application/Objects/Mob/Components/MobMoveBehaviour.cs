@@ -80,12 +80,7 @@ namespace Game.Application.Objects.Components
 
         private float GetRandomDirection()
         {
-            float direction = random.Next(-1, 1);
-
-            if (direction == 0) direction = 0.1f;
-            else direction = -0.1f;
-
-            return direction;
+            return random.Next(-1, 1) == 0 ? 0.1f : -0.1f;
         }
     }
 }
