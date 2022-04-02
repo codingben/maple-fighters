@@ -6,22 +6,23 @@ The game application creates a WebSocket server and handles requests. When a new
 
 ```
 ├── Components
-│   ├── Collection
-│   └── Scene
+│   ├── Collection
+│   ├── Generator
+│   └── Scene
 ├── Coroutines
 ├── Handlers
 ├── Messages
 ├── MessageTools
 ├── Objects
-│   ├── Mob
-│   │   └── Components
-│   ├── Npc
-│   │   └── Components
-│   ├── Player
-│   │   └── Components
-│   └── Portal
-│       └── Components
-└── Physics
+│   ├── Mob
+│   │   └── Components
+│   ├── Npc
+│   │   └── Components
+│   ├── Player
+│   │   └── Components
+│   └── Portal
+│       └── Components
+├── Physics
 ```
 
 ## Quickstart
