@@ -1,5 +1,5 @@
 ﻿using Box2DX.Common;
-using Common.MathematicsHelper;
+using InterestManagement;
 
 namespace Game.Physics
 {

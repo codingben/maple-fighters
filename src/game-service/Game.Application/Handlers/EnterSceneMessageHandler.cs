@@ -3,9 +3,9 @@ using Game.Messages;
 using Game.MessageTools;
 using Game.Application.Objects;
 using Game.Application.Objects.Components;
-using Common.MathematicsHelper;
 using Box2DX.Dynamics;
 using Game.Physics;
+using InterestManagement;
 
 namespace Game.Application.Handlers
 {

@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using Box2DX.Dynamics;
-using Common.MathematicsHelper;
 using Game.Application.Objects;
 using Game.Application.Objects.Components;
 using Game.Physics;
+using InterestManagement;
 
 namespace Game.Application.Components
 {

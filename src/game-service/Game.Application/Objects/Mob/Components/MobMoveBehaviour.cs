@@ -1,10 +1,10 @@
 using System;
 using System.Collections;
 using System.Timers;
-using Common.MathematicsHelper;
 using Coroutines;
 using Game.Application.Components;
 using Game.Messages;
+using InterestManagement;
 
 namespace Game.Application.Objects.Components
 {

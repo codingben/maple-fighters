@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Box2DX.Collision;
 using Box2DX.Dynamics;
-using Common.MathematicsHelper;
+using InterestManagement;
 
 namespace Game.Physics
 {

@@ -6,7 +6,7 @@
     <GenerateRuntimeConfigurationFiles>True</GenerateRuntimeConfigurationFiles>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="InterestManagement" Version="1.0.10"/>
+    <PackageReference Include="InterestManagement" Version="1.1.0"/>
     <PackageReference Include="Fleck" Version="1.1.0"/>
     <PackageReference Include="DotNetEnv" Version="2.0.0"/>
     <PackageReference Include="Box2D.NetStandard" Version="1.0.3"/>

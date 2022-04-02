@@ -6,7 +6,7 @@ using Game.MessageTools;
 using Fleck;
 using Game.Application.Objects;
 using Game.Application.Objects.Components;
-using Common.MathematicsHelper;
+using InterestManagement;
 
 namespace Game.Application
 {
