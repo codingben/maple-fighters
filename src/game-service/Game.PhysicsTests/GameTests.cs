@@ -9,15 +9,13 @@ using Game.Application.Objects;
 using Game.Application.Objects.Components;
 using Game.MessageTools;
 using Game.Physics;
-using OpenTK;
-using Math = Common.MathematicsHelper;
 using static Box2DX.Dynamics.DebugDraw;
 
 // Create a window to display physics simulation.
 var window =
     new SimulationWindow(title: "Physics Tests", width: 800, height: 600)
     {
-        VSync = VSyncMode.On
+        VSync = OpenTK.VSyncMode.On
     };
 
 window.SetView(new CameraView(position: OpenTK.Vector2.Zero, zoom: 0.008f));
@@ -41,8 +39,8 @@ if (gameSceneCollection.TryGet(map: Map.TheDarkForest, out var gameScene))
     var player = new GameObject(
         id: 1,
         name: "Player",
-        position: new Math.Vector2(10, 5),
-        size: Math.Vector2.Zero,
+        position: new InterestManagement.Vector2(10, 5),
+        size: InterestManagement.Vector2.Zero,
         new IComponent[]
         {
             new MessageSender(new NativeJsonSerializer()),
