@@ -1,11 +1,10 @@
 ﻿using System;
-using Common.ComponentModel;
 
-namespace Common.Components
+namespace Game.Application.Components
 {
     public class RandomNumberGenerator : ComponentBase, IRandomNumberGenerator
     {
-        private readonly Random random = new Random();
+        private readonly Random random = new();
 
         public int GenerateRandomNumber()
         {

@@ -1,4 +1,4 @@
-﻿namespace Common.Components
+﻿namespace Game.Application.Components
 {
     public interface IIdGenerator
     {

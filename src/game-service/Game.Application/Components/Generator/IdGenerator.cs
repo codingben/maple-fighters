@@ -1,10 +1,8 @@
-﻿using Common.ComponentModel;
-
-namespace Common.Components
+﻿namespace Game.Application.Components
 {
     public class IdGenerator : ComponentBase, IIdGenerator
     {
-        private readonly object locker = new object();
+        private readonly object locker = new();
         private uint id = uint.MinValue;
 
         public int GenerateId()
