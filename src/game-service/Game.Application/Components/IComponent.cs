@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Common.ComponentModel
+namespace Game.Application.Components
 {
     /// <summary>
     /// Represents a class that will be a component.

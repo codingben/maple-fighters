@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Common.ComponentModel
+namespace Game.Application.Components
 {
     public interface IComponents : IDisposable
     {

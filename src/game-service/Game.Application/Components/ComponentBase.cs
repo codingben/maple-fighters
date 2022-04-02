@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Common.ComponentModel
+namespace Game.Application.Components
 {
     /// <summary>
     /// The component base that each component must inherit from it.
