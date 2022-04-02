@@ -4,8 +4,6 @@
 
 using Box2DX.Dynamics;
 using Box2D.Window;
-using Common.ComponentModel;
-using Common.Components;
 using Game.Application.Components;
 using Game.Application.Objects;
 using Game.Application.Objects.Components;
