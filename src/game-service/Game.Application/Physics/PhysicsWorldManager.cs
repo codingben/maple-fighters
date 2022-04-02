@@ -55,7 +55,9 @@ namespace Game.Physics
 
         private void AddBodies()
         {
-            foreach (var newBodyData in addBodies)
+            var newBodyDatas = new LinkedList<NewBodyData>(addBodies);
+
+            foreach (var newBodyData in newBodyDatas)
             {
                 var id = newBodyData.Id;
 
@@ -76,7 +78,9 @@ namespace Game.Physics
 
         private void RemoveBodies()
         {
-            foreach (var bodyData in removeBodies)
+            var bodyDatas = new LinkedList<BodyData>(removeBodies);
+
+            foreach (var bodyData in bodyDatas)
             {
                 world?.DestroyBody(bodyData.Body);
 
