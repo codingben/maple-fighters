@@ -1,5 +1,6 @@
 ﻿/*
- * The test here is to ensure that the collision detection works correctly.
+ * Test collision detection between the player game object
+ * and another game object.
  */
 
 using Box2DX.Dynamics;
