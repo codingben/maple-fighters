@@ -1,5 +1,4 @@
 ﻿using System;
-using Common.MathematicsHelper;
 
 namespace InterestManagement
 {
