@@ -1,4 +1,4 @@
-﻿using Common.ComponentModel;
+﻿using Game.Application.Components;
 using Shouldly;
 using Xunit;
 

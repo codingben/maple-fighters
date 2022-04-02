@@ -1,6 +1,6 @@
-﻿using NSubstitute;
+﻿using Game.Application.Components;
+using NSubstitute;
 using Xunit;
-using Game.Application.Components;
 
 namespace Game.UnitTests.Components
 {

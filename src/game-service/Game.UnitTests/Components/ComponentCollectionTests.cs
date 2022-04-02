@@ -1,8 +1,8 @@
 ﻿using System;
+using Game.Application.Components;
 using NSubstitute;
 using Shouldly;
 using Xunit;
-using Game.Application.Components;
 
 namespace Game.UnitTests.Components
 {
