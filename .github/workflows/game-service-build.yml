@@ -26,3 +26,5 @@ jobs:
         run: dotnet build src/game-service/Game.Application -c Release
       - name: Game Physics Tests Build
         run: dotnet build src/game-service/Game.PhysicsTests -c Release
+      - name: Game Unit Tests
+        run: dotnet build src/game-service/Game.UnitTests -c Release
