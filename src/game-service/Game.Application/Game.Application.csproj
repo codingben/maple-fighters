@@ -6,7 +6,6 @@
     <GenerateRuntimeConfigurationFiles>True</GenerateRuntimeConfigurationFiles>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Common.ComponentModel" Version="2.0.1"/>
     <PackageReference Include="Common.Components" Version="1.0.3"/>
     <PackageReference Include="InterestManagement" Version="1.0.10"/>
     <PackageReference Include="Fleck" Version="1.1.0"/>

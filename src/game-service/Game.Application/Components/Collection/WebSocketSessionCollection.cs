@@ -1,5 +1,4 @@
 ﻿using System.Collections.Concurrent;
-using Common.ComponentModel;
 
 namespace Game.Application.Components
 {

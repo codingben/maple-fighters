@@ -1,4 +1,4 @@
-﻿using Common.ComponentModel;
+﻿using Game.Application.Components;
 
 namespace Game.Application.Objects.Components
 {

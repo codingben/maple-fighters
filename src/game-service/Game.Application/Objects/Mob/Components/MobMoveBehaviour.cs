@@ -1,9 +1,9 @@
 using System;
 using System.Collections;
 using System.Timers;
-using Common.ComponentModel;
 using Common.MathematicsHelper;
 using Coroutines;
+using Game.Application.Components;
 using Game.Messages;
 
 namespace Game.Application.Objects.Components

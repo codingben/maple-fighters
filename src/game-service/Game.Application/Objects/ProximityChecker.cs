@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Common.ComponentModel;
+using Game.Application.Components;
 using InterestManagement;
 
 namespace Game.Application.Objects

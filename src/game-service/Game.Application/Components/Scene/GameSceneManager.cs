@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using Box2DX.Dynamics;
-using Common.ComponentModel;
 using Common.Components;
 using Common.MathematicsHelper;
 using Game.Application.Objects;
