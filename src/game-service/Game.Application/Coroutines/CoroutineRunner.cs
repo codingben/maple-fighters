@@ -34,8 +34,8 @@ namespace Coroutines
     /// </summary>
     public class CoroutineRunner : ICoroutineRunner
     {
-        private readonly List<IEnumerator> running = new List<IEnumerator>();
-        private readonly List<float> delays = new List<float>();
+        private readonly List<IEnumerator> running = new();
+        private readonly List<float> delays = new();
 
         /// <summary>
         /// Run a coroutine.
