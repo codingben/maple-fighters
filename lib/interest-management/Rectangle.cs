@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Common.MathematicsHelper
+namespace InterestManagement
 {
     public struct Rectangle
     {

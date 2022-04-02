@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Common.MathematicsHelper
+namespace InterestManagement
 {
     public struct Vector2 : IEquatable<Vector2>
     {
