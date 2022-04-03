@@ -3,8 +3,6 @@ using InterestManagement;
 
 namespace Game.InterestManagement.Simulation
 {
-    using Vector2 = Common.MathematicsHelper.Vector2;
-
     public class GameTransform : ITransform
     {
         public event Action PositionChanged;

@@ -1,5 +1,5 @@
 using InterestManagement;
-using UnityEngine;
+using Vector2 = UnityEngine.Vector2;
 
 namespace Game.InterestManagement.Simulation
 {
