@@ -1,8 +1,9 @@
 ﻿using System;
+using InterestManagement;
 using Shouldly;
 using Xunit;
 
-namespace Common.MathematicsHelper.UnitTests
+namespace Game.UnitTests.Mathematics
 {
     public class Vector2Tests
     {
