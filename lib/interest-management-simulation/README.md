@@ -10,10 +10,7 @@ Demonstration of using region-based interest management in Unity. The simulation
 
 ```
 ├── Assets
-│   ├── Libraries
-│   │   ├── NetStandard2.0
-│   │   │   ├── Common.MathematicsHelper.dll
-│   │   │   ├── InterestManagement.dll
+│   ├── Library
 │   ├── Resources
 │   ├── Scenes
 │   ├── Scripts
