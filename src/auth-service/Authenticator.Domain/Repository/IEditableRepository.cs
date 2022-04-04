@@ -1,4 +1,4 @@
-﻿namespace Common.Repository.Interfaces
+﻿namespace Authenticator.Domain.Repository
 {
     /// <summary>
     /// Represents the editable repository definition.

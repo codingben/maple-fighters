@@ -1,4 +1,4 @@
-﻿using Common.Repository.Interfaces;
+﻿using Authenticator.Domain.Repository;
 
 namespace Authenticator.Domain.Aggregates.User
 {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
-using Common.Repository.Interfaces;
+using Authenticator.Domain.Repository;
 using MongoDB.Driver;
 
 namespace Authenticator.Infrastructure.MongoRepository
