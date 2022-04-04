@@ -1,8 +1,7 @@
 ﻿using System;
 using Authenticator.Domain.Aggregates.User;
 using Authenticator.Domain.Aggregates.User.Services;
-using Authenticator.Infrastructure.Repository;
-using Common.MongoDB;
+using Authenticator.Infrastructure.MongoRepository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;

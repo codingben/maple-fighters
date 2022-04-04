@@ -3,9 +3,9 @@ using Authenticator.API.Validators;
 using Authenticator.Domain.Aggregates.User.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
-using Authenticator.Domain.Aggregates.User;
 using Authenticator.API.Converters;
 using Authenticator.API.Constants;
+using Authenticator.Infrastructure;
 
 namespace Authenticator.API.Controllers
 {
