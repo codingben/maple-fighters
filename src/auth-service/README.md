@@ -15,11 +15,13 @@ The authentication service stores user data and verifies user.
 │   ├── Properties
 │   └── Validators
 ├── Authenticator.Domain
-│   └── Aggregates
-│       └── User
-│           └── Services
+│   ├── Aggregates
+│   │   └── User
+│   │       └── Services
+│   ├── Repository
 ├── Authenticator.Infrastructure
-│   └── Repository
+│   ├── InMemoryRepository
+│   ├── MongoRepository
 └── Authenticator.UnitTests
     ├── API
     │   └── Controllers
