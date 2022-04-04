@@ -1,6 +1,6 @@
 ﻿using MongoDB.Driver;
 
-namespace Common.MongoDB
+namespace Authenticator.Infrastructure.MongoRepository
 {
     /// <summary>
     /// Represents the provider of the mongo database.

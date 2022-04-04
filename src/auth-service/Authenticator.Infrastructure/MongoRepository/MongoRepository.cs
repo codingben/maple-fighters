@@ -4,14 +4,14 @@ using System.Linq.Expressions;
 using Common.Repository.Interfaces;
 using MongoDB.Driver;
 
-namespace Common.MongoDB
+namespace Authenticator.Infrastructure.MongoRepository
 {
     /// <summary>
     /// The mongo repository base for all the repositories.
     /// </summary>
     /// <typeparam name="TEntity">The mongo entity.</typeparam>
     public abstract class MongoRepository<TEntity> : IRepository<TEntity, string>
-        where TEntity : IMongoEntity
+        where TEntity : IEntity<string>
     {
         protected IMongoCollection<TEntity> Collection => GetCollection();
 

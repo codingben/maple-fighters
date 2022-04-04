@@ -1,6 +1,6 @@
 ﻿using MongoDB.Driver;
 
-namespace Common.MongoDB
+namespace Authenticator.Infrastructure.MongoRepository
 {
     /// <summary>
     /// Provides the mongo database.
