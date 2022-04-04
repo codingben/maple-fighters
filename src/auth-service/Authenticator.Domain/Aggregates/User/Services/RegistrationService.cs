@@ -9,7 +9,7 @@
             this.accountRepository = accountRepository;
         }
 
-        public void CreateAccount(Account account)
+        public void CreateAccount(IAccount account)
         {
             accountRepository.Create(account);
         }

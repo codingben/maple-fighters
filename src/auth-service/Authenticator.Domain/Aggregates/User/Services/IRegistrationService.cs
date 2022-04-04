@@ -2,7 +2,7 @@
 {
     public interface IRegistrationService
     {
-        void CreateAccount(Account account);
+        void CreateAccount(IAccount account);
 
         bool CheckIfEmailExists(string email);
     }

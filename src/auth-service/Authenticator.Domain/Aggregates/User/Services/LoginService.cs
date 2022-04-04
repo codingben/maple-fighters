@@ -9,7 +9,7 @@
             this.accountRepository = accountRepository;
         }
 
-        public Account FindAccount(string email)
+        public IAccount FindAccount(string email)
         {
             return accountRepository.Read(x => x.Email == email);
         }
