@@ -1,10 +1,9 @@
 ﻿using Authenticator.Domain.Aggregates.User;
-using Common.MongoDB;
 using MongoDB.Driver;
 
-namespace Authenticator.Infrastructure.Repository
+namespace Authenticator.Infrastructure.MongoRepository
 {
-    public class MongoAccountRepository : MongoRepository<Account>, IAccountRepository
+    public class MongoAccountRepository : MongoRepository<IAccount>, IAccountRepository
     {
         private readonly IMongoDatabase mongoDatabase;
 
@@ -13,9 +12,9 @@ namespace Authenticator.Infrastructure.Repository
             mongoDatabase = databaseProvider.Provide();
         }
 
-        protected override IMongoCollection<Account> GetCollection()
+        protected override IMongoCollection<IAccount> GetCollection()
         {
-            return mongoDatabase.GetCollection<Account>(name: "accounts");
+            return mongoDatabase.GetCollection<IAccount>(name: "accounts");
         }
     }
 }
