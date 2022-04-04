@@ -34,27 +34,6 @@ namespace Authenticator.UnitTests.API.Controllers
             actionResult.Value.ShouldBeNull();
         }
 
-        [Fact]
-        public void Login_FindAccount_Received()
-        {
-            // Arrange
-            var registrationService = Substitute.For<IRegistrationService>();
-            var loginService = Substitute.For<ILoginService>();
-            var authController =
-                new AuthController(loginService, registrationService);
-            var loginData = new LoginData()
-            {
-                Email = "benzuk@gmail.com",
-                Password = "12345678"
-            };
-
-            // Act
-            authController.Login(loginData);
-
-            // Assert
-            loginService.Received().FindAccount(Arg.Any<string>());
-        }
-
         [Theory]
         [InlineData("", "12345678", "Ben", "Ukhanov")]
         [InlineData("benzuk@gmail.com", "", "Ben", "Ukhanov")]
@@ -108,7 +87,7 @@ namespace Authenticator.UnitTests.API.Controllers
             authController.Register(registrationData);
 
             // Assert
-            registrationService.Received().CreateAccount(Arg.Any<Account>());
+            registrationService.Received().CreateAccount(Arg.Any<IAccount>());
         }
     }
 }
