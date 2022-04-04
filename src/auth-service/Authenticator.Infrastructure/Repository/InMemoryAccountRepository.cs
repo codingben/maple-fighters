@@ -8,15 +8,15 @@ namespace Authenticator.Infrastructure.Repository
 {
     public class InMemoryAccountRepository : IAccountRepository
     {
-        private readonly List<Account> collection;
-        private readonly static object locker = new object();
+        private readonly List<IAccount> collection;
+        private readonly static object locker = new();
 
         public InMemoryAccountRepository()
         {
-            collection = new List<Account>();
+            collection = new List<IAccount>();
         }
 
-        public void Create(Account entity)
+        public void Create(IAccount entity)
         {
             lock (locker)
             {
@@ -41,7 +41,7 @@ namespace Authenticator.Infrastructure.Repository
             }
         }
 
-        public void Update(Account entity)
+        public void Update(IAccount entity)
         {
             lock (locker)
             {
@@ -53,7 +53,7 @@ namespace Authenticator.Infrastructure.Repository
             }
         }
 
-        public Account Read(Expression<Func<Account, bool>> predicate)
+        public IAccount Read(Expression<Func<IAccount, bool>> predicate)
         {
             lock (locker)
             {
@@ -61,8 +61,7 @@ namespace Authenticator.Infrastructure.Repository
             }
         }
 
-        public IEnumerable<Account> ReadMany(
-            Expression<Func<Account, bool>> predicate)
+        public IEnumerable<IAccount> ReadMany(Expression<Func<IAccount, bool>> predicate)
         {
             lock (locker)
             {
