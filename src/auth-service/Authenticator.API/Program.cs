@@ -4,11 +4,14 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
 Host.CreateDefaultBuilder()
-    .ConfigureLogging(x =>
+    .ConfigureLogging(builder =>
     {
-        x.ClearProviders();
-        x.AddConsole();
+        builder.ClearProviders();
+        builder.AddConsole();
     })
-    .ConfigureWebHostDefaults(x => x.UseStartup<AuthenticatorStartup>())
+    .ConfigureWebHostDefaults(builder =>
+    {
+        builder.UseStartup<AuthenticatorStartup>();
+    })
     .Build()
     .Run();
