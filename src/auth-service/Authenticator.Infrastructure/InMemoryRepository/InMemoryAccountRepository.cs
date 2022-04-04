@@ -4,7 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using Authenticator.Domain.Aggregates.User;
 
-namespace Authenticator.Infrastructure.Repository
+namespace Authenticator.Infrastructure.InMemoryRepository
 {
     public class InMemoryAccountRepository : IAccountRepository
     {
