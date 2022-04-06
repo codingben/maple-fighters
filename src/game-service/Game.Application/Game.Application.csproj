@@ -10,5 +10,6 @@
     <PackageReference Include="Fleck" Version="1.1.0"/>
     <PackageReference Include="DotNetEnv" Version="2.0.0"/>
     <PackageReference Include="Box2D.NetStandard" Version="1.0.3"/>
+    <PackageReference Include="YamlDotNet" Version="11.2.1"/>
   </ItemGroup>
 </Project>
