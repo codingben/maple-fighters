@@ -6,7 +6,6 @@ using Game.MessageTools;
 using Fleck;
 using Game.Application.Objects;
 using Game.Application.Objects.Components;
-using InterestManagement;
 
 namespace Game.Application
 {
@@ -36,25 +35,7 @@ namespace Game.Application
             jsonSerializer = new NativeJsonSerializer();
             handlerCollection = new MessageHandlerCollection(jsonSerializer);
 
-            // TODO: A way to get name, position and size
-            player = new GameObject(
-                id,
-                name: "RemotePlayer",
-                position: new Vector2(10, 5),
-                size: Vector2.Zero,
-                new IComponent[]
-                {
-                    new AnimationData(),
-                    new CharacterData(),
-                    new PresenceMapProvider(),
-                    new MessageSender(jsonSerializer),
-                    new PositionChangedMessageSender(),
-                    new AnimationStateChangedMessageSender(),
-                    new PlayerAttackedMessageSender(),
-                    new BubbleNotificationMessageSender(),
-                    new InterestManagementNotifier(),
-                    new PhysicsBodyPositionSetter()
-                });
+            player = GetPlayerGameObject();
 
             Console.WriteLine($"A new client #{id} is connected.");
         }
@@ -146,6 +127,25 @@ namespace Game.Application
         private void RemoveWebSocketSessionData()
         {
             sessionCollection.Remove(id);
+        }
+
+        private IGameObject GetPlayerGameObject()
+        {
+            var components = new IComponent[]
+            {
+                new AnimationData(),
+                new CharacterData(),
+                new PresenceMapProvider(),
+                new MessageSender(jsonSerializer),
+                new PositionChangedMessageSender(),
+                new AnimationStateChangedMessageSender(),
+                new PlayerAttackedMessageSender(),
+                new BubbleNotificationMessageSender(),
+                new InterestManagementNotifier(),
+                new PhysicsBodyPositionSetter()
+            };
+
+            return new GameObject(id, name: "RemotePlayer", components);
         }
     }
 }

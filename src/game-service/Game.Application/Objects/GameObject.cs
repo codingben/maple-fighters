@@ -17,13 +17,11 @@ namespace Game.Application.Objects
         public GameObject(
             int id,
             string name,
-            Vector2 position,
-            Vector2 size,
             IComponent[] components = null)
         {
             Id = id;
             Name = name;
-            Transform = new Transform(position, size);
+            Transform = new Transform();
 
             var collection = new List<IComponent>
             {

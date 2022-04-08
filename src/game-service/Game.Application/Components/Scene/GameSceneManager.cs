@@ -61,11 +61,13 @@ namespace Game.Application.Components
                 var id = idGenerator.GenerateId();
                 var position = new Vector2(-14.24f, -2.025f);
                 var size = new Vector2(10, 5); // TODO: Size should be the same as region size
-                var npc = new GameObject(id, "Guardian", position, size, new IComponent[]
+                var npc = new GameObject(id, "Guardian", new IComponent[]
                 {
                     new PresenceMapProvider(gameScene),
                     new NpcIdleBehaviour(text: "Hello World!", time: 5)
                 });
+                npc.Transform.SetPosition(position);
+                npc.Transform.SetSize(size);
 
                 yield return npc;
             }
@@ -75,11 +77,13 @@ namespace Game.Application.Components
                 var id = idGenerator.GenerateId();
                 var position = new Vector2(-17.125f, -1.5f);
                 var size = new Vector2(10, 5); // TODO: Size should be the same as region size
-                var portal = new GameObject(id, "Portal", position, size, new IComponent[]
+                var portal = new GameObject(id, "Portal", new IComponent[]
                 {
                     new PresenceMapProvider(gameScene),
                     new PortalData(map: (byte)Map.TheDarkForest)
                 });
+                portal.Transform.SetPosition(position);
+                portal.Transform.SetSize(size);
 
                 yield return portal;
             }
@@ -110,10 +114,11 @@ namespace Game.Application.Components
                     new Vector2(2.85f, -3.05f),
                     new Vector2(-3.5f, -3.05f)
                 };
+                var size = new Vector2(10, 5); // TODO: Size should be the same as region size
 
                 foreach (var position in positions)
                 {
-                    yield return CreateMob(gameScene, name: "BlueSnail", position);
+                    yield return CreateMob(gameScene, name: "BlueSnail", position, size);
                 }
             }
 
@@ -124,10 +129,11 @@ namespace Game.Application.Components
                     new Vector2(-6.5f, 3.75f),
                     new Vector2(-0.8f, 3.75f)
                 };
+                var size = new Vector2(10, 5); // TODO: Size should be the same as region size
 
                 foreach (var position in positions)
                 {
-                    yield return CreateMob(gameScene, name: "Mushroom", position);
+                    yield return CreateMob(gameScene, name: "Mushroom", position, size);
                 }
             }
 
@@ -136,27 +142,30 @@ namespace Game.Application.Components
                 var id = idGenerator.GenerateId();
                 var position = new Vector2(12.5f, -1.125f);
                 var size = new Vector2(10, 5); // TODO: Size should be the same as region size
-                var portal = new GameObject(id, "Portal", position, size, new IComponent[]
+                var portal = new GameObject(id, "Portal", new IComponent[]
                 {
                     new PresenceMapProvider(gameScene),
                     new PortalData(map: (byte)Map.Lobby)
                 });
+                portal.Transform.SetPosition(position);
+                portal.Transform.SetSize(size);
 
                 yield return portal;
             }
         }
 
-        private IGameObject CreateMob(IGameScene scene, string name, Vector2 position)
+        private IGameObject CreateMob(IGameScene scene, string name, Vector2 position, Vector2 size)
         {
             var id = idGenerator.GenerateId();
             var coroutineRunner = scene.PhysicsExecutor.GetCoroutineRunner();
-            var size = new Vector2(10, 5); // TODO: Size should be the same as region size
-            var mob = new GameObject(id, name, position, size, new IComponent[]
+            var mob = new GameObject(id, name, new IComponent[]
             {
                 new PresenceMapProvider(scene),
                 new MobMoveBehaviour(coroutineRunner),
                 new PhysicsBodyPositionSetter()
             });
+            mob.Transform.SetPosition(position);
+            mob.Transform.SetSize(size);
 
             var bodyDef = new BodyDef();
             var x = mob.Transform.Position.X;
