@@ -63,11 +63,13 @@ namespace Game.Application.Components
                 var size = new Vector2(10, 5); // TODO: Size should be the same as region size
                 var npc = new GameObject(id, "Guardian", new IComponent[]
                 {
-                    new PresenceMapProvider(gameScene),
                     new NpcIdleBehaviour(text: "Hello World!", time: 5)
                 });
                 npc.Transform.SetPosition(position);
                 npc.Transform.SetSize(size);
+
+                var presenceMapProvider = npc.Components.Get<IPresenceMapProvider>();
+                presenceMapProvider.SetMap(gameScene);
 
                 yield return npc;
             }
@@ -79,11 +81,13 @@ namespace Game.Application.Components
                 var size = new Vector2(10, 5); // TODO: Size should be the same as region size
                 var portal = new GameObject(id, "Portal", new IComponent[]
                 {
-                    new PresenceMapProvider(gameScene),
                     new PortalData(map: (byte)Map.TheDarkForest)
                 });
                 portal.Transform.SetPosition(position);
                 portal.Transform.SetSize(size);
+
+                var presenceMapProvider = portal.Components.Get<IPresenceMapProvider>();
+                presenceMapProvider.SetMap(gameScene);
 
                 yield return portal;
             }
@@ -144,28 +148,32 @@ namespace Game.Application.Components
                 var size = new Vector2(10, 5); // TODO: Size should be the same as region size
                 var portal = new GameObject(id, "Portal", new IComponent[]
                 {
-                    new PresenceMapProvider(gameScene),
                     new PortalData(map: (byte)Map.Lobby)
                 });
                 portal.Transform.SetPosition(position);
                 portal.Transform.SetSize(size);
 
+                var presenceMapProvider = portal.Components.Get<IPresenceMapProvider>();
+                presenceMapProvider.SetMap(gameScene);
+
                 yield return portal;
             }
         }
 
-        private IGameObject CreateMob(IGameScene scene, string name, Vector2 position, Vector2 size)
+        private IGameObject CreateMob(IGameScene gameScene, string name, Vector2 position, Vector2 size)
         {
             var id = idGenerator.GenerateId();
-            var coroutineRunner = scene.PhysicsExecutor.GetCoroutineRunner();
+            var coroutineRunner = gameScene.PhysicsExecutor.GetCoroutineRunner();
             var mob = new GameObject(id, name, new IComponent[]
             {
-                new PresenceMapProvider(scene),
                 new MobMoveBehaviour(coroutineRunner),
                 new PhysicsBodyPositionSetter()
             });
             mob.Transform.SetPosition(position);
             mob.Transform.SetSize(size);
+
+            var presenceMapProvider = mob.Components.Get<IPresenceMapProvider>();
+            presenceMapProvider.SetMap(gameScene);
 
             var bodyDef = new BodyDef();
             var x = mob.Transform.Position.X;
@@ -182,7 +190,7 @@ namespace Game.Application.Components
             polygonDef.UserData = new MobContactEvents(id);
 
             var bodyData = new NewBodyData(id, bodyDef, polygonDef);
-            scene.PhysicsWorldManager.AddBody(bodyData);
+            gameScene.PhysicsWorldManager.AddBody(bodyData);
 
             return mob;
         }

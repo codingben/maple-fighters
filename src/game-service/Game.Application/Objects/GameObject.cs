@@ -30,6 +30,7 @@ namespace Game.Application.Objects
         private IEnumerable<IComponent> GetAllComponents(IComponent[] components)
         {
             yield return new GameObjectGetter(this);
+            yield return new PresenceMapProvider();
             yield return new ProximityChecker();
 
             if (components != null)

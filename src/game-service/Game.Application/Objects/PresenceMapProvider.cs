@@ -7,11 +7,6 @@ namespace Game.Application.Objects
         private IGameScene gameScene;
         private IProximityChecker proximityChecker;
 
-        public PresenceMapProvider(IGameScene gameScene = null)
-        {
-            this.gameScene = gameScene;
-        }
-
         protected override void OnAwake()
         {
             proximityChecker = Components.Get<IProximityChecker>();
