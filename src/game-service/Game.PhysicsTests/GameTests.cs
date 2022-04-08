@@ -40,13 +40,12 @@ if (gameSceneCollection.TryGet(map: Map.TheDarkForest, out var gameScene))
     var player = new GameObject(
         id: 1,
         name: "Player",
-        position: new InterestManagement.Vector2(10, 5),
-        size: InterestManagement.Vector2.Zero,
         new IComponent[]
         {
             new MessageSender(new NativeJsonSerializer()),
             new PlayerAttackedMessageSender()
         });
+    player.Transform.SetPosition(new InterestManagement.Vector2(10, 5));
 
     var bodyDef = new BodyDef();
     var x = player.Transform.Position.X;
