@@ -14,32 +14,31 @@ namespace Game.Application.Objects
 
         public IComponents Components { get; }
 
-        public GameObject(
-            int id,
-            string name,
-            IComponent[] components = null)
+        public GameObject(int id, string name, IComponent[] components = null)
         {
             Id = id;
             Name = name;
             Transform = new Transform();
-
-            var collection = new List<IComponent>
-            {
-                new GameObjectGetter(this),
-                new ProximityChecker()
-            };
-
-            if (components != null)
-            {
-                collection.AddRange(components);
-            }
-
-            Components = new ComponentCollection(collection);
+            Components = new ComponentCollection(GetAllComponents(components));
         }
 
         public void Dispose()
         {
             Components?.Dispose();
+        }
+
+        private IEnumerable<IComponent> GetAllComponents(IComponent[] components)
+        {
+            yield return new GameObjectGetter(this);
+            yield return new ProximityChecker();
+
+            if (components != null)
+            {
+                foreach (var component in components)
+                {
+                    yield return component;
+                }
+            }
         }
     }
 }
