@@ -7,7 +7,6 @@ using Box2DX.Dynamics;
 using Box2D.Window;
 using Game.Application.Components;
 using Game.Application.Objects;
-using Game.Application.Objects.Components;
 using Game.MessageTools;
 using Game.Physics;
 using static Box2DX.Dynamics.DebugDraw;
@@ -37,14 +36,7 @@ if (gameSceneCollection.TryGet(map: Map.TheDarkForest, out var gameScene))
         Flags = DrawFlags.Aabb | DrawFlags.Shape
     });
 
-    var player = new GameObject(
-        id: 1,
-        name: "Player",
-        new IComponent[]
-        {
-            new MessageSender(new NativeJsonSerializer()),
-            new PlayerAttackedMessageSender()
-        });
+    var player = new PlayerGameObject(id: 1, name: "Player", new NativeJsonSerializer());
     player.Transform.SetPosition(new InterestManagement.Vector2(10, 5));
 
     var bodyDef = new BodyDef();
