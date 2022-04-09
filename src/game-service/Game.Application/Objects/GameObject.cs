@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Game.Application.Components;
 using InterestManagement;
 
@@ -14,32 +13,17 @@ namespace Game.Application.Objects
 
         public IComponents Components { get; }
 
-        public GameObject(int id, string name, IComponent[] components = null)
+        public GameObject(int id, string name)
         {
             Id = id;
             Name = name;
             Transform = new Transform();
-            Components = new ComponentCollection(GetAllComponents(components));
+            Components = new ComponentCollection();
         }
 
         public void Dispose()
         {
             Components?.Dispose();
-        }
-
-        private IEnumerable<IComponent> GetAllComponents(IComponent[] components)
-        {
-            yield return new GameObjectGetter(this);
-            yield return new PresenceMapProvider();
-            yield return new ProximityChecker();
-
-            if (components != null)
-            {
-                foreach (var component in components)
-                {
-                    yield return component;
-                }
-            }
         }
     }
 }
