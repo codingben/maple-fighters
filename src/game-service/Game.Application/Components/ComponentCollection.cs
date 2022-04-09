@@ -9,16 +9,30 @@ namespace Game.Application.Components
     /// </summary>
     public sealed class ComponentCollection : IComponents
     {
-        private readonly IReadOnlyList<IComponent> components;
+        private readonly List<IComponent> components = new();
 
-        public ComponentCollection(IEnumerable<IComponent> collection)
+        public ComponentCollection(IEnumerable<IComponent> collection = null)
         {
-            components = new List<IComponent>(collection);
+            if (collection == null) return;
+
+            components.AddRange(collection);
 
             foreach (var component in components)
             {
                 component.Awake(this);
             }
+        }
+
+        /// <summary>
+        /// See <see cref="IComponents.Add"/> for more information.
+        /// </summary>
+        public void Add(IComponent component)
+        {
+            if (component == null) return;
+
+            components.Add(component);
+
+            component.Awake(this);
         }
 
         /// <summary>
@@ -31,7 +45,7 @@ namespace Game.Application.Components
             {
                 var name = typeof(TComponent).Name;
                 var message =
-                    $"The called component {name} is not through an interface.";
+                    $"Component {name} should be accessible via interface.";
 
                 throw new Exception(message);
             }
