@@ -131,21 +131,7 @@ namespace Game.Application
 
         private IGameObject GetPlayerGameObject()
         {
-            var components = new IComponent[]
-            {
-                new AnimationData(),
-                new CharacterData(),
-                new PresenceMapProvider(),
-                new MessageSender(jsonSerializer),
-                new PositionChangedMessageSender(),
-                new AnimationStateChangedMessageSender(),
-                new PlayerAttackedMessageSender(),
-                new BubbleNotificationMessageSender(),
-                new InterestManagementNotifier(),
-                new PhysicsBodyPositionSetter()
-            };
-
-            return new GameObject(id, name: "RemotePlayer", components);
+            return new PlayerGameObject(id, name: "RemotePlayer", jsonSerializer);
         }
     }
 }
