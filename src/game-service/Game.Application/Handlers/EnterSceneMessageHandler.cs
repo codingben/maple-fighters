@@ -77,8 +77,8 @@ namespace Game.Application.Handlers
             bodyDef.UserData = player;
 
             var polygonDef = new PolygonDef();
-            polygonDef.SetAsBox(0.3625f, 0.825f); // TODO: No hard coding
-            polygonDef.Density = 0.1f; // TODO: No hard coding
+            polygonDef.SetAsBox(0.3625f, 0.825f);
+            polygonDef.Density = 0.1f;
             polygonDef.Filter = new FilterData()
             {
                 GroupIndex = (short)LayerMask.Player
