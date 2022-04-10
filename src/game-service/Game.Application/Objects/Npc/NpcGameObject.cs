@@ -10,7 +10,7 @@ namespace Game.Application.Objects
             Components.Add(new GameObjectGetter(this));
             Components.Add(new ProximityChecker());
             Components.Add(new PresenceMapProvider());
-            Components.Add(new NpcIdleBehaviour(text: "Hello World!", time: 5));
+            Components.Add(new NpcIdleBehaviour(text: "Hello World!", time: 5)); // TODO: Get from config
         }
     }
 }
