@@ -8,19 +8,17 @@ using InterestManagement;
 
 namespace Game.Application.Objects.Components
 {
-    public class MobMoveBehaviour : ComponentBase
+    public class MobMoveBehaviour : ComponentBase, IMobMoveBehaviour
     {
-        private readonly ICoroutineRunner coroutineRunner;
         private readonly Timer positionSenderTimer;
         private readonly Random random = new();
 
+        private ICoroutineRunner coroutineRunner;
         private IProximityChecker proximityChecker;
         private IGameObject mob;
 
-        public MobMoveBehaviour(ICoroutineRunner coroutineRunner)
+        public MobMoveBehaviour()
         {
-            this.coroutineRunner = coroutineRunner;
-
             positionSenderTimer = new Timer(100);
             positionSenderTimer.Elapsed += (s, e) => SendPosition();
         }
@@ -29,12 +27,25 @@ namespace Game.Application.Objects.Components
         {
             proximityChecker = Components.Get<IProximityChecker>();
             mob = Components.Get<IGameObjectGetter>().Get();
+        }
 
+        protected override void OnRemoved()
+        {
+            StopMove();
+        }
+
+        public void SetCoroutineRunner(ICoroutineRunner coroutineRunner)
+        {
+            this.coroutineRunner = coroutineRunner;
+        }
+
+        public void StartMove()
+        {
             positionSenderTimer.Start();
             coroutineRunner.Run(Move());
         }
 
-        protected override void OnRemoved()
+        public void StopMove()
         {
             positionSenderTimer.Dispose();
             coroutineRunner.Stop(Move());
@@ -46,6 +57,7 @@ namespace Game.Application.Objects.Components
             var position = startPosition;
             var direction = GetRandomDirection();
 
+            // TODO: Get speed and distance from config
             const float speed = 0.75f;
             const float distance = 2.5f;
 

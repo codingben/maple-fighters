@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Game.Application.Objects;
+using Game.Application.Objects.Components;
 using InterestManagement;
 
 namespace Game.Application.Components
@@ -145,13 +146,17 @@ namespace Game.Application.Components
         private IGameObject CreateMob(IGameScene gameScene, string name, Vector2 position, Vector2 size)
         {
             var id = idGenerator.GenerateId();
-            var coroutineRunner = gameScene.PhysicsExecutor.GetCoroutineRunner();
-            var mob = new MobGameObject(id, name, coroutineRunner);
+            var mob = new MobGameObject(id, name);
             mob.Transform.SetPosition(position);
             mob.Transform.SetSize(size);
 
             var presenceMapProvider = mob.Components.Get<IPresenceMapProvider>();
             presenceMapProvider.SetMap(gameScene);
+
+            var coroutineRunner = gameScene.PhysicsExecutor.GetCoroutineRunner();
+            var mobMoveBehaviour = mob.Components.Get<IMobMoveBehaviour>();
+            mobMoveBehaviour.SetCoroutineRunner(coroutineRunner);
+            mobMoveBehaviour.StartMove();
 
             gameScene.PhysicsWorldManager.AddBody(mob.CreateBodyData());
 

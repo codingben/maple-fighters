@@ -1,5 +1,4 @@
 using Box2DX.Dynamics;
-using Coroutines;
 using Game.Application.Objects.Components;
 using Game.Physics;
 
@@ -7,13 +6,13 @@ namespace Game.Application.Objects
 {
     public class MobGameObject : GameObject
     {
-        public MobGameObject(int id, string name, ICoroutineRunner coroutineRunner)
+        public MobGameObject(int id, string name)
             : base(id, name)
         {
             Components.Add(new GameObjectGetter(this));
             Components.Add(new ProximityChecker());
             Components.Add(new PresenceMapProvider());
-            Components.Add(new MobMoveBehaviour(coroutineRunner));
+            Components.Add(new MobMoveBehaviour());
             Components.Add(new PhysicsBodyPositionSetter());
         }
 
@@ -23,8 +22,8 @@ namespace Game.Application.Objects
             bodyDef.Position.Set(Transform.Position.X, Transform.Position.Y);
 
             var polygonDef = new PolygonDef();
-            polygonDef.SetAsBox(0.3625f, 0.825f);
-            polygonDef.Density = 0.0f;
+            polygonDef.SetAsBox(0.3625f, 0.825f); // TODO: Get from config
+            polygonDef.Density = 0.0f;// TODO: Get from config
             polygonDef.Filter = new FilterData()
             {
                 GroupIndex = (short)LayerMask.Mob
