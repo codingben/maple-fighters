@@ -1,11 +1,10 @@
 using Game.Application.Objects.Components;
-using Game.MessageTools;
 
 namespace Game.Application.Objects
 {
     public class PlayerGameObject : GameObject
     {
-        public PlayerGameObject(int id, string name, IJsonSerializer jsonSerializer)
+        public PlayerGameObject(int id, string name)
             : base(id, name)
         {
             Components.Add(new GameObjectGetter(this));
@@ -14,7 +13,7 @@ namespace Game.Application.Objects
             Components.Add(new AnimationData());
             Components.Add(new CharacterData());
             Components.Add(new PresenceMapProvider());
-            Components.Add(new MessageSender(jsonSerializer));
+            Components.Add(new MessageSender());
             Components.Add(new PositionChangedMessageSender());
             Components.Add(new AnimationStateChangedMessageSender());
             Components.Add(new PlayerAttackedMessageSender());

@@ -11,16 +11,16 @@ namespace Game.Application.Objects.Components
         public Action<string, int> SendToMessageCallback { get; set; }
 
         private IProximityChecker proximityChecker;
-        private readonly IJsonSerializer jsonSerializer;
-
-        public MessageSender(IJsonSerializer jsonSerializer)
-        {
-            this.jsonSerializer = jsonSerializer;
-        }
+        private IJsonSerializer jsonSerializer;
 
         protected override void OnAwake()
         {
             proximityChecker = Components.Get<IProximityChecker>();
+        }
+
+        public void SetJsonSerializer(IJsonSerializer jsonSerializer)
+        {
+            this.jsonSerializer = jsonSerializer;
         }
 
         public void SendMessage<T>(byte code, T message)

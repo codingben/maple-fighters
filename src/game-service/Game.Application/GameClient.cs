@@ -37,6 +37,9 @@ namespace Game.Application
 
             player = GetPlayerGameObject();
 
+            var messageSender = player.Components.Get<IMessageSender>();
+            messageSender.SetJsonSerializer(jsonSerializer);
+
             Console.WriteLine($"A new client #{id} is connected.");
         }
 
@@ -131,7 +134,7 @@ namespace Game.Application
 
         private IGameObject GetPlayerGameObject()
         {
-            return new PlayerGameObject(id, name: "RemotePlayer", jsonSerializer);
+            return new PlayerGameObject(id, name: "RemotePlayer"); // TODO: Get name from config
         }
     }
 }
