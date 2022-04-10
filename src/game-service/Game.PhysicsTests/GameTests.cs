@@ -36,7 +36,7 @@ if (gameSceneCollection.TryGet(map: Map.TheDarkForest, out var gameScene))
         Flags = DrawFlags.Aabb | DrawFlags.Shape
     });
 
-    var player = new PlayerGameObject(id: 1, name: "Player", new NativeJsonSerializer());
+    var player = new PlayerGameObject(id: 1, name: "Player");
     player.Transform.SetPosition(new InterestManagement.Vector2(10, 5));
 
     var bodyDef = new BodyDef();
