@@ -162,5 +162,38 @@ namespace Game.Application.Components
 
             return mob;
         }
+
+        private string GetConfig()
+        {
+            return @"
+scenes:
+  lobby:
+    sceneSize:
+      x: 40
+      y: 5
+    regionSize: &regionSize
+      x: 10
+      y: 5
+    player_spawn:
+      position:
+        x: 18
+        y: -1.86f
+      size: *regionSize
+      direction: 1
+  the_dark_forest:
+    sceneSize:
+      x: 30
+      y: 30
+    regionSize: &regionSize
+      x: 10
+      y: 5
+    player_spawn:
+      position:
+        x: -12.8f
+        y: -12.95f
+      size: *regionSize
+      direction: -1
+            ";
+        }
     }
 }
