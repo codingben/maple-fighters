@@ -174,25 +174,37 @@ scenes:
     regionSize: &regionSize
       x: 10
       y: 5
-    player_spawn:
+    playerSpawn:
       position:
         x: 18
-        y: -1.86f
+        y: -1.86
       size: *regionSize
       direction: 1
-  the_dark_forest:
+    objects:
+    - name: Guardian
+      position:
+        x: -14.24
+        y: -2.025
+      size: *regionSize
+    - name: Portal
+      position:
+        x: -17.125
+        y: -1.5
+      size: *regionSize
+  thedarkforest:
     sceneSize:
       x: 30
       y: 30
     regionSize: &regionSize
       x: 10
       y: 5
-    player_spawn:
+    playerSpawn:
       position:
-        x: -12.8f
-        y: -12.95f
+        x: -12.8
+        y: -12.95
       size: *regionSize
       direction: -1
+    objects: []
             ";
         }
     }
