@@ -204,7 +204,37 @@ scenes:
         y: -12.95
       size: *regionSize
       direction: -1
-    objects: []
+    objects:
+    - name: BlueSnail
+      position:
+        x: -2.5
+        y: -8.15
+      size: *regionSize
+    - name: BlueSnail
+      position:
+        x: -2.85
+        y: -3.05
+      size: *regionSize
+    - name: BlueSnail
+      position:
+        x: -3.5
+        y: -3.05
+      size: *regionSize
+    - name: Mushroom
+      position:
+        x: -6.5
+        y: -3.75
+      size: *regionSize
+    - name: Mushroom
+      position:
+        x: -0.8
+        y: -3.75
+      size: *regionSize
+    - name: Portal
+      position:
+        x: -12.5
+        y: -1.125
+      size: *regionSize
             ";
         }
     }
