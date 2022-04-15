@@ -182,11 +182,13 @@ scenes:
       direction: 1
     objects:
     - name: Guardian
+      type: 0 # NPC
       position:
         x: -14.24
         y: -2.025
       size: *regionSize
     - name: Portal
+      type: 1 # Portal
       position:
         x: -17.125
         y: -1.5
@@ -206,31 +208,37 @@ scenes:
       direction: -1
     objects:
     - name: BlueSnail
+      type: 0 # NPC
       position:
         x: -2.5
         y: -8.15
       size: *regionSize
     - name: BlueSnail
+      type: 2 # Mob
       position:
         x: -2.85
         y: -3.05
       size: *regionSize
     - name: BlueSnail
+      type: 2 # Mob
       position:
         x: -3.5
         y: -3.05
       size: *regionSize
     - name: Mushroom
+      type: 2 # Mob
       position:
         x: -6.5
         y: -3.75
       size: *regionSize
     - name: Mushroom
+      type: 2 # Mob
       position:
         x: -0.8
         y: -3.75
       size: *regionSize
     - name: Portal
+      type: 1 # Portal
       position:
         x: -12.5
         y: -1.125
