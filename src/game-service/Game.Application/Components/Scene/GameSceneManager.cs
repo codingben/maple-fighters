@@ -40,9 +40,9 @@ namespace Game.Application.Components
         private IGameScene CreateLobby()
         {
             var gameScene = new GameScene(sceneSize: new Vector2(40, 5), regionSize: new Vector2(10, 5));
-            gameScene.SpawnData.Position = new Vector2(18, -1.86f);
-            gameScene.SpawnData.Size = new Vector2(10, 5);
-            gameScene.SpawnData.Direction = 1;
+            gameScene.PlayerSpawnData.SetPosition(new Vector2(18, -1.86f));
+            gameScene.PlayerSpawnData.SetSize(new Vector2(10, 5));
+            gameScene.PlayerSpawnData.SetDirection(1);
 
             foreach (var gameObject in CreateLobbyGameObjects(gameScene))
             {
@@ -84,9 +84,9 @@ namespace Game.Application.Components
         private IGameScene CreateTheDarkForest()
         {
             var gameScene = new GameScene(sceneSize: new Vector2(30, 30), regionSize: new Vector2(10, 5));
-            gameScene.SpawnData.Position = new Vector2(-12.8f, -12.95f);
-            gameScene.SpawnData.Size = new Vector2(10, 5);
-            gameScene.SpawnData.Direction = -1;
+            gameScene.PlayerSpawnData.SetPosition(new Vector2(-12.8f, -12.95f));
+            gameScene.PlayerSpawnData.SetSize(new Vector2(10, 5));
+            gameScene.PlayerSpawnData.SetDirection(-1);
 
             foreach (var gameObject in CreateTheDarkForestGameObjects(gameScene))
             {

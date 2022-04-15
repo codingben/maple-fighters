@@ -37,9 +37,9 @@ namespace Game.Application.Handlers
                 {
                     var name = message.CharacterName;
                     var characterType = message.CharacterType;
-                    var direction = gameScene.SpawnData.Direction;
-                    var position = gameScene.SpawnData.Position;
-                    var size = gameScene.SpawnData.Size;
+                    var position = gameScene.PlayerSpawnData.GetPosition();
+                    var size = gameScene.PlayerSpawnData.GetSize();
+                    var direction = gameScene.PlayerSpawnData.GetDirection();
 
                     SetCharacterData(name, characterType, direction);
                     SetPresenceScene(gameScene);
