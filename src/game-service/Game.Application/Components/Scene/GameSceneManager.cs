@@ -145,7 +145,7 @@ scenes:
     - name: BlueSnail
       type: 2 # Mob
       position:
-        x: -2.85
+        x: 2.85
         y: -3.05
       size: *regionSize
     - name: BlueSnail
@@ -158,18 +158,18 @@ scenes:
       type: 2 # Mob
       position:
         x: -6.5
-        y: -3.75
+        y: 3.75
       size: *regionSize
     - name: Mushroom
       type: 2 # Mob
       position:
         x: -0.8
-        y: -3.75
+        y: 3.75
       size: *regionSize
     - name: Portal
       type: 1 # Portal
       position:
-        x: -12.5
+        x: 12.5
         y: -1.125
       size: *regionSize
             ";
