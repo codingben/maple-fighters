@@ -1,7 +1,8 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Game.Application.Objects;
-using Game.Application.Objects.Components;
 using InterestManagement;
+using YamlDotNet.Serialization;
+using YamlDotNet.Serialization.NamingConventions;
 
 namespace Game.Application.Components
 {
@@ -14,153 +15,81 @@ namespace Game.Application.Components
         {
             idGenerator = Components.Get<IIdGenerator>();
             gameSceneCollection = Components.Get<IGameSceneCollection>();
-            gameSceneCollection.Add(Map.Lobby, CreateLobby());
-            gameSceneCollection.Add(Map.TheDarkForest, CreateTheDarkForest());
+
+            var config = GetConfig();
+            var SceneCollectionData = GetSceneCollectionData(config);
+
+            CreateGameScene(SceneCollectionData);
         }
 
         protected override void OnRemoved()
         {
-            var maps = new[]
-            {
-                Map.Lobby,
-                Map.TheDarkForest
-            };
+            gameSceneCollection.Dispose();
+        }
 
-            foreach (var map in maps)
+        private void CreateGameScene(SceneCollectionData sceneCollection)
+        {
+            foreach (var sceneData in sceneCollection.Scenes)
             {
-                if (gameSceneCollection.TryGet(map, out var gameScene))
+                var sceneName = sceneData.Key;
+                var scene = sceneData.Value;
+                var sceneSize = new Vector2(scene.SceneSize.X, scene.SceneSize.Y);
+                var regionSize = new Vector2(scene.RegionSize.X, scene.RegionSize.Y);
+                var playerSpawnPosition = new Vector2(scene.PlayerSpawn.Position.X, scene.PlayerSpawn.Position.Y);
+                var playerSpawnSize = new Vector2(scene.PlayerSpawn.Size.X, scene.PlayerSpawn.Size.Y);
+                var playerSpawnDirection = scene.PlayerSpawn.Direction;
+                var objects = scene.Objects;
+
+                var gameScene = new GameScene(sceneSize, regionSize);
+                gameScene.PlayerSpawnData.SetPosition(playerSpawnPosition);
+                gameScene.PlayerSpawnData.SetSize(playerSpawnSize);
+                gameScene.PlayerSpawnData.SetDirection(playerSpawnDirection);
+
+                foreach (var gameObject in CreateGameSceneObject(objects))
                 {
-                    gameScene?.Dispose();
+                    var presenceMapProvider = gameObject.Components.Get<IPresenceMapProvider>();
+                    presenceMapProvider.SetMap(gameScene);
+
+                    gameScene.GameObjectCollection.Add(gameObject);
                 }
 
-                gameSceneCollection.Remove(map);
+                gameSceneCollection.Add(sceneName, gameScene);
             }
         }
 
-        private IGameScene CreateLobby()
+        private IEnumerable<IGameObject> CreateGameSceneObject(ObjectData[] objects)
         {
-            var gameScene = new GameScene(sceneSize: new Vector2(40, 5), regionSize: new Vector2(10, 5));
-            gameScene.PlayerSpawnData.SetPosition(new Vector2(18, -1.86f));
-            gameScene.PlayerSpawnData.SetSize(new Vector2(10, 5));
-            gameScene.PlayerSpawnData.SetDirection(1);
-
-            foreach (var gameObject in CreateLobbyGameObjects(gameScene))
+            foreach (var objectData in objects)
             {
-                gameScene.GameObjectCollection.Add(gameObject);
-            }
+                var name = objectData.Name;
+                var type = (ObjectTypes)objectData.Type;
+                var position = new Vector2(objectData.Position.X, objectData.Position.Y);
+                var size = new Vector2(objectData.Size.X, objectData.Size.Y);
 
-            return gameScene;
-        }
-
-        private IEnumerable<IGameObject> CreateLobbyGameObjects(IGameScene gameScene)
-        {
-            // Npc Game Object #1
-            {
                 var id = idGenerator.GenerateId();
-                var npc = new NpcGameObject(id, name: "Guardian");
-                npc.Transform.SetPosition(new Vector2(-14.24f, -2.025f));
-                npc.Transform.SetSize(new Vector2(10, 5));
+                var gameObject = GetGameObject(type, id, name);
+                gameObject.Transform.SetPosition(position);
+                gameObject.Transform.SetSize(size);
 
-                var presenceMapProvider = npc.Components.Get<IPresenceMapProvider>();
-                presenceMapProvider.SetMap(gameScene);
-
-                yield return npc;
-            }
-
-            // Portal Game Object #2
-            {
-                var id = idGenerator.GenerateId();
-                var portal = new PortalGameObject(id, "Portal");
-                portal.Transform.SetPosition(new Vector2(-17.125f, -1.5f));
-                portal.Transform.SetSize(new Vector2(10, 5));
-
-                var presenceMapProvider = portal.Components.Get<IPresenceMapProvider>();
-                presenceMapProvider.SetMap(gameScene);
-
-                yield return portal;
+                yield return gameObject;
             }
         }
 
-        private IGameScene CreateTheDarkForest()
+        private SceneCollectionData GetSceneCollectionData(string data)
         {
-            var gameScene = new GameScene(sceneSize: new Vector2(30, 30), regionSize: new Vector2(10, 5));
-            gameScene.PlayerSpawnData.SetPosition(new Vector2(-12.8f, -12.95f));
-            gameScene.PlayerSpawnData.SetSize(new Vector2(10, 5));
-            gameScene.PlayerSpawnData.SetDirection(-1);
+            var deserializer = new DeserializerBuilder()
+                .WithNamingConvention(CamelCaseNamingConvention.Instance)
+                .Build();
 
-            foreach (var gameObject in CreateTheDarkForestGameObjects(gameScene))
-            {
-                gameScene.GameObjectCollection.Add(gameObject);
-            }
-
-            return gameScene;
+            return deserializer.Deserialize<SceneCollectionData>(data);
         }
 
-        private IEnumerable<IGameObject> CreateTheDarkForestGameObjects(IGameScene gameScene)
+        private IGameObject GetGameObject(ObjectTypes type, int id, string name)
         {
-            // Mob Game Objects #1
-            {
-                var positions = new Vector2[3]
-                {
-                    new Vector2(-2.5f, -8.15f),
-                    new Vector2(2.85f, -3.05f),
-                    new Vector2(-3.5f, -3.05f)
-                };
-                var size = new Vector2(10, 5);
-
-                foreach (var position in positions)
-                {
-                    yield return CreateMob(gameScene, name: "BlueSnail", position, size);
-                }
-            }
-
-            // Mob Game Objects #2
-            {
-                var positions = new Vector2[2]
-                {
-                    new Vector2(-6.5f, 3.75f),
-                    new Vector2(-0.8f, 3.75f)
-                };
-                var size = new Vector2(10, 5);
-
-                foreach (var position in positions)
-                {
-                    yield return CreateMob(gameScene, name: "Mushroom", position, size);
-                }
-            }
-
-            // Portal Game Object #3
-            {
-                var id = idGenerator.GenerateId();
-                var portal = new PortalGameObject(id, name: "Portal");
-                portal.Transform.SetPosition(new Vector2(12.5f, -1.125f));
-                portal.Transform.SetSize(new Vector2(10, 5));
-
-                var presenceMapProvider = portal.Components.Get<IPresenceMapProvider>();
-                presenceMapProvider.SetMap(gameScene);
-
-                yield return portal;
-            }
-        }
-
-        private IGameObject CreateMob(IGameScene gameScene, string name, Vector2 position, Vector2 size)
-        {
-            var id = idGenerator.GenerateId();
-            var mob = new MobGameObject(id, name);
-            mob.Transform.SetPosition(position);
-            mob.Transform.SetSize(size);
-
-            var presenceMapProvider = mob.Components.Get<IPresenceMapProvider>();
-            presenceMapProvider.SetMap(gameScene);
-
-            var coroutineRunner = gameScene.PhysicsExecutor.GetCoroutineRunner();
-            var mobMoveBehaviour = mob.Components.Get<IMobMoveBehaviour>();
-            mobMoveBehaviour.SetCoroutineRunner(coroutineRunner);
-            mobMoveBehaviour.StartMove();
-
-            gameScene.PhysicsWorldManager.AddBody(mob.CreateBodyData());
-
-            return mob;
+            if (type == ObjectTypes.Npc) return new NpcGameObject(id, name);
+            else if (type == ObjectTypes.Portal) return new PortalGameObject(id, name);
+            else if (type == ObjectTypes.Mob) return new MobGameObject(id, name);
+            else throw new System.Exception($"Unknown object type: {type}");
         }
 
         private string GetConfig()
