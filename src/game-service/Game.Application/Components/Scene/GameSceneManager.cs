@@ -137,7 +137,7 @@ scenes:
       direction: -1
     objects:
     - name: BlueSnail
-      type: 0 # NPC
+      type: 2 # Mob
       position:
         x: -2.5
         y: -8.15
