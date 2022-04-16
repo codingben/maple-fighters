@@ -1,11 +1,13 @@
-﻿namespace Game.Application.Components
+﻿using System;
+
+namespace Game.Application.Components
 {
-    public interface IGameSceneCollection
+    public interface IGameSceneCollection : IDisposable
     {
-        bool Add(Map map, IGameScene gameScene);
+        bool Add(string name, IGameScene gameScene);
 
-        void Remove(Map map);
+        void Remove(string name);
 
-        bool TryGet(Map map, out IGameScene gameScene);
+        bool TryGet(string name, out IGameScene gameScene);
     }
 }

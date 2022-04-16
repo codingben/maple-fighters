@@ -4,26 +4,36 @@ namespace Game.Application.Components
 {
     public class GameSceneCollection : ComponentBase, IGameSceneCollection
     {
-        private readonly Dictionary<Map, IGameScene> collection;
+        private readonly Dictionary<string, IGameScene> collection;
 
         public GameSceneCollection()
         {
-            collection = new Dictionary<Map, IGameScene>();
+            collection = new Dictionary<string, IGameScene>();
         }
 
-        public bool Add(Map map, IGameScene gameScene)
+        public void Dispose()
         {
-            return collection.TryAdd(map, gameScene);
+            foreach (var item in collection.Values)
+            {
+                item.Dispose();
+            }
+
+            collection.Clear();
         }
 
-        public void Remove(Map map)
+        public bool Add(string name, IGameScene gameScene)
         {
-            collection.Remove(map, out _);
+            return collection.TryAdd(name, gameScene);
         }
 
-        public bool TryGet(Map map, out IGameScene gameScene)
+        public void Remove(string name)
         {
-            return collection.TryGetValue(map, out gameScene);
+            collection.Remove(name, out _);
+        }
+
+        public bool TryGet(string name, out IGameScene gameScene)
+        {
+            return collection.TryGetValue(name, out gameScene);
         }
     }
 }
