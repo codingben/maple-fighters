@@ -5,8 +5,8 @@ namespace Game.Application.Objects.Components
 {
     public class PhysicsBodyPositionSetter : ComponentBase
     {
-        private IPhysicsWorldManager physicsWorldManager;
         private IGameObject gameObject;
+        private IPhysicsWorldManager physicsWorldManager;
 
         protected override void OnAwake()
         {
@@ -23,37 +23,36 @@ namespace Game.Application.Objects.Components
 
         private void OnPositionChanged()
         {
+            var physicsWorldManager = GetPhysicsWorldManager();
             if (physicsWorldManager == null)
             {
-                physicsWorldManager = GetPhysicsWorldManager();
+                return;
             }
 
-            if (physicsWorldManager != null)
+            if (physicsWorldManager.GetBody(gameObject.Id, out var bodyData))
             {
-                var bodyId = gameObject.Id;
-
-                if (physicsWorldManager.GetBody(bodyId, out var bodyData))
+                var body = bodyData.Body;
+                if (body != null)
                 {
-                    var body = bodyData.Body;
-                    if (body != null)
-                    {
-                        var position =
-                            gameObject.Transform.Position.FromVector2();
-                        var angle =
-                            body.GetAngle();
-
-                        body.SetXForm(position, angle);
-                    }
+                    body.SetXForm(
+                        position: gameObject.Transform.Position.FromVector2(),
+                        angle: body.GetAngle());
                 }
             }
         }
 
         private IPhysicsWorldManager GetPhysicsWorldManager()
         {
+            if (physicsWorldManager != null)
+            {
+                return physicsWorldManager;
+            }
+
             var presenceMapProvider = Components.Get<IPresenceMapProvider>();
             var gameScene = presenceMapProvider?.GetMap();
+            physicsWorldManager = gameScene?.PhysicsWorldManager;
 
-            return gameScene?.PhysicsWorldManager;
+            return physicsWorldManager;
         }
     }
 }
