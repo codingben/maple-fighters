@@ -21,7 +21,7 @@ namespace Game.Application.Components
 
         public void SetSize(Vector2 size)
         {
-            Position = new Vector2Data()
+            Size = new Vector2Data()
             {
                 X = size.X,
                 Y = size.Y
