@@ -13,9 +13,11 @@ namespace Game.Application.Components
 
         public void Dispose()
         {
-            foreach (var item in collection.Values)
+            var gameScenes = collection.Values;
+
+            foreach (var gameScene in gameScenes)
             {
-                item.Dispose();
+                gameScene.Dispose();
             }
 
             collection.Clear();
