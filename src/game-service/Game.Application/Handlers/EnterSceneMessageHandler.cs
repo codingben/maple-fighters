@@ -30,8 +30,9 @@ namespace Game.Application.Handlers
         public void Handle(EnterSceneMessage message)
         {
             var map = message.Map;
+            var mapName = ((Map)map).ToString().ToLower();
 
-            if (gameSceneCollection.TryGet((Map)map, out var gameScene))
+            if (gameSceneCollection.TryGet(mapName, out var gameScene))
             {
                 if (gameScene.GameObjectCollection.Add(player))
                 {

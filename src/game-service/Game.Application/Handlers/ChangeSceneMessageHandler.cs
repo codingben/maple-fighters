@@ -30,8 +30,9 @@ namespace Game.Application.Handlers
             {
                 var portalData = portal.Components.Get<IPortalData>();
                 var map = portalData.GetMap();
+                var mapName = ((Map)map).ToString().ToLower();
                 var gameSceneExists =
-                    gameSceneCollection.TryGet((Map)map, out var gameScene);
+                    gameSceneCollection.TryGet(mapName, out var gameScene);
                 if (gameSceneExists)
                 {
                     presenceMapProvider.SetMap(gameScene);
