@@ -14,6 +14,12 @@ namespace Game.Application.Objects.Components
 
             gameObject = gameObjectGetter.Get();
             gameObject.Transform.PositionChanged += OnPositionChanged;
+
+            var presenceMapProvider = Components.Get<IPresenceMapProvider>();
+            presenceMapProvider.MapChanged += (gameScene) =>
+            {
+                physicsWorldManager = gameScene.PhysicsWorldManager;
+            };
         }
 
         protected override void OnRemoved()
@@ -23,7 +29,6 @@ namespace Game.Application.Objects.Components
 
         private void OnPositionChanged()
         {
-            var physicsWorldManager = GetPhysicsWorldManager();
             if (physicsWorldManager == null)
             {
                 return;
@@ -34,25 +39,12 @@ namespace Game.Application.Objects.Components
                 var body = bodyData.Body;
                 if (body != null)
                 {
-                    body.SetXForm(
-                        position: gameObject.Transform.Position.FromVector2(),
-                        angle: body.GetAngle());
+                    var position = gameObject.Transform.Position.FromVector2();
+                    var angle = body.GetAngle();
+
+                    body.SetXForm(position, angle);
                 }
             }
-        }
-
-        private IPhysicsWorldManager GetPhysicsWorldManager()
-        {
-            if (physicsWorldManager != null)
-            {
-                return physicsWorldManager;
-            }
-
-            var presenceMapProvider = Components.Get<IPresenceMapProvider>();
-            var gameScene = presenceMapProvider?.GetMap();
-            physicsWorldManager = gameScene?.PhysicsWorldManager;
-
-            return physicsWorldManager;
         }
     }
 }
