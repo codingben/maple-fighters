@@ -21,6 +21,7 @@ namespace Game.Application.Objects.Components
         {
             positionSenderTimer = new Timer(100);
             positionSenderTimer.Elapsed += (s, e) => SendPosition();
+            positionSenderTimer.Start();
         }
 
         protected override void OnAwake()
@@ -46,8 +47,6 @@ namespace Game.Application.Objects.Components
             const float speed = 0.75f;
             const float distance = 2.5f;
 
-            positionSenderTimer.Start();
-
             while (true)
             {
                 if (Vector2.Distance(startPosition, position) >= distance)
@@ -64,7 +63,9 @@ namespace Game.Application.Objects.Components
 
         private void SendPosition()
         {
-            foreach (var gameObject in proximityChecker.GetNearbyGameObjects())
+            var nearbyGameObjects = proximityChecker?.GetNearbyGameObjects();
+
+            foreach (var nearbyGameObject in nearbyGameObjects)
             {
                 var message = new PositionChangedMessage()
                 {
@@ -72,7 +73,8 @@ namespace Game.Application.Objects.Components
                     X = gameObject.Transform.Position.X,
                     Y = gameObject.Transform.Position.Y
                 };
-                var messageSender = gameObject.Components.Get<IMessageSender>();
+                var messageSender = nearbyGameObject.Components.Get<IMessageSender>();
+
                 messageSender?.SendMessage((byte)MessageCodes.PositionChanged, message);
             }
         }
