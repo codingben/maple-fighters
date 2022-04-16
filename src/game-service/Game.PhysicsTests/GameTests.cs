@@ -29,7 +29,8 @@ var collection = new ComponentCollection(new IComponent[]
 });
 
 var gameSceneCollection = collection.Get<IGameSceneCollection>();
-if (gameSceneCollection.TryGet(map: Map.TheDarkForest, out var gameScene))
+var mapName = Map.TheDarkForest.ToString().ToLower();
+if (gameSceneCollection.TryGet(mapName, out var gameScene))
 {
     gameScene.PhysicsWorldManager.SetDebugDraw(new DrawPhysics(window)
     {
