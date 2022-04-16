@@ -29,15 +29,22 @@ namespace Game.Application.Components
 
         private void CreateGameScene(SceneCollectionData sceneCollection)
         {
-            foreach (var sceneData in sceneCollection.Scenes)
+            var scenes = sceneCollection.Scenes;
+
+            foreach (var sceneData in scenes)
             {
                 var sceneName = sceneData.Key;
                 var scene = sceneData.Value;
-                var sceneSize = new Vector2(scene.SceneSize.X, scene.SceneSize.Y);
-                var regionSize = new Vector2(scene.RegionSize.X, scene.RegionSize.Y);
-                var playerSpawnPosition = new Vector2(scene.PlayerSpawn.Position.X, scene.PlayerSpawn.Position.Y);
-                var playerSpawnSize = new Vector2(scene.PlayerSpawn.Size.X, scene.PlayerSpawn.Size.Y);
-                var playerSpawnDirection = scene.PlayerSpawn.Direction;
+                var sceneSize =
+                  new Vector2(scene.SceneSize.X, scene.SceneSize.Y);
+                var regionSize =
+                  new Vector2(scene.RegionSize.X, scene.RegionSize.Y);
+                var playerSpawn = scene.PlayerSpawn;
+                var playerSpawnPosition =
+                  new Vector2(playerSpawn.Position.X, playerSpawn.Position.Y);
+                var playerSpawnSize =
+                  new Vector2(playerSpawn.Size.X, playerSpawn.Size.Y);
+                var playerSpawnDirection = playerSpawn.Direction;
                 var objects = scene.Objects;
 
                 var gameScene = new GameScene(sceneSize, regionSize);
@@ -45,9 +52,12 @@ namespace Game.Application.Components
                 gameScene.PlayerSpawnData.SetSize(playerSpawnSize);
                 gameScene.PlayerSpawnData.SetDirection(playerSpawnDirection);
 
-                foreach (var gameObject in CreateGameSceneObject(objects))
+                var gameObjects = CreateGameObject(objects);
+
+                foreach (var gameObject in gameObjects)
                 {
-                    var presenceMapProvider = gameObject.Components.Get<IPresenceMapProvider>();
+                    var presenceMapProvider =
+                      gameObject.Components.Get<IPresenceMapProvider>();
                     presenceMapProvider.SetMap(gameScene);
 
                     gameScene.GameObjectCollection.Add(gameObject);
@@ -57,14 +67,16 @@ namespace Game.Application.Components
             }
         }
 
-        private IEnumerable<IGameObject> CreateGameSceneObject(ObjectData[] objects)
+        private IEnumerable<IGameObject> CreateGameObject(ObjectData[] objects)
         {
             foreach (var objectData in objects)
             {
                 var name = objectData.Name;
                 var type = (ObjectTypes)objectData.Type;
-                var position = new Vector2(objectData.Position.X, objectData.Position.Y);
-                var size = new Vector2(objectData.Size.X, objectData.Size.Y);
+                var position =
+                  new Vector2(objectData.Position.X, objectData.Position.Y);
+                var size =
+                  new Vector2(objectData.Size.X, objectData.Size.Y);
 
                 var id = idGenerator.GenerateId();
                 var gameObject = GetGameObject(type, id, name);
