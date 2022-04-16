@@ -8,14 +8,14 @@ using InterestManagement;
 
 namespace Game.Application.Objects.Components
 {
-    public class MobMoveBehaviour : ComponentBase, IMobMoveBehaviour
+    public class MobMoveBehaviour : ComponentBase
     {
         private readonly Timer positionSenderTimer;
         private readonly Random random = new();
 
-        private ICoroutineRunner coroutineRunner;
+        private IGameObject gameObject;
         private IProximityChecker proximityChecker;
-        private IGameObject mob;
+        private ICoroutineRunner coroutineRunner;
 
         public MobMoveBehaviour()
         {
@@ -25,41 +25,28 @@ namespace Game.Application.Objects.Components
 
         protected override void OnAwake()
         {
+            gameObject = Components.Get<IGameObjectGetter>().Get();
             proximityChecker = Components.Get<IProximityChecker>();
-            mob = Components.Get<IGameObjectGetter>().Get();
-        }
 
-        protected override void OnRemoved()
-        {
-            StopMove();
-        }
-
-        public void SetCoroutineRunner(ICoroutineRunner coroutineRunner)
-        {
-            this.coroutineRunner = coroutineRunner;
-        }
-
-        public void StartMove()
-        {
-            positionSenderTimer.Start();
-            coroutineRunner.Run(Move());
-        }
-
-        public void StopMove()
-        {
-            positionSenderTimer.Dispose();
-            coroutineRunner.Stop(Move());
+            var presenceMapProvider = Components.Get<IPresenceMapProvider>();
+            presenceMapProvider.MapChanged += (gameScene) =>
+            {
+                coroutineRunner = gameScene.PhysicsExecutor.GetCoroutineRunner();
+                coroutineRunner.Run(Move());
+            };
         }
 
         private IEnumerator Move()
         {
-            var startPosition = mob.Transform.Position;
+            var startPosition = gameObject.Transform.Position;
             var position = startPosition;
             var direction = GetRandomDirection();
 
             // TODO: Get speed and distance from config
             const float speed = 0.75f;
             const float distance = 2.5f;
+
+            positionSenderTimer.Start();
 
             while (true)
             {
@@ -70,7 +57,7 @@ namespace Game.Application.Objects.Components
 
                 position += new Vector2(direction, 0) * speed;
 
-                mob.Transform.SetPosition(position);
+                gameObject.Transform.SetPosition(position);
                 yield return null;
             }
         }
@@ -81,9 +68,9 @@ namespace Game.Application.Objects.Components
             {
                 var message = new PositionChangedMessage()
                 {
-                    GameObjectId = mob.Id,
-                    X = mob.Transform.Position.X,
-                    Y = mob.Transform.Position.Y
+                    GameObjectId = gameObject.Id,
+                    X = gameObject.Transform.Position.X,
+                    Y = gameObject.Transform.Position.Y
                 };
                 var messageSender = gameObject.Components.Get<IMessageSender>();
                 messageSender?.SendMessage((byte)MessageCodes.PositionChanged, message);
