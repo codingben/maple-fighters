@@ -21,8 +21,11 @@ namespace Game.Application.Objects.Components
 
         private NewBodyData CreateBodyData()
         {
+            var id = gameObject.Id;
             var bodyDef = new BodyDef();
-            bodyDef.Position.Set(gameObject.Transform.Position.X, gameObject.Transform.Position.Y);
+            var x = gameObject.Transform.Position.X;
+            var y = gameObject.Transform.Position.Y;
+            bodyDef.Position.Set(x, y);
 
             var polygonDef = new PolygonDef();
             polygonDef.SetAsBox(0.3625f, 0.825f); // TODO: Get from config
@@ -31,9 +34,9 @@ namespace Game.Application.Objects.Components
             {
                 GroupIndex = (short)LayerMask.Mob
             };
-            polygonDef.UserData = new MobContactEvents(gameObject.Id);
+            polygonDef.UserData = new MobContactEvents(id);
 
-            return new NewBodyData(gameObject.Id, bodyDef, polygonDef);
+            return new NewBodyData(id, bodyDef, polygonDef);
         }
     }
 }
