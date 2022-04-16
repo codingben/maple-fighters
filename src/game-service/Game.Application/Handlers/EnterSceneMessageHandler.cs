@@ -71,6 +71,7 @@ namespace Game.Application.Handlers
 
         private void SetBody(IGameScene scene)
         {
+            var id = player.Id;
             var bodyDef = new BodyDef();
             var x = player.Transform.Position.X;
             var y = player.Transform.Position.Y;
@@ -85,7 +86,7 @@ namespace Game.Application.Handlers
                 GroupIndex = (short)LayerMask.Player
             };
 
-            var bodyData = new NewBodyData(player.Id, bodyDef, polygonDef);
+            var bodyData = new NewBodyData(id, bodyDef, polygonDef);
             scene.PhysicsWorldManager.AddBody(bodyData);
         }
 
