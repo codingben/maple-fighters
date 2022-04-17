@@ -18,6 +18,7 @@ namespace Game.Application.Objects
             Components.Add(new PlayerAttackedMessageSender());
             Components.Add(new BubbleNotificationMessageSender());
             Components.Add(new InterestManagementNotifier());
+            Components.Add(new PlayerPhysicsBodyCreator());
             Components.Add(new PhysicsBodyPositionSetter());
         }
     }
