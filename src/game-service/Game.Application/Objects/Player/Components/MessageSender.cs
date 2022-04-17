@@ -38,7 +38,7 @@ namespace Game.Application.Objects.Components
         public void SendMessageToNearbyGameObjects<T>(byte code, T message)
             where T : struct
         {
-            var nearbyGameObjects = proximityChecker.GetNearbyGameObjects();
+            var nearbyGameObjects = proximityChecker?.GetNearbyGameObjects();
 
             foreach (var gameObject in nearbyGameObjects)
             {
