@@ -3,9 +3,6 @@ using Game.Messages;
 using Game.MessageTools;
 using Game.Application.Objects;
 using Game.Application.Objects.Components;
-using Box2DX.Dynamics;
-using Game.Physics;
-using InterestManagement;
 
 namespace Game.Application.Handlers
 {
@@ -36,58 +33,25 @@ namespace Game.Application.Handlers
             {
                 if (gameScene.GameObjectCollection.Add(player))
                 {
-                    var name = message.CharacterName;
-                    var characterType = message.CharacterType;
                     var position = gameScene.PlayerSpawnData.GetPosition();
                     var size = gameScene.PlayerSpawnData.GetSize();
                     var direction = gameScene.PlayerSpawnData.GetDirection();
 
-                    SetCharacterData(name, characterType, direction);
-                    SetPresenceScene(gameScene);
-                    SetTransform(position, size);
-                    SetBody(gameScene);
+                    player.Transform.SetPosition(position);
+                    player.Transform.SetSize(size);
+
+                    var name = message.CharacterName;
+                    var type = message.CharacterType;
+
+                    characterData.Name = name;
+                    characterData.CharacterType = type;
+                    characterData.SpawnDirection = direction;
+
+                    presenceMapProvider?.SetMap(gameScene);
+
                     SendEnteredSceneMessage();
                 }
             }
-        }
-
-        private void SetCharacterData(string name, byte type, float direction)
-        {
-            characterData.Name = name;
-            characterData.CharacterType = type;
-            characterData.SpawnDirection = direction;
-        }
-
-        private void SetPresenceScene(IGameScene scene)
-        {
-            presenceMapProvider?.SetMap(scene);
-        }
-
-        private void SetTransform(Vector2 position, Vector2 size)
-        {
-            player.Transform.SetPosition(position);
-            player.Transform.SetSize(size);
-        }
-
-        private void SetBody(IGameScene scene)
-        {
-            var id = player.Id;
-            var bodyDef = new BodyDef();
-            var x = player.Transform.Position.X;
-            var y = player.Transform.Position.Y;
-            bodyDef.Position.Set(x, y);
-            bodyDef.UserData = player;
-
-            var polygonDef = new PolygonDef();
-            polygonDef.SetAsBox(0.3625f, 0.825f); // TODO: Get from config
-            polygonDef.Density = 0.1f; // TODO: Get from config
-            polygonDef.Filter = new FilterData()
-            {
-                GroupIndex = (short)LayerMask.Player
-            };
-
-            var bodyData = new NewBodyData(id, bodyDef, polygonDef);
-            scene.PhysicsWorldManager.AddBody(bodyData);
         }
 
         private void SendEnteredSceneMessage()
