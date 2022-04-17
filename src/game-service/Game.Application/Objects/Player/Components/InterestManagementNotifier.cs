@@ -64,37 +64,37 @@ namespace Game.Application.Objects.Components
             messageSender.SendMessage(messageCode, message);
         }
 
-        private void SceneObjectsAdded(IEnumerable<IGameObject> collection)
+        private void SceneObjectsAdded(IEnumerable<IGameObject> gameObjects)
         {
-            var gameObjectDatas = new List<GameObjectData>();
+            var collection = new List<GameObjectData>();
 
-            foreach (var gameObject in collection)
+            foreach (var gameObject in gameObjects)
             {
-                gameObjectDatas.Add(GetGameObjectData(gameObject));
+                collection.Add(GetGameObjectData(gameObject));
             }
 
             var messageCode = (byte)MessageCodes.GameObjectsAdded;
             var message = new GameObjectsAddedMessage()
             {
-                GameObjects = gameObjectDatas.ToArray()
+                GameObjects = collection.ToArray()
             };
 
             messageSender.SendMessage(messageCode, message);
         }
 
-        private void SceneObjectsRemoved(IEnumerable<IGameObject> collection)
+        private void SceneObjectsRemoved(IEnumerable<IGameObject> gameObjects)
         {
-            var gameObjectIds = new List<int>();
+            var collection = new List<int>();
 
-            foreach (var gameObject in collection)
+            foreach (var gameObject in gameObjects)
             {
-                gameObjectIds.Add(gameObject.Id);
+                collection.Add(gameObject.Id);
             }
 
             var messageCode = (byte)MessageCodes.GameObjectsRemoved;
             var message = new GameObjectsRemovedMessage()
             {
-                GameObjectIds = gameObjectIds.ToArray()
+                GameObjectIds = collection.ToArray()
             };
 
             messageSender.SendMessage(messageCode, message);
