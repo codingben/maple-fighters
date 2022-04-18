@@ -7,7 +7,6 @@ using Box2DX.Dynamics;
 using Box2D.Window;
 using Game.Application.Components;
 using Game.Application.Objects;
-using Game.MessageTools;
 using Game.Physics;
 using static Box2DX.Dynamics.DebugDraw;
 
@@ -32,13 +31,22 @@ var gameSceneCollection = collection.Get<IGameSceneCollection>();
 var mapName = Map.TheDarkForest.ToString().ToLower();
 if (gameSceneCollection.TryGet(mapName, out var gameScene))
 {
-    gameScene.PhysicsWorldManager.SetDebugDraw(new DrawPhysics(window)
+    var scenePhysicsCreator =
+        gameScene.Components.Get<IScenePhysicsCreator>();
+    var physicsWorldManager =
+        scenePhysicsCreator.GetPhysicsWorldManager();
+
+    physicsWorldManager.SetDebugDraw(new DrawPhysics(window)
     {
         Flags = DrawFlags.Aabb | DrawFlags.Shape
     });
 
     var player = new PlayerGameObject(id: 1, name: "Player");
     player.Transform.SetPosition(new InterestManagement.Vector2(10, 5));
+
+    var sceneObjectCollection =
+        gameScene.Components.Get<ISceneObjectCollection>();
+    sceneObjectCollection.Add(player);
 
     var bodyDef = new BodyDef();
     var x = player.Transform.Position.X;
@@ -55,8 +63,7 @@ if (gameSceneCollection.TryGet(mapName, out var gameScene))
     };
 
     var bodyData = new NewBodyData(player.Id, bodyDef, polygonDef);
-    gameScene.GameObjectCollection.Add(player);
-    gameScene.PhysicsWorldManager.AddBody(bodyData);
+    physicsWorldManager.AddBody(bodyData);
 }
 
 window.Run(updateRate: 25.0);
