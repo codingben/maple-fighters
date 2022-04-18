@@ -2,7 +2,7 @@ using Game.Application.Objects;
 
 namespace Game.Application.Components
 {
-    public interface IGameObjectCollection
+    public interface ISceneObjectCollection
     {
         bool Add(IGameObject gameObject);
 

@@ -3,13 +3,25 @@ using Game.Application.Objects;
 
 namespace Game.Application.Components
 {
-    public class GameObjectCollection : IGameObjectCollection
+    public class SceneObjectCollection : ComponentBase, ISceneObjectCollection
     {
         private readonly ConcurrentDictionary<int, IGameObject> collection;
 
-        public GameObjectCollection()
+        public SceneObjectCollection()
         {
             collection = new ConcurrentDictionary<int, IGameObject>();
+        }
+
+        protected override void OnRemoved()
+        {
+            var gameObjects = collection.Values;
+
+            foreach (var gameObject in gameObjects)
+            {
+                gameObject.Dispose();
+            }
+
+            collection.Clear();
         }
 
         public bool Add(IGameObject gameObject)
