@@ -28,9 +28,12 @@ namespace Game.Application.Objects
 
         private void SetRegion()
         {
-            var region = gameScene?.MatrixRegion;
-            if (region != null)
+            var sceneRegionCreator =
+                gameScene?.Components.Get<ISceneRegionCreator>();
+            if (sceneRegionCreator != null)
             {
+                var region = sceneRegionCreator.GetRegion();
+
                 proximityChecker.SetMatrixRegion(region);
             }
         }

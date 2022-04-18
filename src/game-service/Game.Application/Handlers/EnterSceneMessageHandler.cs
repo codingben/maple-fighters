@@ -31,11 +31,17 @@ namespace Game.Application.Handlers
 
             if (gameSceneCollection.TryGet(mapName, out var gameScene))
             {
-                if (gameScene.GameObjectCollection.Add(player))
+                var sceneObjectCollection =
+                    gameScene.Components.Get<ISceneObjectCollection>();
+
+                if (sceneObjectCollection.Add(player))
                 {
-                    var position = gameScene.PlayerSpawnData.GetPosition();
-                    var size = gameScene.PlayerSpawnData.GetSize();
-                    var direction = gameScene.PlayerSpawnData.GetDirection();
+                    var scenePlayerSpawnData =
+                        gameScene.Components.Get<IScenePlayerSpawnData>();
+
+                    var position = scenePlayerSpawnData.GetPosition();
+                    var size = scenePlayerSpawnData.GetSize();
+                    var direction = scenePlayerSpawnData.GetDirection();
 
                     player.Transform.SetPosition(position);
                     player.Transform.SetSize(size);

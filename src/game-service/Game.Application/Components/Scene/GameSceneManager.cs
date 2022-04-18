@@ -48,9 +48,11 @@ namespace Game.Application.Components
                 var objects = scene.Objects;
 
                 var gameScene = new GameScene(sceneSize, regionSize);
-                gameScene.PlayerSpawnData.SetPosition(playerSpawnPosition);
-                gameScene.PlayerSpawnData.SetSize(playerSpawnSize);
-                gameScene.PlayerSpawnData.SetDirection(playerSpawnDirection);
+                var scenePlayerSpawnData =
+                  gameScene.Components.Get<IScenePlayerSpawnData>();
+                scenePlayerSpawnData.SetPosition(playerSpawnPosition);
+                scenePlayerSpawnData.SetSize(playerSpawnSize);
+                scenePlayerSpawnData.SetDirection(playerSpawnDirection);
 
                 var gameObjects = CreateGameObject(objects);
 
@@ -58,9 +60,11 @@ namespace Game.Application.Components
                 {
                     var presenceMapProvider =
                       gameObject.Components.Get<IPresenceMapProvider>();
-                    presenceMapProvider.SetMap(gameScene);
+                    var sceneObjectCollection =
+                      gameScene.Components.Get<ISceneObjectCollection>();
 
-                    gameScene.GameObjectCollection.Add(gameObject);
+                    presenceMapProvider.SetMap(gameScene);
+                    sceneObjectCollection.Add(gameObject);
                 }
 
                 gameSceneCollection.Add(sceneName, gameScene);

@@ -117,7 +117,9 @@ namespace Game.Application
         private void RemovePlayer()
         {
             var map = player.Components.Get<IPresenceMapProvider>().GetMap();
-            map?.GameObjectCollection.Remove(id);
+            var sceneObjectCollection =
+                map?.Components.Get<ISceneObjectCollection>();
+            sceneObjectCollection?.Remove(id);
 
             player.Dispose();
         }

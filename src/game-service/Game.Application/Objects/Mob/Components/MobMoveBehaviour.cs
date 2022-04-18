@@ -32,7 +32,12 @@ namespace Game.Application.Objects.Components
             var presenceMapProvider = Components.Get<IPresenceMapProvider>();
             presenceMapProvider.MapChanged += (gameScene) =>
             {
-                coroutineRunner = gameScene.PhysicsExecutor.GetCoroutineRunner();
+                var gamePhysicsCreator =
+                    gameScene.Components.Get<IScenePhysicsCreator>();
+                var physicsExecutor =
+                    gamePhysicsCreator.GetPhysicsExecutor();
+
+                coroutineRunner = physicsExecutor.GetCoroutineRunner();
                 coroutineRunner.Run(Move());
             };
         }

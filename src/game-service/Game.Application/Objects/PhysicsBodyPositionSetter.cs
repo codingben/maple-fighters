@@ -18,7 +18,10 @@ namespace Game.Application.Objects.Components
             var presenceMapProvider = Components.Get<IPresenceMapProvider>();
             presenceMapProvider.MapChanged += (gameScene) =>
             {
-                physicsWorldManager = gameScene.PhysicsWorldManager;
+                var gamePhysicsCreator =
+                    gameScene.Components.Get<IScenePhysicsCreator>();
+                physicsWorldManager =
+                    gamePhysicsCreator.GetPhysicsWorldManager();
             };
         }
 
