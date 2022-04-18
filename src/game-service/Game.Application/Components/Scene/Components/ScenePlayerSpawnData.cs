@@ -2,7 +2,7 @@ using InterestManagement;
 
 namespace Game.Application.Components
 {
-    public class PlayerSpawnData : IPlayerSpawnData
+    public class ScenePlayerSpawnData : ComponentBase, IScenePlayerSpawnData
     {
         public Vector2Data Position { get; set; }
 

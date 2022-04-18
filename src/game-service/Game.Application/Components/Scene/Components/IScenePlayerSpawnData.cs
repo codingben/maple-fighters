@@ -2,7 +2,7 @@ using InterestManagement;
 
 namespace Game.Application.Components
 {
-    public interface IPlayerSpawnData
+    public interface IScenePlayerSpawnData
     {
         void SetPosition(Vector2 position);
 
