@@ -8,6 +8,7 @@ namespace Game.Application.Components
 
         public GameScene(Vector2 sceneSize, Vector2 regionSize)
         {
+            Components = new ComponentCollection();
             Components.Add(new SceneRegionCreator(sceneSize, regionSize));
             Components.Add(new SceneObjectCollection());
             Components.Add(new ScenePlayerSpawnData());
