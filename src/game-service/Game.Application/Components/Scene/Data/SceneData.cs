@@ -8,6 +8,6 @@ namespace Game.Application.Components
 
         public Vector2Data RegionSize { get; set; }
 
-        public PlayerSpawnData PlayerSpawn { get; set; }
+        public ScenePlayerSpawnData PlayerSpawn { get; set; }
     }
 }
