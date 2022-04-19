@@ -38,7 +38,6 @@ namespace Game.Application.Handlers
                 {
                     var scenePlayerSpawnData =
                         gameScene.Components.Get<IScenePlayerSpawnData>();
-
                     var position = scenePlayerSpawnData.GetPosition();
                     var size = scenePlayerSpawnData.GetSize();
                     var direction = scenePlayerSpawnData.GetDirection();
