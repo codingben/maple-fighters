@@ -35,7 +35,7 @@ namespace Game.Application
             jsonSerializer = new NativeJsonSerializer();
             handlerCollection = new MessageHandlerCollection(jsonSerializer);
 
-            player = GetPlayerGameObject();
+            player = CreatePlayerGameObject();
 
             var messageSender = player.Components.Get<IMessageSender>();
             messageSender.SetJsonSerializer(jsonSerializer);
@@ -134,9 +134,9 @@ namespace Game.Application
             sessionCollection.Remove(id);
         }
 
-        private IGameObject GetPlayerGameObject()
+        private IGameObject CreatePlayerGameObject()
         {
-            return new PlayerGameObject(id, name: "RemotePlayer"); // TODO: Get name from config
+            return new PlayerGameObject(id, name: "RemotePlayer");
         }
     }
 }

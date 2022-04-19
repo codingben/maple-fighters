@@ -54,7 +54,7 @@ namespace Game.Application.Components
                 scenePlayerSpawnData.SetSize(playerSpawnSize);
                 scenePlayerSpawnData.SetDirection(playerSpawnDirection);
 
-                var gameObjects = CreateGameObject(objects);
+                var gameObjects = CreateGameObjects(objects);
 
                 foreach (var gameObject in gameObjects)
                 {
@@ -71,7 +71,7 @@ namespace Game.Application.Components
             }
         }
 
-        private IEnumerable<IGameObject> CreateGameObject(ObjectData[] objects)
+        private IEnumerable<IGameObject> CreateGameObjects(ObjectData[] objects)
         {
             foreach (var objectData in objects)
             {
@@ -83,7 +83,7 @@ namespace Game.Application.Components
                   new Vector2(objectData.Size.X, objectData.Size.Y);
 
                 var id = idGenerator.GenerateId();
-                var gameObject = GetGameObject(type, id, name);
+                var gameObject = CreateGameObject(type, id, name);
                 gameObject.Transform.SetPosition(position);
                 gameObject.Transform.SetSize(size);
 
@@ -100,7 +100,7 @@ namespace Game.Application.Components
             return deserializer.Deserialize<SceneCollectionData>(data);
         }
 
-        private IGameObject GetGameObject(ObjectTypes type, int id, string name)
+        private IGameObject CreateGameObject(ObjectTypes type, int id, string name)
         {
             if (type == ObjectTypes.Npc) return new NpcGameObject(id, name);
             else if (type == ObjectTypes.Portal) return new PortalGameObject(id, name);
