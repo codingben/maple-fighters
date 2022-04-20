@@ -17,7 +17,7 @@ namespace Game.Application.Components
             gameSceneCollection = Components.Get<IGameSceneCollection>();
 
             var config = GetConfig();
-            var SceneCollectionData = GetSceneCollectionData(config);
+            var SceneCollectionData = ParseSceneCollectionData(config);
 
             CreateGameScene(SceneCollectionData);
         }
@@ -91,7 +91,7 @@ namespace Game.Application.Components
             }
         }
 
-        private SceneCollectionData GetSceneCollectionData(string data)
+        private SceneCollectionData ParseSceneCollectionData(string data)
         {
             var deserializer = new DeserializerBuilder()
                 .WithNamingConvention(CamelCaseNamingConvention.Instance)
