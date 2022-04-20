@@ -33,9 +33,15 @@ namespace Game.Application.Objects.Components
             bodyDef.Position.Set(x, y);
             bodyDef.UserData = gameObject;
 
+            var playerConfigDataProvider =
+                Components.Get<IPlayerConfigDataProvider>();
+            var playerConfigData = playerConfigDataProvider.Provide();
+            var bodyWidth = playerConfigData.BodyWidth;
+            var bodyHeight = playerConfigData.BodyHeight;
+            var bodyDensity = playerConfigData.BodyDensity;
             var polygonDef = new PolygonDef();
-            polygonDef.SetAsBox(0.3625f, 0.825f); // TODO: Get from config
-            polygonDef.Density = 0.1f; // TODO: Get from config
+            polygonDef.SetAsBox(bodyWidth, bodyHeight);
+            polygonDef.Density = bodyDensity;
             polygonDef.Filter = new FilterData()
             {
                 GroupIndex = (short)LayerMask.Player
