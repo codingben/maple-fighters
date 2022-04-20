@@ -10,6 +10,7 @@ namespace Game.Application.Objects
             Components.Add(new GameObjectGetter(this));
             Components.Add(new ProximityChecker());
             Components.Add(new PresenceMapProvider());
+            Components.Add(new PlayerConfigDataProvider());
             Components.Add(new AnimationData());
             Components.Add(new CharacterData());
             Components.Add(new MessageSender());
