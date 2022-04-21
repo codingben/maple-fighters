@@ -7,18 +7,18 @@ namespace Game.Application.Handlers
 {
     public class ChangeAnimationStateHandler : IMessageHandler<ChangeAnimationStateMessage>
     {
-        private readonly IAnimationData animationData;
+        private readonly IAnimationStateProvider animationStateProvider;
 
         public ChangeAnimationStateHandler(IGameObject player)
         {
-            animationData = player.Components.Get<IAnimationData>();
+            animationStateProvider = player.Components.Get<IAnimationStateProvider>();
         }
 
         public void Handle(ChangeAnimationStateMessage message)
         {
             var animationState = message.AnimationState;
 
-            animationData.SetAnimationState(animationState);
+            animationStateProvider.SetState(animationState);
         }
     }
 }

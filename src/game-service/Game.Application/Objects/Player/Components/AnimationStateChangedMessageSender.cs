@@ -5,13 +5,13 @@ namespace Game.Application.Objects.Components
 {
     public class AnimationStateChangedMessageSender : ComponentBase
     {
-        private IAnimationData animationData;
+        private IAnimationStateProvider animationStateProvider;
         private IGameObjectGetter gameObjectGetter;
         private IMessageSender messageSender;
 
         protected override void OnAwake()
         {
-            animationData = Components.Get<IAnimationData>();
+            animationStateProvider = Components.Get<IAnimationStateProvider>();
             gameObjectGetter = Components.Get<IGameObjectGetter>();
             messageSender = Components.Get<IMessageSender>();
 
@@ -25,12 +25,12 @@ namespace Game.Application.Objects.Components
 
         private void SubscribeToAnimationStateChanged()
         {
-            animationData.AnimationStateChanged += OnAnimationStateChanged;
+            animationStateProvider.AnimationStateChanged += OnAnimationStateChanged;
         }
 
         private void UnsubscribeFromAnimationStateChanged()
         {
-            animationData.AnimationStateChanged -= OnAnimationStateChanged;
+            animationStateProvider.AnimationStateChanged -= OnAnimationStateChanged;
         }
 
         private void OnAnimationStateChanged()
@@ -40,7 +40,7 @@ namespace Game.Application.Objects.Components
             var message = new AnimationStateChangedMessage()
             {
                 GameObjectId = id,
-                AnimationState = animationData.GetAnimationState()
+                AnimationState = animationStateProvider.GetState()
             };
 
             messageSender.SendMessageToNearbyGameObjects(messageCode, message);
