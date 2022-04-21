@@ -11,8 +11,7 @@ namespace Game.Application.Objects
             Components.Add(new ProximityChecker());
             Components.Add(new PresenceMapProvider());
             Components.Add(new PlayerConfigDataProvider());
-            Components.Add(new AnimationData());
-            Components.Add(new CharacterData());
+            Components.Add(new AnimationStateProvider());
             Components.Add(new MessageSender());
             Components.Add(new PositionChangedMessageSender());
             Components.Add(new AnimationStateChangedMessageSender());
