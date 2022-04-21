@@ -3,25 +3,25 @@ using Game.Application.Components;
 
 namespace Game.Application.Objects.Components
 {
-    public class AnimationData : ComponentBase, IAnimationData
+    public class AnimationStateProvider : ComponentBase, IAnimationStateProvider
     {
         public event Action AnimationStateChanged;
 
         private byte animationState;
 
-        public AnimationData()
+        public AnimationStateProvider()
         {
             // Left blank intentionally
         }
 
-        public void SetAnimationState(byte animationState)
+        public void SetState(byte animationState)
         {
             this.animationState = animationState;
 
             AnimationStateChanged?.Invoke();
         }
 
-        public byte GetAnimationState()
+        public byte GetState()
         {
             return animationState;
         }

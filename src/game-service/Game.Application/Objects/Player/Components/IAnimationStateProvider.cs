@@ -2,12 +2,12 @@
 
 namespace Game.Application.Objects.Components
 {
-    public interface IAnimationData
+    public interface IAnimationStateProvider
     {
         event Action AnimationStateChanged;
 
-        void SetAnimationState(byte animationState);
+        void SetState(byte animationState);
 
-        byte GetAnimationState();
+        byte GetState();
     }
 }
