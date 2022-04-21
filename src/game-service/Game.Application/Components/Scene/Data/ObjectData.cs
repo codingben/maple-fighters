@@ -9,5 +9,7 @@ namespace Game.Application.Components
         public Vector2Data Position { get; set; }
 
         public Vector2Data Size { get; set; }
+
+        public string CustomData { get; set; }
     }
 }

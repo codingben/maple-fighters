@@ -81,9 +81,10 @@ namespace Game.Application.Components
                   new Vector2(objectData.Position.X, objectData.Position.Y);
                 var size =
                   new Vector2(objectData.Size.X, objectData.Size.Y);
+                var customData = objectData.CustomData;
 
                 var id = idGenerator.GenerateId();
-                var gameObject = CreateGameObject(type, id, name);
+                var gameObject = CreateGameObject(type, id, name, customData);
                 gameObject.Transform.SetPosition(position);
                 gameObject.Transform.SetSize(size);
 
@@ -100,10 +101,14 @@ namespace Game.Application.Components
             return deserializer.Deserialize<SceneCollectionData>(data);
         }
 
-        private IGameObject CreateGameObject(ObjectTypes type, int id, string name)
+        private IGameObject CreateGameObject(
+          ObjectTypes type,
+          int id,
+          string name,
+          string customData)
         {
             if (type == ObjectTypes.Npc) return new NpcGameObject(id, name);
-            else if (type == ObjectTypes.Portal) return new PortalGameObject(id, name);
+            else if (type == ObjectTypes.Portal) return new PortalGameObject(id, name, customData);
             else if (type == ObjectTypes.Mob) return new MobGameObject(id, name);
             else throw new System.Exception($"Unknown object type: {type}");
         }
@@ -138,6 +143,7 @@ scenes:
         x: -17.125
         y: -1.5
       size: *regionSize
+      customData: '1' # The Dark Forest Map
   thedarkforest:
     sceneSize:
       x: 30
@@ -188,6 +194,7 @@ scenes:
         x: 12.5
         y: -1.125
       size: *regionSize
+      customData: '0' # Lobby Map
             ";
         }
     }
