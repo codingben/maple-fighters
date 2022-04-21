@@ -102,9 +102,9 @@ namespace Game.Application.Objects.Components
 
         private GameObjectData GetGameObjectData(IGameObject gameObject)
         {
-            var characterData = gameObject.Components.Get<ICharacterData>();
-            var characterName = characterData?.Name;
-            var characterType = characterData?.CharacterType ?? 0;
+            var playerConfigDataProvider =
+                gameObject.Components.Get<IPlayerConfigDataProvider>();
+            var playerConfigData = playerConfigDataProvider?.Provide();
 
             return new GameObjectData()
             {
@@ -113,9 +113,9 @@ namespace Game.Application.Objects.Components
                 X = gameObject.Transform.Position.X,
                 Y = gameObject.Transform.Position.Y,
                 Direction = 0, // TODO: Get direction
-                CharacterName = characterName,
-                CharacterClass = characterType,
-                HasCharacter = characterData != null
+                CharacterName = playerConfigData?.CharacterName,
+                CharacterClass = playerConfigData?.CharacterType ?? 0,
+                HasCharacter = playerConfigData != null
             };
         }
     }

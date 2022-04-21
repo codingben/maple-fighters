@@ -9,7 +9,7 @@ namespace Game.Application.Handlers
     public class EnterSceneMessageHandler : IMessageHandler<EnterSceneMessage>
     {
         private readonly IGameObject player;
-        private readonly ICharacterData characterData;
+        private readonly IPlayerConfigDataProvider playerConfigDataProvider;
         private readonly IPresenceMapProvider presenceMapProvider;
         private readonly IMessageSender messageSender;
         private readonly IGameSceneCollection gameSceneCollection;
@@ -19,7 +19,7 @@ namespace Game.Application.Handlers
             this.player = player;
             this.gameSceneCollection = gameSceneCollection;
 
-            characterData = player.Components.Get<ICharacterData>();
+            playerConfigDataProvider = player.Components.Get<IPlayerConfigDataProvider>();
             presenceMapProvider = player.Components.Get<IPresenceMapProvider>();
             messageSender = player.Components.Get<IMessageSender>();
         }
@@ -47,10 +47,10 @@ namespace Game.Application.Handlers
 
                     var name = message.CharacterName;
                     var type = message.CharacterType;
-
-                    characterData.Name = name;
-                    characterData.CharacterType = type;
-                    characterData.SpawnDirection = direction;
+                    var playerConfigData = playerConfigDataProvider.Provide();
+                    playerConfigData.CharacterName = name;
+                    playerConfigData.CharacterType = type;
+                    playerConfigData.CharacterSpawnDirection = direction;
 
                     presenceMapProvider?.SetMap(gameScene);
 
@@ -61,15 +61,16 @@ namespace Game.Application.Handlers
 
         private void SendEnteredSceneMessage()
         {
+            var playerConfigData = playerConfigDataProvider.Provide();
             var messageCode = (byte)MessageCodes.EnteredScene;
             var message = new EnteredSceneMessage()
             {
                 GameObjectId = player.Id,
                 X = player.Transform.Position.X,
                 Y = player.Transform.Position.Y,
-                Direction = characterData.SpawnDirection,
-                CharacterName = characterData.Name,
-                CharacterClass = characterData.CharacterType
+                Direction = playerConfigData.CharacterSpawnDirection,
+                CharacterName = playerConfigData.CharacterName,
+                CharacterClass = playerConfigData.CharacterType
             };
 
             messageSender.SendMessage(messageCode, message);
