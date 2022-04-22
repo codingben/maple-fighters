@@ -4,22 +4,20 @@ namespace Game.Application.Objects.Components
 {
     public class NpcIdleBehaviour : ComponentBase
     {
-        private readonly string text;
-        private readonly int time;
-
+        private string message;
+        private int messageTime;
         private IProximityChecker proximityChecker;
         private IGameObjectGetter gameObjectGetter;
-
-        public NpcIdleBehaviour(string text, int time)
-        {
-            this.text = text;
-            this.time = time;
-        }
 
         protected override void OnAwake()
         {
             proximityChecker = Components.Get<IProximityChecker>();
             gameObjectGetter = Components.Get<IGameObjectGetter>();
+
+            var npcConfigDataProvider = Components.Get<INpcConfigDataProvider>();
+            var npcConfigData = npcConfigDataProvider.Provide();
+            message = npcConfigData.Message;
+            messageTime = npcConfigData.MessageTime;
 
             SubscribeToNearbyGameObjectAdded();
         }
@@ -45,7 +43,7 @@ namespace Game.Application.Objects.Components
         {
             var id = gameObjectGetter.Get().Id;
             var bubbleNotifier = gameObject?.Components?.Get<IBubbleNotifier>();
-            bubbleNotifier?.Notify(id, text, time);
+            bubbleNotifier?.Notify(id, message, messageTime);
         }
     }
 }
