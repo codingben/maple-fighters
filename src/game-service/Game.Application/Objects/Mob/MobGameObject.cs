@@ -10,6 +10,7 @@ namespace Game.Application.Objects
             Components.Add(new GameObjectGetter(this));
             Components.Add(new ProximityChecker());
             Components.Add(new PresenceMapProvider());
+            Components.Add(new MobConfigDataProvider());
             Components.Add(new MobPhysicsBodyCreator());
             Components.Add(new MobMoveBehaviour());
             Components.Add(new PhysicsBodyPositionSetter());
