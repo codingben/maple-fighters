@@ -16,6 +16,7 @@ namespace Game.Application.Objects.Components
         private IGameObject gameObject;
         private IProximityChecker proximityChecker;
         private ICoroutineRunner coroutineRunner;
+        private IMobConfigDataProvider mobConfigDataProvider;
 
         public MobMoveBehaviour()
         {
@@ -28,6 +29,7 @@ namespace Game.Application.Objects.Components
         {
             gameObject = Components.Get<IGameObjectGetter>().Get();
             proximityChecker = Components.Get<IProximityChecker>();
+            mobConfigDataProvider = Components.Get<IMobConfigDataProvider>();
 
             var presenceMapProvider = Components.Get<IPresenceMapProvider>();
             presenceMapProvider.MapChanged += (gameScene) =>
@@ -47,10 +49,9 @@ namespace Game.Application.Objects.Components
             var startPosition = gameObject.Transform.Position;
             var position = startPosition;
             var direction = GetRandomDirection();
-
-            // TODO: Get speed and distance from config
-            const float speed = 0.75f;
-            const float distance = 2.5f;
+            var mobConfigData = mobConfigDataProvider.Provide();
+            var speed = mobConfigData.Speed;
+            var distance = mobConfigData.Distance;
 
             while (true)
             {

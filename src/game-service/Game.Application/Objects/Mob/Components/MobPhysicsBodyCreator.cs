@@ -27,14 +27,20 @@ namespace Game.Application.Objects.Components
         private NewBodyData CreateBodyData()
         {
             var id = gameObject.Id;
-            var bodyDef = new BodyDef();
             var x = gameObject.Transform.Position.X;
             var y = gameObject.Transform.Position.Y;
+            var mobConfigDataProvider = Components.Get<IMobConfigDataProvider>();
+            var mobConfigData = mobConfigDataProvider.Provide();
+            var bodyWidth = mobConfigData.BodyWidth;
+            var bodyHeight = mobConfigData.BodyHeight;
+            var bodyDensity = mobConfigData.BodyDensity;
+            var bodyDef = new BodyDef();
+            var polygonDef = new PolygonDef();
+
             bodyDef.Position.Set(x, y);
 
-            var polygonDef = new PolygonDef();
-            polygonDef.SetAsBox(0.3625f, 0.825f); // TODO: Get from config
-            polygonDef.Density = 0.0f;// TODO: Get from config
+            polygonDef.SetAsBox(bodyWidth, bodyHeight);
+            polygonDef.Density = bodyDensity;
             polygonDef.Filter = new FilterData()
             {
                 GroupIndex = (short)LayerMask.Mob
