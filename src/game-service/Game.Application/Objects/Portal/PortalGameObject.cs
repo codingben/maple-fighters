@@ -10,7 +10,7 @@ namespace Game.Application.Objects
             Components.Add(new GameObjectGetter(this));
             Components.Add(new ProximityChecker());
             Components.Add(new PresenceMapProvider());
-            Components.Add(new PortalData(map: byte.Parse(customData)));
+            Components.Add(new PortalTeleportationData(map: byte.Parse(customData)));
         }
     }
 }

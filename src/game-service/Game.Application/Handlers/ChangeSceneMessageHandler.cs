@@ -28,8 +28,9 @@ namespace Game.Application.Handlers
             var portal = GetPortal(portalId);
             if (portal != null)
             {
-                var portalData = portal.Components.Get<IPortalData>();
-                var map = portalData.GetMap();
+                var portalTeleportationData =
+                    portal.Components.Get<IPortalTeleportationData>();
+                var map = portalTeleportationData.GetDestinationMap();
                 var mapName = ((Map)map).ToString().ToLower();
                 var gameSceneExists =
                     gameSceneCollection.TryGet(mapName, out var gameScene);
