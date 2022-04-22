@@ -110,7 +110,7 @@ namespace Game.Application.Components
             if (type == ObjectTypes.Npc) return new NpcGameObject(id, name);
             else if (type == ObjectTypes.Portal) return new PortalGameObject(id, name, customData);
             else if (type == ObjectTypes.Mob) return new MobGameObject(id, name);
-            else throw new System.Exception($"Unknown object type: {type}");
+            else throw new InvalidGameObjectTypeException(type);
         }
 
         private string GetConfig()
