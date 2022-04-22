@@ -2,16 +2,16 @@ using Game.Application.Components;
 
 namespace Game.Application.Objects.Components
 {
-    public class PortalData : ComponentBase, IPortalData
+    public class PortalTeleportationData : ComponentBase, IPortalTeleportationData
     {
         private readonly byte map;
 
-        public PortalData(byte map)
+        public PortalTeleportationData(byte map)
         {
             this.map = map;
         }
 
-        public byte GetMap()
+        public byte GetDestinationMap()
         {
             return map;
         }
