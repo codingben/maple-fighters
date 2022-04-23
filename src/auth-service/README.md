@@ -2,7 +2,7 @@
 
 [![Auth Service Build](https://github.com/benukhanov/maple-fighters/actions/workflows/auth-service-build.yml/badge.svg)](https://github.com/benukhanov/maple-fighters/actions/workflows/auth-service-build.yml)
 
-The authentication service stores user data and verifies user.
+Auth service stores user data and verifies user.
 
 ## Project Structure
 
