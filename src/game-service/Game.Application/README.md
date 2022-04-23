@@ -1,6 +1,6 @@
 # Game Application
 
-The game application creates a WebSocket server and handles requests. When a new client connects, it creates a new player in the game world.
+Game application creates a WebSocket server and handles requests. When a new client connects, it creates a new player in the game world.
 
 ## Project Structure
 
