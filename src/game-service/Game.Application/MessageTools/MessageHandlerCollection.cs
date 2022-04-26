@@ -46,5 +46,10 @@ namespace Game.MessageTools
 
             return collection.TryGetValue(key, out handler);
         }
+
+        public void Dispose()
+        {
+            collection?.Clear();
+        }
     }
 }

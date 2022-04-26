@@ -2,7 +2,7 @@ using System;
 
 namespace Game.MessageTools
 {
-    public interface IMessageHandlerCollection
+    public interface IMessageHandlerCollection : IDisposable
     {
         void Set<T, M>(T messageCode, IMessageHandler<M> handler)
             where T : IComparable, IFormattable, IConvertible
