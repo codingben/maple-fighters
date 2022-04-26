@@ -15,8 +15,12 @@ namespace Game.Application.Components
 
         private readonly int id;
         private readonly IWebSocketConnection connection;
+        private readonly IWebSocketSessionCollection sessionCollection;
 
-        public WebSocketConnectionProvider(int id, IWebSocketConnection connection)
+        public WebSocketConnectionProvider(
+            int id,
+            IWebSocketConnection connection,
+            IWebSocketSessionCollection sessionCollection)
         {
             this.id = id;
             this.connection = connection;
@@ -24,6 +28,17 @@ namespace Game.Application.Components
             this.connection.OnClose += OnConnectionClosed;
             this.connection.OnError += OnErrorOccurred;
             this.connection.OnMessage += OnMessageReceived;
+            this.sessionCollection = sessionCollection;
+        }
+
+        protected override void OnAwake()
+        {
+            sessionCollection.Add(id, new WebSocketSessionData(id, connection));
+        }
+
+        protected override void OnRemoved()
+        {
+            sessionCollection.Remove(id);
         }
 
         private void OnConnectionEstablished()
