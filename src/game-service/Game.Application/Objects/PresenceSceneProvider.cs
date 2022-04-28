@@ -3,9 +3,9 @@ using Game.Application.Components;
 
 namespace Game.Application.Objects
 {
-    public class PresenceMapProvider : ComponentBase, IPresenceMapProvider
+    public class PresenceSceneProvider : ComponentBase, IPresenceSceneProvider
     {
-        public event Action<IGameScene> MapChanged;
+        public event Action<IGameScene> SceneChanged;
 
         private IGameScene gameScene;
         private IProximityChecker proximityChecker;
@@ -17,13 +17,13 @@ namespace Game.Application.Objects
             SetRegion();
         }
 
-        public void SetMap(IGameScene gameScene)
+        public void SetScene(IGameScene gameScene)
         {
             this.gameScene = gameScene;
 
             SetRegion();
 
-            MapChanged?.Invoke(gameScene);
+            SceneChanged?.Invoke(gameScene);
         }
 
         private void SetRegion()
@@ -38,7 +38,7 @@ namespace Game.Application.Objects
             }
         }
 
-        public IGameScene GetMap()
+        public IGameScene GetScene()
         {
             return gameScene;
         }
