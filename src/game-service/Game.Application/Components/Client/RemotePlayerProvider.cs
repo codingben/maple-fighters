@@ -24,20 +24,20 @@ namespace Game.Application.Components
 
         public bool AddToPresenceScene()
         {
-            var map =
-                gameObject.Components.Get<IPresenceMapProvider>().GetMap();
+            var scene =
+                gameObject.Components.Get<IPresenceSceneProvider>().GetScene();
             var sceneObjectCollection =
-                map.Components.Get<ISceneObjectCollection>();
+                scene.Components.Get<ISceneObjectCollection>();
 
             return sceneObjectCollection.Add(gameObject);
         }
 
         public bool RemoveFromPresenceScene()
         {
-            var map =
-                gameObject.Components.Get<IPresenceMapProvider>().GetMap();
+            var scene =
+                gameObject.Components.Get<IPresenceSceneProvider>().GetScene();
             var sceneObjectCollection =
-                map.Components.Get<ISceneObjectCollection>();
+                scene.Components.Get<ISceneObjectCollection>();
 
             return sceneObjectCollection.Remove(id);
         }

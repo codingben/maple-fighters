@@ -10,7 +10,7 @@ namespace Game.Application.Handlers
     {
         private readonly IProximityChecker proximityChecker;
         private readonly IMessageSender messageSender;
-        private readonly IPresenceMapProvider presenceMapProvider;
+        private readonly IPresenceSceneProvider presenceSceneProvider;
         private readonly IGameSceneCollection gameSceneCollection;
 
         public ChangeSceneMessageHandler(IGameObject player, IGameSceneCollection gameSceneCollection)
@@ -18,7 +18,7 @@ namespace Game.Application.Handlers
             this.gameSceneCollection = gameSceneCollection;
 
             proximityChecker = player.Components.Get<IProximityChecker>();
-            presenceMapProvider = player.Components.Get<IPresenceMapProvider>();
+            presenceSceneProvider = player.Components.Get<IPresenceSceneProvider>();
             messageSender = player.Components.Get<IMessageSender>();
         }
 
@@ -36,7 +36,7 @@ namespace Game.Application.Handlers
                     gameSceneCollection.TryGet(mapName, out var gameScene);
                 if (gameSceneExists)
                 {
-                    presenceMapProvider.SetMap(gameScene);
+                    presenceSceneProvider.SetScene(gameScene);
 
                     SendSceneChangedMessage(map);
                 }

@@ -15,8 +15,8 @@ namespace Game.Application.Objects.Components
             gameObject = gameObjectGetter.Get();
             gameObject.Transform.PositionChanged += OnPositionChanged;
 
-            var presenceMapProvider = Components.Get<IPresenceMapProvider>();
-            presenceMapProvider.MapChanged += (gameScene) =>
+            var presenceSceneProvider = Components.Get<IPresenceSceneProvider>();
+            presenceSceneProvider.SceneChanged += (gameScene) =>
             {
                 var gamePhysicsCreator =
                     gameScene.Components.Get<IScenePhysicsCreator>();

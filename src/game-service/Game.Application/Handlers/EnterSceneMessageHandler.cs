@@ -10,7 +10,7 @@ namespace Game.Application.Handlers
     {
         private readonly IGameObject player;
         private readonly IPlayerConfigDataProvider playerConfigDataProvider;
-        private readonly IPresenceMapProvider presenceMapProvider;
+        private readonly IPresenceSceneProvider presenceSceneProvider;
         private readonly IMessageSender messageSender;
         private readonly IGameSceneCollection gameSceneCollection;
 
@@ -20,7 +20,7 @@ namespace Game.Application.Handlers
             this.gameSceneCollection = gameSceneCollection;
 
             playerConfigDataProvider = player.Components.Get<IPlayerConfigDataProvider>();
-            presenceMapProvider = player.Components.Get<IPresenceMapProvider>();
+            presenceSceneProvider = player.Components.Get<IPresenceSceneProvider>();
             messageSender = player.Components.Get<IMessageSender>();
         }
 
@@ -52,7 +52,7 @@ namespace Game.Application.Handlers
                     playerConfigData.CharacterType = type;
                     playerConfigData.CharacterSpawnDirection = direction;
 
-                    presenceMapProvider?.SetMap(gameScene);
+                    presenceSceneProvider?.SetScene(gameScene);
 
                     SendEnteredSceneMessage();
                 }

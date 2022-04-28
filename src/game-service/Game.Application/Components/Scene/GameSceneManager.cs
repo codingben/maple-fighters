@@ -58,12 +58,12 @@ namespace Game.Application.Components
 
                 foreach (var gameObject in gameObjects)
                 {
-                    var presenceMapProvider =
-                      gameObject.Components.Get<IPresenceMapProvider>();
+                    var presenceSceneProvider =
+                      gameObject.Components.Get<IPresenceSceneProvider>();
                     var sceneObjectCollection =
                       gameScene.Components.Get<ISceneObjectCollection>();
 
-                    presenceMapProvider.SetMap(gameScene);
+                    presenceSceneProvider.SetScene(gameScene);
                     sceneObjectCollection.Add(gameObject);
                 }
 

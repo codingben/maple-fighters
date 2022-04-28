@@ -31,8 +31,8 @@ namespace Game.Application.Objects.Components
             proximityChecker = Components.Get<IProximityChecker>();
             mobConfigDataProvider = Components.Get<IMobConfigDataProvider>();
 
-            var presenceMapProvider = Components.Get<IPresenceMapProvider>();
-            presenceMapProvider.MapChanged += (gameScene) =>
+            var presenceSceneProvider = Components.Get<IPresenceSceneProvider>();
+            presenceSceneProvider.SceneChanged += (gameScene) =>
             {
                 var gamePhysicsCreator =
                     gameScene.Components.Get<IScenePhysicsCreator>();
