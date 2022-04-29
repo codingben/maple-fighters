@@ -55,14 +55,20 @@ namespace Game.Application.Components
 
         private void OnSendMessageCallback(string data)
         {
-            connection.Send(data);
+            if (connection.IsAvailable)
+            {
+                connection.Send(data);
+            }
         }
 
         private void OnSendMessageCallback(string data, int id)
         {
             if (sessionCollection.TryGet(id, out var sessionData))
             {
-                sessionData.Connection.Send(data);
+                if (sessionData.Connection.IsAvailable)
+                {
+                    sessionData.Connection.Send(data);
+                }
             }
         }
     }
