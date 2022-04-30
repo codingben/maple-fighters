@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Game.Application.Objects;
 
 namespace Game.Application.Components
@@ -9,5 +10,7 @@ namespace Game.Application.Components
         bool Remove(int id);
 
         bool TryGet(int id, out IGameObject gameObject);
+
+        IEnumerable<IGameObject> GetAll();
     }
 }

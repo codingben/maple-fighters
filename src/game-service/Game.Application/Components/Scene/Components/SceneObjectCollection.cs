@@ -1,4 +1,5 @@
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using Game.Application.Objects;
 
 namespace Game.Application.Components
@@ -37,6 +38,11 @@ namespace Game.Application.Components
         public bool TryGet(int id, out IGameObject gameObject)
         {
             return collection.TryGetValue(id, out gameObject);
+        }
+
+        public IEnumerable<IGameObject> GetAll()
+        {
+            return collection.Values;
         }
     }
 }
