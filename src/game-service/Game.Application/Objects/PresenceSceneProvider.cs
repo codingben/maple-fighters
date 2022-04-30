@@ -1,5 +1,7 @@
 using System;
 using Game.Application.Components;
+using Game.Application.Objects.Components;
+using Game.Messages;
 
 namespace Game.Application.Objects
 {
@@ -17,6 +19,12 @@ namespace Game.Application.Objects
             SetRegion();
         }
 
+        protected override void OnRemoved()
+        {
+            RemoveFromPresenceScene();
+            RemoveGameObjectForOtherObjects();
+        }
+
         public void SetScene(IGameScene gameScene)
         {
             this.gameScene = gameScene;
@@ -24,6 +32,11 @@ namespace Game.Application.Objects
             SetRegion();
 
             SceneChanged?.Invoke(gameScene);
+        }
+
+        public IGameScene GetScene()
+        {
+            return gameScene;
         }
 
         private void SetRegion()
@@ -38,9 +51,39 @@ namespace Game.Application.Objects
             }
         }
 
-        public IGameScene GetScene()
+        private void RemoveFromPresenceScene()
         {
-            return gameScene;
+            var gameObjectGetter = Components.Get<IGameObjectGetter>();
+            var gameObject = gameObjectGetter.Get();
+            var sceneObjectCollection =
+                gameScene.Components.Get<ISceneObjectCollection>();
+            var id = gameObject.Id;
+
+            sceneObjectCollection.Remove(id);
+        }
+
+        private void RemoveGameObjectForOtherObjects()
+        {
+            var gameObjectGetter = Components.Get<IGameObjectGetter>();
+            var id = gameObjectGetter.Get().Id;
+            var messageCode = (byte)MessageCodes.GameObjectsRemoved;
+            var message = new GameObjectsRemovedMessage()
+            {
+                GameObjectIds = new int[]
+                {
+                    id
+                }
+            };
+            var sceneObjectCollection =
+                gameScene.Components.Get<ISceneObjectCollection>();
+            var gameObjects = sceneObjectCollection.GetAll();
+
+            foreach (var gameObject in gameObjects)
+            {
+                var messageSender =
+                    gameObject.Components.Get<IMessageSender>();
+                messageSender?.SendMessage(messageCode, message);
+            }
         }
     }
 }
