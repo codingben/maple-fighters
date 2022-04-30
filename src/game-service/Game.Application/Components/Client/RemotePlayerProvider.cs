@@ -1,4 +1,6 @@
 using Game.Application.Objects;
+using Game.Application.Objects.Components;
+using Game.Messages;
 
 namespace Game.Application.Components
 {
@@ -18,6 +20,7 @@ namespace Game.Application.Components
         protected override void OnRemoved()
         {
             RemoveFromPresenceScene();
+            RemovePlayerForOtherPlayers();
 
             gameObject?.Dispose();
         }
@@ -40,6 +43,21 @@ namespace Game.Application.Components
                 scene.Components.Get<ISceneObjectCollection>();
 
             return sceneObjectCollection.Remove(id);
+        }
+
+        private void RemovePlayerForOtherPlayers()
+        {
+            var messageSender = gameObject.Components.Get<IMessageSender>();
+            var messageCode = (byte)MessageCodes.GameObjectsRemoved;
+            var message = new GameObjectsRemovedMessage()
+            {
+                GameObjectIds = new int[]
+                {
+                    gameObject.Id
+                }
+            };
+
+            messageSender.SendMessageToNearbyGameObjects(messageCode, message);
         }
 
         public IGameObject Provide()
