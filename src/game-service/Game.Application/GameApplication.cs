@@ -1,7 +1,6 @@
 using System;
 using DotNetEnv;
 using Fleck;
-using Game.Application;
 using Game.Application.Components;
 
 Env.Load();
@@ -13,8 +12,10 @@ var serverComponents = new ComponentCollection(new IComponent[]
     new IdGenerator(),
     new WebSocketSessionCollection(),
     new GameSceneCollection(),
-    new GameSceneManager()
+    new GameSceneManager(),
+    new GameClientCollection()
 });
+var gameClientCollection = serverComponents.Get<IGameClientCollection>();
 
 AppDomain.CurrentDomain.ProcessExit += (s, e) =>
 {
@@ -22,4 +23,4 @@ AppDomain.CurrentDomain.ProcessExit += (s, e) =>
     serverComponents?.Dispose();
 };
 
-server.Start((connection) => new GameClient(connection, serverComponents));
+server.Start((connection) => gameClientCollection.Add(connection));

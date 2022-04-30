@@ -8,17 +8,17 @@ namespace Game.Application
     {
         private IComponents Components { get; }
 
-        public GameClient(IWebSocketConnection connection, IComponents serverComponents)
+        public GameClient(
+            int id,
+            IWebSocketConnection connection,
+            IWebSocketSessionCollection webSocketSessionCollection,
+            IGameSceneCollection gameSceneCollection)
         {
-            var id = serverComponents.Get<IIdGenerator>().GenerateId();
-            var sessionCollection = serverComponents.Get<IWebSocketSessionCollection>();
-            var gameSceneCollection = serverComponents.Get<IGameSceneCollection>();
-
             Components = new ComponentCollection();
-            Components.Add(new WebSocketConnectionProvider(id, connection, sessionCollection));
+            Components.Add(new WebSocketConnectionProvider(id, connection, webSocketSessionCollection));
             Components.Add(new WebSocketConnectionErrorHandler());
             Components.Add(new RemotePlayerProvider());
-            Components.Add(new RemotePlayerMessageSender(sessionCollection));
+            Components.Add(new RemotePlayerMessageSender(webSocketSessionCollection));
             Components.Add(new MessageHandlerManager(gameSceneCollection));
 
             Console.WriteLine($"A new client #{id} is connected.");
