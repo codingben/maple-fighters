@@ -11,7 +11,8 @@ namespace Game.Application.Handlers
 
         public ChangeAnimationStateHandler(IGameObject player)
         {
-            animationStateProvider = player.Components.Get<IAnimationStateProvider>();
+            animationStateProvider =
+                player.Components.Get<IAnimationStateProvider>();
         }
 
         public void Handle(ChangeAnimationStateMessage message)
