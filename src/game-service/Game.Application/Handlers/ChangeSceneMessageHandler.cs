@@ -17,9 +17,12 @@ namespace Game.Application.Handlers
         {
             this.gameSceneCollection = gameSceneCollection;
 
-            proximityChecker = player.Components.Get<IProximityChecker>();
-            presenceSceneProvider = player.Components.Get<IPresenceSceneProvider>();
-            messageSender = player.Components.Get<IMessageSender>();
+            proximityChecker =
+                player.Components.Get<IProximityChecker>();
+            presenceSceneProvider =
+                player.Components.Get<IPresenceSceneProvider>();
+            messageSender =
+                player.Components.Get<IMessageSender>();
         }
 
         public void Handle(ChangeSceneMessage message)
@@ -32,15 +35,18 @@ namespace Game.Application.Handlers
                     portal.Components.Get<IPortalTeleportationData>();
                 var map = portalTeleportationData.GetDestinationMap();
                 var mapName = ((Map)map).ToString().ToLower();
-                var gameSceneExists =
-                    gameSceneCollection.TryGet(mapName, out var gameScene);
-                if (gameSceneExists)
-                {
-                    presenceSceneProvider.SetScene(gameScene);
 
+                if (gameSceneCollection.TryGet(mapName, out var gameScene))
+                {
+                    SetPlayerPresenceScene(gameScene);
                     SendSceneChangedMessage(map);
                 }
             }
+        }
+
+        private void SetPlayerPresenceScene(IGameScene gameScene)
+        {
+            presenceSceneProvider.SetScene(gameScene);
         }
 
         private void SendSceneChangedMessage(byte map)
