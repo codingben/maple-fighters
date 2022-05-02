@@ -9,9 +9,7 @@ namespace Game.Application.Components
 
         public SceneRegionCreator(Vector2 sceneSize, Vector2 regionSize)
         {
-            var logger = InterestManagementLogger.GetLogger();
-
-            region = new MatrixRegion<IGameObject>(sceneSize, regionSize, logger);
+            region = new MatrixRegion<IGameObject>(sceneSize, regionSize);
         }
 
         protected override void OnRemoved()
