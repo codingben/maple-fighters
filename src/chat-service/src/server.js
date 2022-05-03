@@ -14,11 +14,6 @@ server.on("connection", (webSocket) => {
       client.send(data, { binary: isBinary });
     });
   });
-
-  console.log("A new client connected.");
-});
-server.on("close", () => {
-  console.log("The client has been disconnected.");
 });
 
 console.log("Server started, listening on port %s", port);
