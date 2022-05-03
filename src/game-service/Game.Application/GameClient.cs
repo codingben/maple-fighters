@@ -20,8 +20,6 @@ namespace Game.Application
             Components.Add(new RemotePlayerProvider());
             Components.Add(new RemotePlayerMessageSender(webSocketSessionCollection));
             Components.Add(new MessageHandlerManager(gameSceneCollection));
-
-            Console.WriteLine($"A new client #{id} is connected.");
         }
 
         public void Dispose()

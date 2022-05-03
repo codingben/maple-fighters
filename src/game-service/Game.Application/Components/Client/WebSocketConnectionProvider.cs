@@ -34,11 +34,15 @@ namespace Game.Application.Components
         protected override void OnAwake()
         {
             sessionCollection.Add(id, new WebSocketSessionData(id, connection));
+
+            Console.WriteLine($"Client #{id} is connected.");
         }
 
         protected override void OnRemoved()
         {
             sessionCollection.Remove(id);
+
+            Console.WriteLine($"Client #{id} disconnected.");
         }
 
         private void OnConnectionEstablished()
