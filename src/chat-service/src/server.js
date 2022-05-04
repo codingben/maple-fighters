@@ -4,16 +4,22 @@ require("dotenv").config();
 
 var port = process.env.PORT;
 var server = new WebSocket.Server({ port: port });
-server.on("connection", (webSocket) => {
-  webSocket.on("message", (data, isBinary) => {
-    server.clients.forEach((client) => {
-      if (client === webSocket || client.readyState !== webSocket.OPEN) {
-        return;
-      }
+server.on("connection", onConnection);
 
-      client.send(data, { binary: isBinary });
-    });
+function onConnection(connection) {
+  connection.on("message", (data, isBinary) =>
+    onMessage(connection, data, isBinary)
+  );
+}
+
+function onMessage(connection, data, isBinary) {
+  server.clients.forEach((client) => {
+    if (client === connection || client.readyState !== connection.OPEN) {
+      return;
+    }
+
+    client.send(data, { binary: isBinary });
   });
-});
+}
 
 console.log("Server started, listening on port %s", port);
