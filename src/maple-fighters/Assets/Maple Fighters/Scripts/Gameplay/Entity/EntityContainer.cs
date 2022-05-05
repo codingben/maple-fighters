@@ -58,6 +58,10 @@ namespace Scripts.Gameplay.Entity
             var direction = message.Direction;
 
             localEntity = AddEntity(id, name, position, direction);
+
+            var entityGameObject = localEntity.GameObject;
+
+            SetDirection(entityGameObject, direction);
         }
 
         private void OnGameObjectsAdded(GameObjectsAddedMessage message)
@@ -77,7 +81,10 @@ namespace Scripts.Gameplay.Entity
                 }
                 else
                 {
-                    AddEntity(id, name, position, direction);
+                    var entity = AddEntity(id, name, position, direction);
+                    var entityGameObject = entity.GameObject;
+
+                    SetDirection(entityGameObject, direction);
                 }
             }
         }
@@ -115,8 +122,6 @@ namespace Scripts.Gameplay.Entity
                     collection.Add(id, entity);
 
                     Debug.Log($"Added a new entity with id #{id}");
-
-                    StartCoroutine(SetEntityDirection(gameObject, direction));
                 }
             }
 
@@ -161,16 +166,38 @@ namespace Scripts.Gameplay.Entity
             return collection.TryGetValue(id, out entity);
         }
 
+        private void SetDirection(GameObject entity, float direction)
+        {
+            var name = entity.name;
+            if (name == "LocalPlayer" || name == "RemotePlayer")
+            {
+                StartCoroutine(SetCharacterDirection(entity, direction));
+            }
+            else
+            {
+                StartCoroutine(SetEntityDirection(entity, direction));
+            }
+        }
+
         private IEnumerator SetEntityDirection(GameObject entity, float direction)
         {
             yield return new WaitForSeconds(0.1f);
 
-            if (entity == null || direction == 0)
+            if (direction != 0)
             {
-                yield break;
-            }
+                var x = direction;
+                var y = entity.transform.localScale.y;
+                var z = entity.transform.localScale.z;
 
-            if (entity.name == "LocalPlayer" || entity.name == "RemotePlayer")
+                entity.transform.localScale = new Vector3(x, y, z);
+            }
+        }
+
+        private IEnumerator SetCharacterDirection(GameObject entity, float direction)
+        {
+            yield return new WaitForSeconds(0.1f);
+
+            if (direction != 0)
             {
                 var spawnedCharacter = entity.GetComponent<ISpawnedCharacter>();
                 var character = spawnedCharacter?.GetCharacter();
@@ -182,14 +209,6 @@ namespace Scripts.Gameplay.Entity
 
                     character.transform.localScale = new Vector3(x, y, z);
                 }
-            }
-            else
-            {
-                var x = direction;
-                var y = entity.transform.localScale.y;
-                var z = entity.transform.localScale.z;
-
-                entity.transform.localScale = new Vector3(x, y, z);
             }
         }
     }
