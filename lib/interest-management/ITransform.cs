@@ -35,5 +35,11 @@ namespace InterestManagement
         /// </summary>
         /// <param name="size">The new size.</param>
         void SetSize(Vector2 size);
+
+        /// <summary>
+        /// Sets the direction of the object.
+        /// </summary>
+        /// <param name="direction">The direction.</param>
+        void SetDirection(Vector2 direction);
     }
 }
