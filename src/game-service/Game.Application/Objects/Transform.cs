@@ -9,6 +9,8 @@ namespace Game.Application.Objects
 
         public Vector2 Size { get; private set; }
 
+        public Vector2 Direction { get; private set; }
+
         public event Action PositionChanged;
 
         public Transform()
@@ -27,6 +29,11 @@ namespace Game.Application.Objects
         public void SetSize(Vector2 size)
         {
             Size = size;
+        }
+
+        public void SetDirection(Vector2 direction)
+        {
+            Direction = direction;
         }
     }
 }
