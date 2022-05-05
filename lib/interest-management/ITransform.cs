@@ -20,6 +20,11 @@ namespace InterestManagement
         Vector2 Size { get; }
 
         /// <summary>
+        /// Gets direction of the object.
+        /// </summary>
+        Vector2 Direction { get; }
+
+        /// <summary>
         /// Sets the new position to the object.
         /// </summary>
         /// <param name="position">The position.</param>
