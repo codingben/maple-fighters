@@ -19,8 +19,11 @@ namespace Game.Application.Handlers
             var x = message.X;
             var y = message.Y;
             var position = new Vector2(x, y);
+            var direction = (transform.Position - position).Normalize();
+            direction = new Vector2(direction.X > 0 ? 1 : -1, direction.Y);
 
             transform.SetPosition(position);
+            transform.SetDirection(direction);
         }
     }
 }
