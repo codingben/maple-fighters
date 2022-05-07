@@ -7,8 +7,8 @@ namespace Game.Physics
 {
     public class PhysicsWorldManager : IPhysicsWorldManager
     {
-        private readonly LinkedList<NewBodyData> addBodies;
-        private readonly LinkedList<BodyData> removeBodies;
+        private readonly Queue<NewBodyData> addBodies;
+        private readonly Queue<BodyData> removeBodies;
         private readonly Dictionary<int, BodyData> bodies;
         private readonly World world;
 
@@ -19,8 +19,8 @@ namespace Game.Physics
             bool doSleep = false,
             bool continuousPhysics = false)
         {
-            addBodies = new LinkedList<NewBodyData>();
-            removeBodies = new LinkedList<BodyData>();
+            addBodies = new Queue<NewBodyData>();
+            removeBodies = new Queue<BodyData>();
             bodies = new Dictionary<int, BodyData>();
 
             var worldAabb = new AABB
@@ -42,22 +42,15 @@ namespace Game.Physics
 
         public void UpdateBodies()
         {
-            if (removeBodies.Count > 0)
-            {
-                RemoveBodies();
-            }
-
-            if (addBodies.Count > 0)
-            {
-                AddBodies();
-            }
+            RemoveBodies();
+            AddBodies();
         }
 
         private void AddBodies()
         {
-            var newBodyDatas = new LinkedList<NewBodyData>(addBodies);
+            if (addBodies.Count == 0) return;
 
-            foreach (var newBodyData in newBodyDatas)
+            while (addBodies.TryDequeue(out var newBodyData))
             {
                 var id = newBodyData.Id;
 
@@ -72,15 +65,13 @@ namespace Game.Physics
 
                 bodies.Add(id, bodyData);
             }
-
-            addBodies.Clear();
         }
 
         private void RemoveBodies()
         {
-            var bodyDatas = new LinkedList<BodyData>(removeBodies);
+            if (removeBodies.Count == 0) return;
 
-            foreach (var bodyData in bodyDatas)
+            while (removeBodies.TryDequeue(out var bodyData))
             {
                 world?.DestroyBody(bodyData.Body);
 
@@ -91,20 +82,18 @@ namespace Game.Physics
                     bodies.Remove(id);
                 }
             }
-
-            removeBodies.Clear();
         }
 
         public void AddBody(NewBodyData newBodyData)
         {
-            addBodies.AddLast(newBodyData);
+            addBodies.Enqueue(newBodyData);
         }
 
         public void RemoveBody(int id)
         {
             var body = bodies[id];
 
-            removeBodies.AddLast(body);
+            removeBodies.Enqueue(body);
         }
 
         public void Step(float timeStep, int velocityIterations, int positionIterations)
