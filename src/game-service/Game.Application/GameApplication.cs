@@ -2,6 +2,7 @@ using System;
 using DotNetEnv;
 using Fleck;
 using Game.Application.Components;
+using Game.Logger;
 using Serilog;
 
 Env.Load();
@@ -20,6 +21,8 @@ FleckLog.LogAction = (level, message, exception) =>
             Log.Logger.Information("{0} [{1}] {2} {3}", DateTime.Now, level, message, exception);
     }
 };
+
+InterestManagementLogger.LogLevel = InterestMgmtLogLevel.Debug;
 
 var url = Environment.GetEnvironmentVariable("URL");
 var server = new WebSocketServer(url);
