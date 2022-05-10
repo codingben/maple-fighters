@@ -23,6 +23,7 @@ FleckLog.LogAction = (level, message, exception) =>
 };
 
 InterestManagementLogger.LogLevel = InterestMgmtLogLevel.Debug;
+GameLogger.GameLogLevel = GameLogLevel.Debug;
 
 var url = Environment.GetEnvironmentVariable("URL");
 var server = new WebSocketServer(url);
