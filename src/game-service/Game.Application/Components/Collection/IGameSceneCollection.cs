@@ -6,7 +6,7 @@ namespace Game.Application.Components
     {
         bool Add(string name, IGameScene gameScene);
 
-        void Remove(string name);
+        bool Remove(string name);
 
         bool TryGet(string name, out IGameScene gameScene);
     }

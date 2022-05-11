@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Game.Logger;
 
 namespace Game.Application.Components
 {
@@ -25,12 +26,24 @@ namespace Game.Application.Components
 
         public bool Add(string name, IGameScene gameScene)
         {
-            return collection.TryAdd(name, gameScene);
+            var isAdded = collection.TryAdd(name, gameScene);
+            if (isAdded)
+            {
+                GameLogger.Debug($"Scene {name} added.");
+            }
+
+            return isAdded;
         }
 
-        public void Remove(string name)
+        public bool Remove(string name)
         {
-            collection.Remove(name, out _);
+            var isRemoved = collection.Remove(name, out _);
+            if (isRemoved)
+            {
+                GameLogger.Debug($"Scene {name} removed.");
+            }
+
+            return isRemoved;
         }
 
         public bool TryGet(string name, out IGameScene gameScene)
