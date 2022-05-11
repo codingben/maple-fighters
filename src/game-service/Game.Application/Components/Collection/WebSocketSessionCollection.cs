@@ -1,4 +1,5 @@
 ﻿using System.Collections.Concurrent;
+using Game.Logger;
 
 namespace Game.Application.Components
 {
@@ -13,12 +14,24 @@ namespace Game.Application.Components
 
         public bool Add(int id, WebSocketSessionData webSocketSessionData)
         {
-            return collection.TryAdd(id, webSocketSessionData);
+            var isAdded = collection.TryAdd(id, webSocketSessionData);
+            if (isAdded)
+            {
+                GameLogger.Debug($"Client #{id} is connected.");
+            }
+
+            return isAdded;
         }
 
         public bool Remove(int id)
         {
-            return collection.TryRemove(id, out _);
+            var isRemoved = collection.TryRemove(id, out _);
+            if (isRemoved)
+            {
+                GameLogger.Debug($"Client #{id} disconnected.");
+            }
+
+            return isRemoved;
         }
 
         public bool TryGet(int id, out WebSocketSessionData webSocketSessionData)

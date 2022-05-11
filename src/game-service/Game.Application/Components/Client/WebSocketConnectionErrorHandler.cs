@@ -1,4 +1,5 @@
 using System;
+using Game.Logger;
 
 namespace Game.Application.Components
 {
@@ -13,7 +14,7 @@ namespace Game.Application.Components
 
         private void OnErrorOccurred(Exception exception)
         {
-            Console.WriteLine($"{exception.Message}");
+            GameLogger.Error(exception.Message);
         }
     }
 }
