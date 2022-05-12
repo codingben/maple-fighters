@@ -1,24 +1,14 @@
-using Fleck;
 using System.Collections.Generic;
 
 namespace Game.Application.Components
 {
     public class GameClientCollection : ComponentBase, IGameClientCollection
     {
-        private readonly Dictionary<int, GameClient> collection;
-
-        private IIdGenerator idGenerator;
-        private IGameSceneCollection gameSceneCollection;
+        private readonly Dictionary<int, IGameClient> collection;
 
         public GameClientCollection()
         {
-            collection = new Dictionary<int, GameClient>();
-        }
-
-        protected override void OnAwake()
-        {
-            idGenerator = Components.Get<IIdGenerator>();
-            gameSceneCollection = Components.Get<IGameSceneCollection>();
+            collection = new Dictionary<int, IGameClient>();
         }
 
         protected override void OnRemoved()
@@ -33,30 +23,32 @@ namespace Game.Application.Components
             collection.Clear();
         }
 
-        public void Add(IWebSocketConnection connection)
+        public void Add(IGameClient gameClient)
         {
-            var id = idGenerator.GenerateId();
-            var gameClient = new GameClient(
-                id,
-                connection,
-                gameSceneCollection);
+            var id =
+                gameClient.Id;
+            var webSocketConnectionProvider =
+                gameClient.Components.Get<IWebSocketConnectionProvider>();
+            var connection =
+                webSocketConnectionProvider.ProvideConnection();
+            connection.OnClose += () => Remove(id);
 
             collection.Add(id, gameClient);
-
-            AddConnectionClosedHandler(id, connection);
         }
 
-        private void AddConnectionClosedHandler(int id, IWebSocketConnection connection)
+        public void Remove(int id)
         {
-            connection.OnClose += () =>
+            if (collection.TryGetValue(id, out var gameClient))
             {
-                if (collection.TryGetValue(id, out var gameClient))
-                {
-                    gameClient.Dispose();
-                }
+                gameClient.Dispose();
+            }
 
-                collection.Remove(id);
-            };
+            collection.Remove(id);
+        }
+
+        public bool TryGet(int id, out IGameClient gameClient)
+        {
+            return collection.TryGetValue(id, out gameClient);
         }
     }
 }
