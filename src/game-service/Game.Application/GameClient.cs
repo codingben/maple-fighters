@@ -1,22 +1,24 @@
-using System;
 using Game.Application.Components;
 using Fleck;
 
 namespace Game.Application
 {
-    public class GameClient : IDisposable
+    public class GameClient : IGameClient
     {
-        private IComponents Components { get; }
+        public int Id { get; }
+
+        public IComponents Components { get; }
 
         public GameClient(
             int id,
             IWebSocketConnection connection,
             IGameSceneCollection gameSceneCollection)
         {
+            Id = id;
             Components = new ComponentCollection();
-            Components.Add(new WebSocketConnectionProvider(id, connection));
+            Components.Add(new WebSocketConnectionProvider(connection));
             Components.Add(new WebSocketConnectionErrorHandler());
-            Components.Add(new RemotePlayerProvider());
+            Components.Add(new RemotePlayerProvider(id));
             Components.Add(new RemotePlayerMessageSender());
             Components.Add(new MessageHandlerManager(gameSceneCollection));
         }
