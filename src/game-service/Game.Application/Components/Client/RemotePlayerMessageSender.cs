@@ -9,12 +9,6 @@ namespace Game.Application.Components
     {
         private IGameObject remotePlayer;
         private IWebSocketConnection connection;
-        private readonly IWebSocketSessionCollection sessionCollection;
-
-        public RemotePlayerMessageSender(IWebSocketSessionCollection sessionCollection)
-        {
-            this.sessionCollection = sessionCollection;
-        }
 
         protected override void OnAwake()
         {

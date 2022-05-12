@@ -8,7 +8,6 @@ namespace Game.Application.Components
         private readonly Dictionary<int, GameClient> collection;
 
         private IIdGenerator idGenerator;
-        private IWebSocketSessionCollection webSocketSessionCollection;
         private IGameSceneCollection gameSceneCollection;
 
         public GameClientCollection()
@@ -18,12 +17,8 @@ namespace Game.Application.Components
 
         protected override void OnAwake()
         {
-            idGenerator =
-                Components.Get<IIdGenerator>();
-            webSocketSessionCollection =
-                Components.Get<IWebSocketSessionCollection>();
-            gameSceneCollection =
-                Components.Get<IGameSceneCollection>();
+            idGenerator = Components.Get<IIdGenerator>();
+            gameSceneCollection = Components.Get<IGameSceneCollection>();
         }
 
         protected override void OnRemoved()
@@ -44,7 +39,6 @@ namespace Game.Application.Components
             var gameClient = new GameClient(
                 id,
                 connection,
-                webSocketSessionCollection,
                 gameSceneCollection);
 
             collection.Add(id, gameClient);

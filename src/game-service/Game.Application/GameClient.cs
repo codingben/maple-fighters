@@ -11,14 +11,13 @@ namespace Game.Application
         public GameClient(
             int id,
             IWebSocketConnection connection,
-            IWebSocketSessionCollection webSocketSessionCollection,
             IGameSceneCollection gameSceneCollection)
         {
             Components = new ComponentCollection();
-            Components.Add(new WebSocketConnectionProvider(id, connection, webSocketSessionCollection));
+            Components.Add(new WebSocketConnectionProvider(id, connection));
             Components.Add(new WebSocketConnectionErrorHandler());
             Components.Add(new RemotePlayerProvider());
-            Components.Add(new RemotePlayerMessageSender(webSocketSessionCollection));
+            Components.Add(new RemotePlayerMessageSender());
             Components.Add(new MessageHandlerManager(gameSceneCollection));
         }
 

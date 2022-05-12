@@ -30,10 +30,9 @@ var server = new WebSocketServer(url);
 var serverComponents = new ComponentCollection(new IComponent[]
 {
     new IdGenerator(),
-    new WebSocketSessionCollection(),
     new GameSceneCollection(),
-    new GameSceneManager(),
-    new GameClientCollection()
+    new GameClientCollection(),
+    new GameSceneManager()
 });
 var gameClientCollection = serverComponents.Get<IGameClientCollection>();
 
