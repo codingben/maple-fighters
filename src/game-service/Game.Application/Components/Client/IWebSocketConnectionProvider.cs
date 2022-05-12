@@ -13,8 +13,6 @@ namespace Game.Application.Components
 
         event Action<string> MessageReceived;
 
-        int ProvideId();
-
         IWebSocketConnection ProvideConnection();
     }
 }

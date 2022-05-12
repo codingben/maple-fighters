@@ -4,14 +4,10 @@ namespace Game.Application.Components
 {
     public class RemotePlayerProvider : ComponentBase, IRemotePlayerProvider
     {
-        private int id;
-        private IGameObject gameObject;
+        private readonly IGameObject gameObject;
 
-        protected override void OnAwake()
+        public RemotePlayerProvider(int id)
         {
-            var webSocketConnectionProvider =
-                Components.Get<IWebSocketConnectionProvider>();
-            id = webSocketConnectionProvider.ProvideId();
             gameObject = new PlayerGameObject(id, name: "RemotePlayer");
         }
 

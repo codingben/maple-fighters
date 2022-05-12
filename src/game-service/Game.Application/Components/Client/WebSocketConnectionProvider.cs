@@ -13,14 +13,10 @@ namespace Game.Application.Components
 
         public event Action<string> MessageReceived;
 
-        private readonly int id;
         private readonly IWebSocketConnection connection;
 
-        public WebSocketConnectionProvider(
-            int id,
-            IWebSocketConnection connection)
+        public WebSocketConnectionProvider(IWebSocketConnection connection)
         {
-            this.id = id;
             this.connection = connection;
             this.connection.OnOpen += OnConnectionEstablished;
             this.connection.OnClose += OnConnectionClosed;
@@ -46,11 +42,6 @@ namespace Game.Application.Components
         private void OnMessageReceived(string message)
         {
             MessageReceived?.Invoke(message);
-        }
-
-        public int ProvideId()
-        {
-            return id;
         }
 
         public IWebSocketConnection ProvideConnection()
