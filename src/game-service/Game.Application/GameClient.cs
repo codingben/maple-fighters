@@ -12,6 +12,7 @@ namespace Game.Application
         public GameClient(
             int id,
             IWebSocketConnection connection,
+            IGameClientCollection gameClientCollection,
             IGameSceneCollection gameSceneCollection)
         {
             Id = id;
@@ -19,7 +20,7 @@ namespace Game.Application
             Components.Add(new WebSocketConnectionProvider(connection));
             Components.Add(new WebSocketConnectionErrorHandler());
             Components.Add(new RemotePlayerProvider(id));
-            Components.Add(new RemotePlayerMessageSender());
+            Components.Add(new RemotePlayerMessageSender(gameClientCollection));
             Components.Add(new MessageHandlerManager(gameSceneCollection));
         }
 

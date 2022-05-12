@@ -48,7 +48,11 @@ AppDomain.CurrentDomain.ProcessExit += (_, _) =>
 server.Start((connection) =>
 {
     var id = idGenerator.GenerateId();
-    var gameClient = new GameClient(id, connection, gameSceneCollection);
+    var gameClient = new GameClient(
+        id,
+        connection,
+        gameClientCollection,
+        gameSceneCollection);
 
     gameClientCollection.Add(gameClient);
 });
