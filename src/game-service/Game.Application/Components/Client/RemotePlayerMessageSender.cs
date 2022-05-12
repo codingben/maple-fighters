@@ -9,11 +9,19 @@ namespace Game.Application.Components
     {
         private IGameObject remotePlayer;
         private IWebSocketConnection connection;
+        private readonly IGameClientCollection gameClientCollection;
+
+        public RemotePlayerMessageSender(IGameClientCollection gameClientCollection)
+        {
+            this.gameClientCollection = gameClientCollection;
+        }
 
         protected override void OnAwake()
         {
-            var remotePlayerProvider = Components.Get<IRemotePlayerProvider>();
-            var webSocketConnectionProvider = Components.Get<IWebSocketConnectionProvider>();
+            var remotePlayerProvider =
+                Components.Get<IRemotePlayerProvider>();
+            var webSocketConnectionProvider =
+                Components.Get<IWebSocketConnectionProvider>();
 
             remotePlayer = remotePlayerProvider.Provide();
             connection = webSocketConnectionProvider.ProvideConnection();
@@ -57,11 +65,15 @@ namespace Game.Application.Components
 
         private void OnSendMessageCallback(string data, int id)
         {
-            if (sessionCollection.TryGet(id, out var sessionData))
+            if (gameClientCollection.TryGet(id, out var gameClient))
             {
-                if (sessionData.Connection.IsAvailable)
+                var webSocketConnectionProvider =
+                    gameClient.Components.Get<IWebSocketConnectionProvider>();
+                var connection =
+                    webSocketConnectionProvider.ProvideConnection();
+                if (connection.IsAvailable)
                 {
-                    sessionData.Connection.Send(data);
+                    connection.Send(data);
                 }
             }
         }
