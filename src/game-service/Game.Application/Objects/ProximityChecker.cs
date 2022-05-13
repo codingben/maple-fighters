@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using Game.Application.Components;
-using Game.Logger;
+using Game.Log;
 using InterestManagement;
 
 namespace Game.Application.Objects
@@ -13,9 +13,9 @@ namespace Game.Application.Objects
         {
             var gameObjectGetter = Components.Get<IGameObjectGetter>();
             var gameObject = gameObjectGetter.Get();
-            var logger = InterestManagementLogger.GetLogger();
+            var log = InterestManagementLog.GetLog();
 
-            interestArea = new InterestArea<IGameObject>(gameObject, logger);
+            interestArea = new InterestArea<IGameObject>(gameObject, log);
         }
 
         protected override void OnRemoved()

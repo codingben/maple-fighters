@@ -1,5 +1,5 @@
 using Game.Application.Objects;
-using Game.Logger;
+using Game.Log;
 using InterestManagement;
 
 namespace Game.Application.Components
@@ -10,9 +10,9 @@ namespace Game.Application.Components
 
         public SceneRegionCreator(Vector2 sceneSize, Vector2 regionSize)
         {
-            var logger = InterestManagementLogger.GetLogger();
+            var log = InterestManagementLog.GetLog();
 
-            region = new MatrixRegion<IGameObject>(sceneSize, regionSize, logger);
+            region = new MatrixRegion<IGameObject>(sceneSize, regionSize, log);
         }
 
         protected override void OnRemoved()

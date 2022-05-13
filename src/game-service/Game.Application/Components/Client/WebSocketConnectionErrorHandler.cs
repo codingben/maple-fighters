@@ -1,5 +1,5 @@
 using System;
-using Game.Logger;
+using Game.Log;
 
 namespace Game.Application.Components
 {
@@ -14,7 +14,7 @@ namespace Game.Application.Components
 
         private void OnErrorOccurred(Exception exception)
         {
-            GameLogger.Error(exception.Message);
+            GameLog.Error(exception.Message);
         }
     }
 }

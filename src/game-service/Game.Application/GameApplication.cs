@@ -3,7 +3,7 @@ using DotNetEnv;
 using Fleck;
 using Game.Application;
 using Game.Application.Components;
-using Game.Logger;
+using Game.Log;
 using Serilog;
 
 Env.Load();
@@ -17,14 +17,23 @@ FleckLog.LogAction = (level, message, exception) =>
     if (level >= LogLevel.Info)
     {
         if (exception == null)
-            Log.Logger.Information("{0} [{1}] {2}", DateTime.Now, level, message);
+            Log.Logger.Information(
+                "{0} [{1}] {2}",
+                DateTime.Now,
+                level,
+                message);
         else
-            Log.Logger.Information("{0} [{1}] {2} {3}", DateTime.Now, level, message, exception);
+            Log.Logger.Information(
+                "{0} [{1}] {2} {3}",
+                DateTime.Now,
+                level,
+                message,
+                exception);
     }
 };
 
-InterestManagementLogger.LogLevel = InterestMgmtLogLevel.Debug;
-GameLogger.GameLogLevel = GameLogLevel.Debug;
+InterestManagementLog.LogLevel = InterestManagementLogLevel.Debug;
+GameLog.GameLogLevel = GameLogLevel.Debug;
 
 var url = Environment.GetEnvironmentVariable("URL");
 var server = new WebSocketServer(url);
