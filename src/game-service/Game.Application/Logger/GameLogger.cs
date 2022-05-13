@@ -3,7 +3,7 @@ using Serilog;
 
 namespace Game.Logger
 {
-    public static class GameLogger
+    public class GameLogger
     {
         public static GameLogLevel GameLogLevel;
 
@@ -11,7 +11,7 @@ namespace Game.Logger
         {
             if (GameLogLevel >= GameLogLevel.Debug)
             {
-                Log.Logger.Information("{0} [Debug] {2}", DateTime.Now, message);
+                Log.Logger.Information("{0} [{1}] {2}", DateTime.Now, GameLogLevel.Debug, message);
             }
         }
 
@@ -19,7 +19,7 @@ namespace Game.Logger
         {
             if (GameLogLevel >= GameLogLevel.Info)
             {
-                Log.Logger.Information("{0} [Info] {2}", DateTime.Now, message);
+                Log.Logger.Information("{0} [{1}] {2}", DateTime.Now, GameLogLevel.Info, message);
             }
         }
 
@@ -27,7 +27,7 @@ namespace Game.Logger
         {
             if (GameLogLevel >= GameLogLevel.Warn)
             {
-                Log.Logger.Information("{0} [Warning] {2}", DateTime.Now, message);
+                Log.Logger.Information("{0} [{1}] {2}", DateTime.Now, GameLogLevel.Warn, message);
             }
         }
 
@@ -35,7 +35,7 @@ namespace Game.Logger
         {
             if (GameLogLevel >= GameLogLevel.Error)
             {
-                Log.Logger.Information("{0} [Error] {2}", DateTime.Now, message);
+                Log.Logger.Information("{0} [{1}] {2}", DateTime.Now, GameLogLevel.Error, message);
             }
         }
     }
