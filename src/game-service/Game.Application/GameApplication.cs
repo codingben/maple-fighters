@@ -12,19 +12,7 @@ Log.Logger = new LoggerConfiguration()
     .WriteTo.Console()
     .CreateLogger();
 
-FleckLog.LogAction = (level, message, exception) =>
-{
-    if (FleckLog.Level >= level)
-    {
-        Log.Logger.Information(
-            "{0} [{1}] {2} {3}",
-            DateTime.Now,
-            level,
-            message,
-            exception == null ? string.Empty : exception);
-    }
-};
-
+FleckLog.LogAction = FleckLogAction.LogAction;
 FleckLog.Level = LogLevel.Info;
 InterestManagementLog.LogLevel = InterestManagementLogLevel.Debug;
 GameLog.LogLevel = GameLogLevel.Debug;
