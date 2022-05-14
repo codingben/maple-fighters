@@ -55,6 +55,9 @@ services:
             - 50051
         environment:
             URL: ws://0.0.0.0:50051
+            FLECK_LOG: Info
+            IM_LOG: Debug
+            GAME_LOG: Debug
 
     gameprovider-service:
         image: gameprovider-service
