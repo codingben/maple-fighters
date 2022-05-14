@@ -2,7 +2,7 @@ using System;
 
 namespace Game.Log
 {
-    public enum InterestManagementLogLevel
+    public enum IMLogLevel
     {
         Debug,
         Info
@@ -10,11 +10,11 @@ namespace Game.Log
 
     public class InterestManagementLog : InterestManagement.ILogger
     {
-        public static InterestManagementLogLevel Level;
+        public static IMLogLevel Level;
 
         public void Info(string message)
         {
-            if (Level == InterestManagementLogLevel.Info)
+            if (Level == IMLogLevel.Info)
             {
                 Serilog.Log.Logger.Information(
                     "{0} [{1}] {2}",

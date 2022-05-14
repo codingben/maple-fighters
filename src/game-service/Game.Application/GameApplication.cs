@@ -13,9 +13,9 @@ Log.Logger = new LoggerConfiguration()
     .CreateLogger();
 
 FleckLog.LogAction = FleckLogAction.LogAction;
-FleckLog.Level = (LogLevel)Enum.Parse(typeof(LogLevel), Env.GetString("FLECK_LOG_LEVEL"));
-InterestManagementLog.Level = (InterestManagementLogLevel)Enum.Parse(typeof(InterestManagementLogLevel), Env.GetString("INTEREST_MGMT_LOG_LEVEL"));
-GameLog.Level = (GameLogLevel)Enum.Parse(typeof(GameLogLevel), Env.GetString("GAME_LOG_LEVEL"));
+FleckLog.Level = (LogLevel)Enum.Parse(typeof(LogLevel), Env.GetString("FLECK_LOG"));
+InterestManagementLog.Level = (IMLogLevel)Enum.Parse(typeof(IMLogLevel), Env.GetString("IM_LOG"));
+GameLog.Level = (GameLogLevel)Enum.Parse(typeof(GameLogLevel), Env.GetString("GAME_LOG"));
 
 var url = Env.GetString("URL");
 var server = new WebSocketServer(url);
