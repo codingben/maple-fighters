@@ -12,16 +12,16 @@ namespace Game.Log
 
     public class GameLog
     {
-        public static GameLogLevel LogLevel;
+        public static GameLogLevel Level;
 
         public static Action<GameLogLevel, string> LogAction = (level, message) =>
         {
-            if (LogLevel >= level)
+            if (level >= Level)
             {
                 Serilog.Log.Logger.Information(
                     "{0} [{1}] {2}",
                     DateTime.Now,
-                    GameLogLevel.Debug,
+                    level,
                     message);
             }
         };
