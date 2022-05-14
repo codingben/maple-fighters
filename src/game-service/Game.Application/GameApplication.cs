@@ -14,26 +14,20 @@ Log.Logger = new LoggerConfiguration()
 
 FleckLog.LogAction = (level, message, exception) =>
 {
-    if (level >= LogLevel.Info)
+    if (FleckLog.Level >= level)
     {
-        if (exception == null)
-            Log.Logger.Information(
-                "{0} [{1}] {2}",
-                DateTime.Now,
-                level,
-                message);
-        else
-            Log.Logger.Information(
-                "{0} [{1}] {2} {3}",
-                DateTime.Now,
-                level,
-                message,
-                exception);
+        Log.Logger.Information(
+            "{0} [{1}] {2} {3}",
+            DateTime.Now,
+            level,
+            message,
+            exception == null ? string.Empty : exception);
     }
 };
 
+FleckLog.Level = LogLevel.Info;
 InterestManagementLog.LogLevel = InterestManagementLogLevel.Debug;
-GameLog.GameLogLevel = GameLogLevel.Debug;
+GameLog.LogLevel = GameLogLevel.Debug;
 
 var url = Environment.GetEnvironmentVariable("URL");
 var server = new WebSocketServer(url);
