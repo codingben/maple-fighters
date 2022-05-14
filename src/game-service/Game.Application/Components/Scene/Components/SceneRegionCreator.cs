@@ -10,7 +10,7 @@ namespace Game.Application.Components
 
         public SceneRegionCreator(Vector2 sceneSize, Vector2 regionSize)
         {
-            var log = InterestManagementLog.GetLog();
+            var log = new InterestManagementLog();
 
             region = new MatrixRegion<IGameObject>(sceneSize, regionSize, log);
         }

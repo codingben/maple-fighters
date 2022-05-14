@@ -13,7 +13,7 @@ namespace Game.Application.Objects
         {
             var gameObjectGetter = Components.Get<IGameObjectGetter>();
             var gameObject = gameObjectGetter.Get();
-            var log = InterestManagementLog.GetLog();
+            var log = new InterestManagementLog();
 
             interestArea = new InterestArea<IGameObject>(gameObject, log);
         }
