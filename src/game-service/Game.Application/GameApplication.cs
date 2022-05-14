@@ -18,8 +18,8 @@ var gameLogLevel = Env.GetInt("GAME_LOG_LEVEL");
 
 FleckLog.LogAction = FleckLogAction.LogAction;
 FleckLog.Level = (LogLevel)fleckLogLevel;
-InterestManagementLog.LogLevel = (InterestManagementLogLevel)interestMgmtLogLevel;
-GameLog.LogLevel = (GameLogLevel)gameLogLevel;
+InterestManagementLog.Level = (InterestManagementLogLevel)interestMgmtLogLevel;
+GameLog.Level = (GameLogLevel)gameLogLevel;
 
 var url = Env.GetString("URL");
 var server = new WebSocketServer(url);
