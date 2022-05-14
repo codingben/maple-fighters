@@ -12,11 +12,11 @@ namespace Game.Log
 
     public class GameLog
     {
-        public static GameLogLevel GameLogLevel;
+        public static GameLogLevel LogLevel;
 
-        public static void Debug(string message)
+        public static Action<GameLogLevel, string> LogAction = (level, message) =>
         {
-            if (GameLogLevel >= GameLogLevel.Debug)
+            if (LogLevel >= level)
             {
                 Serilog.Log.Logger.Information(
                     "{0} [{1}] {2}",
@@ -24,42 +24,26 @@ namespace Game.Log
                     GameLogLevel.Debug,
                     message);
             }
+        };
+
+        public static void Debug(string message)
+        {
+            LogAction(GameLogLevel.Debug, message);
         }
 
         public static void Info(string message)
         {
-            if (GameLogLevel >= GameLogLevel.Info)
-            {
-                Serilog.Log.Logger.Information(
-                    "{0} [{1}] {2}",
-                    DateTime.Now,
-                    GameLogLevel.Info,
-                    message);
-            }
+            LogAction(GameLogLevel.Info, message);
         }
 
         public static void Warning(string message)
         {
-            if (GameLogLevel >= GameLogLevel.Warn)
-            {
-                Serilog.Log.Logger.Information(
-                    "{0} [{1}] {2}",
-                    DateTime.Now,
-                    GameLogLevel.Warn,
-                    message);
-            }
+            LogAction(GameLogLevel.Warn, message);
         }
 
         public static void Error(string message)
         {
-            if (GameLogLevel >= GameLogLevel.Error)
-            {
-                Serilog.Log.Logger.Information(
-                    "{0} [{1}] {2}",
-                    DateTime.Now,
-                    GameLogLevel.Error,
-                    message);
-            }
+            LogAction(GameLogLevel.Error, message);
         }
     }
 }
