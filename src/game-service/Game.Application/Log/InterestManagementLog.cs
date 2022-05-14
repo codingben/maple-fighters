@@ -10,23 +10,18 @@ namespace Game.Log
 
     public class InterestManagementLog : InterestManagement.ILogger
     {
-        public static InterestManagementLogLevel LogLevel;
+        public static InterestManagementLogLevel Level;
 
-        public static Action<InterestManagementLogLevel, string> LogAction = (level, message) =>
+        public void Info(string message)
         {
-            if (LogLevel >= level)
+            if (Level == InterestManagementLogLevel.Info)
             {
                 Serilog.Log.Logger.Information(
                     "{0} [{1}] {2}",
                     DateTime.Now,
-                    GameLogLevel.Debug,
+                    Level,
                     message);
             }
-        };
-
-        public void Info(string message)
-        {
-            LogAction(InterestManagementLogLevel.Info, message);
         }
     }
 }
