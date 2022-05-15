@@ -1,6 +1,7 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using Game.Application.Objects;
+using Game.Log;
 
 namespace Game.Application.Components
 {
@@ -27,12 +28,24 @@ namespace Game.Application.Components
 
         public bool Add(IGameObject gameObject)
         {
-            return collection.TryAdd(gameObject.Id, gameObject);
+            var isAdded = collection.TryAdd(gameObject.Id, gameObject);
+            if (isAdded)
+            {
+                GameLog.Debug($"Game object {gameObject.Name} added.");
+            }
+
+            return isAdded;
         }
 
         public bool Remove(int id)
         {
-            return collection.TryRemove(id, out _);
+            var isRemoved = collection.TryRemove(id, out _);
+            if (isRemoved)
+            {
+                GameLog.Debug($"Game object #{id} removed.");
+            }
+
+            return isRemoved;
         }
 
         public bool TryGet(int id, out IGameObject gameObject)
