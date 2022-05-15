@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Game.Log;
 
 namespace Game.Application.Components
 {
@@ -34,6 +35,8 @@ namespace Game.Application.Components
             connection.OnClose += () => Remove(id);
 
             collection.Add(id, gameClient);
+
+            GameLog.Debug($"Client #{id} connected.");
         }
 
         public void Remove(int id)
@@ -44,6 +47,8 @@ namespace Game.Application.Components
             }
 
             collection.Remove(id);
+
+            GameLog.Debug($"Client #{id} disconnected.");
         }
 
         public bool TryGet(int id, out IGameClient gameClient)
