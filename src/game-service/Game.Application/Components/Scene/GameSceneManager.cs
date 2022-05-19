@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Net;
 using Game.Application.Objects;
 using InterestManagement;
 using YamlDotNet.Serialization;
@@ -16,10 +17,10 @@ namespace Game.Application.Components
             idGenerator = Components.Get<IIdGenerator>();
             gameSceneCollection = Components.Get<IGameSceneCollection>();
 
-            var config = GetConfig();
-            var SceneCollectionData = ParseSceneCollectionData(config);
+            var yamlConfig = LoadYamlConfig();
+            var configData = ParseConfigData(yamlConfig);
 
-            CreateGameScene(SceneCollectionData);
+            CreateGameScene(configData);
         }
 
         protected override void OnRemoved()
@@ -88,15 +89,6 @@ namespace Game.Application.Components
             }
         }
 
-        private SceneCollectionData ParseSceneCollectionData(string data)
-        {
-            var deserializer = new DeserializerBuilder()
-                .WithNamingConvention(CamelCaseNamingConvention.Instance)
-                .Build();
-
-            return deserializer.Deserialize<SceneCollectionData>(data);
-        }
-
         private IGameObject CreateGameObject(
           ObjectTypes type,
           int id,
@@ -109,89 +101,27 @@ namespace Game.Application.Components
             else throw new InvalidGameObjectTypeException(type);
         }
 
-        private string GetConfig()
+        private SceneCollectionData ParseConfigData(string data)
         {
-            return @"
-scenes:
-  lobby:
-    sceneSize:
-      x: 40
-      y: 5
-    regionSize: &regionSize
-      x: 10
-      y: 5
-    playerSpawn:
-      position:
-        x: 18
-        y: -1.86
-      size: *regionSize
-      direction: 1
-    objects:
-    - name: Guardian
-      type: 0 # NPC
-      position:
-        x: -14.24
-        y: -2.025
-      size: *regionSize
-    - name: Portal
-      type: 1 # Portal
-      position:
-        x: -17.125
-        y: -1.5
-      size: *regionSize
-      customData: '1' # The Dark Forest Map
-  thedarkforest:
-    sceneSize:
-      x: 30
-      y: 30
-    regionSize: &regionSize
-      x: 10
-      y: 5
-    playerSpawn:
-      position:
-        x: -12.8
-        y: -12.95
-      size: *regionSize
-      direction: -1
-    objects:
-    - name: BlueSnail
-      type: 2 # Mob
-      position:
-        x: -2.5
-        y: -8.15
-      size: *regionSize
-    - name: BlueSnail
-      type: 2 # Mob
-      position:
-        x: 2.85
-        y: -3.05
-      size: *regionSize
-    - name: BlueSnail
-      type: 2 # Mob
-      position:
-        x: -3.5
-        y: -3.05
-      size: *regionSize
-    - name: Mushroom
-      type: 2 # Mob
-      position:
-        x: -6.5
-        y: 3.75
-      size: *regionSize
-    - name: Mushroom
-      type: 2 # Mob
-      position:
-        x: -0.8
-        y: 3.75
-      size: *regionSize
-    - name: Portal
-      type: 1 # Portal
-      position:
-        x: 12.5
-        y: -1.125
-      size: *regionSize
-      customData: '0' # Lobby Map
-            ";
+            var deserializer = new DeserializerBuilder()
+                .WithNamingConvention(CamelCaseNamingConvention.Instance)
+                .Build();
+
+            return deserializer.Deserialize<SceneCollectionData>(data);
+        }
+
+        private string LoadYamlConfig()
+        {
+            var config = string.Empty;
+            var url = "https://raw.githubusercontent.com/benukhanov/maple-fighters-configs/main/{0}";
+            var yamlPath = string.Format(url, "scenes.yml");
+
+            using (var client = new WebClient())
+            {
+                config = client.DownloadString(yamlPath);
+            }
+
+            return config;
         }
     }
 }
