@@ -1,3 +1,4 @@
+using System.Net;
 using Game.Application.Components;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
@@ -6,21 +7,20 @@ namespace Game.Application.Objects.Components
 {
     public class PlayerConfigDataProvider : ComponentBase, IPlayerConfigDataProvider
     {
-        private PlayerConfigData playerConfigData;
+        private PlayerConfigData configData;
 
         protected override void OnAwake()
         {
-            var config = GetConfig();
-
-            playerConfigData = ParsePlayerConfigData(config);
+            var yamlConfig = LoadYamlConfig();
+            configData = ParseConfigData(yamlConfig);
         }
 
         public PlayerConfigData Provide()
         {
-            return playerConfigData;
+            return configData;
         }
 
-        private PlayerConfigData ParsePlayerConfigData(string data)
+        private PlayerConfigData ParseConfigData(string data)
         {
             var deserializer = new DeserializerBuilder()
                 .WithNamingConvention(CamelCaseNamingConvention.Instance)
@@ -29,13 +29,18 @@ namespace Game.Application.Objects.Components
             return deserializer.Deserialize<PlayerConfigData>(data);
         }
 
-        private string GetConfig()
+        private string LoadYamlConfig()
         {
-            return @"
-bodyWidth: 0.3625
-bodyHeight: 0.825
-bodyDensity: 0.1
-            ";
+            var config = string.Empty;
+            var url = "https://raw.githubusercontent.com/benukhanov/maple-fighters-configs/main/{0}";
+            var yamlPath = string.Format(url, "player.yml");
+
+            using (var client = new WebClient())
+            {
+                config = client.DownloadString(yamlPath);
+            }
+
+            return config;
         }
     }
 }
