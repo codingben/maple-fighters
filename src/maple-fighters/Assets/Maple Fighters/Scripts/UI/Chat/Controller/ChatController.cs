@@ -1,12 +1,16 @@
-﻿using Scripts.UI.Focus;
+﻿using System;
+using Scripts.UI.Focus;
 using UI;
 using UnityEngine;
 
 namespace Scripts.UI.Chat
 {
     [RequireComponent(typeof(ChatInteractor))]
+    [RequireComponent(typeof(WelcomeMessageSender))]
     public class ChatController : MonoBehaviour, IOnChatMessageReceived
     {
+        public Action<string> CharacterNameChanged;
+
         private ChatInteractor chatInteractor;
         private FocusStateController focusStateController;
 
@@ -68,12 +72,19 @@ namespace Scripts.UI.Chat
             if (chatView != null)
             {
                 chatView.CharacterName = name;
+
+                CharacterNameChanged?.Invoke(name);
             }
+        }
+
+        public void AddMessage(string message)
+        {
+            chatView?.AddMessage(message);
         }
 
         public void OnMessageReceived(string message)
         {
-            chatView?.AddMessage(message);
+            AddMessage(message);
         }
 
         private void OnMessageAdded(string message)
