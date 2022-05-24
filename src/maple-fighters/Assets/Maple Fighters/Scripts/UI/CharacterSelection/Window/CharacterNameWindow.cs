@@ -2,6 +2,7 @@
 using UI;
 using UnityEngine;
 using UnityEngine.UI;
+using Random = System.Random;
 
 namespace Scripts.UI.CharacterSelection
 {
@@ -30,6 +31,8 @@ namespace Scripts.UI.CharacterSelection
             confirmButton?.onClick.AddListener(OnConfirmButtonClicked);
             backButton?.onClick.AddListener(OnBackButtonClicked);
             nameInputField?.onValueChanged.AddListener(OnNameInputFieldChanged);
+
+            SetRandomCharacterName();
         }
 
         private void OnDestroy()
@@ -37,6 +40,14 @@ namespace Scripts.UI.CharacterSelection
             confirmButton?.onClick.RemoveListener(OnConfirmButtonClicked);
             backButton?.onClick.RemoveListener(OnBackButtonClicked);
             nameInputField?.onValueChanged.RemoveListener(OnNameInputFieldChanged);
+        }
+
+        private void SetRandomCharacterName()
+        {
+            if (nameInputField != null)
+            {
+                nameInputField.text = "player" + new Random().Next(1000, 9999);
+            }
         }
 
         public void EnableConfirmButton()
