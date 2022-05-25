@@ -13,9 +13,9 @@ namespace Scripts.Gameplay.Player
         Knight,
 
         /// <summary>
-        /// The arrow.
+        /// The archer.
         /// </summary>
-        Arrow,
+        Archer,
 
         /// <summary>
         /// The wizard.

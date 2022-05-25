@@ -25,7 +25,7 @@ namespace Scripts.UI.CharacterSelection
         private Button knightButton;
 
         [SerializeField]
-        private Button arrowButton;
+        private Button archerButton;
 
         [SerializeField]
         private Button wizardButton;
@@ -35,7 +35,7 @@ namespace Scripts.UI.CharacterSelection
         private GameObject knightSelectedImage;
 
         [SerializeField]
-        private GameObject arrowSelectedImage;
+        private GameObject archerSelectedImage;
 
         [SerializeField]
         private GameObject wizardSelectedImage;
@@ -45,7 +45,7 @@ namespace Scripts.UI.CharacterSelection
         private Text knightName;
 
         [SerializeField]
-        private Text arrowName;
+        private Text archerName;
 
         [SerializeField]
         private Text wizardName;
@@ -55,7 +55,7 @@ namespace Scripts.UI.CharacterSelection
             chooseButton?.onClick.AddListener(OnChooseButtonClicked);
             cancelButton?.onClick.AddListener(OnCancelButtonClicked);
             knightButton?.onClick.AddListener(OnKnightSelected);
-            arrowButton?.onClick.AddListener(OnArrowSelected);
+            archerButton?.onClick.AddListener(OnArcherSelected);
             wizardButton?.onClick.AddListener(OnWizardSelected);
         }
 
@@ -64,7 +64,7 @@ namespace Scripts.UI.CharacterSelection
             chooseButton?.onClick.RemoveListener(OnChooseButtonClicked);
             cancelButton?.onClick.RemoveListener(OnCancelButtonClicked);
             knightButton?.onClick.RemoveListener(OnKnightSelected);
-            arrowButton?.onClick.RemoveListener(OnArrowSelected);
+            archerButton?.onClick.RemoveListener(OnArcherSelected);
             wizardButton?.onClick.RemoveListener(OnWizardSelected);
         }
 
@@ -83,9 +83,9 @@ namespace Scripts.UI.CharacterSelection
             OnCharacterSelected(UICharacterClass.Knight);
         }
 
-        private void OnArrowSelected()
+        private void OnArcherSelected()
         {
-            OnCharacterSelected(UICharacterClass.Arrow);
+            OnCharacterSelected(UICharacterClass.Archer);
         }
 
         private void OnWizardSelected()
@@ -108,9 +108,9 @@ namespace Scripts.UI.CharacterSelection
                     break;
                 }
 
-                case UICharacterClass.Arrow:
+                case UICharacterClass.Archer:
                 {
-                    SelectArrowClass();
+                    SelectArcherClass();
                     break;
                 }
 
@@ -125,7 +125,7 @@ namespace Scripts.UI.CharacterSelection
         public void ResetSelection()
         {
             DeselectKnightClass();
-            DeselectArrowClass();
+            DeselectArcherClass();
             DeselectWizardClass();
         }
 
@@ -165,24 +165,24 @@ namespace Scripts.UI.CharacterSelection
             knightSelectedImage?.SetActive(false);
         }
 
-        private void SelectArrowClass()
+        private void SelectArcherClass()
         {
-            if (arrowName != null)
+            if (archerName != null)
             {
-                arrowName.fontStyle = FontStyle.Bold;
+                archerName.fontStyle = FontStyle.Bold;
             }
 
-            arrowSelectedImage?.SetActive(true);
+            archerSelectedImage?.SetActive(true);
         }
 
-        private void DeselectArrowClass()
+        private void DeselectArcherClass()
         {
-            if (arrowName != null)
+            if (archerName != null)
             {
-                arrowName.fontStyle = FontStyle.Normal;
+                archerName.fontStyle = FontStyle.Normal;
             }
 
-            arrowSelectedImage?.SetActive(false);
+            archerSelectedImage?.SetActive(false);
         }
 
         private void SelectWizardClass()

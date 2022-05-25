@@ -86,9 +86,9 @@ namespace Scripts.UI.CharacterSelection
                     break;
                 }
 
-                case CharacterClasses.Arrow:
+                case CharacterClasses.Archer:
                 {
-                    uiCharacterClass = UICharacterClass.Arrow;
+                    uiCharacterClass = UICharacterClass.Archer;
                     break;
                 }
 
@@ -115,9 +115,9 @@ namespace Scripts.UI.CharacterSelection
                     break;
                 }
 
-                case UICharacterClass.Arrow:
+                case UICharacterClass.Archer:
                 {
-                    characterClass = CharacterClasses.Arrow;
+                    characterClass = CharacterClasses.Archer;
                     break;
                 }
 
