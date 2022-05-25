@@ -68,7 +68,7 @@ Maple Fighters game code lives here. This folder can be opened with Unity.
     │   │   └── Guardian
     │   ├── Player
     │   │   ├── Classes
-    │   │   │   ├── Arrow
+    │   │   │   ├── Archer
     │   │   │   ├── Knight
     │   │   │   └── Wizard
     │   │   └── Skills
