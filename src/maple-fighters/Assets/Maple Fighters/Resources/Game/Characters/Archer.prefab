@@ -146,7 +146,7 @@ GameObject:
   - component: {fileID: 3433797310513800751}
   - component: {fileID: 8036439935119845020}
   m_Layer: 9
-  m_Name: Arrow Sprite
+  m_Name: Archer Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -280,12 +280,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19f84c7825741fa4f8da1f625cbe1990, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  walk: Walking
-  jump: Jumping
-  rope: Rope
-  ladder: Ladder
-  primaryAttack: PrimaryAttack
-  secondaryAttack: SecondaryAttack
 --- !u!1 &1238605613363138
 GameObject:
   m_ObjectHideFlags: 0
@@ -448,7 +442,7 @@ GameObject:
   - component: {fileID: 114474275508558034}
   - component: {fileID: 4397616534160401849}
   m_Layer: 0
-  m_Name: Arrow
+  m_Name: Archer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
