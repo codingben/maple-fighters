@@ -5,7 +5,7 @@ AnimationClip:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: Arrow_Walk
+  m_Name: Archer_Dead
   serializedVersion: 6
   m_Legacy: 0
   m_Compressed: 0
@@ -19,18 +19,12 @@ AnimationClip:
   m_PPtrCurves:
   - curve:
     - time: 0
-      value: {fileID: 21300000, guid: d6e22f07c480db949ae609f0206bb0da, type: 3}
-    - time: 0.2
-      value: {fileID: 21300000, guid: bb4906c041b5d2540929b26feb1e9b89, type: 3}
-    - time: 0.4
-      value: {fileID: 21300000, guid: 797b2ea60326ba64daf5090bf07cd153, type: 3}
-    - time: 0.6
-      value: {fileID: 21300000, guid: a149acfce732c4441b13997a5180a13c, type: 3}
+      value: {fileID: 21300000, guid: cd4d235b2c66af5449edd8592ba187eb, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
     script: {fileID: 0}
-  m_SampleRate: 5
+  m_SampleRate: 60
   m_WrapMode: 0
   m_Bounds:
     m_Center: {x: 0, y: 0, z: 0}
@@ -45,22 +39,19 @@ AnimationClip:
       customType: 23
       isPPtrCurve: 1
     pptrCurveMapping:
-    - {fileID: 21300000, guid: d6e22f07c480db949ae609f0206bb0da, type: 3}
-    - {fileID: 21300000, guid: bb4906c041b5d2540929b26feb1e9b89, type: 3}
-    - {fileID: 21300000, guid: 797b2ea60326ba64daf5090bf07cd153, type: 3}
-    - {fileID: 21300000, guid: a149acfce732c4441b13997a5180a13c, type: 3}
+    - {fileID: 21300000, guid: cd4d235b2c66af5449edd8592ba187eb, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.8
+    m_StopTime: 0.016666668
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
     m_HasAdditiveReferencePose: 0
-    m_LoopTime: 1
-    m_LoopBlend: 1
+    m_LoopTime: 0
+    m_LoopBlend: 0
     m_LoopBlendOrientation: 0
     m_LoopBlendPositionY: 0
     m_LoopBlendPositionXZ: 0
