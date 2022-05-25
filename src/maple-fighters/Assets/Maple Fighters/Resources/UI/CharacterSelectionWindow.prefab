@@ -209,7 +209,7 @@ GameObject:
   - component: {fileID: 114690161864736032}
   - component: {fileID: 114378917275005112}
   m_Layer: 5
-  m_Name: Arrow
+  m_Name: Archer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -423,7 +423,7 @@ GameObject:
   - component: {fileID: 114278707405124146}
   - component: {fileID: 1203181778776342041}
   m_Layer: 5
-  m_Name: Arrow Image
+  m_Name: Archer Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -556,13 +556,13 @@ MonoBehaviour:
   cancelButton: {fileID: 114779617165758030}
   chooseButton: {fileID: 114171925323035956}
   knightButton: {fileID: 114676887451868836}
-  arrowButton: {fileID: 114378917275005112}
+  archerButton: {fileID: 114378917275005112}
   wizardButton: {fileID: 114376467259610416}
   knightSelectedImage: {fileID: 1623135533285980074}
-  arrowSelectedImage: {fileID: 1621361017009846934}
+  archerSelectedImage: {fileID: 1621361017009846934}
   wizardSelectedImage: {fileID: 1621361143933860414}
   knightName: {fileID: 5073640448376494743}
-  arrowName: {fileID: 4686876032204873311}
+  archerName: {fileID: 4686876032204873311}
   wizardName: {fileID: 2298139266409693050}
 --- !u!225 &225998019712611224
 CanvasGroup:
@@ -1058,7 +1058,7 @@ GameObject:
   - component: {fileID: 1555041441838412820}
   - component: {fileID: 1663369091237075644}
   m_Layer: 5
-  m_Name: Arrow Selection Image
+  m_Name: Archer Selection Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1568,7 +1568,7 @@ GameObject:
   - component: {fileID: 7198741642047294072}
   - component: {fileID: 4686876032204873311}
   m_Layer: 5
-  m_Name: Arrow Name
+  m_Name: Archer Name
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1634,7 +1634,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Arrow
+  m_Text: Archer
 --- !u!1 &3457875538667791222
 GameObject:
   m_ObjectHideFlags: 0
