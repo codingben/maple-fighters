@@ -5,7 +5,7 @@ namespace Scripts.UI.Chat
     [RequireComponent(typeof(ChatController))]
     public class WelcomeMessageSender : MonoBehaviour
     {
-        private const string WelcomeMessage = "<b>Welcome <color=yellow>{0}</color> to Maple Fighters! <color=red>❤</color></b>";
+        private const string WelcomeMessage = "<b>Welcome <color=yellow>{0}</color> to Maple Fighters!</b>";
         private static bool isWelcomePlayerMessageSent;
 
         private ChatController chatController;
