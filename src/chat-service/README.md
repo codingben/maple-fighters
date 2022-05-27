@@ -1,6 +1,6 @@
 # Chat Service
 
-[![Chat Service Build](https://github.com/benukhanov/maple-fighters/actions/workflows/chat-service-build.yml/badge.svg)](https://github.com/benukhanov/maple-fighters/actions/workflows/chat-service-build.yml)
+[![Chat Service Build](https://github.com/codingben/maple-fighters/actions/workflows/chat-service-build.yml/badge.svg)](https://github.com/codingben/maple-fighters/actions/workflows/chat-service-build.yml)
 
 Chat service allows players to communicate with each other.
 

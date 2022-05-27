@@ -21,6 +21,6 @@ Please use Unity Package Manager to install this package in Unity:
 
 1. Open **Package Manager**
 2. Click **Add Package From Git URL**
-3. Enter URL: ```https://github.com/benukhanov/maple-fighters.git?path=/lib/ui-manager/Assets```
+3. Enter URL: ```https://github.com/codingben/maple-fighters.git?path=/lib/ui-manager/Assets```
 
 Done!

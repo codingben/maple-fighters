@@ -1,6 +1,6 @@
 # GameProvider Service
 
-[![GameProvider Service Build](https://github.com/benukhanov/maple-fighters/actions/workflows/gameprovider-service-build.yml/badge.svg)](https://github.com/benukhanov/maple-fighters/actions/workflows/gameprovider-service-build.yml)
+[![GameProvider Service Build](https://github.com/codingben/maple-fighters/actions/workflows/gameprovider-service-build.yml/badge.svg)](https://github.com/codingben/maple-fighters/actions/workflows/gameprovider-service-build.yml)
 
 Game provider service provides a list of game servers.
 
