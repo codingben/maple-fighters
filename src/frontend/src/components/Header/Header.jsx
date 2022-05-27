@@ -17,7 +17,7 @@ function Header() {
         <button onClick={EnterFullScreen} className="fullscreen-button">
           Enter Full Screen
         </button>
-        <a href="https://github.com/benukhanov/maple-fighters" target="_blank">
+        <a href="https://github.com/codingben/maple-fighters" target="_blank">
           <button className="github-button">GitHub</button>
         </a>
       </div>

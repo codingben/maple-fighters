@@ -19,7 +19,7 @@ function App() {
       <div className="warning">
         <img src={logo} alt="logo" />
         <h1>
-          <a href="https://github.com/benukhanov/maple-fighters">
+          <a href="https://github.com/codingben/maple-fighters">
             Maple Fighters
           </a>{" "}
           is not compatible with your device.
