@@ -1,16 +1,16 @@
 {
-  "name": "com.benukhanov.ui-manager",
-  "version": "1.2.0",
-  "description": "UI Manager is designed for simple purposes that can be easily extended and used in Unity.",
+  "name": "com.codingben.ui-manager",
+  "version": "1.2.1",
+  "description": "UI Manager is a simple in-game UI that can be easily extended and used in Unity.",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/benukhanov/maple-fighters"
+    "url": "https://github.com/codingben/maple-fighters"
   },
   "author": {
-    "name": "Ben Ukhanov",
-    "email": "ben.ukhanov@gmail.com",
-    "url": "https://github.com/benukhanov"
+    "name": "Ben Oukhanov",
+    "email": "hello@codingben.io",
+    "url": "https://github.com/codingben"
   },
   "keywords": [
     "ui",
