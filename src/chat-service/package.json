@@ -7,7 +7,7 @@
     "start": "node src/server.js",
     "build": "esbuild src/server.js --outfile=bin/chat-service.js --bundle --platform=node --target=node16.8"
   },
-  "author": "Ben Ukhanov <ben.ukhanov@gmail.com>",
+  "author": "Ben Oukhanov <hello@codingben.io>",
   "dependencies": {
     "dotenv": "^10.0.0",
     "esbuild": "^0.14.1",

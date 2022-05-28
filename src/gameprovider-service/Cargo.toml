@@ -1,7 +1,7 @@
 [package]
 name = "gameprovider-service"
 version = "0.1.0"
-authors = ["Ben Ukhanov <ben.ukhanov@gmail.com>"]
+authors = ["Ben Oukhanov <hello@codingben.io>"]
 edition = "2018"
 
 [dependencies]
