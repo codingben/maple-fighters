@@ -32,7 +32,7 @@ namespace Game.Application.Objects.Components
         private string LoadYamlConfig()
         {
             var config = string.Empty;
-            var url = "https://raw.githubusercontent.com/benukhanov/maple-fighters-configs/main/{0}";
+            var url = "https://raw.githubusercontent.com/codingben/maple-fighters-configs/main/{0}";
             var yamlPath = string.Format(url, "npc.yml");
 
             using (var client = new WebClient())
