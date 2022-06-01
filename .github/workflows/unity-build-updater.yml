@@ -17,7 +17,7 @@ jobs:
       - name: Update Game Data
         run: |
           # Set Variables
-          USER=benukhanov
+          USER=codingben
           REPO=maple-fighters
           WORKFLOW_FILE=unity-build.yml
           ARTIFACT_NAME=Build.zip
