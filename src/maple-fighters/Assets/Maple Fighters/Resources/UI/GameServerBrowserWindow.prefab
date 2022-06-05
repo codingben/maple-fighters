@@ -414,7 +414,7 @@ GameObject:
   - component: {fileID: 224135754144217466}
   - component: {fileID: 114193651093569694}
   - component: {fileID: 225756934479252268}
-  - component: {fileID: 114634272192583016}
+  - component: {fileID: 8465364277634100381}
   m_Layer: 5
   m_Name: GameServerBrowserWindow
   m_TagString: Untagged
@@ -476,7 +476,7 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
---- !u!114 &114634272192583016
+--- !u!114 &8465364277634100381
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -485,7 +485,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1319053500329498}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f651cd5785c56114f8497fa8eaa8fe9e, type: 3}
+  m_Script: {fileID: 11500000, guid: a3094f8d4df92413e899c1328e289fce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 8.5
@@ -577,7 +577,7 @@ GameObject:
   - component: {fileID: 114291137867067084}
   - component: {fileID: 114280984199480182}
   - component: {fileID: 225893267498260622}
-  - component: {fileID: 114725116052178736}
+  - component: {fileID: 6278945733630209155}
   m_Layer: 5
   m_Name: Game Server Browser Refresh Image
   m_TagString: Untagged
@@ -667,7 +667,7 @@ CanvasGroup:
   m_Interactable: 0
   m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
---- !u!114 &114725116052178736
+--- !u!114 &6278945733630209155
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -676,7 +676,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1579499864167712}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f651cd5785c56114f8497fa8eaa8fe9e, type: 3}
+  m_Script: {fileID: 11500000, guid: a3094f8d4df92413e899c1328e289fce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 2

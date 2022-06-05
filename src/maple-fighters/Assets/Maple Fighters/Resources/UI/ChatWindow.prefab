@@ -205,7 +205,7 @@ GameObject:
   - component: {fileID: 224924854073210944}
   - component: {fileID: 114161394725660716}
   - component: {fileID: 225246210530928260}
-  - component: {fileID: 114036808594955340}
+  - component: {fileID: 6715404452480450965}
   m_Layer: 5
   m_Name: ChatWindow
   m_TagString: Untagged
@@ -259,7 +259,7 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
---- !u!114 &114036808594955340
+--- !u!114 &6715404452480450965
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -268,7 +268,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1854758295179424}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 25cf9d80677195041b71dc6ba4bcd44d, type: 3}
+  m_Script: {fileID: 11500000, guid: 89120f4eafbec465e86e5fe9535048a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1377868550649698117

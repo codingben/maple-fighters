@@ -513,7 +513,7 @@ GameObject:
   - component: {fileID: 224750088546606538}
   - component: {fileID: 114742307761586146}
   - component: {fileID: 225998019712611224}
-  - component: {fileID: 114495839878548754}
+  - component: {fileID: 1065649051970656475}
   m_Layer: 5
   m_Name: CharacterSelectionWindow
   m_TagString: Untagged
@@ -576,7 +576,7 @@ CanvasGroup:
   m_Interactable: 0
   m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
---- !u!114 &114495839878548754
+--- !u!114 &1065649051970656475
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -585,7 +585,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1595900313132156}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f651cd5785c56114f8497fa8eaa8fe9e, type: 3}
+  m_Script: {fileID: 11500000, guid: a3094f8d4df92413e899c1328e289fce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 8.5

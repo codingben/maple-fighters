@@ -699,7 +699,7 @@ GameObject:
   - component: {fileID: 224933645529377632}
   - component: {fileID: 114027476173108838}
   - component: {fileID: 225703507231252802}
-  - component: {fileID: 114906988703444844}
+  - component: {fileID: 8710590314229102335}
   m_Layer: 5
   m_Name: MinimapWindow
   m_TagString: Untagged
@@ -755,7 +755,7 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
---- !u!114 &114906988703444844
+--- !u!114 &8710590314229102335
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -764,7 +764,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1343163142404192}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 25cf9d80677195041b71dc6ba4bcd44d, type: 3}
+  m_Script: {fileID: 11500000, guid: 89120f4eafbec465e86e5fe9535048a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1350703717913394
