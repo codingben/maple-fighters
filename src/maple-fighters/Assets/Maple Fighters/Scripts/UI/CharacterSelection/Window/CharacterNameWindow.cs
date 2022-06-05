@@ -31,8 +31,6 @@ namespace Scripts.UI.CharacterSelection
             confirmButton?.onClick.AddListener(OnConfirmButtonClicked);
             backButton?.onClick.AddListener(OnBackButtonClicked);
             nameInputField?.onValueChanged.AddListener(OnNameInputFieldChanged);
-
-            SetRandomCharacterName();
         }
 
         private void OnDestroy()
@@ -42,7 +40,7 @@ namespace Scripts.UI.CharacterSelection
             nameInputField?.onValueChanged.RemoveListener(OnNameInputFieldChanged);
         }
 
-        private void SetRandomCharacterName()
+        public void GenerateRandomCharacterName()
         {
             if (nameInputField != null)
             {

@@ -11,6 +11,8 @@ namespace Scripts.UI.CharacterSelection
 
         event Action<string> NameInputFieldChanged;
 
+        void GenerateRandomCharacterName();
+
         void EnableConfirmButton();
 
         void DisableConfirmButton();

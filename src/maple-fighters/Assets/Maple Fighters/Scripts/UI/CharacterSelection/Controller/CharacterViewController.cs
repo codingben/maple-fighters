@@ -539,6 +539,7 @@ namespace Scripts.UI.CharacterSelection
         private void ShowCharacterNameWindow()
         {
             characterNameView?.Show();
+            characterNameView?.GenerateRandomCharacterName();
         }
 
         private void HideCharacterNameWindow()
