@@ -3,7 +3,7 @@ using UnityEngine.EventSystems;
 
 namespace Scripts.UI.Utils
 {
-    public class SendNavigationEventsSetter : MonoBehaviour
+    public class UIEventSystemSetter : MonoBehaviour
     {
         [SerializeField]
         private bool sendNavigationEvents;
