@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 95067983765548206}
   - component: {fileID: 114374544059665382}
   - component: {fileID: 225361657963418198}
-  - component: {fileID: 114908512220321046}
+  - component: {fileID: 2536791957787100910}
   m_Layer: 5
   m_Name: Wizard 2
   m_TagString: Untagged
@@ -156,7 +156,7 @@ CanvasGroup:
   m_Interactable: 0
   m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
---- !u!114 &114908512220321046
+--- !u!114 &2536791957787100910
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -165,7 +165,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1548961426480822}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f651cd5785c56114f8497fa8eaa8fe9e, type: 3}
+  m_Script: {fileID: 11500000, guid: a3094f8d4df92413e899c1328e289fce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 5
