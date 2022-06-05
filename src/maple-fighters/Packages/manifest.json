@@ -17,15 +17,14 @@
     }
   ],
   "dependencies": {
-    "com.benukhanov.ui-manager": "https://github.com/benukhanov/maple-fighters.git?path=/lib/ui-manager/Assets",
     "com.endel.nativewebsocket": "https://github.com/endel/NativeWebSocket.git#upm",
     "com.unity.2d.sprite": "1.0.0",
     "com.unity.2d.tilemap": "1.0.0",
     "com.unity.cinemachine": "2.6.3",
     "com.unity.ext.nunit": "1.0.6",
-    "com.unity.ide.visualstudio": "2.0.8",
+    "com.unity.ide.visualstudio": "2.0.11",
     "com.unity.ide.vscode": "1.2.3",
-    "com.unity.test-framework": "1.1.24",
+    "com.unity.test-framework": "1.1.27",
     "com.unity.ugui": "1.0.0",
     "com.unity.modules.ai": "1.0.0",
     "com.unity.modules.androidjni": "1.0.0",

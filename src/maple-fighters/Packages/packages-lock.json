@@ -1,12 +1,5 @@
 {
   "dependencies": {
-    "com.benukhanov.ui-manager": {
-      "version": "https://github.com/benukhanov/maple-fighters.git?path=/lib/ui-manager/Assets",
-      "depth": 0,
-      "source": "git",
-      "dependencies": {},
-      "hash": "e05cee91c58534760c0ff611378cd5c22ac4c450"
-    },
     "com.endel.nativewebsocket": {
       "version": "https://github.com/endel/NativeWebSocket.git#upm",
       "depth": 0,
@@ -47,7 +40,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.ide.visualstudio": {
-      "version": "2.0.8",
+      "version": "2.0.11",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -63,7 +56,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.test-framework": {
-      "version": "1.1.24",
+      "version": "1.1.27",
       "depth": 0,
       "source": "registry",
       "dependencies": {
