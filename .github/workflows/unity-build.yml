@@ -9,6 +9,7 @@ on:
     branches: [develop]
     paths:
       - src/maple-fighters/**
+  workflow_dispatch:
 
 env:
   UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
