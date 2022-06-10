@@ -8,8 +8,6 @@
             public const string TheDarkForest = "TheDarkForest";
         }
 
-        public const string Login = "Login";
-        public const string GameServerSelection = "GameServerSelection";
-        public const string CharacterSelection = "CharacterSelection";
+        public const string Main = "Main";
     }
 }
