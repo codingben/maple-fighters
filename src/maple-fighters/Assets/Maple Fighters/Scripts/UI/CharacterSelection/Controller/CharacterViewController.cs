@@ -41,13 +41,6 @@ namespace Scripts.UI.CharacterSelection
             screenFadeController = FindObjectOfType<ScreenFadeController>();
         }
 
-        private void Start()
-        {
-            CreateLoadingView();
-            ShowLoadingView();
-            SubscribeToLoadingView();
-        }
-
         private void OnDestroy()
         {
             UnsubscribeFromCharacterImages();
@@ -55,6 +48,13 @@ namespace Scripts.UI.CharacterSelection
             UnsubscribeFromCharacterSelectionWindow();
             UnsubscribeFromCharacterNameWindow();
             UnsubscribeFromBackgroundClicked();
+        }
+
+        public void CreateAndShowCharacterView()
+        {
+            CreateLoadingView();
+            ShowLoadingView();
+            SubscribeToLoadingView();
         }
 
         private void CreateChooseFighterView()

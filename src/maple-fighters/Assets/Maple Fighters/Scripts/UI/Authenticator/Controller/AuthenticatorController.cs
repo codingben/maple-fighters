@@ -1,8 +1,8 @@
 ﻿using Scripts.Constants;
+using Scripts.UI.GameServerBrowser;
 using Scripts.UI.Notice;
 using UI;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace Scripts.UI.Authenticator
 {
@@ -190,7 +190,11 @@ namespace Scripts.UI.Authenticator
 
         public void OnLoginSucceed()
         {
-            SceneManager.LoadScene(sceneName: SceneNames.GameServerSelection);
+            loginView?.Hide();
+
+            var gameServerBrowserController =
+                FindObjectOfType<GameServerBrowserController>();
+            gameServerBrowserController?.CreateAndShowGameServerBrowserWindow();
         }
 
         public void OnLoginFailed(string reason)

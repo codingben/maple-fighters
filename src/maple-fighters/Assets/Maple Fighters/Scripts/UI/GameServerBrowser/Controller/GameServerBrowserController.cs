@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Scripts.Constants;
+using Scripts.UI.CharacterSelection;
 using UI;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace Scripts.UI.GameServerBrowser
 {
@@ -20,14 +19,6 @@ namespace Scripts.UI.GameServerBrowser
         {
             gameServerBrowserInteractor =
                 GetComponent<GameServerBrowserInteractor>();
-
-            CreateAndShowGameServerBrowserWindow();
-            SubscribeToGameServerBrowserWindow();
-        }
-
-        private void Start()
-        {
-            RefreshGameServers();
         }
 
         private void OnDestroy()
@@ -36,7 +27,7 @@ namespace Scripts.UI.GameServerBrowser
             UnsubscribeFromGameServerBrowserWindow();
         }
 
-        private void CreateAndShowGameServerBrowserWindow()
+        public void CreateAndShowGameServerBrowserWindow()
         {
             gameServerBrowserView = UICreator
                 .GetInstance()
@@ -46,6 +37,9 @@ namespace Scripts.UI.GameServerBrowser
             {
                 gameServerBrowserView.Show();
             }
+
+            SubscribeToGameServerBrowserWindow();
+            RefreshGameServers();
         }
 
         private void SubscribeToGameServerBrowserWindow()
@@ -157,7 +151,9 @@ namespace Scripts.UI.GameServerBrowser
             gameServerBrowserView?.DisableRefreshButton();
             gameServerBrowserView?.Hide();
 
-            SceneManager.LoadScene(sceneName: SceneNames.CharacterSelection);
+            var characterViewController =
+                FindObjectOfType<CharacterViewController>();
+            characterViewController.CreateAndShowCharacterView();
         }
 
         private void OnRefreshButtonClicked()
