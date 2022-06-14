@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Scripts.UI.CharacterSelection;
+using Scripts.UI.MenuBackground;
+using Scripts.UI.ScreenFade;
 using UI;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Scripts.UI.GameServerBrowser
 {
@@ -14,32 +16,55 @@ namespace Scripts.UI.GameServerBrowser
 
         private GameServerViewCollection? gameServerViewCollection;
         private GameServerBrowserInteractor gameServerBrowserInteractor;
+        private ScreenFadeController screenFadeController;
 
         private void Awake()
         {
             gameServerBrowserInteractor =
                 GetComponent<GameServerBrowserInteractor>();
+            screenFadeController =
+                FindObjectOfType<ScreenFadeController>();
+        }
+
+        private void Start()
+        {
+            CreateGameServerBrowserWindow();
+
+            SubscribeToGameServerBrowserWindow();
+            SubscribeToBackgroundClicked();
+
+            RefreshGameServers();
         }
 
         private void OnDestroy()
         {
             UnsubscribeFromGameServerViews();
             UnsubscribeFromGameServerBrowserWindow();
+            UnsubscribeFromBackgroundClicked();
         }
 
-        public void CreateAndShowGameServerBrowserWindow()
+        private void CreateGameServerBrowserWindow()
         {
             gameServerBrowserView = UICreator
                 .GetInstance()
                 .Create<GameServerBrowserWindow>();
+        }
 
+        public void ShowGameServerBrowserWindow()
+        {
             if (gameServerBrowserView != null)
             {
                 gameServerBrowserView.Show();
             }
+        }
 
-            SubscribeToGameServerBrowserWindow();
-            RefreshGameServers();
+        public void HideGameServerBrowserWindow()
+        {
+            if (gameServerBrowserView != null
+                && gameServerBrowserView.IsShown)
+            {
+                gameServerBrowserView.Hide();
+            }
         }
 
         private void SubscribeToGameServerBrowserWindow()
@@ -62,6 +87,33 @@ namespace Scripts.UI.GameServerBrowser
                 gameServerBrowserView.RefreshButtonClicked -=
                     OnRefreshButtonClicked;
             }
+        }
+
+        private void SubscribeToBackgroundClicked()
+        {
+            var backgroundController =
+                FindObjectOfType<MenuBackgroundController>();
+            if (backgroundController != null)
+            {
+                backgroundController.BackgroundClicked +=
+                    OnBackgroundClicked;
+            }
+        }
+
+        private void UnsubscribeFromBackgroundClicked()
+        {
+            var backgroundController =
+                FindObjectOfType<MenuBackgroundController>();
+            if (backgroundController != null)
+            {
+                backgroundController.BackgroundClicked -=
+                    OnBackgroundClicked;
+            }
+        }
+
+        private void OnBackgroundClicked()
+        {
+            HideGameServerBrowserWindow();
         }
 
         public void OnGameServerReceived(IEnumerable<UIGameServerButtonData> gameServer)
@@ -147,13 +199,23 @@ namespace Scripts.UI.GameServerBrowser
 
         private void OnJoinButtonClicked()
         {
-            gameServerBrowserView?.DisableJoinButton();
-            gameServerBrowserView?.DisableRefreshButton();
-            gameServerBrowserView?.Hide();
+            if (screenFadeController != null)
+            {
+                screenFadeController.Show();
+                screenFadeController.FadeInCompleted += OnFadeInCompleted;
+            }
+        }
 
-            var characterViewController =
-                FindObjectOfType<CharacterViewController>();
-            characterViewController.CreateAndShowCharacterView();
+        private void OnFadeInCompleted()
+        {
+            if (screenFadeController != null)
+            {
+                screenFadeController.FadeInCompleted -= OnFadeInCompleted;
+            }
+
+            var mapName = Constants.SceneNames.Maps.Lobby;
+
+            SceneManager.LoadScene(sceneName: mapName);
         }
 
         private void OnRefreshButtonClicked()

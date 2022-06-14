@@ -1,11 +1,10 @@
 ﻿using System.Text.RegularExpressions;
 using Scripts.Constants;
+using Scripts.UI.GameServerBrowser;
 using Scripts.UI.MenuBackground;
 using Scripts.UI.Notice;
-using Scripts.UI.ScreenFade;
 using UI;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace Scripts.UI.CharacterSelection
 {
@@ -31,14 +30,15 @@ namespace Scripts.UI.CharacterSelection
         private UINewCharacterDetails characterDetails;
 
         private CharacterViewInteractor characterViewInteractor;
-        private ScreenFadeController screenFadeController;
-
-        private string mapName;
 
         private void Awake()
         {
             characterViewInteractor = GetComponent<CharacterViewInteractor>();
-            screenFadeController = FindObjectOfType<ScreenFadeController>();
+        }
+
+        private void Start()
+        {
+            CreateAndShowCharacterView();
         }
 
         private void OnDestroy()
@@ -50,11 +50,11 @@ namespace Scripts.UI.CharacterSelection
             UnsubscribeFromBackgroundClicked();
         }
 
-        public void CreateAndShowCharacterView()
+        private void CreateAndShowCharacterView()
         {
             CreateLoadingView();
-            ShowLoadingView();
             SubscribeToLoadingView();
+            ShowLoadingView();
         }
 
         private void CreateChooseFighterView()
@@ -258,25 +258,13 @@ namespace Scripts.UI.CharacterSelection
             ShowChooseFighterView();
         }
 
-        public void OnCharacterValidated(string mapName)
+        public void OnCharacterValidated()
         {
-            this.mapName = mapName;
+            HideCharacterSelectionOptionsWindow();
 
-            if (screenFadeController != null)
-            {
-                screenFadeController.Show();
-                screenFadeController.FadeInCompleted += OnFadeInCompleted;
-            }
-        }
-
-        private void OnFadeInCompleted()
-        {
-            if (screenFadeController != null)
-            {
-                screenFadeController.FadeInCompleted -= OnFadeInCompleted;
-            }
-
-            SceneManager.LoadScene(sceneName: mapName);
+            var gameServerBrowserController =
+                FindObjectOfType<GameServerBrowserController>();
+            gameServerBrowserController?.ShowGameServerBrowserWindow();
         }
 
         public void OnCharacterUnvalidated()
