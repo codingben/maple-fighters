@@ -1,5 +1,4 @@
 ﻿using Scripts.Constants;
-using Scripts.UI.GameServerBrowser;
 using Scripts.UI.Notice;
 using UI;
 using UnityEngine;
@@ -21,7 +20,10 @@ namespace Scripts.UI.Authenticator
         {
             authenticationValidator = new AuthenticationValidator();
             authenticatorInteractor = GetComponent<AuthenticatorInteractor>();
+        }
 
+        private void Start()
+        {
             CreateAndSubscribeToLoginWindow();
             CreateAndSubscribeToRegistrationWindow();
         }
@@ -191,10 +193,6 @@ namespace Scripts.UI.Authenticator
         public void OnLoginSucceed()
         {
             loginView?.Hide();
-
-            var gameServerBrowserController =
-                FindObjectOfType<GameServerBrowserController>();
-            gameServerBrowserController?.CreateAndShowGameServerBrowserWindow();
         }
 
         public void OnLoginFailed(string reason)
