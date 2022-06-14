@@ -2,7 +2,7 @@
 {
     public interface IOnCharacterValidationFinishedListener
     {
-        void OnCharacterValidated(string mapName);
+        void OnCharacterValidated();
 
         void OnCharacterUnvalidated();
     }

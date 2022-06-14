@@ -1,5 +1,4 @@
 ﻿using Proyecto26;
-using Scripts.Constants;
 using Scripts.Services;
 using Scripts.Services.CharacterProviderApi;
 using UnityEngine;
@@ -179,8 +178,6 @@ namespace Scripts.UI.CharacterSelection
 
         public void ValidateCharacter(byte characterType, string characterName)
         {
-            // TODO: Get map name from the server
-            var mapName = SceneNames.Maps.Lobby;
             var userMetadata = FindObjectOfType<UserMetadata>();
             if (userMetadata != null)
             {
@@ -188,7 +185,7 @@ namespace Scripts.UI.CharacterSelection
                 userMetadata.CharacterName = characterName;
             }
 
-            onCharacterValidationFinishedListener.OnCharacterValidated(mapName);
+            onCharacterValidationFinishedListener.OnCharacterValidated();
         }
     }
 }
