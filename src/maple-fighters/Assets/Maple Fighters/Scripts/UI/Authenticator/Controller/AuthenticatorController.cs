@@ -190,7 +190,7 @@ namespace Scripts.UI.Authenticator
             }
         }
 
-        public void OnLoginSucceed()
+        public void OnLoginSucceeded()
         {
             loginView?.Hide();
         }
@@ -202,7 +202,7 @@ namespace Scripts.UI.Authenticator
             NoticeUtils.ShowNotice(message: reason);
         }
 
-        public void OnRegistrationSucceed()
+        public void OnRegistrationSucceeded()
         {
             registrationView?.EnableInteraction();
 

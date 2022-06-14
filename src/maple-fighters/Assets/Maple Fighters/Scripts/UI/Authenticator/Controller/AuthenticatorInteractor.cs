@@ -87,7 +87,7 @@ namespace Scripts.UI.Authenticator
                 id = userid
             };
 
-            onLoginFinishedListener.OnLoginSucceed();
+            onLoginFinishedListener.OnLoginSucceeded();
         }
 
         private void OnLoginCallback(long statusCode, string json)
@@ -102,7 +102,7 @@ namespace Scripts.UI.Authenticator
                         userMetadata.UserData = UserData.FromJson(json);
                     }
 
-                    onLoginFinishedListener.OnLoginSucceed();
+                    onLoginFinishedListener.OnLoginSucceeded();
                     break;
                 }
 
@@ -134,7 +134,7 @@ namespace Scripts.UI.Authenticator
             {
                 case (long)StatusCodes.Ok:
                 {
-                    onRegistrationFinishedListener.OnRegistrationSucceed();
+                    onRegistrationFinishedListener.OnRegistrationSucceeded();
                     break;
                 }
 

@@ -2,7 +2,7 @@
 {
     public interface IOnLoginFinishedListener
     {
-        void OnLoginSucceed();
+        void OnLoginSucceeded();
 
         void OnLoginFailed(string reason);
     }

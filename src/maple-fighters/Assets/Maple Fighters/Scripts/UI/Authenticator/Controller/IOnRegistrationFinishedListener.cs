@@ -2,7 +2,7 @@
 {
     public interface IOnRegistrationFinishedListener
     {
-        void OnRegistrationSucceed();
+        void OnRegistrationSucceeded();
 
         void OnRegistrationFailed(string reason);
     }
