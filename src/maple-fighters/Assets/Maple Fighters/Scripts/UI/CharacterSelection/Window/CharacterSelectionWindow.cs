@@ -10,17 +10,7 @@ namespace Scripts.UI.CharacterSelection
     {
         public event Action<UICharacterClass> CharacterSelected;
 
-        public event Action ChooseButtonClicked;
-
-        public event Action CancelButtonClicked;
-
         [Header("Buttons")]
-        [SerializeField]
-        private Button cancelButton;
-
-        [SerializeField]
-        private Button chooseButton;
-
         [SerializeField]
         private Button knightButton;
 
@@ -32,8 +22,6 @@ namespace Scripts.UI.CharacterSelection
 
         private void Start()
         {
-            chooseButton?.onClick.AddListener(OnChooseButtonClicked);
-            cancelButton?.onClick.AddListener(OnCancelButtonClicked);
             knightButton?.onClick.AddListener(OnKnightSelected);
             archerButton?.onClick.AddListener(OnArcherSelected);
             wizardButton?.onClick.AddListener(OnWizardSelected);
@@ -41,21 +29,9 @@ namespace Scripts.UI.CharacterSelection
 
         private void OnDestroy()
         {
-            chooseButton?.onClick.RemoveListener(OnChooseButtonClicked);
-            cancelButton?.onClick.RemoveListener(OnCancelButtonClicked);
             knightButton?.onClick.RemoveListener(OnKnightSelected);
             archerButton?.onClick.RemoveListener(OnArcherSelected);
             wizardButton?.onClick.RemoveListener(OnWizardSelected);
-        }
-
-        private void OnChooseButtonClicked()
-        {
-            ChooseButtonClicked?.Invoke();
-        }
-
-        private void OnCancelButtonClicked()
-        {
-            CancelButtonClicked?.Invoke();
         }
 
         private void OnKnightSelected()
@@ -76,22 +52,6 @@ namespace Scripts.UI.CharacterSelection
         private void OnCharacterSelected(UICharacterClass uiCharacterClass)
         {
             CharacterSelected?.Invoke(uiCharacterClass);
-        }
-
-        public void EnableChooseButton()
-        {
-            if (chooseButton != null)
-            {
-                chooseButton.interactable = true;
-            }
-        }
-
-        public void DisableChooseButton()
-        {
-            if (chooseButton != null)
-            {
-                chooseButton.interactable = false;
-            }
         }
     }
 }

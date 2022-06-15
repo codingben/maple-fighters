@@ -102,10 +102,6 @@ namespace Scripts.UI.CharacterSelection
 
             if (characterSelectionView != null)
             {
-                characterSelectionView.ChooseButtonClicked +=
-                    OnChooseButtonClicked;
-                characterSelectionView.CancelButtonClicked +=
-                    OnCancelButtonClicked;
                 characterSelectionView.CharacterSelected +=
                     OnCharacterSelected;
             }
@@ -192,10 +188,6 @@ namespace Scripts.UI.CharacterSelection
         {
             if (characterSelectionView != null)
             {
-                characterSelectionView.ChooseButtonClicked -=
-                    OnChooseButtonClicked;
-                characterSelectionView.CancelButtonClicked -=
-                    OnCancelButtonClicked;
                 characterSelectionView.CharacterSelected -=
                     OnCharacterSelected;
             }
@@ -272,7 +264,6 @@ namespace Scripts.UI.CharacterSelection
 
         public void OnCharacterCreated()
         {
-            ResetCharacterSelection();
             ResetCharacterName();
 
             HideCharacterNameWindow();
@@ -474,33 +465,12 @@ namespace Scripts.UI.CharacterSelection
             ShowCharacterSelectionWindow();
         }
 
-        private void OnChooseButtonClicked()
-        {
-            HideCharacterSelectionWindow();
-            ShowCharacterNameWindow();
-        }
-
-        private void OnCancelButtonClicked()
-        {
-            ResetCharacterSelection();
-            ResetCharacterName();
-
-            HideCharacterSelectionWindow();
-            ShowCharacterSelectionOptionsWindow();
-        }
-
         private void OnCharacterSelected(UICharacterClass uiCharacterClass)
         {
             characterDetails.SetCharacterClass(uiCharacterClass);
-            characterSelectionView.EnableChooseButton();
 
             HideCharacterSelectionWindow();
             ShowCharacterNameWindow();
-        }
-
-        private void ResetCharacterSelection()
-        {
-            characterSelectionView.DisableChooseButton();
         }
 
         private void ResetCharacterName()
