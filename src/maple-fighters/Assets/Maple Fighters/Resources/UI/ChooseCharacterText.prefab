@@ -14,8 +14,9 @@ GameObject:
   - component: {fileID: 114001037263124650}
   - component: {fileID: 225129571447908788}
   - component: {fileID: 5085491352716235955}
+  - component: {fileID: 6587230008799861710}
   m_Layer: 5
-  m_Name: ChooseFighterText
+  m_Name: ChooseCharacterText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -81,7 +82,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Choose Your Fighter
+  m_Text: Choose Your Character
 --- !u!114 &114001037263124650
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -91,7 +92,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1146616730714876}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f27a6e5b9dd1eb428ce0f2e186850ca, type: 3}
+  m_Script: {fileID: 11500000, guid: a723e5e4431ed4d6bb8a3d75f9733f33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!225 &225129571447908788
@@ -119,3 +120,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 3
+--- !u!114 &6587230008799861710
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1146616730714876}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1b155907f04e4ed5b646a9ebf45531a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
