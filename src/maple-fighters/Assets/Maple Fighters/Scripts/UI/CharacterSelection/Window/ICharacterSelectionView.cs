@@ -11,12 +11,8 @@ namespace Scripts.UI.CharacterSelection
 
         event Action CancelButtonClicked;
 
-        void SelectCharacterClass(UICharacterClass uiCharacterClass);
-
         void EnableChooseButton();
 
         void DisableChooseButton();
-
-        void ResetSelection();
     }
 }

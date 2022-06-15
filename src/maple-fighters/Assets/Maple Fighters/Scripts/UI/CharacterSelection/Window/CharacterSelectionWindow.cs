@@ -30,26 +30,6 @@ namespace Scripts.UI.CharacterSelection
         [SerializeField]
         private Button wizardButton;
 
-        [Header("Images")]
-        [SerializeField]
-        private GameObject knightSelectedImage;
-
-        [SerializeField]
-        private GameObject archerSelectedImage;
-
-        [SerializeField]
-        private GameObject wizardSelectedImage;
-
-        [Header("Texts")]
-        [SerializeField]
-        private Text knightName;
-
-        [SerializeField]
-        private Text archerName;
-
-        [SerializeField]
-        private Text wizardName;
-
         private void Start()
         {
             chooseButton?.onClick.AddListener(OnChooseButtonClicked);
@@ -98,37 +78,6 @@ namespace Scripts.UI.CharacterSelection
             CharacterSelected?.Invoke(uiCharacterClass);
         }
 
-        public void SelectCharacterClass(UICharacterClass uiCharacterClass)
-        {
-            switch (uiCharacterClass)
-            {
-                case UICharacterClass.Knight:
-                {
-                    SelectKnightClass();
-                    break;
-                }
-
-                case UICharacterClass.Archer:
-                {
-                    SelectArcherClass();
-                    break;
-                }
-
-                case UICharacterClass.Wizard:
-                {
-                    SelectWizardClass();
-                    break;
-                }
-            }
-        }
-
-        public void ResetSelection()
-        {
-            DeselectKnightClass();
-            DeselectArcherClass();
-            DeselectWizardClass();
-        }
-
         public void EnableChooseButton()
         {
             if (chooseButton != null)
@@ -143,66 +92,6 @@ namespace Scripts.UI.CharacterSelection
             {
                 chooseButton.interactable = false;
             }
-        }
-
-        private void SelectKnightClass()
-        {
-            if (knightName != null)
-            {
-                knightName.fontStyle = FontStyle.Bold;
-            }
-
-            knightSelectedImage?.SetActive(true);
-        }
-
-        private void DeselectKnightClass()
-        {
-            if (knightName != null)
-            {
-                knightName.fontStyle = FontStyle.Normal;
-            }
-
-            knightSelectedImage?.SetActive(false);
-        }
-
-        private void SelectArcherClass()
-        {
-            if (archerName != null)
-            {
-                archerName.fontStyle = FontStyle.Bold;
-            }
-
-            archerSelectedImage?.SetActive(true);
-        }
-
-        private void DeselectArcherClass()
-        {
-            if (archerName != null)
-            {
-                archerName.fontStyle = FontStyle.Normal;
-            }
-
-            archerSelectedImage?.SetActive(false);
-        }
-
-        private void SelectWizardClass()
-        {
-            if (wizardName != null)
-            {
-                wizardName.fontStyle = FontStyle.Bold;
-            }
-
-            wizardSelectedImage?.SetActive(true);
-        }
-
-        private void DeselectWizardClass()
-        {
-            if (wizardName != null)
-            {
-                wizardName.fontStyle = FontStyle.Normal;
-            }
-
-            wizardSelectedImage?.SetActive(false);
         }
     }
 }

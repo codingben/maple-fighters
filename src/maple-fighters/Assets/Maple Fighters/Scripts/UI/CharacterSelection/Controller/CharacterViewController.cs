@@ -492,9 +492,7 @@ namespace Scripts.UI.CharacterSelection
         private void OnCharacterSelected(UICharacterClass uiCharacterClass)
         {
             characterDetails.SetCharacterClass(uiCharacterClass);
-
             characterSelectionView.EnableChooseButton();
-            characterSelectionView.ResetSelection();
 
             HideCharacterSelectionWindow();
             ShowCharacterNameWindow();
@@ -502,7 +500,6 @@ namespace Scripts.UI.CharacterSelection
 
         private void ResetCharacterSelection()
         {
-            characterSelectionView.ResetSelection();
             characterSelectionView.DisableChooseButton();
         }
 
