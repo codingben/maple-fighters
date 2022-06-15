@@ -11,7 +11,6 @@ namespace Scripts.UI.CharacterSelection
     [RequireComponent(typeof(CharacterViewInteractor))]
     public class CharacterViewController : MonoBehaviour,
                                            IOnCharacterReceivedListener,
-                                           IOnCharacterValidationFinishedListener,
                                            IOnCharacterDeletionFinishedListener,
                                            IOnCharacterCreationFinishedListener
     {
@@ -258,20 +257,6 @@ namespace Scripts.UI.CharacterSelection
             ShowChooseFighterView();
         }
 
-        public void OnCharacterValidated()
-        {
-            HideCharacterSelectionOptionsWindow();
-
-            var gameServerBrowserController =
-                FindObjectOfType<GameServerBrowserController>();
-            gameServerBrowserController?.ShowGameServerBrowserWindow();
-        }
-
-        public void OnCharacterUnvalidated()
-        {
-            NoticeUtils.ShowNotice(message: NoticeMessages.CharacterView.ValidationFailed);
-        }
-
         public void OnCharacterDeletionSucceed()
         {
             HideChooseFighterView();
@@ -421,7 +406,16 @@ namespace Scripts.UI.CharacterSelection
                     var characterClass = (byte)character.CharacterClass;
                     var characterName = character.CharacterName;
 
-                    characterViewInteractor.ValidateCharacter(characterClass, characterName);
+                    characterViewInteractor.UpdateCharacterData(characterClass, characterName);
+
+                    HideCharacterSelectionOptionsWindow();
+
+                    var gameServerBrowserController = FindObjectOfType<GameServerBrowserController>();
+                    gameServerBrowserController?.ShowGameServerBrowserWindow();
+                }
+                else
+                {
+                    NoticeUtils.ShowNotice(message: NoticeMessages.CharacterView.ValidationFailed);
                 }
             }
         }

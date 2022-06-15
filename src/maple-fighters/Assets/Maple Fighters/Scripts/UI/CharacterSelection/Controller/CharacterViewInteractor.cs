@@ -6,14 +6,12 @@ using UnityEngine;
 namespace Scripts.UI.CharacterSelection
 {
     [RequireComponent(typeof(IOnCharacterReceivedListener))]
-    [RequireComponent(typeof(IOnCharacterValidationFinishedListener))]
     [RequireComponent(typeof(IOnCharacterCreationFinishedListener))]
     [RequireComponent(typeof(IOnCharacterDeletionFinishedListener))]
     public class CharacterViewInteractor : MonoBehaviour
     {
         private ICharacterProviderApi characterProviderApi;
         private IOnCharacterReceivedListener onCharacterReceivedListener;
-        private IOnCharacterValidationFinishedListener onCharacterValidationFinishedListener;
         private IOnCharacterCreationFinishedListener onCharacterCreationFinishedListener;
         private IOnCharacterDeletionFinishedListener onCharacterDeletionFinishedListener;
 
@@ -23,8 +21,6 @@ namespace Scripts.UI.CharacterSelection
                 ApiProvider.ProvideCharacterProviderApi();
             onCharacterReceivedListener =
                 GetComponent<IOnCharacterReceivedListener>();
-            onCharacterValidationFinishedListener =
-                GetComponent<IOnCharacterValidationFinishedListener>();
             onCharacterCreationFinishedListener =
                 GetComponent<IOnCharacterCreationFinishedListener>();
             onCharacterDeletionFinishedListener =
@@ -176,7 +172,7 @@ namespace Scripts.UI.CharacterSelection
             };
         }
 
-        public void ValidateCharacter(byte characterType, string characterName)
+        public void UpdateCharacterData(byte characterType, string characterName)
         {
             var userMetadata = FindObjectOfType<UserMetadata>();
             if (userMetadata != null)
@@ -184,8 +180,6 @@ namespace Scripts.UI.CharacterSelection
                 userMetadata.CharacterType = characterType;
                 userMetadata.CharacterName = characterName;
             }
-
-            onCharacterValidationFinishedListener.OnCharacterValidated();
         }
     }
 }
