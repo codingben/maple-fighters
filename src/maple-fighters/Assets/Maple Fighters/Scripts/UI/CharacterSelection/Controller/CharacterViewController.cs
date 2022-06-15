@@ -381,6 +381,7 @@ namespace Scripts.UI.CharacterSelection
             HideCharacterNameWindow();
             HideCharacterSelectionWindow();
             HideChooseFighterView();
+            HideGameServerBrowserWindow();
 
             ShowCharacterSelectionOptionsWindow();
 
@@ -400,9 +401,7 @@ namespace Scripts.UI.CharacterSelection
                     characterViewInteractor.UpdateCharacterData(characterClass, characterName);
 
                     HideCharacterSelectionOptionsWindow();
-
-                    var gameServerBrowserController = FindObjectOfType<GameServerBrowserController>();
-                    gameServerBrowserController?.ShowGameServerBrowserWindow();
+                    ShowGameServerBrowserWindow();
                 }
                 else
                 {
@@ -514,6 +513,20 @@ namespace Scripts.UI.CharacterSelection
             {
                 characterSelectionView?.Hide();
             }
+        }
+
+        private void ShowGameServerBrowserWindow()
+        {
+            var gameServerBrowserController =
+                FindObjectOfType<GameServerBrowserController>();
+            gameServerBrowserController?.ShowGameServerBrowserWindow();
+        }
+
+        private void HideGameServerBrowserWindow()
+        {
+            var gameServerBrowserController =
+                FindObjectOfType<GameServerBrowserController>();
+            gameServerBrowserController?.HideGameServerBrowserWindow();
         }
 
         private IClickableCharacterView CreateAndShowCharacterView(string path)
