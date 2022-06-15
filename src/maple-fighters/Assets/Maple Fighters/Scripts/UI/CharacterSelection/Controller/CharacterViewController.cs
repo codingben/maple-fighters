@@ -495,7 +495,9 @@ namespace Scripts.UI.CharacterSelection
 
             characterSelectionView.EnableChooseButton();
             characterSelectionView.ResetSelection();
-            characterSelectionView.SelectCharacterClass(uiCharacterClass);
+
+            HideCharacterSelectionWindow();
+            ShowCharacterNameWindow();
         }
 
         private void ResetCharacterSelection()
