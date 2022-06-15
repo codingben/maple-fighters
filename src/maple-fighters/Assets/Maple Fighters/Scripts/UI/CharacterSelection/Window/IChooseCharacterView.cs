@@ -2,7 +2,7 @@
 
 namespace Scripts.UI.CharacterSelection
 {
-    public interface IChooseFighterView : IView
+    public interface IChooseCharacterView : IView
     {
         // Left blank intentionally
     }

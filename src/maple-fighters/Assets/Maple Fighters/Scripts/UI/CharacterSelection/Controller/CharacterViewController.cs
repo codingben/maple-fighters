@@ -18,7 +18,7 @@ namespace Scripts.UI.CharacterSelection
         private int minCharacterNameLength;
 
         private ILoadingView loadingView;
-        private IChooseFighterView chooseFighterView;
+        private IChooseCharacterView chooseCharacterView;
         private ICharacterView characterView;
         private ICharacterSelectionOptionsView characterSelectionOptionsView;
         private ICharacterSelectionView characterSelectionView;
@@ -56,11 +56,11 @@ namespace Scripts.UI.CharacterSelection
             ShowLoadingView();
         }
 
-        private void CreateChooseFighterView()
+        private void CreateChooseCharacterView()
         {
-            chooseFighterView = UICreator
+            chooseCharacterView = UICreator
                 .GetInstance()
-                .Create<ChooseFighterText>(UICanvasLayer.Background, UIIndex.End);
+                .Create<ChooseCharacterText>(UICanvasLayer.Background, UIIndex.End);
         }
 
         private void CreateLoadingView()
@@ -246,12 +246,12 @@ namespace Scripts.UI.CharacterSelection
         public void OnAfterCharacterReceived()
         {
             HideLoadingView();
-            ShowChooseFighterView();
+            ShowChooseCharacterView();
         }
 
         public void OnCharacterDeletionSucceed()
         {
-            HideChooseFighterView();
+            HideChooseCharacterView();
             ShowLoadingView();
 
             RemoveAndShowAllCharacterImages();
@@ -267,7 +267,7 @@ namespace Scripts.UI.CharacterSelection
             ResetCharacterName();
 
             HideCharacterNameWindow();
-            HideChooseFighterView();
+            HideChooseCharacterView();
 
             ShowLoadingView();
 
@@ -296,7 +296,7 @@ namespace Scripts.UI.CharacterSelection
         {
             UnsubscribeFromLoadingView();
 
-            CreateChooseFighterView();
+            CreateChooseCharacterView();
             CreateCharacterView();
             CreateAndSubscribeToCharacterSelectionOptionsWindow();
             CreateAndSubscribeToCharacterSelectionWindow();
@@ -333,9 +333,9 @@ namespace Scripts.UI.CharacterSelection
             }
         }
 
-        private void ShowChooseFighterView()
+        private void ShowChooseCharacterView()
         {
-            chooseFighterView?.Show();
+            chooseCharacterView?.Show();
         }
 
         private void ShowLoadingView()
@@ -343,9 +343,9 @@ namespace Scripts.UI.CharacterSelection
             loadingView?.Show();
         }
 
-        private void HideChooseFighterView()
+        private void HideChooseCharacterView()
         {
-            chooseFighterView?.Hide();
+            chooseCharacterView?.Hide();
         }
 
         private void HideLoadingView()
@@ -380,7 +380,7 @@ namespace Scripts.UI.CharacterSelection
 
             HideCharacterNameWindow();
             HideCharacterSelectionWindow();
-            HideChooseFighterView();
+            HideChooseCharacterView();
             HideGameServerBrowserWindow();
 
             ShowCharacterSelectionOptionsWindow();
@@ -483,7 +483,7 @@ namespace Scripts.UI.CharacterSelection
             HideCharacterSelectionWindow();
             HideCharacterNameWindow();
 
-            ShowChooseFighterView();
+            ShowChooseCharacterView();
         }
 
         private void ShowCharacterNameWindow()
