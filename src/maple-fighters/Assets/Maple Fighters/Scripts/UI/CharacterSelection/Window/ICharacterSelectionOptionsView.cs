@@ -5,13 +5,13 @@ namespace Scripts.UI.CharacterSelection
 {
     public interface ICharacterSelectionOptionsView : IView
     {
-        event Action JoinGameButtonClicked;
+        event Action ChooseCharacterButtonClicked;
 
         event Action CreateCharacterButtonClicked;
 
         event Action DeleteCharacterButtonClicked;
 
-        void EnableOrDisableJoinGameButton(bool interactable);
+        void EnableOrDisableChooseCharacterButton(bool interactable);
 
         void EnableOrDisableCreateCharacterButton(bool interactable);
 

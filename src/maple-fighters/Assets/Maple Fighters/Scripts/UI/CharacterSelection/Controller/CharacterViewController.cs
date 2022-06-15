@@ -85,8 +85,8 @@ namespace Scripts.UI.CharacterSelection
 
             if (characterSelectionOptionsView != null)
             {
-                characterSelectionOptionsView.JoinGameButtonClicked +=
-                    OnJoinGameButtonClicked;
+                characterSelectionOptionsView.ChooseCharacterButtonClicked +=
+                    OnChooseCharacterButtonClicked;
                 characterSelectionOptionsView.CreateCharacterButtonClicked +=
                     OnCreateCharacterButtonClicked;
                 characterSelectionOptionsView.DeleteCharacterButtonClicked +=
@@ -175,8 +175,8 @@ namespace Scripts.UI.CharacterSelection
         {
             if (characterSelectionOptionsView != null)
             {
-                characterSelectionOptionsView.JoinGameButtonClicked -=
-                    OnJoinGameButtonClicked;
+                characterSelectionOptionsView.ChooseCharacterButtonClicked -=
+                    OnChooseCharacterButtonClicked;
                 characterSelectionOptionsView.CreateCharacterButtonClicked -=
                     OnCreateCharacterButtonClicked;
                 characterSelectionOptionsView.DeleteCharacterButtonClicked -=
@@ -369,7 +369,7 @@ namespace Scripts.UI.CharacterSelection
 
         private void EnableOrDisableCharacterSelectionOptionsViewButtons(bool hasCharacter)
         {
-            characterSelectionOptionsView?.EnableOrDisableJoinGameButton(hasCharacter);
+            characterSelectionOptionsView?.EnableOrDisableChooseCharacterButton(hasCharacter);
             characterSelectionOptionsView?.EnableOrDisableCreateCharacterButton(!hasCharacter);
             characterSelectionOptionsView?.EnableOrDisableDeleteCharacterButton(hasCharacter);
         }
@@ -388,7 +388,7 @@ namespace Scripts.UI.CharacterSelection
             EnableOrDisableCharacterSelectionOptionsViewButtons(hasCharacter);
         }
 
-        private void OnJoinGameButtonClicked()
+        private void OnChooseCharacterButtonClicked()
         {
             if (characterIndex != -1)
             {
