@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 114875419846978554}
   - component: {fileID: 114461303457974192}
   m_Layer: 5
-  m_Name: Join Button
+  m_Name: Join Game Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -461,7 +461,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameServerList: {fileID: 224133246790740444}
-  joinButton: {fileID: 114461303457974192}
+  joinGameButton: {fileID: 114461303457974192}
   refreshButton: {fileID: 114014568139333270}
   refreshImage: {fileID: 114280984199480182}
 --- !u!225 &225756934479252268
@@ -958,7 +958,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Join Server
+  m_Text: Join Game
 --- !u!1 &8223303625621426325
 GameObject:
   m_ObjectHideFlags: 0

@@ -131,7 +131,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b791de8c938619b4399d9e90a7aa6767, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startButton: {fileID: 114480412888889336}
+  joinGameButton: {fileID: 114480412888889336}
   createCharacterButton: {fileID: 114544928173412332}
   deleteCharacterButton: {fileID: 114380155219174550}
 --- !u!225 &225947016481078284
@@ -172,7 +172,7 @@ GameObject:
   - component: {fileID: 114102289088866298}
   - component: {fileID: 114480412888889336}
   m_Layer: 5
-  m_Name: Start Button
+  m_Name: Join Game Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -833,7 +833,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Start Game
+  m_Text: Join Game
 --- !u!1 &8453363025077886213
 GameObject:
   m_ObjectHideFlags: 0
