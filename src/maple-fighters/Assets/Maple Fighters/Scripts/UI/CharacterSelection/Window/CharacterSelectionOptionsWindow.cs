@@ -9,7 +9,7 @@ namespace Scripts.UI.CharacterSelection
     public class CharacterSelectionOptionsWindow : UIElement,
                                                    ICharacterSelectionOptionsView
     {
-        public event Action StartButtonClicked;
+        public event Action JoinGameButtonClicked;
 
         public event Action CreateCharacterButtonClicked;
 
@@ -17,7 +17,7 @@ namespace Scripts.UI.CharacterSelection
 
         [Header("Buttons")]
         [SerializeField]
-        private Button startButton;
+        private Button joinGameButton;
 
         [SerializeField]
         private Button createCharacterButton;
@@ -27,21 +27,21 @@ namespace Scripts.UI.CharacterSelection
 
         private void Start()
         {
-            startButton?.onClick.AddListener(OnStartButtonClicked);
+            joinGameButton?.onClick.AddListener(OnJoinGameButtonClicked);
             createCharacterButton?.onClick.AddListener(OnCreateCharacterButtonClicked);
             deleteCharacterButton?.onClick.AddListener(OnDeleteCharacterButtonClicked);
         }
 
         private void OnDestroy()
         {
-            startButton?.onClick.RemoveListener(OnStartButtonClicked);
+            joinGameButton?.onClick.RemoveListener(OnJoinGameButtonClicked);
             createCharacterButton?.onClick.RemoveListener(OnCreateCharacterButtonClicked);
             deleteCharacterButton?.onClick.RemoveListener(OnDeleteCharacterButtonClicked);
         }
 
-        private void OnStartButtonClicked()
+        private void OnJoinGameButtonClicked()
         {
-            StartButtonClicked?.Invoke();
+            JoinGameButtonClicked?.Invoke();
         }
 
         private void OnCreateCharacterButtonClicked()
@@ -54,11 +54,11 @@ namespace Scripts.UI.CharacterSelection
             DeleteCharacterButtonClicked?.Invoke();
         }
 
-        public void EnableOrDisableStartButton(bool interactable)
+        public void EnableOrDisableJoinGameButton(bool interactable)
         {
-            if (startButton != null)
+            if (joinGameButton != null)
             {
-                startButton.interactable = interactable;
+                joinGameButton.interactable = interactable;
             }
         }
 

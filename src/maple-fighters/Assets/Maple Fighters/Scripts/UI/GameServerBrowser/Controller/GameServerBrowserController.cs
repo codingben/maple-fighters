@@ -71,8 +71,8 @@ namespace Scripts.UI.GameServerBrowser
         {
             if (gameServerBrowserView != null)
             {
-                gameServerBrowserView.JoinButtonClicked +=
-                    OnJoinButtonClicked;
+                gameServerBrowserView.JoinGameButtonClicked +=
+                    OnJoinGameButtonClicked;
                 gameServerBrowserView.RefreshButtonClicked +=
                     OnRefreshButtonClicked;
             }
@@ -82,8 +82,8 @@ namespace Scripts.UI.GameServerBrowser
         {
             if (gameServerBrowserView != null)
             {
-                gameServerBrowserView.JoinButtonClicked -=
-                    OnJoinButtonClicked;
+                gameServerBrowserView.JoinGameButtonClicked -=
+                    OnJoinGameButtonClicked;
                 gameServerBrowserView.RefreshButtonClicked -=
                     OnRefreshButtonClicked;
             }
@@ -194,10 +194,10 @@ namespace Scripts.UI.GameServerBrowser
         private void OnGameServerButtonClicked(UIGameServerButtonData gameServerData)
         {
             gameServerBrowserInteractor.SetGameServerInfo(gameServerData);
-            gameServerBrowserView?.EnableJoinButton();
+            gameServerBrowserView?.EnableJoinGameButton();
         }
 
-        private void OnJoinButtonClicked()
+        private void OnJoinGameButtonClicked()
         {
             if (screenFadeController != null)
             {
@@ -232,13 +232,13 @@ namespace Scripts.UI.GameServerBrowser
 
         private void ShowRefreshImage()
         {
-            gameServerBrowserView?.DisableJoinButton();
+            gameServerBrowserView?.DisableJoinGameButton();
             gameServerBrowserView?.RefreshImage?.Show();
         }
 
         private void HideRefreshImage()
         {
-            gameServerBrowserView?.DisableJoinButton();
+            gameServerBrowserView?.DisableJoinGameButton();
             gameServerBrowserView?.RefreshImage?.Hide();
         }
     }

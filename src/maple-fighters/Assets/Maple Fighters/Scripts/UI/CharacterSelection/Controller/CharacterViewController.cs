@@ -85,8 +85,8 @@ namespace Scripts.UI.CharacterSelection
 
             if (characterSelectionOptionsView != null)
             {
-                characterSelectionOptionsView.StartButtonClicked +=
-                    OnStartButtonClicked;
+                characterSelectionOptionsView.JoinGameButtonClicked +=
+                    OnJoinGameButtonClicked;
                 characterSelectionOptionsView.CreateCharacterButtonClicked +=
                     OnCreateCharacterButtonClicked;
                 characterSelectionOptionsView.DeleteCharacterButtonClicked +=
@@ -179,8 +179,8 @@ namespace Scripts.UI.CharacterSelection
         {
             if (characterSelectionOptionsView != null)
             {
-                characterSelectionOptionsView.StartButtonClicked -=
-                    OnStartButtonClicked;
+                characterSelectionOptionsView.JoinGameButtonClicked -=
+                    OnJoinGameButtonClicked;
                 characterSelectionOptionsView.CreateCharacterButtonClicked -=
                     OnCreateCharacterButtonClicked;
                 characterSelectionOptionsView.DeleteCharacterButtonClicked -=
@@ -378,7 +378,7 @@ namespace Scripts.UI.CharacterSelection
 
         private void EnableOrDisableCharacterSelectionOptionsViewButtons(bool hasCharacter)
         {
-            characterSelectionOptionsView?.EnableOrDisableStartButton(hasCharacter);
+            characterSelectionOptionsView?.EnableOrDisableJoinGameButton(hasCharacter);
             characterSelectionOptionsView?.EnableOrDisableCreateCharacterButton(!hasCharacter);
             characterSelectionOptionsView?.EnableOrDisableDeleteCharacterButton(hasCharacter);
         }
@@ -396,7 +396,7 @@ namespace Scripts.UI.CharacterSelection
             EnableOrDisableCharacterSelectionOptionsViewButtons(hasCharacter);
         }
 
-        private void OnStartButtonClicked()
+        private void OnJoinGameButtonClicked()
         {
             if (characterIndex != -1)
             {

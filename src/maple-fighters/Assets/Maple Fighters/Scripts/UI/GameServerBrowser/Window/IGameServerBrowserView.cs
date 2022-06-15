@@ -6,7 +6,7 @@ namespace Scripts.UI.GameServerBrowser
 {
     public interface IGameServerBrowserView : IView
     {
-        event Action JoinButtonClicked;
+        event Action JoinGameButtonClicked;
 
         event Action RefreshButtonClicked;
 
@@ -14,9 +14,9 @@ namespace Scripts.UI.GameServerBrowser
 
         Transform GameServerList { get; }
 
-        void EnableJoinButton();
+        void EnableJoinGameButton();
 
-        void DisableJoinButton();
+        void DisableJoinGameButton();
 
         void EnableRefreshButton();
 

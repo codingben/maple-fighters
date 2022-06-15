@@ -8,7 +8,7 @@ namespace Scripts.UI.GameServerBrowser
     [RequireComponent(typeof(UIFadeAnimation))]
     public class GameServerBrowserWindow : UIElement, IGameServerBrowserView
     {
-        public event Action JoinButtonClicked;
+        public event Action JoinGameButtonClicked;
 
         public event Action RefreshButtonClicked;
 
@@ -22,7 +22,7 @@ namespace Scripts.UI.GameServerBrowser
 
         [Header("Buttons")]
         [SerializeField]
-        private Button joinButton;
+        private Button joinGameButton;
 
         [SerializeField]
         private Button refreshButton;
@@ -33,19 +33,19 @@ namespace Scripts.UI.GameServerBrowser
 
         private void Start()
         {
-            joinButton?.onClick.AddListener(OnJoinButtonClicked);
+            joinGameButton?.onClick.AddListener(OnJoinGameButtonClicked);
             refreshButton?.onClick.AddListener(OnRefreshButtonClicked);
         }
 
         private void OnDestroy()
         {
-            joinButton?.onClick.RemoveListener(OnJoinButtonClicked);
+            joinGameButton?.onClick.RemoveListener(OnJoinGameButtonClicked);
             refreshButton?.onClick.RemoveListener(OnRefreshButtonClicked);
         }
 
-        private void OnJoinButtonClicked()
+        private void OnJoinGameButtonClicked()
         {
-            JoinButtonClicked?.Invoke();
+            JoinGameButtonClicked?.Invoke();
         }
 
         private void OnRefreshButtonClicked()
@@ -53,19 +53,19 @@ namespace Scripts.UI.GameServerBrowser
             RefreshButtonClicked?.Invoke();
         }
 
-        public void EnableJoinButton()
+        public void EnableJoinGameButton()
         {
-            if (joinButton != null)
+            if (joinGameButton != null)
             {
-                joinButton.interactable = true;
+                joinGameButton.interactable = true;
             }
         }
 
-        public void DisableJoinButton()
+        public void DisableJoinGameButton()
         {
-            if (joinButton != null)
+            if (joinGameButton != null)
             {
-                joinButton.interactable = false;
+                joinGameButton.interactable = false;
             }
         }
 
