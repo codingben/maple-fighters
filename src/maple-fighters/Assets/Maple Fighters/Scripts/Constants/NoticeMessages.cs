@@ -17,7 +17,7 @@
             public const string WrongPassword = "The password is incorrect.";
             public const string WrongEmailAddress = "The email address does not exist.";
             public const string RegistrationSucceed = "Registration completed successfully!";
-            public const string UnknownError = "An unknown error has occurred. Please try again later.";
+            public const string UnknownError = "An unknown error has occurred. Please try again.";
         }
 
         public static class GameServer
@@ -27,16 +27,16 @@
 
         public static class GameServerBrowserView
         {
-            public const string UnknownError = "An unknown error has occurred. Please try again later.";
+            public const string UnknownError = "An unknown error has occurred. Please try again.";
         }
 
         public static class CharacterView
         {
-            public const string CreationFailed = "The character creation failed. Please try again later.";
-            public const string NameAlreadyInUse = "Your character name is already taken.";
-            public const string ValidationFailed = "The character validation failed. Please try again later.";
-            public const string DeletionFailed = "The character deletion failed. Please try again later.";
-            public const string UnknownError = "An unknown error has occurred. Please try again later.";
+            public const string CreationFailed = "Character creation failed. Please try again.";
+            public const string DeletionFailed = "Character deletion failed. Please try again.";
+            public const string NotFound = "Character not found. Please create new character.";
+            public const string NameAlreadyInUse = "Character name is already taken.";
+            public const string UnknownError = "An unknown error has occurred. Please try again.";
         }
     }
 }

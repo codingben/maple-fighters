@@ -415,7 +415,7 @@ namespace Scripts.UI.CharacterSelection
                 }
                 else
                 {
-                    NoticeUtils.ShowNotice(message: NoticeMessages.CharacterView.ValidationFailed);
+                    NoticeUtils.ShowNotice(message: NoticeMessages.CharacterView.NotFound);
                 }
             }
         }
