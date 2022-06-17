@@ -33,6 +33,8 @@ namespace ScriptableObjects.Configurations
             {
                 networkConfiguration.Environment = ParseEnv(environment);
             }
+
+            Debug.Log($"Set environment: {environment}");
         }
 
         private HostingEnvironment ParseEnv(string environment)
