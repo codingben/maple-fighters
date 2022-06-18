@@ -37,18 +37,15 @@ namespace Scripts.Services
         #region GameApi
         public static IGameApi ProvideGameApi()
         {
-            if (gameApi == null)
+            var networkConfiguration = NetworkConfiguration.GetInstance();
+            if (networkConfiguration.IsProduction() ||
+                networkConfiguration.IsDevelopment())
             {
-                var networkConfiguration = NetworkConfiguration.GetInstance();
-                if (networkConfiguration.IsProduction() ||
-                    networkConfiguration.IsDevelopment())
-                {
-                    gameApi = WebSocketGameApi.GetInstance();
-                }
-                else
-                {
-                    gameApi = DummyGameApi.GetInstance();
-                }
+                gameApi = WebSocketGameApi.GetInstance();
+            }
+            else
+            {
+                gameApi = DummyGameApi.GetInstance();
             }
 
             return gameApi;
@@ -65,18 +62,15 @@ namespace Scripts.Services
         #region GameProviderApi
         public static IGameProviderApi ProvideGameProviderApi()
         {
-            if (gameProviderApi == null)
+            var networkConfiguration = NetworkConfiguration.GetInstance();
+            if (networkConfiguration.IsProduction() ||
+                networkConfiguration.IsDevelopment())
             {
-                var networkConfiguration = NetworkConfiguration.GetInstance();
-                if (networkConfiguration.IsProduction() ||
-                    networkConfiguration.IsDevelopment())
-                {
-                    gameProviderApi = HttpGameProviderApi.GetInstance();
-                }
-                else
-                {
-                    gameProviderApi = DummyGameProviderApi.GetInstance();
-                }
+                gameProviderApi = HttpGameProviderApi.GetInstance();
+            }
+            else
+            {
+                gameProviderApi = DummyGameProviderApi.GetInstance();
             }
 
             return gameProviderApi;
@@ -118,18 +112,15 @@ namespace Scripts.Services
         #region ChatApi
         public static IChatApi ProvideChatApi()
         {
-            if (chatApi == null)
+            var networkConfiguration = NetworkConfiguration.GetInstance();
+            if (networkConfiguration.IsProduction() ||
+                networkConfiguration.IsDevelopment())
             {
-                var networkConfiguration = NetworkConfiguration.GetInstance();
-                if (networkConfiguration.IsProduction() ||
-                    networkConfiguration.IsDevelopment())
-                {
-                    chatApi = WebSocketChatApi.GetInstance();
-                }
-                else
-                {
-                    chatApi = DummyChatApi.GetInstance();
-                }
+                chatApi = WebSocketChatApi.GetInstance();
+            }
+            else
+            {
+                chatApi = DummyChatApi.GetInstance();
             }
 
             return chatApi;
