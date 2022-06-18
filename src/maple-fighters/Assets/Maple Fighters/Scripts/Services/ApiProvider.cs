@@ -12,9 +12,14 @@ namespace Scripts.Services
         #region AuthenticatorApi
         public static IAuthenticatorApi ProvideAuthenticatorApi()
         {
-            if (authenticatorApi == null)
+            var networkConfiguration = NetworkConfiguration.GetInstance();
+            if (networkConfiguration.IsProduction() ||
+                networkConfiguration.IsDevelopment())
             {
-                // TODO: Fix backend service
+                authenticatorApi = HttpAuthenticatorApi.GetInstance();
+            }
+            else
+            {
                 authenticatorApi = DummyAuthenticatorApi.GetInstance();
             }
 
