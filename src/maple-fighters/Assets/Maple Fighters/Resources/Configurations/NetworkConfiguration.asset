@@ -22,4 +22,4 @@ MonoBehaviour:
   - Name: Production
     Host: maplefighters.io
     Environment: 2
-  Environment: 2
+  Environment: 0
