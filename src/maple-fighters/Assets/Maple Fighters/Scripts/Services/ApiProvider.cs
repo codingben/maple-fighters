@@ -93,9 +93,14 @@ namespace Scripts.Services
         #region CharacterProviderApi
         public static ICharacterProviderApi ProvideCharacterProviderApi()
         {
-            if (characterProviderApi == null)
+            var networkConfiguration = NetworkConfiguration.GetInstance();
+            if (networkConfiguration.IsProduction() ||
+                networkConfiguration.IsDevelopment())
             {
-                // TODO: Fix backend service
+                characterProviderApi = HttpCharacterProviderApi.GetInstance();
+            }
+            else
+            {
                 characterProviderApi = DummyCharacterProviderApi.GetInstance();
             }
 
