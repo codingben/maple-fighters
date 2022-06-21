@@ -8,6 +8,7 @@
             public const string TheDarkForest = "TheDarkForest";
         }
 
+        public const string Initializer = "Initializer";
         public const string Main = "Main";
     }
 }

@@ -1,5 +1,7 @@
 using System.Runtime.InteropServices;
+using Scripts.Constants;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace ScriptableObjects.Configurations
 {
@@ -23,6 +25,8 @@ namespace ScriptableObjects.Configurations
         {
 #if UNITY_WEBGL && !UNITY_EDITOR
             SetEnv();
+#elif UNITY_EDITOR
+            SceneManager.LoadScene(sceneName: SceneNames.Main);
 #endif
         }
 
@@ -35,6 +39,8 @@ namespace ScriptableObjects.Configurations
             }
 
             Debug.Log($"Set environment: {environment}");
+
+            SceneManager.LoadScene(sceneName: SceneNames.Main);
         }
 
         private HostingEnvironment ParseEnv(string environment)
