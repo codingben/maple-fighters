@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Maple Fighters/Scenes/Menu/Initializer.unity
+    guid: c508427494b384c46b8661e2942340cf
+  - enabled: 1
     path: Assets/Maple Fighters/Scenes/Menu/Main.unity
     guid: 9df1aac550fe58b41a73c8be33536790
   - enabled: 1
