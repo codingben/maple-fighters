@@ -290,6 +290,8 @@ namespace Scripts.UI.CharacterSelection
                     break;
                 }
             }
+
+            characterNameView.EnableConfirmButton();
         }
 
         private void OnLoadingAnimationFinished()
