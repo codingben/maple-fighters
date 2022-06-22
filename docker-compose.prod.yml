@@ -10,6 +10,18 @@ services:
             - gameprovider-service
             - chat-service
 
+    character-service:
+        image: character-service
+        expose:
+            - 50053
+        depends_on:
+            - character-db
+        environment:
+            RUST_LOG: info
+            RUST_BACKTRACE: full
+            IP_ADDRESS: 0.0.0.0:50053
+            DATABASE_URL: postgres://${CHARACTER_DB_USER}:${CHARACTER_DB_PASSWORD}@character-db:5432/${CHARACTER_DB_NAME}
+
     game-service:
         image: maplefighters/game-service
         restart: "on-failure"
@@ -37,3 +49,17 @@ services:
             - 50054
         environment:
             PORT: 50054
+
+    character-db:
+        image: postgres:13
+        restart: "always"
+        expose:
+            - 5432
+        environment:
+            POSTGRES_USER: ${CHARACTER_DB_USER}
+            POSTGRES_PASSWORD: ${CHARACTER_DB_PASSWORD}
+        volumes:
+            - postgres:/var/lib/postgresql/data
+
+volumes:
+  postgres: ~
