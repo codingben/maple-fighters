@@ -11,7 +11,7 @@ services:
             - chat-service
 
     character-service:
-        image: character-service
+        image: maplefighters/character-service
         expose:
             - 50053
         depends_on:
