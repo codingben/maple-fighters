@@ -26,6 +26,6 @@ jobs:
             export CHARACTER_DB_PASSWORD=${{ secrets.CHARACTER_DB_PASSWORD }}
             export CHARACTER_DB_NAME=${{ secrets.CHARACTER_DB_NAME }}
             
-            docker compose -f ${{ env.DOCKER_COMPOSE_FILE }} pull
-            docker compose -f ${{ env.DOCKER_COMPOSE_FILE }} up -d
+            docker-compose -f ${{ env.DOCKER_COMPOSE_FILE }} pull
+            docker-compose -f ${{ env.DOCKER_COMPOSE_FILE }} up -d
             docker system prune -af
