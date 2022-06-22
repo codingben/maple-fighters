@@ -77,7 +77,6 @@ namespace Scripts.UI.CharacterSelection
                 ConfirmButtonClicked?.Invoke(characterName);
             }
 
-            ResetNameInputField();
             DisableConfirmButton();
         }
 
