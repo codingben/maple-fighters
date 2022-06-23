@@ -22,6 +22,8 @@ services:
             RUST_BACKTRACE: full
             IP_ADDRESS: 0.0.0.0:50053
             DATABASE_URL: postgres://${CHARACTER_DB_USER}:${CHARACTER_DB_PASSWORD}@character-db:5432/${CHARACTER_DB_NAME}
+        profiles:
+            - authorization
 
     game-service:
         image: maplefighters/game-service
@@ -61,6 +63,8 @@ services:
             POSTGRES_PASSWORD: ${CHARACTER_DB_PASSWORD}
         volumes:
             - postgres:/var/lib/postgresql/data
+        profiles:
+            - authorization
 
 volumes:
   postgres: ~
