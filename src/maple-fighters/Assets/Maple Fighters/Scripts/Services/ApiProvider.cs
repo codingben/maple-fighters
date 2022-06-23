@@ -87,7 +87,9 @@ namespace Scripts.Services
         #region CharacterProviderApi
         public static ICharacterProviderApi ProvideCharacterProviderApi()
         {
-            var networkConfiguration = NetworkConfiguration.GetInstance();
+            characterProviderApi = DummyCharacterProviderApi.GetInstance();
+
+            /* var networkConfiguration = NetworkConfiguration.GetInstance();
             if (networkConfiguration.IsProduction() ||
                 networkConfiguration.IsDevelopment())
             {
@@ -96,7 +98,7 @@ namespace Scripts.Services
             else
             {
                 characterProviderApi = DummyCharacterProviderApi.GetInstance();
-            }
+            } */
 
             return characterProviderApi;
         }
