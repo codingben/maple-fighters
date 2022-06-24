@@ -1,4 +1,7 @@
 ﻿using Scripts.Constants;
+using Scripts.UI.CharacterSelection;
+using Scripts.UI.GameServerBrowser;
+using Scripts.UI.MenuBackground;
 using Scripts.UI.Notice;
 using UI;
 using UnityEngine;
@@ -26,6 +29,23 @@ namespace Scripts.UI.Authenticator
         {
             CreateAndSubscribeToLoginWindow();
             CreateAndSubscribeToRegistrationWindow();
+
+            SubscribeToBackgroundClicked();
+
+#if UNITY_EDITOR
+            CreateLoginButton();
+#endif
+        }
+
+        private void CreateLoginButton()
+        {
+#if UNITY_EDITOR
+            var loginButton = UICreator.GetInstance().Create<LoginButton>();
+            if (loginButton != null)
+            {
+                loginButton.ButtonClicked += ShowLoginWindow;
+            }
+#endif
         }
 
         private void CreateAndSubscribeToLoginWindow()
@@ -64,6 +84,7 @@ namespace Scripts.UI.Authenticator
         {
             UnsubscribeFromLoginWindow();
             UnsubscribeFromRegistrationWindow();
+            UnsubscribeFromBackgroundClicked();
         }
 
         private void UnsubscribeFromLoginWindow()
@@ -88,6 +109,34 @@ namespace Scripts.UI.Authenticator
                 registrationView.BackButtonClicked -=
                     OnBackButtonClicked;
             }
+        }
+
+        private void SubscribeToBackgroundClicked()
+        {
+            var backgroundController =
+                FindObjectOfType<MenuBackgroundController>();
+            if (backgroundController != null)
+            {
+                backgroundController.BackgroundClicked +=
+                    OnBackgroundClicked;
+            }
+        }
+
+        private void UnsubscribeFromBackgroundClicked()
+        {
+            var backgroundController =
+                FindObjectOfType<MenuBackgroundController>();
+            if (backgroundController != null)
+            {
+                backgroundController.BackgroundClicked -=
+                    OnBackgroundClicked;
+            }
+        }
+
+        private void OnBackgroundClicked()
+        {
+            HideLoginWindow();
+            HideRegistrationWindow();
         }
 
         private void OnLoginButtonClicked(
@@ -159,12 +208,32 @@ namespace Scripts.UI.Authenticator
 
         private void ShowLoginWindow()
         {
+            HideLoginWindow();
+            HideRegistrationWindow();
+            HideCharacterView();
+            HideGameServerBrowserView();
+
             loginView?.Show();
         }
 
-        private void HideLoginWindow()
+        private void HideCharacterView()
         {
-            if (loginView != null)
+            var characterView = FindObjectOfType<CharacterViewController>();
+            characterView?.HideCharacterSelectionOptionsWindow();
+            characterView?.HideCharacterSelectionWindow();
+            characterView?.HideCharacterNameWindow();
+        }
+
+        private void HideGameServerBrowserView()
+        {
+            var gameServerBrowser = FindObjectOfType<GameServerBrowserController>();
+            gameServerBrowser?.HideGameServerBrowserWindow();
+        }
+
+        public void HideLoginWindow()
+        {
+            if (loginView != null &&
+                loginView.IsShown)
             {
                 loginView.Email = string.Empty;
                 loginView.Password = string.Empty;
@@ -177,9 +246,10 @@ namespace Scripts.UI.Authenticator
             registrationView?.Show();
         }
 
-        private void HideRegistrationWindow()
+        public void HideRegistrationWindow()
         {
-            if (registrationView != null)
+            if (registrationView != null &&
+                registrationView.IsShown)
             {
                 registrationView.Email = string.Empty;
                 registrationView.Password = string.Empty;

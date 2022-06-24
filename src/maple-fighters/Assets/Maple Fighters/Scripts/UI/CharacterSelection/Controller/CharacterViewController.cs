@@ -1,5 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 using Scripts.Constants;
+using Scripts.UI.Authenticator;
 using Scripts.UI.GameServerBrowser;
 using Scripts.UI.MenuBackground;
 using Scripts.UI.Notice;
@@ -360,7 +361,7 @@ namespace Scripts.UI.CharacterSelection
             characterSelectionOptionsView?.Show();
         }
 
-        private void HideCharacterSelectionOptionsWindow()
+        public void HideCharacterSelectionOptionsWindow()
         {
             if (characterSelectionOptionsView != null
                 && characterSelectionOptionsView.IsShown)
@@ -384,6 +385,7 @@ namespace Scripts.UI.CharacterSelection
             HideCharacterSelectionWindow();
             HideChooseCharacterView();
             HideGameServerBrowserWindow();
+            HideAuthenticatorView();
 
             ShowCharacterSelectionOptionsWindow();
 
@@ -474,6 +476,13 @@ namespace Scripts.UI.CharacterSelection
             ShowCharacterNameWindow();
         }
 
+        private void HideAuthenticatorView()
+        {
+            var authenticatorController = FindObjectOfType<AuthenticatorController>();
+            authenticatorController?.HideLoginWindow();
+            authenticatorController?.HideRegistrationWindow();
+        }
+
         private void ResetCharacterName()
         {
             characterNameView.ResetNameInputField();
@@ -494,7 +503,7 @@ namespace Scripts.UI.CharacterSelection
             characterNameView?.GenerateRandomCharacterName();
         }
 
-        private void HideCharacterNameWindow()
+        public void HideCharacterNameWindow()
         {
             if (characterNameView != null
                 && characterNameView.IsShown)
@@ -508,7 +517,7 @@ namespace Scripts.UI.CharacterSelection
             characterSelectionView?.Show();
         }
 
-        private void HideCharacterSelectionWindow()
+        public void HideCharacterSelectionWindow()
         {
             if (characterSelectionView != null
                 && characterSelectionView.IsShown)
