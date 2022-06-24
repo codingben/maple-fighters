@@ -363,8 +363,8 @@ namespace Scripts.UI.CharacterSelection
 
         public void HideCharacterSelectionOptionsWindow()
         {
-            if (characterSelectionOptionsView != null
-                && characterSelectionOptionsView.IsShown)
+            if (characterSelectionOptionsView != null &&
+                characterSelectionOptionsView.IsShown)
             {
                 characterSelectionOptionsView.Hide();
             }
@@ -505,8 +505,8 @@ namespace Scripts.UI.CharacterSelection
 
         public void HideCharacterNameWindow()
         {
-            if (characterNameView != null
-                && characterNameView.IsShown)
+            if (characterNameView != null &&
+                characterNameView.IsShown)
             {
                 characterNameView?.Hide();
             }
@@ -519,8 +519,8 @@ namespace Scripts.UI.CharacterSelection
 
         public void HideCharacterSelectionWindow()
         {
-            if (characterSelectionView != null
-                && characterSelectionView.IsShown)
+            if (characterSelectionView != null &&
+                characterSelectionView.IsShown)
             {
                 characterSelectionView?.Hide();
             }

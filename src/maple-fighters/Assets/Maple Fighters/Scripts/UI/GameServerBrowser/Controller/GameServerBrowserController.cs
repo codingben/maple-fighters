@@ -60,8 +60,8 @@ namespace Scripts.UI.GameServerBrowser
 
         public void HideGameServerBrowserWindow()
         {
-            if (gameServerBrowserView != null
-                && gameServerBrowserView.IsShown)
+            if (gameServerBrowserView != null &&
+                gameServerBrowserView.IsShown)
             {
                 gameServerBrowserView.Hide();
             }
