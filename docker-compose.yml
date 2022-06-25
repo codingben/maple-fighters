@@ -39,12 +39,12 @@ services:
         expose:
             - 50053
         depends_on:
-            - postgres
+            - character-db
         environment:
             RUST_LOG: info
             RUST_BACKTRACE: full
             IP_ADDRESS: 0.0.0.0:50053
-            DATABASE_URL: postgres://postgres:postgres@postgres:5432/postgres
+            DATABASE_URL: postgres://postgres:postgres@character-db:5432/postgres
 
     game-service:
         image: game-service
@@ -80,9 +80,8 @@ services:
         environment:
             PORT: 50054
 
-    postgres:
+    character-db:
         image: postgres:13
-        container_name: character-db
         expose:
             - 5432
         environment:
