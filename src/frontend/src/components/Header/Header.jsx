@@ -6,6 +6,10 @@ function EnterFullScreen() {
   context.setFullscreen(true);
 }
 
+function Login() {
+  context.send("Authenticator Controller", "ShowLoginWindow");
+}
+
 function Header() {
   return (
     <>
@@ -16,6 +20,9 @@ function Header() {
       <div>
         <button onClick={EnterFullScreen} className="fullscreen-button">
           Enter Full Screen
+        </button>
+        <button onClick={Login} className="login-button">
+          Login
         </button>
         <a href="https://github.com/codingben/maple-fighters" target="_blank">
           <button className="github-button">GitHub</button>
