@@ -60,8 +60,6 @@ namespace Scripts.UI.Authenticator
                     OnLoginButtonClicked;
                 loginView.CreateAccountButtonClicked +=
                     OnCreateAccountButtonClicked;
-                loginView.LoginAsGuestButtonClicked +=
-                    OnLoginAsGuestButtonClicked;
             }
         }
 
@@ -95,8 +93,6 @@ namespace Scripts.UI.Authenticator
                     OnLoginButtonClicked;
                 loginView.CreateAccountButtonClicked -=
                     OnCreateAccountButtonClicked;
-                loginView.LoginAsGuestButtonClicked -=
-                    OnLoginAsGuestButtonClicked;
             }
         }
 
@@ -163,11 +159,6 @@ namespace Scripts.UI.Authenticator
         {
             HideLoginWindow();
             ShowRegistrationWindow();
-        }
-
-        private void OnLoginAsGuestButtonClicked()
-        {
-            authenticatorInteractor.LoginAsGuest();
         }
 
         private void OnRegisterButtonClicked(

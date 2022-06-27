@@ -58,38 +58,6 @@ namespace Scripts.UI.Authenticator
             authenticatorApi?.Register(email, password, firstName, lastName);
         }
 
-        public void LoginAsGuest()
-        {
-            var userMetadata = FindObjectOfType<UserMetadata>();
-            if (userMetadata == null)
-            {
-                return;
-            }
-
-            string userid;
-            const string key = "userid";
-
-            if (PlayerPrefs.HasKey(key))
-            {
-                userid = PlayerPrefs.GetString(key);
-            }
-            else
-            {
-                userid = Convert.ToBase64String(Guid.NewGuid().ToByteArray());
-                userid = Regex.Replace(userid, "[/+=]", string.Empty);
-
-                PlayerPrefs.SetString(key, userid);
-                PlayerPrefs.Save();
-            }
-
-            userMetadata.UserData = new UserData()
-            {
-                id = userid
-            };
-
-            onLoginFinishedListener.OnLoginSucceeded();
-        }
-
         private void OnLoginCallback(long statusCode, string json)
         {
             switch (statusCode)

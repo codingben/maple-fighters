@@ -8,8 +8,6 @@ namespace Scripts.UI.Authenticator
         event Action<UIAuthenticationDetails> LoginButtonClicked;
 
         event Action CreateAccountButtonClicked;
-        
-        event Action LoginAsGuestButtonClicked;
 
         string Email { set; }
 
