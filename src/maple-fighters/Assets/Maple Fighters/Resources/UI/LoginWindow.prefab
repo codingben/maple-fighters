@@ -221,6 +221,7 @@ MonoBehaviour:
   m_CaretBlinkRate: 0.85
   m_CaretWidth: 1
   m_ReadOnly: 0
+  m_ShouldActivateOnSelect: 1
 --- !u!1 &514877813
 GameObject:
   m_ObjectHideFlags: 0
@@ -758,6 +759,7 @@ MonoBehaviour:
   m_CaretBlinkRate: 0.85
   m_CaretWidth: 1
   m_ReadOnly: 0
+  m_ShouldActivateOnSelect: 1
 --- !u!1 &1916155560
 GameObject:
   m_ObjectHideFlags: 0
@@ -976,6 +978,7 @@ MonoBehaviour:
   passwordInputField: {fileID: 1869585360}
   loginButton: {fileID: 114604747071764252}
   createAccountButton: {fileID: 114667661989364152}
+  loginAsGuestButton: {fileID: 0}
 --- !u!225 &225305996580944786
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -1061,7 +1064,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.39215687}
+  m_Color: {r: 0.39215687, g: 0.78431374, b: 1, a: 0.39215687}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1294,7 +1297,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.39215687}
+  m_Color: {r: 0.39215687, g: 0.78431374, b: 1, a: 0.39215687}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
