@@ -24,9 +24,7 @@ services:
         expose:
             - 50050
         depends_on:
-            - mongo
-        external_links:
-            - mongo
+            - auth-db
         environment:
             ASPNETCORE_ENVIRONMENT: Development
             ASPNETCORE_URLS: http://0.0.0.0:50050
@@ -88,8 +86,7 @@ services:
             POSTGRES_USER: postgres
             POSTGRES_PASSWORD: postgres
 
-    mongo:
+    auth-db:
         image: mongo:5.0.2
-        container_name: user-db
         expose:
             - 27017
