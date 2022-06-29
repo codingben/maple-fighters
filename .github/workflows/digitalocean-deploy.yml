@@ -21,7 +21,11 @@ jobs:
           script: |
             rm ${{ env.DOCKER_COMPOSE_FILE }}
             curl -s ${{ env.DOCKER_COMPOSE_URL }} -o ${{ env.DOCKER_COMPOSE_FILE }}
-            
+
+            export USER_DB_USER=${{ secrets.USER_DB_USER }}
+            export USER_DB_PASSWORD=${{ secrets.USER_DB_PASSWORD }}
+            export USER_DB_NAME=${{ secrets.USER_DB_NAME }}
+
             export CHARACTER_DB_USER=${{ secrets.CHARACTER_DB_USER }}
             export CHARACTER_DB_PASSWORD=${{ secrets.CHARACTER_DB_PASSWORD }}
             export CHARACTER_DB_NAME=${{ secrets.CHARACTER_DB_NAME }}
