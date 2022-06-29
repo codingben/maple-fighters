@@ -11,6 +11,17 @@ services:
             - gameprovider-service
             - chat-service
 
+    auth-service:
+        image: auth-service
+        expose:
+            - 50050
+        depends_on:
+            - mongo
+        environment:
+            ASPNETCORE_ENVIRONMENT: Production
+            ASPNETCORE_URLS: http://0.0.0.0:50050
+            DATABASE_URL: mongodb://${AUTH_DB_USER}:${AUTH_DB_PASSWORD}@mongo:27017/${AUTH_DB_NAME}
+
     character-service:
         image: maplefighters/character-service
         expose:
@@ -51,6 +62,17 @@ services:
         environment:
             PORT: 50054
 
+    auth-db:
+        image: mongo:5.0.2
+        restart: "always"
+        expose:
+            - 27017
+        environment:
+            MONGO_INITDB_ROOT_USERNAME: ${AUTH_DB_USER}
+            MONGO_INITDB_ROOT_PASSWORD: ${AUTH_DB_PASSWORD}
+        volumes:
+            - mongo:/mongodb/data
+
     character-db:
         image: postgres:13
         restart: "always"
@@ -64,3 +86,4 @@ services:
 
 volumes:
   postgres: ~
+  mongo: ~
