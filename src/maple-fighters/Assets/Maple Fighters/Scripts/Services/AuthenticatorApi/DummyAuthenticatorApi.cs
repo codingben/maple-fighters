@@ -27,7 +27,7 @@ namespace Scripts.Services.AuthenticatorApi
         public void Login(string email, string password)
         {
             var statusCode = 200;
-            var json = string.Empty;
+            var json = "{\"id\": 0 }";
 
             LoginCallback?.Invoke(statusCode, json);
         }
