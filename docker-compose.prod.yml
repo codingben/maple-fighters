@@ -6,8 +6,9 @@ services:
         ports:
             - 80:80
         depends_on:
-            - game-service
+            - auth-service
             - character-service
+            - game-service
             - gameprovider-service
             - chat-service
 
