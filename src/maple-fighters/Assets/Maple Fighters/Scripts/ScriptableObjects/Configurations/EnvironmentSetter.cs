@@ -25,7 +25,7 @@ namespace ScriptableObjects.Configurations
         {
 #if UNITY_WEBGL && !UNITY_EDITOR
             SetEnv();
-#elif UNITY_EDITOR
+#elif !UNITY_WEBGL || UNITY_EDITOR
             SceneManager.LoadScene(sceneName: SceneNames.Main);
 #endif
         }
