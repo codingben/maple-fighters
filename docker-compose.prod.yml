@@ -16,11 +16,11 @@ services:
         expose:
             - 50050
         depends_on:
-            - mongo
+            - auth-db
         environment:
             ASPNETCORE_ENVIRONMENT: Production
             ASPNETCORE_URLS: http://0.0.0.0:50050
-            DATABASE_URL: mongodb://${AUTH_DB_USER}:${AUTH_DB_PASSWORD}@mongo:27017/${AUTH_DB_NAME}
+            DATABASE_URL: mongodb://${AUTH_DB_USER}:${AUTH_DB_PASSWORD}@auth-db:27017/${AUTH_DB_NAME}
 
     character-service:
         image: maplefighters/character-service
