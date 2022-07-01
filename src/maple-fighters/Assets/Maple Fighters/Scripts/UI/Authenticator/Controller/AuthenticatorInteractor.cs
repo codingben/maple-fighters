@@ -68,6 +68,7 @@ namespace Scripts.UI.Authenticator
                     if (userMetadata != null)
                     {
                         userMetadata.UserData = UserData.FromJson(json);
+                        userMetadata.IsLoggedIn = true;
                     }
 
                     onLoginFinishedListener.OnLoginSucceeded();

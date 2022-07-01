@@ -4,6 +4,7 @@ using Scripts.Services.CharacterProviderApi;
 using Scripts.Services.ChatApi;
 using Scripts.Services.GameApi;
 using Scripts.Services.GameProviderApi;
+using UnityEngine;
 
 namespace Scripts.Services
 {
@@ -89,16 +90,24 @@ namespace Scripts.Services
         {
             characterProviderApi = DummyCharacterProviderApi.GetInstance();
 
-            /* var networkConfiguration = NetworkConfiguration.GetInstance();
+            var networkConfiguration = NetworkConfiguration.GetInstance();
             if (networkConfiguration.IsProduction() ||
                 networkConfiguration.IsDevelopment())
             {
-                characterProviderApi = HttpCharacterProviderApi.GetInstance();
+                var userMetadata = Object.FindObjectOfType<UserMetadata>();
+                if (userMetadata != null && userMetadata.IsLoggedIn)
+                {
+                    characterProviderApi = HttpCharacterProviderApi.GetInstance();
+                }
+                else
+                {
+                    characterProviderApi = DummyCharacterProviderApi.GetInstance();
+                }
             }
             else
             {
                 characterProviderApi = DummyCharacterProviderApi.GetInstance();
-            } */
+            }
 
             return characterProviderApi;
         }

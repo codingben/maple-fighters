@@ -254,6 +254,12 @@ namespace Scripts.UI.Authenticator
         public void OnLoginSucceeded()
         {
             loginView?.Hide();
+
+            var characterViewInteractor = FindObjectOfType<CharacterViewInteractor>();
+            characterViewInteractor?.SetCharacterProviderApi();
+
+            var characterViewController = FindObjectOfType<CharacterViewController>();
+            characterViewController?.LoadCharacters();
         }
 
         public void OnLoginFailed(string reason)

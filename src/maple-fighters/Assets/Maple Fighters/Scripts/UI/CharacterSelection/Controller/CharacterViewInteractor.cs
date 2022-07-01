@@ -17,8 +17,6 @@ namespace Scripts.UI.CharacterSelection
 
         private void Awake()
         {
-            characterProviderApi =
-                ApiProvider.ProvideCharacterProviderApi();
             onCharacterReceivedListener =
                 GetComponent<IOnCharacterReceivedListener>();
             onCharacterCreationFinishedListener =
@@ -26,6 +24,25 @@ namespace Scripts.UI.CharacterSelection
             onCharacterDeletionFinishedListener =
                 GetComponent<IOnCharacterDeletionFinishedListener>();
 
+            SetCharacterProviderApi();
+        }
+
+        public void SetCharacterProviderApi()
+        {
+            UnsubscribeToCharacterProviderApi();
+
+            characterProviderApi = ApiProvider.ProvideCharacterProviderApi();
+
+            SubscribeToCharacterProviderApi();
+        }
+
+        private void OnDestroy()
+        {
+            UnsubscribeToCharacterProviderApi();
+        }
+
+        private void SubscribeToCharacterProviderApi()
+        {
             if (characterProviderApi != null)
             {
                 characterProviderApi.CreateCharacterCallback += OnCreateCharacterCallback;
@@ -34,7 +51,7 @@ namespace Scripts.UI.CharacterSelection
             }
         }
 
-        private void OnDestroy()
+        private void UnsubscribeToCharacterProviderApi()
         {
             if (characterProviderApi != null)
             {

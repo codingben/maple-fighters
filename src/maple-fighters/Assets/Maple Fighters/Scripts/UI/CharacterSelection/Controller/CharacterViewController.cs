@@ -255,7 +255,7 @@ namespace Scripts.UI.CharacterSelection
             HideChooseCharacterView();
             ShowLoadingView();
 
-            RemoveAndShowAllCharacterImages();
+            LoadCharacters();
         }
 
         public void OnCharacterDeletionFailed()
@@ -272,7 +272,7 @@ namespace Scripts.UI.CharacterSelection
 
             ShowLoadingView();
 
-            RemoveAndShowAllCharacterImages();
+            LoadCharacters();
         }
 
         public void OnCreateCharacterFailed(UICharacterCreationFailed reason)
@@ -307,10 +307,10 @@ namespace Scripts.UI.CharacterSelection
 
             SubscribeToBackgroundClicked();
 
-            characterViewInteractor.GetCharacters();
+            LoadCharacters();
         }
 
-        private void RemoveAndShowAllCharacterImages()
+        public void LoadCharacters()
         {
             RemoveAllCharacterImages();
 

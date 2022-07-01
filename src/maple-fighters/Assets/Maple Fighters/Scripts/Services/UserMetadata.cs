@@ -15,6 +15,8 @@ namespace Scripts.Services
 
         public string CharacterName { get; set; }
 
+        public bool IsLoggedIn { get; set; }
+
         private void Awake()
         {
             DontDestroyOnLoad(gameObject);
