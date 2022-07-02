@@ -21,7 +21,7 @@ services:
         environment:
             ASPNETCORE_ENVIRONMENT: Production
             ASPNETCORE_URLS: http://0.0.0.0:50050
-            DATABASE_URL: mongodb://${AUTH_DB_USER}:${AUTH_DB_PASSWORD}@auth-db:27017
+            DATABASE_URL: mongodb://@auth-db:27017/${AUTH_DB_NAME}
 
     character-service:
         image: maplefighters/character-service
@@ -68,9 +68,6 @@ services:
         restart: "always"
         expose:
             - 27017
-        environment:
-            MONGO_INITDB_ROOT_USERNAME: ${AUTH_DB_USER}
-            MONGO_INITDB_ROOT_PASSWORD: ${AUTH_DB_PASSWORD}
         volumes:
             - mongo:/mongodb/data
 
