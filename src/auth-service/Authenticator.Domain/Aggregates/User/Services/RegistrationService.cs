@@ -1,4 +1,6 @@
-﻿namespace Authenticator.Domain.Aggregates.User.Services
+﻿using Authenticator.Infrastructure;
+
+namespace Authenticator.Domain.Aggregates.User.Services
 {
     public class RegistrationService : IRegistrationService
     {
@@ -9,7 +11,7 @@
             this.accountRepository = accountRepository;
         }
 
-        public void CreateAccount(IAccount account)
+        public void CreateAccount(Account account)
         {
             accountRepository.Create(account);
         }

@@ -22,7 +22,7 @@ namespace Authenticator.UnitTests.Domain.User.Services
                 lastName: "Ukhanov");
             var accountRepository = Substitute.For<IAccountRepository>();
             accountRepository
-                .Read(Arg.Any<Expression<Func<IAccount, bool>>>())
+                .Read(Arg.Any<Expression<Func<Account, bool>>>())
                 .Returns(dummyAccount);
             var loginService = new LoginService(accountRepository);
 

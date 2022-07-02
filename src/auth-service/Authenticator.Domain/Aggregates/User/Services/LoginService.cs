@@ -1,4 +1,6 @@
-﻿namespace Authenticator.Domain.Aggregates.User.Services
+﻿using Authenticator.Infrastructure;
+
+namespace Authenticator.Domain.Aggregates.User.Services
 {
     public class LoginService : ILoginService
     {
@@ -9,7 +11,7 @@
             this.accountRepository = accountRepository;
         }
 
-        public IAccount FindAccount(string email)
+        public Account FindAccount(string email)
         {
             return accountRepository.Read(x => x.Email == email);
         }

@@ -1,11 +1,11 @@
 using System;
-using Authenticator.Domain.Aggregates.User;
+using Authenticator.Domain.Repository;
 using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Bson.Serialization.IdGenerators;
 
 namespace Authenticator.Infrastructure
 {
-    public class Account : IAccount
+    public class Account : IEntity<string>
     {
         [BsonId(IdGenerator = typeof(StringObjectIdGenerator))]
         public string Id { get; set; }

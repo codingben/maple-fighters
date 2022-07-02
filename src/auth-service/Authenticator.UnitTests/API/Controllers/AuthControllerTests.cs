@@ -1,7 +1,7 @@
 ﻿using Authenticator.API.Controllers;
 using Authenticator.API.Datas;
-using Authenticator.Domain.Aggregates.User;
 using Authenticator.Domain.Aggregates.User.Services;
+using Authenticator.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
 using Shouldly;
@@ -87,7 +87,7 @@ namespace Authenticator.UnitTests.API.Controllers
             authController.Register(registrationData);
 
             // Assert
-            registrationService.Received().CreateAccount(Arg.Any<IAccount>());
+            registrationService.Received().CreateAccount(Arg.Any<Account>());
         }
     }
 }

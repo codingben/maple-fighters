@@ -3,7 +3,7 @@ using MongoDB.Driver;
 
 namespace Authenticator.Infrastructure.MongoRepository
 {
-    public class MongoAccountRepository : MongoRepository<IAccount>, IAccountRepository
+    public class MongoAccountRepository : MongoRepository<Account>, IAccountRepository
     {
         private readonly IMongoDatabase mongoDatabase;
 
@@ -12,9 +12,9 @@ namespace Authenticator.Infrastructure.MongoRepository
             mongoDatabase = databaseProvider.Provide();
         }
 
-        protected override IMongoCollection<IAccount> GetCollection()
+        protected override IMongoCollection<Account> GetCollection()
         {
-            return mongoDatabase.GetCollection<IAccount>(name: "accounts");
+            return mongoDatabase.GetCollection<Account>(name: "accounts");
         }
     }
 }

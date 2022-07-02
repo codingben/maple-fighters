@@ -1,8 +1,10 @@
-﻿namespace Authenticator.Domain.Aggregates.User.Services
+﻿using Authenticator.Infrastructure;
+
+namespace Authenticator.Domain.Aggregates.User.Services
 {
     public interface IRegistrationService
     {
-        void CreateAccount(IAccount account);
+        void CreateAccount(Account account);
 
         bool CheckIfEmailExists(string email);
     }
