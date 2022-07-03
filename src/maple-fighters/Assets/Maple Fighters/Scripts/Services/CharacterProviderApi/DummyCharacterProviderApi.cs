@@ -54,8 +54,8 @@ namespace Scripts.Services.CharacterProviderApi
             // On server it will iterate only by user (id) characters
             foreach (var characterData in characters)
             {
-                if (characterData.userid == userid
-                    && characterData.charactername == charactername)
+                if (characterData.userid == userid &&
+                    characterData.charactername == charactername)
                 {
                     statusCode = 400;
                     json = "Please choose a different character name.";
