@@ -226,8 +226,6 @@ namespace Scripts.UI.Authenticator
             if (loginView != null &&
                 loginView.IsShown)
             {
-                loginView.Email = string.Empty;
-                loginView.Password = string.Empty;
                 loginView.Hide();
             }
         }
@@ -242,11 +240,6 @@ namespace Scripts.UI.Authenticator
             if (registrationView != null &&
                 registrationView.IsShown)
             {
-                registrationView.Email = string.Empty;
-                registrationView.Password = string.Empty;
-                registrationView.ConfirmPassword = string.Empty;
-                registrationView.FirstName = string.Empty;
-                registrationView.LastName = string.Empty;
                 registrationView.Hide();
             }
         }
