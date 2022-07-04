@@ -248,6 +248,8 @@ namespace Scripts.UI.Authenticator
         {
             loginView?.Hide();
 
+            ClearLoginWindow();
+
             var characterViewInteractor = FindObjectOfType<CharacterViewInteractor>();
             characterViewInteractor?.SetCharacterProviderApi();
 
@@ -266,6 +268,7 @@ namespace Scripts.UI.Authenticator
         {
             registrationView?.EnableInteraction();
 
+            ClearRegistrationWindow();
             HideRegistrationWindow();
             ShowLoginWindow();
 
@@ -277,6 +280,27 @@ namespace Scripts.UI.Authenticator
             registrationView?.EnableInteraction();
 
             NoticeUtils.ShowNotice(message: reason);
+        }
+
+        private void ClearLoginWindow()
+        {
+            if (loginView != null)
+            {
+                loginView.Email = string.Empty;
+                loginView.Password = string.Empty;
+            }
+        }
+
+        private void ClearRegistrationWindow()
+        {
+            if (registrationView != null)
+            {
+                registrationView.Email = string.Empty;
+                registrationView.Password = string.Empty;
+                registrationView.ConfirmPassword = string.Empty;
+                registrationView.FirstName = string.Empty;
+                registrationView.LastName = string.Empty;
+            }
         }
     }
 }
