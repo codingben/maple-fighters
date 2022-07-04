@@ -247,13 +247,16 @@ namespace Scripts.UI.Authenticator
         public void OnLoginSucceeded()
         {
             loginView?.Hide();
+            loginView?.EnableInteraction();
 
             ClearLoginWindow();
 
-            var characterViewInteractor = FindObjectOfType<CharacterViewInteractor>();
-            characterViewInteractor?.SetCharacterProviderApi();
+            var characterViewInteractor =
+                FindObjectOfType<CharacterViewInteractor>();
+            var characterViewController =
+                FindObjectOfType<CharacterViewController>();
 
-            var characterViewController = FindObjectOfType<CharacterViewController>();
+            characterViewInteractor?.SetCharacterProviderApi();
             characterViewController?.LoadCharacters();
         }
 

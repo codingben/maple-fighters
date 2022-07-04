@@ -1,6 +1,4 @@
-﻿using System;
-using System.Text.RegularExpressions;
-using Scripts.Constants;
+﻿using Scripts.Constants;
 using Scripts.Services;
 using Scripts.Services.AuthenticatorApi;
 using UnityEngine;
