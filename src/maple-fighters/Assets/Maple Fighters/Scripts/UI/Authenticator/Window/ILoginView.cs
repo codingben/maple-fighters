@@ -9,7 +9,7 @@ namespace Scripts.UI.Authenticator
 
         event Action CreateAccountButtonClicked;
 
-        string Email { set; }
+        string Email { get; set; }
 
         string Password { set; }
 

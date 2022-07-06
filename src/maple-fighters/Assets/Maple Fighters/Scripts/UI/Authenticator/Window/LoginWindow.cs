@@ -14,6 +14,16 @@ namespace Scripts.UI.Authenticator
 
         public string Email
         {
+            get
+            {
+                if (emailInputField == null)
+                {
+                    return string.Empty;
+                }
+
+                return emailInputField.text;
+            }
+
             set
             {
                 if (emailInputField != null)

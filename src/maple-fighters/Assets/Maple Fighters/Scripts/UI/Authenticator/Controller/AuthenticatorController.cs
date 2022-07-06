@@ -56,6 +56,12 @@ namespace Scripts.UI.Authenticator
 
             if (loginView != null)
             {
+                loginView.Email =
+                    ProvideLoginEmail();
+            }
+
+            if (loginView != null)
+            {
                 loginView.LoginButtonClicked +=
                     OnLoginButtonClicked;
                 loginView.CreateAccountButtonClicked +=
@@ -246,9 +252,12 @@ namespace Scripts.UI.Authenticator
 
         public void OnLoginSucceeded()
         {
+            var email = loginView?.Email;
+
             loginView?.Hide();
             loginView?.EnableInteraction();
 
+            SaveLoginEmail(email);
             ClearLoginWindow();
 
             var characterViewInteractor =
@@ -304,6 +313,24 @@ namespace Scripts.UI.Authenticator
                 registrationView.FirstName = string.Empty;
                 registrationView.LastName = string.Empty;
             }
+        }
+
+        private void SaveLoginEmail(string email)
+        {
+            PlayerPrefs.SetString("email", email);
+            PlayerPrefs.Save();
+        }
+
+        private string ProvideLoginEmail()
+        {
+            var email = string.Empty;
+
+            if (PlayerPrefs.HasKey("email"))
+            {
+                email = PlayerPrefs.GetString("email");
+            }
+
+            return email;
         }
     }
 }
