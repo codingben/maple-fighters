@@ -2,10 +2,35 @@ name: DigitalOcean Deploy
 
 on:
   workflow_dispatch:
-
-env:
-  DOCKER_COMPOSE_FILE: docker-compose.prod.yml
-  DOCKER_COMPOSE_URL: https://raw.githubusercontent.com/codingben/maple-fighters/develop/docker-compose.prod.yml
+    inputs:
+      userName:
+        description: 'User'
+        required: true
+        default: 'codingben'
+        type: choice
+        options:
+        - codingben
+      repoName:
+        description: 'Repository'
+        required: true
+        default: 'maple-fighters'
+        type: choice
+        options:
+        - maple-fighters
+      branchName:
+        description: 'Branch'
+        required: true
+        default: 'develop'
+        type: choice
+        options:
+        - develop
+      dockerComposeFile:
+        description: 'Docker Compose File'
+        required: true
+        default: 'docker-compose.prod.yml'
+        type: choice
+        options:
+        - docker-compose.prod.yml
 
 jobs:
   deploy:
@@ -19,8 +44,14 @@ jobs:
           key: ${{ secrets.DIGITALOCEAN_KEY }}
           port: ${{ secrets.DIGITALOCEAN_PORT }}
           script: |
-            rm ${{ env.DOCKER_COMPOSE_FILE }}
-            curl -s ${{ env.DOCKER_COMPOSE_URL }} -o ${{ env.DOCKER_COMPOSE_FILE }}
+            HOST=https://raw.githubusercontent.com
+            USER=${{ inputs.userName }}
+            REPO=${{ inputs.repoName }}
+            BRANCH=${{ inputs.branchName }}
+            FILE=${{ inputs.dockerComposeFile }}
+
+            rm ${FILE}
+            curl -s ${HOST}/${USER}/${REPO}/${BRANCH}/${FILE} -o ${FILE}
 
             export AUTH_DB_USER=${{ secrets.AUTH_DB_USER }}
             export AUTH_DB_PASSWORD=${{ secrets.AUTH_DB_PASSWORD }}
@@ -30,6 +61,6 @@ jobs:
             export CHARACTER_DB_PASSWORD=${{ secrets.CHARACTER_DB_PASSWORD }}
             export CHARACTER_DB_NAME=${{ secrets.CHARACTER_DB_NAME }}
             
-            docker-compose -f ${{ env.DOCKER_COMPOSE_FILE }} pull
-            docker-compose -f ${{ env.DOCKER_COMPOSE_FILE }} up -d
+            docker-compose -f ${FILE} pull
+            docker-compose -f ${FILE} up -d
             docker system prune -af
