@@ -28,7 +28,6 @@ namespace Scripts.Gameplay.Player.States
         {
             if (IsGrounded())
             {
-                // TODO: Get real animation time duration
                 if (Time.time > previousTime + 0.5f)
                 {
                     playerController.SetPlayerState(PlayerStates.Idle);

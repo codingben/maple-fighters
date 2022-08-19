@@ -72,7 +72,6 @@ namespace Scripts.Gameplay.Player
 
         private void SendUpdatePlayerStateMessage()
         {
-            // TODO: Send animation enabled (while in rope/ladder)
             var message = new ChangeAnimationStateMessage()
             {
                 AnimationState = (byte)playerState
