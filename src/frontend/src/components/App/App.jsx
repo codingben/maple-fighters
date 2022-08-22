@@ -1,9 +1,9 @@
 import Unity, { UnityContext } from "react-unity-webgl";
 import { isMobile } from "react-device-detect";
+import Mobile from "../Mobile/Mobile.jsx";
 import Header from "../Header/Header.jsx";
 import Footer from "../Footer/Footer.jsx";
 import Loader from "../Loader/Loader.jsx";
-import logo from "../../assets/logo.png";
 import "./app.css";
 
 export const context = new UnityContext({
@@ -15,17 +15,7 @@ export const context = new UnityContext({
 
 function App() {
   if (isMobile) {
-    return (
-      <div className="warning">
-        <img src={logo} alt="logo" />
-        <h1>
-          <a href="https://github.com/codingben/maple-fighters">
-            Maple Fighters
-          </a>{" "}
-          is not compatible with your device.
-        </h1>
-      </div>
-    );
+    return <Mobile />;
   }
 
   context.on("SetEnv", () => {
