@@ -13,20 +13,23 @@ export const context = new UnityContext({
   codeUrl: "files/WebGL.wasm",
 });
 
+function OnSetEnv() {
+  // Timeout is required because of the splash screen,
+  // so it takes a few seconds to load game scene.
+  setTimeout(() => {
+    let isProduction = process.env.REACT_APP_ENV == "Production";
+    let env = isProduction ? "Production" : "Development";
+
+    context.send("Environment Setter", "SetEnvCallback", env);
+  }, 2000);
+}
+
 function App() {
   if (isMobile) {
     return <Mobile />;
   }
 
-  context.on("SetEnv", () => {
-    // Timeout required (maybe because of the splash screen).
-    setTimeout(() => {
-      let isProduction = process.env.REACT_APP_ENV == "Production";
-      let env = isProduction ? "Production" : "Development";
-
-      context.send("Environment Setter", "SetEnvCallback", env);
-    }, 2000);
-  });
+  context.on("SetEnv", OnSetEnv);
 
   return (
     <div>
