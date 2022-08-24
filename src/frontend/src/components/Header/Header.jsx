@@ -1,6 +1,7 @@
 import { context } from "../App/App.jsx";
 import "./header.css";
 import logo from "../../assets/logo.png";
+import { useState } from "react";
 
 function EnterFullScreen() {
   context.setFullscreen(true);
