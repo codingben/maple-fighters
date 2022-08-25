@@ -2,10 +2,6 @@ import Unity, { UnityContext } from "react-unity-webgl";
 import { isMobile } from "react-device-detect";
 import FadeLoader from "react-spinners/FadeLoader";
 import "./app.css";
-import "./header.css";
-import "./footer.css";
-import "./loader.css";
-import "./mobile.css";
 import logo from "../../assets/logo.png";
 import { useState } from "react";
 

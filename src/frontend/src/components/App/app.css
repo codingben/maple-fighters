@@ -1,3 +1,91 @@
+/* Header */
+
+.logo {
+  height: 60px;
+  margin: 5px 5px;
+  float: left;
+}
+
+.title {
+  color: white;
+  float: left;
+  margin: 5px 5px;
+  font-style: normal;
+  font-family: Arial;
+}
+
+.fullscreen-button {
+  background-color: transparent;
+  background-repeat: no-repeat;
+  border: none;
+  cursor: pointer;
+  overflow: hidden;
+  outline: none;
+  position: fixed;
+  top: 100;
+  right: 0;
+  margin: 26px 195px;
+  font-size: 23px;
+  font-family: Arial;
+  color: white;
+}
+
+.fullscreen-button:hover {
+  color: gainsboro;
+}
+
+.login-button {
+  background-color: transparent;
+  background-repeat: no-repeat;
+  border: none;
+  cursor: pointer;
+  overflow: hidden;
+  outline: none;
+  position: fixed;
+  top: 100;
+  right: 0;
+  margin: 26px 115px;
+  font-size: 23px;
+  font-family: Arial;
+  color: white;
+}
+
+.login-button:hover {
+  color: gainsboro;
+}
+
+.github-button {
+  background-color: transparent;
+  background-repeat: no-repeat;
+  border: none;
+  cursor: pointer;
+  overflow: hidden;
+  outline: none;
+  position: fixed;
+  top: 100;
+  right: 0;
+  margin: 26px 20px;
+  font-size: 23px;
+  font-family: Arial;
+  color: white;
+}
+
+.github-button:hover {
+  color: gainsboro;
+}
+
+/* Loader */
+
+.loader {
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* Unity Container */
+
 .container {
   width: 100%;
   height: 100%;
@@ -12,4 +100,36 @@
 
 ::selection {
   background-color: transparent;
+}
+
+/* Footer */
+
+.footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+  color: white;
+  font-family: Arial;
+}
+
+a {
+  color: inherit;
+}
+
+a:hover {
+  color: gainsboro;
+}
+
+/* Mobile Warning */
+
+.warning {
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  color: white;
+  font-family: Arial;
 }
