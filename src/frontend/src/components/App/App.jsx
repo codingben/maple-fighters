@@ -44,12 +44,66 @@ function MobileApp() {
   );
 }
 
+function Logo() {
+  return (
+    <div>
+      <img src={logo} className="logo" alt="logo" />
+      <div className="title">
+        <h2>Maple Fighters</h2>
+      </div>
+    </div>
+  );
+}
+
+function FullScreenButton() {
+  return (
+    <div>
+      <button onClick={EnterFullScreen} className="fullscreen-button">
+        Enter Full Screen
+      </button>
+    </div>
+  );
+}
+
+function LoginButton() {
+  return (
+    <div>
+      <button onClick={ShowLoginWindow} className="login-button">
+        Login
+      </button>
+    </div>
+  );
+}
+
+function GitHubButton() {
+  return (
+    <div>
+      <a href="https://github.com/codingben/maple-fighters" target="_blank">
+        <button className="github-button">GitHub</button>
+      </a>
+    </div>
+  );
+}
+
+function Footer() {
+  return (
+    <div className="footer">
+      <h4>
+        Made with <span style={{ color: "#E91E63" }}>&#x2764;</span> by{" "}
+        <a href="https://codingben.io" target="_blank">
+          Ben Oukhanov
+        </a>
+      </h4>
+    </div>
+  );
+}
+
 function App() {
   if (isMobile) {
     return <MobileApp />;
   }
 
-  let [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
 
   unityContext.on("loaded", () => setLoading(false));
   unityContext.on("SetEnv", SetEnvironment);
@@ -57,37 +111,21 @@ function App() {
   return (
     <div>
       <div>
-        <img src={logo} className="logo" alt="logo" />
-        <div className="title">
-          <h2>Maple Fighters</h2>
-        </div>
+        <Logo />
         <div>
           {loading == false && (
             <div>
-              <button onClick={EnterFullScreen} className="fullscreen-button">
-                Enter Full Screen
-              </button>
-              <button onClick={ShowLoginWindow} className="login-button">
-                Login
-              </button>
+              <FullScreenButton />
+              <LoginButton />
             </div>
           )}
-          <a href="https://github.com/codingben/maple-fighters" target="_blank">
-            <button className="github-button">GitHub</button>
-          </a>
+          <GitHubButton />
         </div>
       </div>
       <div>
         <Unity className="container" unityContext={unityContext} />
       </div>
-      <div className="footer">
-        <h4>
-          Made with <span style={{ color: "#E91E63" }}>&#x2764;</span> by{" "}
-          <a href="https://codingben.io" target="_blank">
-            Ben Oukhanov
-          </a>
-        </h4>
-      </div>
+      <Footer />
       <div className="loader">
         <FadeLoader
           css={"display: block;"}
