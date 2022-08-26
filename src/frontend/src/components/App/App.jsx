@@ -104,6 +104,9 @@ function App() {
   }
 
   const [loading, setLoading] = useState(true);
+  const fade = {
+    style: { animation: `${"fade"} 1s` },
+  };
 
   unityContext.on("loaded", () => setLoading(false));
   unityContext.on("SetEnv", SetEnvironment);
@@ -114,7 +117,7 @@ function App() {
         <Logo />
         <div>
           {loading == false && (
-            <div>
+            <div {...fade}>
               <FullScreenButton />
               <LoginButton />
             </div>

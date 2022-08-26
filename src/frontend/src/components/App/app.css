@@ -133,3 +133,14 @@ a:hover {
   color: white;
   font-family: Arial;
 }
+
+/* CSS Animation */
+
+@keyframes fade {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}
