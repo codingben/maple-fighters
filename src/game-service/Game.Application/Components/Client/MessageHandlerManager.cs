@@ -45,6 +45,7 @@ namespace Game.Application.Components
             handlerCollection.Set(MessageCodes.ChangeAnimationState, new ChangeAnimationStateHandler(remotePlayer));
             handlerCollection.Set(MessageCodes.EnterScene, new EnterSceneMessageHandler(remotePlayer, gameSceneCollection));
             handlerCollection.Set(MessageCodes.ChangeScene, new ChangeSceneMessageHandler(remotePlayer, gameSceneCollection));
+            handlerCollection.Set(MessageCodes.Attack, new AttackMessageHandler(remotePlayer));
         }
 
         protected override void OnRemoved()
