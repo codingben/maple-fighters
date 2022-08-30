@@ -8,7 +8,7 @@ using InterestManagement;
 
 namespace Game.Application.Objects.Components
 {
-    public class MobMoveBehaviour : ComponentBase
+    public class MobMoveBehaviour : ComponentBase, IMobMoveBehaviour
     {
         private readonly Timer positionSenderTimer;
         private readonly Random random = new();
@@ -23,6 +23,16 @@ namespace Game.Application.Objects.Components
             positionSenderTimer = new Timer(100);
             positionSenderTimer.Elapsed += (s, e) => SendPosition();
             positionSenderTimer.Start();
+        }
+
+        public void Start()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Stop()
+        {
+            throw new NotImplementedException();
         }
 
         protected override void OnAwake()
