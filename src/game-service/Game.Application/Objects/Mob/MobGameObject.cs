@@ -13,6 +13,7 @@ namespace Game.Application.Objects
             Components.Add(new MobConfigDataProvider());
             Components.Add(new MobPhysicsBodyCreator());
             Components.Add(new MobMoveBehaviour());
+            Components.Add(new MobAttackedBehaviour());
             Components.Add(new MobBehaviourManager());
             Components.Add(new PhysicsBodyPositionSetter());
         }

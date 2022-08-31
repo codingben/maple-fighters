@@ -10,7 +10,9 @@ namespace Game.Application.Objects.Components
         protected override void OnAwake()
         {
             var mobMoveBehaviour = Components.Get<IMobMoveBehaviour>();
+            var mobAttackedBehaviour = Components.Get<IMobAttackedBehaviour>();
             behaviours.Add(MobBehaviour.Move, mobMoveBehaviour);
+            behaviours.Add(MobBehaviour.Attacked, mobAttackedBehaviour);
         }
     }
 }
