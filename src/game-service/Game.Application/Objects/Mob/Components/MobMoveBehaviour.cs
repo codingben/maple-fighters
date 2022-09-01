@@ -27,12 +27,22 @@ namespace Game.Application.Objects.Components
 
         public void Start()
         {
-            throw new NotImplementedException();
+            var presenceSceneProvider =
+                Components.Get<IPresenceSceneProvider>();
+            var gameScene =
+                presenceSceneProvider.GetScene();
+            var gamePhysicsCreator =
+                gameScene.Components.Get<IScenePhysicsCreator>();
+            var physicsExecutor =
+                gamePhysicsCreator.GetPhysicsExecutor();
+
+            coroutineRunner = physicsExecutor.GetCoroutineRunner();
+            coroutineRunner.Run(Move());
         }
 
         public void Stop()
         {
-            throw new NotImplementedException();
+            coroutineRunner?.Stop(Move());
         }
 
         protected override void OnAwake()
@@ -40,18 +50,6 @@ namespace Game.Application.Objects.Components
             gameObject = Components.Get<IGameObjectGetter>().Get();
             proximityChecker = Components.Get<IProximityChecker>();
             mobConfigDataProvider = Components.Get<IMobConfigDataProvider>();
-
-            var presenceSceneProvider = Components.Get<IPresenceSceneProvider>();
-            presenceSceneProvider.SceneChanged += (gameScene) =>
-            {
-                var gamePhysicsCreator =
-                    gameScene.Components.Get<IScenePhysicsCreator>();
-                var physicsExecutor =
-                    gamePhysicsCreator.GetPhysicsExecutor();
-
-                coroutineRunner = physicsExecutor.GetCoroutineRunner();
-                coroutineRunner.Run(Move());
-            };
         }
 
         private IEnumerator Move()

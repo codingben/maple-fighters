@@ -13,6 +13,12 @@ namespace Game.Application.Objects.Components
             var mobAttackedBehaviour = Components.Get<IMobAttackedBehaviour>();
             behaviours.Add(MobBehaviour.Move, mobMoveBehaviour);
             behaviours.Add(MobBehaviour.Attacked, mobAttackedBehaviour);
+
+            var presenceSceneProvider = Components.Get<IPresenceSceneProvider>();
+            presenceSceneProvider.SceneChanged += (gameScene) =>
+            {
+                mobMoveBehaviour.Start();
+            };
         }
     }
 }
