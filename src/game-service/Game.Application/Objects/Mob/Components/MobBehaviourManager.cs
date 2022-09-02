@@ -5,20 +5,38 @@ namespace Game.Application.Objects.Components
 {
     public class MobBehaviourManager : ComponentBase
     {
-        private readonly Dictionary<MobBehaviour, IMobBehaviour> behaviours;
+        private readonly Dictionary<MobBehaviourType, IMobBehaviour> behaviours;
+        private IMobBehaviour behaviour;
 
         protected override void OnAwake()
         {
             var mobMoveBehaviour = Components.Get<IMobMoveBehaviour>();
             var mobAttackedBehaviour = Components.Get<IMobAttackedBehaviour>();
-            behaviours.Add(MobBehaviour.Move, mobMoveBehaviour);
-            behaviours.Add(MobBehaviour.Attacked, mobAttackedBehaviour);
+            behaviours.Add(MobBehaviourType.Move, mobMoveBehaviour);
+            behaviours.Add(MobBehaviourType.Attacked, mobAttackedBehaviour);
 
             var presenceSceneProvider = Components.Get<IPresenceSceneProvider>();
-            presenceSceneProvider.SceneChanged += (gameScene) =>
+            presenceSceneProvider.SceneChanged += OnSceneInitialized;
+        }
+
+        private void OnSceneInitialized(IGameScene gameScene)
+        {
+            ChangeBehaviour(type: MobBehaviourType.Move);
+        }
+
+        public void ChangeBehaviour(MobBehaviourType type)
+        {
+            StopPreviousBehaviour();
+
+            if (behaviours.TryGetValue(type, out behaviour))
             {
-                mobMoveBehaviour.Start();
-            };
+                behaviour.Start();
+            }
+        }
+
+        private void StopPreviousBehaviour()
+        {
+            behaviour?.Stop();
         }
     }
 }

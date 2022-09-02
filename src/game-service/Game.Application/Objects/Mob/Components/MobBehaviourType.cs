@@ -1,6 +1,6 @@
 namespace Game.Application.Objects.Components
 {
-    public enum MobBehaviour
+    public enum MobBehaviourType
     {
         Undefined,
         Move,

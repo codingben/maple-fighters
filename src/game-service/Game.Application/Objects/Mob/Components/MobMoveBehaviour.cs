@@ -22,7 +22,16 @@ namespace Game.Application.Objects.Components
         {
             positionSenderTimer = new Timer(100);
             positionSenderTimer.Elapsed += (s, e) => SendPosition();
+        }
+
+        private void StartPositionSenderTimer()
+        {
             positionSenderTimer.Start();
+        }
+
+        private void StopPositionSenderTimer()
+        {
+            positionSenderTimer.Stop();
         }
 
         public void Start()
@@ -36,12 +45,20 @@ namespace Game.Application.Objects.Components
             var physicsExecutor =
                 gamePhysicsCreator.GetPhysicsExecutor();
 
-            coroutineRunner = physicsExecutor.GetCoroutineRunner();
-            coroutineRunner.Run(Move());
+            if (coroutineRunner != null)
+            {
+                coroutineRunner = physicsExecutor.GetCoroutineRunner();
+            }
+
+            StartPositionSenderTimer();
+
+            coroutineRunner?.Run(Move());
         }
 
         public void Stop()
         {
+            StopPositionSenderTimer();
+
             coroutineRunner?.Stop(Move());
         }
 
