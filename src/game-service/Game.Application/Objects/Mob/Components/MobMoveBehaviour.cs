@@ -45,12 +45,12 @@ namespace Game.Application.Objects.Components
             var physicsExecutor =
                 gamePhysicsCreator.GetPhysicsExecutor();
 
-            if (coroutineRunner != null)
+            StartPositionSenderTimer();
+
+            if (coroutineRunner == null)
             {
                 coroutineRunner = physicsExecutor.GetCoroutineRunner();
             }
-
-            StartPositionSenderTimer();
 
             coroutineRunner?.Run(Move());
         }
