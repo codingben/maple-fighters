@@ -3,9 +3,9 @@ using Game.Application.Components;
 
 namespace Game.Application.Objects.Components
 {
-    public class MobBehaviourManager : ComponentBase
+    public class MobBehaviourManager : ComponentBase, IMobBehaviourManager
     {
-        private readonly Dictionary<MobBehaviourType, IMobBehaviour> behaviours;
+        private readonly Dictionary<MobBehaviourType, IMobBehaviour> behaviours = new();
         private IMobBehaviour behaviour;
 
         protected override void OnAwake()
