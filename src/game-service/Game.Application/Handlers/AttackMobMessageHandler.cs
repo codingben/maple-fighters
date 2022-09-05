@@ -6,19 +6,19 @@ using InterestManagement;
 
 namespace Game.Application.Handlers
 {
-    public class AttackMessageHandler : IMessageHandler<AttackMessage>
+    public class AttackMobMessageHandler : IMessageHandler<AttackMobMessage>
     {
         private readonly IGameObject player;
         private readonly IProximityChecker proximityChecker;
 
-        public AttackMessageHandler(IGameObject player)
+        public AttackMobMessageHandler(IGameObject player)
         {
             this.player = player;
 
             proximityChecker = player.Components.Get<IProximityChecker>();
         }
 
-        public void Handle(AttackMessage message)
+        public void Handle(AttackMobMessage message)
         {
             var nearbyGameObjects = proximityChecker?.GetNearbyGameObjects();
             var distance = 1.5f;

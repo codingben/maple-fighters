@@ -10,7 +10,7 @@ namespace Game.Messages
         GameObjectsRemoved,
         PositionChanged,
         AnimationStateChanged,
-        Attack,
+        AttackMob,
         Attacked,
         BubbleNotification,
         EnteredScene,

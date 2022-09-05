@@ -1,6 +1,6 @@
 namespace Game.Messages
 {
-    public struct AttackMessage
+    public struct AttackMobMessage
     {
         // Left blank intentionally
     }
