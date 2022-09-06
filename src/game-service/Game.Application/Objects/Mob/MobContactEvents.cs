@@ -6,18 +6,19 @@ namespace Game.Application.Objects
 {
     public class MobContactEvents : IContactEvents
     {
-        private readonly int id;
+        private readonly IMobAttackPlayerHandler attackPlayerHandler;
 
-        public MobContactEvents(int id)
+        public MobContactEvents(IMobAttackPlayerHandler attackPlayerHandler)
         {
-            this.id = id;
+            this.attackPlayerHandler = attackPlayerHandler;
         }
 
         public void OnBeginContact(Body body)
         {
-            var player = body.GetUserData() as IGameObject;
-            var playerAttacked = player?.Components.Get<IPlayerAttacked>();
-            playerAttacked?.Attack(id);
+            if (body.GetUserData() is IGameObject player)
+            {
+                attackPlayerHandler.Attack(player);
+            }
         }
 
         public void OnEndContact(Body body)

@@ -29,6 +29,7 @@ namespace Game.Application.Objects.Components
             var id = gameObject.Id;
             var x = gameObject.Transform.Position.X;
             var y = gameObject.Transform.Position.Y;
+            var mobAttackPlayerHandler = Components.Get<IMobAttackPlayerHandler>();
             var mobConfigDataProvider = Components.Get<IMobConfigDataProvider>();
             var mobConfigData = mobConfigDataProvider.Provide();
             var bodyWidth = mobConfigData.BodyWidth;
@@ -45,7 +46,7 @@ namespace Game.Application.Objects.Components
             {
                 GroupIndex = (short)LayerMask.Mob
             };
-            polygonDef.UserData = new MobContactEvents(id);
+            polygonDef.UserData = new MobContactEvents(mobAttackPlayerHandler);
 
             return new NewBodyData(id, bodyDef, polygonDef);
         }

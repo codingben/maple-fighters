@@ -7,6 +7,7 @@ namespace Game.Application.Objects.Components
     {
         private readonly Dictionary<MobBehaviourType, IMobBehaviour> behaviours = new();
         private IMobBehaviour behaviour;
+        private MobBehaviourType behaviourType;
 
         protected override void OnAwake()
         {
@@ -30,8 +31,14 @@ namespace Game.Application.Objects.Components
 
             if (behaviours.TryGetValue(type, out behaviour))
             {
+                behaviourType = type;
                 behaviour.Start();
             }
+        }
+
+        public MobBehaviourType GetBehaviour()
+        {
+            return behaviourType;
         }
 
         private void StopPreviousBehaviour()
