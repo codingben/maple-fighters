@@ -18,6 +18,8 @@ namespace Game.Application.Objects.Components
         private ICoroutineRunner coroutineRunner;
         private IMobConfigDataProvider mobConfigDataProvider;
 
+        private bool isMoveStopped;
+
         public MobMoveBehaviour()
         {
             positionSenderTimer = new Timer(100);
@@ -52,12 +54,16 @@ namespace Game.Application.Objects.Components
                 coroutineRunner = physicsExecutor.GetCoroutineRunner();
             }
 
+            isMoveStopped = false;
+
             coroutineRunner?.Run(Move());
         }
 
         public void Stop()
         {
             StopPositionSenderTimer();
+
+            isMoveStopped = true;
 
             coroutineRunner?.Stop(Move());
         }
@@ -80,6 +86,11 @@ namespace Game.Application.Objects.Components
 
             while (true)
             {
+                if (isMoveStopped)
+                {
+                    yield break;
+                }
+
                 if (Vector2.Distance(startPosition, position) >= distance)
                 {
                     direction *= -1;
