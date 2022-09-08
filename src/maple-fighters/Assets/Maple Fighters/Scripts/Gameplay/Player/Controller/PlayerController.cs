@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using ScriptableObjects.Configurations;
 using Scripts.Editor;
 using Scripts.Gameplay.Graphics;
@@ -13,6 +14,8 @@ namespace Scripts.Gameplay.Player
     [RequireComponent(typeof(Collider2D))]
     public class PlayerController : MonoBehaviour
     {
+        public Action<PlayerStates> PlayerStateChanged;
+
         [Header("Debug")]
         [ViewOnly, SerializeField]
         private PlayerStates playerState = PlayerStates.Falling;
@@ -102,6 +105,8 @@ namespace Scripts.Gameplay.Player
 
                 playerStateAnimator?.SetPlayerState(newPlayerState);
                 playerState = newPlayerState;
+
+                PlayerStateChanged?.Invoke(newPlayerState);
             }
         }
 
