@@ -11,6 +11,7 @@ namespace Game.Application.Objects
             Components.Add(new ProximityChecker());
             Components.Add(new PresenceSceneProvider());
             Components.Add(new MobConfigDataProvider());
+            Components.Add(new MobHealthController());
             Components.Add(new MobMoveBehaviour());
             Components.Add(new MobAttackedBehaviour());
             Components.Add(new MobBehaviourManager());

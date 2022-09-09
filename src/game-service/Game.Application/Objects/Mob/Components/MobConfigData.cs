@@ -11,5 +11,7 @@ namespace Game.Application.Objects.Components
         public float Speed { get; set; }
 
         public float Distance { get; set; }
+
+        public int Health { get; set; }
     }
 }
