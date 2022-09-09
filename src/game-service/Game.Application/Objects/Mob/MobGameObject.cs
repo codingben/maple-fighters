@@ -15,7 +15,7 @@ namespace Game.Application.Objects
             Components.Add(new MobAttackedBehaviour());
             Components.Add(new MobBehaviourManager());
             Components.Add(new MobAttackPlayerHandler(id));
-            Components.Add(new MobPhysicsBodyCreator());
+            Components.Add(new MobPhysicsBodyController());
             Components.Add(new PhysicsBodyPositionSetter());
         }
     }

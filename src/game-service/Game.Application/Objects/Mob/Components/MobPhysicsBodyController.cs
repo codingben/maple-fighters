@@ -4,7 +4,7 @@ using Game.Physics;
 
 namespace Game.Application.Objects.Components
 {
-    public class MobPhysicsBodyCreator : ComponentBase
+    public class MobPhysicsBodyController : ComponentBase
     {
         private IGameObject mob;
         private IPhysicsWorldManager physicsWorldManager;
