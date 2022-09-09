@@ -1,3 +1,4 @@
+using System;
 using Game.Application.Objects;
 using Game.Application.Objects.Components;
 using Game.Messages;
@@ -10,6 +11,7 @@ namespace Game.Application.Handlers
     {
         private readonly IGameObject player;
         private readonly IProximityChecker proximityChecker;
+        private readonly Random random = new();
 
         public AttackMobMessageHandler(IGameObject player)
         {
@@ -23,19 +25,25 @@ namespace Game.Application.Handlers
             var nearbyGameObjects = proximityChecker?.GetNearbyGameObjects();
             var distance = 1.5f;
 
-            foreach (var nearbyGameObject in nearbyGameObjects)
+            foreach (var gameObject in nearbyGameObjects)
             {
                 var playerPosition = player.Transform.Position;
-                var nearbyPosition = nearbyGameObject.Transform.Position;
+                var nearbyPosition = gameObject.Transform.Position;
 
                 if (Vector2.Distance(playerPosition, nearbyPosition) >= distance)
                 {
                     continue;
                 }
 
-                var mobBehaviourManager =
-                    nearbyGameObject.Components.Get<IMobBehaviourManager>();
-                mobBehaviourManager?.ChangeBehaviour(type: MobBehaviourType.Attacked);
+                var behaviourManager =
+                    gameObject.Components.Get<IMobBehaviourManager>();
+                behaviourManager?.ChangeBehaviour(type: MobBehaviourType.Attacked);
+
+                var damageAmount =
+                    random.Next(minValue: 0, maxValue: 50);
+                var healthController =
+                    gameObject.Components.Get<IMobHealthController>();
+                healthController?.Damage(damageAmount);
             }
         }
     }
