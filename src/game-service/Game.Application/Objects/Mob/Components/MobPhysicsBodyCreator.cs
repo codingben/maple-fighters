@@ -6,29 +6,40 @@ namespace Game.Application.Objects.Components
 {
     public class MobPhysicsBodyCreator : ComponentBase
     {
-        private IGameObject gameObject;
+        private IGameObject mob;
+        private IPhysicsWorldManager physicsWorldManager;
 
         protected override void OnAwake()
         {
-            gameObject = Components.Get<IGameObjectGetter>().Get();
+            var gameObjectGetter = Components.Get<IGameObjectGetter>();
+            mob = gameObjectGetter.Get();
 
             var presenceSceneProvider = Components.Get<IPresenceSceneProvider>();
             presenceSceneProvider.SceneChanged += (gameScene) =>
             {
                 var gamePhysicsCreator =
                     gameScene.Components.Get<IScenePhysicsCreator>();
-                var physicsWorldManager =
+                physicsWorldManager =
                     gamePhysicsCreator.GetPhysicsWorldManager();
 
                 physicsWorldManager.AddBody(CreateBodyData());
             };
         }
 
+        protected override void OnRemoved()
+        {
+            base.OnRemoved();
+
+            var id = mob.Id;
+
+            physicsWorldManager?.RemoveBody(id);
+        }
+
         private NewBodyData CreateBodyData()
         {
-            var id = gameObject.Id;
-            var x = gameObject.Transform.Position.X;
-            var y = gameObject.Transform.Position.Y;
+            var id = mob.Id;
+            var x = mob.Transform.Position.X;
+            var y = mob.Transform.Position.Y;
             var mobAttackPlayerHandler = Components.Get<IMobAttackPlayerHandler>();
             var mobConfigDataProvider = Components.Get<IMobConfigDataProvider>();
             var mobConfigData = mobConfigDataProvider.Provide();
