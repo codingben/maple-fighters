@@ -25,8 +25,8 @@ namespace Game.Application.Objects.Components
 
         private void OnAttackedTimeOver()
         {
-            var mobBehaviourManager = Components.Get<IMobBehaviourManager>();
-            mobBehaviourManager.ChangeBehaviour(type: MobBehaviourType.Move);
+            var behaviourManager = Components.Get<IMobBehaviourManager>();
+            behaviourManager.ChangeBehaviour(type: MobBehaviourType.Move);
         }
     }
 }

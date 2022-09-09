@@ -6,11 +6,12 @@ namespace Game.Application.Objects.Components
 {
     public class PlayerPhysicsBodyCreator : ComponentBase
     {
-        private IGameObject gameObject;
+        private IGameObject player;
 
         protected override void OnAwake()
         {
-            gameObject = Components.Get<IGameObjectGetter>().Get();
+            var gameObjectGetter = Components.Get<IGameObjectGetter>();
+            player = gameObjectGetter.Get();
 
             var presenceSceneProvider = Components.Get<IPresenceSceneProvider>();
             presenceSceneProvider.SceneChanged += (gameScene) =>
@@ -26,9 +27,9 @@ namespace Game.Application.Objects.Components
 
         private NewBodyData CreateBodyData()
         {
-            var id = gameObject.Id;
-            var x = gameObject.Transform.Position.X;
-            var y = gameObject.Transform.Position.Y;
+            var id = player.Id;
+            var x = player.Transform.Position.X;
+            var y = player.Transform.Position.Y;
             var playerConfigDataProvider = Components.Get<IPlayerConfigDataProvider>();
             var playerConfigData = playerConfigDataProvider.Provide();
             var bodyWidth = playerConfigData.BodyWidth;
@@ -38,7 +39,7 @@ namespace Game.Application.Objects.Components
             var polygonDef = new PolygonDef();
 
             bodyDef.Position.Set(x, y);
-            bodyDef.UserData = gameObject;
+            bodyDef.UserData = player;
 
             polygonDef.SetAsBox(bodyWidth, bodyHeight);
             polygonDef.Density = bodyDensity;

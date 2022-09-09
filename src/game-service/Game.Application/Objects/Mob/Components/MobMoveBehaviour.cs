@@ -13,7 +13,7 @@ namespace Game.Application.Objects.Components
         private readonly Timer positionSenderTimer;
         private readonly Random random = new();
 
-        private IGameObject gameObject;
+        private IGameObject mob;
         private IProximityChecker proximityChecker;
         private ICoroutineRunner coroutineRunner;
         private IMobConfigDataProvider mobConfigDataProvider;
@@ -70,14 +70,16 @@ namespace Game.Application.Objects.Components
 
         protected override void OnAwake()
         {
-            gameObject = Components.Get<IGameObjectGetter>().Get();
+            var gameObjectGetter = Components.Get<IGameObjectGetter>();
+
+            mob = gameObjectGetter.Get();
             proximityChecker = Components.Get<IProximityChecker>();
             mobConfigDataProvider = Components.Get<IMobConfigDataProvider>();
         }
 
         private IEnumerator Move()
         {
-            var startPosition = gameObject.Transform.Position;
+            var startPosition = mob.Transform.Position;
             var position = startPosition;
             var direction = GetRandomDirection();
             var mobConfigData = mobConfigDataProvider.Provide();
@@ -98,7 +100,7 @@ namespace Game.Application.Objects.Components
 
                 position += new Vector2(direction, 0) * speed;
 
-                gameObject.Transform.SetPosition(position);
+                mob.Transform.SetPosition(position);
                 yield return null;
             }
         }
@@ -107,15 +109,15 @@ namespace Game.Application.Objects.Components
         {
             var nearbyGameObjects = proximityChecker?.GetNearbyGameObjects();
 
-            foreach (var nearbyGameObject in nearbyGameObjects)
+            foreach (var gameObject in nearbyGameObjects)
             {
                 var message = new PositionChangedMessage()
                 {
-                    GameObjectId = gameObject.Id,
-                    X = gameObject.Transform.Position.X,
-                    Y = gameObject.Transform.Position.Y
+                    GameObjectId = mob.Id,
+                    X = mob.Transform.Position.X,
+                    Y = mob.Transform.Position.Y
                 };
-                var messageSender = nearbyGameObject.Components.Get<IMessageSender>();
+                var messageSender = gameObject.Components.Get<IMessageSender>();
 
                 messageSender?.SendMessage((byte)MessageCodes.PositionChanged, message);
             }
