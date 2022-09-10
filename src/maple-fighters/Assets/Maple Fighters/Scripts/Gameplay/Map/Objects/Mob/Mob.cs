@@ -1,50 +1,39 @@
-﻿using Game.Messages;
-using Scripts.Gameplay.Entity;
-using Scripts.Gameplay.Player;
-using Scripts.Gameplay.Player.Behaviours;
-using Scripts.Services;
-using Scripts.Services.GameApi;
+﻿using System.Collections;
 using UnityEngine;
 
 namespace Scripts.Gameplay.Map.Objects
 {
+    [RequireComponent(typeof(Animator))]
     public class Mob : MonoBehaviour
     {
-        [Header("Attack"), SerializeField]
-        private Vector2 hitAmount;
+        [SerializeField]
+        private float hittedTime = 1f;
 
-        private IGameApi gameApi;
+        private Animator animator;
+        private Coroutine coroutine;
 
-        private void Start()
+        private void Awake()
         {
-            gameApi = ApiProvider.ProvideGameApi();
-            gameApi.Attacked.AddListener(OnPlayerAttacked);
+            animator = GetComponent<Animator>();
         }
 
-        private void OnDisable()
+        public void PlayAttackedEffect()
         {
-            gameApi?.Attacked?.RemoveListener(OnPlayerAttacked);
-        }
+            animator.SetBool("Hitted", true);
 
-        private void OnPlayerAttacked(AttackedMessage message)
-        {
-            var entity =
-                EntityContainer.GetInstance().GetLocalEntity();
-            var spawnedCharacter =
-                entity?.GameObject.GetComponent<ISpawnedCharacter>();
-            var character =
-                spawnedCharacter?.GetCharacter();
-            if (character != null)
+            if (coroutine != null)
             {
-                var normalized =
-                    (character.transform.position - transform.position).normalized;
-                var direction = new Vector2(
-                    x: (normalized.x > 0 ? 1 : -1) * hitAmount.x,
-                    y: hitAmount.y);
-
-                var attackPlayer = character.GetComponent<IAttackPlayer>();
-                attackPlayer?.OnPlayerAttacked(direction);
+                StopCoroutine(coroutine);
             }
+
+            coroutine = StartCoroutine(WaitAndUnsetHittedState());
+        }
+
+        private IEnumerator WaitAndUnsetHittedState()
+        {
+            yield return new WaitForSeconds(hittedTime);
+
+            animator.SetBool("Hitted", false);
         }
     }
 }
