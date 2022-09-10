@@ -20,6 +20,9 @@ namespace Scripts.Gameplay.Player
         [ViewOnly, SerializeField]
         private PlayerStates playerState = PlayerStates.Falling;
 
+        [ViewOnly, SerializeField]
+        private Direction direction;
+
         [Header("Ground")]
         [ViewOnly, SerializeField]
         private bool canMove = true;
@@ -38,7 +41,6 @@ namespace Scripts.Gameplay.Player
         private IPlayerStateBehaviour playerStateBehaviour;
         private IPlayerStateAnimator playerStateAnimator;
 
-        private new Transform transform2D;
         private new Rigidbody2D rigidbody2D;
 
         private FocusStateController focusStateController;
@@ -117,23 +119,25 @@ namespace Scripts.Gameplay.Player
 
         public void ChangeDirection(Direction direction)
         {
-            if (transform2D == null)
-            {
-                transform2D = transform;
-            }
+            this.direction = direction;
 
-            var x = Mathf.Abs(transform2D.localScale.x);
-            var y = transform2D.localScale.y;
-            var z = transform2D.localScale.z;
+            var x = Mathf.Abs(transform.localScale.x);
+            var y = transform.localScale.y;
+            var z = transform.localScale.z;
 
             if (direction == Direction.Left)
             {
-                transform2D.localScale = new Vector3(x, y, z);
+                transform.localScale = new Vector3(x, y, z);
             }
             else if (direction == Direction.Right)
             {
-                transform2D.localScale = new Vector3(-x, y, z);
+                transform.localScale = new Vector3(-x, y, z);
             }
+        }
+
+        public Direction GetDirection()
+        {
+            return direction;
         }
 
         public void Bounce(Vector2 force)
