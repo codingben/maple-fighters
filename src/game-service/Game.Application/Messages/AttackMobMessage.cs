@@ -2,6 +2,10 @@ namespace Game.Messages
 {
     public struct AttackMobMessage
     {
-        // Left blank intentionally
+        public int MobId { get; set; }
+
+        public float Distance { get; set; }
+
+        public int DamageAmount { get; set; }
     }
 }
