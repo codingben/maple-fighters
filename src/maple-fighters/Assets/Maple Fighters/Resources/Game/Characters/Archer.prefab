@@ -493,6 +493,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerState: 3
+  direction: 0
   canMove: 1
   overlapCircleRadius: 0.1
   groundLayerMask:
@@ -511,6 +512,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4e4ed50b7d6dbb478b5e75f39c4c2f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hitAmount: {x: 6.5, y: 6.5}
 --- !u!114 &114811677279325916
 MonoBehaviour:
   m_ObjectHideFlags: 0
