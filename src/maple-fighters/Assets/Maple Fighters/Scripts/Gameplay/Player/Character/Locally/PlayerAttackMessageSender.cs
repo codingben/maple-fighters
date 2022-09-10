@@ -64,7 +64,6 @@ namespace Scripts.Gameplay.Player
                     var message = new AttackMobMessage
                     {
                         MobId = id,
-                        Distance = distance,
                         DamageAmount = damageAmount
                     };
 

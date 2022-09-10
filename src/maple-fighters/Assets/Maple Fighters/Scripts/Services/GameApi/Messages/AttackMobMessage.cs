@@ -4,8 +4,6 @@ namespace Game.Messages
     {
         public int MobId;
 
-        public float Distance;
-
         public int DamageAmount;
     }
 }
