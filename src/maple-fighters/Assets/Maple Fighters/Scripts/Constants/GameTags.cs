@@ -8,5 +8,6 @@
         public const string RopeTag = "Rope";
         public const string LadderTag = "Ladder";
         public const string FloorTag = "Ground";
+        public const string MobTag = "Mob";
     }
 }
