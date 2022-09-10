@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 591902785034130984}
   - component: {fileID: 698064906211494386}
   - component: {fileID: 6161239862403785054}
-  - component: {fileID: 2043797901712909870}
   - component: {fileID: 698591475213256844}
   - component: {fileID: 7049760340538523248}
   m_Layer: 9
@@ -65,19 +64,6 @@ MonoBehaviour:
   speed: 15
   canTeleport: 1
   greaterDistance: 5
---- !u!114 &2043797901712909870
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 585545055874431910}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: befbcc0da91c04c3dbc7fa5c6e2c4957, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hitAmount: {x: 6.5, y: 6.5}
 --- !u!114 &698591475213256844
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -246,9 +232,10 @@ GameObject:
   - component: {fileID: 779834754208556860}
   - component: {fileID: 680807391937535184}
   - component: {fileID: 5948289899242576374}
+  - component: {fileID: 2809993840063044388}
   m_Layer: 9
   m_Name: Sprite
-  m_TagString: Untagged
+  m_TagString: Mob
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -356,6 +343,19 @@ MonoBehaviour:
   hideSpeed: 2
   fadeColor: {r: 1, g: 1, b: 1, a: 1}
   unFadeColor: {r: 1, g: 1, b: 1, a: 0}
+--- !u!114 &2809993840063044388
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 586162791571011504}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82d105a50474a4440a62c7918c5fc598, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hittedTime: 1
 --- !u!1 &586343630525505284
 GameObject:
   m_ObjectHideFlags: 0

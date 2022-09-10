@@ -10,6 +10,7 @@ TagManager:
   - Minimap Camera
   - Ground
   - Scene
+  - Mob
   layers:
   - Default
   - TransparentFX

@@ -9,12 +9,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4432867288989048}
+  - component: {fileID: 8048614726567796306}
   - component: {fileID: 212832023325271106}
   - component: {fileID: 95719893799673774}
   - component: {fileID: 6533091585358191240}
+  - component: {fileID: 1226959955713265118}
   m_Layer: 9
   m_Name: Sprite
-  m_TagString: Untagged
+  m_TagString: Mob
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -35,6 +37,22 @@ Transform:
   m_Father: {fileID: 4638261158712662}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!58 &8048614726567796306
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1356793911424206}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.175
 --- !u!212 &212832023325271106
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -122,6 +140,19 @@ MonoBehaviour:
   hideSpeed: 2
   fadeColor: {r: 1, g: 1, b: 1, a: 1}
   unFadeColor: {r: 1, g: 1, b: 1, a: 0}
+--- !u!114 &1226959955713265118
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1356793911424206}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82d105a50474a4440a62c7918c5fc598, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hittedTime: 1
 --- !u!1 &1612330101283962
 GameObject:
   m_ObjectHideFlags: 0
@@ -379,7 +410,6 @@ GameObject:
   - component: {fileID: 4638261158712662}
   - component: {fileID: 114455167538858636}
   - component: {fileID: -2474806018124127712}
-  - component: {fileID: 1475950701341500752}
   - component: {fileID: 114634214393531378}
   - component: {fileID: 7634553161303522574}
   m_Layer: 9
@@ -433,19 +463,6 @@ MonoBehaviour:
   speed: 15
   canTeleport: 1
   greaterDistance: 5
---- !u!114 &1475950701341500752
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1935325154392280}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: befbcc0da91c04c3dbc7fa5c6e2c4957, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hitAmount: {x: 6.5, y: 6.5}
 --- !u!114 &114634214393531378
 MonoBehaviour:
   m_ObjectHideFlags: 0
