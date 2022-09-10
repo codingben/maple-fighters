@@ -43,10 +43,14 @@ namespace Scripts.Gameplay.Player
                 return;
             }
 
+            var distance =
+                1.5f;
+            var damageAmount =
+                Random.Range(0, 50);
             var direction =
                 GetPlayerDirection();
             var raycasts =
-                Physics2D.RaycastAll(transform.position, direction, distance: 1.5f);
+                Physics2D.RaycastAll(transform.position, direction, distance);
             foreach (var raycast in raycasts)
             {
                 var isMob =
@@ -56,9 +60,12 @@ namespace Scripts.Gameplay.Player
                     var mob = raycast.transform.gameObject;
                     var mobAttackedEffect = mob.GetComponent<MobAttackedEffect>();
                     var mobEntity = mob.transform.parent.GetComponent<IEntity>();
+                    var id = mobEntity?.Id ?? -1;
                     var message = new AttackMobMessage
                     {
-                        MobId = mobEntity.Id
+                        MobId = id,
+                        Distance = distance,
+                        DamageAmount = damageAmount
                     };
 
                     mobAttackedEffect?.PlayAttackedEffect();

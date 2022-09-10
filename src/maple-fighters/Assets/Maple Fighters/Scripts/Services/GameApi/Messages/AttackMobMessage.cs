@@ -2,6 +2,10 @@ namespace Game.Messages
 {
     public class AttackMobMessage
     {
-        // Left blank intentionally
+        public int MobId;
+
+        public float Distance;
+
+        public int DamageAmount;
     }
 }
