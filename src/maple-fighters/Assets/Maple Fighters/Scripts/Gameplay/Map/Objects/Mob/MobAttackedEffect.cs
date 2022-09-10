@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Scripts.Gameplay.Map.Objects
 {
     [RequireComponent(typeof(Animator))]
-    public class Mob : MonoBehaviour
+    public class MobAttackedEffect : MonoBehaviour
     {
         [SerializeField]
         private float hittedTime = 1f;
