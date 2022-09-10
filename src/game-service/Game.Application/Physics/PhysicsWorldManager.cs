@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Box2DX.Collision;
 using Box2DX.Dynamics;
 using InterestManagement;
@@ -73,14 +74,14 @@ namespace Game.Physics
 
             while (removeBodies.TryDequeue(out var bodyData))
             {
-                world?.DestroyBody(bodyData.Body);
-
                 var id = bodyData.Id;
 
                 if (bodies.ContainsKey(id))
                 {
                     bodies.Remove(id);
                 }
+
+                world?.DestroyBody(bodyData.Body);
             }
         }
 
@@ -98,7 +99,14 @@ namespace Game.Physics
 
         public void Step(float timeStep, int velocityIterations, int positionIterations)
         {
-            world?.Step(timeStep, velocityIterations, positionIterations);
+            try
+            {
+                world?.Step(timeStep, velocityIterations, positionIterations);
+            }
+            catch (Exception _)
+            {
+                // Left blank intentionally
+            }
         }
 
         public void SetDebugDraw(DebugDraw debugDraw)
