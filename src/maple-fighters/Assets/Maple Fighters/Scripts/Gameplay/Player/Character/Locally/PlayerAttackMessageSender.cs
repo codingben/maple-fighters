@@ -58,7 +58,7 @@ namespace Scripts.Gameplay.Player
                 if (isMob)
                 {
                     var mob = raycast.transform.gameObject;
-                    var mobAttackedEffect = mob.GetComponent<MobAttackedEffect>();
+                    var mobAttackedAnimation = mob.GetComponent<MobAttackedAnimation>();
                     var mobEntity = mob.transform.parent.GetComponent<IEntity>();
                     var id = mobEntity?.Id ?? -1;
                     var message = new AttackMobMessage
@@ -67,7 +67,7 @@ namespace Scripts.Gameplay.Player
                         DamageAmount = damageAmount
                     };
 
-                    mobAttackedEffect?.PlayAttackedEffect();
+                    mobAttackedAnimation?.Play();
                     gameApi?.SendMessage(MessageCodes.AttackMob, message);
                 }
             }
