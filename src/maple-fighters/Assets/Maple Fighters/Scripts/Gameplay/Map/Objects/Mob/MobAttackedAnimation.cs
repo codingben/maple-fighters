@@ -7,6 +7,9 @@ namespace Scripts.Gameplay.Map.Objects
     public class MobAttackedAnimation : MonoBehaviour
     {
         [SerializeField]
+        private string animationName = "Hitted";
+
+        [SerializeField]
         private float hittedTime = 1f;
 
         private Animator animator;
@@ -19,7 +22,7 @@ namespace Scripts.Gameplay.Map.Objects
 
         public void Play()
         {
-            animator.SetBool("Hitted", true);
+            animator.SetBool(animationName, true);
 
             if (coroutine != null)
             {
@@ -29,11 +32,16 @@ namespace Scripts.Gameplay.Map.Objects
             coroutine = StartCoroutine(WaitAndUnsetHittedState());
         }
 
+        public void Stop()
+        {
+            animator.SetBool(animationName, false);
+        }
+
         private IEnumerator WaitAndUnsetHittedState()
         {
             yield return new WaitForSeconds(hittedTime);
 
-            animator.SetBool("Hitted", false);
+            animator.SetBool(animationName, false);
         }
     }
 }
