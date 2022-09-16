@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6161239862403785054}
   - component: {fileID: 698591475213256844}
   - component: {fileID: 7049760340538523248}
+  - component: {fileID: 8893106976975662514}
   m_Layer: 9
   m_Name: Mushroom
   m_TagString: Untagged
@@ -89,6 +90,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fadeEffect: {fileID: 5948289899242576374}
+--- !u!114 &8893106976975662514
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 585545055874431910}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e939768add9948c8a2704428197f76e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fadeEffect: {fileID: 5948289899242576374}
+  attackedAnimation: {fileID: 2809993840063044388}
+  deadAnimation: {fileID: 4445643555974304797}
+  health: 100
 --- !u!1 &585732329821325068
 GameObject:
   m_ObjectHideFlags: 0
@@ -234,6 +251,7 @@ GameObject:
   - component: {fileID: 680807391937535184}
   - component: {fileID: 5948289899242576374}
   - component: {fileID: 2809993840063044388}
+  - component: {fileID: 4445643555974304797}
   m_Layer: 9
   m_Name: Sprite
   m_TagString: Mob
@@ -356,8 +374,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startingState: 0
-  showSpeed: 2
-  hideSpeed: 2
+  showSpeed: 1
+  hideSpeed: 1
   fadeColor: {r: 1, g: 1, b: 1, a: 1}
   unFadeColor: {r: 1, g: 1, b: 1, a: 0}
 --- !u!114 &2809993840063044388
@@ -373,6 +391,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hittedTime: 1
+--- !u!114 &4445643555974304797
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 586162791571011504}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 800ebcf64b4af4191abeb295f0765ba7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &586343630525505284
 GameObject:
   m_ObjectHideFlags: 0

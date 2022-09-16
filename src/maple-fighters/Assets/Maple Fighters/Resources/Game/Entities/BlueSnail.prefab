@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 95719893799673774}
   - component: {fileID: 6533091585358191240}
   - component: {fileID: 1226959955713265118}
+  - component: {fileID: 996590074768006885}
   m_Layer: 9
   m_Name: Sprite
   m_TagString: Mob
@@ -136,8 +137,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startingState: 0
-  showSpeed: 2
-  hideSpeed: 2
+  showSpeed: 1
+  hideSpeed: 1
   fadeColor: {r: 1, g: 1, b: 1, a: 1}
   unFadeColor: {r: 1, g: 1, b: 1, a: 0}
 --- !u!114 &1226959955713265118
@@ -153,6 +154,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hittedTime: 1
+--- !u!114 &996590074768006885
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1356793911424206}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 800ebcf64b4af4191abeb295f0765ba7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1612330101283962
 GameObject:
   m_ObjectHideFlags: 0
@@ -412,6 +425,7 @@ GameObject:
   - component: {fileID: -2474806018124127712}
   - component: {fileID: 114634214393531378}
   - component: {fileID: 7634553161303522574}
+  - component: {fileID: 7490978366412466117}
   m_Layer: 9
   m_Name: BlueSnail
   m_TagString: Untagged
@@ -488,3 +502,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fadeEffect: {fileID: 6533091585358191240}
+--- !u!114 &7490978366412466117
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1935325154392280}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e939768add9948c8a2704428197f76e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fadeEffect: {fileID: 6533091585358191240}
+  attackedAnimation: {fileID: 1226959955713265118}
+  deadAnimation: {fileID: 996590074768006885}
+  health: 100
