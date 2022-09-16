@@ -20,6 +20,10 @@ namespace Scripts.Gameplay.Graphics
             UnFade
         }
 
+        public event Action FadeEffectStarted;
+
+        public event Action UnFadeEffectStarted;
+
         [Header("Fade Settings")]
         [SerializeField]
         private FadeState startingState;
@@ -104,6 +108,8 @@ namespace Scripts.Gameplay.Graphics
 
             spriteRenderer.color = unFadeColor;
 
+            FadeEffectStarted?.Invoke();
+
             while (true)
             {
                 if (spriteRenderer.color.a >= fadeColor.a)
@@ -122,6 +128,8 @@ namespace Scripts.Gameplay.Graphics
             var color = new Color(0, 0, 0, 1);
 
             spriteRenderer.color = fadeColor;
+
+            UnFadeEffectStarted?.Invoke();
 
             while (true)
             {
