@@ -38,7 +38,14 @@ namespace Game.Physics
 
         public void Dispose()
         {
-            world?.Dispose();
+            try
+            {
+                world?.Dispose();
+            }
+            catch (Exception)
+            {
+                // Left blank intentionally
+            }
         }
 
         public void UpdateBodies()
@@ -62,8 +69,12 @@ namespace Game.Physics
 
                 var body =
                     CreateBody(newBodyData.BodyDef, newBodyData.PolygonDef);
-                var bodyData = new BodyData(id, body);
+                if (body == null)
+                {
+                    continue;
+                }
 
+                var bodyData = new BodyData(id, body);
                 bodies.Add(id, bodyData);
             }
         }
@@ -81,7 +92,14 @@ namespace Game.Physics
                     bodies.Remove(id);
                 }
 
-                world?.DestroyBody(bodyData.Body);
+                try
+                {
+                    world?.DestroyBody(bodyData.Body);
+                }
+                catch (Exception)
+                {
+                    // Left blank intentionally
+                }
             }
         }
 
@@ -103,7 +121,7 @@ namespace Game.Physics
             {
                 world?.Step(timeStep, velocityIterations, positionIterations);
             }
-            catch (Exception _)
+            catch (Exception)
             {
                 // Left blank intentionally
             }
@@ -111,7 +129,14 @@ namespace Game.Physics
 
         public void SetDebugDraw(DebugDraw debugDraw)
         {
-            world?.SetDebugDraw(debugDraw);
+            try
+            {
+                world?.SetDebugDraw(debugDraw);
+            }
+            catch (Exception)
+            {
+                // Left blank intentionally
+            }
         }
 
         public bool GetBody(int id, out BodyData bodyData)
@@ -121,13 +146,20 @@ namespace Game.Physics
 
         private Body CreateBody(BodyDef bodyDef, PolygonDef polygonDef)
         {
-            var body = world?.CreateBody(bodyDef);
+            try
+            {
+                var body = world?.CreateBody(bodyDef);
 
-            body?.SetUserData(bodyDef.UserData);
-            body?.CreateFixture(polygonDef);
-            body?.SetMassFromShapes();
+                body?.SetUserData(bodyDef.UserData);
+                body?.CreateFixture(polygonDef);
+                body?.SetMassFromShapes();
 
-            return body;
+                return body;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
     }
 }
