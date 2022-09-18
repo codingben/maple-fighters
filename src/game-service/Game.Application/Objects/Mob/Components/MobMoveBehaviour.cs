@@ -10,94 +10,75 @@ namespace Game.Application.Objects.Components
 {
     public class MobMoveBehaviour : ComponentBase, IMobMoveBehaviour
     {
-        private readonly Timer positionSenderTimer;
+        private const float DIRECTION_TIME = 250;
+
+        private readonly Timer directionTimer;
         private readonly Random random = new();
 
         private IGameObject mob;
         private IProximityChecker proximityChecker;
-        private ICoroutineRunner coroutineRunner;
         private IMobConfigDataProvider mobConfigDataProvider;
+        private ICoroutineRunner coroutineRunner;
 
+        private Vector2 spawnPosition;
+        private float distance;
+        private float direction;
         private bool isMoveStopped;
 
         public MobMoveBehaviour()
         {
-            positionSenderTimer = new Timer(100);
-            positionSenderTimer.Elapsed += (s, e) => SendPosition();
+            directionTimer = new Timer(DIRECTION_TIME);
+            directionTimer.Elapsed += (_, _) => ChangeDirection();
         }
 
-        private void StartPositionSenderTimer()
+        protected override void OnAwake()
         {
-            positionSenderTimer.Start();
+            proximityChecker = Components.Get<IProximityChecker>();
+            mobConfigDataProvider = Components.Get<IMobConfigDataProvider>();
+            mob = Components.Get<IGameObjectGetter>().Get();
+            mob.Transform.PositionChanged += OnPositionChanged;
         }
 
-        private void StopPositionSenderTimer()
+        protected override void OnRemoved()
         {
-            positionSenderTimer.Stop();
+            Stop();
+
+            directionTimer?.Dispose();
         }
 
         public void Start()
         {
-            var presenceSceneProvider =
-                Components.Get<IPresenceSceneProvider>();
-            var gameScene =
-                presenceSceneProvider.GetScene();
-            var gamePhysicsCreator =
-                gameScene.Components.Get<IScenePhysicsCreator>();
-            var physicsExecutor =
-                gamePhysicsCreator.GetPhysicsExecutor();
-
-            StartPositionSenderTimer();
-
             if (coroutineRunner == null)
             {
-                coroutineRunner = physicsExecutor.GetCoroutineRunner();
+                coroutineRunner = GetCoroutineRunner();
             }
 
             isMoveStopped = false;
 
+            directionTimer?.Start();
             coroutineRunner?.Run(Move());
         }
 
         public void Stop()
         {
-            StopPositionSenderTimer();
-
             isMoveStopped = true;
 
+            directionTimer?.Stop();
             coroutineRunner?.Stop(Move());
-        }
-
-        protected override void OnAwake()
-        {
-            var gameObjectGetter = Components.Get<IGameObjectGetter>();
-
-            mob = gameObjectGetter.Get();
-            proximityChecker = Components.Get<IProximityChecker>();
-            mobConfigDataProvider = Components.Get<IMobConfigDataProvider>();
         }
 
         private IEnumerator Move()
         {
-            var startPosition = mob.Transform.Position;
-            var position = startPosition;
-            var direction = GetRandomDirection();
+            var position = mob.Transform.Position;
             var mobConfigData = mobConfigDataProvider.Provide();
             var speed = mobConfigData.Speed;
-            var distance = mobConfigData.Distance;
+            distance = mobConfigData.Distance;
 
-            while (true)
+            spawnPosition = position;
+            direction = GetRandomDirection();
+
+            while (!isMoveStopped)
             {
-                if (isMoveStopped)
-                {
-                    yield break;
-                }
-
-                if (Vector2.Distance(startPosition, position) >= distance)
-                {
-                    direction *= -1;
-                }
-
                 position += new Vector2(direction, 0) * speed;
 
                 mob.Transform.SetPosition(position);
@@ -105,7 +86,17 @@ namespace Game.Application.Objects.Components
             }
         }
 
-        private void SendPosition()
+        private void ChangeDirection()
+        {
+            var position = mob.Transform.Position;
+
+            if (Vector2.Distance(spawnPosition, position) >= distance)
+            {
+                direction *= -1;
+            }
+        }
+
+        private void OnPositionChanged()
         {
             var nearbyGameObjects = proximityChecker?.GetNearbyGameObjects();
 
@@ -126,6 +117,20 @@ namespace Game.Application.Objects.Components
         private float GetRandomDirection()
         {
             return random.Next(-1, 1) == 0 ? 0.1f : -0.1f;
+        }
+
+        private ICoroutineRunner GetCoroutineRunner()
+        {
+            var presenceSceneProvider =
+                Components.Get<IPresenceSceneProvider>();
+            var gameScene =
+                presenceSceneProvider.GetScene();
+            var gamePhysicsCreator =
+                gameScene.Components.Get<IScenePhysicsCreator>();
+            var physicsExecutor =
+                gamePhysicsCreator.GetPhysicsExecutor();
+
+            return physicsExecutor.GetCoroutineRunner();
         }
     }
 }
