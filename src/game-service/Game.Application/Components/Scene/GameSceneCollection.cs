@@ -50,5 +50,10 @@ namespace Game.Application.Components
         {
             return collection.TryGetValue(name, out gameScene);
         }
+
+        public IEnumerable<IGameScene> GetAll()
+        {
+            return collection.Values;
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Game.Application.Components
 {
@@ -9,5 +10,7 @@ namespace Game.Application.Components
         bool Remove(string name);
 
         bool TryGet(string name, out IGameScene gameScene);
+
+        IEnumerable<IGameScene> GetAll();
     }
 }
