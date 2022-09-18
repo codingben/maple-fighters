@@ -29,6 +29,7 @@ namespace Game.Application.Objects.Components
         {
             directionTimer = new Timer(DIRECTION_TIME);
             directionTimer.Elapsed += (_, _) => ChangeDirection();
+            direction = GetRandomDirection();
         }
 
         protected override void OnAwake()
@@ -75,7 +76,6 @@ namespace Game.Application.Objects.Components
             distance = mobConfigData.Distance;
 
             spawnPosition = position;
-            direction = GetRandomDirection();
 
             while (!isMoveStopped)
             {
