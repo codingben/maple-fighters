@@ -11,6 +11,8 @@ namespace Game.Application.Components
 
         bool TryGet(int id, out IGameObject gameObject);
 
+        bool Exists(int id);
+
         IEnumerable<IGameObject> GetAll();
     }
 }

@@ -53,6 +53,11 @@ namespace Game.Application.Components
             return collection.TryGetValue(id, out gameObject);
         }
 
+        public bool Exists(int id)
+        {
+            return collection.ContainsKey(id);
+        }
+
         public IEnumerable<IGameObject> GetAll()
         {
             return collection.Values;
