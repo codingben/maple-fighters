@@ -10,7 +10,7 @@ namespace Game.Application.Objects.Components
 {
     public class MobMoveBehaviour : ComponentBase, IMobMoveBehaviour
     {
-        private const float DIRECTION_TIME = 250;
+        private const float DIRECTION_TIME = 1000;
 
         private readonly Timer directionTimer;
         private readonly Random random = new();
@@ -20,8 +20,6 @@ namespace Game.Application.Objects.Components
         private IMobConfigDataProvider mobConfigDataProvider;
         private ICoroutineRunner coroutineRunner;
 
-        private Vector2 spawnPosition;
-        private float distance;
         private float direction;
         private bool isMoveStopped;
 
@@ -73,14 +71,10 @@ namespace Game.Application.Objects.Components
             var position = mob.Transform.Position;
             var mobConfigData = mobConfigDataProvider.Provide();
             var speed = mobConfigData.Speed;
-            distance = mobConfigData.Distance;
-
-            spawnPosition = position;
 
             while (!isMoveStopped)
             {
                 position += new Vector2(direction, 0) * speed;
-
                 mob.Transform.SetPosition(position);
                 yield return null;
             }
@@ -88,12 +82,7 @@ namespace Game.Application.Objects.Components
 
         private void ChangeDirection()
         {
-            var position = mob.Transform.Position;
-
-            if (Vector2.Distance(spawnPosition, position) >= distance)
-            {
-                direction *= -1;
-            }
+            direction *= -1;
         }
 
         private void OnPositionChanged()
