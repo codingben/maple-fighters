@@ -10,7 +10,7 @@ namespace Game.Application.Components
 {
     public class GameSceneManager : ComponentBase
     {
-        private const float MOB_RESPAWN_TIME = 20000;
+        private const float MOB_RESPAWN_TIME = 30000;
 
         private readonly Timer timer;
         private IGameSceneCollection gameSceneCollection;
