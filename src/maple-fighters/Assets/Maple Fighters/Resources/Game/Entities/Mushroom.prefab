@@ -248,6 +248,7 @@ GameObject:
   - component: {fileID: 588029403064385030}
   - component: {fileID: 3036984593684977270}
   - component: {fileID: 779834754208556860}
+  - component: {fileID: 6051494535598016691}
   - component: {fileID: 680807391937535184}
   - component: {fileID: 5948289899242576374}
   - component: {fileID: 2809993840063044388}
@@ -330,7 +331,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 3
   m_Sprite: {fileID: 21300000, guid: fe485ef1f3aa9944784ecc990322f4d5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -342,6 +343,17 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!210 &6051494535598016691
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 586162791571011504}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 3
 --- !u!95 &680807391937535184
 Animator:
   serializedVersion: 3
@@ -390,6 +402,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1cc4b10c858c349188cb71ef4d69eb1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animationName: Hitted
   hittedTime: 1
 --- !u!114 &4445643555974304797
 MonoBehaviour:
@@ -403,6 +416,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 800ebcf64b4af4191abeb295f0765ba7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animationName: Dead
 --- !u!1 &586343630525505284
 GameObject:
   m_ObjectHideFlags: 0
