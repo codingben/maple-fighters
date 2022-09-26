@@ -10,8 +10,6 @@ namespace Game.Application.Objects.Components
 {
     public class MobMoveBehaviour : ComponentBase, IMobMoveBehaviour
     {
-        private const float DIRECTION_TIME = 1000;
-
         private readonly Timer directionTimer;
         private readonly Random random = new();
 
@@ -25,7 +23,9 @@ namespace Game.Application.Objects.Components
 
         public MobMoveBehaviour()
         {
-            directionTimer = new Timer(DIRECTION_TIME);
+            var time = random.Next(750, 1250);
+
+            directionTimer = new Timer(time);
             directionTimer.Elapsed += (_, _) => ChangeDirection();
         }
 
