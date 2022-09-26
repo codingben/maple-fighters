@@ -110,9 +110,10 @@ namespace Game.Physics
 
         public void RemoveBody(int id)
         {
-            var body = bodies[id];
-
-            removeBodies.Enqueue(body);
+            if (GetBody(id, out var body))
+            {
+                removeBodies.Enqueue(body);
+            }
         }
 
         public void Step(float timeStep, int velocityIterations, int positionIterations)
