@@ -1,3 +1,4 @@
+using System;
 using Game.Application.Components;
 using Game.Physics;
 
@@ -39,13 +40,20 @@ namespace Game.Application.Objects.Components
 
             if (physicsWorldManager.GetBody(gameObject.Id, out var bodyData))
             {
-                var body = bodyData.Body;
-                if (body != null)
+                try
                 {
-                    var position = gameObject.Transform.Position.FromVector2();
-                    var angle = body.GetAngle();
+                    var body = bodyData.Body;
+                    if (body != null)
+                    {
+                        var position = gameObject.Transform.Position.FromVector2();
+                        var angle = body.GetAngle();
 
-                    body.SetXForm(position, angle);
+                        body.SetXForm(position, angle);
+                    }
+                }
+                catch (Exception)
+                {
+                    // Left blank intentionally
                 }
             }
         }
