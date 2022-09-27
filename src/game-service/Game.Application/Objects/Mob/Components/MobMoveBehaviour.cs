@@ -41,6 +41,7 @@ namespace Game.Application.Objects.Components
         {
             Stop();
 
+            directionTimer?.Stop();
             directionTimer?.Dispose();
         }
 
@@ -53,7 +54,6 @@ namespace Game.Application.Objects.Components
 
             isMoveStopped = false;
 
-            directionTimer?.Start();
             coroutineRunner?.Run(Move());
         }
 
@@ -61,7 +61,6 @@ namespace Game.Application.Objects.Components
         {
             isMoveStopped = true;
 
-            directionTimer?.Stop();
             coroutineRunner?.Stop(Move());
         }
 
