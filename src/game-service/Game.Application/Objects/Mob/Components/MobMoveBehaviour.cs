@@ -10,8 +10,8 @@ namespace Game.Application.Objects.Components
 {
     public class MobMoveBehaviour : ComponentBase, IMobMoveBehaviour
     {
-        private readonly Timer directionTimer;
         private readonly Random random = new();
+        private readonly Timer positionSenderTimer;
 
         private IGameObject mob;
         private IProximityChecker proximityChecker;
@@ -23,10 +23,13 @@ namespace Game.Application.Objects.Components
 
         public MobMoveBehaviour()
         {
-            var time = random.Next(750, 1250);
-
-            directionTimer = new Timer(time);
-            directionTimer.Elapsed += (_, _) => ChangeDirection();
+            positionSenderTimer = new Timer
+            {
+                Interval = 100,
+                AutoReset = true,
+                Enabled = true
+            };
+            positionSenderTimer.Elapsed += (_, _) => SendPositionMessage();
         }
 
         protected override void OnAwake()
@@ -34,15 +37,14 @@ namespace Game.Application.Objects.Components
             proximityChecker = Components.Get<IProximityChecker>();
             mobConfigDataProvider = Components.Get<IMobConfigDataProvider>();
             mob = Components.Get<IGameObjectGetter>().Get();
-            mob.Transform.PositionChanged += OnPositionChanged;
         }
 
         protected override void OnRemoved()
         {
             Stop();
 
-            directionTimer?.Stop();
-            directionTimer?.Dispose();
+            positionSenderTimer?.Stop();
+            positionSenderTimer?.Dispose();
         }
 
         public void Start()
@@ -66,26 +68,31 @@ namespace Game.Application.Objects.Components
 
         private IEnumerator Move()
         {
+            var startPosition = mob.Transform.Position;
             var position = mob.Transform.Position;
             var mobConfigData = mobConfigDataProvider.Provide();
             var speed = mobConfigData.Speed;
+            var distance = mobConfigData.Distance;
 
             direction = GetRandomDirection();
 
             while (!isMoveStopped)
             {
+                var currentPosition = mob.Transform.Position;
+
+                if (Vector2.Distance(startPosition, currentPosition) >= distance)
+                {
+                    direction *= -1;
+                }
+
                 position += new Vector2(direction, 0) * speed;
+
                 mob.Transform.SetPosition(position);
                 yield return null;
             }
         }
 
-        private void ChangeDirection()
-        {
-            direction *= -1;
-        }
-
-        private void OnPositionChanged()
+        private void SendPositionMessage()
         {
             var nearbyGameObjects = proximityChecker?.GetNearbyGameObjects();
 
