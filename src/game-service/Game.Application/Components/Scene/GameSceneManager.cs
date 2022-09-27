@@ -10,16 +10,14 @@ namespace Game.Application.Components
 {
     public class GameSceneManager : ComponentBase
     {
-        private const float MOB_RESPAWN_TIME = 30000;
-
-        private readonly Timer timer;
+        private readonly Timer respawnTimer;
         private IGameSceneCollection gameSceneCollection;
 
         public GameSceneManager()
         {
-            timer = new Timer
+            respawnTimer = new Timer
             {
-                Interval = MOB_RESPAWN_TIME,
+                Interval = 60000,
                 AutoReset = true,
                 Enabled = true
             };
@@ -34,12 +32,12 @@ namespace Game.Application.Components
 
             CreateGameScene(configData);
 
-            timer.Elapsed += (_, _) => RespawnGameObjects(configData.Scenes);
+            respawnTimer.Elapsed += (_, _) => RespawnGameObjects(configData.Scenes);
         }
 
         protected override void OnRemoved()
         {
-            timer.Dispose();
+            respawnTimer.Dispose();
             gameSceneCollection.Dispose();
         }
 
