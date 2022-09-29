@@ -58,7 +58,9 @@ namespace Scripts.Gameplay.Player.Behaviours
         private void StartAttackedEffect(Vector3 direction)
         {
             if (playerController.GetPlayerState() == PlayerStates.Idle ||
-                playerController.GetPlayerState() == PlayerStates.Moving)
+                playerController.GetPlayerState() == PlayerStates.Moving ||
+                playerController.GetPlayerState() == PlayerStates.PrimaryAttack ||
+                playerController.GetPlayerState() == PlayerStates.SecondaryAttack)
             {
                 if (isAttacked)
                 {
