@@ -9,12 +9,13 @@ namespace Game.Application.Objects.Components
 
         public MobAttackedBehaviour()
         {
-            attackedTimer = new Timer(1000);
+            attackedTimer = new Timer(2000);
             attackedTimer.Elapsed += (s, e) => OnAttackedTimeOver();
         }
 
         public void Start()
         {
+            attackedTimer.Stop();
             attackedTimer.Start();
         }
 
