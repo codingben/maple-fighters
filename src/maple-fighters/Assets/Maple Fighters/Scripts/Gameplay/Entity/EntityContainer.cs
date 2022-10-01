@@ -68,6 +68,11 @@ namespace Scripts.Gameplay.Entity
         {
             var gameObjects = message.GameObjects;
 
+            StartCoroutine(AddEntities(gameObjects));
+        }
+
+        private IEnumerator AddEntities(GameObjectData[] gameObjects)
+        {
             foreach (var gameObject in gameObjects)
             {
                 var id = gameObject.Id;
@@ -86,6 +91,8 @@ namespace Scripts.Gameplay.Entity
 
                     SetDirection(entityGameObject, direction);
                 }
+
+                yield return new WaitForEndOfFrame();
             }
         }
 
@@ -93,12 +100,19 @@ namespace Scripts.Gameplay.Entity
         {
             var gameObjectIds = message.GameObjectIds;
 
+            StartCoroutine(RemoveEntities(gameObjectIds));
+        }
+
+        private IEnumerator RemoveEntities(int[] gameObjectIds)
+        {
             foreach (var id in gameObjectIds)
             {
                 if (collection.TryGetValue(id, out var entity))
                 {
                     RemoveEntity(entity);
                 }
+
+                yield return new WaitForEndOfFrame();
             }
         }
 
