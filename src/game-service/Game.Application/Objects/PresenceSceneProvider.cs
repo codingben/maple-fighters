@@ -77,6 +77,7 @@ namespace Game.Application.Objects
             var sceneObjectCollection =
                 gameScene?.Components.Get<ISceneObjectCollection>();
             var gameObjects = sceneObjectCollection?.GetAll();
+            if (gameObjects == null) return;
 
             foreach (var gameObject in gameObjects)
             {
