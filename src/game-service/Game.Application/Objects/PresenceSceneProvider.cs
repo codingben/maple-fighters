@@ -11,9 +11,14 @@ namespace Game.Application.Objects
 
         private IGameScene gameScene;
         private IProximityChecker proximityChecker;
+        private int id;
 
         protected override void OnAwake()
         {
+            var gameObjectGetter = Components.Get<IGameObjectGetter>();
+            var gameObject = gameObjectGetter.Get();
+
+            id = gameObject.Id;
             proximityChecker = Components.Get<IProximityChecker>();
 
             SetRegion();
@@ -53,19 +58,14 @@ namespace Game.Application.Objects
 
         private void RemoveFromPresenceScene()
         {
-            var gameObjectGetter = Components.Get<IGameObjectGetter>();
-            var gameObject = gameObjectGetter.Get();
             var sceneObjectCollection =
-                gameScene.Components.Get<ISceneObjectCollection>();
-            var id = gameObject.Id;
+                gameScene?.Components.Get<ISceneObjectCollection>();
 
-            sceneObjectCollection.Remove(id);
+            sceneObjectCollection?.Remove(id);
         }
 
         private void RemoveGameObjectForOtherObjects()
         {
-            var gameObjectGetter = Components.Get<IGameObjectGetter>();
-            var id = gameObjectGetter.Get().Id;
             var messageCode = (byte)MessageCodes.GameObjectsRemoved;
             var message = new GameObjectsRemovedMessage()
             {
@@ -75,8 +75,8 @@ namespace Game.Application.Objects
                 }
             };
             var sceneObjectCollection =
-                gameScene.Components.Get<ISceneObjectCollection>();
-            var gameObjects = sceneObjectCollection.GetAll();
+                gameScene?.Components.Get<ISceneObjectCollection>();
+            var gameObjects = sceneObjectCollection?.GetAll();
 
             foreach (var gameObject in gameObjects)
             {
