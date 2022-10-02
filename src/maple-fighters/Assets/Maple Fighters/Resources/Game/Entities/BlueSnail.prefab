@@ -36,6 +36,7 @@ Transform:
   m_Children:
   - {fileID: 224345178493021892}
   - {fileID: 4484108068655816}
+  - {fileID: 4756870909268700154}
   m_Father: {fileID: 4638261158712662}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -532,3 +533,36 @@ MonoBehaviour:
   attackedAnimation: {fileID: 1226959955713265118}
   deadAnimation: {fileID: 996590074768006885}
   health: 100
+  mobDamageText: {fileID: 8469844777433203015, guid: 87e1f42ee42344620acfbd1da4926470,
+    type: 3}
+  mobDamagePosition: {fileID: 4756870909268700154}
+--- !u!1 &5425502917182765490
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4756870909268700154}
+  m_Layer: 9
+  m_Name: Damage Text (Spawn Position)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4756870909268700154
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5425502917182765490}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.395, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4432867288989048}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
