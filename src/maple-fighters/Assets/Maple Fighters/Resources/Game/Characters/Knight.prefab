@@ -288,6 +288,7 @@ GameObject:
   - component: {fileID: 212127248993799306}
   - component: {fileID: 5013001096185001663}
   - component: {fileID: 95205954151007132}
+  - component: {fileID: 2273779144508437311}
   - component: {fileID: 7634825328052919381}
   - component: {fileID: 6184558502651886351}
   - component: {fileID: 728342546734329126}
@@ -395,6 +396,22 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!111 &2273779144508437311
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1734782633609212}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: 6f8ade35e56be4f4ca15a8e0e136f0d0, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: 6f8ade35e56be4f4ca15a8e0e136f0d0, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 0
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!114 &7634825328052919381
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -525,6 +542,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hitAmount: {x: 6.5, y: 6.5}
+  playerAttackedAnim: {fileID: 2273779144508437311}
 --- !u!114 &114360169840180610
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -203,6 +203,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hitAmount: {x: 6.5, y: 6.5}
+  playerAttackedAnim: {fileID: 6812879103098573682}
 --- !u!114 &114636025593554634
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -395,6 +396,7 @@ GameObject:
   - component: {fileID: 212872142000175708}
   - component: {fileID: 3224576395280814619}
   - component: {fileID: 95101322768173174}
+  - component: {fileID: 6812879103098573682}
   - component: {fileID: 2011847316941369080}
   - component: {fileID: 4480756568220994061}
   - component: {fileID: 8454734998004806313}
@@ -502,6 +504,22 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!111 &6812879103098573682
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1733968886697200}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: 6f8ade35e56be4f4ca15a8e0e136f0d0, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: 6f8ade35e56be4f4ca15a8e0e136f0d0, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 0
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!114 &2011847316941369080
 MonoBehaviour:
   m_ObjectHideFlags: 0
