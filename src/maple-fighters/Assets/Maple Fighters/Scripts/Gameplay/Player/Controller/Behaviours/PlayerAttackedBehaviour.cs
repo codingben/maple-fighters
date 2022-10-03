@@ -10,10 +10,14 @@ namespace Scripts.Gameplay.Player.Behaviours
     [RequireComponent(typeof(PlayerController))]
     public class PlayerAttackedBehaviour : MonoBehaviour
     {
-        private const float ATTACK_DELAY = 1;
+        [SerializeField]
+        private float attackDelay = 3;
 
         [SerializeField]
         private Vector2 hitAmount;
+
+        [SerializeField]
+        private Animation playerAttackedAnim;
 
         private IGameApi gameApi;
         private PlayerController playerController;
@@ -80,12 +84,16 @@ namespace Scripts.Gameplay.Player.Behaviours
 
             playerController.Bounce(direction);
 
-            StartCoroutine(WaitAfterAttacked());
+            StartCoroutine(PlayAttackedAnimAndWait());
         }
 
-        private IEnumerator WaitAfterAttacked()
+        private IEnumerator PlayAttackedAnimAndWait()
         {
-            yield return new WaitForSeconds(ATTACK_DELAY);
+            playerAttackedAnim.Play();
+
+            yield return new WaitForSeconds(attackDelay);
+
+            playerAttackedAnim.Stop();
 
             isAttacked = false;
         }
