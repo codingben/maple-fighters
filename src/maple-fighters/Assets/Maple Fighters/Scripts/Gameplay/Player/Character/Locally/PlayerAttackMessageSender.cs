@@ -38,11 +38,14 @@ namespace Scripts.Gameplay.Player
 
         private void OnPlayerStateChanged(PlayerStates playerState)
         {
-            if (playerState != PlayerStates.PrimaryAttack)
+            if (IsPrimaryOrSecondaryAttack(playerState))
             {
-                return;
+                Attack();
             }
+        }
 
+        private void Attack()
+        {
             var distance =
                 1.5f;
             var damageAmount =
@@ -73,6 +76,14 @@ namespace Scripts.Gameplay.Player
                     gameApi?.SendMessage(MessageCodes.AttackMob, message);
                 }
             }
+        }
+
+        private bool IsPrimaryOrSecondaryAttack(PlayerStates playerState)
+        {
+            var isPrimaryAttack = playerState == PlayerStates.PrimaryAttack;
+            var isSecondaryAttack = playerState == PlayerStates.SecondaryAttack;
+
+            return isPrimaryAttack || isSecondaryAttack;
         }
 
         private Vector2 GetPlayerDirection()
