@@ -119,7 +119,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3881df0171aae3b438aee72df63a3281, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sortingOrderIndex: 2
+  sortingOrderIndex: 5
 --- !u!114 &6182644270239776233
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -132,7 +132,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9dd1212b700173e4b8ee5432ee94c71f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sortingOrderIndex: 2
+  sortingOrderIndex: 5
 --- !u!114 &5656068619675177839
 MonoBehaviour:
   m_ObjectHideFlags: 0

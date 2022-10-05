@@ -138,7 +138,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3881df0171aae3b438aee72df63a3281, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sortingOrderIndex: 3
+  sortingOrderIndex: 4
 --- !u!114 &775172475246146193
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -151,7 +151,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9dd1212b700173e4b8ee5432ee94c71f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sortingOrderIndex: 3
+  sortingOrderIndex: 4
 --- !u!114 &-2978780314599529672
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -212,3 +212,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a03e390ccaca4048ae500f51c516c47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  distance: 1.5
+  minDamageAmount: 0
+  maxDamageAmount: 50
