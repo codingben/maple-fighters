@@ -94,6 +94,9 @@ function Footer() {
           Ben Oukhanov
         </a>
       </h4>
+      <h5 style={{ color: "gray" }}>
+        (Artwork is owned by Nexon Co., Ltd and will never be used commercially)
+      </h5>
     </div>
   );
 }
