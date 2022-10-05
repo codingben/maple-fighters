@@ -10,6 +10,15 @@ namespace Scripts.Gameplay.Player
 {
     public class PlayerAttackMessageSender : MonoBehaviour
     {
+        [SerializeField]
+        private float distance = 1.5f;
+
+        [SerializeField]
+        private int minDamageAmount = 0;
+
+        [SerializeField]
+        private int maxDamageAmount = 50;
+
         private IGameApi gameApi;
         private ISpawnedCharacter spawnedCharacter;
         private PlayerController playerController;
@@ -38,18 +47,23 @@ namespace Scripts.Gameplay.Player
 
         private void OnPlayerStateChanged(PlayerStates playerState)
         {
-            if (IsPrimaryOrSecondaryAttack(playerState))
+            if (playerState == PlayerStates.PrimaryAttack)
             {
                 Attack();
+            }
+            else if (playerState == PlayerStates.SecondaryAttack)
+            {
+                if (playerController.GetCharacterType() == CharacterClasses.Knight)
+                {
+                    Attack();
+                }
             }
         }
 
         private void Attack()
         {
-            var distance =
-                1.5f;
             var damageAmount =
-                Random.Range(0, 50);
+                Random.Range(minDamageAmount, maxDamageAmount);
             var direction =
                 GetPlayerDirection();
             var raycasts =
@@ -76,14 +90,6 @@ namespace Scripts.Gameplay.Player
                     gameApi?.SendMessage(MessageCodes.AttackMob, message);
                 }
             }
-        }
-
-        private bool IsPrimaryOrSecondaryAttack(PlayerStates playerState)
-        {
-            var isPrimaryAttack = playerState == PlayerStates.PrimaryAttack;
-            var isSecondaryAttack = playerState == PlayerStates.SecondaryAttack;
-
-            return isPrimaryAttack || isSecondaryAttack;
         }
 
         private Vector2 GetPlayerDirection()

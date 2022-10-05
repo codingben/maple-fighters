@@ -16,6 +16,9 @@ namespace Scripts.Gameplay.Player
     {
         public Action<PlayerStates> PlayerStateChanged;
 
+        [SerializeField]
+        public CharacterClasses characterType;
+
         [Header("Debug")]
         [ViewOnly, SerializeField]
         private PlayerStates playerState = PlayerStates.Falling;
@@ -138,6 +141,11 @@ namespace Scripts.Gameplay.Player
         public Direction GetDirection()
         {
             return direction;
+        }
+
+        public CharacterClasses GetCharacterType()
+        {
+            return characterType;
         }
 
         public void Bounce(Vector2 force)
