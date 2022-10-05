@@ -307,7 +307,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1734782633609212}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.1, z: 0}
+  m_LocalPosition: {x: 0, y: -0.05, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 1}
   m_Children:
   - {fileID: 224240858297602078}
@@ -521,6 +521,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1694c3863b6f54f49b2d3e9c203ac151, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  characterType: 1
   playerState: 3
   direction: 0
   canMove: 1
@@ -529,6 +530,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   groundTransform: {fileID: 4609200429523440}
+  AttackEffect: {fileID: 0}
+  AttackEffectPosition: {fileID: 0}
 --- !u!114 &-3341735833214904000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -541,6 +544,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4e4ed50b7d6dbb478b5e75f39c4c2f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attackDelay: 3
   hitAmount: {x: 6.5, y: 6.5}
   playerAttackedAnim: {fileID: 2273779144508437311}
 --- !u!114 &114360169840180610

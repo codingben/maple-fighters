@@ -167,6 +167,7 @@ Transform:
   m_Children:
   - {fileID: 224274039830556318}
   - {fileID: 4224109711778200}
+  - {fileID: 4966092611829314559}
   m_Father: {fileID: 4856581149847252}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -521,6 +522,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1694c3863b6f54f49b2d3e9c203ac151, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  characterType: 2
   playerState: 3
   direction: 0
   canMove: 1
@@ -529,6 +531,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   groundTransform: {fileID: 4992641578627268}
+  AttackEffect: {fileID: 3484726295478661776, guid: 7246f29963f6e4a1e91200cdee58607e,
+    type: 3}
+  AttackEffectPosition: {fileID: 4966092611829314559}
 --- !u!114 &5561984822242425150
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -541,6 +546,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4e4ed50b7d6dbb478b5e75f39c4c2f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attackDelay: 3
   hitAmount: {x: 6.5, y: 6.5}
   playerAttackedAnim: {fileID: 6974503334962981235}
 --- !u!114 &114811677279325916
@@ -592,3 +598,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterSprite: {fileID: 1229620062354838}
+--- !u!1 &6763482453901833201
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4966092611829314559}
+  m_Layer: 9
+  m_Name: Arrow (Spawn Position)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4966092611829314559
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6763482453901833201}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.2, y: -0.08, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4745549069549146}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
