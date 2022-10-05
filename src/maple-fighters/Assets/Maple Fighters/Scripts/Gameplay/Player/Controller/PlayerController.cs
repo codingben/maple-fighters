@@ -39,6 +39,11 @@ namespace Scripts.Gameplay.Player
         [SerializeField]
         private Transform groundTransform;
 
+        [Header("Effects")]
+        public GameObject AttackEffect;
+
+        public Transform AttackEffectPosition;
+
         private Dictionary<PlayerStates, IPlayerStateBehaviour> playerStateBehaviours;
 
         private IPlayerStateBehaviour playerStateBehaviour;

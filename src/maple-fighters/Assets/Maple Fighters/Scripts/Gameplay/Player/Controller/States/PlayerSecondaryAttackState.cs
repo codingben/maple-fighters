@@ -22,6 +22,8 @@ namespace Scripts.Gameplay.Player.States
             previousTime = Time.time;
 
             rigidbody2D.velocity = Vector2.zero;
+
+            CreateAttackEffect();
         }
 
         public void OnStateUpdate()
@@ -47,6 +49,42 @@ namespace Scripts.Gameplay.Player.States
         public void OnStateExit()
         {
             // Left blank intentionally
+        }
+
+        private void CreateAttackEffect()
+        {
+            var effect = playerController.AttackEffect;
+            var effectPosition = playerController.AttackEffectPosition;
+            if (effect != null && effectPosition != null)
+            {
+                var gameObject = Object.Instantiate(
+                    effect,
+                    effectPosition.position,
+                    Quaternion.identity);
+                var direction = GetPlayerDirection();
+                var x = gameObject.transform.localScale.x * direction.x;
+                var y = gameObject.transform.localScale.y;
+                var z = gameObject.transform.localScale.z;
+
+                gameObject.transform.localScale = new Vector3(x, y, z);
+            }
+        }
+
+        private Vector2 GetPlayerDirection()
+        {
+            var direction = Vector2.zero;
+
+            var playerDirection = playerController.GetDirection();
+            if (playerDirection == Direction.Left)
+            {
+                direction = Vector3.left;
+            }
+            else if (playerDirection == Direction.Right)
+            {
+                direction = Vector3.right;
+            }
+
+            return direction;
         }
 
         private bool IsGrounded()
