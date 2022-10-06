@@ -57,7 +57,7 @@ namespace Scripts.Gameplay.Entity
             var position = new Vector2(x, y);
             var direction = message.Direction;
 
-            localEntity = AddEntity(id, name, position, direction);
+            localEntity = AddEntity(id, name, position);
 
             var entityGameObject = localEntity.GameObject;
 
@@ -86,7 +86,7 @@ namespace Scripts.Gameplay.Entity
                 }
                 else
                 {
-                    var entity = AddEntity(id, name, position, direction);
+                    var entity = AddEntity(id, name, position);
                     var entityGameObject = entity.GameObject;
 
                     SetDirection(entityGameObject, direction);
@@ -116,11 +116,7 @@ namespace Scripts.Gameplay.Entity
             }
         }
 
-        private IEntity AddEntity(
-            int id,
-            string name,
-            Vector2 position,
-            float direction)
+        private IEntity AddEntity(int id, string name, Vector2 position)
         {
             IEntity entity = null;
 
