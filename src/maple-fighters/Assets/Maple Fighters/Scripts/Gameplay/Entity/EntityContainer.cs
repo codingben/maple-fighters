@@ -218,6 +218,12 @@ namespace Scripts.Gameplay.Entity
                     var z = character.transform.localScale.z;
 
                     character.transform.localScale = new Vector3(x, y, z);
+
+                    var playerController = character.GetComponent<PlayerController>();
+                    if (playerController != null)
+                    {
+                        playerController.SetDirection();
+                    }
                 }
             }
         }

@@ -143,6 +143,12 @@ namespace Scripts.Gameplay.Player
             }
         }
 
+        public void SetDirection()
+        {
+            var x = transform.localScale.x;
+            direction = x > 0 ? Direction.Left : Direction.Right;
+        }
+
         public Direction GetDirection()
         {
             return direction;
