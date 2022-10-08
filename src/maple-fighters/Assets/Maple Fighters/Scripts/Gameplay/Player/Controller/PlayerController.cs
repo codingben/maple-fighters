@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using ScriptableObjects.Configurations;
 using Scripts.Editor;
-using Scripts.Gameplay.Graphics;
 using Scripts.Gameplay.Player.States;
 using Scripts.UI.Focus;
 using UnityEngine;
@@ -40,8 +39,10 @@ namespace Scripts.Gameplay.Player
         private Transform groundTransform;
 
         [Header("Effects")]
-        public GameObject AttackEffect;
+        [SerializeField]
+        private GameObject rushEffect;
 
+        public GameObject AttackEffect;
         public Transform AttackEffectPosition;
 
         private Dictionary<PlayerStates, IPlayerStateBehaviour> playerStateBehaviours;
@@ -172,10 +173,14 @@ namespace Scripts.Gameplay.Player
 
         public void CreateRushEffect(float direction)
         {
-            var rushEffectPosition = transform.position;
-            var rushEffectDirection = new Vector2(direction, 1);
+            var gameObject =
+                Instantiate(rushEffect, transform.position, Quaternion.identity);
 
-            RushEffect.Create(rushEffectPosition, rushEffectDirection);
+            var x = gameObject.transform.localScale.x * direction;
+            var y = gameObject.transform.localScale.y;
+            var z = gameObject.transform.localScale.z;
+
+            gameObject.transform.localScale = new Vector3(x, y, z);
         }
 
         public void SetCanMove(bool canMove)
