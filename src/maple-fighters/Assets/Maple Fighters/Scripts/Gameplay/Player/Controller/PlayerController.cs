@@ -144,10 +144,14 @@ namespace Scripts.Gameplay.Player
             }
         }
 
-        public void SetDirection()
+        public void SetDirection(float value)
         {
-            var x = transform.localScale.x;
-            direction = x > 0 ? Direction.Left : Direction.Right;
+            direction = value > 0 ? Direction.Left : Direction.Right;
+
+            var y = transform.localScale.y;
+            var z = transform.localScale.z;
+
+            transform.localScale = new Vector3(value, y, z);
         }
 
         public Vector2 GetDirection()

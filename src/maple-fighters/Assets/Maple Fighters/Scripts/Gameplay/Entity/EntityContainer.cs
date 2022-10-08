@@ -59,9 +59,12 @@ namespace Scripts.Gameplay.Entity
 
             localEntity = AddEntity(id, name, position);
 
-            var entityGameObject = localEntity.GameObject;
+            if (direction != 0)
+            {
+                var entityGameObject = localEntity.GameObject;
 
-            SetDirection(entityGameObject, direction);
+                StartCoroutine(SetEntityDirection(entityGameObject, direction));
+            }
         }
 
         private void OnGameObjectsAdded(GameObjectsAddedMessage message)
@@ -87,9 +90,13 @@ namespace Scripts.Gameplay.Entity
                 else
                 {
                     var entity = AddEntity(id, name, position);
-                    var entityGameObject = entity.GameObject;
 
-                    SetDirection(entityGameObject, direction);
+                    if (direction != 0)
+                    {
+                        var entityGameObject = entity.GameObject;
+
+                        StartCoroutine(SetEntityDirection(entityGameObject, direction));
+                    }
                 }
 
                 yield return new WaitForEndOfFrame();
@@ -176,55 +183,33 @@ namespace Scripts.Gameplay.Entity
             return collection.TryGetValue(id, out entity);
         }
 
-        private void SetDirection(GameObject entity, float direction)
-        {
-            var name = entity.name;
-            if (name == "LocalPlayer" || name == "RemotePlayer")
-            {
-                StartCoroutine(SetCharacterDirection(entity, direction));
-            }
-            else
-            {
-                StartCoroutine(SetEntityDirection(entity, direction));
-            }
-        }
-
         private IEnumerator SetEntityDirection(GameObject entity, float direction)
         {
             yield return new WaitForSeconds(0.1f);
 
-            if (direction != 0)
+            var name = entity.name;
+            if (name == "LocalPlayer" || name == "RemotePlayer")
+            {
+                var spawnedCharacter =
+                    entity.GetComponent<ISpawnedCharacter>();
+                var character = spawnedCharacter?.GetCharacter();
+                if (character != null)
+                {
+                    var playerController =
+                        character.GetComponent<PlayerController>();
+                    if (playerController != null)
+                    {
+                        playerController.SetDirection(direction);
+                    }
+                }
+            }
+            else
             {
                 var x = direction;
                 var y = entity.transform.localScale.y;
                 var z = entity.transform.localScale.z;
 
                 entity.transform.localScale = new Vector3(x, y, z);
-            }
-        }
-
-        private IEnumerator SetCharacterDirection(GameObject entity, float direction)
-        {
-            yield return new WaitForSeconds(0.1f);
-
-            if (direction != 0)
-            {
-                var spawnedCharacter = entity.GetComponent<ISpawnedCharacter>();
-                var character = spawnedCharacter?.GetCharacter();
-                if (character != null)
-                {
-                    var x = direction;
-                    var y = character.transform.localScale.y;
-                    var z = character.transform.localScale.z;
-
-                    character.transform.localScale = new Vector3(x, y, z);
-
-                    var playerController = character.GetComponent<PlayerController>();
-                    if (playerController != null)
-                    {
-                        playerController.SetDirection();
-                    }
-                }
             }
         }
     }
