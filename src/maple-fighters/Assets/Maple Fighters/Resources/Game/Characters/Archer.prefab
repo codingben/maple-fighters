@@ -531,6 +531,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   groundTransform: {fileID: 4992641578627268}
+  rushEffect: {fileID: 1093319074058561150, guid: 47b46ed17d9ae91be99744fb385695ec,
+    type: 3}
   AttackEffect: {fileID: 3484726295478661776, guid: 7246f29963f6e4a1e91200cdee58607e,
     type: 3}
   AttackEffectPosition: {fileID: 4966092611829314559}
