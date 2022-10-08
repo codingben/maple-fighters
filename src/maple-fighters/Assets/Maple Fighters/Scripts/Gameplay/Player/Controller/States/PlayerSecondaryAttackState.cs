@@ -61,30 +61,13 @@ namespace Scripts.Gameplay.Player.States
                     effect,
                     effectPosition.position,
                     Quaternion.identity);
-                var direction = GetPlayerDirection();
+                var direction = playerController.GetDirection();
                 var x = gameObject.transform.localScale.x * direction.x;
                 var y = gameObject.transform.localScale.y;
                 var z = gameObject.transform.localScale.z;
 
                 gameObject.transform.localScale = new Vector3(x, y, z);
             }
-        }
-
-        private Vector2 GetPlayerDirection()
-        {
-            var direction = Vector2.zero;
-
-            var playerDirection = playerController.GetDirection();
-            if (playerDirection == Direction.Left)
-            {
-                direction = Vector3.left;
-            }
-            else if (playerDirection == Direction.Right)
-            {
-                direction = Vector3.right;
-            }
-
-            return direction;
         }
 
         private bool IsGrounded()

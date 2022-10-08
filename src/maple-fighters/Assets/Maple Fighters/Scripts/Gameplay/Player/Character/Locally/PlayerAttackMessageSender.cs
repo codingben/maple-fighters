@@ -65,7 +65,7 @@ namespace Scripts.Gameplay.Player
             var damageAmount =
                 Random.Range(minDamageAmount, maxDamageAmount);
             var direction =
-                GetPlayerDirection();
+                playerController.GetDirection();
             var raycasts =
                 Physics2D.RaycastAll(transform.position, direction, distance);
             foreach (var raycast in raycasts)
@@ -90,23 +90,6 @@ namespace Scripts.Gameplay.Player
                     gameApi?.SendMessage(MessageCodes.AttackMob, message);
                 }
             }
-        }
-
-        private Vector2 GetPlayerDirection()
-        {
-            var direction = Vector2.zero;
-
-            var playerDirection = playerController.GetDirection();
-            if (playerDirection == Direction.Left)
-            {
-                direction = Vector3.left;
-            }
-            else if (playerDirection == Direction.Right)
-            {
-                direction = Vector3.right;
-            }
-
-            return direction;
         }
     }
 }

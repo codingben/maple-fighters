@@ -149,9 +149,9 @@ namespace Scripts.Gameplay.Player
             direction = x > 0 ? Direction.Left : Direction.Right;
         }
 
-        public Direction GetDirection()
+        public Vector2 GetDirection()
         {
-            return direction;
+            return direction == Direction.Left ? Vector3.left : Vector3.right;
         }
 
         public CharacterClasses GetCharacterType()
