@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 7538559655326947101}
   - component: {fileID: 3947994129239385254}
   - component: {fileID: 5797599163371249659}
+  - component: {fileID: 1917983779611423310}
   m_Layer: 0
   m_Name: FireBallEffect
   m_TagString: Untagged
@@ -117,8 +118,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53b0c95e5cbf94cfc86a1454de9ac2ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minDamageAmount: 10
-  maxDamageAmount: 50
   moveSpeed: 5
   colorSpeed: 3
 --- !u!58 &3947994129239385254
@@ -158,3 +157,18 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &1917983779611423310
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 108455267578846248}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a03e390ccaca4048ae500f51c516c47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hitDistance: 0
+  minDamageAmount: 0
+  maxDamageAmount: 50

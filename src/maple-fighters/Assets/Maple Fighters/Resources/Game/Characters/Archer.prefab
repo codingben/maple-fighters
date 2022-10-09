@@ -466,6 +466,7 @@ GameObject:
   - component: {fileID: 4856581149847252}
   - component: {fileID: 2025907495163829965}
   - component: {fileID: 114172141378278460}
+  - component: {fileID: 2907878289143078356}
   - component: {fileID: 5561984822242425150}
   - component: {fileID: 114811677279325916}
   - component: {fileID: 114791287851909474}
@@ -536,6 +537,21 @@ MonoBehaviour:
   AttackEffect: {fileID: 3484726295478661776, guid: 7246f29963f6e4a1e91200cdee58607e,
     type: 3}
   AttackEffectPosition: {fileID: 4966092611829314559}
+--- !u!114 &2907878289143078356
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1672393161269726}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a03e390ccaca4048ae500f51c516c47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hitDistance: 1.5
+  minDamageAmount: 0
+  maxDamageAmount: 50
 --- !u!114 &5561984822242425150
 MonoBehaviour:
   m_ObjectHideFlags: 0
