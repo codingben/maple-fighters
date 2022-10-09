@@ -22,6 +22,8 @@ namespace Scripts.Gameplay.Player.States
             previousTime = Time.time;
 
             rigidbody2D.velocity = Vector2.zero;
+
+            Attack();
         }
 
         public void OnStateUpdate()
@@ -47,6 +49,16 @@ namespace Scripts.Gameplay.Player.States
         public void OnStateExit()
         {
             // Left blank intentionally
+        }
+
+        private void Attack()
+        {
+            var direction =
+                playerController.GetDirection();
+            var attackMessageSender =
+                playerController.GetComponent<PlayerAttackMessageSender>();
+
+            attackMessageSender?.Attack(direction);
         }
 
         private bool IsGrounded()

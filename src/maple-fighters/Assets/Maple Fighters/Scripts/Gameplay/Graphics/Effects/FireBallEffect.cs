@@ -1,9 +1,6 @@
 using System.Collections;
-using Game.Messages;
 using Scripts.Constants;
-using Scripts.Gameplay.Entity;
-using Scripts.Gameplay.Map.Objects;
-using Scripts.Services;
+using Scripts.Gameplay.Player;
 using UnityEngine;
 
 namespace Scripts.Gameplay.Graphics
@@ -15,12 +12,6 @@ namespace Scripts.Gameplay.Graphics
         private const float AUTO_DESTROY_TIME = 3f;
 
         [SerializeField]
-        private int minDamageAmount = 10;
-
-        [SerializeField]
-        private int maxDamageAmount = 50;
-
-        [SerializeField]
         private float moveSpeed;
 
         [SerializeField]
@@ -28,11 +19,13 @@ namespace Scripts.Gameplay.Graphics
 
         private Animator animator;
         private SpriteRenderer spriteRenderer;
+        private PlayerAttackMessageSender attackMessageSender;
 
         private void Awake()
         {
             animator = GetComponent<Animator>();
             spriteRenderer = GetComponent<SpriteRenderer>();
+            attackMessageSender = GetComponent<PlayerAttackMessageSender>();
         }
 
         private void Start()
@@ -51,33 +44,11 @@ namespace Scripts.Gameplay.Graphics
             var target = other.gameObject;
             if (target.CompareTag(GameTags.MobTag))
             {
-                Attack(target);
+                attackMessageSender?.Attack(target);
 
                 StopAllCoroutines();
                 StartCoroutine(AnimateAndDestroy());
             }
-        }
-
-        private void Attack(GameObject other)
-        {
-            var damageAmount =
-                Random.Range(minDamageAmount, maxDamageAmount);
-            var mobEntity =
-                other.transform.parent.GetComponent<IEntity>();
-            var mobBehaviour =
-                other.transform.parent.GetComponent<MobBehaviour>();
-
-            mobBehaviour?.Attack(damageAmount);
-
-            var id = mobEntity?.Id ?? -1;
-            var message = new AttackMobMessage
-            {
-                MobId = id,
-                DamageAmount = damageAmount
-            };
-
-            var gameApi = ApiProvider.ProvideGameApi();
-            gameApi?.SendMessage(MessageCodes.AttackMob, message);
         }
 
         private IEnumerator Move()
