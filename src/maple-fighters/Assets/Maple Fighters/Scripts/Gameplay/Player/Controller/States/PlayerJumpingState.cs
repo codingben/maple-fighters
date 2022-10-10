@@ -68,11 +68,11 @@ namespace Scripts.Gameplay.Player.States
                 return;
             }
 
+            var direction = playerController.GetDirection();
             var rushSpeed = playerController.GetProperties().RushSpeed;
-            var direction = playerController.transform.localScale.x * -1;
-            var force = new Vector2(direction * rushSpeed, 0);
+            var force = new Vector2(direction.x * rushSpeed, 0);
 
-            playerController.CreateRushEffect(direction);
+            playerController.CreateRushEffect();
             playerController.Bounce(force);
 
             isRushing = true;

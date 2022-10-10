@@ -178,16 +178,22 @@ namespace Scripts.Gameplay.Player
             rigidbody2D.AddForce(force, ForceMode2D.Impulse);
         }
 
-        public void CreateRushEffect(float direction)
+        public void CreateRushEffect()
         {
-            var gameObject =
-                Instantiate(rushEffect, transform.position, Quaternion.identity);
+            var position =
+                transform.position;
+            var rotation =
+                Quaternion.identity;
+            var direction =
+                GetDirection();
+            var effect =
+                Instantiate(rushEffect, position, rotation);
 
-            var x = gameObject.transform.localScale.x * direction;
-            var y = gameObject.transform.localScale.y;
-            var z = gameObject.transform.localScale.z;
+            var x = effect.transform.localScale.x * direction.x;
+            var y = effect.transform.localScale.y;
+            var z = effect.transform.localScale.z;
 
-            gameObject.transform.localScale = new Vector3(x, y, z);
+            effect.transform.localScale = new Vector3(x, y, z);
         }
 
         public void CreateAttackEffect()
