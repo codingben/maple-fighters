@@ -312,6 +312,7 @@ Transform:
   m_Children:
   - {fileID: 224240858297602078}
   - {fileID: 4937934012056378}
+  - {fileID: 8222968840347421507}
   m_Father: {fileID: 4596613497347352}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -533,8 +534,9 @@ MonoBehaviour:
   groundTransform: {fileID: 4609200429523440}
   rushEffect: {fileID: 1093319074058561150, guid: 47b46ed17d9ae91be99744fb385695ec,
     type: 3}
-  AttackEffect: {fileID: 0}
-  AttackEffectPosition: {fileID: 0}
+  attackEffect: {fileID: 4169166629113643232, guid: 29990aa393f7e4173917477785a58894,
+    type: 3}
+  attackEffectSpawnPosition: {fileID: 8222968840347421507}
 --- !u!114 &1898718348860625639
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -614,3 +616,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterSprite: {fileID: 1734782633609212}
+--- !u!1 &7627006276340788893
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8222968840347421507}
+  m_Layer: 9
+  m_Name: Sword (Spawn Position)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8222968840347421507
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7627006276340788893}
+  m_LocalRotation: {x: 0, y: 0, z: -0.258819, w: 0.9659259}
+  m_LocalPosition: {x: -0.8, y: -0.005, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4833170935959054}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -30}
