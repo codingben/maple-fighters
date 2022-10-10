@@ -201,7 +201,7 @@ namespace Scripts.Gameplay.Player
             var position =
                 attackEffectSpawnPosition.position;
             var rotation =
-                Quaternion.identity;
+                attackEffectSpawnPosition.rotation;
             var direction =
                 GetDirection();
             var effect =
