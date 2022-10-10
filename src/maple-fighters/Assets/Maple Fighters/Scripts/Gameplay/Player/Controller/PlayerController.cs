@@ -42,8 +42,11 @@ namespace Scripts.Gameplay.Player
         [SerializeField]
         private GameObject rushEffect;
 
-        public GameObject AttackEffect;
-        public Transform AttackEffectPosition;
+        [SerializeField]
+        private GameObject attackEffect;
+
+        [SerializeField]
+        private Transform attackEffectSpawnPosition;
 
         private Dictionary<PlayerStates, IPlayerStateBehaviour> playerStateBehaviours;
 
@@ -185,6 +188,24 @@ namespace Scripts.Gameplay.Player
             var z = gameObject.transform.localScale.z;
 
             gameObject.transform.localScale = new Vector3(x, y, z);
+        }
+
+        public void CreateAttackEffect()
+        {
+            var position =
+                attackEffectSpawnPosition.position;
+            var rotation =
+                Quaternion.identity;
+            var direction =
+                GetDirection();
+            var effect =
+                Instantiate(attackEffect, position, rotation);
+
+            var x = effect.transform.localScale.x * direction.x;
+            var y = effect.transform.localScale.y;
+            var z = effect.transform.localScale.z;
+
+            effect.transform.localScale = new Vector3(x, y, z);
         }
 
         public void SetCanMove(bool canMove)

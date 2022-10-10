@@ -53,21 +53,7 @@ namespace Scripts.Gameplay.Player.States
 
         private void CreateAttackEffect()
         {
-            var effect = playerController.AttackEffect;
-            var effectPosition = playerController.AttackEffectPosition;
-            if (effect != null && effectPosition != null)
-            {
-                var gameObject = Object.Instantiate(
-                    effect,
-                    effectPosition.position,
-                    Quaternion.identity);
-                var direction = playerController.GetDirection();
-                var x = gameObject.transform.localScale.x * direction.x;
-                var y = gameObject.transform.localScale.y;
-                var z = gameObject.transform.localScale.z;
-
-                gameObject.transform.localScale = new Vector3(x, y, z);
-            }
+            playerController.CreateAttackEffect();
         }
 
         private bool IsGrounded()
