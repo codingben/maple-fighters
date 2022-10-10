@@ -194,9 +194,9 @@ MonoBehaviour:
   groundTransform: {fileID: 4083987963539232}
   rushEffect: {fileID: 1093319074058561150, guid: 47b46ed17d9ae91be99744fb385695ec,
     type: 3}
-  AttackEffect: {fileID: 108455267578846248, guid: b0515177e56594a89b6b1d42adf56be9,
+  attackEffect: {fileID: 108455267578846248, guid: b0515177e56594a89b6b1d42adf56be9,
     type: 3}
-  AttackEffectPosition: {fileID: 9022887031446255070}
+  attackEffectSpawnPosition: {fileID: 9022887031446255070}
 --- !u!114 &5726912112940277546
 MonoBehaviour:
   m_ObjectHideFlags: 0
