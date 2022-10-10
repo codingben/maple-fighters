@@ -1,4 +1,3 @@
-using System.Collections;
 using Scripts.Constants;
 using Scripts.Gameplay.Player;
 using UnityEngine;
@@ -8,9 +7,6 @@ namespace Scripts.Gameplay.Graphics
     [RequireComponent(typeof(SpriteRenderer), typeof(Animator))]
     public class FireBallEffect : MonoBehaviour
     {
-        private const float WAIT_TIME_BEFORE_EFFECT = 0.5f;
-        private const float AUTO_DESTROY_TIME = 3f;
-
         [SerializeField]
         private float moveSpeed;
 
@@ -21,6 +17,9 @@ namespace Scripts.Gameplay.Graphics
         private SpriteRenderer spriteRenderer;
         private PlayerAttackMessageSender attackMessageSender;
 
+        private float previousTime;
+        private bool triggerEntered;
+
         private void Awake()
         {
             animator = GetComponent<Animator>();
@@ -30,13 +29,25 @@ namespace Scripts.Gameplay.Graphics
 
         private void Start()
         {
-            StartCoroutine(Move());
-            StartCoroutine(AutoDestroyTimer());
+            previousTime = Time.time;
+
+            DisableSpriteRenderer();
         }
 
-        private void OnDestroy()
+        private void Update()
         {
-            StopAllCoroutines();
+            if (CanMove())
+            {
+                EnableSpriteRenderer();
+                Move();
+            }
+
+            if (CanAnimateAndDestroy())
+            {
+                EnableHitAnimation();
+                EnableSpriteRenderer();
+                AnimateAndDestroy();
+            }
         }
 
         private void OnTriggerEnter2D(Collider2D other)
@@ -44,55 +55,62 @@ namespace Scripts.Gameplay.Graphics
             var target = other.gameObject;
             if (target.CompareTag(GameTags.MobTag))
             {
+                triggerEntered = true;
+
                 attackMessageSender?.Attack(target);
-
-                StopAllCoroutines();
-                StartCoroutine(AnimateAndDestroy());
             }
         }
 
-        private IEnumerator Move()
+        private void Move()
         {
-            spriteRenderer.enabled = false;
+            var direction = new Vector3(transform.localScale.x, 0, 0);
+            transform.position += direction * moveSpeed * Time.deltaTime;
+        }
 
-            yield return new WaitForSeconds(WAIT_TIME_BEFORE_EFFECT);
-
-            spriteRenderer.enabled = true;
-
-            while (true)
+        private void AnimateAndDestroy()
+        {
+            if (spriteRenderer.color.a <= 0)
             {
-                var direction = new Vector3(transform.localScale.x, 0, 0);
-                transform.position += direction * moveSpeed * Time.deltaTime;
-                yield return null;
+                Destroy(gameObject);
             }
-        }
-
-        private IEnumerator AutoDestroyTimer()
-        {
-            yield return new WaitForSeconds(AUTO_DESTROY_TIME);
-
-            StartCoroutine(AnimateAndDestroy());
-        }
-
-        private IEnumerator AnimateAndDestroy()
-        {
-            animator.SetBool("Hit", true);
 
             var color = new Color(0, 0, 0, 1);
+            spriteRenderer.color -= color * colorSpeed * Time.deltaTime;
+        }
 
+        private void EnableHitAnimation()
+        {
+            animator.SetBool("Hit", true);
+        }
+
+        private void EnableSpriteRenderer()
+        {
             spriteRenderer.enabled = true;
+        }
 
-            while (true)
+        private void DisableSpriteRenderer()
+        {
+            spriteRenderer.enabled = false;
+        }
+
+        private bool CanMove()
+        {
+            if (triggerEntered)
             {
-                if (spriteRenderer.color.a <= 0)
-                {
-                    Destroy(gameObject);
-                    yield break;
-                }
-
-                spriteRenderer.color -= color * colorSpeed * Time.deltaTime;
-                yield return null;
+                return false;
             }
+
+            return Time.time >= previousTime + 0.5f;
+        }
+
+        private bool CanAnimateAndDestroy()
+        {
+            if (triggerEntered)
+            {
+                return true;
+            }
+
+            return Time.time >= previousTime + 3.0f;
         }
     }
 }
