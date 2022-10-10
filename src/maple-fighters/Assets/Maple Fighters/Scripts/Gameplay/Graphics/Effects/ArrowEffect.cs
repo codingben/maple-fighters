@@ -1,4 +1,3 @@
-using System.Collections;
 using Scripts.Constants;
 using Scripts.Gameplay.Player;
 using UnityEngine;
@@ -8,8 +7,6 @@ namespace Scripts.Gameplay.Graphics
     [RequireComponent(typeof(SpriteRenderer))]
     public class ArrowEffect : MonoBehaviour
     {
-        private const float WAIT_TIME_BEFORE_EFFECT = 0.3f;
-
         [SerializeField]
         private float moveSpeed;
 
@@ -19,6 +16,8 @@ namespace Scripts.Gameplay.Graphics
         private SpriteRenderer spriteRenderer;
         private PlayerAttackMessageSender attackMessageSender;
 
+        private float previousTime;
+
         private void Awake()
         {
             spriteRenderer = GetComponent<SpriteRenderer>();
@@ -27,13 +26,16 @@ namespace Scripts.Gameplay.Graphics
 
         private void Start()
         {
-            StartCoroutine(Move());
-            StartCoroutine(ColorEffect());
+            previousTime = Time.time;
         }
 
-        private void OnDestroy()
+        private void Update()
         {
-            StopAllCoroutines();
+            if (CanMove())
+            {
+                Move();
+                DeacraseColor();
+            }
         }
 
         private void OnTriggerEnter2D(Collider2D other)
@@ -43,40 +45,30 @@ namespace Scripts.Gameplay.Graphics
             {
                 attackMessageSender?.Attack(target);
 
-                StopAllCoroutines();
                 Destroy(gameObject);
             }
         }
 
-        private IEnumerator Move()
+        private void Move()
         {
-            yield return new WaitForSeconds(WAIT_TIME_BEFORE_EFFECT);
-
-            while (true)
-            {
-                var direction = new Vector3(transform.localScale.x, 0, 0);
-                transform.position += direction * moveSpeed * Time.deltaTime;
-                yield return null;
-            }
+            var direction = new Vector3(transform.localScale.x, 0, 0);
+            transform.position += direction * moveSpeed * Time.deltaTime;
         }
 
-        private IEnumerator ColorEffect()
+        private void DeacraseColor()
         {
-            yield return new WaitForSeconds(WAIT_TIME_BEFORE_EFFECT);
+            if (spriteRenderer.color.a <= 0)
+            {
+                Destroy(gameObject);
+            }
 
             var color = new Color(0, 0, 0, 1);
+            spriteRenderer.color -= color * colorSpeed * Time.deltaTime;
+        }
 
-            while (true)
-            {
-                if (spriteRenderer.color.a <= 0)
-                {
-                    Destroy(gameObject);
-                    yield break;
-                }
-
-                spriteRenderer.color -= color * colorSpeed * Time.deltaTime;
-                yield return null;
-            }
+        private bool CanMove()
+        {
+            return Time.time >= previousTime + 0.3f;
         }
     }
 }
