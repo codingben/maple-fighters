@@ -170,5 +170,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hitDistance: 0
-  minDamageAmount: 0
+  minDamageAmount: 10
   maxDamageAmount: 50
