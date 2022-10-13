@@ -1,6 +1,6 @@
-using System.Net;
 using Game.Physics;
 using InterestManagement;
+using Utilities;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
 
@@ -13,7 +13,7 @@ namespace Game.Application.Components
 
         protected override void OnAwake()
         {
-            var yamlConfig = LoadYamlConfig();
+            var yamlConfig = ConfigUtils.LoadYamlConfig(configFile: "physics.yml");
             var configData = ParseConfigData(yamlConfig);
             var upperBound = new Vector2(configData.UpperBound.X, configData.UpperBound.Y);
             var lowerBound = new Vector2(configData.LowerBound.X, configData.LowerBound.Y);
@@ -60,20 +60,6 @@ namespace Game.Application.Components
                 .Build();
 
             return deserializer.Deserialize<PhysicsData>(data);
-        }
-
-        private string LoadYamlConfig()
-        {
-            var config = string.Empty;
-            var url = "https://raw.githubusercontent.com/codingben/maple-fighters-configs/main/{0}";
-            var yamlPath = string.Format(url, "physics.yml");
-
-            using (var client = new WebClient())
-            {
-                config = client.DownloadString(yamlPath);
-            }
-
-            return config;
         }
     }
 }

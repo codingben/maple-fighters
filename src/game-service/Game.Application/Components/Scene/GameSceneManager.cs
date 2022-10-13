@@ -1,8 +1,8 @@
 using System.Collections.Generic;
-using System.Net;
 using System.Timers;
 using Game.Application.Objects;
 using InterestManagement;
+using Utilities;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
 
@@ -27,7 +27,7 @@ namespace Game.Application.Components
         {
             gameSceneCollection = Components.Get<IGameSceneCollection>();
 
-            var yamlConfig = LoadYamlConfig();
+            var yamlConfig = ConfigUtils.LoadYamlConfig(configFile: "scenes.yml");
             var configData = ParseConfigData(yamlConfig);
 
             CreateGameScene(configData);
@@ -159,20 +159,6 @@ namespace Game.Application.Components
                 .Build();
 
             return deserializer.Deserialize<SceneCollectionData>(data);
-        }
-
-        private string LoadYamlConfig()
-        {
-            var config = string.Empty;
-            var url = "https://raw.githubusercontent.com/codingben/maple-fighters-configs/main/{0}";
-            var yamlPath = string.Format(url, "scenes.yml");
-
-            using (var client = new WebClient())
-            {
-                config = client.DownloadString(yamlPath);
-            }
-
-            return config;
         }
     }
 }
