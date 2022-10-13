@@ -3,8 +3,6 @@ using System.Timers;
 using Game.Application.Objects;
 using InterestManagement;
 using Utilities;
-using YamlDotNet.Serialization;
-using YamlDotNet.Serialization.NamingConventions;
 
 namespace Game.Application.Components
 {
@@ -28,7 +26,7 @@ namespace Game.Application.Components
             gameSceneCollection = Components.Get<IGameSceneCollection>();
 
             var yamlConfig = ConfigUtils.LoadYamlConfig(configFile: "scenes.yml");
-            var configData = ParseConfigData(yamlConfig);
+            var configData = ConfigUtils.ParseConfigData<SceneCollectionData>(yamlConfig);
 
             CreateGameScene(configData);
 
@@ -150,15 +148,6 @@ namespace Game.Application.Components
             else if (type == ObjectTypes.Portal) return new PortalGameObject(id, name, customData);
             else if (type == ObjectTypes.Mob) return new MobGameObject(id, name);
             else throw new InvalidGameObjectTypeException(type);
-        }
-
-        private SceneCollectionData ParseConfigData(string data)
-        {
-            var deserializer = new DeserializerBuilder()
-                .WithNamingConvention(CamelCaseNamingConvention.Instance)
-                .Build();
-
-            return deserializer.Deserialize<SceneCollectionData>(data);
         }
     }
 }

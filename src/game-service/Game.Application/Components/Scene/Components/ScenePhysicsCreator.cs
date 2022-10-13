@@ -1,8 +1,6 @@
 using Game.Physics;
 using InterestManagement;
 using Utilities;
-using YamlDotNet.Serialization;
-using YamlDotNet.Serialization.NamingConventions;
 
 namespace Game.Application.Components
 {
@@ -14,7 +12,7 @@ namespace Game.Application.Components
         protected override void OnAwake()
         {
             var yamlConfig = ConfigUtils.LoadYamlConfig(configFile: "physics.yml");
-            var configData = ParseConfigData(yamlConfig);
+            var configData = ConfigUtils.ParseConfigData<PhysicsData>(yamlConfig);
             var upperBound = new Vector2(configData.UpperBound.X, configData.UpperBound.Y);
             var lowerBound = new Vector2(configData.LowerBound.X, configData.LowerBound.Y);
             var gravity = new Vector2(configData.Gravity.X, configData.Gravity.Y);
@@ -51,15 +49,6 @@ namespace Game.Application.Components
         public IPhysicsExecutor GetPhysicsExecutor()
         {
             return physicsExecutor;
-        }
-
-        private PhysicsData ParseConfigData(string data)
-        {
-            var deserializer = new DeserializerBuilder()
-                .WithNamingConvention(CamelCaseNamingConvention.Instance)
-                .Build();
-
-            return deserializer.Deserialize<PhysicsData>(data);
         }
     }
 }

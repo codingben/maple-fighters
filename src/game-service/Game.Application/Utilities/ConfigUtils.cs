@@ -1,6 +1,8 @@
 using System;
 using System.Net;
 using DotNetEnv;
+using YamlDotNet.Serialization;
+using YamlDotNet.Serialization.NamingConventions;
 
 namespace Utilities
 {
@@ -24,6 +26,15 @@ namespace Utilities
             }
 
             return config;
+        }
+
+        public static TData ParseConfigData<TData>(string data)
+        {
+            var deserializer = new DeserializerBuilder()
+                .WithNamingConvention(CamelCaseNamingConvention.Instance)
+                .Build();
+
+            return deserializer.Deserialize<TData>(data);
         }
     }
 }
