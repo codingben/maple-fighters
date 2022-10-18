@@ -9,7 +9,8 @@ namespace Game.Application.Objects.Components
 
         protected override void OnAwake()
         {
-            var yamlConfig = ConfigUtils.LoadYamlConfig(configFile: "mob.yml");
+            var yamlConfigUrl = ConfigUtils.GetYamlConfigUrl(configFile: "mob.yml");
+            var yamlConfig = ConfigUtils.LoadYamlConfig(url: yamlConfigUrl);
             configData = ConfigUtils.ParseConfigData<MobConfigData>(yamlConfig);
         }
 

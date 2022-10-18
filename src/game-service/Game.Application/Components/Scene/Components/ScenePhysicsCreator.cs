@@ -11,7 +11,8 @@ namespace Game.Application.Components
 
         protected override void OnAwake()
         {
-            var yamlConfig = ConfigUtils.LoadYamlConfig(configFile: "physics.yml");
+            var yamlConfigUrl = ConfigUtils.GetYamlConfigUrl(configFile: "physics.yml");
+            var yamlConfig = ConfigUtils.LoadYamlConfig(url: yamlConfigUrl);
             var configData = ConfigUtils.ParseConfigData<PhysicsData>(yamlConfig);
             var upperBound = new Vector2(configData.UpperBound.X, configData.UpperBound.Y);
             var lowerBound = new Vector2(configData.LowerBound.X, configData.LowerBound.Y);

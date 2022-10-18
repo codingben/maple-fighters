@@ -25,7 +25,8 @@ namespace Game.Application.Components
         {
             gameSceneCollection = Components.Get<IGameSceneCollection>();
 
-            var yamlConfig = ConfigUtils.LoadYamlConfig(configFile: "scenes.yml");
+            var yamlConfigUrl = ConfigUtils.GetYamlConfigUrl(configFile: "scenes.yml");
+            var yamlConfig = ConfigUtils.LoadYamlConfig(url: yamlConfigUrl);
             var configData = ConfigUtils.ParseConfigData<SceneCollectionData>(yamlConfig);
 
             CreateGameScene(configData);
