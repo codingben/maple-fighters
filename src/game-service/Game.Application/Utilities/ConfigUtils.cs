@@ -8,21 +8,27 @@ namespace Utilities
 {
     public class ConfigUtils
     {
-        public static string LoadYamlConfig(string configFile)
+        public static string GetYamlConfigUrl(string configFile)
         {
-            var config = string.Empty;
+            var user = "codingben";
+            var repo = "maple-fighters-configs";
             var configEnv = Env.GetString("CONFIG_ENV");
-            var url = "https://raw.githubusercontent.com/codingben/maple-fighters-configs/{0}/{1}";
-            var yamlPath = string.Format(url, configEnv, configFile);
 
             if (string.IsNullOrEmpty(configEnv))
             {
                 throw new ArgumentException("CONFIG_ENV is not defined");
             }
 
+            return $"https://raw.githubusercontent.com/{user}/{repo}/{configEnv}/{configFile}";
+        }
+
+        public static string LoadYamlConfig(string url)
+        {
+            var config = string.Empty;
+
             using (var client = new WebClient())
             {
-                config = client.DownloadString(yamlPath);
+                config = client.DownloadString(url);
             }
 
             return config;
