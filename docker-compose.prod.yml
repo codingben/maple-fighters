@@ -45,6 +45,8 @@ services:
             FLECK_LOG: Info
             IM_LOG: Debug
             GAME_LOG: Debug
+            CONFIG_USER: codingben
+            CONFIG_REPO: maple-fighters-configs
             CONFIG_BRANCH: main
 
     gameprovider-service:
