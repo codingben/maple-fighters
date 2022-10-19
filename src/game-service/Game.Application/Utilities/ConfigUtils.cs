@@ -12,14 +12,14 @@ namespace Utilities
         {
             var user = "codingben";
             var repo = "maple-fighters-configs";
-            var configEnv = Env.GetString("CONFIG_ENV");
+            var branch = Env.GetString("CONFIG_BRANCH");
 
-            if (string.IsNullOrEmpty(configEnv))
+            if (string.IsNullOrEmpty(branch))
             {
-                throw new ArgumentException("CONFIG_ENV is not defined");
+                throw new ArgumentException("CONFIG_BRANCH is not defined");
             }
 
-            return $"https://raw.githubusercontent.com/{user}/{repo}/{configEnv}/{configFile}";
+            return $"https://raw.githubusercontent.com/{user}/{repo}/{branch}/{configFile}";
         }
 
         public static string LoadYamlConfig(string url)
