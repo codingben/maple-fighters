@@ -10,16 +10,20 @@ namespace Utilities
     {
         public static string GetYamlConfigUrl(string configFile)
         {
-            var user = "codingben";
-            var repo = "maple-fighters-configs";
-            var branch = Env.GetString("CONFIG_BRANCH");
+            var configUser = Env.GetString("CONFIG_UESR");
+            var configRepo = Env.GetString("CONFIG_REPO");
+            var configBranch = Env.GetString("CONFIG_BRANCH");
 
-            if (string.IsNullOrEmpty(branch))
-            {
+            if (string.IsNullOrEmpty(configUser))
+                throw new ArgumentException("CONFIG_UESR is not defined");
+
+            if (string.IsNullOrEmpty(configRepo))
+                throw new ArgumentException("CONFIG_REPO is not defined");
+
+            if (string.IsNullOrEmpty(configBranch))
                 throw new ArgumentException("CONFIG_BRANCH is not defined");
-            }
 
-            return $"https://raw.githubusercontent.com/{user}/{repo}/{branch}/{configFile}";
+            return $"https://raw.githubusercontent.com/{configUser}/{configRepo}/{configBranch}/{configFile}";
         }
 
         public static string LoadYamlConfig(string url)
