@@ -1,13 +1,20 @@
-name: DigitalOcean Deploy
+name: Cloud Deploy
 
 on:
   workflow_dispatch:
+    inputs:
+      cloud:
+        type: choice
+        description: Cloud Infrastructure
+        options:
+        - DigitalOcean
 
 jobs:
-  deploy:
+  digitalocean-deploy:
+    if: ${{ inputs.cloud }} == 'DigitalOcean'
     runs-on: ubuntu-latest
     steps:
-      - name: Deploy
+      - name: DigitalOcean Deploy
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.DIGITALOCEAN_HOST }}
