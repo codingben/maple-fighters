@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.26.1 (HEAD)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: chat-service
+  name: chat-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: chat-service
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert
+        kompose.version: 1.26.1 (HEAD)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: chat-service
+    spec:
+      containers:
+        - env:
+            - name: PORT
+              value: "50054"
+          image: chat-service
+          name: chat-service
+          ports:
+            - containerPort: 50054
+          resources: {}
+      restartPolicy: Always
+status: {}

@@ -1,0 +1,34 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.26.1 (HEAD)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: game-service
+  name: game-service
+spec:
+  containers:
+    - env:
+        - name: CONFIG_BRANCH
+          value: develop
+        - name: CONFIG_REPO
+          value: maple-fighters-configs
+        - name: CONFIG_USER
+          value: codingben
+        - name: FLECK_LOG
+          value: Info
+        - name: GAME_LOG
+          value: Debug
+        - name: IM_LOG
+          value: Debug
+        - name: URL
+          value: ws://0.0.0.0:50051
+      image: game-service
+      name: game-service
+      ports:
+        - containerPort: 50051
+      resources: {}
+  restartPolicy: OnFailure
+status: {}

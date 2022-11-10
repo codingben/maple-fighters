@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.26.1 (HEAD)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: gameprovider-service
+  name: gameprovider-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: gameprovider-service
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert
+        kompose.version: 1.26.1 (HEAD)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: gameprovider-service
+    spec:
+      containers:
+        - env:
+            - name: GAME_SERVICES
+              value: '[{"name":"Local Game","protocol":"ws","url":"localhost/game/"}]'
+            - name: IP_ADDRESS
+              value: 0.0.0.0:50052
+            - name: RUST_BACKTRACE
+              value: full
+            - name: RUST_LOG
+              value: info
+          image: gameprovider-service
+          name: gameprovider-service
+          ports:
+            - containerPort: 50052
+          resources: {}
+      restartPolicy: Always
+status: {}

@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.26.1 (HEAD)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: auth-service
+  name: auth-service
+spec:
+  ports:
+    - name: "50050"
+      port: 50050
+      targetPort: 50050
+  selector:
+    io.kompose.service: auth-service
+status:
+  loadBalancer: {}

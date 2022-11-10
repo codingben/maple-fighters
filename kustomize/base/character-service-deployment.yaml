@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.26.1 (HEAD)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: character-service
+  name: character-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: character-service
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert
+        kompose.version: 1.26.1 (HEAD)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: character-service
+    spec:
+      containers:
+        - env:
+            - name: DATABASE_URL
+              value: postgres://postgres:postgres@character-db:5432/postgres
+            - name: IP_ADDRESS
+              value: 0.0.0.0:50053
+            - name: RUST_BACKTRACE
+              value: full
+            - name: RUST_LOG
+              value: info
+          image: character-service
+          name: character-service
+          ports:
+            - containerPort: 50053
+          resources: {}
+      restartPolicy: Always
+status: {}
