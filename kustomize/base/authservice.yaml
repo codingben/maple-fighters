@@ -22,7 +22,7 @@ spec:
               value: http://0.0.0.0:50050
             - name: DATABASE_URL
               value: mongodb://auth-db:27017/users
-          image: authservice
+          image: maplefighters/auth-service:latest
           name: authservice
           ports:
             - containerPort: 50050
