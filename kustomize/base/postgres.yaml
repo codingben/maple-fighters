@@ -1,27 +1,18 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  annotations:
-    kompose.cmd: kompose convert
-    kompose.version: 1.26.1 (HEAD)
-  creationTimestamp: null
   labels:
-    io.kompose.service: character-db
-  name: character-db
+    app: postgres-character
+  name: postgres-character
 spec:
   replicas: 1
   selector:
     matchLabels:
-      io.kompose.service: character-db
-  strategy: {}
+      app: postgres-character
   template:
     metadata:
-      annotations:
-        kompose.cmd: kompose convert
-        kompose.version: 1.26.1 (HEAD)
-      creationTimestamp: null
       labels:
-        io.kompose.service: character-db
+        app: postgres-character
     spec:
       containers:
         - env:
@@ -30,29 +21,23 @@ spec:
             - name: POSTGRES_USER
               value: postgres
           image: postgres:13
-          name: character-db
+          name: postgres-character
           ports:
             - containerPort: 5432
           resources: {}
       restartPolicy: Always
-status: {}
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  annotations:
-    kompose.cmd: kompose convert
-    kompose.version: 1.26.1 (HEAD)
-  creationTimestamp: null
   labels:
-    io.kompose.service: character-db
-  name: character-db
+    app: postgres-character
+  name: postgres-character
 spec:
+  type: ClusterIP
   ports:
-    - name: "5432"
+    - name: postgres-port
       port: 5432
       targetPort: 5432
   selector:
-    io.kompose.service: character-db
-status:
-  loadBalancer: {}
+    app: postgres-character
