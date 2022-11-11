@@ -24,7 +24,7 @@ spec:
               value: full
             - name: RUST_LOG
               value: info
-          image: characterservice
+          image: maplefighters/character-service:latest
           name: characterservice
           ports:
             - containerPort: 50053
