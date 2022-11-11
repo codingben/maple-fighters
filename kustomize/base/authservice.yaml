@@ -1,27 +1,18 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  annotations:
-    kompose.cmd: kompose convert
-    kompose.version: 1.26.1 (HEAD)
-  creationTimestamp: null
   labels:
-    io.kompose.service: auth-service
-  name: auth-service
+    app: authservice
+  name: authservice
 spec:
   replicas: 1
   selector:
     matchLabels:
-      io.kompose.service: auth-service
-  strategy: {}
+      app: authservice
   template:
     metadata:
-      annotations:
-        kompose.cmd: kompose convert
-        kompose.version: 1.26.1 (HEAD)
-      creationTimestamp: null
       labels:
-        io.kompose.service: auth-service
+        app: authservice
     spec:
       containers:
         - env:
@@ -31,30 +22,24 @@ spec:
               value: http://0.0.0.0:50050
             - name: DATABASE_URL
               value: mongodb://auth-db:27017/users
-          image: auth-service
-          name: auth-service
+          image: authservice
+          name: authservice
           ports:
             - containerPort: 50050
           resources: {}
       restartPolicy: Always
-status: {}
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  annotations:
-    kompose.cmd: kompose convert
-    kompose.version: 1.26.1 (HEAD)
-  creationTimestamp: null
   labels:
-    io.kompose.service: auth-service
-  name: auth-service
+    app: authservice
+  name: authservice
 spec:
+  type: ClusterIP
   ports:
-    - name: "50050"
+    - name: authservice-port
       port: 50050
       targetPort: 50050
   selector:
-    io.kompose.service: auth-service
-status:
-  loadBalancer: {}
+    app: authservice
