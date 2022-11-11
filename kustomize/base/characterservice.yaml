@@ -40,3 +40,23 @@ spec:
           resources: {}
       restartPolicy: Always
 status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.26.1 (HEAD)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: character-service
+  name: character-service
+spec:
+  ports:
+    - name: "50053"
+      port: 50053
+      targetPort: 50053
+  selector:
+    io.kompose.service: character-service
+status:
+  loadBalancer: {}
