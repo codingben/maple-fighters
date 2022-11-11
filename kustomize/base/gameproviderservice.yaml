@@ -24,7 +24,7 @@ spec:
               value: full
             - name: RUST_LOG
               value: info
-          image: gameproviderservice
+          image: maplefighters/gameprovider-service:latest
           name: gameproviderservice
           ports:
             - containerPort: 50052
