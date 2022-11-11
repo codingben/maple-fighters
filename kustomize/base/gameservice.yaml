@@ -21,7 +21,7 @@ spec:
           value: Debug
         - name: URL
           value: ws://0.0.0.0:50051
-      image: gameservice
+      image: maplefighters/game-service:latest
       name: gameservice
       ports:
         - containerPort: 50051
