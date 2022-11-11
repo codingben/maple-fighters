@@ -15,7 +15,7 @@ spec:
         app: frontend
     spec:
       containers:
-        - image: frontend
+        - image: maplefighters/frontend:latest
           name: frontend
           ports:
             - containerPort: 80
