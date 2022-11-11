@@ -18,7 +18,7 @@ spec:
         - env:
             - name: PORT
               value: "50054"
-          image: chatservice
+          image: maplefighters/chat-service:latest
           name: chatservice
           ports:
             - containerPort: 50054
