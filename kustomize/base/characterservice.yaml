@@ -1,27 +1,18 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  annotations:
-    kompose.cmd: kompose convert
-    kompose.version: 1.26.1 (HEAD)
-  creationTimestamp: null
   labels:
-    io.kompose.service: character-service
-  name: character-service
+    app: characterservice
+  name: characterservice
 spec:
   replicas: 1
   selector:
     matchLabels:
-      io.kompose.service: character-service
-  strategy: {}
+      app: characterservice
   template:
     metadata:
-      annotations:
-        kompose.cmd: kompose convert
-        kompose.version: 1.26.1 (HEAD)
-      creationTimestamp: null
       labels:
-        io.kompose.service: character-service
+        app: characterservice
     spec:
       containers:
         - env:
@@ -33,30 +24,24 @@ spec:
               value: full
             - name: RUST_LOG
               value: info
-          image: character-service
-          name: character-service
+          image: characterservice
+          name: characterservice
           ports:
             - containerPort: 50053
           resources: {}
       restartPolicy: Always
-status: {}
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  annotations:
-    kompose.cmd: kompose convert
-    kompose.version: 1.26.1 (HEAD)
-  creationTimestamp: null
   labels:
-    io.kompose.service: character-service
-  name: character-service
+    app: characterservice
+  name: characterservice
 spec:
+  type: ClusterIP
   ports:
-    - name: "50053"
+    - name: characterservice-port
       port: 50053
       targetPort: 50053
   selector:
-    io.kompose.service: character-service
-status:
-  loadBalancer: {}
+    app: characterservice
