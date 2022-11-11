@@ -1,27 +1,18 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  annotations:
-    kompose.cmd: kompose convert
-    kompose.version: 1.26.1 (HEAD)
-  creationTimestamp: null
   labels:
-    io.kompose.service: gameprovider-service
-  name: gameprovider-service
+    app: gameproviderservice
+  name: gameproviderservice
 spec:
   replicas: 1
   selector:
     matchLabels:
-      io.kompose.service: gameprovider-service
-  strategy: {}
+      app: gameproviderservice
   template:
     metadata:
-      annotations:
-        kompose.cmd: kompose convert
-        kompose.version: 1.26.1 (HEAD)
-      creationTimestamp: null
       labels:
-        io.kompose.service: gameprovider-service
+        app: gameproviderservice
     spec:
       containers:
         - env:
@@ -33,30 +24,24 @@ spec:
               value: full
             - name: RUST_LOG
               value: info
-          image: gameprovider-service
-          name: gameprovider-service
+          image: gameproviderservice
+          name: gameproviderservice
           ports:
             - containerPort: 50052
           resources: {}
       restartPolicy: Always
-status: {}
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  annotations:
-    kompose.cmd: kompose convert
-    kompose.version: 1.26.1 (HEAD)
-  creationTimestamp: null
   labels:
-    io.kompose.service: gameprovider-service
-  name: gameprovider-service
+    app: gameproviderservice
+  name: gameproviderservice
 spec:
+  type: ClusterIP
   ports:
-    - name: "50052"
+    - name: gameproviderservice-port
       port: 50052
       targetPort: 50052
   selector:
-    io.kompose.service: gameprovider-service
-status:
-  loadBalancer: {}
+    app: gameproviderservice
