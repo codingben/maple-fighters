@@ -1,56 +1,41 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  annotations:
-    kompose.cmd: kompose convert
-    kompose.version: 1.26.1 (HEAD)
-  creationTimestamp: null
   labels:
-    io.kompose.service: chat-service
-  name: chat-service
+    app: chatservice
+  name: chatservice
 spec:
   replicas: 1
   selector:
     matchLabels:
-      io.kompose.service: chat-service
-  strategy: {}
+      app: chatservice
   template:
     metadata:
-      annotations:
-        kompose.cmd: kompose convert
-        kompose.version: 1.26.1 (HEAD)
-      creationTimestamp: null
       labels:
-        io.kompose.service: chat-service
+        app: chatservice
     spec:
       containers:
         - env:
             - name: PORT
               value: "50054"
-          image: chat-service
-          name: chat-service
+          image: chatservice
+          name: chatservice
           ports:
             - containerPort: 50054
           resources: {}
       restartPolicy: Always
-status: {}
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  annotations:
-    kompose.cmd: kompose convert
-    kompose.version: 1.26.1 (HEAD)
-  creationTimestamp: null
   labels:
-    io.kompose.service: chat-service
-  name: chat-service
+    app: chatservice
+  name: chatservice
 spec:
+  type: ClusterIP
   ports:
-    - name: "50054"
+    - name: chatservice-port
       port: 50054
       targetPort: 50054
   selector:
-    io.kompose.service: chat-service
-status:
-  loadBalancer: {}
+    app: chatservice
