@@ -1,8 +1,6 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  labels:
-    app: authservice
   name: authservice
 spec:
   replicas: 1
@@ -32,8 +30,6 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  labels:
-    app: authservice
   name: authservice
 spec:
   type: ClusterIP
