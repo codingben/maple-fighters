@@ -1,38 +1,43 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  labels:
-    app: gameservice
   name: gameservice
 spec:
-  containers:
-    - env:
-        - name: CONFIG_BRANCH
-          value: develop
-        - name: CONFIG_REPO
-          value: maple-fighters-configs
-        - name: CONFIG_USER
-          value: codingben
-        - name: FLECK_LOG
-          value: Info
-        - name: GAME_LOG
-          value: Debug
-        - name: IM_LOG
-          value: Debug
-        - name: URL
-          value: ws://0.0.0.0:50051
-      image: maplefighters/game-service:latest
-      name: gameservice
-      ports:
-        - containerPort: 50051
-      resources: {}
-  restartPolicy: OnFailure
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gameservice
+  template:
+    metadata:
+      labels:
+        app: gameservice
+    spec:
+      containers:
+        - env:
+            - name: CONFIG_BRANCH
+              value: develop
+            - name: CONFIG_REPO
+              value: maple-fighters-configs
+            - name: CONFIG_USER
+              value: codingben
+            - name: FLECK_LOG
+              value: Info
+            - name: GAME_LOG
+              value: Debug
+            - name: IM_LOG
+              value: Debug
+            - name: URL
+              value: ws://0.0.0.0:50051
+          image: maplefighters/game-service:latest
+          name: gameservice
+          ports:
+            - containerPort: 50051
+          resources: {}
+      restartPolicy: OnFailure
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  labels:
-    app: gameservice
   name: gameservice
 spec:
   type: ClusterIP
