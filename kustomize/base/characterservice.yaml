@@ -15,7 +15,7 @@ spec:
       containers:
         - env:
             - name: DATABASE_URL
-              value: postgres://postgres:postgres@character-db:5432/postgres
+              value: postgres://postgres:postgres@postgres-character:5432/postgres
             - name: IP_ADDRESS
               value: 0.0.0.0:50053
             - name: RUST_BACKTRACE
