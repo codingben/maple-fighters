@@ -33,7 +33,7 @@ spec:
           ports:
             - containerPort: 50051
           resources: {}
-      restartPolicy: OnFailure
+      restartPolicy: Always
 ---
 apiVersion: v1
 kind: Service
