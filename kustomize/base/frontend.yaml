@@ -1,8 +1,6 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  labels:
-    app: frontend
   name: frontend
 spec:
   replicas: 1
@@ -25,8 +23,6 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  labels:
-    app: frontend
   name: frontend
 spec:
   type: ClusterIP
@@ -43,9 +39,9 @@ metadata:
   name: frontend-external
 spec:
   type: LoadBalancer
-  selector:
-    app: frontend
   ports:
   - name: http
     port: 80
     targetPort: 80
+  selector:
+    app: frontend
