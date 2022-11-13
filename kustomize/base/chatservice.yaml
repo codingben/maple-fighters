@@ -1,8 +1,6 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  labels:
-    app: chatservice
   name: chatservice
 spec:
   replicas: 1
@@ -28,8 +26,6 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  labels:
-    app: chatservice
   name: chatservice
 spec:
   type: ClusterIP
