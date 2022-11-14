@@ -1,16 +1,16 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: authservice
+  name: auth-service
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: authservice
+      app: auth-service
   template:
     metadata:
       labels:
-        app: authservice
+        app: auth-service
     spec:
       containers:
         - env:
@@ -21,7 +21,7 @@ spec:
             - name: DATABASE_URL
               value: mongodb://mongo-auth:27017/users
           image: maplefighters/auth-service:latest
-          name: authservice
+          name: auth-service
           ports:
             - containerPort: 50050
           resources: {}
@@ -30,12 +30,12 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: authservice
+  name: auth-service
 spec:
   type: ClusterIP
   ports:
-    - name: authservice-port
+    - name: auth-service-port
       port: 50050
       targetPort: 50050
   selector:
-    app: authservice
+    app: auth-service

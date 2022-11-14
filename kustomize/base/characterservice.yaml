@@ -1,16 +1,16 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: characterservice
+  name: character-service
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: characterservice
+      app: character-service
   template:
     metadata:
       labels:
-        app: characterservice
+        app: character-service
     spec:
       containers:
         - env:
@@ -23,7 +23,7 @@ spec:
             - name: RUST_LOG
               value: info
           image: maplefighters/character-service:latest
-          name: characterservice
+          name: character-service
           ports:
             - containerPort: 50053
           resources: {}
@@ -32,12 +32,12 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: characterservice
+  name: character-service
 spec:
   type: ClusterIP
   ports:
-    - name: characterservice-port
+    - name: character-service-port
       port: 50053
       targetPort: 50053
   selector:
-    app: characterservice
+    app: character-service

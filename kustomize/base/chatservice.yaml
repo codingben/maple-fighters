@@ -1,23 +1,23 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: chatservice
+  name: chat-service
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: chatservice
+      app: chat-service
   template:
     metadata:
       labels:
-        app: chatservice
+        app: chat-service
     spec:
       containers:
         - env:
             - name: PORT
               value: "50054"
           image: maplefighters/chat-service:latest
-          name: chatservice
+          name: chat-service
           ports:
             - containerPort: 50054
           resources: {}
@@ -26,12 +26,12 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: chatservice
+  name: chat-service
 spec:
   type: ClusterIP
   ports:
-    - name: chatservice-port
+    - name: chat-service-port
       port: 50054
       targetPort: 50054
   selector:
-    app: chatservice
+    app: chat-service

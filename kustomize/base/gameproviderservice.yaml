@@ -1,16 +1,16 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: gameproviderservice
+  name: gameprovider-service
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: gameproviderservice
+      app: gameprovider-service
   template:
     metadata:
       labels:
-        app: gameproviderservice
+        app: gameprovider-service
     spec:
       containers:
         - env:
@@ -23,7 +23,7 @@ spec:
             - name: RUST_LOG
               value: info
           image: maplefighters/gameprovider-service:latest
-          name: gameproviderservice
+          name: gameprovider-service
           ports:
             - containerPort: 50052
           resources: {}
@@ -32,12 +32,12 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: gameproviderservice
+  name: gameprovider-service
 spec:
   type: ClusterIP
   ports:
-    - name: gameproviderservice-port
+    - name: gameprovider-service-port
       port: 50052
       targetPort: 50052
   selector:
-    app: gameproviderservice
+    app: gameprovider-service

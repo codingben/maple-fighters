@@ -1,16 +1,16 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: gameservice
+  name: game-service
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: gameservice
+      app: game-service
   template:
     metadata:
       labels:
-        app: gameservice
+        app: game-service
     spec:
       containers:
         - env:
@@ -29,7 +29,7 @@ spec:
             - name: URL
               value: ws://0.0.0.0:50051
           image: maplefighters/game-service:latest
-          name: gameservice
+          name: game-service
           ports:
             - containerPort: 50051
           resources: {}
@@ -38,12 +38,12 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: gameservice
+  name: game-service
 spec:
   type: ClusterIP
   ports:
-    - name: gameservice-port
+    - name: game-service-port
       port: 50051
       targetPort: 50051
   selector:
-    app: gameservice
+    app: game-service
