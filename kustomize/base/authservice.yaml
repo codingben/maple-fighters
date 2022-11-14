@@ -19,7 +19,7 @@ spec:
             - name: ASPNETCORE_URLS
               value: http://0.0.0.0:50050
             - name: DATABASE_URL
-              value: mongodb://auth-db:27017/users
+              value: mongodb://mongo-auth:27017/users
           image: maplefighters/auth-service:latest
           name: authservice
           ports:
