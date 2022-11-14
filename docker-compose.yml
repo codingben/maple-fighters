@@ -16,7 +16,6 @@ services:
             - game-service
             - gameprovider-service
             - chat-service
-
     auth-service:
         image: auth-service
         build:
@@ -24,12 +23,11 @@ services:
         expose:
             - 50050
         depends_on:
-            - auth-db
+            - mongo-auth
         environment:
             ASPNETCORE_ENVIRONMENT: Development
             ASPNETCORE_URLS: http://0.0.0.0:50050
-            DATABASE_URL: mongodb://auth-db:27017/users
-
+            DATABASE_URL: mongodb://mongo-auth:27017/users
     character-service:
         image: character-service
         build:
@@ -37,13 +35,12 @@ services:
         expose:
             - 50053
         depends_on:
-            - character-db
+            - postgres-character
         environment:
             RUST_LOG: info
             RUST_BACKTRACE: full
             IP_ADDRESS: 0.0.0.0:50053
-            DATABASE_URL: postgres://postgres:postgres@character-db:5432/postgres
-
+            DATABASE_URL: postgres://postgres:postgres@postgres-character:5432/postgres
     game-service:
         image: game-service
         build:
@@ -59,7 +56,6 @@ services:
             CONFIG_USER: codingben
             CONFIG_REPO: maple-fighters-configs
             CONFIG_BRANCH: develop
-
     gameprovider-service:
         image: gameprovider-service
         build:
@@ -71,7 +67,6 @@ services:
             RUST_BACKTRACE: full
             IP_ADDRESS: 0.0.0.0:50052
             GAME_SERVICES: "[{\"name\":\"Local Game\",\"protocol\":\"ws\",\"url\":\"localhost/game/\"}]"
-
     chat-service:
         image: chat-service
         build:
@@ -80,13 +75,11 @@ services:
             - 50054
         environment:
             PORT: 50054
-
-    auth-db:
+    mongo-auth:
         image: mongo:5.0.2
         expose:
             - 27017
-
-    character-db:
+    postgres-character:
         image: postgres:13
         expose:
             - 5432

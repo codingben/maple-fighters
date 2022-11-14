@@ -11,30 +11,27 @@ services:
             - game-service
             - gameprovider-service
             - chat-service
-
     auth-service:
         image: maplefighters/auth-service
         expose:
             - 50050
         depends_on:
-            - auth-db
+            - mongo-auth
         environment:
             ASPNETCORE_ENVIRONMENT: Production
             ASPNETCORE_URLS: http://0.0.0.0:50050
-            DATABASE_URL: mongodb://auth-db:27017/${AUTH_DB_NAME}
-
+            DATABASE_URL: mongodb://mongo-auth:27017/${AUTH_DB_NAME}
     character-service:
         image: maplefighters/character-service
         expose:
             - 50053
         depends_on:
-            - character-db
+            - postgres-character
         environment:
             RUST_LOG: info
             RUST_BACKTRACE: full
             IP_ADDRESS: 0.0.0.0:50053
-            DATABASE_URL: postgres://${CHARACTER_DB_USER}:${CHARACTER_DB_PASSWORD}@character-db:5432/${CHARACTER_DB_NAME}
-
+            DATABASE_URL: postgres://${CHARACTER_DB_USER}:${CHARACTER_DB_PASSWORD}@postgres-character:5432/${CHARACTER_DB_NAME}
     game-service:
         image: maplefighters/game-service
         restart: "on-failure"
@@ -48,7 +45,6 @@ services:
             CONFIG_USER: codingben
             CONFIG_REPO: maple-fighters-configs
             CONFIG_BRANCH: main
-
     gameprovider-service:
         image: maplefighters/gameprovider-service
         expose:
@@ -58,23 +54,20 @@ services:
             RUST_BACKTRACE: full
             IP_ADDRESS: 0.0.0.0:50052
             GAME_SERVICES: "[{\"name\":\"Europe\",\"protocol\":\"ws\",\"url\":\"maplefighters.io/europe/\"}]"
-
     chat-service:
         image: maplefighters/chat-service
         expose:
             - 50054
         environment:
             PORT: 50054
-
-    auth-db:
+    mongo-auth:
         image: mongo:5.0.2
         restart: "always"
         expose:
             - 27017
         volumes:
             - mongo:/mongodb/data
-
-    character-db:
+    postgres-character:
         image: postgres:13
         restart: "always"
         expose:
