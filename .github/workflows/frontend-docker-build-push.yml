@@ -27,3 +27,11 @@ jobs:
           file: ./src/frontend/Dockerfile
           push: true
           tags: maplefighters/frontend:latest
+      - name: Build And Push (Dev)
+        uses: docker/build-push-action@v2
+        with:
+          context: ./src/frontend
+          file: ./src/frontend/Dockerfile.dev
+          push: true
+          tags: maplefighters/frontend-dev:latest
+          build-args: Development
