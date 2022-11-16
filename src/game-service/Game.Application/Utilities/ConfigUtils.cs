@@ -10,12 +10,12 @@ namespace Utilities
     {
         public static string GetYamlConfigUrl(string configFile)
         {
-            var configUser = Env.GetString("CONFIG_UESR");
+            var configUser = Env.GetString("CONFIG_USER");
             var configRepo = Env.GetString("CONFIG_REPO");
             var configBranch = Env.GetString("CONFIG_BRANCH");
 
             if (string.IsNullOrEmpty(configUser))
-                throw new ArgumentException("CONFIG_UESR is not defined");
+                throw new ArgumentException("CONFIG_USER is not defined");
 
             if (string.IsNullOrEmpty(configRepo))
                 throw new ArgumentException("CONFIG_REPO is not defined");
