@@ -13,7 +13,11 @@ spec:
         app: character-service
     spec:
       containers:
-        - env:
+        - name: character-service
+          image: maplefighters/character-service:latest
+          ports:
+            - containerPort: 50053
+          env:
             - name: DATABASE_URL
               value: postgres://postgres:postgres@postgres-character:5432/postgres
             - name: IP_ADDRESS
@@ -22,10 +26,6 @@ spec:
               value: full
             - name: RUST_LOG
               value: info
-          image: maplefighters/character-service:latest
-          name: character-service
-          ports:
-            - containerPort: 50053
           resources: {}
       restartPolicy: Always
 ---

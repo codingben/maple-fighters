@@ -13,8 +13,8 @@ spec:
         app: frontend
     spec:
       containers:
-        - image: maplefighters/frontend-dev:latest
-          name: frontend
+        - name: frontend
+          image: maplefighters/frontend-dev:latest
           ports:
             - containerPort: 80
           resources: {}

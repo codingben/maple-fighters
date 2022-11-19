@@ -13,7 +13,11 @@ spec:
         app: gameprovider-service
     spec:
       containers:
-        - env:
+        - name: gameprovider-service
+          image: maplefighters/gameprovider-service:latest
+          ports:
+            - containerPort: 50052
+          env:
             - name: GAME_SERVICES
               value: '[{"name":"Local Game","protocol":"ws","url":"localhost/game/"}]'
             - name: IP_ADDRESS
@@ -22,10 +26,6 @@ spec:
               value: full
             - name: RUST_LOG
               value: info
-          image: maplefighters/gameprovider-service:latest
-          name: gameprovider-service
-          ports:
-            - containerPort: 50052
           resources: {}
       restartPolicy: Always
 ---

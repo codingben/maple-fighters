@@ -13,15 +13,15 @@ spec:
         app: postgres-character
     spec:
       containers:
-        - env:
+        - name: postgres-character
+          image: postgres:13
+          ports:
+            - containerPort: 5432
+          env:
             - name: POSTGRES_PASSWORD
               value: postgres
             - name: POSTGRES_USER
               value: postgres
-          image: postgres:13
-          name: postgres-character
-          ports:
-            - containerPort: 5432
           resources: {}
       restartPolicy: Always
 ---

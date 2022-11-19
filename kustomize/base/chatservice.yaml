@@ -13,13 +13,13 @@ spec:
         app: chat-service
     spec:
       containers:
-        - env:
-            - name: PORT
-              value: "50054"
+        - name: chat-service
           image: maplefighters/chat-service:latest
-          name: chat-service
           ports:
             - containerPort: 50054
+          env:
+            - name: PORT
+              value: "50054"
           resources: {}
       restartPolicy: Always
 ---
