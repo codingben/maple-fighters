@@ -61,6 +61,47 @@ Maple Fighters is available at [maplefighters.io](http://maplefighters.io). This
 
 Please read the [contributing guidelines](CONTRIBUTING.md).
 
+## Quickstart
+
+### Docker
+
+> 💡 Please make sure you have Docker installed.
+
+Build and run docker images:
+
+```bash
+docker compose up
+```
+
+### Kubernetes
+
+> 💡 Please make sure you have Kubernetes cluster.
+
+1. Clone repository:
+
+```bash
+git clone https://github.com/codingben/maple-fighters.git
+cd maple-fighters
+```
+
+2. Create Kubernetes resources:
+
+```bash
+kubectl apply -k ./kustomize
+```
+
+3. Make sure you have all pods ready:
+
+```bash
+kubectl get pods
+```
+
+4. Use `EXTERNAL_IP` to access in a web browser:
+
+```bash
+kubectl get service frontend-external
+```
+
 ## Artwork
 
 The artwork is owned by Nexon Co., Ltd and will never be used commercially.
