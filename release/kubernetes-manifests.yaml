@@ -1,0 +1,340 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: auth-service
+spec:
+  ports:
+  - name: auth-service-port
+    port: 50050
+    targetPort: 50050
+  selector:
+    app: auth-service
+  type: ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: character-service
+spec:
+  ports:
+  - name: character-service-port
+    port: 50053
+    targetPort: 50053
+  selector:
+    app: character-service
+  type: ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: chat-service
+spec:
+  ports:
+  - name: chat-service-port
+    port: 50054
+    targetPort: 50054
+  selector:
+    app: chat-service
+  type: ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend
+spec:
+  ports:
+  - name: frontend-port
+    port: 80
+    targetPort: 80
+  selector:
+    app: frontend
+  type: ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-external
+spec:
+  ports:
+  - name: http
+    port: 80
+    targetPort: 80
+  selector:
+    app: frontend
+  type: LoadBalancer
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: game-service
+spec:
+  ports:
+  - name: game-service-port
+    port: 50051
+    targetPort: 50051
+  selector:
+    app: game-service
+  type: ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: gameprovider-service
+spec:
+  ports:
+  - name: gameprovider-service-port
+    port: 50052
+    targetPort: 50052
+  selector:
+    app: gameprovider-service
+  type: ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongo-auth
+spec:
+  ports:
+  - name: mongo-port
+    port: 27017
+    targetPort: 27017
+  selector:
+    app: mongo-auth
+  type: ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres-character
+spec:
+  ports:
+  - name: postgres-port
+    port: 5432
+    targetPort: 5432
+  selector:
+    app: postgres-character
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auth-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: auth-service
+  template:
+    metadata:
+      labels:
+        app: auth-service
+    spec:
+      containers:
+      - env:
+        - name: ASPNETCORE_ENVIRONMENT
+          value: Development
+        - name: ASPNETCORE_URLS
+          value: http://0.0.0.0:50050
+        - name: DATABASE_URL
+          value: mongodb://mongo-auth:27017/users
+        image: maplefighters/auth-service:latest
+        name: auth-service
+        ports:
+        - containerPort: 50050
+        resources: {}
+      restartPolicy: Always
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: character-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: character-service
+  template:
+    metadata:
+      labels:
+        app: character-service
+    spec:
+      containers:
+      - env:
+        - name: DATABASE_URL
+          value: postgres://postgres:postgres@postgres-character:5432/postgres
+        - name: IP_ADDRESS
+          value: 0.0.0.0:50053
+        - name: RUST_BACKTRACE
+          value: full
+        - name: RUST_LOG
+          value: info
+        image: maplefighters/character-service:latest
+        name: character-service
+        ports:
+        - containerPort: 50053
+        resources: {}
+      restartPolicy: Always
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: chat-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: chat-service
+  template:
+    metadata:
+      labels:
+        app: chat-service
+    spec:
+      containers:
+      - env:
+        - name: PORT
+          value: "50054"
+        image: maplefighters/chat-service:latest
+        name: chat-service
+        ports:
+        - containerPort: 50054
+        resources: {}
+      restartPolicy: Always
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      containers:
+      - image: maplefighters/frontend-dev:latest
+        name: frontend
+        ports:
+        - containerPort: 80
+        resources: {}
+      restartPolicy: Always
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: game-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: game-service
+  template:
+    metadata:
+      labels:
+        app: game-service
+    spec:
+      containers:
+      - env:
+        - name: CONFIG_BRANCH
+          value: develop
+        - name: CONFIG_REPO
+          value: maple-fighters-configs
+        - name: CONFIG_USER
+          value: codingben
+        - name: FLECK_LOG
+          value: Info
+        - name: GAME_LOG
+          value: Debug
+        - name: IM_LOG
+          value: Debug
+        - name: URL
+          value: ws://0.0.0.0:50051
+        image: maplefighters/game-service:latest
+        name: game-service
+        ports:
+        - containerPort: 50051
+        resources: {}
+      restartPolicy: Always
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gameprovider-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gameprovider-service
+  template:
+    metadata:
+      labels:
+        app: gameprovider-service
+    spec:
+      containers:
+      - env:
+        - name: GAME_SERVICES
+          value: '[{"name":"Local Game","protocol":"ws","url":"localhost/game/"}]'
+        - name: IP_ADDRESS
+          value: 0.0.0.0:50052
+        - name: RUST_BACKTRACE
+          value: full
+        - name: RUST_LOG
+          value: info
+        image: maplefighters/gameprovider-service:latest
+        name: gameprovider-service
+        ports:
+        - containerPort: 50052
+        resources: {}
+      restartPolicy: Always
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongo-auth
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mongo-auth
+  template:
+    metadata:
+      labels:
+        app: mongo-auth
+    spec:
+      containers:
+      - image: mongo:5.0.2
+        name: mongo-auth
+        ports:
+        - containerPort: 27017
+        resources: {}
+      restartPolicy: Always
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres-character
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres-character
+  template:
+    metadata:
+      labels:
+        app: postgres-character
+    spec:
+      containers:
+      - env:
+        - name: POSTGRES_PASSWORD
+          value: postgres
+        - name: POSTGRES_USER
+          value: postgres
+        image: postgres:13
+        name: postgres-character
+        ports:
+        - containerPort: 5432
+        resources: {}
+      restartPolicy: Always
