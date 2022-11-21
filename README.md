@@ -87,7 +87,7 @@ cd maple-fighters
 2. Create Kubernetes resources:
 
 ```bash
-kubectl apply -k ./kustomize
+kubectl apply -f ./release/kubernetes-manifests.yaml
 ```
 
 3. Make sure you have all pods ready:
