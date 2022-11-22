@@ -33,6 +33,10 @@ Maple Fighters is available at [maplefighters.io](http://maplefighters.io). This
 **Reverse Proxy**: Nginx  
 **Cloud**: DigitalOcean 
 
+## Architecture
+
+<img src="docs/architecture-diagram.png">
+
 ## Projects
 
 | Name                                               | Language | Description                                    |
