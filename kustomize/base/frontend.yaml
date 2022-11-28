@@ -17,7 +17,13 @@ spec:
           image: maplefighters/frontend-dev:latest
           ports:
             - containerPort: 80
-          resources: {}
+          resources:
+            requests:
+              cpu: 100m
+              memory: 16Mi
+            limits:
+              cpu: 200m
+              memory: 32Mi
       restartPolicy: Always
 ---
 apiVersion: v1

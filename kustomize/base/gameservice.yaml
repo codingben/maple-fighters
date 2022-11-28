@@ -32,7 +32,13 @@ spec:
               value: Debug
             - name: URL
               value: ws://0.0.0.0:50051
-          resources: {}
+          resources:
+            requests:
+              cpu: 100m
+              memory: 64Mi
+            limits:
+              cpu: 200m
+              memory: 128Mi
       restartPolicy: Always
 ---
 apiVersion: v1
