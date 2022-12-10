@@ -5,7 +5,7 @@ services:
         image: frontend
         build:
             context: ./src/frontend
-            dockerfile: Dockerfile.dev
+            dockerfile: Dockerfile
             args:
                 ENVIRONMENT: Development
         ports:
