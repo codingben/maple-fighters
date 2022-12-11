@@ -212,10 +212,10 @@ spec:
         resources:
           limits:
             cpu: 200m
-            memory: 128Mi
+            memory: 256Mi
           requests:
             cpu: 100m
-            memory: 64Mi
+            memory: 128Mi
       restartPolicy: Always
 ---
 apiVersion: apps/v1
@@ -233,7 +233,7 @@ spec:
         app: frontend
     spec:
       containers:
-      - image: maplefighters/frontend-dev:latest
+      - image: maplefighters/frontend:develop
         name: frontend
         ports:
         - containerPort: 80
@@ -283,10 +283,10 @@ spec:
         resources:
           limits:
             cpu: 200m
-            memory: 128Mi
+            memory: 256Mi
           requests:
             cpu: 100m
-            memory: 64Mi
+            memory: 128Mi
       restartPolicy: Always
 ---
 apiVersion: apps/v1
