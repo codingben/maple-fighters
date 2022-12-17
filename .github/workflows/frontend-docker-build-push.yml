@@ -26,6 +26,7 @@ jobs:
           context: ./src/frontend
           build-args: |
             "ENVIRONMENT=Production"
+            "NGINX_CONF_FILE=nginx.prod.conf"
           file: ./src/frontend/Dockerfile
           push: true
           tags: maplefighters/frontend:latest
@@ -35,6 +36,7 @@ jobs:
           context: ./src/frontend
           build-args: |
             "ENVIRONMENT=Development"
+            "NGINX_CONF_FILE=nginx.conf"
           file: ./src/frontend/Dockerfile
           push: true
           tags: maplefighters/frontend:develop
