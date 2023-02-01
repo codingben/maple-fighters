@@ -1,0 +1,35 @@
+name: Release
+
+on:
+  push:
+    branches: [develop]
+    paths:
+      - kustomize/**
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Setup kustomize
+        uses: imranismail/setup-kustomize@v2
+      - name: Generate release manifests
+        run: kustomize build ./kustomize > ./release/kubernetes-manifests.yaml
+      - name: Create pull request
+        uses: peter-evans/create-pull-request@v4
+        with:
+          token: ${{ github.token }}
+          commit-message: "chore: update kubernetes manifests"
+          committer: GitHub <noreply@github.com>
+          author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
+          signoff: true
+          branch: "release"
+          branch-suffix: short-commit-hash
+          delete-branch: true
+          title: "chore: update kubernetes manifests"
+          body: |
+            Updating the Kubernetes manifests.
+          draft: false
+          assignees: codingben
+          reviewers: codingben
