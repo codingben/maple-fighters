@@ -14,14 +14,16 @@ namespace Authenticator.API
         public void ConfigureServices(IServiceCollection services)
         {
             var databaseUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
-            if (databaseUrl == null)
+            if (databaseUrl)
             {
-                throw new Exception("Please set DATABASE_URL");
+                services.AddSingleton<IDatabaseProvider>(new MongoDatabaseProvider(databaseUrl));
+                services.AddSingleton<IAccountRepository, MongoAccountRepository>();
+            }
+            else
+            {
+                services.AddSingleton<IAccountRepository, InMemoryAccountRepository>();
             }
 
-            services.AddSingleton<IDatabaseProvider>(new MongoDatabaseProvider(databaseUrl));
-            services.AddSingleton<IAccountRepository, MongoAccountRepository>();
-            // services.AddSingleton<IAccountRepository, InMemoryAccountRepository>();
             services.AddTransient<ILoginService, LoginService>();
             services.AddTransient<IRegistrationService, RegistrationService>();
             services.AddControllers();
