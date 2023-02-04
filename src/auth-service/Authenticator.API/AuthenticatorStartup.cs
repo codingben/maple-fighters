@@ -2,6 +2,7 @@
 using Authenticator.Domain.Aggregates.User;
 using Authenticator.Domain.Aggregates.User.Services;
 using Authenticator.Infrastructure.MongoRepository;
+using Authenticator.Infrastructure.InMemoryRepository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,13 +15,15 @@ namespace Authenticator.API
         public void ConfigureServices(IServiceCollection services)
         {
             var databaseUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
-            if (databaseUrl)
+            if (databaseUrl != null)
             {
                 services.AddSingleton<IDatabaseProvider>(new MongoDatabaseProvider(databaseUrl));
                 services.AddSingleton<IAccountRepository, MongoAccountRepository>();
             }
             else
             {
+                Console.WriteLine("DATABASE_URL is not set. In memory account repository will be used.");
+
                 services.AddSingleton<IAccountRepository, InMemoryAccountRepository>();
             }
 
