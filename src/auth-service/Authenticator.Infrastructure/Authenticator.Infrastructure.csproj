@@ -6,6 +6,6 @@
     <ProjectReference Include="..\Authenticator.Domain\Authenticator.Domain.csproj"/>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="MongoDB.Driver" Version="2.15.0"/>
+    <PackageReference Include="MongoDB.Driver" Version="2.19.0"/>
   </ItemGroup>
 </Project>
