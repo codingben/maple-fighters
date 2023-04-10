@@ -61,10 +61,6 @@ Maple Fighters is available at [maplefighters.io](http://maplefighters.io). This
 | Character Service    | [![Character Service Build](https://github.com/codingben/maple-fighters/actions/workflows/character-service-build.yml/badge.svg)](https://github.com/codingben/maple-fighters/actions/workflows/character-service-build.yml)          |
 | Chat Service         | [![Chat Service Build](https://github.com/codingben/maple-fighters/actions/workflows/chat-service-build.yml/badge.svg)](https://github.com/codingben/maple-fighters/actions/workflows/chat-service-build.yml)                         |
 
-## Contributing
-
-Please read the [contributing guidelines](CONTRIBUTING.md).
-
 ## Quickstart
 
 ### Docker
@@ -105,6 +101,10 @@ kubectl get pods
 ```bash
 kubectl get service frontend-external
 ```
+
+## Contributing
+
+Please read the [contributing guidelines](CONTRIBUTING.md).
 
 ## Artwork
 
