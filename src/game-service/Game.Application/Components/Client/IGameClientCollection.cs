@@ -7,5 +7,7 @@ namespace Game.Application.Components
         void Remove(int id);
 
         bool TryGet(int id, out IGameClient gameClient);
+
+        int Count();
     }
 }

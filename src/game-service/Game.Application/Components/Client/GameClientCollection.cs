@@ -55,5 +55,10 @@ namespace Game.Application.Components
         {
             return collection.TryGetValue(id, out gameClient);
         }
+
+        public int Count()
+        {
+            return collection.Count;
+        }
     }
 }
