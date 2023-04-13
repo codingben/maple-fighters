@@ -57,6 +57,7 @@ services:
             CONFIG_USER: codingben
             CONFIG_REPO: maple-fighters-configs
             CONFIG_BRANCH: develop
+            MAX_CONNECTIONS: 100
     gameprovider-service:
         image: gameprovider-service
         build:
