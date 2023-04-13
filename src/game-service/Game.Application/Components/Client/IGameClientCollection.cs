@@ -2,7 +2,7 @@ namespace Game.Application.Components
 {
     public interface IGameClientCollection
     {
-        void Add(IGameClient gameClient);
+        bool Add(IGameClient gameClient);
 
         void Remove(int id);
 

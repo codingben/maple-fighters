@@ -6,9 +6,12 @@ namespace Game.Application.Components
     public class GameClientCollection : ComponentBase, IGameClientCollection
     {
         private readonly Dictionary<int, IGameClient> collection;
+        private readonly int maxNumberOfClients;
 
-        public GameClientCollection()
+        public GameClientCollection(int maxNumberOfClients)
         {
+            this.maxNumberOfClients = maxNumberOfClients;
+
             collection = new Dictionary<int, IGameClient>();
         }
 
@@ -24,8 +27,14 @@ namespace Game.Application.Components
             collection.Clear();
         }
 
-        public void Add(IGameClient gameClient)
+        public bool Add(IGameClient gameClient)
         {
+            if (Count() >= maxNumberOfClients)
+            {
+                GameLog.Debug($"Server reached maximum number of clients.");
+                return false;
+            }
+
             var id =
                 gameClient.Id;
             var webSocketConnectionProvider =
@@ -37,6 +46,7 @@ namespace Game.Application.Components
             collection.Add(id, gameClient);
 
             GameLog.Debug($"Client #{id} connected.");
+            return true;
         }
 
         public void Remove(int id)
