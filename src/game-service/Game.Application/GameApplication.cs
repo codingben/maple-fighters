@@ -15,6 +15,7 @@ Log.Logger = new LoggerConfiguration()
 var fleckLog = Env.GetString("FLECK_LOG");
 var imLog = Env.GetString("IM_LOG");
 var gameLog = Env.GetString("GAME_LOG");
+var maxConnections = Env.GetInt("MAX_CONNECTIONS");
 
 FleckLog.LogAction = FleckLogAction.LogAction;
 FleckLog.Level = (LogLevel)Enum.Parse(typeof(LogLevel), fleckLog);
@@ -26,7 +27,7 @@ var server = new WebSocketServer(url);
 var serverComponents = new ComponentCollection(new IComponent[]
 {
     new IdGenerator(),
-    new GameClientCollection(),
+    new GameClientCollection(maxConnections),
     new GameSceneCollection(),
     new GameSceneManager()
 });
@@ -48,6 +49,10 @@ server.Start((connection) =>
         connection,
         gameClientCollection,
         gameSceneCollection);
+    if (gameClientCollection.Add(gameClient) == false)
+    {
+        connection.Close();
 
-    gameClientCollection.Add(gameClient);
+        GameLog.Debug($"Client #{id} disconnected because server reached maximum number of clients.");
+    }
 });
