@@ -305,14 +305,14 @@ spec:
     spec:
       containers:
       - env:
-        - name: GAME_SERVICES
-          value: '[{"name":"Local Game","protocol":"ws","url":"localhost/game/"}]'
         - name: IP_ADDRESS
           value: 0.0.0.0:50052
         - name: RUST_BACKTRACE
           value: full
         - name: RUST_LOG
           value: info
+        - name: CONFIG_SOURCE
+          value: develop
         image: maplefighters/gameprovider-service:latest
         name: gameprovider-service
         ports:
