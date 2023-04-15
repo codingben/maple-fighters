@@ -18,14 +18,14 @@ spec:
           ports:
             - containerPort: 50052
           env:
-            - name: GAME_SERVICES
-              value: '[{"name":"Local Game","protocol":"ws","url":"localhost/game/"}]'
             - name: IP_ADDRESS
               value: 0.0.0.0:50052
             - name: RUST_BACKTRACE
               value: full
             - name: RUST_LOG
               value: info
+            - name: CONFIG_SOURCE
+              value: develop
           resources:
             requests:
               cpu: 100m

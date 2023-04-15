@@ -68,7 +68,7 @@ services:
             RUST_LOG: info
             RUST_BACKTRACE: full
             IP_ADDRESS: 0.0.0.0:50052
-            GAME_SERVICES: "[{\"name\":\"Local Game\",\"protocol\":\"ws\",\"url\":\"localhost/game/\"}]"
+            CONFIG_SOURCE: develop
     chat-service:
         image: chat-service
         build:

@@ -54,7 +54,7 @@ services:
             RUST_LOG: info
             RUST_BACKTRACE: full
             IP_ADDRESS: 0.0.0.0:50052
-            GAME_SERVICES: "[{\"name\":\"Europe\",\"protocol\":\"ws\",\"url\":\"maplefighters.io/game/\"}]"
+            CONFIG_SOURCE: main
     chat-service:
         image: maplefighters/chat-service
         expose:
