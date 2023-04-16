@@ -1,6 +1,7 @@
-use actix_web::{get, middleware::Logger, web::Data, App, HttpResponse, HttpServer};
+use actix_web::{web::Data, web::Json, App, Responder, HttpServer};
 use dotenv::dotenv;
 use serde::{Serialize, Deserialize};
+use serde_yaml::from_str;
 use std::{env, io};
 
 #[derive(Serialize, Deserialize)]
@@ -21,16 +22,17 @@ async fn read_config_from_remote() -> Result<Config, reqwest::Error> {
         "https://raw.githubusercontent.com/codingben/maple-fighters-configs/{}/game-services.yml",
         env::var("CONFIG_SOURCE").unwrap()
     );
-    let config_text = reqwest::get(config_url).await?.text().await?;
-    let config = serde_yaml::from_str(&config_text).unwrap();
+    let content = reqwest::get(config_url)
+        .await?
+        .text()
+        .await?;
 
-    Ok(config)
+    Ok(from_str(&content).unwrap())
 }
 
-#[get("/games")]
-async fn get_game_services(config: Data<Config>) -> HttpResponse {
-    HttpResponse::Ok()
-        .json(config.as_ref())
+#[actix_web::get("/games")]
+async fn get_game_services(config: Data<Config>) -> impl Responder {
+    Json(config)
 }
 
 #[actix_web::main]
@@ -44,7 +46,6 @@ async fn main() -> io::Result<()> {
     HttpServer::new(move || {
         App::new()
             .app_data(config.clone())
-            .wrap(Logger::default())
             .service(get_game_services)
     })
     .bind(ip_address)?
