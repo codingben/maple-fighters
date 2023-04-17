@@ -10,20 +10,12 @@ namespace Utilities
     {
         public static string GetYamlConfigUrl(string configFile)
         {
-            var configUser = Env.GetString("CONFIG_USER");
-            var configRepo = Env.GetString("CONFIG_REPO");
-            var configBranch = Env.GetString("CONFIG_BRANCH");
+            var configSource = Env.GetString("CONFIG_SOURCE");
 
-            if (string.IsNullOrEmpty(configUser))
-                throw new ArgumentException("CONFIG_USER is not defined");
+            if (string.IsNullOrEmpty(configSource))
+                throw new ArgumentException("CONFIG_SOURCE is not defined");
 
-            if (string.IsNullOrEmpty(configRepo))
-                throw new ArgumentException("CONFIG_REPO is not defined");
-
-            if (string.IsNullOrEmpty(configBranch))
-                throw new ArgumentException("CONFIG_BRANCH is not defined");
-
-            return $"https://raw.githubusercontent.com/{configUser}/{configRepo}/{configBranch}/{configFile}";
+            return $"https://raw.githubusercontent.com/codingben/maple-fighters-configs/{configSource}/{configFile}";
         }
 
         public static string LoadYamlConfig(string url)
