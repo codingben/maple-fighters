@@ -262,12 +262,8 @@ spec:
     spec:
       containers:
       - env:
-        - name: CONFIG_BRANCH
+        - name: CONFIG_SOURCE
           value: develop
-        - name: CONFIG_REPO
-          value: maple-fighters-configs
-        - name: CONFIG_USER
-          value: codingben
         - name: FLECK_LOG
           value: Info
         - name: GAME_LOG
