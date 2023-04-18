@@ -38,7 +38,7 @@ jobs:
         targetPlatform:
           - WebGL
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           lfs: true
       - uses: actions/cache@v2
