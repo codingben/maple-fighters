@@ -1,4 +1,4 @@
-use actix_web::{web::Data, web::Json, App, Responder, HttpServer};
+use actix_web::{web::Data, App, Responder, HttpResponse, HttpServer};
 use dotenv::dotenv;
 use serde::{Serialize, Deserialize};
 use serde_yaml::from_str;
@@ -32,7 +32,7 @@ async fn read_config_from_remote() -> Result<Config, reqwest::Error> {
 
 #[actix_web::get("/games")]
 async fn get_game_services(config: Data<Config>) -> impl Responder {
-    Json(config)
+    HttpResponse::Ok().json(&config.game_services)
 }
 
 #[actix_web::main]
