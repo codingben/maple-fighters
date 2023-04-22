@@ -2,6 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: auth-service
+  namespace: maple-fighters
 spec:
   ports:
   - name: auth-service-port
@@ -15,6 +16,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: character-service
+  namespace: maple-fighters
 spec:
   ports:
   - name: character-service-port
@@ -28,6 +30,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: chat-service
+  namespace: maple-fighters
 spec:
   ports:
   - name: chat-service-port
@@ -41,6 +44,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: frontend
+  namespace: maple-fighters
 spec:
   ports:
   - name: frontend-port
@@ -54,6 +58,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: frontend-external
+  namespace: maple-fighters
 spec:
   ports:
   - name: http
@@ -67,6 +72,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: game-service
+  namespace: maple-fighters
 spec:
   ports:
   - name: game-service-port
@@ -80,6 +86,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: gameprovider-service
+  namespace: maple-fighters
 spec:
   ports:
   - name: gameprovider-service-port
@@ -93,6 +100,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: mongo-auth
+  namespace: maple-fighters
 spec:
   ports:
   - name: mongo-port
@@ -106,6 +114,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: postgres-character
+  namespace: maple-fighters
 spec:
   ports:
   - name: postgres-port
@@ -119,6 +128,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: auth-service
+  namespace: maple-fighters
 spec:
   replicas: 1
   selector:
@@ -154,6 +164,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: character-service
+  namespace: maple-fighters
 spec:
   replicas: 1
   selector:
@@ -191,6 +202,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: chat-service
+  namespace: maple-fighters
 spec:
   replicas: 1
   selector:
@@ -222,6 +234,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: frontend
+  namespace: maple-fighters
 spec:
   replicas: 1
   selector:
@@ -250,6 +263,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: game-service
+  namespace: maple-fighters
 spec:
   replicas: 1
   selector:
@@ -289,6 +303,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: gameprovider-service
+  namespace: maple-fighters
 spec:
   replicas: 1
   selector:
@@ -326,6 +341,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: mongo-auth
+  namespace: maple-fighters
 spec:
   replicas: 1
   selector:
@@ -354,6 +370,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: postgres-character
+  namespace: maple-fighters
 spec:
   replicas: 1
   selector:
