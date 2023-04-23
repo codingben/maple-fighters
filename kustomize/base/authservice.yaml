@@ -16,6 +16,7 @@ spec:
       containers:
         - name: auth-service
           image: maplefighters/auth-service:latest
+          imagePullPolicy: Always
           ports:
             - containerPort: 50050
           env:

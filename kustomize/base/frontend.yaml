@@ -16,6 +16,7 @@ spec:
       containers:
         - name: frontend
           image: maplefighters/frontend:develop
+          imagePullPolicy: Always
           ports:
             - containerPort: 80
           resources:

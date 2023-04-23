@@ -16,6 +16,7 @@ spec:
       containers:
         - name: postgres-character
           image: postgres:13
+          imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 5432
           env:

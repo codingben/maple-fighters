@@ -16,6 +16,7 @@ spec:
       containers:
         - name: game-service
           image: maplefighters/game-service:latest
+          imagePullPolicy: Always
           ports:
             - containerPort: 50051
           env:

@@ -16,6 +16,7 @@ spec:
       containers:
         - name: character-service
           image: maplefighters/character-service:latest
+          imagePullPolicy: Always
           ports:
             - containerPort: 50053
           env:
