@@ -148,6 +148,7 @@ spec:
         - name: DATABASE_URL
           value: mongodb://mongo-auth:27017/users
         image: maplefighters/auth-service:latest
+        imagePullPolicy: Always
         name: auth-service
         ports:
         - containerPort: 50050
@@ -186,6 +187,7 @@ spec:
         - name: RUST_LOG
           value: info
         image: maplefighters/character-service:latest
+        imagePullPolicy: Always
         name: character-service
         ports:
         - containerPort: 50053
@@ -218,6 +220,7 @@ spec:
         - name: PORT
           value: "50054"
         image: maplefighters/chat-service:latest
+        imagePullPolicy: Always
         name: chat-service
         ports:
         - containerPort: 50054
@@ -247,6 +250,7 @@ spec:
     spec:
       containers:
       - image: maplefighters/frontend:develop
+        imagePullPolicy: Always
         name: frontend
         ports:
         - containerPort: 80
@@ -287,6 +291,7 @@ spec:
         - name: URL
           value: ws://0.0.0.0:50051
         image: maplefighters/game-service:latest
+        imagePullPolicy: Always
         name: game-service
         ports:
         - containerPort: 50051
@@ -325,6 +330,7 @@ spec:
         - name: CONFIG_SOURCE
           value: develop
         image: maplefighters/gameprovider-service:latest
+        imagePullPolicy: Always
         name: gameprovider-service
         ports:
         - containerPort: 50052
@@ -354,6 +360,7 @@ spec:
     spec:
       containers:
       - image: mongo:5.0.2
+        imagePullPolicy: IfNotPresent
         name: mongo-auth
         ports:
         - containerPort: 27017
@@ -388,6 +395,7 @@ spec:
         - name: POSTGRES_USER
           value: postgres
         image: postgres:13
+        imagePullPolicy: IfNotPresent
         name: postgres-character
         ports:
         - containerPort: 5432
