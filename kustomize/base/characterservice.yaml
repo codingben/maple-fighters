@@ -35,6 +35,13 @@ spec:
             limits:
               cpu: 200m
               memory: 32Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+            privileged: false
+            readOnlyRootFilesystem: true
       restartPolicy: Always
 ---
 apiVersion: v1
