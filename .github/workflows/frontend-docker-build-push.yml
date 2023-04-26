@@ -30,6 +30,7 @@ jobs:
           file: ./src/frontend/Dockerfile
           push: true
           tags: maplefighters/frontend:latest
+          platforms: linux/amd64,linux/arm64/v8
       - name: Build And Push (Develop)
         uses: docker/build-push-action@v4
         with:
@@ -40,3 +41,4 @@ jobs:
           file: ./src/frontend/Dockerfile
           push: true
           tags: maplefighters/frontend:develop
+          platforms: linux/amd64,linux/arm64/v8

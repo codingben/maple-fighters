@@ -27,3 +27,4 @@ jobs:
           file: ./src/gameprovider-service/Dockerfile
           push: true
           tags: maplefighters/gameprovider-service:latest
+          platforms: linux/amd64,linux/arm64/v8

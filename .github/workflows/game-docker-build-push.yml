@@ -27,3 +27,4 @@ jobs:
           file: ./src/game-service/Game.Application/Dockerfile
           push: true
           tags: maplefighters/game-service:latest
+          platforms: linux/amd64,linux/arm64/v8

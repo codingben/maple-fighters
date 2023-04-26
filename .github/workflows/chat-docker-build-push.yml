@@ -27,3 +27,4 @@ jobs:
           file: ./src/chat-service/Dockerfile
           push: true
           tags: maplefighters/chat-service:latest
+          platforms: linux/amd64,linux/arm64/v8
