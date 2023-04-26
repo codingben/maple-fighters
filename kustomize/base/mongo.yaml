@@ -33,7 +33,26 @@ spec:
                 - ALL
             privileged: false
             readOnlyRootFilesystem: false
+          volumeMounts:
+          - name: mongo-data
+            mountPath: /data/db
       restartPolicy: Always
+      volumes:
+      - name: mongo-data
+        persistentVolumeClaim:
+          claimName: mongo-data-storage
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mongo-data-storage
+  namespace: maple-fighters
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
 ---
 apiVersion: v1
 kind: Service
