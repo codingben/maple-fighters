@@ -124,6 +124,30 @@ spec:
     app: postgres-character
   type: ClusterIP
 ---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mongo-data-storage
+  namespace: maple-fighters
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: postgres-data-storage
+  namespace: maple-fighters
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -420,7 +444,14 @@ spec:
             - ALL
           privileged: false
           readOnlyRootFilesystem: false
+        volumeMounts:
+        - mountPath: /data/db
+          name: mongo-data
       restartPolicy: Always
+      volumes:
+      - name: mongo-data
+        persistentVolumeClaim:
+          claimName: mongo-data-storage
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -462,4 +493,11 @@ spec:
             - ALL
           privileged: false
           readOnlyRootFilesystem: false
+        volumeMounts:
+        - mountPath: /var/lib/postgresql/data
+          name: postgres-data
       restartPolicy: Always
+      volumes:
+      - name: postgres-data
+        persistentVolumeClaim:
+          claimName: postgres-data-storage
