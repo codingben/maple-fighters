@@ -38,7 +38,26 @@ spec:
                 - ALL
             privileged: false
             readOnlyRootFilesystem: false
+          volumeMounts:
+          - name: postgres-data
+            mountPath: /var/lib/postgresql/data
       restartPolicy: Always
+      volumes:
+      - name: postgres-data
+        persistentVolumeClaim:
+          claimName: postgres-data-storage
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: postgres-data-storage
+  namespace: maple-fighters
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
 ---
 apiVersion: v1
 kind: Service
