@@ -13,6 +13,8 @@ spec:
       labels:
         app: mongo-auth
     spec:
+      securityContext:
+        fsGroup: 999
       containers:
         - name: mongo-auth
           image: mongo:5.0.2
@@ -27,6 +29,7 @@ spec:
               cpu: 200m
               memory: 256Mi
           securityContext:
+            runAsUser: 999
             allowPrivilegeEscalation: false
             capabilities:
               drop:
