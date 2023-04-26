@@ -312,7 +312,7 @@ spec:
             drop:
             - ALL
           privileged: false
-          readOnlyRootFilesystem: true
+          readOnlyRootFilesystem: false
       restartPolicy: Always
 ---
 apiVersion: apps/v1
@@ -492,6 +492,9 @@ spec:
         securityContext:
           allowPrivilegeEscalation: false
           capabilities:
+            add:
+            - CHOWN
+            - FOWNER
             drop:
             - ALL
           privileged: false
