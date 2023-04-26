@@ -39,6 +39,9 @@ spec:
             capabilities:
               drop:
                 - ALL
+              add:
+              - CHOWN
+              - FOWNER
             privileged: false
             readOnlyRootFilesystem: false
           volumeMounts:
