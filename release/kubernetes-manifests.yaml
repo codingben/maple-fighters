@@ -491,21 +491,12 @@ spec:
             memory: 128Mi
         securityContext:
           allowPrivilegeEscalation: false
-          capabilities:
-            add:
-            - CHOWN
-            - FOWNER
-            drop:
-            - ALL
           privileged: false
           readOnlyRootFilesystem: false
-          runAsUser: 999
         volumeMounts:
         - mountPath: /var/lib/postgresql/data
           name: postgres-data
       restartPolicy: Always
-      securityContext:
-        fsGroup: 999
       volumes:
       - name: postgres-data
         persistentVolumeClaim:
