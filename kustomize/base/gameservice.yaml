@@ -43,7 +43,7 @@ spec:
               drop:
                 - ALL
             privileged: false
-            readOnlyRootFilesystem: true
+            readOnlyRootFilesystem: false
       restartPolicy: Always
 ---
 apiVersion: v1
