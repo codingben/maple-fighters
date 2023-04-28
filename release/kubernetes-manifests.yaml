@@ -330,7 +330,7 @@ spec:
       containers:
       - env:
         - name: MAX_CONNECTIONS
-          value: 100
+          value: "100"
         - name: CONFIG_SOURCE
           value: develop
         - name: FLECK_LOG
