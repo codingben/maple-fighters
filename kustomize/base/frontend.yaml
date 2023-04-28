@@ -28,9 +28,6 @@ spec:
               memory: 32Mi
           securityContext:
             allowPrivilegeEscalation: false
-            capabilities:
-              drop:
-                - ALL
             privileged: false
             readOnlyRootFilesystem: false
       restartPolicy: Always
