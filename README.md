@@ -75,7 +75,6 @@ cd maple-fighters
 2. Create Kubernetes resources:
 
 ```bash
-kubectl create namespace maple-fighters
 kubectl apply -f ./release/kubernetes-manifests.yaml
 ```
 
