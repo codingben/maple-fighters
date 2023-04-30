@@ -4,6 +4,17 @@ metadata:
   name: maple-fighters
 ---
 apiVersion: v1
+kind: Secret
+metadata:
+  name: postgres-credentials
+  namespace: maple-fighters
+stringData:
+  POSTGRES_DATABASE_URL: postgres://postgres:postgres@postgres-character:5432/postgres
+  POSTGRES_PASSWORD: postgres
+  POSTGRES_USER: postgres
+type: Opaque
+---
+apiVersion: v1
 kind: Service
 metadata:
   name: auth-service
@@ -215,7 +226,10 @@ spec:
       containers:
       - env:
         - name: DATABASE_URL
-          value: postgres://postgres:postgres@postgres-character:5432/postgres
+          valueFrom:
+            secretKeyRef:
+              key: POSTGRES_DATABASE_URL
+              name: postgres-credentials
         - name: IP_ADDRESS
           value: 0.0.0.0:50053
         - name: RUST_BACKTRACE
@@ -477,10 +491,16 @@ spec:
     spec:
       containers:
       - env:
-        - name: POSTGRES_PASSWORD
-          value: postgres
         - name: POSTGRES_USER
-          value: postgres
+          valueFrom:
+            secretKeyRef:
+              key: POSTGRES_USER
+              name: postgres-credentials
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              key: POSTGRES_PASSWORD
+              name: postgres-credentials
         image: postgres:13
         imagePullPolicy: IfNotPresent
         name: postgres-character
