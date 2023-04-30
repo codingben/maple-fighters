@@ -10,3 +10,4 @@ resources:
 - gameservice.yaml
 - mongo.yaml
 - postgres.yaml
+- postgrescredentials.yaml

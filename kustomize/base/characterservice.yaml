@@ -21,7 +21,10 @@ spec:
             - containerPort: 50053
           env:
             - name: DATABASE_URL
-              value: postgres://postgres:postgres@postgres-character:5432/postgres
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-credentials
+                  key: POSTGRES_DATABASE_URL
             - name: IP_ADDRESS
               value: 0.0.0.0:50053
             - name: RUST_BACKTRACE
