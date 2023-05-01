@@ -186,7 +186,10 @@ spec:
         - name: ASPNETCORE_URLS
           value: http://0.0.0.0:50050
         - name: DATABASE_URL
-          value: mongodb://mongo-auth:27017/users
+          valueFrom:
+            secretKeyRef:
+              key: MONGO_DATABASE_URL
+              name: mongo-credentials
         image: maplefighters/auth-service:latest
         imagePullPolicy: Always
         name: auth-service
