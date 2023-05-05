@@ -21,7 +21,7 @@ spec:
             - containerPort: 50050
           env:
             - name: ASPNETCORE_ENVIRONMENT
-              value: Development
+              value: Production
             - name: ASPNETCORE_URLS
               value: http://0.0.0.0:50050
             - name: DATABASE_URL
