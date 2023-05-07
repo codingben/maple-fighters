@@ -14,6 +14,8 @@ namespace Authenticator.API
     {
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddHealthChecks();
+
             var databaseUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
             if (databaseUrl != null)
             {
@@ -42,6 +44,7 @@ namespace Authenticator.API
             applicationBuilder.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHealthChecks("/healthz");
             });
         }
     }
