@@ -192,9 +192,21 @@ spec:
               name: mongo-credentials
         image: maplefighters/auth-service:latest
         imagePullPolicy: Always
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: 50050
+          initialDelaySeconds: 15
+          periodSeconds: 10
         name: auth-service
         ports:
         - containerPort: 50050
+        readinessProbe:
+          httpGet:
+            path: /healthz
+            port: 50050
+          initialDelaySeconds: 5
+          periodSeconds: 5
         resources:
           limits:
             cpu: 200m
@@ -241,9 +253,21 @@ spec:
           value: info
         image: maplefighters/character-service:latest
         imagePullPolicy: Always
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: 50053
+          initialDelaySeconds: 15
+          periodSeconds: 10
         name: character-service
         ports:
         - containerPort: 50053
+        readinessProbe:
+          httpGet:
+            path: /healthz
+            port: 50053
+          initialDelaySeconds: 5
+          periodSeconds: 5
         resources:
           limits:
             cpu: 200m
