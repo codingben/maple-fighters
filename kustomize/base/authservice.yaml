@@ -19,6 +19,18 @@ spec:
           imagePullPolicy: Always
           ports:
             - containerPort: 50050
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 50050
+            initialDelaySeconds: 15
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: 50050
+            initialDelaySeconds: 5
+            periodSeconds: 5
           env:
             - name: ASPNETCORE_ENVIRONMENT
               value: Production

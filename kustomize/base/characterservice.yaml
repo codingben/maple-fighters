@@ -19,6 +19,18 @@ spec:
           imagePullPolicy: Always
           ports:
             - containerPort: 50053
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 50053
+            initialDelaySeconds: 15
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: 50053
+            initialDelaySeconds: 5
+            periodSeconds: 5
           env:
             - name: DATABASE_URL
               valueFrom:
