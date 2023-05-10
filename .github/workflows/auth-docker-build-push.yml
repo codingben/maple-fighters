@@ -28,5 +28,5 @@ jobs:
           context: ./src/auth-service
           file: ./src/auth-service/Dockerfile
           push: true
-          tags: maplefighters/auth-service:latest
+          tags: maplefighters/auth-service:1.0.0
           platforms: linux/amd64,linux/arm64/v8
