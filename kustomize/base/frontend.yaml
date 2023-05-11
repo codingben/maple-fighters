@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: maplefighters/frontend:develop
+          image: maplefighters/frontend:develop # change to main in main branch
           imagePullPolicy: Always
           ports:
             - containerPort: 80

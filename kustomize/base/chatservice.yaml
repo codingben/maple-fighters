@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: chat-service
-          image: maplefighters/chat-service:latest
+          image: maplefighters/chat-service:1.0.0
           imagePullPolicy: Always
           ports:
             - containerPort: 50054
