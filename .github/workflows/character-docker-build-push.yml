@@ -29,4 +29,3 @@ jobs:
           file: ./src/character-service/Dockerfile
           push: true
           tags: maplefighters/character-service:1.0.0
-          platforms: linux/amd64,linux/arm64/v8

@@ -29,4 +29,3 @@ jobs:
           file: ./src/gameprovider-service/Dockerfile
           push: true
           tags: maplefighters/gameprovider-service:1.0.0
-          platforms: linux/amd64,linux/arm64/v8
