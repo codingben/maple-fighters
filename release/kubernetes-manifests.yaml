@@ -190,7 +190,7 @@ spec:
             secretKeyRef:
               key: MONGO_DATABASE_URL
               name: mongo-credentials
-        image: maplefighters/auth-service:latest
+        image: maplefighters/auth-service:1.0.0
         imagePullPolicy: Always
         livenessProbe:
           httpGet:
@@ -251,7 +251,7 @@ spec:
           value: full
         - name: RUST_LOG
           value: info
-        image: maplefighters/character-service:latest
+        image: maplefighters/character-service:1.0.0
         imagePullPolicy: Always
         livenessProbe:
           httpGet:
@@ -303,7 +303,7 @@ spec:
       - env:
         - name: PORT
           value: "50054"
-        image: maplefighters/chat-service:latest
+        image: maplefighters/chat-service:1.0.0
         imagePullPolicy: Always
         name: chat-service
         ports:
@@ -387,7 +387,7 @@ spec:
           value: Debug
         - name: URL
           value: ws://0.0.0.0:50051
-        image: maplefighters/game-service:latest
+        image: maplefighters/game-service:1.0.0
         imagePullPolicy: Always
         name: game-service
         ports:
@@ -433,7 +433,7 @@ spec:
           value: info
         - name: CONFIG_SOURCE
           value: develop
-        image: maplefighters/gameprovider-service:latest
+        image: maplefighters/gameprovider-service:1.0.0
         imagePullPolicy: Always
         name: gameprovider-service
         ports:
