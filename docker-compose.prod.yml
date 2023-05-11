@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
     frontend:
-        image: maplefighters/frontend
+        image: maplefighters/frontend:1.0.0
         ports:
             - 80:80
         depends_on:
@@ -12,7 +12,7 @@ services:
             - gameprovider-service
             - chat-service
     auth-service:
-        image: maplefighters/auth-service
+        image: maplefighters/auth-service:1.0.0
         expose:
             - 50050
         depends_on:
@@ -22,7 +22,7 @@ services:
             ASPNETCORE_URLS: http://0.0.0.0:50050
             DATABASE_URL: mongodb://mongo-auth:27017/${AUTH_DB_NAME}
     character-service:
-        image: maplefighters/character-service
+        image: maplefighters/character-service:1.0.0
         expose:
             - 50053
         depends_on:
@@ -33,7 +33,7 @@ services:
             IP_ADDRESS: 0.0.0.0:50053
             DATABASE_URL: postgres://${CHARACTER_DB_USER}:${CHARACTER_DB_PASSWORD}@postgres-character:5432/${CHARACTER_DB_NAME}
     game-service:
-        image: maplefighters/game-service
+        image: maplefighters/game-service:1.0.0
         restart: "on-failure"
         expose:
             - 50051
@@ -45,7 +45,7 @@ services:
             CONFIG_SOURCE: main
             MAX_CONNECTIONS: 100
     gameprovider-service:
-        image: maplefighters/gameprovider-service
+        image: maplefighters/gameprovider-service:1.0.0
         expose:
             - 50052
         environment:
@@ -54,7 +54,7 @@ services:
             IP_ADDRESS: 0.0.0.0:50052
             CONFIG_SOURCE: main
     chat-service:
-        image: maplefighters/chat-service
+        image: maplefighters/chat-service:1.0.0
         expose:
             - 50054
         environment:
