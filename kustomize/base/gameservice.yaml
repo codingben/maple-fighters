@@ -23,7 +23,7 @@ spec:
             - name: MAX_CONNECTIONS
               value: "100"
             - name: CONFIG_SOURCE
-              value: develop
+              value: v1.0
             - name: FLECK_LOG
               value: Info
             - name: GAME_LOG
