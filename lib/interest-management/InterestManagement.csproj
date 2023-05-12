@@ -4,7 +4,7 @@
     <Authors>Ben Oukhanov</Authors>
     <Description>This library is region-based interest management.</Description>
     <Copyright>Copyright © Ben Oukhanov 2022</Copyright>
-    <PackageProjectUrl>https://github.com/codingben/maple-fighters/tree/develop/lib/interest-management</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/codingben/maple-fighters/tree/main/lib/interest-management</PackageProjectUrl>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Version>1.3.1</Version>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
