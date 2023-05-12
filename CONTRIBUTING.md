@@ -11,7 +11,7 @@ Feel free to contribute and please open a new issue before making any changes.
 
 ## <a name="coc"></a> Code of Conduct
 
-Please read and make sure to follow the [Code of Conduct](https://github.com/codingben/maple-fighters/blob/develop/CODE_OF_CONDUCT.md).
+Please read and make sure to follow the [Code of Conduct](https://github.com/codingben/maple-fighters/blob/main/CODE_OF_CONDUCT.md).
 
 ## <a name="bug"></a> Bug Report
 
@@ -33,4 +33,4 @@ Please use one of the [issue templates](https://github.com/codingben/maple-fight
 2. Clone the forked repository and then create a new branch.
 3. Commit your changes using a commit message that follows [Conventional Commits](https://www.conventionalcommits.org) specification.
 4. Push your new branch.
-5. Send a pull request to `develop` branch.
+5. Send a pull request to `main` branch.
