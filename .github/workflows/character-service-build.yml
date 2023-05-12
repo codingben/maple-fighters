@@ -2,11 +2,11 @@ name: Character Service Build
 
 on:
   push:
-    branches: [develop]
+    branches: [main]
     paths:
       - src/character-service/**
   pull_request:
-    branches: [develop]
+    branches: [main]
     paths:
       - src/character-service/**
 

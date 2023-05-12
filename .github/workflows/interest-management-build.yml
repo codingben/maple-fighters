@@ -2,11 +2,11 @@ name: Interest Management Build
 
 on:
   push:
-    branches: [develop]
+    branches: [main]
     paths:
       - lib/interest-management/**
   pull_request:
-    branches: [develop]
+    branches: [main]
     paths:
       - lib/interest-management/**
 

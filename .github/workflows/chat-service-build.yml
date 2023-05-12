@@ -2,11 +2,11 @@ name: Chat Service Build
 
 on:
   push:
-    branches: [develop]
+    branches: [main]
     paths:
       - src/chat-service/**
   pull_request:
-    branches: [develop]
+    branches: [main]
     paths:
       - src/chat-service/**
 

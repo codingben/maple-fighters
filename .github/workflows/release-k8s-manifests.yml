@@ -2,7 +2,7 @@ name: Release Kubernetes Manifests
 
 on:
   push:
-    branches: [develop]
+    branches: [main]
     paths:
       - kustomize/**
 

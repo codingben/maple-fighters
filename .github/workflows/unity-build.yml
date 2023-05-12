@@ -2,11 +2,11 @@ name: Unity Build
 
 on:
   push:
-    branches: [develop]
+    branches: [main]
     paths:
       - src/maple-fighters/**
   pull_request:
-    branches: [develop]
+    branches: [main]
     paths:
       - src/maple-fighters/**
   workflow_dispatch:

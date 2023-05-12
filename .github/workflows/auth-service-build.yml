@@ -2,11 +2,11 @@ name: Auth Service Build
 
 on:
   push:
-    branches: [develop]
+    branches: [main]
     paths:
       - src/auth-service/**
   pull_request:
-    branches: [develop]
+    branches: [main]
     paths:
       - src/auth-service/**
 
