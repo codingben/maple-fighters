@@ -340,7 +340,7 @@ spec:
         app: frontend
     spec:
       containers:
-      - image: maplefighters/frontend:develop
+      - image: maplefighters/frontend:1.0.0
         imagePullPolicy: Always
         name: frontend
         ports:
@@ -433,6 +433,8 @@ spec:
           value: info
         - name: CONFIG_SOURCE
           value: v1.0
+        - name: CONFIG_ENVIRONMENT
+          value: Production
         image: maplefighters/gameprovider-service:1.0.0
         imagePullPolicy: Always
         name: gameprovider-service
