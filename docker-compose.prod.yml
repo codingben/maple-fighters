@@ -53,6 +53,7 @@ services:
             RUST_BACKTRACE: full
             IP_ADDRESS: 0.0.0.0:50052
             CONFIG_SOURCE: v1.0
+            CONFIG_ENVIRONMENT: Production
     chat-service:
         image: maplefighters/chat-service:1.0.0
         expose:

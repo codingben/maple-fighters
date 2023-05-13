@@ -28,6 +28,8 @@ spec:
               value: info
             - name: CONFIG_SOURCE
               value: v1.0
+            - name: CONFIG_ENVIRONMENT
+              value: Production
           resources:
             requests:
               cpu: 100m

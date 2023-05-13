@@ -67,6 +67,7 @@ services:
             RUST_BACKTRACE: full
             IP_ADDRESS: 0.0.0.0:50052
             CONFIG_SOURCE: v1.0
+            CONFIG_ENVIRONMENT: Development
     chat-service:
         image: chat-service
         build:
