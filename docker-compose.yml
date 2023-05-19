@@ -12,23 +12,10 @@ services:
         ports:
             - 80:80
         depends_on:
-            - auth-service
             - character-service
             - game-service
             - gameprovider-service
             - chat-service
-    auth-service:
-        image: auth-service
-        build:
-            context: ./src/auth-service
-        expose:
-            - 50050
-        depends_on:
-            - mongo-auth
-        environment:
-            ASPNETCORE_ENVIRONMENT: Development
-            ASPNETCORE_URLS: http://0.0.0.0:50050
-            DATABASE_URL: mongodb://mongo-auth:27017/users
     character-service:
         image: character-service
         build:
@@ -76,10 +63,6 @@ services:
             - 50054
         environment:
             PORT: 50054
-    mongo-auth:
-        image: mongo:5.0.2
-        expose:
-            - 27017
     postgres-character:
         image: postgres:13
         expose:
