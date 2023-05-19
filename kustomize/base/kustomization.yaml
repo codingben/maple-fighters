@@ -2,12 +2,10 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
 - namespace.yaml
-- authservice.yaml
 - characterservice.yaml
 - chatservice.yaml
 - frontend.yaml
 - gameproviderservice.yaml
 - gameservice.yaml
-- mongo.yaml
 - postgres.yaml
 - postgrescredentials.yaml
