@@ -17,20 +17,6 @@ type: Opaque
 apiVersion: v1
 kind: Service
 metadata:
-  name: auth-service
-  namespace: maple-fighters
-spec:
-  ports:
-  - name: auth-service-port
-    port: 50050
-    targetPort: 50050
-  selector:
-    app: auth-service
-  type: ClusterIP
----
-apiVersion: v1
-kind: Service
-metadata:
   name: character-service
   namespace: maple-fighters
 spec:
@@ -115,20 +101,6 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: mongo-auth
-  namespace: maple-fighters
-spec:
-  ports:
-  - name: mongo-port
-    port: 27017
-    targetPort: 27017
-  selector:
-    app: mongo-auth
-  type: ClusterIP
----
-apiVersion: v1
-kind: Service
-metadata:
   name: postgres-character
   namespace: maple-fighters
 spec:
@@ -143,18 +115,6 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: mongo-data-storage
-  namespace: maple-fighters
-spec:
-  accessModes:
-  - ReadWriteOnce
-  resources:
-    requests:
-      storage: 1Gi
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
   name: postgres-data-storage
   namespace: maple-fighters
 spec:
@@ -163,65 +123,6 @@ spec:
   resources:
     requests:
       storage: 1Gi
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: auth-service
-  namespace: maple-fighters
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: auth-service
-  template:
-    metadata:
-      labels:
-        app: auth-service
-    spec:
-      containers:
-      - env:
-        - name: ASPNETCORE_ENVIRONMENT
-          value: Production
-        - name: ASPNETCORE_URLS
-          value: http://0.0.0.0:50050
-        - name: DATABASE_URL
-          valueFrom:
-            secretKeyRef:
-              key: MONGO_DATABASE_URL
-              name: mongo-credentials
-        image: maplefighters/auth-service:1.0.0
-        imagePullPolicy: Always
-        livenessProbe:
-          httpGet:
-            path: /healthz
-            port: 50050
-          initialDelaySeconds: 15
-          periodSeconds: 10
-        name: auth-service
-        ports:
-        - containerPort: 50050
-        readinessProbe:
-          httpGet:
-            path: /healthz
-            port: 50050
-          initialDelaySeconds: 5
-          periodSeconds: 5
-        resources:
-          limits:
-            cpu: 200m
-            memory: 128Mi
-          requests:
-            cpu: 100m
-            memory: 64Mi
-        securityContext:
-          allowPrivilegeEscalation: false
-          capabilities:
-            drop:
-            - ALL
-          privileged: false
-          readOnlyRootFilesystem: false
-      restartPolicy: Always
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -455,53 +356,6 @@ spec:
           privileged: false
           readOnlyRootFilesystem: true
       restartPolicy: Always
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: mongo-auth
-  namespace: maple-fighters
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: mongo-auth
-  template:
-    metadata:
-      labels:
-        app: mongo-auth
-    spec:
-      containers:
-      - image: mongo:5.0.2
-        imagePullPolicy: IfNotPresent
-        name: mongo-auth
-        ports:
-        - containerPort: 27017
-        resources:
-          limits:
-            cpu: 200m
-            memory: 256Mi
-          requests:
-            cpu: 100m
-            memory: 128Mi
-        securityContext:
-          allowPrivilegeEscalation: false
-          capabilities:
-            drop:
-            - ALL
-          privileged: false
-          readOnlyRootFilesystem: false
-          runAsUser: 999
-        volumeMounts:
-        - mountPath: /data/db
-          name: mongo-data
-      restartPolicy: Always
-      securityContext:
-        fsGroup: 999
-      volumes:
-      - name: mongo-data
-        persistentVolumeClaim:
-          claimName: mongo-data-storage
 ---
 apiVersion: apps/v1
 kind: Deployment
