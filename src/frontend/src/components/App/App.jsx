@@ -122,7 +122,7 @@ function App() {
           {loading == false && (
             <div {...fade}>
               <FullScreenButton />
-              <LoginButton />
+              {/* <LoginButton /> */}
             </div>
           )}
           <GitHubButton />
