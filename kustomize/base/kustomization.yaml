@@ -5,7 +5,6 @@ resources:
 - characterservice.yaml
 - chatservice.yaml
 - frontend.yaml
-- gameproviderservice.yaml
 - gameservice.yaml
 - postgres.yaml
 - postgrescredentials.yaml
