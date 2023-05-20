@@ -12,7 +12,6 @@ body:
         - interest-management
         - interest-management-simulation
         - ui-manager
-        - chat-service
         - game-service
         - frontend
         - maple-fighters
