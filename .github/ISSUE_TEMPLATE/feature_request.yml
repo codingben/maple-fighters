@@ -12,7 +12,6 @@ body:
         - interest-management
         - interest-management-simulation
         - ui-manager
-        - character-service
         - chat-service
         - game-service
         - frontend
