@@ -87,20 +87,6 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: gameprovider-service
-  namespace: maple-fighters
-spec:
-  ports:
-  - name: gameprovider-service-port
-    port: 50052
-    targetPort: 50052
-  selector:
-    app: gameprovider-service
-  type: ClusterIP
----
-apiVersion: v1
-kind: Service
-metadata:
   name: postgres-character
   namespace: maple-fighters
 spec:
@@ -307,54 +293,6 @@ spec:
             - ALL
           privileged: false
           readOnlyRootFilesystem: false
-      restartPolicy: Always
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: gameprovider-service
-  namespace: maple-fighters
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: gameprovider-service
-  template:
-    metadata:
-      labels:
-        app: gameprovider-service
-    spec:
-      containers:
-      - env:
-        - name: IP_ADDRESS
-          value: 0.0.0.0:50052
-        - name: RUST_BACKTRACE
-          value: full
-        - name: RUST_LOG
-          value: info
-        - name: CONFIG_SOURCE
-          value: v1.0
-        - name: CONFIG_ENVIRONMENT
-          value: Production
-        image: maplefighters/gameprovider-service:1.0.0
-        imagePullPolicy: Always
-        name: gameprovider-service
-        ports:
-        - containerPort: 50052
-        resources:
-          limits:
-            cpu: 200m
-            memory: 32Mi
-          requests:
-            cpu: 100m
-            memory: 16Mi
-        securityContext:
-          allowPrivilegeEscalation: false
-          capabilities:
-            drop:
-            - ALL
-          privileged: false
-          readOnlyRootFilesystem: true
       restartPolicy: Always
 ---
 apiVersion: apps/v1
