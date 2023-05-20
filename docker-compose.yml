@@ -14,7 +14,6 @@ services:
         depends_on:
             - character-service
             - game-service
-            - gameprovider-service
             - chat-service
     character-service:
         image: character-service
@@ -43,18 +42,6 @@ services:
             GAME_LOG: Debug
             CONFIG_SOURCE: v1.0
             MAX_CONNECTIONS: 100
-    gameprovider-service:
-        image: gameprovider-service
-        build:
-            context: ./src/gameprovider-service
-        expose:
-            - 50052
-        environment:
-            RUST_LOG: info
-            RUST_BACKTRACE: full
-            IP_ADDRESS: 0.0.0.0:50052
-            CONFIG_SOURCE: v1.0
-            CONFIG_ENVIRONMENT: Development
     chat-service:
         image: chat-service
         build:

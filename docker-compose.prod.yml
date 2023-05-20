@@ -8,7 +8,6 @@ services:
         depends_on:
             - character-service
             - game-service
-            - gameprovider-service
             - chat-service
     character-service:
         image: maplefighters/character-service:1.0.0
@@ -33,16 +32,6 @@ services:
             GAME_LOG: Debug
             CONFIG_SOURCE: v1.0
             MAX_CONNECTIONS: 100
-    gameprovider-service:
-        image: maplefighters/gameprovider-service:1.0.0
-        expose:
-            - 50052
-        environment:
-            RUST_LOG: info
-            RUST_BACKTRACE: full
-            IP_ADDRESS: 0.0.0.0:50052
-            CONFIG_SOURCE: v1.0
-            CONFIG_ENVIRONMENT: Production
     chat-service:
         image: maplefighters/chat-service:1.0.0
         expose:
