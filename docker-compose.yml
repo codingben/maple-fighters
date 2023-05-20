@@ -13,7 +13,6 @@ services:
             - 80:80
         depends_on:
             - game-service
-            - chat-service
     game-service:
         image: game-service
         build:
@@ -28,11 +27,3 @@ services:
             GAME_LOG: Debug
             CONFIG_SOURCE: v1.0
             MAX_CONNECTIONS: 100
-    chat-service:
-        image: chat-service
-        build:
-            context: ./src/chat-service
-        expose:
-            - 50054
-        environment:
-            PORT: 50054
