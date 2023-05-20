@@ -33,11 +33,6 @@ jobs:
             rm ${FILE}
             curl -s ${HOST}/${USER}/${REPO_NAME}/${BRANCH}/${FILE} -o ${FILE}
 
-            # Set Database Variables
-            export CHARACTER_DB_USER=${{ secrets.CHARACTER_DB_USER }}
-            export CHARACTER_DB_PASSWORD=${{ secrets.CHARACTER_DB_PASSWORD }}
-            export CHARACTER_DB_NAME=${{ secrets.CHARACTER_DB_NAME }}
-            
             # Pull, Up and Clean
             docker-compose -f ${FILE} pull
             docker-compose -f ${FILE} up -d
