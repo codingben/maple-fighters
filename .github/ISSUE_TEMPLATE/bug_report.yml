@@ -15,7 +15,6 @@ body:
         - character-service
         - chat-service
         - game-service
-        - gameprovider-service
         - frontend
         - maple-fighters
       multiple: true
