@@ -26,7 +26,7 @@ jobs:
             HOST=https://raw.githubusercontent.com
             USER=codingben
             REPO_NAME=maple-fighters
-            BRANCH=main
+            BRANCH=v1.0
             FILE=docker-compose.prod.yml
 
             # Download File
