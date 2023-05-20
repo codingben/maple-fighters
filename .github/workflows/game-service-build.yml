@@ -2,12 +2,12 @@ name: Game Service Build
 
 on:
   push:
-    branches: [main]
+    branches: [v1.0]
     paths:
       - src/game-service/Game.Application/**
       - src/game-service/Game.PhysicsTests/**
   pull_request:
-    branches: [main]
+    branches: [v1.0]
     paths:
       - src/game-service/Game.Application/**
       - src/game-service/Game.PhysicsTests/**

@@ -2,11 +2,11 @@ name: GameProvider Service Build
 
 on:
   push:
-    branches: [main]
+    branches: [v1.0]
     paths:
       - src/gameprovider-service/**
   pull_request:
-    branches: [main]
+    branches: [v1.0]
     paths:
       - src/gameprovider-service/**
 
