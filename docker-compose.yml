@@ -12,22 +12,8 @@ services:
         ports:
             - 80:80
         depends_on:
-            - character-service
             - game-service
             - chat-service
-    character-service:
-        image: character-service
-        build:
-            context: ./src/character-service
-        expose:
-            - 50053
-        depends_on:
-            - postgres-character
-        environment:
-            RUST_LOG: info
-            RUST_BACKTRACE: full
-            IP_ADDRESS: 0.0.0.0:50053
-            DATABASE_URL: postgres://postgres:postgres@postgres-character:5432/postgres
     game-service:
         image: game-service
         build:
@@ -50,10 +36,3 @@ services:
             - 50054
         environment:
             PORT: 50054
-    postgres-character:
-        image: postgres:13
-        expose:
-            - 5432
-        environment:
-            POSTGRES_USER: postgres
-            POSTGRES_PASSWORD: postgres
