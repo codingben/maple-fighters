@@ -10,6 +10,7 @@ on:
     paths:
       - src/maple-fighters/**
   workflow_dispatch:
+    # Left blank intentionally
 
 env:
   UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
