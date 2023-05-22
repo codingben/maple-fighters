@@ -9,8 +9,6 @@ namespace Scripts.Services
     {
         public UserData UserData { get; set; }
 
-        public string GameServerUrl { get; set; }
-
         public int CharacterType { get; set; }
 
         public string CharacterName { get; set; }

@@ -66,20 +66,19 @@ namespace Scripts.Services.GameApi
 
         private void Start()
         {
-            var userMetadata = FindObjectOfType<UserMetadata>();
-            if (userMetadata == null)
-            {
-                Debug.LogWarning("Could not find user metadata to connect to the game server.");
-                return;
-            }
-
             var networkConfiguration = NetworkConfiguration.GetInstance();
             if (networkConfiguration == null)
             {
                 return;
             }
 
-            var url = userMetadata.GameServerUrl;
+            var uriBuilder = new UriBuilder()
+            {
+                Scheme = "ws",
+                Host = networkConfiguration.GetHost(),
+                Path = "game"
+            };
+            var url = uriBuilder.Uri.ToString();
 
             try
             {

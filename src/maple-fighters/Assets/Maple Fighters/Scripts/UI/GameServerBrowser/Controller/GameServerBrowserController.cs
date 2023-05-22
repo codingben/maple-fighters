@@ -193,7 +193,6 @@ namespace Scripts.UI.GameServerBrowser
 
         private void OnGameServerButtonClicked(UIGameServerButtonData gameServerData)
         {
-            gameServerBrowserInteractor.SetGameServerInfo(gameServerData);
             gameServerBrowserView?.EnableJoinGameButton();
         }
 

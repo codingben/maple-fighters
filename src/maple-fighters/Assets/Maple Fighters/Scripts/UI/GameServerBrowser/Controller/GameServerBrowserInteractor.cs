@@ -38,18 +38,6 @@ namespace Scripts.UI.GameServerBrowser
             gameProviderApi?.GetGames();
         }
 
-        public void SetGameServerInfo(UIGameServerButtonData gameServerData)
-        {
-            var userMetadata = FindObjectOfType<UserMetadata>();
-            if (userMetadata != null)
-            {
-                var protocol = gameServerData.Protocol;
-                var url = gameServerData.Url;
-
-                userMetadata.GameServerUrl = $"{protocol}://{url}";
-            }
-        }
-
         private void OnGetGamesCallback(long statusCode, string json)
         {
             if (statusCode == (long)StatusCodes.Ok)
