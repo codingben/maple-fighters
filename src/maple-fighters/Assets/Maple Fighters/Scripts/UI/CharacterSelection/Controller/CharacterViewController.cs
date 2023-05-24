@@ -3,9 +3,11 @@ using Scripts.Constants;
 using Scripts.UI.Authenticator;
 using Scripts.UI.GameServerBrowser;
 using Scripts.UI.MenuBackground;
+using Scripts.UI.ScreenFade;
 using Scripts.UI.Notice;
 using UI;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Scripts.UI.CharacterSelection
 {
@@ -15,6 +17,9 @@ namespace Scripts.UI.CharacterSelection
                                            IOnCharacterDeletionFinishedListener,
                                            IOnCharacterCreationFinishedListener
     {
+        [SerializeField]
+        private bool showGameServerBrowser;
+
         [SerializeField]
         private int minCharacterNameLength;
 
@@ -30,10 +35,12 @@ namespace Scripts.UI.CharacterSelection
         private UINewCharacterDetails characterDetails;
 
         private CharacterViewInteractor characterViewInteractor;
+        private ScreenFadeController screenFadeController;
 
         private void Awake()
         {
             characterViewInteractor = GetComponent<CharacterViewInteractor>();
+            screenFadeController = FindObjectOfType<ScreenFadeController>();
         }
 
         private void Start()
@@ -405,13 +412,42 @@ namespace Scripts.UI.CharacterSelection
                     characterViewInteractor.UpdateCharacterData(characterClass, characterName);
 
                     HideCharacterSelectionOptionsWindow();
-                    ShowGameServerBrowserWindow();
+
+                    if (showGameServerBrowser)
+                    {
+                        ShowGameServerBrowserWindow();
+                    }
+                    else
+                    {
+                        LoadLobby();
+                    }
                 }
                 else
                 {
                     NoticeUtils.ShowNotice(message: NoticeMessages.CharacterView.NotFound);
                 }
             }
+        }
+
+        private void LoadLobby()
+        {
+            if (screenFadeController != null)
+            {
+                screenFadeController.Show();
+                screenFadeController.FadeInCompleted += OnFadeInCompleted;                    
+            }
+        }
+
+        private void OnFadeInCompleted()
+        {
+            if (screenFadeController != null)
+            {
+                screenFadeController.FadeInCompleted -= OnFadeInCompleted;
+            }
+
+            var mapName = Constants.SceneNames.Maps.Lobby;
+
+            SceneManager.LoadScene(sceneName: mapName);
         }
 
         private void OnCreateCharacterButtonClicked()
