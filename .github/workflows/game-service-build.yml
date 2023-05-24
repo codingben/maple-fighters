@@ -5,12 +5,10 @@ on:
     branches: [v1.0]
     paths:
       - src/game-service/Game.Application/**
-      - src/game-service/Game.PhysicsTests/**
   pull_request:
     branches: [v1.0]
     paths:
       - src/game-service/Game.Application/**
-      - src/game-service/Game.PhysicsTests/**
 
 jobs:
   build:
