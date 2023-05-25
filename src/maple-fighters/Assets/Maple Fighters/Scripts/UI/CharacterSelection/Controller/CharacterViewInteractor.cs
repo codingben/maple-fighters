@@ -151,24 +151,10 @@ namespace Scripts.UI.CharacterSelection
                 return;
             }
 
-            CharacterData[] characterData;
+            var characterDataCollection = JsonUtility.FromJson<CharacterDataCollection>(json);
+            var characterItems = characterDataCollection.items;
 
-            // NOTE: Unity json allows getting "Items" only (from dummy api)
-            if (json.Contains("Items"))
-            {
-                characterData = JsonHelper.FromJsonString<CharacterData>(json);
-            }
-            else
-            {
-                characterData = JsonHelper.ArrayFromJson<CharacterData>(json);
-            }
-
-            if (characterData == null || characterData?.Length == 0)
-            {
-                return;
-            }
-
-            foreach (var character in characterData)
+            foreach (var character in characterItems)
             {
                 var index = character.index;
 
