@@ -6,6 +6,8 @@ using UnityEngine;
 
 namespace Scripts.Services.CharacterProviderApi
 {
+    using Random = UnityEngine.Random;
+
     public class DummyCharacterProviderApi : MonoBehaviour, ICharacterProviderApi
     {
         public static DummyCharacterProviderApi GetInstance()
@@ -29,12 +31,12 @@ namespace Scripts.Services.CharacterProviderApi
 
         public Action<long, string> GetCharactersCallback { get; set; }
 
-        private List<CharacterData> characters;
-        private int id;
+        private Dictionary<int, CharacterData> characters;
+        private const string key = "characters";
 
         private void Awake()
         {
-            characters = new List<CharacterData>();
+            characters = new Dictionary<int, CharacterData>();
         }
 
         private void OnDestroy()
@@ -51,11 +53,13 @@ namespace Scripts.Services.CharacterProviderApi
             var statusCode = 0;
             var json = string.Empty;
 
-            // On server it will iterate only by user (id) characters
-            foreach (var characterData in characters)
+            var id = GenerateId();
+            var characterCollection = GetCharacterCollection();
+
+            foreach (var character in characterCollection)
             {
-                if (characterData.userid == userid &&
-                    characterData.charactername == charactername)
+                if (character.userid == userid &&
+                    character.charactername == charactername)
                 {
                     statusCode = 400;
                     json = "Please choose a different character name.";
@@ -65,14 +69,16 @@ namespace Scripts.Services.CharacterProviderApi
                 }
             }
 
-            characters.Add(new CharacterData()
+            characters.Add(id, new CharacterData()
             {
-                id = id++,
+                id = id,
                 userid = userid,
                 charactername = charactername,
                 index = index,
                 classindex = classindex
             });
+
+            SaveCharacterCollection();
 
             statusCode = 201;
 
@@ -81,24 +87,12 @@ namespace Scripts.Services.CharacterProviderApi
 
         public void DeleteCharacter(int characterid)
         {
-            var item = default(CharacterData);
-            var itemExists = false;
-
-            foreach (var characterData in characters)
-            {
-                if (characterData.id == characterid)
-                {
-                    item = characterData;
-                    itemExists = true;
-                }
-            }
-
             var statusCode = 0;
             var json = string.Empty;
 
-            if (itemExists)
+            if (characters.Remove(characterid))
             {
-                characters.Remove(item);
+                SaveCharacterCollection();
 
                 statusCode = 200;
 
@@ -115,16 +109,52 @@ namespace Scripts.Services.CharacterProviderApi
 
         public void GetCharacters(string userid)
         {
-            var items = characters.Where(x => x.userid == userid).ToArray();
             var statusCode = 200;
-            var json = "[]";
+            var json = PlayerPrefs.GetString(key);
 
-            if (items.Length != 0)
+            var characterDataCollection = JsonUtility.FromJson<CharacterDataCollection>(json);
+            if (characterDataCollection != null)
             {
-                json = JsonHelper.ArrayToJsonString(items);
+                var characterItems = characterDataCollection.items;
+
+                foreach (var character in characterItems)
+                {
+                    if (characters.ContainsKey(character.id))
+                    {
+                        continue;
+                    }
+
+                    characters.Add(character.id, new CharacterData()
+                    {
+                        id = character.id,
+                        userid = character.userid,
+                        charactername = character.charactername,
+                        index = character.index,
+                        classindex = character.classindex
+                    });
+                }
             }
 
             GetCharactersCallback?.Invoke(statusCode, json);
+        }
+
+        private void SaveCharacterCollection()
+        {
+            var characterCollection = GetCharacterCollection();
+            var characterDataCollection = new CharacterDataCollection(characterCollection);
+
+            PlayerPrefs.DeleteKey(key);
+            PlayerPrefs.SetString(key, characterDataCollection.ToString());
+        }
+
+        private CharacterData[] GetCharacterCollection()
+        {
+            return characters.Values.ToArray();
+        }
+
+        private int GenerateId()
+        {
+            return Random.Range(1, 10000);
         }
     }
 }
