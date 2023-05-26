@@ -17,6 +17,12 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - name: Validate Branch
+        run: |
+          if [[ "${{ github.ref }}" != 'refs/heads/main' ]]; then 
+            echo "This is not main branch. Exiting..."
+            exit 1
+          fi
       - name: Checkout
         uses: actions/checkout@v3
       - name: Setup Node
