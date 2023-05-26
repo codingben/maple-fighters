@@ -1,9 +1,8 @@
 name: Unity Build Updater
 
 on:
-  workflow_run:
-    workflows: [Unity Build]
-    types: [completed]
+  workflow_dispatch:
+    # Left blank intentionally
 
 env:
   TOKEN: ${{ secrets.ARTIFACTS_TOKEN }}
@@ -12,12 +11,6 @@ jobs:
   on-success:
     runs-on: ubuntu-latest
     steps:
-      - name: Validate Branch
-        run: |
-          if [[ "${{ github.ref }}" != 'refs/heads/main' ]]; then 
-            echo "This is not main branch. Exiting..."
-            exit 1
-          fi
       - name: Checkout
         uses: actions/checkout@v3
       - name: Update Game Data

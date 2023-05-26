@@ -1,9 +1,6 @@
 name: Frontend Docker Build And Push
 
 on:
-  workflow_run:
-    workflows: [Frontend Build]
-    types: [completed]
   workflow_dispatch:
     # Left blank intentionally
 
@@ -11,12 +8,6 @@ jobs:
   on-success:
     runs-on: ubuntu-latest
     steps:
-      - name: Validate Branch
-        run: |
-          if [[ "${{ github.ref }}" != 'refs/heads/main' ]]; then 
-            echo "This is not main branch. Exiting..."
-            exit 1
-          fi
       - name: Setup QEMU
         uses: docker/setup-qemu-action@v2
       - name: Setup Docker Buildx
