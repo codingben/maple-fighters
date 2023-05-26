@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Proyecto26;
 using UnityEngine;
 
 namespace Scripts.Services.CharacterProviderApi
@@ -50,7 +49,7 @@ namespace Scripts.Services.CharacterProviderApi
             int index,
             int classindex)
         {
-            var statusCode = 0;
+            var statusCode = (long)StatusCodes.Created;
             var json = string.Empty;
 
             var id = GenerateId();
@@ -61,7 +60,7 @@ namespace Scripts.Services.CharacterProviderApi
                 if (character.userid == userid &&
                     character.charactername == charactername)
                 {
-                    statusCode = 400;
+                    statusCode = (long)StatusCodes.BadRequest;
                     json = "Please choose a different character name.";
 
                     CreateCharacterCallback?.Invoke(statusCode, json);
@@ -80,27 +79,23 @@ namespace Scripts.Services.CharacterProviderApi
 
             SaveCharacterCollection();
 
-            statusCode = 201;
-
             CreateCharacterCallback?.Invoke(statusCode, json);
         }
 
         public void DeleteCharacter(int characterid)
         {
-            var statusCode = 0;
+            var statusCode = (long)StatusCodes.Ok;
             var json = string.Empty;
 
             if (characters.Remove(characterid))
             {
                 SaveCharacterCollection();
 
-                statusCode = 200;
-
                 DeleteCharacterCallback?.Invoke(statusCode, json);
             }
             else
             {
-                statusCode = 404;
+                statusCode = (long)StatusCodes.BadRequest;
                 json = "The character was not found.";
 
                 DeleteCharacterCallback?.Invoke(statusCode, json);
@@ -109,7 +104,7 @@ namespace Scripts.Services.CharacterProviderApi
 
         public void GetCharacters(string userid)
         {
-            var statusCode = 200;
+            var statusCode = (long)StatusCodes.Ok;
             var json = PlayerPrefs.GetString(key);
 
             var characterDataCollection = JsonUtility.FromJson<CharacterDataCollection>(json);
