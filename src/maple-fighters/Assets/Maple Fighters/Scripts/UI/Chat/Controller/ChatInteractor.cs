@@ -1,5 +1,7 @@
-﻿using Scripts.Services;
-using Scripts.Services.ChatApi;
+﻿using Game.Messages;
+using Scripts.Gameplay.Entity;
+using Scripts.Services;
+using Scripts.Services.GameApi;
 using UnityEngine;
 
 namespace Scripts.UI.Chat
@@ -7,46 +9,60 @@ namespace Scripts.UI.Chat
     [RequireComponent(typeof(IOnChatMessageReceived))]
     public class ChatInteractor : MonoBehaviour
     {
-        private IChatApi chatApi;
+        private IGameApi gameApi;
         private IOnChatMessageReceived onChatMessageReceived;
+
+        private string characterName;
 
         private void Start()
         {
-            chatApi = ApiProvider.ProvideChatApi();
+            gameApi = ApiProvider.ProvideGameApi();
             onChatMessageReceived = GetComponent<IOnChatMessageReceived>();
 
-            SubscribeToChatApiEvents();
+            SubscribeToGameApiEvents();
         }
 
         private void OnDisable()
         {
-            UnsubscribeFromChatApiEvents();
+            UnsubscribeFromGameApiEvents();
         }
 
-        private void SubscribeToChatApiEvents()
+        private void SubscribeToGameApiEvents()
         {
-            if (chatApi != null)
-            {
-                chatApi.ChatMessageReceived += OnChatMessageReceived;
-            }
+            gameApi?.ChatMessageReceived?.AddListener(OnChatMessageReceived);
         }
 
-        private void UnsubscribeFromChatApiEvents()
+        private void UnsubscribeFromGameApiEvents()
         {
-            if (chatApi != null)
-            {
-                chatApi.ChatMessageReceived -= OnChatMessageReceived;
-            }
+            gameApi?.ChatMessageReceived?.RemoveListener(OnChatMessageReceived);
+        }
+
+        public void SetCharacterName(string name)
+        {
+            characterName = name;
         }
 
         public void SendChatMessage(string message)
         {
-            chatApi?.SendChatMessage(message);
+            var entity =
+                EntityContainer.GetInstance().GetLocalEntity();
+            var id =
+                entity.Id;
+            var chatMessage = new ChatMessage()
+            {
+                SenderId = id,
+                Name = characterName,
+                Content = message
+            };
+
+            gameApi?.SendMessage(MessageCodes.ChatMessage, chatMessage);
         }
 
-        private void OnChatMessageReceived(string message)
+        private void OnChatMessageReceived(ChatMessage chatMessage)
         {
-            onChatMessageReceived.OnMessageReceived(message);
+            var content = chatMessage.ContentFormatted;
+
+            onChatMessageReceived.OnMessageReceived(content);
         }
     }
 }
