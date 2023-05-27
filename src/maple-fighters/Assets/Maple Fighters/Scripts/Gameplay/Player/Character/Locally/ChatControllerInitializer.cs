@@ -16,14 +16,14 @@ namespace Scripts.Gameplay.Player
 
         private void OnCharacterSpawned()
         {
-            var chatController = FindObjectOfType<ChatController>();
-            if (chatController != null)
+            var chatInteractor = FindObjectOfType<ChatInteractor>();
+            if (chatInteractor != null)
             {
                 var characterDataProvider = GetComponent<ICharacterDataProvider>();
                 var characterData = characterDataProvider.GetCharacterData();
                 var name = characterData.Name;
 
-                chatController.SetCharacterName(name);
+                chatInteractor.SetCharacterName(name);
             }
         }
     }
