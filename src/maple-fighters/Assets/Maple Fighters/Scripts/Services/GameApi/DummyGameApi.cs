@@ -41,6 +41,8 @@ namespace Scripts.Services.GameApi
 
         public UnityEvent<BubbleNotificationMessage> BubbleMessageReceived { get; set; }
 
+        public UnityEvent<ChatMessage> ChatMessageReceived { get; set; }
+
         private void Awake()
         {
             SceneEntered = new UnityEvent<EnteredSceneMessage>();
@@ -51,6 +53,7 @@ namespace Scripts.Services.GameApi
             AnimationStateChanged = new UnityEvent<AnimationStateChangedMessage>();
             Attacked = new UnityEvent<AttackedMessage>();
             BubbleMessageReceived = new UnityEvent<BubbleNotificationMessage>();
+            ChatMessageReceived = new UnityEvent<ChatMessage>();
         }
 
         private void Start()
@@ -76,13 +79,20 @@ namespace Scripts.Services.GameApi
                     HandleChangeSceneOperation(message);
                     break;
                 }
+                case MessageCodes.ChatMessage:
+                {
+                    HandleChatMessageOperation(message);
+                    break;
+                }
             }
         }
 
         private void HandleChangeSceneOperation(object message)
         {
+            var changeSceneMessage = (ChangeSceneMessage)message;
             var sceneChangedMessage = new SceneChangedMessage();
-            var portalId = ((ChangeSceneMessage)message).PortalId;
+
+            var portalId = changeSceneMessage.PortalId;
             if (portalId == 3)
             {
                 sceneChangedMessage.Map = 0; // Lobby
@@ -93,6 +103,30 @@ namespace Scripts.Services.GameApi
             }
 
             SceneChanged?.Invoke(sceneChangedMessage);
+        }
+
+        private void HandleChatMessageOperation(object message)
+        {
+            var chatMessage = (ChatMessage)message;
+            var senderId = chatMessage.SenderId;
+            var name = chatMessage.Name;
+            var content = chatMessage.Content;
+
+            // Format message
+            chatMessage.ContentFormatted = $"<b>{name}: {content}</b>";
+
+            // Send formatted message
+            ChatMessageReceived?.Invoke(chatMessage);
+
+            // Bubble notification (not formatted message)
+            var bubbleNotificationMessage = new BubbleNotificationMessage()
+            {
+                NotifierId = senderId,
+                Message = content,
+                Time = 3 // Seconds
+            };
+
+            BubbleMessageReceived?.Invoke(bubbleNotificationMessage);
         }
     }
 }
