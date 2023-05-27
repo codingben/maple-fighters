@@ -10,8 +10,6 @@ namespace Scripts.UI.Chat
 
         bool IsTypingBlocked { get; }
 
-        string CharacterName { set; }
-
         void AddMessage(string message, UIChatMessageColor color = UIChatMessageColor.None);
 
         void BlockOrUnblockTyping(bool block);
