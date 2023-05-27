@@ -18,11 +18,6 @@ namespace Scripts.UI.Chat
             get => isTypingBlocked;
         }
 
-        public string CharacterName
-        {
-            set => characterName = value;
-        }
-
         private const KeyCode SendMessageKeyCode = KeyCode.Return;
         private const KeyCode SecondarySendMessageKeyCode = KeyCode.KeypadEnter;
         private const KeyCode CloseMessageKeyCode = KeyCode.Escape;
@@ -48,7 +43,6 @@ namespace Scripts.UI.Chat
 
         private bool isTypingBlocked;
         private bool isTypingMessage;
-        private string characterName;
 
         private void Update()
         {
@@ -139,10 +133,9 @@ namespace Scripts.UI.Chat
             {
                 var text = chatInputField.text;
 
-                if (!string.IsNullOrWhiteSpace(text) &&
-                    !string.IsNullOrEmpty(characterName))
+                if (!string.IsNullOrWhiteSpace(text))
                 {
-                    MessageAdded?.Invoke($"{characterName}: {text}");
+                    MessageAdded?.Invoke(text);
                 }
             }
         }
