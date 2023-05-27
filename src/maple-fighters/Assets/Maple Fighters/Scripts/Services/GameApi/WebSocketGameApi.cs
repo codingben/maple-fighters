@@ -43,6 +43,8 @@ namespace Scripts.Services.GameApi
 
         public UnityEvent<BubbleNotificationMessage> BubbleMessageReceived { get; set; }
 
+        public UnityEvent<ChatMessage> ChatMessageReceived { get; set; }
+
         private IJsonSerializer jsonSerializer;
         private MessageHandlerCollection collection;
         private WebSocket webSocket;
@@ -58,6 +60,7 @@ namespace Scripts.Services.GameApi
             AnimationStateChanged = new UnityEvent<AnimationStateChangedMessage>();
             Attacked = new UnityEvent<AttackedMessage>();
             BubbleMessageReceived = new UnityEvent<BubbleNotificationMessage>();
+            ChatMessageReceived = new UnityEvent<ChatMessage>();
 
             // Variables
             jsonSerializer = new UnityJsonSerializer();
@@ -149,6 +152,7 @@ namespace Scripts.Services.GameApi
             collection.Set(MessageCodes.AnimationStateChanged, AnimationStateChanged.ToMessageHandler());
             collection.Set(MessageCodes.Attacked, Attacked.ToMessageHandler());
             collection.Set(MessageCodes.BubbleNotification, BubbleMessageReceived.ToMessageHandler());
+            collection.Set(MessageCodes.ChatMessage, ChatMessageReceived.ToMessageHandler());
 
             Connected?.Invoke();
         }
@@ -163,6 +167,7 @@ namespace Scripts.Services.GameApi
             collection.Unset(MessageCodes.AnimationStateChanged);
             collection.Unset(MessageCodes.Attacked);
             collection.Unset(MessageCodes.BubbleNotification);
+            collection.Unset(MessageCodes.ChatMessage);
 
             Disconnected?.Invoke(code);
         }

@@ -27,6 +27,8 @@ namespace Scripts.Services.GameApi
 
         UnityEvent<BubbleNotificationMessage> BubbleMessageReceived { get; set; }
 
+        UnityEvent<ChatMessage> ChatMessageReceived { get; set; }
+
         void SendMessage<T, M>(T code, M message)
             where T : IComparable, IFormattable, IConvertible
             where M : class;
