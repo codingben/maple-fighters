@@ -6,7 +6,6 @@ using UnityEngine;
 namespace Scripts.UI.Chat
 {
     [RequireComponent(typeof(ChatInteractor))]
-    [RequireComponent(typeof(WelcomeMessageSender))]
     public class ChatController : MonoBehaviour, IOnChatMessageReceived
     {
         public Action<string> CharacterNameChanged;
@@ -67,29 +66,13 @@ namespace Scripts.UI.Chat
             }
         }
 
-        public void SetCharacterName(string name)
-        {
-            if (chatView != null)
-            {
-                chatView.CharacterName = name;
-
-                CharacterNameChanged?.Invoke(name);
-            }
-        }
-
-        public void AddMessage(string message)
-        {
-            chatView?.AddMessage(message);
-        }
-
         public void OnMessageReceived(string message)
         {
-            AddMessage(message);
+            chatView?.AddMessage(message);
         }
 
         private void OnMessageAdded(string message)
         {
-            chatView?.AddMessage(message);
             chatInteractor.SendChatMessage(message);
         }
 
