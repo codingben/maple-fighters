@@ -21,7 +21,7 @@ namespace Game.Application
             Components.Add(new WebSocketConnectionErrorHandler());
             Components.Add(new RemotePlayerProvider(id));
             Components.Add(new RemotePlayerMessageSender(gameClientCollection));
-            Components.Add(new MessageHandlerManager(gameSceneCollection));
+            Components.Add(new MessageHandlerManager(gameClientCollection, gameSceneCollection));
         }
 
         public void Dispose()

@@ -8,10 +8,12 @@ namespace Game.Application.Components
     {
         private readonly IJsonSerializer jsonSerializer;
         private readonly IMessageHandlerCollection handlerCollection;
+        private readonly IGameClientCollection gameClientCollection;
         private readonly IGameSceneCollection gameSceneCollection;
 
-        public MessageHandlerManager(IGameSceneCollection gameSceneCollection)
+        public MessageHandlerManager(IGameClientCollection gameClientCollection, IGameSceneCollection gameSceneCollection)
         {
+            this.gameClientCollection = gameClientCollection;
             this.gameSceneCollection = gameSceneCollection;
 
             jsonSerializer = new NativeJsonSerializer();
@@ -46,6 +48,7 @@ namespace Game.Application.Components
             handlerCollection.Set(MessageCodes.EnterScene, new EnterSceneMessageHandler(remotePlayer, gameSceneCollection));
             handlerCollection.Set(MessageCodes.ChangeScene, new ChangeSceneMessageHandler(remotePlayer, gameSceneCollection));
             handlerCollection.Set(MessageCodes.AttackMob, new AttackMobMessageHandler(remotePlayer));
+            handlerCollection.Set(MessageCodes.ChatMessage, new ChatMessageHandler(remotePlayer, gameClientCollection));
         }
 
         protected override void OnRemoved()
