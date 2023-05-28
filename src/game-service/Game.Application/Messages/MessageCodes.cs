@@ -14,6 +14,7 @@ namespace Game.Messages
         Attacked,
         BubbleNotification,
         EnteredScene,
-        SceneChanged
+        SceneChanged,
+        ChatMessage
     }
 }
