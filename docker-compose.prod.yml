@@ -2,13 +2,13 @@ version: '3.8'
 
 services:
     frontend:
-        image: maplefighters/frontend:1.0.0
+        image: maplefighters/frontend:2.0.0
         ports:
             - 80:80
         depends_on:
             - game-service
     game-service:
-        image: maplefighters/game-service:1.0.0
+        image: maplefighters/game-service:2.0.0
         restart: "on-failure"
         expose:
             - 50051
@@ -17,5 +17,5 @@ services:
             FLECK_LOG: Info
             IM_LOG: Debug
             GAME_LOG: Debug
-            CONFIG_SOURCE: v1.0
+            CONFIG_SOURCE: v2.0
             MAX_CONNECTIONS: 100

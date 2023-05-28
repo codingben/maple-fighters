@@ -28,7 +28,7 @@ jobs:
             "NGINX_CONF_FILE=nginx.prod.conf"
           file: ./src/frontend/Dockerfile
           push: true
-          tags: maplefighters/frontend:1.0.0
+          tags: maplefighters/frontend:2.0.0
           platforms: linux/amd64,linux/arm64/v8
       - name: Build And Push (Develop)
         uses: docker/build-push-action@v4

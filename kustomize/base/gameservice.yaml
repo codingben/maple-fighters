@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: game-service
-          image: maplefighters/game-service:1.0.0
+          image: maplefighters/game-service:2.0.0
           imagePullPolicy: Always
           ports:
             - containerPort: 50051
@@ -23,7 +23,7 @@ spec:
             - name: MAX_CONNECTIONS
               value: "100"
             - name: CONFIG_SOURCE
-              value: v1.0
+              value: v2.0
             - name: FLECK_LOG
               value: Info
             - name: GAME_LOG

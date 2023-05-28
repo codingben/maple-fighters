@@ -25,5 +25,5 @@ services:
             FLECK_LOG: Info
             IM_LOG: Debug
             GAME_LOG: Debug
-            CONFIG_SOURCE: v1.0
+            CONFIG_SOURCE: v2.0
             MAX_CONNECTIONS: 100

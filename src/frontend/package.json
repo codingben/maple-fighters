@@ -1,7 +1,7 @@
 {
   "name": "maple-fighters",
   "homepage": "https://maplefighters.io",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "A small online game similar to MapleStory",
   "main": "index.js",
   "scripts": {
