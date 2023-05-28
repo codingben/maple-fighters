@@ -13,6 +13,9 @@ namespace Game.Application.Components
 
         event Action<string> MessageReceived;
 
+        void SendMessage<T>(byte code, T message)
+            where T : struct;
+
         IWebSocketConnection ProvideConnection();
     }
 }
