@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using Game.Log;
 
@@ -69,6 +70,19 @@ namespace Game.Application.Components
         public int Count()
         {
             return collection.Count;
+        }
+
+        public IEnumerator<IGameClient> GetEnumerator()
+        {
+            foreach (var item in collection)
+            {
+                yield return item.Value;
+            }
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
         }
     }
 }
