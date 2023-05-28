@@ -61,7 +61,7 @@ spec:
         app: frontend
     spec:
       containers:
-      - image: maplefighters/frontend:1.0.0
+      - image: maplefighters/frontend:2.0.0
         imagePullPolicy: Always
         name: frontend
         ports:
@@ -99,7 +99,7 @@ spec:
         - name: MAX_CONNECTIONS
           value: "100"
         - name: CONFIG_SOURCE
-          value: v1.0
+          value: v2.0
         - name: FLECK_LOG
           value: Info
         - name: GAME_LOG
@@ -108,7 +108,7 @@ spec:
           value: Debug
         - name: URL
           value: ws://0.0.0.0:50051
-        image: maplefighters/game-service:1.0.0
+        image: maplefighters/game-service:2.0.0
         imagePullPolicy: Always
         name: game-service
         ports:
