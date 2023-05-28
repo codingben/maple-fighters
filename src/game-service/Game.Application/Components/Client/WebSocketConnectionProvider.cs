@@ -1,5 +1,6 @@
 using System;
 using Fleck;
+using Game.MessageTools;
 
 namespace Game.Application.Components
 {
@@ -14,6 +15,7 @@ namespace Game.Application.Components
         public event Action<string> MessageReceived;
 
         private readonly IWebSocketConnection connection;
+        private readonly IJsonSerializer jsonSerializer = new NativeJsonSerializer();
 
         public WebSocketConnectionProvider(IWebSocketConnection connection)
         {
@@ -22,6 +24,21 @@ namespace Game.Application.Components
             this.connection.OnClose += OnConnectionClosed;
             this.connection.OnError += OnErrorOccurred;
             this.connection.OnMessage += OnMessageReceived;
+        }
+
+        public void SendMessage<T>(byte code, T message)
+            where T : struct
+        {
+            var data = jsonSerializer.Serialize(new MessageData()
+            {
+                Code = code,
+                Data = jsonSerializer.Serialize(message)
+            });
+
+            if (connection.IsAvailable)
+            {
+                connection.Send(data);
+            }
         }
 
         private void OnConnectionEstablished()
