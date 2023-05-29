@@ -15,7 +15,7 @@
 }
 
 .fullscreen-button {
-  background-color: transparent;
+  background-color: white;
   background-repeat: no-repeat;
   border: none;
   cursor: pointer;
@@ -27,11 +27,12 @@
   margin: 26px 115px;
   font-size: 23px;
   font-family: Arial;
-  color: white;
+  color: black;
+  border-radius: 12px;
 }
 
 .fullscreen-button:hover {
-  color: gainsboro;
+  color: darkgrey;
 }
 
 /* .login-button {
@@ -55,7 +56,7 @@
 } */
 
 .github-button {
-  background-color: transparent;
+  background-color: white;
   background-repeat: no-repeat;
   border: none;
   cursor: pointer;
@@ -67,11 +68,12 @@
   margin: 26px 20px;
   font-size: 23px;
   font-family: Arial;
-  color: white;
+  color: black;
+  border-radius: 12px;
 }
 
 .github-button:hover {
-  color: gainsboro;
+  color: darkgrey;
 }
 
 /* Loader */
