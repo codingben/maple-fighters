@@ -30,7 +30,7 @@ Maple Fighters is available at [maplefighters.io](http://maplefighters.io). This
 
 ## Technology
 
-**Game Engine**: Unity WebGL  
+**Game Engine**: Unity (_2020.3.17_)  
 **Client**: C#, React.js (_C# is compiled to C++ and finally to WebAssembly_)  
 **Server**: C# (_.NET 5.0_)  
 **Reverse Proxy**: Nginx  
