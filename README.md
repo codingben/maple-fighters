@@ -10,6 +10,10 @@
 
 ## About
 
+[![Unity Build](https://github.com/codingben/maple-fighters/actions/workflows/unity-build.yml/badge.svg)](https://github.com/codingben/maple-fighters/actions/workflows/unity-build.yml)
+[![Frontend Build](https://github.com/codingben/maple-fighters/actions/workflows/frontend-build.yml/badge.svg)](https://github.com/codingben/maple-fighters/actions/workflows/frontend-build.yml)
+[![Game Service Build](https://github.com/codingben/maple-fighters/actions/workflows/game-service-build.yml/badge.svg)](https://github.com/codingben/maple-fighters/actions/workflows/game-service-build.yml)
+
 Maple Fighters is an online multiplayer game inspired by MapleStory where you battle monsters with others in real-time.
 
 Please **★ Star** if you like it. Made With :heart: For Open Source Community!
@@ -28,7 +32,7 @@ Maple Fighters is available at [maplefighters.io](http://maplefighters.io). This
 
 **Game Engine**: Unity WebGL  
 **Client**: C#, React.js (_C# is compiled to C++ and finally to WebAssembly_)  
-**Server**: C# (.NET 5.0)  
+**Server**: C# (_.NET 5.0_)  
 **Reverse Proxy**: Nginx  
 **Cloud**: DigitalOcean  
 
