@@ -35,20 +35,6 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: frontend
-  namespace: maple-fighters
-spec:
-  type: ClusterIP
-  ports:
-    - name: frontend-port
-      port: 80
-      targetPort: 80
-  selector:
-    app: frontend
----
-apiVersion: v1
-kind: Service
-metadata:
   name: frontend-external
   namespace: maple-fighters
 spec:
