@@ -8,7 +8,6 @@ services:
             dockerfile: Dockerfile
             args:
                 ENVIRONMENT: Development
-                NGINX_CONF_FILE: nginx.conf
         ports:
             - 80:80
         depends_on:
