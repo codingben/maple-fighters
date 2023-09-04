@@ -63,9 +63,14 @@ cd maple-fighters
 
 ```bash
 kubectl apply -f ./release/kubernetes-manifests.yaml
+namespace/maple-fighters created
+service/frontend-external created
+service/game-service created
+deployment.apps/frontend created
+deployment.apps/game-service created
 ```
 
-1. Make sure all pods are running:
+3. Make sure all pods are running:
 
 ```bash
 kubectl get pods -n maple-fighters
@@ -78,6 +83,8 @@ game-service-54f66cbcbb-q9vtb   1/1     Running   0          10s
 
 ```bash
 kubectl get service frontend-external -n maple-fighters
+NAME                TYPE           CLUSTER-IP      EXTERNAL-IP   PORT(S)        AGE
+frontend-external   LoadBalancer   10.101.21.120   <pending>     80:31765/TCP   10s
 ```
 
 ## Contributing
