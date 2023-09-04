@@ -59,22 +59,25 @@ git clone https://github.com/codingben/maple-fighters.git
 cd maple-fighters
 ```
 
-2. Create Kubernetes resources:
+2. Create Kubernetes resources in `maple-fighters` namespace:
 
 ```bash
 kubectl apply -f ./release/kubernetes-manifests.yaml
 ```
 
-3. Make sure you have all pods ready:
+1. Make sure all pods are running:
 
 ```bash
-kubectl get pods
+kubectl get pods -n maple-fighters
+NAME                            READY   STATUS    RESTARTS   AGE
+frontend-79d44b9fbb-gf45k       1/1     Running   0          10s
+game-service-54f66cbcbb-q9vtb   1/1     Running   0          10s
 ```
 
-4. Use `EXTERNAL_IP` to access in a web browser:
+4. Use `EXTERNAL_IP` to access Maple Fighters in a web browser:
 
 ```bash
-kubectl get service frontend-external
+kubectl get service frontend-external -n maple-fighters
 ```
 
 ## Contributing
