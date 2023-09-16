@@ -8,6 +8,8 @@ services:
             dockerfile: Dockerfile
             args:
                 ENVIRONMENT: Development
+        environment:
+            REMOVE_CF_IPS: true
         ports:
             - 80:80
         depends_on:
