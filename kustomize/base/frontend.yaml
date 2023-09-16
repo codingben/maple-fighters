@@ -21,7 +21,7 @@ spec:
             - containerPort: 80
           env:
             - name: REMOVE_CF_IPS
-              value: true
+              value: "true"
           resources:
             requests:
               cpu: 100m
