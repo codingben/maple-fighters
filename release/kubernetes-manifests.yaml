@@ -47,7 +47,10 @@ spec:
         app: frontend
     spec:
       containers:
-      - image: maplefighters/frontend:2.0.0
+      - env:
+        - name: REMOVE_CF_IPS
+          value: true
+        image: maplefighters/frontend:2.0.0
         imagePullPolicy: Always
         name: frontend
         ports:
