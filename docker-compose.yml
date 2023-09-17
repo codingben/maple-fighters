@@ -7,6 +7,7 @@ services:
             context: ./src/frontend
             dockerfile: Dockerfile
         environment:
+            REACT_APP_ENV: Development
             REMOVE_CF_IPS: true
         ports:
             - 80:80
