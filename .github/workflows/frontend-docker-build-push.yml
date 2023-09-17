@@ -23,8 +23,6 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           context: ./src/frontend
-          build-args: |
-            "ENVIRONMENT=Production"
           file: ./src/frontend/Dockerfile
           push: true
           tags: maplefighters/frontend:2.0.0
