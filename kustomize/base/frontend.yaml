@@ -20,6 +20,8 @@ spec:
           ports:
             - containerPort: 80
           env:
+            - name: REACT_APP_ENV
+              value: "Development"
             - name: REMOVE_CF_IPS
               value: "true"
           resources:

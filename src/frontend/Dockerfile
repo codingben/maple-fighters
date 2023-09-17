@@ -3,8 +3,6 @@ WORKDIR /app
 COPY package*.json /app/
 RUN npm install --only=production
 COPY ./ /app/
-ARG ENVIRONMENT
-ENV REACT_APP_ENV ${ENVIRONMENT}
 RUN npm run build
 
 FROM nginx:1.20.1-alpine
