@@ -24,7 +24,7 @@ function SetEnvironment() {
   // Timeout is required because of the splash screen,
   // so it takes a few seconds to load game scene.
   setTimeout(() => {
-    let isProduction = process.env.REACT_APP_ENV == "Production";
+    let isProduction = window._env_.REACT_APP_ENV == "Production";
     let env = isProduction ? "Production" : "Development";
 
     unityContext.send("Environment Setter", "SetEnvCallback", env);
