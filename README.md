@@ -42,7 +42,14 @@ Maple Fighters is available at [maplefighters.io](http://maplefighters.io). This
 
 > 💡 Please make sure you have Docker installed.
 
-Build and run docker images:
+1. Clone repository:
+
+```bash
+git clone https://github.com/codingben/maple-fighters.git
+cd maple-fighters
+```
+
+2. Build and run docker images:
 
 ```bash
 docker compose up
@@ -52,17 +59,10 @@ docker compose up
 
 > 💡 Please make sure you have Kubernetes cluster.
 
-1. Clone repository:
+1. Create Kubernetes resources in `maple-fighters` namespace:
 
 ```bash
-git clone https://github.com/codingben/maple-fighters.git
-cd maple-fighters
-```
-
-2. Create Kubernetes resources in `maple-fighters` namespace:
-
-```bash
-kubectl apply -f ./release/kubernetes-manifests.yaml
+kubectl apply -f https://raw.githubusercontent.com/codingben/maple-fighters/main/release/kubernetes-manifests.yaml
 namespace/maple-fighters created
 service/frontend-external created
 service/game-service created
@@ -70,7 +70,7 @@ deployment.apps/frontend created
 deployment.apps/game-service created
 ```
 
-3. Make sure all pods are running:
+2. Make sure all pods are running:
 
 ```bash
 kubectl get pods -n maple-fighters
@@ -79,7 +79,7 @@ frontend-79d44b9fbb-gf45k       1/1     Running   0          10s
 game-service-54f66cbcbb-q9vtb   1/1     Running   0          10s
 ```
 
-4. Use `EXTERNAL_IP` to access Maple Fighters in a web browser:
+3. Use `EXTERNAL_IP` to access Maple Fighters in a web browser:
 
 ```bash
 kubectl get service frontend-external -n maple-fighters
