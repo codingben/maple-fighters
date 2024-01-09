@@ -1,4 +1,5 @@
 using System;
+using System.Security.Cryptography.X509Certificates;
 using DotNetEnv;
 using Fleck;
 using Game.Application;
@@ -23,7 +24,10 @@ InterestManagementLog.Level = (IMLogLevel)Enum.Parse(typeof(IMLogLevel), imLog);
 GameLog.Level = (GameLogLevel)Enum.Parse(typeof(GameLogLevel), gameLog);
 
 var url = Env.GetString("URL");
+var certificateName = Env.GetString("CERTIFICATE_NAME");
+var certificatePassword = Env.GetString("CERTIFICATE_PASSWORD");
 var server = new WebSocketServer(url);
+server.Certificate = new X509Certificate2(certificateName, certificatePassword);
 var serverComponents = new ComponentCollection(new IComponent[]
 {
     new IdGenerator(),

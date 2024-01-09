@@ -43,4 +43,4 @@ make build
 make run
 ```
 
-You should now be able to access it at `ws://localhost:50051`.
+You should now be able to access it at `wss://localhost:50051`.
