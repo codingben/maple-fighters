@@ -18,7 +18,7 @@ spec:
           image: maplefighters/frontend:2.0.0
           imagePullPolicy: Always
           ports:
-            - containerPort: 80
+            - containerPort: 443
           env:
             - name: REACT_APP_ENV
               value: "Development"
@@ -45,8 +45,8 @@ metadata:
 spec:
   type: LoadBalancer
   ports:
-  - name: http
-    port: 80
-    targetPort: 80
+  - name: https
+    port: 443
+    targetPort: 443
   selector:
     app: frontend
