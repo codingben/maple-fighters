@@ -7,6 +7,8 @@ namespace ScriptableObjects.Configurations
     {
         public string Name;
 
+        public string Protocol;
+
         public string Host;
 
         public HostingEnvironment Environment;
