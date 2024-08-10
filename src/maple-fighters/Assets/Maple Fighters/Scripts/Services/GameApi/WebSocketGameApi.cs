@@ -77,7 +77,7 @@ namespace Scripts.Services.GameApi
 
             var uriBuilder = new UriBuilder()
             {
-                Scheme = "ws",
+                Scheme = networkConfiguration.GetProtocol(),
                 Host = networkConfiguration.GetHost(),
                 Path = "game"
             };

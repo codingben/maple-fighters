@@ -7,7 +7,7 @@ services:
             REACT_APP_ENV: Production
             REMOVE_CF_IPS: "false"
         ports:
-            - 80:80
+            - 443:443
         depends_on:
             - game-service
     game-service:
@@ -16,7 +16,7 @@ services:
         expose:
             - 50051
         environment:
-            URL: ws://0.0.0.0:50051
+            URL: wss://0.0.0.0:50051
             FLECK_LOG: Info
             IM_LOG: Debug
             GAME_LOG: Debug

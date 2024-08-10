@@ -14,6 +14,18 @@ namespace ScriptableObjects.Configurations
 
         public HostingEnvironment Environment;
 
+        public string GetProtocol()
+        {
+            var hostingData =
+                HostingData.FirstOrDefault((x) => x.Environment == Environment);
+            if (hostingData != null)
+            {
+                return hostingData.Protocol;
+            }
+
+            return string.Empty;
+        }
+
         public string GetHost()
         {
             var hostingData =

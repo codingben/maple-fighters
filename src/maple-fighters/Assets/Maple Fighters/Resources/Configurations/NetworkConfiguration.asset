@@ -14,12 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HostingData:
   - Name: Editor
+    Protocol: ws
     Host: localhost
     Environment: 0
   - Name: Development
+    Protocol: ws
     Host: localhost
     Environment: 1
   - Name: Production
+    Protocol: wss
     Host: maplefighters.io
     Environment: 2
   Environment: 0
