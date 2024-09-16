@@ -10,6 +10,9 @@ services:
             - 443:443
         depends_on:
             - game-service
+        volumes:
+            - /etc/letsencrypt/live/maplefighters.io/server.crt:/etc/nginx/ssl/server.crt
+            - /etc/letsencrypt/live/maplefighters.io/server.key:/etc/nginx/ssl/server.key
     game-service:
         image: maplefighters/game-service:2.0.0
         restart: "on-failure"
@@ -22,3 +25,6 @@ services:
             GAME_LOG: Debug
             CONFIG_SOURCE: v2.0
             MAX_CONNECTIONS: 100
+            CERT_PASSWORD: ""
+        volumes:
+            - /etc/letsencrypt/live/maplefighters.io/server.pfx:/app/server.pfx
