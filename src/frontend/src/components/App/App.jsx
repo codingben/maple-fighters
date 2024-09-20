@@ -90,7 +90,11 @@ function Footer() {
     <div className="footer">
       <h4>
         Made with <span style={{ color: "#E91E63" }}>&#x2764;</span> by{" "}
-        <a href="https://codingben.io" target="_blank">
+        <a
+          href="https://codingben.io"
+          target="_blank"
+          style={{ textDecoration: "none" }}
+        >
           Ben Oukhanov
         </a>
       </h4>
