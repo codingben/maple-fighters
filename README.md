@@ -4,7 +4,7 @@
   <br><i>A small online game similar to MapleStory</i><br>
 </p>
 <p align="center">
-  <a href="http://maplefighters.io"><strong>maplefighters.io</strong></a>
+  <a href="https://maplefighters.io"><strong>maplefighters.io</strong></a>
   <br>
 </p>
 
@@ -20,7 +20,7 @@ Please **★ Star** if you like it. Made With :heart: For Open Source Community!
 
 ## Play Online
 
-Maple Fighters is available at [maplefighters.io](http://maplefighters.io). This is a web game, no installation required. Supported in any web browser with internet connection. Small, optimized, and incredibly fast! 🚀
+Maple Fighters is available at [maplefighters.io](https://maplefighters.io). This is a web game, no installation required. Supported in any web browser with internet connection. Small, optimized, and incredibly fast! 🚀
 
 ## Screenshots
 
