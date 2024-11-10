@@ -1,5 +1,4 @@
 ﻿using Game.Messages;
-using NativeWebSocket;
 using Scripts.Constants;
 using Scripts.Gameplay.Entity;
 using Scripts.Services;
@@ -31,10 +30,20 @@ namespace Scripts.Gameplay.Map.Objects
         {
             mapIndex = (int)message.Map;
 
-            var gameApi = ApiProvider.ProvideGameApi();
-            gameApi.Disconnected += OnDisconnected;
+            switch (mapIndex)
+            {
+                case 0:
+                {
+                    SceneManager.LoadScene(sceneName: SceneNames.Maps.Lobby);
+                    break;
+                }
 
-            Destroy((Object)gameApi);
+                case 1:
+                {
+                    SceneManager.LoadScene(sceneName: SceneNames.Maps.TheDarkForest);
+                    break;
+                }
+            }
         }
 
         public void Teleport()
@@ -54,28 +63,6 @@ namespace Scripts.Gameplay.Map.Objects
                     gameApi?.SendMessage(MessageCodes.ChangeScene, message);
                 };
                 screenFadeController.Show();
-            }
-        }
-
-        private void OnDisconnected(WebSocketCloseCode code)
-        {
-            if (code == WebSocketCloseCode.Normal ||
-                code == WebSocketCloseCode.Abnormal)
-            {
-                switch (mapIndex)
-                {
-                    case 0:
-                    {
-                        SceneManager.LoadScene(sceneName: SceneNames.Maps.Lobby);
-                        break;
-                    }
-
-                    case 1:
-                    {
-                        SceneManager.LoadScene(sceneName: SceneNames.Maps.TheDarkForest);
-                        break;
-                    }
-                }
             }
         }
     }
