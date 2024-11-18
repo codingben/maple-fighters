@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Update Game Data
         run: |
           # Set Download Game Files Variables
@@ -38,7 +38,7 @@ jobs:
           mv ${BUILD_PATH} ${FILES_PATH}
           rm ${ARTIFACT_NAME}
           rm -r ${PLATFORM}
-      - uses: EndBug/add-and-commit@v8
+      - uses: EndBug/add-and-commit@v9
         with:
           message: "build(frontend): update game files"
           default_author: github_actions

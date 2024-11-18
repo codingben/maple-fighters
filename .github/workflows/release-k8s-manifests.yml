@@ -11,13 +11,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Setup kustomize
         uses: imranismail/setup-kustomize@v2
       - name: Generate release manifests
         run: kustomize build ./kustomize > ./release/kubernetes-manifests.yaml
       - name: Create pull request
-        uses: peter-evans/create-pull-request@v4
+        uses: peter-evans/create-pull-request@v7
         with:
           token: ${{ github.token }}
           commit-message: "chore: update kubernetes manifests"
