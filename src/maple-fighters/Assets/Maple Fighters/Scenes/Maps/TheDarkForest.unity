@@ -358,6 +358,7 @@ GameObject:
   - component: {fileID: 193192975}
   - component: {fileID: 193192974}
   - component: {fileID: 193192973}
+  - component: {fileID: 193192976}
   m_Layer: 0
   m_Name: Down
   m_TagString: Untagged
@@ -446,6 +447,22 @@ Transform:
   m_Father: {fileID: 1117228358}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
+--- !u!114 &193192976
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 193192972}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c3d10b0b45754607bb54508ec0d3446, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  requiredPlayerState: 5
+  primaryKeyCode: 115
+  secondaryKeyCode: 274
+  colorSpeed: 0.5
 --- !u!1 &298437731
 GameObject:
   m_ObjectHideFlags: 0
@@ -508,6 +525,7 @@ GameObject:
   - component: {fileID: 317925599}
   - component: {fileID: 317925598}
   - component: {fileID: 317925597}
+  - component: {fileID: 317925600}
   m_Layer: 0
   m_Name: Q
   m_TagString: Untagged
@@ -596,6 +614,22 @@ Transform:
   m_Father: {fileID: 1117228358}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &317925600
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 317925596}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c3d10b0b45754607bb54508ec0d3446, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  requiredPlayerState: 8
+  primaryKeyCode: 113
+  secondaryKeyCode: 113
+  colorSpeed: 0.5
 --- !u!1 &354198740
 GameObject:
   m_ObjectHideFlags: 0
@@ -984,7 +1018,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 581949298}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.021780968, y: -11.365763, z: -10}
+  m_LocalPosition: {x: -0.021778107, y: -11.367054, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 572659480}
@@ -1949,7 +1983,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1151788562}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -12.8, y: -12.95, z: -10}
+  m_LocalPosition: {x: -12.799999, y: -12.95, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 713957756}
@@ -2804,6 +2838,7 @@ GameObject:
   - component: {fileID: 1881879949}
   - component: {fileID: 1881879948}
   - component: {fileID: 1881879947}
+  - component: {fileID: 1881879950}
   m_Layer: 0
   m_Name: Ctrl
   m_TagString: Untagged
@@ -2892,6 +2927,22 @@ Transform:
   m_Father: {fileID: 1117228358}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1881879950
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1881879946}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c3d10b0b45754607bb54508ec0d3446, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  requiredPlayerState: 7
+  primaryKeyCode: 306
+  secondaryKeyCode: 306
+  colorSpeed: 0.5
 --- !u!1 &1904566971
 GameObject:
   m_ObjectHideFlags: 0
@@ -2933,6 +2984,7 @@ GameObject:
   - component: {fileID: 2003073457}
   - component: {fileID: 2003073456}
   - component: {fileID: 2003073455}
+  - component: {fileID: 2003073458}
   m_Layer: 0
   m_Name: Up
   m_TagString: Untagged
@@ -3021,6 +3073,22 @@ Transform:
   m_Father: {fileID: 1117228358}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 270}
+--- !u!114 &2003073458
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2003073454}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c3d10b0b45754607bb54508ec0d3446, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  requiredPlayerState: 5
+  primaryKeyCode: 119
+  secondaryKeyCode: 273
+  colorSpeed: 0.5
 --- !u!1 &2094996518
 GameObject:
   m_ObjectHideFlags: 0
