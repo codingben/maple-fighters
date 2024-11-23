@@ -23,6 +23,11 @@
         Falling,
 
         /// <summary>
+        /// The dead state.
+        /// </summary>
+        Dead,
+
+        /// <summary>
         /// The rope climb state.
         /// </summary>
         Rope,

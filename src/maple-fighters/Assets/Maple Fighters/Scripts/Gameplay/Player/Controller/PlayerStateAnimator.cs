@@ -85,6 +85,7 @@ namespace Scripts.Gameplay.Player
             var isMoving = playerState == PlayerStates.Moving;
             var isJumping = playerState == PlayerStates.Jumping;
             var isFalling = playerState == PlayerStates.Falling;
+            var isDead = playerState == PlayerStates.Dead;
             var isRope = playerState == PlayerStates.Rope;
             var isLadder = playerState == PlayerStates.Ladder;
             var isPrimaryAttack = playerState == PlayerStates.PrimaryAttack;
@@ -92,6 +93,7 @@ namespace Scripts.Gameplay.Player
 
             animator.SetBool(PlayerStates.Moving.ToString(), isMoving);
             animator.SetBool(PlayerStates.Jumping.ToString(), isJumping || isFalling);
+            animator.SetBool(PlayerStates.Dead.ToString(), isDead);
             animator.SetBool(PlayerStates.Rope.ToString(), isRope);
             animator.SetBool(PlayerStates.Ladder.ToString(), isLadder);
             animator.SetBool(PlayerStates.PrimaryAttack.ToString(), isPrimaryAttack);

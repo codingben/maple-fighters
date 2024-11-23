@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Scripts.Gameplay.Player.Behaviours
 {
-    [RequireComponent(typeof(PlayerController))]
+    [RequireComponent(typeof(PlayerController), typeof(PlayerHealth))]
     public class PlayerAttackedBehaviour : MonoBehaviour
     {
         [SerializeField]
@@ -21,11 +21,14 @@ namespace Scripts.Gameplay.Player.Behaviours
 
         private IGameApi gameApi;
         private PlayerController playerController;
+        private PlayerHealth playerHealth;
+
         private bool isAttacked;
 
         private void Awake()
         {
             playerController = GetComponent<PlayerController>();
+            playerHealth = GetComponent<PlayerHealth>();
         }
 
         private void Start()
@@ -54,6 +57,9 @@ namespace Scripts.Gameplay.Player.Behaviours
                 var direction = new Vector2(
                     x: (normalized.x > 0 ? 1 : -1) * hitAmount.x,
                     y: hitAmount.y);
+
+                // TODO: Use message.DamageAmount (unique per enemy)
+                playerHealth.Damage();
 
                 StartAttackedEffect(direction);
             }
