@@ -7,6 +7,7 @@ using Scripts.UI.Chat;
 using Scripts.UI.Focus;
 using Scripts.UI.GameServer;
 using Scripts.UI.Notice;
+using Scripts.UI.PlayerData;
 using UI;
 using UnityEngine;
 
@@ -39,6 +40,7 @@ namespace Scripts.Gameplay.Creator
             yield return typeof(FocusStateController);
             yield return typeof(NoticeController);
             yield return typeof(ChatController);
+            yield return typeof(PlayerDataController);
             yield return typeof(GameServerDisconnectionHandler);
         }
 

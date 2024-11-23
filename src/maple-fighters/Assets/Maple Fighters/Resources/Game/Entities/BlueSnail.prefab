@@ -533,6 +533,7 @@ MonoBehaviour:
   attackedAnimation: {fileID: 1226959955713265118}
   deadAnimation: {fileID: 996590074768006885}
   health: 100
+  mobExperience: 5
   mobDamageText: {fileID: 8469844777433203015, guid: 87e1f42ee42344620acfbd1da4926470,
     type: 3}
   mobDamagePosition: {fileID: 4756870909268700154}

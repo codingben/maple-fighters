@@ -65,6 +65,7 @@ namespace Scripts.Gameplay.Player
                 { PlayerStates.Moving, new PlayerMovingState(this) },
                 { PlayerStates.Jumping, new PlayerJumpingState(this) },
                 { PlayerStates.Falling, new PlayerFallingState(this) },
+                { PlayerStates.Dead, new PlayerDeadState() },
                 { PlayerStates.Rope, new PlayerClimbState(this) },
                 { PlayerStates.Ladder, new PlayerClimbState(this) },
                 { PlayerStates.PrimaryAttack, new PlayerPrimaryAttackState(this) },

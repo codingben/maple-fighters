@@ -1,4 +1,5 @@
 using Scripts.Gameplay.Graphics;
+using Scripts.Services;
 using UnityEngine;
 
 namespace Scripts.Gameplay.Map.Objects
@@ -16,6 +17,9 @@ namespace Scripts.Gameplay.Map.Objects
 
         [SerializeField]
         private int health = 100;
+
+        [SerializeField]
+        private float mobExperience = 10;
 
         [Header("Mob Damage Effect")]
         [SerializeField]
@@ -58,6 +62,12 @@ namespace Scripts.Gameplay.Map.Objects
             {
                 deadAnimation?.Play();
                 attackedAnimation?.Stop();
+
+                var userMetadata = FindObjectOfType<UserMetadata>();
+                if (userMetadata != null)
+                {
+                    userMetadata.AddExperiencePoints(mobExperience);
+                }
             }
         }
 
