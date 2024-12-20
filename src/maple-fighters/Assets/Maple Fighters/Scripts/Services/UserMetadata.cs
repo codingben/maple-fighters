@@ -13,6 +13,8 @@ namespace Scripts.Services
 
         public UserData UserData { get; set; }
 
+        public int CharacterId { get; set; }
+
         public int CharacterType { get; set; }
 
         public int CharacterHealth { get; set; }
@@ -38,8 +40,6 @@ namespace Scripts.Services
             };
 
             CharacterHealth = GetMaxCharacterHealth();
-            CharacterLevel = 1;
-            CharacterExperiencePoints = 0;
         }
 
         public void AddExperiencePoints(float value)
@@ -47,6 +47,7 @@ namespace Scripts.Services
             CharacterExperiencePoints += value;
 
             VerifyCharacterLevel(value);
+            SaveCharacterData();
         }
 
         public int GetMaxCharacterHealth()
@@ -77,6 +78,12 @@ namespace Scripts.Services
             {
                 CharacterExperiencePointsAdded?.Invoke(value);
             }
+        }
+
+        private void SaveCharacterData()
+        {
+            var characterProviderApi = ApiProvider.ProvideCharacterProviderApi();
+            characterProviderApi.UpdateCharacter(CharacterId, CharacterLevel, CharacterExperiencePoints);
         }
 
         private string GetUserId()

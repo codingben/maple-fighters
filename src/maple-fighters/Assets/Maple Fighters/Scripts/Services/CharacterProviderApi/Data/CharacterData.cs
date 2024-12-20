@@ -11,6 +11,10 @@ namespace Scripts.Services.CharacterProviderApi
 
         public string charactername;
 
+        public int characterlevel;
+
+        public float characterexperience;
+
         public int index;
 
         public int classindex;

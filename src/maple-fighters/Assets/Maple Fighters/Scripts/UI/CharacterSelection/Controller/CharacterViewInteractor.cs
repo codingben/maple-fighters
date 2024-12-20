@@ -134,9 +134,11 @@ namespace Scripts.UI.CharacterSelection
             {
                 var id = character.id;
                 var name = character.charactername;
+                var level = character.characterlevel;
+                var experience = character.characterexperience;
                 var index = (UICharacterIndex)character.index;
                 var classindex = (UICharacterClass)character.classindex;
-                var uiCharacterDetails = new UICharacterDetails(id, name, index, classindex);
+                var uiCharacterDetails = new UICharacterDetails(id, name, level, experience, index, classindex);
 
                 onCharacterReceivedListener.OnCharacterReceived(uiCharacterDetails);
             }
@@ -160,6 +162,8 @@ namespace Scripts.UI.CharacterSelection
 
                 characters[index].id = character.id;
                 characters[index].charactername = character.charactername;
+                characters[index].characterlevel = character.characterlevel;
+                characters[index].characterexperience = character.characterexperience;
                 characters[index].classindex = character.classindex;
             }
         }
@@ -167,21 +171,30 @@ namespace Scripts.UI.CharacterSelection
         private CharacterData[] GetSampleCharacterData()
         {
             // NOTE: Make sure the "index" parameter is like this array
-            return new CharacterData[3]
+            return new CharacterData[1]
             {
-                new CharacterData { userid = string.Empty, charactername = "Sample", index = 0, classindex = 0 },
-                new CharacterData { userid = string.Empty, charactername = "Sample", index = 1, classindex = 0 },
-                new CharacterData { userid = string.Empty, charactername = "Sample", index = 2, classindex = 0 }
+                new CharacterData
+                {
+                    userid = string.Empty,
+                    charactername = "Sample",
+                    characterlevel = 1,
+                    characterexperience = 0,
+                    index = 0,
+                    classindex = 0
+                }
             };
         }
 
-        public void UpdateCharacterData(byte characterType, string characterName)
+        public void UpdateCharacterData(int characterId, byte characterType, string characterName, int characterLevel, float characterExperience)
         {
             var userMetadata = FindObjectOfType<UserMetadata>();
             if (userMetadata != null)
             {
+                userMetadata.CharacterId = characterId;
                 userMetadata.CharacterType = characterType;
                 userMetadata.CharacterName = characterName;
+                userMetadata.CharacterLevel = characterLevel;
+                userMetadata.CharacterExperiencePoints = characterExperience;
             }
         }
     }

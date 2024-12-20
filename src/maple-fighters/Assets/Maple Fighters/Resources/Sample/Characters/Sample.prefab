@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 225240873354403080}
   - component: {fileID: 8559039274618302552}
   m_Layer: 5
-  m_Name: Sample 1
+  m_Name: Sample
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -127,6 +127,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterNameText: {fileID: 0}
+  characterLevelText: {fileID: 0}
+  characterExperienceText: {fileID: 0}
 --- !u!225 &225240873354403080
 CanvasGroup:
   m_ObjectHideFlags: 0

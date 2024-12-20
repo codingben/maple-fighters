@@ -7,8 +7,7 @@ namespace Scripts.UI.CharacterSelection
         public static string GetCharacterPath(UICharacterDetails characterDetails)
         {
             var characterClass = characterDetails.GetCharacterClass();
-            var characterIndex = characterDetails.GetCharacterIndex();
-            var name = $"{characterClass} {(int)characterIndex}";
+            var name = $"{characterClass}";
 
             return string.Format(Paths.Resources.Sample.Characters, name);
         }
