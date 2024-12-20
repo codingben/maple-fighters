@@ -231,6 +231,8 @@ namespace Scripts.UI.CharacterSelection
             {
                 characterView.Id = characterDetails.GetCharacterId();
                 characterView.CharacterName = characterDetails.GetCharacterName();
+                characterView.CharacterLevel = characterDetails.GetCharacterLevel();
+                characterView.CharacterExperience = characterDetails.GetCharacterExperience();
                 characterView.CharacterIndex = characterDetails.GetCharacterIndex();
                 characterView.CharacterClass = characterDetails.GetCharacterClass();
 
@@ -406,10 +408,13 @@ namespace Scripts.UI.CharacterSelection
                 var character = characterViewCollection?.Get(characterIndex);
                 if (character != null)
                 {
+                    var characterId = character.Id;
                     var characterClass = (byte)character.CharacterClass;
                     var characterName = character.CharacterName;
+                    var characterLevel = character.CharacterLevel;
+                    var characterExperience = character.CharacterExperience;
 
-                    characterViewInteractor.UpdateCharacterData(characterClass, characterName);
+                    characterViewInteractor.UpdateCharacterData(characterId, characterClass, characterName, characterLevel, characterExperience);
 
                     HideCharacterSelectionOptionsWindow();
 
@@ -434,7 +439,7 @@ namespace Scripts.UI.CharacterSelection
             if (screenFadeController != null)
             {
                 screenFadeController.Show();
-                screenFadeController.FadeInCompleted += OnFadeInCompleted;                    
+                screenFadeController.FadeInCompleted += OnFadeInCompleted;
             }
         }
 

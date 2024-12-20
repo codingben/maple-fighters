@@ -75,6 +75,11 @@ namespace Scripts.Services.CharacterProviderApi
             CreateCharacterCallback?.Invoke(statusCode, json);
         }
 
+        public void UpdateCharacter(int characterid, int characterlevel, float characterexperience)
+        {
+            // Left blank intentionally
+        }
+
         public void DeleteCharacter(int characterid)
         {
             RestClient.Delete($"{url}/characters/{characterid}", OnDeleteCharacterCallback);

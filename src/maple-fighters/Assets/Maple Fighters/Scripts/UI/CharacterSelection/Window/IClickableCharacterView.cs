@@ -12,6 +12,10 @@ namespace Scripts.UI.CharacterSelection
 
         string CharacterName { get; set; }
 
+        int CharacterLevel { get; set; }
+
+        float CharacterExperience { get; set; }
+
         UICharacterIndex CharacterIndex { get; set; }
 
         UICharacterClass CharacterClass { get; set; }

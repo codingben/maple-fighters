@@ -72,6 +72,8 @@ namespace Scripts.Services.CharacterProviderApi
             {
                 id = id,
                 userid = userid,
+                characterlevel = 1,
+                characterexperience = 0f,
                 charactername = charactername,
                 index = index,
                 classindex = classindex
@@ -80,6 +82,26 @@ namespace Scripts.Services.CharacterProviderApi
             SaveCharacterCollection();
 
             CreateCharacterCallback?.Invoke(statusCode, json);
+        }
+
+        public void UpdateCharacter(int characterid, int characterlevel, float characterexperience)
+        {
+            if (characters.Count == 0)
+            {
+                var userMetadata = FindObjectOfType<UserMetadata>();
+                var userId = userMetadata?.UserData.id ?? string.Empty;
+
+                GetCharacters(userId);
+            }
+
+            if (characters.TryGetValue(characterid, out CharacterData characterData))
+            {
+                characterData.characterlevel = characterlevel;
+                characterData.characterexperience = characterexperience;
+                characters[characterid] = characterData;
+            }
+
+            SaveCharacterCollection();
         }
 
         public void DeleteCharacter(int characterid)
@@ -124,6 +146,8 @@ namespace Scripts.Services.CharacterProviderApi
                         id = character.id,
                         userid = character.userid,
                         charactername = character.charactername,
+                        characterlevel = character.characterlevel,
+                        characterexperience = character.characterexperience,
                         index = character.index,
                         classindex = character.classindex
                     });

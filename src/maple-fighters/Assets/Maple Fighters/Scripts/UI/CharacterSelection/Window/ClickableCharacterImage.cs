@@ -38,6 +38,42 @@ namespace Scripts.UI.CharacterSelection
             }
         }
 
+        public int CharacterLevel
+        {
+            get
+            {
+                return characterLevel;
+            }
+
+            set
+            {
+                characterLevel = value;
+
+                if (characterLevelText != null)
+                {
+                    characterLevelText.text = $"Lvl. {characterLevel}";
+                }
+            }
+        }
+
+        public float CharacterExperience
+        {
+            get
+            {
+                return characterExperience;
+            }
+
+            set
+            {
+                characterExperience = value;
+
+                if (characterExperienceText != null)
+                {
+                    characterExperienceText.text = $"({characterExperience}%)";
+                }
+            }
+        }
+
         public UICharacterIndex CharacterIndex { get; set; }
 
         public UICharacterClass CharacterClass { get; set; }
@@ -47,8 +83,16 @@ namespace Scripts.UI.CharacterSelection
         [Header("Text"), SerializeField]
         private Text characterNameText;
 
-        private bool hasCharacter;
+        [Header("Text"), SerializeField]
+        private Text characterLevelText;
+
+        [Header("Text"), SerializeField]
+        private Text characterExperienceText;
+
         private Animator animator;
+
+        private int characterLevel;
+        private float characterExperience;
 
         private void Awake()
         {
